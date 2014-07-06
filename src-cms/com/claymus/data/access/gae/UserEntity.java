@@ -18,8 +18,14 @@ public class UserEntity implements User {
 	@Persistent( column = "PASSWORD" )
 	private String password;
 	
-	@Persistent( column = "NAME" )
-	private String name;
+	@Persistent( column = "FIRST_NAME" )
+	private String firstName;
+	
+	@Persistent( column = "LAST_NAME" )
+	private String lastName;
+	
+	@Persistent( column = "NICK_NAME" )
+	private String nickName;
 	
 	@Persistent( column = "EMAIL" )
 	private String email;
@@ -52,13 +58,33 @@ public class UserEntity implements User {
 	}
 
 	@Override
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
 	@Override
-	public void setName( String name ) {
-		this.name = name;
+	public void setFirstName( String firstName ) {
+		this.firstName = firstName;
+	}
+
+	@Override
+	public String getLastName() {
+		return lastName;
+	}
+
+	@Override
+	public void setLastName( String lastName ) {
+		this.lastName = lastName;
+	}
+
+	@Override
+	public String getNickName() {
+		return nickName;
+	}
+
+	@Override
+	public void setNickName( String nickName ) {
+		this.nickName = nickName;
 	}
 
 	@Override

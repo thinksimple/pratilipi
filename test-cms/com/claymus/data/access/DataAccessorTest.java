@@ -33,7 +33,9 @@ public class DataAccessorTest {
     	
     	String id = "id";
     	String password = "password";
-    	String name = "name";
+    	String firstName = "firstName";
+    	String lastName = "lastName";
+    	String nickName = "nickName";
     	String email = "email";
     	String phone = "phone";
     	Date signUpDate = new Date();
@@ -43,7 +45,9 @@ public class DataAccessorTest {
     	User user = dataAccessor.newUser();
     	user.setId( id );
     	user.setPassword( password );
-    	user.setName( name );
+    	user.setFirstName( firstName );
+    	user.setLastName( lastName );
+    	user.setNickName( nickName );
     	user.setEmail( email );
     	user.setPhone( phone );
     	user.setSignUpDate( signUpDate );
@@ -57,7 +61,9 @@ public class DataAccessorTest {
     	Assert.assertNotNull( user );
     	Assert.assertEquals( id, user.getId() );
     	Assert.assertEquals( password, user.getPassword() );
-    	Assert.assertEquals( name, user.getName() );
+    	Assert.assertEquals( firstName, user.getFirstName() );
+    	Assert.assertEquals( lastName, user.getLastName() );
+    	Assert.assertEquals( nickName, user.getNickName() );
     	Assert.assertEquals( email, user.getEmail() );
     	Assert.assertEquals( phone, user.getPhone() );
     	Assert.assertEquals( signUpDate, user.getSignUpDate() );

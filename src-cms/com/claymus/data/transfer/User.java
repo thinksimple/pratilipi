@@ -12,9 +12,17 @@ public interface User {
 
 	void setPassword( String password );
 
-	String getName();
+	String getFirstName();
 
-	void setName( String name );
+	void setFirstName( String firstName );
+
+	String getLastName();
+
+	void setLastName( String lastName );
+
+	String getNickName();
+
+	void setNickName( String nickName );
 
 	String getEmail();
 
