@@ -1,6 +1,4 @@
-package com.pratilipi.data.access;
-
-import com.claymus.data.access.DataAccessor;
+package com.claymus.data.access;
 
 public class DataAccessorFactory {
 
