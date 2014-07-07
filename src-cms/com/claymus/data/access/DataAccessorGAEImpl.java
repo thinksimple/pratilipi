@@ -28,12 +28,12 @@ public class DataAccessorGAEImpl implements DataAccessor {
 	}
 
 	
-	private <T> T getEntity( Class<T> clazz, Object id ) {
+	protected <T> T getEntity( Class<T> clazz, Object id ) {
 		T entity = (T) pm.getObjectById( clazz, id );
 		return pm.detachCopy( entity );
 	}
 
-	private <T> T createOrUpdateEntity( T entity ) {
+	protected <T> T createOrUpdateEntity( T entity ) {
 		entity = pm.makePersistent( entity );
 		return pm.detachCopy( entity );
 	}
