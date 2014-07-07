@@ -19,6 +19,12 @@ public class BlobEntryEntity implements BlobEntry {
 	@Persistent( column = "NAME" )
 	private String name;
 	
+	@Persistent( column = "TYPE" )
+	private Type type;
+	
+	@Persistent( column = "SIZE" )
+	private Long size;
+	
 	@Persistent( column = "SOURCE" )
 	private Source source;
 	
@@ -46,6 +52,26 @@ public class BlobEntryEntity implements BlobEntry {
 	@Override
 	public void setName( String name ) {
 		this.name = name;
+	}
+	
+	@Override
+	public Type getType() {
+		return type;
+	}
+	
+	@Override
+	public void setType( Type type ) {
+		this.type = type;
+	}
+	
+	@Override
+	public Long getSize() {
+		return size;
+	}
+	
+	@Override
+	public void setSize( Long size ) {
+		this.size = size;
 	}
 	
 	@Override

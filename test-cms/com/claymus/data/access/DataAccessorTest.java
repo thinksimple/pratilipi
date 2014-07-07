@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.BlobEntry.Source;
+import com.claymus.data.transfer.BlobEntry.Type;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
@@ -104,11 +105,15 @@ public class DataAccessorTest {
     public void testBlobEntry() {
 
     	String name = "name";
-
+    	
+    	Type type_1 = Type.TXT;
+    	Long size_1 = 123L;
     	Source source_1 = Source.GOOGLE_APP_ENGINE;
     	String blobId_1 = "bolbId_1";
     	Date creationDate_1 = new Date();
     	
+    	Type type_2 = Type.PDF;
+    	Long size_2 = 456L;
     	Source source_2 = Source.GOOGLE_CLOUD_STORAGE;
     	String blobId_2 = "bolbId_2";
     	Date creationDate_2 = new Date( new Date().getTime() + 100 );
@@ -117,6 +122,8 @@ public class DataAccessorTest {
 
     	BlobEntry blobEntry = dataAccessor.newBlobEntry();
     	blobEntry.setName( name );
+    	blobEntry.setType( type_1 );
+    	blobEntry.setSize( size_1 );
     	blobEntry.setSource( source_1 );
     	blobEntry.setBlobId( blobId_1 );
     	blobEntry.setCreationDate( creationDate_1 );
@@ -125,6 +132,8 @@ public class DataAccessorTest {
 
     	blobEntry = dataAccessor.newBlobEntry();
     	blobEntry.setName( name );
+    	blobEntry.setType( type_2 );
+    	blobEntry.setSize( size_2 );
     	blobEntry.setSource( source_2 );
     	blobEntry.setBlobId( blobId_2 );
     	blobEntry.setCreationDate( creationDate_2 );
@@ -137,6 +146,8 @@ public class DataAccessorTest {
     	
     	Assert.assertNotNull( blobEntry );
     	Assert.assertEquals( name, blobEntry.getName() );
+    	Assert.assertEquals( type_2, blobEntry.getType() );
+    	Assert.assertEquals( size_2, blobEntry.getSize() );
     	Assert.assertEquals( source_2, blobEntry.getSource() );
     	Assert.assertEquals( blobId_2, blobEntry.getBlobId() );
     	Assert.assertEquals( creationDate_2, blobEntry.getCreationDate() );

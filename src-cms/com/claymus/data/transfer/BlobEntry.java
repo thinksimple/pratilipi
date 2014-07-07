@@ -10,11 +10,24 @@ public interface BlobEntry {
 		GOOGLE_CLOUD_STORAGE,
 	}
 
+	public enum Type {
+		TXT, PDF, DOC,
+	}
+
+	
 	Long getId();
 
 	String getName();
 	
 	void setName( String name );
+
+	Type getType();
+	
+	void setType( Type type );
+	
+	Long getSize();
+	
+	void setSize( Long size );
 	
 	Source getSource();
 	
