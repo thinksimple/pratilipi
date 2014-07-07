@@ -2,6 +2,9 @@ package com.pratilipi.data.access;
 
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
+import com.pratilipi.data.transfer.BookAuthor;
+import com.pratilipi.data.transfer.BookGenere;
+import com.pratilipi.data.transfer.BookTag;
 import com.pratilipi.data.transfer.Genere;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
@@ -42,5 +45,20 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	Tag getTag( Long id );
 
 	Tag createOrUpdateTag( Tag tag );
+	
+
+	BookAuthor newBookAuthor();
+
+	BookAuthor createOrUpdateBookAuthor( BookAuthor bookAuthor );
+	
+
+	BookGenere newBookGenere();
+
+	BookGenere createOrUpdateBookGenere( BookGenere bookGenere );
+	
+
+	BookTag newBookTag();
+
+	BookTag createOrUpdateBookTag( BookTag bookTag );
 	
 }

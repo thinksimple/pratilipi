@@ -1,12 +1,18 @@
 package com.pratilipi.data.access;
 
 import com.pratilipi.data.access.gae.AuthorEntity;
+import com.pratilipi.data.access.gae.BookAuthorEntity;
 import com.pratilipi.data.access.gae.BookEntity;
+import com.pratilipi.data.access.gae.BookGenereEntity;
+import com.pratilipi.data.access.gae.BookTagEntity;
 import com.pratilipi.data.access.gae.GenereEntity;
 import com.pratilipi.data.access.gae.PublisherEntity;
 import com.pratilipi.data.access.gae.TagEntity;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
+import com.pratilipi.data.transfer.BookAuthor;
+import com.pratilipi.data.transfer.BookGenere;
+import com.pratilipi.data.transfer.BookTag;
 import com.pratilipi.data.transfer.Genere;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
@@ -92,6 +98,39 @@ public class DataAccessorGAEImpl
 	@Override
 	public Tag createOrUpdateTag( Tag tag ) {
 		return createOrUpdateEntity( tag );
+	}
+
+	
+	@Override
+	public BookAuthor newBookAuthor() {
+		return new BookAuthorEntity();
+	}
+
+	@Override
+	public BookAuthor createOrUpdateBookAuthor( BookAuthor bookAuthor ) {
+		return createOrUpdateEntity( bookAuthor );
+	}
+
+	
+	@Override
+	public BookGenere newBookGenere() {
+		return new BookGenereEntity();
+	}
+
+	@Override
+	public BookGenere createOrUpdateBookGenere( BookGenere bookGenere ) {
+		return createOrUpdateEntity( bookGenere );
+	}
+
+
+	@Override
+	public BookTag newBookTag() {
+		return new BookTagEntity();
+	}
+
+	@Override
+	public BookTag createOrUpdateBookTag( BookTag bookTag ) {
+		return createOrUpdateEntity( bookTag );
 	}
 
 }
