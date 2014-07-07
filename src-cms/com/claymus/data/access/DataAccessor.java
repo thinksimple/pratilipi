@@ -1,5 +1,6 @@
 package com.claymus.data.access;
 
+import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 
@@ -20,6 +21,13 @@ public interface DataAccessor {
 
 	UserRole createOrUpdateUserRole( UserRole userRole );
 
+	
+	BlobEntry newBlobEntry();
+	
+	BlobEntry getBlobEntry( String name );
+	
+	BlobEntry createBlobEntry( BlobEntry blobEntry );
+	
 	
 	void destroy();
 	
