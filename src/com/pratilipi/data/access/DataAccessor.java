@@ -8,6 +8,7 @@ import com.pratilipi.data.transfer.BookTag;
 import com.pratilipi.data.transfer.Genere;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
+import com.pratilipi.data.transfer.UserBook;
 
 
 public interface DataAccessor extends com.claymus.data.access.DataAccessor {
@@ -61,4 +62,11 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	BookTag createOrUpdateBookTag( BookTag bookTag );
 	
+	
+	UserBook newUserBook();
+
+	UserBook getUserBook( String userId, String isbn );
+
+	UserBook createOrUpdateUserBook( UserBook userBook );
+
 }

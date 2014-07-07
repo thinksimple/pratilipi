@@ -8,6 +8,7 @@ import com.pratilipi.data.access.gae.BookTagEntity;
 import com.pratilipi.data.access.gae.GenereEntity;
 import com.pratilipi.data.access.gae.PublisherEntity;
 import com.pratilipi.data.access.gae.TagEntity;
+import com.pratilipi.data.access.gae.UserBookEntity;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.BookAuthor;
@@ -16,6 +17,7 @@ import com.pratilipi.data.transfer.BookTag;
 import com.pratilipi.data.transfer.Genere;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
+import com.pratilipi.data.transfer.UserBook;
 
 public class DataAccessorGAEImpl
 		extends com.claymus.data.access.DataAccessorGAEImpl
@@ -133,4 +135,21 @@ public class DataAccessorGAEImpl
 		return createOrUpdateEntity( bookTag );
 	}
 
+	
+	@Override
+	public UserBook newUserBook() {
+		return new UserBookEntity();
+	}
+
+	@Override
+	public UserBook getUserBook( String userId, String isbn ) {
+		return getEntity( UserBookEntity.class, userId + "-" + isbn );
+	}
+
+	@Override
+	public UserBook createOrUpdateUserBook( UserBook userBook ) {
+		( (UserBookEntity) userBook ).setId( userBook.getUserId() + "-" + userBook.getIsbn() );
+		return createOrUpdateEntity( userBook );
+	}
+	
 }

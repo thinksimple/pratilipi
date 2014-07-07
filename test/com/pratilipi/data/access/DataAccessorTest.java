@@ -15,6 +15,8 @@ import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genere;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
+import com.pratilipi.data.transfer.UserBook;
+import com.pratilipi.data.transfer.UserBook.ReviewState;
 
 public class DataAccessorTest {
 
@@ -195,6 +197,41 @@ public class DataAccessorTest {
     	Assert.assertNotNull( tag );
     	Assert.assertEquals( name, tag.getName() );
     	Assert.assertEquals( creationDate, tag.getCreationDate() );
+    	
+    	dataAccessor.destroy();
+    	
+    }
+    
+    @Test
+    public void testUserBook() {
+    	
+    	String userId = "userId";
+    	String isbn = "isbn";
+    	Long rating = 123L;
+    	ReviewState reviewState = ReviewState.APPROVED;
+    	Date reviewDate = new Date();
+    	
+    	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+    	
+    	UserBook userBook = dataAccessor.newUserBook();
+    	userBook.setUserId( userId );
+    	userBook.setIsbn( isbn );
+    	userBook.setRating( rating );
+    	userBook.setReviewState( reviewState );
+    	userBook.setReviewDate( reviewDate );
+    	
+    	userBook = dataAccessor.createOrUpdateUserBook( userBook );
+    	dataAccessor.destroy();
+    	
+    	dataAccessor = DataAccessorFactory.getDataAccessor();
+    	userBook = dataAccessor.getUserBook( userId, isbn );
+    	
+    	Assert.assertNotNull( userBook );
+    	Assert.assertEquals( userId, userBook.getUserId() );
+    	Assert.assertEquals( isbn, userBook.getIsbn() );
+    	Assert.assertEquals( rating, userBook.getRating() );
+    	Assert.assertEquals( reviewState, userBook.getReviewState() );
+    	Assert.assertEquals( reviewDate, userBook.getReviewDate() );
     	
     	dataAccessor.destroy();
     	
