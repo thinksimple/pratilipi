@@ -11,10 +11,11 @@ import com.claymus.data.access.gae.BlobEntryEntity;
 import com.claymus.data.access.gae.UserEntity;
 import com.claymus.data.access.gae.UserRoleEntity;
 import com.claymus.data.transfer.BlobEntry;
+import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 
-public class DataAccessorGAEImpl implements DataAccessor {
+public class DataAccessorGaeImpl implements DataAccessor {
 
 	private static final PersistenceManagerFactory pmfInstance =
 			JDOHelper.getPersistenceManagerFactory( "transactions-optional" );
@@ -23,7 +24,7 @@ public class DataAccessorGAEImpl implements DataAccessor {
 	protected final PersistenceManager pm;
 	
 	
-	public DataAccessorGAEImpl() {
+	public DataAccessorGaeImpl() {
 		this.pm = pmfInstance.getPersistenceManager();
 	}
 
@@ -88,7 +89,7 @@ public class DataAccessorGAEImpl implements DataAccessor {
 	@Override
 	public BlobEntry getBlobEntry( String name ) {
 		Query query =
-				new GAEQueryBuilder( pm.newQuery( BlobEntryEntity.class ) )
+				new GaeQueryBuilder( pm.newQuery( BlobEntryEntity.class ) )
 						.addFilter( "name", name )
 						.addOrdering( "creationDate", false )
 						.setRange( 0, 1 )
@@ -106,6 +107,24 @@ public class DataAccessorGAEImpl implements DataAccessor {
 	}
 
 	
+	@Override
+	public List<PageContent> getPageContentList( Long pageId ) {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( PageContent.class ) )
+						.addFilter( "pageId", pageId )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<PageContent> pageContentList = (List<PageContent>) query.execute( pageId );
+		return pageContentList.size() == 0 ? null : (List<PageContent>) pm.detachCopyAll( pageContentList );
+	}
+
+	@Override
+	public PageContent createOrUpdatePageContent( PageContent pageContent ) {
+		return createOrUpdateEntity( pageContent );
+	}
+
+
 	@Override
 	public void destroy() {
 		this.pm.close();

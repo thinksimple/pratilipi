@@ -19,8 +19,8 @@ import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserBook;
 
-public class DataAccessorGAEImpl
-		extends com.claymus.data.access.DataAccessorGAEImpl
+public class DataAccessorGaeImpl
+		extends com.claymus.data.access.DataAccessorGaeImpl
 		implements DataAccessor {
 
 	@Override

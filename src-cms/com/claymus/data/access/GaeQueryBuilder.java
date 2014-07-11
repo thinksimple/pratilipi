@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.jdo.Query;
 
-public class GAEQueryBuilder {
+public class GaeQueryBuilder {
 
 	public enum Operator {
 		EQUALS,
@@ -26,7 +26,7 @@ public class GAEQueryBuilder {
 	private final Map<String, Object> paramNameValueMap;
 	
 	
-	public GAEQueryBuilder( Query query ) {
+	public GaeQueryBuilder( Query query ) {
 		this.query = query;
 		this.filters = new LinkedList<>();
 		this.parameteres = new LinkedList<>();
@@ -35,15 +35,15 @@ public class GAEQueryBuilder {
 	}
 
 	
-	public GAEQueryBuilder addFilter( String param, Object value) {
+	public GaeQueryBuilder addFilter( String param, Object value) {
 		return addFilter( param, value, Operator.EQUALS );
 	}
 	
-	public GAEQueryBuilder addFilter( String param, Collection<?> value) {
+	public GaeQueryBuilder addFilter( String param, Collection<?> value) {
 		return addFilter( param, value, Operator.CONTAINS );
 	}
 	
-	public GAEQueryBuilder addFilter( String param, Object value, Operator operator ) {
+	public GaeQueryBuilder addFilter( String param, Object value, Operator operator ) {
 		String paramKey = param + "Param";
 		for( int i = 0; ; i++ ) {
 			if( paramNameValueMap.get( paramKey ) == null )
@@ -80,12 +80,12 @@ public class GAEQueryBuilder {
 		return this;
 	}
 
-	public GAEQueryBuilder addOrdering( String param, boolean asc ) {
+	public GaeQueryBuilder addOrdering( String param, boolean asc ) {
 		orderings.add( asc ? param : param + " DESC" );
 		return this;
 	}
 
-	public GAEQueryBuilder setRange( long start, long end ) {
+	public GaeQueryBuilder setRange( long start, long end ) {
 		query.setRange( start, end );
 		return this;
 	}
