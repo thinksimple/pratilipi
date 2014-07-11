@@ -2,13 +2,9 @@ package com.pratilipi.data.access;
 
 import java.util.Date;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
-import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.pratilipi.common.Language;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
@@ -18,21 +14,7 @@ import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserBook;
 import com.pratilipi.data.transfer.UserBook.ReviewState;
 
-public class DataAccessorTest {
-
-	private final LocalServiceTestHelper helper =
-			new LocalServiceTestHelper( new LocalDatastoreServiceTestConfig() );
-	
-	@Before
-    public void setUp() {
-        helper.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        helper.tearDown();
-    }
-	
+public abstract class DataAccessorTest {
 
     @Test
     public void testBook() {

@@ -2,9 +2,7 @@ package com.claymus.data.access;
 
 import java.util.Date;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.claymus.data.transfer.BlobEntry;
@@ -12,24 +10,8 @@ import com.claymus.data.transfer.BlobEntry.Source;
 import com.claymus.data.transfer.BlobEntry.Type;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
-import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
-import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
-public class DataAccessorTest {
-
-	private final LocalServiceTestHelper helper =
-			new LocalServiceTestHelper( new LocalDatastoreServiceTestConfig() );
-	
-	@Before
-    public void setUp() {
-        helper.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        helper.tearDown();
-    }
-	
+public abstract class DataAccessorTest {
 
     @Test
     public void testUser() {
