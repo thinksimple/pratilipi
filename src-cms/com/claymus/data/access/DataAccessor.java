@@ -1,7 +1,10 @@
 package com.claymus.data.access;
 
+import java.util.List;
+
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
+import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 
@@ -37,6 +40,11 @@ public interface DataAccessor {
 	Page createOrUpdatePage( Page page );
 	
 
+	List<PageContent> getPageContentList( Long pageId );
+
+	PageContent createOrUpdatePageContent( PageContent pageContent );
+	
+	
 	void destroy();
 	
 }

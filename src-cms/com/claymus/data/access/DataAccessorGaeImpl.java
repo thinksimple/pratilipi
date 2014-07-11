@@ -8,11 +8,13 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
 import com.claymus.data.access.gae.BlobEntryEntity;
+import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.access.gae.PageEntity;
 import com.claymus.data.access.gae.UserEntity;
 import com.claymus.data.access.gae.UserRoleEntity;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
+import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 
@@ -133,6 +135,24 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	
+	@Override
+	public List<PageContent> getPageContentList( Long pageId ) {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( PageContentEntity.class ) )
+						.addFilter( "pageId", pageId )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<PageContent> pageContentList = (List<PageContent>) query.execute( pageId );
+		return pageContentList.size() == 0 ? null : (List<PageContent>) pm.detachCopyAll( pageContentList );
+	}
+
+	@Override
+	public PageContent createOrUpdatePageContent( PageContent pageContent ) {
+		return createOrUpdateEntity( pageContent );
+	}
+
+
 	@Override
 	public void destroy() {
 		this.pm.close();
