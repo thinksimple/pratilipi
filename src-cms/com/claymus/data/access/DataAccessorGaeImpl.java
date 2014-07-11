@@ -8,10 +8,11 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
 import com.claymus.data.access.gae.BlobEntryEntity;
+import com.claymus.data.access.gae.PageEntity;
 import com.claymus.data.access.gae.UserEntity;
 import com.claymus.data.access.gae.UserRoleEntity;
 import com.claymus.data.transfer.BlobEntry;
-import com.claymus.data.transfer.PageContent;
+import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 
@@ -108,23 +109,30 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	
 	@Override
-	public List<PageContent> getPageContentList( Long pageId ) {
+	public Page newPage() {
+		return new PageEntity();
+	}
+	
+	@Override
+	public Page getPage( String uri ) {
 		Query query =
-				new GaeQueryBuilder( pm.newQuery( PageContent.class ) )
-						.addFilter( "pageId", pageId )
+				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
+						.addFilter( "uri", uri )
+						.addOrdering( "creationDate", false )
+						.setRange( 0, 1 )
 						.build();
 		
 		@SuppressWarnings("unchecked")
-		List<PageContent> pageContentList = (List<PageContent>) query.execute( pageId );
-		return pageContentList.size() == 0 ? null : (List<PageContent>) pm.detachCopyAll( pageContentList );
+		List<PageEntity> pageEntityList = (List<PageEntity>) query.execute( uri );
+		return pageEntityList.size() == 0 ? null : pm.detachCopy( pageEntityList.get( 0 ) );
 	}
-
+	
 	@Override
-	public PageContent createOrUpdatePageContent( PageContent pageContent ) {
-		return createOrUpdateEntity( pageContent );
+	public Page createOrUpdatePage( Page page ) {
+		return createOrUpdateEntity( page );
 	}
 
-
+	
 	@Override
 	public void destroy() {
 		this.pm.close();

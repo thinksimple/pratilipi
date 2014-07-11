@@ -8,6 +8,7 @@ import org.junit.Test;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.BlobEntry.Source;
 import com.claymus.data.transfer.BlobEntry.Type;
+import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 
@@ -138,4 +139,39 @@ public abstract class DataAccessorTest {
     	
     }
 	
+    @Test
+    public void testPage() {
+    	
+    	Long id;
+    	String uri = "uri";
+    	String title = "title";
+    	Long layoutId = 123L;
+    	Date creationDate = new Date();
+    	
+    	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+    	Page page = dataAccessor.newPage();
+    	page.setUri( uri );
+    	page.setTitle( title );
+    	page.setLayout( layoutId );
+    	page.setCreationDate( creationDate );
+    	
+    	page = dataAccessor.createOrUpdatePage( page );
+    	id = page.getId();
+    	dataAccessor.destroy();
+
+    	dataAccessor = DataAccessorFactory.getDataAccessor();
+    	page = dataAccessor.getPage( uri );
+    	
+    	Assert.assertNotNull( page );
+    	Assert.assertEquals( id, page.getId() );
+    	Assert.assertEquals( uri, page.getUri() );
+    	Assert.assertEquals( title, page.getTitle() );
+    	Assert.assertEquals( layoutId, page.getLayoutId() );
+    	Assert.assertEquals( creationDate, page.getCreationDate() );
+    	
+    	dataAccessor.destroy();
+    	
+    }
+    
 }
