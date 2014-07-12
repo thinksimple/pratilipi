@@ -1,4 +1,4 @@
-package com.claymus.module.pagecontent.html.gae;
+package com.claymus.module.pagecontent.html;
 
 import java.util.List;
 
@@ -9,8 +9,6 @@ import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.transfer.PageContent;
-import com.claymus.module.pagecontent.html.HtmlContent;
-import com.claymus.module.pagecontent.html.ModuleFactory;
 
 public abstract class HtmlContentModuleTest {
 
@@ -22,7 +20,7 @@ public abstract class HtmlContentModuleTest {
     	String position = "position";
     	String html = "html";
     	
-    	HtmlContent htmlContent = ModuleFactory.newHtmlContent();
+    	HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
     	htmlContent.setPageId( pageId );
     	htmlContent.setPosition( position );
     	htmlContent.setHtml( html );
@@ -47,5 +45,5 @@ public abstract class HtmlContentModuleTest {
     	dataAccessor.destroy();
     	
     }
-	
+    
 }
