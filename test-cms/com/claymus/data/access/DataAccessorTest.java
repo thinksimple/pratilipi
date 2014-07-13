@@ -9,6 +9,7 @@ import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.BlobEntry.Source;
 import com.claymus.data.transfer.BlobEntry.Type;
 import com.claymus.data.transfer.Page;
+import com.claymus.data.transfer.PageLayout;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 
@@ -174,4 +175,32 @@ public abstract class DataAccessorTest {
     	
     }
     
+    @Test
+    public void testPageLayout() {
+    	
+    	Long id;
+    	String name = "name";
+    	String template = "template";
+    	
+    	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+    	PageLayout pageLayout = dataAccessor.newPageLayout();
+    	pageLayout.setName( name );
+    	pageLayout.setTemplate( template );
+    	
+    	pageLayout = dataAccessor.createOrUpdatePageLayout( pageLayout );
+    	id = pageLayout.getId();
+    	dataAccessor.destroy();
+
+    	dataAccessor = DataAccessorFactory.getDataAccessor();
+    	pageLayout = dataAccessor.getPageLayout( id );
+    	
+    	Assert.assertNotNull( pageLayout );
+    	Assert.assertEquals( id, pageLayout.getId() );
+    	Assert.assertEquals( name, pageLayout.getName() );
+    	Assert.assertEquals( template, pageLayout.getTemplate() );
+    	
+    	dataAccessor.destroy();
+    	
+    }
 }

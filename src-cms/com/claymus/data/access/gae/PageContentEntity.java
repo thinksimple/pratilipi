@@ -9,7 +9,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.claymus.data.transfer.PageContent;
 
-@PersistenceCapable( table = "CLAYMUS_PAGE_CONTENT" )
+@PersistenceCapable( table = "PAGE_CONTENT" )
 @Discriminator( column = "TYPE", strategy = DiscriminatorStrategy.CLASS_NAME )
 public abstract class PageContentEntity implements PageContent {
 

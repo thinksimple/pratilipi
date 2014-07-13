@@ -10,11 +10,13 @@ import javax.jdo.Query;
 import com.claymus.data.access.gae.BlobEntryEntity;
 import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.access.gae.PageEntity;
+import com.claymus.data.access.gae.PageLayoutEntity;
 import com.claymus.data.access.gae.UserEntity;
 import com.claymus.data.access.gae.UserRoleEntity;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
+import com.claymus.data.transfer.PageLayout;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 
@@ -150,6 +152,22 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public PageContent createOrUpdatePageContent( PageContent pageContent ) {
 		return createOrUpdateEntity( pageContent );
+	}
+
+
+	@Override
+	public PageLayout newPageLayout() {
+		return new PageLayoutEntity();
+	}
+
+	@Override
+	public PageLayout getPageLayout( Long id ) {
+		return getEntity( PageLayoutEntity.class, id );
+	}
+
+	@Override
+	public PageLayout createOrUpdatePageLayout( PageLayout pageLayout ) {
+		return createOrUpdateEntity( pageLayout );
 	}
 
 

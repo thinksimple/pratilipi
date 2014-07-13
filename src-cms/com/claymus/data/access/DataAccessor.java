@@ -5,6 +5,7 @@ import java.util.List;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
+import com.claymus.data.transfer.PageLayout;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 
@@ -44,6 +45,13 @@ public interface DataAccessor {
 
 	PageContent createOrUpdatePageContent( PageContent pageContent );
 	
+	
+	PageLayout newPageLayout();
+	
+	PageLayout getPageLayout( Long id );
+	
+	PageLayout createOrUpdatePageLayout( PageLayout pageLayout );
+
 	
 	void destroy();
 	

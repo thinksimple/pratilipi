@@ -9,11 +9,11 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.claymus.data.transfer.Page;
 
-@PersistenceCapable( table = "CLAYMUS_PAGE" )
+@PersistenceCapable( table = "PAGE" )
 public class PageEntity implements Page {
 
 	@PrimaryKey
-	@Persistent( column = "CLAYMUS_PAGE_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
+	@Persistent( column = "PAGE_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
 	@Persistent( column = "URI" )
