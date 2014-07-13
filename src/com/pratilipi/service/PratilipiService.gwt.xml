@@ -1,0 +1,4 @@
+<module rename-to='service_pratilipi'>
+  <source path='client'/>
+  <source path='shared'/>
+</module>
