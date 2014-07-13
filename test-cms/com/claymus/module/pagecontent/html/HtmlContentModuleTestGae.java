@@ -1,9 +1,8 @@
-package com.claymus.module.pagecontent.html.gae;
+package com.claymus.module.pagecontent.html;
 
 import org.junit.After;
 import org.junit.Before;
 
-import com.claymus.module.pagecontent.html.HtmlContentModuleTest;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
