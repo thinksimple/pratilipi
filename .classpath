@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src-cms"/>
-	<classpathentry kind="src" path="test-cms"/>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" output="war/WEB-INF/classes-cms" path="src-cms"/>
+	<classpathentry kind="src" output="test-cms-classes" path="test-cms"/>
+	<classpathentry kind="src" output="war/WEB-INF/classes" path="src"/>
 	<classpathentry kind="src" output="test-classes" path="test"/>
 	<classpathentry kind="lib" path="/Users/guptapr/Documents/appengine-java-sdk-1.9.6/lib/testing/appengine-testing.jar"/>
 	<classpathentry kind="lib" path="/Users/guptapr/Documents/appengine-java-sdk-1.9.6/lib/impl/appengine-api-stubs.jar"/>
@@ -12,8 +12,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
