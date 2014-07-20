@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="war/WEB-INF/classes-cms" path="src-cms"/>
-	<classpathentry kind="src" output="test-cms-classes" path="test-cms"/>
-	<classpathentry kind="src" output="war/WEB-INF/classes" path="src"/>
+	<classpathentry kind="src" path="src-cms"/>
+	<classpathentry kind="src" output="test-classes" path="test-cms"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" output="test-classes" path="test"/>
 	<classpathentry kind="lib" path="/Users/guptapr/Documents/appengine-java-sdk-1.9.6/lib/testing/appengine-testing.jar"/>
 	<classpathentry kind="lib" path="/Users/guptapr/Documents/appengine-java-sdk-1.9.6/lib/impl/appengine-api-stubs.jar"/>
