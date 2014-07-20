@@ -1,5 +1,10 @@
 package com.pratilipi.data.access;
 
+import java.util.List;
+
+import javax.jdo.Query;
+
+import com.claymus.data.access.GaeQueryBuilder;
 import com.pratilipi.data.access.gae.AuthorEntity;
 import com.pratilipi.data.access.gae.BookAuthorEntity;
 import com.pratilipi.data.access.gae.BookEntity;
@@ -33,6 +38,17 @@ public class DataAccessorGaeImpl
 		return getEntity( BookEntity.class, isbn );
 	}
 
+	@Override
+	public List<Book> getBookList() {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( BookEntity.class ) )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<Book> bookEntityList = (List<Book>) query.execute();
+		return (List<Book>) pm.detachCopyAll( bookEntityList );
+	}
+	
 	@Override
 	public Book createOrUpdateBook( Book book ) {
 		return createOrUpdateEntity( book );

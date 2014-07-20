@@ -1,5 +1,7 @@
 package com.pratilipi.data.access;
 
+import java.util.List;
+
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.BookAuthor;
@@ -16,6 +18,8 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	Book newBook();
 
 	Book getBook( String isbn );
+	
+	List<Book> getBookList();
 
 	Book createOrUpdateBook( Book book );
 
