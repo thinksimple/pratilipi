@@ -21,6 +21,7 @@ import com.claymus.module.pagecontent.PageContentProcessor;
 import com.claymus.module.pagecontent.PageContentRegistry;
 import com.claymus.module.pagecontent.html.HtmlContent;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
+import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 
 import freemarker.template.Configuration;
@@ -36,6 +37,7 @@ public class Main extends HttpServlet {
 			HttpServletResponse response ) throws IOException {
 
 		PageContentRegistry.register( HtmlContentFactory.class );
+		PageContentRegistry.register( BookDataInputFactory.class );
 		PageContentRegistry.register( BookListFactory.class );
 		
 		PrintWriter out = response.getWriter();
@@ -199,6 +201,7 @@ public class Main extends HttpServlet {
 		
 		List<PageContent> pageContentList = new LinkedList<>();
 		pageContentList.add( htmlContent );
+		pageContentList.add( BookDataInputFactory.newBookDataInput() );
 		pageContentList.add( BookListFactory.newBookList() );
 		return pageContentList;
 		
