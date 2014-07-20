@@ -1,7 +1,7 @@
 package com.claymus.data.transfer;
 
 
-public interface UserRole {
+public interface Role {
 
 	Long getId();
 

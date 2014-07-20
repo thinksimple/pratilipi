@@ -11,7 +11,7 @@ import com.claymus.data.transfer.BlobEntry.Type;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageLayout;
 import com.claymus.data.transfer.User;
-import com.claymus.data.transfer.UserRole;
+import com.claymus.data.transfer.Role;
 
 public abstract class DataAccessorTest {
 
@@ -60,22 +60,22 @@ public abstract class DataAccessorTest {
     }
     
     @Test
-    public void testUserRole() {
+    public void testRole() {
     	
     	Long id = null;
     	String name = "name";
     	
     	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
     	
-    	UserRole userRole = dataAccessor.newUserRole();
+    	Role userRole = dataAccessor.newRole();
     	userRole.setName( name );
     	
-    	userRole = dataAccessor.createOrUpdateUserRole( userRole );
+    	userRole = dataAccessor.createOrUpdateRole( userRole );
     	id = userRole.getId();
     	dataAccessor.destroy();
     	
     	dataAccessor = DataAccessorFactory.getDataAccessor();
-    	userRole = dataAccessor.getUserRole( id );
+    	userRole = dataAccessor.getRole( id );
     	
     	Assert.assertNotNull( userRole );
     	Assert.assertEquals( id, userRole.getId() );

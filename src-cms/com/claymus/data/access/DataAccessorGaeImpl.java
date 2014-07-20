@@ -12,13 +12,13 @@ import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.access.gae.PageEntity;
 import com.claymus.data.access.gae.PageLayoutEntity;
 import com.claymus.data.access.gae.UserEntity;
-import com.claymus.data.access.gae.UserRoleEntity;
+import com.claymus.data.access.gae.RoleEntity;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
 import com.claymus.data.transfer.User;
-import com.claymus.data.transfer.UserRole;
+import com.claymus.data.transfer.Role;
 
 public class DataAccessorGaeImpl implements DataAccessor {
 
@@ -71,18 +71,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	
 	@Override
-	public UserRole newUserRole() {
-		return new UserRoleEntity();
+	public Role newRole() {
+		return new RoleEntity();
 	}
 
 	@Override
-	public UserRole getUserRole( Long id ) {
-		return getEntity( UserRoleEntity.class, id );
+	public Role getRole( Long id ) {
+		return getEntity( RoleEntity.class, id );
 	}
 
 	@Override
-	public UserRole createOrUpdateUserRole( UserRole userRole ) {
-		return createOrUpdateEntity( userRole );
+	public Role createOrUpdateRole( Role role ) {
+		return createOrUpdateEntity( role );
 	}
 
 

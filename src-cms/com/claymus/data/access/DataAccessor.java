@@ -7,7 +7,7 @@ import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
 import com.claymus.data.transfer.User;
-import com.claymus.data.transfer.UserRole;
+import com.claymus.data.transfer.Role;
 
 public interface DataAccessor {
 
@@ -20,11 +20,11 @@ public interface DataAccessor {
 	User updateUser( User user );
 
 	
-	UserRole newUserRole();
+	Role newRole();
 
-	UserRole getUserRole( Long id );
+	Role getRole( Long id );
 
-	UserRole createOrUpdateUserRole( UserRole userRole );
+	Role createOrUpdateRole( Role role );
 
 	
 	BlobEntry newBlobEntry();
