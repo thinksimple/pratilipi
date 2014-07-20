@@ -127,8 +127,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 						.build();
 		
 		@SuppressWarnings("unchecked")
-		List<PageEntity> pageEntityList = (List<PageEntity>) query.execute( uri );
-		return pageEntityList.size() == 0 ? null : pm.detachCopy( pageEntityList.get( 0 ) );
+		List<Page> pageList = (List<Page>) query.execute( uri );
+		return pageList.size() == 0 ? null : pm.detachCopy( pageList.get( 0 ) );
 	}
 	
 	@Override

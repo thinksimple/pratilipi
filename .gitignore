@@ -4,4 +4,5 @@
 /war/WEB-INF/classes
 /war/WEB-INF/deploy
 /war/WEB-INF/lib
+/war/pagecontent_bookdatainput
 /war/pagecontent_booklist
