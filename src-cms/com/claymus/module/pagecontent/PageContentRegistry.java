@@ -11,7 +11,7 @@ import com.claymus.data.transfer.PageContent;
 public final class PageContentRegistry {
 
 	private static final Logger logger = 
-			Logger.getLogger( PageContentFactory.class.getName() );
+			Logger.getLogger( PageContentRegistry.class.getName() );
 
 	
 	private static final Map<
