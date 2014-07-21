@@ -7,14 +7,14 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.claymus.data.transfer.PageWidget;
+import com.claymus.data.transfer.WebsiteWidget;
 
-@PersistenceCapable( table = "PAGE_WIDGET" )
+@PersistenceCapable( table = "WEBSITE_WIDGET" )
 @Discriminator( column = "TYPE", strategy = DiscriminatorStrategy.CLASS_NAME )
-public abstract class PageWidgetEntity implements PageWidget {
+public abstract class WebsiteWidgetEntity implements WebsiteWidget {
 
 	@PrimaryKey
-	@Persistent( column = "PAGE_WIDGET_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
+	@Persistent( column = "WEBSITE_WIDGET_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
 	@Persistent( column = "POSITION" )

@@ -1,6 +1,6 @@
 package com.claymus.data.transfer;
 
-public interface PageWidget {
+public interface WebsiteWidget {
 
 	Long getId();
 
