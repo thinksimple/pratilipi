@@ -19,7 +19,6 @@ import com.claymus.data.transfer.PageWidget;
 import com.claymus.data.transfer.WebsiteLayout;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.claymus.module.pagecontent.PageContentRegistry;
-import com.claymus.module.pagecontent.html.HtmlContent;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
@@ -29,7 +28,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 @SuppressWarnings("serial")
-public class Main extends HttpServlet {
+public class BookDataServlet extends HttpServlet {
 	
 	@Override
 	public void doGet(
@@ -166,43 +165,8 @@ public class Main extends HttpServlet {
 	
 	private List<PageContent> getPageContentList() {
 		
-		HtmlContent htmlContent = new HtmlContent() {
-
-			@Override
-			public Long getId() {
-				return null;
-			}
-
-			@Override
-			public Long getPageId() {
-				return null;
-			}
-
-			@Override
-			public void setPageId( Long pageId ) { }
-
-			@Override
-			public String getPosition() {
-				return null;
-			}
-
-			@Override
-			public void setPosition( String position ) { }
-
-			@Override
-			public String getHtml() {
-				return "Hello, World !";
-			}
-
-			@Override
-			public void setHtml( String html ) { }
-			
-		};
-		
 		List<PageContent> pageContentList = new LinkedList<>();
-		pageContentList.add( htmlContent );
 		pageContentList.add( BookDataInputFactory.newBookDataInput() );
-		pageContentList.add( BookListFactory.newBookList() );
 		return pageContentList;
 		
 	}

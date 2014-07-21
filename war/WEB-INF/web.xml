@@ -14,6 +14,16 @@
     <servlet-name>PratilipiService</servlet-name>
     <url-pattern>/pratilipiservice</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>BookDataServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.BookDataServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>BookDataServlet</servlet-name>
+    <url-pattern>/_ah/bookdata</url-pattern>
+  </servlet-mapping>
    
   <servlet>
     <servlet-name>MainServlet</servlet-name>
