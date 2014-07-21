@@ -42,7 +42,7 @@ public final class WebsiteWidgetRegistry {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <P extends WebsiteWidget> WebsiteWidgetProcessor<P> getPageContentProcessor(
+	public static <P extends WebsiteWidget> WebsiteWidgetProcessor<P> getWebsiteWidgetProcessor(
 			Class<P> pageContentClass ) {
 		
 		if( pageContentClass.isInterface() )

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
-import com.claymus.data.transfer.PageWidget;
+import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.data.transfer.WebsiteLayout;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.claymus.module.pagecontent.PageContentRegistry;
@@ -43,7 +43,7 @@ public class BookDataServlet extends HttpServlet {
 		
 		Page page = getPage();
 		List<PageContent> pageContentList = getPageContentList();
-		List<PageWidget> pageWidgetList = getPageWidgetList();
+		List<WebsiteWidget> pageWidgetList = getPageWidgetList();
 		PageLayout pageLayout = getPageLayout();
 		WebsiteLayout websiteLayout = getWebsiteLayout();
 		
@@ -55,7 +55,7 @@ public class BookDataServlet extends HttpServlet {
 	private void renderPage(
 			Page page,
 			List<PageContent> pageContentList,
-			List<PageWidget> pageWidgetList,
+			List<WebsiteWidget> pageWidgetList,
 			PageLayout pageLayout,
 			WebsiteLayout websiteLayout,
 			PrintWriter out
@@ -171,7 +171,7 @@ public class BookDataServlet extends HttpServlet {
 		
 	}
 
-	private List<PageWidget> getPageWidgetList() {
+	private List<WebsiteWidget> getPageWidgetList() {
 		return null;
 	}
 

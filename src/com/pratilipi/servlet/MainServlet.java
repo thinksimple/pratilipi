@@ -15,11 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
-import com.claymus.data.transfer.PageWidget;
 import com.claymus.data.transfer.WebsiteLayout;
+import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.claymus.module.pagecontent.PageContentRegistry;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
+import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
+import com.claymus.module.websitewidget.WebsiteWidgetRegistry;
+import com.claymus.module.websitewidget.user.UserInfoFactory;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 
@@ -38,16 +41,17 @@ public class MainServlet extends HttpServlet {
 		PageContentRegistry.register( HtmlContentFactory.class );
 		PageContentRegistry.register( BookDataInputFactory.class );
 		PageContentRegistry.register( BookListFactory.class );
+		WebsiteWidgetRegistry.register( UserInfoFactory.class );
 		
 		PrintWriter out = response.getWriter();
 		
 		Page page = getPage();
 		List<PageContent> pageContentList = getPageContentList();
-		List<PageWidget> pageWidgetList = getPageWidgetList();
+		List<WebsiteWidget> websiteWidgetList = getWebsiteWidgetList();
 		PageLayout pageLayout = getPageLayout();
 		WebsiteLayout websiteLayout = getWebsiteLayout();
 		
-		renderPage( page, pageContentList, pageWidgetList, pageLayout, websiteLayout, out );
+		renderPage( page, pageContentList, websiteWidgetList, pageLayout, websiteLayout, out );
 		
 		out.close();
 	}
@@ -55,7 +59,7 @@ public class MainServlet extends HttpServlet {
 	private void renderPage(
 			Page page,
 			List<PageContent> pageContentList,
-			List<PageWidget> pageWidgetList,
+			List<WebsiteWidget> websiteWidgetList,
 			PageLayout pageLayout,
 			WebsiteLayout websiteLayout,
 			PrintWriter out
@@ -93,6 +97,16 @@ public class MainServlet extends HttpServlet {
 		out.println( "</noscript>" );
 		
 		
+		List<String> websiteWidgetHtmlList = new LinkedList<>();
+		for( WebsiteWidget websiteWidget : websiteWidgetList ) {
+			@SuppressWarnings("rawtypes")
+			WebsiteWidgetProcessor websiteWidgetProcessor = 
+					WebsiteWidgetRegistry.getWebsiteWidgetProcessor( websiteWidget.getClass() );
+			@SuppressWarnings("unchecked")
+			String websiteWidgetHtml = websiteWidgetProcessor.getHtml( websiteWidget );
+			websiteWidgetHtmlList.add( websiteWidgetHtml );
+		}
+		
 		List<String> pageContentHtmlList = new LinkedList<>();
 		for( PageContent pageContent : pageContentList ) {
 			@SuppressWarnings("rawtypes")
@@ -104,10 +118,14 @@ public class MainServlet extends HttpServlet {
 		}
 		
 		Map<String, Object> input = new HashMap<String, Object>();
+		input.put( "websiteWidgetList", websiteWidgetHtmlList );
 		input.put( "pageContentList", pageContentHtmlList );
 		
 		try {
-			Template template = new Template( null, pageLayout.getTemplate(), new Configuration() );
+			Template template = new Template( null, websiteLayout.getTemplate(), new Configuration() );
+			template.process( input, out );
+
+			template = new Template( null, pageLayout.getTemplate(), new Configuration() );
 			template.process( input, out );
 		} catch ( IOException | TemplateException e ) {
 			e.printStackTrace();
@@ -169,8 +187,10 @@ public class MainServlet extends HttpServlet {
 		return pageContentList;
 	}
 
-	private List<PageWidget> getPageWidgetList() {
-		return null;
+	private List<WebsiteWidget> getWebsiteWidgetList() {
+		List<WebsiteWidget> websiteWidgetList = new LinkedList<>();
+		websiteWidgetList.add( UserInfoFactory.newUserInfo() );
+		return websiteWidgetList;
 	}
 
 	private PageLayout getPageLayout() {
@@ -223,7 +243,9 @@ public class MainServlet extends HttpServlet {
 
 			@Override
 			public String getTemplate() {
-				return null;
+				return "<#list websiteWidgetList as websiteWidget>"
+						+ "${websiteWidget}"
+						+ "</#list>";
 			}
 
 			@Override
