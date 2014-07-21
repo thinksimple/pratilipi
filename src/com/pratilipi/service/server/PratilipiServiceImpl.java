@@ -3,6 +3,8 @@ package com.pratilipi.service.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.claymus.ClaymusHelper;
+import com.claymus.client.InsufficientAccessException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -26,8 +28,11 @@ public class PratilipiServiceImpl
 	}
 
 	@Override
-	public AddBookResponse addBook( AddBookRequest request ) {
+	public AddBookResponse addBook( AddBookRequest request ) throws InsufficientAccessException {
 		
+		if( ! ClaymusHelper.isUserAdmin() )
+			throw new InsufficientAccessException();
+
 		BookData bookData = request.getBook();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

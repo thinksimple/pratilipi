@@ -9,7 +9,7 @@ public class BookDataInputProcessor implements PageContentProcessor<BookDataInpu
 		return "<script "
 				+ "type='text/javascript' "
 				+ "language='javascript' "
-				+ "src='pagecontent_bookdatainput/pagecontent_bookdatainput.nocache.js'"
+				+ "src='/pagecontent_bookdatainput/pagecontent_bookdatainput.nocache.js'"
 				+ "></script>"
 				+ "<div id='Pratilipi-BookDataInput'></div>";
 	}

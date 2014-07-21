@@ -8,8 +8,7 @@ import com.pratilipi.service.shared.GetBookListResponse;
 
 public interface PratilipiServiceAsync {
 	
-	void greetServer( String input, AsyncCallback<String> callback )
-			throws IllegalArgumentException;
+	void greetServer( String input, AsyncCallback<String> callback );
 	
 	void addBook(
 			AddBookRequest request,

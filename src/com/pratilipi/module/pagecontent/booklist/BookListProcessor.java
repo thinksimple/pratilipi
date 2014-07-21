@@ -9,7 +9,7 @@ public class BookListProcessor implements PageContentProcessor<BookList> {
 		return "<script "
 				+ "type='text/javascript' "
 				+ "language='javascript' "
-				+ "src='pagecontent_booklist/pagecontent_booklist.nocache.js'"
+				+ "src='/pagecontent_booklist/pagecontent_booklist.nocache.js'"
 				+ "></script>"
 				+ "<div id='Pratilipi-BookList'></div>";
 	}

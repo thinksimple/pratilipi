@@ -1,0 +1,4 @@
+<module rename-to='claymus'>
+  <source path='client'/>
+  <source path='shared'/>
+</module>
