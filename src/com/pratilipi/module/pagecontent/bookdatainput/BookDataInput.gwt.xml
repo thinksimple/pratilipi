@@ -6,6 +6,7 @@
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='com.claymus.Claymus'/>
   <inherits name='com.pratilipi.service.PratilipiService'/>
+  <inherits name='com.pratilipi.module.validateinput.ValidateInput'/>
 
   <entry-point class='com.pratilipi.module.pagecontent.bookdatainput.client.BookDataInput'/>
 
