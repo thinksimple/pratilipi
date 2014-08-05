@@ -2,6 +2,8 @@ package com.pratilipi.module.pagecontent.bookdatainput.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.regexp.shared.MatchResult;
@@ -9,6 +11,7 @@ import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.module.validateinput.client.ValidateInputImpl;
 import com.pratilipi.service.client.PratilipiService;
@@ -21,6 +24,7 @@ public class BookDataInput implements EntryPoint {
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
 	private ValidateInputImpl validator;
+	//private FormPanel form = new FormPanel();
 	
 	public void onModuleLoad() {
 		
@@ -55,8 +59,12 @@ public class BookDataInput implements EntryPoint {
 			
 		} );
 		
+		//form.add(bookDataInputView);
+		//form.add(button);
+		
 		RootPanel.get( "Pratilipi-BookDataInput" ).add( bookDataInputView );
 		RootPanel.get( "Pratilipi-BookDataInput" ).add( button );
+		//RootPanel.get( "Pratilipi-BookDataInput" ).add(form);
 		
 	}
 	
