@@ -74,22 +74,22 @@ public class BookDataInputViewImpl extends BookDataInputView {
 	
 	//Error styling is not working for some reason.
 	public void setIsbnErrorStyle(){
-		isbnInput.getElement().setPropertyString("border", "1px solid #FF0000");
+		isbnInput.getElement().setAttribute("style", "border:1px solid #FF0000");
 	}
 	
 	public void setTitleErrorStyle(){
-		titleInput.getElement().setPropertyString("border", "1px solid #FF0000");
+		titleInput.getElement().setAttribute("style", "border:1px solid #FF0000");
 	}
 	
 	public void setAuthorErrorStyle(){
-		authorInput.getElement().setPropertyString("border", "1px solid #FF0000");
+		authorInput.getElement().setAttribute("style", "border:1px solid #FF0000");
 	}
 	
 	public void setPublisherErrorStyle(){
-		publisherInput.getElement().setPropertyString("border", "1px solid #FF0000");
+		publisherInput.getElement().setAttribute("style", "border:1px solid #FF0000");
 	}
 	
 	public void setLanguageErrorStyle(){
-		languageInput.getElement().setPropertyString("border", "1px solid #FF0000");
+		languageInput.getElement().setAttribute("style", "border:1px solid #FF0000");
 	}
 }
