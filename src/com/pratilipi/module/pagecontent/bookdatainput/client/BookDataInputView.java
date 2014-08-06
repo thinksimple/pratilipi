@@ -9,4 +9,23 @@ public abstract class BookDataInputView extends Composite {
 	
 	public abstract BookData getBook();
 	
+	public abstract String getIsbn();
+	
+	public abstract String getTitle();
+	
+	public abstract String getAuthor();
+	
+	public abstract String getPublisher();
+	
+	public abstract String getLanguage();
+	
+	public abstract void setIsbnErrorStyle();
+	
+	public abstract void setTitleErrorStyle();
+	
+	public abstract void setAuthorErrorStyle();
+	
+	public abstract void setPublisherErrorStyle();
+	
+	public abstract void setLanguageErrorStyle();
 }

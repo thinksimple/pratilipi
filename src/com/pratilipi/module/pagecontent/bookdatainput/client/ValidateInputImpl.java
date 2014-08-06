@@ -1,12 +1,11 @@
-package com.pratilipi.module.validateinput.client;
+package com.pratilipi.module.pagecontent.bookdatainput.client;
 
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
-import com.pratilipi.module.pagecontent.bookdatainput.client.BookDataInputViewImpl;
 
 public class ValidateInputImpl{
 	
-	private BookDataInputViewImpl book;
+	private BookDataInputView book;
 	//Regular expression for numbers.
 	private String numPattern = new String("^[0-9]+$");
 	private RegExp numExp = RegExp.compile(numPattern);
@@ -27,7 +26,7 @@ public class ValidateInputImpl{
 	public ValidateInputImpl(){}
 
 	//overload constructor to validate objects of other classes.
-	public ValidateInputImpl(BookDataInputViewImpl book){
+	public ValidateInputImpl(BookDataInputView book){
 		this.book = book;
 	}
 	

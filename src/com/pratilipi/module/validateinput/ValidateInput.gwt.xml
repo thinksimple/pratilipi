@@ -1,4 +1,0 @@
-<module rename-to='validateinput'>
-  <source path='client'/>
-  <source path='shared'/>
-</module>
