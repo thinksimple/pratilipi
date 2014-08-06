@@ -4,9 +4,9 @@
 	<classpathentry kind="src" output="test-classes" path="test-cms"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" output="test-classes" path="test"/>
-	<classpathentry kind="lib" path="C:/Users/antsh_000/Documents/gwt-2.6.1/gwt-codeserver.jar"/>
-	<classpathentry kind="lib" path="C:/Users/antsh_000/Documents/appengine-java-sdk-1.9.8/lib/testing/appengine-testing.jar"/>
-	<classpathentry kind="lib" path="C:/Users/antsh_000/Documents/appengine-java-sdk-1.9.8/lib/impl/appengine-api-stubs.jar"/>
+	<classpathentry kind="var" path="ECLIPSE_HOME/plugins/com.google.gwt.eclipse.sdkbundle_2.6.1/gwt-2.6.1/gwt-codeserver.jar"/>
+	<classpathentry kind="var" path="ECLIPSE_HOME/plugins/com.google.appengine.eclipse.sdkbundle_1.9.8/appengine-java-sdk-1.9.8/lib/testing/appengine-testing.jar"/>
+	<classpathentry kind="var" path="ECLIPSE_HOME/plugins/com.google.appengine.eclipse.sdkbundle_1.9.8/appengine-java-sdk-1.9.8/lib/impl/appengine-api-stubs.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/freemarker-gae-2.3.20.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://freemarker.org/docs/api/"/>
