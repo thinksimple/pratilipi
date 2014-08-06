@@ -28,7 +28,7 @@ public class BookDetailView extends Composite {
 		
 		//Close Button
 		HorizontalPanel closePanel = new HorizontalPanel();
-		this.closeButton = new Image("/Images/closebutton.jpg");
+		this.closeButton = new Image("/images/closebutton.jpg");
 		closeButton.addClickHandler(new ClickHandler(){
 
 			@Override
