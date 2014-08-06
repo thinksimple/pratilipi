@@ -1,10 +1,10 @@
 package com.pratilipi.service.shared.data;
 
-import java.io.Serializable;
 import java.util.Date;
 
-@SuppressWarnings("serial")
-public class BookData implements Serializable {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class BookData implements IsSerializable {
 
 	private String isbn;
 	

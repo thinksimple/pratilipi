@@ -1,11 +1,9 @@
 package com.pratilipi.service.shared;
 
-import java.io.Serializable;
-
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.pratilipi.service.shared.data.BookData;
 
-@SuppressWarnings("serial")
-public class AddBookResponse implements Serializable {
+public class AddBookResponse implements IsSerializable {
 
 	private BookData book;
 	
