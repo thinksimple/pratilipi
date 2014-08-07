@@ -9,18 +9,24 @@ import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
 import com.pratilipi.service.shared.GetBookListResponse;
+import com.pratilipi.service.shared.GetLanguageListRequest;
+import com.pratilipi.service.shared.GetLanguageListResponse;
 
 @RemoteServiceRelativePath("../pratilipiservice")
 public interface PratilipiService extends RemoteService {
 	
 	String greetServer( String name ) throws IllegalArgumentException;
 
+	
 	AddBookResponse addBook( AddBookRequest request )
 			throws InsufficientAccessException;
 
 	GetBookListResponse getBookList( GetBookListRequest request );
 
+
 	AddLanguageResponse addLanguage( AddLanguageRequest request )
 			throws InsufficientAccessException;
+
+	GetLanguageListResponse getLanguageList( GetLanguageListRequest request );
 
 }

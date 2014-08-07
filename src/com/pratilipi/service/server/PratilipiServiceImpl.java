@@ -19,6 +19,8 @@ import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
 import com.pratilipi.service.shared.GetBookListResponse;
+import com.pratilipi.service.shared.GetLanguageListRequest;
+import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.LanguageData;
 
@@ -64,7 +66,7 @@ public class PratilipiServiceImpl
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Book> bookList = dataAccessor.getBookList();
 		
-		ArrayList<BookData> bookDataList = new ArrayList<BookData>( bookList.size() );
+		ArrayList<BookData> bookDataList = new ArrayList<>( bookList.size() );
 		for( Book book : bookList ) {
 			Language language = dataAccessor.getLanguage( book.getLanguageId() );
 			Author author = dataAccessor.getAuthor( book.getAuthorId() );
@@ -91,6 +93,7 @@ public class PratilipiServiceImpl
 		return new GetBookListResponse( bookDataList );
 	}
 
+	
 	@Override
 	public AddLanguageResponse addLanguage( AddLanguageRequest request )
 			throws InsufficientAccessException {
@@ -109,6 +112,26 @@ public class PratilipiServiceImpl
 		dataAccessor.destroy();
 		
 		return new AddLanguageResponse( language.getId() );
+	}
+
+	@Override
+	public GetLanguageListResponse getLanguageList( GetLanguageListRequest request ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<Language> languageList = dataAccessor.getLanguageList();
+		
+		ArrayList<LanguageData> languageDataList = new ArrayList<>( languageList.size() );
+		for( Language language : languageList ) {
+			LanguageData languageData = new LanguageData();
+			languageData.setId( language.getId() );
+			languageData.setName( language.getName() );
+			
+			languageDataList.add( languageData );
+		}
+
+		dataAccessor.destroy();
+		
+		return new GetLanguageListResponse( languageDataList );
 	}
 
 }

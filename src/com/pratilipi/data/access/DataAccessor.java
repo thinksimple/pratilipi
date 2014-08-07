@@ -29,6 +29,8 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	Language getLanguage( Long id );
 
+	List<Language> getLanguageList();
+
 	Language createOrUpdateLanguage( Language language );
 
 	

@@ -7,10 +7,13 @@ import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
 import com.pratilipi.service.shared.GetBookListResponse;
+import com.pratilipi.service.shared.GetLanguageListRequest;
+import com.pratilipi.service.shared.GetLanguageListResponse;
 
 public interface PratilipiServiceAsync {
 	
 	void greetServer( String input, AsyncCallback<String> callback );
+	
 	
 	void addBook(
 			AddBookRequest request,
@@ -20,8 +23,13 @@ public interface PratilipiServiceAsync {
 			GetBookListRequest request,
 			AsyncCallback<GetBookListResponse> callback );
 
+	
 	void addLanguage(
 			AddLanguageRequest request,
 			AsyncCallback<AddLanguageResponse> callback );
+
+	void getLanguageList(
+			GetLanguageListRequest request,
+			AsyncCallback<GetLanguageListResponse> callback );
 
 }

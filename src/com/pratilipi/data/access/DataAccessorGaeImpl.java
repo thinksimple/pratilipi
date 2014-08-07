@@ -68,6 +68,17 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
+	public List<Language> getLanguageList() {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( LanguageEntity.class ) )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<Language> languageEntityList = (List<Language>) query.execute();
+		return (List<Language>) pm.detachCopyAll( languageEntityList );
+	}
+	
+	@Override
 	public Language createOrUpdateLanguage( Language language ) {
 		return createOrUpdateEntity( language );
 	}
