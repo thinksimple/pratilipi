@@ -8,6 +8,7 @@ import com.pratilipi.data.transfer.BookAuthor;
 import com.pratilipi.data.transfer.BookGenere;
 import com.pratilipi.data.transfer.BookTag;
 import com.pratilipi.data.transfer.Genere;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserBook;
@@ -22,6 +23,13 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	List<Book> getBookList();
 
 	Book createOrUpdateBook( Book book );
+
+	
+	Language newLanguage();
+
+	Language getLanguage( Long id );
+
+	Language createOrUpdateLanguage( Language language );
 
 	
 	Author newAuthor();

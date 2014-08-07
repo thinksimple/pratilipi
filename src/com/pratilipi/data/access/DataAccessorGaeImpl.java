@@ -11,6 +11,7 @@ import com.pratilipi.data.access.gae.BookEntity;
 import com.pratilipi.data.access.gae.BookGenereEntity;
 import com.pratilipi.data.access.gae.BookTagEntity;
 import com.pratilipi.data.access.gae.GenereEntity;
+import com.pratilipi.data.access.gae.LanguageEntity;
 import com.pratilipi.data.access.gae.PublisherEntity;
 import com.pratilipi.data.access.gae.TagEntity;
 import com.pratilipi.data.access.gae.UserBookEntity;
@@ -20,6 +21,7 @@ import com.pratilipi.data.transfer.BookAuthor;
 import com.pratilipi.data.transfer.BookGenere;
 import com.pratilipi.data.transfer.BookTag;
 import com.pratilipi.data.transfer.Genere;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserBook;
@@ -52,6 +54,22 @@ public class DataAccessorGaeImpl
 	@Override
 	public Book createOrUpdateBook( Book book ) {
 		return createOrUpdateEntity( book );
+	}
+
+	
+	@Override
+	public Language newLanguage() {
+		return new LanguageEntity();
+	}
+
+	@Override
+	public Language getLanguage( Long id ) {
+		return getEntity( LanguageEntity.class, id );
+	}
+
+	@Override
+	public Language createOrUpdateLanguage( Language language ) {
+		return createOrUpdateEntity( language );
 	}
 
 	

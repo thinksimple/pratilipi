@@ -5,10 +5,10 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.pratilipi.common.Language;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genere;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserBook;
@@ -21,7 +21,7 @@ public abstract class DataAccessorTest {
     	
     	Long id = null;
     	String title = "title";
-    	Language language = Language.IN_HINDI;
+    	com.pratilipi.common.Language language = com.pratilipi.common.Language.IN_HINDI;
     	Long authorId = 123L;
     	Long publisherId = 456L;
     	Date publicationDate = new Date();
@@ -54,6 +54,31 @@ public abstract class DataAccessorTest {
     	Assert.assertEquals( publicationDate, book.getPublicationDate() );
     	Assert.assertEquals( listingDate, book.getListingDate() );
     	Assert.assertEquals( wordCount, book.getWordCount() );
+    	
+    	dataAccessor.destroy();
+    	
+    }
+    
+    @Test
+    public void testLanguage() {
+    	
+    	Long id = null;
+    	String name = "name";
+    	
+    	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+    	Language language = dataAccessor.newLanguage();
+    	language.setName( name );
+    	
+    	language = dataAccessor.createOrUpdateLanguage( language );
+    	id = language.getId();
+    	dataAccessor.destroy();
+    	
+    	dataAccessor = DataAccessorFactory.getDataAccessor();
+    	language = dataAccessor.getLanguage( id );
+    	
+    	Assert.assertNotNull( language );
+    	Assert.assertEquals( name, language.getName() );
     	
     	dataAccessor.destroy();
     	
