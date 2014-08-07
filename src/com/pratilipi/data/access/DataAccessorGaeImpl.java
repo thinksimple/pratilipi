@@ -95,6 +95,17 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
+	public List<Author> getAuthorList() {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<Author> authorEntityList = (List<Author>) query.execute();
+		return (List<Author>) pm.detachCopyAll( authorEntityList );
+	}
+	
+	@Override
 	public Author createOrUpdateAuthor( Author author ) {
 		return createOrUpdateEntity( author );
 	}

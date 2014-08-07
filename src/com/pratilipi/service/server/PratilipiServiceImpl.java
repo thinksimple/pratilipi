@@ -14,14 +14,19 @@ import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.service.client.PratilipiService;
+import com.pratilipi.service.shared.AddAuthorRequest;
+import com.pratilipi.service.shared.AddAuthorResponse;
 import com.pratilipi.service.shared.AddBookRequest;
 import com.pratilipi.service.shared.AddBookResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
+import com.pratilipi.service.shared.GetAuthorListRequest;
+import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
 import com.pratilipi.service.shared.GetBookListResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
+import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.LanguageData;
 
@@ -129,6 +134,52 @@ public class PratilipiServiceImpl
 		dataAccessor.destroy();
 		
 		return new GetLanguageListResponse( languageDataList );
+	}
+
+
+	@Override
+	public AddAuthorResponse addAuthor( AddAuthorRequest request )
+			throws InsufficientAccessException {
+		
+		if( ! ClaymusHelper.isUserAdmin() )
+			throw new InsufficientAccessException();
+		
+		AuthorData authorData = request.getAuthor();
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Author author = dataAccessor.newAuthor();
+		author.setFirstName( authorData.getFirstName() );
+		author.setLastName( authorData.getLastName() );
+		author.setEmail( authorData.getEmail() );
+		author.setRegistrationDate( new Date() );
+		
+		author = dataAccessor.createOrUpdateAuthor( author );
+		dataAccessor.destroy();
+		
+		return new AddAuthorResponse( author.getId() );
+	}
+
+	@Override
+	public GetAuthorListResponse getAuthorList( GetAuthorListRequest request ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<Author> authorList = dataAccessor.getAuthorList();
+		
+		ArrayList<AuthorData> authorDataList = new ArrayList<>( authorList.size() );
+		for( Author author : authorList ) {
+			AuthorData authorData = new AuthorData();
+			authorData.setFirstName( author.getFirstName() );
+			authorData.setLastName( author.getLastName() );
+			authorData.setEmail( author.getEmail() );
+			authorData.setRegistrationDate( author.getRegistrationDate() );
+			
+			authorDataList.add( authorData );
+		}
+
+		dataAccessor.destroy();
+		
+		return new GetAuthorListResponse( authorDataList );
 	}
 
 }

@@ -38,6 +38,8 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	Author getAuthor( Long id );
 
+	List<Author> getAuthorList();
+
 	Author createOrUpdateAuthor( Author author );
 
 	
