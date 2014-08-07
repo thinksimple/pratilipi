@@ -12,9 +12,6 @@ import com.pratilipi.service.shared.GetLanguageListResponse;
 
 public interface PratilipiServiceAsync {
 	
-	void greetServer( String input, AsyncCallback<String> callback );
-	
-	
 	void addBook(
 			AddBookRequest request,
 			AsyncCallback<AddBookResponse> callback );

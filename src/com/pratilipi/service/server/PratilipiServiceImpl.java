@@ -29,12 +29,6 @@ public class PratilipiServiceImpl
 		extends RemoteServiceServlet
 		implements PratilipiService {
 
-	public String greetServer( String input ) throws IllegalArgumentException {
-
-		return "Hello from server !";
-		
-	}
-
 	@Override
 	public AddBookResponse addBook( AddBookRequest request ) throws InsufficientAccessException {
 		

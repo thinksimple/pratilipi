@@ -15,9 +15,6 @@ import com.pratilipi.service.shared.GetLanguageListResponse;
 @RemoteServiceRelativePath("../pratilipiservice")
 public interface PratilipiService extends RemoteService {
 	
-	String greetServer( String name ) throws IllegalArgumentException;
-
-	
 	AddBookResponse addBook( AddBookRequest request )
 			throws InsufficientAccessException;
 
