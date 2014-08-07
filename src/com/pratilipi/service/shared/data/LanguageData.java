@@ -1,5 +1,7 @@
 package com.pratilipi.service.shared.data;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class LanguageData implements IsSerializable {
@@ -7,6 +9,8 @@ public class LanguageData implements IsSerializable {
 	private Long id;
 	
 	private String name;
+	
+	private Date creationDate;
 	
 	
 	public Long getId() {
@@ -23,6 +27,14 @@ public class LanguageData implements IsSerializable {
 
 	public void setName( String name ) {
 		this.name = name;
+	}
+	
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate( Date creationDate ) {
+		this.creationDate = creationDate;
 	}
 	
 }

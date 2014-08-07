@@ -1,5 +1,7 @@
 package com.pratilipi.data.access.gae;
 
+import java.util.Date;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -18,6 +20,9 @@ public class LanguageEntity implements Language {
 	@Persistent( column = "NAME" )
 	private String name;
 	
+	@Persistent( column = "CREATION_DATE" )
+	private Date creationDate;
+
 	
 	@Override
 	public Long getId() {
@@ -34,4 +39,14 @@ public class LanguageEntity implements Language {
 		this.name = name;
 	}
 	
+	@Override
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	@Override
+	public void setCreationDate( Date creationDate ) {
+		this.creationDate = creationDate;
+	}
+
 }

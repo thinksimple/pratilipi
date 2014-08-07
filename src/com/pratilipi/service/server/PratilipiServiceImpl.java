@@ -1,6 +1,7 @@
 package com.pratilipi.service.server;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.claymus.ClaymusHelper;
@@ -101,6 +102,7 @@ public class PratilipiServiceImpl
 		
 		Language language = dataAccessor.newLanguage();
 		language.setName( languageData.getNamme() );
+		language.setCreationDate( new Date() );
 		
 		language = dataAccessor.createOrUpdateLanguage( language );
 		dataAccessor.destroy();
@@ -119,6 +121,7 @@ public class PratilipiServiceImpl
 			LanguageData languageData = new LanguageData();
 			languageData.setId( language.getId() );
 			languageData.setName( language.getName() );
+			languageData.setCreationDate( language.getCreationDate() );
 			
 			languageDataList.add( languageData );
 		}
