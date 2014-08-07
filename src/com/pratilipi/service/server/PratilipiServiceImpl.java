@@ -15,9 +15,12 @@ import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddBookRequest;
 import com.pratilipi.service.shared.AddBookResponse;
+import com.pratilipi.service.shared.AddLanguageRequest;
+import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
 import com.pratilipi.service.shared.GetBookListResponse;
 import com.pratilipi.service.shared.data.BookData;
+import com.pratilipi.service.shared.data.LanguageData;
 
 @SuppressWarnings("serial")
 public class PratilipiServiceImpl
@@ -86,6 +89,26 @@ public class PratilipiServiceImpl
 		dataAccessor.destroy();
 		
 		return new GetBookListResponse( bookDataList );
+	}
+
+	@Override
+	public AddLanguageResponse addLanguage( AddLanguageRequest request )
+			throws InsufficientAccessException {
+		
+		if( ! ClaymusHelper.isUserAdmin() )
+			throw new InsufficientAccessException();
+		
+		LanguageData languageData = request.getLanguage();
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Language language = dataAccessor.newLanguage();
+		language.setName( languageData.getNamme() );
+		
+		language = dataAccessor.createOrUpdateLanguage( language );
+		dataAccessor.destroy();
+		
+		return new AddLanguageResponse( language.getId() );
 	}
 
 }

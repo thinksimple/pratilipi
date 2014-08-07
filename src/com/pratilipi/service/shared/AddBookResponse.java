@@ -28,6 +28,7 @@ public class AddBookResponse implements IsSerializable {
 		return this.bookId;
 	}
 	
+	@Deprecated
 	public BookData getBook() {
 		return this.book;
 	}
