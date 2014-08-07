@@ -15,9 +15,9 @@ public interface UserBook {
 	
 	void setUserId( String userId );
 	
-	String getIsbn();
+	Long getBookId();
 	
-	void setIsbn( String isbn );
+	void setBookId( Long bookId );
 	
 	Long getRating();
 	

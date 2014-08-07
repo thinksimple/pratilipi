@@ -4,9 +4,9 @@ public interface BookTag {
 
 	Long getId();
 	
-	String getIsbn();
+	Long getBookId();
 	
-	void setIsbn( String isbn );
+	void setBookId( Long bookId );
 	
 	Long getTagId();
 	

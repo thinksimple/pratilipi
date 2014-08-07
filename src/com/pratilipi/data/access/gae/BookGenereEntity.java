@@ -14,8 +14,8 @@ public class BookGenereEntity implements BookGenere {
 	@Persistent( column = "BOOK_GENERE_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
-	@Persistent( column = "ISBN" )
-	private String isbn;
+	@Persistent( column = "BOOK_ID" )
+	private Long bookId;
 	
 	@Persistent( column = "GENERE_ID" )
 	private Long genereId;
@@ -25,12 +25,12 @@ public class BookGenereEntity implements BookGenere {
 		return id;
 	}
 	
-	public String getIsbn() {
-		return isbn;
+	public Long getBookId() {
+		return bookId;
 	}
 	
-	public void setIsbn( String isbn ) {
-		this.isbn = isbn;
+	public void setBookId( Long bookId ) {
+		this.bookId = bookId;
 	}
 	
 	public Long getGenereId() {

@@ -14,8 +14,8 @@ public class BookAuthorEntity implements BookAuthor {
 	@Persistent( column = "BOOK_AUTHOR_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
-	@Persistent( column = "ISBN" )
-	private String isbn;
+	@Persistent( column = "BOOK_ID" )
+	private Long bookId;
 	
 	@Persistent( column = "AUTHOR_ID" )
 	private Long authorId;
@@ -27,13 +27,13 @@ public class BookAuthorEntity implements BookAuthor {
 	}
 	
 	@Override
-	public String getIsbn() {
-		return isbn;
+	public Long getBookId() {
+		return bookId;
 	}
 	
 	@Override
-	public void setIsbn( String isbn ) {
-		this.isbn = isbn;
+	public void setBookId( Long bookId ) {
+		this.bookId = bookId;
 	}
 	
 	@Override

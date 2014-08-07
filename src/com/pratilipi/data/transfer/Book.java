@@ -6,9 +6,7 @@ import com.pratilipi.common.Language;
 
 public interface Book {
 
-	String getIsbn();
-	
-	void setIsbn( String isbn );
+	Long getId();
 	
 	String getTitle();
 	

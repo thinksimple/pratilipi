@@ -18,8 +18,8 @@ public class UserBookEntity implements UserBook {
 	@Persistent( column = "USER_ID" )
 	private String userId;
 	
-	@Persistent( column = "ISBN" )
-	private String isbn;
+	@Persistent( column = "BOOK_ID" )
+	private Long bookId;
 	
 	@Persistent( column = "RATING" )
 	private Long rating;
@@ -46,13 +46,13 @@ public class UserBookEntity implements UserBook {
 	}
 	
 	@Override
-	public String getIsbn() {
-		return isbn;
+	public Long getBookId() {
+		return bookId;
 	}
 	
 	@Override
-	public void setIsbn( String isbn ) {
-		this.isbn = isbn;
+	public void setBookId( Long bookId ) {
+		this.bookId = bookId;
 	}
 	
 	@Override

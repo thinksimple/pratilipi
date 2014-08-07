@@ -19,7 +19,7 @@ public abstract class DataAccessorTest {
     @Test
     public void testBook() {
     	
-    	String isbn = "isbn";
+    	Long id = null;
     	String title = "title";
     	Language language = Language.IN_HINDI;
     	Long authorId = 123L;
@@ -31,7 +31,6 @@ public abstract class DataAccessorTest {
     	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
     	
     	Book book = dataAccessor.newBook();
-    	book.setIsbn( isbn );
     	book.setTitle( title );
     	book.setLanguage( language );
     	book.setAuthorId( authorId );
@@ -41,13 +40,13 @@ public abstract class DataAccessorTest {
     	book.setWordCount( wordCount );
     	
     	book = dataAccessor.createOrUpdateBook( book );
+    	id = book.getId();
     	dataAccessor.destroy();
     	
     	dataAccessor = DataAccessorFactory.getDataAccessor();
-    	book = dataAccessor.getBook( isbn );
+    	book = dataAccessor.getBook( id );
     	
     	Assert.assertNotNull( book );
-    	Assert.assertEquals( isbn, book.getIsbn() );
     	Assert.assertEquals( title, book.getTitle() );
     	Assert.assertEquals( language, book.getLanguage() );
     	Assert.assertEquals( authorId, book.getAuthorId() );
@@ -188,8 +187,8 @@ public abstract class DataAccessorTest {
     public void testUserBook() {
     	
     	String userId = "userId";
-    	String isbn = "isbn";
-    	Long rating = 123L;
+    	Long bookId = 123L;
+    	Long rating = 234L;
     	ReviewState reviewState = ReviewState.APPROVED;
     	Date reviewDate = new Date();
     	
@@ -197,7 +196,7 @@ public abstract class DataAccessorTest {
     	
     	UserBook userBook = dataAccessor.newUserBook();
     	userBook.setUserId( userId );
-    	userBook.setIsbn( isbn );
+    	userBook.setBookId( bookId );
     	userBook.setRating( rating );
     	userBook.setReviewState( reviewState );
     	userBook.setReviewDate( reviewDate );
@@ -206,11 +205,11 @@ public abstract class DataAccessorTest {
     	dataAccessor.destroy();
     	
     	dataAccessor = DataAccessorFactory.getDataAccessor();
-    	userBook = dataAccessor.getUserBook( userId, isbn );
+    	userBook = dataAccessor.getUserBook( userId, bookId );
     	
     	Assert.assertNotNull( userBook );
     	Assert.assertEquals( userId, userBook.getUserId() );
-    	Assert.assertEquals( isbn, userBook.getIsbn() );
+    	Assert.assertEquals( bookId, userBook.getBookId() );
     	Assert.assertEquals( rating, userBook.getRating() );
     	Assert.assertEquals( reviewState, userBook.getReviewState() );
     	Assert.assertEquals( reviewDate, userBook.getReviewDate() );

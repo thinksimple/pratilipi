@@ -14,8 +14,8 @@ public class BookTagEntity implements BookTag {
 	@Persistent( column = "BOOK_TAG_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
-	@Persistent( column = "ISBN" )
-	private String isbn;
+	@Persistent( column = "BOOK_ID" )
+	private Long bookId;
 	
 	@Persistent( column = "TAG_ID" )
 	private Long tagId;
@@ -25,12 +25,12 @@ public class BookTagEntity implements BookTag {
 		return id;
 	}
 	
-	public String getIsbn() {
-		return isbn;
+	public Long getBookId() {
+		return bookId;
 	}
 	
-	public void setIsbn( String isbn ) {
-		this.isbn = isbn;
+	public void setBookId( Long bookId ) {
+		this.bookId = bookId;
 	}
 	
 	public Long getTagId() {

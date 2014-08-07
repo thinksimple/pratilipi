@@ -34,8 +34,8 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
-	public Book getBook( String isbn ) {
-		return getEntity( BookEntity.class, isbn );
+	public Book getBook( Long id ) {
+		return getEntity( BookEntity.class, id );
 	}
 
 	@Override
@@ -158,13 +158,13 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
-	public UserBook getUserBook( String userId, String isbn ) {
-		return getEntity( UserBookEntity.class, userId + "-" + isbn );
+	public UserBook getUserBook( String userId, Long bookId ) {
+		return getEntity( UserBookEntity.class, userId + "-" + bookId );
 	}
 
 	@Override
 	public UserBook createOrUpdateUserBook( UserBook userBook ) {
-		( (UserBookEntity) userBook ).setId( userBook.getUserId() + "-" + userBook.getIsbn() );
+		( (UserBookEntity) userBook ).setId( userBook.getUserId() + "-" + userBook.getBookId() );
 		return createOrUpdateEntity( userBook );
 	}
 	

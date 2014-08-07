@@ -17,7 +17,7 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
 	Book newBook();
 
-	Book getBook( String isbn );
+	Book getBook( Long id );
 	
 	List<Book> getBookList();
 
@@ -69,7 +69,7 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
 	UserBook newUserBook();
 
-	UserBook getUserBook( String userId, String isbn );
+	UserBook getUserBook( String userId, Long bookId );
 
 	UserBook createOrUpdateUserBook( UserBook userBook );
 

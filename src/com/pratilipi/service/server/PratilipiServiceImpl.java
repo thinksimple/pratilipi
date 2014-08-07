@@ -39,7 +39,7 @@ public class PratilipiServiceImpl
 		
 		Book book = dataAccessor.newBook();  //returns database book entity.
 		//insert data into database.
-		book.setIsbn( bookData.getIsbn() );
+//		book.setIsbn( bookData.getIsbn() );
 		book.setTitle( bookData.getTitle() );
 		
 		book = dataAccessor.createOrUpdateBook( book );

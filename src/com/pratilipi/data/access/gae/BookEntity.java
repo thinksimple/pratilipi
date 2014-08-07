@@ -2,6 +2,7 @@ package com.pratilipi.data.access.gae;
 
 import java.util.Date;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -13,8 +14,8 @@ import com.pratilipi.data.transfer.Book;
 public class BookEntity implements Book {
 
 	@PrimaryKey
-	@Persistent( column = "BOOK_ID" )
-	private String isbn;
+	@Persistent( column = "BOOK_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
+	private Long id;
 	
 	@Persistent( column = "TITLE" )
 	private String title;
@@ -41,13 +42,8 @@ public class BookEntity implements Book {
 
 	
 	@Override
-	public String getIsbn() {
-		return isbn;
-	}
-
-	@Override
-	public void setIsbn( String isbn ) {
-		this.isbn = isbn;
+	public Long getId() {
+		return id;
 	}
 
 	@Override
