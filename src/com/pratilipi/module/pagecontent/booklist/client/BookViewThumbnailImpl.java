@@ -75,7 +75,7 @@ public class BookViewThumbnailImpl extends BookView {
 	
 	@Override
 	public void setBookData( BookData bookData ) {
-		this.isbnLabel.setText( bookData.getIsbn() );
+//		this.isbnLabel.setText( bookData.getIsbn() );
 		this.titleLabel.setText( bookData.getTitle() );
 		this.bookData = bookData;
 	}

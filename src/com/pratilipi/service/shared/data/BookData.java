@@ -6,17 +6,23 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class BookData implements IsSerializable {
 
-	private String isbn;
+	private Long id;
 	
 	private String title;
 	
-	private String language;
+	private Long languageId;
 
+	private String languageName;
+	
 	
 	private Long authorId;
 	
+	private String authorName;
+	
 	private Long publisherId;
 
+	private String publisherName;
+	
 	private Date publicationDate;
 
 	private Date listingDate;
@@ -25,12 +31,12 @@ public class BookData implements IsSerializable {
 	private Long wordCount;
 
 	
-	public String getIsbn() {
-		return isbn;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIsbn( String isbn ) {
-		this.isbn = isbn;
+	public void setId( Long id ) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -41,12 +47,20 @@ public class BookData implements IsSerializable {
 		this.title = title;
 	}
 
-	public String getLanguage() {
-		return language;
+	public Long getLanguageId() {
+		return languageId;
 	}
 
-	public void setLanguage( String language ) {
-		this.language = language;
+	public void setLanguageId( Long languageId ) {
+		this.languageId = languageId;
+	}
+
+	public String getLanguageName() {
+		return languageName;
+	}
+
+	public void setLanguageName( String languageName ) {
+		this.languageName = languageName;
 	}
 
 	public Long getAuthorId() {
@@ -57,12 +71,28 @@ public class BookData implements IsSerializable {
 		this.authorId = authorId;
 	}
 
+	public String getAuthorName() {
+		return authorName;
+	}
+
+	public void setAuthorName( String authorName ) {
+		this.authorName = authorName;
+	}
+
 	public Long getPublisherId() {
 		return publisherId;
 	}
 
 	public void setPublisherId( Long publisherId ) {
 		this.publisherId = publisherId;
+	}
+
+	public String getPublisherName() {
+		return publisherName;
+	}
+
+	public void setPublisherName( String publisherName ) {
+		this.publisherName = publisherName;
 	}
 
 	public Date getPublicationDate() {

@@ -26,7 +26,7 @@ public class BookViewDetailImpl extends BookView implements ClickHandler {
 	
 	@Override
 	public void setBookData( BookData bookData ) {
-		this.isbnLabel.setText( bookData.getIsbn() );
+//		this.isbnLabel.setText( bookData.getIsbn() );
 		this.titleLabel.setText( bookData.getTitle() );
 		this.bookData = bookData;
 	}

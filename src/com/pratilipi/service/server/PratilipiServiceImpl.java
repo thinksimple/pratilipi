@@ -8,7 +8,9 @@ import com.claymus.client.InsufficientAccessException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
+import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddBookRequest;
 import com.pratilipi.service.shared.AddBookResponse;
@@ -33,56 +35,53 @@ public class PratilipiServiceImpl
 		if( ! ClaymusHelper.isUserAdmin() )
 			throw new InsufficientAccessException();
 		
-		BookData bookData = request.getBook(); //get book to be inserted into database
+		BookData bookData = request.getBook();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		Book book = dataAccessor.newBook();  //returns database book entity.
-		//insert data into database.
-//		book.setIsbn( bookData.getIsbn() );
+		Book book = dataAccessor.newBook();
 		book.setTitle( bookData.getTitle() );
+//		book.setLanguage( bookData.getLanguage() );
+		book.setAuthorId( bookData.getAuthorId() );
+		book.setPublisherId( bookData.getPublisherId() );
+		book.setPublicationDate( bookData.getPublicationDate() );
+		book.setListingDate( bookData.getListingDate() );
+		book.setWordCount( bookData.getWordCount() );
 		
 		book = dataAccessor.createOrUpdateBook( book );
 		dataAccessor.destroy();
 		
-		return new AddBookResponse( bookData );
+		return new AddBookResponse( book.getId() );
 	}
 
 	@Override
 	public GetBookListResponse getBookList( GetBookListRequest request ) {
 		
-		// DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		// List<Book> bookList = dataAccessor.getBookList();
-		BookData[] books = new BookData[3];
-		for(int i=0; i<3; ++i)
-			books[i] = new BookData();
-		//first record
-		books[0].setTitle("Facebook");
-		books[0].setAuthorId(new Long(1234));
-		//books[0].setCoverPage("/images/facebook.png");
-		//Second record
-		books[1].setTitle("Twitter");
-		books[1].setAuthorId(new Long(4567));
-		//books[1].setCoverPage("/images/twitter.png");
-		//Third record
-		books[2].setTitle("BlackTwitter");
-		books[2].setAuthorId(new Long(8901));
-		//books[2].setCoverPage("/images/BlackTwitter.png");
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<Book> bookList = dataAccessor.getBookList();
 		
-		ArrayList<BookData> bookList = new ArrayList<BookData>();
-		for(int i=0;i<books.length;++i)
-			bookList.add(books[i]);
-		
-		//Static data is only for testing purpose.
-		List<BookData> bookDataList = new ArrayList<BookData>( bookList.size() );
-		for( BookData book : bookList ) {
+		ArrayList<BookData> bookDataList = new ArrayList<BookData>( bookList.size() );
+		for( Book book : bookList ) {
+			Author author = dataAccessor.getAuthor( book.getAuthorId() );
+			Publisher publisher = dataAccessor.getPublisher( book.getPublisherId() );
+			
 			BookData bookData = new BookData();
-			bookData.setIsbn( book.getIsbn() );
+			bookData.setId( book.getId() );
 			bookData.setTitle( book.getTitle() );
+//			bookData.setLanguageId( languageId );
+			bookData.setLanguageName( book.getLanguage().getName() );
+			bookData.setAuthorId( author.getId() );
+			bookData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
+			bookData.setPublisherId( publisher.getId() );
+			bookData.setPublisherName( publisher.getFirstName() + " " + publisher.getLastName() );
+			bookData.setPublicationDate( book.getPublicationDate() );
+			bookData.setListingDate( book.getListingDate() );
+			bookData.setWordCount( book.getWordCount() );
+			
 			bookDataList.add( bookData );
 		}
 
-		//dataAccessor.destroy();
+		dataAccessor.destroy();
 		
 		return new GetBookListResponse( bookDataList );
 	}
