@@ -5,19 +5,19 @@ import com.pratilipi.service.shared.data.BookData;
 
 public class AddBookRequest implements IsSerializable {
 
-	private BookData book;
+	private BookData bookData;
 
 
 	@SuppressWarnings("unused")
 	private AddBookRequest() {}
 	
-	public AddBookRequest( BookData book ) {
-		this.book = book;
+	public AddBookRequest( BookData bookData ) {
+		this.bookData = bookData;
 	}
 	
 	
 	public BookData getBook() {
-		return this.book;
+		return this.bookData;
 	}
 
 }

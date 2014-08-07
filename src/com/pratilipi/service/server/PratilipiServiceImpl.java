@@ -106,7 +106,7 @@ public class PratilipiServiceImpl
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		Language language = dataAccessor.newLanguage();
-		language.setName( languageData.getNamme() );
+		language.setName( languageData.getName() );
 		language.setCreationDate( new Date() );
 		
 		language = dataAccessor.createOrUpdateLanguage( language );

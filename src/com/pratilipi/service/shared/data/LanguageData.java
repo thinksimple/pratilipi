@@ -21,7 +21,7 @@ public class LanguageData implements IsSerializable {
 		this.id = id;
 	}
 
-	public String getNamme() {
+	public String getName() {
 		return name;
 	}
 

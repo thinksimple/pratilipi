@@ -8,7 +8,7 @@ public class AddBookResponse implements IsSerializable {
 	private Long bookId;
 
 	@Deprecated
-	private BookData book;
+	private BookData bookData;
 	
 	
 	@SuppressWarnings("unused")
@@ -19,8 +19,8 @@ public class AddBookResponse implements IsSerializable {
 	}
 	
 	@Deprecated
-	public AddBookResponse( BookData book ) {
-		this.book = book;
+	public AddBookResponse( BookData bookData ) {
+		this.bookData = bookData;
 	}
 
 	
@@ -30,7 +30,7 @@ public class AddBookResponse implements IsSerializable {
 	
 	@Deprecated
 	public BookData getBook() {
-		return this.book;
+		return this.bookData;
 	}
 	
 }

@@ -5,19 +5,19 @@ import com.pratilipi.service.shared.data.LanguageData;
 
 public class AddLanguageRequest implements IsSerializable {
 
-	private LanguageData language;
+	private LanguageData languageData;
 
 
 	@SuppressWarnings("unused")
 	private AddLanguageRequest() {}
 	
-	public AddLanguageRequest( LanguageData language ) {
-		this.language = language;
+	public AddLanguageRequest( LanguageData languageData ) {
+		this.languageData = languageData;
 	}
 	
 	
 	public LanguageData getLanguage() {
-		return this.language;
+		return this.languageData;
 	}
 
 }

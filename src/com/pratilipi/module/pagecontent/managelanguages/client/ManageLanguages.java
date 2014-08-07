@@ -44,7 +44,7 @@ public class ManageLanguages implements EntryPoint {
 			public void onSuccess( GetLanguageListResponse response ) {
 
 				for( LanguageData languageData : response.getLanguageList() )
-					verticalPanel.add( new Label( languageData.getNamme() ) );
+					verticalPanel.add( new Label( languageData.getName() ) );
 				
 			}
 			

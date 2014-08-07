@@ -7,19 +7,19 @@ import com.pratilipi.service.shared.data.LanguageData;
 
 public class GetLanguageListResponse implements IsSerializable {
 
-	private List<LanguageData> languageList;
+	private List<LanguageData> languageDataList;
 	
 	
 	@SuppressWarnings("unused")
 	private GetLanguageListResponse() {}
 	
-	public GetLanguageListResponse( List<LanguageData> languageList ) {
-		this.languageList = languageList;
+	public GetLanguageListResponse( List<LanguageData> languageDataList ) {
+		this.languageDataList = languageDataList;
 	}
 	
 	
 	public List<LanguageData> getLanguageList() {
-		return this.languageList;
+		return this.languageDataList;
 	}
 	
 }
