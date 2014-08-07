@@ -10,6 +10,7 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddBookRequest;
@@ -41,7 +42,7 @@ public class PratilipiServiceImpl
 		
 		Book book = dataAccessor.newBook();
 		book.setTitle( bookData.getTitle() );
-//		book.setLanguage( bookData.getLanguage() );
+		book.setLanguageId( bookData.getLanguageId() );
 		book.setAuthorId( bookData.getAuthorId() );
 		book.setPublisherId( bookData.getPublisherId() );
 		book.setPublicationDate( bookData.getPublicationDate() );
@@ -62,14 +63,15 @@ public class PratilipiServiceImpl
 		
 		ArrayList<BookData> bookDataList = new ArrayList<BookData>( bookList.size() );
 		for( Book book : bookList ) {
+			Language language = dataAccessor.getLanguage( book.getLanguageId() );
 			Author author = dataAccessor.getAuthor( book.getAuthorId() );
 			Publisher publisher = dataAccessor.getPublisher( book.getPublisherId() );
 			
 			BookData bookData = new BookData();
 			bookData.setId( book.getId() );
 			bookData.setTitle( book.getTitle() );
-//			bookData.setLanguageId( languageId );
-			bookData.setLanguageName( book.getLanguage().getName() );
+			bookData.setLanguageId( language.getId() );
+			bookData.setLanguageName( language.getName() );
 			bookData.setAuthorId( author.getId() );
 			bookData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
 			bookData.setPublisherId( publisher.getId() );

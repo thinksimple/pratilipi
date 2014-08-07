@@ -2,8 +2,6 @@ package com.pratilipi.data.transfer;
 
 import java.util.Date;
 
-import com.pratilipi.common.Language;
-
 public interface Book {
 
 	Long getId();
@@ -12,9 +10,9 @@ public interface Book {
 	
 	void setTitle( String title );
 	
-	Language getLanguage();
+	Long getLanguageId();
 	
-	void setLanguage( Language language );
+	void setLanguageId( Long languageId );
 	
 	Long getAuthorId();
 	

@@ -21,18 +21,18 @@ public abstract class DataAccessorTest {
     	
     	Long id = null;
     	String title = "title";
-    	com.pratilipi.common.Language language = com.pratilipi.common.Language.IN_HINDI;
-    	Long authorId = 123L;
-    	Long publisherId = 456L;
+    	Long languageId = 123L;
+    	Long authorId = 234L;
+    	Long publisherId = 345L;
     	Date publicationDate = new Date();
     	Date listingDate = new Date();
-    	Long wordCount = 789L;
+    	Long wordCount = 456L;
     	
     	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
     	
     	Book book = dataAccessor.newBook();
     	book.setTitle( title );
-    	book.setLanguage( language );
+    	book.setLanguageId( languageId );
     	book.setAuthorId( authorId );
     	book.setPublisherId( publisherId );
     	book.setPublicationDate( publicationDate );
@@ -48,7 +48,7 @@ public abstract class DataAccessorTest {
     	
     	Assert.assertNotNull( book );
     	Assert.assertEquals( title, book.getTitle() );
-    	Assert.assertEquals( language, book.getLanguage() );
+    	Assert.assertEquals( languageId, book.getLanguageId() );
     	Assert.assertEquals( authorId, book.getAuthorId() );
     	Assert.assertEquals( publisherId, book.getPublisherId() );
     	Assert.assertEquals( publicationDate, book.getPublicationDate() );

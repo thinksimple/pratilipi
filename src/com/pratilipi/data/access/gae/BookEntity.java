@@ -7,7 +7,6 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.pratilipi.common.Language;
 import com.pratilipi.data.transfer.Book;
 
 @PersistenceCapable( table = "BOOK" )
@@ -20,8 +19,8 @@ public class BookEntity implements Book {
 	@Persistent( column = "TITLE" )
 	private String title;
 	
-	@Persistent( column = "LANGUAGE" )
-	private Language language;
+	@Persistent( column = "LANGUAGE_ID" )
+	private Long languageId;
 
 	
 	@Persistent( column = "AUTHOR_ID" )
@@ -57,13 +56,13 @@ public class BookEntity implements Book {
 	}
 
 	@Override
-	public Language getLanguage() {
-		return language;
+	public Long getLanguageId() {
+		return languageId;
 	}
 
 	@Override
-	public void setLanguage( Language language ) {
-		this.language = language;
+	public void setLanguageId( Long languageId ) {
+		this.languageId = languageId;
 	}
 
 	@Override
