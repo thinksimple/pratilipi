@@ -19,6 +19,7 @@ public abstract class BookDataInputView extends Composite {
 	
 	public abstract String getLanguage();
 	
+	//Error styling functions
 	public abstract void setIsbnErrorStyle();
 	
 	public abstract void setTitleErrorStyle();
@@ -28,4 +29,15 @@ public abstract class BookDataInputView extends Composite {
 	public abstract void setPublisherErrorStyle();
 	
 	public abstract void setLanguageErrorStyle();
+	
+	//Accept styling function
+	public abstract void setIsbnAcceptStyle();
+	
+	public abstract void setTitleAcceptStyle();
+	
+	public abstract void setAuthorAcceptStyle();
+	
+	public abstract void setPublisherAcceptStyle();
+	
+	public abstract void setLanguageAcceptStyle();
 }

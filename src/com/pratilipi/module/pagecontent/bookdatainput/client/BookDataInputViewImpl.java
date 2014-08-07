@@ -72,7 +72,7 @@ public class BookDataInputViewImpl extends BookDataInputView {
 		return languageInput.getText();
 	}
 	
-	//Error styling is not working for some reason.
+	//Error styling.
 	public void setIsbnErrorStyle(){
 		isbnInput.getElement().setAttribute("style", "border:1px solid #FF0000");
 	}
@@ -91,5 +91,26 @@ public class BookDataInputViewImpl extends BookDataInputView {
 	
 	public void setLanguageErrorStyle(){
 		languageInput.getElement().setAttribute("style", "border:1px solid #FF0000");
+	}
+	
+	//Accept Styling
+	public void setIsbnAcceptStyle(){
+		isbnInput.getElement().setAttribute("style", "border:1px solid #000000");
+	}
+	
+	public void setTitleAcceptStyle(){
+		titleInput.getElement().setAttribute("style", "border:1px solid #000000");
+	}
+	
+	public void setAuthorAcceptStyle(){
+		authorInput.getElement().setAttribute("style", "border:1px solid #000000");
+	}
+	
+	public void setPublisherAcceptStyle(){
+		publisherInput.getElement().setAttribute("style", "border:1px solid #000000");
+	}
+	
+	public void setLanguageAcceptStyle(){
+		languageInput.getElement().setAttribute("style", "border:1px solid #000000");
 	}
 }
