@@ -25,6 +25,7 @@ import com.claymus.module.websitewidget.WebsiteWidgetRegistry;
 import com.claymus.module.websitewidget.user.UserInfoFactory;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
+import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -39,14 +40,24 @@ public class MainServlet extends HttpServlet {
 			HttpServletResponse response ) throws IOException {
 
 		PageContentRegistry.register( HtmlContentFactory.class );
+		PageContentRegistry.register( ManageLanguagesFactory.class );
 		PageContentRegistry.register( BookDataInputFactory.class );
 		PageContentRegistry.register( BookListFactory.class );
 		WebsiteWidgetRegistry.register( UserInfoFactory.class );
-		
+
+		String requestUri = request.getRequestURI();
 		PrintWriter out = response.getWriter();
 		
 		Page page = getPage();
-		List<PageContent> pageContentList = getPageContentList();
+		List<PageContent> pageContentList = new LinkedList<>();
+		
+		if( requestUri.equals( "/manage/languages" ) )
+			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
+		else if( requestUri.equals( "/manage/books/new" ) )
+			pageContentList.add( BookDataInputFactory.newBookDataInput() );
+		else
+			pageContentList.add( BookListFactory.newBookList() );
+		
 		List<WebsiteWidget> websiteWidgetList = getWebsiteWidgetList();
 		PageLayout pageLayout = getPageLayout();
 		WebsiteLayout websiteLayout = getWebsiteLayout();

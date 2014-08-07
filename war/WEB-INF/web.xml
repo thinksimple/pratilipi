@@ -17,17 +17,6 @@
 
 
   <servlet>
-    <servlet-name>BookDataServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.BookDataServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>BookDataServlet</servlet-name>
-    <url-pattern>/_ah/bookdata</url-pattern>
-  </servlet-mapping>
-
-   
-  <servlet>
     <servlet-name>ResourceServlet</servlet-name>
     <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
   </servlet>
@@ -52,7 +41,8 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>admin</web-resource-name>
-      <url-pattern>/_ah/*</url-pattern>
+      <url-pattern>/manage/languages/*</url-pattern>
+      <url-pattern>/manage/books/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
