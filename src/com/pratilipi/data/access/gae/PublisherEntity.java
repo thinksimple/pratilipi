@@ -16,11 +16,9 @@ public class PublisherEntity implements Publisher {
 	@Persistent( column = "PUBLISHER_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
-	@Persistent( column = "FIRST_NAME" )
-	private String firstName;
+	@Persistent( column = "NAME" )
+	private String name;
 	
-	@Persistent( column = "LAST_NAME" )
-	private String lastName;
 
 	@Persistent( column = "EMAIL" )
 	private String email;
@@ -35,23 +33,13 @@ public class PublisherEntity implements Publisher {
 	}
 
 	@Override
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
 	@Override
-	public void setFirstName( String firstName ) {
-		this.firstName = firstName;
-	}
-
-	@Override
-	public String getLastName() {
-		return lastName;
-	}
-
-	@Override
-	public void setLastName( String lastName ) {
-		this.lastName = lastName;
+	public void setName( String name ) {
+		this.name = name;
 	}
 
 	@Override

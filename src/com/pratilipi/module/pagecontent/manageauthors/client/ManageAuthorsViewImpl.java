@@ -13,23 +13,22 @@ public class ManageAuthorsViewImpl extends ManageAuthorsView {
 	
 	public ManageAuthorsViewImpl(){
 		VerticalPanel vPanel = new VerticalPanel();
-		vPanel.setSpacing(10);
+		vPanel.setSpacing(1);
 		
 		HorizontalPanel name = new HorizontalPanel();
-		name.setSpacing(5);
 		
 		//setting place holders for all text boxes
 		firstNameInput.getElement().setPropertyString("placeholder", "First Name");
-		firstNameInput.setWidth("70px");
+		firstNameInput.setWidth("100px");
 		
 		lastNameInput.getElement().setPropertyString("placeholder", "Last Name");
-		lastNameInput.setWidth("70px");
+		lastNameInput.setWidth("100px");
 		
 		penNameInput.getElement().setPropertyString("placeholder", "Pen Name");
-		penNameInput.setWidth("150px");
+		penNameInput.setWidth("204px");
 		
 		emailInput.getElement().setPropertyString("placeholder", "Email");
-		emailInput.setWidth("150px");
+		emailInput.setWidth("204px");
 		
 		//add name text boxes to name horizontal panel
 		name.add(firstNameInput);
@@ -78,42 +77,50 @@ public class ManageAuthorsViewImpl extends ManageAuthorsView {
 	@Override
 	public void setFirstNameErrorStyle() {
 		firstNameInput.getElement().setAttribute("style", "border:1px solid #FF0000");
+		firstNameInput.setWidth("100px");
 	}
 
 	@Override
 	public void setLastNameErrorStyle() {
 		lastNameInput.getElement().setAttribute("style", "border:1px solid #FF0000");
+		lastNameInput.setWidth("100px");
 	}
 
 	@Override
 	public void setPenNameErrorStyle() {
 		penNameInput.getElement().setAttribute("style", "border:1px solid #FF0000");
+		penNameInput.setWidth("204px");
 	}
 
 	@Override
 	public void setEmailErrorStyle() {
 		emailInput.getElement().setAttribute("style", "border:1px solid #FF0000");
+		emailInput.setWidth("204px");
 	}
 
 	//Accept styling functions
 	@Override
 	public void setFirstNameAcceptStyle() {
 		firstNameInput.getElement().setAttribute("style", "border:1px solid #000000");
+		firstNameInput.setWidth("100px");
 	}
 
 	@Override
 	public void setLastNameAcceptStyle() {
 		lastNameInput.getElement().setAttribute("style", "border:1px solid #000000");
+		lastNameInput.setWidth("100px");
 	}
 
 	@Override
 	public void setPenNameAcceptStyle() {
 		penNameInput.getElement().setAttribute("style", "border:1px solid #000000");
+		penNameInput.setWidth("204px");
 	}
 
 	@Override
 	public void setEmailAcceptStyle() {
 		emailInput.getElement().setAttribute("style", "border:1px solid #000000");
+		emailInput.setWidth("204px");
 	}
 
 }

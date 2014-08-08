@@ -6,13 +6,9 @@ public interface Publisher {
 
 	Long getId();
 	
-	String getFirstName();
+	String getName();
 	
-	void setFirstName( String firstName );
-	
-	String getLastName();
-	
-	void setLastName( String lastName );
+	void setName( String name );
 	
 	String getEmail();
 	

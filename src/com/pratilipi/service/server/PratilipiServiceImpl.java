@@ -80,7 +80,7 @@ public class PratilipiServiceImpl
 			bookData.setAuthorId( author.getId() );
 			bookData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
 			bookData.setPublisherId( publisher.getId() );
-			bookData.setPublisherName( publisher.getFirstName() + " " + publisher.getLastName() );
+			bookData.setPublisherName( publisher.getName() );
 			bookData.setPublicationDate( book.getPublicationDate() );
 			bookData.setListingDate( book.getListingDate() );
 			bookData.setWordCount( book.getWordCount() );

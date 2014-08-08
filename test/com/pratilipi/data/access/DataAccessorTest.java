@@ -122,16 +122,14 @@ public abstract class DataAccessorTest {
     public void testPublisher() {
     	
     	Long id = null;
-    	String firstName = "firstName";
-    	String lastName = "lastName";
+    	String name = "name";
     	String email = "email";
     	Date registrationDate = new Date();
     	
     	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
     	
     	Publisher publisher = dataAccessor.newPublisher();
-    	publisher.setFirstName( firstName );
-    	publisher.setLastName( lastName );
+    	publisher.setName( name );
     	publisher.setEmail( email );
     	publisher.setRegistrationDate( registrationDate );
     	
@@ -143,8 +141,7 @@ public abstract class DataAccessorTest {
     	publisher = dataAccessor.getPublisher( id );
     	
     	Assert.assertNotNull( publisher );
-    	Assert.assertEquals( firstName, publisher.getFirstName() );
-    	Assert.assertEquals( lastName, publisher.getLastName() );
+    	Assert.assertEquals( name, publisher.getName() );
     	Assert.assertEquals( email, publisher.getEmail() );
     	Assert.assertEquals( registrationDate, publisher.getRegistrationDate() );
     	
