@@ -2,7 +2,7 @@ package com.claymus.module.websitewidget.navigation;
 
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 
-public class NavigationProcessor implements WebsiteWidgetProcessor<Navigation> {
+public class NavigationProcessor extends WebsiteWidgetProcessor<Navigation> {
 
 	@Override
 	public String getHtml( Navigation navigation ) {

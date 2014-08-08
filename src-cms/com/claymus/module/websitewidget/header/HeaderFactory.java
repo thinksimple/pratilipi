@@ -6,7 +6,7 @@ import com.claymus.module.websitewidget.header.gae.HeaderEntity;
 public class HeaderFactory
 		implements WebsiteWidgetFactory<Header, HeaderProcessor> {
 	
-	public static Header newUserInfo() {
+	public static Header newHeader() {
 		return new HeaderEntity();
 	}
 

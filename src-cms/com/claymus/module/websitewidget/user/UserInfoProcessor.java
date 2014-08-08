@@ -4,7 +4,7 @@ import com.claymus.ClaymusHelper;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.google.appengine.api.users.User;
 
-public class UserInfoProcessor implements WebsiteWidgetProcessor<UserInfo> {
+public class UserInfoProcessor extends WebsiteWidgetProcessor<UserInfo> {
 
 	@Override
 	public String getHtml( UserInfo userInfo ) {

@@ -1,4 +1,4 @@
 <div>
-	<h1> ${title} </h1>
-	<h3> ${tagLine} </h3>
+	<h1> ${ getTitle() } </h1>
+	<h3> ${ getTagLine() } </h3>
 </div>

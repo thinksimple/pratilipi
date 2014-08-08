@@ -43,12 +43,12 @@ public final class WebsiteWidgetRegistry {
 	
 	@SuppressWarnings("unchecked")
 	public <P extends WebsiteWidget> WebsiteWidgetProcessor<P> getWebsiteWidgetProcessor(
-			Class<P> pageContentClass ) {
+			Class<P> websiteWidgetClass ) {
 		
-		if( pageContentClass.isInterface() )
-			return (WebsiteWidgetProcessor<P>) map.get( pageContentClass );
+		if( websiteWidgetClass.isInterface() )
+			return (WebsiteWidgetProcessor<P>) map.get( websiteWidgetClass );
 		else
-			return (WebsiteWidgetProcessor<P>) map.get( pageContentClass.getInterfaces()[0] );
+			return (WebsiteWidgetProcessor<P>) map.get( websiteWidgetClass.getInterfaces()[0] );
 	}
 	
 }

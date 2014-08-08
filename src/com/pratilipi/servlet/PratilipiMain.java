@@ -55,7 +55,7 @@ public class PratilipiMain extends ClaymusMain {
 		List<WebsiteWidget> websiteWidgetList
 				= super.getWebsiteWidgetList( request );
 
-		Header header = HeaderFactory.newUserInfo();
+		Header header = HeaderFactory.newHeader();
 		header.setTitle( "Pratilipi" );
 		header.setTagLine( "You become what you read ..." );
 
