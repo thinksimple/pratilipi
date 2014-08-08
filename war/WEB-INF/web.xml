@@ -28,12 +28,12 @@
    
 
   <servlet>
-    <servlet-name>MainServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.MainServlet</servlet-class>
+    <servlet-name>PratilipiMain</servlet-name>
+    <servlet-class>com.pratilipi.servlet.PratilipiMain</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>MainServlet</servlet-name>
+    <servlet-name>PratilipiMain</servlet-name>
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
    

@@ -16,7 +16,7 @@ import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
 
 @SuppressWarnings("serial")
-public class MainServlet extends ClaymusMain {
+public class PratilipiMain extends ClaymusMain {
 	
 	static {
 		PageContentRegistry.register( BookDataInputFactory.class );
