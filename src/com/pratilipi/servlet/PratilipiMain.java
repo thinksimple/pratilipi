@@ -14,6 +14,7 @@ import com.claymus.module.websitewidget.user.UserInfoFactory;
 import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
+import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
 import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
 
 @SuppressWarnings("serial")
@@ -23,6 +24,7 @@ public class PratilipiMain extends ClaymusMain {
 		PAGE_CONTENT_REGISTRY.register( BookDataInputFactory.class );
 		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManageLanguagesFactory.class );
+		PAGE_CONTENT_REGISTRY.register( ManageAuthorsFactory.class );
 	}
 	
 
@@ -38,6 +40,8 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
 		else if( requestUri.equals( "/manage/books/new" ) )
 			pageContentList.add( BookDataInputFactory.newBookDataInput() );
+		else if( requestUri.equals( "/manage/authors/new" ) )
+			pageContentList.add( ManageAuthorsFactory.newAuthorDataInput() );
 		else
 			pageContentList.add( BookListFactory.newBookList() );
 		
