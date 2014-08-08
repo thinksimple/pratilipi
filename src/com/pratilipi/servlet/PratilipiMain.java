@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.WebsiteWidget;
-import com.claymus.module.pagecontent.PageContentRegistry;
 import com.claymus.module.websitewidget.header.Header;
 import com.claymus.module.websitewidget.header.HeaderFactory;
 import com.claymus.module.websitewidget.navigation.Navigation;
@@ -21,9 +20,9 @@ import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
 public class PratilipiMain extends ClaymusMain {
 	
 	static {
-		PageContentRegistry.register( BookDataInputFactory.class );
-		PageContentRegistry.register( BookListFactory.class );
-		PageContentRegistry.register( ManageLanguagesFactory.class );
+		PAGE_CONTENT_REGISTRY.register( BookDataInputFactory.class );
+		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
+		PAGE_CONTENT_REGISTRY.register( ManageLanguagesFactory.class );
 	}
 	
 

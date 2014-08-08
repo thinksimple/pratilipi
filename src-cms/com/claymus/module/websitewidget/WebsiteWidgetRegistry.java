@@ -14,13 +14,13 @@ public final class WebsiteWidgetRegistry {
 			Logger.getLogger( WebsiteWidgetRegistry.class.getName() );
 
 	
-	private static final Map<
+	private final Map<
 			Class<? extends WebsiteWidget>,
-			WebsiteWidgetProcessor<? extends WebsiteWidget> > WEBSITE_WIDGET_REGISTRY = new HashMap<>();
+			WebsiteWidgetProcessor<? extends WebsiteWidget> > map = new HashMap<>();
 
 
 	@SuppressWarnings("unchecked")
-	public static <
+	public <
 			P extends WebsiteWidget,
 			Q extends WebsiteWidgetProcessor<P>,
 			R extends WebsiteWidgetFactory<P, Q> > void register( Class<R> websiteWidgetFactoryClass ) {
@@ -35,20 +35,20 @@ public final class WebsiteWidgetRegistry {
 		
 		try {
 			Q websiteWidgetProcessor = websiteWidgetProcessorClass.newInstance();
-			WEBSITE_WIDGET_REGISTRY.put( websiteWidgetClass, websiteWidgetProcessor );
+			map.put( websiteWidgetClass, websiteWidgetProcessor );
 		} catch ( InstantiationException | IllegalAccessException e ) {
 			logger.log( Level.SEVERE, "Module registration failed.", e );
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <P extends WebsiteWidget> WebsiteWidgetProcessor<P> getWebsiteWidgetProcessor(
+	public <P extends WebsiteWidget> WebsiteWidgetProcessor<P> getWebsiteWidgetProcessor(
 			Class<P> pageContentClass ) {
 		
 		if( pageContentClass.isInterface() )
-			return (WebsiteWidgetProcessor<P>) WEBSITE_WIDGET_REGISTRY.get( pageContentClass );
+			return (WebsiteWidgetProcessor<P>) map.get( pageContentClass );
 		else
-			return (WebsiteWidgetProcessor<P>) WEBSITE_WIDGET_REGISTRY.get( pageContentClass.getInterfaces()[0] );
+			return (WebsiteWidgetProcessor<P>) map.get( pageContentClass.getInterfaces()[0] );
 	}
 	
 }

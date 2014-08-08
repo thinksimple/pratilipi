@@ -14,13 +14,13 @@ public final class PageContentRegistry {
 			Logger.getLogger( PageContentRegistry.class.getName() );
 
 	
-	private static final Map<
+	private final Map<
 			Class<? extends PageContent>,
-			PageContentProcessor<? extends PageContent> > PAGE_CONTENT_REGISTRY = new HashMap<>();
+			PageContentProcessor<? extends PageContent> > map = new HashMap<>();
 
 
 	@SuppressWarnings("unchecked")
-	public static <
+	public <
 			P extends PageContent,
 			Q extends PageContentProcessor<P>,
 			R extends PageContentFactory<P, Q> > void register( Class<R> pageContentFactoryClass ) {
@@ -35,20 +35,20 @@ public final class PageContentRegistry {
 		
 		try {
 			Q pageContentProcessor = pageContentProcessorClass.newInstance();
-			PAGE_CONTENT_REGISTRY.put( pageContentClass, pageContentProcessor );
+			map.put( pageContentClass, pageContentProcessor );
 		} catch ( InstantiationException | IllegalAccessException e ) {
 			logger.log( Level.SEVERE, "Module registration failed.", e );
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <P extends PageContent> PageContentProcessor<P> getPageContentProcessor(
+	public <P extends PageContent> PageContentProcessor<P> getPageContentProcessor(
 			Class<P> pageContentClass ) {
 		
 		if( pageContentClass.isInterface() )
-			return (PageContentProcessor<P>) PAGE_CONTENT_REGISTRY.get( pageContentClass );
+			return (PageContentProcessor<P>) map.get( pageContentClass );
 		else
-			return (PageContentProcessor<P>) PAGE_CONTENT_REGISTRY.get( pageContentClass.getInterfaces()[0] );
+			return (PageContentProcessor<P>) map.get( pageContentClass.getInterfaces()[0] );
 	}
 	
 }

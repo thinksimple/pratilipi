@@ -32,13 +32,19 @@ import freemarker.template.TemplateException;
 
 @SuppressWarnings("serial")
 public class ClaymusMain extends HttpServlet {
+	
+	protected static final PageContentRegistry PAGE_CONTENT_REGISTRY
+			= new PageContentRegistry();
+
+	protected static final WebsiteWidgetRegistry WEBSITE_WIDGET_REGISTRY
+			= new WebsiteWidgetRegistry();
 
 	static {
-		PageContentRegistry.register( HtmlContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( HtmlContentFactory.class );
 
-		WebsiteWidgetRegistry.register( HeaderFactory.class );
-		WebsiteWidgetRegistry.register( NavigationFactory.class );
-		WebsiteWidgetRegistry.register( UserInfoFactory.class );
+		WEBSITE_WIDGET_REGISTRY.register( HeaderFactory.class );
+		WEBSITE_WIDGET_REGISTRY.register( NavigationFactory.class );
+		WEBSITE_WIDGET_REGISTRY.register( UserInfoFactory.class );
 	}
 	
 	@Override
@@ -102,7 +108,7 @@ public class ClaymusMain extends HttpServlet {
 		for( WebsiteWidget websiteWidget : websiteWidgetList ) {
 			@SuppressWarnings("rawtypes")
 			WebsiteWidgetProcessor websiteWidgetProcessor = 
-					WebsiteWidgetRegistry.getWebsiteWidgetProcessor( websiteWidget.getClass() );
+					WEBSITE_WIDGET_REGISTRY.getWebsiteWidgetProcessor( websiteWidget.getClass() );
 			@SuppressWarnings("unchecked")
 			String websiteWidgetHtml = websiteWidgetProcessor.getHtml( websiteWidget );
 			websiteWidgetHtmlList.add( websiteWidgetHtml );
@@ -112,7 +118,7 @@ public class ClaymusMain extends HttpServlet {
 		for( PageContent pageContent : pageContentList ) {
 			@SuppressWarnings("rawtypes")
 			PageContentProcessor pageContentProcessor =
-					PageContentRegistry.getPageContentProcessor( pageContent.getClass() );
+					PAGE_CONTENT_REGISTRY.getPageContentProcessor( pageContent.getClass() );
 			@SuppressWarnings("unchecked")
 			String pageContentHtml = pageContentProcessor.getHtml( pageContent );
 			pageContentHtmlList.add( pageContentHtml );
