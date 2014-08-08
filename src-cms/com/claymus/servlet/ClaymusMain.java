@@ -1,5 +1,6 @@
 package com.claymus.servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.client.InitializationException;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
@@ -27,24 +29,41 @@ import com.claymus.module.websitewidget.navigation.NavigationFactory;
 import com.claymus.module.websitewidget.user.UserInfoFactory;
 
 import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
+import freemarker.template.Version;
 
 @SuppressWarnings("serial")
 public class ClaymusMain extends HttpServlet {
 	
-	protected static final PageContentRegistry PAGE_CONTENT_REGISTRY
-			= new PageContentRegistry();
+	protected static final PageContentRegistry PAGE_CONTENT_REGISTRY;
+	protected static final WebsiteWidgetRegistry WEBSITE_WIDGET_REGISTRY;
 
-	protected static final WebsiteWidgetRegistry WEBSITE_WIDGET_REGISTRY
-			= new WebsiteWidgetRegistry();
-
+	public static final Configuration FREEMARKER_CONFIGURATION;
+	
 	static {
+		PAGE_CONTENT_REGISTRY = new PageContentRegistry();
+		WEBSITE_WIDGET_REGISTRY = new WebsiteWidgetRegistry();
+		
 		PAGE_CONTENT_REGISTRY.register( HtmlContentFactory.class );
 
 		WEBSITE_WIDGET_REGISTRY.register( HeaderFactory.class );
 		WEBSITE_WIDGET_REGISTRY.register( NavigationFactory.class );
 		WEBSITE_WIDGET_REGISTRY.register( UserInfoFactory.class );
+		
+		FREEMARKER_CONFIGURATION = new Configuration();
+		try {
+			FREEMARKER_CONFIGURATION.setDirectoryForTemplateLoading(
+					new File( System.getProperty("user.dir") + "/WEB-INF/classes/" ) );
+		} catch ( IOException e ) {
+			throw new InitializationException( e );
+		}
+		FREEMARKER_CONFIGURATION.setObjectWrapper( new DefaultObjectWrapper() );
+		FREEMARKER_CONFIGURATION.setDefaultEncoding( "UTF-8" );
+		FREEMARKER_CONFIGURATION.setTemplateExceptionHandler( TemplateExceptionHandler.HTML_DEBUG_HANDLER );
+		FREEMARKER_CONFIGURATION.setIncompatibleImprovements( new Version(2, 3, 20) ); // FreeMarker 2.3.20
 	}
 	
 	@Override
