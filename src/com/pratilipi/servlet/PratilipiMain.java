@@ -26,7 +26,7 @@ public class PratilipiMain extends ClaymusMain {
 		PAGE_CONTENT_REGISTRY.register( ManageLanguagesFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManageAuthorsFactory.class );
 	}
-	
+
 
 	@Override
 	protected List<PageContent> getPageContentList(
@@ -65,7 +65,7 @@ public class PratilipiMain extends ClaymusMain {
 				{ "About", "/about" },
 				{ "Contact", "/contact" }
 		} );
-		
+	
 		websiteWidgetList.add( header );
 		websiteWidgetList.add( navigation );
 		websiteWidgetList.add( UserInfoFactory.newUserInfo() );

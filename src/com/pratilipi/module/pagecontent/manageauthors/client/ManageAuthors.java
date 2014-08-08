@@ -68,9 +68,9 @@ public class ManageAuthors implements EntryPoint {
 					Window.alert("Error in form");
 			}});
 		
-		RootPanel.get("Pratilipi-ManageAuthor").add(vPanel);
-		RootPanel.get("Pratilipi-ManageAuthor").add(manageAuthors);
-		RootPanel.get("Pratilipi-ManageAuthor").add(addAuthor);
+		RootPanel.get("PageContent-ManageAuthors").add(vPanel);
+		RootPanel.get("PageContent-ManageAuthors").add(manageAuthors);
+		RootPanel.get("PageContent-ManageAuthors").add(addAuthor);
 		
 	}
 	

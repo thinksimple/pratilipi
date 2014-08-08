@@ -11,6 +11,7 @@ public class BookViewDetailImpl extends BookView implements ClickHandler {
 
 	private Label isbnLabel = new Label();
 	private Label titleLabel = new Label();
+	@SuppressWarnings("unused")
 	private BookData bookData = new BookData();
 	
 	

@@ -2,7 +2,7 @@ package com.pratilipi.module.pagecontent.managelanguages;
 
 import com.claymus.module.pagecontent.PageContentProcessor;
 
-public class ManageLanguagesProcessor implements PageContentProcessor<ManageLanguages> {
+public class ManageLanguagesProcessor extends PageContentProcessor<ManageLanguages> {
 
 	@Override
 	public String getHtml( ManageLanguages manageLanguages ) {

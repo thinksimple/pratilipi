@@ -2,7 +2,7 @@ package com.pratilipi.module.pagecontent.manageauthors;
 
 import com.claymus.module.pagecontent.PageContentProcessor;
 
-public class ManageAuthorsProcessor implements PageContentProcessor<ManageAuthors> {
+public class ManageAuthorsProcessor extends PageContentProcessor<ManageAuthors> {
 
 	@Override
 	public String getHtml( ManageAuthors author ) {
@@ -11,7 +11,7 @@ public class ManageAuthorsProcessor implements PageContentProcessor<ManageAuthor
 				+ "language='javascript' "
 				+ "src='/pagecontent.manageauthors/pagecontent.manageauthors.nocache.js'"
 				+ "></script>"
-				+ "<div id='Pratilipi-ManageAuthor'></div>";
+				+ "<div id='PageContent-ManageAuthors'></div>";
 	}
 	
 }

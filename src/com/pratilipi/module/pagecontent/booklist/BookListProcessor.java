@@ -2,7 +2,7 @@ package com.pratilipi.module.pagecontent.booklist;
 
 import com.claymus.module.pagecontent.PageContentProcessor;
 
-public class BookListProcessor implements PageContentProcessor<BookList> {
+public class BookListProcessor extends PageContentProcessor<BookList> {
 
 	@Override
 	public String getHtml( BookList bookList ) {

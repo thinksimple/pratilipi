@@ -32,7 +32,6 @@ public abstract class WebsiteWidgetProcessor<T extends WebsiteWidget> {
 		}
 		
 		return writer.toString();
-	
 	}
 	
 	protected String getTemplateName() {
