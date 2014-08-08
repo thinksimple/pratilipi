@@ -7,12 +7,16 @@ import com.pratilipi.service.shared.AddBookRequest;
 import com.pratilipi.service.shared.AddBookResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
+import com.pratilipi.service.shared.AddPublisherRequest;
+import com.pratilipi.service.shared.AddPublisherResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
 import com.pratilipi.service.shared.GetBookListResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
+import com.pratilipi.service.shared.GetPublisherListRequest;
+import com.pratilipi.service.shared.GetPublisherListResponse;
 
 public interface PratilipiServiceAsync {
 	
@@ -41,5 +45,13 @@ public interface PratilipiServiceAsync {
 	void getAuthorList(
 			GetAuthorListRequest request,
 			AsyncCallback<GetAuthorListResponse> callback );
+	
+	void addPublisher(
+			AddPublisherRequest request,
+			AsyncCallback<AddPublisherResponse> callback );
+
+	void getPublisherList(
+			GetPublisherListRequest request,
+			AsyncCallback<GetPublisherListResponse> callback );
 
 }

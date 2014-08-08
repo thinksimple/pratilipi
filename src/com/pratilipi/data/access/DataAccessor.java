@@ -46,6 +46,8 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	Publisher newPublisher();
 
 	Publisher getPublisher( Long id );
+	
+	List<Publisher> getPublisherList();
 
 	Publisher createOrUpdatePublisher( Publisher publisher );
 

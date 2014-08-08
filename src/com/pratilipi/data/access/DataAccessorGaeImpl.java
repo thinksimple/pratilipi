@@ -120,6 +120,17 @@ public class DataAccessorGaeImpl
 	public Publisher getPublisher( Long id ) {
 		return getEntity( PublisherEntity.class, id );
 	}
+	
+	@Override
+	public List<Publisher> getPublisherList() {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( PublisherEntity.class ) )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<Publisher> publisherEntityList = (List<Publisher>) query.execute();
+		return (List<Publisher>) pm.detachCopyAll( publisherEntityList );
+	}
 
 	@Override
 	public Publisher createOrUpdatePublisher( Publisher publisher ) {

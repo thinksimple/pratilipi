@@ -20,15 +20,20 @@ import com.pratilipi.service.shared.AddBookRequest;
 import com.pratilipi.service.shared.AddBookResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
+import com.pratilipi.service.shared.AddPublisherRequest;
+import com.pratilipi.service.shared.AddPublisherResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
 import com.pratilipi.service.shared.GetBookListResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
+import com.pratilipi.service.shared.GetPublisherListRequest;
+import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.LanguageData;
+import com.pratilipi.service.shared.data.PublisherData;
 
 @SuppressWarnings("serial")
 public class PratilipiServiceImpl
@@ -181,6 +186,50 @@ public class PratilipiServiceImpl
 		dataAccessor.destroy();
 		
 		return new GetAuthorListResponse( authorDataList );
+	}
+
+	@Override
+	public AddPublisherResponse addPublisher(AddPublisherRequest request)
+			throws InsufficientAccessException {
+		
+		if( ! ClaymusHelper.isUserAdmin() )
+			throw new InsufficientAccessException();
+		
+		PublisherData publisherData = request.getPublisher();
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Publisher publisher = dataAccessor.newPublisher();
+		publisher.setName( publisherData.getName() );
+		publisher.setEmail( publisherData.getEmail() );
+		publisher.setRegistrationDate( new Date() );
+		
+		publisher = dataAccessor.createOrUpdatePublisher( publisher );
+		dataAccessor.destroy();
+		
+		return new AddPublisherResponse( publisher.getId() );
+	}
+
+	@Override
+	public GetPublisherListResponse getPublisherList(
+			GetPublisherListRequest request) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<Publisher> publisherList = dataAccessor.getPublisherList();
+		
+		ArrayList<PublisherData> publisherDataList = new ArrayList<>( publisherList.size() );
+		for( Publisher publisher : publisherList ) {
+			PublisherData publisherData = new PublisherData();
+			publisherData.setName( publisher.getName() );
+			publisherData.setEmail( publisher.getEmail() );
+			publisherData.setRegistrationDate( publisher.getRegistrationDate() );
+			
+			publisherDataList.add( publisherData );
+		}
+
+		dataAccessor.destroy();
+		
+		return new GetPublisherListResponse( publisherDataList );
 	}
 
 }
