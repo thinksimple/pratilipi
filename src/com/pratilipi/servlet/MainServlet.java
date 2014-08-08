@@ -22,6 +22,8 @@ import com.claymus.module.pagecontent.PageContentRegistry;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.claymus.module.websitewidget.WebsiteWidgetRegistry;
+import com.claymus.module.websitewidget.header.Header;
+import com.claymus.module.websitewidget.header.HeaderFactory;
 import com.claymus.module.websitewidget.user.UserInfoFactory;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
@@ -44,6 +46,7 @@ public class MainServlet extends HttpServlet {
 		PageContentRegistry.register( BookDataInputFactory.class );
 		PageContentRegistry.register( BookListFactory.class );
 		WebsiteWidgetRegistry.register( UserInfoFactory.class );
+		WebsiteWidgetRegistry.register( HeaderFactory.class );
 
 		String requestUri = request.getRequestURI();
 		PrintWriter out = response.getWriter();
@@ -192,15 +195,16 @@ public class MainServlet extends HttpServlet {
 		
 	}
 	
-	private List<PageContent> getPageContentList() {
-		List<PageContent> pageContentList = new LinkedList<>();
-		pageContentList.add( BookListFactory.newBookList() );
-		return pageContentList;
-	}
-
 	private List<WebsiteWidget> getWebsiteWidgetList() {
 		List<WebsiteWidget> websiteWidgetList = new LinkedList<>();
+
+		Header header = HeaderFactory.newUserInfo();
+		header.setTitle( "Pratilipi" );
+		header.setTagLine( "You become what you read ..." );
+
+		websiteWidgetList.add( header );
 		websiteWidgetList.add( UserInfoFactory.newUserInfo() );
+
 		return websiteWidgetList;
 	}
 
