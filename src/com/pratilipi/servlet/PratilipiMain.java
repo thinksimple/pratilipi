@@ -9,6 +9,8 @@ import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.PageContentRegistry;
 import com.claymus.module.websitewidget.header.Header;
 import com.claymus.module.websitewidget.header.HeaderFactory;
+import com.claymus.module.websitewidget.navigation.Navigation;
+import com.claymus.module.websitewidget.navigation.NavigationFactory;
 import com.claymus.module.websitewidget.user.UserInfoFactory;
 import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
@@ -24,23 +26,6 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( ManageLanguagesFactory.class );
 	}
 	
-
-	@Override
-	protected List<WebsiteWidget> getWebsiteWidgetList(
-			HttpServletRequest request ) {
-		
-		List<WebsiteWidget> websiteWidgetList
-				= super.getWebsiteWidgetList( request );
-
-		Header header = HeaderFactory.newUserInfo();
-		header.setTitle( "Pratilipi" );
-		header.setTagLine( "You become what you read ..." );
-
-		websiteWidgetList.add( header );
-		websiteWidgetList.add( UserInfoFactory.newUserInfo() );
-
-		return websiteWidgetList;
-	}
 
 	@Override
 	protected List<PageContent> getPageContentList(
@@ -60,4 +45,29 @@ public class PratilipiMain extends ClaymusMain {
 		return pageContentList;
 	}
 	
+	@Override
+	protected List<WebsiteWidget> getWebsiteWidgetList(
+			HttpServletRequest request ) {
+		
+		List<WebsiteWidget> websiteWidgetList
+				= super.getWebsiteWidgetList( request );
+
+		Header header = HeaderFactory.newUserInfo();
+		header.setTitle( "Pratilipi" );
+		header.setTagLine( "You become what you read ..." );
+
+		Navigation navigation = NavigationFactory.newNavigation();
+		navigation.setLinks( new String[][] {
+				{ "Home", "/" },
+				{ "About", "/about" },
+				{ "Contact", "/contact" }
+		} );
+		
+		websiteWidgetList.add( header );
+		websiteWidgetList.add( navigation );
+		websiteWidgetList.add( UserInfoFactory.newUserInfo() );
+
+		return websiteWidgetList;
+	}
+
 }

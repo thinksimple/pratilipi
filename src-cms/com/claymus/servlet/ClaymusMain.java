@@ -23,6 +23,7 @@ import com.claymus.module.pagecontent.html.HtmlContentFactory;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.claymus.module.websitewidget.WebsiteWidgetRegistry;
 import com.claymus.module.websitewidget.header.HeaderFactory;
+import com.claymus.module.websitewidget.navigation.NavigationFactory;
 import com.claymus.module.websitewidget.user.UserInfoFactory;
 
 import freemarker.template.Configuration;
@@ -36,6 +37,7 @@ public class ClaymusMain extends HttpServlet {
 		PageContentRegistry.register( HtmlContentFactory.class );
 
 		WebsiteWidgetRegistry.register( HeaderFactory.class );
+		WebsiteWidgetRegistry.register( NavigationFactory.class );
 		WebsiteWidgetRegistry.register( UserInfoFactory.class );
 	}
 	
@@ -182,7 +184,6 @@ public class ClaymusMain extends HttpServlet {
 	
 	protected List<PageContent> getPageContentList(
 			HttpServletRequest request ) {
-		
 		return new LinkedList<>();
 	}
 
