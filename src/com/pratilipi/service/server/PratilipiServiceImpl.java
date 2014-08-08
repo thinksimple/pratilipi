@@ -151,6 +151,7 @@ public class PratilipiServiceImpl
 		Author author = dataAccessor.newAuthor();
 		author.setFirstName( authorData.getFirstName() );
 		author.setLastName( authorData.getLastName() );
+		author.setPenName( authorData.getPenName() );
 		author.setEmail( authorData.getEmail() );
 		author.setRegistrationDate( new Date() );
 		

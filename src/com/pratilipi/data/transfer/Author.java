@@ -5,6 +5,10 @@ import java.util.Date;
 public interface Author {
 	
 	Long getId();
+
+	String getUserId();
+	
+	void setUserId( String userId );
 	
 	String getFirstName();
 	
@@ -13,6 +17,10 @@ public interface Author {
 	String getLastName();
 	
 	void setLastName( String lastName );
+	
+	String getPenName();
+	
+	void setPenName( String penName );
 	
 	String getEmail();
 	

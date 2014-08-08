@@ -12,6 +12,8 @@ public class AuthorData implements IsSerializable {
 	
 	private String lastName;
 	
+	private String penName;
+	
 	private String email;
 
 	private Date registrationDate;
@@ -29,7 +31,7 @@ public class AuthorData implements IsSerializable {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstName( String firstName ) {
 		this.firstName = firstName;
 	}
 
@@ -37,15 +39,23 @@ public class AuthorData implements IsSerializable {
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public void setLastName( String lastName ) {
 		this.lastName = lastName;
+	}
+
+	public String getPenName() {
+		return penName;
+	}
+
+	public void setPenName( String penName ) {
+		this.penName = penName;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail( String email ) {
 		this.email = email;
 	}
 
@@ -53,7 +63,7 @@ public class AuthorData implements IsSerializable {
 		return registrationDate;
 	}
 
-	public void setRegistrationDate(Date registrationDate) {
+	public void setRegistrationDate( Date registrationDate ) {
 		this.registrationDate = registrationDate;
 	}
 

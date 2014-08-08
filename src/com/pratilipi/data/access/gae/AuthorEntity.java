@@ -15,6 +15,9 @@ public class AuthorEntity implements Author {
 	@PrimaryKey
 	@Persistent( column = "AUTHOR_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
+
+	@Persistent( column = "USER_ID" )
+	private String userId;
 	
 	@Persistent( column = "FIRST_NAME" )
 	private String firstName;
@@ -22,6 +25,9 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "LAST_NAME" )
 	private String lastName;
 
+	@Persistent( column = "PEN_NAME" )
+	private String penName;
+	
 	@Persistent( column = "EMAIL" )
 	private String email;
 
@@ -32,6 +38,16 @@ public class AuthorEntity implements Author {
 	@Override
 	public Long getId() {
 		return id;
+	}
+
+	@Override
+	public String getUserId() {
+		return userId;
+	}
+	
+	@Override
+	public void setUserId( String userId ) {
+		this.userId = userId;
 	}
 
 	@Override
@@ -52,6 +68,16 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setLastName( String lastName ) {
 		this.lastName = lastName;
+	}
+
+	@Override
+	public String getPenName() {
+		return penName;
+	}
+
+	@Override
+	public void setPenName( String penName ) {
+		this.penName = penName;
 	}
 
 	@Override
