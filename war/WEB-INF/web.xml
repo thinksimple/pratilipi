@@ -12,7 +12,7 @@
   
   <servlet-mapping>
     <servlet-name>PratilipiService</servlet-name>
-    <url-pattern>/pratilipiservice</url-pattern>
+    <url-pattern>/service.pratilipi</url-pattern>
   </servlet-mapping>
 
 

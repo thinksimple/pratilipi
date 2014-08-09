@@ -20,7 +20,7 @@ import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 
-@RemoteServiceRelativePath("../pratilipiservice")
+@RemoteServiceRelativePath("../service.pratilipi")
 public interface PratilipiService extends RemoteService {
 	
 	AddBookResponse addBook( AddBookRequest request )

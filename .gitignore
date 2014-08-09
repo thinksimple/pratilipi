@@ -5,8 +5,8 @@
 /war/WEB-INF/classes
 /war/WEB-INF/deploy
 /war/WEB-INF/lib
-/war/pagecontent_bookdatainput
-/war/pagecontent_booklist
+/war/pagecontent.bookdatainput
+/war/pagecontent.booklist
 /war/pagecontent.managelanguages
 /war/pagecontent.manageauthors
 /war/pagecontent.managepublishers

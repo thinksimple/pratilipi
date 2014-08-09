@@ -9,9 +9,9 @@ public class BookListProcessor extends PageContentProcessor<BookList> {
 		return "<script "
 				+ "type='text/javascript' "
 				+ "language='javascript' "
-				+ "src='/pagecontent_booklist/pagecontent_booklist.nocache.js'"
+				+ "src='/pagecontent.booklist/pagecontent.booklist.nocache.js'"
 				+ "></script>"
-				+ "<div id='Pratilipi-BookList'></div>";
+				+ "<div id='PageContent-BookList'></div>";
 	}
 	
 }

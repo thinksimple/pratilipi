@@ -27,7 +27,7 @@ public class BookList implements EntryPoint {
 					BookView bookView = new BookViewThumbnailImpl();
 					bookView.setBookData( bookData );
 					RootPanel
-							.get( "Pratilipi-BookList" )
+							.get( "PageContent-BookList" )
 							.add( bookView );
 				}
 				

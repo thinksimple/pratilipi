@@ -56,9 +56,9 @@ public class BookDataInput implements EntryPoint {
 		//form.add(bookDataInputView);
 		//form.add(button);
 		
-		RootPanel.get( "Pratilipi-BookDataInput" ).add( bookDataInputView );
-		RootPanel.get( "Pratilipi-BookDataInput" ).add( button );
-		//RootPanel.get( "Pratilipi-BookDataInput" ).add(form);
+		RootPanel.get( "PageContent-BookDataInput" ).add( bookDataInputView );
+		RootPanel.get( "PageContent-BookDataInput" ).add( button );
+		//RootPanel.get( "PageContent-BookDataInput" ).add(form);
 		
 	}
 	

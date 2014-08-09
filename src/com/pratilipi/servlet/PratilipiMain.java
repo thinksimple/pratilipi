@@ -70,9 +70,18 @@ public class PratilipiMain extends ClaymusMain {
 				{ "Contact", "/contact" }
 		} );
 	
+		Navigation navigation_2 = NavigationFactory.newNavigation();
+		navigation_2.setLinks( new String[][] {
+				{ "Books", "/manage/books/new" },
+				{ "Languages", "/manage/languages" },
+				{ "Authors", "/manage/authors/new" },
+				{ "Publishers", "/manage/publishers/new" }
+		} );
+	
 		websiteWidgetList.add( header );
-		websiteWidgetList.add( navigation );
 		websiteWidgetList.add( UserInfoFactory.newUserInfo() );
+		websiteWidgetList.add( navigation );
+		websiteWidgetList.add( navigation_2 );
 
 		return websiteWidgetList;
 	}
