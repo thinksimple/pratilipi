@@ -8,10 +8,12 @@ public class ValidatePublisher {
 	
 	//Regular expression for string containing characters and whitespace.
 	private String charPattern = new String("^\\w+( \\w+)*$");
+	@SuppressWarnings("unused")
 	private RegExp charExp = RegExp.compile(charPattern);
 	
 	//Regular expression for a word.
 	private String wordPattern = new String("^\\w*$");
+	@SuppressWarnings("unused")
 	private RegExp wordExp = RegExp.compile(wordPattern);
 		
 	//Regular expression for string containing characters and whitespace.

@@ -1,6 +1,5 @@
 package com.pratilipi.module.pagecontent.managepublishers.client;
 
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pratilipi.service.shared.data.PublisherData;
