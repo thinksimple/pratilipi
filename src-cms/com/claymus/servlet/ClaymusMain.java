@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import com.claymus.data.transfer.WebsiteLayout;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.claymus.module.pagecontent.PageContentRegistry;
+import com.claymus.module.pagecontent.fileupload.FileUploadFactory;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.claymus.module.websitewidget.WebsiteWidgetRegistry;
@@ -52,7 +54,8 @@ public class ClaymusMain extends HttpServlet {
 		WEBSITE_WIDGET_REGISTRY = new WebsiteWidgetRegistry();
 		
 		PAGE_CONTENT_REGISTRY.register( HtmlContentFactory.class );
-	
+		PAGE_CONTENT_REGISTRY.register( FileUploadFactory.class );
+		
 		WEBSITE_WIDGET_REGISTRY.register( HeaderFactory.class );
 		WEBSITE_WIDGET_REGISTRY.register( NavigationFactory.class );
 		WEBSITE_WIDGET_REGISTRY.register( UserInfoFactory.class );
@@ -71,6 +74,37 @@ public class ClaymusMain extends HttpServlet {
 		FREEMARKER_CONFIGURATION.setDefaultEncoding( "UTF-8" );
 		FREEMARKER_CONFIGURATION.setTemplateExceptionHandler( TemplateExceptionHandler.RETHROW_HANDLER );
 		FREEMARKER_CONFIGURATION.setIncompatibleImprovements( new Version(2, 3, 20) ); // FreeMarker 2.3.20
+	}
+
+	
+	private HttpServlet fileUploadServlet;
+	
+
+	@Override
+	protected void service(
+			HttpServletRequest request,
+			HttpServletResponse response ) throws ServletException, IOException {
+		
+		String requestUri = request.getRequestURI();
+		
+		if( requestUri.startsWith( "/service.upload/" ) ) {
+			if( fileUploadServlet == null ) {
+				fileUploadServlet = new FileUpload();
+				fileUploadServlet.init( this.getServletConfig() );
+			}
+			fileUploadServlet.service( request, response );
+		
+		} else {
+			super.service( request, response );
+		}
+	}
+	
+	@Override
+	public void doPost(
+			HttpServletRequest request,
+			HttpServletResponse response ) throws IOException {
+
+			doGet( request, response );
 	}
 	
 	@Override

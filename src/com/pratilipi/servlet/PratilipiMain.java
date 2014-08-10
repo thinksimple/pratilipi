@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.WebsiteWidget;
+import com.claymus.module.pagecontent.fileupload.FileUpload;
+import com.claymus.module.pagecontent.fileupload.FileUploadFactory;
 import com.claymus.module.websitewidget.header.Header;
 import com.claymus.module.websitewidget.header.HeaderFactory;
 import com.claymus.module.websitewidget.navigation.Navigation;
@@ -46,7 +48,11 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( ManageAuthorsFactory.newAuthorDataInput() );
 		else if( requestUri.equals( "/manage/publishers/new" ) )
 			pageContentList.add( ManagePublishersFactory.newPublisherDataInput() );
-		else
+		else if( requestUri.startsWith( "/uploads/" ) ) {
+			FileUpload fileUpload = FileUploadFactory.newHtmlContent();
+			fileUpload.setFileName( requestUri.substring( 9 ) );
+			pageContentList.add( fileUpload );
+		} else
 			pageContentList.add( BookListFactory.newBookList() );
 		
 		return pageContentList;

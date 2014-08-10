@@ -3,6 +3,7 @@ package com.claymus;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.apphosting.api.ApiProxy;
 
 public class ClaymusHelper {
 
@@ -33,6 +34,13 @@ public class ClaymusHelper {
 
 	public static String createLogoutURL( String destinationURL ) {
 		return userService.createLogoutURL( destinationURL );
+	}
+
+	public static String getSystemProperty( String propertyName ) {
+		String appId = ApiProxy.getCurrentEnvironment().getAppId();
+		if( appId.startsWith("s~") )
+			appId = appId.substring( 2 );
+		return System.getProperty( appId + "." + propertyName );
 	}
 	
 }

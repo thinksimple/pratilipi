@@ -19,9 +19,15 @@
     <exclude path="**.gwt.rpc" />
   </static-files>
 
-  <!-- Configure java.util.logging -->
   <system-properties>
+    <!-- Configure java.util.logging -->
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+
+    <property name="devo-pratilipi.blobservice" value="GOOGLE_CLOUD_STORAGE"/>
+    <property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
+
+    <property name="prod-pratilipi.blobservice" value="GOOGLE_CLOUD_STORAGE"/>
+    <property name="prod-pratilipi.blobservice.gcs.bucket" value="prod-pratilipi.appspot.com"/>
   </system-properties>
 
   <!--
