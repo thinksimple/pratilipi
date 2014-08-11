@@ -1,13 +1,19 @@
 package com.pratilipi.servlet;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.FileUtils;
 
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.fileupload.FileUpload;
 import com.claymus.module.pagecontent.fileupload.FileUploadFactory;
+import com.claymus.module.pagecontent.html.HtmlContent;
+import com.claymus.module.pagecontent.html.HtmlContentFactory;
 import com.claymus.module.websitewidget.header.Header;
 import com.claymus.module.websitewidget.header.HeaderFactory;
 import com.claymus.module.websitewidget.navigation.Navigation;
@@ -34,13 +40,15 @@ public class PratilipiMain extends ClaymusMain {
 
 	@Override
 	protected List<PageContent> getPageContentList(
-			HttpServletRequest request ) {
+			HttpServletRequest request ) throws IOException {
 	
 		List<PageContent> pageContentList
 				= super.getPageContentList( request );
 		
 		String requestUri = request.getRequestURI();
-		if( requestUri.equals( "/manage/languages" ) )
+		if( requestUri.equals( "/books" ) )
+			pageContentList.add( BookListFactory.newBookList() );
+		else if( requestUri.equals( "/manage/languages" ) )
 			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
 		else if( requestUri.equals( "/manage/books/new" ) )
 			pageContentList.add( BookDataInputFactory.newBookDataInput() );
@@ -52,9 +60,17 @@ public class PratilipiMain extends ClaymusMain {
 			FileUpload fileUpload = FileUploadFactory.newHtmlContent();
 			fileUpload.setFileName( requestUri.substring( 9 ) );
 			pageContentList.add( fileUpload );
-		} else
-			pageContentList.add( BookListFactory.newBookList() );
-		
+		} else {
+			File file = new File("WEB-INF/classes/com/pratilipi/servlet/content/PratilipiMain.ftl");
+			List<String> lines = FileUtils.readLines( file, "UTF-8" );
+			String html = "";
+			for( String line : lines )
+				html = html + line;
+			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
+			htmlContent.setHtml( html );
+			
+			pageContentList.add( htmlContent );
+		}
 		return pageContentList;
 	}
 	
@@ -64,6 +80,10 @@ public class PratilipiMain extends ClaymusMain {
 		
 		List<WebsiteWidget> websiteWidgetList
 				= super.getWebsiteWidgetList( request );
+
+		String requestUri = request.getRequestURI();
+		if( requestUri.equals( "/" ) )
+			return websiteWidgetList;
 
 		Header header = HeaderFactory.newHeader();
 		header.setTitle( "Pratilipi" );

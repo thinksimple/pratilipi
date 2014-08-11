@@ -249,7 +249,7 @@ public class ClaymusMain extends HttpServlet {
 	}
 	
 	protected List<PageContent> getPageContentList(
-			HttpServletRequest request ) {
+			HttpServletRequest request ) throws IOException {
 		return new LinkedList<>();
 	}
 
