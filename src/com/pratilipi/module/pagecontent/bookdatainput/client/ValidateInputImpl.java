@@ -12,11 +12,11 @@ public class ValidateInputImpl{
 	private RegExp numExp = RegExp.compile(numPattern);
 
 	//Regular expression for string containing characters and whitespace.
-	private String charPattern = new String("^\\w+( \\w+)*$");
+	private String charPattern = new String("^[a-zA-z\\s]+$");
 	private RegExp charExp = RegExp.compile(charPattern);
 
 	//Regular expression for string containing number, characters and whitespace.
-	private String strPattern = new String("^((0-9)*(a-b)*(A-B)*\\s)+$");
+	private String strPattern = new String("^\\w+( \\w+)*$");
 	private RegExp strExp = RegExp.compile(strPattern);
 
 	//container of validation result.

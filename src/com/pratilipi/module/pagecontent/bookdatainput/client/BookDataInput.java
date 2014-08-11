@@ -24,7 +24,7 @@ public class BookDataInput implements EntryPoint {
 		
 		final BookDataInputView bookDataInputView = new BookDataInputViewImpl();
 		
-		Button button = new Button( "Save" );
+		final Button button = new Button( "Save" );
 		button.addClickHandler( new ClickHandler() {
 			
 			@Override
@@ -37,6 +37,9 @@ public class BookDataInput implements EntryPoint {
 						@Override
 						public void onSuccess( AddBookResponse result ) {
 							Window.alert( "Book added successfully !" );
+							bookDataInputView.setReabableOnly();
+							bookDataInputView.setEditLink(button, result.getBookId());
+							button.setVisible(false);
 						}
 						
 						@Override

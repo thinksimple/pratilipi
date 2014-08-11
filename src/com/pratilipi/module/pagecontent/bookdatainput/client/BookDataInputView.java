@@ -1,5 +1,6 @@
 package com.pratilipi.module.pagecontent.bookdatainput.client;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.pratilipi.service.shared.data.BookData;
 
@@ -40,4 +41,10 @@ public abstract class BookDataInputView extends Composite {
 	public abstract void setPublisherAcceptStyle();
 	
 	public abstract void setLanguageAcceptStyle();
+	
+	public abstract void setReabableOnly();
+	
+	public abstract void setWritable();
+	
+	public abstract void setEditLink(Button save, Long bookId);
 }
