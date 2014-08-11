@@ -87,7 +87,7 @@ public class PratilipiMain extends ClaymusMain {
 
 		Header header = HeaderFactory.newHeader();
 		header.setTitle( "Pratilipi" );
-		header.setTagLine( "You become what you read ..." );
+		header.setTagLine( "you become what you read ..." );
 
 		Navigation navigation = NavigationFactory.newNavigation();
 		navigation.setLinks( new String[][] {

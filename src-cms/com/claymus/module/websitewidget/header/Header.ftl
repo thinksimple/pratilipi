@@ -1,4 +1,6 @@
-<div>
-	<h1> ${ getTitle() } </h1>
-	<h3> ${ getTagLine() } </h3>
+<div class="pagecontent-header">
+	<h1>
+		${ getTitle() }
+		<small> ${ getTagLine() } </small>
+	</h1>
 </div>

@@ -143,7 +143,11 @@ public class ClaymusMain extends HttpServlet {
 		out.println( "<head>" );
 		
 		
-		out.println( "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"> ");
+		out.println( "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">");
+
+		out.println( "<link href='theme.default/style.css' rel='stylesheet' type='text/css'>");
+		out.println( "<link href='theme.pratilipi/style.css' rel='stylesheet' type='text/css'>");
+
 		out.println( "<title>" + page.getTitle() + "</title>" );
 		  
 		out.println( "</head>" );
