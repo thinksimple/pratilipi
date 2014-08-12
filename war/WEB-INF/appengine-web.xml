@@ -23,6 +23,9 @@
     <!-- Configure java.util.logging -->
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
 
+    <property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>
+    <property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
+
     <property name="devo-pratilipi.blobservice" value="GOOGLE_CLOUD_STORAGE"/>
     <property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
 

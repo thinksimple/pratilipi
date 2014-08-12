@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 
+import com.claymus.ClaymusHelper;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.fileupload.FileUploadContent;
@@ -52,7 +53,7 @@ public class PratilipiMain extends ClaymusMain {
 		try {
 			Template template = FREEMARKER_CONFIGURATION
 					.getTemplate( "com/pratilipi/servlet/content/WebsiteHead.ftl" );
-			template.process( null, writer );
+			template.process( new ClaymusHelper(), writer );
 		} catch ( IOException | TemplateException e ) {
 			logger.log( Level.SEVERE, "Template processing failed.", e );
 		}
