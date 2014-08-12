@@ -10,15 +10,15 @@ import org.apache.commons.io.FileUtils;
 
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.WebsiteWidget;
-import com.claymus.module.pagecontent.fileupload.FileUpload;
-import com.claymus.module.pagecontent.fileupload.FileUploadFactory;
+import com.claymus.module.pagecontent.fileupload.FileUploadContent;
+import com.claymus.module.pagecontent.fileupload.FileUploadContentFactory;
 import com.claymus.module.pagecontent.html.HtmlContent;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
-import com.claymus.module.websitewidget.header.Header;
-import com.claymus.module.websitewidget.header.HeaderFactory;
-import com.claymus.module.websitewidget.navigation.Navigation;
-import com.claymus.module.websitewidget.navigation.NavigationFactory;
-import com.claymus.module.websitewidget.user.UserInfoFactory;
+import com.claymus.module.websitewidget.header.HeaderWidget;
+import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
+import com.claymus.module.websitewidget.navigation.NavigationWidget;
+import com.claymus.module.websitewidget.navigation.NavigationWidgetFactory;
+import com.claymus.module.websitewidget.user.UserWidgetFactory;
 import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
@@ -57,9 +57,9 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/manage/publishers/new" ) )
 			pageContentList.add( ManagePublishersFactory.newPublisherDataInput() );
 		else if( requestUri.startsWith( "/uploads/" ) ) {
-			FileUpload fileUpload = FileUploadFactory.newHtmlContent();
-			fileUpload.setFileName( requestUri.substring( 9 ) );
-			pageContentList.add( fileUpload );
+			FileUploadContent fileUploadContent = FileUploadContentFactory.newFileUploadContent();
+			fileUploadContent.setFileName( requestUri.substring( 9 ) );
+			pageContentList.add( fileUploadContent );
 		} else {
 			File file = new File("WEB-INF/classes/com/pratilipi/servlet/content/PratilipiMain.ftl");
 			List<String> lines = FileUtils.readLines( file, "UTF-8" );
@@ -85,29 +85,29 @@ public class PratilipiMain extends ClaymusMain {
 		if( requestUri.equals( "/" ) )
 			return websiteWidgetList;
 
-		Header header = HeaderFactory.newHeader();
-		header.setTitle( "Pratilipi" );
-		header.setTagLine( "you become what you read ..." );
+		HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
+		headerWidget.setTitle( "Pratilipi" );
+		headerWidget.setTagLine( "you become what you read ..." );
 
-		Navigation navigation = NavigationFactory.newNavigation();
-		navigation.setLinks( new String[][] {
+		NavigationWidget navigationWidget = NavigationWidgetFactory.newNavigationWidget();
+		navigationWidget.setLinks( new String[][] {
 				{ "Home", "/" },
 				{ "About", "/about" },
 				{ "Contact", "/contact" }
 		} );
 	
-		Navigation navigation_2 = NavigationFactory.newNavigation();
-		navigation_2.setLinks( new String[][] {
+		NavigationWidget navigationWidget_2 = NavigationWidgetFactory.newNavigationWidget();
+		navigationWidget_2.setLinks( new String[][] {
 				{ "Books", "/manage/books/new" },
 				{ "Languages", "/manage/languages" },
 				{ "Authors", "/manage/authors/new" },
 				{ "Publishers", "/manage/publishers/new" }
 		} );
 	
-		websiteWidgetList.add( header );
-		websiteWidgetList.add( UserInfoFactory.newUserInfo() );
-		websiteWidgetList.add( navigation );
-		websiteWidgetList.add( navigation_2 );
+		websiteWidgetList.add( headerWidget );
+		websiteWidgetList.add( UserWidgetFactory.newUserWidget() );
+		websiteWidgetList.add( navigationWidget );
+		websiteWidgetList.add( navigationWidget_2 );
 
 		return websiteWidgetList;
 	}

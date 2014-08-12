@@ -2,7 +2,7 @@ package com.claymus.module.websitewidget.navigation;
 
 import com.claymus.data.transfer.WebsiteWidget;
 
-public interface Navigation extends WebsiteWidget {
+public interface NavigationWidget extends WebsiteWidget {
 	
 	String getTitle();
 	

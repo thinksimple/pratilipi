@@ -23,13 +23,13 @@ import com.claymus.data.transfer.WebsiteLayout;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.claymus.module.pagecontent.PageContentRegistry;
-import com.claymus.module.pagecontent.fileupload.FileUploadFactory;
+import com.claymus.module.pagecontent.fileupload.FileUploadContentFactory;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.claymus.module.websitewidget.WebsiteWidgetRegistry;
-import com.claymus.module.websitewidget.header.HeaderFactory;
-import com.claymus.module.websitewidget.navigation.NavigationFactory;
-import com.claymus.module.websitewidget.user.UserInfoFactory;
+import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
+import com.claymus.module.websitewidget.navigation.NavigationWidgetFactory;
+import com.claymus.module.websitewidget.user.UserWidgetFactory;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -54,11 +54,11 @@ public class ClaymusMain extends HttpServlet {
 		WEBSITE_WIDGET_REGISTRY = new WebsiteWidgetRegistry();
 		
 		PAGE_CONTENT_REGISTRY.register( HtmlContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( FileUploadFactory.class );
+		PAGE_CONTENT_REGISTRY.register( FileUploadContentFactory.class );
 		
-		WEBSITE_WIDGET_REGISTRY.register( HeaderFactory.class );
-		WEBSITE_WIDGET_REGISTRY.register( NavigationFactory.class );
-		WEBSITE_WIDGET_REGISTRY.register( UserInfoFactory.class );
+		WEBSITE_WIDGET_REGISTRY.register( HeaderWidgetFactory.class );
+		WEBSITE_WIDGET_REGISTRY.register( NavigationWidgetFactory.class );
+		WEBSITE_WIDGET_REGISTRY.register( UserWidgetFactory.class );
 		
 		FREEMARKER_CONFIGURATION = new Configuration();
 		try {
@@ -145,8 +145,8 @@ public class ClaymusMain extends HttpServlet {
 		
 		out.println( "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">");
 
-		out.println( "<link href='theme.default/style.css' rel='stylesheet' type='text/css'>");
-		out.println( "<link href='theme.pratilipi/style.css' rel='stylesheet' type='text/css'>");
+		out.println( "<link href='/theme.default/style.css' rel='stylesheet' type='text/css'>");
+		out.println( "<link href='/theme.pratilipi/style.css' rel='stylesheet' type='text/css'>");
 
 		out.println( "<title>" + page.getTitle() + "</title>" );
 		  

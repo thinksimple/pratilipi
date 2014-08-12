@@ -2,11 +2,11 @@ package com.claymus.module.websitewidget.header;
 
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 
-public class HeaderProcessor extends WebsiteWidgetProcessor<Header> {
+public class HeaderWidgetProcessor extends WebsiteWidgetProcessor<HeaderWidget> {
 
 	@Override
 	public String getTemplateName() {
-		return "com/claymus/module/websitewidget/header/Header.ftl";
+		return "com/claymus/module/websitewidget/header/HeaderWidget.ftl";
 	}
 
 }

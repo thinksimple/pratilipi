@@ -5,10 +5,10 @@ import javax.jdo.annotations.Persistent;
 
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.access.gae.PageContentEntity;
-import com.claymus.module.pagecontent.fileupload.FileUpload;
+import com.claymus.module.pagecontent.fileupload.FileUploadContent;
 
 @PersistenceCapable
-public class FileUploadEntity extends PageContentEntity implements FileUpload {
+public class FileUploadContentEntity extends PageContentEntity implements FileUploadContent {
 	
 	@Persistent( column = "X_COL_0" )
 	private String fileName;

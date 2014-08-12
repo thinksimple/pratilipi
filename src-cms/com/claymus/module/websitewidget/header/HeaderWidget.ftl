@@ -1,4 +1,4 @@
-<div class="pagecontent-header">
+<div class="websitewidget-header">
 	<h1>
 		${ getTitle() }
 		<small> ${ getTagLine() } </small>

@@ -4,10 +4,10 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.claymus.data.access.gae.WebsiteWidgetEntity;
-import com.claymus.module.websitewidget.navigation.Navigation;
+import com.claymus.module.websitewidget.navigation.NavigationWidget;
 
 @PersistenceCapable
-public class NavigationEntity extends WebsiteWidgetEntity implements Navigation {
+public class NavigationWidgetEntity extends WebsiteWidgetEntity implements NavigationWidget {
 
 	@Persistent( column = "X_COL_0" )
 	private String title;

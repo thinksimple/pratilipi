@@ -4,10 +4,10 @@ import com.claymus.ClaymusHelper;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.google.appengine.api.users.User;
 
-public class UserInfoProcessor extends WebsiteWidgetProcessor<UserInfo> {
+public class UserWidgetProcessor extends WebsiteWidgetProcessor<UserWidget> {
 
 	@Override
-	public String getHtml( UserInfo userInfo ) {
+	public String getHtml( UserWidget userInfo ) {
 
 		User user = ClaymusHelper.getCurrentUser();
 		

@@ -2,7 +2,7 @@ package com.claymus.module.websitewidget.header;
 
 import com.claymus.data.transfer.WebsiteWidget;
 
-public interface Header extends WebsiteWidget {
+public interface HeaderWidget extends WebsiteWidget {
 	
 	String getTitle();
 	

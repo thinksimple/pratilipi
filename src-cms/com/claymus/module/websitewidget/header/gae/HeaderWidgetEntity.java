@@ -4,10 +4,10 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.claymus.data.access.gae.WebsiteWidgetEntity;
-import com.claymus.module.websitewidget.header.Header;
+import com.claymus.module.websitewidget.header.HeaderWidget;
 
 @PersistenceCapable
-public class HeaderEntity extends WebsiteWidgetEntity implements Header {
+public class HeaderWidgetEntity extends WebsiteWidgetEntity implements HeaderWidget {
 
 	@Persistent( column = "X_COL_0" )
 	private String title;

@@ -10,10 +10,10 @@ import com.google.appengine.api.datastore.Text;
 @PersistenceCapable
 public class HtmlContentEntity extends PageContentEntity implements HtmlContent {
 
-	@Persistent( column = "TITLE" )
+	@Persistent( column = "X_COL_0" )
 	private String title;
 	
-	@Persistent( column = "HTML" )
+	@Persistent( column = "X_COL_1" )
 	private Text html;
 
 	
