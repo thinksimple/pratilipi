@@ -3,6 +3,7 @@ package com.claymus.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -89,7 +90,7 @@ public class ClaymusMain extends HttpServlet {
 		
 		if( requestUri.startsWith( "/service.upload/" ) ) {
 			if( fileUploadServlet == null ) {
-				fileUploadServlet = new FileUpload();
+				fileUploadServlet = new FileUploadServlet();
 				fileUploadServlet.init( this.getServletConfig() );
 			}
 			fileUploadServlet.service( request, response );
@@ -132,41 +133,16 @@ public class ClaymusMain extends HttpServlet {
 			PrintWriter out
 			) {
 
-		/*
-		 * The DOCTYPE declaration below will set the browser's rendering engine
-		 * into "Standards Mode". Replacing this declaration with a "Quirks Mode"
-		 * doctype is not supported.
-		 */
 		out.println( "<!doctype html>" );
 		
 		out.println( "<html>" );
 		out.println( "<head>" );
 		
+		renderPageHead( out );
 		
-		out.println( "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">");
-
-		out.println( "<link href='/theme.default/style.css' rel='stylesheet' type='text/css'>");
-		out.println( "<link href='/theme.pratilipi/style.css' rel='stylesheet' type='text/css'>");
-
-		out.println( "<title>" + page.getTitle() + "</title>" );
-		  
 		out.println( "</head>" );
 		out.println( "<body>" );
 
-		/*
-		 * OPTIONAL: include this if you want history support
-		 */
-		out.println( "<iframe src=\"javascript:''\" id=\"__gwt_historyFrame\" tabIndex='-1' style=\"position:absolute;width:0;height:0;border:0\"></iframe>" );
-		    
-		/*
-		 * RECOMMENDED: if your web app will not function without JavaScript enabled
-		 */
-		out.println( "<noscript>" );
-		out.println( "<div style=\"width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif\"> ");
-		out.println( "Your web browser must have JavaScript enabled in order for this application to display correctly." );
-		out.println( "</div>" );
-		out.println( "</noscript>" );
-		
 		
 		List<String> websiteWidgetHtmlList = new LinkedList<>();
 		for( WebsiteWidget websiteWidget : websiteWidgetList ) {
@@ -205,6 +181,16 @@ public class ClaymusMain extends HttpServlet {
 
 		out.println( "</body>" );
 		out.println( "</html>" );
+	}
+	
+	protected void renderPageHead( Writer writer ) {
+		try {
+			Template template = FREEMARKER_CONFIGURATION
+							.getTemplate( "com/claymus/servlet/content/WebsiteHead.ftl" );
+			template.process( null, writer );
+		} catch ( IOException | TemplateException e ) {
+			logger.log( Level.SEVERE, "Template processing failed.", e );
+		}
 	}
 	
 	private Page getPage() {

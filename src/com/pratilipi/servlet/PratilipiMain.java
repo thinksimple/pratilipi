@@ -2,7 +2,10 @@ package com.pratilipi.servlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,9 +29,15 @@ import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
 import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
 import com.pratilipi.module.pagecontent.managepublishers.ManagePublishersFactory;
 
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
 	
+	private static final Logger logger = 
+			Logger.getLogger( PratilipiMain.class.getName() );
+
 	static {
 		PAGE_CONTENT_REGISTRY.register( BookDataInputFactory.class );
 		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
@@ -37,6 +46,17 @@ public class PratilipiMain extends ClaymusMain {
 		PAGE_CONTENT_REGISTRY.register( ManagePublishersFactory.class );
 	}
 
+
+	protected void renderPageHead( Writer writer ) {
+		super.renderPageHead( writer );
+		try {
+			Template template = FREEMARKER_CONFIGURATION
+					.getTemplate( "com/pratilipi/servlet/content/WebsiteHead.ftl" );
+			template.process( null, writer );
+		} catch ( IOException | TemplateException e ) {
+			logger.log( Level.SEVERE, "Template processing failed.", e );
+		}
+	}
 
 	@Override
 	protected List<PageContent> getPageContentList(

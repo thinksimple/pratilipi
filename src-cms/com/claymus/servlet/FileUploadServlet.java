@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.data.access.DataAccessorFactory;
 
 @SuppressWarnings("serial")
-public class FileUpload extends HttpServlet {
+public class FileUploadServlet extends HttpServlet {
 
 	@Override
 	public void doPost(
