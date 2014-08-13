@@ -3,12 +3,12 @@ body {
 }
 
 
-.pagecontent-pratilipihome {
+#PageContent-PratilipiHome {
 	display: table;
 	width: 100%;
 }
 
-.pagecontent-pratilipihome .background {
+#PageContent-PratilipiHome .background {
 	position: absolute;
 	overflow: hidden;
 	height: 100%;
@@ -16,52 +16,57 @@ body {
 	z-index: -1;
 }
 
-.pagecontent-pratilipihome .background img {
+#PageContent-PratilipiHome .background img {
 	min-width: 800px;
 }
 
-.pagecontent-pratilipihome .links-left,
-.pagecontent-pratilipihome .links-right,
-.pagecontent-pratilipihome .title {
+#PageContent-PratilipiHome .links-left,
+#PageContent-PratilipiHome .links-right,
+#PageContent-PratilipiHome .title {
 	position: absolute;
 	overflow: visible;
 	height: 0px;
 	width: 100%;
 }
 
-.pagecontent-pratilipihome .links-left {
+#PageContent-PratilipiHome .links-left {
 	text-align: left;
 	padding-top: 15px;
 }
 
-.pagecontent-pratilipihome .links-right {
+#PageContent-PratilipiHome .links-right {
 	text-align: right;
 	padding-top: 15px;
 }
 
-.pagecontent-pratilipihome .title {
+#PageContent-PratilipiHome .title {
 	text-align: center;
 	padding-top: 15px;
 	font-size: 40px;
 }
 
-.pagecontent-pratilipihome a {
+#PageContent-PratilipiHome a {
 	color: white;
 	text-decoration: none;
 	padding-left: 75px;
 	padding-right: 75px;
 }
 
-.pagecontent-pratilipihome .tag-line {
+#PageContent-PratilipiHome .tag-line {
 	text-align: center;
 	padding-top: 100px;
 	font-size: 25px;
 	color: white;
 }
 
-.pagecontent-pratilipihome .teaser {
+#PageContent-PratilipiHome .teaser {
 	text-align: center;
 	padding-top: 100px;
+}
+
+
+#PageContent-PratilipiAbout {
+	padding: 10px;
 }
 
 

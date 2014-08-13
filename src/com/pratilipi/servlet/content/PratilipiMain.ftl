@@ -1,4 +1,4 @@
-<div class="pagecontent-pratilipihome" id="PageContent-PratilipiHome">
+<div id="PageContent-PratilipiHome">
 
 	<div class="background">
 		<img src="theme.pratilipi/images/home-background.jpg" />
