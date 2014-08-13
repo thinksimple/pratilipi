@@ -95,6 +95,8 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
 		else if( requestUri.equals( "/manage/books/new" ) )
 			pageContentList.add( BookDataInputFactory.newBookDataInput() );
+		else if( requestUri.equals( "/manage/books/update" ) )
+			pageContentList.add( BookDataInputFactory.newBookDataInput() );
 		else if( requestUri.equals( "/manage/authors/new" ) )
 			pageContentList.add( ManageAuthorsFactory.newAuthorDataInput() );
 		else if( requestUri.equals( "/manage/publishers/new" ) )

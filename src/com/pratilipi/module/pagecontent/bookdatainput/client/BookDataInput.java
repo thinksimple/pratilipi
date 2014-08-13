@@ -18,51 +18,88 @@ public class BookDataInput implements EntryPoint {
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
 	private ValidateInputImpl validator;
-	//private FormPanel form = new FormPanel();
+	private BookDataInputView bookDataInputView = new BookDataInputViewImpl();
 	
 	public void onModuleLoad() {
 		
-		final BookDataInputView bookDataInputView = new BookDataInputViewImpl();
+		String path = Window.Location.getPath();
 		
-		final Button button = new Button( "Save" );
-		button.addClickHandler( new ClickHandler() {
+		//Add new book page.
+		if(path.equals("/manage/books/new")){
+			//final BookDataInputView bookDataInputView = new BookDataInputViewImpl();
 			
-			@Override
-			public void onClick(ClickEvent event) {
-				validator = new ValidateInputImpl(bookDataInputView);
-				boolean matchFound = validator.validateBook();
-				if(matchFound){
-					pratilipiService.addBook( new AddBookRequest( bookDataInputView.getBook() ), new AsyncCallback<AddBookResponse>() {
-						
-						@Override
-						public void onSuccess( AddBookResponse result ) {
-							Window.alert( "Book added successfully !" );
-							bookDataInputView.setReabableOnly();
-							bookDataInputView.setEditLink(button, result.getBookId());
-							button.setVisible(false);
-						}
-						
-						@Override
-						public void onFailure( Throwable caught ) {
-							Window.alert( caught.getMessage() );
-						}
-						
-					} );
+			final Button button = new Button( "Save" );
+			button.addClickHandler( new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					validator = new ValidateInputImpl(bookDataInputView);
+					boolean matchFound = validator.validateBook();
+					if(matchFound){
+						pratilipiService.addBook( new AddBookRequest( bookDataInputView.getBook() ), new AsyncCallback<AddBookResponse>() {
+							
+							@Override
+							public void onSuccess( AddBookResponse result ) {
+								Long bookId = result.getBookId();
+								Window.alert( "Book added successfully !" );
+								Window.Location.assign("/manage/books/update?gwt.codesvr=127.0.0.1:9997&bookid=" + bookId);
+//								Window.alert("Redirected to update page");
+							}
+							
+							@Override
+							public void onFailure( Throwable caught ) {
+								Window.alert( caught.getMessage() );
+							}
+						} );
+					}
+					else {
+						Window.alert("Error in Form");
+					}
 				}
-				else {
-					Window.alert("Error in Form");
-				}
-			}
+				
+			} );
 			
-		} );
+			RootPanel.get( "PageContent-BookDataInput" ).add( bookDataInputView );
+			RootPanel.get( "PageContent-BookDataInput" ).add( button );
+		}
 		
-		//form.add(bookDataInputView);
-		//form.add(button);
-		
-		RootPanel.get( "PageContent-BookDataInput" ).add( bookDataInputView );
-		RootPanel.get( "PageContent-BookDataInput" ).add( button );
-		//RootPanel.get( "PageContent-BookDataInput" ).add(form);
-		
+		//Update book page.
+		else{
+			String id = Window.Location.getParameter("bookid");
+			Window.alert("Update book " + id);
+			final Long bookId = Long.valueOf(id);
+			
+			Button updateButton = new Button("Update");
+			updateButton.addClickHandler( new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					bookDataInputView.setBookId(bookId);
+					validator = new ValidateInputImpl(bookDataInputView);
+					boolean matchFound = validator.validateBook();
+					if(matchFound){
+						pratilipiService.addBook( new AddBookRequest( bookDataInputView.getBook() ), new AsyncCallback<AddBookResponse>() {
+							
+							@Override
+							public void onSuccess( AddBookResponse result ) {
+								Window.alert( "Book updated successfully !" );
+							}
+							
+							@Override
+							public void onFailure( Throwable caught ) {
+								Window.alert( caught.getMessage() );
+							}
+						} );
+					}
+					else {
+						Window.alert("Error in Form");
+					}
+				}
+			} );
+			
+			RootPanel.get( "PageContent-BookDataInput" ).add( bookDataInputView );
+			RootPanel.get( "PageContent-BookDataInput" ).add( updateButton );
+			RootPanel.get("PageContent-BookDataInput").add(new BookDataUpdateViewImpl( bookId));
+		}
 	}
-	
 }

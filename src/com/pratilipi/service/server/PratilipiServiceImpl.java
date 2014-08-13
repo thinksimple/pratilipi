@@ -26,6 +26,8 @@ import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
 import com.pratilipi.service.shared.GetBookListResponse;
+import com.pratilipi.service.shared.GetBookRequest;
+import com.pratilipi.service.shared.GetBookResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
@@ -96,6 +98,34 @@ public class PratilipiServiceImpl
 		dataAccessor.destroy();
 		
 		return new GetBookListResponse( bookDataList );
+	}
+	
+	
+	@Override
+	public GetBookResponse getBookById(GetBookRequest request) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Book book = dataAccessor.getBook(request.getBookId());
+		
+		//Setting retrieved book to BookData
+		Language language = dataAccessor.getLanguage( book.getLanguageId() );
+		Author author = dataAccessor.getAuthor( book.getAuthorId() );
+		Publisher publisher = dataAccessor.getPublisher( book.getPublisherId() );
+		
+		BookData bookData = new BookData();
+		bookData.setId( book.getId() );
+		bookData.setTitle( book.getTitle() );
+		bookData.setLanguageId( language.getId() );
+		bookData.setLanguageName( language.getName() );
+		bookData.setAuthorId( author.getId() );
+		bookData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
+		bookData.setPublisherId( publisher.getId() );
+		bookData.setPublisherName( publisher.getName() );
+		bookData.setPublicationDate( book.getPublicationDate() );
+		bookData.setListingDate( book.getListingDate() );
+		bookData.setWordCount( book.getWordCount() );
+		
+		return new GetBookResponse(bookData);
 	}
 
 	
@@ -175,6 +205,7 @@ public class PratilipiServiceImpl
 		ArrayList<AuthorData> authorDataList = new ArrayList<>( authorList.size() );
 		for( Author author : authorList ) {
 			AuthorData authorData = new AuthorData();
+			authorData.setId(author.getId());
 			authorData.setFirstName( author.getFirstName() );
 			authorData.setLastName( author.getLastName() );
 			authorData.setEmail( author.getEmail() );
@@ -220,6 +251,7 @@ public class PratilipiServiceImpl
 		ArrayList<PublisherData> publisherDataList = new ArrayList<>( publisherList.size() );
 		for( Publisher publisher : publisherList ) {
 			PublisherData publisherData = new PublisherData();
+			publisherData.setId(publisher.getId());
 			publisherData.setName( publisher.getName() );
 			publisherData.setEmail( publisher.getEmail() );
 			publisherData.setRegistrationDate( publisher.getRegistrationDate() );

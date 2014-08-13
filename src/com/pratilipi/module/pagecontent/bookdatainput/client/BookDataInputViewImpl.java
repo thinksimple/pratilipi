@@ -1,17 +1,11 @@
 package com.pratilipi.module.pagecontent.bookdatainput.client;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FileUpload;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
-import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pratilipi.service.client.PratilipiService;
@@ -32,6 +26,8 @@ public class BookDataInputViewImpl extends BookDataInputView {
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
 	
+	
+	VerticalPanel panel;
 	private Label formHeader = new Label( "Enter Book Details" );
 	private Label isbnLabel = new Label("ISBN ");
 	private Label titleLabel = new Label("Title ");
@@ -39,50 +35,35 @@ public class BookDataInputViewImpl extends BookDataInputView {
 	private Label publisherLabel = new Label("Publisher ");
 	private Label languageLabel = new Label("Language ");
 	
-	private Label edit = new Label("edit");
-	
 	private TextBox isbnInput = new TextBox(); 
 	private TextBox titleInput = new TextBox();
-	private SuggestBox authorInput;
-	private SuggestBox publisherInput;
-	private SuggestBox languageInput;
-	
-	private Label coverLabel = new Label("Upload Book Cover");
-	private Label contentLabel = new Label("Upload Book");
-	private FileUpload bookCover = new FileUpload();
-	private FileUpload bookContent = new FileUpload();
-	private FormPanel form;
-	
-	private Button save = new Button();
+	private ListBox authorInput = new ListBox();
+	private ListBox publisherInput = new ListBox();;
+	private ListBox languageInput = new ListBox();;
 
 	//Book id
 	private Long bookId;
 	
 	public BookDataInputViewImpl() {
-		form = new FormPanel();
-		VerticalPanel panel = new VerticalPanel();
+		panel = new VerticalPanel();
 		HorizontalPanel isbn = new HorizontalPanel();
 		HorizontalPanel title = new HorizontalPanel();
 		HorizontalPanel author = new HorizontalPanel();
 		HorizontalPanel publisher = new HorizontalPanel();
 		HorizontalPanel language = new HorizontalPanel();
 		
-		//panels to hold uploading elements
-		VerticalPanel uploads = new VerticalPanel();
-		HorizontalPanel cover = new HorizontalPanel();
-		HorizontalPanel content = new HorizontalPanel();
 		
-		//setting width to labels
+		//setting width to elements
 		isbnLabel.setWidth("100px");
+		isbnInput.setWidth("100px");
 		titleLabel.setWidth("100px");
+		titleInput.setWidth("100px");
 		authorLabel.setWidth("100px");
+		authorInput.setWidth("105px");
 		publisherLabel.setWidth("100px");
+		publisherInput.setWidth("105px");
 		languageLabel.setWidth("100px");
-		coverLabel.setWidth("150px");
-		contentLabel.setWidth("150px");
-		
-		//Suggestion container for author suggestion box
-		final MultiWordSuggestOracle authorOracle = new MultiWordSuggestOracle();  
+		languageInput.setWidth("105px");
 		
 		//Get list of authors.
 		pratilipiService.getAuthorList(new GetAuthorListRequest(), new AsyncCallback<GetAuthorListResponse>(){
@@ -95,15 +76,11 @@ public class BookDataInputViewImpl extends BookDataInputView {
 			@Override
 			public void onSuccess(GetAuthorListResponse response) {
 				for(AuthorData authorData : response.getAuthorList() )
-					authorOracle.add( authorData.getFirstName()+ " " + authorData.getLastName() 
-							+ "( " + authorData.getPenName() + " )");
+					//authorOracle.add( authorData.getFirstName()+ " " + authorData.getLastName());
+					authorInput.addItem(authorData.getFirstName()+ " " + authorData.getLastName(), authorData.getId().toString());
+				
 			}});
-	      
-	    authorInput = new SuggestBox( authorOracle );
-	    
-	    //suggestion container for publisher suggestion box
-	    final MultiWordSuggestOracle publisherOracle = new MultiWordSuggestOracle();  
-	    
+	
 	    //getting list of publishers
 	    pratilipiService.getPublisherList(new GetPublisherListRequest(), new AsyncCallback<GetPublisherListResponse>(){
 
@@ -115,14 +92,8 @@ public class BookDataInputViewImpl extends BookDataInputView {
 			@Override
 			public void onSuccess(GetPublisherListResponse response) {
 				for(PublisherData publisherData : response.getPublisherList())
-					publisherOracle.add(publisherData.getName());
+					publisherInput.addItem(publisherData.getName(), publisherData.getId().toString());
 			}});
-	    
-	    //Adding suggestion values to publisher suggestion box
-	    publisherInput = new SuggestBox( publisherOracle );
-	    
-	    //suggestion values for language suggestion Box
-	    final MultiWordSuggestOracle langOracle = new MultiWordSuggestOracle();
 	    
 	    //getting list of languages for suggestion box
 	    pratilipiService.getLanguageList(new GetLanguageListRequest(), new AsyncCallback<GetLanguageListResponse>(){
@@ -136,36 +107,10 @@ public class BookDataInputViewImpl extends BookDataInputView {
 			@Override
 			public void onSuccess(GetLanguageListResponse response) {
 				for( LanguageData languageData : response.getLanguageList())
-					langOracle.add(languageData.getName());
+					languageInput.addItem(languageData.getName(), languageData.getId().toString());
 				
 			}});
-	    
-	    //adding suggestion values to language suggestion box
-	    languageInput = new SuggestBox( langOracle );
-		
-	    //Book Edit link
-	    edit.setVisible(false);
-	    edit.addClickHandler(new ClickHandler(){
-
-			@Override
-			public void onClick(ClickEvent event) {
-				save.setVisible(true);
-				edit.setVisible(false);
-				form.setVisible(false);
-				setWritable();
-				
-			}});
-	    
-	    //adding upload form elements.
-	    cover.add(coverLabel);
-	    cover.add(bookCover);
-	    content.add(contentLabel);
-	    content.add(bookContent);
-	    uploads.add(cover);
-	    uploads.add(content);
-	    form.add(uploads);
-	    form.setVisible(false);
-	    
+	   
 	    //adding label and input boxes to horizontal panels.
 	    isbn.add(isbnLabel);
 	    isbn.add(isbnInput);
@@ -185,8 +130,8 @@ public class BookDataInputViewImpl extends BookDataInputView {
 		panel.add( author );
 		panel.add( publisher );
 		panel.add( language );
-		panel.add(edit);
-		panel.add(form);
+		
+		
 		panel.setSpacing(10);
 		
 		//form.add(panel);
@@ -201,10 +146,15 @@ public class BookDataInputViewImpl extends BookDataInputView {
 	public BookData getBook() {
 		BookData book = new BookData();
 //		book.setIsbn( isbnInput.getText() );
+		book.setId(bookId);
 		book.setTitle( titleInput.getText() );
-		book.setTitle( authorInput.getText() );  //need to find a way to get AUTHOR_ID of required author from database
-		book.setTitle( publisherInput.getText() );  //need to find a way to get PUBLISHER_ID of required author from database
-		book.setTitle( languageInput.getText() );
+		book.setAuthorName( authorInput.getItemText(authorInput.getSelectedIndex()));  //need to find a way to get AUTHOR_ID of required author from database
+		book.setPublisherName(publisherInput.getItemText(publisherInput.getSelectedIndex()));  //need to find a way to get PUBLISHER_ID of required author from database
+		book.setLanguageName(languageInput.getItemText(languageInput.getSelectedIndex()));
+		book.setAuthorId(Long.valueOf(authorInput.getValue(authorInput.getSelectedIndex())));
+		book.setPublisherId(Long.valueOf(publisherInput.getValue(publisherInput.getSelectedIndex())));
+		book.setLanguageId(Long.valueOf(languageInput.getValue(languageInput.getSelectedIndex())));
+		
 		return book;
 	}
 	
@@ -212,24 +162,52 @@ public class BookDataInputViewImpl extends BookDataInputView {
 		return bookId;
 	}
 	
+	public void setBookId(Long bookId){
+		this.bookId = bookId;
+	}
+	
 	public String getIsbn(){
 		return isbnInput.getText();
+	}
+	
+	@Override
+	public void setIsbn(String isbn) {
+		this.isbnInput.setText(isbn);
 	}
 	
 	public String getTitle(){
 		return titleInput.getText();
 	}
 	
+	@Override
+	public void setTtile(String title) {
+		this.titleInput.setText(title);
+	}
+	
 	public String getAuthor(){
-		return authorInput.getText();
+		return authorInput.getItemText(authorInput.getSelectedIndex());
+	}
+	
+	@Override
+	public void setAuthor(String author) {
+		//Todo
 	}
 	
 	public String getPublisher(){
-		return publisherInput.getText();
+		return publisherInput.getItemText(publisherInput.getSelectedIndex());
 	}
-	
+
+	@Override
+	public void setPublisher(String publisher) {
+		//TODO
+	}
 	public String getLanguage(){
-		return languageInput.getText();
+		return languageInput.getItemText(languageInput.getSelectedIndex());
+	}
+
+	@Override
+	public void setLanguage(String lang) {
+		//TODO
 	}
 	
 	//Error styling.
@@ -275,29 +253,9 @@ public class BookDataInputViewImpl extends BookDataInputView {
 	}
 
 	@Override
-	public void setReabableOnly() {
-
-		isbnInput.setEnabled(false);
-		titleInput.setEnabled(false);
-		authorInput.setEnabled(false);
-		publisherInput.setEnabled(false);
-		languageInput.setEnabled(false);
-	}
-	
-	@Override
-	public void setWritable(){
-		isbnInput.setEnabled(true);
-		titleInput.setEnabled(true);
-		authorInput.setEnabled(true);
-		publisherInput.setEnabled(true);
-		languageInput.setEnabled(true);
-	}
-	
-	public void setEditLink(Button save, Long bookId){
-		this.save = save;
-		this.bookId = bookId;
-		edit.setVisible(true);
-		form.setVisible(true);
+	public void setForm() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
