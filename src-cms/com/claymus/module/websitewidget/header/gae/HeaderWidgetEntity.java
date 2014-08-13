@@ -15,6 +15,12 @@ public class HeaderWidgetEntity extends WebsiteWidgetEntity implements HeaderWid
 	@Persistent( column = "X_COL_1" )
 	private String tagLine;
 
+	@Persistent( column = "X_COL_2" )
+	private String[][] leftLinks;
+
+	@Persistent( column = "X_COL_3" )
+	private String[][] rightLinks;
+
 	
 	@Override
 	public String getTitle() {
@@ -34,6 +40,26 @@ public class HeaderWidgetEntity extends WebsiteWidgetEntity implements HeaderWid
 	@Override
 	public void setTagLine( String tagLine ) {
 		this.tagLine = tagLine;
+	}
+	
+	@Override
+	public String[][] getLeftLinks() {
+		return leftLinks;
+	}
+
+	@Override
+	public void setLeftLinks( String[][] leftLinks ) {
+		this.leftLinks = leftLinks;
+	}
+
+	@Override
+	public String[][] getRightLinks() {
+		return rightLinks;
+	}
+
+	@Override
+	public void setRightLinks( String[][] rightLinks ) {
+		this.rightLinks = rightLinks;
 	}
 
 }

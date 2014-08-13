@@ -2,16 +2,13 @@ package com.pratilipi.servlet;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 
-import com.claymus.ClaymusHelper;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.fileupload.FileUploadContent;
@@ -32,9 +29,6 @@ import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
 import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
 import com.pratilipi.module.pagecontent.managepublishers.ManagePublishersFactory;
 
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
 	
@@ -50,15 +44,9 @@ public class PratilipiMain extends ClaymusMain {
 	}
 
 
-	protected void renderPageHead( Writer writer ) {
-		super.renderPageHead( writer );
-		try {
-			Template template = FREEMARKER_CONFIGURATION
-					.getTemplate( "com/pratilipi/servlet/content/WebsiteHead.ftl" );
-			template.process( new ClaymusHelper(), writer );
-		} catch ( IOException | TemplateException e ) {
-			logger.log( Level.SEVERE, "Template processing failed.", e );
-		}
+	@Override
+	protected String getTemplateName() {
+		return "com/pratilipi/servlet/content/PratilipiTemplate.ftl";
 	}
 
 	@Override
@@ -112,35 +100,38 @@ public class PratilipiMain extends ClaymusMain {
 	protected List<WebsiteWidget> getWebsiteWidgetList(
 			HttpServletRequest request ) {
 		
+		String requestUri = request.getRequestURI();
 		List<WebsiteWidget> websiteWidgetList
 				= super.getWebsiteWidgetList( request );
 
-		String requestUri = request.getRequestURI();
-		if( ! requestUri.equals( "/" ) && ! requestUri.equals( "/about" ) ) {
-			
+		if( ! requestUri.equals( "/" ) ) {
 			HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
 			headerWidget.setTitle( "Pratilipi" );
 			headerWidget.setTagLine( "you become what you read ..." );
-	
+			headerWidget.setLeftLinks( new String[][] {
+					{ "FEATURES", "#" }
+			});
+			headerWidget.setRightLinks( new String[][] {
+					{ "SUBSCRIBE", "#" }
+			});
+			headerWidget.setPosition( "HEADER" );
+			websiteWidgetList.add( headerWidget );
+		}
+		
+		if( ! requestUri.equals( "/" ) && ! requestUri.equals( "/about" ) ) {
+			
+			websiteWidgetList.add( UserWidgetFactory.newUserWidget() );
+
 			NavigationWidget navigationWidget = NavigationWidgetFactory.newNavigationWidget();
 			navigationWidget.setLinks( new String[][] {
-					{ "Home", "/" },
-					{ "About", "/about" },
-					{ "Contact", "/contact" }
-			} );
-		
-			NavigationWidget navigationWidget_2 = NavigationWidgetFactory.newNavigationWidget();
-			navigationWidget_2.setLinks( new String[][] {
 					{ "Books", "/manage/books/new" },
 					{ "Languages", "/manage/languages" },
 					{ "Authors", "/manage/authors/new" },
 					{ "Publishers", "/manage/publishers/new" }
 			} );
+			navigationWidget.setPosition( "HEADER" );
 	
-			websiteWidgetList.add( headerWidget );
-			websiteWidgetList.add( UserWidgetFactory.newUserWidget() );
 			websiteWidgetList.add( navigationWidget );
-			websiteWidgetList.add( navigationWidget_2 );
 		}
 		
 		FooterWidget footerWidget = FooterWidgetFactory.newFooterWidget();
@@ -150,7 +141,7 @@ public class PratilipiMain extends ClaymusMain {
 				{ "FAQs", "/faq" }
 		} );
 		footerWidget.setCopyrightNote( "&copy; 2014 pratilipi.com" );
-		
+		footerWidget.setPosition( "FOOTER" );
 		websiteWidgetList.add( footerWidget );
 		
 		return websiteWidgetList;

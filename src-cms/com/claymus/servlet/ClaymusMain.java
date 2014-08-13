@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.ClaymusHelper;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
@@ -134,6 +135,10 @@ public class ClaymusMain extends HttpServlet {
 		out.close();
 	}
 	
+	protected String getTemplateName() {
+		return null;
+	}
+	
 	private void renderPage(
 			Page page,
 			List<PageContent> pageContentList,
@@ -143,19 +148,18 @@ public class ClaymusMain extends HttpServlet {
 			PrintWriter out
 			) {
 
-		out.println( "<!doctype html>" );
-		
-		out.println( "<html>" );
-		out.println( "<head>" );
-		
-		renderPageHead( out );
-		
-		out.println( "</head>" );
-		out.println( "<body>" );
-
-		
-		List<String> websiteWidgetHtmlList = new LinkedList<>();
+		Map<String, List<String>> websiteWidgetHtmlListMap = new HashMap<>();
 		for( WebsiteWidget websiteWidget : websiteWidgetList ) {
+			List<String> websiteWidgetHtmlList
+					= websiteWidgetHtmlListMap.get( websiteWidget.getPosition() );
+
+			if( websiteWidgetHtmlList == null ) {
+				websiteWidgetHtmlList = new LinkedList<>();
+				websiteWidgetHtmlListMap.put(
+						websiteWidget.getPosition(),
+						websiteWidgetHtmlList );
+			}
+			
 			@SuppressWarnings("rawtypes")
 			WebsiteWidgetProcessor websiteWidgetProcessor = 
 					WEBSITE_WIDGET_REGISTRY.getWebsiteWidgetProcessor( websiteWidget.getClass() );
@@ -175,31 +179,16 @@ public class ClaymusMain extends HttpServlet {
 		}
 		
 		Map<String, Object> input = new HashMap<String, Object>();
-		input.put( "websiteWidgetList", websiteWidgetHtmlList );
-		input.put( "pageContentList", pageContentHtmlList );
+		input.put( "websiteWidgetHtmlListMap", websiteWidgetHtmlListMap );
+		input.put( "pageContentHtmlList", pageContentHtmlList );
+		input.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
 		
-		try {
-			Template template = new Template( null, pageLayout.getTemplate(), new Configuration() );
-			template.process( input, out );
-
-			template = new Template( null, websiteLayout.getTemplate(), new Configuration() );
-			template.process( input, out );
-		} catch ( IOException | TemplateException e ) {
-			e.printStackTrace();
-		}
-		
-
-		out.println( "</body>" );
-		out.println( "</html>" );
-	}
-	
-	protected void renderPageHead( Writer writer ) {
 		try {
 			Template template = FREEMARKER_CONFIGURATION
-							.getTemplate( "com/claymus/servlet/content/WebsiteHead.ftl" );
-			template.process( null, writer );
+					.getTemplate( getTemplateName() );
+			template.process( input, out);
 		} catch ( IOException | TemplateException e ) {
-			logger.log( Level.SEVERE, "Template processing failed.", e );
+			e.printStackTrace();
 		}
 	}
 	

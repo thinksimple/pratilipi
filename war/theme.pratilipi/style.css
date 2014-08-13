@@ -70,6 +70,23 @@ body {
 }
 
 
+.websitewidget-header {
+	background-color: black;
+}
+
+.websitewidget-header .title {
+	color: white;
+	font-size: 40px;
+}
+
+.websitewidget-header a {
+	color: white;
+	text-decoration: none;
+	padding-left: 75px;
+	padding-right: 75px;
+}
+
+
 .websitewidget-footer {
 	background-color: black;
 	color: white;

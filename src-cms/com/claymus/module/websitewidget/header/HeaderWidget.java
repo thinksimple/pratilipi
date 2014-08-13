@@ -12,4 +12,12 @@ public interface HeaderWidget extends WebsiteWidget {
 	
 	void setTagLine( String tagLine );
 	
+	String[][] getLeftLinks();
+	
+	void setLeftLinks( String[][] leftLinks );
+
+	String[][] getRightLinks();
+	
+	void setRightLinks( String[][] rightLinks );
+
 }
