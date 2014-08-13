@@ -2,6 +2,7 @@ package com.claymus.data.access.gae;
 
 import java.util.Date;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -10,10 +11,10 @@ import com.claymus.data.transfer.User;
 
 @PersistenceCapable( table = "USER" )
 public class UserEntity implements User {
-
+	
 	@PrimaryKey
-	@Persistent( column = "USER_ID" )
-	private String id;
+	@Persistent( column = "USER_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
+	private Long id;
 	
 	@Persistent( column = "PASSWORD" )
 	private String password;
@@ -38,12 +39,12 @@ public class UserEntity implements User {
 
 	
 	@Override
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
 	@Override
-	public void setId( String id ) {
+	public void setId( Long id ) {
 		this.id = id;
 	}
 

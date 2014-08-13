@@ -11,14 +11,14 @@ import com.claymus.data.access.gae.BlobEntryEntity;
 import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.access.gae.PageEntity;
 import com.claymus.data.access.gae.PageLayoutEntity;
-import com.claymus.data.access.gae.UserEntity;
 import com.claymus.data.access.gae.RoleEntity;
+import com.claymus.data.access.gae.UserEntity;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
-import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.Role;
+import com.claymus.data.transfer.User;
 
 public class DataAccessorGaeImpl implements DataAccessor {
 
@@ -51,8 +51,20 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public User getUser( String id ) {
+	public User getUser( Long id ) {
 		return getEntity( UserEntity.class, id );
+	}
+	
+	@Override
+	public User getUserByEmail( String email ) {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( UserEntity.class ) )
+						.addFilter( "email", email )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<User> userList = (List<User>) query.execute( email );
+		return userList.size() == 0 ? null : pm.detachCopy( userList.get( 0 ) );
 	}
 	
 	@Override

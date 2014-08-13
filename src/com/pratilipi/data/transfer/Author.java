@@ -6,9 +6,9 @@ public interface Author {
 	
 	Long getId();
 
-	String getUserId();
+	Long getUserId();
 	
-	void setUserId( String userId );
+	void setUserId( Long userId );
 	
 	String getFirstName();
 	

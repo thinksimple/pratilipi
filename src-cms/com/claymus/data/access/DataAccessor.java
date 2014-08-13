@@ -13,7 +13,9 @@ public interface DataAccessor {
 
 	User newUser();
 
-	User getUser( String id );
+	User getUser( Long id );
+
+	User getUserByEmail( String email );
 
 	User createUser( User user );
 

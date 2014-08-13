@@ -18,7 +18,7 @@ public abstract class DataAccessorTest {
     @Test
     public void testUser() {
     	
-    	String id = "id";
+    	Long id = 123L;
     	String password = "password";
     	String firstName = "firstName";
     	String lastName = "lastName";

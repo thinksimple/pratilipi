@@ -17,7 +17,7 @@ public class AuthorEntity implements Author {
 	private Long id;
 
 	@Persistent( column = "USER_ID" )
-	private String userId;
+	private Long userId;
 	
 	@Persistent( column = "FIRST_NAME" )
 	private String firstName;
@@ -41,12 +41,12 @@ public class AuthorEntity implements Author {
 	}
 
 	@Override
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	
+
 	@Override
-	public void setUserId( String userId ) {
+	public void setUserId( Long userId ) {
 		this.userId = userId;
 	}
 
