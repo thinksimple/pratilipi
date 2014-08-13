@@ -25,6 +25,7 @@ import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.claymus.module.pagecontent.PageContentRegistry;
 import com.claymus.module.pagecontent.fileupload.FileUploadContentFactory;
+import com.claymus.module.pagecontent.html.HtmlContent;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.claymus.module.websitewidget.WebsiteWidgetRegistry;
@@ -120,6 +121,13 @@ public class ClaymusMain extends HttpServlet {
 		List<WebsiteWidget> websiteWidgetList = getWebsiteWidgetList( request );
 		PageLayout pageLayout = getPageLayout();
 		WebsiteLayout websiteLayout = getWebsiteLayout();
+		
+		if( pageContentList.size() == 0 ) {
+			response.setStatus( HttpServletResponse.SC_NOT_FOUND );
+			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
+			htmlContent.setHtml( "Page not found !" );
+			pageContentList.add( htmlContent );
+		}
 		
 		PrintWriter out = response.getWriter();
 		renderPage( page, pageContentList, websiteWidgetList, pageLayout, websiteLayout, out );
