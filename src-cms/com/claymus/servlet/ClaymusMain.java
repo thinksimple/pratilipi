@@ -28,6 +28,7 @@ import com.claymus.module.pagecontent.fileupload.FileUploadContentFactory;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.claymus.module.websitewidget.WebsiteWidgetRegistry;
+import com.claymus.module.websitewidget.footer.FooterWidgetFactory;
 import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
 import com.claymus.module.websitewidget.navigation.NavigationWidgetFactory;
 import com.claymus.module.websitewidget.user.UserWidgetFactory;
@@ -58,6 +59,7 @@ public class ClaymusMain extends HttpServlet {
 		PAGE_CONTENT_REGISTRY.register( FileUploadContentFactory.class );
 		
 		WEBSITE_WIDGET_REGISTRY.register( HeaderWidgetFactory.class );
+		WEBSITE_WIDGET_REGISTRY.register( FooterWidgetFactory.class );
 		WEBSITE_WIDGET_REGISTRY.register( NavigationWidgetFactory.class );
 		WEBSITE_WIDGET_REGISTRY.register( UserWidgetFactory.class );
 		
@@ -169,10 +171,10 @@ public class ClaymusMain extends HttpServlet {
 		input.put( "pageContentList", pageContentHtmlList );
 		
 		try {
-			Template template = new Template( null, websiteLayout.getTemplate(), new Configuration() );
+			Template template = new Template( null, pageLayout.getTemplate(), new Configuration() );
 			template.process( input, out );
 
-			template = new Template( null, pageLayout.getTemplate(), new Configuration() );
+			template = new Template( null, websiteLayout.getTemplate(), new Configuration() );
 			template.process( input, out );
 		} catch ( IOException | TemplateException e ) {
 			e.printStackTrace();

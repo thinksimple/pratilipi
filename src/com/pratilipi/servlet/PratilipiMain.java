@@ -18,6 +18,8 @@ import com.claymus.module.pagecontent.fileupload.FileUploadContent;
 import com.claymus.module.pagecontent.fileupload.FileUploadContentFactory;
 import com.claymus.module.pagecontent.html.HtmlContent;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
+import com.claymus.module.websitewidget.footer.FooterWidget;
+import com.claymus.module.websitewidget.footer.FooterWidgetFactory;
 import com.claymus.module.websitewidget.header.HeaderWidget;
 import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
 import com.claymus.module.websitewidget.navigation.NavigationWidget;
@@ -67,7 +69,17 @@ public class PratilipiMain extends ClaymusMain {
 				= super.getPageContentList( request );
 		
 		String requestUri = request.getRequestURI();
-		if( requestUri.equals( "/books" ) )
+		if( requestUri.equals( "/" ) ) {
+			File file = new File("WEB-INF/classes/com/pratilipi/servlet/content/PratilipiMain.ftl");
+			List<String> lines = FileUtils.readLines( file, "UTF-8" );
+			String html = "";
+			for( String line : lines )
+				html = html + line;
+			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
+			htmlContent.setHtml( html );
+			
+			pageContentList.add( htmlContent );
+		} else if( requestUri.equals( "/books" ) )
 			pageContentList.add( BookListFactory.newBookList() );
 		else if( requestUri.equals( "/manage/languages" ) )
 			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
@@ -81,16 +93,6 @@ public class PratilipiMain extends ClaymusMain {
 			FileUploadContent fileUploadContent = FileUploadContentFactory.newFileUploadContent();
 			fileUploadContent.setFileName( requestUri.substring( 9 ) );
 			pageContentList.add( fileUploadContent );
-		} else {
-			File file = new File("WEB-INF/classes/com/pratilipi/servlet/content/PratilipiMain.ftl");
-			List<String> lines = FileUtils.readLines( file, "UTF-8" );
-			String html = "";
-			for( String line : lines )
-				html = html + line;
-			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-			htmlContent.setHtml( html );
-			
-			pageContentList.add( htmlContent );
 		}
 		return pageContentList;
 	}
@@ -103,33 +105,43 @@ public class PratilipiMain extends ClaymusMain {
 				= super.getWebsiteWidgetList( request );
 
 		String requestUri = request.getRequestURI();
-		if( requestUri.equals( "/" ) )
-			return websiteWidgetList;
-
-		HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
-		headerWidget.setTitle( "Pratilipi" );
-		headerWidget.setTagLine( "you become what you read ..." );
-
-		NavigationWidget navigationWidget = NavigationWidgetFactory.newNavigationWidget();
-		navigationWidget.setLinks( new String[][] {
-				{ "Home", "/" },
+		if( ! requestUri.equals( "/" ) && ! requestUri.equals( "/about" ) ) {
+			
+			HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
+			headerWidget.setTitle( "Pratilipi" );
+			headerWidget.setTagLine( "you become what you read ..." );
+	
+			NavigationWidget navigationWidget = NavigationWidgetFactory.newNavigationWidget();
+			navigationWidget.setLinks( new String[][] {
+					{ "Home", "/" },
+					{ "About", "/about" },
+					{ "Contact", "/contact" }
+			} );
+		
+			NavigationWidget navigationWidget_2 = NavigationWidgetFactory.newNavigationWidget();
+			navigationWidget_2.setLinks( new String[][] {
+					{ "Books", "/manage/books/new" },
+					{ "Languages", "/manage/languages" },
+					{ "Authors", "/manage/authors/new" },
+					{ "Publishers", "/manage/publishers/new" }
+			} );
+	
+			websiteWidgetList.add( headerWidget );
+			websiteWidgetList.add( UserWidgetFactory.newUserWidget() );
+			websiteWidgetList.add( navigationWidget );
+			websiteWidgetList.add( navigationWidget_2 );
+		}
+		
+		FooterWidget footerWidget = FooterWidgetFactory.newFooterWidget();
+		footerWidget.setLinks( new String[][] {
 				{ "About", "/about" },
-				{ "Contact", "/contact" }
+				{ "Contact", "/contact" },
+				{ "FAQs", "/faq" }
 		} );
-	
-		NavigationWidget navigationWidget_2 = NavigationWidgetFactory.newNavigationWidget();
-		navigationWidget_2.setLinks( new String[][] {
-				{ "Books", "/manage/books/new" },
-				{ "Languages", "/manage/languages" },
-				{ "Authors", "/manage/authors/new" },
-				{ "Publishers", "/manage/publishers/new" }
-		} );
-	
-		websiteWidgetList.add( headerWidget );
-		websiteWidgetList.add( UserWidgetFactory.newUserWidget() );
-		websiteWidgetList.add( navigationWidget );
-		websiteWidgetList.add( navigationWidget_2 );
-
+		footerWidget.setCopyrightNote( "&copy; 2014 pratilipi.com" );
+		
+		websiteWidgetList.add( footerWidget );
+		
 		return websiteWidgetList;
 	}
 
