@@ -1,5 +1,6 @@
 package com.pratilipi.servlet.content.client;
 
+import com.claymus.client.UserStatus;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -57,6 +58,7 @@ public class SubscriptionForm extends Composite {
 		userData.setEmail( emailInput.getText().trim() );
 		userData.setCampaign( "PreLaunch" );
 		userData.setReferer( Window.Location.getParameter( "ref" ) );
+		userData.setStatus( UserStatus.PRELAUNCH_SIGNUP );
 		return userData;
 	}
 	

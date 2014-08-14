@@ -1,5 +1,6 @@
 package com.claymus.service.shared.data;
 
+import com.claymus.client.UserStatus;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class UserData implements IsSerializable {
@@ -13,6 +14,8 @@ public class UserData implements IsSerializable {
 	private String campaign;
 	
 	private String referer;
+	
+	private UserStatus status;
 	
 	
 	public String getFirstName() {
@@ -53,6 +56,14 @@ public class UserData implements IsSerializable {
 
 	public void setReferer( String referer ) {
 		this.referer = referer;
+	}
+
+	public UserStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus( UserStatus status ) {
+		this.status = status;
 	}
 	
 }

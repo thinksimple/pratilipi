@@ -48,11 +48,11 @@ public class ClaymusHelper {
 		return System.getProperty( appId + "." + propertyName );
 	}
 	
-	public static void performNewUserActions( HttpSession session, Long userId ) {
+	public static void performNewUserActions( HttpSession session, com.claymus.data.transfer.User user ) {
 		Queue queue = QueueFactory.getQueue( "new-user" );
-		queue.add( TaskOptions.Builder.withParam( "userId", userId.toString() ) );
+		queue.add( TaskOptions.Builder.withParam( "userId", user.getId().toString() ) );
 
-		session.setAttribute( SessionAttributes.CURRENT_USER_ID, userId );
+		session.setAttribute( SessionAttributes.CURRENT_USER_ID, user.getId() );
 	}
 	
 }

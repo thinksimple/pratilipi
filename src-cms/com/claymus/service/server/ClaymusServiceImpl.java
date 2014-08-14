@@ -25,25 +25,31 @@ public class ClaymusServiceImpl
 		UserData userData = request.getUser();
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
 		User user = dataAccessor.getUserByEmail( userData.getEmail() );
-		if( user == null ) {
+
+		if( user == null )
 			user = dataAccessor.newUser();
+			
+		if( user.getStatus() == null 
+				|| user.getStatus() == userData.getStatus()
+				|| userData.getStatus() == UserStatus.PRELAUNCH_SIGNUP ) {
+			
 			user.setFirstName( userData.getFirstName() );
 			user.setLastName( userData.getLastName() );
 			user.setEmail( userData.getEmail() );
 			user.setCampaign( userData.getCampaign() );
 			user.setReferer( userData.getReferer() );
 			user.setSignUpDate( new Date() );
-			user.setStatus( UserStatus.PRELAUNCH_SIGNUP );
-			
+			user.setStatus( userData.getStatus() );
+
 			user = dataAccessor.createUser( user );
 		}
 		dataAccessor.destroy();
 		
-		ClaymusHelper.performNewUserActions(
-				this.getThreadLocalRequest().getSession(),
-				user.getId() );
+		if( user.getStatus() == userData.getStatus() )
+			ClaymusHelper.performNewUserActions(
+					this.getThreadLocalRequest().getSession(),
+					user );
 		
 		return new AddUserResponse( user.getId() );
 	}
