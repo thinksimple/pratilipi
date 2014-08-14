@@ -2,6 +2,7 @@ package com.pratilipi.servlet.content.client;
 
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -54,6 +55,8 @@ public class SubscriptionForm extends Composite {
 		userData.setFirstName( firstNameInput.getText().trim() );
 		userData.setLastName( lastNameInput.getText().trim() );
 		userData.setEmail( emailInput.getText().trim() );
+		userData.setCampaign( "PreLaunch" );
+		userData.setReferer( Window.Location.getParameter( "ref" ) );
 		return userData;
 	}
 	

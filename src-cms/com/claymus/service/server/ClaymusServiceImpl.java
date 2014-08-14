@@ -1,6 +1,9 @@
 package com.claymus.service.server;
 
+import java.util.Date;
+
 import com.claymus.SessionAttributes;
+import com.claymus.client.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.User;
@@ -28,7 +31,11 @@ public class ClaymusServiceImpl
 			user.setFirstName( userData.getFirstName() );
 			user.setLastName( userData.getLastName() );
 			user.setEmail( userData.getEmail() );
-		
+			user.setCampaign( userData.getCampaign() );
+			user.setReferer( userData.getReferer() );
+			user.setSignUpDate( new Date() );
+			user.setStatus( UserStatus.PRELAUNCH_SIGNUP );
+			
 			user = dataAccessor.createUser( user );
 		}
 		dataAccessor.destroy();

@@ -2,6 +2,8 @@ package com.claymus.data.transfer;
 
 import java.util.Date;
 
+import com.claymus.client.UserStatus;
+
 public interface User {
 
 	Long getId();
@@ -32,8 +34,20 @@ public interface User {
 
 	void setPhone( String phone );
 
+	String getCampaign();
+
+	void setCampaign( String campaign );
+	
+	String getReferer();
+
+	String setReferer( String referer );
+	
 	Date getSignUpDate();
 	
 	void setSignUpDate( Date date );
 
+	UserStatus getStatus();
+	
+	void setStatus( UserStatus userStatus );
+	
 }

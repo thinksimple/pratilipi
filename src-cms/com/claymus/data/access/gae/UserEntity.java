@@ -7,6 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.claymus.client.UserStatus;
 import com.claymus.data.transfer.User;
 
 @PersistenceCapable( table = "USER" )
@@ -33,6 +34,15 @@ public class UserEntity implements User {
 	
 	@Persistent( column = "PHONE" )
 	private String phone;
+	
+	@Persistent( column = "CAMPAIGN" )
+	private String campaign;
+	
+	@Persistent( column = "REFERER" )
+	private String referer;
+	
+	@Persistent( column = "STATUS" )
+	private UserStatus status;
 	
 	@Persistent( column = "SIGN_UP_DATE" )
 	private Date signUpDate;
@@ -109,12 +119,42 @@ public class UserEntity implements User {
 	}
 
 	@Override
+	public String getCampaign() {
+		return campaign;
+	}
+
+	@Override
+	public void setCampaign( String campaign ) {
+		this.campaign = campaign;
+	}
+
+	@Override
+	public String getReferer() {
+		return referer;
+	}
+
+	@Override
+	public String setReferer( String referer ) {
+		return this.referer = referer;
+	}
+
+	@Override
 	public Date getSignUpDate() {
 		return signUpDate;
 	}
 
 	public void setSignUpDate( Date signUpDate ) {
 		this.signUpDate = signUpDate;
+	}
+
+	@Override
+	public UserStatus getStatus() {
+		return status;
+	}
+
+	@Override
+	public void setStatus( UserStatus status ) {
+		this.status = status;
 	}
 
 }
