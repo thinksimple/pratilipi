@@ -8,7 +8,7 @@
 		<a href="#">FEATURES</a>
 	</div>
 	<div class="links-right">
-		<a href="#">SUBSCRIBE</a>
+		<a href="#subscribe">SUBSCRIBE</a>
 	</div>
 
 	<div class="title">
@@ -34,3 +34,5 @@
 	window.onload = setPageContentSize;
 	window.onresize = setPageContentSize;
 </script>
+
+<script type="text/javascript" language="javascript" src="/pagecontent.homepagecontent/pagecontent.homepagecontent.nocache.js"></script>

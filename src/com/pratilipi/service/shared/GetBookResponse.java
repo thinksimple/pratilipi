@@ -7,14 +7,17 @@ public class GetBookResponse implements IsSerializable {
 	
 	private BookData bookData;
 	
+	
 	@SuppressWarnings("unused")
 	private GetBookResponse(){}
 	
-	public GetBookResponse(BookData bookData){
+	public GetBookResponse( BookData bookData ){
 		this.bookData = bookData;
 	}
 
+	
 	public BookData getBook(){
 		return this.bookData;
 	}
+	
 }

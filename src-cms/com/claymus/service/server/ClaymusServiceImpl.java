@@ -25,14 +25,14 @@ public class ClaymusServiceImpl
 		if( user == null ) {
 			user = dataAccessor.newUser();
 			user.setFirstName( userData.getFirstName() );
-			user.setLastName( user.getLastName() );
+			user.setLastName( userData.getLastName() );
 			user.setEmail( userData.getEmail() );
 		
 			user = dataAccessor.createUser( user );
 		}
 		dataAccessor.destroy();
 		
-		return new AddUserResponse();
+		return new AddUserResponse( user.getId() );
 	}
 
 }

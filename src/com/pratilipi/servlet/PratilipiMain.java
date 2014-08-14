@@ -125,7 +125,7 @@ public class PratilipiMain extends ClaymusMain {
 					{ "FEATURES", "#" }
 			});
 			headerWidget.setRightLinks( new String[][] {
-					{ "SUBSCRIBE", "#" }
+					{ "SUBSCRIBE", "#subscribe" }
 			});
 			headerWidget.setPosition( "HEADER" );
 			websiteWidgetList.add( headerWidget );

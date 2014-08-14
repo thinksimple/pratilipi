@@ -107,7 +107,6 @@ public class PratilipiServiceImpl
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Book book = dataAccessor.getBook(request.getBookId());
 		
-		//Setting retrieved book to BookData
 		Language language = dataAccessor.getLanguage( book.getLanguageId() );
 		Author author = dataAccessor.getAuthor( book.getAuthorId() );
 		Publisher publisher = dataAccessor.getPublisher( book.getPublisherId() );
@@ -125,6 +124,8 @@ public class PratilipiServiceImpl
 		bookData.setListingDate( book.getListingDate() );
 		bookData.setWordCount( book.getWordCount() );
 		
+		dataAccessor.destroy();
+
 		return new GetBookResponse(bookData);
 	}
 
@@ -205,7 +206,7 @@ public class PratilipiServiceImpl
 		ArrayList<AuthorData> authorDataList = new ArrayList<>( authorList.size() );
 		for( Author author : authorList ) {
 			AuthorData authorData = new AuthorData();
-			authorData.setId(author.getId());
+			authorData.setId( author.getId() );
 			authorData.setFirstName( author.getFirstName() );
 			authorData.setLastName( author.getLastName() );
 			authorData.setEmail( author.getEmail() );
@@ -251,7 +252,7 @@ public class PratilipiServiceImpl
 		ArrayList<PublisherData> publisherDataList = new ArrayList<>( publisherList.size() );
 		for( Publisher publisher : publisherList ) {
 			PublisherData publisherData = new PublisherData();
-			publisherData.setId(publisher.getId());
+			publisherData.setId( publisher.getId() );
 			publisherData.setName( publisher.getName() );
 			publisherData.setEmail( publisher.getEmail() );
 			publisherData.setRegistrationDate( publisher.getRegistrationDate() );

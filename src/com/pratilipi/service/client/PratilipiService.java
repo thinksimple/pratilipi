@@ -30,7 +30,7 @@ public interface PratilipiService extends RemoteService {
 
 	GetBookListResponse getBookList( GetBookListRequest request );
 	
-	GetBookResponse getBookById(GetBookRequest request);
+	GetBookResponse getBookById( GetBookRequest request );
 
 
 	AddLanguageResponse addLanguage( AddLanguageRequest request )

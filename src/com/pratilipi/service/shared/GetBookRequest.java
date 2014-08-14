@@ -6,14 +6,16 @@ public class GetBookRequest implements IsSerializable {
 	
 	private Long bookId;
 	
-	@SuppressWarnings("unused")
-	private GetBookRequest(){}
 	
-	public GetBookRequest(Long bookId){
+	@SuppressWarnings("unused")
+	private GetBookRequest() {}
+	
+	public GetBookRequest( Long bookId ) {
 		this.bookId = bookId;
 	}
 	
-	public Long getBookId(){
+	
+	public Long getBookId() {
 		return this.bookId;
 	}
 

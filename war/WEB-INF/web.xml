@@ -6,6 +6,16 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <servlet>
+    <servlet-name>ClaymusService</servlet-name>
+    <servlet-class>com.claymus.service.server.ClaymusServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ClaymusService</servlet-name>
+    <url-pattern>/service.claymus</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>PratilipiService</servlet-name>
     <servlet-class>com.pratilipi.service.server.PratilipiServiceImpl</servlet-class>
   </servlet>
