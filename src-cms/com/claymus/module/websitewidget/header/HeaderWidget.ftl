@@ -8,7 +8,7 @@
 				</#list>
 			</td>
 			<td style="padding:0px; text-align:center;">
-				<span class="title"> ${ getTitle() } </title>
+				<a href="/" class="title">${ getTitle() }</a>
 			</td>
 			<td style="padding:0px; text-align:right;">
 				<#list getRightLinks() as link>
