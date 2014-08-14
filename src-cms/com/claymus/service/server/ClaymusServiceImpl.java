@@ -1,5 +1,6 @@
 package com.claymus.service.server;
 
+import com.claymus.SessionAttributes;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.User;
@@ -31,6 +32,10 @@ public class ClaymusServiceImpl
 			user = dataAccessor.createUser( user );
 		}
 		dataAccessor.destroy();
+		
+		this.getThreadLocalRequest()
+				.getSession()
+				.setAttribute( SessionAttributes.CURRENT_USER_ID, user.getId() );
 		
 		return new AddUserResponse( user.getId() );
 	}
