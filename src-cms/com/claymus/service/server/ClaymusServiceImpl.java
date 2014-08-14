@@ -1,8 +1,9 @@
+
 package com.claymus.service.server;
 
 import java.util.Date;
 
-import com.claymus.SessionAttributes;
+import com.claymus.ClaymusHelper;
 import com.claymus.client.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
@@ -40,9 +41,9 @@ public class ClaymusServiceImpl
 		}
 		dataAccessor.destroy();
 		
-		this.getThreadLocalRequest()
-				.getSession()
-				.setAttribute( SessionAttributes.CURRENT_USER_ID, user.getId() );
+		ClaymusHelper.performNewUserActions(
+				this.getThreadLocalRequest().getSession(),
+				user.getId() );
 		
 		return new AddUserResponse( user.getId() );
 	}

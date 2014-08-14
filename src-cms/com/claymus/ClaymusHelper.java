@@ -1,5 +1,10 @@
 package com.claymus;
 
+import javax.servlet.http.HttpSession;
+
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -41,6 +46,13 @@ public class ClaymusHelper {
 		if( appId.startsWith("s~") )
 			appId = appId.substring( 2 );
 		return System.getProperty( appId + "." + propertyName );
+	}
+	
+	public static void performNewUserActions( HttpSession session, Long userId ) {
+		Queue queue = QueueFactory.getQueue( "new-user" );
+		queue.add( TaskOptions.Builder.withParam( "userId", userId.toString() ) );
+
+		session.setAttribute( SessionAttributes.CURRENT_USER_ID, userId );
 	}
 	
 }
