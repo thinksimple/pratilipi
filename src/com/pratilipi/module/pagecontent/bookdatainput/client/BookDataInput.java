@@ -42,7 +42,7 @@ public class BookDataInput implements EntryPoint {
 							public void onSuccess( AddBookResponse result ) {
 								Long bookId = result.getBookId();
 								Window.alert( "Book added successfully !" );
-								Window.Location.assign("/manage/books/update?gwt.codesvr=127.0.0.1:9997&bookid=" + bookId);
+								Window.Location.assign("/manage/books/update?bookid=" + bookId);
 //								Window.alert("Redirected to update page");
 							}
 							

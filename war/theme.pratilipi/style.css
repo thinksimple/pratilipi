@@ -1,11 +1,14 @@
 body {
 	margin: 0px;
+	font-size : 17px;
+	font-family: 'Kalam', cursive;
 }
 
 input[type='text'] {
 	padding: 5px;
 	border-width: 1px;
 	border-radius: 5px;
+	font-family: 'Kalam', cursive; 
 }
 
 input[type='text']:focus {
@@ -58,6 +61,7 @@ input[type='text']:focus {
 	text-decoration: none;
 	padding-left: 75px;
 	padding-right: 75px;
+	font-family: none;
 }
 
 #PageContent-PratilipiHome .tag-line {
@@ -106,6 +110,7 @@ input[type='text']:focus {
 .pratilipi-SubscriptionForm .buttonPanel .gwt-Button {
 	margin: 5px;
 	font-size: 18px;
+	font-family: 'Kalam', cursive;
 }
 
 #PageContent-PratilipiInvite {
@@ -115,14 +120,14 @@ input[type='text']:focus {
 .Pratilipi-InvitationForm .gwt-TextBox {
 	width : 300px;
 	height : 20px;
-	font-size : 14px;
-	placeholder : "Email";
+	font-size : 16px;
 }
 
 .Pratilipi-InvitationForm .gwt-Button {
 	width : 150px;
 	height : 30px;
-	font-size : 14px;
+	font-size : 16px;
+	font-family: 'Kalam', cursive;
 }
 
 .SharePanel-Image {
@@ -153,6 +158,8 @@ input[type='text']:focus {
 	text-decoration: none;
 	padding-left: 75px;
 	padding-right: 75px;
+	font-size : 15px;
+	font-family : none;
 }
 
 
@@ -166,5 +173,7 @@ input[type='text']:focus {
 
 .websitewidget-footer a {
 	color: white;
+	font-size : 14px;
 	text-decoration: none;
+	font-family : none;
 }

@@ -3,6 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<link href='http://fonts.googleapis.com/css?family=Kalam&subset=latin,devanagari' rel='stylesheet' type='text/css'>
 		<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
 		<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
 
