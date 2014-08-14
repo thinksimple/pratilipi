@@ -67,7 +67,18 @@ public class PratilipiMain extends ClaymusMain {
 			htmlContent.setHtml( html );
 			
 			pageContentList.add( htmlContent );
-		} else if( requestUri.equals( "/about" ) ) {
+		} else if( requestUri.equals( "/invite" ) ) {
+			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/InvitePageContent.ftl" );
+			List<String> lines = FileUtils.readLines( file, "UTF-8" );
+			String html = "";
+			for( String line : lines )
+				html = html + line + "\n";
+			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
+			htmlContent.setHtml( html );
+			
+			pageContentList.add( htmlContent );
+
+		}else if( requestUri.equals( "/about" ) ) {
 			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/AboutPageContent.ftl" );
 			List<String> lines = FileUtils.readLines( file, "UTF-8" );
 			String html = "";
@@ -132,6 +143,7 @@ public class PratilipiMain extends ClaymusMain {
 		}
 		
 		if( ! requestUri.equals( "/" )
+				&& ! requestUri.equals( "/invite" )
 				&& ! requestUri.equals( "/about" )
 				&& ! requestUri.equals( "/contact" ) ) {
 			
