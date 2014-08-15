@@ -58,7 +58,7 @@ public class SubscriptionForm extends Composite {
 		if( lastNameInput.getText().trim().length() != 0 )
 			userData.setLastName( lastNameInput.getText().trim() );
 		userData.setEmail( emailInput.getText().trim() );
-		userData.setCampaign( "PreLaunch" );
+		userData.setCampaign( "SoftLaunch" );
 		userData.setReferer( Window.Location.getParameter( "ref" ) );
 		userData.setStatus( UserStatus.PRELAUNCH_SIGNUP );
 		return userData;

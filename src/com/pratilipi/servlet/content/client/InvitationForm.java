@@ -32,7 +32,7 @@ public class InvitationForm extends Composite {
 	public UserData getUser() {
 		UserData userData = new UserData();
 		userData.setEmail( emailInput.getText().trim() );
-		userData.setCampaign( "PreLaunch" );
+		userData.setCampaign( "SoftLaunch" );
 		userData.setReferer( Window.Location.getParameter( "id" ) );
 		userData.setStatus( UserStatus.PRELAUNCH_REFERRAL );
 		return userData;
