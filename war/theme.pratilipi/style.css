@@ -66,14 +66,28 @@ input[type='text']:focus {
 
 #PageContent-PratilipiHome .tag-line {
 	text-align: center;
-	padding-top: 100px;
+	padding-top: 50px;
 	font-size: 25px;
 	color: white;
 }
 
+#PageContent-PratilipiHome .launching-soon {
+	text-align: center;
+	padding-top: 50px;
+	font-size: 30px;
+	color: white;
+}
+
+#PageContent-PratilipiHome .launching-soon a {
+	padding-left: 0px;
+	padding-right: 0px;
+	font-family: 'Kalam', cursive;
+	text-decoration: underline;
+}
+
 #PageContent-PratilipiHome .teaser {
 	text-align: center;
-	padding-top: 100px;
+	padding-top: 50px;
 }
 
 

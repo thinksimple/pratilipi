@@ -31,17 +31,6 @@ public class HomePageContent implements EntryPoint {
 		
 		final SubscriptionForm subscriptionForm = new SubscriptionForm();
 		
-		ClickHandler cancelButtonClickHandler = new ClickHandler() {
-			
-			@Override
-			public void onClick( ClickEvent event ) {
-				opaqueOverlay.setVisible( false );
-				transparentOverlay.setVisible( false );
-				History.newItem( "" );
-			}
-			
-		};
-		
 		ClickHandler subscribeButtonClickHandler = new ClickHandler() {
 			
 			@Override
@@ -64,8 +53,19 @@ public class HomePageContent implements EntryPoint {
 			}
 		};
 
-		subscriptionForm.addCancelButtonClickHandler( cancelButtonClickHandler );
+		ClickHandler cancelButtonClickHandler = new ClickHandler() {
+			
+			@Override
+			public void onClick( ClickEvent event ) {
+				opaqueOverlay.setVisible( false );
+				transparentOverlay.setVisible( false );
+				History.newItem( "" );
+			}
+			
+		};
+		
 		subscriptionForm.addSubscribeButtonClickHandler( subscribeButtonClickHandler );
+		subscriptionForm.addCancelButtonClickHandler( cancelButtonClickHandler );
 
 		transparentOverlay.add( subscriptionForm );
 
@@ -77,8 +77,8 @@ public class HomePageContent implements EntryPoint {
 			transparentOverlay.setVisible( false );
 		}
 	
-		RootPanel.get( "PageContent-PratilipiHome" ).add( opaqueOverlay );
-		RootPanel.get( "PageContent-PratilipiHome" ).add( transparentOverlay );
+		RootPanel.get().add( opaqueOverlay );
+		RootPanel.get().add( transparentOverlay );
 
 		History.addValueChangeHandler( new ValueChangeHandler<String>() {
 

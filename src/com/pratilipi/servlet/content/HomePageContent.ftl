@@ -18,6 +18,11 @@
 		<span>you become what you read ...</span>
 	</div>
 
+	<div class="launching-soon">
+		<span>We are launching soon !</span><br/>
+		<span><a href="#subscribe">Subscribe</a> to be the first one to know.</span>
+	</div>
+	
 	<div class="teaser">
 		<iframe width="560" height="315" src="//www.youtube.com/embed/8L71YwC7BOQ?rel=0&controls=2&showinfo=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
 	</div>
@@ -34,5 +39,3 @@
 	window.onload = setPageContentSize;
 	window.onresize = setPageContentSize;
 </script>
-
-<script type="text/javascript" language="javascript" src="/pagecontent.homepagecontent/pagecontent.homepagecontent.nocache.js"></script>
