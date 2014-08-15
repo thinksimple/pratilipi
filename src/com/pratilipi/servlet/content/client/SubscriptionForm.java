@@ -53,8 +53,10 @@ public class SubscriptionForm extends Composite {
 	
 	public UserData getUser() {
 		UserData userData = new UserData();
-		userData.setFirstName( firstNameInput.getText().trim() );
-		userData.setLastName( lastNameInput.getText().trim() );
+		if( firstNameInput.getText().trim().length() != 0 )
+			userData.setFirstName( firstNameInput.getText().trim() );
+		if( lastNameInput.getText().trim().length() != 0 )
+			userData.setLastName( lastNameInput.getText().trim() );
 		userData.setEmail( emailInput.getText().trim() );
 		userData.setCampaign( "PreLaunch" );
 		userData.setReferer( Window.Location.getParameter( "ref" ) );

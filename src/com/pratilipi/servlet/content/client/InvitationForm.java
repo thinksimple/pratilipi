@@ -3,6 +3,7 @@ package com.pratilipi.servlet.content.client;
 import com.claymus.client.UserStatus;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -28,11 +29,12 @@ public class InvitationForm extends Composite {
 		initWidget(inviteForm);
 	}
 	
-	public UserData getUser(){
+	public UserData getUser() {
 		UserData userData = new UserData();
-		userData.setEmail(emailInput.getText());
-		userData.setStatus(UserStatus.PRELAUNCH_REFERRAL);
-		userData.setReferer(refId);
+		userData.setEmail( emailInput.getText().trim() );
+		userData.setCampaign( "PreLaunch" );
+		userData.setReferer( Window.Location.getParameter( "id" ) );
+		userData.setStatus( UserStatus.PRELAUNCH_REFERRAL );
 		return userData;
 	}
 	

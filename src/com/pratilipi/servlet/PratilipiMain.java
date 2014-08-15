@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 
@@ -44,6 +47,28 @@ public class PratilipiMain extends ClaymusMain {
 	}
 
 
+	private HttpServlet newUserQueueServlet;
+
+	@Override
+	protected void service(
+			HttpServletRequest request,
+			HttpServletResponse response ) throws ServletException, IOException {
+		
+		String requestUri = request.getRequestURI();
+		
+		if( requestUri.equals( "/_ah/queue/new-user" ) ) {
+			if( newUserQueueServlet == null ) {
+				newUserQueueServlet = new NewUserQueueServlet();
+				newUserQueueServlet.init( this.getServletConfig() );
+			}
+			newUserQueueServlet.service( request, response );
+		
+		} else {
+			super.service( request, response );
+		}
+
+	}
+	
 	@Override
 	protected String getTemplateName() {
 		return "com/pratilipi/servlet/content/PratilipiTemplate.ftl";
@@ -78,7 +103,7 @@ public class PratilipiMain extends ClaymusMain {
 			
 			pageContentList.add( htmlContent );
 
-		}else if( requestUri.equals( "/about" ) ) {
+		} else if( requestUri.equals( "/about" ) ) {
 			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/AboutPageContent.ftl" );
 			List<String> lines = FileUtils.readLines( file, "UTF-8" );
 			String html = "";

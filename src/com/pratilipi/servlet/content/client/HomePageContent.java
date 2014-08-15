@@ -52,7 +52,7 @@ public class HomePageContent implements EntryPoint {
 					
 					@Override
 					public void onSuccess( AddUserResponse response ) {
-						Window.Location.assign( "/invite" );
+						Window.Location.assign( "/invite?id=" + response.getUserId() );
 					}
 					
 					@Override
