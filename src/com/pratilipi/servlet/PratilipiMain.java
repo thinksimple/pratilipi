@@ -135,6 +135,17 @@ public class PratilipiMain extends ClaymusMain {
 			
 			pageContentList.add( htmlContent );
 
+		} else if( requestUri.equals( "/faq" ) ) {
+			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/FaqPageContent.ftl" );
+			List<String> lines = FileUtils.readLines( file, "UTF-8" );
+			String html = "";
+			for( String line : lines )
+				html = html + line + "\n";
+			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
+			htmlContent.setHtml( html );
+			
+			pageContentList.add( htmlContent );
+
 		} else if( requestUri.equals( "/books" ) )
 			pageContentList.add( BookListFactory.newBookList() );
 		else if( requestUri.equals( "/manage/languages" ) )
@@ -181,6 +192,7 @@ public class PratilipiMain extends ClaymusMain {
 				&& ! requestUri.equals( "/invite" )
 				&& ! requestUri.equals( "/about" )
 				&& ! requestUri.equals( "/contact" )
+				&& ! requestUri.equals( "/faq" )
 				&& ! requestUri.equals( "/give-away" )) {
 			
 			websiteWidgetList.add( UserWidgetFactory.newUserWidget() );
