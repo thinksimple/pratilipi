@@ -92,6 +92,16 @@ public class PratilipiMain extends ClaymusMain {
 			htmlContent.setHtml( html );
 			
 			pageContentList.add( htmlContent );
+		} else if( requestUri.equals( "/give-away" ) ) {
+			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/GiveAwayPageContent.ftl" );
+			List<String> lines = FileUtils.readLines( file, "UTF-8" );
+			String html = "";
+			for( String line : lines )
+				html = html + line;
+			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
+			htmlContent.setHtml( html );
+			
+			pageContentList.add( htmlContent );
 		} else if( requestUri.equals( "/invite" ) ) {
 			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/InvitePageContent.ftl" );
 			List<String> lines = FileUtils.readLines( file, "UTF-8" );
@@ -158,7 +168,7 @@ public class PratilipiMain extends ClaymusMain {
 			headerWidget.setTitle( "Pratilipi" );
 			headerWidget.setTagLine( "you become what you read ..." );
 			headerWidget.setLeftLinks( new String[][] {
-					{ "FEATURES", "#" }
+					{ "GIVE AWAY", "/give-away" }
 			});
 			headerWidget.setRightLinks( new String[][] {
 					{ "SUBSCRIBE", "#subscribe" }
@@ -170,7 +180,8 @@ public class PratilipiMain extends ClaymusMain {
 		if( ! requestUri.equals( "/" )
 				&& ! requestUri.equals( "/invite" )
 				&& ! requestUri.equals( "/about" )
-				&& ! requestUri.equals( "/contact" ) ) {
+				&& ! requestUri.equals( "/contact" )
+				&& ! requestUri.equals( "/give-away" )) {
 			
 			websiteWidgetList.add( UserWidgetFactory.newUserWidget() );
 

@@ -33,8 +33,8 @@ public class SubscriptionForm extends Composite {
 		emailPanel.add( emailInput );
 		
 		Panel buttonPanel = new FlowPanel();
-		buttonPanel.add( cancelButton );
 		buttonPanel.add( subscribeButton );
+		buttonPanel.add( cancelButton );
 		
 		
 		Panel panel = new FlowPanel();
@@ -76,8 +76,8 @@ public class SubscriptionForm extends Composite {
 		firstNameInput.setEnabled( enabled );
 		lastNameInput.setEnabled( enabled );
 		emailInput.setEnabled( enabled );
-		cancelButton.setEnabled( enabled );
 		subscribeButton.setEnabled( enabled );
+		cancelButton.setEnabled( enabled );
 	}
 	
 }

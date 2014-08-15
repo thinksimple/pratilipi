@@ -5,7 +5,7 @@
 	</div>
 
 	<div class="links-left">
-		<a href="#">FEATURES</a>
+		<a href="/give-away">GIVE AWAY</a>
 	</div>
 	<div class="links-right">
 		<a href="#subscribe">SUBSCRIBE</a>
