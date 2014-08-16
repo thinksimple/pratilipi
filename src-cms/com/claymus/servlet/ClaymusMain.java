@@ -3,7 +3,6 @@ package com.claymus.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -32,6 +31,7 @@ import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.claymus.module.websitewidget.WebsiteWidgetRegistry;
 import com.claymus.module.websitewidget.footer.FooterWidgetFactory;
 import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
+import com.claymus.module.websitewidget.html.HtmlWidgetFactory;
 import com.claymus.module.websitewidget.navigation.NavigationWidgetFactory;
 import com.claymus.module.websitewidget.user.UserWidgetFactory;
 
@@ -64,6 +64,7 @@ public class ClaymusMain extends HttpServlet {
 		WEBSITE_WIDGET_REGISTRY.register( FooterWidgetFactory.class );
 		WEBSITE_WIDGET_REGISTRY.register( NavigationWidgetFactory.class );
 		WEBSITE_WIDGET_REGISTRY.register( UserWidgetFactory.class );
+		WEBSITE_WIDGET_REGISTRY.register( HtmlWidgetFactory.class );
 		
 		FREEMARKER_CONFIGURATION = new Configuration();
 		try {
