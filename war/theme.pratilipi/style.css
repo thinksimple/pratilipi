@@ -12,7 +12,7 @@ input[type='text'] {
 }
 
 input[type='text']:focus {
-	box-shadow : 0 1px 1px #00ccff, 0 0 8px #00ccff;
+	box-shadow : 0 1px 1px #49A3FF, 0 0 8px #49A3FF; /*#00ccff;*/
 }
 
 #PageContent-PratilipiHome {
@@ -51,6 +51,16 @@ input[type='text']:focus {
 	padding-top: 15px;
 }
 
+#PageContent-PratilipiHome .links-right li {
+	width: 150px;
+	float: right;
+	text-align: center;
+}
+
+#PageContent-PratilipiHome .links-right li:hover {
+	background-color: #49A3FF;
+}
+
 #PageContent-PratilipiHome .title {
 	text-align: center;
 	font-size: 40px;
@@ -59,9 +69,13 @@ input[type='text']:focus {
 #PageContent-PratilipiHome a {
 	color: white;
 	text-decoration: none;
-	padding-left: 75px;
-	padding-right: 75px;
+	/*padding-left: 75px;
+	padding-right: 75px; */
 	font-family: none;
+}
+
+#PageContent-PratilipiHome li a {
+	width: 150px;
 }
 
 #PageContent-PratilipiHome .tag-line {
@@ -191,3 +205,46 @@ input[type='text']:focus {
 	text-decoration: none;
 	font-family : none;
 }
+
+/* About Menu */
+.links-left
+{	margin: 0;
+	padding: 0;
+	z-index: 30
+	}
+
+.links-left li
+{	
+	float: left;
+}
+
+.links-left li a
+{	display: block;
+	color: #FFF;
+	text-align: center;
+	text-decoration: none
+}
+
+.links-left li a:hover
+{	background: #49A3FF }
+
+.links-left div
+{	position: absolute;
+	visibility: hidden;
+}
+
+.links-left div a
+{	position: relative;
+	display: block;
+	width: auto;
+	white-space: nowrap;
+	text-align: center;
+	text-decoration: none;
+}
+
+.links-left div a:hover
+{	background: #49A3FF;
+	color: #FFF
+}
+	
+	

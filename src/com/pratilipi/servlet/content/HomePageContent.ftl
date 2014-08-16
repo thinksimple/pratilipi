@@ -5,10 +5,21 @@
 	</div>
 
 	<div class="links-left">
-		<a href="/give-away">GIVE AWAY</a>
+			<li><a href="/about" 
+		        onmouseover="mopen('about')"
+		        onmouseout="mclosetime()">ABOUT</a>
+		        <div id="about" 
+		            onmouseover="mcancelclosetime()" 
+		            onmouseout="mclosetime()">
+			        <a href="#">Pratilipi</a>
+			        <a href="#">Team</a>
+			        <a href="#">Founding Readers</a>
+		        </div>
+	   		</li>
+			<li><a href="/give-away">GIVE AWAY</a></li>
 	</div>
 	<div class="links-right">
-		<a href="#subscribe">SUBSCRIBE</a>
+		<li><a href="#subscribe">SUBSCRIBE</a></li>
 	</div>
 
 	<div class="title">

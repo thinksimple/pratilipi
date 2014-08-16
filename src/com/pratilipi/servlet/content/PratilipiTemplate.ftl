@@ -6,6 +6,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Kalam&subset=latin,devanagari' rel='stylesheet' type='text/css'>
 		<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
 		<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
+		<script type="text/javascript" language="javascript" src="/theme.pratilipi/aboutmenu.js"></script>
 
 		<script type="text/javascript" language="javascript" src="/pagecontent.homepagecontent/pagecontent.homepagecontent.nocache.js"></script>
 
