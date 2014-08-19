@@ -1,5 +1,7 @@
 package com.claymus.data.access;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +11,8 @@ public interface BlobAccessor {
 
 	boolean createBlob( HttpServletRequest request );
 	
-	boolean serveBlob( HttpServletRequest request, HttpServletResponse response );
+	void serveBlob(
+			String fileName,
+			HttpServletResponse response ) throws IOException;
 	
 }

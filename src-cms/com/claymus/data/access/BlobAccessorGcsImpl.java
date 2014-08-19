@@ -114,34 +114,24 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 	}
 
 	@Override
-	public boolean serveBlob(
-			HttpServletRequest request,
-			HttpServletResponse response ) {
+	public void serveBlob(
+			String fileName,
+			HttpServletResponse response ) throws IOException {
 
-		String fileName = request.getRequestURI().substring( 16 );
+		GcsFilename gcsFileName
+				= new GcsFilename( bucketName, fileName );
+		GcsFileMetadata gcsFileMetadata
+				= gcsService.getMetadata( gcsFileName );
+		GcsInputChannel gcsInputChannel
+				= gcsService.openReadChannel( gcsFileName, 0 );
 		
-		try {
-			GcsFilename gcsFileName
-					= new GcsFilename( bucketName, fileName );
-			GcsFileMetadata gcsFileMetadata
-					= gcsService.getMetadata( gcsFileName );
-			GcsInputChannel gcsInputChannel
-					= gcsService.openReadChannel( gcsFileName, 0 );
-			
-			ByteBuffer byteBuffer
-					= ByteBuffer.allocate( (int) gcsFileMetadata.getLength() );
-			gcsInputChannel.read( byteBuffer );
-		
-			response.setContentType( gcsFileMetadata.getOptions().getMimeType() );
-			response.getOutputStream().write( byteBuffer.array() );
-			response.getOutputStream().close();
-			
-			return true;
-			
-		} catch (IOException e) {
-			logger.log( Level.SEVERE, "Failed to serve the blob.", e );
-			return false;
-		}
+		ByteBuffer byteBuffer
+				= ByteBuffer.allocate( (int) gcsFileMetadata.getLength() );
+		gcsInputChannel.read( byteBuffer );
+	
+		response.setContentType( gcsFileMetadata.getOptions().getMimeType() );
+		response.getOutputStream().write( byteBuffer.array() );
+		response.getOutputStream().close();
 	}
 	
 }

@@ -28,12 +28,12 @@
 
   <servlet>
     <servlet-name>ResourceServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
+    <servlet-class>com.pratilipi.www.servlet.ResourceServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
     <servlet-name>ResourceServlet</servlet-name>
-    <url-pattern>/resource/book-cover/*</url-pattern>
+    <url-pattern>/resource.book-cover/*</url-pattern>
   </servlet-mapping>
    
 

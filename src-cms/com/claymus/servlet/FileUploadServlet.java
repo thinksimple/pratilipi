@@ -29,7 +29,9 @@ public class FileUploadServlet extends HttpServlet {
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 
-		DataAccessorFactory.getBlobAccessor().serveBlob( request, response );
+		DataAccessorFactory
+				.getBlobAccessor()
+				.serveBlob( request.getRequestURI().substring( 16 ), response );
 	}
 	
 }

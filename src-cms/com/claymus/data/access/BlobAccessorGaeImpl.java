@@ -1,7 +1,6 @@
 package com.claymus.data.access;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +12,7 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 public class BlobAccessorGaeImpl implements BlobAccessor {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = 
 			Logger.getLogger( BlobAccessorGaeImpl.class.getName() );
 
@@ -35,19 +35,14 @@ public class BlobAccessorGaeImpl implements BlobAccessor {
 	}
 
 	@Override
-	public boolean serveBlob( HttpServletRequest request, HttpServletResponse response ) {
-		@SuppressWarnings("unused")
-		String fileName = request.getRequestURI().substring( 16 );
+	public void serveBlob(
+			String fileName,
+			HttpServletResponse response ) throws IOException {
+		
 		// TODO: Get the blob key mapped against the fileName.
 		String blobKeyString = null;
 		BlobKey blobKey = new BlobKey( blobKeyString );
-		try {
-			blobstoreService.serve( blobKey, response );
-			return true;
-		} catch (IOException e) {
-			logger.log( Level.SEVERE, "Failed to serve the blob.", e );
-			return false;
-		}
+		blobstoreService.serve( blobKey, response );
 	}
 	
 }
