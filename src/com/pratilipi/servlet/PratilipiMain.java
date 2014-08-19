@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 
+import com.claymus.ClaymusHelper;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.fileupload.FileUploadContent;
@@ -22,9 +23,6 @@ import com.claymus.module.websitewidget.footer.FooterWidget;
 import com.claymus.module.websitewidget.footer.FooterWidgetFactory;
 import com.claymus.module.websitewidget.header.HeaderWidget;
 import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
-import com.claymus.module.websitewidget.navigation.NavigationWidget;
-import com.claymus.module.websitewidget.navigation.NavigationWidgetFactory;
-import com.claymus.module.websitewidget.user.UserWidgetFactory;
 import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
@@ -179,37 +177,32 @@ public class PratilipiMain extends ClaymusMain {
 			HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
 			headerWidget.setBrand( "Pratilipi" );
 			headerWidget.setTagLine( "you become what you read ..." );
-			headerWidget.setRightNavItems( new Object[][] {
-					{ "Give Away", "/give-away", null },
-					{ "Suscribe", "#subscribe", null },
-					{ "About", null, new String[][] {
-							{ "Pratilipi", "/about/pratilipi" },
-							{ "Team", "/about/team" },
-							{ "The Founding Readers", "/about/the-founding-readers" }}},
-			});
+			if( ClaymusHelper.isUserAdmin() )
+				headerWidget.setRightNavItems( new Object[][] {
+						{ "Give Away", "/give-away", null },
+						{ "Subscribe", "#subscribe", null },
+						{ "About", null, new String[][] {
+								{ "Pratilipi", "/about/pratilipi" },
+								{ "Team", "/about/team" },
+								{ "The Founding Readers", "/about/the-founding-readers" }}},
+						{ "Manage", null, new String[][] {
+								{ "Books", "/manage/books" },
+								{ "Authors", "/manage/authors" },
+								{ "Publishers", "/manage/publishers" },
+								{ "Languages", "/manage/languages" }}},
+						{ "Log Out", ClaymusHelper.createLogoutURL(), null },
+				});
+			else
+				headerWidget.setRightNavItems( new Object[][] {
+						{ "Give Away", "/give-away", null },
+						{ "Subscribe", "#subscribe", null },
+						{ "About", null, new String[][] {
+								{ "Pratilipi", "/about/pratilipi" },
+								{ "Team", "/about/team" },
+								{ "The Founding Readers", "/about/the-founding-readers" }}},
+				});
 			headerWidget.setPosition( "HEADER" );
 			websiteWidgetList.add( headerWidget );
-		}
-		
-		if( ! requestUri.equals( "/" )
-				&& ! requestUri.equals( "/invite" )
-				&& ! requestUri.equals( "/about" )
-				&& ! requestUri.equals( "/contact" )
-				&& ! requestUri.equals( "/faq" )
-				&& ! requestUri.equals( "/give-away" )) {
-			
-			websiteWidgetList.add( UserWidgetFactory.newUserWidget() );
-
-			NavigationWidget navigationWidget = NavigationWidgetFactory.newNavigationWidget();
-			navigationWidget.setLinks( new String[][] {
-					{ "Books", "/manage/books/new" },
-					{ "Languages", "/manage/languages" },
-					{ "Authors", "/manage/authors/new" },
-					{ "Publishers", "/manage/publishers/new" }
-			} );
-			navigationWidget.setPosition( "HEADER" );
-	
-			websiteWidgetList.add( navigationWidget );
 		}
 		
 		FooterWidget footerWidget = FooterWidgetFactory.newFooterWidget();
