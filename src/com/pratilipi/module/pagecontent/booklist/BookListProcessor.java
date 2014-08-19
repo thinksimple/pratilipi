@@ -11,7 +11,7 @@ public class BookListProcessor extends PageContentProcessor<BookList> {
 				+ "language='javascript' "
 				+ "src='/pagecontent.booklist/pagecontent.booklist.nocache.js'"
 				+ "></script>"
-				+ "<div id='PageContent-BookList'></div>";
+				+ "<div id='PageContent-BookList' class='container'></div>";
 	}
 	
 }

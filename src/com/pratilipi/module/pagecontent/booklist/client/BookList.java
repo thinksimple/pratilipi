@@ -28,7 +28,7 @@ public class BookList implements EntryPoint {
 					bookView.setBookData( bookData );
 					RootPanel
 							.get( "PageContent-BookList" )
-							.add( bookView );
+							.add( bookView.getThumbnail() );
 				}
 				
 			}
