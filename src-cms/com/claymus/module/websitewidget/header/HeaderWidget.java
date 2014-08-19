@@ -4,20 +4,20 @@ import com.claymus.data.transfer.WebsiteWidget;
 
 public interface HeaderWidget extends WebsiteWidget {
 	
-	String getTitle();
+	String getBrand();
 	
-	void setTitle( String title );
+	void setBrand( String brand );
 	
 	String getTagLine();
 	
 	void setTagLine( String tagLine );
 	
-	String[][] getLeftLinks();
+	Object[][] getLeftNavItems();
 	
-	void setLeftLinks( String[][] leftLinks );
+	void setLeftNavItems( Object[][] leftNavItems );
 
-	String[][] getRightLinks();
+	Object[][] getRightNavItems();
 	
-	void setRightLinks( String[][] rightLinks );
+	void setRightNavItems( Object[][] rightNavItems );
 
 }

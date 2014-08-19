@@ -35,6 +35,7 @@ import com.pratilipi.module.pagecontent.managepublishers.ManagePublishersFactory
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
 	
+	@SuppressWarnings("unused")
 	private static final Logger logger = 
 			Logger.getLogger( PratilipiMain.class.getName() );
 
@@ -176,13 +177,15 @@ public class PratilipiMain extends ClaymusMain {
 
 		if( ! requestUri.equals( "/" ) ) {
 			HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
-			headerWidget.setTitle( "Pratilipi" );
+			headerWidget.setBrand( "Pratilipi" );
 			headerWidget.setTagLine( "you become what you read ..." );
-			headerWidget.setLeftLinks( new String[][] {
-					{ "GIVE AWAY", "/give-away" }
-			});
-			headerWidget.setRightLinks( new String[][] {
-					{ "SUBSCRIBE", "#subscribe" }
+			headerWidget.setRightNavItems( new Object[][] {
+					{ "Give Away", "/give-away", null },
+					{ "Suscribe", "#subscribe", null },
+					{ "About", null, new String[][] {
+							{ "Pratilipi", "/about/pratilipi" },
+							{ "Team", "/about/team" },
+							{ "The Founding Readers", "/about/the-founding-readers" }}},
 			});
 			headerWidget.setPosition( "HEADER" );
 			websiteWidgetList.add( headerWidget );

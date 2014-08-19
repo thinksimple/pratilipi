@@ -10,26 +10,26 @@ import com.claymus.module.websitewidget.header.HeaderWidget;
 public class HeaderWidgetEntity extends WebsiteWidgetEntity implements HeaderWidget {
 
 	@Persistent( column = "X_COL_0" )
-	private String title;
+	private String brand;
 	
 	@Persistent( column = "X_COL_1" )
 	private String tagLine;
 
 	@Persistent( column = "X_COL_2" )
-	private String[][] leftLinks;
+	private Object[][] leftNavItems;
 
 	@Persistent( column = "X_COL_3" )
-	private String[][] rightLinks;
+	private Object[][] rightNavItems;
 
 	
 	@Override
-	public String getTitle() {
-		return title;
+	public String getBrand() {
+		return brand;
 	}
 
 	@Override
-	public void setTitle( String title ) {
-		this.title = title;
+	public void setBrand( String brand ) {
+		this.brand = brand;
 	}
 
 	@Override
@@ -43,23 +43,23 @@ public class HeaderWidgetEntity extends WebsiteWidgetEntity implements HeaderWid
 	}
 	
 	@Override
-	public String[][] getLeftLinks() {
-		return leftLinks;
+	public Object[][] getLeftNavItems() {
+		return leftNavItems;
 	}
 
 	@Override
-	public void setLeftLinks( String[][] leftLinks ) {
-		this.leftLinks = leftLinks;
+	public void setLeftNavItems( Object[][] leftNavItems ) {
+		this.leftNavItems = leftNavItems;
 	}
 
 	@Override
-	public String[][] getRightLinks() {
-		return rightLinks;
+	public Object[][] getRightNavItems() {
+		return rightNavItems;
 	}
 
 	@Override
-	public void setRightLinks( String[][] rightLinks ) {
-		this.rightLinks = rightLinks;
+	public void setRightNavItems( Object[][] rightNavItems ) {
+		this.rightNavItems = rightNavItems;
 	}
 
 }
