@@ -149,7 +149,18 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( BookListFactory.newBookList() );
 		else if( requestUri.equals( "/manage/languages" ) )
 			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
-		else if( requestUri.equals( "/manage/books/new" ) )
+		else if( requestUri.equals( "/manage/books" ) ) {
+				File file = new File( "WEB-INF/classes/com/pratilipi/www/ManageBooks.ftl" );
+				List<String> lines = FileUtils.readLines( file, "UTF-8" );
+				String html = "";
+				for( String line : lines )
+					html = html + line + "\n";
+				HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
+				htmlContent.setHtml( html );
+				
+				pageContentList.add( htmlContent );
+
+		} else if( requestUri.equals( "/manage/books/new" ) )
 			pageContentList.add( BookDataInputFactory.newBookDataInput() );
 		else if( requestUri.equals( "/manage/books/update" ) )
 			pageContentList.add( BookDataInputFactory.newBookDataInput() );
