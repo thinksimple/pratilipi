@@ -70,6 +70,16 @@ public class UserBookEntity implements UserBook {
 	}
 	
 	@Override
+	public String getReview() {
+		return review == null ? null : review.getValue();
+	}
+
+	@Override
+	public void setReview( String review ) {
+		this.review = new Text( review );
+	}
+	
+	@Override
 	public ReviewState getReviewState() {
 		return reviewState;
 	}
@@ -89,14 +99,4 @@ public class UserBookEntity implements UserBook {
 		this.reviewDate = reviewDate;
 	}
 
-	@Override
-	public Text getReview() {
-		return review;
-	}
-
-	@Override
-	public void setReview(Text review) {
-		this.review = review;
-	}
-	
 }
