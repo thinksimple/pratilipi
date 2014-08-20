@@ -1,6 +1,5 @@
-<div class="websitewidget-navigation">
+<ul class="nav nav-tabs nav-justified" role="tablist">
 	<#list getLinks() as link>
-		<a href="${ link[1] }">${ link[0] }</a>
-		&nbsp;
+		<li><a href="${ link[1] }">${ link[0] }</a></li>
 	</#list>
-</div>
+</ul>

@@ -19,23 +19,29 @@ public abstract class PageContentProcessor<T extends PageContent> {
 	
 	public String getHtml( T pageContent ) {
 		
+		return processTemplate( pageContent, getTemplateName() );
+		
+	}
+	
+	protected String getTemplateName() {
+		return null;
+	}
+	
+	protected String processTemplate( Object dataModel, String templateName ) {
+		
 		Writer writer = new StringWriter();
 
 		try {
 			Template template
 					= ClaymusMain
 							.FREEMARKER_CONFIGURATION
-							.getTemplate( getTemplateName() );
-			template.process( pageContent, writer );
+							.getTemplate( templateName );
+			template.process( dataModel, writer );
 		} catch ( IOException | TemplateException e ) {
 			logger.log( Level.SEVERE, "Template processing failed.", e );
 		}
 		
 		return writer.toString();
-	}
-	
-	protected String getTemplateName() {
-		return null;
 	}
 		
 }

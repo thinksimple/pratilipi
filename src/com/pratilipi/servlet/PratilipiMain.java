@@ -26,6 +26,7 @@ import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
 import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
+import com.pratilipi.module.pagecontent.homebook.HomeBookContentFactory;
 import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
 import com.pratilipi.module.pagecontent.managebooks.ManageBooksFactory;
 import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
@@ -41,6 +42,9 @@ public class PratilipiMain extends ClaymusMain {
 	static {
 		PAGE_CONTENT_REGISTRY.register( BookDataInputFactory.class );
 		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
+		
+		PAGE_CONTENT_REGISTRY.register( HomeBookContentFactory.class );
+		
 		PAGE_CONTENT_REGISTRY.register( ManageBooksFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManageLanguagesFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManageAuthorsFactory.class );
@@ -113,23 +117,31 @@ public class PratilipiMain extends ClaymusMain {
 					generateHtmlContentFromFile(
 							"WEB-INF/classes/com/pratilipi/servlet/content/FaqPageContent.ftl" ) );
 			
-		else if( requestUri.equals( "/books" ) )
+		
+		else if( requestUri.equals( "/home" ) )
 			pageContentList.add( BookListFactory.newBookList() );
 		
-		else if( requestUri.equals( "/manage/languages" ) )
-			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
+		
+		else if( requestUri.startsWith( "/book/" ) ) {
+			String bookIdStr = requestUri.substring( 6 );
+			Long bookId = Long.parseLong( bookIdStr );
+			pageContentList.add( HomeBookContentFactory.newHomeBookContent( bookId ) );
+		}
 		
 		else if( requestUri.equals( "/manage/books" ) )
 			pageContentList.add( ManageBooksFactory.newManageBooks() );
+		else if( requestUri.equals( "/manage/authors" ) )
+			pageContentList.add( ManageAuthorsFactory.newAuthorDataInput() );
+		else if( requestUri.equals( "/manage/publishers" ) )
+			pageContentList.add( ManagePublishersFactory.newPublisherDataInput() );
+		else if( requestUri.equals( "/manage/languages" ) )
+			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
 
+		
 		else if( requestUri.equals( "/manage/books/new" ) )
 			pageContentList.add( BookDataInputFactory.newBookDataInput() );
 		else if( requestUri.equals( "/manage/books/update" ) )
 			pageContentList.add( BookDataInputFactory.newBookDataInput() );
-		else if( requestUri.equals( "/manage/authors/new" ) )
-			pageContentList.add( ManageAuthorsFactory.newAuthorDataInput() );
-		else if( requestUri.equals( "/manage/publishers/new" ) )
-			pageContentList.add( ManagePublishersFactory.newPublisherDataInput() );
 		else if( requestUri.startsWith( "/uploads/" ) ) {
 			FileUploadContent fileUploadContent = FileUploadContentFactory.newFileUploadContent();
 			fileUploadContent.setFileName( requestUri.substring( 9 ) );

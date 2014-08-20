@@ -52,11 +52,7 @@
     <web-resource-collection>
       <web-resource-name>admin</web-resource-name>
       <url-pattern>/service.upload/*</url-pattern>
-      <url-pattern>/manage/publishers/*</url-pattern>
-      <url-pattern>/manage/languages/*</url-pattern>
-      <url-pattern>/manage/authors/*</url-pattern>
-      <url-pattern>/manage/books/*</url-pattern>
-      <url-pattern>/manage/uploads/*</url-pattern>
+      <url-pattern>/manage/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
