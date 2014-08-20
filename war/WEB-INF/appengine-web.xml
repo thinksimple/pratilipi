@@ -7,8 +7,10 @@
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>
 
+  <instance-class>F1</instance-class>
+
   <automatic-scaling>
-    <max-pending-latency>100ms</max-pending-latency>
+    <max-pending-latency>10ms</max-pending-latency>
   </automatic-scaling>
     
   <static-files>
