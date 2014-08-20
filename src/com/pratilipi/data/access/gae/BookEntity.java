@@ -7,6 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Text;
 import com.pratilipi.data.transfer.Book;
 
 @PersistenceCapable( table = "BOOK" )
@@ -36,6 +37,9 @@ public class BookEntity implements Book {
 	private Date listingDate;
 
 	
+	@Persistent( column = "SUMMARY" )
+	private Text summary;
+
 	@Persistent( column = "WORD_COUNT" )
 	private Long wordCount;
 
@@ -105,6 +109,16 @@ public class BookEntity implements Book {
 		this.listingDate = listingDate;
 	}
 
+	@Override
+	public String getSummary() {
+		return summary == null ? null : summary.getValue();
+	}
+
+	@Override
+	public void setSummary( String summary ) {
+		this.summary = new Text( summary );
+	}
+	
 	@Override
 	public Long getWordCount() {
 		return wordCount;

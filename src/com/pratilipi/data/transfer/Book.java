@@ -30,6 +30,10 @@ public interface Book {
 	
 	void setListingDate( Date listingDate );
 	
+	String getSummary();
+	
+	void setSummary( String summary );
+	
 	Long getWordCount();
 	
 	void setWordCount( Long wordCount );

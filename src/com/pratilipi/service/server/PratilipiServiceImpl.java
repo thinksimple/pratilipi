@@ -90,6 +90,7 @@ public class PratilipiServiceImpl
 			bookData.setPublisherName( publisher.getName() );
 			bookData.setPublicationDate( book.getPublicationDate() );
 			bookData.setListingDate( book.getListingDate() );
+			bookData.setSummary( book.getSummary() );
 			bookData.setWordCount( book.getWordCount() );
 			
 			bookDataList.add( bookData );
@@ -122,6 +123,7 @@ public class PratilipiServiceImpl
 		bookData.setPublisherName( publisher.getName() );
 		bookData.setPublicationDate( book.getPublicationDate() );
 		bookData.setListingDate( book.getListingDate() );
+		bookData.setSummary( book.getSummary() );
 		bookData.setWordCount( book.getWordCount() );
 		
 		dataAccessor.destroy();

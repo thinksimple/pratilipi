@@ -28,6 +28,8 @@ public class BookData implements IsSerializable {
 	private Date listingDate;
 
 	
+	private String summary;
+
 	private Long wordCount;
 
 	
@@ -109,6 +111,14 @@ public class BookData implements IsSerializable {
 
 	public void setListingDate( Date listingDate ) {
 		this.listingDate = listingDate;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary( String summary ) {
+		this.summary = summary;
 	}
 
 	public Long getWordCount() {
