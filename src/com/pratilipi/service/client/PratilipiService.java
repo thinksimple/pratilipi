@@ -1,5 +1,6 @@
 package com.pratilipi.service.client;
 
+import com.claymus.client.IllegalArgumentException;
 import com.claymus.client.InsufficientAccessException;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -21,12 +22,19 @@ import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
+import com.pratilipi.service.shared.UpdateBookRequest;
+import com.pratilipi.service.shared.UpdateBookResponse;
 
 @RemoteServiceRelativePath("../service.pratilipi")
 public interface PratilipiService extends RemoteService {
 	
 	AddBookResponse addBook( AddBookRequest request )
-			throws InsufficientAccessException;
+			throws InsufficientAccessException,
+					IllegalArgumentException;
+
+	UpdateBookResponse updateBook( UpdateBookRequest request )
+			throws InsufficientAccessException,
+					IllegalArgumentException;
 
 	GetBookListResponse getBookList( GetBookListRequest request );
 	

@@ -7,31 +7,39 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class BookData implements IsSerializable {
 
 	private Long id;
+	private boolean hasId;
 	
 	private String title;
+	private boolean hasTitle;
 	
 	private Long languageId;
+	private boolean hasLanguageId;
 
 	private String languageName;
 	
 	
 	private Long authorId;
+	private boolean hasAuthorId;
 	
 	private String authorName;
 	
 	private Long publisherId;
+	private boolean hasPublisherId;
 
 	private String publisherName;
 	
-	private Date publicationDate;
-
+	private Long publicationYear;
+	private boolean hasPublicationYear;
+	
 	private Date listingDate;
 
 	
 	private String summary;
-
+	private boolean hasSummary;
+	
 	private Long wordCount;
-
+	private boolean hasWordCount;
+	
 	
 	public Long getId() {
 		return id;
@@ -39,14 +47,24 @@ public class BookData implements IsSerializable {
 
 	public void setId( Long id ) {
 		this.id = id;
+		this.hasId = true;
 	}
 
+	public boolean hasId() {
+		return hasId;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
 
 	public void setTitle( String title ) {
 		this.title = title;
+		this.hasTitle = true;
+	}
+	
+	public boolean hasTitle() {
+		return hasTitle;
 	}
 
 	public Long getLanguageId() {
@@ -55,8 +73,13 @@ public class BookData implements IsSerializable {
 
 	public void setLanguageId( Long languageId ) {
 		this.languageId = languageId;
+		this.hasLanguageId = true;
 	}
 
+	public boolean hasLanguageId() {
+		return hasLanguageId;
+	}
+	
 	public String getLanguageName() {
 		return languageName;
 	}
@@ -71,8 +94,13 @@ public class BookData implements IsSerializable {
 
 	public void setAuthorId( Long authorId ) {
 		this.authorId = authorId;
+		this.hasAuthorId = true;
 	}
 
+	public boolean hasAuthorId() {
+		return hasAuthorId;
+	}
+	
 	public String getAuthorName() {
 		return authorName;
 	}
@@ -87,8 +115,13 @@ public class BookData implements IsSerializable {
 
 	public void setPublisherId( Long publisherId ) {
 		this.publisherId = publisherId;
+		this.hasPublisherId = true;
 	}
 
+	public boolean hasPublisherId() {
+		return hasPublisherId;
+	}
+	
 	public String getPublisherName() {
 		return publisherName;
 	}
@@ -97,14 +130,19 @@ public class BookData implements IsSerializable {
 		this.publisherName = publisherName;
 	}
 
-	public Date getPublicationDate() {
-		return publicationDate;
+	public Long getPublicationYear() {
+		return publicationYear;
 	}
 
-	public void setPublicationDate( Date publicationDate ) {
-		this.publicationDate = publicationDate;
+	public void setPublicationDate( Long publicationYear ) {
+		this.publicationYear = publicationYear;
+		this.hasPublicationYear = true;
 	}
 
+	public boolean hasPublicationYear() {
+		return hasPublicationYear;
+	}
+	
 	public Date getListingDate() {
 		return listingDate;
 	}
@@ -119,14 +157,24 @@ public class BookData implements IsSerializable {
 
 	public void setSummary( String summary ) {
 		this.summary = summary;
+		this.hasSummary = true;
 	}
 
+	public boolean hasSummary() {
+		return hasSummary;
+	}
+	
 	public Long getWordCount() {
 		return wordCount;
 	}
 
 	public void setWordCount( Long wordCount ) {
 		this.wordCount = wordCount;
+		this.hasWordCount = true;
+	}
+	
+	public boolean hasWordCount() {
+		return hasWordCount;
 	}
 	
 }

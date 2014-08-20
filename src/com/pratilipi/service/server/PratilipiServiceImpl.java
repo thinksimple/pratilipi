@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.claymus.ClaymusHelper;
+import com.claymus.client.IllegalArgumentException;
 import com.claymus.client.InsufficientAccessException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.data.access.DataAccessor;
@@ -32,6 +33,8 @@ import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
+import com.pratilipi.service.shared.UpdateBookRequest;
+import com.pratilipi.service.shared.UpdateBookResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.LanguageData;
@@ -43,12 +46,16 @@ public class PratilipiServiceImpl
 		implements PratilipiService {
 
 	@Override
-	public AddBookResponse addBook( AddBookRequest request ) throws InsufficientAccessException {
+	public AddBookResponse addBook( AddBookRequest request )
+			throws InsufficientAccessException, IllegalArgumentException {
 		
 		if( ! ClaymusHelper.isUserAdmin() )
 			throw new InsufficientAccessException();
 		
 		BookData bookData = request.getBook();
+		if( bookData.hasId() )
+			throw new IllegalArgumentException(
+					"BookId exist already. Did you mean to call updateBook ?" );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
@@ -57,16 +64,54 @@ public class PratilipiServiceImpl
 		book.setLanguageId( bookData.getLanguageId() );
 		book.setAuthorId( bookData.getAuthorId() );
 		book.setPublisherId( bookData.getPublisherId() );
-		book.setPublicationDate( bookData.getPublicationDate() );
-		book.setListingDate( bookData.getListingDate() );
+		book.setPublicationYear( bookData.getPublicationYear() );
+		book.setSummary( bookData.getSummary() );
 		book.setWordCount( bookData.getWordCount() );
 		
+		book.setListingDate( new Date() );
+
 		book = dataAccessor.createOrUpdateBook( book );
 		dataAccessor.destroy();
 		
 		return new AddBookResponse( book.getId() );
 	}
 
+	@Override
+	public UpdateBookResponse updateBook( UpdateBookRequest request )
+			throws InsufficientAccessException, IllegalArgumentException {
+
+		if( ! ClaymusHelper.isUserAdmin() )
+			throw new InsufficientAccessException();
+		
+		BookData bookData = request.getBook();
+		if( bookData.hasId() )
+			throw new IllegalArgumentException(
+					"BookId is not set. Did you mean to call addBook ?" );
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Book book = dataAccessor.getBook( bookData.getId() );
+		if( bookData.hasTitle() )
+			book.setTitle( bookData.getTitle() );
+		if( bookData.hasLanguageId() )
+			book.setLanguageId( bookData.getLanguageId() );
+		if( bookData.hasAuthorId() )
+			book.setAuthorId( bookData.getAuthorId() );
+		if( bookData.hasPublisherId() )
+			book.setPublisherId( bookData.getPublisherId() );
+		if( bookData.hasPublicationYear() )
+			book.setPublicationYear( bookData.getPublicationYear() );
+		if( bookData.hasSummary() )
+			book.setSummary( bookData.getSummary() );
+		if( bookData.hasWordCount() )
+			book.setWordCount( bookData.getWordCount() );
+		
+		book = dataAccessor.createOrUpdateBook( book );
+		dataAccessor.destroy();
+
+		return new UpdateBookResponse();
+	}
+	
 	@Override
 	public GetBookListResponse getBookList( GetBookListRequest request ) {
 		
@@ -88,7 +133,7 @@ public class PratilipiServiceImpl
 			bookData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
 			bookData.setPublisherId( publisher.getId() );
 			bookData.setPublisherName( publisher.getName() );
-			bookData.setPublicationDate( book.getPublicationDate() );
+			bookData.setPublicationDate( book.getPublicationYear() );
 			bookData.setListingDate( book.getListingDate() );
 			bookData.setSummary( book.getSummary() );
 			bookData.setWordCount( book.getWordCount() );
@@ -121,7 +166,7 @@ public class PratilipiServiceImpl
 		bookData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
 		bookData.setPublisherId( publisher.getId() );
 		bookData.setPublisherName( publisher.getName() );
-		bookData.setPublicationDate( book.getPublicationDate() );
+		bookData.setPublicationDate( book.getPublicationYear() );
 		bookData.setListingDate( book.getListingDate() );
 		bookData.setSummary( book.getSummary() );
 		bookData.setWordCount( book.getWordCount() );

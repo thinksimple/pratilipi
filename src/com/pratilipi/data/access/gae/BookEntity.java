@@ -30,8 +30,8 @@ public class BookEntity implements Book {
 	@Persistent( column = "PUBLISHER_ID" )
 	private Long publisherId;
 
-	@Persistent( column = "PUBLICATION_DATE" )
-	private Date publicationDate;
+	@Persistent( column = "PUBLICATION_YEAR" )
+	private Long publicationYear;
 
 	@Persistent( column = "LISTING_DATE" )
 	private Date listingDate;
@@ -90,13 +90,13 @@ public class BookEntity implements Book {
 	}
 
 	@Override
-	public Date getPublicationDate() {
-		return publicationDate;
+	public Long getPublicationYear() {
+		return publicationYear;
 	}
 
 	@Override
-	public void setPublicationDate( Date publicationDate ) {
-		this.publicationDate = publicationDate;
+	public void setPublicationYear( Long publicationYear ) {
+		this.publicationYear = publicationYear;
 	}
 
 	@Override

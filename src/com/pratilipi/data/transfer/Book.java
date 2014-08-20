@@ -22,9 +22,9 @@ public interface Book {
 	
 	void setPublisherId( Long publisherId );
 	
-	Date getPublicationDate();
+	Long getPublicationYear();
 	
-	void setPublicationDate( Date publicationDate );
+	void setPublicationYear( Long publicationYear );
 	
 	Date getListingDate();
 	

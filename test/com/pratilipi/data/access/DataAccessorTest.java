@@ -24,9 +24,9 @@ public abstract class DataAccessorTest {
     	Long languageId = 123L;
     	Long authorId = 234L;
     	Long publisherId = 345L;
-    	Date publicationDate = new Date();
+    	Long publicationYear = 456L;
     	Date listingDate = new Date();
-    	Long wordCount = 456L;
+    	Long wordCount = 567L;
     	
     	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
     	
@@ -35,7 +35,7 @@ public abstract class DataAccessorTest {
     	book.setLanguageId( languageId );
     	book.setAuthorId( authorId );
     	book.setPublisherId( publisherId );
-    	book.setPublicationDate( publicationDate );
+    	book.setPublicationYear( publicationYear );
     	book.setListingDate( listingDate );
     	book.setWordCount( wordCount );
     	
@@ -51,7 +51,7 @@ public abstract class DataAccessorTest {
     	Assert.assertEquals( languageId, book.getLanguageId() );
     	Assert.assertEquals( authorId, book.getAuthorId() );
     	Assert.assertEquals( publisherId, book.getPublisherId() );
-    	Assert.assertEquals( publicationDate, book.getPublicationDate() );
+    	Assert.assertEquals( publicationYear, book.getPublicationYear() );
     	Assert.assertEquals( listingDate, book.getListingDate() );
     	Assert.assertEquals( wordCount, book.getWordCount() );
     	
