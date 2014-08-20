@@ -1,4 +1,4 @@
-package com.pratilipi.servlet;
+package com.pratilipi.www.servlet;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +29,7 @@ import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
 import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
 import com.pratilipi.module.pagecontent.managepublishers.ManagePublishersFactory;
+import com.pratilipi.servlet.NewUserQueueServlet;
 
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
@@ -81,86 +82,48 @@ public class PratilipiMain extends ClaymusMain {
 				= super.getPageContentList( request );
 		
 		String requestUri = request.getRequestURI();
-		if( requestUri.equals( "/" ) ) {
-			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/HomePageContent.ftl" );
-			List<String> lines = FileUtils.readLines( file, "UTF-8" );
-			String html = "";
-			for( String line : lines )
-				html = html + line;
-			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-			htmlContent.setHtml( html );
-			
-			pageContentList.add( htmlContent );
-		} else if( requestUri.equals( "/give-away" ) ) {
-			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/GiveAwayPageContent.ftl" );
-			List<String> lines = FileUtils.readLines( file, "UTF-8" );
-			String html = "";
-			for( String line : lines )
-				html = html + line;
-			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-			htmlContent.setHtml( html );
-			
-			pageContentList.add( htmlContent );
-		} else if( requestUri.equals( "/invite" ) ) {
-			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/InvitePageContent.ftl" );
-			List<String> lines = FileUtils.readLines( file, "UTF-8" );
-			String html = "";
-			for( String line : lines )
-				html = html + line + "\n";
-			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-			htmlContent.setHtml( html );
-			
-			pageContentList.add( htmlContent );
+		if( requestUri.equals( "/" ) )
+			pageContentList.add(
+					generateHtmlContentFromFile(
+							"WEB-INF/classes/com/pratilipi/servlet/content/HomePageContent.ftl" ) );
 
-		} else if( requestUri.equals( "/about" ) ) {
-			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/AboutPageContent.ftl" );
-			List<String> lines = FileUtils.readLines( file, "UTF-8" );
-			String html = "";
-			for( String line : lines )
-				html = html + line + "\n";
-			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-			htmlContent.setHtml( html );
-			
-			pageContentList.add( htmlContent );
+		else if( requestUri.equals( "/give-away" ) )
+			pageContentList.add(
+					generateHtmlContentFromFile(
+							"WEB-INF/classes/com/pratilipi/servlet/content/GiveAwayPageContent.ftl" ) );
 
-		} else if( requestUri.equals( "/contact" ) ) {
-			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/ContactPageContent.ftl" );
-			List<String> lines = FileUtils.readLines( file, "UTF-8" );
-			String html = "";
-			for( String line : lines )
-				html = html + line + "\n";
-			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-			htmlContent.setHtml( html );
+		else if( requestUri.equals( "/invite" ) )
+			pageContentList.add(
+					generateHtmlContentFromFile(
+							"WEB-INF/classes/com/pratilipi/servlet/content/InvitePageContent.ftl" ) );
 			
-			pageContentList.add( htmlContent );
-
-		} else if( requestUri.equals( "/faq" ) ) {
-			File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/FaqPageContent.ftl" );
-			List<String> lines = FileUtils.readLines( file, "UTF-8" );
-			String html = "";
-			for( String line : lines )
-				html = html + line + "\n";
-			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-			htmlContent.setHtml( html );
+		else if( requestUri.equals( "/about" ) )
+			pageContentList.add(
+					generateHtmlContentFromFile(
+							"WEB-INF/classes/com/pratilipi/servlet/content/AboutPageContent.ftl" ) );
 			
-			pageContentList.add( htmlContent );
-
-		} else if( requestUri.equals( "/books" ) )
+		else if( requestUri.equals( "/contact" ) )
+			pageContentList.add(
+					generateHtmlContentFromFile(
+							"WEB-INF/classes/com/pratilipi/servlet/content/ContactPageContent.ftl" ) );
+			
+		else if( requestUri.equals( "/faq" ) )
+			pageContentList.add(
+					generateHtmlContentFromFile(
+							"WEB-INF/classes/com/pratilipi/servlet/content/FaqPageContent.ftl" ) );
+			
+		else if( requestUri.equals( "/books" ) )
 			pageContentList.add( BookListFactory.newBookList() );
+		
 		else if( requestUri.equals( "/manage/languages" ) )
 			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
-		else if( requestUri.equals( "/manage/books" ) ) {
-				File file = new File( "WEB-INF/classes/com/pratilipi/www/ManageBooks.ftl" );
-				List<String> lines = FileUtils.readLines( file, "UTF-8" );
-				String html = "";
-				for( String line : lines )
-					html = html + line + "\n";
-				HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-				htmlContent.setHtml( html );
-				
-				pageContentList.add( htmlContent );
+		
+		else if( requestUri.equals( "/manage/books" ) )
+			pageContentList.add(
+					generateHtmlContentFromFile(
+							"WEB-INF/classes/com/pratilipi/www/ManageBooks.ftl" ) );
 
-		} else if( requestUri.equals( "/manage/books/new" ) )
+		else if( requestUri.equals( "/manage/books/new" ) )
 			pageContentList.add( BookDataInputFactory.newBookDataInput() );
 		else if( requestUri.equals( "/manage/books/update" ) )
 			pageContentList.add( BookDataInputFactory.newBookDataInput() );
@@ -229,4 +192,17 @@ public class PratilipiMain extends ClaymusMain {
 		return websiteWidgetList;
 	}
 
+	private HtmlContent generateHtmlContentFromFile(
+			String fileName ) throws IOException {
+		
+		File file = new File( fileName );
+		List<String> lines = FileUtils.readLines( file, "UTF-8" );
+		String html = "";
+		for( String line : lines )
+			html = html + line;
+		HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
+		htmlContent.setHtml( html );
+		return htmlContent;
+	}
+	
 }
