@@ -11,6 +11,8 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" defer></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" defer></script>
 	
+		<script src="//cdn.ckeditor.com/4.4.3/full/ckeditor.js" defer></script>
+	
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 			<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

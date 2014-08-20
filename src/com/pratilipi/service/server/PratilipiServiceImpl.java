@@ -84,7 +84,7 @@ public class PratilipiServiceImpl
 			throw new InsufficientAccessException();
 		
 		BookData bookData = request.getBook();
-		if( bookData.hasId() )
+		if( ! bookData.hasId() )
 			throw new IllegalArgumentException(
 					"BookId is not set. Did you mean to call addBook ?" );
 		
