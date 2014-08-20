@@ -8,6 +8,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
 import com.pratilipi.data.transfer.UserBook;
+import com.pratilipi.shared.UserReviewState;
 
 @PersistenceCapable( table = "USER_BOOK" )
 public class UserBookEntity implements UserBook {
@@ -29,7 +30,7 @@ public class UserBookEntity implements UserBook {
 	private Text review;
 	
 	@Persistent( column = "REVIEW_STATE" )
-	private ReviewState reviewState;
+	private UserReviewState reviewState;
 	
 	@Persistent( column = "REVIEW_DATE" )
 	private Date reviewDate;
@@ -80,12 +81,12 @@ public class UserBookEntity implements UserBook {
 	}
 	
 	@Override
-	public ReviewState getReviewState() {
+	public UserReviewState getReviewState() {
 		return reviewState;
 	}
 	
 	@Override
-	public void setReviewState( ReviewState reviewState ) {
+	public void setReviewState( UserReviewState reviewState ) {
 		this.reviewState = reviewState;
 	}
 

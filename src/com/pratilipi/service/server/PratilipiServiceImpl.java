@@ -14,6 +14,7 @@ import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
+import com.pratilipi.data.transfer.UserBook;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
@@ -23,6 +24,8 @@ import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
 import com.pratilipi.service.shared.AddPublisherResponse;
+import com.pratilipi.service.shared.AddUserBookRequest;
+import com.pratilipi.service.shared.AddUserBookResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
@@ -33,12 +36,16 @@ import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
+import com.pratilipi.service.shared.GetUserBookListRequest;
+import com.pratilipi.service.shared.GetUserBookListResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PublisherData;
+import com.pratilipi.service.shared.data.UserBookData;
+import com.pratilipi.shared.UserReviewState;
 
 @SuppressWarnings("serial")
 public class PratilipiServiceImpl
@@ -310,6 +317,58 @@ public class PratilipiServiceImpl
 		dataAccessor.destroy();
 		
 		return new GetPublisherListResponse( publisherDataList );
+	}
+
+	@Override
+	public AddUserBookResponse addUserBook(AddUserBookRequest request)
+			throws InsufficientAccessException {
+		
+		if( ! ClaymusHelper.isUserAdmin() )
+			throw new InsufficientAccessException();
+		
+		UserBookData userBookData = request.getUserBook();
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		UserBook userBook = dataAccessor.newUserBook();
+		userBook.setUserId(userBookData.getUserId());
+		userBook.setBookId(userBookData.getBookId());
+		userBook.setRating(userBookData.getRating());
+		userBook.setReview(userBookData.getReview());
+		userBook.setReviewState(UserReviewState.PENDING_APPROVAL);
+		userBook.setReviewDate(new Date());
+				
+		userBook = dataAccessor.createOrUpdateUserBook( userBook );
+		dataAccessor.destroy();
+		
+		return new AddUserBookResponse( userBook.getUserId()+"-"+userBook.getBookId() );
+		
+	}
+
+	@Override
+	public GetUserBookListResponse getUserBookList(GetUserBookListRequest request) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<UserBook> userBookList = dataAccessor.getUserBookList( request.getBookId() );
+		
+		ArrayList<UserBookData> userBookDataList = new ArrayList<>( userBookList.size() );
+		for( UserBook userBook : userBookList ) {
+			UserBookData userBookData = new UserBookData();
+			userBookData.setBookId(userBook.getBookId());
+			userBookData.setUserId(userBook.getUserId());
+			userBookData.setRating(userBook.getRating());
+			userBookData.setReview(userBook.getReview());
+			userBookData.setReviewState(userBook.getReviewState());
+			userBookData.setReviewDate(userBook.getReviewDate());
+			userBookData.setId(userBook.getUserId()+"-"+userBook.getBookId());
+			
+			userBookDataList.add( userBookData );
+			
+		}
+
+		dataAccessor.destroy();
+		
+		return new GetUserBookListResponse( userBookDataList );
 	}
 
 }

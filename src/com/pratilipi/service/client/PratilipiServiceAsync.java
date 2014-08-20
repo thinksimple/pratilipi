@@ -9,6 +9,8 @@ import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
 import com.pratilipi.service.shared.AddPublisherResponse;
+import com.pratilipi.service.shared.AddUserBookRequest;
+import com.pratilipi.service.shared.AddUserBookResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
@@ -19,6 +21,8 @@ import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
+import com.pratilipi.service.shared.GetUserBookListRequest;
+import com.pratilipi.service.shared.GetUserBookListResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 
@@ -39,6 +43,14 @@ public interface PratilipiServiceAsync {
 	void getBookById(
 			GetBookRequest request,
 			AsyncCallback<GetBookResponse> callback );
+	
+	void addUserBook( 
+			AddUserBookRequest request,
+			AsyncCallback<AddUserBookResponse> callback );
+
+	void getUserBookList( 
+			GetUserBookListRequest request,
+			AsyncCallback<GetUserBookListResponse> callback );
 
 	
 	void addLanguage(

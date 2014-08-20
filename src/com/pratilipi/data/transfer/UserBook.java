@@ -1,15 +1,9 @@
 package com.pratilipi.data.transfer;
 
 import java.util.Date;
+import com.pratilipi.shared.UserReviewState;
 
 public interface UserBook {
-	
-	public enum ReviewState {
-		NOT_SUBMITTED,
-		PENDING_APPROVAL,
-		APPROVED,
-		AUTO_APPROVED
-	}
 
 	String getUserId();
 	
@@ -27,9 +21,9 @@ public interface UserBook {
 	
 	void setReview( String review );
 	
-	ReviewState getReviewState();
+	UserReviewState getReviewState();
 	
-	void setReviewState( ReviewState reviewState );
+	void setReviewState( UserReviewState reviewState );
 	
 	Date getReviewDate();
 	

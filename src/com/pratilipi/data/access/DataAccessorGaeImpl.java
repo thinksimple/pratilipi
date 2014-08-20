@@ -207,10 +207,23 @@ public class DataAccessorGaeImpl
 	public UserBook newUserBook() {
 		return new UserBookEntity();
 	}
-
+	
 	@Override
 	public UserBook getUserBook( String userId, Long bookId ) {
-		return getEntity( UserBookEntity.class, userId + "-" + bookId );
+		return getEntity( UserBookEntity.class, userId+"-"+bookId );
+	}
+
+	@Override
+	public List<UserBook> getUserBookList(Long bookId) {
+		
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( BookEntity.class ) )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<UserBook> userBookList = (List<UserBook>) query.execute();
+		return (List<UserBook>) pm.detachCopyAll( userBookList );
+		
 	}
 
 	@Override

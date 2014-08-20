@@ -12,7 +12,7 @@ import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserBook;
-import com.pratilipi.data.transfer.UserBook.ReviewState;
+import com.pratilipi.shared.UserReviewState;
 
 public abstract class DataAccessorTest {
 
@@ -211,7 +211,7 @@ public abstract class DataAccessorTest {
     	String userId = "userId";
     	Long bookId = 123L;
     	Long rating = 234L;
-    	ReviewState reviewState = ReviewState.APPROVED;
+    	UserReviewState reviewState = UserReviewState.APPROVED;
     	Date reviewDate = new Date();
     	
     	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

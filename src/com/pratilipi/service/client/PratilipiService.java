@@ -12,6 +12,8 @@ import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
 import com.pratilipi.service.shared.AddPublisherResponse;
+import com.pratilipi.service.shared.AddUserBookRequest;
+import com.pratilipi.service.shared.AddUserBookResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
@@ -22,6 +24,8 @@ import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
+import com.pratilipi.service.shared.GetUserBookListRequest;
+import com.pratilipi.service.shared.GetUserBookListResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 
@@ -39,7 +43,12 @@ public interface PratilipiService extends RemoteService {
 	GetBookListResponse getBookList( GetBookListRequest request );
 	
 	GetBookResponse getBookById( GetBookRequest request );
+	
+	//Function to get and add user rating and review.
+	AddUserBookResponse addUserBook( AddUserBookRequest request )
+			throws InsufficientAccessException;
 
+	GetUserBookListResponse getUserBookList( GetUserBookListRequest request );
 
 	AddLanguageResponse addLanguage( AddLanguageRequest request )
 			throws InsufficientAccessException;
