@@ -28,7 +28,7 @@
 
   <servlet>
     <servlet-name>ResourceServlet</servlet-name>
-    <servlet-class>com.pratilipi.www.servlet.ResourceServlet</servlet-class>
+    <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -39,7 +39,7 @@
 
   <servlet>
     <servlet-name>PratilipiMain</servlet-name>
-    <servlet-class>com.pratilipi.www.servlet.PratilipiMain</servlet-class>
+    <servlet-class>com.pratilipi.servlet.PratilipiMain</servlet-class>
   </servlet>
   
   <servlet-mapping>

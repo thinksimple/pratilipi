@@ -1,4 +1,4 @@
-package com.pratilipi.www.shared;
+package com.pratilipi.shared;
 
 public class PratilipiHelper {
 

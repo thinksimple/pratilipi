@@ -7,9 +7,9 @@
 /war/WEB-INF/lib
 /war/pagecontent.bookdatainput
 /war/pagecontent.booklist
+/war/pagecontent.managebooks
 /war/pagecontent.managelanguages
 /war/pagecontent.manageauthors
 /war/pagecontent.managepublishers
 /war/pagecontent.homepagecontent
 /war/pagecontent.invitepage
-/war/pratilipi.managebooks

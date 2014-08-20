@@ -1,4 +1,4 @@
-package com.pratilipi.www.servlet;
+package com.pratilipi.servlet;
 
 import java.io.IOException;
 

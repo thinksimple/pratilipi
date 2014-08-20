@@ -1,4 +1,4 @@
-package com.pratilipi.www.client.ui;
+package com.pratilipi.client;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.HeadingElement;
@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
 import com.pratilipi.service.shared.data.BookData;
-import com.pratilipi.www.shared.PratilipiHelper;
+import com.pratilipi.shared.PratilipiHelper;
 
 public class BookViewDetailImpl extends BookView {
 
@@ -57,7 +57,7 @@ public class BookViewDetailImpl extends BookView {
 	@Override
 	public void setBookData( BookData bookData ) {
 		bookImageAnchor.setHref( PratilipiHelper.BOOK_PAGE_URL + bookData.getId() );
-		bookImage.setUrl( "/resource.book-cover/" + bookData.getId() );
+		bookImage.setUrl( PratilipiHelper.BOOK_COVER_URL + bookData.getId() );
 
 		titleAnchor.setText( bookData.getTitle() );
 		titleAnchor.setHref( PratilipiHelper.BOOK_PAGE_URL + bookData.getId() );

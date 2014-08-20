@@ -1,4 +1,4 @@
-package com.pratilipi.www.servlet;
+package com.pratilipi.servlet;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,9 +27,9 @@ import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
+import com.pratilipi.module.pagecontent.managebooks.ManageBooksFactory;
 import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
 import com.pratilipi.module.pagecontent.managepublishers.ManagePublishersFactory;
-import com.pratilipi.servlet.NewUserQueueServlet;
 
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
@@ -41,6 +41,7 @@ public class PratilipiMain extends ClaymusMain {
 	static {
 		PAGE_CONTENT_REGISTRY.register( BookDataInputFactory.class );
 		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
+		PAGE_CONTENT_REGISTRY.register( ManageBooksFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManageLanguagesFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManageAuthorsFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManagePublishersFactory.class );
@@ -119,9 +120,7 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
 		
 		else if( requestUri.equals( "/manage/books" ) )
-			pageContentList.add(
-					generateHtmlContentFromFile(
-							"WEB-INF/classes/com/pratilipi/www/ManageBooks.ftl" ) );
+			pageContentList.add( ManageBooksFactory.newManageBooks() );
 
 		else if( requestUri.equals( "/manage/books/new" ) )
 			pageContentList.add( BookDataInputFactory.newBookDataInput() );

@@ -1,17 +1,17 @@
-package com.pratilipi.www.client;
+package com.pratilipi.module.pagecontent.managebooks.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.pratilipi.client.BookView;
+import com.pratilipi.client.BookViewDetailImpl;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.GetBookListRequest;
 import com.pratilipi.service.shared.GetBookListResponse;
 import com.pratilipi.service.shared.data.BookData;
-import com.pratilipi.www.client.ui.BookView;
-import com.pratilipi.www.client.ui.BookViewDetailImpl;
 
 public class ManageBooks implements EntryPoint {
 
@@ -29,7 +29,7 @@ public class ManageBooks implements EntryPoint {
 					BookView bookView = new BookViewDetailImpl();
 					bookView.setBookData( bookData );
 					RootPanel
-							.get( "Pratilipi-ManageBooks" )
+							.get( "PageContent-ManageBooks" )
 							.add( bookView );
 				}
 				
@@ -42,7 +42,6 @@ public class ManageBooks implements EntryPoint {
 			}
 			
 		} );
-		
-	}
 	
+	}
 }
