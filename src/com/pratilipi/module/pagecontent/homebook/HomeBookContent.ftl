@@ -15,10 +15,28 @@
 			</h4>
 			<div>
 				<#if book.getSummary()?? >
-					${ book.getSummary() }
+					<div id="PageContent-HomeBook-Summary">
+						${ book.getSummary() }
+					</div>
+				</#if>
+				<#if showEditOptions>
+					<div>
+						<a href="#" onClick="editSummmary( 'PageContent-HomeBook-Summary' )">
+							<#if book.getSummary()?? >
+								Edit Summary
+							<#else>	
+								Add Summary
+							</#if>
+						</a>
+					</div>
 				</#if>
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript" language="javascript" src="/pagecontent.homebook/pagecontent.homebook.nocache.js" async></script>
+	<#if showEditOptions>
+		<script type="text/javascript" language="javascript" src="/pagecontent.homebook.editoptions/pagecontent.homebook.editoptions.nocache.js" async></script>
+	</#if>
 	
 </div>

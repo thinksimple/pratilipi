@@ -3,6 +3,7 @@ package com.pratilipi.module.pagecontent.homebook;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.claymus.ClaymusHelper;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -26,6 +27,7 @@ public class HomeBookContentProcessor extends PageContentProcessor<HomeBookConte
 		dataModel.put( "bookCoverUrl", PratilipiHelper.BOOK_COVER_URL );
 		dataModel.put( "bookHomeUrl", PratilipiHelper.BOOK_PAGE_URL );
 		dataModel.put( "authorHomeUrl", PratilipiHelper.AUTHOR_PAGE_URL );
+		dataModel.put( "showEditOptions", ClaymusHelper.isUserAdmin() );
 		
 		return super.processTemplate(
 				dataModel,
