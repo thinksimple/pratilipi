@@ -13,15 +13,14 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pratilipi.service.shared.data.BookData;
+import com.pratilipi.shared.PratilipiHelper;
 
 public class BookViewThumbnailImpl extends BookView {
 
-	private Label isbnLabel = new Label();
-	private Label titleLabel = new Label();
 	private BookData bookData = new BookData();
+	private Image image = new Image();
 	
 	
 	public BookViewThumbnailImpl() {
@@ -31,8 +30,6 @@ public class BookViewThumbnailImpl extends BookView {
 	
 	@Override
 	public void setBookData( BookData bookData ) {
-//		this.isbnLabel.setText( bookData.getIsbn() );
-		this.titleLabel.setText( bookData.getTitle() );
 		this.bookData = bookData;
 	}
 
@@ -44,7 +41,7 @@ public class BookViewThumbnailImpl extends BookView {
 		Anchor anchor = new Anchor();
 		
 		//set book cover
-		Image image = new Image("images/BlackTwitter.jpg");
+		image.setUrl( PratilipiHelper.BOOK_COVER_URL + bookData.getId() );
 		image.addStyleName("img-responsive");
 		anchor.getElement().appendChild(image.getElement());   //add image to the anchor tag
 		image.addClickHandler(new ClickHandler(){

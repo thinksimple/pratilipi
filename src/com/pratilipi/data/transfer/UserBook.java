@@ -2,6 +2,8 @@ package com.pratilipi.data.transfer;
 
 import java.util.Date;
 
+import com.google.appengine.api.datastore.Text;
+
 public interface UserBook {
 	
 	public enum ReviewState {
@@ -22,6 +24,10 @@ public interface UserBook {
 	Long getRating();
 	
 	void setRating( Long rating );
+	
+	Text getReview();
+	
+	void setReview( Text review );
 	
 	ReviewState getReviewState();
 	
