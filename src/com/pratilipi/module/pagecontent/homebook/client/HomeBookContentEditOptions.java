@@ -35,7 +35,7 @@ public class HomeBookContentEditOptions implements EntryPoint, ClickHandler {
 		rootPanel.add( editSummaryAnchor );
 		rootPanel.add( saveSummaryAnchor );
 		rootPanel.add( savingLabel );
-		
+
 		saveSummaryAnchor.setVisible( false );
 		savingLabel.setVisible( false );
 		

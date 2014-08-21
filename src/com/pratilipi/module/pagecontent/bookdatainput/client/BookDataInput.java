@@ -42,7 +42,7 @@ public class BookDataInput implements EntryPoint {
 							public void onSuccess( AddBookResponse result ) {
 								Long bookId = result.getBookId();
 								Window.alert( "Book added successfully !" );
-								Window.Location.assign("/manage/books/update?bookid=" + bookId);
+								Window.Location.assign("/book/?bookid=" + bookId);
 //								Window.alert("Redirected to update page");
 							}
 							

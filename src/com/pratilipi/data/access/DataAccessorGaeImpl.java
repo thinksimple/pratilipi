@@ -209,7 +209,7 @@ public class DataAccessorGaeImpl
 	}
 	
 	@Override
-	public UserBook getUserBook( String userId, Long bookId ) {
+	public UserBook getUserBook( Long userId, Long bookId ) {
 		return getEntity( UserBookEntity.class, userId+"-"+bookId );
 	}
 

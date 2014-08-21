@@ -2,16 +2,16 @@ package com.pratilipi.service.shared;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class GetUserBookListRequest implements IsSerializable {
+public class GetUserBookRequest implements IsSerializable {
 	
 	private Long bookId;
 	private Long userId;
 	
 	
 	@SuppressWarnings("unused")
-	private GetUserBookListRequest() {}
+	private GetUserBookRequest() {}
 	
-	public GetUserBookListRequest( Long userId, Long bookId ) {
+	public GetUserBookRequest( Long userId, Long bookId ) {
 		this.bookId = bookId;
 		this.userId = userId;
 	}

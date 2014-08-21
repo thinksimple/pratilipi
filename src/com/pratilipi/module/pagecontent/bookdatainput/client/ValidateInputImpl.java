@@ -34,6 +34,7 @@ public class ValidateInputImpl{
 	//create similar functions corresponding to object passed in the constructor.
 	public boolean validateBook() {
 		//validating ISBN textbox
+		//Proper ISBN regex should be used once manage book is rolled out to public.
 		this.matcher = numExp.exec(book.getIsbn());
 		Boolean matchFound = (matcher!=null);
 		if(!matchFound){
@@ -44,9 +45,9 @@ public class ValidateInputImpl{
 			book.setIsbnAcceptStyle();
 		
 		//validating title textbox
-		this.matcher = strExp.exec(book.getTitle());
-		matchFound = (matcher!=null);
-		if(!matchFound){
+		//this.matcher = strExp.exec(book.getTitle());
+		//matchFound = (matcher!=null);
+		if(book.getTitle().isEmpty()){
 			book.setTitleErrorStyle();
 			validated = false;
 		}
@@ -64,9 +65,9 @@ public class ValidateInputImpl{
 			book.setAuthorAcceptStyle();
 		
 		//validating publisher textbox
-		this.matcher = charExp.exec(book.getPublisher());
-		matchFound = (matcher!=null);
-		if(!matchFound){
+		//this.matcher = charExp.exec(book.getPublisher());
+		//matchFound = (matcher!=null);
+		if(book.getPublisher().isEmpty()){
 			book.setPublisherErrorStyle();
 			validated = false;
 		}

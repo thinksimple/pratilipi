@@ -208,7 +208,7 @@ public abstract class DataAccessorTest {
     @Test
     public void testUserBook() {
     	
-    	String userId = "userId";
+    	Long userId = 1223L;
     	Long bookId = 123L;
     	Long rating = 234L;
     	UserReviewState reviewState = UserReviewState.APPROVED;

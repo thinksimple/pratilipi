@@ -83,7 +83,7 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
 	UserBook newUserBook();
 	
-	UserBook getUserBook(String userId, Long bookId);
+	UserBook getUserBook(Long userId, Long bookId);
 
 	List<UserBook> getUserBookList( Long bookId );
 

@@ -7,6 +7,7 @@ import java.util.List;
 import com.claymus.ClaymusHelper;
 import com.claymus.client.IllegalArgumentException;
 import com.claymus.client.InsufficientAccessException;
+import com.claymus.data.transfer.User;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -38,6 +39,8 @@ import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetUserBookListRequest;
 import com.pratilipi.service.shared.GetUserBookListResponse;
+import com.pratilipi.service.shared.GetUserBookRequest;
+import com.pratilipi.service.shared.GetUserBookResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 import com.pratilipi.service.shared.data.AuthorData;
@@ -344,6 +347,28 @@ public class PratilipiServiceImpl
 		return new AddUserBookResponse( userBook.getUserId()+"-"+userBook.getBookId() );
 		
 	}
+	
+	@Override
+	public GetUserBookResponse getUserBook(GetUserBookRequest request) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		UserBook userBook = dataAccessor.getUserBook(request.getUserId(), request.getBookId());
+		
+		User user = dataAccessor.getUser( request.getUserId() );
+		
+		UserBookData userBookData = new UserBookData();
+		userBookData.setBookId(userBook.getBookId());
+		userBookData.setRating(userBook.getRating());
+		userBookData.setReview(userBook.getReview());
+		userBookData.setReviewDate(userBook.getReviewDate());
+		userBookData.setReviewState(userBook.getReviewState());
+		userBookData.setUserId(userBook.getUserId());
+		userBookData.setUserName(user.getFirstName() + " " + user.getLastName() );
+		userBookData.setId( userBook.getUserId() + "-" + userBook.getBookId() );
+		
+		
+		return new GetUserBookResponse( userBookData );
+	}
 
 	@Override
 	public GetUserBookListResponse getUserBookList(GetUserBookListRequest request) {
@@ -353,6 +378,8 @@ public class PratilipiServiceImpl
 		
 		ArrayList<UserBookData> userBookDataList = new ArrayList<>( userBookList.size() );
 		for( UserBook userBook : userBookList ) {
+			User user = dataAccessor.getUser( request.getUserId() );
+			
 			UserBookData userBookData = new UserBookData();
 			userBookData.setBookId(userBook.getBookId());
 			userBookData.setUserId(userBook.getUserId());
@@ -360,6 +387,7 @@ public class PratilipiServiceImpl
 			userBookData.setReview(userBook.getReview());
 			userBookData.setReviewState(userBook.getReviewState());
 			userBookData.setReviewDate(userBook.getReviewDate());
+			userBookData.setUserName( user.getFirstName() + " " + user.getLastName() );
 			userBookData.setId(userBook.getUserId()+"-"+userBook.getBookId());
 			
 			userBookDataList.add( userBookData );

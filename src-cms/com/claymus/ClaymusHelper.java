@@ -25,6 +25,10 @@ public class ClaymusHelper {
 		return userService.isUserLoggedIn() && userService.isUserAdmin();
 	}
 	
+	public static boolean isUser(){
+		return userService.isUserLoggedIn();
+	}
+	
 	public static String createLoginURL() {
 		return userService.createLoginURL( "/" );
 	}

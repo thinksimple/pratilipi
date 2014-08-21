@@ -23,6 +23,21 @@
 					<div id="PageContent-HomeBook-Summary-EditOptions"></div>
 				</#if>
 			</div>
+			<div>
+				<div id="PageContent-HomeBook-Review">
+					<#list reviewList as review >
+						<a href="#">${ review.getUserName() }</a>?string(": ")${ review.getReview() }
+						<#if review_has_next >,</#if>
+					</#list>
+				</div>
+				<!-- TODO : ADD CHECK TO MAKE SURE THIS SECTION IS NOT VISIBLE TO BOOK AUTHOR -->
+				<!-- TODO : GET CURRENT USERID FROM SESSION.  -->
+				<#if showAddReviewOption>
+					<#if !userBook.getReview()??>
+						<div id="PageContent-HomeBook-Review"></div>
+					</#if>
+				</#if>
+			</div>
 		</div>
 	</div>
 

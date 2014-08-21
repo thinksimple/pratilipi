@@ -18,7 +18,7 @@ public class UserBookEntity implements UserBook {
 	private String id;
 	
 	@Persistent( column = "USER_ID" )
-	private String userId;
+	private Long userId;
 	
 	@Persistent( column = "BOOK_ID" )
 	private Long bookId;
@@ -41,12 +41,12 @@ public class UserBookEntity implements UserBook {
 	}
 	
 	@Override
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 	
 	@Override
-	public void setUserId( String userId ) {
+	public void setUserId( Long userId ) {
 		this.userId = userId;
 	}
 	

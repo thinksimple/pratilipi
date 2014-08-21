@@ -26,6 +26,8 @@ import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetUserBookListRequest;
 import com.pratilipi.service.shared.GetUserBookListResponse;
+import com.pratilipi.service.shared.GetUserBookRequest;
+import com.pratilipi.service.shared.GetUserBookResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 
@@ -48,6 +50,8 @@ public interface PratilipiService extends RemoteService {
 	AddUserBookResponse addUserBook( AddUserBookRequest request )
 			throws InsufficientAccessException;
 
+	GetUserBookResponse getUserBook( GetUserBookRequest request );
+	
 	GetUserBookListResponse getUserBookList( GetUserBookListRequest request );
 
 	AddLanguageResponse addLanguage( AddLanguageRequest request )

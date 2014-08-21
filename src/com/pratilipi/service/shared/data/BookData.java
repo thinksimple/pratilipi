@@ -9,6 +9,9 @@ public class BookData implements IsSerializable {
 	private Long id;
 	private boolean hasId;
 	
+	private String isbn;
+	private boolean hasIsbn;
+	
 	private String title;
 	private boolean hasTitle;
 	
@@ -52,6 +55,19 @@ public class BookData implements IsSerializable {
 
 	public boolean hasId() {
 		return hasId;
+	}
+	
+	public String getIsbn(){
+		return isbn;
+	}
+	
+	public void setIsbn(String isbn){
+		this.isbn = isbn;
+		this.hasIsbn = true;
+	}
+	
+	public boolean hasIsbn(){
+		return this.hasIsbn;
 	}
 	
 	public String getTitle() {

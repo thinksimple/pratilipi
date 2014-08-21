@@ -5,9 +5,9 @@ import com.pratilipi.shared.UserReviewState;
 
 public interface UserBook {
 
-	String getUserId();
+	Long getUserId();
 	
-	void setUserId( String userId );
+	void setUserId( Long userId );
 	
 	Long getBookId();
 	

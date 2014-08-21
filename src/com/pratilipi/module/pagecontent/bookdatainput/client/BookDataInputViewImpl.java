@@ -145,8 +145,8 @@ public class BookDataInputViewImpl extends BookDataInputView {
 	
 	public BookData getBook() {
 		BookData book = new BookData();
-//		book.setIsbn( isbnInput.getText() );
-		book.setId(bookId);
+		book.setIsbn( isbnInput.getText() );
+		//book.setId(bookId);
 		book.setTitle( titleInput.getText() );
 		book.setAuthorName( authorInput.getItemText(authorInput.getSelectedIndex()));  //need to find a way to get AUTHOR_ID of required author from database
 		book.setPublisherName(publisherInput.getItemText(publisherInput.getSelectedIndex()));  //need to find a way to get PUBLISHER_ID of required author from database
