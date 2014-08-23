@@ -31,11 +31,8 @@ public class HomeBookContentProcessor extends PageContentProcessor<HomeBookConte
 		dataModel.put( "bookCoverUrl", PratilipiHelper.BOOK_COVER_URL );
 		dataModel.put( "bookHomeUrl", PratilipiHelper.BOOK_PAGE_URL );
 		dataModel.put( "authorHomeUrl", PratilipiHelper.AUTHOR_PAGE_URL );
+		dataModel.put( "showAddOptions", homeBookContent.getCurrentUserId() != null );
 		dataModel.put( "showEditOptions", ClaymusHelper.isUserAdmin() );
-
-		//In Production, remove below line and uncomment the comment line.
-		dataModel.put( "showAddReviewOption", true );
-		//dataModel.put( "showAddReviewOption", ClaymusHelper.isUser() );
 		
 		return super.processTemplate(
 				dataModel,

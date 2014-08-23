@@ -5,8 +5,8 @@
 <module rename-to='pagecontent.booklist'>
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='com.claymus.Claymus'/>
-  <inherits name='com.pratilipi.service.PratilipiService'/>
   <inherits name='com.pratilipi.Pratilipi'/>
+  <inherits name='com.pratilipi.service.PratilipiService'/>
 
   <entry-point class='com.pratilipi.module.pagecontent.booklist.client.BookList'/>
 

@@ -7,19 +7,19 @@ import com.pratilipi.service.shared.data.UserBookData;
 
 public class GetUserBookListResponse implements IsSerializable {
 	
-	private List<UserBookData> userBookData;
+	private List<UserBookData> userBookDataList;
 	
 	
 	@SuppressWarnings("unused")
 	private GetUserBookListResponse(){}
 	
-	public GetUserBookListResponse( List<UserBookData> userBookData ){
-		this.userBookData = userBookData;
+	public GetUserBookListResponse( List<UserBookData> userBookDataList ){
+		this.userBookDataList = userBookDataList;
 	}
 
 	
-	public List<UserBookData> getBook(){
-		return this.userBookData;
+	public List<UserBookData> getUserBookList(){
+		return userBookDataList;
 	}
 	
 }

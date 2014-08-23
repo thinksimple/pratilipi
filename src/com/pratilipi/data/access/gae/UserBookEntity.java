@@ -41,6 +41,11 @@ public class UserBookEntity implements UserBook {
 	}
 	
 	@Override
+	public String getId() {
+		return this.id;
+	}
+	
+	@Override
 	public Long getUserId() {
 		return userId;
 	}

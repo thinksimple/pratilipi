@@ -46,18 +46,6 @@ public interface PratilipiServiceAsync {
 			GetBookRequest request,
 			AsyncCallback<GetBookResponse> callback );
 	
-	void addUserBook( 
-			AddUserBookRequest request,
-			AsyncCallback<AddUserBookResponse> callback );
-	
-	void getUserBook( 
-			GetUserBookRequest request,
-			AsyncCallback<GetUserBookResponse> callBack);
-
-	void getUserBookList( 
-			GetUserBookListRequest request,
-			AsyncCallback<GetUserBookListResponse> callback );
-
 	
 	void addLanguage(
 			AddLanguageRequest request,
@@ -75,6 +63,7 @@ public interface PratilipiServiceAsync {
 	void getAuthorList(
 			GetAuthorListRequest request,
 			AsyncCallback<GetAuthorListResponse> callback );
+
 	
 	void addPublisher(
 			AddPublisherRequest request,
@@ -83,5 +72,18 @@ public interface PratilipiServiceAsync {
 	void getPublisherList(
 			GetPublisherListRequest request,
 			AsyncCallback<GetPublisherListResponse> callback );
+
+	
+	void addUserBook( 
+			AddUserBookRequest request,
+			AsyncCallback<AddUserBookResponse> callback );
+	
+	void getUserBook( 
+			GetUserBookRequest request,
+			AsyncCallback<GetUserBookResponse> callBack);
+
+	void getUserBookList( 
+			GetUserBookListRequest request,
+			AsyncCallback<GetUserBookListResponse> callback );
 
 }

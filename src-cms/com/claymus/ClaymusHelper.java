@@ -14,6 +14,10 @@ public class ClaymusHelper {
 
 	private static final UserService userService = UserServiceFactory.getUserService();
 
+	public static Long getCurrentUserId( HttpSession session ) {
+		return (Long) session.getAttribute( SessionAttributes.CURRENT_USER_ID );
+	}
+	
 	public static User getCurrentUser() {
 		if( userService.isUserLoggedIn() )
 			return userService.getCurrentUser();
@@ -23,10 +27,6 @@ public class ClaymusHelper {
 	
 	public static boolean isUserAdmin() {
 		return userService.isUserLoggedIn() && userService.isUserAdmin();
-	}
-	
-	public static boolean isUser(){
-		return userService.isUserLoggedIn();
 	}
 	
 	public static String createLoginURL() {

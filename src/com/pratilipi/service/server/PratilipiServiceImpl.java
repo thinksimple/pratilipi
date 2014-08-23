@@ -156,7 +156,6 @@ public class PratilipiServiceImpl
 		return new GetBookListResponse( bookDataList );
 	}
 	
-	
 	@Override
 	public GetBookResponse getBookById(GetBookRequest request) {
 		
@@ -277,6 +276,7 @@ public class PratilipiServiceImpl
 		return new GetAuthorListResponse( authorDataList );
 	}
 
+	
 	@Override
 	public AddPublisherResponse addPublisher(AddPublisherRequest request)
 			throws InsufficientAccessException {
@@ -322,50 +322,60 @@ public class PratilipiServiceImpl
 		return new GetPublisherListResponse( publisherDataList );
 	}
 
+	
 	@Override
-	public AddUserBookResponse addUserBook(AddUserBookRequest request)
-			throws InsufficientAccessException {
+	public AddUserBookResponse addUserBook( AddUserBookRequest request )
+			throws InsufficientAccessException, IllegalArgumentException {
 		
-		if( ! ClaymusHelper.isUserAdmin() )
+		Long userId = ClaymusHelper.getCurrentUserId(
+				this.getThreadLocalRequest().getSession() );
+		
+		if( userId == null )
 			throw new InsufficientAccessException();
 		
 		UserBookData userBookData = request.getUserBook();
+		Long bookId = userBookData.getBookId();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		UserBook userBook = dataAccessor.newUserBook();
-		userBook.setUserId(userBookData.getUserId());
-		userBook.setBookId(userBookData.getBookId());
-		userBook.setRating(userBookData.getRating());
-		userBook.setReview(userBookData.getReview());
-		userBook.setReviewState(UserReviewState.PENDING_APPROVAL);
-		userBook.setReviewDate(new Date());
-				
+		UserBook userBook = dataAccessor.getUserBook( userId, bookId );
+		if( userBook != null )
+			throw new IllegalArgumentException(
+					"UserBook for given User and Book alreay exists."
+					+ " Did you meant to call updateUserBook ?" );
+			
+		userBook = dataAccessor.newUserBook();
+		userBook.setUserId( userId );
+		userBook.setBookId( bookId );
+		userBook.setRating( userBookData.getRating() );
+		userBook.setReview( userBookData.getReview() );
+		userBook.setReviewState( UserReviewState.PENDING_APPROVAL );
+		userBook.setReviewDate( new Date() );
+
 		userBook = dataAccessor.createOrUpdateUserBook( userBook );
 		dataAccessor.destroy();
 		
 		return new AddUserBookResponse( userBook.getUserId()+"-"+userBook.getBookId() );
-		
 	}
 	
 	@Override
-	public GetUserBookResponse getUserBook(GetUserBookRequest request) {
+	public GetUserBookResponse getUserBook( GetUserBookRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		UserBook userBook = dataAccessor.getUserBook(request.getUserId(), request.getBookId());
+		UserBook userBook = dataAccessor.getUserBook(
+				request.getUserId(),
+				request.getBookId());
 		
-		User user = dataAccessor.getUser( request.getUserId() );
+		User user = dataAccessor.getUser( userBook.getUserId() );
 		
 		UserBookData userBookData = new UserBookData();
-		userBookData.setBookId(userBook.getBookId());
-		userBookData.setRating(userBook.getRating());
-		userBookData.setReview(userBook.getReview());
-		userBookData.setReviewDate(userBook.getReviewDate());
-		userBookData.setReviewState(userBook.getReviewState());
-		userBookData.setUserId(userBook.getUserId());
-		userBookData.setUserName(user.getFirstName() + " " + user.getLastName() );
-		userBookData.setId( userBook.getUserId() + "-" + userBook.getBookId() );
-		
+		userBookData.setId( userBook.getId() );
+		userBookData.setUserId( user.getId() );
+		userBookData.setUserName( user.getFirstName() + " " + user.getLastName() );
+		userBookData.setBookId( userBook.getBookId() );
+		userBookData.setRating( userBook.getRating() );
+		userBookData.setReview( userBook.getReview() );
+		userBookData.setReviewState( userBook.getReviewState() );
+		userBookData.setReviewDate( userBook.getReviewDate() );
 		
 		return new GetUserBookResponse( userBookData );
 	}

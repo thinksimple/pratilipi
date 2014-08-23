@@ -210,14 +210,14 @@ public class DataAccessorGaeImpl
 	
 	@Override
 	public UserBook getUserBook( Long userId, Long bookId ) {
-		return getEntity( UserBookEntity.class, userId+"-"+bookId );
+		return getEntity( UserBookEntity.class, userId + "-" + bookId );
 	}
 
 	@Override
-	public List<UserBook> getUserBookList(Long bookId) {
+	public List<UserBook> getUserBookList( Long bookId ) {
 		
 		Query query =
-				new GaeQueryBuilder( pm.newQuery( BookEntity.class ) )
+				new GaeQueryBuilder( pm.newQuery( UserBookEntity.class ) )
 						.build();
 		
 		@SuppressWarnings("unchecked")

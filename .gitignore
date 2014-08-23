@@ -1,4 +1,5 @@
 /.google_apis
+/.settings/com.google.gwt.eclipse.core.prefs
 /test-classes
 /gwt-unitCache
 /war/WEB-INF/appengine-generated

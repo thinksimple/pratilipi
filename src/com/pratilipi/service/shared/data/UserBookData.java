@@ -23,11 +23,12 @@ public class UserBookData implements IsSerializable {
 	
 	private Date reviewDate;
 
+	
 	public String getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId( String id ) {
 		this.id = id;
 	}
 
@@ -35,7 +36,7 @@ public class UserBookData implements IsSerializable {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId( Long userId ) {
 		this.userId = userId;
 	}
 	
@@ -43,7 +44,7 @@ public class UserBookData implements IsSerializable {
 		return userName;
 	}
 
-	public void setUserName(String userName) {
+	public void setUserName( String userName ) {
 		this.userName = userName;
 	}
 
@@ -51,7 +52,7 @@ public class UserBookData implements IsSerializable {
 		return bookId;
 	}
 
-	public void setBookId(Long bookId) {
+	public void setBookId( Long bookId ) {
 		this.bookId = bookId;
 	}
 
@@ -59,7 +60,7 @@ public class UserBookData implements IsSerializable {
 		return rating;
 	}
 
-	public void setRating(Long rating) {
+	public void setRating( Long rating ) {
 		this.rating = rating;
 	}
 
@@ -67,7 +68,7 @@ public class UserBookData implements IsSerializable {
 		return review;
 	}
 
-	public void setReview(String review) {
+	public void setReview( String review ) {
 		this.review = review;
 	}
 
@@ -75,7 +76,7 @@ public class UserBookData implements IsSerializable {
 		return reviewState;
 	}
 
-	public void setReviewState(UserReviewState reviewState) {
+	public void setReviewState( UserReviewState reviewState ) {
 		this.reviewState = reviewState;
 	}
 
@@ -83,7 +84,7 @@ public class UserBookData implements IsSerializable {
 		return reviewDate;
 	}
 
-	public void setReviewDate(Date reviewDate) {
+	public void setReviewDate( Date reviewDate ) {
 		this.reviewDate = reviewDate;
 	}
 

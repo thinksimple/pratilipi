@@ -61,7 +61,7 @@ public class BookData implements IsSerializable {
 		return isbn;
 	}
 	
-	public void setIsbn(String isbn){
+	public void setIsbn( String isbn ){
 		this.isbn = isbn;
 		this.hasIsbn = true;
 	}

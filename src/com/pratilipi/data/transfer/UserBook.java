@@ -5,6 +5,8 @@ import com.pratilipi.shared.UserReviewState;
 
 public interface UserBook {
 
+	String getId();
+	
 	Long getUserId();
 	
 	void setUserId( Long userId );
