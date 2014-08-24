@@ -9,6 +9,8 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -43,20 +45,22 @@ public class InvitePageContent extends Composite implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				UserData userData = invitationForm.getUser();
-				claymusService.addUser( new AddUserRequest( userData ), new AsyncCallback<AddUserResponse>() {
-					
-					@Override
-					public void onSuccess( AddUserResponse response ) {
-						Window.alert("Invitation Sent!");
-						invitationForm.reloadForm();
-					}
-					
-					@Override
-					public void onFailure( Throwable caught ) {
-						Window.alert( caught.getMessage() );
-					}
-					
-				});
+				if( isValidEmail( userData )){
+					claymusService.addUser( new AddUserRequest( userData ), new AsyncCallback<AddUserResponse>() {
+						
+						@Override
+						public void onSuccess( AddUserResponse response ) {
+							Window.alert("Invitation Sent!");
+							invitationForm.reloadForm();
+						}
+						
+						@Override
+						public void onFailure( Throwable caught ) {
+							Window.alert( caught.getMessage() );
+						}
+						
+					});
+				}
 		}};
 			
 		invitationForm.addInviteButtonClickHandler(inviteButtonClickHandler);
@@ -98,6 +102,33 @@ public class InvitePageContent extends Composite implements EntryPoint {
 		RootPanel.get("Pratilipi-InvitationForm").add(invitationForm);
 		RootPanel.get("Pratilipi-SharePanel").add(sharePanel);
 		
+	}
+	
+	private boolean isValidEmail( UserData user ){
+		
+		Boolean validated = true;
+ 
+		final String emailPattern = new String("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$");
+		final RegExp emailExp = RegExp.compile(emailPattern);
+		
+		MatchResult matcher = emailExp.exec( user.getEmail() );
+		Boolean matchFound = (matcher!=null);
+		
+		if( user.getEmail().isEmpty() ){
+			this.invitationForm.setErrorStyle();
+			Window.alert( "Email cannot be empty" );
+			validated = false;
+		}
+		else if(!matchFound){
+			this.invitationForm.setErrorStyle();
+			Window.alert( "Not a valid email address" );
+			validated = false;
+		}
+		else{
+			validated = true;
+		}
+
+		return validated;
 	}
 
 }

@@ -7,6 +7,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class InvitationForm extends Composite {
@@ -18,7 +19,11 @@ public class InvitationForm extends Composite {
 	public InvitationForm(String refId){
 		this.refId = refId;
 		
+		emailInput.addStyleName("form-control");
 		emailInput.getElement().setPropertyString("placeholder", "Email");
+		
+		inviteButton.addStyleName("btn");
+		inviteButton.addStyleName("btn-default");
 		
 		HorizontalPanel inviteForm = new HorizontalPanel();
 		inviteForm.setSpacing(10);
@@ -44,6 +49,10 @@ public class InvitationForm extends Composite {
 	
 	public void reloadForm(){
 		emailInput.setText("");
+	}
+	
+	public void setErrorStyle(){
+		emailInput.addStyleName( "gwt-TextBoxError" );
 	}
 
 }

@@ -116,7 +116,7 @@ public class BookEntity implements Book {
 
 	@Override
 	public void setSummary( String summary ) {
-		this.summary = new Text( summary );
+		this.summary = summary == null ? null : new Text( summary );
 	}
 	
 	@Override
