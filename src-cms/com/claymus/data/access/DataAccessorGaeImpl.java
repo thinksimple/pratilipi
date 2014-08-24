@@ -13,12 +13,15 @@ import com.claymus.data.access.gae.PageEntity;
 import com.claymus.data.access.gae.PageLayoutEntity;
 import com.claymus.data.access.gae.RoleEntity;
 import com.claymus.data.access.gae.UserEntity;
+import com.claymus.data.access.gae.UserRoleEntity;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
 import com.claymus.data.transfer.Role;
+import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
+import com.claymus.data.transfer.UserRole;
 
 public class DataAccessorGaeImpl implements DataAccessor {
 
@@ -79,6 +82,23 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		// TODO: throw exception if user id is not set
 		// TODO: throw exception if entity with give id doesn't exist
 		return createOrUpdateEntity( user );
+	}
+
+	
+	public List<UserRole> getUserRoleList( Long userId ) {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( UserRoleEntity.class ) )
+						.addFilter( "userId", userId )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<UserRole> userRoleList = (List<UserRole>) query.execute( userId );
+		return (List<UserRole>) pm.detachCopyAll( userRoleList );
+	}
+	
+	
+	public RoleAccess getRoleAccess( Long roleId, String accessId ) {
+		return getEntity( RoleAccess.class, roleId + "-"  + accessId );
 	}
 
 	

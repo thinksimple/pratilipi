@@ -19,6 +19,9 @@ public class RoleAccessEntity implements RoleAccess {
 	@Persistent( column = "ACCESS_ID" )
 	private String accessId;
 	
+	@Persistent( column = "ACCESS" )
+	private Boolean access;
+	
 	
 	@Override
 	public String getId() {
@@ -47,6 +50,16 @@ public class RoleAccessEntity implements RoleAccess {
 	@Override
 	public void setAccessId( String accessId ) {
 		this.accessId = accessId;
+	}
+
+	@Override
+	public boolean hasAccess() {
+		return access;
+	}
+
+	@Override
+	public void setAccess( boolean access ) {
+		this.access = access;
 	}
 
 }

@@ -11,5 +11,9 @@ public interface RoleAccess {
 	String getAccessId();
 
 	void setAccessId( String id );
+
+	boolean hasAccess();
+	
+	void setAccess( boolean access );
 	
 }

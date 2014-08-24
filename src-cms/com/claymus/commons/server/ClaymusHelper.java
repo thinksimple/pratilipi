@@ -1,11 +1,14 @@
 package com.claymus.commons.server;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.User;
+import com.claymus.data.transfer.UserRole;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
@@ -24,7 +27,8 @@ public class ClaymusHelper {
 	private final HttpSession session;
 	
 	private User currentUser;
-	
+	private List<UserRole> currentUserRoleList;
+
 	
 	@Deprecated
 	public ClaymusHelper() {
@@ -51,10 +55,39 @@ public class ClaymusHelper {
 		return currentUser;
 	}
 	
+	public List<UserRole> getCurrentUserRoleList() {
+		if( currentUserRoleList == null ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			currentUserRoleList = dataAccessor.getUserRoleList( getCurrentUserId() );
+			dataAccessor.destroy();
+		}
+		return currentUserRoleList;
+	}
+	
 	@Deprecated
 	public static boolean isUserAdmin() {
 		UserService userService = UserServiceFactory.getUserService();
 		return userService.isUserLoggedIn() && userService.isUserAdmin();
+	}
+	
+	public boolean hasUserAccess( String accessId ) {
+		boolean  access = false;
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		for( UserRole userRole : getCurrentUserRoleList() ) {
+			access = dataAccessor
+					.getRoleAccess( userRole.getRoleId(), accessId ).hasAccess();
+			if( access )
+				break;
+		}
+		dataAccessor.destroy();
+		return access;
+	}
+	
+	public boolean hasUserAccessAny( String... accessIdList ) {
+		for( String accessId : accessIdList )
+			if( hasUserAccess( accessId ) )
+				return true;
+		return false;
 	}
 	
 	public String createLoginURL() {
