@@ -14,8 +14,8 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.service.shared.data.BookData;
-import com.pratilipi.shared.PratilipiHelper;
 
 public class BookViewThumbnailImpl extends BookView {
 

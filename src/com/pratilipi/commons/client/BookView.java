@@ -1,4 +1,4 @@
-package com.pratilipi.client;
+package com.pratilipi.commons.client;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.pratilipi.service.shared.data.BookData;

@@ -1,4 +1,4 @@
-package com.pratilipi.client;
+package com.pratilipi.commons.client;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.HeadingElement;
@@ -7,8 +7,8 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
+import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.service.shared.data.BookData;
-import com.pratilipi.shared.PratilipiHelper;
 
 public class BookViewDetailImpl extends BookView {
 

@@ -7,8 +7,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
+import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.transfer.UserBook;
-import com.pratilipi.shared.UserReviewState;
 
 @PersistenceCapable( table = "USER_BOOK" )
 public class UserBookEntity implements UserBook {

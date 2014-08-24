@@ -1,4 +1,4 @@
-package com.pratilipi.shared;
+package com.pratilipi.commons.shared;
 
 public enum UserReviewState {
 	

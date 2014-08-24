@@ -5,6 +5,7 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genere;
@@ -12,7 +13,6 @@ import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserBook;
-import com.pratilipi.shared.UserReviewState;
 
 public abstract class DataAccessorTest {
 

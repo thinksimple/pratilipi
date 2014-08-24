@@ -5,7 +5,7 @@
 <module rename-to='pagecontent.bookdatainput'>
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='com.claymus.commons.Claymus'/>
-  <inherits name='com.pratilipi.Pratilipi'/>
+  <inherits name='com.pratilipi.commons.Pratilipi'/>
   <inherits name='com.pratilipi.service.PratilipiService'/>
 
   <entry-point class='com.pratilipi.module.pagecontent.bookdatainput.client.BookDataInput'/>

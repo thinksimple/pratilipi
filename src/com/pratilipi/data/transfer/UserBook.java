@@ -1,7 +1,8 @@
 package com.pratilipi.data.transfer;
 
 import java.util.Date;
-import com.pratilipi.shared.UserReviewState;
+
+import com.pratilipi.commons.shared.UserReviewState;
 
 public interface UserBook {
 

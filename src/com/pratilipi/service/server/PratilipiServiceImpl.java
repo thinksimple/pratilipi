@@ -9,6 +9,7 @@ import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.transfer.User;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
@@ -48,7 +49,6 @@ import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PublisherData;
 import com.pratilipi.service.shared.data.UserBookData;
-import com.pratilipi.shared.UserReviewState;
 
 @SuppressWarnings("serial")
 public class PratilipiServiceImpl
