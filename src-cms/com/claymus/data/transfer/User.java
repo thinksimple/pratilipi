@@ -2,7 +2,7 @@ package com.claymus.data.transfer;
 
 import java.util.Date;
 
-import com.claymus.client.UserStatus;
+import com.claymus.commons.shared.UserStatus;
 
 public interface User {
 

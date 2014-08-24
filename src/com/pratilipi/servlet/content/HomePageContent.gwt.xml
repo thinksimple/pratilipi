@@ -4,7 +4,7 @@
 
 <module rename-to='pagecontent.homepagecontent'>
   <inherits name='com.google.gwt.user.User'/>
-  <inherits name='com.claymus.Claymus'/>
+  <inherits name='com.claymus.commons.Claymus'/>
   <inherits name='com.claymus.service.ClaymusService'/>
 
   <entry-point class='com.pratilipi.servlet.content.client.HomePageContent'/>

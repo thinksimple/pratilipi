@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 
-import com.claymus.ClaymusHelper;
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.fileupload.FileUploadContent;
@@ -175,7 +175,7 @@ public class PratilipiMain extends ClaymusMain {
 								{ "Authors", "/manage/authors" },
 								{ "Publishers", "/manage/publishers" },
 								{ "Languages", "/manage/languages" }}},
-						{ "Log Out", ClaymusHelper.createLogoutURL(), null },
+						{ "Log Out", new ClaymusHelper().createLogoutURL(), null },
 				});
 			else
 				headerWidget.setRightNavItems( new Object[][] {

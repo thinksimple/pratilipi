@@ -1,4 +1,4 @@
-package com.claymus.client;
+package com.claymus.commons.client;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

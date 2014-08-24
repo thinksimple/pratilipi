@@ -1,6 +1,6 @@
 package com.claymus.data.access;
 
-import com.claymus.ClaymusHelper;
+import com.claymus.commons.server.ClaymusHelper;
 
 public class DataAccessorFactory {
 	

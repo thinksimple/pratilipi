@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.claymus.ClaymusHelper;
-import com.claymus.client.IllegalArgumentException;
-import com.claymus.client.InsufficientAccessException;
+import com.claymus.commons.client.IllegalArgumentException;
+import com.claymus.commons.client.InsufficientAccessException;
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.transfer.User;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.data.access.DataAccessor;
@@ -327,8 +327,8 @@ public class PratilipiServiceImpl
 	public AddUserBookResponse addUserBook( AddUserBookRequest request )
 			throws InsufficientAccessException, IllegalArgumentException {
 		
-		Long userId = ClaymusHelper.getCurrentUserId(
-				this.getThreadLocalRequest().getSession() );
+		Long userId = new ClaymusHelper( this.getThreadLocalRequest() )
+				.getCurrentUserId();
 		
 		if( userId == null )
 			throw new InsufficientAccessException();

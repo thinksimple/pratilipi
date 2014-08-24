@@ -1,4 +1,4 @@
-package com.claymus.client;
+package com.claymus.commons.shared;
 
 public enum UserStatus {
 

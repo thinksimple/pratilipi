@@ -3,8 +3,8 @@ package com.claymus.service.server;
 
 import java.util.Date;
 
-import com.claymus.ClaymusHelper;
-import com.claymus.client.UserStatus;
+import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.User;

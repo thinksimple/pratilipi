@@ -6,7 +6,7 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.claymus.ClaymusHelper;
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.claymus.servlet.ClaymusMain;
 

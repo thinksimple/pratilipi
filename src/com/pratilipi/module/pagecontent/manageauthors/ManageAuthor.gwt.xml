@@ -4,7 +4,8 @@
 
 <module rename-to='pagecontent.manageauthors'>
   <inherits name='com.google.gwt.user.User'/>
-  <inherits name='com.claymus.Claymus'/>
+  <inherits name='com.claymus.commons.Claymus'/>
+  <inherits name='com.pratilipi.Pratilipi'/>
   <inherits name='com.pratilipi.service.PratilipiService'/>
 
   <entry-point class='com.pratilipi.module.pagecontent.manageauthors.client.ManageAuthors'/>

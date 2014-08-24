@@ -7,7 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.claymus.client.UserStatus;
+import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.transfer.User;
 
 @PersistenceCapable( table = "USER" )

@@ -1,6 +1,6 @@
 package com.pratilipi.servlet.content.client;
 
-import com.claymus.client.UserStatus;
+import com.claymus.commons.shared.UserStatus;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;

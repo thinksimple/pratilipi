@@ -1,7 +1,7 @@
 package com.pratilipi.service.client;
 
-import com.claymus.client.IllegalArgumentException;
-import com.claymus.client.InsufficientAccessException;
+import com.claymus.commons.client.IllegalArgumentException;
+import com.claymus.commons.client.InsufficientAccessException;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.pratilipi.service.shared.AddAuthorRequest;

@@ -1,6 +1,6 @@
 package com.claymus.service.shared.data;
 
-import com.claymus.client.UserStatus;
+import com.claymus.commons.shared.UserStatus;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class UserData implements IsSerializable {
