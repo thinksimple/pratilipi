@@ -14,7 +14,7 @@ public class RoleAccessEntity implements RoleAccess {
 	private String id;
 	
 	@Persistent( column = "ROLE_ID" )
-	private Long roleId;
+	private String roleId;
 	
 	@Persistent( column = "ACCESS_ID" )
 	private String accessId;
@@ -33,12 +33,12 @@ public class RoleAccessEntity implements RoleAccess {
 	}
 
 	@Override
-	public Long getRoleId() {
+	public String getRoleId() {
 		return roleId;
 	}
 
 	@Override
-	public void setRoleId( Long roleId ) {
+	public void setRoleId( String roleId ) {
 		this.roleId = roleId;
 	}
 

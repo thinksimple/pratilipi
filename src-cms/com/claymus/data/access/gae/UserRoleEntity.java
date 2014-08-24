@@ -17,7 +17,7 @@ public class UserRoleEntity implements UserRole {
 	private Long userId;
 	
 	@Persistent( column = "ROLE_ID" )
-	private Long roleId;
+	private String roleId;
 	
 	
 	@Override
@@ -40,12 +40,12 @@ public class UserRoleEntity implements UserRole {
 	}
 
 	@Override
-	public Long getRoleId() {
+	public String getRoleId() {
 		return roleId;
 	}
 
 	@Override
-	public void setRoleId( Long roleId ) {
+	public void setRoleId( String roleId ) {
 		this.roleId = roleId;
 	}
 

@@ -8,8 +8,8 @@ public interface UserRole {
 
 	void setUserId( Long userId );
 	
-	Long getRoleId();
+	String getRoleId();
 
-	void setRoleId( Long roleId );
+	void setRoleId( String roleId );
 	
 }

@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.data.access.DataAccessor;
+import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.PageContent;
+import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.fileupload.FileUploadContent;
 import com.claymus.module.pagecontent.fileupload.FileUploadContentFactory;
@@ -27,6 +30,7 @@ import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.module.pagecontent.homebook.HomeBookContentFactory;
+import com.pratilipi.module.pagecontent.homebook.HomeBookContentProcessor;
 import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
 import com.pratilipi.module.pagecontent.managebooks.ManageBooksFactory;
 import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
@@ -49,6 +53,16 @@ public class PratilipiMain extends ClaymusMain {
 		PAGE_CONTENT_REGISTRY.register( ManageLanguagesFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManageAuthorsFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManagePublishersFactory.class );
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		RoleAccess roleAccess = dataAccessor.newRoleAccess();
+		roleAccess.setRoleId( "member" );
+		roleAccess.setAccessId( HomeBookContentProcessor.ACCESS_ID_BOOK_REVIEW_ADD );
+		roleAccess.setAccess( true );
+		dataAccessor.createOrUpdateRoleAccess( roleAccess );
+		
+		dataAccessor.destroy();
 	}
 
 
@@ -175,7 +189,7 @@ public class PratilipiMain extends ClaymusMain {
 								{ "Authors", "/manage/authors" },
 								{ "Publishers", "/manage/publishers" },
 								{ "Languages", "/manage/languages" }}},
-						{ "Log Out", new ClaymusHelper().createLogoutURL(), null },
+						{ "Log Out", new ClaymusHelper( request ).createLogoutURL(), null },
 				});
 			else
 				headerWidget.setRightNavItems( new Object[][] {

@@ -4,9 +4,9 @@ public interface RoleAccess {
 
 	String getId();
 	
-	Long getRoleId();
+	String getRoleId();
 
-	void setRoleId( Long id );
+	void setRoleId( String id );
 	
 	String getAccessId();
 

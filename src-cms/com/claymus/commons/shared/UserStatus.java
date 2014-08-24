@@ -4,5 +4,6 @@ public enum UserStatus {
 
 	PRELAUNCH_SIGNUP,
 	PRELAUNCH_REFERRAL,
+	REGISTERED,
 	
 }

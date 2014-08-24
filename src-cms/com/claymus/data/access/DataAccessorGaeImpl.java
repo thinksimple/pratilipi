@@ -3,6 +3,7 @@ package com.claymus.data.access;
 import java.util.List;
 
 import javax.jdo.JDOHelper;
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
@@ -11,6 +12,7 @@ import com.claymus.data.access.gae.BlobEntryEntity;
 import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.access.gae.PageEntity;
 import com.claymus.data.access.gae.PageLayoutEntity;
+import com.claymus.data.access.gae.RoleAccessEntity;
 import com.claymus.data.access.gae.RoleEntity;
 import com.claymus.data.access.gae.UserEntity;
 import com.claymus.data.access.gae.UserRoleEntity;
@@ -85,23 +87,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	
-	public List<UserRole> getUserRoleList( Long userId ) {
-		Query query =
-				new GaeQueryBuilder( pm.newQuery( UserRoleEntity.class ) )
-						.addFilter( "userId", userId )
-						.build();
-		
-		@SuppressWarnings("unchecked")
-		List<UserRole> userRoleList = (List<UserRole>) query.execute( userId );
-		return (List<UserRole>) pm.detachCopyAll( userRoleList );
-	}
-	
-	
-	public RoleAccess getRoleAccess( Long roleId, String accessId ) {
-		return getEntity( RoleAccess.class, roleId + "-"  + accessId );
-	}
-
-	
 	@Override
 	public Role newRole() {
 		return new RoleEntity();
@@ -118,6 +103,53 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 
+	@Override
+	public UserRole newUserRole() {
+		return new UserRoleEntity();
+	}
+
+	@Override
+	public List<UserRole> getUserRoleList( Long userId ) {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( UserRoleEntity.class ) )
+						.addFilter( "userId", userId )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<UserRole> userRoleList = (List<UserRole>) query.execute( userId );
+		return (List<UserRole>) pm.detachCopyAll( userRoleList );
+	}
+	
+	@Override
+	public UserRole createOrUpdateUserRole( UserRole userRole ) {
+		( (UserRoleEntity) userRole ).setId(
+				userRole.getUserId() + "-" + userRole.getRoleId() );
+		return createOrUpdateEntity( userRole );
+	}
+
+	
+	@Override
+	public RoleAccess newRoleAccess() {
+		return new RoleAccessEntity();
+	}
+
+	@Override
+	public RoleAccess getRoleAccess( String roleId, String accessId ) {
+		try {
+			return getEntity( RoleAccessEntity.class, roleId + "-"  + accessId );
+		} catch( JDOObjectNotFoundException e ) {
+			return null;
+		}
+	}
+
+	@Override
+	public RoleAccess createOrUpdateRoleAccess( RoleAccess roleAccess ) {
+		( (RoleAccessEntity) roleAccess ).setId(
+				roleAccess.getRoleId() + "-" + roleAccess.getAccessId() );
+		return createOrUpdateEntity( roleAccess );
+	}
+
+	
 	@Override
 	public BlobEntry newBlobEntry() {
 		return new BlobEntryEntity();

@@ -1,10 +1,12 @@
 package com.claymus.commons.server;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.RoleAccess;
@@ -26,6 +28,7 @@ public class ClaymusHelper {
 	private final HttpServletRequest request;
 	private final HttpSession session;
 	
+	private Long currentUserId;
 	private User currentUser;
 	private List<UserRole> currentUserRoleList;
 
@@ -43,14 +46,117 @@ public class ClaymusHelper {
 	
 	
 	public Long getCurrentUserId() {
-		return (Long) session.getAttribute( SESSION_ATTRIB_CURRENT_USER_ID );
+		if( currentUserId == null ) {
+			currentUserId = (Long) session.getAttribute( SESSION_ATTRIB_CURRENT_USER_ID );
+			if( currentUserId == null )
+				currentUserId = 0L;
+		}
+		return currentUserId;
 	}
 
 	public User getCurrentUser() {
 		if( currentUser == null ) {
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			currentUser = dataAccessor.getUser( getCurrentUserId() );
-			dataAccessor.destroy();
+
+			if( currentUserId == 0L ) {
+				currentUser = new User() {
+
+					@Override
+					public Long getId() {
+						return 0L;
+					}
+
+					@Override
+					public void setId( Long id ) { }
+
+					@Override
+					public String getPassword() {
+						return null;
+					}
+
+					@Override
+					public void setPassword( String password ) { }
+
+					@Override
+					public String getFirstName() {
+						return "Anonymous";
+					}
+
+					@Override
+					public void setFirstName( String firstName ) { }
+
+					@Override
+					public String getLastName() {
+						return "User";
+					}
+
+					@Override
+					public void setLastName( String lastName ) { }
+
+					@Override
+					public String getNickName() {
+						return "Anonymous User";
+					}
+
+					@Override
+					public void setNickName( String nickName ) { }
+
+					@Override
+					public String getEmail() {
+						return null;
+					}
+
+					@Override
+					public void setEmail( String email ) { }
+
+					@Override
+					public String getPhone() {
+						return null;
+					}
+
+					@Override
+					public void setPhone( String phone ) { }
+
+					@Override
+					public String getCampaign() {
+						return null;
+					}
+
+					@Override
+					public void setCampaign( String campaign ) { }
+
+					@Override
+					public String getReferer() {
+						return null;
+					}
+
+					@Override
+					public String setReferer( String referer ) {
+						return null;
+					}
+
+					@Override
+					public Date getSignUpDate() {
+						return new Date();
+					}
+
+					@Override
+					public void setSignUpDate( Date date ) { }
+
+					@Override
+					public UserStatus getStatus() {
+						return null;
+					}
+
+					@Override
+					public void setStatus( UserStatus userStatus ) { }
+					
+				};
+			} else {
+				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+				currentUser = dataAccessor.getUser( getCurrentUserId() );
+				dataAccessor.destroy();
+			}
+			
 		}
 		return currentUser;
 	}
@@ -119,6 +225,13 @@ public class ClaymusHelper {
 		Queue queue = QueueFactory.getQueue( "new-user" );
 		queue.add( TaskOptions.Builder.withParam( "userId", user.getId().toString() ) );
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		UserRole userRole = dataAccessor.newUserRole();
+		userRole.setUserId( user.getId() );
+		userRole.setRoleId( "member" );
+		dataAccessor.createOrUpdateUserRole( userRole );
+		dataAccessor.destroy();
+		
 		session.setAttribute( SESSION_ATTRIB_CURRENT_USER_ID, user.getId() );
 	}
 	
