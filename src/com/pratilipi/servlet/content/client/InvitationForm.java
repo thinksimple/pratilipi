@@ -7,7 +7,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class InvitationForm extends Composite {
@@ -53,6 +52,10 @@ public class InvitationForm extends Composite {
 	
 	public void setErrorStyle(){
 		emailInput.addStyleName( "gwt-TextBoxError" );
+	}
+	
+	public void removeErrorStyle(){
+		emailInput.removeStyleName( "gwt-TextBoxError" );
 	}
 
 }

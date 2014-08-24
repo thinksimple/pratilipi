@@ -125,6 +125,7 @@ public class InvitePageContent extends Composite implements EntryPoint {
 			validated = false;
 		}
 		else{
+			this.invitationForm.removeErrorStyle();
 			validated = true;
 		}
 
