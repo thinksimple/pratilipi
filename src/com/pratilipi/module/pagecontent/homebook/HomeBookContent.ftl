@@ -33,7 +33,11 @@
 
 	<div id="PageContent-HomeBook-ReviewList">
 		<#list reviewList as review >
-			${ review.getReview() }<br/><br/>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					${ review.getReview() }
+				</div>
+			</div>
 		</#list>
 	</div>
 	
