@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
+import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.google.appengine.api.taskqueue.Queue;
@@ -18,10 +19,9 @@ import com.google.apphosting.api.ApiProxy;
 
 public class ClaymusHelper {
 
-	public static final String CURRENT_USER_ID = "CurrentUserId";
-
-	public static final String LOGIN_URL = "/login?dest=";
-	public static final String LOGOUT_URL = "/logout?dest=";
+	private static final String SESSION_ATTRIB_CURRENT_USER_ID = "CurrentUserId";
+	private static final String URL_LOGIN_PAGE = "/login?dest=";
+	private static final String URL_LOGOUT_PAGE = "/logout?dest=";
 	
 	private final HttpServletRequest request;
 	private final HttpSession session;
@@ -43,7 +43,7 @@ public class ClaymusHelper {
 	
 	
 	public Long getCurrentUserId() {
-		return (Long) session.getAttribute( CURRENT_USER_ID );
+		return (Long) session.getAttribute( SESSION_ATTRIB_CURRENT_USER_ID );
 	}
 
 	public User getCurrentUser() {
@@ -70,40 +70,41 @@ public class ClaymusHelper {
 		return userService.isUserLoggedIn() && userService.isUserAdmin();
 	}
 	
-	public boolean hasUserAccess( String accessId ) {
-		boolean  access = false;
+	public boolean hasUserAccess( String accessId, boolean defaultAccess ) {
+		Boolean access = null;
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		for( UserRole userRole : getCurrentUserRoleList() ) {
-			access = dataAccessor
-					.getRoleAccess( userRole.getRoleId(), accessId ).hasAccess();
-			if( access )
-				break;
+			RoleAccess roleAccess = dataAccessor
+					.getRoleAccess( userRole.getRoleId(), accessId );
+			if( roleAccess != null ) {
+				access = roleAccess.hasAccess();
+				if( access )
+					break;
+			}
 		}
 		dataAccessor.destroy();
+		
+		if( access == null )
+			return defaultAccess;
+		
 		return access;
 	}
 	
-	public boolean hasUserAccessAny( String... accessIdList ) {
-		for( String accessId : accessIdList )
-			if( hasUserAccess( accessId ) )
-				return true;
-		return false;
-	}
-	
 	public String createLoginURL() {
-		return LOGIN_URL + request.getRequestURI();
+		return URL_LOGIN_PAGE + request.getRequestURI();
 	}
 
 	public static String createLoginURL( String destinationURL ) {
-		return LOGIN_URL + destinationURL;
+		return URL_LOGIN_PAGE + destinationURL;
 	}
 
 	public String createLogoutURL() {
-		return LOGOUT_URL + request.getRequestURI();
+		return URL_LOGOUT_PAGE + request.getRequestURI();
 	}
 
 	public static String createLogoutURL( String destinationURL ) {
-		return LOGOUT_URL + destinationURL;
+		return URL_LOGOUT_PAGE + destinationURL;
 	}
 
 	
@@ -114,11 +115,15 @@ public class ClaymusHelper {
 		return System.getProperty( appId + "." + propertyName );
 	}
 	
-	public static void performNewUserActions( HttpSession session, com.claymus.data.transfer.User user ) {
+	public static void performNewUserActions( HttpSession session, User user ) {
 		Queue queue = QueueFactory.getQueue( "new-user" );
 		queue.add( TaskOptions.Builder.withParam( "userId", user.getId().toString() ) );
 
-		session.setAttribute( CURRENT_USER_ID, user.getId() );
+		session.setAttribute( SESSION_ATTRIB_CURRENT_USER_ID, user.getId() );
+	}
+	
+	public static void performUserLoginActions( HttpSession session, User user ) {
+		session.setAttribute( SESSION_ATTRIB_CURRENT_USER_ID, user.getId() );
 	}
 	
 }

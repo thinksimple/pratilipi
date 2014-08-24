@@ -132,7 +132,7 @@ public class ClaymusMain extends HttpServlet {
 		}
 		
 		PrintWriter out = response.getWriter();
-		renderPage( page, pageContentList, websiteWidgetList, pageLayout, websiteLayout, out );
+		renderPage( page, pageContentList, websiteWidgetList, pageLayout, websiteLayout, out, request, response );
 		out.close();
 	}
 	
@@ -146,7 +146,9 @@ public class ClaymusMain extends HttpServlet {
 			List<WebsiteWidget> websiteWidgetList,
 			PageLayout pageLayout,
 			WebsiteLayout websiteLayout,
-			PrintWriter out
+			PrintWriter out,
+			HttpServletRequest request,
+			HttpServletResponse response
 			) {
 
 		Map<String, List<String>> websiteWidgetHtmlListMap = new HashMap<>();
@@ -175,7 +177,7 @@ public class ClaymusMain extends HttpServlet {
 			PageContentProcessor pageContentProcessor =
 					PAGE_CONTENT_REGISTRY.getPageContentProcessor( pageContent.getClass() );
 			@SuppressWarnings("unchecked")
-			String pageContentHtml = pageContentProcessor.getHtml( pageContent );
+			String pageContentHtml = pageContentProcessor.getHtml( pageContent, request, response );
 			pageContentHtmlList.add( pageContentHtml );
 		}
 		

@@ -6,6 +6,9 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.claymus.data.transfer.PageContent;
 import com.claymus.servlet.ClaymusMain;
 
@@ -17,7 +20,16 @@ public abstract class PageContentProcessor<T extends PageContent> {
 	private static final Logger logger =
 			Logger.getLogger( PageContentProcessor.class.getName() );
 	
+	@Deprecated
 	public String getHtml( T pageContent ) {
+		
+		return processTemplate( pageContent, getTemplateName() );
+		
+	}
+	
+	public String getHtml( T pageContent,
+			HttpServletRequest request,
+			HttpServletResponse response ) {
 		
 		return processTemplate( pageContent, getTemplateName() );
 		
