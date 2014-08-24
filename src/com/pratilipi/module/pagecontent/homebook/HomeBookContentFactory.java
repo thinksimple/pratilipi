@@ -11,7 +11,6 @@ public class HomeBookContentFactory
 		HomeBookContent homeBookContent = new HomeBookContentEntity();
 		homeBookContent.setBookId( bookId );
 		return homeBookContent;
-		
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.pratilipi.data.access;
 
 import java.util.List;
 
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.Query;
 
 import com.claymus.data.access.GaeQueryBuilder;
@@ -210,7 +211,11 @@ public class DataAccessorGaeImpl
 	
 	@Override
 	public UserBook getUserBook( Long userId, Long bookId ) {
-		return getEntity( UserBookEntity.class, userId + "-" + bookId );
+		try {
+			return getEntity( UserBookEntity.class, userId + "-" + bookId );
+		} catch( JDOObjectNotFoundException e ) {
+			return null;
+		}
 	}
 
 	@Override
@@ -218,10 +223,11 @@ public class DataAccessorGaeImpl
 		
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( UserBookEntity.class ) )
+						.addFilter( "bookId", bookId )
 						.build();
 		
 		@SuppressWarnings("unchecked")
-		List<UserBook> userBookList = (List<UserBook>) query.execute();
+		List<UserBook> userBookList = (List<UserBook>) query.execute( bookId );
 		return (List<UserBook>) pm.detachCopyAll( userBookList );
 		
 	}

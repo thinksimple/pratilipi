@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.shared.PratilipiHelper;
+import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
@@ -30,15 +31,17 @@ public class HomeBookContentProcessor extends PageContentProcessor<HomeBookConte
 	public String getHtml( HomeBookContent homeBookContent,
 			HttpServletRequest request, HttpServletResponse response ) {
 
+		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		Book book = dataAccessor.getBook( homeBookContent.getBookId() );
 		Author author = dataAccessor.getAuthor( book.getAuthorId() );
+		UserBook userBook = dataAccessor.getUserBook(
+				claymusHelper.getCurrentUserId(), book.getId() );
 		List<UserBook> reviewList = dataAccessor.getUserBookList( book.getId() );
 
 		dataAccessor.destroy();
-		
-		ClaymusHelper claymusHelper = new ClaymusHelper( request );
 		
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "book", book );
@@ -50,12 +53,12 @@ public class HomeBookContentProcessor extends PageContentProcessor<HomeBookConte
 		dataModel.put( "authorHomeUrl", PratilipiHelper.AUTHOR_PAGE_URL );
 		
 		dataModel.put( "showEditOptions",
-				( claymusHelper.getCurrentUserId() == book.getAuthorId()
-				&& claymusHelper.hasUserAccess( ACCESS_ID_BOOK_ADD, false ) )
+				( claymusHelper.getCurrentUserId() == book.getAuthorId() && claymusHelper.hasUserAccess( ACCESS_ID_BOOK_ADD, false ) )
 				|| claymusHelper.hasUserAccess( ACCESS_ID_BOOK_UPDATE, false ) );
 		
 		dataModel.put( "showAddReviewOption",
 				claymusHelper.getCurrentUserId() != book.getAuthorId()
+				&& ( userBook == null || userBook.getReviewState() == UserReviewState.NOT_SUBMITTED )
 				&& claymusHelper.hasUserAccess( ACCESS_ID_BOOK_REVIEW_ADD, false ) );
 		
 		return super.processTemplate(

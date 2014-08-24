@@ -12,58 +12,56 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
-import com.pratilipi.service.shared.UpdateBookRequest;
-import com.pratilipi.service.shared.UpdateBookResponse;
-import com.pratilipi.service.shared.data.BookData;
+import com.pratilipi.service.shared.AddUserBookRequest;
+import com.pratilipi.service.shared.AddUserBookResponse;
 import com.pratilipi.service.shared.data.UserBookData;
 
 public class HomeBookContent implements EntryPoint, ClickHandler {
 
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
-	private UserBookData userBookData = new UserBookData();
-	private final Anchor AddReviewAnchor = new Anchor( "Review this book" );
+
+	private final Anchor addReviewAnchor = new Anchor( "Review this book." );
 	private final Anchor saveReviewAnchor = new Anchor( "Save Review" );
 	private final Label savingLabel = new Label( "Saving ..." );
 	
 	public void onModuleLoad() {
-		
-		Window.alert( "Hello Book Page !" );
-		
-		AddReviewAnchor.addClickHandler( this );
-		saveReviewAnchor.addClickHandler( this );
-		
 		RootPanel rootPanel = RootPanel.get( "PageContent-HomeBook-Review-AddOptions" );
-		rootPanel.add( AddReviewAnchor );
-		rootPanel.add( saveReviewAnchor );
-		rootPanel.add( savingLabel );
-		saveReviewAnchor.setVisible( false );
-		savingLabel.setVisible( false );
+		if( rootPanel != null ) {
+			addReviewAnchor.addClickHandler( this );
+			saveReviewAnchor.addClickHandler( this );
 		
+			rootPanel.add( addReviewAnchor );
+			rootPanel.add( saveReviewAnchor );
+			rootPanel.add( savingLabel );
+			
+			saveReviewAnchor.setVisible( false );
+			savingLabel.setVisible( false );
+		}
 	}
 
 	@Override
 	public void onClick( ClickEvent event ) {
 		
-		if( event.getSource() == AddReviewAnchor ) {
-			AddReviewAnchor.setVisible( false );
+		if( event.getSource() == addReviewAnchor ) {
+			addReviewAnchor.setVisible( false );
 			saveReviewAnchor.setVisible( true );
-			loadEditor( RootPanel.get( "PageContent-HomeBook-Summary" ).getElement() );
+			loadEditor( RootPanel.get( "PageContent-HomeBook-Review" ).getElement() );
 			
 		} else if( event.getSource() == saveReviewAnchor ) {
 			saveReviewAnchor.setVisible( false );
 			savingLabel.setVisible( true );
 			
-			BookData bookData = new BookData();
-			bookData.setId( Long.parseLong( Window.Location.getPath().substring( 6 ) ));
-			bookData.setSummary( getHtmlFromEditor( "PageContent-HomeBook-Summary" ) );
+			UserBookData userBookData = new UserBookData();
+			userBookData.setBookId( Long.parseLong( Window.Location.getPath().substring( 6 ) ));
+			userBookData.setReview( getHtmlFromEditor( "PageContent-HomeBook-Review" ) );
 			
-			pratilipiService.updateBook(
-					new UpdateBookRequest( bookData ),
-					new AsyncCallback<UpdateBookResponse>() {
+			pratilipiService.addUserBook(
+					new AddUserBookRequest( userBookData ),
+					new AsyncCallback<AddUserBookResponse>() {
 				
 				@Override
-				public void onSuccess(UpdateBookResponse result) {
+				public void onSuccess( AddUserBookResponse result ) {
 					Window.Location.reload();
 				}
 				

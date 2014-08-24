@@ -62,7 +62,7 @@ public class HomeBookContentEditOptions implements EntryPoint, ClickHandler {
 					new AsyncCallback<UpdateBookResponse>() {
 				
 				@Override
-				public void onSuccess(UpdateBookResponse result) {
+				public void onSuccess( UpdateBookResponse result ) {
 					Window.Location.reload();
 				}
 				

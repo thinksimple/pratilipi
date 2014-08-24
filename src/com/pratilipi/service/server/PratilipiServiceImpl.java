@@ -17,6 +17,7 @@ import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserBook;
+import com.pratilipi.module.pagecontent.homebook.HomeBookContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
@@ -327,25 +328,25 @@ public class PratilipiServiceImpl
 	public AddUserBookResponse addUserBook( AddUserBookRequest request )
 			throws InsufficientAccessException, IllegalArgumentException {
 		
-		Long userId = new ClaymusHelper( this.getThreadLocalRequest() )
-				.getCurrentUserId();
-		
-		if( userId == null )
-			throw new InsufficientAccessException();
-		
 		UserBookData userBookData = request.getUserBook();
-		Long bookId = userBookData.getBookId();
-		
+
+		ClaymusHelper claymusHelper =
+				new ClaymusHelper( this.getThreadLocalRequest() );
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		UserBook userBook = dataAccessor.getUserBook( userId, bookId );
-		if( userBook != null )
-			throw new IllegalArgumentException(
-					"UserBook for given User and Book alreay exists."
-					+ " Did you meant to call updateUserBook ?" );
-			
+		
+		Book book = dataAccessor.getBook( userBookData.getBookId() );
+		UserBook userBook = dataAccessor.getUserBook(
+				claymusHelper.getCurrentUserId(), book.getId() );
+		
+		if( claymusHelper.getCurrentUserId() == book.getAuthorId()
+				|| ( userBook != null && userBook.getReviewState() != UserReviewState.NOT_SUBMITTED )
+				|| ! claymusHelper.hasUserAccess( HomeBookContentProcessor.ACCESS_ID_BOOK_REVIEW_ADD, false ) )
+			throw new InsufficientAccessException();
+
 		userBook = dataAccessor.newUserBook();
-		userBook.setUserId( userId );
-		userBook.setBookId( bookId );
+		userBook.setUserId( claymusHelper.getCurrentUserId() );
+		userBook.setBookId( book.getId() );
 		userBook.setRating( userBookData.getRating() );
 		userBook.setReview( userBookData.getReview() );
 		userBook.setReviewState( UserReviewState.PENDING_APPROVAL );
@@ -354,7 +355,7 @@ public class PratilipiServiceImpl
 		userBook = dataAccessor.createOrUpdateUserBook( userBook );
 		dataAccessor.destroy();
 		
-		return new AddUserBookResponse( userBook.getUserId()+"-"+userBook.getBookId() );
+		return new AddUserBookResponse( userBook.getId() );
 	}
 	
 	@Override
