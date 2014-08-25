@@ -298,3 +298,22 @@ Styling for book thumbnails. */
 	margin: 10px 0px;
 	height: 200px;
 }
+
+//CSS for sign-up form and sign-in form
+@media (min-width: 400px){
+	.nameTextBox {
+	width: 50%;
+	}	
+}
+
+
+.textBoxError {
+	border : 1px solid #F61C0C;
+}
+
+.errorMessage {
+	margin : 5px;
+	color : #F61C0C;
+	display : block;
+	line-height : 17px;
+}
