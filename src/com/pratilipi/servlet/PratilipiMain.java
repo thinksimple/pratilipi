@@ -90,7 +90,7 @@ public class PratilipiMain extends ClaymusMain {
 	
 	@Override
 	protected String getTemplateName() {
-		return "com/pratilipi/servlet/content/PratilipiTemplate.ftl";
+		return "com/pratilipi/servlet/PratilipiTemplate.ftl";
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class PratilipiMain extends ClaymusMain {
 				= super.getPageContentList( request );
 		
 		String requestUri = request.getRequestURI();
-		if( requestUri.equals( "/" ) )
+		if( requestUri.equals( "/home" ) )
 			pageContentList.add(
 					generateHtmlContentFromFile(
 							"WEB-INF/classes/com/pratilipi/servlet/content/HomePageContent.ftl" ) );
@@ -116,11 +116,6 @@ public class PratilipiMain extends ClaymusMain {
 					generateHtmlContentFromFile(
 							"WEB-INF/classes/com/pratilipi/servlet/content/InvitePageContent.ftl" ) );
 			
-		else if( requestUri.equals( "/about" ) )
-			pageContentList.add(
-					generateHtmlContentFromFile(
-							"WEB-INF/classes/com/pratilipi/servlet/content/AboutPageContent.ftl" ) );
-			
 		else if( requestUri.equals( "/contact" ) )
 			pageContentList.add(
 					generateHtmlContentFromFile(
@@ -132,7 +127,7 @@ public class PratilipiMain extends ClaymusMain {
 							"WEB-INF/classes/com/pratilipi/servlet/content/FaqPageContent.ftl" ) );
 			
 		
-		else if( requestUri.equals( "/home" ) )
+		else if( requestUri.equals( "/" ) )
 			pageContentList.add( BookListFactory.newBookList() );
 		
 		
@@ -141,7 +136,16 @@ public class PratilipiMain extends ClaymusMain {
 			Long bookId = Long.parseLong( bookIdStr );
 			pageContentList.add( HomeBookContentFactory.newHomeBookContent( bookId ) );
 		}
+
 		
+		else if( requestUri.equals( "/about/pratilipi" ) )
+			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/AboutPratilipiPageContent.ftl" ) );
+		else if( requestUri.equals( "/about/team" ) )
+			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/AboutTeamPageContent.ftl" ) );
+		else if( requestUri.equals( "/about/the-founding-readers" ) )
+			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/AboutFoundingReadersPageContent.ftl" ) );
+			
+
 		else if( requestUri.equals( "/manage/books" ) )
 			pageContentList.add( ManageBooksFactory.newManageBooks() );
 		else if( requestUri.equals( "/manage/authors" ) )
@@ -172,7 +176,7 @@ public class PratilipiMain extends ClaymusMain {
 		List<WebsiteWidget> websiteWidgetList
 				= super.getWebsiteWidgetList( request );
 
-		if( ! requestUri.equals( "/" ) ) {
+		if( ! requestUri.equals( "/home" ) ) {
 			HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
 			headerWidget.setBrand( "Pratilipi" );
 			headerWidget.setTagLine( "you become what you read ..." );

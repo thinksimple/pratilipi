@@ -21,7 +21,7 @@ public class RoleAccessEntity implements RoleAccess {
 	
 	@Persistent( column = "ACCESS" )
 	private Boolean access;
-	
+
 	
 	@Override
 	public String getId() {

@@ -43,11 +43,13 @@ public class BookViewDetailImpl extends BookView {
 		
 		detailPanel.add( summaryHtml );
 
+		
 		panel.setStyleName( "row" );
 		thumbnailPanel.setStyleName( "col-sm-2" );
 		detailPanel.setStyleName( "col-sm-10" );
 		
 		bookImage.setStyleName( "img-responsive img-thumbnail" );
+		
 		
 		initWidget( panel );
 	}

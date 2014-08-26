@@ -31,7 +31,7 @@ public abstract class PageContentProcessor<T extends PageContent> {
 			HttpServletRequest request,
 			HttpServletResponse response ) {
 		
-		return processTemplate( pageContent, getTemplateName() );
+		return getHtml( pageContent );
 		
 	}
 	
