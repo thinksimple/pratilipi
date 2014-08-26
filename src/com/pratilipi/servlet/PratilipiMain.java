@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 
-import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.PageContent;
@@ -219,31 +218,19 @@ public class PratilipiMain extends ClaymusMain {
 			HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
 			headerWidget.setBrand( "Pratilipi" );
 			headerWidget.setTagLine( "you become what you read ..." );
-			if( ClaymusHelper.isUserAdmin() )
-				headerWidget.setRightNavItems( new Object[][] {
-						{ "Give Away", "/give-away", null },
-						{ "Subscribe", "#subscribe", null },
-						{ "About", null, new String[][] {
-								{ "Pratilipi", "/about/pratilipi" },
-								{ "Team", "/about/team" },
-								{ "The Founding Readers", "/about/the-founding-readers" }}},
-						{ "Manage", null, new String[][] {
-								{ "Books", "/manage/books" },
-								{ "Authors", "/manage/authors" },
-								{ "Publishers", "/manage/publishers" },
-								{ "Languages", "/manage/languages" }}},
-						{ "Log Out", new ClaymusHelper( request ).createLogoutURL(), null },
-				});
-			else
-				headerWidget.setRightNavItems( new Object[][] {
-						{ "Give Away", "/give-away", null },
-						{ "Languages", "/languages", null },
-						{ "Subscribe", "#subscribe", null },
-						{ "About", null, new String[][] {
-								{ "Pratilipi", "/about/pratilipi" },
-								{ "Team", "/about/team" },
-								{ "The Founding Readers", "/about/the-founding-readers" }}},
-				});
+			headerWidget.setRightNavItems( new Object[][] {
+					{ "Give Away", "/give-away", null },
+					{ "Languages", "/languages", null },
+					{ "About", null, new String[][] {
+							{ "Pratilipi", "/about/pratilipi" },
+							{ "Team", "/about/team" },
+							{ "The Founding Readers", "/about/the-founding-readers" }}},
+					{ "Manage", null, new String[][] {
+							{ "Books", "/manage/books" },
+							{ "Authors", "/manage/authors" },
+							{ "Publishers", "/manage/publishers" }}},
+					{ "Subscribe", "#subscribe", null },
+			});
 			headerWidget.setPosition( "HEADER" );
 			websiteWidgetList.add( headerWidget );
 		}
