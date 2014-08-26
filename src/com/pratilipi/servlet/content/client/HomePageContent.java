@@ -4,6 +4,8 @@ import com.claymus.service.client.ClaymusService;
 import com.claymus.service.client.ClaymusServiceAsync;
 import com.claymus.service.shared.AddUserRequest;
 import com.claymus.service.shared.AddUserResponse;
+import com.claymus.service.shared.LoginUserRequest;
+import com.claymus.service.shared.LoginUserResponse;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -91,6 +93,47 @@ public class HomePageContent implements EntryPoint {
 			}
 			
 		});
+		
+		//Login.
+		final LoginForm loginForm = new LoginForm();
+		
+		ClickHandler loginButtonClickHandler = new ClickHandler() {
+			
+			@Override
+			public void onClick( ClickEvent event ) {
+				claymusService.loginUser( new LoginUserRequest( loginForm.getEmail(), loginForm.getPassword() ), new AsyncCallback<LoginUserResponse>() {
+					
+					@Override
+					public void onSuccess( LoginUserResponse response ) {
+						//Redirection URL
+					}
+					
+					@Override
+					public void onFailure( Throwable caught ) {
+						Window.alert( caught.getMessage() );
+					}
+					
+				});
+			}
+		};
+		
+		//Not in favour of having cancel button in the login form as we can use ESC or clicking outside
+		//login form for same purpose.
+		/*
+		ClickHandler cancelButtonClickHandler = new ClickHandler() {
+			
+			@Override
+			public void onClick( ClickEvent event ) {
+				opaqueOverlay.setVisible( false );
+				transparentOverlay.setVisible( false );
+				History.newItem( "" );
+			}
+			
+		};*/
+		
+		loginForm.addLoginButtonClickHandler( loginButtonClickHandler );
+		//loginForm.addCancelButtonClickHandler( cancelButtonClickHandler );
+
 		
 	}
 

@@ -3,6 +3,7 @@ package com.pratilipi.servlet.content.client;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -16,7 +17,8 @@ public class LoginForm extends Composite {
 	
 	private TextBox emailInput = new TextBox();
 	private PasswordTextBox password = new PasswordTextBox();
-	private Button loginButton = new Button("SIGN IN");
+	private Button loginButton = new Button("Login");
+	private Button cancelButton = new Button( "Cancel" );
 	
 	//Error messages
 	private Label emailInputError = new Label();
@@ -78,10 +80,18 @@ public class LoginForm extends Composite {
 				}
 			}});
 		
-		loginButton.addStyleName("btn btn-lg");
+		loginButton.addStyleName("btn");
+		loginButton.addStyleName("btn-sm");
 		loginButton.addStyleName("btn-primary");
 		loginButton.addStyleName("btn-block");
 		loginButton.getElement().getStyle().setDisplay(Display.BLOCK);
+		
+		cancelButton.addStyleName( "btn" );
+		cancelButton.addStyleName( "btn-sm" );
+		cancelButton.addStyleName("btn-primary");
+		cancelButton.addStyleName("btn-block");
+		cancelButton.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+		
 		
 		//Error message Style
 		emailInputError.setStyleName("errorMessage");
@@ -96,10 +106,19 @@ public class LoginForm extends Composite {
 		panel.add(password);
 		panel.add(passwordError);
 		panel.add(loginButton);
+		panel.add(cancelButton);
 		
 		form.add(panel);
 		
 		initWidget(form);
+	}
+	
+	public void addCancelButtonClickHandler( ClickHandler clickHandler ) {
+		cancelButton.addClickHandler( clickHandler );
+	}
+
+	public void addLoginButtonClickHandler( ClickHandler clickHandler ) {
+		loginButton.addClickHandler( clickHandler );
 	}
 	
 	public String getEmail(){

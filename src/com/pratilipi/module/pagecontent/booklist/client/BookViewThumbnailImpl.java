@@ -81,7 +81,7 @@ public class BookViewThumbnailImpl extends BookView {
 				
 			}});
 		anchor.setStyleName("thumnail");
-		anchor.getElement().setAttribute("href", "#");
+		anchor.getElement().setAttribute("href", "/book/" + bookData.getId());
 		
 		Label title = new Label();
 		String bookTitle = bookData.getTitle();
