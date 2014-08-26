@@ -18,6 +18,7 @@ import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserBook;
 import com.pratilipi.module.pagecontent.homebook.HomeBookContentProcessor;
+import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
@@ -191,7 +192,10 @@ public class PratilipiServiceImpl
 	public AddLanguageResponse addLanguage( AddLanguageRequest request )
 			throws InsufficientAccessException {
 		
-		if( ! ClaymusHelper.isUserAdmin() )
+		ClaymusHelper claymusHelper =
+				new ClaymusHelper( this.getThreadLocalRequest() );
+		
+		if( claymusHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_ADD, false ) )
 			throw new InsufficientAccessException();
 		
 		LanguageData languageData = request.getLanguage();
