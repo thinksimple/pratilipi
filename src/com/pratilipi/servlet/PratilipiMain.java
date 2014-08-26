@@ -33,8 +33,9 @@ import com.pratilipi.module.pagecontent.homebook.HomeBookContentFactory;
 import com.pratilipi.module.pagecontent.homebook.HomeBookContentProcessor;
 import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
 import com.pratilipi.module.pagecontent.managebooks.ManageBooksFactory;
-import com.pratilipi.module.pagecontent.managelanguages.ManageLanguagesFactory;
 import com.pratilipi.module.pagecontent.managepublishers.ManagePublishersFactory;
+import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
+import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
@@ -50,7 +51,7 @@ public class PratilipiMain extends ClaymusMain {
 		PAGE_CONTENT_REGISTRY.register( HomeBookContentFactory.class );
 		
 		PAGE_CONTENT_REGISTRY.register( ManageBooksFactory.class );
-		PAGE_CONTENT_REGISTRY.register( ManageLanguagesFactory.class );
+		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManageAuthorsFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManagePublishersFactory.class );
 		
@@ -59,6 +60,41 @@ public class PratilipiMain extends ClaymusMain {
 		RoleAccess roleAccess = dataAccessor.newRoleAccess();
 		roleAccess.setRoleId( "member" );
 		roleAccess.setAccessId( HomeBookContentProcessor.ACCESS_ID_BOOK_REVIEW_ADD );
+		roleAccess.setAccess( true );
+		dataAccessor.createOrUpdateRoleAccess( roleAccess );
+		
+		// TODO: added for devo testing. remove it in prod.
+		roleAccess = dataAccessor.newRoleAccess();
+		roleAccess.setRoleId( "member" );
+		roleAccess.setAccessId( HomeBookContentProcessor.ACCESS_ID_BOOK_ADD );
+		roleAccess.setAccess( true );
+		dataAccessor.createOrUpdateRoleAccess( roleAccess );
+		
+		// TODO: added for devo testing. remove it in prod.
+		roleAccess = dataAccessor.newRoleAccess();
+		roleAccess.setRoleId( "member" );
+		roleAccess.setAccessId( HomeBookContentProcessor.ACCESS_ID_BOOK_UPDATE );
+		roleAccess.setAccess( true );
+		dataAccessor.createOrUpdateRoleAccess( roleAccess );
+		
+		// TODO: added for devo testing. remove it in prod.
+		roleAccess = dataAccessor.newRoleAccess();
+		roleAccess.setRoleId( "member" );
+		roleAccess.setAccessId( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_LIST );
+		roleAccess.setAccess( true );
+		dataAccessor.createOrUpdateRoleAccess( roleAccess );
+		
+		// TODO: added for devo testing. remove it in prod.
+		roleAccess = dataAccessor.newRoleAccess();
+		roleAccess.setRoleId( "member" );
+		roleAccess.setAccessId( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_READ_META_DATA );
+		roleAccess.setAccess( true );
+		dataAccessor.createOrUpdateRoleAccess( roleAccess );
+		
+		// TODO: added for devo testing. remove it in prod.
+		roleAccess = dataAccessor.newRoleAccess();
+		roleAccess.setRoleId( "member" );
+		roleAccess.setAccessId( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_ADD );
 		roleAccess.setAccess( true );
 		dataAccessor.createOrUpdateRoleAccess( roleAccess );
 		
@@ -131,10 +167,15 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( BookListFactory.newBookList() );
 		
 		
+		else if( requestUri.equals( "/languages" ) )
+			pageContentList.add( LanguagesContentFactory.newLanguagesContent() );
+
 		else if( requestUri.startsWith( "/book/" ) ) {
 			String bookIdStr = requestUri.substring( 6 );
-			Long bookId = Long.parseLong( bookIdStr );
-			pageContentList.add( HomeBookContentFactory.newHomeBookContent( bookId ) );
+			if( bookIdStr == "new" )
+				pageContentList.add( HomeBookContentFactory.newHomeBookContent() );
+			else
+				pageContentList.add( HomeBookContentFactory.newHomeBookContent( Long.parseLong( bookIdStr ) ) );
 		}
 
 		
@@ -152,8 +193,6 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( ManageAuthorsFactory.newAuthorDataInput() );
 		else if( requestUri.equals( "/manage/publishers" ) )
 			pageContentList.add( ManagePublishersFactory.newPublisherDataInput() );
-		else if( requestUri.equals( "/manage/languages" ) )
-			pageContentList.add( ManageLanguagesFactory.newManageLanguages() );
 
 		
 		else if( requestUri.equals( "/manage/books/new" ) )
@@ -198,6 +237,7 @@ public class PratilipiMain extends ClaymusMain {
 			else
 				headerWidget.setRightNavItems( new Object[][] {
 						{ "Give Away", "/give-away", null },
+						{ "Languages", "/languages", null },
 						{ "Subscribe", "#subscribe", null },
 						{ "About", null, new String[][] {
 								{ "Pratilipi", "/about/pratilipi" },

@@ -9,7 +9,6 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.pratilipi.data.transfer.Language;
 
-
 @PersistenceCapable( table = "LANGUAGE" )
 public class LanguageEntity implements Language {
 
