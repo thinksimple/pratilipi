@@ -1,5 +1,6 @@
 package com.pratilipi.pagecontent.languages.client;
 
+import com.claymus.commons.client.ui.TextBoxFormField;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -8,7 +9,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddLanguageRequest;
@@ -22,10 +22,11 @@ public class LanguagesContent implements EntryPoint {
 	
 	public void onModuleLoad() {
 		
-		final TextBox languageInput = new TextBox();
+		final TextBoxFormField languageInput = new TextBoxFormField();
 		final Button addButton = new Button( "Add" );
 		
-		languageInput.setStyleName( "form-control" );
+		languageInput.setRequired( true );
+		
 		addButton.setStyleName( "btn btn-default" );
 		
 		RootPanel.get( "PageContent-Languages-TextInput" ).add( languageInput );
@@ -35,12 +36,16 @@ public class LanguagesContent implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
+				
+				if( ! languageInput.validate() )
+					return;
+				
 				languageInput.setEnabled( false );
 				addButton.setEnabled( false );
 				addButton.setText( "Saving ..." );
 
 				LanguageData languageData = new LanguageData();
-				languageData.setName( languageInput.getText().trim() );
+				languageData.setName( languageInput.getText() );
 				AddLanguageRequest request = new AddLanguageRequest( languageData );
 				pratilipiService.addLanguage( request, new AsyncCallback<AddLanguageResponse>() {
 

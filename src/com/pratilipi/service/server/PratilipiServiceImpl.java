@@ -195,7 +195,7 @@ public class PratilipiServiceImpl
 		ClaymusHelper claymusHelper =
 				new ClaymusHelper( this.getThreadLocalRequest() );
 		
-		if( claymusHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_ADD, false ) )
+		if( ! claymusHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_ADD, false ) )
 			throw new InsufficientAccessException();
 		
 		LanguageData languageData = request.getLanguage();
