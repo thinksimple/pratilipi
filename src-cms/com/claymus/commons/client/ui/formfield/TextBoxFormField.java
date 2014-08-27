@@ -1,4 +1,4 @@
-package com.claymus.commons.client.ui;
+package com.claymus.commons.client.ui.formfield;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -18,17 +18,21 @@ public class TextBoxFormField extends FormField {
 	
 	public TextBoxFormField() {
 
+		textBox.getElement().setAttribute( "data-container", "body" );
+		textBox.getElement().setAttribute( "data-placement", "top" );
+		
+		// Composing the widget
 		panel.getElement().appendChild( label );
 		panel.add( textBox );
 		panel.getElement().appendChild( glyphicon );
 		
+		// Setting required style classes
 		panel.setStyleName( "form-group" );
 		label.setAttribute( "class", "control-label sr-only" );
 		textBox.setStyleName( "form-control" );
 		
-		textBox.getElement().setAttribute( "data-container", "body" );
-		textBox.getElement().setAttribute( "data-placement", "top" );
-		
+		initWidget( panel );
+
 		textBox.addBlurHandler( new BlurHandler() {
 			
 			@Override
@@ -38,21 +42,24 @@ public class TextBoxFormField extends FormField {
 			
 		});
 		
-		initWidget( panel );
 	}
 
-	public String getText() {
-		return textBox.getText().trim();
+	public void setPlaceholder( String placeholder ) {
+		textBox.getElement().setAttribute( "placeholder", placeholder );
 	}
 	
 	public void setEnabled( boolean enabled ) {
 		textBox.setEnabled( enabled );
 	}
 	
+	public String getText() {
+		return textBox.getText().trim();
+	}
+	
 	@Override
 	public boolean validate() {
 		if( isRequired() ) {
-			if( textBox.getText().trim() == "" ) {
+			if( getText() == "" ) {
 				markError( "Input Required !" );
 				return false;
 			} else {

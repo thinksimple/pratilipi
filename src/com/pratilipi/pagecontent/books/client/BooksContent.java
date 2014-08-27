@@ -1,5 +1,6 @@
 package com.pratilipi.pagecontent.books.client;
 
+import com.claymus.commons.client.ui.InfiniteScrollPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
@@ -19,26 +20,35 @@ public class BooksContent implements EntryPoint {
 			GWT.create( PratilipiService.class );
 	
 	public void onModuleLoad() {
-		
-		pratilipiService.getBookList( new GetBookListRequest(), new AsyncCallback<GetBookListResponse>() {
-			
-			@Override
-			public void onSuccess( GetBookListResponse response ) {
 
-				for( BookData bookData : response.getBookList() ) {
-					BookView bookView = new BookViewDetailImpl();
-					bookView.setBookData( bookData );
-					RootPanel
-							.get( "PageContent-Books" )
-							.add( bookView );
-				}
-				
-			}
-			
+		RootPanel.get( "PageContent-Books" ).add( new InfiniteScrollPanel() {
+
 			@Override
-			public void onFailure( Throwable caught ) {
-				// TODO Auto-generated method stub
-				Window.alert( caught.getMessage() );
+			protected void loadItems() {
+				
+				pratilipiService.getBookList( new GetBookListRequest(), new AsyncCallback<GetBookListResponse>() {
+					
+					@Override
+					public void onSuccess( GetBookListResponse response ) {
+
+						for( BookData bookData : response.getBookList() ) {
+							BookView bookView = new BookViewDetailImpl();
+							bookView.setBookData( bookData );
+							add( bookView );
+						}
+						
+						loadSuccessful();
+					}
+					
+					@Override
+					public void onFailure( Throwable caught ) {
+						loadFailed();
+						// TODO Auto-generated method stub
+						Window.alert( caught.getMessage() );
+					}
+					
+				} );
+				
 			}
 			
 		} );

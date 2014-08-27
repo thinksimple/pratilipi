@@ -1,6 +1,6 @@
 package com.pratilipi.pagecontent.languages.client;
 
-import com.claymus.commons.client.ui.TextBoxFormField;
+import com.claymus.commons.client.ui.formfield.TextBoxFormField;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

@@ -1,4 +1,4 @@
-package com.claymus.commons.client.ui;
+package com.claymus.commons.client.ui.formfield;
 
 import com.google.gwt.user.client.ui.Composite;
 
