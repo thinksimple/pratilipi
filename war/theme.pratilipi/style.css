@@ -299,13 +299,19 @@ Styling for book thumbnails. */
 	height: 200px;
 }
 
-//CSS for sign-up form and sign-in form
+
 @media (min-width: 400px){
 	.nameTextBox {
 	width: 50%;
+	display: inline_block;
 	}	
 }
 
+@media (max-width: 400px){
+	.nameTextBox {
+	width: 100%;
+	}	
+}
 
 .textBoxError {
 	border : 1px solid #F61C0C;

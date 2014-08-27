@@ -19,7 +19,7 @@
 			<li><a href="/give-away">GIVE AWAY</a></li>
 	</div>
 	<div class="links-right">
-		<li><a href="#subscribe">SUBSCRIBE</a></li>
+		<li><a href="#subscribe" data-toggle="modal" data-target="#myModal">Subscribe</a></li>
 	</div>
 
 	<div class="title">
@@ -37,7 +37,12 @@
 	<div class="teaser">
 		<iframe width="560" height="315" src="//www.youtube.com/embed/8L71YwC7BOQ?rel=0&controls=2&showinfo=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
 	</div>
-
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" id="Signup"></div>
+  </div>
 </div>
 
 <script>

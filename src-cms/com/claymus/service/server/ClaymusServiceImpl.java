@@ -14,6 +14,9 @@ import com.claymus.service.shared.AddUserRequest;
 import com.claymus.service.shared.AddUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
 import com.claymus.service.shared.LoginUserResponse;
+import com.claymus.service.shared.RegisterUserRequest;
+import com.claymus.service.shared.RegisterUserResponse;
+import com.claymus.service.shared.data.RegistrationData;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -55,6 +58,38 @@ public class ClaymusServiceImpl
 					user );
 		
 		return new AddUserResponse( user.getId() );
+	}
+	
+	@Override
+	public RegisterUserResponse registerUser(RegisterUserRequest request)
+		throws IllegalArgumentException {
+		RegistrationData registerData = request.getUser();
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUserByEmail( registerData.getEmail() );
+
+		if( user == null )
+			user = dataAccessor.newUser();
+		
+		//For subscribed and referred users.
+		if( user.getStatus() != UserStatus.REGISTERED ){
+			
+			user.setFirstName( registerData.getFirstName() );
+			user.setLastName( registerData.getLastName() );
+			user.setEmail( registerData.getEmail() );
+			user.setPassword( registerData.getPassword() );
+			user.setCampaign( registerData.getCampaign() );
+			user.setReferer( registerData.getReferer() );
+			user.setSignUpDate( new Date() );
+			user.setStatus( registerData.getStatus() );
+
+			user = dataAccessor.createUser( user );
+		}
+		else 
+			throw new IllegalArgumentException( "This Email Id is already registered" );
+		
+		
+		return new RegisterUserResponse( user.getId() );
 	}
 
 	@Override

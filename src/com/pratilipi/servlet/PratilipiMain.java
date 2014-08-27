@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.PageContent;
@@ -214,22 +215,43 @@ public class PratilipiMain extends ClaymusMain {
 		List<WebsiteWidget> websiteWidgetList
 				= super.getWebsiteWidgetList( request );
 
+		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		
 		if( ! requestUri.equals( "/home" ) ) {
 			HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
 			headerWidget.setBrand( "Pratilipi" );
 			headerWidget.setTagLine( "you become what you read ..." );
-			headerWidget.setRightNavItems( new Object[][] {
-					{ "Give Away", "/give-away", null },
-					{ "Languages", "/languages", null },
-					{ "Books", "/books", null },
-					{ "Authors", "/manage/authors" },
-					{ "Publishers", "/manage/publishers" },
-					{ "About", null, new String[][] {
-							{ "Pratilipi", "/about/pratilipi" },
-							{ "Team", "/about/team" },
-							{ "The Founding Readers", "/about/the-founding-readers" }}},
-					{ "Subscribe", "#subscribe", null },
-			});
+			if( claymusHelper.isUserLoggedIn() ){
+				headerWidget.setRightNavItems( new Object[][] {
+						{ "Give Away", "/give-away", null },
+						{ "Languages", "/languages", null },
+						{ "About", null, new String[][] {
+								{ "Pratilipi", "/about/pratilipi" },
+								{ "Team", "/about/team" },
+								{ "The Founding Readers", "/about/the-founding-readers" }}},
+						{ "Manage", null, new String[][] {
+								{ "Books", "/manage/books" },
+								{ "Authors", "/manage/authors" },
+								{ "Publishers", "/manage/publishers" }}},
+						{ "Sign Out", "#signout", null },
+				});
+			}
+			else{
+				headerWidget.setRightNavItems( new Object[][] {
+						{ "Give Away", "/give-away", null },
+						{ "Languages", "/languages", null },
+						{ "About", null, new String[][] {
+								{ "Pratilipi", "/about/pratilipi" },
+								{ "Team", "/about/team" },
+								{ "The Founding Readers", "/about/the-founding-readers" }}},
+						{ "Manage", null, new String[][] {
+								{ "Books", "/manage/books" },
+								{ "Authors", "/manage/authors" },
+								{ "Publishers", "/manage/publishers" }}},
+						{ "Sign up", "#signup", null },
+						{ "Sign In", "#signin", null },
+				});
+			}
 			headerWidget.setPosition( "HEADER" );
 			websiteWidgetList.add( headerWidget );
 		}

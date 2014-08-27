@@ -81,7 +81,7 @@ public class BookViewThumbnailImpl extends BookView {
 				
 			}});
 		anchor.setStyleName("thumnail");
-		anchor.getElement().setAttribute("href", "/book/" + bookData.getId());
+		anchor.getElement().setAttribute("href", PratilipiHelper.BOOK_PAGE_URL + bookData.getId());
 		
 		Label title = new Label();
 		String bookTitle = bookData.getTitle();

@@ -45,6 +45,15 @@ public class ClaymusHelper {
 	}
 	
 	
+	public boolean isUserLoggedIn() {
+		if( currentUserId == null ) {
+			currentUserId = (Long) session.getAttribute( SESSION_ATTRIB_CURRENT_USER_ID );
+			if( currentUserId == null )
+				currentUserId = 0L;
+		}
+		return currentUserId != 0L;
+	}
+
 	public Long getCurrentUserId() {
 		if( currentUserId == null ) {
 			currentUserId = (Long) session.getAttribute( SESSION_ATTRIB_CURRENT_USER_ID );

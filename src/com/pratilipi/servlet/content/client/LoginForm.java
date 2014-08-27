@@ -7,7 +7,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -18,7 +17,6 @@ public class LoginForm extends Composite {
 	private TextBox emailInput = new TextBox();
 	private PasswordTextBox password = new PasswordTextBox();
 	private Button loginButton = new Button("Login");
-	private Button cancelButton = new Button( "Cancel" );
 	
 	//Error messages
 	private Label emailInputError = new Label();
@@ -27,13 +25,14 @@ public class LoginForm extends Composite {
 	
 	public LoginForm(){
 		
-		FormPanel form = new FormPanel();
+		Panel modalContent = new FlowPanel();
+		modalContent.setStyleName( "modal-content" );
+		
 		Panel panel = new FlowPanel();
+		panel.setStyleName( "modal-body" );
 		
-		final ValidateForm validateForm = new ValidateForm();
-		
-		FlowPanel namePanel = new FlowPanel();
-		namePanel.getElement().getStyle().setDisplay( Display.BLOCK );
+		Panel fields = new FlowPanel();
+		Panel button = new FlowPanel();
 		
 		emailInput.getElement().setPropertyString("placeholder", "Email");
 		emailInput.addStyleName( "form-control" );
@@ -41,20 +40,7 @@ public class LoginForm extends Composite {
 
 			@Override
 			public void onBlur(BlurEvent event) {
-				if( getEmail().isEmpty() ){
-					setEmailErrorStyle();
-					setEmailInputError("Enter your email");
-					showEmailInputError();
-				}
-				else if( validateForm.ValidateEmail( getEmail() ) ){
-					setEmailErrorStyle();
-					setEmailInputError("Email not in proper format");
-					showEmailInputError();
-				}
-				else{
-					setEmailAcceptStyle();
-					hideEmailInputError();
-				}
+				validateEmail();
 			}});
 		
 		password.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -69,11 +55,6 @@ public class LoginForm extends Composite {
 					setPasswordError("Enter Password");
 					showPasswordError();
 				}
-				else if( validateForm.ValidatePassword( getPassword() )){
-					setPasswordErrorStyle();
-					setPasswordError("Password should be atleast 6 characters long");
-					showPasswordError();
-				}
 				else{
 					setPasswordAcceptStyle();
 					hidePasswordError();
@@ -86,12 +67,6 @@ public class LoginForm extends Composite {
 		loginButton.addStyleName("btn-block");
 		loginButton.getElement().getStyle().setDisplay(Display.BLOCK);
 		
-		cancelButton.addStyleName( "btn" );
-		cancelButton.addStyleName( "btn-sm" );
-		cancelButton.addStyleName("btn-primary");
-		cancelButton.addStyleName("btn-block");
-		cancelButton.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-		
 		
 		//Error message Style
 		emailInputError.setStyleName("errorMessage");
@@ -101,24 +76,52 @@ public class LoginForm extends Composite {
 		emailInputError.setVisible(false);
 		passwordError.setVisible(false);
 		
-		panel.add(emailInput);
-		panel.add(emailInputError);
-		panel.add(password);
-		panel.add(passwordError);
-		panel.add(loginButton);
-		panel.add(cancelButton);
+		fields.add(emailInput);
+		fields.add(emailInputError);
+		fields.add(password);
+		fields.add(passwordError);
+		button.add(loginButton);
 		
-		form.add(panel);
+		panel.add( fields );
+		panel.add( button );
 		
-		initWidget(form);
+		modalContent.add( panel );
+		
+		initWidget( modalContent );
 	}
 	
-	public void addCancelButtonClickHandler( ClickHandler clickHandler ) {
-		cancelButton.addClickHandler( clickHandler );
-	}
-
+	//Click handler functions
 	public void addLoginButtonClickHandler( ClickHandler clickHandler ) {
 		loginButton.addClickHandler( clickHandler );
+	}
+	
+	//Login validation functions
+	public boolean validateEmail(){
+		if( getEmail().isEmpty() ){
+			setEmailErrorStyle();
+			setEmailInputError("Enter your email");
+			showEmailInputError();
+			return false;
+		}
+		else{
+			setEmailAcceptStyle();
+			hideEmailInputError();
+			return true;
+		}
+	}
+	
+	public boolean validatePassword(){
+		if(getPassword().isEmpty()){
+			setPasswordErrorStyle();
+			setPasswordError("Enter Password");
+			showPasswordError();
+			return false;
+		}
+		else{
+			setPasswordAcceptStyle();
+			hidePasswordError();
+			return true;
+		}
 	}
 	
 	public String getEmail(){

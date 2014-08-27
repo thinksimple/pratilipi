@@ -1,12 +1,15 @@
 package com.pratilipi.servlet.content.client;
 
+import com.claymus.commons.shared.UserStatus;
+import com.claymus.service.shared.data.RegistrationData;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -18,7 +21,9 @@ public class RegistrationForm extends Composite {
 	private TextBox emailInput = new TextBox();
 	private PasswordTextBox password = new PasswordTextBox();
 	private PasswordTextBox confirmPassword = new PasswordTextBox();
-	private Button register = new Button("SIGN UP");
+	private Button registerButton = new Button("SIGN UP");
+	
+	final ValidateForm validateForm = new ValidateForm();
 	
 	//Error messages
 	private Label nameInputError = new Label();
@@ -29,10 +34,11 @@ public class RegistrationForm extends Composite {
 	
 	public RegistrationForm(){
 		
-		FormPanel form = new FormPanel();
-		Panel panel = new FlowPanel();
+		Panel modalContent = new FlowPanel();
+		modalContent.setStyleName( "modal-content" );
 		
-		final ValidateForm validateForm = new ValidateForm();
+		Panel panel = new FlowPanel();
+		panel.setStyleName( "modal-body" );
 		
 		FlowPanel namePanel = new FlowPanel();
 		namePanel.getElement().getStyle().setDisplay( Display.BLOCK );
@@ -46,22 +52,10 @@ public class RegistrationForm extends Composite {
 
 			@Override
 			public void onBlur(BlurEvent event) {
-				if( getFirstName().isEmpty() ){
-					setFirstNameErrorStyle();
-					setNameInputError("Enter first name");
-					showNameInputError();
-				}
-				else if( validateForm.ValidateFirstName( getFirstName() ) ){
-					setFirstNameErrorStyle();
-					setNameInputError("First Name cannot contain special characters and integers");
-					showNameInputError();
-				}
-				else{
-					setFirstNameAcceptStyle();
-					hideNameInputError();
-				}
+				validateFirstName();
 			}});
 		
+		lastNameInput.getElement().getStyle().setDisplay( Display.INLINE_BLOCK );
 		lastNameInput.getElement().setPropertyString("placeholder", "Last Name");
 		lastNameInput.addStyleName( "col-xs-1" );
 		lastNameInput.addStyleName( "form-control" );
@@ -70,15 +64,7 @@ public class RegistrationForm extends Composite {
 
 			@Override
 			public void onBlur(BlurEvent event) {
-				if( validateForm.ValidateLastName( getLastName() ) ){
-					setLastNameErrorStyle();
-					setNameInputError("Last Name cannot contain special characters and integers");
-					showNameInputError();
-				}
-				else{
-					setLastNameAcceptStyle();
-					hideNameInputError();
-				}
+				validateLastName();
 			}});
 		
 		emailInput.getElement().setPropertyString("placeholder", "Email");
@@ -87,20 +73,7 @@ public class RegistrationForm extends Composite {
 
 			@Override
 			public void onBlur(BlurEvent event) {
-				if( getEmail().isEmpty() ){
-					setEmailErrorStyle();
-					setEmailInputError("Enter your email");
-					showEmailInputError();
-				}
-				else if( validateForm.ValidateEmail( getEmail() ) ){
-					setEmailErrorStyle();
-					setEmailInputError("Email not in proper format");
-					showEmailInputError();
-				}
-				else{
-					setEmailAcceptStyle();
-					hideEmailInputError();
-				}
+				validateEmail();
 			}});
 		
 		password.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -110,20 +83,7 @@ public class RegistrationForm extends Composite {
 
 			@Override
 			public void onBlur(BlurEvent event) {
-				if(getPassword().isEmpty()){
-					setPasswordErrorStyle();
-					setPasswordError("Enter Password");
-					showPasswordError();
-				}
-				else if( validateForm.ValidatePassword( getPassword() ) ){
-					setPasswordErrorStyle();
-					setPasswordError("Password should be atleast 6 characters long");
-					showPasswordError();
-				}
-				else{
-					setPasswordAcceptStyle();
-					hidePasswordError();
-				}
+				validatePassword();
 			}});
 		
 		confirmPassword.getElement().setPropertyString("placeholder", "Confirm Password");
@@ -132,26 +92,13 @@ public class RegistrationForm extends Composite {
 
 			@Override
 			public void onBlur(BlurEvent event) {
-				if(getConfPassword().isEmpty()){
-					setConfPasswordErrorStyle();
-					setconfPassError("Please re-enter your password");
-					showConfPassError();
-				}
-				else if( validateForm.validateConfirmPassword( getPassword(), getConfPassword() ) ){
-					setConfPasswordErrorStyle();
-					setconfPassError("Password should be atleast 6 characters long");
-					showConfPassError();
-				}
-				else{
-					setConfPasswordAcceptStyle();
-					hideConfPassError();
-				}
+				validateConfPassword();
 			}});
 		
-		register.addStyleName("btn btn-lg");
-		register.addStyleName("btn-primary");
-		register.addStyleName("btn-block");
-		register.getElement().getStyle().setDisplay(Display.BLOCK);
+		registerButton.addStyleName("btn btn-lg");
+		registerButton.addStyleName("btn-primary");
+		registerButton.addStyleName("btn-block");
+		registerButton.getElement().getStyle().setDisplay(Display.BLOCK);
 		
 		//Error message Style
 		nameInputError.setStyleName("errorMessage");
@@ -175,13 +122,129 @@ public class RegistrationForm extends Composite {
 		panel.add(passwordError);
 		panel.add(confirmPassword);
 		panel.add(confPassError);
-		panel.add(register);
+		panel.add(registerButton);
 		
-		form.add(panel);
+		modalContent.add( panel );
 		
-		initWidget(form);
+		initWidget(modalContent);
 	}
 	
+	public RegistrationData getUser() {
+		RegistrationData registrationData = new RegistrationData();
+		if( firstNameInput.getText().trim().length() != 0 )
+			registrationData.setFirstName( firstNameInput.getText().trim() );
+		if( lastNameInput.getText().trim().length() != 0 )
+			registrationData.setLastName( lastNameInput.getText().trim() );
+		registrationData.setPassword( password.getText());
+		registrationData.setEmail( emailInput.getText().trim() );
+		registrationData.setCampaign( "preLaunch" );
+		registrationData.setReferer( Window.Location.getParameter( "ref" ) );
+		registrationData.setStatus( UserStatus.REGISTERED );
+		
+		return registrationData;
+	}
+	
+	//Clickhandler  functions
+	public void addRegisterButtonClickHandler( ClickHandler clickHandler ) {
+		registerButton.addClickHandler( clickHandler );
+	}
+	
+	//Form validation functions
+	public boolean validateFirstName(){
+		if( getFirstName().isEmpty() ){
+			setFirstNameErrorStyle();
+			setNameInputError("Enter first name");
+			showNameInputError();
+			return false;
+		}
+		else if( validateForm.ValidateFirstName( getFirstName() ) ){
+			setFirstNameErrorStyle();
+			setNameInputError("First Name cannot contain special characters and integers");
+			showNameInputError();
+			return false;
+		}
+		else{
+			setFirstNameAcceptStyle();
+			hideNameInputError();
+			return true;
+		}
+	}
+	
+	public boolean validateLastName(){
+		if( validateForm.ValidateLastName( getLastName() ) ){
+			setLastNameErrorStyle();
+			setNameInputError("Last Name cannot contain special characters and integers");
+			showNameInputError();
+			return false;
+		}
+		else{
+			setLastNameAcceptStyle();
+			hideNameInputError();
+			return true;
+		}
+	}
+	
+	public boolean validateEmail(){
+		if( getEmail().isEmpty() ){
+			setEmailErrorStyle();
+			setEmailInputError("Enter your email");
+			showEmailInputError();
+			return false;
+		}
+		else if( validateForm.ValidateEmail( getEmail() ) ){
+			setEmailErrorStyle();
+			setEmailInputError("Email not in proper format");
+			showEmailInputError();
+			return false;
+		}
+		else{
+			setEmailAcceptStyle();
+			hideEmailInputError();
+			return true;
+		}
+	}
+	
+	public boolean validatePassword(){
+		if(getPassword().isEmpty()){
+			setPasswordErrorStyle();
+			setPasswordError("Enter Password");
+			showPasswordError();
+			return false;
+		}
+		else if( validateForm.ValidatePassword( getPassword() ) ){
+			setPasswordErrorStyle();
+			setPasswordError("Password should be atleast 6 characters long");
+			showPasswordError();
+			return false;
+		}
+		else{
+			setPasswordAcceptStyle();
+			hidePasswordError();
+			return true;
+		}
+	}
+	
+	public boolean validateConfPassword(){
+		if(getConfPassword().isEmpty()){
+			setConfPasswordErrorStyle();
+			setconfPassError("Please re-enter your password");
+			showConfPassError();
+			return false;
+		}
+		else if( validateForm.validateConfirmPassword( getPassword(), getConfPassword() ) ){
+			setConfPasswordErrorStyle();
+			setconfPassError("Password should be atleast 6 characters long");
+			showConfPassError();
+			return false;
+		}
+		else{
+			setConfPasswordAcceptStyle();
+			hideConfPassError();
+			return true;
+		}
+	}
+	
+	//Get text from input fields.
 	public String getFirstName(){
 		return firstNameInput.getText();
 	}
@@ -202,6 +265,7 @@ public class RegistrationForm extends Composite {
 		return confirmPassword.getText();
 	}
 	
+	//Set and remove error styling.
 	public void setFirstNameErrorStyle(){
 		firstNameInput.addStyleName("textBoxError");
 	}
