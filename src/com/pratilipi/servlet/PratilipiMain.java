@@ -221,37 +221,20 @@ public class PratilipiMain extends ClaymusMain {
 			HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
 			headerWidget.setBrand( "Pratilipi" );
 			headerWidget.setTagLine( "you become what you read ..." );
-			if( claymusHelper.isUserLoggedIn() ){
-				headerWidget.setRightNavItems( new Object[][] {
-						{ "Give Away", "/give-away", null },
-						{ "Languages", "/languages", null },
-						{ "About", null, new String[][] {
-								{ "Pratilipi", "/about/pratilipi" },
-								{ "Team", "/about/team" },
-								{ "The Founding Readers", "/about/the-founding-readers" }}},
-						{ "Manage", null, new String[][] {
-								{ "Books", "/manage/books" },
-								{ "Authors", "/manage/authors" },
-								{ "Publishers", "/manage/publishers" }}},
-						{ "Sign Out", "#signout", null },
-				});
-			}
-			else{
-				headerWidget.setRightNavItems( new Object[][] {
-						{ "Give Away", "/give-away", null },
-						{ "Languages", "/languages", null },
-						{ "About", null, new String[][] {
-								{ "Pratilipi", "/about/pratilipi" },
-								{ "Team", "/about/team" },
-								{ "The Founding Readers", "/about/the-founding-readers" }}},
-						{ "Manage", null, new String[][] {
-								{ "Books", "/manage/books" },
-								{ "Authors", "/manage/authors" },
-								{ "Publishers", "/manage/publishers" }}},
-						{ "Sign up", "#signup", null },
-						{ "Sign In", "#signin", null },
-				});
-			}
+
+			headerWidget.setRightNavItems( new Object[][] {
+					{ "Give Away", "/give-away", null },
+					{ "Languages", "/languages", null },
+					{ "Books", "/books", null },
+					{ "Authors", "/manage/authors" },
+					{ "Publishers", "/manage/publishers" },
+					{ "About", null, new String[][] {
+							{ "Pratilipi", "/about/pratilipi" },
+							{ "Team", "/about/team" },
+							{ "The Founding Readers", "/about/the-founding-readers" }}},
+					{ claymusHelper.isUserLoggedIn() ? "Sign Out" : "Sign In", claymusHelper.isUserLoggedIn() ? "#signout" : "#signin", null },
+					{ "Sign up", "#signup", null },
+			});
 			headerWidget.setPosition( "HEADER" );
 			websiteWidgetList.add( headerWidget );
 		}
