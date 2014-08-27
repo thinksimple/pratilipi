@@ -5,12 +5,12 @@
 /war/WEB-INF/classes
 /war/WEB-INF/deploy
 /war/WEB-INF/lib
+/war/pagecontent.books
+/war/pagecontent.languages
 /war/pagecontent.bookdatainput
 /war/pagecontent.booklist
 /war/pagecontent.homebook
 /war/pagecontent.homebook.editoptions
-/war/pagecontent.managebooks
-/war/pagecontent.languages
 /war/pagecontent.manageauthors
 /war/pagecontent.managepublishers
 /war/pagecontent.homepagecontent

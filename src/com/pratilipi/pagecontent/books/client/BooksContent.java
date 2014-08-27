@@ -1,4 +1,4 @@
-package com.pratilipi.module.pagecontent.managebooks.client;
+package com.pratilipi.pagecontent.books.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -13,7 +13,7 @@ import com.pratilipi.service.shared.GetBookListRequest;
 import com.pratilipi.service.shared.GetBookListResponse;
 import com.pratilipi.service.shared.data.BookData;
 
-public class ManageBooks implements EntryPoint {
+public class BooksContent implements EntryPoint {
 
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
@@ -29,7 +29,7 @@ public class ManageBooks implements EntryPoint {
 					BookView bookView = new BookViewDetailImpl();
 					bookView.setBookData( bookData );
 					RootPanel
-							.get( "PageContent-ManageBooks" )
+							.get( "PageContent-Books" )
 							.add( bookView );
 				}
 				

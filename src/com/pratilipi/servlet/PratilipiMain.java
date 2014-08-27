@@ -31,8 +31,8 @@ import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.module.pagecontent.homebook.HomeBookContentFactory;
 import com.pratilipi.module.pagecontent.homebook.HomeBookContentProcessor;
 import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
-import com.pratilipi.module.pagecontent.managebooks.ManageBooksFactory;
 import com.pratilipi.module.pagecontent.managepublishers.ManagePublishersFactory;
+import com.pratilipi.pagecontent.books.BooksContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 
@@ -49,7 +49,7 @@ public class PratilipiMain extends ClaymusMain {
 		
 		PAGE_CONTENT_REGISTRY.register( HomeBookContentFactory.class );
 		
-		PAGE_CONTENT_REGISTRY.register( ManageBooksFactory.class );
+		PAGE_CONTENT_REGISTRY.register( BooksContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManageAuthorsFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManagePublishersFactory.class );
@@ -166,6 +166,8 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( BookListFactory.newBookList() );
 		
 		
+		else if( requestUri.equals( "/books" ) )
+			pageContentList.add( BooksContentFactory.newBooksContent() );
 		else if( requestUri.equals( "/languages" ) )
 			pageContentList.add( LanguagesContentFactory.newLanguagesContent() );
 
@@ -186,8 +188,6 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/AboutFoundingReadersPageContent.ftl" ) );
 			
 
-		else if( requestUri.equals( "/manage/books" ) )
-			pageContentList.add( ManageBooksFactory.newManageBooks() );
 		else if( requestUri.equals( "/manage/authors" ) )
 			pageContentList.add( ManageAuthorsFactory.newAuthorDataInput() );
 		else if( requestUri.equals( "/manage/publishers" ) )
@@ -221,14 +221,13 @@ public class PratilipiMain extends ClaymusMain {
 			headerWidget.setRightNavItems( new Object[][] {
 					{ "Give Away", "/give-away", null },
 					{ "Languages", "/languages", null },
+					{ "Books", "/books", null },
+					{ "Authors", "/manage/authors" },
+					{ "Publishers", "/manage/publishers" },
 					{ "About", null, new String[][] {
 							{ "Pratilipi", "/about/pratilipi" },
 							{ "Team", "/about/team" },
 							{ "The Founding Readers", "/about/the-founding-readers" }}},
-					{ "Manage", null, new String[][] {
-							{ "Books", "/manage/books" },
-							{ "Authors", "/manage/authors" },
-							{ "Publishers", "/manage/publishers" }}},
 					{ "Subscribe", "#subscribe", null },
 			});
 			headerWidget.setPosition( "HEADER" );
