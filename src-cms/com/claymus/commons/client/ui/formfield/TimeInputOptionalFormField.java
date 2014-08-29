@@ -1,24 +1,38 @@
 package com.claymus.commons.client.ui.formfield;
 
-import com.google.gwt.dom.client.Document;
+import java.util.Date;
+
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 
-public class DateInputFormField extends FormField {
+public class TimeInputOptionalFormField extends FormField {
 
 	private final Panel panel = new FlowPanel();
-	private final Element label = Document.get().createLabelElement();
+	private final CheckBox checkBox = new CheckBox();
 	private final TextBox textBox = new TextBox();
-	private final Element glyphicon = Document.get().createSpanElement();
 	
 	
-	public DateInputFormField() {
+	public TimeInputOptionalFormField() {
 
-		textBox.getElement().setAttribute( "type", "date" );
+		checkBox.addValueChangeHandler( new ValueChangeHandler<Boolean>() {
+			
+			@Override
+			public void onValueChange( ValueChangeEvent<Boolean> event ) {
+				validate();
+				textBox.setEnabled( event.getValue() );
+			}
+			
+		});
+		checkBox.setValue( false );
+		textBox.getElement().setAttribute( "type", "time" );
 		textBox.getElement().setAttribute( "data-container", "body" );
 		textBox.getElement().setAttribute( "data-placement", "top" );
 		textBox.addBlurHandler( new BlurHandler() {
@@ -29,52 +43,48 @@ public class DateInputFormField extends FormField {
 			}
 			
 		});
-
+		textBox.setEnabled( false );
+		
 		// Composing the widget
-		panel.getElement().appendChild( label );
+		panel.add( checkBox );
 		panel.add( textBox );
-		panel.getElement().appendChild( glyphicon );
 		
 		// Setting required style classes
-		panel.setStyleName( "form-group" );
-		label.setAttribute( "class", "control-label sr-only" );
+		panel.setStyleName( "input-group" );
+		checkBox.setStyleName( "input-group-addon" );
 		textBox.setStyleName( "form-control" );
 		
 		initWidget( panel );
+		
+		setValue( new Date() );
 	}
 
-	public void setEnabled( boolean enabled ) {
-		textBox.setEnabled( enabled );
+	public String getValue() {
+		return checkBox.getValue() ? textBox.getText() : "";
 	}
-	
-	public String getText() {
-		return textBox.getText().trim();
+
+	public void setValue( Date date ) {
+		textBox.setValue( DateTimeFormat.getFormat( "HH:mm" ).format( date ) );
 	}
 	
 	@Override
 	public boolean validate() {
-		if( isRequired() ) {
-			if( getText() == "" ) {
-				markError( "Input Required !" );
-				return false;
-			} else {
-				markSuccess();
-				return true;
-			}
+		if( checkBox.getValue() && textBox.getValue() == "" ) {
+			markError( "Input Required !" );
+			return false;
+		} else {
+			markSuccess();
+			return true;
 		}
-		
-		return true;
 	}
 	
 	private void markSuccess() {
-		panel.setStyleName( "form-group has-success has-feedback" );
-		glyphicon.setAttribute( "class", "form-control-feedback glyphicon glyphicon-ok" );
+		panel.setStyleName( "input-group has-success" );
 		hidePopover( textBox.getElement() );
 	}
 	
 	private void markError( String errorMsg ) {
-		panel.setStyleName( "form-group has-error has-feedback" );
-		glyphicon.setAttribute( "class", "form-control-feedback glyphicon glyphicon-remove" );
+		panel.setStyleName( "input-group has-error" );
 		showPopover( textBox.getElement(), errorMsg );
 	}
 	
@@ -86,5 +96,5 @@ public class DateInputFormField extends FormField {
 	public static native void hidePopover( Element element ) /*-{
 		$wnd.jQuery( element ).popover( 'destroy' );
 	}-*/;
-
+	
 }

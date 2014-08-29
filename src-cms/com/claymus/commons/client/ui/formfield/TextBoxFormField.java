@@ -20,6 +20,14 @@ public class TextBoxFormField extends FormField {
 
 		textBox.getElement().setAttribute( "data-container", "body" );
 		textBox.getElement().setAttribute( "data-placement", "top" );
+		textBox.addBlurHandler( new BlurHandler() {
+			
+			@Override
+			public void onBlur( BlurEvent event ) {
+				validate();
+			}
+			
+		});
 		
 		// Composing the widget
 		panel.getElement().appendChild( label );
@@ -32,16 +40,6 @@ public class TextBoxFormField extends FormField {
 		textBox.setStyleName( "form-control" );
 		
 		initWidget( panel );
-
-		textBox.addBlurHandler( new BlurHandler() {
-			
-			@Override
-			public void onBlur( BlurEvent event ) {
-				validate();
-			}
-			
-		});
-		
 	}
 
 	public void setPlaceholder( String placeholder ) {
