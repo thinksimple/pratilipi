@@ -248,4 +248,8 @@ public class ClaymusHelper {
 		session.setAttribute( SESSION_ATTRIB_CURRENT_USER_ID, user.getId() );
 	}
 	
+	public static void performUserLogoutActions( HttpSession session ){
+		session.invalidate();
+	}
+	
 }

@@ -299,6 +299,10 @@ Styling for book thumbnails. */
 	height: 200px;
 }
 
+#myModal {
+	top: 25%;
+}
+
 
 @media (min-width: 400px){
 	.nameTextBox {
@@ -322,4 +326,16 @@ Styling for book thumbnails. */
 	color : #F61C0C;
 	display : block;
 	line-height : 17px;
+}
+
+.forgotPassword{
+	width: 100%;
+	margin-top: 5px;
+	color: blue;
+	background-color: white;
+	text-align: right;
+}	
+
+.buttonPanel {
+	margin-top: 15px;
 }

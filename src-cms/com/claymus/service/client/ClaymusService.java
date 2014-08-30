@@ -16,9 +16,12 @@ public interface ClaymusService extends RemoteService {
 	AddUserResponse addUser( AddUserRequest request );
 	
 	RegisterUserResponse registerUser( RegisterUserRequest request )
-			throws IllegalArgumentException;
+			throws IllegalArgumentException, Exception;
 
 	LoginUserResponse loginUser( LoginUserRequest request )
+			throws IllegalArgumentException, Exception;
+	
+	void logoutUser()
 			throws IllegalArgumentException;
 	
 }

@@ -21,7 +21,7 @@ public class RegistrationForm extends Composite {
 	private TextBox emailInput = new TextBox();
 	private PasswordTextBox password = new PasswordTextBox();
 	private PasswordTextBox confirmPassword = new PasswordTextBox();
-	private Button registerButton = new Button("SIGN UP");
+	private Button registerButton = new Button("Sign up");
 	
 	final ValidateForm validateForm = new ValidateForm();
 	
@@ -41,7 +41,10 @@ public class RegistrationForm extends Composite {
 		panel.setStyleName( "modal-body" );
 		
 		FlowPanel namePanel = new FlowPanel();
-		namePanel.getElement().getStyle().setDisplay( Display.BLOCK );
+		//namePanel.getElement().getStyle().setDisplay( Display.BLOCK );
+		
+		Panel buttonPanel = new FlowPanel();
+		buttonPanel.addStyleName( "buttonPanel" );
 		
 		firstNameInput.getElement().setPropertyString("placeholder", "First Name");
 		firstNameInput.addStyleName( "col-xs-1" );
@@ -114,7 +117,7 @@ public class RegistrationForm extends Composite {
 		
 		namePanel.add(firstNameInput);
 		namePanel.add(lastNameInput);
-		panel.add(namePanel);
+		panel.add( namePanel );
 		panel.add(nameInputError);
 		panel.add(emailInput);
 		panel.add(emailInputError);
@@ -122,7 +125,8 @@ public class RegistrationForm extends Composite {
 		panel.add(passwordError);
 		panel.add(confirmPassword);
 		panel.add(confPassError);
-		panel.add(registerButton);
+		buttonPanel.add(registerButton);
+		panel.add( buttonPanel );
 		
 		modalContent.add( panel );
 		

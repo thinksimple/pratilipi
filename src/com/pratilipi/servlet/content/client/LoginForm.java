@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -16,7 +17,8 @@ public class LoginForm extends Composite {
 	
 	private TextBox emailInput = new TextBox();
 	private PasswordTextBox password = new PasswordTextBox();
-	private Button loginButton = new Button("Login");
+	private Button loginButton = new Button("Sign In");
+	private Label forgotPassword = new Label();
 	
 	//Error messages
 	private Label emailInputError = new Label();
@@ -33,6 +35,7 @@ public class LoginForm extends Composite {
 		
 		Panel fields = new FlowPanel();
 		Panel button = new FlowPanel();
+		button.setStyleName( "buttonPanel" );
 		
 		emailInput.getElement().setPropertyString("placeholder", "Email");
 		emailInput.addStyleName( "form-control" );
@@ -62,11 +65,16 @@ public class LoginForm extends Composite {
 			}});
 		
 		loginButton.addStyleName("btn");
-		loginButton.addStyleName("btn-sm");
+		loginButton.addStyleName("btn-lg");
 		loginButton.addStyleName("btn-primary");
 		loginButton.addStyleName("btn-block");
 		loginButton.getElement().getStyle().setDisplay(Display.BLOCK);
 		
+		//forgot password link
+		forgotPassword.setStyleName( "forgotPassword" );
+		Anchor link = new Anchor( "Forgot Password?" );
+		link.setHref( "#forgotpassword" );
+		forgotPassword.getElement().appendChild( link.getElement() );
 		
 		//Error message Style
 		emailInputError.setStyleName("errorMessage");
@@ -80,13 +88,15 @@ public class LoginForm extends Composite {
 		fields.add(emailInputError);
 		fields.add(password);
 		fields.add(passwordError);
-		button.add(loginButton);
+		
+		button.add(loginButton);		
+		button.add( forgotPassword );
 		
 		panel.add( fields );
 		panel.add( button );
 		
 		modalContent.add( panel );
-		
+			
 		initWidget( modalContent );
 	}
 	

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.claymus.commons.client.IllegalArgumentException;
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.server.EncryptPassword;
 import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
@@ -62,7 +63,7 @@ public class ClaymusServiceImpl
 	
 	@Override
 	public RegisterUserResponse registerUser(RegisterUserRequest request)
-		throws IllegalArgumentException {
+		throws IllegalArgumentException,Exception {
 		RegistrationData registerData = request.getUser();
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -77,7 +78,17 @@ public class ClaymusServiceImpl
 			user.setFirstName( registerData.getFirstName() );
 			user.setLastName( registerData.getLastName() );
 			user.setEmail( registerData.getEmail() );
-			user.setPassword( registerData.getPassword() );
+			//user.setPassword( registerData.getPassword() );
+			
+			//Password encryption.
+			//Have no idea how to implement try catch thing.
+			try {
+				user.setPassword( EncryptPassword.getSaltedHash( registerData.getPassword() ));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			user.setCampaign( registerData.getCampaign() );
 			user.setReferer( registerData.getReferer() );
 			user.setSignUpDate( new Date() );
@@ -94,20 +105,40 @@ public class ClaymusServiceImpl
 
 	@Override
 	public LoginUserResponse loginUser( LoginUserRequest request )
-			throws IllegalArgumentException {
+			throws IllegalArgumentException, Exception {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( request.getLoginId() );
 		dataAccessor.destroy();
+		boolean isValidUser = false;
 		
-		if( ! user.getPassword().equals( request.getPassword() ) )
-			throw new IllegalArgumentException( "Invalid email id or password !" );
+		try {
+			isValidUser = EncryptPassword.check( request.getPassword(),  user.getPassword() );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if( ! isValidUser){
+			if( user.getPassword().isEmpty() )
+				throw new IllegalArgumentException( "You are a subscribed user. Please Sign up to login" );
+			else
+				throw new IllegalArgumentException( "Invalid email id or password !" );
+		}
+		//if( ! user.getPassword().equals( request.getPassword() ) )
+		//	throw new IllegalArgumentException( "Invalid email id or password !" );
 		
 		ClaymusHelper.performUserLoginActions(
 				this.getThreadLocalRequest().getSession(),
 				user );
 		
 		return new LoginUserResponse();
+	}
+
+	@Override
+	public void logoutUser()
+			throws IllegalArgumentException {
+		ClaymusHelper.performUserLogoutActions( this.getThreadLocalRequest().getSession() );
 	}
 
 }

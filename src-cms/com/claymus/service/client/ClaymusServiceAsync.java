@@ -21,5 +21,7 @@ public interface ClaymusServiceAsync {
 	void loginUser(
 			LoginUserRequest request,
 			AsyncCallback<LoginUserResponse> callback );
+	
+	void logoutUser( AsyncCallback callback);
 
 }
