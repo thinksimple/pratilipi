@@ -55,15 +55,13 @@ public class TimeInputOptionalFormField extends FormField {
 		textBox.setStyleName( "form-control" );
 		
 		initWidget( panel );
-		
-		setValue( new Date() );
 	}
 
-	public String getValue() {
+	public String getTime() {
 		return checkBox.getValue() ? textBox.getText() : "";
 	}
 
-	public void setValue( Date date ) {
+	public void setTime( Date date ) {
 		textBox.setValue( DateTimeFormat.getFormat( "HH:mm" ).format( date ) );
 	}
 	

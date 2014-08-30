@@ -1,9 +1,12 @@
 package com.claymus.commons.client.ui.formfield;
 
+import java.util.Date;
+
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -49,6 +52,10 @@ public class DateInputFormField extends FormField {
 	
 	public String getText() {
 		return textBox.getText().trim();
+	}
+	
+	public void setDate( Date date ) {
+		textBox.setText( DateTimeFormat.getFormat( "yyyy-mm-dd" ).format( date ) );
 	}
 	
 	@Override
