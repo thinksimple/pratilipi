@@ -3,6 +3,7 @@ package com.claymus.data.access;
 import java.util.List;
 
 import com.claymus.data.transfer.BlobEntry;
+import com.claymus.data.transfer.EmailTemplate;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
@@ -68,6 +69,9 @@ public interface DataAccessor {
 	
 	PageLayout createOrUpdatePageLayout( PageLayout pageLayout );
 
+	
+	EmailTemplate newEmailTemplate();
+	
 	
 	void destroy();
 	

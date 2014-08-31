@@ -9,6 +9,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
 import com.claymus.data.access.gae.BlobEntryEntity;
+import com.claymus.data.access.gae.EmailTemplateEntity;
 import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.access.gae.PageEntity;
 import com.claymus.data.access.gae.PageLayoutEntity;
@@ -17,6 +18,7 @@ import com.claymus.data.access.gae.RoleEntity;
 import com.claymus.data.access.gae.UserEntity;
 import com.claymus.data.access.gae.UserRoleEntity;
 import com.claymus.data.transfer.BlobEntry;
+import com.claymus.data.transfer.EmailTemplate;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
@@ -225,6 +227,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( pageLayout );
 	}
 
+	
+	@Override
+	public EmailTemplate newEmailTemplate() {
+		return new EmailTemplateEntity();
+	}
+	
 
 	@Override
 	public void destroy() {
