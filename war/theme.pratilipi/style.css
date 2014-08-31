@@ -300,7 +300,7 @@ Styling for book thumbnails. */
 }
 
 #myModal {
-	top: 25%;
+	top: 20%;
 }
 
 
@@ -328,13 +328,15 @@ Styling for book thumbnails. */
 	line-height : 17px;
 }
 
-.forgotPassword{
+.modal-link {
 	width: 100%;
 	margin-top: 5px;
-	color: blue;
-	background-color: white;
 	text-align: right;
 }	
+
+.modal-link a {
+	margin-left: 10px;
+}
 
 .buttonPanel {
 	margin-top: 15px;
@@ -355,4 +357,14 @@ Styling for book thumbnails. */
 	#forgotPasswordForm .generatePasswordButton{
 		margin-top: 5px;
 	}
+}
+
+
+.page-header {
+	margin: 10px 0 20px;
+	padding-bottom: 0;
+}
+
+.page-header h3 {
+	margin-top: 10px;
 }
