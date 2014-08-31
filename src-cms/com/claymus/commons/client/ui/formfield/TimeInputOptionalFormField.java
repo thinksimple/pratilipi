@@ -115,6 +115,7 @@ public class TimeInputOptionalFormField extends FormField {
 	}
 	
 	private static native void showPopover( Element element, String errorMsg ) /*-{
+		$wnd.jQuery( element ).popover( 'destroy' );
 		$wnd.jQuery( element ).popover( { content : errorMsg } );
 		$wnd.jQuery( element ).popover( 'show' );
 	}-*/;

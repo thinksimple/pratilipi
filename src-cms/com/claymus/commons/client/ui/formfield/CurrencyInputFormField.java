@@ -61,8 +61,8 @@ public class CurrencyInputFormField extends FormField {
 		textBox.getElement().setAttribute( "placeholder", placeholder );
 	}
 	
-	public Long getAmount() {
-		return textBox.getValue() == "" ? null : Long.parseLong( textBox.getText() );
+	public String getAmount() {
+		return textBox.getValue().trim();
 	}
 
 	public void setAmount( Long amount ) {
@@ -72,11 +72,11 @@ public class CurrencyInputFormField extends FormField {
 	
 	@Override
 	public boolean validate() {
-		if( textBox.getText() == "" && !isRequired() ) {
+		if( getAmount() == "" && !isRequired() ) {
 			markDefault();
 			return true;
 			
-		} else if( textBox.getText() == "" && isRequired() ) {
+		} else if( getAmount() == "" && isRequired() ) {
 			markError( "Input Required !" );
 			return false;
 
@@ -109,12 +109,13 @@ public class CurrencyInputFormField extends FormField {
 		showPopover( textBox.getElement(), errorMsg );
 	}
 	
-	public static native void showPopover( Element element, String errorMsg ) /*-{
+	private static native void showPopover( Element element, String errorMsg ) /*-{
+		$wnd.jQuery( element ).popover( 'destroy' );
 		$wnd.jQuery( element ).popover( { content : errorMsg } );
 		$wnd.jQuery( element ).popover( 'show' );
 	}-*/;
 
-	public static native void hidePopover( Element element ) /*-{
+	private static native void hidePopover( Element element ) /*-{
 		$wnd.jQuery( element ).popover( 'destroy' );
 	}-*/;
 	

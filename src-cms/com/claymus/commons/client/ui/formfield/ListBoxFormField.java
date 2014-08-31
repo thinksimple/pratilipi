@@ -5,21 +5,21 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.TextBox;
 
-public class TextInputFormField extends FormField {
+public class ListBoxFormField extends FormField {
 
 	private final Panel formGroup = new FlowPanel();
 	private final Element label = Document.get().createLabelElement();
-	private final TextBox textBox = new TextBox();
+	private final ListBox listBox = new ListBox();
 	private final Element glyphicon = Document.get().createSpanElement();
 	
 	
-	public TextInputFormField() {
-		textBox.getElement().setAttribute( "data-container", "body" );
-		textBox.getElement().setAttribute( "data-placement", "top" );
-		textBox.addBlurHandler( new BlurHandler() {
+	public ListBoxFormField() {
+		listBox.getElement().setAttribute( "data-container", "body" );
+		listBox.getElement().setAttribute( "data-placement", "top" );
+		listBox.addBlurHandler( new BlurHandler() {
 			
 			@Override
 			public void onBlur( BlurEvent event ) {
@@ -31,48 +31,44 @@ public class TextInputFormField extends FormField {
 		
 		// Composing the widget
 		formGroup.getElement().appendChild( label );
-		formGroup.add( textBox );
+		formGroup.add( listBox );
 		formGroup.getElement().appendChild( glyphicon );
 		
 		
 		// Setting required style classes
 		formGroup.setStyleName( "form-group" );
 		label.setAttribute( "class", "control-label sr-only" );
-		textBox.setStyleName( "form-control" );
+		listBox.setStyleName( "form-control" );
 		
 		
 		initWidget( formGroup );
 	}
 
 	
-	public void setPlaceholder( String placeholder ) {
-		textBox.getElement().setAttribute( "placeholder", placeholder );
+	public String getSelectedValue() {
+		return listBox.getValue( listBox.getSelectedIndex() );
 	}
 	
-	public String getText() {
-		return textBox.getText().trim();
-	}
-	
-	public void setText( String text ) {
-		textBox.setText( text );
+	public void setValueText( String text ) {
+//		listBox.setText( text );
 	}
 	
 	public void setEnabled( boolean enabled ) {
-		textBox.setEnabled( enabled );
+		listBox.setEnabled( enabled );
 	}
 	
 	
 	@Override
 	public boolean validate() {
-		if( getText() == "" && !isRequired() ) {
+		if( getSelectedValue() == "" && !isRequired() ) {
 			markDefault();
 			return true;
 		
-		} else if( getText() == "" && isRequired() ) {
+		} else if( getSelectedValue() == "" && isRequired() ) {
 			markError( "Input Required !" );
 			return false;
 
-		} else { // if( getText() != "" ) {
+		} else { // if( getSelectedValue() != "" ) {
 			markSuccess();
 			return true;
 		}
@@ -81,19 +77,19 @@ public class TextInputFormField extends FormField {
 	private void markDefault() {
 		formGroup.setStyleName( "form-group" );
 		glyphicon.setAttribute( "class", "" );
-		hidePopover( textBox.getElement() );
+		hidePopover( listBox.getElement() );
 	}
 	
 	private void markSuccess() {
 		formGroup.setStyleName( "form-group has-success has-feedback" );
 		glyphicon.setAttribute( "class", "form-control-feedback glyphicon glyphicon-ok" );
-		hidePopover( textBox.getElement() );
+		hidePopover( listBox.getElement() );
 	}
 	
 	private void markError( String errorMsg ) {
 		formGroup.setStyleName( "form-group has-error has-feedback" );
 		glyphicon.setAttribute( "class", "form-control-feedback glyphicon glyphicon-remove" );
-		showPopover( textBox.getElement(), errorMsg );
+		showPopover( listBox.getElement(), errorMsg );
 	}
 	
 	private static native void showPopover( Element element, String errorMsg ) /*-{
