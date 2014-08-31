@@ -61,7 +61,7 @@ public class PasswordResetServlet extends HttpServlet {
 		
 		char[] password = new char[ 10 ];
 		for( int j = 0; j < 10; j++ )
-			password[ j ] = charRange[ (int)( Math.random() * password.length ) ];
+			password[ j ] = charRange[ (int)( Math.random() * charRange.length ) ];
 
 		return new String( password );
 	}

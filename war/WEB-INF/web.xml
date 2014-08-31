@@ -9,7 +9,6 @@
     <servlet-name>ClaymusService</servlet-name>
     <servlet-class>com.claymus.service.server.ClaymusServiceImpl</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>ClaymusService</servlet-name>
     <url-pattern>/service.claymus</url-pattern>
@@ -19,7 +18,6 @@
     <servlet-name>PratilipiService</servlet-name>
     <servlet-class>com.pratilipi.service.server.PratilipiServiceImpl</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>PratilipiService</servlet-name>
     <url-pattern>/service.pratilipi</url-pattern>
@@ -30,7 +28,6 @@
     <servlet-name>ResourceServlet</servlet-name>
     <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>ResourceServlet</servlet-name>
     <url-pattern>/resource.book-cover/*</url-pattern>
@@ -41,7 +38,6 @@
     <servlet-name>PasswordResetServlet</servlet-name>
     <servlet-class>com.claymus.servlet.PasswordResetServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>PasswordResetServlet</servlet-name>
     <url-pattern>/_ah/queue/reset-password</url-pattern>
@@ -52,7 +48,6 @@
     <servlet-name>PratilipiMain</servlet-name>
     <servlet-class>com.pratilipi.servlet.PratilipiMain</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>PratilipiMain</servlet-name>
     <url-pattern>/*</url-pattern>

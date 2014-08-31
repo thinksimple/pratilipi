@@ -13,11 +13,7 @@ public class InvitationForm extends Composite {
 	private TextBox emailInput = new TextBox();
 	private Button inviteButton = new Button("Invite Friend");
 	
-	private String refId;
-	
 	public InvitationForm(String refId){
-		this.refId = refId;
-		
 		emailInput.addStyleName("form-control");
 		emailInput.getElement().setPropertyString("placeholder", "Email");
 		

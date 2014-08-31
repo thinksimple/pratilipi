@@ -2,8 +2,8 @@ package com.pratilipi.servlet.content.client;
 
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.client.ClaymusServiceAsync;
-import com.claymus.service.shared.AddUserRequest;
-import com.claymus.service.shared.AddUserResponse;
+import com.claymus.service.shared.InviteUserRequest;
+import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -46,10 +46,10 @@ public class InvitePageContent extends Composite implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				UserData userData = invitationForm.getUser();
 				if( isValidEmail( userData )){
-					claymusService.addUser( new AddUserRequest( userData ), new AsyncCallback<AddUserResponse>() {
+					claymusService.inviteUser( new InviteUserRequest( userData ), new AsyncCallback<InviteUserResponse>() {
 						
 						@Override
-						public void onSuccess( AddUserResponse response ) {
+						public void onSuccess( InviteUserResponse response ) {
 							Window.alert("Invitation Sent!");
 							invitationForm.reloadForm();
 						}

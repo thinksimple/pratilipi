@@ -5,6 +5,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class UserData implements IsSerializable {
 
+	private String password;
+	
 	private String firstName;
 	
 	private String lastName;
@@ -18,6 +20,14 @@ public class UserData implements IsSerializable {
 	private UserStatus status;
 	
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword( String password ) {
+		this.password = password;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}

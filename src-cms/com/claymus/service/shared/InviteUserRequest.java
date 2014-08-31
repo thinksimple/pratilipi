@@ -3,15 +3,15 @@ package com.claymus.service.shared;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class AddUserRequest implements IsSerializable {
+public class InviteUserRequest implements IsSerializable {
 
 	private UserData userData;
 
 
 	@SuppressWarnings("unused")
-	private AddUserRequest() {}
+	private InviteUserRequest() {}
 	
-	public AddUserRequest( UserData useData ) {
+	public InviteUserRequest( UserData useData ) {
 		this.userData = useData;
 	}
 	

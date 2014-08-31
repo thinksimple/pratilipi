@@ -21,7 +21,9 @@ import com.google.apphosting.api.ApiProxy;
 
 public class ClaymusHelper {
 
-	private static final String SESSION_ATTRIB_CURRENT_USER_ID = "CurrentUserId";
+	@Deprecated
+	public static final String SESSION_ATTRIB_CURRENT_USER_ID = "CurrentUserId";
+	
 	private static final String URL_LOGIN_PAGE = "/login?dest=";
 	private static final String URL_LOGOUT_PAGE = "/logout?dest=";
 	private static final String URL_REGISTER_PAGE = "#signup";
@@ -233,28 +235,6 @@ public class ClaymusHelper {
 		if( appId.startsWith("s~") )
 			appId = appId.substring( 2 );
 		return System.getProperty( appId + "." + propertyName );
-	}
-	
-	public static void performNewUserActions( HttpSession session, User user ) {
-		Queue queue = QueueFactory.getQueue( "new-user" );
-		queue.add( TaskOptions.Builder.withParam( "userId", user.getId().toString() ) );
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		UserRole userRole = dataAccessor.newUserRole();
-		userRole.setUserId( user.getId() );
-		userRole.setRoleId( "member" );
-		dataAccessor.createOrUpdateUserRole( userRole );
-		dataAccessor.destroy();
-		
-		session.setAttribute( SESSION_ATTRIB_CURRENT_USER_ID, user.getId() );
-	}
-	
-	public static void performUserLoginActions( HttpSession session, User user ) {
-		session.setAttribute( SESSION_ATTRIB_CURRENT_USER_ID, user.getId() );
-	}
-	
-	public static void performUserLogoutActions( HttpSession session ){
-		session.invalidate();
 	}
 	
 }

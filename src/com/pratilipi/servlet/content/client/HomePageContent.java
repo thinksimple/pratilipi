@@ -2,15 +2,14 @@ package com.pratilipi.servlet.content.client;
 
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.client.ClaymusServiceAsync;
-import com.claymus.service.shared.AddUserRequest;
-import com.claymus.service.shared.AddUserResponse;
+import com.claymus.service.shared.InviteUserRequest;
+import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
 import com.claymus.service.shared.LoginUserResponse;
 import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
 import com.claymus.service.shared.ResetUserPasswordRequest;
 import com.claymus.service.shared.ResetUserPasswordResponse;
-import com.claymus.service.shared.data.RegistrationData;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -52,10 +51,10 @@ public class HomePageContent implements EntryPoint {
 			public void onClick( ClickEvent event ) {
 				subscriptionForm.setEnabled( false );
 				UserData userData = subscriptionForm.getUser();
-				claymusService.addUser( new AddUserRequest( userData ), new AsyncCallback<AddUserResponse>() {
+				claymusService.inviteUser( new InviteUserRequest( userData ), new AsyncCallback<InviteUserResponse>() {
 					
 					@Override
-					public void onSuccess( AddUserResponse response ) {
+					public void onSuccess( InviteUserResponse response ) {
 						Window.Location.assign( "/invite?id=" + response.getUserId() );
 					}
 					
@@ -153,8 +152,8 @@ public class HomePageContent implements EntryPoint {
 				   && registrationForm.validatePassword()
 				   && registrationForm.validateConfPassword()){
 						
-					RegistrationData registerData = registrationForm.getUser();
-					claymusService.registerUser( new RegisterUserRequest( registerData ), new AsyncCallback<RegisterUserResponse>() {
+					UserData userData = registrationForm.getUser();
+					claymusService.registerUser( new RegisterUserRequest( userData ), new AsyncCallback<RegisterUserResponse>() {
 						
 						@Override
 						public void onSuccess( RegisterUserResponse response ) {
@@ -256,7 +255,7 @@ public class HomePageContent implements EntryPoint {
 				}
 				
 				if( historyToken.equals( "signout" ) ) {
-					claymusService.logoutUser( new AsyncCallback(){
+					claymusService.logoutUser( new AsyncCallback<Void>(){
 
 						@Override
 						public void onFailure(Throwable caught) {
@@ -264,7 +263,7 @@ public class HomePageContent implements EntryPoint {
 						}
 
 						@Override
-						public void onSuccess(Object result) {
+						public void onSuccess(Void result) {
 							Window.Location.replace( "/" );
 						}} );
 				}

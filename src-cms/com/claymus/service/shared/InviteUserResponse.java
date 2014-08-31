@@ -2,15 +2,15 @@ package com.claymus.service.shared;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class AddUserResponse implements IsSerializable {
+public class InviteUserResponse implements IsSerializable {
 	
 	private Long userId;
 
 	
 	@SuppressWarnings("unused")
-	private AddUserResponse() {}
+	private InviteUserResponse() {}
 	
-	public AddUserResponse( Long userId ) {
+	public InviteUserResponse( Long userId ) {
 		this.userId = userId;
 	}
 	

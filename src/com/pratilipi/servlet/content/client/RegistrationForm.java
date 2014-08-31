@@ -1,7 +1,6 @@
 package com.pratilipi.servlet.content.client;
 
-import com.claymus.commons.shared.UserStatus;
-import com.claymus.service.shared.data.RegistrationData;
+import com.claymus.service.shared.data.UserData;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -152,19 +151,18 @@ public class RegistrationForm extends Composite {
 		initWidget(modalContent);
 	}
 	
-	public RegistrationData getUser() {
-		RegistrationData registrationData = new RegistrationData();
+	public UserData getUser() {
+		UserData userData = new UserData();
 		if( firstNameInput.getText().trim().length() != 0 )
-			registrationData.setFirstName( firstNameInput.getText().trim() );
+			userData.setFirstName( firstNameInput.getText().trim() );
 		if( lastNameInput.getText().trim().length() != 0 )
-			registrationData.setLastName( lastNameInput.getText().trim() );
-		registrationData.setPassword( password.getText());
-		registrationData.setEmail( emailInput.getText().trim() );
-		registrationData.setCampaign( "PreLaunch" );
-		registrationData.setReferer( Window.Location.getParameter( "ref" ) );
-		registrationData.setStatus( UserStatus.REGISTERED );
+			userData.setLastName( lastNameInput.getText().trim() );
+		userData.setPassword( password.getText());
+		userData.setEmail( emailInput.getText().trim() );
+		userData.setCampaign( "PreLaunch" );
+		userData.setReferer( Window.Location.getParameter( "ref" ) );
 		
-		return registrationData;
+		return userData;
 	}
 	
 	//Clickhandler  functions

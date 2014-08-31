@@ -1,21 +1,23 @@
 package com.claymus.service.shared;
 
-import com.claymus.service.shared.data.RegistrationData;
+import com.claymus.service.shared.data.UserData;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class RegisterUserRequest implements IsSerializable {
-	private RegistrationData registerData;
+
+	private UserData userData;
 
 
 	@SuppressWarnings("unused")
 	private RegisterUserRequest() {}
 	
-	public RegisterUserRequest( RegistrationData registerData ) {
-		this.registerData = registerData;
+	public RegisterUserRequest( UserData userData ) {
+		this.userData = userData;
 	}
 	
 	
-	public RegistrationData getUser() {
-		return this.registerData;
+	public UserData getUser() {
+		return this.userData;
 	}
+	
 }

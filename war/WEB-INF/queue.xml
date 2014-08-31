@@ -1,7 +1,8 @@
 <queue-entries>
 
+  <!-- Sends invitation email to referred users. -->
   <queue>
-    <name>new-user</name>
+    <name>invite-user</name>
     <rate>1/s</rate>
     <bucket-size>1</bucket-size>
     <max-concurrent-requests>1</max-concurrent-requests>

@@ -41,13 +41,19 @@ public class EncryptPassword {
 
     /** Checks whether given plaintext password corresponds 
         to a stored salted hash of the password. */
-    public static boolean check(String password, String stored) throws Exception{
+    public static boolean check(String password, String stored) {
         String[] saltAndPass = stored.split("\\$");
         System.out.println("Salt: "+ saltAndPass[0] );
         System.out.println("Password: "+ saltAndPass[1] );
         if (saltAndPass.length != 2)
             return false;
-        String hashOfInput = hash(password, Base64.decodeBase64(saltAndPass[0]));
+        String hashOfInput;
+		try {
+			hashOfInput = hash(password, Base64.decodeBase64(saltAndPass[0]));
+		} catch( NoSuchAlgorithmException | InvalidKeySpecException e ) {
+    		logger.log( Level.SEVERE, "", e );
+    		hashOfInput = password;
+		}
         System.out.println("Password: "+ hashOfInput );
         return hashOfInput.equals(saltAndPass[1]);
     }
