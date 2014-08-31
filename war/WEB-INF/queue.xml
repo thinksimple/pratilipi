@@ -12,4 +12,17 @@
     </retry-parameters>
   </queue>
   
+  <!-- Re-set user password and send an email regarding the same. -->
+  <queue>
+    <name>reset-password</name>
+    <rate>1/s</rate>
+    <bucket-size>1</bucket-size>
+    <max-concurrent-requests>1</max-concurrent-requests>
+    <retry-parameters>
+      <task-age-limit>90d</task-age-limit>
+      <min-backoff-seconds>300</min-backoff-seconds>
+      <max-backoff-seconds>300</max-backoff-seconds>
+    </retry-parameters>
+  </queue>
+
 </queue-entries>
