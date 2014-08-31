@@ -2,7 +2,7 @@ package com.claymus.commons.client.ui.formfield;
 
 import com.google.gwt.user.client.ui.Composite;
 
-public abstract class FormField extends Composite{
+public abstract class FormField extends Composite {
 
 	private boolean isRequired = false;
 	

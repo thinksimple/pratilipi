@@ -1,11 +1,8 @@
 package com.claymus.commons.client.ui.formfield;
-import java.util.Date;
-
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
@@ -13,7 +10,11 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public class CurrencyInputFormField extends FormField {
 
-	private final Panel panel = new FlowPanel();
+	private final Panel formGroup = new FlowPanel();
+	private final Element label = Document.get().createLabelElement();
+	private final Panel inputGroup = new FlowPanel();
+	private final Element glyphicon = Document.get().createSpanElement();
+
 	private final Element symbol = Document.get().createSpanElement();
 	private final TextBox textBox = new TextBox();
 	
@@ -23,7 +24,6 @@ public class CurrencyInputFormField extends FormField {
 	public CurrencyInputFormField() {
 
 		symbol.setInnerText( "Rs." );
-		textBox.getElement().setAttribute( "placeholder", "Amount" );
 		textBox.getElement().setAttribute( "data-container", "body" );
 		textBox.getElement().setAttribute( "data-placement", "top" );
 		textBox.addBlurHandler( new BlurHandler() {
@@ -37,48 +37,75 @@ public class CurrencyInputFormField extends FormField {
 		
 		
 		// Composing the widget
-		panel.getElement().appendChild( symbol );
-		panel.add( textBox );
+		formGroup.getElement().appendChild( label );
+		formGroup.add( inputGroup );
+		formGroup.getElement().appendChild( glyphicon );
+		
+		inputGroup.getElement().appendChild( symbol );
+		inputGroup.add( textBox );
 		
 		
 		// Setting required style classes
-		panel.setStyleName( "input-group" );
+		formGroup.setStyleName( "form-group" );
+		label.setAttribute( "class", "control-label sr-only" );
+		inputGroup.setStyleName( "input-group" );
 		symbol.setAttribute( "class", "input-group-addon" );
 		textBox.setStyleName( "form-control" );
 		
 		
-		initWidget( panel );
+		initWidget( formGroup );
 	}
 
-	public String getAmount() {
-		return textBox.getValue() == "" ? textBox.getText() : "";
+	
+	public void setPlaceholder( String placeholder ) {
+		textBox.getElement().setAttribute( "placeholder", placeholder );
+	}
+	
+	public Long getAmount() {
+		return textBox.getValue() == "" ? null : Long.parseLong( textBox.getText() );
 	}
 
-	public void setAmount( Date date ) {
-		textBox.setValue( DateTimeFormat.getFormat( "HH:mm" ).format( date ) );
+	public void setAmount( Long amount ) {
+		textBox.setValue( amount.toString() );
 	}
+	
 	
 	@Override
 	public boolean validate() {
-		if( isRequired() && textBox.getText() == "" ) {
+		if( textBox.getText() == "" && !isRequired() ) {
+			markDefault();
+			return true;
+			
+		} else if( textBox.getText() == "" && isRequired() ) {
 			markError( "Input Required !" );
 			return false;
-		} else if( textBox.getText() != "" && ! regExp.test( textBox.getText() ) ) {
-			markError( "Provide a valid number !" );
-			return false;
-		} else {
-			markSuccess();
-			return true;
+
+		} else { // if( textBox.getText() != "" ) {
+			if( regExp.test( textBox.getText() ) ) {
+				markSuccess();
+				return true;
+			} else {
+				markError( "Provide a valid number !" );
+				return false;
+			}
 		}
 	}
 	
+	private void markDefault() {
+		formGroup.setStyleName( "form-group" );
+		glyphicon.setAttribute( "class", "" );
+		hidePopover( textBox.getElement() );
+	}
+	
 	private void markSuccess() {
-		panel.setStyleName( "input-group has-success" );
+		formGroup.setStyleName( "form-group has-success has-feedback" );
+		glyphicon.setAttribute( "class", "form-control-feedback glyphicon glyphicon-ok" );
 		hidePopover( textBox.getElement() );
 	}
 	
 	private void markError( String errorMsg ) {
-		panel.setStyleName( "input-group has-error" );
+		formGroup.setStyleName( "form-group has-error has-feedback" );
+		glyphicon.setAttribute( "class", "form-control-feedback glyphicon glyphicon-remove" );
 		showPopover( textBox.getElement(), errorMsg );
 	}
 	
