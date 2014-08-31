@@ -2,6 +2,7 @@
 package com.claymus.service.server;
 
 import java.util.Date;
+import java.util.Random;
 
 import com.claymus.commons.client.IllegalArgumentException;
 import com.claymus.commons.server.ClaymusHelper;
@@ -139,6 +140,49 @@ public class ClaymusServiceImpl
 	public void logoutUser()
 			throws IllegalArgumentException {
 		ClaymusHelper.performUserLogoutActions( this.getThreadLocalRequest().getSession() );
+	}
+
+	@Override
+	public LoginUserResponse regeneratePassword(LoginUserRequest request)
+			throws IllegalArgumentException {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUserByEmail( request.getLoginId() );
+		
+		if( user == null )
+			throw new IllegalArgumentException( "This email id is not registered. Please try again" );
+		
+		final char[] charList;
+		//Array of alphabets and number
+		StringBuilder tmp = new StringBuilder();
+		for (char ch = '0'; ch <= '9'; ++ch)
+		  tmp.append(ch);
+		for (char ch = 'A'; ch <= 'z'; ++ch)
+		  tmp.append(ch);
+		charList = tmp.toString().toCharArray();
+		  
+		
+		char[] newPassword = new char[6];
+		final Random random = new Random();
+		int range = charList.length;
+		
+		//generating new password.
+		for( int index=0; index<6; ++index)
+			newPassword[index] = charList[ random.nextInt( range ) ];
+		
+		System.out.println( new String(newPassword) );
+		//Password Encryption
+		try {
+			user.setPassword( EncryptPassword.getSaltedHash( new String(newPassword) ));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Update database
+		dataAccessor.createUser( user );
+		dataAccessor.destroy();
+				
+		return new LoginUserResponse();
 	}
 
 }

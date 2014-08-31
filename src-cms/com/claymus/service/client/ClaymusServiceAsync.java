@@ -23,5 +23,9 @@ public interface ClaymusServiceAsync {
 			AsyncCallback<LoginUserResponse> callback );
 	
 	void logoutUser( AsyncCallback callback);
+	
+	void regeneratePassword(
+			LoginUserRequest request,
+			AsyncCallback<LoginUserResponse> callback );
 
 }

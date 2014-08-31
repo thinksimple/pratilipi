@@ -211,6 +211,34 @@ public class HomePageContent implements EntryPoint {
 		loginForm.addLoginButtonClickHandler( loginButtonClickHandler );
 		loginFormDialog.add( loginForm );
 		
+/************************************************ Forgot Password ********************************************/
+		final Panel forgotPasswordFormDialog = new FlowPanel();
+		forgotPasswordFormDialog.setStyleName( "modal-dialog" );
+		
+		final ForgotPasswordForm forgotPassword = new ForgotPasswordForm();
+		
+		ClickHandler genPasswdButtonClickHandler = new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if( forgotPassword.validateEmail()){
+					claymusService.regeneratePassword(new LoginUserRequest( forgotPassword.getEmail(), null ), new AsyncCallback<LoginUserResponse>(){
+	
+						@Override
+						public void onFailure(Throwable caught) {
+							forgotPassword.setEmailInputError( caught.getMessage() );
+							forgotPassword.showEmailInputError();
+						}
+	
+						@Override
+						public void onSuccess(LoginUserResponse result) {
+							Window.Location.assign( "/" );
+						}});
+				}
+			}};
+		
+		forgotPassword.addGenPasswdButtonClickHandler( genPasswdButtonClickHandler );
+		forgotPasswordFormDialog.add( forgotPassword );
 /* ================================================================================================================================== */
 
 		History.addValueChangeHandler( new ValueChangeHandler<String>() {
@@ -219,6 +247,7 @@ public class HomePageContent implements EntryPoint {
 				String historyToken = event.getValue();
 				if( historyToken.equals( "signup" ) ) {
 					modal.remove( loginFormDialog );
+					modal.remove( forgotPasswordFormDialog );
 					modal.remove( registrationFormDialog );
 					modal.add( registrationFormDialog );
 					showModal();
@@ -226,13 +255,32 @@ public class HomePageContent implements EntryPoint {
 				
 				if( historyToken.equals( "signin" ) ) {
 					modal.remove( registrationFormDialog );
+					modal.remove( forgotPasswordFormDialog );
 					modal.remove( loginFormDialog );
 					modal.add( loginFormDialog );
 					showModal();
 				}
 				
 				if( historyToken.equals( "signout" ) ) {
-					//TODO
+					claymusService.logoutUser( new AsyncCallback(){
+
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert( caught.getMessage() );
+						}
+
+						@Override
+						public void onSuccess(Object result) {
+							Window.Location.replace( "/" );
+						}} );
+				}
+				
+				if( historyToken.equals( "forgotpassword" ) ) {
+					modal.remove( registrationFormDialog );
+					modal.remove( loginFormDialog );
+					modal.remove( forgotPasswordFormDialog );
+					modal.add( forgotPasswordFormDialog );
+					showModal();
 				}
 			}
 			

@@ -141,7 +141,7 @@ public class RegistrationForm extends Composite {
 			registrationData.setLastName( lastNameInput.getText().trim() );
 		registrationData.setPassword( password.getText());
 		registrationData.setEmail( emailInput.getText().trim() );
-		registrationData.setCampaign( "preLaunch" );
+		registrationData.setCampaign( "PreLaunch" );
 		registrationData.setReferer( Window.Location.getParameter( "ref" ) );
 		registrationData.setStatus( UserStatus.REGISTERED );
 		
@@ -231,13 +231,13 @@ public class RegistrationForm extends Composite {
 	public boolean validateConfPassword(){
 		if(getConfPassword().isEmpty()){
 			setConfPasswordErrorStyle();
-			setconfPassError("Please re-enter your password");
+			setconfPassError("Please confirm your password");
 			showConfPassError();
 			return false;
 		}
 		else if( validateForm.validateConfirmPassword( getPassword(), getConfPassword() ) ){
 			setConfPasswordErrorStyle();
-			setconfPassError("Password should be atleast 6 characters long");
+			setconfPassError("These passwords don't match. Please try again.");
 			showConfPassError();
 			return false;
 		}

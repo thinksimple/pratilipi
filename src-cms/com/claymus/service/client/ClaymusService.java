@@ -24,4 +24,7 @@ public interface ClaymusService extends RemoteService {
 	void logoutUser()
 			throws IllegalArgumentException;
 	
+	LoginUserResponse regeneratePassword( LoginUserRequest request)
+		throws IllegalArgumentException;
+	
 }
