@@ -7,12 +7,14 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class ForgotPasswordForm extends Composite {
 	
+	private Label heading = new Label();
 	private TextBox emailInput = new TextBox();
 	private Label emailInputError = new Label();
 	private Button genPasswdButton = new Button( "Generate Password" );
@@ -27,6 +29,16 @@ public class ForgotPasswordForm extends Composite {
 		form.setStyleName( "modal-body" );
 		form.getElement().setId( "forgotPasswordForm" );
 		
+		//Modal heading
+		HTML headingElement= new HTML();
+		headingElement.setHTML( "<h3>Password Reset</h3>" );
+		headingElement.addStyleName( "page-header" );
+		
+		HTML msgElement = new HTML();
+		msgElement.setHTML("<p>To reset your password, enter the email address you use to sign in to Pratilipi. You will receive an email containing new password. <b>You are adviced to change your password on first login after password reset.</b></p>");
+		
+		heading.getElement().appendChild( headingElement.getElement() );
+		heading.getElement().appendChild( msgElement.getElement() );
 		
 		//text box formatting
 		emailInput.getElement().setAttribute("placeholder", "Enter registered email");
@@ -62,6 +74,7 @@ public class ForgotPasswordForm extends Composite {
 		emailInputError.setStyleName( "errorMessage" );
 		emailInputError.setVisible( false );
 		
+		form.add( heading );
 		form.add( emailInput );
 		form.add( genPasswdButton );
 		form.add( emailInputError );

@@ -7,9 +7,11 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -22,6 +24,8 @@ public class RegistrationForm extends Composite {
 	private PasswordTextBox password = new PasswordTextBox();
 	private PasswordTextBox confirmPassword = new PasswordTextBox();
 	private Button registerButton = new Button("Sign up");
+	private Label heading = new Label();
+	private Label signin = new Label( "Already a member?" );
 	
 	final ValidateForm validateForm = new ValidateForm();
 	
@@ -41,7 +45,12 @@ public class RegistrationForm extends Composite {
 		panel.setStyleName( "modal-body" );
 		
 		FlowPanel namePanel = new FlowPanel();
-		//namePanel.getElement().getStyle().setDisplay( Display.BLOCK );
+		
+		HTML headingElement= new HTML();
+		headingElement.setHTML("<h3>Sign Up</h3>");
+		
+		heading.addStyleName( "page-header" );
+		heading.getElement().appendChild( headingElement.getElement() );
 		
 		Panel buttonPanel = new FlowPanel();
 		buttonPanel.addStyleName( "buttonPanel" );
@@ -109,6 +118,14 @@ public class RegistrationForm extends Composite {
 		passwordError.setStyleName("errorMessage");
 		confPassError.setStyleName("errorMessage");
 		
+		//Sign in link
+		signin.setStyleName( "modal-link" );
+		
+		//New user link in login form
+		Anchor signinAnchor = new Anchor( "Sign In" );
+		signinAnchor.setHref( "#signin" );
+		signin.getElement().appendChild( signinAnchor.getElement() );
+		
 		//All error messages are invisible when page is loaded for first time.
 		nameInputError.setVisible(false);
 		emailInputError.setVisible(false);
@@ -117,6 +134,7 @@ public class RegistrationForm extends Composite {
 		
 		namePanel.add(firstNameInput);
 		namePanel.add(lastNameInput);
+		panel.add( heading );
 		panel.add( namePanel );
 		panel.add(nameInputError);
 		panel.add(emailInput);
@@ -127,6 +145,7 @@ public class RegistrationForm extends Composite {
 		panel.add(confPassError);
 		buttonPanel.add(registerButton);
 		panel.add( buttonPanel );
+		panel.add( signin );
 		
 		modalContent.add( panel );
 		

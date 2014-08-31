@@ -117,14 +117,6 @@ public class HomePageContent implements EntryPoint {
 		modal.getElement().setAttribute("role", "dialog");
 		modal.getElement().setAttribute("aria-labelledby", "myModalLabel");
 		modal.getElement().setAttribute("aria-hidden", "true");
-		
-		//Set focus on Modal div
-		modal.addMouseOverHandler( new MouseOverHandler(){
-
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				modal.setFocus(true);
-			}});
 				
 		//Click handler to change history item when modal div is clicked.
 		modal.addClickHandler( new ClickHandler(){
@@ -140,7 +132,7 @@ public class HomePageContent implements EntryPoint {
 
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE) {
 		               History.newItem( "" );
 		           }
 			}});

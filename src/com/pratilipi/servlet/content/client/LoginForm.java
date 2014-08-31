@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -15,6 +16,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public class LoginForm extends Composite {
 	
+	private Label heading = new Label();
 	private TextBox emailInput = new TextBox();
 	private PasswordTextBox password = new PasswordTextBox();
 	private Button loginButton = new Button("Sign In");
@@ -36,6 +38,13 @@ public class LoginForm extends Composite {
 		Panel fields = new FlowPanel();
 		Panel button = new FlowPanel();
 		button.setStyleName( "buttonPanel" );
+		
+
+		HTML headingElement= new HTML();
+		headingElement.setHTML("<h3>Welcome Back</h3>");
+		
+		heading.addStyleName( "page-header" );
+		heading.getElement().appendChild( headingElement.getElement() );
 		
 		emailInput.getElement().setPropertyString("placeholder", "Email");
 		emailInput.addStyleName( "form-control" );
@@ -70,11 +79,17 @@ public class LoginForm extends Composite {
 		loginButton.addStyleName("btn-block");
 		loginButton.getElement().getStyle().setDisplay(Display.BLOCK);
 		
+		forgotPassword.setStyleName( "modal-link" );
+		
+		//New user link in login form
+		Anchor newUserAnchor = new Anchor( "Not a member?" );
+		newUserAnchor.setHref( "#signup" );
+		forgotPassword.getElement().appendChild( newUserAnchor.getElement() );
+		
 		//forgot password link
-		forgotPassword.setStyleName( "forgotPassword" );
-		Anchor link = new Anchor( "Forgot Password?" );
-		link.setHref( "#forgotpassword" );
-		forgotPassword.getElement().appendChild( link.getElement() );
+		Anchor forgotPasswdAnchor = new Anchor( "Forgot Password?" );
+		forgotPasswdAnchor.setHref( "#forgotpassword" );
+		forgotPassword.getElement().appendChild( forgotPasswdAnchor.getElement() );
 		
 		//Error message Style
 		emailInputError.setStyleName("errorMessage");
@@ -84,6 +99,7 @@ public class LoginForm extends Composite {
 		emailInputError.setVisible(false);
 		passwordError.setVisible(false);
 		
+		fields.add( heading );
 		fields.add(emailInput);
 		fields.add(emailInputError);
 		fields.add(password);
