@@ -54,7 +54,7 @@ public class ClaymusServiceImpl
 			user.setSignUpDate( new Date() );
 			user.setStatus( userData.getStatus() );
 
-			user = dataAccessor.createUser( user );
+			user = dataAccessor.createOrUpdateUser( user );
 		}
 		dataAccessor.destroy();
 		
@@ -99,7 +99,7 @@ public class ClaymusServiceImpl
 			user.setSignUpDate( new Date() );
 			user.setStatus( registerData.getStatus() );
 
-			user = dataAccessor.createUser( user );
+			user = dataAccessor.createOrUpdateUser( user );
 		}
 		else 
 			throw new IllegalArgumentException( "This Email Id is already registered" );

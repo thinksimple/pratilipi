@@ -36,7 +36,7 @@ public class PasswordResetServlet extends HttpServlet {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
 		user.setPassword( EncryptPassword.getSaltedHash( newPassword ) );
-		dataAccessor.updateUser( user );
+		dataAccessor.createOrUpdateUser( user );
 		dataAccessor.destroy();
 		
 		// Sending email to the user

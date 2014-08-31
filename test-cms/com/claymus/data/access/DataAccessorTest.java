@@ -39,7 +39,7 @@ public abstract class DataAccessorTest {
     	user.setPhone( phone );
     	user.setSignUpDate( signUpDate );
     	
-    	user = dataAccessor.createUser( user );
+    	user = dataAccessor.createOrUpdateUser( user );
     	dataAccessor.destroy();
     	
     	dataAccessor = DataAccessorFactory.getDataAccessor();

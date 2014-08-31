@@ -19,9 +19,7 @@ public interface DataAccessor {
 
 	User getUserByEmail( String email );
 
-	User createUser( User user );
-
-	User updateUser( User user );
+	User createOrUpdateUser( User user );
 
 	
 	Role newRole();

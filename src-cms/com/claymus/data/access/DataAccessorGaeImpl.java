@@ -73,16 +73,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public User createUser( User user ) {
-		// TODO: user transaction
-		// TODO: throw exception if a user with given id already exists
-		return createOrUpdateEntity( user );
-	}
-
-	@Override
-	public User updateUser( User user ) {
-		// TODO: throw exception if user id is not set
-		// TODO: throw exception if entity with give id doesn't exist
+	public User createOrUpdateUser( User user ) {
 		return createOrUpdateEntity( user );
 	}
 
