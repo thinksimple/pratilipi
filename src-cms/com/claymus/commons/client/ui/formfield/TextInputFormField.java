@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 
-public class TextBoxFormField extends FormField {
+public class TextInputFormField extends FormField {
 
 	private final Panel panel = new FlowPanel();
 	private final Element label = Document.get().createLabelElement();
@@ -16,7 +16,7 @@ public class TextBoxFormField extends FormField {
 	private final Element glyphicon = Document.get().createSpanElement();
 	
 	
-	public TextBoxFormField() {
+	public TextInputFormField() {
 
 		textBox.getElement().setAttribute( "data-container", "body" );
 		textBox.getElement().setAttribute( "data-placement", "top" );

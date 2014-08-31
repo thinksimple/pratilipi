@@ -1,6 +1,6 @@
 package com.pratilipi.pagecontent.languages.client;
 
-import com.claymus.commons.client.ui.formfield.TextBoxFormField;
+import com.claymus.commons.client.ui.formfield.TextInputFormField;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -22,7 +22,7 @@ public class LanguagesContent implements EntryPoint {
 	
 	public void onModuleLoad() {
 		
-		final TextBoxFormField languageInput = new TextBoxFormField();
+		final TextInputFormField languageInput = new TextInputFormField();
 		final Button addButton = new Button( "Add" );
 		
 		languageInput.setRequired( true );
