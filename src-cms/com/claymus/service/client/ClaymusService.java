@@ -7,6 +7,8 @@ import com.claymus.service.shared.LoginUserRequest;
 import com.claymus.service.shared.LoginUserResponse;
 import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
+import com.claymus.service.shared.ResetUserPasswordRequest;
+import com.claymus.service.shared.ResetUserPasswordResponse;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -24,7 +26,7 @@ public interface ClaymusService extends RemoteService {
 	void logoutUser()
 			throws IllegalArgumentException;
 	
-	LoginUserResponse regeneratePassword( LoginUserRequest request)
-		throws IllegalArgumentException;
+	ResetUserPasswordResponse resetUserPassword( ResetUserPasswordRequest request )
+				throws IllegalArgumentException;
 	
 }

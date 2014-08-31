@@ -36,6 +36,17 @@
     <url-pattern>/resource.book-cover/*</url-pattern>
   </servlet-mapping>
    
+   
+  <servlet>
+    <servlet-name>PasswordResetServlet</servlet-name>
+    <servlet-class>com.claymus.servlet.PasswordResetServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>PasswordResetServlet</servlet-name>
+    <url-pattern>/_ah/queue/reset-password</url-pattern>
+  </servlet-mapping>
+
 
   <servlet>
     <servlet-name>PratilipiMain</servlet-name>
@@ -51,6 +62,7 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>admin</web-resource-name>
+      <url-pattern>/_ah/queue/*</url-pattern>
       <url-pattern>/service.upload/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>

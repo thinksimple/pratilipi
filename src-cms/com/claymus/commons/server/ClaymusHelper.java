@@ -24,6 +24,7 @@ public class ClaymusHelper {
 	private static final String SESSION_ATTRIB_CURRENT_USER_ID = "CurrentUserId";
 	private static final String URL_LOGIN_PAGE = "/login?dest=";
 	private static final String URL_LOGOUT_PAGE = "/logout?dest=";
+	private static final String URL_REGISTER_PAGE = "#signup";
 	
 	private final HttpServletRequest request;
 	private final HttpSession session;
@@ -220,6 +221,10 @@ public class ClaymusHelper {
 
 	public static String createLogoutURL( String destinationURL ) {
 		return URL_LOGOUT_PAGE + destinationURL;
+	}
+
+	public String createRegisterURL() {
+		return URL_REGISTER_PAGE;
 	}
 
 	

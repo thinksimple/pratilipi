@@ -2,7 +2,6 @@
 package com.claymus.service.server;
 
 import java.util.Date;
-import java.util.Random;
 
 import com.claymus.commons.client.IllegalArgumentException;
 import com.claymus.commons.server.ClaymusHelper;
@@ -18,8 +17,13 @@ import com.claymus.service.shared.LoginUserRequest;
 import com.claymus.service.shared.LoginUserResponse;
 import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
+import com.claymus.service.shared.ResetUserPasswordRequest;
+import com.claymus.service.shared.ResetUserPasswordResponse;
 import com.claymus.service.shared.data.RegistrationData;
 import com.claymus.service.shared.data.UserData;
+import com.claymus.taskqueue.Task;
+import com.claymus.taskqueue.TaskQueue;
+import com.claymus.taskqueue.TaskQueueFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
@@ -143,46 +147,31 @@ public class ClaymusServiceImpl
 	}
 
 	@Override
-	public LoginUserResponse regeneratePassword(LoginUserRequest request)
-			throws IllegalArgumentException {
+	public ResetUserPasswordResponse resetUserPassword(
+			ResetUserPasswordRequest request ) throws IllegalArgumentException {
+		
+		ClaymusHelper claymusHelper =
+				new ClaymusHelper( this.getThreadLocalRequest() );
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( request.getLoginId() );
+		User user = dataAccessor.getUserByEmail( request.getUserEmail() );
+		dataAccessor.destroy();
 		
-		if( user == null )
-			throw new IllegalArgumentException( "This email id is not registered. Please try again" );
-		
-		final char[] charList;
-		//Array of alphabets and number
-		StringBuilder tmp = new StringBuilder();
-		for (char ch = '0'; ch <= '9'; ++ch)
-		  tmp.append(ch);
-		for (char ch = 'A'; ch <= 'z'; ++ch)
-		  tmp.append(ch);
-		charList = tmp.toString().toCharArray();
-		  
-		
-		char[] newPassword = new char[6];
-		final Random random = new Random();
-		int range = charList.length;
-		
-		//generating new password.
-		for( int index=0; index<6; ++index)
-			newPassword[index] = charList[ random.nextInt( range ) ];
-		
-		System.out.println( new String(newPassword) );
-		//Password Encryption
-		try {
-			user.setPassword( EncryptPassword.getSaltedHash( new String(newPassword) ));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if( user != null ) {
+			Task task = TaskQueueFactory.newTask();
+			task.addParam( "userId", user.getId().toString() );
+			
+			TaskQueue taskQueue = TaskQueueFactory.getResetPasswordTaskQueue();
+			taskQueue.add( task );
+
+		} else {
+			throw new IllegalArgumentException(
+					"This email id is not yet registered. Kindly "
+					+ "<a href='" + claymusHelper.createRegisterURL() + "'>register</a>"
+					+ " or try again with a different email id." );
 		}
 		
-		//Update database
-		dataAccessor.createUser( user );
-		dataAccessor.destroy();
-				
-		return new LoginUserResponse();
+		return new ResetUserPasswordResponse();
 	}
 
 }

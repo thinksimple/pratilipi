@@ -1,6 +1,10 @@
 package com.claymus.commons.server;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -9,6 +13,11 @@ import javax.crypto.spec.PBEKeySpec;
 import org.apache.commons.codec.binary.Base64;
 
 public class EncryptPassword {
+	
+	private static final Logger logger = 
+			Logger.getLogger( EncryptPassword.class.getName() );
+
+	
 	// The higher the number of iterations the more 
     // expensive computing the hash is for us
     // and also for a brute force attack.
@@ -19,10 +28,15 @@ public class EncryptPassword {
     /** Computes a salted PBKDF2 hash of given plaintext password
         suitable for storing in a database. 
         Empty passwords are not supported. */
-    public static String getSaltedHash(String password) throws Exception {
-        byte[] salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(saltLen);
-        // store the salt with the password
-        return Base64.encodeBase64String(salt) + "$" + hash(password, salt);
+    public static String getSaltedHash(String password) {
+    	try {
+    		byte[] salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(saltLen);
+    		// store the salt with the password
+    		return Base64.encodeBase64String(salt) + "$" + hash(password, salt);
+    	} catch( NoSuchAlgorithmException | InvalidKeySpecException e ) {
+    		logger.log( Level.SEVERE, "", e );
+    		return password;
+    	}
     }
 
     /** Checks whether given plaintext password corresponds 
@@ -40,7 +54,7 @@ public class EncryptPassword {
 
     // using PBKDF2 from Sun, an alternative is https://github.com/wg/scrypt
     // cf. http://www.unlimitednovelty.com/2012/03/dont-use-bcrypt.html
-    private static String hash(String password, byte[] salt) throws Exception {
+    private static String hash(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         if (password == null || password.length() == 0)
             throw new IllegalArgumentException("Empty passwords are not supported.");
         SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");

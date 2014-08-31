@@ -8,6 +8,8 @@ import com.claymus.service.shared.LoginUserRequest;
 import com.claymus.service.shared.LoginUserResponse;
 import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
+import com.claymus.service.shared.ResetUserPasswordRequest;
+import com.claymus.service.shared.ResetUserPasswordResponse;
 import com.claymus.service.shared.data.RegistrationData;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.core.client.EntryPoint;
@@ -222,7 +224,7 @@ public class HomePageContent implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				if( forgotPassword.validateEmail()){
-					claymusService.regeneratePassword(new LoginUserRequest( forgotPassword.getEmail(), null ), new AsyncCallback<LoginUserResponse>(){
+					claymusService.resetUserPassword(new ResetUserPasswordRequest( forgotPassword.getEmail() ), new AsyncCallback<ResetUserPasswordResponse>(){
 	
 						@Override
 						public void onFailure(Throwable caught) {
@@ -231,7 +233,7 @@ public class HomePageContent implements EntryPoint {
 						}
 	
 						@Override
-						public void onSuccess(LoginUserResponse result) {
+						public void onSuccess(ResetUserPasswordResponse result) {
 							Window.Location.assign( "/" );
 						}});
 				}
