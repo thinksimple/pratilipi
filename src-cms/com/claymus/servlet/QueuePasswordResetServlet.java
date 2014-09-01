@@ -1,6 +1,10 @@
 package com.claymus.servlet;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -9,17 +13,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.commons.server.EmailUtil;
+import org.apache.commons.io.FileUtils;
+
 import com.claymus.commons.server.EncryptPassword;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
+import com.claymus.data.transfer.EmailTemplate;
 import com.claymus.data.transfer.User;
+import com.claymus.email.EmailUtil;
+
+import freemarker.template.TemplateException;
 
 @SuppressWarnings("serial")
-public class PasswordResetServlet extends HttpServlet {
+public class QueuePasswordResetServlet extends HttpServlet {
 	
 	private static final Logger logger = 
-			Logger.getLogger( PasswordResetServlet.class.getName() );
+			Logger.getLogger( QueuePasswordResetServlet.class.getName() );
 
 
 	@Override
@@ -27,25 +36,51 @@ public class PasswordResetServlet extends HttpServlet {
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Long userId = Long.parseLong( request.getParameter( "userId" ) );
 
 		// New password
 		String newPassword = generatePassword();
 		
-		// Updating password in the DataStore
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		// Updating user password in the DataStore
 		User user = dataAccessor.getUser( userId );
 		user.setPassword( EncryptPassword.getSaltedHash( newPassword ) );
 		dataAccessor.createOrUpdateUser( user );
-		dataAccessor.destroy();
+
+		// Creating Email Template
+		// TODO: migrate it to DataStore
+		File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/PasswordResetEmailContent.ftl" );
+		List<String> lines;
+		lines = FileUtils.readLines( file, "UTF-8" );
+		String body = "";
+		for( String line : lines )
+			body = body + line;
+
+		EmailTemplate passwordResetEmailTemplate = dataAccessor.newEmailTemplate();
+		passwordResetEmailTemplate.setSenderName( "Pratilipi" );
+		passwordResetEmailTemplate.setSenderEmail( "no-reply@pratilipi.com" );
+		passwordResetEmailTemplate.setReplyToName( "Pratilipi Team" );
+		passwordResetEmailTemplate.setReplyToEmail( "contact+password-reset@pratilipi.com" );
+		passwordResetEmailTemplate.setSubject( "Your Pratilipi password" );
+		passwordResetEmailTemplate.setBody( body );
 		
 		// Sending email to the user
 		try {
-			EmailUtil.sendPasswordResetMail( user, newPassword );
-		} catch( MessagingException e ) {
+			
+			Map<String, Object> dataModel = new HashMap<>();
+			dataModel.put( "user", user );
+			dataModel.put( "newPassword", newPassword );
+
+			EmailUtil.sendMail(
+					EmailUtil.createUserName( user ), user.getEmail(),
+					passwordResetEmailTemplate, dataModel );
+			
+		} catch( MessagingException | TemplateException e ) {
 			response.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 			logger.log( Level.SEVERE, "Failed to send the email !", e );
 		}
+		
+		dataAccessor.destroy();
 	}
 	
 	private String generatePassword() {

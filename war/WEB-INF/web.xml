@@ -34,12 +34,32 @@
   </servlet-mapping>
    
    
+  <!-- Handlers for Task Queues -->
+  
   <servlet>
-    <servlet-name>PasswordResetServlet</servlet-name>
-    <servlet-class>com.claymus.servlet.PasswordResetServlet</servlet-class>
+    <servlet-name>QueueInviteUserServlet</servlet-name>
+    <servlet-class>com.claymus.servlet.QueueInviteUserServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>PasswordResetServlet</servlet-name>
+    <servlet-name>QueueInviteUserServlet</servlet-name>
+    <url-pattern>/_ah/queue/invite-user</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>QueueWelcomeUserServlet</servlet-name>
+    <servlet-class>com.claymus.servlet.QueueWelcomeUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueueWelcomeUserServlet</servlet-name>
+    <url-pattern>/_ah/queue/welcome-user</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>QueuePasswordResetServlet</servlet-name>
+    <servlet-class>com.claymus.servlet.QueuePasswordResetServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueuePasswordResetServlet</servlet-name>
     <url-pattern>/_ah/queue/reset-password</url-pattern>
   </servlet-mapping>
 

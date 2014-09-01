@@ -145,6 +145,12 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		user = dataAccessor.createOrUpdateUser( user );
 		dataAccessor.destroy();
 
+		Task task = TaskQueueFactory.newTask();
+		task.addParam( "userId", user.getId().toString() );
+		
+		TaskQueue taskQueue = TaskQueueFactory.getWelcomeUserTaskQueue();
+		taskQueue.add( task );
+		
 		return new RegisterUserResponse( user.getId() );
 	}
 

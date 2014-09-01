@@ -3,12 +3,10 @@ package com.pratilipi.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 
@@ -40,7 +38,6 @@ import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
 	
-	@SuppressWarnings("unused")
 	private static final Logger logger = 
 			Logger.getLogger( PratilipiMain.class.getName() );
 
@@ -102,28 +99,6 @@ public class PratilipiMain extends ClaymusMain {
 	}
 
 
-	private HttpServlet newUserQueueServlet;
-
-	@Override
-	protected void service(
-			HttpServletRequest request,
-			HttpServletResponse response ) throws ServletException, IOException {
-		
-		String requestUri = request.getRequestURI();
-		
-		if( requestUri.equals( "/_ah/queue/new-user" ) ) {
-			if( newUserQueueServlet == null ) {
-				newUserQueueServlet = new NewUserQueueServlet();
-				newUserQueueServlet.init( this.getServletConfig() );
-			}
-			newUserQueueServlet.service( request, response );
-		
-		} else {
-			super.service( request, response );
-		}
-
-	}
-	
 	@Override
 	protected String getTemplateName() {
 		return "com/pratilipi/servlet/PratilipiTemplate.ftl";
@@ -263,6 +238,21 @@ public class PratilipiMain extends ClaymusMain {
 		HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
 		htmlContent.setHtml( html );
 		return htmlContent;
+	}
+	
+	private static String getContentFromFile( String fileName ) {
+		File file = new File( fileName );
+		List<String> lines;
+		try {
+			lines = FileUtils.readLines( file, "UTF-8" );
+		} catch ( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to get content from the file ", e );
+			return null;
+		}
+		String content = "";
+		for( String line : lines )
+			content = content + line;
+		return content;
 	}
 	
 }
