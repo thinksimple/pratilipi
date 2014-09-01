@@ -9,7 +9,7 @@ public interface BlobAccessor {
 	
 	String createUploadUrl( String fileName );
 
-	boolean createBlob( HttpServletRequest request );
+	boolean createBlob( HttpServletRequest request, String fileName );
 	
 	void serveBlob(
 			String fileName,

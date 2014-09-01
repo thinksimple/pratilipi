@@ -1,4 +1,4 @@
-package com.pratilipi.servlet;
+package com.claymus.servlet;
 
 import java.io.IOException;
 
@@ -12,14 +12,22 @@ import com.claymus.data.access.DataAccessorFactory;
 public class ResourceServlet extends HttpServlet {
 	
 	@Override
+	public void doPost(
+			HttpServletRequest request,
+			HttpServletResponse response ) throws IOException {
+
+		String fileName = request.getRequestURI().substring( 10 );
+		if( ! DataAccessorFactory.getBlobAccessor().createBlob( request, fileName ) )
+			response.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+	}
+	
+	@Override
 	public void doGet(
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 
-		DataAccessorFactory
-				.getBlobAccessor()
+		DataAccessorFactory.getBlobAccessor()
 				.serveBlob( request.getRequestURI().substring( 10 ), response );
-		
 	}
 	
 }

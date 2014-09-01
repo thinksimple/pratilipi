@@ -47,7 +47,7 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 	}
 
 	@Override
-	public boolean createBlob( HttpServletRequest request ) {
+	public boolean createBlob( HttpServletRequest request, String fileName ) {
 		
 		boolean blobCreated = false;
 		
@@ -78,7 +78,6 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 									+ "\n\tField Name: " + fileItemStream.getFieldName()
 									+ "\n\tFile Name: " + fileItemStream.getName() );
 	
-					String fileName = request.getRequestURI().substring( 16 );
 					GcsFilename gcsFileName
 							= new GcsFilename( bucketName, fileName );
 					GcsFileOptions gcsFileOptions
@@ -114,9 +113,8 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 	}
 
 	@Override
-	public void serveBlob(
-			String fileName,
-			HttpServletResponse response ) throws IOException {
+	public void serveBlob( String fileName, HttpServletResponse response )
+			throws IOException {
 
 		GcsFilename gcsFileName
 				= new GcsFilename( bucketName, fileName );

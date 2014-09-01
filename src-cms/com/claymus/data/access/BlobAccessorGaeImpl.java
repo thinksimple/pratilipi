@@ -26,18 +26,15 @@ public class BlobAccessorGaeImpl implements BlobAccessor {
 	}
 
 	@Override
-	public boolean createBlob( HttpServletRequest request ) {
-		@SuppressWarnings("unused")
-		String fileName = request.getRequestURI().substring( 16 );
+	public boolean createBlob( HttpServletRequest request, String fileName ) {
 		// TODO: Persist a mapping between fileName and blob uploaded.
 		// TODO: Handle multiple blob uploads.
 		return false;
 	}
 
 	@Override
-	public void serveBlob(
-			String fileName,
-			HttpServletResponse response ) throws IOException {
+	public void serveBlob( String fileName, HttpServletResponse response )
+			throws IOException {
 		
 		// TODO: Get the blob key mapped against the fileName.
 		String blobKeyString = null;

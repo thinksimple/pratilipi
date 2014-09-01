@@ -2,16 +2,19 @@
 	
 	<div class="row">
 		<div class="col-sm-2">
-			<a href="${ bookHomeUrl }${ book.getId() }">
-				<img class="img-responsive img-thumbnail" src="${ bookCoverUrl }${ book.getId()?string("#") }">
+			<a href="${ bookHomeUrl }">
+				<img class="img-responsive img-thumbnail" src="${ bookCoverUrl }">
 			</a>
+			<#if showEditOptions>
+				<div id="PageContent-Book-CoverImage-EditOptions"></div>
+			</#if>
 		</div>
 		<div class="col-sm-10">
 			<h3>
-				<a href="${ bookHomeUrl }${ book.getId()?string("#") }">${ book.getTitle() }</a>
+				<a href="${ bookHomeUrl }">${ book.getTitle() }</a>
 			</h3>
 			<h4>
-				<a href="${ authorHomeUrl }${ author.getId()?string("#") }">${ author.getFirstName() } ${ author.getLastName() }</a>
+				<a href="${ authorHomeUrl }">${ author.getFirstName() } ${ author.getLastName() }</a>
 			</h4>
 			<div>
 				<div id="PageContent-HomeBook-Summary">

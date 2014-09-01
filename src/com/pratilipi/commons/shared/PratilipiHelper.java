@@ -8,6 +8,6 @@ public class PratilipiHelper {
 
 	public static final String URL_LANGUAGE_PAGE = "/language/";
 
-	public static final String BOOK_COVER_URL = "/resource.book-cover/";
+	public static final String BOOK_COVER_URL = "/resource.book-cover/original/";
 	
 }
