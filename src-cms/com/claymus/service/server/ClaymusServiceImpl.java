@@ -12,6 +12,7 @@ import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.User;
+import com.claymus.data.transfer.UserRole;
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
@@ -143,6 +144,12 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		user.setStatus( UserStatus.POSTLAUNCH_SIGNUP );
 
 		user = dataAccessor.createOrUpdateUser( user );
+		
+		UserRole userRole = dataAccessor.newUserRole();
+		userRole.setUserId( user.getId() );
+		userRole.setRoleId( "member" );
+		dataAccessor.createOrUpdateUserRole( userRole );
+		
 		dataAccessor.destroy();
 
 		Task task = TaskQueueFactory.newTask();
@@ -186,7 +193,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		if( ! EncryptPassword.check( request.getPassword(), user.getPassword() ) )
 			throw new IllegalArgumentException( "Incorrect password !" );
 
-		this.getThreadLocalRequest().setAttribute(
+		this.getThreadLocalRequest().getSession().setAttribute(
 				ClaymusHelper.SESSION_ATTRIB_CURRENT_USER_ID, user.getId() );
 		
 		return new LoginUserResponse();
