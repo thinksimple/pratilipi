@@ -179,6 +179,10 @@ public class ClaymusHelper {
 		return currentUserRoleList;
 	}
 	
+	public String getCurrentUserTimeZone() {
+		return "Asia/Kolkata";
+	}
+	
 	@Deprecated
 	public static boolean isUserAdmin() {
 		UserService userService = UserServiceFactory.getUserService();

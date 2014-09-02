@@ -72,6 +72,7 @@ public class DataAccessorGaeImpl
 	public List<Language> getLanguageList() {
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( LanguageEntity.class ) )
+						.addOrdering( "creationDate", false )
 						.build();
 		
 		@SuppressWarnings("unchecked")

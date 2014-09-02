@@ -1,5 +1,7 @@
 <!-- PageContent :: Languages :: Start -->
 
+<#setting time_zone="${ timeZone }">
+
 <div>
 
 	<table class="table">

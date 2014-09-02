@@ -45,6 +45,7 @@ public class LanguagesContentProcessor
 		dataModel.put( "languagePageUrl", PratilipiHelper.URL_LANGUAGE_PAGE );
 		dataModel.put( "showMetaData", showMetaData );
 		dataModel.put( "showAddOption", showAddOption );
+		dataModel.put( "timeZone", claymusHelper.getCurrentUserTimeZone() );
 		
 
 		// Processing template
