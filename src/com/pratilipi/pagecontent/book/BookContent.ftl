@@ -17,24 +17,24 @@
 				<a href="${ authorHomeUrl }">${ author.getFirstName() } ${ author.getLastName() }</a>
 			</h4>
 			<div>
-				<div id="PageContent-HomeBook-Summary">
+				<div id="PageContent-Book-Summary">
 					<#if book.getSummary()?? >
 						${ book.getSummary() }
 					</#if>
 				</div>
 				<#if showEditOptions>
-					<div id="PageContent-HomeBook-Summary-EditOptions"></div>
+					<div id="PageContent-Book-Summary-EditOptions"></div>
 				</#if>
 			</div>
 		</div>
 	</div>
 
 	<#if showAddReviewOption>
-		<div id="PageContent-HomeBook-Review"></div>
-		<div id="PageContent-HomeBook-Review-AddOptions"></div>
+		<div id="PageContent-Book-Review"></div>
+		<div id="PageContent-Book-Review-AddOptions"></div>
 	</#if>
 
-	<div id="PageContent-HomeBook-ReviewList">
+	<div id="PageContent-Book-ReviewList">
 		<#list reviewList as review >
 			<div class="panel panel-default">
 				<div class="panel-body">
@@ -46,7 +46,7 @@
 	
 </div>
 
-<script type="text/javascript" language="javascript" src="/pagecontent.homebook/pagecontent.homebook.nocache.js" defer></script>
+<script type="text/javascript" language="javascript" src="/pagecontent.book/pagecontent.book.nocache.js" defer></script>
 <#if showEditOptions>
-	<script type="text/javascript" language="javascript" src="/pagecontent.homebook.editoptions/pagecontent.homebook.editoptions.nocache.js" defer></script>
+	<script type="text/javascript" language="javascript" src="/pagecontent.book.editoptions/pagecontent.book.editoptions.nocache.js" defer></script>
 </#if>

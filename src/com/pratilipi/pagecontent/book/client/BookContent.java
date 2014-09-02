@@ -1,4 +1,4 @@
-package com.pratilipi.module.pagecontent.homebook.client;
+package com.pratilipi.pagecontent.book.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -16,7 +16,7 @@ import com.pratilipi.service.shared.AddUserBookRequest;
 import com.pratilipi.service.shared.AddUserBookResponse;
 import com.pratilipi.service.shared.data.UserBookData;
 
-public class HomeBookContent implements EntryPoint, ClickHandler {
+public class BookContent implements EntryPoint, ClickHandler {
 
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
@@ -26,7 +26,7 @@ public class HomeBookContent implements EntryPoint, ClickHandler {
 	private final Label savingLabel = new Label( "Saving ..." );
 	
 	public void onModuleLoad() {
-		RootPanel rootPanel = RootPanel.get( "PageContent-HomeBook-Review-AddOptions" );
+		RootPanel rootPanel = RootPanel.get( "PageContent-Book-Review-AddOptions" );
 		if( rootPanel != null ) {
 			addReviewAnchor.addClickHandler( this );
 			saveReviewAnchor.addClickHandler( this );
@@ -46,7 +46,7 @@ public class HomeBookContent implements EntryPoint, ClickHandler {
 		if( event.getSource() == addReviewAnchor ) {
 			addReviewAnchor.setVisible( false );
 			saveReviewAnchor.setVisible( true );
-			loadEditor( RootPanel.get( "PageContent-HomeBook-Review" ).getElement() );
+			loadEditor( RootPanel.get( "PageContent-Book-Review" ).getElement() );
 			
 		} else if( event.getSource() == saveReviewAnchor ) {
 			saveReviewAnchor.setVisible( false );
@@ -54,7 +54,7 @@ public class HomeBookContent implements EntryPoint, ClickHandler {
 			
 			UserBookData userBookData = new UserBookData();
 			userBookData.setBookId( Long.parseLong( Window.Location.getPath().substring( 6 ) ));
-			userBookData.setReview( getHtmlFromEditor( "PageContent-HomeBook-Review" ) );
+			userBookData.setReview( getHtmlFromEditor( "PageContent-Book-Review" ) );
 			
 			pratilipiService.addUserBook(
 					new AddUserBookRequest( userBookData ),

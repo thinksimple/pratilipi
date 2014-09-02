@@ -2,13 +2,13 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.6.1//EN"
   "http://google-web-toolkit.googlecode.com/svn/tags/2.6.1/distro-source/core/src/gwt-module.dtd">
 
-<module rename-to='pagecontent.homebook.editoptions'>
+<module rename-to='pagecontent.book'>
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='com.claymus.commons.Claymus'/>
   <inherits name='com.pratilipi.commons.Pratilipi'/>
   <inherits name='com.pratilipi.service.PratilipiService'/>
 
-  <entry-point class='com.pratilipi.module.pagecontent.homebook.client.HomeBookContentEditOptions'/>
+  <entry-point class='com.pratilipi.pagecontent.book.client.BookContent'/>
 
   <source path='client'/>
   <source path='shared'/>

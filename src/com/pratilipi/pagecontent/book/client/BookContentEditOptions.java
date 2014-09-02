@@ -1,4 +1,4 @@
-package com.pratilipi.module.pagecontent.homebook.client;
+package com.pratilipi.pagecontent.book.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -16,7 +16,7 @@ import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 import com.pratilipi.service.shared.data.BookData;
 
-public class HomeBookContentEditOptions implements EntryPoint, ClickHandler {
+public class BookContentEditOptions implements EntryPoint, ClickHandler {
 
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
@@ -31,7 +31,7 @@ public class HomeBookContentEditOptions implements EntryPoint, ClickHandler {
 		editSummaryAnchor.addClickHandler( this );
 		saveSummaryAnchor.addClickHandler( this );
 		
-		RootPanel rootPanel = RootPanel.get( "PageContent-HomeBook-Summary-EditOptions" );
+		RootPanel rootPanel = RootPanel.get( "PageContent-Book-Summary-EditOptions" );
 		rootPanel.add( editSummaryAnchor );
 		rootPanel.add( saveSummaryAnchor );
 		rootPanel.add( savingLabel );
@@ -47,7 +47,7 @@ public class HomeBookContentEditOptions implements EntryPoint, ClickHandler {
 		if( event.getSource() == editSummaryAnchor ) {
 			editSummaryAnchor.setVisible( false );
 			saveSummaryAnchor.setVisible( true );
-			loadEditor( RootPanel.get( "PageContent-HomeBook-Summary" ).getElement() );
+			loadEditor( RootPanel.get( "PageContent-Book-Summary" ).getElement() );
 			
 		} else if( event.getSource() == saveSummaryAnchor ) {
 			saveSummaryAnchor.setVisible( false );
@@ -55,7 +55,7 @@ public class HomeBookContentEditOptions implements EntryPoint, ClickHandler {
 			
 			BookData bookData = new BookData();
 			bookData.setId( Long.parseLong( Window.Location.getPath().substring( 6 ) ));
-			bookData.setSummary( getHtmlFromEditor( "PageContent-HomeBook-Summary" ) );
+			bookData.setSummary( getHtmlFromEditor( "PageContent-Book-Summary" ) );
 			
 			pratilipiService.updateBook(
 					new UpdateBookRequest( bookData ),

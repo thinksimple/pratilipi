@@ -1,13 +1,13 @@
-package com.pratilipi.module.pagecontent.homebook.gae;
+package com.pratilipi.pagecontent.book.gae;
 
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.claymus.data.access.gae.PageContentEntity;
-import com.pratilipi.module.pagecontent.homebook.HomeBookContent;
+import com.pratilipi.pagecontent.book.BookContent;
 
 @PersistenceCapable
-public class HomeBookContentEntity extends PageContentEntity implements HomeBookContent {
+public class BookContentEntity extends PageContentEntity implements BookContent {
 
 	@Persistent( column = "X_COL_0" )
 	private Long bookId;

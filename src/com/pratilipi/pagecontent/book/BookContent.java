@@ -1,8 +1,8 @@
-package com.pratilipi.module.pagecontent.homebook;
+package com.pratilipi.pagecontent.book;
 
 import com.claymus.data.transfer.PageContent;
 
-public interface HomeBookContent extends PageContent {
+public interface BookContent extends PageContent {
 	
 	Long getBookId();
 	

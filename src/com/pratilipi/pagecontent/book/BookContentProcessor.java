@@ -1,4 +1,4 @@
-package com.pratilipi.module.pagecontent.homebook;
+package com.pratilipi.pagecontent.book;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +17,7 @@ import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.UserBook;
 
-public class HomeBookContentProcessor extends PageContentProcessor<HomeBookContent> {
+public class BookContentProcessor extends PageContentProcessor<BookContent> {
 
 	public static String ACCESS_ID_BOOK_VIEW = "book_view";
 	public static String ACCESS_ID_BOOK_ADD = "book_add";
@@ -28,7 +28,7 @@ public class HomeBookContentProcessor extends PageContentProcessor<HomeBookConte
 
 	
 	@Override
-	public String getHtml( HomeBookContent homeBookContent,
+	public String getHtml( BookContent homeBookContent,
 			HttpServletRequest request, HttpServletResponse response ) {
 
 		ClaymusHelper claymusHelper = new ClaymusHelper( request );
@@ -63,7 +63,7 @@ public class HomeBookContentProcessor extends PageContentProcessor<HomeBookConte
 		
 		return super.processTemplate(
 				dataModel,
-				"com/pratilipi/module/pagecontent/homebook/HomeBookContent.ftl" );
+				"com/pratilipi/pagecontent/book/BookContent.ftl" );
 	}
 	
 }
