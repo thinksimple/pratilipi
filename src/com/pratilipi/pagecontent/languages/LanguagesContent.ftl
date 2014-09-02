@@ -1,3 +1,5 @@
+<!-- PageContent :: Languages :: Start -->
+
 <div>
 
 	<table class="table">
@@ -29,8 +31,11 @@
 			</#if>
 		</tbody>
 	</table>
+
+	<#if showAddOption>
+		<script type="text/javascript" language="javascript" src="/pagecontent.languages/pagecontent.languages.nocache.js" defer></script>
+	</#if>
 	
 </div>
 
-<script type="text/javascript" language="javascript" src="/pagecontent.languages/pagecontent.languages.nocache.js" defer></script>
-
+<!-- PageContent :: Languages :: End -->

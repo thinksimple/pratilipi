@@ -202,14 +202,13 @@ public class PratilipiServiceImpl
 		if( ! claymusHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_ADD, false ) )
 			throw new InsufficientAccessException();
 		
+		
 		LanguageData languageData = request.getLanguage();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
 		Language language = dataAccessor.newLanguage();
 		language.setName( languageData.getName() );
 		language.setCreationDate( new Date() );
-		
 		language = dataAccessor.createOrUpdateLanguage( language );
 		dataAccessor.destroy();
 		
@@ -217,7 +216,18 @@ public class PratilipiServiceImpl
 	}
 
 	@Override
-	public GetLanguageListResponse getLanguageList( GetLanguageListRequest request ) {
+	public GetLanguageListResponse getLanguageList(
+			GetLanguageListRequest request ) throws InsufficientAccessException {
+		
+		ClaymusHelper claymusHelper =
+				new ClaymusHelper( this.getThreadLocalRequest() );
+		
+		if( ! claymusHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_LIST, false ) )
+			throw new InsufficientAccessException();
+
+		boolean sendMetaData = claymusHelper.hasUserAccess(
+				LanguagesContentProcessor.ACCESS_ID_LANGUAGE_READ_META_DATA, false );
+		
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Language> languageList = dataAccessor.getLanguageList();
@@ -227,12 +237,14 @@ public class PratilipiServiceImpl
 			LanguageData languageData = new LanguageData();
 			languageData.setId( language.getId() );
 			languageData.setName( language.getName() );
-			languageData.setCreationDate( language.getCreationDate() );
+			if( sendMetaData )
+				languageData.setCreationDate( language.getCreationDate() );
 			
 			languageDataList.add( languageData );
 		}
 
 		dataAccessor.destroy();
+		
 		
 		return new GetLanguageListResponse( languageDataList );
 	}

@@ -48,7 +48,8 @@ public interface PratilipiService extends RemoteService {
 	AddLanguageResponse addLanguage( AddLanguageRequest request )
 			throws InsufficientAccessException;
 
-	GetLanguageListResponse getLanguageList( GetLanguageListRequest request );
+	GetLanguageListResponse getLanguageList( GetLanguageListRequest request )
+			throws InsufficientAccessException;
 
 
 	AddAuthorResponse addAuthor( AddAuthorRequest request )

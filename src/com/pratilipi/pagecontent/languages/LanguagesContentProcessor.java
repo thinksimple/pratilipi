@@ -19,7 +19,6 @@ public class LanguagesContentProcessor
 
 	public static String ACCESS_ID_LANGUAGE_LIST = "language_list";
 	public static String ACCESS_ID_LANGUAGE_READ_META_DATA = "language_read_meta_data";
-
 	public static String ACCESS_ID_LANGUAGE_ADD = "language_add";
 	
 	
@@ -28,25 +27,33 @@ public class LanguagesContentProcessor
 			HttpServletRequest request, HttpServletResponse response ) {
 		
 		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		boolean showMetaData =
+				claymusHelper.hasUserAccess( ACCESS_ID_LANGUAGE_READ_META_DATA, false );
+		boolean showAddOption =
+				claymusHelper.hasUserAccess( ACCESS_ID_LANGUAGE_ADD, false );
+
 		
+		// Fetching Language list
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Language> languageList = dataAccessor.getLanguageList();
 		dataAccessor.destroy();
+
 		
+		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "languageList", languageList );
-		
 		dataModel.put( "languagePageUrl", PratilipiHelper.URL_LANGUAGE_PAGE );
+		dataModel.put( "showMetaData", showMetaData );
+		dataModel.put( "showAddOption", showAddOption );
 		
-		dataModel.put( "showMetaData",
-				claymusHelper.hasUserAccess( ACCESS_ID_LANGUAGE_READ_META_DATA, false ) );
-		
-		dataModel.put( "showAddOption",
-				claymusHelper.hasUserAccess( ACCESS_ID_LANGUAGE_ADD, false ) );
-		
-		return super.processTemplate(
-				dataModel,
-				"com/pratilipi/pagecontent/languages/LanguagesContent.ftl" );
+
+		// Processing template
+		return super.processTemplate( dataModel, getTemplateName() );
+	}
+
+	@Override
+	protected String getTemplateName() {
+		return "com/pratilipi/pagecontent/languages/LanguagesContent.ftl";
 	}
 	
 }
