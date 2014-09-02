@@ -10,10 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 
 import com.claymus.commons.server.ClaymusHelper;
-import com.claymus.data.access.DataAccessor;
-import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.PageContent;
-import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.html.HtmlContent;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
@@ -28,10 +25,8 @@ import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
 import com.pratilipi.module.pagecontent.managepublishers.ManagePublishersFactory;
 import com.pratilipi.pagecontent.book.BookContentFactory;
-import com.pratilipi.pagecontent.book.BookContentProcessor;
 import com.pratilipi.pagecontent.books.BooksContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
-import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
@@ -50,51 +45,6 @@ public class PratilipiMain extends ClaymusMain {
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManageAuthorsFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManagePublishersFactory.class );
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		RoleAccess roleAccess = dataAccessor.newRoleAccess();
-		roleAccess.setRoleId( "member" );
-		roleAccess.setAccessId( BookContentProcessor.ACCESS_ID_BOOK_REVIEW_ADD );
-		roleAccess.setAccess( true );
-		dataAccessor.createOrUpdateRoleAccess( roleAccess );
-		
-		// TODO: added for devo testing. remove it in prod.
-		roleAccess = dataAccessor.newRoleAccess();
-		roleAccess.setRoleId( "member" );
-		roleAccess.setAccessId( BookContentProcessor.ACCESS_ID_BOOK_ADD );
-		roleAccess.setAccess( true );
-		dataAccessor.createOrUpdateRoleAccess( roleAccess );
-		
-		// TODO: added for devo testing. remove it in prod.
-		roleAccess = dataAccessor.newRoleAccess();
-		roleAccess.setRoleId( "member" );
-		roleAccess.setAccessId( BookContentProcessor.ACCESS_ID_BOOK_UPDATE );
-		roleAccess.setAccess( true );
-		dataAccessor.createOrUpdateRoleAccess( roleAccess );
-		
-		// TODO: added for devo testing. remove it in prod.
-		roleAccess = dataAccessor.newRoleAccess();
-		roleAccess.setRoleId( "member" );
-		roleAccess.setAccessId( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_LIST );
-		roleAccess.setAccess( true );
-		dataAccessor.createOrUpdateRoleAccess( roleAccess );
-		
-		// TODO: added for devo testing. remove it in prod.
-		roleAccess = dataAccessor.newRoleAccess();
-		roleAccess.setRoleId( "member" );
-		roleAccess.setAccessId( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_READ_META_DATA );
-		roleAccess.setAccess( true );
-		dataAccessor.createOrUpdateRoleAccess( roleAccess );
-		
-		// TODO: added for devo testing. remove it in prod.
-		roleAccess = dataAccessor.newRoleAccess();
-		roleAccess.setRoleId( "member" );
-		roleAccess.setAccessId( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_ADD );
-		roleAccess.setAccess( true );
-		dataAccessor.createOrUpdateRoleAccess( roleAccess );
-		
-		dataAccessor.destroy();
 	}
 
 
