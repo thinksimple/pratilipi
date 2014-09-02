@@ -83,14 +83,6 @@ public class ClaymusMain extends HttpServlet {
 
 	
 	@Override
-	public void doPost(
-			HttpServletRequest request,
-			HttpServletResponse response ) throws IOException {
-
-			doGet( request, response );
-	}
-	
-	@Override
 	public void doGet(
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
