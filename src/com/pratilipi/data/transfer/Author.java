@@ -10,6 +10,10 @@ public interface Author {
 	
 	void setUserId( Long userId );
 	
+	Long getLanguageId();
+	
+	void setLanguageId( Long languageId );
+	
 	String getFirstName();
 	
 	void setFirstName( String firstName );
@@ -21,6 +25,18 @@ public interface Author {
 	String getPenName();
 	
 	void setPenName( String penName );
+	
+	String getFirstNameEn();
+	
+	void setFirstNameEn( String firstNameEn );
+	
+	String getLastNameEn();
+	
+	void setLastNameEn( String lastNameEn );
+	
+	String getPenNameEn();
+	
+	void setPenNameEn( String penNameEn );
 	
 	String getEmail();
 	

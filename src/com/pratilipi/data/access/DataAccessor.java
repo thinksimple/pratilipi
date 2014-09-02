@@ -2,6 +2,7 @@ package com.pratilipi.data.access;
 
 import java.util.List;
 
+import com.claymus.data.access.DataListCursorTuple;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.BookAuthor;
@@ -38,7 +39,7 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	Author getAuthor( Long id );
 
-	List<Author> getAuthorList();
+	DataListCursorTuple<Author> getAuthorList( String cursor, int resultCount );
 
 	Author createOrUpdateAuthor( Author author );
 

@@ -19,6 +19,9 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "USER_ID" )
 	private Long userId;
 	
+	@Persistent( column = "LANGUAGE_ID" )
+	private Long languageId;
+
 	@Persistent( column = "FIRST_NAME" )
 	private String firstName;
 	
@@ -27,6 +30,15 @@ public class AuthorEntity implements Author {
 
 	@Persistent( column = "PEN_NAME" )
 	private String penName;
+	
+	@Persistent( column = "FIRST_NAME_EN" )
+	private String firstNameEn;
+	
+	@Persistent( column = "LAST_NAME_EN" )
+	private String lastNameEn;
+
+	@Persistent( column = "PEN_NAME_EN" )
+	private String penNameEn;
 	
 	@Persistent( column = "EMAIL" )
 	private String email;
@@ -48,6 +60,16 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setUserId( Long userId ) {
 		this.userId = userId;
+	}
+
+	@Override
+	public Long getLanguageId() {
+		return languageId;
+	}
+
+	@Override
+	public void setLanguageId( Long languageId ) {
+		this.languageId = languageId;
 	}
 
 	@Override
@@ -78,6 +100,36 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setPenName( String penName ) {
 		this.penName = penName;
+	}
+
+	@Override
+	public String getFirstNameEn() {
+		return firstNameEn;
+	}
+
+	@Override
+	public void setFirstNameEn( String firstNameEn ) {
+		this.firstNameEn = firstNameEn;
+	}
+
+	@Override
+	public String getLastNameEn() {
+		return lastNameEn;
+	}
+
+	@Override
+	public void setLastNameEn( String lastNameEn ) {
+		this.lastNameEn = lastNameEn;
+	}
+
+	@Override
+	public String getPenNameEn() {
+		return penNameEn;
+	}
+
+	@Override
+	public void setPenNameEn( String penNameEn ) {
+		this.penNameEn = penNameEn;
 	}
 
 	@Override

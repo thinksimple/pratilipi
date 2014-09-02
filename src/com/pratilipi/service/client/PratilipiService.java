@@ -35,10 +35,10 @@ import com.pratilipi.service.shared.UpdateBookResponse;
 public interface PratilipiService extends RemoteService {
 	
 	AddBookResponse addBook( AddBookRequest request )
-			throws InsufficientAccessException, IllegalArgumentException;
+			throws IllegalArgumentException, InsufficientAccessException;
 
 	UpdateBookResponse updateBook( UpdateBookRequest request )
-			throws InsufficientAccessException, IllegalArgumentException;
+			throws IllegalArgumentException, InsufficientAccessException;
 
 	GetBookListResponse getBookList( GetBookListRequest request );
 	
@@ -46,16 +46,17 @@ public interface PratilipiService extends RemoteService {
 	
 
 	AddLanguageResponse addLanguage( AddLanguageRequest request )
-			throws InsufficientAccessException;
+			throws IllegalArgumentException, InsufficientAccessException;
 
 	GetLanguageListResponse getLanguageList( GetLanguageListRequest request )
 			throws InsufficientAccessException;
 
 
 	AddAuthorResponse addAuthor( AddAuthorRequest request )
-			throws InsufficientAccessException;
+			throws IllegalArgumentException, InsufficientAccessException;
 
-	GetAuthorListResponse getAuthorList( GetAuthorListRequest request );
+	GetAuthorListResponse getAuthorList( GetAuthorListRequest request )
+			throws InsufficientAccessException;
 	
 	
 	AddPublisherResponse addPublisher( AddPublisherRequest request )
@@ -65,7 +66,7 @@ public interface PratilipiService extends RemoteService {
 	
 
 	AddUserBookResponse addUserBook( AddUserBookRequest request )
-			throws InsufficientAccessException, IllegalArgumentException;
+			throws IllegalArgumentException, InsufficientAccessException;
 
 	GetUserBookResponse getUserBook( GetUserBookRequest request );
 	

@@ -7,6 +7,7 @@ import java.util.List;
 import com.claymus.commons.client.IllegalArgumentException;
 import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.User;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.commons.shared.UserReviewState;
@@ -17,6 +18,7 @@ import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserBook;
+import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
 import com.pratilipi.pagecontent.book.BookContentProcessor;
 import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
@@ -59,7 +61,7 @@ public class PratilipiServiceImpl
 
 	@Override
 	public AddBookResponse addBook( AddBookRequest request )
-			throws InsufficientAccessException, IllegalArgumentException {
+			throws IllegalArgumentException, InsufficientAccessException {
 		
 		if( ! ClaymusHelper.isUserAdmin() )
 			throw new InsufficientAccessException();
@@ -90,7 +92,7 @@ public class PratilipiServiceImpl
 
 	@Override
 	public UpdateBookResponse updateBook( UpdateBookRequest request )
-			throws InsufficientAccessException, IllegalArgumentException {
+			throws IllegalArgumentException, InsufficientAccessException {
 
 		BookData bookData = request.getBook();
 		if( ! bookData.hasId() )
@@ -163,7 +165,7 @@ public class PratilipiServiceImpl
 	}
 	
 	@Override
-	public GetBookResponse getBookById(GetBookRequest request) {
+	public GetBookResponse getBookById( GetBookRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Book book = dataAccessor.getBook(request.getBookId());
@@ -194,7 +196,13 @@ public class PratilipiServiceImpl
 	
 	@Override
 	public AddLanguageResponse addLanguage( AddLanguageRequest request )
-			throws InsufficientAccessException {
+			throws IllegalArgumentException, InsufficientAccessException {
+		
+		LanguageData languageData = request.getLanguage();
+		if( languageData.getId() != null )
+			throw new IllegalArgumentException(
+					"LanguageId exist already. Did you mean to call updateLanguage ?" );
+
 		
 		ClaymusHelper claymusHelper =
 				new ClaymusHelper( this.getThreadLocalRequest() );
@@ -203,7 +211,6 @@ public class PratilipiServiceImpl
 			throw new InsufficientAccessException();
 		
 		
-		LanguageData languageData = request.getLanguage();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Language language = dataAccessor.newLanguage();
@@ -231,6 +238,8 @@ public class PratilipiServiceImpl
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Language> languageList = dataAccessor.getLanguageList();
+		dataAccessor.destroy();
+		
 		
 		ArrayList<LanguageData> languageDataList = new ArrayList<>( languageList.size() );
 		for( Language language : languageList ) {
@@ -243,8 +252,6 @@ public class PratilipiServiceImpl
 			languageDataList.add( languageData );
 		}
 
-		dataAccessor.destroy();
-		
 		
 		return new GetLanguageListResponse( languageDataList );
 	}
@@ -252,22 +259,32 @@ public class PratilipiServiceImpl
 
 	@Override
 	public AddAuthorResponse addAuthor( AddAuthorRequest request )
-			throws InsufficientAccessException {
-		
-		if( ! ClaymusHelper.isUserAdmin() )
-			throw new InsufficientAccessException();
+			throws IllegalArgumentException, InsufficientAccessException {
 		
 		AuthorData authorData = request.getAuthor();
+		if( authorData.getId() != null )
+			throw new IllegalArgumentException(
+					"AuthorId exist already. Did you mean to call updateAuthor ?" );
+		
+		
+		ClaymusHelper claymusHelper =
+				new ClaymusHelper( this.getThreadLocalRequest() );
+		
+		if( ! claymusHelper.hasUserAccess( AuthorsContentProcessor.ACCESS_ID_AUTHOR_ADD, false ) )
+			throw new InsufficientAccessException();
+
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
 		Author author = dataAccessor.newAuthor();
+		author.setLanguageId( authorData.getLanguageId() );
 		author.setFirstName( authorData.getFirstName() );
 		author.setLastName( authorData.getLastName() );
 		author.setPenName( authorData.getPenName() );
-		author.setEmail( authorData.getEmail() );
+		author.setFirstNameEn( authorData.getFirstNameEn() );
+		author.setLastNameEn( authorData.getLastNameEn() );
+		author.setPenNameEn( authorData.getPenNameEn() );
+		author.setEmail( authorData.getEmail().toLowerCase() );
 		author.setRegistrationDate( new Date() );
-		
 		author = dataAccessor.createOrUpdateAuthor( author );
 		dataAccessor.destroy();
 		
@@ -275,26 +292,50 @@ public class PratilipiServiceImpl
 	}
 
 	@Override
-	public GetAuthorListResponse getAuthorList( GetAuthorListRequest request ) {
+	public GetAuthorListResponse getAuthorList( GetAuthorListRequest request )
+			throws InsufficientAccessException {
+		
+		ClaymusHelper claymusHelper =
+				new ClaymusHelper( this.getThreadLocalRequest() );
+		
+		if( ! claymusHelper.hasUserAccess( AuthorsContentProcessor.ACCESS_ID_AUTHOR_LIST, false ) )
+			throw new InsufficientAccessException();
+
+		boolean sendMetaData = claymusHelper.hasUserAccess(
+				AuthorsContentProcessor.ACCESS_ID_AUTHOR_READ_META_DATA, false );
+
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<Author> authorList = dataAccessor.getAuthorList();
+		DataListCursorTuple<Author> authorListCursorTuple =
+				dataAccessor.getAuthorList( request.getCursor(), request.getResultCount() );
+		List<Author> authorList = authorListCursorTuple.getDataList();
+		String cursor = authorListCursorTuple.getCursor();
 		
 		ArrayList<AuthorData> authorDataList = new ArrayList<>( authorList.size() );
 		for( Author author : authorList ) {
+			Language language = dataAccessor.getLanguage( author.getLanguageId() );
+
 			AuthorData authorData = new AuthorData();
 			authorData.setId( author.getId() );
+			authorData.setLanguageId( language.getId() );
+			authorData.setLanguageName( language.getName() );
 			authorData.setFirstName( author.getFirstName() );
 			authorData.setLastName( author.getLastName() );
+			authorData.setPenName( author.getPenName() );
+			authorData.setFirstNameEn( author.getFirstNameEn() );
+			authorData.setLastNameEn( author.getLastNameEn() );
+			authorData.setPenNameEn( author.getPenNameEn() );
 			authorData.setEmail( author.getEmail() );
-			authorData.setRegistrationDate( author.getRegistrationDate() );
+			if( sendMetaData )
+				authorData.setRegistrationDate( author.getRegistrationDate() );
 			
 			authorDataList.add( authorData );
 		}
 
 		dataAccessor.destroy();
+
 		
-		return new GetAuthorListResponse( authorDataList );
+		return new GetAuthorListResponse( authorDataList, cursor );
 	}
 
 	
@@ -346,7 +387,7 @@ public class PratilipiServiceImpl
 	
 	@Override
 	public AddUserBookResponse addUserBook( AddUserBookRequest request )
-			throws InsufficientAccessException, IllegalArgumentException {
+			throws IllegalArgumentException, InsufficientAccessException {
 		
 		UserBookData userBookData = request.getUserBook();
 

@@ -8,11 +8,21 @@ public class AuthorData implements IsSerializable {
 
 	private Long id;
 	
+	private Long languageId;
+
+	private String languageName;
+
 	private String firstName;
 	
 	private String lastName;
 	
 	private String penName;
+	
+	private String firstNameEn;
+	
+	private String lastNameEn;
+	
+	private String penNameEn;
 	
 	private String email;
 
@@ -25,6 +35,22 @@ public class AuthorData implements IsSerializable {
 
 	public void setId( Long id ) {
 		this.id = id;
+	}
+
+	public Long getLanguageId() {
+		return languageId;
+	}
+
+	public void setLanguageId( Long languageId ) {
+		this.languageId = languageId;
+	}
+
+	public String getLanguageName() {
+		return languageName;
+	}
+
+	public void setLanguageName( String languageName ) {
+		this.languageName = languageName;
 	}
 
 	public String getFirstName() {
@@ -49,6 +75,30 @@ public class AuthorData implements IsSerializable {
 
 	public void setPenName( String penName ) {
 		this.penName = penName;
+	}
+
+	public String getFirstNameEn() {
+		return firstNameEn;
+	}
+
+	public void setFirstNameEn( String firstNameEn ) {
+		this.firstNameEn = firstNameEn;
+	}
+
+	public String getLastNameEn() {
+		return lastNameEn;
+	}
+
+	public void setLastNameEn( String lastNameEn ) {
+		this.lastNameEn = lastNameEn;
+	}
+
+	public String getPenNameEn() {
+		return penNameEn;
+	}
+
+	public void setPenNameEn( String penNameEn ) {
+		this.penNameEn = penNameEn;
 	}
 
 	public String getEmail() {

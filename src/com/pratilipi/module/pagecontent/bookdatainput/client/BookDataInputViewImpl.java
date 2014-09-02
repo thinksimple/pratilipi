@@ -66,7 +66,7 @@ public class BookDataInputViewImpl extends BookDataInputView {
 		languageInput.setWidth("105px");
 		
 		//Get list of authors.
-		pratilipiService.getAuthorList(new GetAuthorListRequest(), new AsyncCallback<GetAuthorListResponse>(){
+		pratilipiService.getAuthorList(new GetAuthorListRequest( null , 20 ), new AsyncCallback<GetAuthorListResponse>(){
 
 			@Override
 			public void onFailure(Throwable caught) {

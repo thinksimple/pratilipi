@@ -1,11 +1,16 @@
 package com.pratilipi.data.access;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.Query;
 
+import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.access.GaeQueryBuilder;
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.data.access.gae.AuthorEntity;
 import com.pratilipi.data.access.gae.BookAuthorEntity;
 import com.pratilipi.data.access.gae.BookEntity;
@@ -97,14 +102,31 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
-	public List<Author> getAuthorList() {
+	public DataListCursorTuple<Author> getAuthorList( String cursorStr, int resultCount ) {
+
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
+						.addOrdering( "firstNameEn", true )
+						.addOrdering( "lastNameEn", true )
+						.addOrdering( "penNameEn", true )
+						.setRange( 0, resultCount )
 						.build();
+
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions(extensionMap);
+		}
 		
 		@SuppressWarnings("unchecked")
 		List<Author> authorEntityList = (List<Author>) query.execute();
-		return (List<Author>) pm.detachCopyAll( authorEntityList );
+		Cursor cursor = JDOCursorHelper.getCursor( authorEntityList );
+		
+		return new DataListCursorTuple<>(
+				(List<Author>) pm.detachCopyAll( authorEntityList ),
+				cursor.toWebSafeString() );
+	
 	}
 	
 	@Override
