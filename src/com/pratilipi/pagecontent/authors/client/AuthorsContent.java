@@ -1,4 +1,4 @@
-package com.pratilipi.module.pagecontent.manageauthors.client;
+package com.pratilipi.pagecontent.authors.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -18,12 +18,12 @@ import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 
-public class ManageAuthors implements EntryPoint {
+public class AuthorsContent implements EntryPoint {
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
 	
 	public void onModuleLoad() {
-		final ManageAuthorsView manageAuthors = new ManageAuthorsViewImpl();
+		final AuthorsDataInputView manageAuthors = new AuthorsDataInputViewImpl();
 		
 		final VerticalPanel vPanel = new VerticalPanel();
 		
@@ -49,7 +49,7 @@ public class ManageAuthors implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				ValidateAuthor validator = new ValidateAuthor(manageAuthors);
+				ValidateAuthorData validator = new ValidateAuthorData(manageAuthors);
 				if(validator.validateAuthor()){
 					pratilipiService.addAuthor(new AddAuthorRequest(manageAuthors.getAuthor()), new AsyncCallback<AddAuthorResponse>(){
 	
@@ -68,9 +68,9 @@ public class ManageAuthors implements EntryPoint {
 					Window.alert("Error in form");
 			}});
 		
-		RootPanel.get("PageContent-ManageAuthors").add(vPanel);
-		RootPanel.get("PageContent-ManageAuthors").add(manageAuthors);
-		RootPanel.get("PageContent-ManageAuthors").add(addAuthor);
+		RootPanel.get("PageContent-Authors").add(vPanel);
+		RootPanel.get("PageContent-Authors").add(manageAuthors);
+		RootPanel.get("PageContent-Authors").add(addAuthor);
 		
 	}
 	

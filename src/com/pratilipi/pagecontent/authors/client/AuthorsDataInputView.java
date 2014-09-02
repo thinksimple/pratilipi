@@ -1,9 +1,9 @@
-package com.pratilipi.module.pagecontent.manageauthors.client;
+package com.pratilipi.pagecontent.authors.client;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.pratilipi.service.shared.data.AuthorData;
 
-public abstract class ManageAuthorsView extends Composite {
+public abstract class AuthorsDataInputView extends Composite {
 	public abstract void setAuthor( AuthorData author);
 	
 	public abstract AuthorData getAuthor();

@@ -22,8 +22,8 @@ import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
-import com.pratilipi.module.pagecontent.manageauthors.ManageAuthorsFactory;
 import com.pratilipi.module.pagecontent.managepublishers.ManagePublishersFactory;
+import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.book.BookContentFactory;
 import com.pratilipi.pagecontent.books.BooksContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
@@ -43,7 +43,7 @@ public class PratilipiMain extends ClaymusMain {
 		
 		PAGE_CONTENT_REGISTRY.register( BooksContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( ManageAuthorsFactory.class );
+		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ManagePublishersFactory.class );
 	}
 
@@ -72,7 +72,7 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( LanguagesContentFactory.newLanguagesContent() );
 
 		else if( requestUri.equals( "/authors" ) )
-			pageContentList.add( ManageAuthorsFactory.newAuthorDataInput() );
+			pageContentList.add( AuthorsContentFactory.newAuthorsContent() );
 
 		else if( requestUri.equals( "/publishers" ) )
 			pageContentList.add( ManagePublishersFactory.newPublisherDataInput() );
@@ -82,9 +82,9 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.startsWith( PratilipiHelper.BOOK_PAGE_URL ) ) {
 			String bookIdStr = requestUri.substring( PratilipiHelper.BOOK_PAGE_URL.length() );
 			if( bookIdStr.equals( "new" ) )
-				pageContentList.add( BookContentFactory.newHomeBookContent() );
+				pageContentList.add( BookContentFactory.newBookContent() );
 			else
-				pageContentList.add( BookContentFactory.newHomeBookContent( Long.parseLong( bookIdStr ) ) );
+				pageContentList.add( BookContentFactory.newBookContent( Long.parseLong( bookIdStr ) ) );
 		}
 
 		

@@ -6,15 +6,15 @@ import com.pratilipi.pagecontent.book.gae.BookContentEntity;
 public class BookContentFactory
 		implements PageContentFactory<BookContent, BookContentProcessor> {
 	
-	public static BookContent newHomeBookContent() {
+	public static BookContent newBookContent() {
 		
 		return new BookContentEntity();
 	}
 
-	public static BookContent newHomeBookContent( Long bookId ) {
-		BookContent homeBookContent = new BookContentEntity();
-		homeBookContent.setBookId( bookId );
-		return homeBookContent;
+	public static BookContent newBookContent( Long bookId ) {
+		BookContent bookContent = new BookContentEntity();
+		bookContent.setBookId( bookId );
+		return bookContent;
 	}
 	
 }

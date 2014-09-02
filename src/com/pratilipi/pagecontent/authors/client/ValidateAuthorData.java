@@ -1,10 +1,10 @@
-package com.pratilipi.module.pagecontent.manageauthors.client;
+package com.pratilipi.pagecontent.authors.client;
 
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 
-public class ValidateAuthor {
-	private ManageAuthorsView author = new ManageAuthorsViewImpl();
+public class ValidateAuthorData {
+	private AuthorsDataInputView author = new AuthorsDataInputViewImpl();
 	
 	//Regular expression for string containing characters and whitespace.
 	private String charPattern = new String("^\\w+( \\w+)*$");
@@ -23,7 +23,7 @@ public class ValidateAuthor {
 	//container of validation result.
 	private Boolean validated = true;
 	
-	public ValidateAuthor(ManageAuthorsView author){
+	public ValidateAuthorData(AuthorsDataInputView author){
 		this.author = author;
 	}
 	

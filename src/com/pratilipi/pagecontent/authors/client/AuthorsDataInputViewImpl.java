@@ -1,17 +1,17 @@
-package com.pratilipi.module.pagecontent.manageauthors.client;
+package com.pratilipi.pagecontent.authors.client;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pratilipi.service.shared.data.AuthorData;
 
-public class ManageAuthorsViewImpl extends ManageAuthorsView {
+public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 	private TextBox firstNameInput = new TextBox();
 	private TextBox lastNameInput = new TextBox();
 	private TextBox emailInput = new TextBox();
 	private TextBox penNameInput = new TextBox();
 	
-	public ManageAuthorsViewImpl(){
+	public AuthorsDataInputViewImpl(){
 		VerticalPanel vPanel = new VerticalPanel();
 		vPanel.setSpacing(1);
 		

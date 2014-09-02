@@ -1,13 +1,13 @@
-package com.pratilipi.module.pagecontent.manageauthors;
+package com.pratilipi.pagecontent.authors;
 
 import com.claymus.module.pagecontent.PageContentFactory;
 
-public class ManageAuthorsFactory
-		implements PageContentFactory<ManageAuthors, ManageAuthorsProcessor> {
+public class AuthorsContentFactory
+		implements PageContentFactory<AuthorsContent, AuthorsContentProcessor> {
 	
-	public static ManageAuthors newAuthorDataInput() {
+	public static AuthorsContent newAuthorsContent() {
 		
-		return new ManageAuthors() {
+		return new AuthorsContent() {
 			
 			@Override
 			public Long getId() {
