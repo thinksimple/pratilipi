@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.BlobEntry;
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.Transform;
 
 @SuppressWarnings("serial")
 public class ResourceServlet extends HttpServlet {
@@ -39,8 +43,15 @@ public class ResourceServlet extends HttpServlet {
 		} else {
 			response.setContentType( blobEntry.getMimeType() );
 			response.setHeader( "ETag", blobEntry.getETag() );
+
+			// If the image width is more than 300px, resizing it to 300px width
+			ImagesService imagesService = ImagesServiceFactory.getImagesService();
+	        Transform resize = ImagesServiceFactory.makeResize( 300, 1000 );
+	        Image oldImage = ImagesServiceFactory.makeImage( blobEntry.getData() );
+	        Image newImage = imagesService.applyTransform( resize, oldImage );
+
 			OutputStream out = response.getOutputStream();
-			out.write( blobEntry.getData() );
+			out.write( newImage.getImageData() );
 			out.close();
 		}
 	}
