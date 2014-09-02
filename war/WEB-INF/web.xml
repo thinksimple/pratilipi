@@ -24,9 +24,11 @@
   </servlet-mapping>
 
 
+  <!-- Handler for uploading and serving website resources -->
+
   <servlet>
     <servlet-name>ResourceServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
+    <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ResourceServlet</servlet-name>
@@ -78,7 +80,6 @@
     <web-resource-collection>
       <web-resource-name>admin</web-resource-name>
       <url-pattern>/_ah/queue/*</url-pattern>
-      <url-pattern>/service.upload/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
