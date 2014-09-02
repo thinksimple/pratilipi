@@ -8,6 +8,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddBookRequest;
@@ -25,9 +26,7 @@ public class BookDataInput implements EntryPoint {
 		String path = Window.Location.getPath();
 		
 		//Add new book page.
-		if(path.equals("/manage/books/new")){
-			//final BookDataInputView bookDataInputView = new BookDataInputViewImpl();
-			
+		if(path.equals("/book/new")){
 			final Button button = new Button( "Save" );
 			button.addClickHandler( new ClickHandler() {
 				
@@ -42,8 +41,7 @@ public class BookDataInput implements EntryPoint {
 							public void onSuccess( AddBookResponse result ) {
 								Long bookId = result.getBookId();
 								Window.alert( "Book added successfully !" );
-								Window.Location.assign("/book/?bookid=" + bookId);
-//								Window.alert("Redirected to update page");
+								Window.Location.assign( PratilipiHelper.BOOK_PAGE_URL + bookId);
 							}
 							
 							@Override
@@ -59,8 +57,8 @@ public class BookDataInput implements EntryPoint {
 				
 			} );
 			
-			RootPanel.get( "PageContent-BookDataInput" ).add( bookDataInputView );
-			RootPanel.get( "PageContent-BookDataInput" ).add( button );
+			RootPanel.get( "PageContent-HomeBook-New" ).add( bookDataInputView );
+			RootPanel.get( "PageContent-HomeBook-New" ).add( button );
 		}
 		
 		//Update book page.
@@ -97,9 +95,9 @@ public class BookDataInput implements EntryPoint {
 				}
 			} );
 			
-			RootPanel.get( "PageContent-BookDataInput" ).add( bookDataInputView );
-			RootPanel.get( "PageContent-BookDataInput" ).add( updateButton );
-			RootPanel.get("PageContent-BookDataInput").add(new BookDataUpdateViewImpl( bookId));
+			RootPanel.get( "PageContent-HomeBook-New" ).add( bookDataInputView );
+			RootPanel.get( "PageContent-HomeBook-New" ).add( updateButton );
+			RootPanel.get( "PageContent-HomeBook-New" ).add( new BookDataUpdateViewImpl( bookId) );
 		}
 	}
 }

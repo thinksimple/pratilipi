@@ -8,8 +8,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.UpdateBookRequest;
@@ -21,16 +23,38 @@ public class BookContentEditOptions implements EntryPoint, ClickHandler {
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
 	
+
+	// Cover image edit options widgets
+	private final FileUpload coverImageUpload = new FileUpload();
+	
+	
+	// Summary edit options widgets
 	private final Anchor editSummaryAnchor = new Anchor( "Edit Summary" );
 	private final Anchor saveSummaryAnchor = new Anchor( "Save Summary" );
 	private final Label savingLabel = new Label( "Saving ..." );
 	
 
 	public void onModuleLoad() {
+
+		String uri = Window.Location.getPath();
+		String bookIdStr = uri.substring( PratilipiHelper.BOOK_PAGE_URL.length() );
 		
+		
+		// Cover image edit options
+		coverImageUpload.getElement().setAttribute(
+				"data-url", PratilipiHelper.BOOK_COVER_URL + bookIdStr );
+
+		RootPanel coverImageEditOptions =
+				RootPanel.get( "PageContent-Book-CoverImage-EditOptions" );
+		coverImageEditOptions.add( coverImageUpload );
+		
+		loadFileUploader( coverImageUpload.getElement() );
+
+		
+		// Summary edit options
 		editSummaryAnchor.addClickHandler( this );
 		saveSummaryAnchor.addClickHandler( this );
-		
+
 		RootPanel rootPanel = RootPanel.get( "PageContent-Book-Summary-EditOptions" );
 		rootPanel.add( editSummaryAnchor );
 		rootPanel.add( saveSummaryAnchor );
@@ -78,6 +102,15 @@ public class BookContentEditOptions implements EntryPoint, ClickHandler {
 		
 	}
 	
+	private native void loadFileUploader( Element element ) /*-{
+		$wnd.jQuery( element ).fileupload({
+			dataType: 'html',
+			done: function( e, data ) {
+				$wnd.document.location.reload();
+			}
+		});
+	}-*/;
+
 	private native void loadEditor( Element element ) /*-{
 		$wnd.CKEDITOR.replace( element );
 	}-*/;

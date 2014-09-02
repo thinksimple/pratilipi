@@ -17,7 +17,7 @@ import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserBook;
-import com.pratilipi.module.pagecontent.homebook.HomeBookContentProcessor;
+import com.pratilipi.pagecontent.book.BookContentProcessor;
 import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddAuthorRequest;
@@ -92,17 +92,21 @@ public class PratilipiServiceImpl
 	public UpdateBookResponse updateBook( UpdateBookRequest request )
 			throws InsufficientAccessException, IllegalArgumentException {
 
-		if( ! ClaymusHelper.isUserAdmin() )
-			throw new InsufficientAccessException();
-		
 		BookData bookData = request.getBook();
 		if( ! bookData.hasId() )
 			throw new IllegalArgumentException(
 					"BookId is not set. Did you mean to call addBook ?" );
-		
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
 		Book book = dataAccessor.getBook( bookData.getId() );
+		
+		ClaymusHelper claymusHelper = new ClaymusHelper( this.getThreadLocalRequest() );
+		
+		if ( ( claymusHelper.getCurrentUserId() == book.getAuthorId()
+				&& ! claymusHelper.hasUserAccess( BookContentProcessor.ACCESS_ID_BOOK_ADD, false ) )
+				|| ! claymusHelper.hasUserAccess( BookContentProcessor.ACCESS_ID_BOOK_UPDATE, false ) )
+			throw new InsufficientAccessException();
+		
 		if( bookData.hasTitle() )
 			book.setTitle( bookData.getTitle() );
 		if( bookData.hasLanguageId() )
@@ -345,7 +349,7 @@ public class PratilipiServiceImpl
 		
 		if( claymusHelper.getCurrentUserId() == book.getAuthorId()
 				|| ( userBook != null && userBook.getReviewState() != UserReviewState.NOT_SUBMITTED )
-				|| ! claymusHelper.hasUserAccess( HomeBookContentProcessor.ACCESS_ID_BOOK_REVIEW_ADD, false ) )
+				|| ! claymusHelper.hasUserAccess( BookContentProcessor.ACCESS_ID_BOOK_REVIEW_ADD, false ) )
 			throw new InsufficientAccessException();
 
 		userBook = dataAccessor.newUserBook();

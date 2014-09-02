@@ -1,7 +1,6 @@
 package com.pratilipi.module.pagecontent.bookdatainput.client;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pratilipi.service.shared.data.BookData;
 
 public abstract class BookDataInputView extends Composite {

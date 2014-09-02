@@ -15,10 +15,6 @@ public class ValidateInputImpl{
 	private String charPattern = new String("^[a-zA-z\\s]+$");
 	private RegExp charExp = RegExp.compile(charPattern);
 
-	//Regular expression for string containing number, characters and whitespace.
-	private String strPattern = new String("^\\w+( \\w+)*$");
-	private RegExp strExp = RegExp.compile(strPattern);
-
 	//container of validation result.
 	private Boolean validated = true;
 

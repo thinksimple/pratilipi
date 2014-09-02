@@ -28,42 +28,53 @@ public class BookContentProcessor extends PageContentProcessor<BookContent> {
 
 	
 	@Override
-	public String getHtml( BookContent homeBookContent,
+	public String getHtml( BookContent bookContent,
 			HttpServletRequest request, HttpServletResponse response ) {
 
 		ClaymusHelper claymusHelper = new ClaymusHelper( request );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		Book book = dataAccessor.getBook( homeBookContent.getBookId() );
-		Author author = dataAccessor.getAuthor( book.getAuthorId() );
-		UserBook userBook = dataAccessor.getUserBook(
-				claymusHelper.getCurrentUserId(), book.getId() );
-		List<UserBook> reviewList = dataAccessor.getUserBookList( book.getId() );
 
-		dataAccessor.destroy();
+		if( bookContent.getBookId() != null ) {
+			Book book = dataAccessor.getBook( bookContent.getBookId() );
+			Author author = dataAccessor.getAuthor( book.getAuthorId() );
+			UserBook userBook = dataAccessor.getUserBook(
+					claymusHelper.getCurrentUserId(), book.getId() );
+			List<UserBook> reviewList = dataAccessor.getUserBookList( book.getId() );
+	
+			dataAccessor.destroy();
+			
+			Map<String, Object> dataModel = new HashMap<>();
+			dataModel.put( "book", book );
+			dataModel.put( "author", author );
+			dataModel.put( "reviewList", reviewList );
+			
+			dataModel.put( "bookCoverUrl", PratilipiHelper.BOOK_COVER_URL + book.getId() );
+			dataModel.put( "bookHomeUrl", PratilipiHelper.BOOK_PAGE_URL + book.getId() );
+			dataModel.put( "authorHomeUrl", PratilipiHelper.AUTHOR_PAGE_URL + book.getId() );
+			
+			dataModel.put( "showEditOptions",
+					( claymusHelper.getCurrentUserId() == book.getAuthorId() && claymusHelper.hasUserAccess( ACCESS_ID_BOOK_ADD, false ) )
+					|| claymusHelper.hasUserAccess( ACCESS_ID_BOOK_UPDATE, false ) );
+			
+			dataModel.put( "showAddReviewOption",
+					claymusHelper.getCurrentUserId() != book.getAuthorId()
+					&& ( userBook == null || userBook.getReviewState() == UserReviewState.NOT_SUBMITTED )
+					&& claymusHelper.hasUserAccess( ACCESS_ID_BOOK_REVIEW_ADD, false ) );
+			
+			return super.processTemplate(
+					dataModel,
+					"com/pratilipi/pagecontent/book/BookContent.ftl" );
 		
-		Map<String, Object> dataModel = new HashMap<>();
-		dataModel.put( "book", book );
-		dataModel.put( "author", author );
-		dataModel.put( "reviewList", reviewList );
+		} else if( claymusHelper.hasUserAccess( ACCESS_ID_BOOK_ADD, false ) ) {
+			return super.processTemplate(
+					null,
+					"com/pratilipi/pagecontent/book/BookContentNew.ftl" );
+			
+		} else {
+			return "";
+		}
 		
-		dataModel.put( "bookCoverUrl", PratilipiHelper.BOOK_COVER_URL );
-		dataModel.put( "bookHomeUrl", PratilipiHelper.BOOK_PAGE_URL );
-		dataModel.put( "authorHomeUrl", PratilipiHelper.AUTHOR_PAGE_URL );
-		
-		dataModel.put( "showEditOptions",
-				( claymusHelper.getCurrentUserId() == book.getAuthorId() && claymusHelper.hasUserAccess( ACCESS_ID_BOOK_ADD, false ) )
-				|| claymusHelper.hasUserAccess( ACCESS_ID_BOOK_UPDATE, false ) );
-		
-		dataModel.put( "showAddReviewOption",
-				claymusHelper.getCurrentUserId() != book.getAuthorId()
-				&& ( userBook == null || userBook.getReviewState() == UserReviewState.NOT_SUBMITTED )
-				&& claymusHelper.hasUserAccess( ACCESS_ID_BOOK_REVIEW_ADD, false ) );
-		
-		return super.processTemplate(
-				dataModel,
-				"com/pratilipi/pagecontent/book/BookContent.ftl" );
 	}
 	
 }
