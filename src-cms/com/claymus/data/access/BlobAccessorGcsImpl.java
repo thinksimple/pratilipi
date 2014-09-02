@@ -14,6 +14,8 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.claymus.data.access.gcs.BlobEntryGcsImpl;
+import com.claymus.data.transfer.BlobEntry;
 import com.google.appengine.tools.cloudstorage.GcsFileMetadata;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
@@ -110,6 +112,23 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 		}
 		
 		return blobCreated;
+	}
+
+	@Override
+	public BlobEntry getBlob( String fileName ) throws IOException {
+
+		GcsFilename gcsFileName
+				= new GcsFilename( bucketName, fileName );
+		GcsFileMetadata gcsFileMetadata
+				= gcsService.getMetadata( gcsFileName );
+		GcsInputChannel gcsInputChannel
+				= gcsService.openReadChannel( gcsFileName, 0 );
+		
+		ByteBuffer byteBuffer
+				= ByteBuffer.allocate( (int) gcsFileMetadata.getLength() );
+		gcsInputChannel.read( byteBuffer );
+	
+		return new BlobEntryGcsImpl( byteBuffer, gcsFileMetadata );
 	}
 
 	@Override

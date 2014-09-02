@@ -2,7 +2,6 @@ package com.claymus.data.access;
 
 import java.util.List;
 
-import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.EmailTemplate;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
@@ -43,13 +42,6 @@ public interface DataAccessor {
 	
 	RoleAccess createOrUpdateRoleAccess( RoleAccess roleAccess );
 
-	
-	BlobEntry newBlobEntry();
-	
-	BlobEntry getBlobEntry( String name );
-	
-	BlobEntry createBlobEntry( BlobEntry blobEntry );
-	
 	
 	Page newPage();
 	

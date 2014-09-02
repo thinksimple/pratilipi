@@ -8,7 +8,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
-import com.claymus.data.access.gae.BlobEntryEntity;
 import com.claymus.data.access.gae.EmailTemplateEntity;
 import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.access.gae.PageEntity;
@@ -17,7 +16,6 @@ import com.claymus.data.access.gae.RoleAccessEntity;
 import com.claymus.data.access.gae.RoleEntity;
 import com.claymus.data.access.gae.UserEntity;
 import com.claymus.data.access.gae.UserRoleEntity;
-import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.EmailTemplate;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
@@ -140,32 +138,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		( (RoleAccessEntity) roleAccess ).setId(
 				roleAccess.getRoleId() + "-" + roleAccess.getAccessId() );
 		return createOrUpdateEntity( roleAccess );
-	}
-
-	
-	@Override
-	public BlobEntry newBlobEntry() {
-		return new BlobEntryEntity();
-	}
-
-	@Override
-	public BlobEntry getBlobEntry( String name ) {
-		Query query =
-				new GaeQueryBuilder( pm.newQuery( BlobEntryEntity.class ) )
-						.addFilter( "name", name )
-						.addOrdering( "creationDate", false )
-						.setRange( 0, 1 )
-						.build();
-		
-		@SuppressWarnings("unchecked")
-		List<BlobEntry> blobEntryList = (List<BlobEntry>) query.execute( name );
-		return blobEntryList.size() == 0 ? null : pm.detachCopy( blobEntryList.get( 0 ) );
-	}
-
-	@Override
-	public BlobEntry createBlobEntry( BlobEntry blobEntry ) {
-		( (BlobEntryEntity) blobEntry ).setId( null );
-		return createOrUpdateEntity( blobEntry );
 	}
 
 	

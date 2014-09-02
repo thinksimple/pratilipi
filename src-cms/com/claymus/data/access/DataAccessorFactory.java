@@ -16,20 +16,24 @@ public class DataAccessorFactory {
 	private static final String GOOGLE_CLOUD_STORAGE_BUCKET =
 			ClaymusHelper.getSystemProperty( "blobservice.gcs.bucket" );
 
+	private static BlobAccessor blobAccessor;
+	
 	
 	public static DataAccessor getDataAccessor() {
 		return new DataAccessorGaeImpl();
 	}
 	
 	public static BlobAccessor getBlobAccessor() {
-
-		if( CLOUD_SERVICE.equals( GOOGLE_CLOUD_STORAGE ) )
-			return new BlobAccessorGcsImpl( GOOGLE_CLOUD_STORAGE_BUCKET );
-		
-		else if( CLOUD_SERVICE.equals( GOOGLE_APPENGINE_BLOBSTORE ) )
-			return new BlobAccessorGaeImpl();
-		
-		return null;
+		if( blobAccessor == null ) {
+			if( CLOUD_SERVICE.equals( GOOGLE_CLOUD_STORAGE ) )
+				blobAccessor = new BlobAccessorCacheWrapper(
+						new BlobAccessorGcsImpl( GOOGLE_CLOUD_STORAGE_BUCKET ) );
+			
+			else if( CLOUD_SERVICE.equals( GOOGLE_APPENGINE_BLOBSTORE ) )
+				blobAccessor = new BlobAccessorCacheWrapper(
+						new BlobAccessorGaeImpl() );
+		}		
+		return blobAccessor;
 	}
 	
 }

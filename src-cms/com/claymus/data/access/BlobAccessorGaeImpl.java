@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.data.transfer.BlobEntry;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
@@ -32,6 +33,12 @@ public class BlobAccessorGaeImpl implements BlobAccessor {
 		return false;
 	}
 
+	@Override
+	public BlobEntry getBlob( String fileName ) throws IOException {
+		// TODO: implementation
+		return null;
+	}
+		
 	@Override
 	public void serveBlob( String fileName, HttpServletResponse response )
 			throws IOException {
