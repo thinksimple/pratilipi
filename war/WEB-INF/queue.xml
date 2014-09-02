@@ -39,7 +39,7 @@
     </retry-parameters>
   </queue>
 
-  <!-- REQUIED FOR MARK-1 BACKWARD COMPATIBILITY. -->
+  <!-- REQUIRED FOR MARK-1 BACKWARD COMPATIBILITY. -->
   <!-- Sends welcome email to new subscribers and referrals. -->
   <queue>
     <name>new-user</name>
