@@ -8,7 +8,11 @@ public interface Language {
 	
 	String getName();
 	
-	void setName( String Name );
+	void setName( String name );
+	
+	String getNameEn();
+	
+	void setNameEn( String nameEn );
 	
 	Date getCreationDate();
 	

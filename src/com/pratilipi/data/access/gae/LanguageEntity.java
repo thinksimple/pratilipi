@@ -19,6 +19,9 @@ public class LanguageEntity implements Language {
 	@Persistent( column = "NAME" )
 	private String name;
 	
+	@Persistent( column = "NAME_EN" )
+	private String nameEn;
+	
 	@Persistent( column = "CREATION_DATE" )
 	private Date creationDate;
 
@@ -36,6 +39,16 @@ public class LanguageEntity implements Language {
 	@Override
 	public void setName( String name ) {
 		this.name = name;
+	}
+	
+	@Override
+	public String getNameEn() {
+		return nameEn;
+	}
+
+	@Override
+	public void setNameEn( String nameEn ) {
+		this.nameEn = nameEn;
 	}
 	
 	@Override

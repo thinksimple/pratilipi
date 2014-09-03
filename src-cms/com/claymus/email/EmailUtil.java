@@ -46,8 +46,7 @@ public class EmailUtil {
 		writer = new StringWriter();
 		template = new Template( null, new StringReader( emailTemplate.getBody() ), new Configuration() );
 		template.process( dataModel, writer );
-		//msg.setContent( writer.toString(), "text/html" );
-		msg.setText( "Text" );
+		msg.setContent( writer.toString(), "text/html" );
 
 		Transport.send( msg );
 	}

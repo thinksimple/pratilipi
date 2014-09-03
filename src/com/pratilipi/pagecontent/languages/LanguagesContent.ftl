@@ -2,6 +2,10 @@
 
 <#setting time_zone="${ timeZone }">
 
+<#if showAddOption>
+	<div id="PageContent-Languages-DataInput"></div>
+</#if>
+
 <div>
 
 	<table class="table">
@@ -11,26 +15,21 @@
 				<th>Language</th>
 				<#if showMetaData>
 					<th>Date Added</th>
-				</#if>				
+				</#if>
 			</tr>
 		</thead>
 		<tbody>
 			<#list languageList as language >
+				<#assign _languageName="${ language.getName() } (${ language.getNameEn() })">  
+				<#assign _languagePageUrl="${ languagePageUrl }${ language.getId()?string(\"#\") }">
 				<tr>
 					<td>${ language_index + 1 }</td>
-					<td><a href="${ languagePageUrl }${ language.getId()?string("#") }">${ language.getName() }</td>
+					<td><a href="${ _languagePageUrl }">${ _languageName }</td>
 					<#if showMetaData>
 						<td>${ language.getCreationDate()?date }</td>
 					</#if>
 				</tr>
 			</#list>
-			<#if showAddOption>
-				<tr>
-					<td>${ languageList?size + 1 }</td>
-					<td id="PageContent-Languages-TextInput"></td>
-					<td id="PageContent-Languages-AddButton"></td>
-				</tr>
-			</#if>
 		</tbody>
 	</table>
 

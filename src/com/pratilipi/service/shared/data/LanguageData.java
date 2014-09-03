@@ -10,6 +10,8 @@ public class LanguageData implements IsSerializable {
 	
 	private String name;
 	
+	private String nameEn;
+	
 	private Date creationDate;
 	
 	
@@ -27,6 +29,14 @@ public class LanguageData implements IsSerializable {
 
 	public void setName( String name ) {
 		this.name = name;
+	}
+	
+	public String getNameEn() {
+		return nameEn;
+	}
+
+	public void setNameEn( String nameEn ) {
+		this.nameEn = nameEn;
 	}
 	
 	public Date getCreationDate() {

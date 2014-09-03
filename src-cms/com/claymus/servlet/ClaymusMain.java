@@ -93,6 +93,8 @@ public class ClaymusMain extends HttpServlet {
 		PageLayout pageLayout = getPageLayout();
 		WebsiteLayout websiteLayout = getWebsiteLayout();
 		
+		response.setCharacterEncoding( "UTF-8" );
+
 		if( pageContentList.size() == 0 ) {
 			response.setStatus( HttpServletResponse.SC_NOT_FOUND );
 			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
