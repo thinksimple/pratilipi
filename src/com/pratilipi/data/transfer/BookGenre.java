@@ -1,6 +1,6 @@
 package com.pratilipi.data.transfer;
 
-public interface BookGenere {
+public interface BookGenre {
 
 	Long getId();
 	
@@ -8,8 +8,8 @@ public interface BookGenere {
 	
 	void setBookId( Long bookId );
 	
-	Long getGenereId();
+	Long getGenreId();
 	
-	void setGenereId( Long genereId );
+	void setGenreId( Long genreId );
 	
 }

@@ -17,7 +17,7 @@ public class AddLanguageRequest implements IsSerializable {
 	
 	
 	public LanguageData getLanguage() {
-		return this.languageData;
+		return languageData;
 	}
 
 }

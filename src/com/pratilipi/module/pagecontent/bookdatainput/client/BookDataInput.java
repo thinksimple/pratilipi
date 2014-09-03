@@ -41,7 +41,7 @@ public class BookDataInput implements EntryPoint {
 							public void onSuccess( AddBookResponse result ) {
 								Long bookId = result.getBookId();
 								Window.alert( "Book added successfully !" );
-								Window.Location.assign( PratilipiHelper.BOOK_PAGE_URL + bookId);
+								Window.Location.assign( PratilipiHelper.URL_BOOK_PAGE + bookId);
 							}
 							
 							@Override

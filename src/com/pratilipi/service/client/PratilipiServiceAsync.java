@@ -5,6 +5,8 @@ import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
 import com.pratilipi.service.shared.AddBookRequest;
 import com.pratilipi.service.shared.AddBookResponse;
+import com.pratilipi.service.shared.AddGenreRequest;
+import com.pratilipi.service.shared.AddGenreResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
@@ -74,6 +76,11 @@ public interface PratilipiServiceAsync {
 			AsyncCallback<GetPublisherListResponse> callback );
 
 	
+	void addGenre(
+			AddGenreRequest request,
+			AsyncCallback<AddGenreResponse> callback );
+
+
 	void addUserBook( 
 			AddUserBookRequest request,
 			AsyncCallback<AddUserBookResponse> callback );

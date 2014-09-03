@@ -49,9 +49,9 @@ public class BookContentProcessor extends PageContentProcessor<BookContent> {
 			dataModel.put( "author", author );
 			dataModel.put( "reviewList", reviewList );
 			
-			dataModel.put( "bookCoverUrl", PratilipiHelper.BOOK_COVER_URL + book.getId() );
-			dataModel.put( "bookHomeUrl", PratilipiHelper.BOOK_PAGE_URL + book.getId() );
-			dataModel.put( "authorHomeUrl", PratilipiHelper.AUTHOR_PAGE_URL + book.getId() );
+			dataModel.put( "bookCoverUrl", PratilipiHelper.URL_BOOK_COVER + book.getId() );
+			dataModel.put( "bookHomeUrl", PratilipiHelper.URL_BOOK_PAGE + book.getId() );
+			dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + book.getId() );
 			
 			dataModel.put( "showEditOptions",
 					( claymusHelper.getCurrentUserId() == book.getAuthorId() && claymusHelper.hasUserAccess( ACCESS_ID_BOOK_ADD, false ) )

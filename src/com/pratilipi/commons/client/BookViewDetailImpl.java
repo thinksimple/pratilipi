@@ -57,14 +57,14 @@ public class BookViewDetailImpl extends BookView {
 	
 	@Override
 	public void setBookData( BookData bookData ) {
-		bookImageAnchor.setHref( PratilipiHelper.BOOK_PAGE_URL + bookData.getId() );
-		bookImage.setUrl( PratilipiHelper.BOOK_COVER_URL + bookData.getId() );
+		bookImageAnchor.setHref( PratilipiHelper.URL_BOOK_PAGE + bookData.getId() );
+		bookImage.setUrl( PratilipiHelper.URL_BOOK_COVER + bookData.getId() );
 
 		titleAnchor.setText( bookData.getTitle() );
-		titleAnchor.setHref( PratilipiHelper.BOOK_PAGE_URL + bookData.getId() );
+		titleAnchor.setHref( PratilipiHelper.URL_BOOK_PAGE + bookData.getId() );
 
 		authorAnchor.setText( bookData.getAuthorName() );
-		authorAnchor.setHref( PratilipiHelper.AUTHOR_PAGE_URL + bookData.getAuthorId() );
+		authorAnchor.setHref( PratilipiHelper.URL_AUTHOR_PAGE + bookData.getAuthorId() );
 		
 		summaryHtml.setHTML( bookData.getSummary() );
 	}

@@ -7,13 +7,13 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.pratilipi.data.transfer.Genere;
+import com.pratilipi.data.transfer.Genre;
 
-@PersistenceCapable( table = "GENERE" )
-public class GenereEntity implements Genere {
+@PersistenceCapable( table = "GENRE" )
+public class GenreEntity implements Genre {
 
 	@PrimaryKey
-	@Persistent( column = "GENERE_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
+	@Persistent( column = "GENRE_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
 	@Persistent( column = "NAME" )

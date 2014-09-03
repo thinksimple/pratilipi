@@ -22,10 +22,10 @@ import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
-import com.pratilipi.module.pagecontent.managepublishers.ManagePublishersFactory;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.book.BookContentFactory;
 import com.pratilipi.pagecontent.books.BooksContentFactory;
+import com.pratilipi.pagecontent.genres.GenresContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 
 @SuppressWarnings("serial")
@@ -44,7 +44,7 @@ public class PratilipiMain extends ClaymusMain {
 		PAGE_CONTENT_REGISTRY.register( BooksContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( ManagePublishersFactory.class );
+		PAGE_CONTENT_REGISTRY.register( GenresContentFactory.class );
 	}
 
 
@@ -74,13 +74,13 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/authors" ) )
 			pageContentList.add( AuthorsContentFactory.newAuthorsContent() );
 
-		else if( requestUri.equals( "/publishers" ) )
-			pageContentList.add( ManagePublishersFactory.newPublisherDataInput() );
+		else if( requestUri.equals( "/genres" ) )
+			pageContentList.add( GenresContentFactory.newGenresContent() );
 
 
 		// Individual item's pages
-		else if( requestUri.startsWith( PratilipiHelper.BOOK_PAGE_URL ) ) {
-			String bookIdStr = requestUri.substring( PratilipiHelper.BOOK_PAGE_URL.length() );
+		else if( requestUri.startsWith( PratilipiHelper.URL_BOOK_PAGE ) ) {
+			String bookIdStr = requestUri.substring( PratilipiHelper.URL_BOOK_PAGE.length() );
 			if( bookIdStr.equals( "new" ) )
 				pageContentList.add( BookContentFactory.newBookContent() );
 			else
@@ -132,7 +132,7 @@ public class PratilipiMain extends ClaymusMain {
 					{ "Books", "/books", null },
 					{ "Languages", "/languages", null },
 					{ "Authors", "/authors" },
-					{ "Publishers", "/publishers" },
+					{ "Genres", "/genres" },
 					{ "About", null, new String[][] {
 							{ "Pratilipi", "/about/pratilipi" },
 							{ "Team", "/about/team" },

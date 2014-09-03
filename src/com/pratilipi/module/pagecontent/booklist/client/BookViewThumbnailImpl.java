@@ -41,7 +41,7 @@ public class BookViewThumbnailImpl extends BookView {
 		Anchor anchor = new Anchor();
 		
 		//set book cover
-		image.setUrl( PratilipiHelper.BOOK_COVER_URL + bookData.getId() );
+		image.setUrl( PratilipiHelper.URL_BOOK_COVER + bookData.getId() );
 		image.addStyleName("img-responsive");
 		anchor.getElement().appendChild(image.getElement());   //add image to the anchor tag
 		image.addClickHandler(new ClickHandler(){
@@ -81,7 +81,7 @@ public class BookViewThumbnailImpl extends BookView {
 				
 			}});
 		anchor.setStyleName("thumnail");
-		anchor.getElement().setAttribute("href", PratilipiHelper.BOOK_PAGE_URL + bookData.getId());
+		anchor.getElement().setAttribute("href", PratilipiHelper.URL_BOOK_PAGE + bookData.getId());
 		
 		Label title = new Label();
 		String bookTitle = bookData.getTitle();

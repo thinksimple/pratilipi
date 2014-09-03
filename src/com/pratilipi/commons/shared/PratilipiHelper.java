@@ -2,12 +2,14 @@ package com.pratilipi.commons.shared;
 
 public class PratilipiHelper {
 
-	public static final String BOOK_PAGE_URL = "/book/";
+	public static final String URL_BOOK_PAGE = "/book/";
 
-	public static final String AUTHOR_PAGE_URL = "/author/";
+	public static final String URL_AUTHOR_PAGE = "/author/";
 
 	public static final String URL_LANGUAGE_PAGE = "/language/";
 
-	public static final String BOOK_COVER_URL = "/resource.book-cover/original/";
+	public static final String URL_GENRE_PAGE = "/genre/";
+
+	public static final String URL_BOOK_COVER = "/resource.book-cover/original/";
 	
 }

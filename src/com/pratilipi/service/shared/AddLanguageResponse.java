@@ -16,7 +16,7 @@ public class AddLanguageResponse implements IsSerializable {
 
 	
 	public Long getLanguageId() {
-		return this.languageId;
+		return languageId;
 	}
 	
 }

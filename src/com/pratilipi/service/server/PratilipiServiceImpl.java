@@ -15,17 +15,21 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
+import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserBook;
 import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
 import com.pratilipi.pagecontent.book.BookContentProcessor;
+import com.pratilipi.pagecontent.genres.GenresContentProcessor;
 import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
 import com.pratilipi.service.shared.AddBookRequest;
 import com.pratilipi.service.shared.AddBookResponse;
+import com.pratilipi.service.shared.AddGenreRequest;
+import com.pratilipi.service.shared.AddGenreResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
@@ -50,6 +54,7 @@ import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.BookData;
+import com.pratilipi.service.shared.data.GenreData;
 import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PublisherData;
 import com.pratilipi.service.shared.data.UserBookData;
@@ -341,6 +346,35 @@ public class PratilipiServiceImpl
 	}
 
 	
+	@Override
+	public AddGenreResponse addGenre( AddGenreRequest request )
+			throws IllegalArgumentException, InsufficientAccessException {
+		
+		GenreData genreData = request.getGenre();
+		if( genreData.getId() != null )
+			throw new IllegalArgumentException(
+					"GenreId exist already. Did you mean to call updateGenre ?" );
+
+		
+		ClaymusHelper claymusHelper =
+				new ClaymusHelper( this.getThreadLocalRequest() );
+		
+		if( ! claymusHelper.hasUserAccess( GenresContentProcessor.ACCESS_ID_GENRE_ADD, false ) )
+			throw new InsufficientAccessException();
+		
+		
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Genre genre = dataAccessor.newGenre();
+		genre.setName( genreData.getName() );
+		genre.setCreationDate( new Date() );
+		genre = dataAccessor.createOrUpdateGenre( genre );
+		dataAccessor.destroy();
+		
+		return new AddGenreResponse( genre.getId() );
+	}
+
+
 	@Override
 	public AddPublisherResponse addPublisher(AddPublisherRequest request)
 			throws InsufficientAccessException {

@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
-import com.pratilipi.data.transfer.Genere;
+import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
@@ -158,16 +158,16 @@ public abstract class DataAccessorTest {
     	
     	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
     	
-    	Genere genere = dataAccessor.newGenere();
+    	Genre genere = dataAccessor.newGenre();
     	genere.setName( name );
     	genere.setCreationDate( creationDate );
     	
-    	genere = dataAccessor.createOrUpdateGenere( genere );
+    	genere = dataAccessor.createOrUpdateGenre( genere );
     	id = genere.getId();
     	dataAccessor.destroy();
     	
     	dataAccessor = DataAccessorFactory.getDataAccessor();
-    	genere = dataAccessor.getGenere( id );
+    	genere = dataAccessor.getGenre( id );
     	
     	Assert.assertNotNull( genere );
     	Assert.assertEquals( name, genere.getName() );

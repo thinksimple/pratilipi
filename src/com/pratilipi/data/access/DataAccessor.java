@@ -6,9 +6,9 @@ import com.claymus.data.access.DataListCursorTuple;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.BookAuthor;
-import com.pratilipi.data.transfer.BookGenere;
+import com.pratilipi.data.transfer.BookGenre;
 import com.pratilipi.data.transfer.BookTag;
-import com.pratilipi.data.transfer.Genere;
+import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
@@ -53,11 +53,13 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	Publisher createOrUpdatePublisher( Publisher publisher );
 
 	
-	Genere newGenere();
+	Genre newGenre();
 
-	Genere getGenere( Long id );
+	Genre getGenre( Long id );
 
-	Genere createOrUpdateGenere( Genere genere );
+	List<Genre> getGenreList();
+
+	Genre createOrUpdateGenre( Genre genre );
 
 
 	Tag newTag();
@@ -72,9 +74,9 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	BookAuthor createOrUpdateBookAuthor( BookAuthor bookAuthor );
 	
 
-	BookGenere newBookGenere();
+	BookGenre newBookGenere();
 
-	BookGenere createOrUpdateBookGenere( BookGenere bookGenere );
+	BookGenre createOrUpdateBookGenere( BookGenre bookGenere );
 	
 
 	BookTag newBookTag();

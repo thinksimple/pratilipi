@@ -14,9 +14,9 @@ import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.data.access.gae.AuthorEntity;
 import com.pratilipi.data.access.gae.BookAuthorEntity;
 import com.pratilipi.data.access.gae.BookEntity;
-import com.pratilipi.data.access.gae.BookGenereEntity;
+import com.pratilipi.data.access.gae.BookGenreEntity;
 import com.pratilipi.data.access.gae.BookTagEntity;
-import com.pratilipi.data.access.gae.GenereEntity;
+import com.pratilipi.data.access.gae.GenreEntity;
 import com.pratilipi.data.access.gae.LanguageEntity;
 import com.pratilipi.data.access.gae.PublisherEntity;
 import com.pratilipi.data.access.gae.TagEntity;
@@ -24,9 +24,9 @@ import com.pratilipi.data.access.gae.UserBookEntity;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.BookAuthor;
-import com.pratilipi.data.transfer.BookGenere;
+import com.pratilipi.data.transfer.BookGenre;
 import com.pratilipi.data.transfer.BookTag;
-import com.pratilipi.data.transfer.Genere;
+import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
@@ -163,18 +163,30 @@ public class DataAccessorGaeImpl
 
 	
 	@Override
-	public Genere newGenere() {
-		return new GenereEntity();
+	public Genre newGenre() {
+		return new GenreEntity();
 	}
 
 	@Override
-	public Genere getGenere( Long id ) {
-		return getEntity( GenereEntity.class, id );
+	public Genre getGenre( Long id ) {
+		return getEntity( GenreEntity.class, id );
 	}
 
 	@Override
-	public Genere createOrUpdateGenere( Genere genere ) {
-		return createOrUpdateEntity( genere );
+	public List<Genre> getGenreList() {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( GenreEntity.class ) )
+						.addOrdering( "name", false )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<Genre> genreEntityList = (List<Genre>) query.execute();
+		return (List<Genre>) pm.detachCopyAll( genreEntityList );
+	}
+	
+	@Override
+	public Genre createOrUpdateGenre( Genre genre ) {
+		return createOrUpdateEntity( genre );
 	}
 
 
@@ -206,12 +218,12 @@ public class DataAccessorGaeImpl
 
 	
 	@Override
-	public BookGenere newBookGenere() {
-		return new BookGenereEntity();
+	public BookGenre newBookGenere() {
+		return new BookGenreEntity();
 	}
 
 	@Override
-	public BookGenere createOrUpdateBookGenere( BookGenere bookGenere ) {
+	public BookGenre createOrUpdateBookGenere( BookGenre bookGenere ) {
 		return createOrUpdateEntity( bookGenere );
 	}
 

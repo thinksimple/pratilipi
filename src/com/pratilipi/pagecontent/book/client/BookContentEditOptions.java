@@ -37,12 +37,12 @@ public class BookContentEditOptions implements EntryPoint, ClickHandler {
 	public void onModuleLoad() {
 
 		String uri = Window.Location.getPath();
-		String bookIdStr = uri.substring( PratilipiHelper.BOOK_PAGE_URL.length() );
+		String bookIdStr = uri.substring( PratilipiHelper.URL_BOOK_PAGE.length() );
 		
 		
 		// Cover image edit options
 		coverImageUpload.getElement().setAttribute(
-				"data-url", PratilipiHelper.BOOK_COVER_URL + bookIdStr );
+				"data-url", PratilipiHelper.URL_BOOK_COVER + bookIdStr );
 
 		RootPanel coverImageEditOptions =
 				RootPanel.get( "PageContent-Book-CoverImage-EditOptions" );

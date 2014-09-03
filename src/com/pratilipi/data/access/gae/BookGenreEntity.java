@@ -5,20 +5,20 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.pratilipi.data.transfer.BookGenere;
+import com.pratilipi.data.transfer.BookGenre;
 
-@PersistenceCapable( table = "BOOK_GENERE" )
-public class BookGenereEntity implements BookGenere {
+@PersistenceCapable( table = "BOOK_GENRE" )
+public class BookGenreEntity implements BookGenre {
 
 	@PrimaryKey
-	@Persistent( column = "BOOK_GENERE_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
+	@Persistent( column = "BOOK_GENRE_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
 	@Persistent( column = "BOOK_ID" )
 	private Long bookId;
 	
-	@Persistent( column = "GENERE_ID" )
-	private Long genereId;
+	@Persistent( column = "GENRE_ID" )
+	private Long genreId;
 	
 	
 	public Long getId() {
@@ -33,12 +33,12 @@ public class BookGenereEntity implements BookGenere {
 		this.bookId = bookId;
 	}
 	
-	public Long getGenereId() {
-		return genereId;
+	public Long getGenreId() {
+		return genreId;
 	}
 	
-	public void setGenereId( Long genereId ) {
-		this.genereId = genereId;
+	public void setGenreId( Long genreId ) {
+		this.genreId = genreId;
 	}
 	
 }

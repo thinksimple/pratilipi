@@ -2,7 +2,7 @@ package com.pratilipi.data.transfer;
 
 import java.util.Date;
 
-public interface Genere {
+public interface Genre {
 
 	Long getId();
 	
