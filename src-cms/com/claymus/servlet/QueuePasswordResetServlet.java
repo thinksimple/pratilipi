@@ -44,7 +44,7 @@ public class QueuePasswordResetServlet extends HttpServlet {
 		
 		// Updating user password in the DataStore
 		User user = dataAccessor.getUser( userId );
-		user.setPassword( EncryptPassword.getSaltedHash( newPassword ) );
+		user.setPassword( EncryptPassword.getSaltedHash( newPassword ));
 		dataAccessor.createOrUpdateUser( user );
 
 		// Creating Email Template
@@ -94,8 +94,8 @@ public class QueuePasswordResetServlet extends HttpServlet {
 		for( char ch = 'A'; ch <= 'Z'; ch++ )
 			charRange[ i++ ] = ch;
 		
-		char[] password = new char[ 10 ];
-		for( int j = 0; j < 10; j++ )
+		char[] password = new char[ 16 ];
+		for( int j = 0; j < 16; j++ )
 			password[ j ] = charRange[ (int)( Math.random() * charRange.length ) ];
 
 		return new String( password );

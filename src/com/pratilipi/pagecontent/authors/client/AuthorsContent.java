@@ -28,7 +28,7 @@ public class AuthorsContent implements EntryPoint {
 		final VerticalPanel vPanel = new VerticalPanel();
 		
 		//getting list of authors present in database.
-		pratilipiService.getAuthorList(new GetAuthorListRequest(), new AsyncCallback<GetAuthorListResponse>(){
+		pratilipiService.getAuthorList(new GetAuthorListRequest(null, 100), new AsyncCallback<GetAuthorListResponse>(){
 
 			@Override
 			public void onFailure(Throwable caught) {

@@ -43,8 +43,6 @@ public class EncryptPassword {
         to a stored salted hash of the password. */
     public static boolean check(String password, String stored) {
         String[] saltAndPass = stored.split("\\$");
-        System.out.println("Salt: "+ saltAndPass[0] );
-        System.out.println("Password: "+ saltAndPass[1] );
         if (saltAndPass.length != 2)
             return false;
         String hashOfInput;

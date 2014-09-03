@@ -24,6 +24,7 @@ public class ClaymusHelper {
 	private static final String URL_LOGIN_PAGE = "/login?dest=";
 	private static final String URL_LOGOUT_PAGE = "/logout?dest=";
 	private static final String URL_REGISTER_PAGE = "#signup";
+	private static final String URL_FORGOTPASSWORD_PAGE = "#forgotpassword";
 	
 	private final HttpServletRequest request;
 	private final HttpSession session;
@@ -66,7 +67,7 @@ public class ClaymusHelper {
 	public User getCurrentUser() {
 		if( currentUser == null ) {
 
-			if( currentUserId == 0L ) {
+			if( getCurrentUserId() == 0L ) {
 				currentUser = new User() {
 
 					@Override
@@ -228,6 +229,10 @@ public class ClaymusHelper {
 
 	public String createRegisterURL() {
 		return URL_REGISTER_PAGE;
+	}
+	
+	public String createForgotPasswordURL() {
+		return URL_FORGOTPASSWORD_PAGE;
 	}
 
 	

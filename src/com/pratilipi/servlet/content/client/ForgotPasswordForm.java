@@ -18,6 +18,7 @@ public class ForgotPasswordForm extends Composite {
 	private TextBox emailInput = new TextBox();
 	private Label emailInputError = new Label();
 	private Button genPasswdButton = new Button( "Generate Password" );
+	private Label serverError = new Label();
 	
 	private ValidateForm validateForm = new ValidateForm();
 	
@@ -35,10 +36,14 @@ public class ForgotPasswordForm extends Composite {
 		headingElement.addStyleName( "page-header" );
 		
 		HTML msgElement = new HTML();
-		msgElement.setHTML("<p>To reset your password, enter the email address you use to sign in to Pratilipi. You will receive an email containing new password. <b>You are adviced to change your password on first login after password reset.</b></p>");
+		msgElement.setHTML("<p>To reset your password, enter the email address you use to sign in to Pratilipi. Click on the link in email to change your password.</p>");
 		
 		heading.getElement().appendChild( headingElement.getElement() );
 		heading.getElement().appendChild( msgElement.getElement() );
+		
+		serverError.addStyleName( "alert alert-danger" );
+		serverError.getElement().setAttribute( "role", "alert") ;
+		serverError.setVisible( false );
 		
 		//text box formatting
 		emailInput.getElement().setAttribute("placeholder", "Enter registered email");
@@ -75,6 +80,7 @@ public class ForgotPasswordForm extends Composite {
 		emailInputError.setVisible( false );
 		
 		form.add( heading );
+		form.add( serverError );
 		form.add( emailInput );
 		form.add( genPasswdButton );
 		form.add( emailInputError );
@@ -98,6 +104,16 @@ public class ForgotPasswordForm extends Composite {
 	
 	public String getEmail(){
 		return emailInput.getText();
+	}
+	
+	public void setServerError( String error ){
+		HTML msg = new HTML();
+		msg.setHTML( error );
+		this.serverError.getElement().appendChild( msg.getElement() );
+	}
+	
+	public void showServerError(){
+		this.serverError.setVisible( true );
 	}
 	
 	//Button ClickHandler

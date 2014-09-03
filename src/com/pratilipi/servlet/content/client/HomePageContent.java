@@ -2,6 +2,8 @@ package com.pratilipi.servlet.content.client;
 
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.client.ClaymusServiceAsync;
+import com.claymus.service.shared.ChangePasswordRequest;
+import com.claymus.service.shared.ChangePasswordResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -10,6 +12,7 @@ import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
 import com.claymus.service.shared.ResetUserPasswordRequest;
 import com.claymus.service.shared.ResetUserPasswordResponse;
+import com.claymus.service.shared.data.ChangePasswordData;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -18,8 +21,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -36,6 +37,9 @@ public class HomePageContent implements EntryPoint {
 	private static final ClaymusServiceAsync claymusService =
 			GWT.create( ClaymusService.class );
 	
+	private boolean isChangePasswordURL = false;
+	private String email = null;
+	private String password = null;
 	
 	public void onModuleLoad() {
 		
@@ -194,7 +198,8 @@ public class HomePageContent implements EntryPoint {
 						
 						@Override
 						public void onFailure( Throwable caught ) {
-							Window.alert( caught.getMessage() );
+							loginForm.setServerError( caught.getMessage() );
+							loginForm.showServerError();
 						}
 					});
 				}	
@@ -219,8 +224,8 @@ public class HomePageContent implements EntryPoint {
 	
 						@Override
 						public void onFailure(Throwable caught) {
-							forgotPassword.setEmailInputError( caught.getMessage() );
-							forgotPassword.showEmailInputError();
+							forgotPassword.setServerError( caught.getMessage() );
+							forgotPassword.showServerError();
 						}
 	
 						@Override
@@ -232,8 +237,53 @@ public class HomePageContent implements EntryPoint {
 		
 		forgotPassword.addGenPasswdButtonClickHandler( genPasswdButtonClickHandler );
 		forgotPasswordFormDialog.add( forgotPassword );
-/* ================================================================================================================================== */
+		
+/************************************************ Change Password ********************************************/
+		final Panel changePasswordFormDialog = new FlowPanel();
+		changePasswordFormDialog.setStyleName( "modal-dialog" );
+		
+		final ChangePasswordForm changePasswordForm = new ChangePasswordForm();
+		
+		//This will through exception when URL contains email address and password is absent 
+		email = ( Window.Location.getHash().lastIndexOf( "-" ) != Window.Location.getHash().indexOf( "-" ) )
+						? Window.Location.getHash().substring(Window.Location.getHash().indexOf( "-" )+1, 
+								 Window.Location.getHash().lastIndexOf( "-" )): null;
+		password = ( Window.Location.getHash().lastIndexOf( "-" ) != Window.Location.getHash().indexOf( "-" ) )
+						? Window.Location.getHash().substring( Window.Location.getHash().lastIndexOf( "-" )+1 ) : null;
+						
+		if ( email != null && password == null){
+			Window.alert( "Please check the URL. Try again with correct URL" );
+			Window.Location.replace( " " );
+		}
+		
+		this.isChangePasswordURL = History.getToken().equals( "changepassword" );
+		
+		ClickHandler changePasswdButtonClickHandler = new ClickHandler(){
 
+			@Override
+			public void onClick(ClickEvent event) {
+				final ChangePasswordData changePasswordData = changePasswordForm.setChangePasswordData();
+				
+				changePasswordData.setEmail( email );
+				changePasswordData.setPassInUrl( password );
+				
+				//used when a logged in user chooses to change his password
+				if( isChangePasswordURL 
+					&& changePasswordForm.validateCurrentPassword()
+					&& changePasswordForm.validatePassword() 
+					&& changePasswordForm.validateConfPassword())
+					changePasswordRPC(changePasswordForm, changePasswordData);
+				//used when user click on reset password link sent to his registered email.
+				else if( !isChangePasswordURL 
+						 && changePasswordForm.validatePassword() 
+						 && changePasswordForm.validateConfPassword() )
+							changePasswordRPC(changePasswordForm, changePasswordData);
+			}};
+		
+		changePasswordForm.addChangePasswdButtonClickHandler( changePasswdButtonClickHandler );
+		changePasswordFormDialog.add( changePasswordForm );
+/* ================================================================================================================================== */
+		//Used when user clicks on links.
 		History.addValueChangeHandler( new ValueChangeHandler<String>() {
 
 			public void onValueChange( ValueChangeEvent<String> event ) {
@@ -241,6 +291,7 @@ public class HomePageContent implements EntryPoint {
 				if( historyToken.equals( "signup" ) ) {
 					modal.remove( loginFormDialog );
 					modal.remove( forgotPasswordFormDialog );
+					modal.remove( changePasswordFormDialog );
 					modal.remove( registrationFormDialog );
 					modal.add( registrationFormDialog );
 					showModal();
@@ -249,6 +300,7 @@ public class HomePageContent implements EntryPoint {
 				if( historyToken.equals( "signin" ) ) {
 					modal.remove( registrationFormDialog );
 					modal.remove( forgotPasswordFormDialog );
+					modal.remove( changePasswordFormDialog );
 					modal.remove( loginFormDialog );
 					modal.add( loginFormDialog );
 					showModal();
@@ -271,8 +323,37 @@ public class HomePageContent implements EntryPoint {
 				if( historyToken.equals( "forgotpassword" ) ) {
 					modal.remove( registrationFormDialog );
 					modal.remove( loginFormDialog );
+					modal.remove( changePasswordFormDialog );
 					modal.remove( forgotPasswordFormDialog );
 					modal.add( forgotPasswordFormDialog );
+					showModal();
+				}
+				
+				if( History.getToken().startsWith( "changepassword" ) ) {
+					email = ( Window.Location.getHash().lastIndexOf( "-" ) != Window.Location.getHash().indexOf( "-" ) )
+							? Window.Location.getHash().substring(Window.Location.getHash().indexOf( "-" )+1, 
+									 Window.Location.getHash().lastIndexOf( "-" )): null;
+					password = ( Window.Location.getHash().lastIndexOf( "-" ) != Window.Location.getHash().indexOf( "-" ) )
+									? Window.Location.getHash().substring( Window.Location.getHash().lastIndexOf( "-" )+1 ) : null;
+									
+					if ( email != null && password == null){
+						Window.alert( "Please check the URL. Try again with correct URL" );
+						Window.Location.replace( " " );
+					}
+					
+					isChangePasswordURL = History.getToken().equals( "changepassword" );
+					
+					if( History.getToken().equals( "changepassword" ) )
+						changePasswordForm.showCurrentPassword();
+					else{
+						changePasswordForm.hideCurrentPassword();
+						changePasswordForm.hideCurrentPasswordError();
+					}
+					modal.remove( registrationFormDialog );
+					modal.remove( loginFormDialog );
+					modal.remove( forgotPasswordFormDialog );
+					modal.remove( changePasswordFormDialog );
+					modal.add( changePasswordFormDialog );
 					showModal();
 				}
 			}
@@ -281,6 +362,61 @@ public class HomePageContent implements EntryPoint {
 		
 		//Adding modal view to root panel
 		RootPanel.get().add( modal );
+		
+		//Showing modal on module load.
+		if( History.getToken().equals( "signup" ) ) {
+			modal.remove( loginFormDialog );
+			modal.remove( forgotPasswordFormDialog );
+			modal.remove( changePasswordFormDialog );
+			modal.remove( registrationFormDialog );
+			modal.add( registrationFormDialog );
+			showModal();
+		}
+				
+		if( History.getToken().equals( "signin" ) ) {
+			modal.remove( registrationFormDialog );
+			modal.remove( forgotPasswordFormDialog );
+			modal.remove( changePasswordFormDialog );
+			modal.remove( loginFormDialog );
+			modal.add( loginFormDialog );
+			showModal();
+		}
+				
+		if( History.getToken().equals( "forgotpassword" ) ) {
+			modal.remove( registrationFormDialog );
+			modal.remove( loginFormDialog );
+			modal.remove( changePasswordFormDialog );
+			modal.remove( forgotPasswordFormDialog );
+			modal.add( forgotPasswordFormDialog );
+			showModal();
+		}
+		
+		if( History.getToken().startsWith( "changepassword" ) ) {
+			if( History.getToken().equals( "changepassword" ) )
+				changePasswordForm.showCurrentPassword();
+			modal.remove( registrationFormDialog );
+			modal.remove( loginFormDialog );
+			modal.remove( forgotPasswordFormDialog );
+			modal.remove( changePasswordFormDialog );
+			modal.add( changePasswordFormDialog );
+			showModal();
+		}
+	}
+	
+	public void changePasswordRPC(final ChangePasswordForm changePasswordForm, ChangePasswordData changePasswordData){
+		claymusService.changeUserPassword(new ChangePasswordRequest( changePasswordData ), new AsyncCallback<ChangePasswordResponse>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				changePasswordForm.setServerError( caught.getMessage() );
+				changePasswordForm.showServerError();
+			}
+
+			@Override
+			public void onSuccess(ChangePasswordResponse result) {
+				Window.alert( "Password Changed successfully." );
+				Window.Location.replace( "/" );
+			}});
 	}
 	
 	//JQuery function to show and hide bootstrap modal view

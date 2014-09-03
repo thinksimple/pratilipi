@@ -1,5 +1,7 @@
 package com.claymus.service.client;
 
+import com.claymus.service.shared.ChangePasswordRequest;
+import com.claymus.service.shared.ChangePasswordResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -29,5 +31,9 @@ public interface ClaymusServiceAsync {
 	void resetUserPassword(
 			ResetUserPasswordRequest request,
 			AsyncCallback<ResetUserPasswordResponse> callback );
+	
+	void changeUserPassword(
+			ChangePasswordRequest request,
+			AsyncCallback<ChangePasswordResponse> callback );
 
 }

@@ -1,4 +1,3 @@
-
 package com.claymus.service.server;
 
 import java.util.Date;
@@ -14,6 +13,8 @@ import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.claymus.service.client.ClaymusService;
+import com.claymus.service.shared.ChangePasswordRequest;
+import com.claymus.service.shared.ChangePasswordResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -178,7 +179,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 				|| user.getStatus() == UserStatus.POSTLAUNCH_REFERRAL ) {
 			throw new IllegalArgumentException(
 					"This email id is not yet registered. Kindly "
-					+ "<a href='" + claymusHelper.createRegisterURL() + "'>register</a>"
+					+ "<a href='" + claymusHelper.createRegisterURL() + "' class='alert-link'>register</a>"
 					+ " or try again with a different email id." );
 			
 		} else if( user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP ) {
@@ -221,7 +222,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 				|| user.getStatus() == UserStatus.POSTLAUNCH_REFERRAL ) {
 			throw new IllegalArgumentException(
 					"This email id is not yet registered. Kindly "
-					+ "<a href='" + claymusHelper.createRegisterURL() + "'>register</a>"
+					+ "<a href='" + claymusHelper.createRegisterURL() + "' class='alert-link'>register</a>"
 					+ " or try again with a different email id." );
 			
 		} else if( user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP ) {
@@ -240,6 +241,50 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		taskQueue.add( task );
 
 		return new ResetUserPasswordResponse();
+	}
+	
+	@Override
+	public ChangePasswordResponse changeUserPassword(ChangePasswordRequest request)
+			throws IllegalArgumentException {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		ClaymusHelper claymusHelper =
+				new ClaymusHelper( this.getThreadLocalRequest() );
+		
+		String tempEmail = request.getEmail();
+		
+		//if request object does not contain email, try retrieving it from session.
+		if( request.getEmail() == null || request.getEmail().isEmpty() ){
+			User tempUser = claymusHelper.getCurrentUser();
+			tempEmail = tempUser.getEmail();
+		}	
+		
+		User user = dataAccessor.getUserByEmail( tempEmail );
+		
+		//User is not logged in and trying to change password by using direct URL
+		if( user != null ){
+			if( request.getPassInUrl() != null && !user.getPassword().equals( request.getPassInUrl() ) )
+				throw new IllegalArgumentException( "URL used is not valid. Please check the URL and try again" );
+			else if( !request.getCurrentPassword().isEmpty() && !EncryptPassword.check( request.getCurrentPassword(),  user.getPassword() ) )
+				throw new IllegalArgumentException( "Current Password is not correct. Please try again" );
+		}
+		
+		if(user == null ){
+			if( request.getPassInUrl() != null )
+				throw new IllegalArgumentException( "URL used is not valid. Please check and try again" );
+			if( claymusHelper.isUserLoggedIn() )
+				throw new IllegalArgumentException( 
+					"You are not logged in. In case you forgot your password "
+					+ "<a href='" + claymusHelper.createForgotPasswordURL() + " ' class='alert-link'>Click Here</a>" );
+		}
+		
+		user.setPassword( EncryptPassword.getSaltedHash( request.getNewPassword() ));
+		dataAccessor.createOrUpdateUser( user );
+		
+		dataAccessor.destroy();
+		
+		return new ChangePasswordResponse();
+		
 	}
 
 }

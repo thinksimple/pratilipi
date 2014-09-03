@@ -23,6 +23,7 @@ public class LoginForm extends Composite {
 	private Label forgotPassword = new Label();
 	
 	//Error messages
+	private Label serverError = new Label();
 	private Label emailInputError = new Label();
 	private Label passwordError = new Label();
 	
@@ -92,14 +93,18 @@ public class LoginForm extends Composite {
 		forgotPassword.getElement().appendChild( forgotPasswdAnchor.getElement() );
 		
 		//Error message Style
+		serverError.addStyleName( "alert alert-danger" );
+		serverError.getElement().setAttribute( "role", "alert") ;
 		emailInputError.setStyleName("errorMessage");
 		passwordError.setStyleName("errorMessage");
 		
 		//All error messages are invisible when page is loaded for first time.
 		emailInputError.setVisible(false);
 		passwordError.setVisible(false);
+		serverError.setVisible( false );
 		
 		fields.add( heading );
+		fields.add( serverError );
 		fields.add(emailInput);
 		fields.add(emailInputError);
 		fields.add(password);
@@ -183,6 +188,13 @@ public class LoginForm extends Composite {
 		passwordError.setText(msg);
 	}
 	
+	public void setServerError( String error ){
+		this.serverError.getElement().removeAllChildren();
+		HTML msg = new HTML();
+		msg.setHTML( error );
+		this.serverError.getElement().appendChild( msg.getElement() );
+	}
+	
 	//show error messages	
 	public void showEmailInputError(){
 		emailInputError.setVisible(true);
@@ -190,6 +202,10 @@ public class LoginForm extends Composite {
 	
 	public void showPasswordError(){
 		passwordError.setVisible(true);
+	}
+	
+	public void showServerError(){
+		this.serverError.setVisible( true );
 	}
 	
 	//hide error messages	
