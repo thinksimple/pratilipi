@@ -34,10 +34,10 @@
 		</tbody>
 	</table>
 
-	<#if showAddOption>
-		<script type="text/javascript" language="javascript" src="/pagecontent.languages/pagecontent.languages.nocache.js" defer></script>
-	</#if>
-	
 </div>
+
+<#if showAddOption>
+	<script type="text/javascript" language="javascript" src="/pagecontent.languages/pagecontent.languages.nocache.js" defer></script>
+</#if>
 
 <!-- PageContent :: Languages :: End -->

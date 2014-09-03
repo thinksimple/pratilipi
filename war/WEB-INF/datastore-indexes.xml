@@ -1,0 +1,10 @@
+<datastore-indexes autoGenerate="false">
+
+  <!-- Required by PratilipiService.getAuthorList -->
+  <datastore-index kind="AUTHOR" ancestor="false" source="manual">
+    <property name="FIRST_NAME_EN" direction="asc"/>
+    <property name="LAST_NAME_EN" direction="asc"/>
+    <property name="PEN_NAME_EN" direction="asc"/>
+  </datastore-index>
+
+</datastore-indexes>
