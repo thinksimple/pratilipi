@@ -7,12 +7,14 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.pratilipi.commons.client.AuthorsDataInputView;
+import com.pratilipi.commons.client.AuthorsDataInputViewImpl;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
+import com.pratilipi.service.shared.data.AuthorData;
 
 public class AuthorsContent implements EntryPoint, ClickHandler {
 	
@@ -23,48 +25,41 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 	private final Accordion accordion = new Accordion();
 	
 	private AuthorsDataInputView authorsDataInputView = new AuthorsDataInputViewImpl();
-	private Button addAuthorButton = new Button( "Add Author" );
 
 	
 	public void onModuleLoad() {
+				
+		if( RootPanel.get( "PageContent-Authors-DataInput" ) == null )
+			return;
 		
-		if( RootPanel.get( "PageContent-Authors-DataInput" ) != null ) {
-			accordion.setTitle( "Add Author" );
-			addAuthorButton.addClickHandler( this );
+		accordion.setTitle( "Add Author" );
+		authorsDataInputView.addAddButtonClickHandler( this );
 
-			accordion.add( authorsDataInputView );
-			accordion.add( addAuthorButton );
-			
-			RootPanel.get( "PageContent-Authors-DataInput" ).add( accordion );
-		}
+		accordion.add( authorsDataInputView );
+		RootPanel.get( "PageContent-Authors-DataInput" ).add( accordion );
 		
 	}
 	
 	@Override
 	public void onClick( ClickEvent event ) {
+		if( !authorsDataInputView.validateInputs() )
+			return;
 		
-		if( event.getSource() == addAuthorButton ) {
-		
-			ValidateAuthorData validator = new ValidateAuthorData( authorsDataInputView );
-			if( validator.validateAuthor() ) {
-				pratilipiService.addAuthor( new AddAuthorRequest( authorsDataInputView.getAuthor()), new AsyncCallback<AddAuthorResponse>(){
-	
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert( caught.getMessage() );
-					}
-	
-					@Override
-					public void onSuccess(AddAuthorResponse result) {
-						Window.alert( "Author added successfully !" );
-						Window.Location.reload();
-					}});
-			
-			} else {
-				Window.alert("Error in form");
-			}		
-		}
-		
+		authorsDataInputView.setEnabled( false );
+		AuthorData authorData = authorsDataInputView.getAuthorData();
+		AddAuthorRequest request = new AddAuthorRequest( authorData );
+		pratilipiService.addAuthor( request, new AsyncCallback<AddAuthorResponse>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				authorsDataInputView.setEnabled( true );
+				Window.alert( caught.getMessage() );
+			}
+
+			@Override
+			public void onSuccess(AddAuthorResponse result) {
+				Window.Location.reload();				
+			}});
 	}
 	
 }
