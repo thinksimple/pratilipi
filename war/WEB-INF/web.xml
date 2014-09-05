@@ -33,6 +33,9 @@
   <servlet-mapping>
     <servlet-name>ResourceServlet</servlet-name>
     <url-pattern>/resource.book-cover/*</url-pattern>
+    <url-pattern>/resource.poem-cover/*</url-pattern>
+    <url-pattern>/resource.story-cover/*</url-pattern>
+    <url-pattern>/resource.article-cover/*</url-pattern>
   </servlet-mapping>
    
    

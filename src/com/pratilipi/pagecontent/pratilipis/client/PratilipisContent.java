@@ -13,6 +13,7 @@ import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewImpl;
 import com.pratilipi.commons.client.PratilipiView;
 import com.pratilipi.commons.client.PratilipiViewBookDetailImpl;
+import com.pratilipi.commons.client.PratilipiViewPoemDetailImpl;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
@@ -105,7 +106,11 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 					public void onSuccess( GetPratilipiListResponse response ) {
 
 						for( PratilipiData pratilipiData : response.getPratilipiDataList() ) {
-							PratilipiView pratilipiView = new PratilipiViewBookDetailImpl();
+							PratilipiView pratilipiView = null;
+							if( pratilipiType == PratilipiType.BOOK )
+								pratilipiView = new PratilipiViewBookDetailImpl();
+							else if( pratilipiType == PratilipiType.POEM )
+								pratilipiView = new PratilipiViewPoemDetailImpl();
 							pratilipiView.setPratilipiData( pratilipiData );
 							add( pratilipiView );
 						}

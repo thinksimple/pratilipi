@@ -20,12 +20,14 @@ import com.pratilipi.data.transfer.UserPratilipi;
 
 public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
+	Pratilipi getPratilipi( Long id, PratilipiType type );
+	
+	DataListCursorTuple<Pratilipi> getPratilipiList(
+			PratilipiType type, String cursorStr, int resultCount );
+
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
 
-	<T extends Pratilipi> DataListCursorTuple<T> getPratilipiList(
-			PratilipiType pratilipiType, String cursorStr, int resultCount );
 
-	
 	Book newBook();
 
 	Book getBook( Long id );

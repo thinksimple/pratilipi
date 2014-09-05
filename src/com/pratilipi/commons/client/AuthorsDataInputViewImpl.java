@@ -2,7 +2,6 @@ package com.pratilipi.commons.client;
 
 import com.claymus.commons.client.ui.formfield.ListBoxFormField;
 import com.claymus.commons.client.ui.formfield.TextInputFormField;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
@@ -10,15 +9,10 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.pratilipi.service.client.PratilipiService;
-import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.LanguageData;
 
 public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
-	
-	private static final PratilipiServiceAsync pratilipiService =
-			GWT.create( PratilipiService.class );
 	
 	private FormPanel form = new FormPanel();
 	private Panel panel = new FlowPanel();

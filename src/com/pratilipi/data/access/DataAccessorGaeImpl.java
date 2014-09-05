@@ -42,25 +42,32 @@ public class DataAccessorGaeImpl
 		implements DataAccessor {
 
 	@Override
-	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
-		return createOrUpdateEntity( pratilipi );
+	public Pratilipi getPratilipi( Long id, PratilipiType type ) {
+		if( type == PratilipiType.BOOK )
+			return getEntity( BookEntity.class, id );
+		
+		else if( type == PratilipiType.POEM )
+			return getEntity( PoemEntity.class, id );
+		
+		return null;
+
 	}
-	
+
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiType pratilipiType, String cursorStr, int resultCount ) {
+			PratilipiType type, String cursorStr, int resultCount ) {
 		
 		Query query = null;
 		
-		if( pratilipiType == PratilipiType.BOOK )
+		if( type == PratilipiType.BOOK )
 			query = pm.newQuery( BookEntity.class );
 		
-		else if( pratilipiType == PratilipiType.POEM )
+		else if( type == PratilipiType.POEM )
 			query = pm.newQuery( PoemEntity.class );
 
 		
 		query = new GaeQueryBuilder( query )
-						.addFilter( "type", pratilipiType )
+						.addFilter( "type", type )
 						.addOrdering( "title", true )
 						.setRange( 0, resultCount )
 						.build();
@@ -73,12 +80,17 @@ public class DataAccessorGaeImpl
 		}
 		
 		@SuppressWarnings("unchecked")
-		List<Pratilipi> pratilipiEntityList = (List<Pratilipi>) query.execute( pratilipiType );
+		List<Pratilipi> pratilipiEntityList = (List<Pratilipi>) query.execute( type );
 		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
 		
 		return new DataListCursorTuple<Pratilipi>(
 				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
 				cursor == null ? null : cursor.toWebSafeString() );
+	}
+	
+	@Override
+	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
+		return createOrUpdateEntity( pratilipi );
 	}
 	
 	

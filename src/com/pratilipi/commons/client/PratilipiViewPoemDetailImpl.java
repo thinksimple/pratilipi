@@ -8,9 +8,9 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
 import com.pratilipi.commons.shared.PratilipiHelper;
-import com.pratilipi.service.shared.data.PoemData;
+import com.pratilipi.service.shared.data.PratilipiData;
 
-public class PoemViewDetailImpl extends PoemView {
+public class PratilipiViewPoemDetailImpl extends PratilipiView {
 
 	private final Panel panel = new FlowPanel();
 	private final Panel thumbnailPanel = new FlowPanel();
@@ -28,7 +28,7 @@ public class PoemViewDetailImpl extends PoemView {
 	private final HTML summaryHtml = new HTML();
 	
 	
-	public PoemViewDetailImpl() {
+	public PratilipiViewPoemDetailImpl() {
 		panel.add( thumbnailPanel );
 		panel.add( detailPanel );
 		
@@ -56,7 +56,7 @@ public class PoemViewDetailImpl extends PoemView {
 
 	
 	@Override
-	public void setPoemData( PoemData poemData ) {
+	public void setPratilipiData( PratilipiData poemData ) {
 		poemImageAnchor.setHref( PratilipiHelper.URL_POEM_PAGE + poemData.getId() );
 		poemImage.setUrl( PratilipiHelper.URL_POEM_COVER + poemData.getId() );
 

@@ -27,6 +27,7 @@ import com.pratilipi.pagecontent.book.BookContentFactory;
 import com.pratilipi.pagecontent.books.BooksContentFactory;
 import com.pratilipi.pagecontent.genres.GenresContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
+import com.pratilipi.pagecontent.pratilipi.PratilipiContentFactory;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
 
 @SuppressWarnings("serial")
@@ -39,9 +40,10 @@ public class PratilipiMain extends ClaymusMain {
 	static {
 		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
 		PAGE_CONTENT_REGISTRY.register( BookContentFactory.class );
-		
-		PAGE_CONTENT_REGISTRY.register( PratilipisContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( BooksContentFactory.class );
+		
+		PAGE_CONTENT_REGISTRY.register( PratilipiContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( PratilipisContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( GenresContentFactory.class );
@@ -82,13 +84,11 @@ public class PratilipiMain extends ClaymusMain {
 
 
 		// Individual item's pages
-		else if( requestUri.startsWith( PratilipiHelper.URL_BOOK_PAGE ) ) {
-			String bookIdStr = requestUri.substring( PratilipiHelper.URL_BOOK_PAGE.length() );
-			if( bookIdStr.equals( "new" ) )
-				pageContentList.add( BookContentFactory.newBookContent() );
-			else
-				pageContentList.add( BookContentFactory.newBookContent( Long.parseLong( bookIdStr ) ) );
-		}
+		else if( requestUri.startsWith( PratilipiHelper.URL_BOOK_PAGE ) )
+			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiHelper.URL_BOOK_PAGE.length() ) ), PratilipiType.BOOK ) );
+
+		else if( requestUri.startsWith( PratilipiHelper.URL_POEM_PAGE ) )
+			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiHelper.URL_POEM_PAGE.length() ) ), PratilipiType.POEM ) );
 
 		
 		// Static pages
