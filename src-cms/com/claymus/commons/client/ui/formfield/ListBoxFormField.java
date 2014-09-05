@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
@@ -43,14 +44,33 @@ public class ListBoxFormField extends FormField {
 		
 		initWidget( formGroup );
 	}
-
 	
-	public String getSelectedValue() {
+	public void addItem( String item ){
+		listBox.addItem( item );
+	}
+
+	public void addItem(String item, String value){
+		listBox.addItem(item, value);
+	}
+	
+	public String getValue() {
 		return listBox.getValue( listBox.getSelectedIndex() );
 	}
 	
+	public String getItemText() {
+		return listBox.getItemText( listBox.getSelectedIndex() );
+	}
+	
 	public void setValueText( String text ) {
-//		listBox.setText( text );
+		int itemCount = listBox.getItemCount();
+		for(int i=0; i<itemCount; ++i){
+			if(text.equals( listBox.getItemText(i) )){
+				listBox.setSelectedIndex(i);
+				break;
+			}
+			if(i == itemCount-1)
+				Window.alert( "Item not found!" );
+		}
 	}
 	
 	public void setEnabled( boolean enabled ) {
@@ -60,11 +80,11 @@ public class ListBoxFormField extends FormField {
 	
 	@Override
 	public boolean validate() {
-		if( getSelectedValue() == "" && !isRequired() ) {
+		if( getValue().isEmpty() && !isRequired() ) {
 			markDefault();
 			return true;
 		
-		} else if( getSelectedValue() == "" && isRequired() ) {
+		} else if( getValue().isEmpty() && isRequired() ) {
 			markError( "Input Required !" );
 			return false;
 

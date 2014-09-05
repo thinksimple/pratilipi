@@ -64,11 +64,11 @@ public class TextInputFormField extends FormField {
 	
 	@Override
 	public boolean validate() {
-		if( getText() == "" && !isRequired() ) {
+		if( getText().isEmpty() && !isRequired() ) {
 			markDefault();
 			return true;
 		
-		} else if( getText() == "" && isRequired() ) {
+		} else if( getText().isEmpty() && isRequired() ) {
 			markError( "Input Required !" );
 			return false;
 
