@@ -1,4 +1,4 @@
-package com.pratilipi.pagecontent.books.client;
+package com.pratilipi.pagecontent.pratilipis.client;
 
 import com.claymus.commons.client.ui.Accordion;
 import com.claymus.commons.client.ui.InfiniteScrollPanel;
@@ -16,8 +16,8 @@ import com.pratilipi.commons.client.PratilipiDataInputViewImpl;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
-import com.pratilipi.service.shared.AddBookRequest;
-import com.pratilipi.service.shared.AddBookResponse;
+import com.pratilipi.service.shared.AddPratilipiRequest;
+import com.pratilipi.service.shared.AddPratilipiResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
@@ -27,27 +27,37 @@ import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.LanguageData;
+import com.pratilipi.service.shared.data.PratilipiData;
 
-public class BooksContent implements EntryPoint, ClickHandler {
+public class PratilipisContent implements EntryPoint, ClickHandler {
 
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
 	
 
 	private final Accordion accordion = new Accordion();
-	private final PratilipiDataInputView<BookData> bookDataInputView =
-			new PratilipiDataInputViewImpl<BookData>( PratilipiType.BOOK );
-
+	private PratilipiDataInputView pratilipiDataInputView;
+	
+	private PratilipiType pratilipiType;
+	
 	
 	public void onModuleLoad() {
-		
-		if( RootPanel.get( "PageContent-Books-DataInput" ) != null ) {
-		
-			accordion.setTitle( "Add Book" );
-			bookDataInputView.addAddButtonClickHandler( this );
 
-			accordion.add( bookDataInputView );
-			RootPanel.get( "PageContent-Books-DataInput" ).add( accordion );
+		for( PratilipiType pratilipiType : PratilipiType.values() )
+			if( RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" ) != null )
+				this.pratilipiType = pratilipiType;
+		
+		if( pratilipiType == null )
+			return;
+		
+		if( RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" ) != null ) {
+		
+			accordion.setTitle( "Add " + pratilipiType.getName() );
+			pratilipiDataInputView = new PratilipiDataInputViewImpl( pratilipiType );
+			pratilipiDataInputView.addAddButtonClickHandler( this );
+
+			accordion.add( pratilipiDataInputView );
+			RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" ).add( accordion );
 			
 			
 			// Load list of authors.
@@ -61,7 +71,7 @@ public class BooksContent implements EntryPoint, ClickHandler {
 				@Override
 				public void onSuccess( GetAuthorListResponse response ) {
 					for( AuthorData authorData : response.getAuthorList() )
-						bookDataInputView.setAuthorList( authorData );
+						pratilipiDataInputView.setAuthorList( authorData );
 				}
 				
 			});
@@ -78,14 +88,14 @@ public class BooksContent implements EntryPoint, ClickHandler {
 				@Override
 				public void onSuccess( GetLanguageListResponse response ) {
 					for( LanguageData languageData : response.getLanguageList())
-						bookDataInputView.setLanguageList( languageData );
+						pratilipiDataInputView.setLanguageList( languageData );
 				}
 				
 		    });
 		
 		}
 
-		RootPanel.get( "PageContent-Books" ).add( new InfiniteScrollPanel() {
+		RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" ).add( new InfiniteScrollPanel() {
 
 			@Override
 			protected void loadItems() {
@@ -119,24 +129,25 @@ public class BooksContent implements EntryPoint, ClickHandler {
 	
 	}
 	
+	
 	@Override
 	public void onClick( ClickEvent event ) {
-		if( !bookDataInputView.validateInputs() )
+		if( ! pratilipiDataInputView.validateInputs() )
 			return;
 		
-		bookDataInputView.setEnabled( false );
-		BookData bookData = bookDataInputView.getPratilipiData();
-		AddBookRequest request = new AddBookRequest( bookData );
-		pratilipiService.addBook( request, new AsyncCallback<AddBookResponse>(){
+		pratilipiDataInputView.setEnabled( false );
+		PratilipiData pratilipiData = pratilipiDataInputView.getPratilipiData();
+		AddPratilipiRequest request = new AddPratilipiRequest( pratilipiData );
+		pratilipiService.addPratilipi( request, new AsyncCallback<AddPratilipiResponse>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
-				bookDataInputView.setEnabled( true );
+				pratilipiDataInputView.setEnabled( true );
 				Window.alert( caught.getMessage() );
 			}
 
 			@Override
-			public void onSuccess(AddBookResponse result) {
+			public void onSuccess( AddPratilipiResponse result ) {
 				Window.Location.reload();				
 			}
 			

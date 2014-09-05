@@ -20,12 +20,14 @@ import com.claymus.module.websitewidget.header.HeaderWidget;
 import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
 import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.commons.shared.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.book.BookContentFactory;
 import com.pratilipi.pagecontent.books.BooksContentFactory;
 import com.pratilipi.pagecontent.genres.GenresContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
+import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
 
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
@@ -35,8 +37,10 @@ public class PratilipiMain extends ClaymusMain {
 			Logger.getLogger( PratilipiMain.class.getName() );
 
 	static {
+		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
 		PAGE_CONTENT_REGISTRY.register( BookContentFactory.class );
 		
+		PAGE_CONTENT_REGISTRY.register( PratilipisContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( BooksContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
@@ -62,7 +66,10 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( BookListFactory.newBookList() );
 
 		else if( requestUri.equals( "/books" ) )
-			pageContentList.add( BooksContentFactory.newBooksContent() );
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK ) );
+		
+		else if( requestUri.equals( "/poems" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM ) );
 		
 		else if( requestUri.equals( "/languages" ) )
 			pageContentList.add( LanguagesContentFactory.newLanguagesContent() );
@@ -126,6 +133,7 @@ public class PratilipiMain extends ClaymusMain {
 			headerWidget.setRightNavItems( new Object[][] {
 					{ "Give Away", "/give-away", null },
 					{ "Books", "/books", null },
+					{ "Poems", "/poems", null },
 					{ "Languages", "/languages", null },
 					{ "Authors", "/authors" },
 					{ "Genres", "/genres" },

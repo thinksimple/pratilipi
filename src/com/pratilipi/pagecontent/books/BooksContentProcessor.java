@@ -14,6 +14,7 @@ public class BooksContentProcessor extends PageContentProcessor<BooksContent> {
 	public static String ACCESS_ID_BOOK_LIST = "book_list";
 	public static String ACCESS_ID_BOOK_READ_META_DATA = "book_read_meta_data";
 	public static String ACCESS_ID_BOOK_ADD = "book_add";
+	public static String ACCESS_ID_BOOK_UPDATE = "book_update";
 	
 	
 	@Override

@@ -35,7 +35,6 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 	private Label formHeader = new Label( "Enter Book Details" );
 	
 	private ListBoxFormField pratilipiTypeInput = new ListBoxFormField();
-	private TextInputFormField isbnInput = new TextInputFormField(); 
 	private TextInputFormField titleInput = new TextInputFormField();
 	private ListBoxFormField authorInput = new ListBoxFormField();
 	//private ListBoxFormField publisherInput = new ListBoxFormField();;
@@ -43,7 +42,12 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 	
 	private Button add = new Button( "Add" );
 	
-	public PratilipiDataInputViewImpl() {
+	
+	private final PratilipiType pratilipiType;
+	
+	public PratilipiDataInputViewImpl( PratilipiType pratilipiType ) {
+		
+		this.pratilipiType = pratilipiType;
 		
 		pratilipiTypeInput.addItem("Select Type", "");
 	    pratilipiTypeInput.setRequired( true );
@@ -57,15 +61,6 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 	    pratilipiTypeInputCol.add( pratilipiTypeInput );
 	    pratilipiTypePanel.addStyleName( "row" );
 	    pratilipiTypePanel.add( pratilipiTypeInputCol );
-	    
-	    /*
-	    isbnLabel.addStyleName( "col-sm-2" );
-	    isbnInputCol.addStyleName( "col-sm-4" );
-	    isbnInputCol.add( isbnInput );
-	    isbnPanel.addStyleName( "row" );
-	    isbnPanel.add( isbnLabel );
-	    isbnPanel.add( isbnInputCol );
-	    */
 	    
 	    titleInput.setPlaceholder( "Title" );
 	    titleInput.setRequired( true );
@@ -117,7 +112,6 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 	public boolean validateInputs() {
 		boolean validated = true;
 		validated = pratilipiTypeInput.validate() && validated;
-		validated = isbnInput.validate() && validated;
 		validated = titleInput.validate() && validated;
 		validated = authorInput.validate() && validated;
 		validated = languageInput.validate() && validated;
@@ -127,7 +121,6 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 	@Override
 	public void setEnabled(boolean enabled) {
 		pratilipiTypeInput.setEnabled( enabled);
-		isbnInput.setEnabled( enabled );
 		titleInput.setEnabled( enabled );
 		authorInput.setEnabled( enabled );
 		languageInput.setEnabled( enabled );		
@@ -146,8 +139,7 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 		else
 			pratilipiData = new ArticleData();
 
-		pratilipiData.setPratilipiType( pratilipiTypeInput.getItemText() );
-		pratilipiData.setIsbn( isbnInput.getText() );
+		pratilipiData.setPratilipiType( pratilipiType );
 		pratilipiData.setTitle( titleInput.getText() );
 		pratilipiData.setAuthorName( authorInput.getItemText());
 		pratilipiData.setAuthorId( Long.valueOf(authorInput.getValue()) );

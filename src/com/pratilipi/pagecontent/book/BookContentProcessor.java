@@ -16,12 +16,12 @@ import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.UserPratilipi;
+import com.pratilipi.pagecontent.books.BooksContentProcessor;
 
 public class BookContentProcessor extends PageContentProcessor<BookContent> {
 
-	public static String ACCESS_ID_BOOK_VIEW = "book_view";
-	public static String ACCESS_ID_BOOK_ADD = "book_add";
-	public static String ACCESS_ID_BOOK_UPDATE = "book_update";
+	public static String ACCESS_ID_BOOK_ADD = BooksContentProcessor.ACCESS_ID_BOOK_ADD;
+	public static String ACCESS_ID_BOOK_UPDATE = BooksContentProcessor.ACCESS_ID_BOOK_UPDATE;
 	
 	public static String ACCESS_ID_BOOK_REVIEW_VIEW = "book_review_view";
 	public static String ACCESS_ID_BOOK_REVIEW_ADD = "book_review_add";
