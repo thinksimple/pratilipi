@@ -14,7 +14,10 @@ import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
+import com.pratilipi.service.shared.GetLanguageListRequest;
+import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.data.AuthorData;
+import com.pratilipi.service.shared.data.LanguageData;
 
 public class AuthorsContent implements EntryPoint, ClickHandler {
 	
@@ -31,7 +34,22 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 				
 		if( RootPanel.get( "PageContent-Authors-DataInput" ) == null )
 			return;
-		
+		else {
+			pratilipiService.getLanguageList(new GetLanguageListRequest(), new AsyncCallback<GetLanguageListResponse>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+					
+				}
+
+				@Override
+				public void onSuccess(GetLanguageListResponse response) {
+					for( LanguageData languageData : response.getLanguageList())
+						authorsDataInputView.setLanguageList( languageData );
+					
+				}});
+		}
 		accordion.setTitle( "Add Author" );
 		authorsDataInputView.addAddButtonClickHandler( this );
 

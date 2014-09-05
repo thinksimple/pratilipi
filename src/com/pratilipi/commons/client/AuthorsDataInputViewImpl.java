@@ -5,8 +5,6 @@ import com.claymus.commons.client.ui.formfield.TextInputFormField;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormPanel;
@@ -14,8 +12,6 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
-import com.pratilipi.service.shared.GetLanguageListRequest;
-import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.LanguageData;
 
@@ -79,20 +75,6 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 		
 		languageInput.setRequired( true );
 		languageInput.addStyleName( "form-group" );
-		pratilipiService.getLanguageList(new GetLanguageListRequest(), new AsyncCallback<GetLanguageListResponse>(){
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-					
-				}
-
-				@Override
-				public void onSuccess(GetLanguageListResponse response) {
-					for( LanguageData languageData : response.getLanguageList())
-						languageInput.addItem(languageData.getName(), languageData.getId().toString());
-					
-				}});
 		
 		addButton.addStyleName( "btn btn-default" );
 		
@@ -201,6 +183,12 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 		penNameEngInput.setText( authorData.getPenNameEn() );
 		emailInput.setText( authorData.getEmail() );
 		languageInput.setValueText( authorData.getLanguageName() );
+	}
+
+	@Override
+	public void setLanguageList(LanguageData languageData) {
+		this.languageInput.addItem(languageData.getName(), languageData.getId().toString());
+		
 	}
 	
 }
