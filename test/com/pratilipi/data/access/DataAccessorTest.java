@@ -12,7 +12,7 @@ import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
-import com.pratilipi.data.transfer.UserBook;
+import com.pratilipi.data.transfer.UserPratilipi;
 
 public abstract class DataAccessorTest {
 
@@ -216,9 +216,9 @@ public abstract class DataAccessorTest {
     	
     	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
     	
-    	UserBook userBook = dataAccessor.newUserBook();
+    	UserPratilipi userBook = dataAccessor.newUserPratilipi();
     	userBook.setUserId( userId );
-    	userBook.setBookId( bookId );
+    	userBook.setPratilipiId( bookId );
     	userBook.setRating( rating );
     	userBook.setReviewState( reviewState );
     	userBook.setReviewDate( reviewDate );
@@ -227,11 +227,11 @@ public abstract class DataAccessorTest {
     	dataAccessor.destroy();
     	
     	dataAccessor = DataAccessorFactory.getDataAccessor();
-    	userBook = dataAccessor.getUserBook( userId, bookId );
+    	userBook = dataAccessor.getUserPratilipi( userId, bookId );
     	
     	Assert.assertNotNull( userBook );
     	Assert.assertEquals( userId, userBook.getUserId() );
-    	Assert.assertEquals( bookId, userBook.getBookId() );
+    	Assert.assertEquals( bookId, userBook.getPratilipiId() );
     	Assert.assertEquals( rating, userBook.getRating() );
     	Assert.assertEquals( reviewState, userBook.getReviewState() );
     	Assert.assertEquals( reviewDate, userBook.getReviewDate() );

@@ -2,9 +2,10 @@ package com.pratilipi.data.transfer;
 
 import java.util.Date;
 
+import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.UserReviewState;
 
-public interface UserBook {
+public interface UserPratilipi {
 
 	String getId();
 	
@@ -12,9 +13,13 @@ public interface UserBook {
 	
 	void setUserId( Long userId );
 	
-	Long getBookId();
+	Long getPratilipiId();
 	
-	void setBookId( Long bookId );
+	void setPratilipiId( Long pratilipiId );
+	
+	PratilipiType getPratilipiType();
+	
+	void setPratilipiType( PratilipiType pratilipiType );
 	
 	Long getRating();
 	

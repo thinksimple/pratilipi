@@ -18,7 +18,7 @@ import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
-import com.pratilipi.data.transfer.UserBook;
+import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
 import com.pratilipi.pagecontent.book.BookContentProcessor;
 import com.pratilipi.pagecontent.genres.GenresContentProcessor;
@@ -34,8 +34,8 @@ import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
 import com.pratilipi.service.shared.AddPublisherResponse;
-import com.pratilipi.service.shared.AddUserBookRequest;
-import com.pratilipi.service.shared.AddUserBookResponse;
+import com.pratilipi.service.shared.AddUserPratilipiRequest;
+import com.pratilipi.service.shared.AddUserPratilipiResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
@@ -46,10 +46,10 @@ import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
-import com.pratilipi.service.shared.GetUserBookListRequest;
-import com.pratilipi.service.shared.GetUserBookListResponse;
-import com.pratilipi.service.shared.GetUserBookRequest;
-import com.pratilipi.service.shared.GetUserBookResponse;
+import com.pratilipi.service.shared.GetUserPratilipiListRequest;
+import com.pratilipi.service.shared.GetUserPratilipiListResponse;
+import com.pratilipi.service.shared.GetUserPratilipiRequest;
+import com.pratilipi.service.shared.GetUserPratilipiResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 import com.pratilipi.service.shared.data.AuthorData;
@@ -57,7 +57,7 @@ import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.GenreData;
 import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PublisherData;
-import com.pratilipi.service.shared.data.UserBookData;
+import com.pratilipi.service.shared.data.UserPratilipiData;
 
 @SuppressWarnings("serial")
 public class PratilipiServiceImpl
@@ -422,18 +422,18 @@ public class PratilipiServiceImpl
 
 	
 	@Override
-	public AddUserBookResponse addUserBook( AddUserBookRequest request )
+	public AddUserPratilipiResponse addUserPratilipi( AddUserPratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
 		
-		UserBookData userBookData = request.getUserBook();
+		UserPratilipiData userBookData = request.getUserPratilipi();
 
 		ClaymusHelper claymusHelper =
 				new ClaymusHelper( this.getThreadLocalRequest() );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		Book book = dataAccessor.getBook( userBookData.getBookId() );
-		UserBook userBook = dataAccessor.getUserBook(
+		Book book = dataAccessor.getBook( userBookData.getPratilipiId() );
+		UserPratilipi userBook = dataAccessor.getUserPratilipi(
 				claymusHelper.getCurrentUserId(), book.getId() );
 		
 		if( claymusHelper.getCurrentUserId() == book.getAuthorId()
@@ -441,9 +441,9 @@ public class PratilipiServiceImpl
 				|| ! claymusHelper.hasUserAccess( BookContentProcessor.ACCESS_ID_BOOK_REVIEW_ADD, false ) )
 			throw new InsufficientAccessException();
 
-		userBook = dataAccessor.newUserBook();
+		userBook = dataAccessor.newUserPratilipi();
 		userBook.setUserId( claymusHelper.getCurrentUserId() );
-		userBook.setBookId( book.getId() );
+		userBook.setPratilipiId( book.getId() );
 		userBook.setRating( userBookData.getRating() );
 		userBook.setReview( userBookData.getReview() );
 		userBook.setReviewState( UserReviewState.PENDING_APPROVAL );
@@ -452,51 +452,51 @@ public class PratilipiServiceImpl
 		userBook = dataAccessor.createOrUpdateUserBook( userBook );
 		dataAccessor.destroy();
 		
-		return new AddUserBookResponse( userBook.getId() );
+		return new AddUserPratilipiResponse( userBook.getId() );
 	}
 	
 	@Override
-	public GetUserBookResponse getUserBook( GetUserBookRequest request ) {
+	public GetUserPratilipiResponse getUserPratilipi( GetUserPratilipiRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		UserBook userBook = dataAccessor.getUserBook(
+		UserPratilipi userBook = dataAccessor.getUserPratilipi(
 				request.getUserId(),
-				request.getBookId());
+				request.getPratilipiId());
 		
 		User user = dataAccessor.getUser( userBook.getUserId() );
 		
-		UserBookData userBookData = new UserBookData();
+		UserPratilipiData userBookData = new UserPratilipiData();
 		userBookData.setId( userBook.getId() );
 		userBookData.setUserId( user.getId() );
 		userBookData.setUserName( user.getFirstName() + " " + user.getLastName() );
-		userBookData.setBookId( userBook.getBookId() );
+		userBookData.setPratilipiId( userBook.getPratilipiId() );
 		userBookData.setRating( userBook.getRating() );
 		userBookData.setReview( userBook.getReview() );
 		userBookData.setReviewState( userBook.getReviewState() );
 		userBookData.setReviewDate( userBook.getReviewDate() );
 		
-		return new GetUserBookResponse( userBookData );
+		return new GetUserPratilipiResponse( userBookData );
 	}
 
 	@Override
-	public GetUserBookListResponse getUserBookList(GetUserBookListRequest request) {
+	public GetUserPratilipiListResponse getUserPratilipiList(GetUserPratilipiListRequest request) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<UserBook> userBookList = dataAccessor.getUserBookList( request.getBookId() );
+		List<UserPratilipi> userBookList = dataAccessor.getUserPratilipiList( request.getPratilipiId() );
 		
-		ArrayList<UserBookData> userBookDataList = new ArrayList<>( userBookList.size() );
-		for( UserBook userBook : userBookList ) {
+		ArrayList<UserPratilipiData> userBookDataList = new ArrayList<>( userBookList.size() );
+		for( UserPratilipi userBook : userBookList ) {
 			User user = dataAccessor.getUser( request.getUserId() );
 			
-			UserBookData userBookData = new UserBookData();
-			userBookData.setBookId(userBook.getBookId());
+			UserPratilipiData userBookData = new UserPratilipiData();
+			userBookData.setPratilipiId(userBook.getPratilipiId());
 			userBookData.setUserId(userBook.getUserId());
 			userBookData.setRating(userBook.getRating());
 			userBookData.setReview(userBook.getReview());
 			userBookData.setReviewState(userBook.getReviewState());
 			userBookData.setReviewDate(userBook.getReviewDate());
 			userBookData.setUserName( user.getFirstName() + " " + user.getLastName() );
-			userBookData.setId(userBook.getUserId()+"-"+userBook.getBookId());
+			userBookData.setId(userBook.getUserId()+"-"+userBook.getPratilipiId());
 			
 			userBookDataList.add( userBookData );
 			
@@ -504,7 +504,7 @@ public class PratilipiServiceImpl
 
 		dataAccessor.destroy();
 		
-		return new GetUserBookListResponse( userBookDataList );
+		return new GetUserPratilipiListResponse( userBookDataList );
 	}
 
 }

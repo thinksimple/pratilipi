@@ -1,5 +1,12 @@
 <datastore-indexes autoGenerate="false">
 
+  <!-- Required by PratilipiService.getPratilipiList -->
+  <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
+    <property name="PRATILIPI_TYPE" direction="asc"/>
+    <property name="_TYPE" direction="asc"/>
+    <property name="TITLE" direction="asc"/>
+  </datastore-index>
+    
   <!-- Required by PratilipiService.getAuthorList -->
   <datastore-index kind="AUTHOR" ancestor="false" source="manual">
     <property name="FIRST_NAME_EN" direction="asc"/>

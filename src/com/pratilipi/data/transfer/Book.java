@@ -1,41 +1,9 @@
 package com.pratilipi.data.transfer;
 
-import java.util.Date;
-
-public interface Book {
-
-	Long getId();
-	
-	String getTitle();
-	
-	void setTitle( String title );
-	
-	Long getLanguageId();
-	
-	void setLanguageId( Long languageId );
-	
-	Long getAuthorId();
-	
-	void setAuthorId( Long authorId );
+public interface Book extends Pratilipi {
 
 	Long getPublisherId();
 	
 	void setPublisherId( Long publisherId );
-	
-	Long getPublicationYear();
-	
-	void setPublicationYear( Long publicationYear );
-	
-	Date getListingDate();
-	
-	void setListingDate( Date listingDate );
-	
-	String getSummary();
-	
-	void setSummary( String summary );
-	
-	Long getWordCount();
-	
-	void setWordCount( Long wordCount );
 	
 }

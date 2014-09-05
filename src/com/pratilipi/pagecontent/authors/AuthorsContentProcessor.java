@@ -13,6 +13,7 @@ import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Language;
 
 public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent> {
 
@@ -32,15 +33,25 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 				claymusHelper.hasUserAccess( ACCESS_ID_AUTHOR_ADD, false );
 
 		
-		// Fetching Language list
+		// Fetching Author list
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Author> authorList = dataAccessor.getAuthorList( null, 100 ).getDataList();
+		Map<String, String> languageIdNameMap = new HashMap<>();
+		for( Author author : authorList ) {
+			if( languageIdNameMap.get( author.getLanguageId() ) == null ) {
+				Language language = dataAccessor.getLanguage( author.getLanguageId() );
+				languageIdNameMap.put(
+						language.getId().toString(),
+						language.getName() + " (" + language.getNameEn() + ")" );
+			}
+		}
 		dataAccessor.destroy();
 		
 		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "authorList", authorList );
+		dataModel.put( "languageIdNameMap", languageIdNameMap );
 		dataModel.put( "authorPageUrl", PratilipiHelper.URL_AUTHOR_PAGE );
 		dataModel.put( "showMetaData", showMetaData );
 		dataModel.put( "showAddOption", showAddOption );

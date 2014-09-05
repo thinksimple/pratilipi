@@ -11,8 +11,8 @@ import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
 import com.pratilipi.service.shared.AddPublisherResponse;
-import com.pratilipi.service.shared.AddUserBookRequest;
-import com.pratilipi.service.shared.AddUserBookResponse;
+import com.pratilipi.service.shared.AddUserPratilipiRequest;
+import com.pratilipi.service.shared.AddUserPratilipiResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetBookListRequest;
@@ -23,10 +23,10 @@ import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
-import com.pratilipi.service.shared.GetUserBookListRequest;
-import com.pratilipi.service.shared.GetUserBookListResponse;
-import com.pratilipi.service.shared.GetUserBookRequest;
-import com.pratilipi.service.shared.GetUserBookResponse;
+import com.pratilipi.service.shared.GetUserPratilipiListRequest;
+import com.pratilipi.service.shared.GetUserPratilipiListResponse;
+import com.pratilipi.service.shared.GetUserPratilipiRequest;
+import com.pratilipi.service.shared.GetUserPratilipiResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 
@@ -81,16 +81,16 @@ public interface PratilipiServiceAsync {
 			AsyncCallback<AddGenreResponse> callback );
 
 
-	void addUserBook( 
-			AddUserBookRequest request,
-			AsyncCallback<AddUserBookResponse> callback );
+	void addUserPratilipi( 
+			AddUserPratilipiRequest request,
+			AsyncCallback<AddUserPratilipiResponse> callback );
 	
-	void getUserBook( 
-			GetUserBookRequest request,
-			AsyncCallback<GetUserBookResponse> callBack);
+	void getUserPratilipi( 
+			GetUserPratilipiRequest request,
+			AsyncCallback<GetUserPratilipiResponse> callBack);
 
-	void getUserBookList( 
-			GetUserBookListRequest request,
-			AsyncCallback<GetUserBookListResponse> callback );
+	void getUserPratilipiList( 
+			GetUserPratilipiListRequest request,
+			AsyncCallback<GetUserPratilipiListResponse> callback );
 
 }

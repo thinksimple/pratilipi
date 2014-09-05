@@ -12,9 +12,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
-import com.pratilipi.service.shared.AddUserBookRequest;
-import com.pratilipi.service.shared.AddUserBookResponse;
-import com.pratilipi.service.shared.data.UserBookData;
+import com.pratilipi.service.shared.AddUserPratilipiRequest;
+import com.pratilipi.service.shared.AddUserPratilipiResponse;
+import com.pratilipi.service.shared.data.UserPratilipiData;
 
 public class BookContent implements EntryPoint, ClickHandler {
 
@@ -52,16 +52,16 @@ public class BookContent implements EntryPoint, ClickHandler {
 			saveReviewAnchor.setVisible( false );
 			savingLabel.setVisible( true );
 			
-			UserBookData userBookData = new UserBookData();
-			userBookData.setBookId( Long.parseLong( Window.Location.getPath().substring( 6 ) ));
+			UserPratilipiData userBookData = new UserPratilipiData();
+			userBookData.setPratilipiId( Long.parseLong( Window.Location.getPath().substring( 6 ) ));
 			userBookData.setReview( getHtmlFromEditor( "PageContent-Book-Review" ) );
 			
-			pratilipiService.addUserBook(
-					new AddUserBookRequest( userBookData ),
-					new AsyncCallback<AddUserBookResponse>() {
+			pratilipiService.addUserPratilipi(
+					new AddUserPratilipiRequest( userBookData ),
+					new AsyncCallback<AddUserPratilipiResponse>() {
 				
 				@Override
-				public void onSuccess( AddUserBookResponse result ) {
+				public void onSuccess( AddUserPratilipiResponse result ) {
 					Window.Location.reload();
 				}
 				

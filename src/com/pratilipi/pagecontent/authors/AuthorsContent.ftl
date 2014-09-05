@@ -22,15 +22,15 @@
 		</thead>
 		<tbody>
 			<#list authorList as author >
-				<#assign _authorName="${ author.getFirstName() } ${ author.getLastName() } ${ author.getFirstNameEn() } ${ author.getLastNameEn() }">  
-				<#assign _authorPenName="${ author.getPenName() } ${ author.getPenNameEn() }">
+				<#assign _authorName="${ author.getFirstName() } ${ author.getLastName() } (${ author.getFirstNameEn() } ${ author.getLastNameEn() })">  
+				<#assign _authorPenName="${ author.getPenName() } (${ author.getPenNameEn() })">
 				<#assign _authorPageUrl="${ authorPageUrl }${ author.getId()?string(\"#\") }">
 				<tr>
 					<td>${ author_index + 1 }</td>
 					<td><a href="${ _authorPageUrl }">${ _authorName }</td>
 					<td><a href="${ _authorPageUrl }">${ _authorPenName }</td>
 					<#if showMetaData>
-						<td>${ author.getLanguageName() }</td>
+						<td>${ languageIdNameMap[ author.getLanguageId()?string("#") ] }</td>
 						<td>${ author.getRegistrationDate()?date }</td>
 					</#if>
 				</tr>

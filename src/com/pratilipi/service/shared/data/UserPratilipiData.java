@@ -5,7 +5,7 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.pratilipi.commons.shared.UserReviewState;
 
-public class UserBookData implements IsSerializable {
+public class UserPratilipiData implements IsSerializable {
 
 	private String id;
 	
@@ -13,7 +13,7 @@ public class UserBookData implements IsSerializable {
 	
 	private String userName;
 	
-	private Long bookId;
+	private Long pratilipiId;
 	
 	private Long rating;
 	
@@ -48,12 +48,12 @@ public class UserBookData implements IsSerializable {
 		this.userName = userName;
 	}
 
-	public Long getBookId() {
-		return bookId;
+	public Long getPratilipiId() {
+		return pratilipiId;
 	}
 
-	public void setBookId( Long bookId ) {
-		this.bookId = bookId;
+	public void setPratilipiId( Long pratilipiId ) {
+		this.pratilipiId = pratilipiId;
 	}
 
 	public Long getRating() {

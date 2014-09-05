@@ -1,6 +1,6 @@
 package com.pratilipi.commons.shared;
 
-public enum PratilipiTypes {
+public enum PratilipiType {
 	
 	ARTICLE( "Article" ),
 	BOOK( "Book" ),
@@ -10,7 +10,7 @@ public enum PratilipiTypes {
 	
 	private String name;
 	
-	private PratilipiTypes( String name ) {
+	private PratilipiType( String name ) {
 		this.name = name;
 	}
 	

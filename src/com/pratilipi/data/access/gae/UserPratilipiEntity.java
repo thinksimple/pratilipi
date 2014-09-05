@@ -7,21 +7,25 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
+import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.UserReviewState;
-import com.pratilipi.data.transfer.UserBook;
+import com.pratilipi.data.transfer.UserPratilipi;
 
-@PersistenceCapable( table = "USER_BOOK" )
-public class UserBookEntity implements UserBook {
+@PersistenceCapable( table = "USER_PRATILIPI" )
+public class UserPratilipiEntity implements UserPratilipi {
 
 	@PrimaryKey
-	@Persistent( column = "USER_BOOK_ID" )
+	@Persistent( column = "USER_PRATILIPI_ID" )
 	private String id;
 	
 	@Persistent( column = "USER_ID" )
 	private Long userId;
 	
-	@Persistent( column = "BOOK_ID" )
-	private Long bookId;
+	@Persistent( column = "PRATILIPI_ID" )
+	private Long pratilipiId;
+	
+	@Persistent( column = "PRATILIPI_TYPE" )
+	private PratilipiType pratilipiType;
 	
 	@Persistent( column = "RATING" )
 	private Long rating;
@@ -56,15 +60,25 @@ public class UserBookEntity implements UserBook {
 	}
 	
 	@Override
-	public Long getBookId() {
-		return bookId;
+	public Long getPratilipiId() {
+		return pratilipiId;
 	}
 	
 	@Override
-	public void setBookId( Long bookId ) {
-		this.bookId = bookId;
+	public void setPratilipiId( Long pratilipiId ) {
+		this.pratilipiId = pratilipiId;
 	}
 	
+	@Override
+	public PratilipiType getPratilipiType() {
+		return pratilipiType;
+	}
+	
+	@Override
+	public void setPratilipiType( PratilipiType pratilipiType ) {
+		this.pratilipiType = pratilipiType;
+	}
+
 	@Override
 	public Long getRating() {
 		return rating;

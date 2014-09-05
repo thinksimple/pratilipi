@@ -5,14 +5,14 @@ import java.util.List;
 import com.claymus.data.access.DataListCursorTuple;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
-import com.pratilipi.data.transfer.BookAuthor;
-import com.pratilipi.data.transfer.BookGenre;
-import com.pratilipi.data.transfer.BookTag;
+import com.pratilipi.data.transfer.PratilipiAuthor;
+import com.pratilipi.data.transfer.PratilipiGenre;
+import com.pratilipi.data.transfer.PratilipiTag;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
-import com.pratilipi.data.transfer.UserBook;
+import com.pratilipi.data.transfer.UserPratilipi;
 
 
 public interface DataAccessor extends com.claymus.data.access.DataAccessor {
@@ -69,27 +69,27 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	Tag createOrUpdateTag( Tag tag );
 	
 
-	BookAuthor newBookAuthor();
+	PratilipiAuthor newPratilipiAuthor();
 
-	BookAuthor createOrUpdateBookAuthor( BookAuthor bookAuthor );
+	PratilipiAuthor createOrUpdatePratilipiAuthor( PratilipiAuthor bookAuthor );
 	
 
-	BookGenre newBookGenere();
+	PratilipiGenre newPratilipiGenre();
 
-	BookGenre createOrUpdateBookGenere( BookGenre bookGenere );
+	PratilipiGenre createOrUpdatePratilipiGenre( PratilipiGenre bookGenere );
 	
 
-	BookTag newBookTag();
+	PratilipiTag newPratilipiTag();
 
-	BookTag createOrUpdateBookTag( BookTag bookTag );
+	PratilipiTag createOrUpdatePratilipiTag( PratilipiTag bookTag );
 	
 	
-	UserBook newUserBook();
+	UserPratilipi newUserPratilipi();
 	
-	UserBook getUserBook(Long userId, Long bookId);
+	UserPratilipi getUserPratilipi(Long userId, Long bookId);
 
-	List<UserBook> getUserBookList( Long bookId );
+	List<UserPratilipi> getUserPratilipiList( Long bookId );
 
-	UserBook createOrUpdateUserBook( UserBook userBook );
+	UserPratilipi createOrUpdateUserBook( UserPratilipi userBook );
 
 }

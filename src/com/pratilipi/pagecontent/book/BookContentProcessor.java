@@ -15,7 +15,7 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
-import com.pratilipi.data.transfer.UserBook;
+import com.pratilipi.data.transfer.UserPratilipi;
 
 public class BookContentProcessor extends PageContentProcessor<BookContent> {
 
@@ -38,9 +38,9 @@ public class BookContentProcessor extends PageContentProcessor<BookContent> {
 		if( bookContent.getBookId() != null ) {
 			Book book = dataAccessor.getBook( bookContent.getBookId() );
 			Author author = dataAccessor.getAuthor( book.getAuthorId() );
-			UserBook userBook = dataAccessor.getUserBook(
+			UserPratilipi userBook = dataAccessor.getUserPratilipi(
 					claymusHelper.getCurrentUserId(), book.getId() );
-			List<UserBook> reviewList = dataAccessor.getUserBookList( book.getId() );
+			List<UserPratilipi> reviewList = dataAccessor.getUserPratilipiList( book.getId() );
 	
 			dataAccessor.destroy();
 			

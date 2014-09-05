@@ -11,30 +11,49 @@ import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.access.GaeQueryBuilder;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
+import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.gae.AuthorEntity;
-import com.pratilipi.data.access.gae.BookAuthorEntity;
 import com.pratilipi.data.access.gae.BookEntity;
-import com.pratilipi.data.access.gae.BookGenreEntity;
-import com.pratilipi.data.access.gae.BookTagEntity;
 import com.pratilipi.data.access.gae.GenreEntity;
 import com.pratilipi.data.access.gae.LanguageEntity;
+import com.pratilipi.data.access.gae.PratilipiAuthorEntity;
+import com.pratilipi.data.access.gae.PratilipiEntity;
+import com.pratilipi.data.access.gae.PratilipiGenreEntity;
+import com.pratilipi.data.access.gae.PratilipiTagEntity;
 import com.pratilipi.data.access.gae.PublisherEntity;
 import com.pratilipi.data.access.gae.TagEntity;
-import com.pratilipi.data.access.gae.UserBookEntity;
+import com.pratilipi.data.access.gae.UserPratilipiEntity;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
-import com.pratilipi.data.transfer.BookAuthor;
-import com.pratilipi.data.transfer.BookGenre;
-import com.pratilipi.data.transfer.BookTag;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
+import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.data.transfer.PratilipiAuthor;
+import com.pratilipi.data.transfer.PratilipiGenre;
+import com.pratilipi.data.transfer.PratilipiTag;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
-import com.pratilipi.data.transfer.UserBook;
+import com.pratilipi.data.transfer.UserPratilipi;
 
 public class DataAccessorGaeImpl
 		extends com.claymus.data.access.DataAccessorGaeImpl
 		implements DataAccessor {
+
+	
+	private <T extends Pratilipi> List<T> getPratilipiList(
+			PratilipiType pratilipiType ) {
+		
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) )
+						.addFilter( "pratilipiType", pratilipiType )
+						.addOrdering( "title", true )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<T> pratilipiEntityList = (List<T>) query.execute( pratilipiType );
+		return (List<T>) pm.detachCopyAll( pratilipiEntityList );
+	}
+	
 
 	@Override
 	public Book newBook() {
@@ -48,13 +67,7 @@ public class DataAccessorGaeImpl
 
 	@Override
 	public List<Book> getBookList() {
-		Query query =
-				new GaeQueryBuilder( pm.newQuery( BookEntity.class ) )
-						.build();
-		
-		@SuppressWarnings("unchecked")
-		List<Book> bookEntityList = (List<Book>) query.execute();
-		return (List<Book>) pm.detachCopyAll( bookEntityList );
+		return getPratilipiList( PratilipiType.BOOK );
 	}
 	
 	@Override
@@ -77,7 +90,7 @@ public class DataAccessorGaeImpl
 	public List<Language> getLanguageList() {
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( LanguageEntity.class ) )
-						.addOrdering( "name", false )
+						.addOrdering( "nameEn", true )
 						.build();
 		
 		@SuppressWarnings("unchecked")
@@ -207,70 +220,70 @@ public class DataAccessorGaeImpl
 
 	
 	@Override
-	public BookAuthor newBookAuthor() {
-		return new BookAuthorEntity();
+	public PratilipiAuthor newPratilipiAuthor() {
+		return new PratilipiAuthorEntity();
 	}
 
 	@Override
-	public BookAuthor createOrUpdateBookAuthor( BookAuthor bookAuthor ) {
-		return createOrUpdateEntity( bookAuthor );
-	}
-
-	
-	@Override
-	public BookGenre newBookGenere() {
-		return new BookGenreEntity();
-	}
-
-	@Override
-	public BookGenre createOrUpdateBookGenere( BookGenre bookGenere ) {
-		return createOrUpdateEntity( bookGenere );
-	}
-
-
-	@Override
-	public BookTag newBookTag() {
-		return new BookTagEntity();
-	}
-
-	@Override
-	public BookTag createOrUpdateBookTag( BookTag bookTag ) {
-		return createOrUpdateEntity( bookTag );
+	public PratilipiAuthor createOrUpdatePratilipiAuthor( PratilipiAuthor pratilipiAuthor ) {
+		return createOrUpdateEntity( pratilipiAuthor );
 	}
 
 	
 	@Override
-	public UserBook newUserBook() {
-		return new UserBookEntity();
+	public PratilipiGenre newPratilipiGenre() {
+		return new PratilipiGenreEntity();
+	}
+
+	@Override
+	public PratilipiGenre createOrUpdatePratilipiGenre( PratilipiGenre pratilipiGenre ) {
+		return createOrUpdateEntity( pratilipiGenre );
+	}
+
+
+	@Override
+	public PratilipiTag newPratilipiTag() {
+		return new PratilipiTagEntity();
+	}
+
+	@Override
+	public PratilipiTag createOrUpdatePratilipiTag( PratilipiTag pratilipiTag ) {
+		return createOrUpdateEntity( pratilipiTag );
+	}
+
+	
+	@Override
+	public UserPratilipi newUserPratilipi() {
+		return new UserPratilipiEntity();
 	}
 	
 	@Override
-	public UserBook getUserBook( Long userId, Long bookId ) {
+	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
 		try {
-			return getEntity( UserBookEntity.class, userId + "-" + bookId );
+			return getEntity( UserPratilipiEntity.class, userId + "-" + pratilipiId );
 		} catch( JDOObjectNotFoundException e ) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<UserBook> getUserBookList( Long bookId ) {
+	public List<UserPratilipi> getUserPratilipiList( Long pratilipiId ) {
 		
 		Query query =
-				new GaeQueryBuilder( pm.newQuery( UserBookEntity.class ) )
-						.addFilter( "bookId", bookId )
+				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) )
+						.addFilter( "pratilipiId", pratilipiId )
 						.build();
 		
 		@SuppressWarnings("unchecked")
-		List<UserBook> userBookList = (List<UserBook>) query.execute( bookId );
-		return (List<UserBook>) pm.detachCopyAll( userBookList );
+		List<UserPratilipi> userBookList = (List<UserPratilipi>) query.execute( pratilipiId );
+		return (List<UserPratilipi>) pm.detachCopyAll( userBookList );
 		
 	}
 
 	@Override
-	public UserBook createOrUpdateUserBook( UserBook userBook ) {
-		( (UserBookEntity) userBook ).setId( userBook.getUserId() + "-" + userBook.getBookId() );
-		return createOrUpdateEntity( userBook );
+	public UserPratilipi createOrUpdateUserBook( UserPratilipi userPratilipi ) {
+		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
+		return createOrUpdateEntity( userPratilipi );
 	}
 	
 }
