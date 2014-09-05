@@ -18,7 +18,7 @@ import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.service.shared.data.PublisherData;
 import com.pratilipi.service.shared.data.StoryData;
 
-public class BookDataInputViewImpl extends BookDataInputView {
+public class PratilipiDataInputViewImpl<T extends PratilipiData> extends PratilipiDataInputView<T> {
 	
 	private Panel panel = new FlowPanel();
 	private Panel pratilipiTypePanel = new FlowPanel();
@@ -45,7 +45,7 @@ public class BookDataInputViewImpl extends BookDataInputView {
 	
 	private Button add = new Button( "Add" );
 	
-	public BookDataInputViewImpl() {
+	public PratilipiDataInputViewImpl() {
 		
 	    pratilipiTypeInput.setRequired( true );
 	    pratilipiTypeInput.addItem( PratilipiType.ARTICLE.getName() );
@@ -140,7 +140,7 @@ public class BookDataInputViewImpl extends BookDataInputView {
 	}
 
 	@Override
-	public PratilipiData getPratilipiData() {
+	public T getPratilipiData() {
 		PratilipiData pratilipiData;
 		if( pratilipiTypeInput.getItemText().equals( "BOOK" )){
 			pratilipiData = new BookData();
@@ -163,11 +163,11 @@ public class BookDataInputViewImpl extends BookDataInputView {
 		pratilipiData.setLanguageName(languageInput.getItemText());
 		pratilipiData.setLanguageId(Long.valueOf(languageInput.getValue()));
 		
-		return pratilipiData;
+		return (T) pratilipiData;
 	}
 
 	@Override
-	public void setBookData(BookData bookData) {
+	public void setPratilipiData( T t ) {
 		//TODO
 	}
 

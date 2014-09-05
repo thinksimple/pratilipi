@@ -9,7 +9,7 @@ import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.service.shared.data.PublisherData;
 
-public abstract class BookDataInputView extends Composite {
+public abstract class PratilipiDataInputView<T extends PratilipiData> extends Composite {
 	
 	public abstract HandlerRegistration addAddButtonClickHandler(
 			ClickHandler clickHandler );
@@ -18,9 +18,9 @@ public abstract class BookDataInputView extends Composite {
 
 	public abstract void setEnabled( boolean enabled );
 	
-	public abstract PratilipiData getPratilipiData();
+	public abstract T getPratilipiData();
 
-	public abstract void setBookData( BookData bookData );
+	public abstract void setPratilipiData( T t );
 	
 	public abstract void setAuthorList ( AuthorData authorData );
 	

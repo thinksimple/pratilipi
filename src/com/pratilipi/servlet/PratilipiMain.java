@@ -20,7 +20,6 @@ import com.claymus.module.websitewidget.header.HeaderWidget;
 import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
 import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.commons.shared.PratilipiHelper;
-import com.pratilipi.module.pagecontent.bookdatainput.BookDataInputFactory;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.book.BookContentFactory;
@@ -36,9 +35,6 @@ public class PratilipiMain extends ClaymusMain {
 			Logger.getLogger( PratilipiMain.class.getName() );
 
 	static {
-		PAGE_CONTENT_REGISTRY.register( BookDataInputFactory.class );
-		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
-		
 		PAGE_CONTENT_REGISTRY.register( BookContentFactory.class );
 		
 		PAGE_CONTENT_REGISTRY.register( BooksContentFactory.class );
