@@ -36,11 +36,16 @@ import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
+import com.pratilipi.service.shared.UpdatePratilipiRequest;
+import com.pratilipi.service.shared.UpdatePratilipiResponse;
 
 @RemoteServiceRelativePath("../service.pratilipi")
 public interface PratilipiService extends RemoteService {
 	
 	AddPratilipiResponse addPratilipi( AddPratilipiRequest request )
+			throws IllegalArgumentException, InsufficientAccessException;
+
+	UpdatePratilipiResponse updatePratilipi( UpdatePratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException;
 
 	GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request );

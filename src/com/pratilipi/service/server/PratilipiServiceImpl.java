@@ -25,6 +25,7 @@ import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
 import com.pratilipi.pagecontent.book.BookContentProcessor;
 import com.pratilipi.pagecontent.genres.GenresContentProcessor;
 import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
+import com.pratilipi.pagecontent.pratilipi.PratilipiContentProcessor;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddAuthorRequest;
@@ -59,6 +60,8 @@ import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
+import com.pratilipi.service.shared.UpdatePratilipiRequest;
+import com.pratilipi.service.shared.UpdatePratilipiResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.GenreData;
@@ -103,13 +106,14 @@ public class PratilipiServiceImpl
 			pratilipi = dataAccessor.newPoem();
 		}
 		
-		pratilipi.setType( pratilipiData.getType() );
 		pratilipi.setTitle( pratilipiData.getTitle() );
 		pratilipi.setLanguageId( pratilipiData.getLanguageId() );
 		pratilipi.setAuthorId( pratilipiData.getAuthorId() );
 		pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
 		pratilipi.setSummary( pratilipiData.getSummary() );
 		pratilipi.setWordCount( pratilipiData.getWordCount() );
+
+		pratilipi.setType( pratilipiData.getType() );
 		pratilipi.setListingDate( new Date() );
 
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
@@ -118,6 +122,48 @@ public class PratilipiServiceImpl
 		return new AddPratilipiResponse( pratilipi.getId() );
 	}
 
+	@Override
+	public UpdatePratilipiResponse updatePratilipi( UpdatePratilipiRequest request )
+			throws IllegalArgumentException, InsufficientAccessException {
+		
+		PratilipiData pratilipiData = request.getPratilipiData();
+		if( ! pratilipiData.hasId() )
+			throw new IllegalArgumentException(
+					"PratilipiId is not set. Did you mean to call addPratilipi ?" );
+
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi(
+				pratilipiData.getId(),
+				pratilipiData.getType() );
+		
+		ClaymusHelper claymusHelper = new ClaymusHelper( this.getThreadLocalRequest() );
+		
+		if ( ( claymusHelper.getCurrentUserId() == pratilipi.getAuthorId()
+				&& ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
+				|| ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
+			throw new InsufficientAccessException();
+		
+		
+		if( pratilipiData.hasTitle() )
+			pratilipi.setTitle( pratilipiData.getTitle() );
+		if( pratilipiData.hasLanguageId() )
+			pratilipi.setLanguageId( pratilipiData.getLanguageId() );
+		if( pratilipiData.hasAuthorId() )
+			pratilipi.setAuthorId( pratilipiData.getAuthorId() );
+		if( pratilipiData.hasPublicationYear() )
+			pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
+		if( pratilipiData.hasSummary() )
+			pratilipi.setSummary( pratilipiData.getSummary() );
+		if( pratilipiData.hasWordCount() )
+			pratilipi.setWordCount( pratilipiData.getWordCount() );
+		
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+		dataAccessor.destroy();
+
+		return new UpdatePratilipiResponse();
+	}
+	
 	@Override
 	public GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request ) {
 		
