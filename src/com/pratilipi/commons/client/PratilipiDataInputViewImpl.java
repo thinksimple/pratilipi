@@ -28,7 +28,6 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 	private Panel titleInputCol = new SimplePanel();
 	private Panel authorPanel = new FlowPanel();
 	private Panel authorInputCol = new SimplePanel();
-	//private Panel publisherPanel = new FlowPanel();
 	private Panel languagePanel = new FlowPanel();
 	private Panel languageInputCol = new SimplePanel();
 	
@@ -37,7 +36,6 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 	private ListBoxFormField pratilipiTypeInput = new ListBoxFormField();
 	private TextInputFormField titleInput = new TextInputFormField();
 	private ListBoxFormField authorInput = new ListBoxFormField();
-	//private ListBoxFormField publisherInput = new ListBoxFormField();;
 	private ListBoxFormField languageInput = new ListBoxFormField();;
 	
 	private Button add = new Button( "Add" );
@@ -76,13 +74,6 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 	    authorPanel.addStyleName( "row" );
 	    authorPanel.add( authorInputCol );
 	    
-	    /* To be used in future implementations
-	    publisherInput.setRequired( true );
-	    publisherLabelCol.add( publisherLabel );
-	    publisherInputCol.add( publisherInput );
-	    publisherPanel.add(publisherLabelCol);
-	    publisherPanel.add(publisherInputCol);
-	    */
 	    languageInput.addItem("Select Language", "" );
 	    languageInput.setRequired( true );
 	    languageInputCol.addStyleName( "col-sm-4" );
