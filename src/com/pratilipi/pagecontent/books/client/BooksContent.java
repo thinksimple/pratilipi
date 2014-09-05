@@ -9,8 +9,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.pratilipi.commons.client.BookView;
-import com.pratilipi.commons.client.BookViewDetailImpl;
+import com.pratilipi.commons.client.PratilipiView;
+import com.pratilipi.commons.client.PratilipiViewBookDetailImpl;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewImpl;
 import com.pratilipi.commons.shared.PratilipiType;
@@ -96,9 +96,9 @@ public class BooksContent implements EntryPoint, ClickHandler {
 					public void onSuccess( GetBookListResponse response ) {
 
 						for( BookData bookData : response.getBookList() ) {
-							BookView bookView = new BookViewDetailImpl();
-							bookView.setBookData( bookData );
-							add( bookView );
+							PratilipiView pratilipiView = new PratilipiViewBookDetailImpl();
+							pratilipiView.setPratilipiData( bookData );
+							add( pratilipiView );
 						}
 						
 						loadSuccessful();

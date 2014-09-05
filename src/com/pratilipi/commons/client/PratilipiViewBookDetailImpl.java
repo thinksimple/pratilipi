@@ -8,9 +8,9 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
 import com.pratilipi.commons.shared.PratilipiHelper;
-import com.pratilipi.service.shared.data.BookData;
+import com.pratilipi.service.shared.data.PratilipiData;
 
-public class BookViewDetailImpl extends BookView {
+public class PratilipiViewBookDetailImpl extends PratilipiView {
 
 	private final Panel panel = new FlowPanel();
 	private final Panel thumbnailPanel = new FlowPanel();
@@ -28,7 +28,7 @@ public class BookViewDetailImpl extends BookView {
 	private final HTML summaryHtml = new HTML();
 	
 	
-	public BookViewDetailImpl() {
+	public PratilipiViewBookDetailImpl() {
 		panel.add( thumbnailPanel );
 		panel.add( detailPanel );
 		
@@ -56,17 +56,17 @@ public class BookViewDetailImpl extends BookView {
 
 	
 	@Override
-	public void setBookData( BookData bookData ) {
-		bookImageAnchor.setHref( PratilipiHelper.URL_BOOK_PAGE + bookData.getId() );
-		bookImage.setUrl( PratilipiHelper.URL_BOOK_COVER + bookData.getId() );
+	public void setPratilipiData( PratilipiData pratilipiData ) {
+		bookImageAnchor.setHref( PratilipiHelper.URL_BOOK_PAGE + pratilipiData.getId() );
+		bookImage.setUrl( PratilipiHelper.URL_BOOK_COVER + pratilipiData.getId() );
 
-		titleAnchor.setText( bookData.getTitle() );
-		titleAnchor.setHref( PratilipiHelper.URL_BOOK_PAGE + bookData.getId() );
+		titleAnchor.setText( pratilipiData.getTitle() );
+		titleAnchor.setHref( PratilipiHelper.URL_BOOK_PAGE + pratilipiData.getId() );
 
-		authorAnchor.setText( bookData.getAuthorName() );
-		authorAnchor.setHref( PratilipiHelper.URL_AUTHOR_PAGE + bookData.getAuthorId() );
+		authorAnchor.setText( pratilipiData.getAuthorName() );
+		authorAnchor.setHref( PratilipiHelper.URL_AUTHOR_PAGE + pratilipiData.getAuthorId() );
 		
-		summaryHtml.setHTML( bookData.getSummary() );
+		summaryHtml.setHTML( pratilipiData.getSummary() );
 	}
 
 }

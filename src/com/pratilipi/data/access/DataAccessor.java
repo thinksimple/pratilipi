@@ -3,6 +3,7 @@ package com.pratilipi.data.access;
 import java.util.List;
 
 import com.claymus.data.access.DataListCursorTuple;
+import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genre;
@@ -20,6 +21,9 @@ import com.pratilipi.data.transfer.UserPratilipi;
 public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
+
+	<T extends Pratilipi> DataListCursorTuple<T> getPratilipiList(
+			PratilipiType pratilipiType, String cursorStr, int resultCount );
 
 	
 	Book newBook();

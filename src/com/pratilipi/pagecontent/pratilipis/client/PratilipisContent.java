@@ -9,10 +9,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.pratilipi.commons.client.BookView;
-import com.pratilipi.commons.client.BookViewDetailImpl;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewImpl;
+import com.pratilipi.commons.client.PratilipiView;
+import com.pratilipi.commons.client.PratilipiViewBookDetailImpl;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
@@ -20,12 +20,11 @@ import com.pratilipi.service.shared.AddPratilipiRequest;
 import com.pratilipi.service.shared.AddPratilipiResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
-import com.pratilipi.service.shared.GetBookListRequest;
-import com.pratilipi.service.shared.GetBookListResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
+import com.pratilipi.service.shared.GetPratilipiListRequest;
+import com.pratilipi.service.shared.GetPratilipiListResponse;
 import com.pratilipi.service.shared.data.AuthorData;
-import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PratilipiData;
 
@@ -100,15 +99,15 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 			@Override
 			protected void loadItems() {
 				
-				pratilipiService.getBookList( new GetBookListRequest(), new AsyncCallback<GetBookListResponse>() {
+				pratilipiService.getPratilipiList( new GetPratilipiListRequest( pratilipiType ), new AsyncCallback<GetPratilipiListResponse>() {
 					
 					@Override
-					public void onSuccess( GetBookListResponse response ) {
+					public void onSuccess( GetPratilipiListResponse response ) {
 
-						for( BookData bookData : response.getBookList() ) {
-							BookView bookView = new BookViewDetailImpl();
-							bookView.setBookData( bookData );
-							add( bookView );
+						for( PratilipiData pratilipiData : response.getPratilipiDataList() ) {
+							PratilipiView pratilipiView = new PratilipiViewBookDetailImpl();
+							pratilipiView.setPratilipiData( pratilipiData );
+							add( pratilipiView );
 						}
 						
 						loadSuccessful();

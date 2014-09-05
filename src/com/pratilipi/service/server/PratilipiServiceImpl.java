@@ -49,6 +49,8 @@ import com.pratilipi.service.shared.GetBookRequest;
 import com.pratilipi.service.shared.GetBookResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
+import com.pratilipi.service.shared.GetPratilipiListRequest;
+import com.pratilipi.service.shared.GetPratilipiListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
@@ -98,7 +100,7 @@ public class PratilipiServiceImpl
 			book.setPublisherId( bookData.getPublisherId() );
 			
 		} else if( pratilipiData.getType() == PratilipiType.POEM ) {
-			pratilipi = dataAccessor.newBook();
+			pratilipi = dataAccessor.newPoem();
 		}
 		
 		pratilipi.setType( pratilipiData.getType() );
@@ -114,6 +116,42 @@ public class PratilipiServiceImpl
 		dataAccessor.destroy();
 		
 		return new AddPratilipiResponse( pratilipi.getId() );
+	}
+
+	@Override
+	public GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<Pratilipi> bookList = dataAccessor.getPratilipiList(
+				request.getPratilipiType(),
+				null, 100 ).getDataList();
+		
+		ArrayList<PratilipiData> bookDataList = new ArrayList<>( bookList.size() );
+		for( Pratilipi book : bookList ) {
+			Language language = dataAccessor.getLanguage( book.getLanguageId() );
+			Author author = dataAccessor.getAuthor( book.getAuthorId() );
+//			Publisher publisher = dataAccessor.getPublisher( book.getPublisherId() );
+			
+			BookData bookData = new BookData();
+			bookData.setId( book.getId() );
+			bookData.setTitle( book.getTitle() );
+			bookData.setLanguageId( language.getId() );
+			bookData.setLanguageName( language.getName() );
+			bookData.setAuthorId( author.getId() );
+			bookData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
+//			bookData.setPublisherId( publisher.getId() );
+//			bookData.setPublisherName( publisher.getName() );
+			bookData.setPublicationDate( book.getPublicationYear() );
+			bookData.setListingDate( book.getListingDate() );
+			bookData.setSummary( book.getSummary() );
+			bookData.setWordCount( book.getWordCount() );
+			
+			bookDataList.add( bookData );
+		}
+
+		dataAccessor.destroy();
+		
+		return new GetPratilipiListResponse( bookDataList );
 	}
 
 	

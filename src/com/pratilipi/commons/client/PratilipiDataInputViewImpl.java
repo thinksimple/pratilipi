@@ -119,15 +119,18 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 
 	@Override
 	public T getPratilipiData() {
-		PratilipiData pratilipiData;
-		if( pratilipiTypeInput.getItemText().equals( "Book" )){
+		PratilipiData pratilipiData = null;
+
+		if( pratilipiType == PratilipiType.BOOK )
 			pratilipiData = new BookData();
-		}
-		else if( pratilipiTypeInput.getItemText().equals( "Poem" ) )
+		
+		else if( pratilipiType == PratilipiType.POEM )
 			pratilipiData = new PoemData();
-		else if( pratilipiTypeInput.getItemText().equals( "Story" ) )
+		
+		else if( pratilipiType == PratilipiType.STORY )
 			pratilipiData = new StoryData();
-		else
+		
+		else if( pratilipiType == PratilipiType.ARTICLE )
 			pratilipiData = new ArticleData();
 
 		pratilipiData.setType( pratilipiType );
@@ -135,7 +138,7 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 		pratilipiData.setAuthorName( authorInput.getItemText());
 		pratilipiData.setAuthorId( Long.valueOf(authorInput.getValue()) );
 		pratilipiData.setLanguageName(languageInput.getItemText());
-		pratilipiData.setLanguageId(Long.valueOf(languageInput.getValue()));
+		pratilipiData.setLanguageId( Long.parseLong( languageInput.getValue() ) );
 		
 		return (T) pratilipiData;
 	}
