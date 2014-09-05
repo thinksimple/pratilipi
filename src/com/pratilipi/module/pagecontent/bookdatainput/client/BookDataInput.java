@@ -1,28 +1,116 @@
 package com.pratilipi.module.pagecontent.bookdatainput.client;
 
+import com.claymus.commons.client.ui.Accordion;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.pratilipi.commons.shared.PratilipiHelper;
+import com.pratilipi.commons.client.BookDataInputView;
+import com.pratilipi.commons.client.BookDataInputViewImpl;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddBookRequest;
 import com.pratilipi.service.shared.AddBookResponse;
+import com.pratilipi.service.shared.GetAuthorListRequest;
+import com.pratilipi.service.shared.GetAuthorListResponse;
+import com.pratilipi.service.shared.GetLanguageListRequest;
+import com.pratilipi.service.shared.GetLanguageListResponse;
+import com.pratilipi.service.shared.data.AuthorData;
+import com.pratilipi.service.shared.data.LanguageData;
+import com.pratilipi.service.shared.data.PratilipiData;
 
-public class BookDataInput implements EntryPoint {
+public class BookDataInput implements EntryPoint, ClickHandler {
 
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
-	private ValidateInputImpl validator;
+	
+	private final Accordion accordion = new Accordion();
+	
 	private BookDataInputView bookDataInputView = new BookDataInputViewImpl();
 	
 	public void onModuleLoad() {
 		
+		if( RootPanel.get( "PageContent-Authors-DataInput" ) == null )
+			return;
+		else {
+				//Get list of authors.
+				pratilipiService.getAuthorList(new GetAuthorListRequest( null , 20 ), new AsyncCallback<GetAuthorListResponse>(){
+	
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(caught.getMessage());
+					}
+	
+					@Override
+					public void onSuccess(GetAuthorListResponse response) {
+						for(AuthorData authorData : response.getAuthorList() )
+							//authorOracle.add( authorData.getFirstName()+ " " + authorData.getLastName());
+							bookDataInputView.setAuthorList( authorData );
+					}});
+				
+				//getting list of languages for suggestion box
+			    pratilipiService.getLanguageList(new GetLanguageListRequest(), new AsyncCallback<GetLanguageListResponse>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(caught.getMessage());
+						
+					}
+
+					@Override
+					public void onSuccess(GetLanguageListResponse response) {
+						for( LanguageData languageData : response.getLanguageList())
+							bookDataInputView.setLanguageList(languageData);
+					}});
+			    
+			    //getting list of publishers
+			    /*pratilipiService.getPublisherList(new GetPublisherListRequest(), new AsyncCallback<GetPublisherListResponse>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert( caught.getMessage() );
+					}
+
+					@Override
+					public void onSuccess(GetPublisherListResponse response) {
+						for(PublisherData publisherData : response.getPublisherList())
+							bookDataInputView.setPublisherList( publisherData );
+					}});*/
+		}
+		
+		accordion.setTitle( "Add Book" );
+		bookDataInputView.addAddButtonClickHandler( this );
+
+		accordion.add( bookDataInputView );
+		RootPanel.get( "PageContent-Books-DataInput" ).add( accordion );
+		
+	}
+	
+	@Override
+	public void onClick( ClickEvent event ) {
+		if( !bookDataInputView.validateInputs() )
+			return;
+		
+		bookDataInputView.setEnabled( false );
+		PratilipiData pratilipiData = bookDataInputView.getPratilipiData();
+		AddBookRequest request = new AddBookRequest( pratilipiData );
+		pratilipiService.addBook( request, new AsyncCallback<AddBookResponse>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				bookDataInputView.setEnabled( true );
+				Window.alert( caught.getMessage() );
+			}
+
+			@Override
+			public void onSuccess(AddBookResponse result) {
+				Window.Location.reload();				
+			}});
+		
+		/*
 		String path = Window.Location.getPath();
 		
 		//Add new book page.
@@ -32,27 +120,7 @@ public class BookDataInput implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					validator = new ValidateInputImpl(bookDataInputView);
-					boolean matchFound = validator.validateBook();
-					if(matchFound){
-						pratilipiService.addBook( new AddBookRequest( bookDataInputView.getBook() ), new AsyncCallback<AddBookResponse>() {
-							
-							@Override
-							public void onSuccess( AddBookResponse result ) {
-								Long bookId = result.getBookId();
-								Window.alert( "Book added successfully !" );
-								Window.Location.assign( PratilipiHelper.URL_BOOK_PAGE + bookId);
-							}
-							
-							@Override
-							public void onFailure( Throwable caught ) {
-								Window.alert( caught.getMessage() );
-							}
-						} );
-					}
-					else {
-						Window.alert("Error in Form");
-					}
+				
 				}
 				
 			} );
@@ -72,32 +140,13 @@ public class BookDataInput implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					bookDataInputView.setBookId(bookId);
-					validator = new ValidateInputImpl(bookDataInputView);
-					boolean matchFound = validator.validateBook();
-					if(matchFound){
-						pratilipiService.addBook( new AddBookRequest( bookDataInputView.getBook() ), new AsyncCallback<AddBookResponse>() {
-							
-							@Override
-							public void onSuccess( AddBookResponse result ) {
-								Window.alert( "Book updated successfully !" );
-							}
-							
-							@Override
-							public void onFailure( Throwable caught ) {
-								Window.alert( caught.getMessage() );
-							}
-						} );
-					}
-					else {
-						Window.alert("Error in Form");
-					}
+			
 				}
 			} );
 			
 			RootPanel.get( "PageContent-HomeBook-New" ).add( bookDataInputView );
 			RootPanel.get( "PageContent-HomeBook-New" ).add( updateButton );
 			RootPanel.get( "PageContent-HomeBook-New" ).add( new BookDataUpdateViewImpl( bookId) );
-		}
-	}
+		}*/
+	} 
 }
