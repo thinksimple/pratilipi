@@ -13,6 +13,7 @@ import com.claymus.data.access.GaeQueryBuilder;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.data.access.gae.ArticleEntity;
 import com.pratilipi.data.access.gae.AuthorEntity;
 import com.pratilipi.data.access.gae.BookEntity;
 import com.pratilipi.data.access.gae.GenreEntity;
@@ -22,8 +23,10 @@ import com.pratilipi.data.access.gae.PratilipiAuthorEntity;
 import com.pratilipi.data.access.gae.PratilipiGenreEntity;
 import com.pratilipi.data.access.gae.PratilipiTagEntity;
 import com.pratilipi.data.access.gae.PublisherEntity;
+import com.pratilipi.data.access.gae.StoryEntity;
 import com.pratilipi.data.access.gae.TagEntity;
 import com.pratilipi.data.access.gae.UserPratilipiEntity;
+import com.pratilipi.data.transfer.Article;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genre;
@@ -34,6 +37,7 @@ import com.pratilipi.data.transfer.PratilipiAuthor;
 import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.PratilipiTag;
 import com.pratilipi.data.transfer.Publisher;
+import com.pratilipi.data.transfer.Story;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserPratilipi;
 
@@ -49,8 +53,13 @@ public class DataAccessorGaeImpl
 		else if( type == PratilipiType.POEM )
 			return getEntity( PoemEntity.class, id );
 		
-		return null;
+		else if( type == PratilipiType.STORY )
+			return getEntity( StoryEntity.class, id );
 
+		else if( type == PratilipiType.ARTICLE )
+			return getEntity( ArticleEntity.class, id );
+		
+		return null;
 	}
 
 	@Override
@@ -65,6 +74,11 @@ public class DataAccessorGaeImpl
 		else if( type == PratilipiType.POEM )
 			query = pm.newQuery( PoemEntity.class );
 
+		else if( type == PratilipiType.STORY )
+			query = pm.newQuery( StoryEntity.class );
+
+		else if( type == PratilipiType.ARTICLE )
+			query = pm.newQuery( ArticleEntity.class );
 		
 		query = new GaeQueryBuilder( query )
 						.addFilter( "type", type )
@@ -123,6 +137,18 @@ public class DataAccessorGaeImpl
 	@Override
 	public Poem newPoem() {
 		return new PoemEntity();
+	}
+
+
+	@Override
+	public Story newStory() {
+		return new StoryEntity();
+	}
+
+
+	@Override
+	public Article newArticle() {
+		return new ArticleEntity();
 	}
 
 

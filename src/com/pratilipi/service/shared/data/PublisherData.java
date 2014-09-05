@@ -5,6 +5,7 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class PublisherData implements IsSerializable {
+	
 	private Long id;
 	
 	private String name;
@@ -13,11 +14,12 @@ public class PublisherData implements IsSerializable {
 
 	private Date registrationDate;
 	
+	
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId( Long id ) {
 		this.id = id;
 	}
 
@@ -25,7 +27,7 @@ public class PublisherData implements IsSerializable {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName( String name ) {
 		this.name = name;
 	}
 
@@ -33,7 +35,7 @@ public class PublisherData implements IsSerializable {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail( String email ) {
 		this.email = email;
 	}
 
@@ -41,9 +43,8 @@ public class PublisherData implements IsSerializable {
 		return registrationDate;
 	}
 
-	public void setRegistrationDate(Date registrationDate) {
+	public void setRegistrationDate( Date registrationDate ) {
 		this.registrationDate = registrationDate;
 	}
-
 
 }

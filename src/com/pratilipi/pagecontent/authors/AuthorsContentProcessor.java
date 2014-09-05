@@ -17,9 +17,9 @@ import com.pratilipi.data.transfer.Language;
 
 public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent> {
 
-	public static String ACCESS_ID_AUTHOR_LIST = "author_list";
-	public static String ACCESS_ID_AUTHOR_READ_META_DATA = "author_read_meta_data";
-	public static String ACCESS_ID_AUTHOR_ADD = "author_add";
+	public static final String ACCESS_ID_AUTHOR_LIST = "author_list";
+	public static final String ACCESS_ID_AUTHOR_READ_META_DATA = "author_read_meta_data";
+	public static final String ACCESS_ID_AUTHOR_ADD = "author_add";
 	
 	
 	@Override

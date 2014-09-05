@@ -6,169 +6,121 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.pratilipi.commons.shared.PratilipiType;
-import com.pratilipi.service.shared.data.ArticleData;
-import com.pratilipi.service.shared.data.AuthorData;
-import com.pratilipi.service.shared.data.BookData;
-import com.pratilipi.service.shared.data.LanguageData;
-import com.pratilipi.service.shared.data.PoemData;
 import com.pratilipi.service.shared.data.PratilipiData;
-import com.pratilipi.service.shared.data.PublisherData;
-import com.pratilipi.service.shared.data.StoryData;
 
-public class PratilipiDataInputViewImpl<T extends PratilipiData> extends PratilipiDataInputView<T> {
+public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	
 	private Panel panel = new FlowPanel();
-	private Panel pratilipiTypePanel = new FlowPanel();
-	private Panel pratilipiTypeInputCol = new SimplePanel();
-	private Panel titlePanel = new FlowPanel();
+
+	private Panel titleInputRow = new FlowPanel();
+	private Panel authorInputRow = new FlowPanel();
+	private Panel languageInputRow = new FlowPanel();
+	
 	private Panel titleInputCol = new SimplePanel();
-	private Panel authorPanel = new FlowPanel();
 	private Panel authorInputCol = new SimplePanel();
-	private Panel languagePanel = new FlowPanel();
 	private Panel languageInputCol = new SimplePanel();
 	
-	private Label formHeader = new Label( "Enter Book Details" );
-	
-	private ListBoxFormField pratilipiTypeInput = new ListBoxFormField();
 	private TextInputFormField titleInput = new TextInputFormField();
-	private ListBoxFormField authorInput = new ListBoxFormField();
-	private ListBoxFormField languageInput = new ListBoxFormField();;
-	
-	private Button add = new Button( "Add" );
+	private ListBoxFormField authorList = new ListBoxFormField();
+	private ListBoxFormField languageList = new ListBoxFormField();;
+	private Button addButton = new Button();
 	
 	
 	private final PratilipiType pratilipiType;
+	
 	
 	public PratilipiDataInputViewImpl( PratilipiType pratilipiType ) {
 		
 		this.pratilipiType = pratilipiType;
 		
-		pratilipiTypeInput.addItem("Select Type", "");
-	    pratilipiTypeInput.setRequired( true );
-	    pratilipiTypeInput.addItem( PratilipiType.ARTICLE.getName() );
-	    pratilipiTypeInput.addItem( PratilipiType.BOOK.getName());
-	    pratilipiTypeInput.addItem( PratilipiType.POEM.getName());
-	    pratilipiTypeInput.addItem( PratilipiType.STORY.getName());
-	    
-	    //adding label and input boxes to horizontal panels.
-	    pratilipiTypeInputCol.addStyleName( "col-sm-4" );
-	    pratilipiTypeInputCol.add( pratilipiTypeInput );
-	    pratilipiTypePanel.addStyleName( "row" );
-	    pratilipiTypePanel.add( pratilipiTypeInputCol );
-	    
 	    titleInput.setPlaceholder( "Title" );
 	    titleInput.setRequired( true );
-	    titleInputCol.addStyleName( "col-sm-4" );
-	    titleInputCol.add( titleInput );
-	    titlePanel.addStyleName( "row" );
-	    titlePanel.add( titleInputCol );
+	    authorList.addItem( "Select Author", "" );
+	    authorList.setRequired( true );
+	    languageList.addItem( "Select Language", "" );
+	    languageList.setRequired( true );
+		addButton.setText(  "Add " + pratilipiType.getName() );
+		
+	
+		// Composing the widget
+		panel.add( titleInputRow );
+		panel.add( authorInputRow );
+		panel.add( languageInputRow );
+		panel.add( addButton );
+
+		titleInputRow.add( titleInputCol );
+		authorInputRow.add( authorInputCol );
+	    languageInputRow.add( languageInputCol );
 	    
-	    authorInput.addItem("Select Author", "");
-	    authorInput.setRequired( true );
-	    authorInputCol.addStyleName( "col-sm-4" );
-	    authorInputCol.add( authorInput );
-	    authorPanel.addStyleName( "row" );
-	    authorPanel.add( authorInputCol );
+		titleInputCol.add( titleInput );
+	    authorInputCol.add( authorList );
+	    languageInputCol.add( languageList );
+
+		
+		// Setting required style classes
+		titleInputRow.setStyleName( "row" );
+		authorInputRow.setStyleName( "row" );
+		languageInputRow.setStyleName( "row" );
 	    
-	    languageInput.addItem("Select Language", "" );
-	    languageInput.setRequired( true );
-	    languageInputCol.addStyleName( "col-sm-4" );
-	    languageInputCol.add( languageInput );
-	    languagePanel.addStyleName( "row" );
-	    languagePanel.add(languageInputCol);
+		titleInputCol.setStyleName( "col-sm-4" );
+	    authorInputCol.setStyleName( "col-sm-4" );
+	    languageInputCol.setStyleName( "col-sm-4" );
 	    
-	    add.addStyleName( "btn btn-default" );
-	    
-	    //adding horizontal panels to vertical panel
-	    panel.add(formHeader);
-	    panel.add( pratilipiTypePanel );
-		panel.add( titlePanel );
-		panel.add( authorPanel );
-		panel.add( languagePanel );
-		panel.add( add );
+	    addButton.setStyleName( "btn btn-default" );
+
 		
 		initWidget( panel );
 	}
 	
+	
 	@Override
-	public HandlerRegistration addAddButtonClickHandler(ClickHandler clickHandler){
-		return add.addClickHandler( clickHandler );
+	public HandlerRegistration addAddButtonClickHandler(ClickHandler clickHandler) {
+		return addButton.addClickHandler( clickHandler );
 	}
 
 	@Override
+	public void addAuthorListItem( String item, String value ) {
+		authorList.addItem( item, value );
+	}
+
+	@Override
+	public void addLanguageListItem( String item, String value ) {
+		languageList.addItem( item, value );
+	}
+		
+	@Override
 	public boolean validateInputs() {
 		boolean validated = true;
-		validated = pratilipiTypeInput.validate() && validated;
 		validated = titleInput.validate() && validated;
-		validated = authorInput.validate() && validated;
-		validated = languageInput.validate() && validated;
+		validated = authorList.validate() && validated;
+		validated = languageList.validate() && validated;
 		return validated;
 	}
 
 	@Override
 	public void setEnabled(boolean enabled) {
-		pratilipiTypeInput.setEnabled( enabled);
 		titleInput.setEnabled( enabled );
-		authorInput.setEnabled( enabled );
-		languageInput.setEnabled( enabled );		
+		authorList.setEnabled( enabled );
+		languageList.setEnabled( enabled );		
 	}
 
 	@Override
-	public T getPratilipiData() {
-		PratilipiData pratilipiData = null;
-
-		if( pratilipiType == PratilipiType.BOOK )
-			pratilipiData = new BookData();
-		
-		else if( pratilipiType == PratilipiType.POEM )
-			pratilipiData = new PoemData();
-		
-		else if( pratilipiType == PratilipiType.STORY )
-			pratilipiData = new StoryData();
-		
-		else if( pratilipiType == PratilipiType.ARTICLE )
-			pratilipiData = new ArticleData();
-
-		pratilipiData.setType( pratilipiType );
+	public PratilipiData getPratilipiData() {
+		PratilipiData pratilipiData = pratilipiType.newPratilipiData();
 		pratilipiData.setTitle( titleInput.getText() );
-		pratilipiData.setAuthorName( authorInput.getItemText());
-		pratilipiData.setAuthorId( Long.valueOf(authorInput.getValue()) );
-		pratilipiData.setLanguageName(languageInput.getItemText());
-		pratilipiData.setLanguageId( Long.parseLong( languageInput.getValue() ) );
-		
-		return (T) pratilipiData;
+		pratilipiData.setAuthorId( Long.valueOf(authorList.getValue()) );
+		pratilipiData.setLanguageId( Long.parseLong( languageList.getValue() ) );
+		return pratilipiData;
 	}
 
 	@Override
-	public void setPratilipiData( T t ) {
-		//TODO
+	public void setPratilipiData( PratilipiData pratilipiData ) {
+		titleInput.setText( pratilipiData.getTitle() );
+		authorList.setValue( pratilipiData.getAuthorId().toString() );
+		languageList.setValue( pratilipiData.getLanguageId().toString() );
 	}
 
-	@Override
-	public void setAuthorList(AuthorData authorData) {
-		// TODO Auto-generated method stub
-		this.authorInput.addItem(authorData.getFirstName() + 
-									" " + 
-									authorData.getLastName(), 
-								 authorData.getId().toString());
-		
-	}
-
-	@Override
-	public void setLanguageList(LanguageData languageData) {
-		this.languageInput.addItem(languageData.getName(), 
-									languageData.getId().toString());
-		
-	}
-
-	@Override
-	public void setPublisherList(PublisherData publisherData) {
-		// TODO Auto-generated method stub
-		
-	}
-		
 }

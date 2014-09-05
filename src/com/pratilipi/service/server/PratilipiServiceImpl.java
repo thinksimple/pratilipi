@@ -104,7 +104,14 @@ public class PratilipiServiceImpl
 			
 		} else if( pratilipiData.getType() == PratilipiType.POEM ) {
 			pratilipi = dataAccessor.newPoem();
+
+		} else if( pratilipiData.getType() == PratilipiType.STORY ) {
+			pratilipi = dataAccessor.newStory();
+
+		} else if( pratilipiData.getType() == PratilipiType.ARTICLE ) {
+			pratilipi = dataAccessor.newArticle();
 		}
+
 		
 		pratilipi.setTitle( pratilipiData.getTitle() );
 		pratilipi.setLanguageId( pratilipiData.getLanguageId() );
@@ -125,7 +132,7 @@ public class PratilipiServiceImpl
 	@Override
 	public UpdatePratilipiResponse updatePratilipi( UpdatePratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
-		
+	
 		PratilipiData pratilipiData = request.getPratilipiData();
 		if( ! pratilipiData.hasId() )
 			throw new IllegalArgumentException(
@@ -168,36 +175,36 @@ public class PratilipiServiceImpl
 	public GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<Pratilipi> bookList = dataAccessor.getPratilipiList(
+		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList(
 				request.getPratilipiType(),
 				null, 100 ).getDataList();
 		
-		ArrayList<PratilipiData> bookDataList = new ArrayList<>( bookList.size() );
-		for( Pratilipi book : bookList ) {
-			Language language = dataAccessor.getLanguage( book.getLanguageId() );
-			Author author = dataAccessor.getAuthor( book.getAuthorId() );
+		ArrayList<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
+		for( Pratilipi pratilipi : pratilipiList ) {
+			Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 //			Publisher publisher = dataAccessor.getPublisher( book.getPublisherId() );
 			
-			BookData bookData = new BookData();
-			bookData.setId( book.getId() );
-			bookData.setTitle( book.getTitle() );
-			bookData.setLanguageId( language.getId() );
-			bookData.setLanguageName( language.getName() );
-			bookData.setAuthorId( author.getId() );
-			bookData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
+			PratilipiData pratilipiData = request.getPratilipiType().newPratilipiData();
+			pratilipiData.setId( pratilipi.getId() );
+			pratilipiData.setTitle( pratilipi.getTitle() );
+			pratilipiData.setLanguageId( language.getId() );
+			pratilipiData.setLanguageName( language.getName() );
+			pratilipiData.setAuthorId( author.getId() );
+			pratilipiData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
 //			bookData.setPublisherId( publisher.getId() );
 //			bookData.setPublisherName( publisher.getName() );
-			bookData.setPublicationDate( book.getPublicationYear() );
-			bookData.setListingDate( book.getListingDate() );
-			bookData.setSummary( book.getSummary() );
-			bookData.setWordCount( book.getWordCount() );
-			
-			bookDataList.add( bookData );
+			pratilipiData.setPublicationDate( pratilipi.getPublicationYear() );
+			pratilipiData.setListingDate( pratilipi.getListingDate() );
+			pratilipiData.setSummary( pratilipi.getSummary() );
+			pratilipiData.setWordCount( pratilipi.getWordCount() );
+			pratilipiData.setType( request.getPratilipiType() );
+			pratilipiDataList.add( pratilipiData );
 		}
 
 		dataAccessor.destroy();
 		
-		return new GetPratilipiListResponse( bookDataList );
+		return new GetPratilipiListResponse( pratilipiDataList );
 	}
 
 	

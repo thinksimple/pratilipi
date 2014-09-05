@@ -45,19 +45,19 @@ public enum PratilipiType implements IsSerializable {
 		switch( this ) {
 			case BOOK:
 				pratilipiData = new BookData();
-				pratilipiData.setType( this );
+				pratilipiData.setType( BOOK );
 				break;
 			case POEM:
 				pratilipiData = new PoemData();
-				pratilipiData.setType( this );
+				pratilipiData.setType( POEM );
 				break;
 			case STORY:
 				pratilipiData = new StoryData();
-				pratilipiData.setType( this );
+				pratilipiData.setType( STORY );
 				break;
 			case ARTICLE:
 				pratilipiData = new ArticleData();
-				pratilipiData.setType( this );
+				pratilipiData.setType( ARTICLE );
 				break;
 		}
 		

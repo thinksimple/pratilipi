@@ -11,10 +11,10 @@ import com.claymus.module.pagecontent.PageContentProcessor;
 
 public class PratilipisContentProcessor extends PageContentProcessor<PratilipisContent> {
 
-	public static String ACCESS_ID_PRATILIPI_LIST = "pratilipi_list";
-	public static String ACCESS_ID_PRATILIPI_READ_META_DATA = "pratilipi_read_meta_data";
-	public static String ACCESS_ID_PRATILIPI_ADD = "pratilipi_add";
-	public static String ACCESS_ID_PRATILIPI_UPDATE = "pratilipi_update";
+	public static final String ACCESS_ID_PRATILIPI_LIST = "pratilipi_list";
+	public static final String ACCESS_ID_PRATILIPI_READ_META_DATA = "pratilipi_read_meta_data";
+	public static final String ACCESS_ID_PRATILIPI_ADD = "pratilipi_add";
+	public static final String ACCESS_ID_PRATILIPI_UPDATE = "pratilipi_update";
 	
 	
 	@Override
@@ -22,6 +22,7 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 			HttpServletRequest request, HttpServletResponse response ) {
 		
 		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		@SuppressWarnings("unused")
 		boolean showMetaData =
 				claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_READ_META_DATA, false );
 		boolean showAddOption =

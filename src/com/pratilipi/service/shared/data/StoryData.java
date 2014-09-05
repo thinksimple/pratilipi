@@ -1,6 +1,3 @@
 package com.pratilipi.service.shared.data;
 
-
-public class StoryData extends PratilipiData {
-
-}
+public class StoryData extends PratilipiData { }

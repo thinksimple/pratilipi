@@ -22,6 +22,7 @@ public class BooksContentProcessor extends PageContentProcessor<BooksContent> {
 			HttpServletRequest request, HttpServletResponse response ) {
 		
 		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		@SuppressWarnings("unused")
 		boolean showMetaData =
 				claymusHelper.hasUserAccess( ACCESS_ID_BOOK_READ_META_DATA, false );
 		boolean showAddOption =

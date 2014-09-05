@@ -9,10 +9,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.pratilipi.commons.client.PratilipiView;
-import com.pratilipi.commons.client.PratilipiViewBookDetailImpl;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewImpl;
+import com.pratilipi.commons.client.PratilipiView;
+import com.pratilipi.commons.client.PratilipiViewDetailImpl;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
@@ -35,8 +35,8 @@ public class BooksContent implements EntryPoint, ClickHandler {
 	
 
 	private final Accordion accordion = new Accordion();
-	private final PratilipiDataInputView<BookData> bookDataInputView =
-			new PratilipiDataInputViewImpl<BookData>( PratilipiType.BOOK );
+	private final PratilipiDataInputView bookDataInputView =
+			new PratilipiDataInputViewImpl( PratilipiType.BOOK );
 
 	
 	public void onModuleLoad() {
@@ -61,7 +61,12 @@ public class BooksContent implements EntryPoint, ClickHandler {
 				@Override
 				public void onSuccess( GetAuthorListResponse response ) {
 					for( AuthorData authorData : response.getAuthorList() )
-						bookDataInputView.setAuthorList( authorData );
+						bookDataInputView.addAuthorListItem(
+								authorData.getFirstName() + " "
+										+ authorData.getLastName() + " ("
+										+ authorData.getFirstNameEn() + " "
+										+ authorData.getLastNameEn() + ")",
+								authorData.getId().toString() );
 				}
 				
 			});
@@ -78,7 +83,9 @@ public class BooksContent implements EntryPoint, ClickHandler {
 				@Override
 				public void onSuccess( GetLanguageListResponse response ) {
 					for( LanguageData languageData : response.getLanguageList())
-						bookDataInputView.setLanguageList( languageData );
+						bookDataInputView.addLanguageListItem(
+								languageData.getName() + " (" + languageData.getNameEn() + ")",
+								languageData.getId().toString() );
 				}
 				
 		    });
@@ -96,7 +103,7 @@ public class BooksContent implements EntryPoint, ClickHandler {
 					public void onSuccess( GetBookListResponse response ) {
 
 						for( BookData bookData : response.getBookList() ) {
-							PratilipiView pratilipiView = new PratilipiViewBookDetailImpl();
+							PratilipiView pratilipiView = new PratilipiViewDetailImpl();
 							pratilipiView.setPratilipiData( bookData );
 							add( pratilipiView );
 						}
@@ -125,7 +132,7 @@ public class BooksContent implements EntryPoint, ClickHandler {
 			return;
 		
 		bookDataInputView.setEnabled( false );
-		BookData bookData = bookDataInputView.getPratilipiData();
+		BookData bookData = (BookData) bookDataInputView.getPratilipiData();
 		AddBookRequest request = new AddBookRequest( bookData );
 		pratilipiService.addBook( request, new AsyncCallback<AddBookResponse>(){
 

@@ -6,137 +6,141 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.pratilipi.service.shared.data.AuthorData;
-import com.pratilipi.service.shared.data.LanguageData;
 
 public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 	
-	private FormPanel form = new FormPanel();
 	private Panel panel = new FlowPanel();
-	private Panel firstNamePanel = new FlowPanel();
+	
+	private Panel firstNameRow = new FlowPanel();
+	private Panel lastNameRow = new FlowPanel();
+	private Panel penNameRow = new FlowPanel();
+	private Panel languageEmailRow = new FlowPanel();
+	
 	private Panel firstNameCol = new SimplePanel();
 	private Panel lastNameCol = new SimplePanel();
-	private Panel lastNamePanel = new FlowPanel();
-	private Panel firstNameEngCol = new SimplePanel();
-	private Panel lastNameEngCol = new SimplePanel();
-	private Panel penNamePanel = new FlowPanel();
 	private Panel penNameCol = new SimplePanel();
-	private Panel penNameEngCol = new SimplePanel();
-	private Panel otherPanel = new FlowPanel();
-	private Panel emailCol = new SimplePanel();
+	private Panel firstNameEnCol = new SimplePanel();
+	private Panel lastNameEnCol = new SimplePanel();
+	private Panel penNameEnCol = new SimplePanel();
 	private Panel languageCol = new SimplePanel();
+	private Panel emailCol = new SimplePanel();
 	
 	private TextInputFormField firstNameInput = new TextInputFormField();
-	private TextInputFormField firstNameEngInput = new TextInputFormField();
 	private TextInputFormField lastNameInput = new TextInputFormField();
-	private TextInputFormField lastNameEngInput = new TextInputFormField();
-	private TextInputFormField emailInput = new TextInputFormField();
 	private TextInputFormField penNameInput = new TextInputFormField();
-	private TextInputFormField penNameEngInput = new TextInputFormField();	
-	private ListBoxFormField languageInput = new ListBoxFormField();
+	private TextInputFormField firstNameEnInput = new TextInputFormField();
+	private TextInputFormField lastNameEnInput = new TextInputFormField();
+	private TextInputFormField penNameEnInput = new TextInputFormField();	
+	private ListBoxFormField languageList = new ListBoxFormField();
+	private TextInputFormField emailInput = new TextInputFormField();
 	private Button addButton = new Button( "Add" );
+	
 	
 	public AuthorsDataInputViewImpl(){
 		firstNameInput.setPlaceholder( "First Name" );
 		firstNameInput.setRequired( true );
-		firstNameInput.addStyleName( "form-group" );
 		
 		lastNameInput.setPlaceholder( "Last Name" );
 		lastNameInput.setRequired( true );
-		lastNameInput.addStyleName( "form-group" );
-		
-		firstNameEngInput.setPlaceholder( "First Name (English)" );
-		firstNameEngInput.setRequired( true );
-		firstNameEngInput.addStyleName( "form-group" );
-		
-		lastNameEngInput.setPlaceholder( "Last Name (English)" );
-		lastNameEngInput.setRequired( true );
-		lastNameEngInput.addStyleName( "form-group" );
-		
-		emailInput.setPlaceholder( "Email" );
-		emailInput.addStyleName( "form-group" );
 		
 		penNameInput.setPlaceholder( "Pen Name" );
 		penNameInput.setRequired( true );
-		penNameInput.addStyleName( "form-group" );
+
+		firstNameEnInput.setPlaceholder( "First Name (English)" );
+		firstNameEnInput.setRequired( true );
 		
-		penNameEngInput.setPlaceholder( "Pen Name (English)" );
-		penNameEngInput.setRequired( true );
-		penNameEngInput.addStyleName( "form-group" );
+		lastNameEnInput.setPlaceholder( "Last Name (English)" );
+		lastNameEnInput.setRequired( true );
 		
-		languageInput.setRequired( true );
-		languageInput.addStyleName( "form-group" );
+		penNameEnInput.setPlaceholder( "Pen Name (English)" );
+		penNameEnInput.setRequired( true );
+
+		languageList.setRequired( true );
+		emailInput.setPlaceholder( "Email" );
+
 		
-		addButton.addStyleName( "btn btn-default" );
+		// Composing the widget
+		panel.add( firstNameRow );
+		panel.add( lastNameRow );
+		panel.add( penNameRow);
+		panel.add( languageEmailRow );
+		panel.add( addButton );
+
+		firstNameRow.add( firstNameCol );
+		firstNameRow.add( firstNameEnCol );
+
+		lastNameRow.add( lastNameCol );
+		lastNameRow.add( lastNameEnCol );
+		
+		penNameRow.add( penNameCol );
+		penNameRow.add( penNameEnCol );
+		
+		languageEmailRow.add( languageCol );
+		languageEmailRow.add( emailCol );
 		
 		firstNameCol.add( firstNameInput );
-		firstNameCol.addStyleName( "col-sm-4" );
-		firstNameEngCol.add( firstNameEngInput );
-		firstNameEngCol.addStyleName( "col-sm-4" );
-		firstNamePanel.add( firstNameCol );
-		firstNamePanel.add( firstNameEngCol );
-		firstNamePanel.addStyleName( "row" );
+		firstNameEnCol.add( firstNameEnInput );
 		
 		lastNameCol.add( lastNameInput );
-		lastNameCol.addStyleName( "col-sm-4" );
-		lastNameEngCol.add( lastNameEngInput );
-		lastNameEngCol.addStyleName( "col-sm-4" );
-		lastNamePanel.add( lastNameCol );
-		lastNamePanel.add( lastNameEngCol );
-		lastNamePanel.addStyleName( "row" );
+		lastNameEnCol.add( lastNameEnInput );
 		
 		penNameCol.add( penNameInput );
-		penNameCol.addStyleName( "col-sm-4" );
-		penNameEngCol.add( penNameEngInput );
-		penNameEngCol.addStyleName( "col-sm-4" );
-		penNamePanel.add( penNameCol );
-		penNamePanel.add( penNameEngCol );
-		penNamePanel.addStyleName( "row" );
+		penNameEnCol.add( penNameEnInput );
 		
+		languageCol.add( languageList );
 		emailCol.add( emailInput );
-		emailCol.addStyleName( "col-sm-4" );
-		languageCol.add( languageInput );
-		languageCol.addStyleName( "col-sm-4" );
-		otherPanel.add( emailCol );
-		otherPanel.add( languageCol );
-		otherPanel.addStyleName( "row" );
 		
+		
+		// Setting required style classes
 		panel.addStyleName( "container-fluid" );
 		
-
-		panel.add( firstNamePanel );
-		panel.add( lastNamePanel );
-		panel.add( penNamePanel);
-		panel.add( otherPanel );
-		panel.add( addButton );
+		firstNameRow.addStyleName( "row" );
+		lastNameRow.addStyleName( "row" );
+		penNameRow.addStyleName( "row" );
+		languageEmailRow.addStyleName( "row" );
 		
-		form.getElement().setAttribute( "role", "form" );
-		form.add( panel );
+		firstNameCol.addStyleName( "col-sm-4" );
+		firstNameEnCol.addStyleName( "col-sm-4" );
 		
+		lastNameCol.addStyleName( "col-sm-4" );
+		lastNameEnCol.addStyleName( "col-sm-4" );
 		
+		penNameCol.addStyleName( "col-sm-4" );
+		penNameEnCol.addStyleName( "col-sm-4" );
+		
+		emailCol.addStyleName( "col-sm-4" );
+		languageCol.addStyleName( "col-sm-4" );
+		
+		addButton.addStyleName( "btn btn-default" );
+				
 		initWidget( panel );
 	}
 
-	@Override
-	public HandlerRegistration addAddButtonClickHandler(
-			ClickHandler clickHandler) {
-		return addButton.addClickHandler( clickHandler );
-	}	
 
+	@Override
+	public HandlerRegistration addAddButtonClickHandler(ClickHandler clickHandler) {
+		return addButton.addClickHandler( clickHandler );
+	}
+
+	@Override
+	public void addLanguageListItem( String item, String value ) {
+		languageList.addItem( item, value );
+	}
+		
 	@Override
 	public boolean validateInputs() {
 		boolean validated = true;
 		validated = firstNameInput.validate() && validated;
 		validated = lastNameInput.validate() && validated;
-		validated = firstNameEngInput.validate() && validated;
-		validated = lastNameEngInput.validate() && validated;
 		validated = penNameInput.validate() && validated;
-		validated = penNameEngInput.validate() && validated;
+		validated = firstNameEnInput.validate() && validated;
+		validated = lastNameEnInput.validate() && validated;
+		validated = penNameEnInput.validate() && validated;
 		validated = emailInput.validate() && validated;
-		validated = languageInput.validate() && validated;
+		validated = languageList.validate() && validated;
 		return validated;
 	}
 
@@ -144,45 +148,38 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 	public void setEnabled(boolean enabled) {
 		firstNameInput.setEnabled( enabled );
 		lastNameInput.setEnabled( enabled );
-		firstNameEngInput.setEnabled( enabled );
-		lastNameEngInput.setEnabled( enabled );
 		penNameInput.setEnabled( enabled );
-		penNameEngInput.setEnabled( enabled );
+		firstNameEnInput.setEnabled( enabled );
+		lastNameEnInput.setEnabled( enabled );
+		penNameEnInput.setEnabled( enabled );
 		emailInput.setEnabled( enabled );
-		languageInput.setEnabled( enabled );
+		languageList.setEnabled( enabled );
 	}
 
 	@Override
 	public AuthorData getAuthorData() {
 		AuthorData authorData = new AuthorData();
+		authorData.setLanguageId( Long.parseLong( languageList.getValue() ) );
 		authorData.setFirstName( firstNameInput.getText() );
 		authorData.setLastName( lastNameInput.getText() );
-		authorData.setFirstNameEn( firstNameEngInput.getText() );
-		authorData.setLastNameEn( lastNameEngInput.getText() );
 		authorData.setPenName( penNameInput.getText() );
-		authorData.setPenNameEn( penNameEngInput.getText() );
+		authorData.setFirstNameEn( firstNameEnInput.getText() );
+		authorData.setLastNameEn( lastNameEnInput.getText() );
+		authorData.setPenNameEn( penNameEnInput.getText() );
 		authorData.setEmail( emailInput.getText() );
-		authorData.setLanguageName( languageInput.getItemText() );
-		authorData.setLanguageId( Long.valueOf( languageInput.getValue() ));
 		return authorData;
 	}
 
 	@Override
-	public void setAuthorData(AuthorData authorData) {
+	public void setAuthorData( AuthorData authorData ) {
+		languageList.setValue( authorData.getLanguageId().toString() );
 		firstNameInput.setText( authorData.getFirstName() );
 		lastNameInput.setText( authorData.getLastName() );
-		firstNameEngInput.setText( authorData.getFirstNameEn() );
-		lastNameEngInput.setText( authorData.getLastNameEn() );
 		penNameInput.setText( authorData.getPenName() );
-		penNameEngInput.setText( authorData.getPenNameEn() );
+		firstNameEnInput.setText( authorData.getFirstNameEn() );
+		lastNameEnInput.setText( authorData.getLastNameEn() );
+		penNameEnInput.setText( authorData.getPenNameEn() );
 		emailInput.setText( authorData.getEmail() );
-		languageInput.setValueText( authorData.getLanguageName() );
 	}
 
-	@Override
-	public void setLanguageList(LanguageData languageData) {
-		this.languageInput.addItem(languageData.getName(), languageData.getId().toString());
-		
-	}
-	
 }

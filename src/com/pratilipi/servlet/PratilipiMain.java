@@ -19,7 +19,6 @@ import com.claymus.module.websitewidget.footer.FooterWidgetFactory;
 import com.claymus.module.websitewidget.header.HeaderWidget;
 import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
 import com.claymus.servlet.ClaymusMain;
-import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
@@ -73,6 +72,12 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/poems" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM ) );
 		
+		else if( requestUri.equals( "/stories" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY ) );
+		
+		else if( requestUri.equals( "/articles" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.ARTICLE ) );
+		
 		else if( requestUri.equals( "/languages" ) )
 			pageContentList.add( LanguagesContentFactory.newLanguagesContent() );
 
@@ -84,11 +89,17 @@ public class PratilipiMain extends ClaymusMain {
 
 
 		// Individual item's pages
-		else if( requestUri.startsWith( PratilipiHelper.URL_BOOK_PAGE ) )
-			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiHelper.URL_BOOK_PAGE.length() ) ), PratilipiType.BOOK ) );
+		else if( requestUri.startsWith( PratilipiType.BOOK.getPageUrl() ) )
+			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiType.BOOK.getPageUrl().length() ) ), PratilipiType.BOOK ) );
 
-		else if( requestUri.startsWith( PratilipiHelper.URL_POEM_PAGE ) )
-			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiHelper.URL_POEM_PAGE.length() ) ), PratilipiType.POEM ) );
+		else if( requestUri.startsWith( PratilipiType.POEM.getPageUrl() ) )
+			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiType.POEM.getPageUrl().length() ) ), PratilipiType.POEM ) );
+
+		else if( requestUri.startsWith( PratilipiType.STORY.getPageUrl() ) )
+			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiType.STORY.getPageUrl().length() ) ), PratilipiType.STORY ) );
+
+		else if( requestUri.startsWith( PratilipiType.ARTICLE.getPageUrl() ) )
+			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiType.ARTICLE.getPageUrl().length() ) ), PratilipiType.ARTICLE ) );
 
 		
 		// Static pages
@@ -134,6 +145,8 @@ public class PratilipiMain extends ClaymusMain {
 					{ "Give Away", "/give-away", null },
 					{ "Books", "/books", null },
 					{ "Poems", "/poems", null },
+					{ "Stories", "/stories", null },
+					{ "Articles", "/articles", null },
 					{ "Languages", "/languages", null },
 					{ "Authors", "/authors" },
 					{ "Genres", "/genres" },

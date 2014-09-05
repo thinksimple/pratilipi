@@ -27,15 +27,20 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 	
 	private final Accordion accordion = new Accordion();
 	
-	private AuthorsDataInputView authorsDataInputView = new AuthorsDataInputViewImpl();
+	private final AuthorsDataInputView authorsDataInputView =
+			new AuthorsDataInputViewImpl();
 
 	
 	public void onModuleLoad() {
-				
-		if( RootPanel.get( "PageContent-Authors-DataInput" ) == null )
-			return;
-		else {
-			pratilipiService.getLanguageList(new GetLanguageListRequest(), new AsyncCallback<GetLanguageListResponse>(){
+		RootPanel rootPanel = RootPanel.get( "PageContent-Authors-DataInput" );
+		if( rootPanel != null ) {
+			accordion.setTitle( "Add Author" );
+			authorsDataInputView.addAddButtonClickHandler( this );
+
+			accordion.add( authorsDataInputView );
+			rootPanel.add( accordion );
+
+			pratilipiService.getLanguageList( new GetLanguageListRequest(), new AsyncCallback<GetLanguageListResponse>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -46,21 +51,20 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 				@Override
 				public void onSuccess(GetLanguageListResponse response) {
 					for( LanguageData languageData : response.getLanguageList())
-						authorsDataInputView.setLanguageList( languageData );
-					
-				}});
+						authorsDataInputView.addLanguageListItem(
+								languageData.getName() + " (" + languageData.getNameEn() + ")",
+								languageData.getId().toString() );
+				}
+				
+			});
 		}
-		accordion.setTitle( "Add Author" );
-		authorsDataInputView.addAddButtonClickHandler( this );
-
-		accordion.add( authorsDataInputView );
-		RootPanel.get( "PageContent-Authors-DataInput" ).add( accordion );
 		
 	}
 	
+	
 	@Override
 	public void onClick( ClickEvent event ) {
-		if( !authorsDataInputView.validateInputs() )
+		if( ! authorsDataInputView.validateInputs() )
 			return;
 		
 		authorsDataInputView.setEnabled( false );
@@ -69,7 +73,7 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 		pratilipiService.addAuthor( request, new AsyncCallback<AddAuthorResponse>(){
 
 			@Override
-			public void onFailure(Throwable caught) {
+			public void onFailure( Throwable caught ) {
 				authorsDataInputView.setEnabled( true );
 				Window.alert( caught.getMessage() );
 			}
@@ -77,7 +81,9 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 			@Override
 			public void onSuccess(AddAuthorResponse result) {
 				Window.Location.reload();				
-			}});
+			}
+			
+		});
 	}
 	
 }

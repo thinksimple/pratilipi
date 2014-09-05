@@ -21,11 +21,12 @@ import com.pratilipi.pagecontent.pratilipis.PratilipisContentProcessor;
 
 public class PratilipiContentProcessor extends PageContentProcessor<PratilipiContent> {
 
-	public static String ACCESS_ID_PRATILIPI_ADD = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_ADD;
-	public static String ACCESS_ID_PRATILIPI_UPDATE = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_UPDATE;
+	public static final String ACCESS_ID_PRATILIPI_READ_META_DATA = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_READ_META_DATA;
+	public static final String ACCESS_ID_PRATILIPI_ADD = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_ADD;
+	public static final String ACCESS_ID_PRATILIPI_UPDATE = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_UPDATE;
 	
-	public static String ACCESS_ID_PRATILIPI_REVIEW_VIEW = "pratilipi_review_view";
-	public static String ACCESS_ID_PRATILIPI_REVIEW_ADD = "pratilipi_review_add";
+	public static final String ACCESS_ID_PRATILIPI_REVIEW_VIEW = "pratilipi_review_view";
+	public static final String ACCESS_ID_PRATILIPI_REVIEW_ADD = "pratilipi_review_add";
 
 	
 	@Override
@@ -41,7 +42,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId,
 				pratilipiContent.getPratilipiType() );
-		Author author = dataAccessor.getAuthor( pratilipiId );
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		UserPratilipi pratilipiBook = dataAccessor.getUserPratilipi(
 				claymusHelper.getCurrentUserId(), pratilipiId );
 		List<UserPratilipi> reviewList =

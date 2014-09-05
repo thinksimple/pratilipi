@@ -12,8 +12,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewImpl;
 import com.pratilipi.commons.client.PratilipiView;
-import com.pratilipi.commons.client.PratilipiViewBookDetailImpl;
-import com.pratilipi.commons.client.PratilipiViewPoemDetailImpl;
+import com.pratilipi.commons.client.PratilipiViewDetailImpl;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
@@ -42,7 +41,6 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 	
 	
 	public void onModuleLoad() {
-
 		for( PratilipiType pratilipiType : PratilipiType.values() )
 			if( RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" ) != null )
 				this.pratilipiType = pratilipiType;
@@ -50,15 +48,15 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 		if( pratilipiType == null )
 			return;
 		
-		if( RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" ) != null ) {
 		
+		RootPanel rootPanel = RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" );
+		if( rootPanel != null ) {
 			accordion.setTitle( "Add " + pratilipiType.getName() );
 			pratilipiDataInputView = new PratilipiDataInputViewImpl( pratilipiType );
 			pratilipiDataInputView.addAddButtonClickHandler( this );
 
 			accordion.add( pratilipiDataInputView );
-			RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" ).add( accordion );
-			
+			rootPanel.add( accordion );
 			
 			// Load list of authors.
 			pratilipiService.getAuthorList( new GetAuthorListRequest( null , 100 ), new AsyncCallback<GetAuthorListResponse>() {
@@ -71,7 +69,12 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 				@Override
 				public void onSuccess( GetAuthorListResponse response ) {
 					for( AuthorData authorData : response.getAuthorList() )
-						pratilipiDataInputView.setAuthorList( authorData );
+						pratilipiDataInputView.addAuthorListItem(
+								authorData.getFirstName() + " "
+										+ authorData.getLastName() + " ("
+										+ authorData.getFirstNameEn() + " "
+										+ authorData.getLastNameEn() + ")",
+								authorData.getId().toString() );
 				}
 				
 			});
@@ -87,49 +90,55 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 
 				@Override
 				public void onSuccess( GetLanguageListResponse response ) {
-					for( LanguageData languageData : response.getLanguageList())
-						pratilipiDataInputView.setLanguageList( languageData );
+					for( LanguageData languageData : response.getLanguageList() )
+						pratilipiDataInputView.addLanguageListItem(
+								languageData.getName() + " (" + languageData.getNameEn() + ")",
+								languageData.getId().toString() );
 				}
 				
 		    });
 		
 		}
 
-		RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" ).add( new InfiniteScrollPanel() {
+		
+		rootPanel = RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" );
+		if( rootPanel != null ) {
+			InfiniteScrollPanel infiniteScrollPanel = new InfiniteScrollPanel() {
 
-			@Override
-			protected void loadItems() {
-				
-				pratilipiService.getPratilipiList( new GetPratilipiListRequest( pratilipiType ), new AsyncCallback<GetPratilipiListResponse>() {
+				@Override
+				protected void loadItems() {
 					
-					@Override
-					public void onSuccess( GetPratilipiListResponse response ) {
-
-						for( PratilipiData pratilipiData : response.getPratilipiDataList() ) {
-							PratilipiView pratilipiView = null;
-							if( pratilipiType == PratilipiType.BOOK )
-								pratilipiView = new PratilipiViewBookDetailImpl();
-							else if( pratilipiType == PratilipiType.POEM )
-								pratilipiView = new PratilipiViewPoemDetailImpl();
-							pratilipiView.setPratilipiData( pratilipiData );
-							add( pratilipiView );
+					pratilipiService.getPratilipiList(
+							new GetPratilipiListRequest( pratilipiType ),
+							new AsyncCallback<GetPratilipiListResponse>() {
+						
+						@Override
+						public void onSuccess( GetPratilipiListResponse response ) {
+	
+							for( PratilipiData pratilipiData : response.getPratilipiDataList() ) {
+								PratilipiView pratilipiView = new PratilipiViewDetailImpl();
+								pratilipiView.setPratilipiData( pratilipiData );
+								add( pratilipiView );
+							}
+							
+							loadSuccessful();
 						}
 						
-						loadSuccessful();
-					}
+						@Override
+						public void onFailure( Throwable caught ) {
+							loadFailed();
+							// TODO Auto-generated method stub
+							Window.alert( caught.getMessage() );
+						}
+						
+					} );
 					
-					@Override
-					public void onFailure( Throwable caught ) {
-						loadFailed();
-						// TODO Auto-generated method stub
-						Window.alert( caught.getMessage() );
-					}
-					
-				} );
+				}
 				
-			}
+			};
 			
-		} );
+			rootPanel.add( infiniteScrollPanel );
+		}
 	
 	}
 	

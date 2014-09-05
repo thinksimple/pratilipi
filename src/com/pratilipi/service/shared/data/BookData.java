@@ -1,6 +1,5 @@
 package com.pratilipi.service.shared.data;
 
-
 public class BookData extends PratilipiData {
 
 	private String isbn;

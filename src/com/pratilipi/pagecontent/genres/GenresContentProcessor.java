@@ -17,9 +17,9 @@ import com.pratilipi.data.transfer.Genre;
 public class GenresContentProcessor
 		extends PageContentProcessor<GenresContent> {
 
-	public static String ACCESS_ID_GENRE_LIST = "genre_list";
-	public static String ACCESS_ID_GENRE_READ_META_DATA = "genre_read_meta_data";
-	public static String ACCESS_ID_GENRE_ADD = "genre_add";
+	public static final String ACCESS_ID_GENRE_LIST = "genre_list";
+	public static final String ACCESS_ID_GENRE_READ_META_DATA = "genre_read_meta_data";
+	public static final String ACCESS_ID_GENRE_ADD = "genre_add";
 	
 	
 	@Override
