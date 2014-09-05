@@ -5,17 +5,22 @@ import java.util.List;
 import com.claymus.data.access.DataListCursorTuple;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
+import com.pratilipi.data.transfer.Genre;
+import com.pratilipi.data.transfer.Language;
+import com.pratilipi.data.transfer.Poem;
+import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiAuthor;
 import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.PratilipiTag;
-import com.pratilipi.data.transfer.Genre;
-import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserPratilipi;
 
 
 public interface DataAccessor extends com.claymus.data.access.DataAccessor {
+	
+	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
+
 	
 	Book newBook();
 
@@ -26,6 +31,9 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	Book createOrUpdateBook( Book book );
 
 	
+	Poem newPoem();
+
+
 	Language newLanguage();
 
 	Language getLanguage( Long id );

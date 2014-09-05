@@ -8,9 +8,9 @@ public interface Pratilipi {
 
 	Long getId();
 	
-	PratilipiType getPratilipiType();
+	PratilipiType getType();
 	
-	void setPratilipiType( PratilipiType pratilipiType );
+	void setType( PratilipiType pratilipiType );
 	
 	String getTitle();
 	

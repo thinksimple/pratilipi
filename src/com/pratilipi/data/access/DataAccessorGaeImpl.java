@@ -16,6 +16,7 @@ import com.pratilipi.data.access.gae.AuthorEntity;
 import com.pratilipi.data.access.gae.BookEntity;
 import com.pratilipi.data.access.gae.GenreEntity;
 import com.pratilipi.data.access.gae.LanguageEntity;
+import com.pratilipi.data.access.gae.PoemEntity;
 import com.pratilipi.data.access.gae.PratilipiAuthorEntity;
 import com.pratilipi.data.access.gae.PratilipiEntity;
 import com.pratilipi.data.access.gae.PratilipiGenreEntity;
@@ -27,6 +28,7 @@ import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
+import com.pratilipi.data.transfer.Poem;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiAuthor;
 import com.pratilipi.data.transfer.PratilipiGenre;
@@ -56,6 +58,12 @@ public class DataAccessorGaeImpl
 	
 
 	@Override
+	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
+		return createOrUpdateEntity( pratilipi );
+	}
+
+	
+	@Override
 	public Book newBook() {
 		return new BookEntity();
 	}
@@ -76,6 +84,12 @@ public class DataAccessorGaeImpl
 	}
 
 	
+	@Override
+	public Poem newPoem() {
+		return new PoemEntity();
+	}
+
+
 	@Override
 	public Language newLanguage() {
 		return new LanguageEntity();

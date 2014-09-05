@@ -11,6 +11,7 @@ public class BookData extends PratilipiData {
 
 	private String publisherName;
 		
+	
 	public String getIsbn(){
 		return isbn;
 	}

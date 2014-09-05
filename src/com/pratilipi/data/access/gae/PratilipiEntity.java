@@ -22,7 +22,7 @@ public abstract class PratilipiEntity implements Pratilipi {
 	private Long id;
 	
 	@Persistent( column = "PRATILIPI_TYPE" )
-	private PratilipiType pratilipiType;
+	private PratilipiType type;
 	
 	@Persistent( column = "TITLE" )
 	private String title;
@@ -54,13 +54,13 @@ public abstract class PratilipiEntity implements Pratilipi {
 	}
 
 	@Override
-	public PratilipiType getPratilipiType() {
-		return pratilipiType;
+	public PratilipiType getType() {
+		return type;
 	}
 	
 	@Override
-	public void setPratilipiType( PratilipiType pratilipiType ) {
-		this.pratilipiType = pratilipiType;
+	public void setType( PratilipiType pratilipiType ) {
+		this.type = pratilipiType;
 	}
 
 	@Override

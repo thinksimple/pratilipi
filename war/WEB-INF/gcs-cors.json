@@ -1,18 +1,18 @@
 [
     {
-      "origin": ["http//pratilipi.com"],
+      "origin": ["http://pratilipi.com"],
       "method": ["GET"]
     },
     {
-      "origin": ["https//pratilipi.com"],
+      "origin": ["https://pratilipi.com"],
       "method": ["GET"]
     },
     {
-      "origin": ["http//*.pratilipi.com"],
+      "origin": ["http://*.pratilipi.com"],
       "method": ["GET"]
     },
     {
-      "origin": ["https//*.pratilipi.com"],
+      "origin": ["https://*.pratilipi.com"],
       "method": ["GET"]
     },
     {

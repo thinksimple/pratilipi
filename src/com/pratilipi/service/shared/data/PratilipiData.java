@@ -3,17 +3,15 @@ package com.pratilipi.service.shared.data;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.pratilipi.commons.shared.PratilipiType;
 
 public abstract class PratilipiData implements IsSerializable {
 
-	private String pratilipiType;
-	private boolean hasPratilipiType;
-	
 	private Long id;
 	private boolean hasId;
 	
-	private String isbn;
-	private boolean hasIsbn;
+	private PratilipiType type;
+	private boolean hasType;
 	
 	private String title;
 	private boolean hasTitle;
@@ -29,11 +27,6 @@ public abstract class PratilipiData implements IsSerializable {
 	
 	private String authorName;
 	
-	private Long publisherId;
-	private boolean hasPublisherId;
-
-	private String publisherName;
-	
 	private Long publicationYear;
 	private boolean hasPublicationYear;
 	
@@ -46,19 +39,6 @@ public abstract class PratilipiData implements IsSerializable {
 	private Long wordCount;
 	private boolean hasWordCount;
 	
-	
-	public String getPratilipiType(){
-		return this.pratilipiType;
-	}
-	
-	public void setPratilipiType( String pratilipiType ){
-		this.pratilipiType = pratilipiType;
-		this.hasPratilipiType = true;
-	}
-	
-	public boolean hasPratilipiType(){
-		return this.hasPratilipiType;
-	}
 	
 	public Long getId() {
 		return id;
@@ -73,17 +53,17 @@ public abstract class PratilipiData implements IsSerializable {
 		return hasId;
 	}
 	
-	public String getIsbn(){
-		return isbn;
+	public PratilipiType getPratilipiType(){
+		return this.type;
 	}
 	
-	public void setIsbn( String isbn ){
-		this.isbn = isbn;
-		this.hasIsbn = true;
+	public void setPratilipiType( PratilipiType pratilipiType ){
+		this.type = pratilipiType;
+		this.hasType = true;
 	}
 	
-	public boolean hasIsbn(){
-		return this.hasIsbn;
+	public boolean hasPratilipiType(){
+		return this.hasType;
 	}
 	
 	public String getTitle() {
@@ -139,27 +119,6 @@ public abstract class PratilipiData implements IsSerializable {
 
 	public void setAuthorName( String authorName ) {
 		this.authorName = authorName;
-	}
-
-	public Long getPublisherId() {
-		return publisherId;
-	}
-
-	public void setPublisherId( Long publisherId ) {
-		this.publisherId = publisherId;
-		this.hasPublisherId = true;
-	}
-
-	public boolean hasPublisherId() {
-		return hasPublisherId;
-	}
-	
-	public String getPublisherName() {
-		return publisherName;
-	}
-
-	public void setPublisherName( String publisherName ) {
-		this.publisherName = publisherName;
 	}
 
 	public Long getPublicationYear() {

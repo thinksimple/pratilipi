@@ -10,6 +10,7 @@ import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.User;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -17,12 +18,14 @@ import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
+import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
 import com.pratilipi.pagecontent.book.BookContentProcessor;
 import com.pratilipi.pagecontent.genres.GenresContentProcessor;
 import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
+import com.pratilipi.pagecontent.pratilipis.PratilipisContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
@@ -32,6 +35,8 @@ import com.pratilipi.service.shared.AddGenreRequest;
 import com.pratilipi.service.shared.AddGenreResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
+import com.pratilipi.service.shared.AddPratilipiRequest;
+import com.pratilipi.service.shared.AddPratilipiResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
 import com.pratilipi.service.shared.AddPublisherResponse;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
@@ -56,6 +61,7 @@ import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.GenreData;
 import com.pratilipi.service.shared.data.LanguageData;
+import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.service.shared.data.PublisherData;
 import com.pratilipi.service.shared.data.UserPratilipiData;
 
@@ -64,6 +70,52 @@ public class PratilipiServiceImpl
 		extends RemoteServiceServlet
 		implements PratilipiService {
 
+	@Override
+	public AddPratilipiResponse addPratilipi( AddPratilipiRequest request )
+			throws IllegalArgumentException, InsufficientAccessException {
+		
+		PratilipiData pratiliData = request.getPratilipiData();
+		if( pratiliData.hasId() )
+			throw new IllegalArgumentException(
+					"PratilipiId exist already. Did you mean to call updatePratilipi ?" );
+
+		
+		ClaymusHelper claymusHelper =
+				new ClaymusHelper( this.getThreadLocalRequest() );
+		
+		if( ! claymusHelper.hasUserAccess( PratilipisContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
+			throw new InsufficientAccessException();
+		
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Pratilipi pratilipi = null;
+		if( pratiliData.getPratilipiType() == PratilipiType.BOOK ) {
+			pratilipi = dataAccessor.newBook();
+			
+			BookData bookData = (BookData) pratiliData;
+			Book book = (Book) pratilipi;
+			book.setPublisherId( bookData.getPublisherId() );
+			
+		} else if( pratiliData.getPratilipiType() == PratilipiType.POEM ) {
+			pratilipi = dataAccessor.newBook();
+		}
+		
+		pratilipi.setTitle( pratiliData.getTitle() );
+		pratilipi.setLanguageId( pratiliData.getLanguageId() );
+		pratilipi.setAuthorId( pratiliData.getAuthorId() );
+		pratilipi.setPublicationYear( pratiliData.getPublicationYear() );
+		pratilipi.setSummary( pratiliData.getSummary() );
+		pratilipi.setWordCount( pratiliData.getWordCount() );
+		pratilipi.setListingDate( new Date() );
+
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+		dataAccessor.destroy();
+		
+		return new AddPratilipiResponse( pratilipi.getId() );
+	}
+
+	
 	@Override
 	public AddBookResponse addBook( AddBookRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
@@ -94,7 +146,7 @@ public class PratilipiServiceImpl
 		
 		return new AddBookResponse( book.getId() );
 	}
-
+	
 	@Override
 	public UpdateBookResponse updateBook( UpdateBookRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {

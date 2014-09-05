@@ -1,6 +1,8 @@
 package com.pratilipi.commons.shared;
 
-public enum PratilipiType {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public enum PratilipiType implements IsSerializable {
 	
 	ARTICLE( "Article" ),
 	BOOK( "Book" ),
