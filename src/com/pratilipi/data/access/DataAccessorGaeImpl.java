@@ -47,7 +47,7 @@ public class DataAccessorGaeImpl
 		
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) )
-						.addFilter( "pratilipiType", pratilipiType )
+						.addFilter( "type", pratilipiType )
 						.addOrdering( "title", true )
 						.build();
 		

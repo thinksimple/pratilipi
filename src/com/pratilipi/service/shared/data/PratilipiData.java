@@ -53,12 +53,12 @@ public abstract class PratilipiData implements IsSerializable {
 		return hasId;
 	}
 	
-	public PratilipiType getPratilipiType(){
+	public PratilipiType getType(){
 		return this.type;
 	}
 	
-	public void setPratilipiType( PratilipiType pratilipiType ){
-		this.type = pratilipiType;
+	public void setType( PratilipiType type ){
+		this.type = type;
 		this.hasType = true;
 	}
 	

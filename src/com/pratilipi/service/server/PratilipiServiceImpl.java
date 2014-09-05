@@ -74,8 +74,8 @@ public class PratilipiServiceImpl
 	public AddPratilipiResponse addPratilipi( AddPratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
 		
-		PratilipiData pratiliData = request.getPratilipiData();
-		if( pratiliData.hasId() )
+		PratilipiData pratilipiData = request.getPratilipiData();
+		if( pratilipiData.hasId() )
 			throw new IllegalArgumentException(
 					"PratilipiId exist already. Did you mean to call updatePratilipi ?" );
 
@@ -90,23 +90,24 @@ public class PratilipiServiceImpl
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		Pratilipi pratilipi = null;
-		if( pratiliData.getPratilipiType() == PratilipiType.BOOK ) {
+		if( pratilipiData.getType() == PratilipiType.BOOK ) {
 			pratilipi = dataAccessor.newBook();
 			
-			BookData bookData = (BookData) pratiliData;
+			BookData bookData = (BookData) pratilipiData;
 			Book book = (Book) pratilipi;
 			book.setPublisherId( bookData.getPublisherId() );
 			
-		} else if( pratiliData.getPratilipiType() == PratilipiType.POEM ) {
+		} else if( pratilipiData.getType() == PratilipiType.POEM ) {
 			pratilipi = dataAccessor.newBook();
 		}
 		
-		pratilipi.setTitle( pratiliData.getTitle() );
-		pratilipi.setLanguageId( pratiliData.getLanguageId() );
-		pratilipi.setAuthorId( pratiliData.getAuthorId() );
-		pratilipi.setPublicationYear( pratiliData.getPublicationYear() );
-		pratilipi.setSummary( pratiliData.getSummary() );
-		pratilipi.setWordCount( pratiliData.getWordCount() );
+		pratilipi.setType( pratilipiData.getType() );
+		pratilipi.setTitle( pratilipiData.getTitle() );
+		pratilipi.setLanguageId( pratilipiData.getLanguageId() );
+		pratilipi.setAuthorId( pratilipiData.getAuthorId() );
+		pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
+		pratilipi.setSummary( pratilipiData.getSummary() );
+		pratilipi.setWordCount( pratilipiData.getWordCount() );
 		pratilipi.setListingDate( new Date() );
 
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );

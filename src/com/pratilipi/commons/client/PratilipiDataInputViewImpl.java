@@ -139,7 +139,7 @@ public class PratilipiDataInputViewImpl<T extends PratilipiData> extends Pratili
 		else
 			pratilipiData = new ArticleData();
 
-		pratilipiData.setPratilipiType( pratilipiType );
+		pratilipiData.setType( pratilipiType );
 		pratilipiData.setTitle( titleInput.getText() );
 		pratilipiData.setAuthorName( authorInput.getItemText());
 		pratilipiData.setAuthorId( Long.valueOf(authorInput.getValue()) );
