@@ -42,7 +42,7 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 	
 	public void onModuleLoad() {
 		for( PratilipiType pratilipiType : PratilipiType.values() )
-			if( RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" ) != null )
+			if( RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" ) != null )
 				this.pratilipiType = pratilipiType;
 		
 		if( pratilipiType == null )

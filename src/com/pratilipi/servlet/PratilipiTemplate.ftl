@@ -13,6 +13,23 @@
 		<script src="//static.pratilipi.com/third-party/bootstrap-3.2.0/js/bootstrap.min.js" defer></script>
 	
 		<script src="//cdn.ckeditor.com/4.4.3/full/ckeditor.js" defer></script>
+		<script language="javascript" defer>
+			window.onload = function() {
+				CKEDITOR.config.toolbar = [
+						['Format','Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],
+						['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Outdent','Indent'],
+						['NumberedList','BulletedList'],
+						['HorizontalRule','Blockquote','Smiley'],
+						['Link','Unlink'],
+						['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'],
+						['ShowBlocks','Maximize']];
+				CKEDITOR.config.toolbar_BASIC = [
+						['Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],
+						['NumberedList','BulletedList'],
+						['HorizontalRule','Blockquote','Smiley'],
+						['Link','Unlink']];
+			}
+		</script>
 		
 		<script src="//static.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/vendor/jquery.ui.widget.js" defer></script>
 		<script src="//static.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/jquery.iframe-transport.js" defer></script>

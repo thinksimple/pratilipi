@@ -58,7 +58,7 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 		if( event.getSource() == addReviewAnchor ) {
 			addReviewAnchor.setVisible( false );
 			saveReviewAnchor.setVisible( true );
-			loadEditor( RootPanel.get( "PageContent-Pratilipi-Review" ).getElement() );
+			loadBasicEditor( RootPanel.get( "PageContent-Pratilipi-Review" ).getElement() );
 			
 		} else if( event.getSource() == saveReviewAnchor ) {
 			saveReviewAnchor.setVisible( false );
@@ -95,7 +95,13 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 	private native void loadEditor( Element element ) /*-{
 		$wnd.CKEDITOR.replace( element );
 	}-*/;
-	
+
+	private native void loadBasicEditor( Element element ) /*-{
+		$wnd.CKEDITOR.replace( element, {
+				toolbar : 'BASIC'
+		} );
+	}-*/;
+
 	private native String getHtmlFromEditor( String editorName ) /*-{
 		return $wnd.CKEDITOR.instances[ editorName ].getData();
 	}-*/;
