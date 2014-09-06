@@ -60,6 +60,8 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "pratilipiHomeUrl", pratilipiType.getPageUrl() + pratilipi.getId() );
 		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getId() );
 		
+		dataModel.put( "showContent", pratilipiType != PratilipiType.BOOK );
+
 		dataModel.put( "showAddReviewOption",
 				claymusHelper.getCurrentUserId() != pratilipi.getAuthorId()
 				&& ( pratilipiBook == null || pratilipiBook.getReviewState() == UserReviewState.NOT_SUBMITTED )

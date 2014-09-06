@@ -29,6 +29,17 @@
 		</div>
 	</div>
 
+	<#if showContent>
+		<div id="PageContent-Pratilipi-Content">
+			<#if pratilipi.getContent()?? >
+				${ pratilipi.getContent() }
+			</#if>
+		</div>
+		<#if showEditOptions>
+			<div id="PageContent-Pratilipi-Content-EditOptions"></div>
+		</#if>
+	</#if>
+
 	<#if showAddReviewOption>
 		<div id="PageContent-Pratilipi-Review"></div>
 		<div id="PageContent-Pratilipi-Review-AddOptions"></div>

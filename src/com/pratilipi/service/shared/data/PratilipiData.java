@@ -36,6 +36,9 @@ public abstract class PratilipiData implements IsSerializable {
 	private String summary;
 	private boolean hasSummary;
 	
+	private String content;
+	private boolean hasContent;
+	
 	private Long wordCount;
 	private boolean hasWordCount;
 	
@@ -153,6 +156,19 @@ public abstract class PratilipiData implements IsSerializable {
 
 	public boolean hasSummary() {
 		return hasSummary;
+	}
+	
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent( String content ) {
+		this.content = content;
+		this.hasContent = true;
+	}
+
+	public boolean hasContent() {
+		return hasContent;
 	}
 	
 	public Long getWordCount() {

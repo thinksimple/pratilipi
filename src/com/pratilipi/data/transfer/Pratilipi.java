@@ -36,6 +36,10 @@ public interface Pratilipi {
 	
 	void setSummary( String summary );
 	
+	String getContent();
+	
+	void setContent( String content );
+	
 	Long getWordCount();
 	
 	void setWordCount( Long wordCount );

@@ -31,7 +31,13 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	// Summary edit options widgets
 	private final Anchor editSummaryAnchor = new Anchor( "Edit Summary" );
 	private final Anchor saveSummaryAnchor = new Anchor( "Save Summary" );
-	private final Label savingLabel = new Label( "Saving ..." );
+	private final Label savingSummaryLabel = new Label( "Saving Summary ..." );
+
+	
+	// Content edit options widgets
+	private final Anchor editContentAnchor = new Anchor( "Edit Content" );
+	private final Anchor saveContentAnchor = new Anchor( "Save Content" );
+	private final Label savingContentLabel = new Label( "Saving Content ..." );
 
 	
 	private String url = Window.Location.getPath();
@@ -67,12 +73,27 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			editSummaryAnchor.addClickHandler( this );
 			saveSummaryAnchor.addClickHandler( this );
 			saveSummaryAnchor.setVisible( false );
-			savingLabel.setVisible( false );
+			savingSummaryLabel.setVisible( false );
 	
 			rootPanel.add( editSummaryAnchor );
 			rootPanel.add( saveSummaryAnchor );
-			rootPanel.add( savingLabel );
+			rootPanel.add( savingSummaryLabel );
 		}
+
+		
+		// Content edit options
+		rootPanel = RootPanel.get( "PageContent-Pratilipi-Content-EditOptions" );
+		if( rootPanel != null ) {
+			editContentAnchor.addClickHandler( this );
+			saveContentAnchor.addClickHandler( this );
+			saveContentAnchor.setVisible( false );
+			savingContentLabel.setVisible( false );
+	
+			rootPanel.add( editContentAnchor );
+			rootPanel.add( saveContentAnchor );
+			rootPanel.add( savingContentLabel );
+		}
+
 	}
 
 	@Override
@@ -85,7 +106,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			
 		} else if( event.getSource() == saveSummaryAnchor ) {
 			saveSummaryAnchor.setVisible( false );
-			savingLabel.setVisible( true );
+			savingSummaryLabel.setVisible( true );
 			
 			String pratilipiIdStr = url.substring( pratilipiType.getPageUrl().length() );
 			Long pratilipiId = Long.parseLong( pratilipiIdStr );
@@ -106,12 +127,47 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 				@Override
 				public void onFailure( Throwable caught ) {
 					Window.alert( caught.getMessage() );
-					savingLabel.setVisible( false );
+					savingSummaryLabel.setVisible( false );
 					saveSummaryAnchor.setVisible( true );
 				}
 				
 			});
+		
+		} else if( event.getSource() == editContentAnchor ) {
+			editContentAnchor.setVisible( false );
+			saveContentAnchor.setVisible( true );
+			loadEditor( RootPanel.get( "PageContent-Pratilipi-Content" ).getElement() );
+			
+		} else if( event.getSource() == saveContentAnchor ) {
+			saveContentAnchor.setVisible( false );
+			savingContentLabel.setVisible( true );
+			
+			String pratilipiIdStr = url.substring( pratilipiType.getPageUrl().length() );
+			Long pratilipiId = Long.parseLong( pratilipiIdStr );
+
+			PratilipiData pratilipiData = pratilipiType.newPratilipiData();
+			pratilipiData.setId( pratilipiId );
+			pratilipiData.setContent( getHtmlFromEditor( "PageContent-Pratilipi-Content" ) );
+			
+			pratilipiService.updatePratilipi(
+					new UpdatePratilipiRequest( pratilipiData ),
+					new AsyncCallback<UpdatePratilipiResponse>() {
+				
+				@Override
+				public void onSuccess( UpdatePratilipiResponse result ) {
+					Window.Location.reload();
+				}
+				
+				@Override
+				public void onFailure( Throwable caught ) {
+					Window.alert( caught.getMessage() );
+					savingContentLabel.setVisible( false );
+					saveContentAnchor.setVisible( true );
+				}
+				
+			});
 		}
+
 		
 	}
 	

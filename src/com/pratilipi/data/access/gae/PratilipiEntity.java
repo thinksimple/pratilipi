@@ -44,6 +44,9 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "SUMMARY" )
 	private Text summary;
 
+	@Persistent( column = "CONTENT" )
+	private Text content;
+
 	@Persistent( column = "WORD_COUNT" )
 	private Long wordCount;
 
@@ -121,6 +124,16 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Override
 	public void setSummary( String summary ) {
 		this.summary = summary == null ? null : new Text( summary );
+	}
+	
+	@Override
+	public String getContent() {
+		return content == null ? null : content.getValue();
+	}
+
+	@Override
+	public void setContent( String content ) {
+		this.content = content == null ? null : new Text( content );
 	}
 	
 	@Override
