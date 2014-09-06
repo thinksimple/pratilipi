@@ -29,6 +29,7 @@ public class RegistrationForm extends Composite {
 	final ValidateForm validateForm = new ValidateForm();
 	
 	//Error messages
+	private Label serverError = new Label();
 	private Label nameInputError = new Label();
 	private Label emailInputError = new Label();
 	private Label passwordError = new Label();
@@ -112,6 +113,8 @@ public class RegistrationForm extends Composite {
 		registerButton.getElement().getStyle().setDisplay(Display.BLOCK);
 		
 		//Error message Style
+		serverError.addStyleName( "alert alert-danger" );
+		serverError.getElement().setAttribute( "role", "alert") ;
 		nameInputError.setStyleName("errorMessage");
 		emailInputError.setStyleName("errorMessage");
 		passwordError.setStyleName("errorMessage");
@@ -126,6 +129,7 @@ public class RegistrationForm extends Composite {
 		signin.getElement().appendChild( signinAnchor.getElement() );
 		
 		//All error messages are invisible when page is loaded for first time.
+		serverError.setVisible( false );
 		nameInputError.setVisible(false);
 		emailInputError.setVisible(false);
 		passwordError.setVisible(false);
@@ -134,6 +138,7 @@ public class RegistrationForm extends Composite {
 		namePanel.add(firstNameInput);
 		namePanel.add(lastNameInput);
 		panel.add( heading );
+		panel.add( serverError );
 		panel.add( namePanel );
 		panel.add(nameInputError);
 		panel.add(emailInput);
@@ -376,6 +381,22 @@ public class RegistrationForm extends Composite {
 	
 	public void hideConfPassError(){
 		confPassError.setVisible(false);
+	}
+	
+	//Server Error function
+	public void setServerError( String error ){
+		this.serverError.getElement().removeAllChildren();
+		HTML msg = new HTML();
+		msg.setHTML( error );
+		this.serverError.getElement().appendChild( msg.getElement() );
+	}
+	
+	public void showServerError(){
+		this.serverError.setVisible( true );
+	}
+	
+	public void hideServerError(){
+		//TODO
 	}
 
 }

@@ -167,7 +167,8 @@ public class HomePageContent implements EntryPoint {
 						
 						@Override
 						public void onFailure( Throwable caught ) {
-							Window.alert( caught.getMessage() );
+							registrationForm.setServerError( caught.getMessage() );
+							registrationForm.showServerError();
 						}		
 					});
 				}
@@ -178,7 +179,7 @@ public class HomePageContent implements EntryPoint {
 		registrationFormDialog.add( registrationForm );
 				
 /************************************************** User Login **************************************************/
-		final Panel loginFormDialog = new FlowPanel();
+		final FocusPanel loginFormDialog = new FocusPanel();
 		loginFormDialog.setStyleName( "modal-dialog" );
 		
 		final LoginForm loginForm = new LoginForm();
@@ -187,28 +188,21 @@ public class HomePageContent implements EntryPoint {
 			
 			@Override
 			public void onClick( ClickEvent event ) {
-				if( loginForm.validateEmail() && loginForm.validatePassword() ){
-					claymusService.loginUser( new LoginUserRequest( loginForm.getEmail(), loginForm.getPassword() ), new AsyncCallback<LoginUserResponse>() {
-						
-						@Override
-						public void onSuccess( LoginUserResponse response ) {
-							hideModal();
-							Window.Location.reload();
-						}
-						
-						@Override
-						public void onFailure( Throwable caught ) {
-							loginForm.setServerError( caught.getMessage() );
-							loginForm.showServerError();
-						}
-					});
-				}	
+				userLogin( loginForm );	
 			}
 		};
 		
 		loginForm.addLoginButtonClickHandler( loginButtonClickHandler );
 		loginFormDialog.add( loginForm );
-		
+		loginFormDialog.addKeyDownHandler( new KeyDownHandler(){
+
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+		            userLogin( loginForm );   
+					History.newItem( "" );
+		           }
+			}});
 /************************************************ Forgot Password ********************************************/
 		final Panel forgotPasswordFormDialog = new FlowPanel();
 		forgotPasswordFormDialog.setStyleName( "modal-dialog" );
@@ -417,6 +411,25 @@ public class HomePageContent implements EntryPoint {
 				Window.alert( "Password Changed successfully." );
 				Window.Location.replace( "/" );
 			}});
+	}
+	
+	public void userLogin(final LoginForm loginForm){
+		if( loginForm.validateEmail() && loginForm.validatePassword() ){
+			claymusService.loginUser( new LoginUserRequest( loginForm.getEmail(), loginForm.getPassword() ), new AsyncCallback<LoginUserResponse>() {
+				
+				@Override
+				public void onSuccess( LoginUserResponse response ) {
+					hideModal();
+					Window.Location.reload();
+				}
+				
+				@Override
+				public void onFailure( Throwable caught ) {
+					loginForm.setServerError( caught.getMessage() );
+					loginForm.showServerError();
+				}
+			});
+		}
 	}
 	
 	//JQuery function to show and hide bootstrap modal view
