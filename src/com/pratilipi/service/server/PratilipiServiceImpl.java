@@ -192,7 +192,10 @@ public class PratilipiServiceImpl
 			pratilipiData.setLanguageId( language.getId() );
 			pratilipiData.setLanguageName( language.getName() );
 			pratilipiData.setAuthorId( author.getId() );
-			pratilipiData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
+			if( author.getLastName() == null )
+				pratilipiData.setAuthorName( author.getFirstName() );
+			else
+				pratilipiData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
 //			bookData.setPublisherId( publisher.getId() );
 //			bookData.setPublisherName( publisher.getName() );
 			pratilipiData.setPublicationDate( pratilipi.getPublicationYear() );

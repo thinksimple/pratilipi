@@ -22,7 +22,10 @@
 		</thead>
 		<tbody>
 			<#list authorList as author >
-				<#assign _authorName="${ author.getFirstName() } ${ author.getLastName() } (${ author.getFirstNameEn() } ${ author.getLastNameEn() })">  
+				<#assign _authorName>
+					${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if>
+					(${ author.getFirstNameEn() }<#if author.getLastNameEn()??>${ author.getLastNameEn() }</#if>)
+				</#assign>
 				<#assign _authorPenName>
 					<#if author.getPenName()??>${ author.getPenName() } </#if>
 					<#if author.getPenNameEn()??>(${ author.getPenNameEn() })</#if>

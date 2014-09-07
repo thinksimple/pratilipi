@@ -14,7 +14,7 @@
 				<a href="${ pratilipiHomeUrl }">${ pratilipi.getTitle() }</a>
 			</h3>
 			<h4>
-				<a href="${ authorHomeUrl }">${ author.getFirstNameEn() } ${ author.getLastNameEn() }</a>
+				<a href="${ authorHomeUrl }">${ author.getFirstNameEn() }<#if author.getLastNameEn()??> ${ author.getLastNameEn() }</#if></a>
 			</h4>
 			<div>
 				<div id="PageContent-Pratilipi-Summary">
