@@ -50,7 +50,7 @@ public class TextInputFormField extends FormField {
 	}
 	
 	public String getText() {
-		return textBox.getText().trim();
+		return textBox.getText().trim().isEmpty() ? null : textBox.getText().trim();
 	}
 	
 	public void setText( String text ) {
@@ -64,11 +64,11 @@ public class TextInputFormField extends FormField {
 	
 	@Override
 	public boolean validate() {
-		if( getText().isEmpty() && !isRequired() ) {
+		if( getText() == null && !isRequired() ) {
 			markDefault();
 			return true;
 		
-		} else if( getText().isEmpty() && isRequired() ) {
+		} else if( getText() == null && isRequired() ) {
 			markError( "Input Required !" );
 			return false;
 

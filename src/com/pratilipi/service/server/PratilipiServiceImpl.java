@@ -436,7 +436,7 @@ public class PratilipiServiceImpl
 		author.setFirstNameEn( authorData.getFirstNameEn() );
 		author.setLastNameEn( authorData.getLastNameEn() );
 		author.setPenNameEn( authorData.getPenNameEn() );
-		author.setEmail( authorData.getEmail().toLowerCase() );
+		author.setEmail( authorData.getEmail() == null ? null : authorData.getEmail().toLowerCase() );
 		author.setRegistrationDate( new Date() );
 		author = dataAccessor.createOrUpdateAuthor( author );
 		dataAccessor.destroy();

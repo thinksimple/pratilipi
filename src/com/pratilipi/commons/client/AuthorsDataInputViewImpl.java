@@ -47,7 +47,6 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 		lastNameInput.setRequired( true );
 		
 		penNameInput.setPlaceholder( "Pen Name" );
-		penNameInput.setRequired( true );
 
 		firstNameEnInput.setPlaceholder( "First Name (English)" );
 		firstNameEnInput.setRequired( true );
@@ -56,7 +55,6 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 		lastNameEnInput.setRequired( true );
 		
 		penNameEnInput.setPlaceholder( "Pen Name (English)" );
-		penNameEnInput.setRequired( true );
 
 		languageList.setRequired( true );
 		emailInput.setPlaceholder( "Email" );

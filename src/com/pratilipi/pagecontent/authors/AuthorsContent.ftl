@@ -23,7 +23,10 @@
 		<tbody>
 			<#list authorList as author >
 				<#assign _authorName="${ author.getFirstName() } ${ author.getLastName() } (${ author.getFirstNameEn() } ${ author.getLastNameEn() })">  
-				<#assign _authorPenName="${ author.getPenName() } (${ author.getPenNameEn() })">
+				<#assign _authorPenName>
+					<#if author.getPenName()??>${ author.getPenName() } </#if>
+					<#if author.getPenNameEn()??>(${ author.getPenNameEn() })</#if>
+				</#assign>
 				<#assign _authorPageUrl="${ authorPageUrl }${ author.getId()?string(\"#\") }">
 				<tr>
 					<td>${ author_index + 1 }</td>
