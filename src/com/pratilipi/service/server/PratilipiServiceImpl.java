@@ -22,7 +22,6 @@ import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
-import com.pratilipi.pagecontent.book.BookContentProcessor;
 import com.pratilipi.pagecontent.genres.GenresContentProcessor;
 import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentProcessor;
@@ -256,8 +255,8 @@ public class PratilipiServiceImpl
 		ClaymusHelper claymusHelper = new ClaymusHelper( this.getThreadLocalRequest() );
 		
 		if ( ( claymusHelper.getCurrentUserId() == book.getAuthorId()
-				&& ! claymusHelper.hasUserAccess( BookContentProcessor.ACCESS_ID_BOOK_ADD, false ) )
-				|| ! claymusHelper.hasUserAccess( BookContentProcessor.ACCESS_ID_BOOK_UPDATE, false ) )
+				&& ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
+				|| ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
 			throw new InsufficientAccessException();
 		
 		if( bookData.hasTitle() )
@@ -584,7 +583,7 @@ public class PratilipiServiceImpl
 		
 		if( claymusHelper.getCurrentUserId() == book.getAuthorId()
 				|| ( userBook != null && userBook.getReviewState() != UserReviewState.NOT_SUBMITTED )
-				|| ! claymusHelper.hasUserAccess( BookContentProcessor.ACCESS_ID_BOOK_REVIEW_ADD, false ) )
+				|| ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_REVIEW_ADD, false ) )
 			throw new InsufficientAccessException();
 
 		userBook = dataAccessor.newUserPratilipi();

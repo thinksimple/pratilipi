@@ -5,16 +5,12 @@
 /war/WEB-INF/classes
 /war/WEB-INF/deploy
 /war/WEB-INF/lib
-/war/pagecontent.book
-/war/pagecontent.book.editoptions
 /war/pagecontent.pratilipi
 /war/pagecontent.pratilipi.edit
 /war/pagecontent.pratilipis
-/war/pagecontent.books
 /war/pagecontent.languages
 /war/pagecontent.authors
 /war/pagecontent.genres
-/war/pagecontent.bookdatainput
 /war/pagecontent.booklist
 /war/pagecontent.managepublishers
 /war/pagecontent.homepagecontent

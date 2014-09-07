@@ -22,8 +22,6 @@ import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
-import com.pratilipi.pagecontent.book.BookContentFactory;
-import com.pratilipi.pagecontent.books.BooksContentFactory;
 import com.pratilipi.pagecontent.genres.GenresContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentFactory;
@@ -38,8 +36,6 @@ public class PratilipiMain extends ClaymusMain {
 
 	static {
 		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
-		PAGE_CONTENT_REGISTRY.register( BookContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( BooksContentFactory.class );
 		
 		PAGE_CONTENT_REGISTRY.register( PratilipiContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( PratilipisContentFactory.class );
