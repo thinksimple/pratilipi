@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.data.transfer.User;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
@@ -15,6 +16,7 @@ import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentProcessor;
@@ -47,6 +49,17 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 				claymusHelper.getCurrentUserId(), pratilipiId );
 		List<UserPratilipi> reviewList =
 				dataAccessor.getUserPratilipiList( pratilipiId );
+		
+		Map<String, String> userIdNameMap = new HashMap<>();
+		for( UserPratilipi review : reviewList) {
+			if( userIdNameMap.get( review.getUserId() ) == null ){
+				User user = dataAccessor.getUser( review.getUserId() );
+				System.out.println( user.getFirstName() );
+				userIdNameMap.put(
+						user.getId().toString(),
+						user.getFirstName()+ " " + user.getLastName() );
+			}
+		}
 		dataAccessor.destroy();
 		
 
@@ -55,6 +68,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "pratilipi", pratilipi );
 		dataModel.put( "author", author );
 		dataModel.put( "reviewList", reviewList );
+		dataModel.put( "userIdNameMap", userIdNameMap );
 		
 		dataModel.put( "pratilipiCoverUrl", pratilipiType.getCoverImageUrl() + pratilipi.getId() );
 		dataModel.put( "pratilipiHomeUrl", pratilipiType.getPageUrl() + pratilipi.getId() );

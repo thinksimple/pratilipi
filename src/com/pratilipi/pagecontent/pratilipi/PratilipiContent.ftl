@@ -49,6 +49,7 @@
 		<#list reviewList as review >
 			<div class="panel panel-default">
 				<div class="panel-body">
+					<h4><a href="#">${ userIdNameMap[ review.getUserId()?string("#") ] }</a>,<small> ${ review.getReviewDate()?date }</small></h4>
 					${ review.getReview() }
 				</div>
 			</div>
