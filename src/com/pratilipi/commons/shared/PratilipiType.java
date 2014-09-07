@@ -9,21 +9,43 @@ import com.pratilipi.service.shared.data.StoryData;
 
 public enum PratilipiType implements IsSerializable {
 	
-	BOOK	( "Book",		PratilipiHelper.URL_BOOK_PAGE,		PratilipiHelper.URL_BOOK_COVER ),
-	POEM	( "Poem",		PratilipiHelper.URL_POEM_PAGE,		PratilipiHelper.URL_POEM_COVER ),
-	STORY	( "Story",		PratilipiHelper.URL_STORY_PAGE,		PratilipiHelper.URL_STORY_COVER ),
-	ARTICLE	( "Article",	PratilipiHelper.URL_ARTICLE_PAGE,	PratilipiHelper.URL_ARTICLE_COVER );
+	BOOK( "Book",
+			PratilipiHelper.URL_BOOK_PAGE,
+			PratilipiHelper.URL_BOOK_COVER,
+			PratilipiHelper.URL_BOOK_READER,
+			PratilipiHelper.URL_BOOK_CONTENT_JPEG ),
+	POEM( "Poem",
+			PratilipiHelper.URL_POEM_PAGE,
+			PratilipiHelper.URL_POEM_COVER,
+			PratilipiHelper.URL_POEM_READER,
+			PratilipiHelper.URL_POEM_CONTENT_JPEG ),
+	STORY( "Story",
+			PratilipiHelper.URL_STORY_PAGE,
+			PratilipiHelper.URL_STORY_COVER,
+			PratilipiHelper.URL_STORY_READER,
+			PratilipiHelper.URL_STORY_CONTENT_JPEG ),
+	ARTICLE( "Article",
+			PratilipiHelper.URL_ARTICLE_PAGE,
+			PratilipiHelper.URL_ARTICLE_COVER,
+			PratilipiHelper.URL_ARTICLE_READER,
+			PratilipiHelper.URL_ARTICLE_CONTENT_JPEG );
 	
 	
 	private String name;
 	private String pageUrl;
 	private String coverImageUrl;
+	private String readerPageUrl;
+	private String contentJpegUrl;
 	
-	
-	private PratilipiType( String name, String pageUrl, String coverImageUrl ) {
+	private PratilipiType(
+			String name, String pageUrl,
+			String coverImageUrl, String readerPageUrl,
+			String contentJpegUrl ) {
 		this.name = name;
 		this.pageUrl = pageUrl;
 		this.coverImageUrl = coverImageUrl;
+		this.readerPageUrl = readerPageUrl;
+		this.contentJpegUrl = contentJpegUrl;
 	}
 	
 	
@@ -37,6 +59,14 @@ public enum PratilipiType implements IsSerializable {
 
 	public String getCoverImageUrl() {
 		return coverImageUrl;
+	}
+	
+	public String getReaderPageUrl() {
+		return readerPageUrl;
+	}
+	
+	public String getContentJpegUrl() {
+		return contentJpegUrl;
 	}
 	
 	public PratilipiData newPratilipiData() {

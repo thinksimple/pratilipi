@@ -54,7 +54,7 @@ public class RoleAccessEntity implements RoleAccess {
 
 	@Override
 	public boolean hasAccess() {
-		return access;
+		return access == null ? false : access;
 	}
 
 	@Override

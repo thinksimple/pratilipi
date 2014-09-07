@@ -27,17 +27,29 @@
   <!-- Handler for uploading and serving website resources -->
 
   <servlet>
-    <servlet-name>ResourceServlet</servlet-name>
+    <servlet-name>CoverImageResourceServlet</servlet-name>
     <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
+    <init-param>
+      <param-name>ResizeImage</param-name>
+      <param-value>300</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ResourceServlet</servlet-name>
+    <servlet-name>CoverImageResourceServlet</servlet-name>
     <url-pattern>/resource.book-cover/*</url-pattern>
     <url-pattern>/resource.poem-cover/*</url-pattern>
     <url-pattern>/resource.story-cover/*</url-pattern>
     <url-pattern>/resource.article-cover/*</url-pattern>
   </servlet-mapping>
    
+  <servlet>
+    <servlet-name>JpegContentResourceServlet</servlet-name>
+    <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JpegContentResourceServlet</servlet-name>
+    <url-pattern>/resource.book-content/jpeg/*</url-pattern>
+  </servlet-mapping>
    
   <!-- Handlers for Task Queues -->
   

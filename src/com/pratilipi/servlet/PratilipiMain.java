@@ -26,6 +26,7 @@ import com.pratilipi.pagecontent.genres.GenresContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentFactory;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
+import com.pratilipi.pagecontent.reader.ReaderContentFactory;
 
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
@@ -37,11 +38,13 @@ public class PratilipiMain extends ClaymusMain {
 	static {
 		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
 		
-		PAGE_CONTENT_REGISTRY.register( PratilipiContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( PratilipisContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( GenresContentFactory.class );
+
+		PAGE_CONTENT_REGISTRY.register( PratilipisContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( PratilipiContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( ReaderContentFactory.class );
 	}
 
 
@@ -96,6 +99,11 @@ public class PratilipiMain extends ClaymusMain {
 
 		else if( requestUri.startsWith( PratilipiType.ARTICLE.getPageUrl() ) )
 			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiType.ARTICLE.getPageUrl().length() ) ), PratilipiType.ARTICLE ) );
+
+		
+		// Individual item's readers
+		else if( requestUri.startsWith( PratilipiType.BOOK.getReaderPageUrl() ) )
+			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.BOOK ) );
 
 		
 		// Static pages

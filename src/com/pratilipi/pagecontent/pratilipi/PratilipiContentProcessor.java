@@ -16,7 +16,6 @@ import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
-import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentProcessor;
@@ -54,7 +53,6 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		for( UserPratilipi review : reviewList) {
 			if( userIdNameMap.get( review.getUserId() ) == null ){
 				User user = dataAccessor.getUser( review.getUserId() );
-				System.out.println( user.getFirstName() );
 				userIdNameMap.put(
 						user.getId().toString(),
 						user.getFirstName() + ( user.getLastName() == null ? "" : " " + user.getLastName() ) );

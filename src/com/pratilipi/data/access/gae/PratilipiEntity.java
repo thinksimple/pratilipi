@@ -50,6 +50,9 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "WORD_COUNT" )
 	private Long wordCount;
 
+	@Persistent( column = "PAGE_COUNT" )
+	private Long pageCount;
+
 	
 	@Override
 	public Long getId() {
@@ -146,4 +149,14 @@ public abstract class PratilipiEntity implements Pratilipi {
 		this.wordCount = wordCount;
 	}
 	
+	@Override
+	public Long getPageCount() {
+		return pageCount;
+	}
+
+	@Override
+	public void setPageCount( Long pageCount ) {
+		this.pageCount = pageCount;
+	}
+
 }

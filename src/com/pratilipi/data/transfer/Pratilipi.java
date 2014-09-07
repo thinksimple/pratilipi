@@ -43,5 +43,9 @@ public interface Pratilipi {
 	Long getWordCount();
 	
 	void setWordCount( Long wordCount );
+
+	Long getPageCount();
 	
+	void setPageCount( Long pageCount );
+
 }

@@ -3,6 +3,7 @@ package com.claymus.servlet;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,14 +45,23 @@ public class ResourceServlet extends HttpServlet {
 			response.setContentType( blobEntry.getMimeType() );
 			response.setHeader( "ETag", blobEntry.getETag() );
 
-			// If the image width is more than 300px, resizing it to 300px width
-			ImagesService imagesService = ImagesServiceFactory.getImagesService();
-	        Transform resize = ImagesServiceFactory.makeResize( 300, 1000 );
-	        Image oldImage = ImagesServiceFactory.makeImage( blobEntry.getData() );
-	        Image newImage = imagesService.applyTransform( resize, oldImage );
-
 			OutputStream out = response.getOutputStream();
-			out.write( newImage.getImageData() );
+			ServletConfig servletConfig = getServletConfig();
+			String resizeImageParam = servletConfig.getInitParameter( "ResizeImage" );
+			
+			if( resizeImageParam != null ) {
+				ImagesService imagesService = ImagesServiceFactory.getImagesService();
+		        Transform resize = ImagesServiceFactory.makeResize(
+		        		Integer.parseInt( resizeImageParam ), 1000 );
+		        Image oldImage = ImagesServiceFactory.makeImage( blobEntry.getData() );
+		        Image newImage = imagesService.applyTransform( resize, oldImage );
+		        out.write( newImage.getImageData() );
+			
+			} else {
+				out.write( blobEntry.getData() );
+
+			}
+			
 			out.close();
 		}
 	}
