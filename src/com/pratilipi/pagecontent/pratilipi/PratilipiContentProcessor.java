@@ -57,7 +57,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 				System.out.println( user.getFirstName() );
 				userIdNameMap.put(
 						user.getId().toString(),
-						user.getFirstName()+ " " + user.getLastName() );
+						user.getFirstName() + ( user.getLastName() == null ? "" : " " + user.getLastName() ) );
 			}
 		}
 		dataAccessor.destroy();
