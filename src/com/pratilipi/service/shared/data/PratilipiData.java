@@ -30,6 +30,9 @@ public abstract class PratilipiData implements IsSerializable {
 	private Long publicationYear;
 	private boolean hasPublicationYear;
 	
+	private boolean isPublicDomain;
+	private boolean hasPublicDomain;
+	
 	private Date listingDate;
 
 	
@@ -122,6 +125,19 @@ public abstract class PratilipiData implements IsSerializable {
 
 	public void setAuthorName( String authorName ) {
 		this.authorName = authorName;
+	}
+	
+	public boolean getIsPublicDomain() {
+		return isPublicDomain;
+	}
+
+	public void setPublicDomain( boolean isPublicDomain ) {
+		this.isPublicDomain = isPublicDomain;
+		this.hasPublicDomain = true;
+	}
+
+	public boolean hasPublicDomain() {
+		return hasPublicDomain;
 	}
 
 	public Long getPublicationYear() {

@@ -34,6 +34,9 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "AUTHOR_ID" )
 	private Long authorId;
 	
+	@Persistent( column = "ISPUBLICDOMAIN" )
+	private Boolean isPublicDomain;
+	
 	@Persistent( column = "PUBLICATION_YEAR" )
 	private Long publicationYear;
 
@@ -98,7 +101,17 @@ public abstract class PratilipiEntity implements Pratilipi {
 	public void setAuthorId( Long authorId ) {
 		this.authorId = authorId;
 	}
-
+	
+	@Override
+	public boolean getIsPublicDomain() {
+		return this.isPublicDomain == null ? false : this.isPublicDomain;
+	}
+	
+	@Override
+	public void setPublicDomain( boolean isPublicDomain ) {
+		this.isPublicDomain = isPublicDomain;
+	}
+	
 	@Override
 	public Long getPublicationYear() {
 		return publicationYear;

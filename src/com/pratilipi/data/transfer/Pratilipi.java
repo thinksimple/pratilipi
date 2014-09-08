@@ -23,6 +23,10 @@ public interface Pratilipi {
 	Long getAuthorId();
 	
 	void setAuthorId( Long authorId );
+	
+	boolean getIsPublicDomain();
+	
+	void setPublicDomain( boolean isPublicDomain );
 
 	Long getPublicationYear();
 	

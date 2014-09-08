@@ -88,7 +88,8 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	public void setEnabled(boolean enabled) {
 		titleInput.setEnabled( enabled );
 		authorList.setEnabled( enabled );
-		languageList.setEnabled( enabled );		
+		languageList.setEnabled( enabled );	
+		isPublicDomain.setEnabled( enabled );
 	}
 
 	@Override
@@ -97,6 +98,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		pratilipiData.setTitle( titleInput.getText() );
 		pratilipiData.setAuthorId( Long.valueOf(authorList.getValue()) );
 		pratilipiData.setLanguageId( Long.parseLong( languageList.getValue() ) );
+		pratilipiData.setPublicDomain( isPublicDomain.isChecked() );
 		return pratilipiData;
 	}
 
@@ -105,6 +107,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		titleInput.setText( pratilipiData.getTitle() );
 		authorList.setValue( pratilipiData.getAuthorId().toString() );
 		languageList.setValue( pratilipiData.getLanguageId().toString() );
+		isPublicDomain.setChecked( pratilipiData.getIsPublicDomain() );
 	}
 
 }

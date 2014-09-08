@@ -116,6 +116,7 @@ public class PratilipiServiceImpl
 		pratilipi.setLanguageId( pratilipiData.getLanguageId() );
 		pratilipi.setAuthorId( pratilipiData.getAuthorId() );
 		pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
+		pratilipi.setPublicDomain( pratilipiData.getIsPublicDomain() );
 		pratilipi.setSummary( pratilipiData.getSummary() );
 		pratilipi.setWordCount( pratilipiData.getWordCount() );
 
@@ -159,6 +160,8 @@ public class PratilipiServiceImpl
 			pratilipi.setAuthorId( pratilipiData.getAuthorId() );
 		if( pratilipiData.hasPublicationYear() )
 			pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
+		if( pratilipiData.hasPublicDomain() )
+			pratilipi.setPublicDomain( pratilipiData.getIsPublicDomain() );
 		if( pratilipiData.hasSummary() )
 			pratilipi.setSummary( pratilipiData.getSummary() );
 		if( pratilipiData.hasContent() )
@@ -199,6 +202,7 @@ public class PratilipiServiceImpl
 //			bookData.setPublisherId( publisher.getId() );
 //			bookData.setPublisherName( publisher.getName() );
 			pratilipiData.setPublicationDate( pratilipi.getPublicationYear() );
+			pratilipiData.setPublicDomain( pratilipi.getIsPublicDomain() );
 			pratilipiData.setListingDate( pratilipi.getListingDate() );
 			pratilipiData.setSummary( pratilipi.getSummary() );
 			pratilipiData.setWordCount( pratilipi.getWordCount() );
