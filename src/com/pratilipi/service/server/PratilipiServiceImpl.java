@@ -121,6 +121,7 @@ public class PratilipiServiceImpl
 		pratilipi.setPublicDomain( pratilipiData.isPublicDomain() );
 		pratilipi.setSummary( pratilipiData.getSummary() );
 		pratilipi.setWordCount( pratilipiData.getWordCount() );
+		pratilipi.setPageCount( pratilipiData.getPageCount() );
 
 		pratilipi.setType( pratilipiData.getType() );
 		pratilipi.setListingDate( new Date() );
@@ -170,6 +171,8 @@ public class PratilipiServiceImpl
 			pratilipi.setContent( pratilipiData.getContent() );
 		if( pratilipiData.hasWordCount() )
 			pratilipi.setWordCount( pratilipiData.getWordCount() );
+		if( pratilipiData.hasPageCount() )
+			pratilipi.setPageCount( pratilipiData.getPageCount() );
 		
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 		dataAccessor.destroy();
@@ -249,6 +252,8 @@ public class PratilipiServiceImpl
 				pratilipi.setContent( pratilipiData.getContent() );
 			if( pratilipiData.hasWordCount() )
 				pratilipi.setWordCount( pratilipiData.getWordCount() );
+			if( pratilipiData.hasPageCount() )
+				pratilipi.setPageCount( pratilipiData.getPageCount() );
 			
 			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 

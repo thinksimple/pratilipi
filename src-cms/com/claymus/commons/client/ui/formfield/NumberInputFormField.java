@@ -56,11 +56,11 @@ public class NumberInputFormField extends FormField {
 		inputBox.getElement().setAttribute( "placeholder", placeholder );
 	}
 	
-	public long getNumber() {
-		return Long.valueOf( inputBox.getText() );
+	public Long getValue() {
+		return Long.valueOf( inputBox.getText().trim() );
 	}
 	
-	public void setNumber( long number ) {
+	public void setValue( Long number ) {
 		inputBox.setText( Long.toString( number ) );
 	}
 	
@@ -71,13 +71,13 @@ public class NumberInputFormField extends FormField {
 	
 	@Override
 	public boolean validate() {
-		MatchResult matcher = numberExp.exec( inputBox.getText() );
+		MatchResult matcher = numberExp.exec( inputBox.getText().trim() );
 		Boolean matchFound = (matcher != null);
-		if( inputBox.getText() == "" && !isRequired() ) {
+		if( inputBox.getText().trim() == "" && !isRequired() ) {
 			markDefault();
 			return true;
 
-		} else if( inputBox.getText() == "" && !isRequired() ){
+		} else if( inputBox.getText().trim() == "" && !isRequired() ){
 			markError( "Input Required !" );
 			return false;
 		} else if( !matchFound ) {

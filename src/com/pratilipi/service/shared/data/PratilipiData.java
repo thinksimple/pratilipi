@@ -43,6 +43,9 @@ public abstract class PratilipiData implements IsSerializable {
 	private Long wordCount;
 	private boolean hasWordCount;
 	
+	private Long pageCount;
+	private boolean hasPageCount;
+	
 	
 	public Long getId() {
 		return id;
@@ -186,6 +189,19 @@ public abstract class PratilipiData implements IsSerializable {
 	
 	public boolean hasWordCount() {
 		return hasWordCount;
+	}
+	
+	public Long getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount( Long pageCount ) {
+		this.pageCount = pageCount;
+		this.hasPageCount = true;
+	}
+	
+	public boolean hasPageCount() {
+		return hasPageCount;
 	}
 	
 }

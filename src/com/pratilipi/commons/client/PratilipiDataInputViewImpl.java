@@ -87,6 +87,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		validated = titleInput.validate() && validated;
 		validated = authorList.validate() && validated;
 		validated = languageList.validate() && validated;
+		validated = pageCountInput.validate() && validated;
 		return validated;
 	}
 
@@ -95,6 +96,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		titleInput.setEnabled( enabled );
 		authorList.setEnabled( enabled );
 		languageList.setEnabled( enabled );	
+		pageCountInput.setEnabled( enabled );
 		isPublicDomain.setEnabled( enabled );
 	}
 
@@ -102,10 +104,10 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	public PratilipiData getPratilipiData() {
 		PratilipiData pratilipiData = pratilipiType.newPratilipiData();
 		pratilipiData.setId( pratilipiId );
-	
 		pratilipiData.setTitle( titleInput.getText() );
 		pratilipiData.setAuthorId( Long.valueOf(authorList.getValue()) );
 		pratilipiData.setLanguageId( Long.parseLong( languageList.getValue() ) );
+		pratilipiData.setPageCount( pageCountInput.getValue() );
 		pratilipiData.setPublicDomain( isPublicDomain.isChecked() );
 		
 		pratilipiData.setAuthorName( authorList.getValueText() );
@@ -121,6 +123,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		titleInput.setText( pratilipiData.getTitle() );
 		authorList.setValue( pratilipiData.getAuthorId().toString() );
 		languageList.setValue( pratilipiData.getLanguageId().toString() );
+		pageCountInput.setValue( pratilipiData.getPageCount() );
 		isPublicDomain.setChecked( pratilipiData.isPublicDomain() );
 	}
 
@@ -141,6 +144,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		titleInput.setText( null );
 		authorList.setValue( null );
 		languageList.setValue( null );
+		pageCountInput.setValue( null );
 		isPublicDomain.setChecked( false );
 		
 		titleInput.resetValidation();
