@@ -2,6 +2,7 @@ package com.pratilipi.commons.client;
 
 import com.claymus.commons.client.ui.formfield.CheckBoxFormField;
 import com.claymus.commons.client.ui.formfield.ListBoxFormField;
+import com.claymus.commons.client.ui.formfield.NumberInputFormField;
 import com.claymus.commons.client.ui.formfield.TextInputFormField;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -18,7 +19,8 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	
 	private TextInputFormField titleInput = new TextInputFormField();
 	private ListBoxFormField authorList = new ListBoxFormField();
-	private ListBoxFormField languageList = new ListBoxFormField();;
+	private ListBoxFormField languageList = new ListBoxFormField();
+	private NumberInputFormField pageCountInput = new NumberInputFormField();
 	private CheckBoxFormField isPublicDomain = new CheckBoxFormField();
 	private Button addButton = new Button();
 	
@@ -36,6 +38,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	    authorList.setRequired( true );
 	    languageList.addItem( "Select Language", "" );
 	    languageList.setRequired( true );
+	    pageCountInput.setPlaceholder( "Page Count" );
 		isPublicDomain.setText( "Classics" );
 		addButton.setText(  "Add " + pratilipiType.getName() );
 		
@@ -46,6 +49,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		innerPanel.add( titleInput );
 		innerPanel.add( authorList );
 		innerPanel.add( languageList );
+		innerPanel.add( pageCountInput );
 		innerPanel.add( isPublicDomain );
 		innerPanel.add( addButton );
 
