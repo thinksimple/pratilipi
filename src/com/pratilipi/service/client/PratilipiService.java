@@ -34,6 +34,8 @@ import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
+import com.pratilipi.service.shared.SavePratilipiRequest;
+import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 import com.pratilipi.service.shared.UpdatePratilipiRequest;
@@ -46,6 +48,10 @@ public interface PratilipiService extends RemoteService {
 			throws IllegalArgumentException, InsufficientAccessException;
 
 	UpdatePratilipiResponse updatePratilipi( UpdatePratilipiRequest request )
+			throws IllegalArgumentException, InsufficientAccessException;
+
+	SavePratilipiResponse savePratilipi(
+			SavePratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException;
 
 	GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request );

@@ -13,6 +13,7 @@ public abstract class InfiniteScrollPanel extends Composite implements Window.Sc
 
 	private int pagesToPreLoad = 5;
 	private boolean loadingItems = false;
+	private boolean finisedLoading = false;
 
 	
 	public InfiniteScrollPanel() {
@@ -48,7 +49,7 @@ public abstract class InfiniteScrollPanel extends Composite implements Window.Sc
 				// Hidden portion below visible area
 				+ pagesToPreLoad * Window.getClientHeight();
 
-		if( !loadingItems && currentPanelHeight < requiredPanelHeight ) {
+		if( !finisedLoading && !loadingItems && currentPanelHeight < requiredPanelHeight ) {
 			loadingItems = true;
 			loadItems();
 		}
@@ -64,4 +65,8 @@ public abstract class InfiniteScrollPanel extends Composite implements Window.Sc
 		loadingItems = false;
 	}
 	
+	protected void finishedLoading() {
+		finisedLoading = true;
+	}
+
 }

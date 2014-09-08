@@ -1,6 +1,7 @@
 package com.claymus.commons.client.ui;
 
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -13,10 +14,10 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class Accordion extends Composite {
 
-	private Panel panel = new FlowPanel();
+	private final Panel panel = new FlowPanel();
 	
 	private final Panel headingPanel = new SimplePanel();
-	private final Panel collapsePanel = new SimplePanel();
+	private final SimplePanel collapsePanel = new SimplePanel();
 	
 	private final Anchor titleAnchor = new Anchor();
 	private final HeadingElement titleElement = Document.get().createHElement( 4 );
@@ -68,4 +69,20 @@ public class Accordion extends Composite {
 		bodyPanel.add( child );
 	}
 	
+	public void show() {
+		showCollapse( collapsePanel.getElement() );
+	}
+	
+	public void hide() {
+		hideCollapse( collapsePanel.getElement() );
+	}
+	
+	private static native void showCollapse( Element element ) /*-{
+		$wnd.jQuery( element ).collapse( 'show' );
+	}-*/;
+	
+	private static native void hideCollapse( Element element ) /*-{
+		$wnd.jQuery( element ).collapse( 'hide' );
+	}-*/;
+
 }

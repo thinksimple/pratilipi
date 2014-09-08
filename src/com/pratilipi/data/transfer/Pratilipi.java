@@ -12,6 +12,10 @@ public interface Pratilipi {
 	
 	void setType( PratilipiType pratilipiType );
 	
+	boolean isPublicDomain();
+	
+	void setPublicDomain( boolean isPublicDomain );
+
 	String getTitle();
 	
 	void setTitle( String title );
@@ -24,10 +28,6 @@ public interface Pratilipi {
 	
 	void setAuthorId( Long authorId );
 	
-	boolean getIsPublicDomain();
-	
-	void setPublicDomain( boolean isPublicDomain );
-
 	Long getPublicationYear();
 	
 	void setPublicationYear( Long publicationYear );
@@ -51,5 +51,9 @@ public interface Pratilipi {
 	Long getPageCount();
 	
 	void setPageCount( Long pageCount );
+	
+	Date getLastUpdated();
+	
+	void setLastUpdated( Date lastUpdated );
 
 }

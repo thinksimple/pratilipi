@@ -46,18 +46,17 @@ public class ListBoxFormField extends FormField {
 	
 	
 	public void addItem( String item, String value ){
-		listBox.addItem( item, value );
+		listBox.addItem( item, value == null ? "" : value );
 	}
 	
 	public String getValue() {
-		return listBox.getValue( listBox.getSelectedIndex() );
-	}
-	
-	public String getItemText() {
-		return listBox.getItemText( listBox.getSelectedIndex() );
+		String value = listBox.getValue( listBox.getSelectedIndex() ).trim();
+		return value.isEmpty() ? null : value;
 	}
 	
 	public void setValue( String value ) {
+		if( value == null )
+			value = "";
 		int itemCount = listBox.getItemCount();
 		for( int i = 0; i < itemCount; ++i ){
 			if( listBox.getValue( i ).equals( value ) ) {
@@ -73,11 +72,11 @@ public class ListBoxFormField extends FormField {
 	
 	@Override
 	public boolean validate() {
-		if( getValue().isEmpty() && !isRequired() ) {
+		if( getValue() == null && !isRequired() ) {
 			markDefault();
 			return true;
 		
-		} else if( getValue().isEmpty() && isRequired() ) {
+		} else if( getValue() == null && isRequired() ) {
 			markError( "Input Required !" );
 			return false;
 

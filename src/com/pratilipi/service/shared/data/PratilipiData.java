@@ -8,10 +8,11 @@ import com.pratilipi.commons.shared.PratilipiType;
 public abstract class PratilipiData implements IsSerializable {
 
 	private Long id;
-	private boolean hasId;
 	
 	private PratilipiType type;
-	private boolean hasType;
+	
+	private boolean isPublicDomain;
+	private boolean hasPublicDomain;
 	
 	private String title;
 	private boolean hasTitle;
@@ -29,9 +30,6 @@ public abstract class PratilipiData implements IsSerializable {
 	
 	private Long publicationYear;
 	private boolean hasPublicationYear;
-	
-	private boolean isPublicDomain;
-	private boolean hasPublicDomain;
 	
 	private Date listingDate;
 
@@ -52,26 +50,29 @@ public abstract class PratilipiData implements IsSerializable {
 
 	public void setId( Long id ) {
 		this.id = id;
-		this.hasId = true;
 	}
 
-	public boolean hasId() {
-		return hasId;
-	}
-	
 	public PratilipiType getType(){
 		return this.type;
 	}
 	
 	public void setType( PratilipiType type ){
 		this.type = type;
-		this.hasType = true;
 	}
 	
-	public boolean hasPratilipiType(){
-		return this.hasType;
+	public boolean isPublicDomain() {
+		return isPublicDomain;
 	}
-	
+
+	public void setPublicDomain( boolean isPublicDomain ) {
+		this.isPublicDomain = isPublicDomain;
+		this.hasPublicDomain = true;
+	}
+
+	public boolean hasPublicDomain() {
+		return hasPublicDomain;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -127,19 +128,6 @@ public abstract class PratilipiData implements IsSerializable {
 		this.authorName = authorName;
 	}
 	
-	public boolean getIsPublicDomain() {
-		return isPublicDomain;
-	}
-
-	public void setPublicDomain( boolean isPublicDomain ) {
-		this.isPublicDomain = isPublicDomain;
-		this.hasPublicDomain = true;
-	}
-
-	public boolean hasPublicDomain() {
-		return hasPublicDomain;
-	}
-
 	public Long getPublicationYear() {
 		return publicationYear;
 	}

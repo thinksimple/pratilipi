@@ -31,6 +31,8 @@ import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
+import com.pratilipi.service.shared.SavePratilipiRequest;
+import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.UpdateBookRequest;
 import com.pratilipi.service.shared.UpdateBookResponse;
 import com.pratilipi.service.shared.UpdatePratilipiRequest;
@@ -45,6 +47,10 @@ public interface PratilipiServiceAsync {
 	void updatePratilipi(
 			UpdatePratilipiRequest request,
 			AsyncCallback<UpdatePratilipiResponse> callback );
+
+	void savePratilipi(
+			SavePratilipiRequest request,
+			AsyncCallback<SavePratilipiResponse> callback );
 
 	void getPratilipiList(
 			GetPratilipiListRequest request,

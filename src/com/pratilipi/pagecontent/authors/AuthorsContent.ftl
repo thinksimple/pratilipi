@@ -24,7 +24,7 @@
 			<#list authorList as author >
 				<#assign _authorName>
 					${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if>
-					(${ author.getFirstNameEn() }<#if author.getLastNameEn()??>${ author.getLastNameEn() }</#if>)
+					(${ author.getFirstNameEn() }<#if author.getLastNameEn()??> ${ author.getLastNameEn() }</#if>)
 				</#assign>
 				<#assign _authorPenName>
 					<#if author.getPenName()??>${ author.getPenName() } </#if>

@@ -23,4 +23,10 @@ public abstract class PratilipiDataInputView extends Composite {
 
 	public abstract void setPratilipiData( PratilipiData pratilipiData );
 	
+	public abstract PratilipiView getPratilipiView();
+
+	public abstract void setPratilipiView( PratilipiView pratilipiView );
+
+	public abstract void reset();
+
 }

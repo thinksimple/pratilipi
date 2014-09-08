@@ -26,6 +26,8 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	
 	
 	private final PratilipiType pratilipiType;
+	private Long pratilipiId;
+	private PratilipiView pratilipiView;
 	
 	
 	public PratilipiDataInputViewImpl( PratilipiType pratilipiType ) {
@@ -40,7 +42,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	    languageList.setRequired( true );
 	    pageCountInput.setPlaceholder( "Page Count" );
 		isPublicDomain.setText( "Classics" );
-		addButton.setText(  "Add " + pratilipiType.getName() );
+		addButton.setText(  "Save " + pratilipiType.getName() );
 		
 	
 		// Composing the widget
@@ -99,19 +101,46 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	@Override
 	public PratilipiData getPratilipiData() {
 		PratilipiData pratilipiData = pratilipiType.newPratilipiData();
+		pratilipiData.setId( pratilipiId );
+	
 		pratilipiData.setTitle( titleInput.getText() );
 		pratilipiData.setAuthorId( Long.valueOf(authorList.getValue()) );
 		pratilipiData.setLanguageId( Long.parseLong( languageList.getValue() ) );
 		pratilipiData.setPublicDomain( isPublicDomain.isChecked() );
+		
 		return pratilipiData;
 	}
 
 	@Override
 	public void setPratilipiData( PratilipiData pratilipiData ) {
+		pratilipiId = pratilipiData.getId();
+		
 		titleInput.setText( pratilipiData.getTitle() );
 		authorList.setValue( pratilipiData.getAuthorId().toString() );
 		languageList.setValue( pratilipiData.getLanguageId().toString() );
-		isPublicDomain.setChecked( pratilipiData.getIsPublicDomain() );
+		isPublicDomain.setChecked( pratilipiData.isPublicDomain() );
+	}
+
+	@Override
+	public PratilipiView getPratilipiView() {
+		return pratilipiView;
+	}
+
+	@Override
+	public void setPratilipiView( PratilipiView pratilipiView ) {
+		this.pratilipiView = pratilipiView;
+	}
+
+	@Override
+	public void reset() {
+		pratilipiId = null;
+		
+		titleInput.setText( null );
+		authorList.setValue( null );
+		languageList.setValue( null );
+		isPublicDomain.setChecked( false );
+		
+		pratilipiView = null;
 	}
 
 }

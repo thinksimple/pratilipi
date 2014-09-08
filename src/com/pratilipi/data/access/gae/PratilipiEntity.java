@@ -24,6 +24,9 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "PRATILIPI_TYPE" )
 	private PratilipiType type;
 	
+	@Persistent( column = "PUBLIC_DOMAIN" )
+	private Boolean isPublicDomain;
+	
 	@Persistent( column = "TITLE" )
 	private String title;
 	
@@ -33,9 +36,6 @@ public abstract class PratilipiEntity implements Pratilipi {
 	
 	@Persistent( column = "AUTHOR_ID" )
 	private Long authorId;
-	
-	@Persistent( column = "ISPUBLICDOMAIN" )
-	private Boolean isPublicDomain;
 	
 	@Persistent( column = "PUBLICATION_YEAR" )
 	private Long publicationYear;
@@ -56,6 +56,9 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "PAGE_COUNT" )
 	private Long pageCount;
 
+	@Persistent( column = "LAST_UPDATED" )
+	private Date lastUpdated;
+
 	
 	@Override
 	public Long getId() {
@@ -72,6 +75,16 @@ public abstract class PratilipiEntity implements Pratilipi {
 		this.type = pratilipiType;
 	}
 
+	@Override
+	public boolean isPublicDomain() {
+		return isPublicDomain == null ? false : isPublicDomain;
+	}
+	
+	@Override
+	public void setPublicDomain( boolean isPublicDomain ) {
+		this.isPublicDomain = isPublicDomain;
+	}
+	
 	@Override
 	public String getTitle() {
 		return title;
@@ -100,16 +113,6 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Override
 	public void setAuthorId( Long authorId ) {
 		this.authorId = authorId;
-	}
-	
-	@Override
-	public boolean getIsPublicDomain() {
-		return this.isPublicDomain == null ? false : this.isPublicDomain;
-	}
-	
-	@Override
-	public void setPublicDomain( boolean isPublicDomain ) {
-		this.isPublicDomain = isPublicDomain;
 	}
 	
 	@Override
@@ -170,6 +173,16 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Override
 	public void setPageCount( Long pageCount ) {
 		this.pageCount = pageCount;
+	}
+
+	@Override
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+	@Override
+	public void setLastUpdated( Date lastUpdated ) {
+		this.lastUpdated = lastUpdated;
 	}
 
 }
