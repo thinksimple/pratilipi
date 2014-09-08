@@ -37,10 +37,21 @@ public class CheckBoxFormField extends FormField {
 		return checkBox.isChecked();
 	}
 	
+	public void setChecked( boolean checked ) {
+		checkBox.setChecked( checked );
+	}
+	
 	public void setText( String text ) {
 		label.setInnerText( text );
 	}
 	
+	public void setEnabled( boolean enabled ) {
+		if( enabled )
+			checkBox.removeAttribute( "disabled" );
+		else
+			checkBox.setAttribute( "disabled", "disabled" );
+	}
+
 	@Override
 	public boolean validate() {
 		return true;
