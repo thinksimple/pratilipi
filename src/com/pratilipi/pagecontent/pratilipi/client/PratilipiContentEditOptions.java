@@ -14,8 +14,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
-import com.pratilipi.service.shared.UpdatePratilipiRequest;
-import com.pratilipi.service.shared.UpdatePratilipiResponse;
+import com.pratilipi.service.shared.SavePratilipiRequest;
+import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
@@ -115,12 +115,12 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			pratilipiData.setId( pratilipiId );
 			pratilipiData.setSummary( getHtmlFromEditor( "PageContent-Pratilipi-Summary" ) );
 			
-			pratilipiService.updatePratilipi(
-					new UpdatePratilipiRequest( pratilipiData ),
-					new AsyncCallback<UpdatePratilipiResponse>() {
+			pratilipiService.savePratilipi(
+					new SavePratilipiRequest( pratilipiData ),
+					new AsyncCallback<SavePratilipiResponse>() {
 				
 				@Override
-				public void onSuccess( UpdatePratilipiResponse result ) {
+				public void onSuccess( SavePratilipiResponse result ) {
 					Window.Location.reload();
 				}
 				
@@ -149,12 +149,12 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			pratilipiData.setId( pratilipiId );
 			pratilipiData.setContent( getHtmlFromEditor( "PageContent-Pratilipi-Content" ) );
 			
-			pratilipiService.updatePratilipi(
-					new UpdatePratilipiRequest( pratilipiData ),
-					new AsyncCallback<UpdatePratilipiResponse>() {
+			pratilipiService.savePratilipi(
+					new SavePratilipiRequest( pratilipiData ),
+					new AsyncCallback<SavePratilipiResponse>() {
 				
 				@Override
-				public void onSuccess( UpdatePratilipiResponse result ) {
+				public void onSuccess( SavePratilipiResponse result ) {
 					Window.Location.reload();
 				}
 				

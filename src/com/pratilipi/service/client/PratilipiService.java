@@ -6,24 +6,16 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
-import com.pratilipi.service.shared.AddBookRequest;
-import com.pratilipi.service.shared.AddBookResponse;
 import com.pratilipi.service.shared.AddGenreRequest;
 import com.pratilipi.service.shared.AddGenreResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
-import com.pratilipi.service.shared.AddPratilipiRequest;
-import com.pratilipi.service.shared.AddPratilipiResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
 import com.pratilipi.service.shared.AddPublisherResponse;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
 import com.pratilipi.service.shared.AddUserPratilipiResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
-import com.pratilipi.service.shared.GetBookListRequest;
-import com.pratilipi.service.shared.GetBookListResponse;
-import com.pratilipi.service.shared.GetBookRequest;
-import com.pratilipi.service.shared.GetBookResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
@@ -36,36 +28,16 @@ import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
-import com.pratilipi.service.shared.UpdateBookRequest;
-import com.pratilipi.service.shared.UpdateBookResponse;
-import com.pratilipi.service.shared.UpdatePratilipiRequest;
-import com.pratilipi.service.shared.UpdatePratilipiResponse;
 
 @RemoteServiceRelativePath("../service.pratilipi")
 public interface PratilipiService extends RemoteService {
 	
-	AddPratilipiResponse addPratilipi( AddPratilipiRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
-
-	UpdatePratilipiResponse updatePratilipi( UpdatePratilipiRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
-
 	SavePratilipiResponse savePratilipi(
 			SavePratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException;
 
-	GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request );
-	
-
-	AddBookResponse addBook( AddBookRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
-
-	UpdateBookResponse updateBook( UpdateBookRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
-
-	GetBookListResponse getBookList( GetBookListRequest request );
-	
-	GetBookResponse getBookById( GetBookRequest request );
+	GetPratilipiListResponse getPratilipiList(
+			GetPratilipiListRequest request );
 	
 
 	AddLanguageResponse addLanguage( AddLanguageRequest request )

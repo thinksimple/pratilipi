@@ -5,11 +5,13 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
-import com.pratilipi.service.shared.GetBookListRequest;
-import com.pratilipi.service.shared.GetBookListResponse;
+import com.pratilipi.service.shared.GetPratilipiListRequest;
+import com.pratilipi.service.shared.GetPratilipiListResponse;
 import com.pratilipi.service.shared.data.BookData;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 public class BookList implements EntryPoint {
 
@@ -18,14 +20,16 @@ public class BookList implements EntryPoint {
 	
 	public void onModuleLoad() {
 		
-		pratilipiService.getBookList( new GetBookListRequest(), new AsyncCallback<GetBookListResponse>() {
+		pratilipiService.getPratilipiList(
+				new GetPratilipiListRequest( PratilipiType.BOOK, null, 100 ),
+				new AsyncCallback<GetPratilipiListResponse>() {
 			
 			@Override
-			public void onSuccess( GetBookListResponse response ) {
+			public void onSuccess( GetPratilipiListResponse response ) {
 
-				for( BookData bookData : response.getBookList() ) {
+				for( PratilipiData pratilipiData : response.getPratilipiDataList() ) {
 					BookView bookView = new BookViewThumbnailImpl();
-					bookView.setBookData( bookData );
+					bookView.setBookData( (BookData) pratilipiData );
 					RootPanel
 							.get( "PageContent-BookList" )
 							.add( bookView.getThumbnail() );
