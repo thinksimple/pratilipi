@@ -78,6 +78,11 @@ public class TextInputFormField extends FormField {
 		}
 	}
 	
+	@Override
+	public void resetValidation() {
+		markDefault();
+	}
+
 	private void markDefault() {
 		formGroup.setStyleName( "form-group" );
 		glyphicon.setAttribute( "class", "" );

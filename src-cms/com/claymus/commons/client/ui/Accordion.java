@@ -17,7 +17,7 @@ public class Accordion extends Composite {
 	private final Panel panel = new FlowPanel();
 	
 	private final Panel headingPanel = new SimplePanel();
-	private final SimplePanel collapsePanel = new SimplePanel();
+	private final Panel collapsePanel = new SimplePanel();
 	
 	private final Anchor titleAnchor = new Anchor();
 	private final HeadingElement titleElement = Document.get().createHElement( 4 );

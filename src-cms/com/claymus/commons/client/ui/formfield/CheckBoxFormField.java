@@ -57,4 +57,7 @@ public class CheckBoxFormField extends FormField {
 		return true;
 	}
 	
+	@Override
+	public void resetValidation() {}
+	
 }

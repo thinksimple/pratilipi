@@ -6,6 +6,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -128,6 +129,7 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 									@Override
 									public void onClick( ClickEvent event ) {
 										focusPanel.setFocus( true );
+										accordion.setTitle( "Edit " + pratilipiType.getName() );
 										accordion.show();
 										PratilipiData pratilipiData = pratilipiView.getPratilipiData();
 										pratilipiDataInputView.setPratilipiData( pratilipiData );
@@ -180,19 +182,23 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 			}
 
 			@Override
-			public void onSuccess( SavePratilipiResponse result ) {
-				accordion.hide();
-
-				PratilipiView pratilipiView = pratilipiDataInputView.getPratilipiView();
+			public void onSuccess( SavePratilipiResponse response ) {
+				final PratilipiView pratilipiView = pratilipiDataInputView.getPratilipiView();
 				if( pratilipiView == null ) {
-					pratilipiView = new PratilipiViewDetailImpl();
-					RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" ).add( pratilipiView );
+					Window.Location.replace( pratilipiType.getPageUrl() + response.getPratilipiId() );
+				} else {
+					accordion.hide();
+					accordion.setTitle( "Add " + pratilipiType.getName() );
+					new Timer() { // Wait for the accordion to collapse
+						@Override
+						public void run() {
+							pratilipiView.focus();
+							pratilipiView.setPratilipiData( pratilipiData );
+							pratilipiDataInputView.reset();
+							pratilipiDataInputView.setEnabled( true );
+						}
+					}.schedule( 100 );
 				}
-				pratilipiView.focus();
-				pratilipiView.setPratilipiData( pratilipiData );
-
-				pratilipiDataInputView.reset();
-				pratilipiDataInputView.setEnabled( true );
 			}
 			
 		});

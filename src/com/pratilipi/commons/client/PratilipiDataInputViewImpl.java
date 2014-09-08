@@ -108,6 +108,9 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		pratilipiData.setLanguageId( Long.parseLong( languageList.getValue() ) );
 		pratilipiData.setPublicDomain( isPublicDomain.isChecked() );
 		
+		pratilipiData.setAuthorName( authorList.getValueText() );
+		pratilipiData.setLanguageName( languageList.getValueText() );
+		
 		return pratilipiData;
 	}
 
@@ -139,6 +142,11 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		authorList.setValue( null );
 		languageList.setValue( null );
 		isPublicDomain.setChecked( false );
+		
+		titleInput.resetValidation();
+		authorList.resetValidation();
+		languageList.resetValidation();
+		isPublicDomain.resetValidation();
 		
 		pratilipiView = null;
 	}

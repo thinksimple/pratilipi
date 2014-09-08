@@ -66,6 +66,11 @@ public class ListBoxFormField extends FormField {
 		}
 	}
 	
+	public String getValueText() {
+		String value = listBox.getItemText( listBox.getSelectedIndex() ).trim();
+		return value.isEmpty() ? null : value;
+	}
+	
 	public void setEnabled( boolean enabled ) {
 		listBox.setEnabled( enabled );
 	}
@@ -86,6 +91,11 @@ public class ListBoxFormField extends FormField {
 		}
 	}
 	
+	@Override
+	public void resetValidation() {
+		markDefault();
+	}
+
 	private void markDefault() {
 		formGroup.setStyleName( "form-group" );
 		glyphicon.setAttribute( "class", "" );

@@ -17,4 +17,6 @@ public abstract class FormField extends Composite {
 	
 	public abstract boolean validate();
 	
+	public abstract void resetValidation();
+	
 }
