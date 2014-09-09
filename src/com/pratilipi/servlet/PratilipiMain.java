@@ -20,7 +20,6 @@ import com.claymus.module.websitewidget.header.HeaderWidget;
 import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
 import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.commons.shared.PratilipiType;
-import com.pratilipi.module.pagecontent.booklist.BookListFactory;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.genres.GenresContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
@@ -36,8 +35,6 @@ public class PratilipiMain extends ClaymusMain {
 			Logger.getLogger( PratilipiMain.class.getName() );
 
 	static {
-		PAGE_CONTENT_REGISTRY.register( BookListFactory.class );
-		
 		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( GenresContentFactory.class );
@@ -63,7 +60,7 @@ public class PratilipiMain extends ClaymusMain {
 		// Home pages
 		String requestUri = request.getRequestURI();
 		if( requestUri.equals( "/" ) )
-			pageContentList.add( BookListFactory.newBookList() );
+			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/HomePageContent.ftl" ) );
 
 		else if( requestUri.equals( "/books" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK ) );

@@ -16,6 +16,12 @@ public class GetPratilipiListRequest implements IsSerializable {
 	private GetPratilipiListRequest() {}
 
 	public GetPratilipiListRequest(
+			String cursor, int resultCount ) {
+		
+		this( null, cursor, resultCount );
+	}
+
+	public GetPratilipiListRequest(
 			PratilipiType pratilipiType,
 			String cursor, int resultCount ) {
 		

@@ -124,19 +124,20 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 							for( final PratilipiData pratilipiData : response.getPratilipiDataList() ) {
 								final PratilipiView pratilipiView = new PratilipiViewDetailImpl();
 								pratilipiView.setPratilipiData( pratilipiData );
-								pratilipiView.addEditHyperlinkClickHandler( new ClickHandler() {
-									
-									@Override
-									public void onClick( ClickEvent event ) {
-										focusPanel.setFocus( true );
-										accordion.setTitle( "Edit " + pratilipiType.getName() );
-										accordion.show();
-										PratilipiData pratilipiData = pratilipiView.getPratilipiData();
-										pratilipiDataInputView.setPratilipiData( pratilipiData );
-										pratilipiDataInputView.setPratilipiView( pratilipiView );
-									}
-									
-								});
+								if( RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" ) != null)
+									pratilipiView.addEditHyperlinkClickHandler( new ClickHandler() {
+										
+										@Override
+										public void onClick( ClickEvent event ) {
+											focusPanel.setFocus( true );
+											accordion.setTitle( "Edit " + pratilipiType.getName() );
+											accordion.show();
+											PratilipiData pratilipiData = pratilipiView.getPratilipiData();
+											pratilipiDataInputView.setPratilipiData( pratilipiData );
+											pratilipiDataInputView.setPratilipiView( pratilipiView );
+										}
+										
+									});
 								add( pratilipiView );
 							}
 							

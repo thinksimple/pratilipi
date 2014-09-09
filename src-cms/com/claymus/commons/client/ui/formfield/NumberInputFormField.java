@@ -11,15 +11,18 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class NumberInputFormField extends FormField {
+
+	private static final String numberPattern = new String( "^\\d*$" );
+	private static final RegExp numberExp = RegExp.compile( numberPattern );
+	
 	private final Panel formGroup = new FlowPanel();
 	private final Element label = Document.get().createLabelElement();
 	private final TextBox inputBox = new TextBox();
 	private final Element glyphicon = Document.get().createSpanElement();
 	
-	private String numberPattern;
-	private RegExp numberExp;
 	
 	public NumberInputFormField() {
+
 		inputBox.getElement().setAttribute( "type", "text" );
 		inputBox.getElement().setAttribute( "data-container", "body" );
 		inputBox.getElement().setAttribute( "data-placement", "top" );
@@ -44,24 +47,22 @@ public class NumberInputFormField extends FormField {
 		label.setAttribute( "class", "control-label sr-only" );
 		inputBox.setStyleName( "form-control" );
 		
-		//Regular expression to match number pattern
-		this.numberPattern = new String("^\\d*$");
-		this.numberExp = RegExp.compile(numberPattern);
-		
 		
 		initWidget( formGroup );
 	}
 
+	
 	public void setPlaceholder( String placeholder ) {
 		inputBox.getElement().setAttribute( "placeholder", placeholder );
 	}
 	
 	public Long getValue() {
-		return Long.valueOf( inputBox.getText().trim() );
+		return inputBox.getText().trim().isEmpty() ?
+				null : Long.valueOf( inputBox.getText().trim() );
 	}
 	
 	public void setValue( Long number ) {
-		inputBox.setText( Long.toString( number ) );
+		inputBox.setText( number == null ? "" : Long.toString( number ) );
 	}
 	
 	public void setEnabled( boolean enabled ) {
@@ -72,18 +73,21 @@ public class NumberInputFormField extends FormField {
 	@Override
 	public boolean validate() {
 		MatchResult matcher = numberExp.exec( inputBox.getText().trim() );
-		Boolean matchFound = (matcher != null);
-		if( inputBox.getText().trim() == "" && !isRequired() ) {
+		Boolean matchFound = ( matcher != null );
+
+		if( inputBox.getText().trim().isEmpty() && !isRequired() ) {
 			markDefault();
 			return true;
 
-		} else if( inputBox.getText().trim() == "" && !isRequired() ){
+		} else if( inputBox.getText().trim().isEmpty() && !isRequired() ){
 			markError( "Input Required !" );
 			return false;
-		} else if( !matchFound ) {
-			markError( "Not a valid number!" );
-			return true;
-		} else { // if( getDate() != "" ) {
+			
+		} else if( !matchFound ) { // ! inputBox.getText().trim().isEmpty()
+			markError( "Not a valid number !" );
+			return false;
+		
+		} else { // matchFound && inputBox.getText().trim().isEmpty()
 			markSuccess();
 			return true;
 		}

@@ -2,6 +2,12 @@
 
   <!-- Required by PratilipiService.getPratilipiList -->
   <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
+    <property name="_TYPE" direction="asc"/>
+    <property name="TITLE" direction="asc"/>
+  </datastore-index>
+
+  <!-- Required by PratilipiService.getPratilipiList -->
+  <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
     <property name="PRATILIPI_TYPE" direction="asc"/>
     <property name="_TYPE" direction="asc"/>
     <property name="TITLE" direction="asc"/>

@@ -22,8 +22,13 @@ import com.pratilipi.data.transfer.UserPratilipi;
 
 public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
+	Pratilipi getPratilipi( Long id );
+
 	Pratilipi getPratilipi( Long id, PratilipiType type );
 	
+	DataListCursorTuple<Pratilipi> getPratilipiList(
+			String cursorStr, int resultCount );
+
 	DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiType type, String cursorStr, int resultCount );
 
