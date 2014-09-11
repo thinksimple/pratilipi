@@ -4,15 +4,6 @@ import com.claymus.commons.server.ClaymusHelper;
 
 public class DataAccessorFactory {
 	
-	private static final String GOOGLE_CLOUD_STORAGE =
-			"GOOGLE_CLOUD_STORAGE";
-	private static final String GOOGLE_APPENGINE_BLOBSTORE =
-			"GOOGLE_APPENGINE_BLOBSTORE";
-
-	
-	private static final String CLOUD_SERVICE =
-			ClaymusHelper.getSystemProperty( "blobservice" );
-
 	private static final String GOOGLE_CLOUD_STORAGE_BUCKET =
 			ClaymusHelper.getSystemProperty( "blobservice.gcs.bucket" );
 
@@ -25,13 +16,7 @@ public class DataAccessorFactory {
 	
 	public static BlobAccessor getBlobAccessor() {
 		if( blobAccessor == null ) {
-			if( CLOUD_SERVICE.equals( GOOGLE_CLOUD_STORAGE ) )
-				blobAccessor = new BlobAccessorCacheWrapper(
-						new BlobAccessorGcsImpl( GOOGLE_CLOUD_STORAGE_BUCKET ) );
-			
-			else if( CLOUD_SERVICE.equals( GOOGLE_APPENGINE_BLOBSTORE ) )
-				blobAccessor = new BlobAccessorCacheWrapper(
-						new BlobAccessorGaeImpl() );
+			blobAccessor = new BlobAccessorGcsImpl( GOOGLE_CLOUD_STORAGE_BUCKET );
 		}		
 		return blobAccessor;
 	}

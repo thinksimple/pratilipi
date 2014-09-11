@@ -1,6 +1,7 @@
 package com.claymus.data.access;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -16,7 +17,6 @@ public class BlobAccessorCacheWrapper implements BlobAccessor {
 	private static final Logger logger = 
 			Logger.getLogger( BlobAccessorCacheWrapper.class.getName() );
 
-	
 	private final int maxCacheSize = 100 * 1024 * 1024; // 100 MB
 	
 	@SuppressWarnings("serial")
@@ -58,14 +58,48 @@ public class BlobAccessorCacheWrapper implements BlobAccessor {
 	}
 
 	@Override
-	public BlobEntry getBlob( String fileName ) throws IOException {
+	public void createBlob( String fileName, String mimeType, byte[] bytes )
+			throws IOException {
+		
+		blobAccessor.createBlob( fileName, mimeType, bytes );
+		blobEntryCache.remove( fileName );
+	}
+
+	@Override
+	public void createBlob( String fileName, String mimeType, String content, Charset charset )
+			throws IOException {
+		
+		blobAccessor.createBlob( fileName, mimeType, content, charset );
+		blobEntryCache.remove( fileName );
+	}
+
+	@Override
+	public void updateBlob( BlobEntry blobEntry, byte[] bytes )
+			throws IOException {
+
+		blobAccessor.updateBlob( blobEntry, bytes );
+		blobEntryCache.remove( blobEntry.getName() );
+	}
+
+	@Override
+	public void updateBlob( BlobEntry blobEntry, String content, Charset charset )
+			throws IOException {
+
+		blobAccessor.updateBlob( blobEntry, content, charset );
+		blobEntryCache.remove( blobEntry.getName() );
+	}
+
+	@Override
+	public BlobEntry getBlob( String fileName )
+			throws IOException {
+		
 		BlobEntry blobEntry = blobEntryCache.get( fileName );
 		if( blobEntry == null ) {
-			logger.log( Level.INFO, "Cache Miss ! Object Name: " + fileName );
+			logger.log( Level.INFO, "CACHE MISS ! Object Name: " + fileName );
 			blobEntry = blobAccessor.getBlob( fileName );
 			blobEntryCache.put( fileName, blobEntry );
 		} else {
-			logger.log( Level.INFO, "Cache Hit ! Object Name: " + fileName );
+			logger.log( Level.INFO, "CACHE HIT ! Object Name: " + fileName );
 		}
 		return blobEntry;
 	}
@@ -73,6 +107,7 @@ public class BlobAccessorCacheWrapper implements BlobAccessor {
 	@Override
 	public void serveBlob( String fileName, HttpServletResponse response )
 			throws IOException {
+
 		blobAccessor.serveBlob( fileName, response );
 	}
 	

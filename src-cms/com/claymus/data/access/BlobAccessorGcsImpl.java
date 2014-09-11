@@ -3,6 +3,7 @@ package com.claymus.data.access;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +19,7 @@ import com.claymus.data.access.gcs.BlobEntryGcsImpl;
 import com.claymus.data.transfer.BlobEntry;
 import com.google.appengine.tools.cloudstorage.GcsFileMetadata;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
+import com.google.appengine.tools.cloudstorage.GcsFileOptions.Builder;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
 import com.google.appengine.tools.cloudstorage.GcsInputChannel;
 import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
@@ -112,6 +114,59 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 		}
 		
 		return blobCreated;
+	}
+
+	@Override
+	public void createBlob( String fileName, String mimeType, byte[] bytes )
+			throws IOException {
+		
+		GcsFilename gcsFileName
+				= new GcsFilename( bucketName, fileName );
+		
+		Builder builder = new GcsFileOptions.Builder();
+		if( mimeType != null )
+			builder.mimeType( mimeType );
+		GcsFileOptions gcsFileOptions = builder.build();
+		
+		GcsOutputChannel gcsOutputChannel = gcsService
+				.createOrReplace( gcsFileName , gcsFileOptions );
+		
+		gcsOutputChannel.write( ByteBuffer.wrap( bytes ) );
+		gcsOutputChannel.close();
+	}
+
+	@Override
+	public void createBlob( String fileName, String mimeType, String content, Charset charset )
+				throws IOException {
+		
+		createBlob( fileName, mimeType, content.getBytes( charset ) );
+	}
+
+	@Override
+	public void updateBlob( BlobEntry blobEntry, byte[] bytes )
+			throws IOException {
+		
+		GcsFilename gcsFileName
+				= new GcsFilename( bucketName, blobEntry.getName() );
+
+		Builder builder = new GcsFileOptions.Builder();
+		if( blobEntry.getMimeType() != null )
+			builder.mimeType( blobEntry.getMimeType() );
+		GcsFileOptions gcsFileOptions = builder.build();
+
+		GcsOutputChannel gcsOutputChannel = gcsService
+				.createOrReplace( gcsFileName , gcsFileOptions );
+		
+		gcsOutputChannel.write( ByteBuffer.wrap( bytes ) );
+		gcsOutputChannel.close();
+	}
+
+	@Override
+	public void updateBlob(
+			BlobEntry blobEntry, String content, Charset charset )
+					throws IOException {
+		
+		updateBlob( blobEntry, content.getBytes( charset ) );
 	}
 
 	@Override
