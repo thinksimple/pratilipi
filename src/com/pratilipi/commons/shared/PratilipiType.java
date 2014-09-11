@@ -13,21 +13,41 @@ public enum PratilipiType implements IsSerializable {
 			PratilipiHelper.URL_BOOK_PAGE,
 			PratilipiHelper.URL_BOOK_COVER,
 			PratilipiHelper.URL_BOOK_READER,
+			PratilipiHelper.RESOURCE_BOOK_CONTENT,
+			PratilipiHelper.RESOURCE_BOOK_CONTENT_WORD,
+			PratilipiHelper.RESOURCE_BOOK_CONTENT_JPEG,
+			PratilipiHelper.URL_BOOK_CONTENT,
+			PratilipiHelper.URL_BOOK_CONTENT_WORD,
 			PratilipiHelper.URL_BOOK_CONTENT_JPEG ),
 	POEM( "Poem",
 			PratilipiHelper.URL_POEM_PAGE,
 			PratilipiHelper.URL_POEM_COVER,
 			PratilipiHelper.URL_POEM_READER,
+			PratilipiHelper.RESOURCE_POEM_CONTENT,
+			PratilipiHelper.RESOURCE_POEM_CONTENT_WORD,
+			PratilipiHelper.RESOURCE_POEM_CONTENT_JPEG,
+			PratilipiHelper.URL_POEM_CONTENT,
+			PratilipiHelper.URL_POEM_CONTENT_WORD,
 			PratilipiHelper.URL_POEM_CONTENT_JPEG ),
 	STORY( "Story",
 			PratilipiHelper.URL_STORY_PAGE,
 			PratilipiHelper.URL_STORY_COVER,
 			PratilipiHelper.URL_STORY_READER,
+			PratilipiHelper.RESOURCE_STORY_CONTENT,
+			PratilipiHelper.RESOURCE_STORY_CONTENT_WORD,
+			PratilipiHelper.RESOURCE_STORY_CONTENT_JPEG,
+			PratilipiHelper.URL_STORY_CONTENT,
+			PratilipiHelper.URL_STORY_CONTENT_WORD,
 			PratilipiHelper.URL_STORY_CONTENT_JPEG ),
 	ARTICLE( "Article",
 			PratilipiHelper.URL_ARTICLE_PAGE,
 			PratilipiHelper.URL_ARTICLE_COVER,
 			PratilipiHelper.URL_ARTICLE_READER,
+			PratilipiHelper.RESOURCE_ARTICLE_CONTENT,
+			PratilipiHelper.RESOURCE_ARTICLE_CONTENT_WORD,
+			PratilipiHelper.RESOURCE_ARTICLE_CONTENT_JPEG,
+			PratilipiHelper.URL_ARTICLE_CONTENT,
+			PratilipiHelper.URL_ARTICLE_CONTENT_WORD,
 			PratilipiHelper.URL_ARTICLE_CONTENT_JPEG );
 	
 	
@@ -35,16 +55,29 @@ public enum PratilipiType implements IsSerializable {
 	private String pageUrl;
 	private String coverImageUrl;
 	private String readerPageUrl;
+	
+	private String contentResource;
+	private String contentWordResource;
+	private String contentJpegResource;
+	
+	private String contentUrl;
+	private String contentWordUrl;
 	private String contentJpegUrl;
 	
+	
 	private PratilipiType(
-			String name, String pageUrl,
-			String coverImageUrl, String readerPageUrl,
-			String contentJpegUrl ) {
+			String name, String pageUrl, String coverImageUrl, String readerPageUrl,
+			String contentResource, String contentWordResource, String contentJpegResource,
+			String contentUrl, String contentWordUrl, String contentJpegUrl ) {
 		this.name = name;
 		this.pageUrl = pageUrl;
 		this.coverImageUrl = coverImageUrl;
 		this.readerPageUrl = readerPageUrl;
+		this.contentResource = contentResource;
+		this.contentWordResource = contentWordResource;
+		this.contentJpegResource = contentJpegResource;
+		this.contentUrl = contentUrl;
+		this.contentWordUrl = contentWordUrl;
 		this.contentJpegUrl = contentJpegUrl;
 	}
 	
@@ -65,10 +98,33 @@ public enum PratilipiType implements IsSerializable {
 		return readerPageUrl;
 	}
 	
+	
+	public String getContentResource() {
+		return contentResource;
+	}
+	
+	public String getContentJpegResource() {
+		return contentJpegResource;
+	}
+	
+	public String getContentWordResource() {
+		return contentWordResource;
+	}
+	
+	
+	public String getContentUrl() {
+		return contentUrl;
+	}
+	
 	public String getContentJpegUrl() {
 		return contentJpegUrl;
 	}
 	
+	public String getContentWordUrl() {
+		return contentWordUrl;
+	}
+	
+
 	public PratilipiData newPratilipiData() {
 		PratilipiData pratilipiData = null;
 		
