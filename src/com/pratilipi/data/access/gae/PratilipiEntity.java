@@ -55,6 +55,15 @@ public abstract class PratilipiEntity implements Pratilipi {
 
 	@Persistent( column = "PAGE_COUNT" )
 	private Long pageCount;
+	
+	@Persistent( column = "REVIEW_COUNT" )
+	private Long reviewCount;
+	
+	@Persistent( column = "RATING_COUNT" )
+	private Long ratingCount;
+	
+	@Persistent( column = "STAR_COUNT" )
+	private Long starCount;
 
 	@Persistent( column = "LAST_UPDATED" )
 	private Date lastUpdated;
@@ -174,7 +183,37 @@ public abstract class PratilipiEntity implements Pratilipi {
 	public void setPageCount( Long pageCount ) {
 		this.pageCount = pageCount;
 	}
+	
+	@Override
+	public Long getReviewCount() {
+		return reviewCount;
+	}
 
+	@Override
+	public void setReviewCount( Long reviewCount ) {
+		this.reviewCount = reviewCount;
+	}
+
+	@Override
+	public Long getRatingCount() {
+		return ratingCount;
+	}
+
+	@Override
+	public void setRatingCount( Long ratingCount ) {
+		this.ratingCount = ratingCount;
+	}
+	
+	@Override
+	public Long getStarCount() {
+		return starCount;
+	}
+
+	@Override
+	public void setStarCount( Long starCount ) {
+		this.starCount = starCount;
+	}
+	
 	@Override
 	public Date getLastUpdated() {
 		return lastUpdated;

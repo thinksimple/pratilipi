@@ -52,6 +52,18 @@ public interface Pratilipi {
 	
 	void setPageCount( Long pageCount );
 	
+	Long getReviewCount();
+	
+	void setReviewCount( Long reviewCount );
+	
+	Long getRatingCount();
+	
+	void setRatingCount( Long ratingCount );
+	
+	Long getStarCount();
+	
+	void setStarCount( Long starCount );
+	
 	Date getLastUpdated();
 	
 	void setLastUpdated( Date lastUpdated );
