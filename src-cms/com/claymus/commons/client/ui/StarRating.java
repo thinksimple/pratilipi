@@ -13,41 +13,30 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Image;
 
-public class StarRating extends Composite implements HasValue<Integer> {
+public class StarRating extends Composite implements HasValue<Long> {
 
     private FlowPanel mainPanel = new FlowPanel();
     private Image[] stars;
     
-    private int rating = 0;
+    private Long rating = 0L;
     private int rating_max = 5;
     private int hover_index = 0;
     private boolean read_only = false;     
     private String star_selected_path = "images/selected_blue.png";
     private String star_unselected_path = "images/unselected.png";
     private String star_hover_path = "images/hover_blue.png";
-    private String clear_path = "images/clear.png";
     
-    /**
-     * Star rating widget
-     */
+    //Default Constructor
     public StarRating() {
-        this(0, 5, false);
+        this(0L, 5, false);
     }
     
-    /**
-     * Star rating widget
-     * @param read_only
-     */
-    public StarRating(boolean read_only){
-        this(0, 5, read_only);
+    public StarRating(Long rating, boolean read_only){
+        this( rating, 5, read_only );
         
     }
     
-    public StarRating(int rating, int rating_max){
-        this(rating, rating_max, false);
-    }
-    
-    public StarRating(int rating, int rating_max, boolean read_only){
+    public StarRating(Long rating, int rating_max, boolean read_only){
     	stars = new Image[ rating_max ];
     	for( int i=0; i< rating_max; i++)
         	stars[i] = new Image();
@@ -62,7 +51,6 @@ public class StarRating extends Composite implements HasValue<Integer> {
         Image.prefetch(this.getStarSelectedPath());
         Image.prefetch(this.getStarUnselectedPath());
         Image.prefetch(this.getStarHoverPath());
-        Image.prefetch(this.getClearPath());
         
         //Initialize
         initWidget(mainPanel); 
@@ -101,7 +89,7 @@ public class StarRating extends Composite implements HasValue<Integer> {
     }
     
    //Returns images paths
-    private String getImagePath(int index) {
+    private String getImagePath( int index ) {
         String path = "";
         
         if (index >= this.getHoverIndex()) {
@@ -120,12 +108,12 @@ public class StarRating extends Composite implements HasValue<Integer> {
     }
 
     //Sets rating
-    public void setRating(int rating) {
+    public void setRating(Long rating) {
         this.rating = rating;
     }
 
     //returns rating
-    public int getRating() {
+    public Long getRating() {
         return rating;
     }
 
@@ -150,7 +138,7 @@ public class StarRating extends Composite implements HasValue<Integer> {
     }
 
     //Sets rating panel read only
-    public void setReadOnly(boolean read_only) {
+    public void setReadOnly( boolean read_only ) {
         this.read_only = read_only;
     }
 
@@ -180,14 +168,6 @@ public class StarRating extends Composite implements HasValue<Integer> {
 
     public String getStarHoverPath() {
         return star_hover_path;
-    }
-
-    public void setClearPath(String clear_path) {
-        this.clear_path = clear_path;
-    }
-
-    public String getClearPath() {
-        return clear_path;
     }
 
     //Mouse Over Handler
@@ -223,23 +203,23 @@ public class StarRating extends Composite implements HasValue<Integer> {
     /**
      * Adds a ValueChangehandler
      */
-    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<Integer> handler) {
+    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<Long> handler) {
         return addHandler(handler, ValueChangeEvent.getType());
     }
 
     //returns rating value
-    public Integer getValue() {
+    public Long getValue() {
         return this.getRating();
     }
 
     //sets rating value
-    public void setValue(Integer value) {
+    public void setValue(Long value) {
         this.setRating(value);
         this.setStarImages();
     }
 
     //sets rating and fire value change event.
-    public void setValue(Integer value, boolean fireEvents) {
+    public void setValue(Long value, boolean fireEvents) {
         this.setValue(value);
         if (fireEvents)
             ValueChangeEvent.fire(this, value);

@@ -46,6 +46,12 @@ public abstract class PratilipiData implements IsSerializable {
 	private Long pageCount;
 	private boolean hasPageCount;
 	
+	private Long reviewCount;
+	
+	private Long ratingCount;
+	
+	private Long starCount;
+	
 	
 	public Long getId() {
 		return id;
@@ -202,6 +208,30 @@ public abstract class PratilipiData implements IsSerializable {
 	
 	public boolean hasPageCount() {
 		return hasPageCount;
+	}
+	
+	public Long getReviewCount() {
+		return reviewCount;
+	}
+
+	public void setReviewCount(Long reviewCount) {
+		//this.reviewCount = reviewCount;
+	}
+
+	public Long getRatingCount() {
+		return ratingCount;
+	}
+
+	public void setRatingCount(Long ratingCount) {
+		//this.ratingCount = ratingCount;
+	}
+
+	public Long getStarCount() {
+		return starCount;
+	}
+
+	public void setStarCount(Long starCount) {
+		//this.starCount = starCount;
 	}
 	
 }

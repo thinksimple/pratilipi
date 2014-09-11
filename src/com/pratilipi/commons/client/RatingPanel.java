@@ -41,8 +41,8 @@ public class RatingPanel extends Composite {
 		initWidget( flowPanel );	
 	}
 	
-	public RatingPanel(boolean isReadOnly){
-		stars  = new StarRating(isReadOnly);
+	public RatingPanel( Long rating, boolean isReadOnly ){
+		stars  = new StarRating( rating, isReadOnly);
 		FlowPanel flowPanel = new FlowPanel();
 		
 		bookId = Window.Location.getHref()
@@ -67,7 +67,7 @@ public class RatingPanel extends Composite {
 				if (!stars.isReadOnly()) {
 		            final Image image = (Image)event.getSource();
 		            if( stars.getHoverIndex() == stars.getRating() ){
-		            	stars.setValue(0, true);
+		            	stars.setValue(0L, true);
 		            }
 		            else {
 		                userPratilipi.setPratilipiId( Long.valueOf( bookId ) );
@@ -81,7 +81,7 @@ public class RatingPanel extends Composite {
 
 							@Override
 							public void onSuccess(AddUserPratilipiResponse result) {
-								stars.setValue(Integer.parseInt(image.getTitle()), true);
+								stars.setValue(Long.parseLong(image.getTitle()), true);
 								Window.alert( "Rated Successfully!" );
 							}});
 		            }
@@ -117,10 +117,6 @@ public class RatingPanel extends Composite {
 			}
 		};
 		return starMouseOutHandler;
-	}
-	
-	public Long getRating(){
-		return 0L;
 	}
 
 }
