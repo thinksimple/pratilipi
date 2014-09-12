@@ -25,6 +25,8 @@ import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
 import com.pratilipi.service.shared.SavePratilipiContentRequest;
 import com.pratilipi.service.shared.SavePratilipiContentResponse;
+import com.pratilipi.service.shared.SaveAuthorRequest;
+import com.pratilipi.service.shared.SaveAuthorResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 
@@ -56,6 +58,10 @@ public interface PratilipiServiceAsync {
 	void addAuthor(
 			AddAuthorRequest request,
 			AsyncCallback<AddAuthorResponse> callback );
+	
+	void saveAuthor(
+			SaveAuthorRequest request,
+			AsyncCallback<SaveAuthorResponse> callback );
 
 	void getAuthorList(
 			GetAuthorListRequest request,

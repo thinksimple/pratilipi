@@ -28,11 +28,14 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
 	DataListCursorTuple<Pratilipi> getPratilipiList(
 			String cursorStr, int resultCount );
-
+	
 	DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiType type, String cursorStr, int resultCount );
 
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
+	
+	DataListCursorTuple<Pratilipi> getPratilipiListByAuthor( 
+			Long authorId, PratilipiType type, String cursorStr, int resultCount );
 
 
 	Book newBook();
@@ -114,7 +117,7 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	UserPratilipi getUserPratilipi(Long userId, Long bookId);
 
 	List<UserPratilipi> getUserPratilipiList( Long bookId );
-
+	
 	UserPratilipi createOrUpdateUserBook( UserPratilipi userBook );
 
 }

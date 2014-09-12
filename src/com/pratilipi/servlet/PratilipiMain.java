@@ -19,7 +19,9 @@ import com.claymus.module.websitewidget.footer.FooterWidgetFactory;
 import com.claymus.module.websitewidget.header.HeaderWidget;
 import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
 import com.claymus.servlet.ClaymusMain;
+import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.pagecontent.author.AuthorContentFactory;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.genres.GenresContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
@@ -35,6 +37,7 @@ public class PratilipiMain extends ClaymusMain {
 			Logger.getLogger( PratilipiMain.class.getName() );
 
 	static {
+		PAGE_CONTENT_REGISTRY.register( AuthorContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( GenresContentFactory.class );
@@ -83,7 +86,7 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/genres" ) )
 			pageContentList.add( GenresContentFactory.newGenresContent() );
 
-
+		
 		// Individual item's pages
 		else if( requestUri.startsWith( PratilipiType.BOOK.getPageUrl() ) )
 			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiType.BOOK.getPageUrl().length() ) ), PratilipiType.BOOK ) );
@@ -96,6 +99,9 @@ public class PratilipiMain extends ClaymusMain {
 
 		else if( requestUri.startsWith( PratilipiType.ARTICLE.getPageUrl() ) )
 			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiType.ARTICLE.getPageUrl().length() ) ), PratilipiType.ARTICLE ) );
+
+		else if( requestUri.startsWith( PratilipiHelper.URL_AUTHOR_PAGE ) )
+			pageContentList.add( AuthorContentFactory.newAuthorContent( Long.parseLong( requestUri.substring( PratilipiHelper.URL_AUTHOR_PAGE.length() ) ) ) );
 
 		
 		// Individual item's readers

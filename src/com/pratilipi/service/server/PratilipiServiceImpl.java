@@ -58,6 +58,8 @@ import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
 import com.pratilipi.service.shared.SavePratilipiContentRequest;
 import com.pratilipi.service.shared.SavePratilipiContentResponse;
+import com.pratilipi.service.shared.SaveAuthorRequest;
+import com.pratilipi.service.shared.SaveAuthorResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.data.AuthorData;
@@ -391,6 +393,55 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		dataAccessor.destroy();
 		
 		return new AddAuthorResponse( author.getId() );
+	}
+	
+	@Override
+	public SaveAuthorResponse saveAuthor(SaveAuthorRequest request)
+			throws IllegalArgumentException, InsufficientAccessException {
+		
+		AuthorData authorData = request.getAuthor();
+		
+		ClaymusHelper claymusHelper =
+				new ClaymusHelper( this.getThreadLocalRequest() );
+		
+		if( ! claymusHelper.hasUserAccess( AuthorsContentProcessor.ACCESS_ID_AUTHOR_ADD, false ) )
+			throw new InsufficientAccessException();
+
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = null;
+		
+		if( authorData.getId() != null)
+			author = dataAccessor.getAuthor( authorData.getId() );
+		else
+			author = dataAccessor.newAuthor();
+
+		if( authorData.hasLanguageId() )
+			author.setLanguageId( authorData.getLanguageId() );
+		if( authorData.hasFirstName() )
+			author.setFirstName( authorData.getFirstName() );
+		if( authorData.hasLastName() )
+			author.setLastName( authorData.getLastName() );
+		if( authorData.hasFirstNameEn() )
+			author.setFirstNameEn( authorData.getFirstNameEn() );
+		if( authorData.hasLastNameEn() )
+			author.setLastNameEn( authorData.getLastNameEn() );
+		if( authorData.hasPenName() )
+			author.setPenName( authorData.getPenName() );
+		if( authorData.hasPenNameEn() )
+			author.setPenNameEn( authorData.getPenNameEn() );
+		if( authorData.hasSummary() )
+			author.setSummary( authorData.getSummary() );
+		if( authorData.hasEmail() )
+			author.setEmail( authorData.getEmail().toLowerCase() );
+		
+		author.setRegistrationDate( new Date() );
+
+		author = dataAccessor.createOrUpdateAuthor( author );
+		dataAccessor.destroy();
+		
+		return new SaveAuthorResponse( author.getId() );
+		
 	}
 
 	@Override

@@ -67,6 +67,47 @@ public class DataAccessorGaeImpl
 		
 		return null;
 	}
+	
+	@Override
+	public DataListCursorTuple<Pratilipi> getPratilipiListByAuthor( 
+			Long authorId, PratilipiType type, String cursorStr, int resultCount  ) {
+		Query query = null;
+		
+		if( type == PratilipiType.BOOK )
+			query = pm.newQuery( BookEntity.class );
+		
+		else if( type == PratilipiType.POEM )
+			query = pm.newQuery( PoemEntity.class );
+
+		else if( type == PratilipiType.STORY )
+			query = pm.newQuery( StoryEntity.class );
+
+		else if( type == PratilipiType.ARTICLE )
+			query = pm.newQuery( ArticleEntity.class );
+		
+		query = new GaeQueryBuilder( query )
+						.addFilter( "type", type )
+						.addFilter( "authorId", authorId )
+						.addOrdering( "title", true )
+						.setRange( 0, resultCount )
+						.build();
+
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions(extensionMap);
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<Pratilipi> pratilipiEntityList = (List<Pratilipi>) query.execute( type, authorId );
+		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
+		
+		return new DataListCursorTuple<Pratilipi>(
+				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
+				cursor == null ? null : cursor.toWebSafeString() );
+		
+	}
 
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
@@ -392,5 +433,5 @@ public class DataAccessorGaeImpl
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
 		return createOrUpdateEntity( userPratilipi );
 	}
-	
+
 }

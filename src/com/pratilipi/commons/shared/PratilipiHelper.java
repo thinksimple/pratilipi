@@ -19,6 +19,7 @@ public class PratilipiHelper {
 
 	
 	public static final String URL_AUTHOR_PAGE = "/author/";
+	public static final String URL_AUTHOR_IMAGE = "/resource.author-image/original/";
 
 	public static final String URL_LANGUAGE_PAGE = "/language/";
 

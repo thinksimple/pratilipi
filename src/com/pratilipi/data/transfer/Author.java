@@ -38,6 +38,10 @@ public interface Author {
 	
 	void setPenNameEn( String penNameEn );
 	
+	String getSummary();
+	
+	void setSummary( String summary );
+	
 	String getEmail();
 	
 	void setEmail( String email );

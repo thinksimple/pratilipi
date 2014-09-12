@@ -40,6 +40,9 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "PEN_NAME_EN" )
 	private String penNameEn;
 	
+	@Persistent( column = "SUMMARY" )
+	private String summary;
+	
 	@Persistent( column = "EMAIL" )
 	private String email;
 
@@ -133,10 +136,20 @@ public class AuthorEntity implements Author {
 	}
 
 	@Override
+	public String getSummary() {
+		return this.summary;
+	}
+
+	@Override
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+	
+	@Override
 	public String getEmail() {
 		return email;
 	}
-
+	
 	@Override
 	public void setEmail( String email ) {
 		this.email = email;
