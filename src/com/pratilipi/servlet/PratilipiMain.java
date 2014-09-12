@@ -102,6 +102,15 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.startsWith( PratilipiType.BOOK.getReaderPageUrl() ) )
 			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.BOOK ) );
 
+		else if( requestUri.startsWith( PratilipiType.POEM.getReaderPageUrl() ) )
+			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.POEM ) );
+		
+		else if( requestUri.startsWith( PratilipiType.STORY.getReaderPageUrl() ) )
+			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.STORY ) );
+		
+		else if( requestUri.startsWith( PratilipiType.ARTICLE.getReaderPageUrl() ) )
+			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.ARTICLE ) );
+
 		
 		// Static pages
 		// Migrate these PageContents to DataStore

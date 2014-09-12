@@ -120,7 +120,7 @@ public class ClaymusMain extends HttpServlet {
 			PrintWriter out,
 			HttpServletRequest request,
 			HttpServletResponse response
-			) {
+			) throws IOException {
 
 		Map<String, List<String>> websiteWidgetHtmlListMap = new HashMap<>();
 		for( WebsiteWidget websiteWidget : websiteWidgetList ) {

@@ -5,13 +5,14 @@
 /war/WEB-INF/classes
 /war/WEB-INF/deploy
 /war/WEB-INF/lib
+/war/WEB-INF/PratilipiDevo-a987225aa0b1.p12
 /war/pagecontent.pratilipi
 /war/pagecontent.pratilipi.edit
 /war/pagecontent.pratilipis
-/war/pagecontent.languages
+/war/pagecontent.reader
 /war/pagecontent.authors
+/war/pagecontent.languages
 /war/pagecontent.genres
-/war/pagecontent.booklist
 /war/pagecontent.managepublishers
 /war/pagecontent.homepagecontent
 /war/pagecontent.invitepage
