@@ -28,6 +28,10 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	private final FileUpload coverImageUpload = new FileUpload();
 	
 	
+	// Word content edit options widgets
+	private final FileUpload wordContentUpload = new FileUpload();
+
+	
 	// Summary edit options widgets
 	private final Anchor editSummaryAnchor = new Anchor( "Edit Summary" );
 	private final Anchor saveSummaryAnchor = new Anchor( "Save Summary" );
@@ -64,6 +68,17 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			loadFileUploader( coverImageUpload.getElement() );
 
 			rootPanel.add( coverImageUpload );
+		}
+		
+		
+		// Word content edit options
+		rootPanel = RootPanel.get( "PageContent-Pratilipi-WordContent-EditOptions" );
+		if( rootPanel != null ) {
+			String uploadUrl = pratilipiType.getContentWordUrl() + pratilipiIdStr;
+			wordContentUpload.getElement().setAttribute( "data-url", uploadUrl );
+			loadFileUploader( wordContentUpload.getElement() );
+
+			rootPanel.add( wordContentUpload );
 		}
 		
 		

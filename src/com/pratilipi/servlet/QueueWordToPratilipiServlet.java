@@ -75,7 +75,7 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 		BlobEntry blobEntry = blobAccessor.getBlob( fileName );
 
 
-		// Uploading word content to GDrive
+		// Uploading word content to Drive
 		File file = new File();
 		ByteArrayContent mediaContent = new ByteArrayContent(
 				blobEntry.getMimeType(), blobEntry.getData() );
@@ -86,7 +86,7 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 				+ "\tMimeType: " + file.getMimeType() );
 		
 		
-		// Downloading exported html content from GDrive
+		// Downloading exported html content from Drive
 		GenericUrl url = new GenericUrl(file.getExportLinks().get( "text/html" ));
 		HttpResponse resp = driveService.getRequestFactory().buildGetRequest( url ).execute();
 		InputStream inputStream = resp.getContent();
@@ -95,6 +95,10 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 		String html = writer.toString();
 		logger.log( Level.INFO, "Raw content length: " + html.length() );
 
+		
+		// Deleting word content on Drive
+		driveService.files().delete( file.getId() ).execute();
+		
 		
 		// Processing html content to Pratilipi content
 		String regEx = "(.*?<body\\s.*?>)(.*?)(</body>.*?)";
@@ -115,7 +119,7 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 	}
 	
 
-	private Drive getDriveService() {
+	private Drive getDriveService() throws IOException {
 		try {
 			HttpTransport httpTransport = new NetHttpTransport();
 			JacksonFactory jsonFactory = new JacksonFactory();
@@ -132,7 +136,7 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 			
 			return new Drive.Builder( httpTransport, jsonFactory, null )
 					.setHttpRequestInitializer(credential).build();
-		} catch ( GeneralSecurityException | IOException e ) {
+		} catch ( GeneralSecurityException e ) {
 			logger.log( Level.SEVERE, "Failed to create credentials for Google Drive access !", e );
 			return null;
 		}

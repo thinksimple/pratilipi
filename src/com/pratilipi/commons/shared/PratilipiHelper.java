@@ -1,9 +1,17 @@
 package com.pratilipi.commons.shared;
 
+import java.util.regex.Pattern;
+
 import com.claymus.commons.server.ClaymusHelper;
 
 public class PratilipiHelper {
 
+	public static final Pattern REGEX_PAGE_BREAK = Pattern.compile(
+			"(<hr\\s+style=\"page-break-(before|after).+?>)"
+			+ "|"
+			+ "(<div\\s+style=\"page-break-(before|after).+?>(.+?)</div>)" );
+	
+	
 	public static final String URL_RESOURCE = ClaymusHelper.URL_RESOURCE;
 
 	

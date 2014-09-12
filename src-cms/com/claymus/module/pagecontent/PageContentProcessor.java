@@ -29,7 +29,7 @@ public abstract class PageContentProcessor<T extends PageContent> {
 	
 	public String getHtml( T pageContent,
 			HttpServletRequest request,
-			HttpServletResponse response ) {
+			HttpServletResponse response ) throws IOException {
 		
 		return getHtml( pageContent );
 		
