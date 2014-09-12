@@ -23,6 +23,8 @@ import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
+import com.pratilipi.service.shared.SavePratilipiContentRequest;
+import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 
@@ -35,6 +37,11 @@ public interface PratilipiServiceAsync {
 	void getPratilipiList(
 			GetPratilipiListRequest request,
 			AsyncCallback<GetPratilipiListResponse> callback );
+
+	
+	void savePratilipiContent(
+			SavePratilipiContentRequest request,
+			AsyncCallback<SavePratilipiContentResponse> callback );
 
 	
 	void addLanguage(
@@ -69,7 +76,7 @@ public interface PratilipiServiceAsync {
 			AsyncCallback<AddGenreResponse> callback );
 
 
-	void addUserPratilipi( 
+	void addUserPratilipi(
 			AddUserPratilipiRequest request,
 			AsyncCallback<AddUserPratilipiResponse> callback );
 	

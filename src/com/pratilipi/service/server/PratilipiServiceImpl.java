@@ -1,15 +1,24 @@
 package com.pratilipi.service.server;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
 
 import com.claymus.commons.client.IllegalArgumentException;
 import com.claymus.commons.client.InsufficientAccessException;
+import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.access.DataListCursorTuple;
+import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.User;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -47,21 +56,27 @@ import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
+import com.pratilipi.service.shared.SavePratilipiContentRequest;
+import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.GenreData;
 import com.pratilipi.service.shared.data.LanguageData;
+import com.pratilipi.service.shared.data.PratilipiContentData;
 import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.service.shared.data.PublisherData;
 import com.pratilipi.service.shared.data.UserPratilipiData;
 
 @SuppressWarnings("serial")
-public class PratilipiServiceImpl
-		extends RemoteServiceServlet
+public class PratilipiServiceImpl extends RemoteServiceServlet
 		implements PratilipiService {
 
+	private static final Logger logger =
+			Logger.getLogger( PratilipiServiceImpl.class.getName() );
+
+	
 	@Override
 	public SavePratilipiResponse savePratilipi( SavePratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
@@ -186,6 +201,96 @@ public class PratilipiServiceImpl
 		return new GetPratilipiListResponse( pratilipiDataList, pratilipiListCursorTuple.getCursor() );
 	}
 
+
+	@Override
+	public SavePratilipiContentResponse savePratilipiContent(
+			SavePratilipiContentRequest request )
+			throws IllegalArgumentException,
+					InsufficientAccessException,
+					UnexpectedServerException {
+	
+		ClaymusHelper claymusHelper = new ClaymusHelper( this.getThreadLocalRequest() );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		PratilipiContentData pratilipiContentData = request.getPratilipiContentData();
+		Pratilipi pratilipi =  dataAccessor.getPratilipi(
+				pratilipiContentData.getPratilipiId(),
+				pratilipiContentData.getPratilipiType() );
+				
+		try {
+			if ( ( claymusHelper.getCurrentUserId() == pratilipi.getAuthorId()
+					&& ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
+					|| ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
+				throw new InsufficientAccessException();
+			
+			pratilipi.setLastUpdated( new Date() );
+			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+
+		} finally {
+			dataAccessor.destroy();
+		}
+		
+		
+		// Fetching Pratilipi content from Blob Store
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		String fileName =
+				pratilipiContentData.getPratilipiType().getContentResource()
+				+ pratilipiContentData.getPratilipiId();
+		BlobEntry blobEntry;
+		try {
+			blobEntry = blobAccessor.getBlob( fileName );
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch blob: " + fileName, e );
+			throw new UnexpectedServerException();
+		}
+		String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+
+		
+		logger.log( Level.INFO, "Content length: " + content.length() );
+		logger.log( Level.INFO, "New page " + pratilipiContentData.getPageNo()
+				+ " length: " + pratilipiContentData.getContent().length() );
+		
+		// Update page
+		Matcher matcher =  PratilipiHelper.REGEX_PAGE_BREAK.matcher( content );	
+		int pageCount = 1;
+		int startIndex = 0;
+		int endIndex = 0;
+		while( pageCount <= pratilipiContentData.getPageNo() ) {
+			startIndex = endIndex;
+			if( matcher.find() )
+				endIndex = matcher.end();
+			else
+				endIndex = content.length();
+
+			System.out.println( "Page " + pageCount + " length: "
+					+ ( endIndex - startIndex )
+					+ " (" + startIndex + " - " + endIndex + ") "
+					+ matcher.group() );
+
+			if( pageCount == pratilipiContentData.getPageNo() ) {
+				logger.log( Level.INFO, "Updating page " + pageCount + "..." );
+				content = content.substring( 0, startIndex )
+						+ pratilipiContentData.getContent()
+						+ content.substring( endIndex );
+			}
+
+			pageCount++;
+		}
+		
+		
+		logger.log( Level.INFO, "New content length " + content.length() );
+		
+		
+		try {
+			blobAccessor.updateBlob( blobEntry, content, Charset.forName( "UTF-8" ) );
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to update blob: " + fileName, e );
+			throw new UnexpectedServerException();
+		}
+		
+		return new SavePratilipiContentResponse();
+	}
+	
 	
 	@Override
 	public AddLanguageResponse addLanguage( AddLanguageRequest request )

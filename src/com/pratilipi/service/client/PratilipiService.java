@@ -2,6 +2,7 @@ package com.pratilipi.service.client;
 
 import com.claymus.commons.client.IllegalArgumentException;
 import com.claymus.commons.client.InsufficientAccessException;
+import com.claymus.commons.client.UnexpectedServerException;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.pratilipi.service.shared.AddAuthorRequest;
@@ -26,6 +27,8 @@ import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
+import com.pratilipi.service.shared.SavePratilipiContentRequest;
+import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 
@@ -39,6 +42,12 @@ public interface PratilipiService extends RemoteService {
 	GetPratilipiListResponse getPratilipiList(
 			GetPratilipiListRequest request );
 	
+
+	SavePratilipiContentResponse savePratilipiContent(
+			SavePratilipiContentRequest request )
+			throws IllegalArgumentException, InsufficientAccessException,
+					UnexpectedServerException;
+
 
 	AddLanguageResponse addLanguage( AddLanguageRequest request )
 			throws IllegalArgumentException, InsufficientAccessException;
