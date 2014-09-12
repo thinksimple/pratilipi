@@ -27,7 +27,7 @@
   <!-- Handler for uploading and serving website resources -->
 
   <servlet>
-    <servlet-name>CoverImageResourceServlet</servlet-name>
+    <servlet-name>BookCoverResourceServlet</servlet-name>
     <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
     <init-param>
       <param-name>ResizeImage</param-name>
@@ -35,11 +35,24 @@
     </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CoverImageResourceServlet</servlet-name>
-    <url-pattern>/resource.book-cover/*</url-pattern>
-    <url-pattern>/resource.poem-cover/*</url-pattern>
-    <url-pattern>/resource.story-cover/*</url-pattern>
-    <url-pattern>/resource.article-cover/*</url-pattern>
+    <servlet-name>BookCoverResourceServlet</servlet-name>
+    <url-pattern>/resource.book-cover/original/*</url-pattern>
+    <url-pattern>/resource.poem-cover/original/*</url-pattern>
+    <url-pattern>/resource.story-cover/original/*</url-pattern>
+    <url-pattern>/resource.article-cover/original/*</url-pattern>
+  </servlet-mapping>
+   
+  <servlet>
+    <servlet-name>AuthorImageResourceServlet</servlet-name>
+    <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
+    <init-param>
+      <param-name>ResizeImage</param-name>
+      <param-value>300</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthorImageResourceServlet</servlet-name>
+    <url-pattern>/resource.author-image/original/*</url-pattern>
   </servlet-mapping>
    
   <servlet>
