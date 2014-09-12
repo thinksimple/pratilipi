@@ -45,7 +45,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		int pageNo = Integer.parseInt( pageNoStr );
 		
 
-		long pageCount = 1;
+		long pageCount = 0;
 		String pageContent = "";
 		if( readerType.equals( "jpeg" ) ) {
 			
@@ -64,7 +64,6 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 			BlobEntry blobEntry = blobAccessor.getBlob( pratilipiType.getContentResource() + pratilipiIdStr );
 
-			// Hack to copy Pratilipi content from Data Store to Blob Store
 			// TODO: Remove this as soon as possible
 			if( blobEntry == null ) {
 				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -72,14 +71,23 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 						pratilipiId, pratilipiContent.getPratilipiType() );
 				dataAccessor.destroy();
 
+				// Hack to copy Pratilipi content from Data Store to Blob Store
 				if( pratilipi.getContent() != null ) {
-					logger.log( Level.INFO, "Copying Pratilipi content from Data Store to Blob Store ..." );
+					logger.log( Level.INFO, "Creating Blob Store entry using Pratilipi content from Data Store ..." );
 					blobAccessor.createBlob(
 							pratilipiType.getContentResource() + pratilipiIdStr,
 							"text/html",
 							pratilipi.getContent(), Charset.forName( "UTF-8" ) );
-					blobEntry = blobAccessor.getBlob( pratilipiType.getContentResource() + pratilipiIdStr );
+
+				// Hack to create empty Pratilipi content from old Pratilipis
+				} else {
+					logger.log( Level.INFO, "Creating Blob Store entry using empty string ..." );
+					blobAccessor.createBlob(
+							pratilipiType.getContentResource() + pratilipiIdStr,
+							"text/html",
+							"&nbsp;", Charset.forName( "UTF-8" ) );
 				}
+				blobEntry = blobAccessor.getBlob( pratilipiType.getContentResource() + pratilipiIdStr );
 			}
 			
 			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
@@ -90,6 +98,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			int startIndex = 0;
 			int endIndex = 0;
 			while( endIndex < content.length() ) {
+				pageCount++;
 				startIndex = endIndex;
 				if( matcher.find() ) {
 					endIndex = matcher.end();
@@ -106,8 +115,6 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 				
 				if( pageCount == pageNo )
 					pageContent = content.substring( startIndex, endIndex );
-
-				pageCount++;
 			}
 		}
 
@@ -127,7 +134,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			dataModel.put( "nextPageUrl",
 					pratilipiType.getReaderPageUrl() + pratilipiIdStr
 							+ "?&reader=" + readerType
-							+ "&page=" + ( pageNo +1 ) );
+							+ "&page=" + ( pageNo + 1 ) );
 
 		
 		return super.processTemplate(

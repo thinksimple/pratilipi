@@ -252,10 +252,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		// Update page
 		Matcher matcher =  PratilipiHelper.REGEX_PAGE_BREAK.matcher( content );	
-		int pageCount = 1;
+		int pageCount = 0;
 		int startIndex = 0;
 		int endIndex = 0;
 		while( pageCount <= pratilipiContentData.getPageNo() ) {
+			pageCount++;
 			startIndex = endIndex;
 			if( matcher.find() ) {
 				endIndex = matcher.end();
@@ -276,8 +277,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 						+ pratilipiContentData.getContent()
 						+ content.substring( endIndex );
 			}
-
-			pageCount++;
 		}
 		
 		

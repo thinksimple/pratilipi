@@ -42,12 +42,6 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	private final Label savingSummaryLabel = new Label( "Saving Summary ..." );
 
 	
-	// Content edit options widgets
-	private final Anchor editContentAnchor = new Anchor( "Edit Content" );
-	private final Anchor saveContentAnchor = new Anchor( "Save Content" );
-	private final Label savingContentLabel = new Label( "Saving Content ..." );
-
-	
 	private String url = Window.Location.getPath();
 	private PratilipiType pratilipiType;
 
@@ -110,20 +104,6 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			rootPanel.add( savingSummaryLabel );
 		}
 
-		
-		// Content edit options
-		rootPanel = RootPanel.get( "PageContent-Pratilipi-Content-EditOptions" );
-		if( rootPanel != null ) {
-			editContentAnchor.addClickHandler( this );
-			saveContentAnchor.addClickHandler( this );
-			saveContentAnchor.setVisible( false );
-			savingContentLabel.setVisible( false );
-	
-			rootPanel.add( editContentAnchor );
-			rootPanel.add( saveContentAnchor );
-			rootPanel.add( savingContentLabel );
-		}
-
 	}
 
 	@Override
@@ -163,41 +143,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 				
 			});
 		
-		} else if( event.getSource() == editContentAnchor ) {
-			editContentAnchor.setVisible( false );
-			saveContentAnchor.setVisible( true );
-			loadEditor( RootPanel.get( "PageContent-Pratilipi-Content" ).getElement() );
-			
-		} else if( event.getSource() == saveContentAnchor ) {
-			saveContentAnchor.setVisible( false );
-			savingContentLabel.setVisible( true );
-			
-			String pratilipiIdStr = url.substring( pratilipiType.getPageUrl().length() );
-			Long pratilipiId = Long.parseLong( pratilipiIdStr );
-
-			PratilipiData pratilipiData = pratilipiType.newPratilipiData();
-			pratilipiData.setId( pratilipiId );
-			pratilipiData.setContent( getHtmlFromEditor( "PageContent-Pratilipi-Content" ) );
-			
-			pratilipiService.savePratilipi(
-					new SavePratilipiRequest( pratilipiData ),
-					new AsyncCallback<SavePratilipiResponse>() {
-				
-				@Override
-				public void onSuccess( SavePratilipiResponse result ) {
-					Window.Location.reload();
-				}
-				
-				@Override
-				public void onFailure( Throwable caught ) {
-					Window.alert( caught.getMessage() );
-					savingContentLabel.setVisible( false );
-					saveContentAnchor.setVisible( true );
-				}
-				
-			});
 		}
-
 		
 	}
 	
