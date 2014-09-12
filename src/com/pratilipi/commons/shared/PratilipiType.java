@@ -14,9 +14,11 @@ public enum PratilipiType implements IsSerializable {
 			PratilipiHelper.URL_BOOK_COVER,
 			PratilipiHelper.URL_BOOK_READER,
 			PratilipiHelper.RESOURCE_BOOK_CONTENT,
+			PratilipiHelper.RESOURCE_BOOK_CONTENT_HTML,
 			PratilipiHelper.RESOURCE_BOOK_CONTENT_WORD,
 			PratilipiHelper.RESOURCE_BOOK_CONTENT_JPEG,
 			PratilipiHelper.URL_BOOK_CONTENT,
+			PratilipiHelper.URL_BOOK_CONTENT_HTML,
 			PratilipiHelper.URL_BOOK_CONTENT_WORD,
 			PratilipiHelper.URL_BOOK_CONTENT_JPEG ),
 	POEM( "Poem",
@@ -24,9 +26,11 @@ public enum PratilipiType implements IsSerializable {
 			PratilipiHelper.URL_POEM_COVER,
 			PratilipiHelper.URL_POEM_READER,
 			PratilipiHelper.RESOURCE_POEM_CONTENT,
+			PratilipiHelper.RESOURCE_POEM_CONTENT_HTML,
 			PratilipiHelper.RESOURCE_POEM_CONTENT_WORD,
 			PratilipiHelper.RESOURCE_POEM_CONTENT_JPEG,
 			PratilipiHelper.URL_POEM_CONTENT,
+			PratilipiHelper.URL_POEM_CONTENT_HTML,
 			PratilipiHelper.URL_POEM_CONTENT_WORD,
 			PratilipiHelper.URL_POEM_CONTENT_JPEG ),
 	STORY( "Story",
@@ -34,9 +38,11 @@ public enum PratilipiType implements IsSerializable {
 			PratilipiHelper.URL_STORY_COVER,
 			PratilipiHelper.URL_STORY_READER,
 			PratilipiHelper.RESOURCE_STORY_CONTENT,
+			PratilipiHelper.RESOURCE_STORY_CONTENT_HTML,
 			PratilipiHelper.RESOURCE_STORY_CONTENT_WORD,
 			PratilipiHelper.RESOURCE_STORY_CONTENT_JPEG,
 			PratilipiHelper.URL_STORY_CONTENT,
+			PratilipiHelper.URL_STORY_CONTENT_HTML,
 			PratilipiHelper.URL_STORY_CONTENT_WORD,
 			PratilipiHelper.URL_STORY_CONTENT_JPEG ),
 	ARTICLE( "Article",
@@ -44,9 +50,11 @@ public enum PratilipiType implements IsSerializable {
 			PratilipiHelper.URL_ARTICLE_COVER,
 			PratilipiHelper.URL_ARTICLE_READER,
 			PratilipiHelper.RESOURCE_ARTICLE_CONTENT,
+			PratilipiHelper.RESOURCE_ARTICLE_CONTENT_HTML,
 			PratilipiHelper.RESOURCE_ARTICLE_CONTENT_WORD,
 			PratilipiHelper.RESOURCE_ARTICLE_CONTENT_JPEG,
 			PratilipiHelper.URL_ARTICLE_CONTENT,
+			PratilipiHelper.URL_ARTICLE_CONTENT_HTML,
 			PratilipiHelper.URL_ARTICLE_CONTENT_WORD,
 			PratilipiHelper.URL_ARTICLE_CONTENT_JPEG );
 	
@@ -57,26 +65,32 @@ public enum PratilipiType implements IsSerializable {
 	private String readerPageUrl;
 	
 	private String contentResource;
+	private String contentHtmlResource;
 	private String contentWordResource;
 	private String contentJpegResource;
 	
 	private String contentUrl;
+	private String contentHtmlUrl;
 	private String contentWordUrl;
 	private String contentJpegUrl;
 	
 	
 	private PratilipiType(
 			String name, String pageUrl, String coverImageUrl, String readerPageUrl,
-			String contentResource, String contentWordResource, String contentJpegResource,
-			String contentUrl, String contentWordUrl, String contentJpegUrl ) {
+			String contentResource, String contentHtmlResource,
+			String contentWordResource, String contentJpegResource,
+			String contentUrl, String contentHtmlUrl,
+			String contentWordUrl, String contentJpegUrl ) {
 		this.name = name;
 		this.pageUrl = pageUrl;
 		this.coverImageUrl = coverImageUrl;
 		this.readerPageUrl = readerPageUrl;
 		this.contentResource = contentResource;
+		this.contentHtmlResource = contentHtmlResource;
 		this.contentWordResource = contentWordResource;
 		this.contentJpegResource = contentJpegResource;
 		this.contentUrl = contentUrl;
+		this.contentHtmlUrl = contentHtmlUrl;
 		this.contentWordUrl = contentWordUrl;
 		this.contentJpegUrl = contentJpegUrl;
 	}
@@ -103,12 +117,16 @@ public enum PratilipiType implements IsSerializable {
 		return contentResource;
 	}
 	
-	public String getContentJpegResource() {
-		return contentJpegResource;
+	public String getContentHtmlResource() {
+		return contentHtmlResource;
 	}
 	
 	public String getContentWordResource() {
 		return contentWordResource;
+	}
+	
+	public String getContentJpegResource() {
+		return contentJpegResource;
 	}
 	
 	
@@ -116,12 +134,16 @@ public enum PratilipiType implements IsSerializable {
 		return contentUrl;
 	}
 	
-	public String getContentJpegUrl() {
-		return contentJpegUrl;
+	public String getContentHtmlUrl() {
+		return contentHtmlUrl;
 	}
 	
 	public String getContentWordUrl() {
 		return contentWordUrl;
+	}
+	
+	public String getContentJpegUrl() {
+		return contentJpegUrl;
 	}
 	
 

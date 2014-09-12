@@ -7,6 +7,7 @@
 			</a>
 			<#if showEditOptions>
 				<div id="PageContent-Pratilipi-CoverImage-EditOptions"></div>
+				<div id="PageContent-Pratilipi-HtmlContent-EditOptions"></div>
 				<div id="PageContent-Pratilipi-WordContent-EditOptions"></div>
 			</#if>
 		</div>

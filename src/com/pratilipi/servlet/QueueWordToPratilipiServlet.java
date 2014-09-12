@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +28,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
+import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessorFactory;
 
@@ -81,6 +81,8 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 				blobEntry.getMimeType(), blobEntry.getData() );
 		file = driveService.files().insert( file, mediaContent )
 				.setConvert( true ).execute();
+		
+		
 		logger.log( Level.INFO, "File created on Drive -\n"
 				+ "\tFile Id: " + file.getId() + "\n"
 				+ "\tMimeType: " + file.getMimeType() );
@@ -93,22 +95,24 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 		StringWriter writer = new StringWriter();
 		IOUtils.copy( inputStream, writer );
 		String html = writer.toString();
-		logger.log( Level.INFO, "Raw content length: " + html.length() );
 
 		
 		// Deleting word content on Drive
 		driveService.files().delete( file.getId() ).execute();
 		
 		
+		logger.log( Level.INFO, "Raw content length: " + html.length() );
+
+		
 		// Processing html content to Pratilipi content
-		String regEx = "(.*?<body\\s.*?>)(.*?)(</body>.*?)";
-		Pattern pattern = Pattern.compile( regEx );
-		Matcher matcher =  pattern.matcher( html );
+		Matcher matcher =  PratilipiHelper.REGEX_HTML_BODY.matcher( html );
 		if( matcher.matches() ) {
 			logger.log( Level.INFO, "Discarding pre-<body> content (lenght: " + matcher.group( 1 ).length() + "):\n" + matcher.group( 1 ) );
 			logger.log( Level.INFO, "Discarding post-</body> content (lenght: " + matcher.group( 3 ).length() + "):\n" + matcher.group( 3 ) );
 			html = matcher.group( 2);
 		}
+		
+		
 		System.out.println( "Processed content lenght: " + html.length() );
 				  
 

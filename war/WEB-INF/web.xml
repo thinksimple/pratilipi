@@ -59,6 +59,22 @@
   </servlet-mapping>
    
   <servlet>
+    <servlet-name>HtmlContentResourceServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
+    <init-param>
+      <param-name>ResourceServletType</param-name>
+      <param-value>UPLOAD_ONLY</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WordContentResourceServlet</servlet-name>
+    <url-pattern>/resource.book-content/html/*</url-pattern>
+    <url-pattern>/resource.poem-content/html/*</url-pattern>
+    <url-pattern>/resource.story-content/html/*</url-pattern>
+    <url-pattern>/resource.article-content/html/*</url-pattern>
+  </servlet-mapping>
+   
+  <servlet>
     <servlet-name>JpegContentResourceServlet</servlet-name>
     <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
     <init-param>
@@ -102,6 +118,15 @@
   <servlet-mapping>
     <servlet-name>QueuePasswordResetServlet</servlet-name>
     <url-pattern>/_ah/queue/reset-password</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>QueueHtmlToPratilipiServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.QueueHtmlToPratilipiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueueHtmlToPratilipiServlet</servlet-name>
+    <url-pattern>/_ah/queue/html-to-pratilipi</url-pattern>
   </servlet-mapping>
 
   <servlet>

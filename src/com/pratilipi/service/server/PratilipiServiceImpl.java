@@ -257,16 +257,19 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		int endIndex = 0;
 		while( pageCount <= pratilipiContentData.getPageNo() ) {
 			startIndex = endIndex;
-			if( matcher.find() )
+			if( matcher.find() ) {
 				endIndex = matcher.end();
-			else
+				logger.log( Level.INFO, "Page " + pageCount + " length: "
+						+ ( endIndex - startIndex )
+						+ " (" + startIndex + " - " + endIndex + ") "
+						+ matcher.group() );
+			} else {
 				endIndex = content.length();
-
-			System.out.println( "Page " + pageCount + " length: "
-					+ ( endIndex - startIndex )
-					+ " (" + startIndex + " - " + endIndex + ") "
-					+ matcher.group() );
-
+				logger.log( Level.INFO, "Page " + pageCount + " length: "
+						+ ( endIndex - startIndex )
+						+ " (" + startIndex + " - " + endIndex + ")");
+			}
+			
 			if( pageCount == pratilipiContentData.getPageNo() ) {
 				logger.log( Level.INFO, "Updating page " + pageCount + "..." );
 				content = content.substring( 0, startIndex )

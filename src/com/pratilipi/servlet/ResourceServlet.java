@@ -18,15 +18,26 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 		
 		Task task = TaskQueueFactory.newTask();
 		task.addParam( "pratilipiId", pratilipiIdStr );
+
 		for( PratilipiType pratilipiType : PratilipiType.values() ) {
+			
+			if( url.startsWith( pratilipiType.getContentHtmlUrl() ) ) {
+				task.addParam( "pratilipiType", pratilipiType.toString() );
+				TaskQueue taskQueue = TaskQueueFactory.getHtmlToPrailipiTaskQueue();
+				taskQueue.add( task );
+				break;
+			
+			}
+			
 			if( url.startsWith( pratilipiType.getContentWordUrl() ) ) {
 				task.addParam( "pratilipiType", pratilipiType.toString() );
+				TaskQueue taskQueue = TaskQueueFactory.getWordToPrailipiTaskQueue();
+				taskQueue.add( task );
 				break;
 			}
+			
 		}
-		
-		TaskQueue taskQueue = TaskQueueFactory.getWordToPrailipiTaskQueue();
-		taskQueue.add( task );
+
 	}
 	
 }

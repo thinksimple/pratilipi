@@ -10,7 +10,10 @@ public class PratilipiHelper {
 			"(<hr\\s+style=\"page-break-(before|after).+?>)"
 			+ "|"
 			+ "(<div\\s+style=\"page-break-(before|after).+?>(.+?)</div>)" );
-	
+
+	public static final Pattern REGEX_HTML_BODY = Pattern.compile(
+			"(.*?<body\\s.*?>)(.*?)(</body>.*?)" );
+
 	
 	public static final String URL_RESOURCE = ClaymusHelper.URL_RESOURCE;
 
@@ -47,6 +50,12 @@ public class PratilipiHelper {
 	public static final String RESOURCE_STORY_CONTENT   = "story-content/pratilipi/";
 	public static final String RESOURCE_ARTICLE_CONTENT = "article-content/pratilipi/";
 	
+	// Pratilipi Content (Html Format)
+	public static final String RESOURCE_BOOK_CONTENT_HTML    = "book-content/html/";
+	public static final String RESOURCE_POEM_CONTENT_HTML    = "poem-content/html/";
+	public static final String RESOURCE_STORY_CONTENT_HTML   = "story-content/html/";
+	public static final String RESOURCE_ARTICLE_CONTENT_HTML = "article-content/html/";
+	
 	// Pratilipi Content (Word Format)
 	public static final String RESOURCE_BOOK_CONTENT_WORD    = "book-content/word/";
 	public static final String RESOURCE_POEM_CONTENT_WORD    = "poem-content/word/";
@@ -65,6 +74,12 @@ public class PratilipiHelper {
 	public static final String URL_POEM_CONTENT    = URL_RESOURCE + "poem-content/pratilipi/";
 	public static final String URL_STORY_CONTENT   = URL_RESOURCE + "story-content/pratilipi/";
 	public static final String URL_ARTICLE_CONTENT = URL_RESOURCE + "article-content/pratilipi/";
+	
+	// URL to Pratilipi Content (Html Format)
+	public static final String URL_BOOK_CONTENT_HTML    = URL_RESOURCE + RESOURCE_BOOK_CONTENT_HTML;
+	public static final String URL_POEM_CONTENT_HTML    = URL_RESOURCE + RESOURCE_POEM_CONTENT_HTML;
+	public static final String URL_STORY_CONTENT_HTML   = URL_RESOURCE + RESOURCE_STORY_CONTENT_HTML;
+	public static final String URL_ARTICLE_CONTENT_HTML = URL_RESOURCE + RESOURCE_ARTICLE_CONTENT_HTML;
 	
 	// URL to Pratilipi Content (Word Format)
 	public static final String URL_BOOK_CONTENT_WORD    = URL_RESOURCE + "book-content/word/";

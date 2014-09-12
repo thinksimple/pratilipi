@@ -72,19 +72,21 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			int endIndex = 0;
 			while( endIndex < content.length() ) {
 				startIndex = endIndex;
-				if( matcher.find() )
+				if( matcher.find() ) {
 					endIndex = matcher.end();
-				else
+					logger.log( Level.INFO, "Page " + pageCount + " length: "
+							+ ( endIndex - startIndex )
+							+ " (" + startIndex + " - " + endIndex + ") "
+							+ matcher.group() );
+				} else {
 					endIndex = content.length();
-
-				System.out.println( "Page " + pageCount + " length: "
-						+ ( endIndex - startIndex )
-						+ " (" + startIndex + " - " + endIndex + ") "
-						+ matcher.group() );
-
-				if( pageCount == pageNo ) {
-					content = content.substring( startIndex, endIndex );
+					logger.log( Level.INFO, "Page " + pageCount + " length: "
+							+ ( endIndex - startIndex )
+							+ " (" + startIndex + " - " + endIndex + ")");
 				}
+				
+				if( pageCount == pageNo )
+					pageContent = content.substring( startIndex, endIndex );
 
 				pageCount++;
 			}

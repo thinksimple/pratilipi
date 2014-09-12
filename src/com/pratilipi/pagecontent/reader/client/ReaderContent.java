@@ -70,12 +70,15 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 			savingContentLabel.setVisible( true );
 			
 			String pratilipiIdStr = url.substring( pratilipiType.getReaderPageUrl().length() );
+			String pageNoStr = Window.Location.getParameter( "page" );
+			
 			Long pratilipiId = Long.parseLong( pratilipiIdStr );
+			Integer pageNo = pageNoStr == null ? 1 : Integer.parseInt( pageNoStr );
 
 			PratilipiContentData pratilipiContentData = new PratilipiContentData();
 			pratilipiContentData.setPratilipiId( pratilipiId );
 			pratilipiContentData.setPratilipiType( pratilipiType );
-			pratilipiContentData.setPageNo( Integer.parseInt( Window.Location.getParameter( "page" ) ) );
+			pratilipiContentData.setPageNo( pageNo );
 			pratilipiContentData.setContent( getHtmlFromEditor( "PageContent-Pratilipi-Content" ) );
 			
 			pratilipiService.savePratilipiContent(
