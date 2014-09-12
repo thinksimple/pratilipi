@@ -48,7 +48,7 @@ public class HomePageContent implements EntryPoint {
 						cursor = response.getCursor();
 						loadSuccessful();
 						if( response.getPratilipiDataList().size() < resultCount )
-							finishedLoading();
+							loadFinished();
 					}
 					
 					@Override

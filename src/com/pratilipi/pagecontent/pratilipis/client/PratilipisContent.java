@@ -1,7 +1,5 @@
 package com.pratilipi.pagecontent.pratilipis.client;
 
-import com.claymus.commons.client.ui.Accordion;
-import com.claymus.commons.client.ui.InfiniteScrollPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -9,12 +7,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.PratilipiDataInputView;
-import com.pratilipi.commons.client.PratilipiDataInputViewImpl;
+import com.pratilipi.commons.client.PratilipiDataInputViewAccordionImpl;
 import com.pratilipi.commons.client.PratilipiView;
-import com.pratilipi.commons.client.PratilipiViewDetailImpl;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.PratilipiUtil;
 import com.pratilipi.service.client.PratilipiService;
@@ -23,8 +19,6 @@ import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
-import com.pratilipi.service.shared.GetPratilipiListRequest;
-import com.pratilipi.service.shared.GetPratilipiListResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.data.AuthorData;
@@ -37,14 +31,9 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 			GWT.create( PratilipiService.class );
 	
 
-	private final FocusPanel focusPanel = new FocusPanel();
-	private final Accordion accordion = new Accordion();
 	private PratilipiDataInputView pratilipiDataInputView;
 	
 	private PratilipiType pratilipiType;
-	
-	private String cursor;
-	private int resultCount = 25;
 	
 	
 	public void onModuleLoad() {
@@ -58,14 +47,10 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 		
 		RootPanel rootPanel = RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" );
 		if( rootPanel != null ) {
-			accordion.setTitle( "Add " + pratilipiType.getName() );
-			pratilipiDataInputView = new PratilipiDataInputViewImpl( pratilipiType );
+			pratilipiDataInputView = new PratilipiDataInputViewAccordionImpl( pratilipiType );
 			pratilipiDataInputView.addAddButtonClickHandler( this );
 
-			focusPanel.add( accordion );
-			accordion.add( pratilipiDataInputView );
-
-			rootPanel.add( focusPanel );
+			rootPanel.add( pratilipiDataInputView );
 			
 			// Load list of authors.
 			pratilipiService.getAuthorList( new GetAuthorListRequest( null , 100 ), new AsyncCallback<GetAuthorListResponse>() {
@@ -108,59 +93,8 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 
 		
 		rootPanel = RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" );
-		if( rootPanel != null ) {
-			InfiniteScrollPanel infiniteScrollPanel = new InfiniteScrollPanel() {
-
-				@Override
-				protected void loadItems() {
-					
-					pratilipiService.getPratilipiList(
-							new GetPratilipiListRequest( pratilipiType, cursor, resultCount ),
-							new AsyncCallback<GetPratilipiListResponse>() {
-						
-						@Override
-						public void onSuccess( GetPratilipiListResponse response ) {
-	
-							for( final PratilipiData pratilipiData : response.getPratilipiDataList() ) {
-								final PratilipiView pratilipiView = new PratilipiViewDetailImpl();
-								pratilipiView.setPratilipiData( pratilipiData );
-								if( RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" ) != null)
-									pratilipiView.addEditHyperlinkClickHandler( new ClickHandler() {
-										
-										@Override
-										public void onClick( ClickEvent event ) {
-											focusPanel.setFocus( true );
-											accordion.setTitle( "Edit " + pratilipiType.getName() );
-											accordion.show();
-											PratilipiData pratilipiData = pratilipiView.getPratilipiData();
-											pratilipiDataInputView.setPratilipiData( pratilipiData );
-											pratilipiDataInputView.setPratilipiView( pratilipiView );
-										}
-										
-									});
-								add( pratilipiView );
-							}
-							
-							cursor = response.getCursor();
-							loadSuccessful();
-							if( response.getPratilipiDataList().size() < resultCount )
-								finishedLoading();
-						}
-						
-						@Override
-						public void onFailure( Throwable caught ) {
-							loadFailed();
-							Window.alert( caught.getMessage() );
-						}
-						
-					} );
-					
-				}
-				
-			};
-			
-			rootPanel.add( infiniteScrollPanel );
-		}
+		if( rootPanel != null )
+			rootPanel.add( new PratilipiList( pratilipiType, pratilipiDataInputView ) );
 	
 	}
 	
@@ -187,16 +121,15 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 				final PratilipiView pratilipiView = pratilipiDataInputView.getPratilipiView();
 				if( pratilipiView == null ) {
 					Window.Location.replace( pratilipiType.getPageUrl() + response.getPratilipiId() );
+
 				} else {
-					accordion.hide();
-					accordion.setTitle( "Add " + pratilipiType.getName() );
-					new Timer() { // Wait for the accordion to collapse
+					pratilipiDataInputView.reset();
+					pratilipiDataInputView.setEnabled( true );
+					new Timer() { // Wait for the pratilipiDataInputView to collapse
 						@Override
 						public void run() {
 							pratilipiView.focus();
 							pratilipiView.setPratilipiData( pratilipiData );
-							pratilipiDataInputView.reset();
-							pratilipiDataInputView.setEnabled( true );
 						}
 					}.schedule( 100 );
 				}

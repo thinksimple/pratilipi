@@ -37,8 +37,7 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 
 		
 		// Composing the widget
-		colPanel.add( focusPanel );
-		focusPanel.add( panel );
+		colPanel.add( panel );
 		
 		panel.add( thumbnailPanel );
 		panel.add( infoPanel );
@@ -52,12 +51,10 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 		
 		// Setting required style classes
 		colPanel.setStyleName( "col-lg-2 col-md-3 col-sm-4 col-xs-6" );
-		focusPanel.getElement().setAttribute( "style", "margin:15px;" );
-		panel.getElement().setAttribute( "style", "width:200px; height:200px; overflow: hidden;" );
-		coverImage.setStyleName( "img-thumbnail" );
-		infoPanel.getElement().setAttribute( "style",
-				"position:absolute; width:200px; height:55px; padding-left:10px; bottom:0px;"
-				+ " background-color:#FFF; opacity:0.8;" );
+		panel.getElement().setAttribute( "style", "width:100px; padding-top: 10px; padding-bottom:10px;" );
+		thumbnailPanel.getElement().setAttribute( "style", "width:100px; height:160px; overflow: hidden;" );
+		infoPanel.getElement().setAttribute( "style", "width:100px; height:55px; overflow: hidden;" );
+		coverImage.setStyleName( "img-responsive" );
 		titleAnchor.getElement().setAttribute( "style", "display:block;");
 		authorAnchor.getElement().setAttribute( "style", "display:block;");
 		

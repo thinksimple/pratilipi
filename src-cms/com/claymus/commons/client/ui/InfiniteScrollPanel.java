@@ -34,12 +34,15 @@ public abstract class InfiniteScrollPanel extends Composite implements Window.Sc
 
 	@Override
 	protected void onLoad() {
-		loadingItems = true;
-		loadItems();
+		loadItemsIfRequired();
 	}
 
 	@Override
 	public void onWindowScroll( Window.ScrollEvent event ) {
+		loadItemsIfRequired();
+	}
+	
+	private void loadItemsIfRequired() {
 		int currentPanelHeight = panel.getOffsetHeight();
 		int requiredPanelHeight =
 				// Hidden portion above visible area
@@ -57,15 +60,16 @@ public abstract class InfiniteScrollPanel extends Composite implements Window.Sc
 	
 	protected abstract void loadItems();
 	
-	protected void loadSuccessful() {
+	public void loadSuccessful() {
 		loadingItems = false;
+		loadItemsIfRequired();
 	}
 
-	protected void loadFailed() {
+	public void loadFailed() {
 		loadingItems = false;
 	}
 	
-	protected void finishedLoading() {
+	public void loadFinished() {
 		finisedLoading = true;
 	}
 
