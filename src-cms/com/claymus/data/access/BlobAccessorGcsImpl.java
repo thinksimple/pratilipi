@@ -176,6 +176,10 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 				= new GcsFilename( bucketName, fileName );
 		GcsFileMetadata gcsFileMetadata
 				= gcsService.getMetadata( gcsFileName );
+		
+		if( gcsFileMetadata == null )
+			return null;
+		
 		GcsInputChannel gcsInputChannel
 				= gcsService.openReadChannel( gcsFileName, 0 );
 		

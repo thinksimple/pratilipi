@@ -63,6 +63,25 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			// Fetching Pratilipi content
 			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 			BlobEntry blobEntry = blobAccessor.getBlob( pratilipiType.getContentResource() + pratilipiIdStr );
+
+			// Hack to copy Pratilipi content from Data Store to Blob Store
+			// TODO: Remove this as soon as possible
+			if( blobEntry == null ) {
+				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+				Pratilipi pratilipi = dataAccessor.getPratilipi(
+						pratilipiId, pratilipiContent.getPratilipiType() );
+				dataAccessor.destroy();
+
+				if( pratilipi.getContent() != null ) {
+					logger.log( Level.INFO, "Copying Pratilipi content from Data Store to Blob Store ..." );
+					blobAccessor.createBlob(
+							pratilipiType.getContentResource() + pratilipiIdStr,
+							"text/html",
+							pratilipi.getContent(), Charset.forName( "UTF-8" ) );
+					blobEntry = blobAccessor.getBlob( pratilipiType.getContentResource() + pratilipiIdStr );
+				}
+			}
+			
 			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 
 			logger.log( Level.INFO, "Content length: " + content.length() );
