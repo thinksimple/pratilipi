@@ -43,13 +43,37 @@
   </servlet-mapping>
    
   <servlet>
+    <servlet-name>WordContentResourceServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
+    <init-param>
+      <param-name>ResourceServletType</param-name>
+      <param-value>UPLOAD_ONLY</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WordContentResourceServlet</servlet-name>
+    <url-pattern>/resource.book-content/word/*</url-pattern>
+    <url-pattern>/resource.poem-content/word/*</url-pattern>
+    <url-pattern>/resource.story-content/word/*</url-pattern>
+    <url-pattern>/resource.article-content/word/*</url-pattern>
+  </servlet-mapping>
+   
+  <servlet>
     <servlet-name>JpegContentResourceServlet</servlet-name>
     <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
+    <init-param>
+      <param-name>ResourceServletType</param-name>
+      <param-value>DOWNLOAD_ONLY</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>JpegContentResourceServlet</servlet-name>
     <url-pattern>/resource.book-content/jpeg/*</url-pattern>
+    <url-pattern>/resource.poem-content/jpeg/*</url-pattern>
+    <url-pattern>/resource.story-content/jpeg/*</url-pattern>
+    <url-pattern>/resource.article-content/jpeg/*</url-pattern>
   </servlet-mapping>
+  
    
   <!-- Handlers for Task Queues -->
   
@@ -78,6 +102,15 @@
   <servlet-mapping>
     <servlet-name>QueuePasswordResetServlet</servlet-name>
     <url-pattern>/_ah/queue/reset-password</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>QueueWordToPratilipiServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.QueueWordToPratilipiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueueWordToPratilipiServlet</servlet-name>
+    <url-pattern>/_ah/queue/word-to-pratilipi</url-pattern>
   </servlet-mapping>
 
 

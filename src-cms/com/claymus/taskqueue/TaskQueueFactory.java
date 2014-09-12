@@ -24,7 +24,7 @@ public class TaskQueueFactory {
 		return getTaskQueue( QUEUE_RESET_PASSWORD );
 	}
 
-	private static TaskQueue getTaskQueue( String taskQueueName ) {
+	protected static TaskQueue getTaskQueue( String taskQueueName ) {
 		TaskQueue taskQueue = taskQueueMap.get( taskQueueName );
 		if( taskQueue == null ) {
 			taskQueue = new TaskQueueGaeImpl( taskQueueName );

@@ -1,8 +1,10 @@
 package com.pratilipi.commons.shared;
 
+import com.claymus.commons.server.ClaymusHelper;
+
 public class PratilipiHelper {
 
-	public static final String URL_RESOURCE = "/resource.";
+	public static final String URL_RESOURCE = ClaymusHelper.URL_RESOURCE;
 
 	
 	public static final String URL_AUTHOR_PAGE = "/author/";
