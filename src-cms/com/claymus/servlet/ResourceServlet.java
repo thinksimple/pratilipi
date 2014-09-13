@@ -60,9 +60,12 @@ public class ResourceServlet extends HttpServlet {
 		}
 
 		
-		String fileName = getFileName( request );
-		BlobEntry blobEntry =
-				DataAccessorFactory.getBlobAccessor().getBlob( fileName );
+		BlobEntry blobEntry = getBlobEntry( request );
+		if( blobEntry == null ) {
+			response.sendError( HttpServletResponse.SC_NOT_FOUND );
+			return;
+		}
+		
 		
 		String eTag = request.getHeader( "If-None-Match" );
 		if( eTag == null )
@@ -94,6 +97,11 @@ public class ResourceServlet extends HttpServlet {
 			
 			out.close();
 		}
+	}
+	
+	protected BlobEntry getBlobEntry( HttpServletRequest request ) throws IOException {
+		String fileName = getFileName( request );
+		return DataAccessorFactory.getBlobAccessor().getBlob( fileName );
 	}
 	
 	protected String getFileName( HttpServletRequest request ) {
