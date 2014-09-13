@@ -50,12 +50,12 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 		
 		
 		// Setting required style classes
-		colPanel.setStyleName( "col-lg-2 col-md-3 col-sm-4 col-xs-6" );
+		colPanel.setStyleName( "col-lg-2 col-md-2 col-sm-3 col-xs-4" );
 		panel.getElement().setAttribute( "style", "width:100px; padding-top: 10px; padding-bottom:10px;" );
 		thumbnailPanel.getElement().setAttribute( "style", "width:100px; height:160px; overflow: hidden;" );
-		infoPanel.getElement().setAttribute( "style", 
-				"position:absolute; padding-left:5px; padding-right:5px; bottom:10px;"
-				+ "width:100px; height:60px; overflow: hidden;" );
+		infoPanel.getElement().setAttribute( "style",
+				"position:absolute; bottom:10px;"
+				+ "width:100px; height:60px; overflow: hidden; font-size:12px" );
 		coverImage.setStyleName( "img-responsive" );
 		titleAnchor.getElement().setAttribute( "style", "display:block;");
 		authorAnchor.getElement().setAttribute( "style", "display:block;");
@@ -86,7 +86,7 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 		titleAnchor.setText( pratilipiData.getTitle() );
 		titleAnchor.setHref( pratilipiType.getPageUrl() + pratilipiData.getId() );
 
-		authorAnchor.setText( pratilipiData.getAuthorName() );
+		authorAnchor.setText( "(" + pratilipiData.getAuthorName() + ")" );
 		authorAnchor.setHref( PratilipiHelper.URL_AUTHOR_PAGE + pratilipiData.getAuthorId() );
 	}
 
