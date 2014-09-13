@@ -7,6 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Text;
 import com.pratilipi.data.transfer.Author;
 
 @PersistenceCapable( table = "AUTHOR" )
@@ -41,7 +42,7 @@ public class AuthorEntity implements Author {
 	private String penNameEn;
 	
 	@Persistent( column = "SUMMARY" )
-	private String summary;
+	private Text summary;
 	
 	@Persistent( column = "EMAIL" )
 	private String email;
@@ -137,12 +138,12 @@ public class AuthorEntity implements Author {
 
 	@Override
 	public String getSummary() {
-		return this.summary;
+		return summary == null ? null : summary.getValue();
 	}
 
 	@Override
-	public void setSummary(String summary) {
-		this.summary = summary;
+	public void setSummary( String summary ) {
+		this.summary = summary == null ? null : new Text( summary );
 	}
 	
 	@Override

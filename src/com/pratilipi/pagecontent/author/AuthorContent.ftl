@@ -74,7 +74,7 @@ window.onload = function(){
 							</#if>
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-4">
 						<h3>Published Works</h3>
 						<#assign _bookCount = bookDataList?size>
 						<#assign _poemCount = poemDataList?size>
@@ -105,9 +105,9 @@ window.onload = function(){
 												<img class="img-responsive" src="${ bookCoverMap[ book.getId()?string("#") ] }"></img>
 											</a>
 										</div>
-										<div style="width:100px; height:55px; overflow: hidden; white-space: normal;">
+										<div style="width:100px; height:55px; overflow: hidden; white-space: normal; font-size: 12px;">
 											<a href="${ bookUrlMap[ book.getId()?string("#") ] }">${ book.getTitle() }</a>
-											<span>${ languageMap[ book.getLanguageId()?string("#") ] }</span>
+											<p>${ languageMap[ book.getLanguageId()?string("#") ] }</p>
 										</div>
 									</div>
 								</div>
@@ -128,9 +128,9 @@ window.onload = function(){
 												<img class="img-responsive" src="${ storyCoverMap[ story.getId()?string("#") ] }"></img>
 											</a>
 										</div>
-										<div style="width:100px; height:55px; overflow: hidden; white-space: normal;">
+										<div style="width:100px; height:55px; overflow: hidden; white-space: normal; font-size: 12px;">
 											<a href="${ storyUrlMap[ story.getId()?string("#") ] }">${ story.getTitle() }</a>
-											<span>${ languageMap[ story.getLanguageId()?string("#") ] }</span>
+											<p>${ languageMap[ story.getLanguageId()?string("#") ] }</p>
 										</div>
 									</div>
 								</div>
@@ -151,9 +151,9 @@ window.onload = function(){
 												<img class="img-responsive" src="${ poemCoverMap[ poem.getId()?string("#") ] }"></img>
 											</a>
 										</div>
-										<div style="width:100px; height:55px; overflow: hidden; white-space: normal;">
+										<div style="width:100px; height:55px; overflow: hidden; white-space: normal; font-size: 12px;">
 											<a href="${ poemUrlMap[ poem.getId()?string("#") ] }">${ poem.getTitle() }</a>
-											<span>${ languageMap[ poem.getLanguageId()?string("#") ] }</span>
+											<p>${ languageMap[ poem.getLanguageId()?string("#") ] }</p>
 										</div>
 									</div>
 								</div>

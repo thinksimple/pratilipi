@@ -91,7 +91,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		for( Language language : languageList ){
 			if( languageMap.get( language.getId() ) == null ){
 				languageMap.put( language.getId().toString(),
-								 language.getName() + "( " + language.getNameEn() + " )" );
+								 language.getName() + " (" + language.getNameEn() + ")" );
 			}
 		}
 		
