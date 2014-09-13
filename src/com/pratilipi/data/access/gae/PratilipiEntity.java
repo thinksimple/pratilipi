@@ -25,7 +25,7 @@ public abstract class PratilipiEntity implements Pratilipi {
 	private PratilipiType type;
 	
 	@Persistent( column = "PUBLIC_DOMAIN" )
-	private Boolean isPublicDomain;
+	private Boolean publicDomain;
 	
 	@Persistent( column = "TITLE" )
 	private String title;
@@ -86,12 +86,12 @@ public abstract class PratilipiEntity implements Pratilipi {
 
 	@Override
 	public boolean isPublicDomain() {
-		return isPublicDomain == null ? false : isPublicDomain;
+		return publicDomain == null ? false : publicDomain;
 	}
 	
 	@Override
 	public void setPublicDomain( boolean isPublicDomain ) {
-		this.isPublicDomain = isPublicDomain;
+		this.publicDomain = isPublicDomain;
 	}
 	
 	@Override

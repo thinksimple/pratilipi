@@ -136,7 +136,7 @@ public class DataAccessorGaeImpl
 	
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiType type, String cursorStr, int resultCount ) {
+			PratilipiType type, Boolean publicDomain, String cursorStr, int resultCount ) {
 		
 		Query query = null;
 		
@@ -152,12 +152,21 @@ public class DataAccessorGaeImpl
 		else if( type == PratilipiType.ARTICLE )
 			query = pm.newQuery( ArticleEntity.class );
 		
-		query = new GaeQueryBuilder( query )
-						.addFilter( "type", type )
-						.addOrdering( "title", true )
-						.setRange( 0, resultCount )
-						.build();
+		if( publicDomain != null )
+			query = new GaeQueryBuilder( query )
+							.addFilter( "type", type )
+							.addFilter( "publicDomain", publicDomain )
+							.addOrdering( "title", true )
+							.setRange( 0, resultCount )
+							.build();
+		else
+			query = new GaeQueryBuilder( query )
+							.addFilter( "type", type )
+							.addOrdering( "title", true )
+							.setRange( 0, resultCount )
+							.build();
 
+		
 		if( cursorStr != null ) {
 			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
 			Map<String, Object> extensionMap = new HashMap<String, Object>();
@@ -165,8 +174,11 @@ public class DataAccessorGaeImpl
 			query.setExtensions(extensionMap);
 		}
 		
-		@SuppressWarnings("unchecked")
-		List<Pratilipi> pratilipiEntityList = (List<Pratilipi>) query.execute( type );
+		List<Pratilipi> pratilipiEntityList;
+		if( publicDomain == null )
+			pratilipiEntityList = (List<Pratilipi>) query.execute( type );
+		else
+			pratilipiEntityList = (List<Pratilipi>) query.execute( type, publicDomain );
 		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
 		
 		return new DataListCursorTuple<Pratilipi>(
@@ -193,7 +205,7 @@ public class DataAccessorGaeImpl
 	@Override
 	public List<Book> getBookList() {
 		List<Pratilipi> pratilipiList =
-				getPratilipiList( PratilipiType.BOOK, null , 100 ).getDataList();
+				getPratilipiList( PratilipiType.BOOK, null, null , 100 ).getDataList();
 		ArrayList<Book> bookList = new ArrayList<>( pratilipiList.size() );
 		for( Pratilipi pratilipi : pratilipiList )
 			bookList.add( (Book) pratilipi );

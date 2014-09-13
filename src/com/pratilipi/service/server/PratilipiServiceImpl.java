@@ -169,6 +169,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple = dataAccessor.getPratilipiList(
 				request.getPratilipiType(),
+				request.getPublicDomain(),
 				request.getCursor(),
 				request.getResultCount() );
 

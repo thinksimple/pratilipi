@@ -30,7 +30,7 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 			String cursorStr, int resultCount );
 	
 	DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiType type, String cursorStr, int resultCount );
+			PratilipiType type, Boolean publicDomain, String cursorStr, int resultCount );
 
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
 	

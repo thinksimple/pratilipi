@@ -8,5 +8,9 @@ public interface PratilipisContent extends PageContent {
 	PratilipiType getPratilipiType();
 
 	void setPratilipiType( PratilipiType pratilipiType );
+
+	Boolean getPublicDomain();
+
+	void setPublicDomain( Boolean isPublicDomain );
 	
 }

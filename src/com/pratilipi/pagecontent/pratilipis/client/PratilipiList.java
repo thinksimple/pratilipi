@@ -23,21 +23,28 @@ public class PratilipiList extends InfiniteScrollPanel {
 			GWT.create( PratilipiService.class );
 
 	private final PratilipiType pratilipiType;
+	private final Boolean publicDomain;
 	private final PratilipiDataInputView pratilipiDataInputView;
 	private String cursor = null;
 	private int resultCount = 20;
 
 	
 	public PratilipiList( PratilipiType pratilipiType ) {
-		this.pratilipiType = pratilipiType;
-		this.pratilipiDataInputView = null;
+		this( pratilipiType, null, null );
 	}
 	
-	public PratilipiList( PratilipiType pratilipiType,
+	public PratilipiList( PratilipiType pratilipiType, Boolean publicDomain ) {
+		this( pratilipiType, null, null );
+	}
+	
+	public PratilipiList( PratilipiType pratilipiType, Boolean publicDomain,
 			PratilipiDataInputView pratilipiDataInputView ) {
 		
 		this.pratilipiType = pratilipiType;
+		this.publicDomain = publicDomain;
 		this.pratilipiDataInputView = pratilipiDataInputView;
+		
+		setStyleName( "row" );
 	}
 
 	
@@ -46,7 +53,7 @@ public class PratilipiList extends InfiniteScrollPanel {
 		// TODO: show loading image/text while while waiting for RPC response
 		
 		pratilipiService.getPratilipiList(
-				new GetPratilipiListRequest( pratilipiType, cursor, resultCount ),
+				new GetPratilipiListRequest( pratilipiType, publicDomain, cursor, resultCount ),
 				new AsyncCallback<GetPratilipiListResponse>() {
 			
 			@Override

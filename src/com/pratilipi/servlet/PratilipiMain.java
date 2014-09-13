@@ -77,6 +77,19 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/articles" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.ARTICLE ) );
 		
+		else if( requestUri.startsWith( "/classics/books" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, true ) );
+
+		else if( requestUri.startsWith( "/classics/poems" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM, true ) );
+
+		else if( requestUri.startsWith( "/classics/stories" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY, true ) );
+
+		else if( requestUri.startsWith( "/classics/articles" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.ARTICLE, true ) );
+
+		
 		else if( requestUri.equals( "/languages" ) )
 			pageContentList.add( LanguagesContentFactory.newLanguagesContent() );
 
@@ -100,6 +113,7 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.startsWith( PratilipiType.ARTICLE.getPageUrl() ) )
 			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( PratilipiType.ARTICLE.getPageUrl().length() ) ), PratilipiType.ARTICLE ) );
 
+		
 		else if( requestUri.startsWith( PratilipiHelper.URL_AUTHOR_PAGE ) )
 			pageContentList.add( AuthorContentFactory.newAuthorContent( Long.parseLong( requestUri.substring( PratilipiHelper.URL_AUTHOR_PAGE.length() ) ) ) );
 
@@ -120,9 +134,6 @@ public class PratilipiMain extends ClaymusMain {
 		
 		// Static pages
 		// Migrate these PageContents to DataStore
-		else if( requestUri.equals( "/give-away" ) )
-			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/GiveAwayPageContent.ftl" ) );
-
 		else if( requestUri.equals( "/contact" ) )
 			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/ContactPageContent.ftl" ) );
 			
@@ -158,7 +169,11 @@ public class PratilipiMain extends ClaymusMain {
 			headerWidget.setTagLine( "you become what you read ..." );
 
 			headerWidget.setRightNavItems( new Object[][] {
-					{ "Give Away", "/give-away", null },
+					{ "Classics", null, new String[][] {
+							{ "Classic Books", "/classics/books" },
+							{ "Classic Poems", "/classics/poems" },
+							{ "Classic Stories", "/classics/stories" },
+							{ "Classic Articles", "/classics/articles" }}},
 					{ "Books", "/books", null },
 					{ "Poems", "/poems", null },
 					{ "Stories", "/stories", null },

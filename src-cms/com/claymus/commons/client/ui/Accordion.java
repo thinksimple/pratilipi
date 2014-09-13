@@ -28,8 +28,8 @@ public class Accordion extends Composite {
 	public Accordion() {
 
 		String id = HTMLPanel.createUniqueId();
-		titleAnchor.setHref( "#Tr-" + id );
-		collapsePanel.getElement().setAttribute( "id", "Tr-" + id );
+		titleAnchor.setHref( id );
+		collapsePanel.getElement().setAttribute( "id", id );
 
 		
 		// Composing the widget

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.module.pagecontent.PageContentProcessor;
+import com.pratilipi.commons.shared.PratilipiType;
 
 public class PratilipisContentProcessor extends PageContentProcessor<PratilipisContent> {
 
@@ -29,9 +30,25 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 				claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false );
 
 		
+		PratilipiType pratilipiType = pratilipisContent.getPratilipiType();
+		
+		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
-		dataModel.put( "pratilipiType", pratilipisContent.getPratilipiType().getName() );
+		dataModel.put( "pratilipiType", pratilipiType.getName() );
+
+		if( pratilipiType == PratilipiType.STORY )
+			dataModel.put( "pratilipisType", "Stories" );
+		else
+			dataModel.put( "pratilipisType", pratilipiType.getName() + "s" );
+		
+		if( pratilipisContent.getPublicDomain() != null && pratilipisContent.getPublicDomain() ) {
+			dataModel.put( "pratilipisType", "Classic " + dataModel.get( "pratilipisType" ) );
+			dataModel.put( "pratilipiFilters", "CLASSICS" );
+		} else {
+			dataModel.put( "pratilipiFilters", "" );
+		}
+		
 		dataModel.put( "showAddOption", showAddOption );
 		
 

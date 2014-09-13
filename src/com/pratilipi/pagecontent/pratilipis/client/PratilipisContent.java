@@ -93,8 +93,13 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 
 		
 		rootPanel = RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" );
-		if( rootPanel != null )
-			rootPanel.add( new PratilipiList( pratilipiType, pratilipiDataInputView ) );
+		if( rootPanel != null ) {
+			String filters = rootPanel.getElement().getAttribute( "pratilipi-filters" );
+			if( filters != null && filters.equals( "CLASSICS" ) )
+				rootPanel.add( new PratilipiList( pratilipiType, true, pratilipiDataInputView ) );
+			else
+				rootPanel.add( new PratilipiList( pratilipiType, null, pratilipiDataInputView ) );
+		}
 	
 	}
 	
