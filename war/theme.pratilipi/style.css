@@ -156,3 +156,32 @@
 .page-header h3 {
 	margin-top: 10px;
 }
+
+
+
+.books-block, 
+.stories-block,
+.poems-block {
+    position:relative; /**/
+    overflow: hidden;
+    margin: 0 5px;
+    height: 250px;     /**/
+} 
+.books-block .books, 
+.stories-block .stories,
+.poems-block .poems {
+    white-space: nowrap;
+    text-align: center;
+}
+.books-block .thumb, 
+.stories-block .thumb,
+.poems-block .thumb {
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+}
+
+.books, .stories, .poems {
+  position:absolute;  /**/
+  margin-left:0;      /**/
+}
