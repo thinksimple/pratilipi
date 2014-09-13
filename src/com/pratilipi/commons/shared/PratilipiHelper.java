@@ -32,6 +32,12 @@ public class PratilipiHelper {
 	public static final String URL_STORY_PAGE   = "/story/";
 	public static final String URL_ARTICLE_PAGE = "/article/";
 
+	// Pratilipi covers
+	public static final String RESOURCE_BOOK_COVER    = "book-cover/original/";
+	public static final String RESOURCE_POEM_COVER    = "poem-cover/original/";
+	public static final String RESOURCE_STORY_COVER   = "story-cover/original/";
+	public static final String RESOURCE_ARTICLE_COVER = "article-cover/original/";
+	
 	// URL to Pratilipi covers
 	public static final String URL_BOOK_COVER    = "/resource.book-cover/original/";
 	public static final String URL_POEM_COVER    = "/resource.poem-cover/original/";

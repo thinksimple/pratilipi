@@ -193,9 +193,6 @@ public class ClaymusHelper {
 	}
 	
 	public boolean hasUserAccess( String accessId, boolean defaultAccess ) {
-//		if( true == true )
-//			return true;
-		
 		Boolean access = null;
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

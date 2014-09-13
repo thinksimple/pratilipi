@@ -12,7 +12,7 @@ import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.shared.data.PratilipiData;
 
-public class PratilipiViewThumbnailImpl extends PratilipiView {
+public class PratilipiViewThumbnailBookImpl extends PratilipiView {
 
 	private final Panel colPanel = new SimplePanel();
 	private final FocusPanel focusPanel = new FocusPanel();
@@ -31,7 +31,7 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 	private PratilipiData pratilipiData;
 	
 	
-	public PratilipiViewThumbnailImpl() {
+	public PratilipiViewThumbnailBookImpl() {
 		editAnchor.setText( "Edit" );
 		editAnchor.setVisible( false );
 
@@ -53,9 +53,7 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 		colPanel.setStyleName( "col-lg-2 col-md-3 col-sm-4 col-xs-6" );
 		panel.getElement().setAttribute( "style", "width:100px; padding-top: 10px; padding-bottom:10px;" );
 		thumbnailPanel.getElement().setAttribute( "style", "width:100px; height:160px; overflow: hidden;" );
-		infoPanel.getElement().setAttribute( "style", 
-				"position:absolute; padding-left:5px; padding-right:5px; bottom:10px;"
-				+ "width:100px; height:60px; overflow: hidden;" );
+		infoPanel.getElement().setAttribute( "style", "width:100px; height:60px; overflow: hidden;" );
 		coverImage.setStyleName( "img-responsive" );
 		titleAnchor.getElement().setAttribute( "style", "display:block;");
 		authorAnchor.getElement().setAttribute( "style", "display:block;");

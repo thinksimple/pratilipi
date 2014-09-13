@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiView;
 import com.pratilipi.commons.client.PratilipiViewDetailImpl;
+import com.pratilipi.commons.client.PratilipiViewThumbnailBookImpl;
 import com.pratilipi.commons.client.PratilipiViewThumbnailImpl;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
@@ -54,7 +55,11 @@ public class PratilipiList extends InfiniteScrollPanel {
 				for( final PratilipiData pratilipiData : response.getPratilipiDataList() ) {
 					final PratilipiView pratilipiView;
 					
-					if( pratilipiDataInputView == null ) {
+					if( pratilipiDataInputView == null && pratilipiType == PratilipiType.BOOK ) {
+						pratilipiView = new PratilipiViewThumbnailBookImpl();
+						pratilipiView.setPratilipiData( pratilipiData );
+
+					} else if( pratilipiDataInputView == null && pratilipiType != PratilipiType.BOOK ) {
 						pratilipiView = new PratilipiViewThumbnailImpl();
 						pratilipiView.setPratilipiData( pratilipiData );
 

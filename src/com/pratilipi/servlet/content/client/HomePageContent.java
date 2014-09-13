@@ -7,7 +7,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.PratilipiView;
-import com.pratilipi.commons.client.PratilipiViewThumbnailImpl;
+import com.pratilipi.commons.client.PratilipiViewThumbnailBookImpl;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
@@ -40,7 +40,7 @@ public class HomePageContent implements EntryPoint {
 					public void onSuccess( GetPratilipiListResponse response ) {
 
 						for( final PratilipiData pratilipiData : response.getPratilipiDataList() ) {
-							final PratilipiView pratilipiView = new PratilipiViewThumbnailImpl();
+							final PratilipiView pratilipiView = new PratilipiViewThumbnailBookImpl();
 							pratilipiView.setPratilipiData( pratilipiData );
 							add( pratilipiView );
 						}
