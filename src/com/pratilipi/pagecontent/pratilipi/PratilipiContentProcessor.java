@@ -41,17 +41,19 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		
 		// Fetching Pratilipi, Author and Reviews
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId,
-				pratilipiContent.getPratilipiType() );
+		Pratilipi pratilipi = dataAccessor.getPratilipi(
+				pratilipiId, pratilipiType );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		UserPratilipi pratilipiBook = dataAccessor.getUserPratilipi(
+		UserPratilipi pratilipiBook = null;
+		if( claymusHelper.isUserLoggedIn() )
+			pratilipiBook = dataAccessor.getUserPratilipi(
 				claymusHelper.getCurrentUserId(), pratilipiId );
 		List<UserPratilipi> reviewList =
 				dataAccessor.getUserPratilipiList( pratilipiId );
 		
 		Map<String, String> userIdNameMap = new HashMap<>();
 		for( UserPratilipi review : reviewList) {
-			if( userIdNameMap.get( review.getUserId() ) == null ){
+			if( userIdNameMap.get( review.getUserId() ) == null ) {
 				User user = dataAccessor.getUser( review.getUserId() );
 				userIdNameMap.put(
 						user.getId().toString(),
@@ -68,11 +70,21 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "reviewList", reviewList );
 		dataModel.put( "userIdNameMap", userIdNameMap );
 		
+		User currentUser = claymusHelper.getCurrentUser();
+		String userName = currentUser.getFirstName();
+		if( currentUser.getLastName() != null )
+			userName += " " + currentUser.getLastName();
+		dataModel.put( "userName", userName );
+		
 		dataModel.put( "pratilipiCoverUrl", pratilipiType.getCoverImageUrl() + pratilipi.getId() );
 		dataModel.put( "pratilipiHomeUrl", pratilipiType.getPageUrl() + pratilipi.getId() );
+		dataModel.put( "pratilipiReaderUrl", pratilipiType.getReaderPageUrl() + pratilipi.getId() );
 		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getId() );
 		
-		dataModel.put( "showAddReviewOption",
+		dataModel.put( "showReviewedMessage",
+				pratilipiBook != null && pratilipiBook.getReviewState() != UserReviewState.NOT_SUBMITTED );
+
+		dataModel.put( "showReviewOption",
 				claymusHelper.getCurrentUserId() != pratilipi.getAuthorId()
 				&& ( pratilipiBook == null || pratilipiBook.getReviewState() == UserReviewState.NOT_SUBMITTED )
 				&& claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_REVIEW_ADD, false ) );

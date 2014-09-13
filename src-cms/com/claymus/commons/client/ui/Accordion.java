@@ -28,7 +28,7 @@ public class Accordion extends Composite {
 	public Accordion() {
 
 		String id = HTMLPanel.createUniqueId();
-		titleAnchor.setHref( id );
+		titleAnchor.setHref( "#" + id );
 		collapsePanel.getElement().setAttribute( "id", id );
 
 		

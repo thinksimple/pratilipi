@@ -28,6 +28,19 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 }
 
 
+/* START: Bootstrap Overrides */
+
+.btn {
+	border-radius: 1px;
+}
+
+/* END: Bootstrap Overrides*/
+
+
+
+
+
+
 /*Bootstrap Overrides*/
 
 ul, li {
@@ -96,10 +109,6 @@ ul, li {
 	border-radius: 2px;
 }
 
-img {
-	width: 100%;
-}
-
 hr {
 	margin-bottom: 0;
 	border-top: 1px solid #ddd;
@@ -165,10 +174,6 @@ hr {
 
 .badge {
 	background-color: #2C3E50;
-}
-
-.btn {
-	border-radius: 1px;
 }
 
 .modal-header {
@@ -627,9 +632,6 @@ header {
 @media screen and (max-width: 991px) {
 	.login-btn {
 		margin-top: 25px;
-	}
-	img {
-		margin: 5px;
 	}
 	.prod-info {
 		margin: 10px;

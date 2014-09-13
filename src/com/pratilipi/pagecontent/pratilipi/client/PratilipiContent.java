@@ -7,8 +7,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
@@ -22,9 +21,8 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
 
-	private final Anchor addReviewAnchor = new Anchor( "Review this" );
-	private final Anchor saveReviewAnchor = new Anchor( "Save Review" );
-	private final Label savingLabel = new Label( "Saving ..." );
+	
+	private final Button saveReviewButton = new Button( "Submit Review" );
 	
 	private String url = Window.Location.getPath();
 	private PratilipiType pratilipiType;
@@ -37,32 +35,30 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 
 		if( pratilipiType == null )
 			return;
+
 		
-		
-		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-Review-AddOptions" );
-		if( rootPanel != null ) {
-			addReviewAnchor.addClickHandler( this );
-			saveReviewAnchor.addClickHandler( this );
-			saveReviewAnchor.setVisible( false );
-			savingLabel.setVisible( false );
-		
-			rootPanel.add( addReviewAnchor );
-			rootPanel.add( saveReviewAnchor );
-			rootPanel.add( savingLabel );
+		RootPanel reviewPanel = RootPanel.get( "PageContent-Pratilipi-Review" );
+		RootPanel submitButtonPanel = RootPanel.get( "PageContent-Pratilipi-Review-AddOptions" );
+		if( reviewPanel != null && submitButtonPanel != null ) {
+			saveReviewButton.getElement().setAttribute( "class", "btn btn-danger" );
+			saveReviewButton.addClickHandler( this );
+			
+			loadBasicEditor( RootPanel.get( "PageContent-Pratilipi-Review" ).getElement() );
+			submitButtonPanel.add( saveReviewButton );
 		}
 	}
 
 	@Override
 	public void onClick( ClickEvent event ) {
 		
-		if( event.getSource() == addReviewAnchor ) {
-			addReviewAnchor.setVisible( false );
-			saveReviewAnchor.setVisible( true );
-			loadBasicEditor( RootPanel.get( "PageContent-Pratilipi-Review" ).getElement() );
+		if( event.getSource() == saveReviewButton ) {
 			
-		} else if( event.getSource() == saveReviewAnchor ) {
-			saveReviewAnchor.setVisible( false );
-			savingLabel.setVisible( true );
+			if( getHtmlFromEditor( "PageContent-Pratilipi-Review" ).trim().isEmpty() )
+				return;
+			
+			
+			saveReviewButton.setEnabled( false );
+			saveReviewButton.setText( "Submitting ..." );
 			
 			String pratilipiIdStr = url.substring( pratilipiType.getPageUrl().length() );
 			Long pratilipiId = Long.parseLong( pratilipiIdStr );
@@ -83,8 +79,8 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 				@Override
 				public void onFailure( Throwable caught ) {
 					Window.alert( caught.getMessage() );
-					savingLabel.setVisible( false );
-					saveReviewAnchor.setVisible( true );
+					saveReviewButton.setEnabled( true );
+					saveReviewButton.setText( "Submit Review" );
 				}
 				
 			});
