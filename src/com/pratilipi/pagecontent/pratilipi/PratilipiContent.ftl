@@ -61,7 +61,7 @@
 
 	</div> <#-- END of row -->
 
-	<div id="Reviews" class="well">
+	<div id="Reviews" class="well" style="margin-top:25px;">
 		<#list reviewList as review >
 			<div class="hr-below">
 				<h4 style="display:inline-block">${ userIdNameMap[ review.getUserId()?string("#") ] } Says,</h4>

@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.module.pagecontent.PageContentProcessor;
@@ -18,12 +19,17 @@ import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.pagecontent.pratilipis.PratilipisContentProcessor;
 
 public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> {
 
 	private static final Logger logger =
 			Logger.getLogger( ReaderContentProcessor.class.getName() );
+
+	public static final String ACCESS_ID_PRATILIPI_ADD = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_ADD;
+	public static final String ACCESS_ID_PRATILIPI_UPDATE = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_UPDATE;
 
 	
 	@Override
@@ -43,17 +49,19 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 		Long pratilipiId = Long.parseLong( pratilipiIdStr );
 		int pageNo = Integer.parseInt( pageNoStr );
+		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+
 		
+		// Fetching Pratilipi and Author
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi(
+				pratilipiId, pratilipiContent.getPratilipiType() );
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		dataAccessor.destroy();
 
 		long pageCount = 0;
 		String pageContent = "";
 		if( readerType.equals( "jpeg" ) ) {
-			
-			// Fetching Pratilipi
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			Pratilipi pratilipi = dataAccessor.getPratilipi(
-					pratilipiId, pratilipiContent.getPratilipiType() );
-			dataAccessor.destroy();
 
 			pageCount = pratilipi.getPageCount();
 			pageContent = "<img style=\"width:100%; max-width:700px\" src=\"" + pratilipiType.getContentJpegUrl() + pratilipiId + "/" + pageNo + "\">";
@@ -66,10 +74,6 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 			// TODO: Remove this as soon as possible
 			if( blobEntry == null ) {
-				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-				Pratilipi pratilipi = dataAccessor.getPratilipi(
-						pratilipiId, pratilipiContent.getPratilipiType() );
-				dataAccessor.destroy();
 
 				// Hack to copy Pratilipi content from Data Store to Blob Store
 				if( pratilipi.getContent() != null ) {
@@ -122,6 +126,8 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		
+		dataModel.put( "pratilipi", pratilipi );
+		dataModel.put( "author", author );
 		dataModel.put( "pageContent", pageContent );
 	
 		if( pageNo > 1 )
@@ -135,6 +141,13 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 					pratilipiType.getReaderPageUrl() + pratilipiIdStr
 							+ "?&reader=" + readerType
 							+ "&page=" + ( pageNo + 1 ) );
+
+		dataModel.put( "pratilipiHomeUrl", pratilipiType.getPageUrl() + pratilipi.getId() );
+		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getId() );
+
+		dataModel.put( "showEditOptions",
+				( claymusHelper.getCurrentUserId() == pratilipi.getAuthorId() && claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false ) )
+				|| claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_UPDATE, false ) );
 
 		
 		return super.processTemplate(

@@ -1,13 +1,58 @@
-<div class="container-fluid">
+<div class="container">
+
 	<div class="row">
-		<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="border:1px solid #EEE; font-size:18px" id="PageContent-Pratilipi-Content">
-			${ pageContent }
+	
+		<#-- Title and Author Name -->
+		<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+			<h2>
+				<a href="${ pratilipiHomeUrl }">${ pratilipi.getTitle() }</a>
+			</h2>
+			<h4>
+				<a href="${ authorHomeUrl }">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></a>
+			</h4>
+
+			<#if showEditOptions>
+				<div id="PageContent-Pratilipi-Content-EditOptions"></div>
+			</#if>
 		</div>
-		<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="border:1px solid #EEE; font-size:18px" id="PageContent-Pratilipi-Content-EditOptions">
-			<#if previousPageUrl??><a href="${ previousPageUrl }">Previous Page</a></#if>
-			<#if nextPageUrl??><a href="${ nextPageUrl }">Next Page</a></#if>
+
+	</div> <#-- END of row -->
+
+
+	<div class="row">
+
+		<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="padding:0px;">
+			<div id="PageContent-Pratilipi-Content" class="well" style="margin-bottom:10px;">
+				${ pageContent }
+			</div>
 		</div>
-	</div>
+		
+		<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="padding:0px;">
+			<#if previousPageUrl??>
+				<button type="button" class="btn btn-default" onclick="window.location.href='${ previousPageUrl }'">
+					<span class="glyphicon glyphicon-chevron-left"></span>&nbsp;&nbsp;Previous
+				</button>
+			</#if>
+				
+			<#if nextPageUrl??>
+				<button type="button" class="btn btn-default pull-right" onclick="window.location.href='${ nextPageUrl }'">
+					Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+				</button>
+			</#if>
+		</div>
+
+	</div> <#-- END of second row -->
+
 </div>
 
-<script type="text/javascript" language="javascript" src="/pagecontent.reader/pagecontent.reader.nocache.js" defer></script>
+<script language="javascript" defer>
+	window.onload = function() {
+		var $reader = $( '#PageContent-Pratilipi-Content' );
+		if( $reader.height() < 800 )
+			$reader.height( 800 );
+	}
+</script>
+
+<#if showEditOptions>
+	<script type="text/javascript" language="javascript" src="/pagecontent.reader/pagecontent.reader.nocache.js" defer></script>
+</#if>
