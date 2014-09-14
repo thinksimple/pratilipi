@@ -53,7 +53,7 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 			rootPanel.add( pratilipiDataInputView );
 			
 			// Load list of authors.
-			pratilipiService.getAuthorList( new GetAuthorListRequest( null , 100 ), new AsyncCallback<GetAuthorListResponse>() {
+			pratilipiService.getAuthorList( new GetAuthorListRequest( null , 250 ), new AsyncCallback<GetAuthorListResponse>() {
 
 				@Override
 				public void onFailure( Throwable caught ) {
@@ -94,6 +94,7 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 		
 		rootPanel = RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" );
 		if( rootPanel != null ) {
+			rootPanel.clear();
 			String filters = rootPanel.getElement().getAttribute( "pratilipi-filters" );
 			if( filters != null && filters.equals( "CLASSICS" ) )
 				rootPanel.add( new PratilipiList( pratilipiType, true, pratilipiDataInputView ) );

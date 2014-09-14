@@ -5,6 +5,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Image;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiView;
 import com.pratilipi.commons.client.PratilipiViewDetailImpl;
@@ -28,6 +29,8 @@ public class PratilipiList extends InfiniteScrollPanel {
 	private String cursor = null;
 	private int resultCount = 20;
 
+	private Image loadingImage = new Image( "/theme.pratilipi/images/loading.gif" );
+	
 	
 	public PratilipiList( PratilipiType pratilipiType ) {
 		this( pratilipiType, null, null );
@@ -52,6 +55,8 @@ public class PratilipiList extends InfiniteScrollPanel {
 	protected void loadItems() {
 		// TODO: show loading image/text while while waiting for RPC response
 		
+		add( loadingImage );
+		
 		pratilipiService.getPratilipiList(
 				new GetPratilipiListRequest( pratilipiType, publicDomain, cursor, resultCount ),
 				new AsyncCallback<GetPratilipiListResponse>() {
@@ -59,6 +64,8 @@ public class PratilipiList extends InfiniteScrollPanel {
 			@Override
 			public void onSuccess( GetPratilipiListResponse response ) {
 
+				loadingImage.removeFromParent();
+				
 				for( final PratilipiData pratilipiData : response.getPratilipiDataList() ) {
 					final PratilipiView pratilipiView;
 					
@@ -97,6 +104,7 @@ public class PratilipiList extends InfiniteScrollPanel {
 			
 			@Override
 			public void onFailure( Throwable caught ) {
+				loadingImage.removeFromParent();
 				loadFailed();
 				// TODO: show manual load button
 			}
