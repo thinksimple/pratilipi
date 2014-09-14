@@ -41,7 +41,7 @@ public class QueueWelcomeUserServlet extends HttpServlet {
 		
 		// Creating Email Template
 		// TODO: migrate it to DataStore
-		String subject = "Thank you for subscribing at Pratilipi !";
+		String subject = "Account Activation: Pratilipi.com";
 		
 		File file = new File( "WEB-INF/classes/com/pratilipi/servlet/content/WelcomeEmailContent.ftl" );
 		List<String> lines;
