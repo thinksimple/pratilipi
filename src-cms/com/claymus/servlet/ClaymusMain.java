@@ -217,7 +217,7 @@ public class ClaymusMain extends HttpServlet {
 	}
 
 	protected List<WebsiteWidget> getWebsiteWidgetList(
-			HttpServletRequest request ) {
+			HttpServletRequest request ) throws IOException {
 		
 		return new LinkedList<>();
 	}

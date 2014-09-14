@@ -9,7 +9,6 @@
 		<link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic&subset=devanagari,latin' rel='stylesheet' type='text/css'>
 
 		<link rel="stylesheet" href="//static.pratilipi.com/third-party/bootstrap-3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//static.pratilipi.com/third-party/bootstrap-3.2.0/css/bootstrap-theme.min.css">
 	
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" defer></script>
 		<script src="//static.pratilipi.com/third-party/bootstrap-3.2.0/js/bootstrap.min.js" defer></script>

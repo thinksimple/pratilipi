@@ -6,7 +6,7 @@ public class HtmlWidgetProcessor extends WebsiteWidgetProcessor<HtmlWidget> {
 
 	@Override
 	public String getTemplateName() {
-		return "com/claymus/module/websitewidget/footer/FooterWidget.ftl";
+		return "com/claymus/module/websitewidget/html/HtmlWidget.ftl";
 	}
 
 }
