@@ -27,12 +27,14 @@ import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
-import com.pratilipi.service.shared.SavePratilipiContentRequest;
-import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SaveAuthorRequest;
 import com.pratilipi.service.shared.SaveAuthorResponse;
+import com.pratilipi.service.shared.SavePratilipiContentRequest;
+import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
+import com.pratilipi.service.shared.UserQueryRequest;
+import com.pratilipi.service.shared.UserQueryResponse;
 
 @RemoteServiceRelativePath("../service.pratilipi")
 public interface PratilipiService extends RemoteService {
@@ -84,5 +86,7 @@ public interface PratilipiService extends RemoteService {
 	GetUserPratilipiResponse getUserPratilipi( GetUserPratilipiRequest request );
 	
 	GetUserPratilipiListResponse getUserPratilipiList( GetUserPratilipiListRequest request );
+	
+	UserQueryResponse userQueryMail( UserQueryRequest request );
 
 }

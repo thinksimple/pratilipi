@@ -1,5 +1,8 @@
 package com.pratilipi.servlet.content.client;
 
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -9,47 +12,73 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class ContactMailForm extends Composite {
+	private TextBox nameInput = new TextBox();
 	private TextBox emailInput = new TextBox();
-	private TextBox subjectInput = new TextBox();
-	private InlineLabel bodyLabel = new InlineLabel( "Enter Your Message Below:" );
 	private TextArea mailBody = new TextArea();
-	private Button sendMail = new Button();
+	private Button sendMail = new Button( "Send" );
 	
 	private ValidateForm validateForm = new ValidateForm();
 	
 	private InlineLabel emailInputError = new InlineLabel();
-	private InlineLabel subjectInputError = new InlineLabel();
+	private InlineLabel nameInputError = new InlineLabel();
 	private InlineLabel mailBodyError = new InlineLabel();
 	
 	public ContactMailForm(){
 		Panel contactMailForm = new FlowPanel();
-		contactMailForm.addStyleName( "form-group" );
 		
-		emailInput.addStyleName( "form-control contactPage-TextBox" );
-		emailInput.getElement().setAttribute("placeholder", "Enter Your Email");
+		nameInput.addStyleName( "form-control" );
+		nameInput.getElement().setAttribute("placeholder", "Name");
+		nameInput.addBlurHandler( new BlurHandler() {
+
+			@Override
+			public void onBlur(BlurEvent event) {
+				validateName();
+			}});
 		
-		bodyLabel.addStyleName( "contactPage-Label" );
+		emailInput.addStyleName( "form-control" );
+		emailInput.getElement().setAttribute("placeholder", "Email");
+		emailInput.getElement().getStyle().setProperty("marginTop", "15px");
+		emailInput.addBlurHandler( new BlurHandler() {
+
+			@Override
+			public void onBlur(BlurEvent event) {
+				validateEmail();
+			}});
 		
-		subjectInput.addStyleName( "form-control contactPage-TextBox" );
-		subjectInput.getElement().setAttribute("placeholder", "Subject");
-		
-		mailBody.addStyleName( "form-control contactPage-TextArea" );
+		mailBody.addStyleName( "form-control" );
+		mailBody.getElement().setAttribute("placeholder", "Enter Your Query");
+		mailBody.getElement().getStyle().setProperty("marginTop", "15px");
 		mailBody.setVisibleLines( 5 );
+		mailBody.addBlurHandler( new BlurHandler() {
+
+			@Override
+			public void onBlur(BlurEvent event) {
+				validateBody();
+			}});
 		
-		sendMail.addStyleName( "btn btn-info btn-md contactPage-Button" );
+		sendMail.addStyleName( "btn btn-md btn-success" );
+		sendMail.getElement().getStyle().setProperty("marginTop", "15px");
 		
 		//Error messages
 		emailInputError.addStyleName( "errorMessage" );
-		subjectInputError.addStyleName( "errorMessage" );
+		nameInputError.addStyleName( "errorMessage" );
 		mailBodyError.addStyleName( "errorMessage" );
 		
+		contactMailForm.add( nameInput );
+		contactMailForm.add( nameInputError );
 		contactMailForm.add( emailInput );
-		contactMailForm.add( subjectInput );
-		contactMailForm.add( bodyLabel );
+		contactMailForm.add( emailInputError );
 		contactMailForm.add( mailBody );
+		contactMailForm.add( mailBodyError );
+		contactMailForm.add( sendMail );
 		
 		initWidget( contactMailForm );
 	}
+	
+	public void addSendButtonClickHandler( ClickHandler clickHandler ) {
+		sendMail.addClickHandler( clickHandler );
+	}
+	
 	
 	public boolean validateEmail(){
 		if( emailInput.getText().isEmpty() ){
@@ -71,15 +100,15 @@ public class ContactMailForm extends Composite {
 		}
 	}
 	
-	public boolean validateSubject(){
-		if( subjectInput.getText().isEmpty() ){
-			subjectInput.addStyleName( "textBoxError" );
+	public boolean validateName(){
+		if( nameInput.getText().isEmpty() ){
+			nameInput.addStyleName( "textBoxError" );
 			setSubjectInputError("Enter subject of mail");
 			showSubjectInputError();
 			return false;
 		}
 		else{
-			subjectInput.removeStyleName( "textBoxError" );
+			nameInput.removeStyleName( "textBoxError" );
 			hideSubjectInputError();
 			return true;
 		}
@@ -88,7 +117,7 @@ public class ContactMailForm extends Composite {
 	public boolean validateBody(){
 		if( mailBody.getText().isEmpty() ){
 			mailBody.addStyleName( "textBoxError" );
-			setBodyError("Enter subject of mail");
+			setBodyError("Enter Your Name");
 			showBodyError();
 			return false;
 		}
@@ -112,15 +141,15 @@ public class ContactMailForm extends Composite {
 	}
 	
 	public void setSubjectInputError(String error){
-		subjectInputError.setText( error );
+		nameInputError.setText( error );
 	}
 	
 	public void showSubjectInputError(){
-		subjectInputError.setVisible( true );
+		nameInputError.setVisible( true );
 	}
 	
 	public void hideSubjectInputError(){
-		subjectInputError.setVisible( true );
+		nameInputError.setVisible( true );
 	}
 	
 	public void setBodyError(String error){

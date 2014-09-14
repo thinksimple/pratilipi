@@ -395,6 +395,12 @@ public class UserForms implements EntryPoint {
 			modal.add( changePasswordFormDialog );
 			showModal();
 		}
+		
+
+		RootPanel contactForm = RootPanel.get("PageContent-PratilipiContact-Form");
+		ContactMailForm contactMailForm = new ContactMailForm();
+		if( contactForm != null )
+			contactForm.add( contactMailForm );
 	}
 	
 	public void changePasswordRPC(final ChangePasswordForm changePasswordForm, ChangePasswordData changePasswordData){

@@ -23,12 +23,14 @@ import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
-import com.pratilipi.service.shared.SavePratilipiContentRequest;
-import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SaveAuthorRequest;
 import com.pratilipi.service.shared.SaveAuthorResponse;
+import com.pratilipi.service.shared.SavePratilipiContentRequest;
+import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
+import com.pratilipi.service.shared.UserQueryRequest;
+import com.pratilipi.service.shared.UserQueryResponse;
 
 public interface PratilipiServiceAsync {
 	
@@ -93,5 +95,9 @@ public interface PratilipiServiceAsync {
 	void getUserPratilipiList( 
 			GetUserPratilipiListRequest request,
 			AsyncCallback<GetUserPratilipiListResponse> callback );
+	
+	void userQueryMail(
+			UserQueryRequest request,
+			AsyncCallback<UserQueryResponse> callback );
 
 }
