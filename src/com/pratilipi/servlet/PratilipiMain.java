@@ -17,8 +17,6 @@ import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.html.HtmlContent;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
-import com.claymus.module.websitewidget.footer.FooterWidget;
-import com.claymus.module.websitewidget.footer.FooterWidgetFactory;
 import com.claymus.module.websitewidget.html.HtmlWidget;
 import com.claymus.module.websitewidget.html.HtmlWidgetFactory;
 import com.claymus.servlet.ClaymusMain;
@@ -38,7 +36,6 @@ import freemarker.template.TemplateException;
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
 	
-	@SuppressWarnings("unused")
 	private static final Logger logger = 
 			Logger.getLogger( PratilipiMain.class.getName() );
 
@@ -163,54 +160,14 @@ public class PratilipiMain extends ClaymusMain {
 	protected List<WebsiteWidget> getWebsiteWidgetList(
 			HttpServletRequest request ) throws IOException {
 		
-		String requestUri = request.getRequestURI();
 		List<WebsiteWidget> websiteWidgetList
 				= super.getWebsiteWidgetList( request );
 
-		ClaymusHelper claymusHelper = new ClaymusHelper( request );
-		
-		
-		/*
-		if( ! requestUri.equals( "/home" ) ) {
-			HeaderWidget headerWidget = HeaderWidgetFactory.newHeaderWidget();
-			headerWidget.setBrand( "Pratilipi" );
-			headerWidget.setTagLine( "you become what you read ..." );
-
-			headerWidget.setRightNavItems( new Object[][] {
-					{ "Classics", null, new String[][] {
-							{ "Classic Books", "/classics/books" },
-							{ "Classic Poems", "/classics/poems" },
-							{ "Classic Stories", "/classics/stories" },
-							{ "Classic Articles", "/classics/articles" }}},
-					{ "Books", "/books", null },
-					{ "Poems", "/poems", null },
-					{ "Stories", "/stories", null },
-					{ "Articles", "/articles", null },
-					{ "Languages", "/languages", null },
-					{ "Authors", "/authors" },
-					{ "Genres", "/genres" },
-					{ "About", null, new String[][] {
-							{ "Pratilipi", "/about/pratilipi" },
-							{ "Team", "/about/team" },
-							{ "The Founding Readers", "/about/the-founding-readers" }}},
-					{ claymusHelper.isUserLoggedIn() ? "Sign Out" : "Sign In", claymusHelper.isUserLoggedIn() ? "#signout" : "#signin", null },
-					{ "Sign up", "#signup", null },
-			});
-			headerWidget.setPosition( "HEADER" );
-		}
-*/
-		
 		HtmlWidget headerWidget = generateHeaderWidget( request );
 		headerWidget.setPosition( "HEADER" );
 		websiteWidgetList.add( headerWidget );
 		
-		FooterWidget footerWidget = FooterWidgetFactory.newFooterWidget();
-		footerWidget.setLinks( new String[][] {
-				{ "About", "/about" },
-				{ "Contact", "/contact" },
-				{ "FAQs", "/faq" }
-		} );
-		footerWidget.setCopyrightNote( "&copy; 2014 pratilipi.com" );
+		HtmlWidget footerWidget = generateHtmlWidgetFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/FooterWidget.ftl" );
 		footerWidget.setPosition( "FOOTER" );
 		websiteWidgetList.add( footerWidget );
 		
