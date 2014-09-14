@@ -2,45 +2,130 @@
 
 <script type="text/javascript">
 window.onload = function(){
-	    var $bl    = $(".books-block"),
-	    	$sl    = $(".stories-block"),
-	    	$pl    = $(".poems-block"),
-	        blW    = $bl.outerWidth(),
-	        blSW   = $bl[0].scrollWidth,
-	        wDiff  = (blSW/blW)-1,  // widths difference ratio
-	        mPadd  = 60,  // Mousemove Padding
-	        damp   = 20,  // Mousemove response softness
-	        mX     = 0,   // Real mouse position
-	        mX2    = 0,   // Modified mouse position
-	        posX   = 0,
-	        mmAA   = blW-(mPadd*2), // The mousemove available area
-	        mmAAr  = (blW/mmAA);    // get available mousemove fidderence ratio
-	
-		var $th;
-		
-		$bl.mousemove(function(e) {
-			$th = $(".books");
-	        mX = e.pageX - this.offsetLeft;
-	        mX2 = Math.min( Math.max(0, mX-mPadd), mmAA ) * mmAAr;
+	     var $book = $('div.book'), //Cache your DOM selector
+			$story = $('div.story'),
+			$poem = $('div.poem'),
+	     	 $bookL = $('div#bookL'),
+	     	 $bookR = $('div#bookR'),
+			 $storyL = $('div#storyL'),
+	     	 $storyR = $('div#storyR'),
+			 $poemL = $('div#poemL'),
+	     	 $poemR = $('div#poemR'),
+	        index = Math.floor($('div#list-container').outerWidth()/116), //Starting index
+	        visible = index;
+	    
+	    $('div#bookR').click(function(){
+	    	endIndex = $book.length; 
+	        if(index <= endIndex ){
+	          if(index+visible < endIndex) { 
+	            var shift = visible*116;     
+	          	$book.animate({'left':'-=' + shift + 'px'});
+	          	index = index+visible;
+	          	$bookL.css("cursor", "pointer");
+	          }
+	          else{
+	           var shift = (endIndex - index)*116;
+	          	$book.animate({'left':'-=' + shift + 'px'});
+	          	index = endIndex;
+	          	$bookR.css("cursor", "default");
+	          	$bookL.css("cursor", "pointer");
+	          }
+	        }
+	    });
+	    
+	    $('div#bookL').click(function(){
+	    	endIndex = $book.length; 
+	        if(index > 0){
+	          if(index-visible > visible) { 
+	          	var shift = visible*116;            
+	          	$book.animate({'left':'+='+ shift + 'px'});
+	          	index = index-visible;
+	          	$bookR.css("cursor", "pointer");
+	          }
+	          else{
+	          	var shift = (index - visible)*116;
+	          	$book.animate({'left':'+=' + shift + 'px'});
+	          	index = visible;
+	          	$bookL.css("cursor", "default");
+	          	$bookR.css("cursor", "pointer");
+	          }
+	       }
 		});
-		
-		$sl.mousemove(function(e) {
-			$th = $(".stories");
-	        mX = e.pageX - this.offsetLeft;
-	        mX2 = Math.min( Math.max(0, mX-mPadd), mmAA ) * mmAAr;
+		   
+		$('div#storyR').click(function(){
+		    endIndex = $story.length ; 
+	        if(index <= endIndex ){
+	          if(index+visible < endIndex) { 
+	            var shift = visible*116;     
+	          	$story.animate({'left':'-=' + shift + 'px'});
+	          	index = index+visible;
+	          	$storyL.css("cursor", "pointer");
+	          }
+	          else{
+	           var shift = (endIndex - index)*116;
+	          	$story.animate({'left':'-=' + shift + 'px'});
+	          	index = endIndex;
+	          	$storyR.css("cursor", "default");
+	          	$storyL.css("cursor", "pointer");
+	          }
+	        }
+	    });
+	    
+	    $('div#storyL').click(function(){
+	    	endIndex = $story.length; 
+	        if(index > 0){
+	          if(index-visible > visible) { 
+	          	var shift = visible*116;            
+	          	$story.animate({'left':'+='+ shift + 'px'});
+	          	index = index-visible;
+	          	$storyR.css("cursor", "pointer");
+	          }
+	          else{
+	          	var shift = (index - visible)*116;
+	          	$story.animate({'left':'+=' + shift + 'px'});
+	          	index = visible;
+	          	$storyL.css("cursor", "default");
+	          	$storyR.css("cursor", "pointer");
+	          }
+	       }
 		});
-		
-		$pl.mousemove(function(e) {
-			$th = $(".poems");
-	        mX = e.pageX - this.offsetLeft;
-	        mX2 = Math.min( Math.max(0, mX-mPadd), mmAA ) * mmAAr;
-		});
-	
-		setInterval(function(){
-			posX += (mX2 - posX) / damp; // zeno's paradox equation "catching delay"	
-			$th.css({marginLeft: -posX*wDiff });
-		}, 10);
-		
+		$('div#poemR').click(function(){
+		    endIndex = $poem.length; 
+	        if(index <= endIndex ){
+	          if(index+visible < endIndex) { 
+	            var shift = visible*116;     
+	          	$poem.animate({'left':'-=' + shift + 'px'});
+	          	index = index+visible;
+	          	$poemL.css("cursor", "pointer");
+	          }
+	          else{
+	           var shift = (endIndex - index)*116;
+	          	$poem.animate({'left':'-=' + shift + 'px'});
+	          	index = endIndex;
+	          	$poemR.css("cursor", "default");
+	          	$poemL.css("cursor", "pointer");
+	          }
+	        }
+	    });
+	    
+	    $('div#poemL').click(function(){
+	    	endIndex = $poem.length; 
+	        if(index > 0){
+	          if(index-visible > visible) { 
+	          	var shift = visible*116;            
+	          	$poem.animate({'left':'+='+ shift + 'px'});
+	          	index = index-visible;
+	          	$poemR.css("cursor", "pointer");
+	          }
+	          else{
+	          	var shift = (index - visible)*116;
+	          	$poem.animate({'left':'+=' + shift + 'px'});
+	          	index = visible;
+	          	$poemL.css("cursor", "default");
+	          	$poemR.css("cursor", "pointer");
+	          }
+	       }
+	    });
 	}
 </script>
 
@@ -58,11 +143,11 @@ window.onload = function(){
 			</div>
 			<div class="col-md-9">
 				<div class="row margin0 published-works">
-					<div class="col-sm-7">
+					<div class="col-sm-7" style="border: 1px solid #DDD;">
 						<#assign _authorNameEn = author.getFirstNameEn()+ " " + author.getLastNameEn()>
 						<#assign _authorName = author.getFirstName()+ " " + author.getLastName()>
-						<h3>${ _authorName }</h3>
-						<h4>${ _authorNameEn }</h4>
+						<h3 style="text-align: center;">${ _authorName }</h3>
+						<h4 style="text-align: center;">${ _authorNameEn }</h4>
 						<div>
 							<div id="PageContent-Author-Summary">
 								<#if author.getSummary()??>
@@ -95,69 +180,81 @@ window.onload = function(){
 				<#if bookDataList?has_content>
 					<hr></hr>
 					<h4 class="published">PUBLISHED BOOKS</h4>
-					<div class="row new-arrivals books-block">
-						<div class="books col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<#list bookDataList as book >
-								<div class="prod-info thumb">
-									<div style="width:100px; padding-top: 10px; padding-bottom:10px;">
-										<div style="width:100px; height:160px; overflow: hidden;">
-											<a href="${ bookUrlMap[ book.getId()?string("#") ] }">
-												<img class="img-responsive" src="${ bookCoverMap[ book.getId()?string("#") ] }"></img>
-											</a>
-										</div>
-										<div style="width:100px; height:55px; overflow: hidden; white-space: normal; font-size: 12px;">
-											<a href="${ bookUrlMap[ book.getId()?string("#") ] }">${ book.getTitle() }</a>
-											<p>${ languageMap[ book.getLanguageId()?string("#") ] }</p>
+					<div id="container" class="row new-arrivals">
+						<div id="list-container">
+							<div id="bookL"></div>
+							<div id="bookR"></div>
+							<div class="list">
+								<#list bookDataList as book >
+									<div class="prod-info book">
+										<div style="width:100px; padding-top: 10px; padding-bottom:10px;">
+											<div style="width:100px; height:160px; overflow: hidden;">
+												<a href="${ bookUrlMap[ book.getId()?string("#") ] }">
+													<img class="img-responsive" src="${ bookCoverMap[ book.getId()?string("#") ] }"></img>
+												</a>
+											</div>
+											<div style="width:100px; height:55px; overflow: hidden; white-space: normal; font-size: 12px;">
+												<a href="${ bookUrlMap[ book.getId()?string("#") ] }">${ book.getTitle() }</a>
+												<p>${ languageMap[ book.getLanguageId()?string("#") ] }</p>
+											</div>
 										</div>
 									</div>
-								</div>
-							</#list>
+								</#list>
+							</div>
 						</div>
 					</div>
 				</#if>
-				<#if storyDataList?has_content> 	
+				<#if storyDataList?has_content>
 					<hr></hr>
-					<h4>PUBLISHED STORIES</h4>
-					<div class="row new-arrivals stories-block">
-						<div class="stories col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<#list storyDataList as story >
-								<div class="prod-info thumb">
-									<div style="width:100px; padding-top: 10px; padding-bottom:10px;">
-										<div style="width:100px; height:160px; overflow: hidden;">
-											<a href="${ storyUrlMap[ story.getId()?string("#") ] }">
-												<img class="img-responsive" src="${ storyCoverMap[ story.getId()?string("#") ] }"></img>
-											</a>
-										</div>
-										<div style="width:100px; height:55px; overflow: hidden; white-space: normal; font-size: 12px;">
-											<a href="${ storyUrlMap[ story.getId()?string("#") ] }">${ story.getTitle() }</a>
-											<p>${ languageMap[ story.getLanguageId()?string("#") ] }</p>
+					<h4 class="published">PUBLISHED STORIES</h4>
+					<div id="container" class="row new-arrivals">
+						<div id="list-container">
+							<div id="storyL"></div>
+							<div id="storyR"></div>
+							<div class="list">
+								<#list storyDataList as story >
+									<div class="prod-info story">
+										<div style="width:100px; padding-top: 10px; padding-bottom:10px;">
+											<div style="width:100px; height:160px; overflow: hidden;">
+												<a href="${ storyUrlMap[ story.getId()?string("#") ] }">
+													<img class="img-responsive" src="${ storyCoverMap[ story.getId()?string("#") ] }"></img>
+												</a>
+											</div>
+											<div style="width:100px; height:55px; overflow: hidden; white-space: normal; font-size: 12px;">
+												<a href="${ storyUrlMap[ story.getId()?string("#") ] }">${ story.getTitle() }</a>
+												<p>${ languageMap[ story.getLanguageId()?string("#") ] }</p>
+											</div>
 										</div>
 									</div>
-								</div>
-							</#list>
+								</#list>
+							</div>
 						</div>
 					</div>
 				</#if>
 				<#if poemDataList?has_content>
 					<hr></hr>
-					<h4>PUBLISHED POEMS</h4>
-					<div class="row new-arrivals poems-block">
-						<div class="poems col-lg-12 col-md-12 col-sm-12 col-xs-12">	
-							<#list poemDataList as poem >
-								<div class="prod-info thumb">
-									<div style="width:100px; padding-top: 10px; padding-bottom:10px;">
-										<div style="width:100px; height:160px; overflow: hidden;">
-											<a href="${ poemUrlMap[ poem.getId()?string("#") ] }">
-												<img class="img-responsive" src="${ poemCoverMap[ poem.getId()?string("#") ] }"></img>
-											</a>
-										</div>
-										<div style="width:100px; height:55px; overflow: hidden; white-space: normal; font-size: 12px;">
-											<a href="${ poemUrlMap[ poem.getId()?string("#") ] }">${ poem.getTitle() }</a>
-											<p>${ languageMap[ poem.getLanguageId()?string("#") ] }</p>
+					<h4 class="published">PUBLISHED POEMS</h4>
+					<div id="container" class="row new-arrivals">
+						<div id="list-container">
+							<div id="poemL"></div>
+							<div id="poemR"></div>
+							<div class="list">
+								<#list poemDataList as poem >
+									<div class="prod-info poem">
+										<div style="width:100px; padding-top: 10px; padding-bottom:10px;">
+											<div style="width:100px; height:160px; overflow: hidden;">
+												<a href="${ poemUrlMap[ poem.getId()?string("#") ] }">
+													<img class="img-responsive" src="${ poemCoverMap[ poem.getId()?string("#") ] }"></img>
+												</a>
+											</div>
+											<div style="width:100px; height:55px; overflow: hidden; white-space: normal; font-size: 12px;">
+												<a href="${ poemUrlMap[ poem.getId()?string("#") ] }">${ poem.getTitle() }</a>
+												<p>${ languageMap[ poem.getLanguageId()?string("#") ] }</p>
+											</div>
 										</div>
 									</div>
-								</div>
-							</#list>
+								</#list>
+							</div>
 						</div>
 					</div>
 				</#if>

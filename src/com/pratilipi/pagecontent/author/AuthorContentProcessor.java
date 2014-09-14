@@ -38,7 +38,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		String authorImage = PratilipiHelper.URL_AUTHOR_IMAGE + authorId;
 		
 		DataListCursorTuple<Pratilipi> bookList = dataAccessor.getPratilipiListByAuthor( 
-								authorId, PratilipiType.BOOK, null, 100 );
+								authorId, PratilipiType.BOOK, null, 200 );
 		List<Pratilipi> bookDataList = bookList.getDataList();
 		
 		Map<String, String> bookCoverMap = new HashMap<>();
