@@ -39,7 +39,7 @@
 			</div>
 			<div class="col-md-4" style="width: 200px; margin-top: 20px;">
 				<a href="https://www.google.co.in/maps/place/12%C2%B054%2736.9%22N+77%C2%B036%2719.9%22E/@12.9102416,77.6055429,16z/data=!4m2!3m1!1s0x0:0x0" target="_blank">
-					<img src="/images/location.jpg"/></a>
+					<img src="/theme.pratilipi/images/location.jpg"/></a>
 			</div>
 		</div>
 	</div>
