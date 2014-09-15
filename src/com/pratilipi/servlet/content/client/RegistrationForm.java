@@ -5,6 +5,8 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -59,12 +61,19 @@ public class RegistrationForm extends Composite {
 		firstNameInput.addStyleName( "col-xs-1" );
 		firstNameInput.addStyleName( "form-control" );
 		firstNameInput.addStyleName( "nameTextBox" );
-		
 		firstNameInput.addBlurHandler(new BlurHandler(){
 
 			@Override
 			public void onBlur(BlurEvent event) {
 				validateFirstName();
+			}});
+		firstNameInput.addFocusHandler( new FocusHandler() {
+
+			@Override
+			public void onFocus(FocusEvent event) {
+				nameInputError.setVisible( false );
+				hideServerError();
+				
 			}});
 		
 		lastNameInput.getElement().getStyle().setDisplay( Display.INLINE_BLOCK );
@@ -78,6 +87,16 @@ public class RegistrationForm extends Composite {
 			public void onBlur(BlurEvent event) {
 				validateLastName();
 			}});
+		lastNameInput.addFocusHandler( new FocusHandler() {
+
+			@Override
+			public void onFocus(FocusEvent event) {
+				if( validateFirstName() ) 
+					nameInputError.setVisible( false );
+				hideServerError();
+				
+			}});
+		
 		
 		emailInput.getElement().setPropertyString("placeholder", "Email");
 		emailInput.addStyleName( "form-control" );
@@ -87,6 +106,15 @@ public class RegistrationForm extends Composite {
 			public void onBlur(BlurEvent event) {
 				validateEmail();
 			}});
+		emailInput.addFocusHandler( new FocusHandler() {
+
+			@Override
+			public void onFocus(FocusEvent event) {
+				emailInputError.setVisible( false );
+				hideServerError();
+				
+			}});
+		
 		
 		password.getElement().getStyle().setDisplay(Display.BLOCK);
 		password.getElement().setPropertyString("placeholder", "Password");
@@ -97,6 +125,14 @@ public class RegistrationForm extends Composite {
 			public void onBlur(BlurEvent event) {
 				validatePassword();
 			}});
+		password.addFocusHandler( new FocusHandler() {
+
+			@Override
+			public void onFocus(FocusEvent event) {
+				passwordError.setVisible( false );
+				hideServerError();
+				
+			}});
 		
 		confirmPassword.getElement().setPropertyString("placeholder", "Confirm Password");
 		confirmPassword.addStyleName( "form-control" );
@@ -105,6 +141,14 @@ public class RegistrationForm extends Composite {
 			@Override
 			public void onBlur(BlurEvent event) {
 				validateConfPassword();
+			}});
+		confirmPassword.addFocusHandler( new FocusHandler() {
+
+			@Override
+			public void onFocus(FocusEvent event) {
+				confPassError.setVisible( false );
+				hideServerError();
+				
 			}});
 		
 		registerButton.addStyleName("btn btn-lg");
@@ -177,13 +221,7 @@ public class RegistrationForm extends Composite {
 	
 	//Form validation functions
 	public boolean validateFirstName(){
-		if( getFirstName().isEmpty() ){
-			setFirstNameErrorStyle();
-			setNameInputError("Enter first name");
-			showNameInputError();
-			return false;
-		}
-		else if( validateForm.ValidateFirstName( getFirstName() ) ){
+		if( validateForm.ValidateFirstName( getFirstName() ) ){
 			setFirstNameErrorStyle();
 			setNameInputError("First Name cannot contain special characters and integers");
 			showNameInputError();
@@ -205,7 +243,8 @@ public class RegistrationForm extends Composite {
 		}
 		else{
 			setLastNameAcceptStyle();
-			hideNameInputError();
+			if( validateFirstName() )
+				hideNameInputError();
 			return true;
 		}
 	}
@@ -396,7 +435,7 @@ public class RegistrationForm extends Composite {
 	}
 	
 	public void hideServerError(){
-		//TODO
+		serverError.setVisible( false );
 	}
 
 }

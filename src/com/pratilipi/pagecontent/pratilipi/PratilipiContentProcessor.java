@@ -79,7 +79,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "pratilipiCoverUrl", pratilipiType.getCoverImageUrl() + pratilipi.getId() );
 		dataModel.put( "pratilipiHomeUrl", pratilipiType.getPageUrl() + pratilipi.getId() );
 		dataModel.put( "pratilipiReaderUrl", pratilipiType.getReaderPageUrl() + pratilipi.getId() );
-		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getId() );
+		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getAuthorId() );
 		
 		dataModel.put( "showReviewedMessage",
 				pratilipiBook != null && pratilipiBook.getReviewState() != UserReviewState.NOT_SUBMITTED );

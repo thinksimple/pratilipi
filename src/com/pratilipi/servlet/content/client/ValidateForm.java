@@ -5,12 +5,8 @@ import com.google.gwt.regexp.shared.RegExp;
 
 public class ValidateForm {
 	
-	//Regular expression for string containing characters and whitespace.
-	private String charPattern = new String("^[a-zA-Z\\s]+$");
-	private RegExp charExp = RegExp.compile(charPattern);
-	
-	private String lastNamePattern = new String("^[a-zA-Z]*$");
-	private RegExp lastNameExp = RegExp.compile(lastNamePattern);
+	private String namePattern = new String("^[a-zA-Z\\s]*$");
+	private RegExp nameExp = RegExp.compile(namePattern);
 	
 	//Regular expression for string containing characters and whitespace.
 	private String emailPattern = new String("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$");
@@ -19,7 +15,7 @@ public class ValidateForm {
 	public ValidateForm(){}
 	
 	public boolean ValidateFirstName(String firstName){
-		MatchResult matcher = charExp.exec( firstName );
+		MatchResult matcher = nameExp.exec( firstName );
 		Boolean matchFound = (matcher!=null);
 		if(!matchFound)
 			return true;
@@ -28,7 +24,7 @@ public class ValidateForm {
 	}
 	
 	public boolean ValidateLastName( String lastName ){
-		MatchResult matcher = lastNameExp.exec( lastName );
+		MatchResult matcher = nameExp.exec( lastName );
 		Boolean matchFound = (matcher!=null);
 		if(!matchFound)
 			return true;

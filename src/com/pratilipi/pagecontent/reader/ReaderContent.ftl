@@ -46,12 +46,39 @@
 </div>
 
 <script language="javascript" defer>
+
+	function disableselect(e){
+		return false;
+	}
+	function reEnable(){
+		return true;
+	}
+	//if IE4+
+		document.onselectstart=new Function ("return false");
+		document.oncontextmenu=new Function ("return false");
+	//if NS6
+	if (window.sidebar){
+		document.onmousedown=disableselect;
+		document.onclick=reEnable;
+	}	
+	
 	window.onload = function() {
 		var $reader = $( '#PageContent-Pratilipi-Content' );
 		if( $reader.height() < 800 )
-			$reader.height( 800 );
+			$reader.height( 800 ); 
+		
+		jQuery(document).bind("keyup keydown", function(e){
+	    if(e.ctrlKey && e.keyCode == 80){
+		        return false;
+		    }
+	});
 	}
 </script>
+	<style type="text/css">
+		@media print{
+			body {display:none;}
+		}
+</style>
 
 <#if showEditOptions>
 	<script type="text/javascript" language="javascript" src="/pagecontent.reader/pagecontent.reader.nocache.js" defer></script>
