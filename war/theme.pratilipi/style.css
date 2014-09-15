@@ -530,13 +530,14 @@ header {
 }
 
 .help {
-	background: url(../theme.pratilipi/images/faqs.jpg) no-repeat center center;
-	height: 300px;
+	/* background: url(../theme.pratilipi/images/faqs.jpg) no-repeat center center; */
+	/* height: 300px; */
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 	min-width: 100%;
+	color: black;
 }
 
 .common-static-bg {
@@ -831,36 +832,8 @@ header {
 
 
 
-.books-block, 
-.stories-block,
-.poems-block {
-    position:relative; /**/
-    overflow: hidden;
-    margin: 0 5px;
-    height: 250px;     /**/
-} 
-.books-block .books, 
-.stories-block .stories,
-.poems-block .poems {
-    white-space: nowrap;
-    text-align: center;
-}
-.books-block .thumb, 
-.stories-block .thumb,
-.poems-block .thumb {
-    display: inline-block;
-    padding: 5px;
-    margin: 5px;
-}
+/* Below piece of formating is for horizontal scroll */
 
-.books, .stories, .poems {
-  position:absolute;  /**/
-  margin-left:0;      /**/
-}
-
-
-
-/**/
 #container{
 	width:100%;
 	height:230px;
@@ -869,13 +842,11 @@ header {
 
 #list-container {
 	overflow:hidden;    
-	width: 98%;  
-	float:left;   
+	width: 95%;  
 }
 
 .list{
-	min-width:1400px;
-    float:left;
+	margin-left : 30px;
 }
 
 
@@ -900,7 +871,6 @@ header {
     width:70px;
     height:220px;
     float:left;
-    cursor:pointer;
     z-index :1;
 }
 
@@ -914,7 +884,8 @@ header {
 .book, .story, .poem{
 	width:100px;
     height:220px;
-    margin: 8px;
+    margin: 15px;
     float:left;
     position:relative;
 }
+	

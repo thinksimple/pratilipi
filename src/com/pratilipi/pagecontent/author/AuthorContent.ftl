@@ -3,30 +3,41 @@
 <script type="text/javascript">
 window.onload = function(){
 	     var $book = $('div.book'), //Cache your DOM selector
-			$story = $('div.story'),
-			$poem = $('div.poem'),
+			 $story = $('div.story'),
+			 $poem = $('div.poem'),
+			 $pratilipiWidth = 130,
 	     	 $bookL = $('div#bookL'),
 	     	 $bookR = $('div#bookR'),
 			 $storyL = $('div#storyL'),
 	     	 $storyR = $('div#storyR'),
 			 $poemL = $('div#poemL'),
 	     	 $poemR = $('div#poemR'),
-	        index = Math.floor($('div#list-container').outerWidth()/116), //Starting index
-	        visible = index;
-	    
+	         visible = Math.floor($('div#list-container').outerWidth()/$pratilipiWidth), //Starting index
+			 bookIndex = visible,
+			 storyIndex = visible,
+			 poemIndex = visible;
+	         
+	  
+		 //maxList
+		 var $maxList = ( $('div.book').length >= $('div.story').length )?
+									   (( $('div.book').length >= $('div.poem').length )? $('div.book').length : $('div.poem').length ):
+									   (( $('div.poem').length >= $('div.story').length )? $('div.poem').length : $('div.poem').length );
+		
+		$('div.list').css( "min-width", $maxList*$pratilipiWidth+'px' );
+		
 	    $('div#bookR').click(function(){
 	    	endIndex = $book.length; 
-	        if(index <= endIndex ){
-	          if(index+visible < endIndex) { 
-	            var shift = visible*116;     
+	        if(bookIndex <= endIndex ){
+	          if(bookIndex+visible < endIndex) { 
+	            var shift = visible*$pratilipiWidth;     
 	          	$book.animate({'left':'-=' + shift + 'px'});
-	          	index = index+visible;
+	          	bookIndex = bookIndex+visible;
 	          	$bookL.css("cursor", "pointer");
 	          }
 	          else{
-	           var shift = (endIndex - index)*116;
+	           var shift = (endIndex - bookIndex)*$pratilipiWidth;
 	          	$book.animate({'left':'-=' + shift + 'px'});
-	          	index = endIndex;
+	          	bookIndex = endIndex;
 	          	$bookR.css("cursor", "default");
 	          	$bookL.css("cursor", "pointer");
 	          }
@@ -35,17 +46,17 @@ window.onload = function(){
 	    
 	    $('div#bookL').click(function(){
 	    	endIndex = $book.length; 
-	        if(index > 0){
-	          if(index-visible > visible) { 
-	          	var shift = visible*116;            
+	        if(bookIndex > 0){
+	          if(bookIndex-visible > visible) { 
+	          	var shift = visible*$pratilipiWidth;            
 	          	$book.animate({'left':'+='+ shift + 'px'});
-	          	index = index-visible;
+	          	bookIndex = bookIndex-visible;
 	          	$bookR.css("cursor", "pointer");
 	          }
 	          else{
-	          	var shift = (index - visible)*116;
+	          	var shift = (bookIndex - visible)*$pratilipiWidth;
 	          	$book.animate({'left':'+=' + shift + 'px'});
-	          	index = visible;
+	          	bookIndex = visible;
 	          	$bookL.css("cursor", "default");
 	          	$bookR.css("cursor", "pointer");
 	          }
@@ -54,17 +65,17 @@ window.onload = function(){
 		   
 		$('div#storyR').click(function(){
 		    endIndex = $story.length ; 
-	        if(index <= endIndex ){
-	          if(index+visible < endIndex) { 
-	            var shift = visible*116;     
+	        if(storyIndex <= endIndex ){
+	          if(storyIndex+visible < endIndex) { 
+	            var shift = visible*$pratilipiWidth;     
 	          	$story.animate({'left':'-=' + shift + 'px'});
-	          	index = index+visible;
+	          	storyIndex = storyIndex+visible;
 	          	$storyL.css("cursor", "pointer");
 	          }
 	          else{
-	           var shift = (endIndex - index)*116;
+	           var shift = (endIndex - storyIndex)*$pratilipiWidth;
 	          	$story.animate({'left':'-=' + shift + 'px'});
-	          	index = endIndex;
+	          	storyIndex = endIndex;
 	          	$storyR.css("cursor", "default");
 	          	$storyL.css("cursor", "pointer");
 	          }
@@ -73,17 +84,17 @@ window.onload = function(){
 	    
 	    $('div#storyL').click(function(){
 	    	endIndex = $story.length; 
-	        if(index > 0){
-	          if(index-visible > visible) { 
-	          	var shift = visible*116;            
+	        if(storyIndex > 0){
+	          if(storyIndex-visible > visible) { 
+	          	var shift = visible*$pratilipiWidth;            
 	          	$story.animate({'left':'+='+ shift + 'px'});
-	          	index = index-visible;
+	          	storyIndex = storyIndex-visible;
 	          	$storyR.css("cursor", "pointer");
 	          }
 	          else{
-	          	var shift = (index - visible)*116;
+	          	var shift = (storyIndex - visible)*$pratilipiWidth;
 	          	$story.animate({'left':'+=' + shift + 'px'});
-	          	index = visible;
+	          	storyIndex = visible;
 	          	$storyL.css("cursor", "default");
 	          	$storyR.css("cursor", "pointer");
 	          }
@@ -91,17 +102,17 @@ window.onload = function(){
 		});
 		$('div#poemR').click(function(){
 		    endIndex = $poem.length; 
-	        if(index <= endIndex ){
-	          if(index+visible < endIndex) { 
-	            var shift = visible*116;     
+	        if(poemIndex <= endIndex ){
+	          if(poemIndex+visible < endIndex) { 
+	            var shift = visible*$pratilipiWidth;     
 	          	$poem.animate({'left':'-=' + shift + 'px'});
-	          	index = index+visible;
+	          	poemIndex = poemIndex+visible;
 	          	$poemL.css("cursor", "pointer");
 	          }
 	          else{
-	           var shift = (endIndex - index)*116;
+	           var shift = (endIndex - poemIndex)*$pratilipiWidth;
 	          	$poem.animate({'left':'-=' + shift + 'px'});
-	          	index = endIndex;
+	          	poemIndex = endIndex;
 	          	$poemR.css("cursor", "default");
 	          	$poemL.css("cursor", "pointer");
 	          }
@@ -110,17 +121,17 @@ window.onload = function(){
 	    
 	    $('div#poemL').click(function(){
 	    	endIndex = $poem.length; 
-	        if(index > 0){
-	          if(index-visible > visible) { 
-	          	var shift = visible*116;            
+	        if(poemIndex > 0){
+	          if(poemIndex-visible > visible) { 
+	          	var shift = visible*$pratilipiWidth;            
 	          	$poem.animate({'left':'+='+ shift + 'px'});
-	          	index = index-visible;
+	          	poemIndex = poemIndex-visible;
 	          	$poemR.css("cursor", "pointer");
 	          }
 	          else{
-	          	var shift = (index - visible)*116;
+	          	var shift = (poemIndex - visible)*$pratilipiWidth;
 	          	$poem.animate({'left':'+=' + shift + 'px'});
-	          	index = visible;
+	          	poemIndex = visible;
 	          	$poemL.css("cursor", "default");
 	          	$poemR.css("cursor", "pointer");
 	          }
