@@ -13,7 +13,7 @@ You have received this mail as you requested for password reset of your account 
 <table cellspacing="0" cellpadding="0"> 
 <tr>
 <td align="center" width="300" height="40" bgcolor="#d62828" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
-<a href="http://devo-pratilipi.appspot.com/#changepassword-${ user.getEmail() }-${ user.getPassword() }" style="font-size:16px; font-weight: bold; font-family:sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
+<a href="http://www.pratilipi.com/#changepassword-${ user.getEmail() }-${ user.getPassword() }" style="font-size:16px; font-weight: bold; font-family:sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
 <span style="color: #ffffff;">
 Reset Your Password
 </span>
@@ -26,8 +26,8 @@ Reset Your Password
 
 Please click (or copy and paste) on the link below to reset your password if above button doesn't work.<br/>
 
-<a href="http://devo-pratilipi.appspot.com/#changepassword-${ user.getEmail() }-${ user.getPassword() }">
-	http://devo-pratilipi.appspot.com/#changepassword-${ user.getEmail() }-${ user.getPassword() }</a><br/><br/>
+<a href="http://www.pratilipi.com/#changepassword-${ user.getEmail() }-${ user.getPassword() }">
+	http://www.pratilipi.com/#changepassword-${ user.getEmail() }-${ user.getPassword() }</a><br/><br/>
 
 
 Thanks,<br/>
