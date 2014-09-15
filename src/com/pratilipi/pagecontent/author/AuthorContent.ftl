@@ -16,13 +16,15 @@ window.onload = function(){
 			 bookIndex = visible,
 			 storyIndex = visible,
 			 poemIndex = visible;
-	         
-	  
-		 //maxList
+	    
+	    
+	    //maxList
 		 var $maxList = ( $('div.book').length >= $('div.story').length )?
 									   (( $('div.book').length >= $('div.poem').length )? $('div.book').length : $('div.poem').length ):
-									   (( $('div.poem').length >= $('div.story').length )? $('div.poem').length : $('div.poem').length );
+									   (( $('div.story').length >= $('div.poem').length )? $('div.story').length : $('div.poem').length );
 		
+	    
+	    //Setting width of list div containing all books/stories/poems to stop wrapping of elements
 		$('div.list').css( "min-width", $maxList*$pratilipiWidth+'px' );
 		
 	    $('div#bookR').click(function(){
@@ -155,10 +157,8 @@ window.onload = function(){
 			<div class="col-md-9">
 				<div class="row margin0 published-works">
 					<div class="col-sm-7" style="border: 1px solid #DDD;">
-						<#assign _authorNameEn = author.getFirstNameEn()+ " " + author.getLastNameEn()>
-						<#assign _authorName = author.getFirstName()+ " " + author.getLastName()>
-						<h3 style="text-align: center;">${ _authorName }</h3>
-						<h4 style="text-align: center;">${ _authorNameEn }</h4>
+						<h3 style="text-align: center;">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></h3>
+						<h4 style="text-align: center;">${ author.getFirstNameEn() }<#if author.getLastNameEn()??> ${ author.getLastNameEn() }</#if></h4>
 						<div>
 							<div id="PageContent-Author-Summary">
 								<#if author.getSummary()??>
