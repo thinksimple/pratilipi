@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +25,10 @@ import com.claymus.module.websitewidget.html.HtmlWidgetFactory;
 import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.commons.shared.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.data.access.DataAccessor;
+import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Language;
+import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.author.AuthorContentFactory;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.genres.GenresContentFactory;
@@ -66,7 +73,7 @@ public class PratilipiMain extends ClaymusMain {
 		// Home pages
 		String requestUri = request.getRequestURI();
 		if( requestUri.equals( "/" ) )
-			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/HomePageContent.ftl" ) );
+			pageContentList.add( generateHomePageContent( request ) );
 
 		else if( requestUri.equals( "/books" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK ) );
@@ -217,6 +224,118 @@ public class PratilipiMain extends ClaymusMain {
 		HtmlWidget htmlWidget = HtmlWidgetFactory.newHtmlWidget();
 		htmlWidget.setHtml( writer.toString() );
 		return htmlWidget;
+	}
+
+	private HtmlContent generateHomePageContent(
+			HttpServletRequest request ) throws IOException {
+		
+		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		List<Pratilipi> bookDataList = new ArrayList<>(6);
+		bookDataList.add( dataAccessor.getPratilipi( 5710758973276160L, PratilipiType.BOOK) );
+		bookDataList.add( dataAccessor.getPratilipi( 5157903266742272L, PratilipiType.BOOK) );
+//		bookDataList.add( dataAccessor.getPratilipi( 4571168321306624L, PratilipiType.BOOK) );
+		bookDataList.add( dataAccessor.getPratilipi( 5963192723308544L, PratilipiType.BOOK) );
+		bookDataList.add( dataAccessor.getPratilipi( 5702351037923328L, PratilipiType.BOOK) );
+		bookDataList.add( dataAccessor.getPratilipi( 4840632421974016L, PratilipiType.BOOK) );
+		
+		Map<String, String> bookCoverMap = new HashMap<>();
+		Map<String, String> bookUrlMap = new HashMap<>();
+		for( Pratilipi book : bookDataList ){
+			if( bookCoverMap.get( book.getId() ) == null ){
+				bookCoverMap.put( book.getId().toString(),
+								  PratilipiHelper.URL_BOOK_COVER + book.getId() );
+			}
+			if( bookUrlMap.get( book.getId() ) == null ){
+				bookUrlMap.put( book.getId().toString(), 
+								PratilipiHelper.URL_BOOK_PAGE + book.getId() );
+			}
+		}
+		
+		List<Pratilipi> poemDataList = new ArrayList<>( 6 );
+		poemDataList.add( dataAccessor.getPratilipi( 5705718560718848L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 5379137837465600L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 5969899851612160L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 5717648100818944L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 6196444344090624L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 4822614228860928L, PratilipiType.POEM) );
+
+		Map<String, String> poemCoverMap = new HashMap<>();
+		Map<String, String> poemUrlMap = new HashMap<>();
+		for( Pratilipi poem : poemDataList ){
+			if( poemCoverMap.get( poem.getId() ) == null ){
+				poemCoverMap.put( poem.getId().toString(),
+								  PratilipiHelper.URL_POEM_COVER + poem.getId() );
+			}
+			if( poemUrlMap.get( poem.getId() ) == null ){
+				poemUrlMap.put( poem.getId().toString(),
+								PratilipiHelper.URL_POEM_PAGE + poem.getId() );
+			}
+		}
+		
+		List<Pratilipi> storyDataList = new ArrayList<>( 6 );
+		storyDataList.add( dataAccessor.getPratilipi( 6466217413967872L, PratilipiType.STORY) );
+		storyDataList.add( dataAccessor.getPratilipi( 6174784018710528L, PratilipiType.STORY) );
+		storyDataList.add( dataAccessor.getPratilipi( 5998899202359296L, PratilipiType.STORY) );
+		storyDataList.add( dataAccessor.getPratilipi( 6662913897005056L, PratilipiType.STORY) );
+		storyDataList.add( dataAccessor.getPratilipi( 5944759797415936L, PratilipiType.STORY) );
+		storyDataList.add( dataAccessor.getPratilipi( 5898452667990016L, PratilipiType.STORY) );
+		
+		Map<String, String> storyCoverMap = new HashMap<>();
+		Map<String, String> storyUrlMap = new HashMap<>();
+		for( Pratilipi story : storyDataList ){
+			if( storyCoverMap.get( story.getId() ) == null ){
+				storyCoverMap.put( story.getId().toString(),
+								   PratilipiHelper.URL_STORY_COVER + story.getId() );
+			}
+			if( storyUrlMap.get( story.getId() ) == null ){
+				storyUrlMap.put( story.getId().toString(),
+								 PratilipiHelper.URL_STORY_PAGE + story.getId() );
+			}
+		}
+		//Fetching language list
+		List<Language> languageList = dataAccessor.getLanguageList();
+		Map<String, String> languageMap = new HashMap<>();
+		for( Language language : languageList ){
+			if( languageMap.get( language.getId() ) == null ){
+				languageMap.put( language.getId().toString(),
+								 language.getName() + " (" + language.getNameEn() + ")" );
+			}
+		}
+		
+		dataAccessor.destroy();
+		
+		
+		// Creating data model required for template processing
+		Map<String, Object> dataModel = new HashMap<>();
+		dataModel.put( "bookDataList", bookDataList );
+		dataModel.put( "bookCoverMap",  bookCoverMap );
+		dataModel.put( "bookUrlMap",  bookUrlMap );
+		dataModel.put( "poemDataList", poemDataList );
+		dataModel.put( "poemCoverMap",  poemCoverMap );
+		dataModel.put( "poemUrlMap",  poemUrlMap );
+		dataModel.put( "storyDataList", storyDataList );
+		dataModel.put( "storyCoverMap", storyCoverMap );
+		dataModel.put( "storyUrlMap", storyUrlMap );
+		dataModel.put( "languageMap", languageMap );
+		dataModel.put( "timeZone", claymusHelper.getCurrentUserTimeZone() );
+		
+		
+		Writer writer = new StringWriter();
+		Template template = FREEMARKER_CONFIGURATION
+				.getTemplate( "com/pratilipi/servlet/content/HomePageContent.ftl" );
+		try {
+			template.process( dataModel , writer );
+		} catch (TemplateException e) {
+			// TODO Auto-generated catch block
+			logger.log( Level.SEVERE, "", e );
+		}
+
+		HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
+		htmlContent.setHtml( writer.toString() );
+		return htmlContent;
 	}
 
 }
