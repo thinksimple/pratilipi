@@ -1,8 +1,8 @@
 package com.claymus.service.client;
 
 import com.claymus.commons.client.IllegalArgumentException;
-import com.claymus.service.shared.ChangePasswordRequest;
-import com.claymus.service.shared.ChangePasswordResponse;
+import com.claymus.service.shared.UpdateUserPasswordRequest;
+import com.claymus.service.shared.UpdateUserPasswordResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -29,9 +29,9 @@ public interface ClaymusService extends RemoteService {
 	void logoutUser();
 	
 	ResetUserPasswordResponse resetUserPassword( ResetUserPasswordRequest request )
-				throws IllegalArgumentException;
+			throws IllegalArgumentException;
 	
-	ChangePasswordResponse changeUserPassword( ChangePasswordRequest request )
+	UpdateUserPasswordResponse updateUserPassword( UpdateUserPasswordRequest request )
 			throws IllegalArgumentException;
 	
 }

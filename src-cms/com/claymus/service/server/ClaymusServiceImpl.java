@@ -13,8 +13,6 @@ import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.claymus.service.client.ClaymusService;
-import com.claymus.service.shared.ChangePasswordRequest;
-import com.claymus.service.shared.ChangePasswordResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -23,6 +21,8 @@ import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
 import com.claymus.service.shared.ResetUserPasswordRequest;
 import com.claymus.service.shared.ResetUserPasswordResponse;
+import com.claymus.service.shared.UpdateUserPasswordRequest;
+import com.claymus.service.shared.UpdateUserPasswordResponse;
 import com.claymus.service.shared.data.UserData;
 import com.claymus.taskqueue.Task;
 import com.claymus.taskqueue.TaskQueue;
@@ -44,11 +44,11 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		UserData userData = request.getUser();
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( userData.getEmail() );
+		User user = dataAccessor.getUserByEmail( userData.getEmail().toLowerCase() );
 
 		if( user == null ) {
 			user = dataAccessor.newUser();
-			user.setEmail( userData.getEmail() );
+			user.setEmail( userData.getEmail().toLowerCase() );
 
 			user.setCampaign( userData.getCampaign() );
 			user.setReferer( userData.getReferer() );
@@ -93,7 +93,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		TaskQueue taskQueue = TaskQueueFactory.getInviteUserTaskQueue();
 		taskQueue.add( task );
 		
-		return new InviteUserResponse( user.getId() );
+		return new InviteUserResponse();
 	}
 	
 	@Override
@@ -103,11 +103,11 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		UserData userData = request.getUser();
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( userData.getEmail() );
+		User user = dataAccessor.getUserByEmail( userData.getEmail().toLowerCase() );
 
 		if( user == null ) {
 			user = dataAccessor.newUser();
-			user.setEmail( userData.getEmail() );
+			user.setEmail( userData.getEmail().toLowerCase() );
 			user.setSignUpDate( new Date() );
 
 			user.setCampaign( userData.getCampaign() );
@@ -159,7 +159,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		TaskQueue taskQueue = TaskQueueFactory.getWelcomeUserTaskQueue();
 		taskQueue.add( task );
 		
-		return new RegisterUserResponse( user.getId() );
+		return new RegisterUserResponse();
 	}
 
 	@Override
@@ -170,7 +170,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 				new ClaymusHelper( this.getThreadLocalRequest() );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( request.getLoginId() );
+		User user = dataAccessor.getUserByEmail( request.getLoginId().toLowerCase() );
 		dataAccessor.destroy();
 		
 		if( user == null
@@ -213,7 +213,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 				new ClaymusHelper( this.getThreadLocalRequest() );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( request.getUserEmail() );
+		User user = dataAccessor.getUserByEmail( request.getUserEmail().toLowerCase() );
 		dataAccessor.destroy();
 		
 		if( user == null
@@ -244,47 +244,56 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 	}
 	
 	@Override
-	public ChangePasswordResponse changeUserPassword(ChangePasswordRequest request)
-			throws IllegalArgumentException {
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
+	public UpdateUserPasswordResponse updateUserPassword(
+			UpdateUserPasswordRequest request ) throws IllegalArgumentException {
+
 		ClaymusHelper claymusHelper =
 				new ClaymusHelper( this.getThreadLocalRequest() );
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		String tempEmail = request.getEmail();
+		String userEmail = request.getUserEmail();
+		User user = null;
 		
-		//if request object does not contain email, try retrieving it from session.
-		if( request.getEmail() == null || request.getEmail().isEmpty() ){
-			User tempUser = claymusHelper.getCurrentUser();
-			tempEmail = tempUser.getEmail();
-		}	
-		
-		User user = dataAccessor.getUserByEmail( tempEmail );
-		
-		//User is not logged in and trying to change password by using direct URL
-		if( user != null ){
-			if( request.getPassInUrl() != null && !user.getPassword().equals( request.getPassInUrl() ) )
-				throw new IllegalArgumentException( "URL used is not valid. Please check the URL and try again" );
-			else if( !request.getCurrentPassword().isEmpty() && !EncryptPassword.check( request.getCurrentPassword(),  user.getPassword() ) )
-				throw new IllegalArgumentException( "Current Password is not correct. Please try again" );
+		try {
+			// Request from user profile
+			if( userEmail == null ) {
+				
+				if( ! claymusHelper.isUserLoggedIn() )
+					throw new IllegalArgumentException(
+							"You are not logged in. Kindly "
+							+ "<a href='" + claymusHelper.createLoginURL() + "' class='alert-link'>login</a> and try again. "
+							+ "If you have forgotten your password, you can reset you password "
+							+ "<a href='" + claymusHelper.createForgotPasswordURL() + " ' class='alert-link'>here</a>." );
+
+				user = claymusHelper.getCurrentUser();
+
+				if( request.getCurrentPassword() == null
+						||  ! EncryptPassword.check( request.getCurrentPassword(),  user.getPassword() ) )
+					throw new IllegalArgumentException( "Current password is not correct. Kindly try again." );
+
+
+			// Request via password reset link
+			} else {
+				
+				user = dataAccessor.getUserByEmail( userEmail );
+				
+				if( request.getToken() == null
+						|| ! user.getPassword().equals( request.getToken() ) )
+
+					throw new IllegalArgumentException(
+							"URL used is invalid or expired. "
+							+ "Kindly check the URL and try again." );
+			}
+			
+			user.setPassword( EncryptPassword.getSaltedHash( request.getNewPassword() ));
+			dataAccessor.createOrUpdateUser( user );
+
+		} finally {
+			dataAccessor.destroy();
 		}
 		
-		if(user == null ){
-			if( request.getPassInUrl() != null )
-				throw new IllegalArgumentException( "URL used is not valid. Please check and try again" );
-			if( claymusHelper.isUserLoggedIn() )
-				throw new IllegalArgumentException( 
-					"You are not logged in. In case you forgot your password "
-					+ "<a href='" + claymusHelper.createForgotPasswordURL() + " ' class='alert-link'>Click Here</a>" );
-		}
-		
-		user.setPassword( EncryptPassword.getSaltedHash( request.getNewPassword() ));
-		dataAccessor.createOrUpdateUser( user );
-		
-		dataAccessor.destroy();
-		
-		return new ChangePasswordResponse();
-		
+		return new UpdateUserPasswordResponse();
 	}
 
 }

@@ -18,12 +18,11 @@ import com.google.apphosting.api.ApiProxy;
 
 public class ClaymusHelper {
 
-	@Deprecated
 	public static final String SESSION_ATTRIB_CURRENT_USER_ID = "CurrentUserId";
 	
 	public static final String URL_RESOURCE = "/resource.";
 
-	private static final String URL_LOGIN_PAGE = "/login?dest=";
+	private static final String URL_LOGIN_PAGE = "#login";
 	private static final String URL_LOGOUT_PAGE = "/logout?dest=";
 	private static final String URL_REGISTER_PAGE = "#signup";
 	private static final String URL_FORGOTPASSWORD_PAGE = "#forgotpassword";
@@ -66,6 +65,7 @@ public class ClaymusHelper {
 		return currentUserId;
 	}
 
+	@SuppressWarnings("serial")
 	public User getCurrentUser() {
 		if( currentUser == null ) {
 

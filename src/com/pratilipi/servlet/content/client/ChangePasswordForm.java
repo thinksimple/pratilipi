@@ -1,6 +1,5 @@
 package com.pratilipi.servlet.content.client;
 
-import com.claymus.service.shared.data.ChangePasswordData;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -187,18 +186,13 @@ public class ChangePasswordForm extends Composite {
 		}
 	}
 	
-	//Ser change Password data
-	public ChangePasswordData setChangePasswordData(){
-		ChangePasswordData changePassword = new ChangePasswordData();
-		changePassword.setCurrentPassword( currentPassword.getText() );
-		changePassword.setNewPassword( password.getText() );
-		
-		return changePassword;
-	}
-	
 	//Get text from input fields.
+	public String getCurrentPassword(){
+		return currentPassword.getText().trim().isEmpty() ? null : currentPassword.getText().trim();
+	}
+
 	public String getPassword(){
-		return password.getText();
+		return password.getText().trim().isEmpty() ? null : password.getText().trim();
 	}
 	
 	//set error message	

@@ -2,8 +2,6 @@ package com.pratilipi.servlet.content.client;
 
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.client.ClaymusServiceAsync;
-import com.claymus.service.shared.ChangePasswordRequest;
-import com.claymus.service.shared.ChangePasswordResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -12,7 +10,8 @@ import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
 import com.claymus.service.shared.ResetUserPasswordRequest;
 import com.claymus.service.shared.ResetUserPasswordResponse;
-import com.claymus.service.shared.data.ChangePasswordData;
+import com.claymus.service.shared.UpdateUserPasswordRequest;
+import com.claymus.service.shared.UpdateUserPasswordResponse;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -59,7 +58,7 @@ public class UserForms implements EntryPoint {
 					
 					@Override
 					public void onSuccess( InviteUserResponse response ) {
-						Window.Location.assign( "/invite?id=" + response.getUserId() );
+						Window.Location.assign( "/invite" );
 					}
 					
 					@Override
@@ -256,22 +255,17 @@ public class UserForms implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				final ChangePasswordData changePasswordData = changePasswordForm.setChangePasswordData();
-				
-				changePasswordData.setEmail( email );
-				changePasswordData.setPassInUrl( password );
-				
 				//used when a logged in user chooses to change his password
 				if( isChangePasswordURL 
 					&& changePasswordForm.validateCurrentPassword()
 					&& changePasswordForm.validatePassword() 
 					&& changePasswordForm.validateConfPassword())
-					changePasswordRPC(changePasswordForm, changePasswordData);
+					changePasswordRPC(changePasswordForm, email, password);
 				//used when user click on reset password link sent to his registered email.
 				else if( !isChangePasswordURL 
 						 && changePasswordForm.validatePassword() 
 						 && changePasswordForm.validateConfPassword() )
-							changePasswordRPC(changePasswordForm, changePasswordData);
+							changePasswordRPC(changePasswordForm, email, password);
 			}};
 		
 		changePasswordForm.addChangePasswdButtonClickHandler( changePasswdButtonClickHandler );
@@ -403,8 +397,10 @@ public class UserForms implements EntryPoint {
 			contactForm.add( contactMailForm );
 	}
 	
-	public void changePasswordRPC(final ChangePasswordForm changePasswordForm, ChangePasswordData changePasswordData){
-		claymusService.changeUserPassword(new ChangePasswordRequest( changePasswordData ), new AsyncCallback<ChangePasswordResponse>(){
+	public void changePasswordRPC(final ChangePasswordForm changePasswordForm, String userEmail, String token ){
+		claymusService.updateUserPassword(
+				new UpdateUserPasswordRequest( userEmail, token, changePasswordForm.getCurrentPassword(), changePasswordForm.getPassword() ),
+				new AsyncCallback<UpdateUserPasswordResponse>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -413,7 +409,7 @@ public class UserForms implements EntryPoint {
 			}
 
 			@Override
-			public void onSuccess(ChangePasswordResponse result) {
+			public void onSuccess(UpdateUserPasswordResponse result) {
 				Window.alert( "Password Changed successfully." );
 				Window.Location.replace( "/" );
 			}});
