@@ -1,6 +1,5 @@
 package com.pratilipi.data.access;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +45,28 @@ public class DataAccessorGaeImpl
 		extends com.claymus.data.access.DataAccessorGaeImpl
 		implements DataAccessor {
 
+	
+	@Override
+	public Book newBook() {
+		return new BookEntity();
+	}
+
+	@Override
+	public Poem newPoem() {
+		return new PoemEntity();
+	}
+
+	@Override
+	public Story newStory() {
+		return new StoryEntity();
+	}
+
+	@Override
+	public Article newArticle() {
+		return new ArticleEntity();
+	}
+
+
 	@Override
 	public Pratilipi getPratilipi( Long id ) {
 		return getEntity( PratilipiEntity.class, id );
@@ -68,47 +89,6 @@ public class DataAccessorGaeImpl
 		return null;
 	}
 	
-	@Override
-	public DataListCursorTuple<Pratilipi> getPratilipiListByAuthor( 
-			Long authorId, PratilipiType type, String cursorStr, int resultCount  ) {
-		Query query = null;
-		
-		if( type == PratilipiType.BOOK )
-			query = pm.newQuery( BookEntity.class );
-		
-		else if( type == PratilipiType.POEM )
-			query = pm.newQuery( PoemEntity.class );
-
-		else if( type == PratilipiType.STORY )
-			query = pm.newQuery( StoryEntity.class );
-
-		else if( type == PratilipiType.ARTICLE )
-			query = pm.newQuery( ArticleEntity.class );
-		
-		query = new GaeQueryBuilder( query )
-						.addFilter( "type", type )
-						.addFilter( "authorId", authorId )
-						.addOrdering( "title", true )
-						.setRange( 0, resultCount )
-						.build();
-
-		if( cursorStr != null ) {
-			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-			Map<String, Object> extensionMap = new HashMap<String, Object>();
-			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions(extensionMap);
-		}
-		
-		@SuppressWarnings("unchecked")
-		List<Pratilipi> pratilipiEntityList = (List<Pratilipi>) query.execute( type, authorId );
-		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
-		
-		return new DataListCursorTuple<Pratilipi>(
-				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
-				cursor == null ? null : cursor.toWebSafeString() );
-		
-	}
-
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
 			String cursorStr, int resultCount ) {
@@ -133,7 +113,8 @@ public class DataAccessorGaeImpl
 				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
 				cursor == null ? null : cursor.toWebSafeString() );
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiType type, Boolean publicDomain, String cursorStr, int resultCount ) {
@@ -185,6 +166,91 @@ public class DataAccessorGaeImpl
 				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
 				cursor == null ? null : cursor.toWebSafeString() );
 	}
+
+	@Override
+	public DataListCursorTuple<Pratilipi> getPratilipiListByLanguage(
+			PratilipiType type, Long languageId, String cursorStr, int resultCount  ) {
+
+		Query query = null;
+		
+		if( type == PratilipiType.BOOK )
+			query = pm.newQuery( BookEntity.class );
+		
+		else if( type == PratilipiType.POEM )
+			query = pm.newQuery( PoemEntity.class );
+
+		else if( type == PratilipiType.STORY )
+			query = pm.newQuery( StoryEntity.class );
+
+		else if( type == PratilipiType.ARTICLE )
+			query = pm.newQuery( ArticleEntity.class );
+		
+		query = new GaeQueryBuilder( query )
+						.addFilter( "type", type )
+						.addFilter( "languageId", languageId )
+						.addOrdering( "title", true )
+						.setRange( 0, resultCount )
+						.build();
+
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions(extensionMap);
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<Pratilipi> pratilipiEntityList = (List<Pratilipi>) query.execute( type, languageId );
+		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
+		
+		return new DataListCursorTuple<Pratilipi>(
+				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
+				cursor == null ? null : cursor.toWebSafeString() );
+		
+	}
+
+	@Override
+	public DataListCursorTuple<Pratilipi> getPratilipiListByAuthor( 
+			PratilipiType type, Long authorId, String cursorStr, int resultCount  ) {
+	
+		Query query = null;
+		
+		if( type == PratilipiType.BOOK )
+			query = pm.newQuery( BookEntity.class );
+		
+		else if( type == PratilipiType.POEM )
+			query = pm.newQuery( PoemEntity.class );
+
+		else if( type == PratilipiType.STORY )
+			query = pm.newQuery( StoryEntity.class );
+
+		else if( type == PratilipiType.ARTICLE )
+			query = pm.newQuery( ArticleEntity.class );
+		
+		query = new GaeQueryBuilder( query )
+						.addFilter( "type", type )
+						.addFilter( "authorId", authorId )
+						.addOrdering( "title", true )
+						.setRange( 0, resultCount )
+						.build();
+
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions(extensionMap);
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<Pratilipi> pratilipiEntityList = (List<Pratilipi>) query.execute( type, authorId );
+		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
+		
+		return new DataListCursorTuple<Pratilipi>(
+				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
+				cursor == null ? null : cursor.toWebSafeString() );
+		
+	}
+	
 	
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
@@ -192,50 +258,6 @@ public class DataAccessorGaeImpl
 	}
 	
 	
-	@Override
-	public Book newBook() {
-		return new BookEntity();
-	}
-
-	@Override
-	public Book getBook( Long id ) {
-		return getEntity( BookEntity.class, id );
-	}
-
-	@Override
-	public List<Book> getBookList() {
-		List<Pratilipi> pratilipiList =
-				getPratilipiList( PratilipiType.BOOK, null, null , 100 ).getDataList();
-		ArrayList<Book> bookList = new ArrayList<>( pratilipiList.size() );
-		for( Pratilipi pratilipi : pratilipiList )
-			bookList.add( (Book) pratilipi );
-		return bookList;
-	}
-	
-	@Override
-	public Book createOrUpdateBook( Book book ) {
-		return createOrUpdateEntity( book );
-	}
-
-	
-	@Override
-	public Poem newPoem() {
-		return new PoemEntity();
-	}
-
-
-	@Override
-	public Story newStory() {
-		return new StoryEntity();
-	}
-
-
-	@Override
-	public Article newArticle() {
-		return new ArticleEntity();
-	}
-
-
 	@Override
 	public Language newLanguage() {
 		return new LanguageEntity();

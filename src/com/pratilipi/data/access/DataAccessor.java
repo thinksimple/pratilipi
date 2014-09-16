@@ -22,6 +22,14 @@ import com.pratilipi.data.transfer.UserPratilipi;
 
 public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
+	Book newBook();
+
+	Poem newPoem();
+
+	Story newStory();
+
+	Article newArticle();
+
 	Pratilipi getPratilipi( Long id );
 
 	Pratilipi getPratilipi( Long id, PratilipiType type );
@@ -32,28 +40,15 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiType type, Boolean publicDomain, String cursorStr, int resultCount );
 
+	DataListCursorTuple<Pratilipi> getPratilipiListByLanguage( 
+			PratilipiType type, Long languageId, String cursorStr, int resultCount );
+
+	DataListCursorTuple<Pratilipi> getPratilipiListByAuthor( 
+			PratilipiType type, Long authorId, String cursorStr, int resultCount );
+
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
 	
-	DataListCursorTuple<Pratilipi> getPratilipiListByAuthor( 
-			Long authorId, PratilipiType type, String cursorStr, int resultCount );
 
-
-	Book newBook();
-
-	Book getBook( Long id );
-	
-	List<Book> getBookList();
-
-	Book createOrUpdateBook( Book book );
-
-	
-	Poem newPoem();
-
-	Story newStory();
-
-	Article newArticle();
-
-	
 	Language newLanguage();
 
 	Language getLanguage( Long id );
@@ -99,25 +94,25 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	PratilipiAuthor newPratilipiAuthor();
 
-	PratilipiAuthor createOrUpdatePratilipiAuthor( PratilipiAuthor bookAuthor );
+	PratilipiAuthor createOrUpdatePratilipiAuthor( PratilipiAuthor pratilipiAuthor );
 	
 
 	PratilipiGenre newPratilipiGenre();
 
-	PratilipiGenre createOrUpdatePratilipiGenre( PratilipiGenre bookGenere );
+	PratilipiGenre createOrUpdatePratilipiGenre( PratilipiGenre pratilipiGenere );
 	
 
 	PratilipiTag newPratilipiTag();
 
-	PratilipiTag createOrUpdatePratilipiTag( PratilipiTag bookTag );
+	PratilipiTag createOrUpdatePratilipiTag( PratilipiTag pratilipiTag );
 	
 	
 	UserPratilipi newUserPratilipi();
 	
-	UserPratilipi getUserPratilipi(Long userId, Long bookId);
+	UserPratilipi getUserPratilipi( Long userId, Long pratilipiId );
 
-	List<UserPratilipi> getUserPratilipiList( Long bookId );
+	List<UserPratilipi> getUserPratilipiList( Long pratilipiId );
 	
-	UserPratilipi createOrUpdateUserBook( UserPratilipi userBook );
+	UserPratilipi createOrUpdateUserBook( UserPratilipi userPratilipi );
 
 }
