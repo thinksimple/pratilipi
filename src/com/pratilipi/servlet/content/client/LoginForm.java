@@ -4,6 +4,8 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -55,6 +57,12 @@ public class LoginForm extends Composite {
 			public void onBlur(BlurEvent event) {
 				validateEmail();
 			}});
+		emailInput.addFocusHandler( new FocusHandler() {
+
+			@Override
+			public void onFocus(FocusEvent event) {
+				emailInputError.setVisible( false );
+			}});
 		
 		password.getElement().getStyle().setDisplay(Display.BLOCK);
 		password.getElement().setPropertyString("placeholder", "Password");
@@ -73,6 +81,13 @@ public class LoginForm extends Composite {
 					hidePasswordError();
 				}
 			}});
+		password.addFocusHandler( new FocusHandler() {
+			
+			@Override
+			public void onFocus(FocusEvent event) {
+				passwordError.setVisible( false );
+			}
+		});
 		
 		loginButton.addStyleName("btn");
 		loginButton.addStyleName("btn-lg");
@@ -124,6 +139,13 @@ public class LoginForm extends Composite {
 	//Click handler functions
 	public void addLoginButtonClickHandler( ClickHandler clickHandler ) {
 		loginButton.addClickHandler( clickHandler );
+	}
+	
+	//Enable and Disable login form
+	public void setEnabled( boolean enabled ) {
+		emailInput.setEnabled( enabled );
+		password.setEnabled( enabled );
+		loginButton.setEnabled( enabled );
 	}
 	
 	//Login validation functions
@@ -217,4 +239,7 @@ public class LoginForm extends Composite {
 		passwordError.setVisible(false);
 	}
 
+	public void hideServerError(){
+		this.serverError.setVisible( false );
+	}
 }

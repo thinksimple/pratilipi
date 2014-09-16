@@ -23,6 +23,7 @@ import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -203,7 +204,7 @@ public class UserForms implements EntryPoint {
 		           }
 			}});
 /************************************************ Forgot Password ********************************************/
-		final Panel forgotPasswordFormDialog = new FlowPanel();
+		final FocusPanel forgotPasswordFormDialog = new FocusPanel();
 		forgotPasswordFormDialog.setStyleName( "modal-dialog" );
 		
 		final ForgotPasswordForm forgotPassword = new ForgotPasswordForm();
@@ -212,24 +213,21 @@ public class UserForms implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if( forgotPassword.validateEmail()){
-					claymusService.resetUserPassword(new ResetUserPasswordRequest( forgotPassword.getEmail() ), new AsyncCallback<ResetUserPasswordResponse>(){
-	
-						@Override
-						public void onFailure(Throwable caught) {
-							forgotPassword.setServerError( caught.getMessage() );
-							forgotPassword.showServerError();
-						}
-	
-						@Override
-						public void onSuccess(ResetUserPasswordResponse result) {
-							Window.Location.assign( "/" );
-						}});
-				}
+				forgotPassword.hideServerError();
+				forgotPassword( forgotPassword );
 			}};
 		
 		forgotPassword.addGenPasswdButtonClickHandler( genPasswdButtonClickHandler );
 		forgotPasswordFormDialog.add( forgotPassword );
+		forgotPasswordFormDialog.addKeyDownHandler( new KeyDownHandler(){
+
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+					forgotPassword.hideServerError();
+					forgotPassword( forgotPassword );   
+		           }
+			}});
 		
 /************************************************ Change Password ********************************************/
 		final Panel changePasswordFormDialog = new FlowPanel();
@@ -296,6 +294,7 @@ public class UserForms implements EntryPoint {
 				
 				if( historyToken.equals( "signout" ) ) {
 					claymusService.logoutUser( new AsyncCallback<Void>(){
+
 
 						@Override
 						public void onFailure(Throwable caught) {
@@ -405,6 +404,7 @@ public class UserForms implements EntryPoint {
 			@Override
 			public void onFailure(Throwable caught) {
 				changePasswordForm.setServerError( caught.getMessage() );
+				changePasswordForm.hideServerError();
 				changePasswordForm.showServerError();
 			}
 
@@ -417,6 +417,8 @@ public class UserForms implements EntryPoint {
 	
 	public void userLogin(final LoginForm loginForm){
 		if( loginForm.validateEmail() && loginForm.validatePassword() ){
+			loginForm.setEnabled( false );
+			loginForm.hideServerError();
 			claymusService.loginUser( new LoginUserRequest( loginForm.getEmail(), loginForm.getPassword() ), new AsyncCallback<LoginUserResponse>() {
 				
 				@Override
@@ -429,14 +431,45 @@ public class UserForms implements EntryPoint {
 				public void onFailure( Throwable caught ) {
 					loginForm.setServerError( caught.getMessage() );
 					loginForm.showServerError();
+					loginForm.setEnabled( true );
 				}
 			});
+		}
+	}
+	
+	public void forgotPassword( final ForgotPasswordForm forgotPassword ) {
+		if( forgotPassword.validateEmail()){
+			forgotPassword.setEnable( false );
+			claymusService.resetUserPassword(new ResetUserPasswordRequest( forgotPassword.getEmail() ), new AsyncCallback<ResetUserPasswordResponse>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					forgotPassword.setServerError( caught.getMessage() );
+					forgotPassword.showServerError();
+					forgotPassword.setEnable( true );
+				}
+
+				@Override
+				public void onSuccess(ResetUserPasswordResponse result) {
+					forgotPassword.hideForm();
+					forgotPassword.setServerSuccess( result.getMessage() );
+					forgotPassword.showServerSuccess();
+					Timer time = new Timer() {
+
+						@Override
+						public void run() {
+							hideModal();
+							Window.Location.reload();
+						}};
+					time.schedule( 5000 );
+				}});
 		}
 	}
 	
 	//JQuery function to show and hide bootstrap modal view
 	public static native void showModal() /*-{
     		$wnd.jQuery("#myModal").modal("show");
+    		
 	}-*/;
 	
 	public static native void hideModal() /*-{

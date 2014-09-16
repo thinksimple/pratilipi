@@ -2,7 +2,11 @@
 <body>
 <p>
 
-Hi<#if user.getFirstName() ??> ${ user.getFirstName() }</#if>,<br/><br/>
+Hi <#if user.getFirstName()??>
+		${ user.getFirstName() }
+	<#else>
+		${ user.getEmail() }
+	</#if>, <br/><br/>
 
 Thank you for subscribing at <a href="http://pratilipi.com">Pratilipi</a> !<br/><br/>
 

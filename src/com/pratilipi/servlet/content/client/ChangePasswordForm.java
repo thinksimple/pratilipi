@@ -224,5 +224,7 @@ public class ChangePasswordForm extends Composite {
 		this.serverError.setVisible( true );
 	}
 	
-	public void hideServerError(){}
+	public void hideServerError(){
+		this.serverError.setVisible( false );
+	}
 }

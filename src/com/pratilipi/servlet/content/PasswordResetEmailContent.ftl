@@ -2,7 +2,11 @@
 <body>
 <p>
 
-Dear<#if user.getFirstName() ??> ${ user.getFirstName() }</#if>,<br/><br/>
+Dear <#if user.getFirstName()??>
+		${ user.getFirstName() }
+	<#else>
+		${ user.getEmail() }
+	</#if>, <br/><br/>
 
 Greetings from Pratilipi.com<br/><br/>
 

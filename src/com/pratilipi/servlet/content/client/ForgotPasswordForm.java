@@ -1,6 +1,7 @@
 package com.pratilipi.servlet.content.client;
 
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -14,21 +15,24 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public class ForgotPasswordForm extends Composite {
 	
+	private Panel modalContent = new FlowPanel();
+	private Panel form = new FlowPanel();
+	
 	private Label heading = new Label();
 	private TextBox emailInput = new TextBox();
 	private Label emailInputError = new Label();
 	private Button genPasswdButton = new Button( "Generate Password" );
 	private Label serverError = new Label();
+	private Label serverSuccess = new Label();
 	
 	private ValidateForm validateForm = new ValidateForm();
 	
 	public ForgotPasswordForm(){
-		Panel modalContent = new FlowPanel();
+		
 		modalContent.setStyleName( "modal-content" );
 		
-		Panel form = new FlowPanel();
-		form.setStyleName( "modal-body" );
-		form.getElement().setId( "forgotPasswordForm" );
+		this.form.setStyleName( "modal-body" );
+		this.form.getElement().setId( "forgotPasswordForm" );
 		
 		//Modal heading
 		HTML headingElement= new HTML();
@@ -44,6 +48,11 @@ public class ForgotPasswordForm extends Composite {
 		serverError.addStyleName( "alert alert-danger" );
 		serverError.getElement().setAttribute( "role", "alert") ;
 		serverError.setVisible( false );
+		
+		serverSuccess.addStyleName( "alert-success" );
+		serverSuccess.getElement().getStyle().setPadding( 15, Unit.PX );
+		serverSuccess.getElement().setAttribute( "role", "alert" );
+		serverSuccess.setVisible( false );
 		
 		//text box formatting
 		emailInput.getElement().setAttribute("placeholder", "Enter registered email");
@@ -79,15 +88,24 @@ public class ForgotPasswordForm extends Composite {
 		emailInputError.setStyleName( "errorMessage" );
 		emailInputError.setVisible( false );
 		
-		form.add( heading );
-		form.add( serverError );
-		form.add( emailInput );
-		form.add( genPasswdButton );
-		form.add( emailInputError );
+		this.form.add( heading );
+		this.form.add( serverError );
+		this.form.add( emailInput );
+		this.form.add( genPasswdButton );
+		this.form.add( emailInputError );
 		
 		modalContent.add( form );
+		modalContent.add( serverSuccess );
 		
 		initWidget( modalContent );
+	}
+	
+	public void showForm() {
+		this.form.setVisible( true );
+	}
+	
+	public void hideForm() {
+		this.form.setVisible( false );
 	}
 	
 	public void setEmailInputError( String error ){
@@ -106,14 +124,35 @@ public class ForgotPasswordForm extends Composite {
 		return emailInput.getText();
 	}
 	
+	//Setting server messages.
 	public void setServerError( String error ){
 		HTML msg = new HTML();
 		msg.setHTML( error );
+		this.serverError.getElement().removeAllChildren();
 		this.serverError.getElement().appendChild( msg.getElement() );
+	}
+	
+	public void setServerSuccess( String message ) {
+		HTML msg = new HTML();
+		msg.setHTML( message );
+		this.serverSuccess.getElement().removeAllChildren();
+		this.serverSuccess.getElement().appendChild( msg.getElement() );
 	}
 	
 	public void showServerError(){
 		this.serverError.setVisible( true );
+	}
+	
+	public void hideServerError(){
+		this.serverError.setVisible( false );
+	}
+	
+	public void showServerSuccess(){
+		this.serverSuccess.setVisible( true );
+	}
+	
+	public void hideServerSuccess(){
+		this.serverSuccess.setVisible( false );
 	}
 	
 	//Button ClickHandler
@@ -129,12 +168,23 @@ public class ForgotPasswordForm extends Composite {
 			showEmailInputError();
 			return false;
 		}
+		else if( validateForm.ValidateEmail( getEmail() ) ){
+			emailInput.addStyleName("textBoxError");
+			setEmailInputError("Email not in proper format");
+			showEmailInputError();
+			return false;
+		}
 		else{
 			emailInput.removeStyleName("textBoxError");
 			hideEmailInputError();
 			return true;
 		}
+		
 	}
 
+	public void setEnable( boolean enabled ) {
+		emailInput.setEnabled( enabled );
+		genPasswdButton.setEnabled( enabled );
+	}
 }
 
