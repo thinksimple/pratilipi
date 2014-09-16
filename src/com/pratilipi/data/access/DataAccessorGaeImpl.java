@@ -463,7 +463,7 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
-	public UserPratilipi createOrUpdateUserBook( UserPratilipi userPratilipi ) {
+	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
 		return createOrUpdateEntity( userPratilipi );
 	}

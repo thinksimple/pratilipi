@@ -180,7 +180,7 @@ public abstract class DataAccessorTest {
     	userBook.setReviewState( reviewState );
     	userBook.setReviewDate( reviewDate );
     	
-    	userBook = dataAccessor.createOrUpdateUserBook( userBook );
+    	userBook = dataAccessor.createOrUpdateUserPratilipi( userBook );
     	dataAccessor.destroy();
     	
     	dataAccessor = DataAccessorFactory.getDataAccessor();

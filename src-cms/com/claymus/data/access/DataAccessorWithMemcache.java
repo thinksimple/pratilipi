@@ -14,8 +14,8 @@ import com.claymus.data.transfer.UserRole;
 
 public class DataAccessorWithMemcache implements DataAccessor {
 	
-	private final static String PREFIX_USER 	= "User-";
-	private final static String PREFIX_ROLE 	= "Role-";
+	private final static String PREFIX_USER = "User-";
+	private final static String PREFIX_ROLE = "Role-";
 	private final static String PREFIX_USER_ROLE_LIST = "UserRoleList-";
 	private final static String PREFIX_ROLE_ACCESS = "RoleAccess-";
 	

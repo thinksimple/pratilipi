@@ -598,7 +598,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		userBook.setReviewState( UserReviewState.PENDING_APPROVAL );
 		userBook.setReviewDate( new Date() );
 
-		userBook = dataAccessor.createOrUpdateUserBook( userBook );
+		userBook = dataAccessor.createOrUpdateUserPratilipi( userBook );
 		dataAccessor.destroy();
 		
 		return new AddUserPratilipiResponse( userBook.getId() );

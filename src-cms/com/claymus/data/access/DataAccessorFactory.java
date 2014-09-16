@@ -18,7 +18,13 @@ public class DataAccessorFactory {
 	
 	public static BlobAccessor getBlobAccessor() {
 		if( blobAccessor == null ) {
-			blobAccessor = new BlobAccessorGcsImpl( GOOGLE_CLOUD_STORAGE_BUCKET );
+			
+			if( memcache == null )
+				memcache = new MemcacheGaeImpl();
+			
+			blobAccessor = new BlobAccessorWithMemcache(
+					new BlobAccessorGcsImpl( GOOGLE_CLOUD_STORAGE_BUCKET ),
+					memcache );
 		}		
 		return blobAccessor;
 	}

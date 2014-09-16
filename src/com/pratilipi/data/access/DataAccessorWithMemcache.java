@@ -329,8 +329,8 @@ public class DataAccessorWithMemcache
 	}
 
 	@Override
-	public UserPratilipi createOrUpdateUserBook( UserPratilipi userPratilipi ) {
-		userPratilipi = dataAccessor.createOrUpdateUserBook( userPratilipi );
+	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
+		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		memcache.put(
 				PREFIX_USER_PRATILIPI + userPratilipi.getId(),
 				userPratilipi );
