@@ -9,6 +9,8 @@ public class GetPratilipiListRequest implements IsSerializable {
 	
 	private Boolean publicDomain;
 	
+	private Long languageId;
+	
 	private String cursor;
 	
 	private int resultCount;
@@ -27,15 +29,16 @@ public class GetPratilipiListRequest implements IsSerializable {
 			PratilipiType pratilipiType,
 			String cursor, int resultCount ) {
 		
-		this( pratilipiType, null, cursor, resultCount );
+		this( pratilipiType, null, null, cursor, resultCount );
 	}
 
 	public GetPratilipiListRequest(
-			PratilipiType pratilipiType, Boolean publicDomain,
+			PratilipiType pratilipiType, Boolean publicDomain, Long languageId,
 			String cursor, int resultCount ) {
 		
 		this.pratilipiType = pratilipiType;
 		this.publicDomain = publicDomain;
+		this.languageId = languageId;
 		this.cursor = cursor;
 		this.resultCount = resultCount;
 	}
@@ -47,6 +50,10 @@ public class GetPratilipiListRequest implements IsSerializable {
 
 	public Boolean getPublicDomain() {
 		return publicDomain;
+	}
+
+	public Long getLanguageId() {
+		return languageId;
 	}
 
 	public String getCursor() {

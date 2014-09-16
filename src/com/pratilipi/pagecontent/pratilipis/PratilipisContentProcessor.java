@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.data.access.DataAccessor;
+import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Language;
 
 public class PratilipisContentProcessor extends PageContentProcessor<PratilipisContent> {
 
@@ -45,6 +48,13 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 		if( pratilipisContent.getPublicDomain() != null && pratilipisContent.getPublicDomain() ) {
 			dataModel.put( "pratilipisType", "Classic " + dataModel.get( "pratilipisType" ) );
 			dataModel.put( "pratilipiFilters", "CLASSICS" );
+		} else if( pratilipisContent.getLanguageId() != null ){
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			Language language = dataAccessor.getLanguage( pratilipisContent.getLanguageId() );
+			dataAccessor.destroy();
+			
+			dataModel.put( "pratilipisType",  language.getNameEn() + " " + dataModel.get( "pratilipisType" ) );
+			dataModel.put( "pratilipiFilters", "LANGUAGE:" + pratilipisContent.getLanguageId() );
 		} else {
 			dataModel.put( "pratilipiFilters", "" );
 		}

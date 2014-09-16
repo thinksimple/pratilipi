@@ -8,7 +8,7 @@ public class PratilipisContentFactory
 		implements PageContentFactory<PratilipisContent, PratilipisContentProcessor> {
 	
 	public static PratilipisContent newPratilipisContent( PratilipiType pratilipiType ) {
-		return newPratilipisContent( pratilipiType, null );
+		return newPratilipisContent( pratilipiType, (Boolean) null );
 	}
 	
 	public static PratilipisContent newPratilipisContent(
@@ -17,6 +17,15 @@ public class PratilipisContentFactory
 		PratilipisContent pratilipisContent = new PratilipisContentEntity();
 		pratilipisContent.setPratilipiType( pratilipiType );
 		pratilipisContent.setPublicDomain( publicDomain );
+		return pratilipisContent;
+	}
+
+	public static PratilipisContent newPratilipisContent(
+			PratilipiType pratilipiType, Long languageId ) {
+		
+		PratilipisContent pratilipisContent = new PratilipisContentEntity();
+		pratilipisContent.setPratilipiType( pratilipiType );
+		pratilipisContent.setLanguageId( languageId );
 		return pratilipisContent;
 	}
 

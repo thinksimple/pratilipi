@@ -6,8 +6,6 @@
     <property name="TITLE" direction="asc"/>
   </datastore-index>
 
-
-  <!-- Required by PratilipiService.getPratilipiList -->
   <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
     <property name="PRATILIPI_TYPE" direction="asc"/>
     <property name="_TYPE" direction="asc"/>
@@ -21,14 +19,24 @@
     <property name="TITLE" direction="asc"/>
   </datastore-index>
 
+
+  <!-- Required by DatabaseAccessor.getPratilipiListByLanguage -->
+  <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
+    <property name="LANGUAGE_ID" direction="asc"/>
+    <property name="PRATILIPI_TYPE" direction="asc"/>
+    <property name="_TYPE" direction="asc"/>
+    <property name="TITLE" direction="asc"/>
+  </datastore-index>
+    
   
   <!-- Required by DatabaseAccessor.getPratilipiListByAuthor -->
   <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
-        <property name="AUTHOR_ID" direction="asc"/>
-        <property name="PRATILIPI_TYPE" direction="asc"/>
-        <property name="_TYPE" direction="asc"/>
-        <property name="TITLE" direction="asc"/>
-    </datastore-index>
+    <property name="AUTHOR_ID" direction="asc"/>
+    <property name="PRATILIPI_TYPE" direction="asc"/>
+    <property name="_TYPE" direction="asc"/>
+    <property name="TITLE" direction="asc"/>
+  </datastore-index>
+  
     
   <!-- Required by PratilipiService.getAuthorList -->
   <datastore-index kind="AUTHOR" ancestor="false" source="manual">

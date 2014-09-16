@@ -97,9 +97,14 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 			rootPanel.clear();
 			String filters = rootPanel.getElement().getAttribute( "pratilipi-filters" );
 			if( filters != null && filters.equals( "CLASSICS" ) )
-				rootPanel.add( new PratilipiList( pratilipiType, true, pratilipiDataInputView ) );
+				rootPanel.add( new PratilipiList( pratilipiType, true, null, pratilipiDataInputView ) );
+			else if( filters != null && filters.startsWith( "LANGUAGE" ) )
+				rootPanel.add( new PratilipiList(
+						pratilipiType, null,
+						Long.parseLong( filters.substring( filters.indexOf( ':' ) + 1 ) ),
+						pratilipiDataInputView ) );
 			else
-				rootPanel.add( new PratilipiList( pratilipiType, null, pratilipiDataInputView ) );
+				rootPanel.add( new PratilipiList( pratilipiType, null, null, pratilipiDataInputView ) );
 		}
 	
 	}

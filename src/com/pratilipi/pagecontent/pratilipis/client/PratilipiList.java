@@ -25,6 +25,7 @@ public class PratilipiList extends InfiniteScrollPanel {
 
 	private final PratilipiType pratilipiType;
 	private final Boolean publicDomain;
+	private final Long languageId;
 	private final PratilipiDataInputView pratilipiDataInputView;
 	private String cursor = null;
 	private int resultCount = 20;
@@ -33,18 +34,19 @@ public class PratilipiList extends InfiniteScrollPanel {
 	
 	
 	public PratilipiList( PratilipiType pratilipiType ) {
-		this( pratilipiType, null, null );
+		this( pratilipiType, null, null, null );
 	}
 	
 	public PratilipiList( PratilipiType pratilipiType, Boolean publicDomain ) {
-		this( pratilipiType, null, null );
+		this( pratilipiType, publicDomain, null, null );
 	}
 	
 	public PratilipiList( PratilipiType pratilipiType, Boolean publicDomain,
-			PratilipiDataInputView pratilipiDataInputView ) {
+			Long languageId, PratilipiDataInputView pratilipiDataInputView ) {
 		
 		this.pratilipiType = pratilipiType;
 		this.publicDomain = publicDomain;
+		this.languageId = languageId;
 		this.pratilipiDataInputView = pratilipiDataInputView;
 		
 		setStyleName( "row" );
@@ -58,7 +60,7 @@ public class PratilipiList extends InfiniteScrollPanel {
 		add( loadingImage );
 		
 		pratilipiService.getPratilipiList(
-				new GetPratilipiListRequest( pratilipiType, publicDomain, cursor, resultCount ),
+				new GetPratilipiListRequest( pratilipiType, publicDomain, languageId, cursor, resultCount ),
 				new AsyncCallback<GetPratilipiListResponse>() {
 			
 			@Override

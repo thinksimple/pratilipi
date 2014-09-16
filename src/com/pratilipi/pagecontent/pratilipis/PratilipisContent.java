@@ -13,4 +13,8 @@ public interface PratilipisContent extends PageContent {
 
 	void setPublicDomain( Boolean isPublicDomain );
 	
+	Long getLanguageId();
+
+	void setLanguageId( Long languageId );
+	
 }

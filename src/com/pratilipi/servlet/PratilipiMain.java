@@ -78,14 +78,38 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/books" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK ) );
 		
+		else if( requestUri.equals( "/books/hindi" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, 5130467284090880L ) );
+		
+		else if( requestUri.equals( "/books/gujarati" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, 5965057007550464L ) );
+		
 		else if( requestUri.equals( "/poems" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM ) );
+		
+		else if( requestUri.equals( "/poems/hindi" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM, 5130467284090880L ) );
+		
+		else if( requestUri.equals( "/poems/gujarati" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM, 5965057007550464L ) );
 		
 		else if( requestUri.equals( "/stories" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY ) );
 		
+		else if( requestUri.equals( "/stories/hindi" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY, 5130467284090880L ) );
+		
+		else if( requestUri.equals( "/stories/gujarati" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY, 5965057007550464L ) );
+		
 		else if( requestUri.equals( "/articles" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.ARTICLE ) );
+		
+		else if( requestUri.equals( "/articles/hindi" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.ARTICLE, 5130467284090880L ) );
+		
+		else if( requestUri.equals( "/articles/gujarati" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.ARTICLE, 5965057007550464L ) );
 		
 		else if( requestUri.startsWith( "/classics/books" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, true ) );

@@ -9,9 +9,6 @@ import com.google.appengine.tools.cloudstorage.GcsFileMetadata;
 @SuppressWarnings("serial")
 public class BlobEntryGcsImpl implements BlobEntry {
 	
-//	private ByteBuffer byteBuffer;
-//	private GcsFileMetadata gcsFileMetadata;
-	
 	private final String fileName;
 	private final byte[] data;
 	private final String mimeType;
@@ -20,9 +17,6 @@ public class BlobEntryGcsImpl implements BlobEntry {
 	
 	
 	public BlobEntryGcsImpl( ByteBuffer byteBuffer, GcsFileMetadata gcsFileMetadata ) {
-//		this.byteBuffer = byteBuffer;
-//		this.gcsFileMetadata = gcsFileMetadata;
-
 		this.fileName = gcsFileMetadata.getFilename().getObjectName();
 		this.data = byteBuffer.array();
 		this.mimeType = gcsFileMetadata.getOptions().getMimeType();
@@ -33,31 +27,26 @@ public class BlobEntryGcsImpl implements BlobEntry {
 
 	@Override
 	public String getName() {
-//		return gcsFileMetadata.getFilename().getObjectName();
 		return fileName;
 	}
 
 	@Override
 	public byte[] getData() {
-//		return byteBuffer.array();
 		return data;
 	}
 
 	@Override
 	public String getMimeType() {
-//		return gcsFileMetadata.getOptions().getMimeType();
 		return mimeType;
 	}
 	
 	@Override
 	public String getETag() {
-//		return gcsFileMetadata.getEtag();
 		return eTag;
 	}
 
 	@Override
 	public Date getLastModified() {
-//		return gcsFileMetadata.getLastModified();
 		return lastModified;
 	}
 

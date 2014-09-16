@@ -7,6 +7,7 @@ import com.claymus.data.access.gae.PageContentEntity;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContent;
 
+@SuppressWarnings("serial")
 @PersistenceCapable
 public class PratilipisContentEntity extends PageContentEntity
 		implements PratilipisContent {
@@ -17,6 +18,9 @@ public class PratilipisContentEntity extends PageContentEntity
 	@Persistent( column = "X_COL_1" )
 	private Boolean publicDomain;
 	
+	@Persistent( column = "X_COL_2" )
+	private Long languageId;
+
 	
 	@Override
 	public PratilipiType getPratilipiType() {
@@ -36,6 +40,16 @@ public class PratilipisContentEntity extends PageContentEntity
 	@Override
 	public void setPublicDomain( Boolean publicDomain ) {
 		this.publicDomain = publicDomain;
+	}
+
+	@Override
+	public Long getLanguageId() {
+		return languageId;
+	}
+
+	@Override
+	public void setLanguageId( Long languageId ) {
+		this.languageId = languageId;
 	}
 	
 }

@@ -56,10 +56,10 @@ import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
-import com.pratilipi.service.shared.SavePratilipiContentRequest;
-import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SaveAuthorRequest;
 import com.pratilipi.service.shared.SaveAuthorResponse;
+import com.pratilipi.service.shared.SavePratilipiContentRequest;
+import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.UserQueryRequest;
@@ -169,11 +169,19 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple = dataAccessor.getPratilipiList(
+		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple;
+		if( request.getLanguageId() != null )
+			pratilipiListCursorTuple = dataAccessor.getPratilipiListByLanguage(
 				request.getPratilipiType(),
-				request.getPublicDomain(),
+				request.getLanguageId(),
 				request.getCursor(),
 				request.getResultCount() );
+		else
+			pratilipiListCursorTuple = dataAccessor.getPratilipiList(
+					request.getPratilipiType(),
+					request.getPublicDomain(),
+					request.getCursor(),
+					request.getResultCount() );
 
 		List<Pratilipi> pratilipiList = pratilipiListCursorTuple.getDataList();
 		
