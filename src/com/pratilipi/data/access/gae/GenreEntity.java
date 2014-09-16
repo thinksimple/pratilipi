@@ -9,6 +9,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.pratilipi.data.transfer.Genre;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "GENRE" )
 public class GenreEntity implements Genre {
 

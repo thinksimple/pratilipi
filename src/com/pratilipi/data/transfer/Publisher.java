@@ -1,8 +1,9 @@
 package com.pratilipi.data.transfer;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public interface Publisher {
+public interface Publisher extends Serializable {
 
 	Long getId();
 	

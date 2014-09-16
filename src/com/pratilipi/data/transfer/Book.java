@@ -1,6 +1,6 @@
 package com.pratilipi.data.transfer;
 
-public interface Book extends Pratilipi {
+public interface Book extends Pratilipi  {
 
 	Long getPublisherId();
 	

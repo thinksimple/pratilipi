@@ -70,10 +70,10 @@ public class PratilipiHelper {
 	public static final String RESOURCE_ARTICLE_CONTENT_WORD = "article-content/word/";
 	
 	// Pratilipi Content (JPEG Format)
-	public static final String RESOURCE_BOOK_CONTENT_JPEG    = "book-content/jpeg/";
-	public static final String RESOURCE_POEM_CONTENT_JPEG    = "poem-content/jpeg/";
-	public static final String RESOURCE_STORY_CONTENT_JPEG   = "story-content/jpeg/";
-	public static final String RESOURCE_ARTICLE_CONTENT_JPEG = "article-content/jpeg/";
+	public static final String RESOURCE_BOOK_CONTENT_IMAGE    = "book-content/image/";
+	public static final String RESOURCE_POEM_CONTENT_IMAGE    = "poem-content/image/";
+	public static final String RESOURCE_STORY_CONTENT_IMAGE   = "story-content/image/";
+	public static final String RESOURCE_ARTICLE_CONTENT_IMAGE = "article-content/image/";
 
 	
 	// URL to Pratilipi Content (Pratilipi Format)
@@ -95,9 +95,9 @@ public class PratilipiHelper {
 	public static final String URL_ARTICLE_CONTENT_WORD = URL_RESOURCE + "article-content/word/";
 	
 	// URL to Pratilipi Content (JPEG Format)
-	public static final String URL_BOOK_CONTENT_JPEG    = URL_RESOURCE + "book-content/jpeg/";
-	public static final String URL_POEM_CONTENT_JPEG    = URL_RESOURCE + "poem-content/jpeg/";
-	public static final String URL_STORY_CONTENT_JPEG   = URL_RESOURCE + "story-content/jpeg/";
-	public static final String URL_ARTICLE_CONTENT_JPEG = URL_RESOURCE + "article-content/jpeg/";
+	public static final String URL_BOOK_CONTENT_IMAGE    = URL_RESOURCE + "book-content/image/";
+	public static final String URL_POEM_CONTENT_IMAGE    = URL_RESOURCE + "poem-content/image/";
+	public static final String URL_STORY_CONTENT_IMAGE   = URL_RESOURCE + "story-content/image/";
+	public static final String URL_ARTICLE_CONTENT_IMAGE = URL_RESOURCE + "article-content/image/";
 	
 }

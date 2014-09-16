@@ -22,7 +22,7 @@ public class ClaymusHelper {
 	
 	public static final String URL_RESOURCE = "/resource.";
 
-	private static final String URL_LOGIN_PAGE = "#login";
+	private static final String URL_LOGIN_PAGE = "#signin";
 	private static final String URL_LOGOUT_PAGE = "/logout?dest=";
 	private static final String URL_REGISTER_PAGE = "#signup";
 	private static final String URL_FORGOTPASSWORD_PAGE = "#forgotpassword";
@@ -214,7 +214,7 @@ public class ClaymusHelper {
 	}
 	
 	public String createLoginURL() {
-		return URL_LOGIN_PAGE + request.getRequestURI();
+		return URL_LOGIN_PAGE;
 	}
 
 	public static String createLoginURL( String destinationURL ) {

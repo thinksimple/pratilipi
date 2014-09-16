@@ -13,6 +13,7 @@ import com.google.appengine.api.datastore.Text;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.Pratilipi;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "PRATILIPI" )
 @Discriminator( column = "_TYPE", strategy = DiscriminatorStrategy.CLASS_NAME )
 public abstract class PratilipiEntity implements Pratilipi {

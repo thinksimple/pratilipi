@@ -10,6 +10,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Text;
 import com.pratilipi.data.transfer.Author;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "AUTHOR" )
 public class AuthorEntity implements Author {
 	

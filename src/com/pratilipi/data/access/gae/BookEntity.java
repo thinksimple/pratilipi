@@ -5,6 +5,7 @@ import javax.jdo.annotations.Persistent;
 
 import com.pratilipi.data.transfer.Book;
 
+@SuppressWarnings("serial")
 @PersistenceCapable
 public class BookEntity extends PratilipiEntity implements Book {
 

@@ -8,6 +8,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.PratilipiTag;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "PRATILIPI_TAG" )
 public class PratilipiTagEntity implements PratilipiTag {
 

@@ -1,10 +1,11 @@
 package com.claymus.data.transfer;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.claymus.commons.shared.UserStatus;
 
-public interface User {
+public interface User extends Serializable {
 
 	Long getId();
 

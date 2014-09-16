@@ -1,8 +1,9 @@
 package com.pratilipi.data.transfer;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public interface Tag {
+public interface Tag extends Serializable {
 
 	Long getId();
 	

@@ -1,6 +1,8 @@
 package com.claymus.data.transfer;
 
-public interface EmailTemplate {
+import java.io.Serializable;
+
+public interface EmailTemplate extends Serializable {
 	
 	String getId();
 

@@ -6,6 +6,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.claymus.data.transfer.EmailTemplate;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "EMAIL_TEMPLATE" )
 public class EmailTemplateEntity implements EmailTemplate {
 	

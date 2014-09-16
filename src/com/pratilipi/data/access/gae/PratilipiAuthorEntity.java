@@ -8,6 +8,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.PratilipiAuthor;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "PRATILIPI_AUTHOR" )
 public class PratilipiAuthorEntity implements PratilipiAuthor {
 

@@ -9,6 +9,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.claymus.data.transfer.Page;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "PAGE" )
 public class PageEntity implements Page {
 

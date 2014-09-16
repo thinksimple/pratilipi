@@ -88,7 +88,7 @@
   </servlet-mapping>
    
   <servlet>
-    <servlet-name>JpegContentResourceServlet</servlet-name>
+    <servlet-name>ImageContentResourceServlet</servlet-name>
     <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
     <init-param>
       <param-name>ResourceServletType</param-name>
@@ -96,11 +96,11 @@
     </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>JpegContentResourceServlet</servlet-name>
-    <url-pattern>/resource.book-content/jpeg/*</url-pattern>
-    <url-pattern>/resource.poem-content/jpeg/*</url-pattern>
-    <url-pattern>/resource.story-content/jpeg/*</url-pattern>
-    <url-pattern>/resource.article-content/jpeg/*</url-pattern>
+    <servlet-name>ImageContentResourceServlet</servlet-name>
+    <url-pattern>/resource.book-content/image/*</url-pattern>
+    <url-pattern>/resource.poem-content/image/*</url-pattern>
+    <url-pattern>/resource.story-content/image/*</url-pattern>
+    <url-pattern>/resource.article-content/image/*</url-pattern>
   </servlet-mapping>
   
    

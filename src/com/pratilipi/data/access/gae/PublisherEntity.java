@@ -9,6 +9,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.pratilipi.data.transfer.Publisher;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "PUBLISHER" )
 public class PublisherEntity implements Publisher {
 

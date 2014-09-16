@@ -581,7 +581,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		Book book = dataAccessor.getBook( userBookData.getPratilipiId() );
+		Pratilipi book = dataAccessor.getPratilipi( userBookData.getPratilipiId() );
 		UserPratilipi userBook = dataAccessor.getUserPratilipi(
 				claymusHelper.getCurrentUserId(), book.getId() );
 		

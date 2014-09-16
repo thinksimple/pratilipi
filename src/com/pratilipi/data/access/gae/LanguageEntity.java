@@ -9,6 +9,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.pratilipi.data.transfer.Language;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "LANGUAGE" )
 public class LanguageEntity implements Language {
 

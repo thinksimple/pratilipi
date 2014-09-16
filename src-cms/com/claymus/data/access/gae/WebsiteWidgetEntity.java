@@ -9,6 +9,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.claymus.data.transfer.WebsiteWidget;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "WEBSITE_WIDGET" )
 @Discriminator( column = "TYPE", strategy = DiscriminatorStrategy.CLASS_NAME )
 public abstract class WebsiteWidgetEntity implements WebsiteWidget {

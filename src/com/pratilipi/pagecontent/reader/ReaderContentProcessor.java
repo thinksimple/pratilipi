@@ -61,10 +61,10 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 		long pageCount = 0;
 		String pageContent = "";
-		if( readerType.equals( "jpeg" ) ) {
+		if( pratilipi.getPageCount() != null && pratilipi.getPageCount() > 0 ) {
 
 			pageCount = pratilipi.getPageCount();
-			pageContent = "<img style=\"width:100%; max-width:700px\" src=\"" + pratilipiType.getContentJpegUrl() + pratilipiId + "/" + pageNo + "\">";
+			pageContent = "<img style=\"width:100%;\" src=\"" + pratilipiType.getContentImageUrl() + pratilipiId + "/" + pageNo + "\">";
 
 		} else if( readerType.equals( "html" ) ) {
 
@@ -143,7 +143,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 							+ "&page=" + ( pageNo + 1 ) );
 
 		dataModel.put( "pratilipiHomeUrl", pratilipiType.getPageUrl() + pratilipi.getId() );
-		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getId() );
+		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getAuthorId() );
 
 		dataModel.put( "showEditOptions",
 				( claymusHelper.getCurrentUserId() == pratilipi.getAuthorId() && claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false ) )

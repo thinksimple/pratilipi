@@ -10,6 +10,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.transfer.User;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "USER" )
 public class UserEntity implements User {
 	

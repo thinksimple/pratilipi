@@ -11,6 +11,7 @@ import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.transfer.UserPratilipi;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "USER_PRATILIPI" )
 public class UserPratilipiEntity implements UserPratilipi {
 

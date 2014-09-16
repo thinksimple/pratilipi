@@ -6,6 +6,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.claymus.data.transfer.RoleAccess;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "ROLE_ACCESS" )
 public class RoleAccessEntity implements RoleAccess {
 	

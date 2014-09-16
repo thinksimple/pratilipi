@@ -9,6 +9,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.pratilipi.data.transfer.Tag;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "TAG" )
 public class TagEntity implements Tag {
 

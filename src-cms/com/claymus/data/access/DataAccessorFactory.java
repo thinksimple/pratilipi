@@ -8,10 +8,12 @@ public class DataAccessorFactory {
 			ClaymusHelper.getSystemProperty( "blobservice.gcs.bucket" );
 
 	private static BlobAccessor blobAccessor;
-	
+	private static Memcache memcache;
 	
 	public static DataAccessor getDataAccessor() {
-		return new DataAccessorGaeImpl();
+		if( memcache == null )
+			memcache = new MemcacheGaeImpl();
+		return new DataAccessorWithMemcache( new DataAccessorGaeImpl(), memcache );
 	}
 	
 	public static BlobAccessor getBlobAccessor() {

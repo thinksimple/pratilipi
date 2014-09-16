@@ -1,8 +1,9 @@
 package com.claymus.data.transfer;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public interface AuditLog {
+public interface AuditLog extends Serializable {
 	
 	Long getId();
 

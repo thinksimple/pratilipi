@@ -1,8 +1,9 @@
 package com.claymus.data.transfer;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public interface Page {
+public interface Page extends Serializable {
 
 	Long getId();
 

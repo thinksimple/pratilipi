@@ -1,11 +1,12 @@
 package com.pratilipi.data.transfer;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.UserReviewState;
 
-public interface UserPratilipi {
+public interface UserPratilipi extends Serializable {
 
 	String getId();
 	

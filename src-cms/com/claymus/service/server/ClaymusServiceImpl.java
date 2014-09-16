@@ -280,7 +280,6 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 				
 				if( request.getToken() == null
 						|| ! user.getPassword().equals( request.getToken() ) )
-
 					throw new IllegalArgumentException(
 							"URL used is invalid or expired. "
 							+ "Kindly check the URL and try again." );

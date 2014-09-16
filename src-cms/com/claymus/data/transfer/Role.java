@@ -1,7 +1,8 @@
 package com.claymus.data.transfer;
 
+import java.io.Serializable;
 
-public interface Role {
+public interface Role extends Serializable {
 
 	Long getId();
 

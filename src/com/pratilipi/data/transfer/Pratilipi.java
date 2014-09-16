@@ -1,10 +1,11 @@
 package com.pratilipi.data.transfer;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.commons.shared.PratilipiType;
 
-public interface Pratilipi {
+public interface Pratilipi extends Serializable {
 
 	Long getId();
 	

@@ -1,6 +1,8 @@
 package com.claymus.data.transfer;
 
-public interface UserRole {
+import java.io.Serializable;
+
+public interface UserRole extends Serializable {
 
 	String getId();
 	

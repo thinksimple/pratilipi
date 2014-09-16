@@ -38,7 +38,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		String authorImage = PratilipiHelper.URL_AUTHOR_IMAGE + authorId;
 		
 		DataListCursorTuple<Pratilipi> bookList = dataAccessor.getPratilipiListByAuthor( 
-								authorId, PratilipiType.BOOK, null, 200 );
+								PratilipiType.BOOK, authorId, null, 200 );
 		List<Pratilipi> bookDataList = bookList.getDataList();
 		
 		Map<String, String> bookCoverMap = new HashMap<>();
@@ -55,7 +55,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		}
 		
 		DataListCursorTuple<Pratilipi> poemList = dataAccessor.getPratilipiListByAuthor( 
-				authorId, PratilipiType.POEM, null, 100 );
+				PratilipiType.POEM, authorId, null, 100 );
 		List<Pratilipi> poemDataList = poemList.getDataList();
 		Map<String, String> poemCoverMap = new HashMap<>();
 		Map<String, String> poemUrlMap = new HashMap<>();
@@ -71,7 +71,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		}
 		
 		DataListCursorTuple<Pratilipi> storyList = dataAccessor.getPratilipiListByAuthor( 
-				authorId, PratilipiType.STORY, null, 100 );
+				PratilipiType.STORY, authorId, null, 100 );
 		List<Pratilipi> storyDataList = storyList.getDataList();
 		Map<String, String> storyCoverMap = new HashMap<>();
 		Map<String, String> storyUrlMap = new HashMap<>();

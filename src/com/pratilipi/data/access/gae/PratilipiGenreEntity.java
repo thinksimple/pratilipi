@@ -8,6 +8,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.PratilipiGenre;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "PRATILIPI_GENRE" )
 public class PratilipiGenreEntity implements PratilipiGenre {
 

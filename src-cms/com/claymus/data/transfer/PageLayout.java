@@ -1,6 +1,8 @@
 package com.claymus.data.transfer;
 
-public interface PageLayout {
+import java.io.Serializable;
+
+public interface PageLayout extends Serializable {
 	
 	Long getId();
 	

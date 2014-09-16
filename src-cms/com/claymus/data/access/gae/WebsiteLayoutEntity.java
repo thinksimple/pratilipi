@@ -8,6 +8,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.claymus.data.transfer.PageLayout;
 import com.google.appengine.api.datastore.Text;
 
+@SuppressWarnings("serial")
 @PersistenceCapable( table = "WEBSITE_LAYOUT" )
 public class WebsiteLayoutEntity implements PageLayout {
 	
