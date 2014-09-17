@@ -141,7 +141,7 @@ public class UserForms implements EntryPoint {
 			}});
 		
 /******************************************** User Registration ********************************************/
-		final Panel registrationFormDialog = new FlowPanel();
+		final FocusPanel registrationFormDialog = new FocusPanel();
 		registrationFormDialog.setStyleName( "modal-dialog" );
 		
 		final RegistrationForm registrationForm = new RegistrationForm();
@@ -150,34 +150,22 @@ public class UserForms implements EntryPoint {
 			
 			@Override
 			public void onClick( ClickEvent event ) {
-				if(   registrationForm.validateFirstName()
-				   && registrationForm.validateLastName()
-				   && registrationForm.validateEmail()
-				   && registrationForm.validatePassword()
-				   && registrationForm.validateConfPassword()){
-						
-					UserData userData = registrationForm.getUser();
-					claymusService.registerUser( new RegisterUserRequest( userData ), new AsyncCallback<RegisterUserResponse>() {
-						
-						@Override
-						public void onSuccess( RegisterUserResponse response ) {
-							hideModal();
-							Window.alert( "Sign up successfull!" );
-						}
-						
-						@Override
-						public void onFailure( Throwable caught ) {
-							registrationForm.setServerError( caught.getMessage() );
-							registrationForm.showServerError();
-						}		
-					});
-				}
-			}
+				userRegistrationRPC( registrationForm );
+			}	
 		};
 		
 		registrationForm.addRegisterButtonClickHandler( registerButtonClickHandler );
 		registrationFormDialog.add( registrationForm );
-				
+		registrationFormDialog.addKeyDownHandler( new KeyDownHandler(){
+
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+					userRegistrationRPC( registrationForm );   
+					History.newItem( "" );
+		           }
+			}});
+
 /************************************************** User Login **************************************************/
 		final FocusPanel loginFormDialog = new FocusPanel();
 		loginFormDialog.setStyleName( "modal-dialog" );
@@ -422,6 +410,42 @@ public class UserForms implements EntryPoint {
 		ContactMailForm contactMailForm = new ContactMailForm();
 		if( contactForm != null )
 			contactForm.add( contactMailForm );
+	}
+	
+	public void userRegistrationRPC( final RegistrationForm registrationForm ) {
+		registrationForm.hideServerError();
+		if(   registrationForm.validateFirstName()
+				   && registrationForm.validateLastName()
+				   && registrationForm.validateEmail()
+				   && registrationForm.validatePassword()
+				   && registrationForm.validateConfPassword()){
+					registrationForm.setEnable( false );	
+					UserData userData = registrationForm.getUser();
+					claymusService.registerUser( new RegisterUserRequest( userData ), new AsyncCallback<RegisterUserResponse>() {
+						
+						@Override
+						public void onSuccess( RegisterUserResponse response ) {
+							registrationForm.hideForm();
+							registrationForm.setServerSuccess( response.getMessage() );
+							registrationForm.showServerSuccess();
+							Timer time = new Timer() {
+
+								@Override
+								public void run() {
+									hideModal();
+									Window.Location.reload();
+								}};
+							time.schedule( 2000 );
+						}
+						
+						@Override
+						public void onFailure( Throwable caught ) {
+							registrationForm.setServerError( caught.getMessage() );
+							registrationForm.showServerError();
+							registrationForm.setEnable( true );
+						}		
+					});
+				}
 	}
 	
 	public void changePasswordRPC(final ChangePasswordForm changePasswordForm, String userEmail, String token ){

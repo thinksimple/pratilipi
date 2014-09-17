@@ -159,7 +159,12 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		TaskQueue taskQueue = TaskQueueFactory.getWelcomeUserTaskQueue();
 		taskQueue.add( task );
 		
-		return new RegisterUserResponse();
+		this.getThreadLocalRequest().getSession().setAttribute(
+				ClaymusHelper.SESSION_ATTRIB_CURRENT_USER_ID, user.getId() );
+		
+		String message = "SignUp successful! ";
+		
+		return new RegisterUserResponse( message );
 	}
 
 	@Override

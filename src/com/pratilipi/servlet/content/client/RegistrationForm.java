@@ -2,6 +2,7 @@ package com.pratilipi.servlet.content.client;
 
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -19,6 +20,10 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class RegistrationForm extends Composite {
+	
+	private Panel modalContent = new FlowPanel();
+	private Panel panel = new FlowPanel();
+	
 	private TextBox firstNameInput = new TextBox();
 	private TextBox lastNameInput = new TextBox();
 	private TextBox emailInput = new TextBox();
@@ -32,6 +37,7 @@ public class RegistrationForm extends Composite {
 	
 	//Error messages
 	private Label serverError = new Label();
+	private Label serverSuccess = new Label();
 	private Label nameInputError = new Label();
 	private Label emailInputError = new Label();
 	private Label passwordError = new Label();
@@ -40,10 +46,8 @@ public class RegistrationForm extends Composite {
 	
 	public RegistrationForm(){
 		
-		Panel modalContent = new FlowPanel();
 		modalContent.setStyleName( "modal-content" );
 		
-		Panel panel = new FlowPanel();
 		panel.setStyleName( "modal-body" );
 		
 		FlowPanel namePanel = new FlowPanel();
@@ -72,8 +76,6 @@ public class RegistrationForm extends Composite {
 			@Override
 			public void onFocus(FocusEvent event) {
 				nameInputError.setVisible( false );
-				hideServerError();
-				
 			}});
 		
 		lastNameInput.getElement().getStyle().setDisplay( Display.INLINE_BLOCK );
@@ -93,8 +95,6 @@ public class RegistrationForm extends Composite {
 			public void onFocus(FocusEvent event) {
 				if( validateFirstName() ) 
 					nameInputError.setVisible( false );
-				hideServerError();
-				
 			}});
 		
 		
@@ -111,8 +111,6 @@ public class RegistrationForm extends Composite {
 			@Override
 			public void onFocus(FocusEvent event) {
 				emailInputError.setVisible( false );
-				hideServerError();
-				
 			}});
 		
 		
@@ -130,7 +128,6 @@ public class RegistrationForm extends Composite {
 			@Override
 			public void onFocus(FocusEvent event) {
 				passwordError.setVisible( false );
-				hideServerError();
 				
 			}});
 		
@@ -147,7 +144,6 @@ public class RegistrationForm extends Composite {
 			@Override
 			public void onFocus(FocusEvent event) {
 				confPassError.setVisible( false );
-				hideServerError();
 				
 			}});
 		
@@ -155,6 +151,11 @@ public class RegistrationForm extends Composite {
 		registerButton.addStyleName("btn-primary");
 		registerButton.addStyleName("btn-block");
 		registerButton.getElement().getStyle().setDisplay(Display.BLOCK);
+		
+		serverSuccess.addStyleName( "alert-success" );
+		serverSuccess.getElement().getStyle().setPadding( 15, Unit.PX );
+		serverSuccess.getElement().setAttribute( "role", "alert" );
+		serverSuccess.setVisible( false );
 		
 		//Error message Style
 		serverError.addStyleName( "alert alert-danger" );
@@ -196,6 +197,7 @@ public class RegistrationForm extends Composite {
 		panel.add( signin );
 		
 		modalContent.add( panel );
+		modalContent.add( serverSuccess );
 		
 		initWidget(modalContent);
 	}
@@ -218,6 +220,23 @@ public class RegistrationForm extends Composite {
 	public void addRegisterButtonClickHandler( ClickHandler clickHandler ) {
 		registerButton.addClickHandler( clickHandler );
 	}
+	
+	public void setEnable( boolean enabled ) {
+		firstNameInput.setEnabled( enabled );
+		lastNameInput.setEnabled( enabled );
+		emailInput.setEnabled( enabled );
+		password.setEnabled( enabled );
+		confirmPassword.setEnabled( enabled );
+	}
+	
+	public void showForm() {
+		this.panel.setVisible( true );
+	}
+	
+	public void hideForm() {
+		this.panel.setVisible( false );
+	}
+	
 	
 	//Form validation functions
 	public boolean validateFirstName(){
@@ -430,6 +449,13 @@ public class RegistrationForm extends Composite {
 		this.serverError.getElement().appendChild( msg.getElement() );
 	}
 	
+	public void setServerSuccess( String message ) {
+		HTML msg = new HTML();
+		msg.setHTML( message );
+		this.serverSuccess.getElement().removeAllChildren();
+		this.serverSuccess.getElement().appendChild( msg.getElement() );
+	}
+	
 	public void showServerError(){
 		this.serverError.setVisible( true );
 	}
@@ -438,4 +464,11 @@ public class RegistrationForm extends Composite {
 		serverError.setVisible( false );
 	}
 
+	public void showServerSuccess(){
+		this.serverSuccess.setVisible( true );
+	}
+	
+	public void hideServerSuccess(){
+		this.serverSuccess.setVisible( false );
+	}
 }

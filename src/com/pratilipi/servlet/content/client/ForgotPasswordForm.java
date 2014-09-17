@@ -5,6 +5,8 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -77,7 +79,12 @@ public class ForgotPasswordForm extends Composite {
 					hideEmailInputError();
 				}
 			}});
-		
+		emailInput.addFocusHandler( new FocusHandler() {
+
+			@Override
+			public void onFocus(FocusEvent event) {
+				emailInputError.setVisible( false );
+			}});
 		//password generate button. 
 		genPasswdButton.getElement().getStyle().setDisplay( Display.INLINE_BLOCK );
 		genPasswdButton.addStyleName( "col-xs-1" );
