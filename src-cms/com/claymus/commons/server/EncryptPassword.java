@@ -52,7 +52,6 @@ public class EncryptPassword {
     		logger.log( Level.SEVERE, "", e );
     		hashOfInput = password;
 		}
-        System.out.println("Password: "+ hashOfInput );
         return hashOfInput.equals(saltAndPass[1]);
     }
 

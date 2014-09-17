@@ -1,9 +1,12 @@
 package com.pratilipi.servlet.content.client;
 
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -14,27 +17,30 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 
 public class ChangePasswordForm extends Composite {
 	
+	private Panel modalContent = new FlowPanel();
+	private Panel panel = new FlowPanel();
+
+	
 	private PasswordTextBox currentPassword = new PasswordTextBox();
-	private PasswordTextBox password = new PasswordTextBox();
+	private PasswordTextBox newPassword = new PasswordTextBox();
 	private PasswordTextBox confirmPassword = new PasswordTextBox();
 	private Button changePasswordButton = new Button("Change Password");
 	private Label serverError = new Label();
+	private Label serverSuccessMsg = new Label();
 	private Label heading = new Label();
 	
 	final ValidateForm validateForm = new ValidateForm();
 	
 	//Error messages
 	private Label currentPasswordError = new Label();
-	private Label passwordError = new Label();
+	private Label newPasswordError = new Label();
 	private Label confPassError = new Label();
 	
 	
 	public ChangePasswordForm(){
 		
-		Panel modalContent = new FlowPanel();
 		modalContent.setStyleName( "modal-content" );
 		
-		Panel panel = new FlowPanel();
 		panel.setStyleName( "modal-body" );
 		
 		HTML headingElement= new HTML();
@@ -49,6 +55,10 @@ public class ChangePasswordForm extends Composite {
 		serverError.addStyleName( "alert alert-danger" );
 		serverError.getElement().setAttribute( "role", "alert") ;
 		
+		serverSuccessMsg.addStyleName( "alert-success" );
+		serverSuccessMsg.getElement().getStyle().setPadding( 15, Unit.PX );
+		serverSuccessMsg.getElement().setAttribute( "role", "alert") ;
+		
 		currentPassword.getElement().setPropertyString("placeholder", "Current Password");
 		currentPassword.addStyleName( "form-control" );
 		currentPassword.addBlurHandler(new BlurHandler(){
@@ -57,15 +67,28 @@ public class ChangePasswordForm extends Composite {
 			public void onBlur(BlurEvent event) {
 				validateCurrentPassword();
 			}});
+		currentPassword.addFocusHandler( new FocusHandler() {
+
+			@Override
+			public void onFocus(FocusEvent event) {
+				currentPasswordError.setVisible( false );
+			}} );
 		
-		password.getElement().getStyle().setDisplay(Display.BLOCK);
-		password.getElement().setPropertyString("placeholder", "New Password");
-		password.addStyleName( "form-control" );
-		password.addBlurHandler(new BlurHandler(){
+		newPassword.getElement().getStyle().setDisplay(Display.BLOCK);
+		newPassword.getElement().setPropertyString("placeholder", "New Password");
+		newPassword.addStyleName( "form-control" );
+		newPassword.addBlurHandler(new BlurHandler(){
 
 			@Override
 			public void onBlur(BlurEvent event) {
-				validatePassword();
+				validateNewPassword();
+			}});
+		newPassword.addFocusHandler( new FocusHandler() {
+
+			@Override
+			public void onFocus(FocusEvent event) {
+				newPasswordError.setVisible( false );
+				
 			}});
 		
 		confirmPassword.getElement().setPropertyString("placeholder", "Confirm Password");
@@ -76,6 +99,13 @@ public class ChangePasswordForm extends Composite {
 			public void onBlur(BlurEvent event) {
 				validateConfPassword();
 			}});
+		confirmPassword.addFocusHandler( new FocusHandler() {
+
+			@Override
+			public void onFocus(FocusEvent event) {
+				confPassError.setVisible( false );
+				
+			}});
 		
 		changePasswordButton.addStyleName("btn btn-lg");
 		changePasswordButton.addStyleName("btn-primary");
@@ -84,13 +114,14 @@ public class ChangePasswordForm extends Composite {
 		
 		//Error message Style
 		currentPasswordError.setStyleName("errorMessage");
-		passwordError.setStyleName("errorMessage");
+		newPasswordError.setStyleName("errorMessage");
 		confPassError.setStyleName("errorMessage");
 				
 		//All error messages are invisible when page is loaded for first time.
 		serverError.setVisible( false );
+		serverSuccessMsg.setVisible( false );
 		currentPasswordError.setVisible(false);
-		passwordError.setVisible(false);
+		newPasswordError.setVisible(false);
 		confPassError.setVisible(false);
 		
 		//Hide current password for password reset form.
@@ -100,16 +131,32 @@ public class ChangePasswordForm extends Composite {
 		panel.add( serverError );
 		panel.add(currentPassword);
 		panel.add(currentPasswordError);
-		panel.add(password);
-		panel.add(passwordError);
+		panel.add(newPassword);
+		panel.add(newPasswordError);
 		panel.add(confirmPassword);
 		panel.add(confPassError);
 		buttonPanel.add(changePasswordButton);
 		panel.add( buttonPanel );
 		
 		modalContent.add( panel );
+		modalContent.add( serverSuccessMsg );
 		
 		initWidget(modalContent);
+	}
+	
+	public void hideForm() {
+		this.panel.setVisible( false );
+	}
+	
+	public void showForm() {
+		this.panel.setVisible( true );
+	}
+	
+	public void setEnable( boolean enabled ) {
+		currentPassword.setEnabled( enabled );
+		newPassword.setEnabled( enabled );
+		confirmPassword.setEnabled( enabled );
+		changePasswordButton.setEnabled( enabled );
 	}
 	
 	public void showCurrentPassword(){
@@ -146,22 +193,22 @@ public class ChangePasswordForm extends Composite {
 		}
 	}
 	
-	public boolean validatePassword(){
-		if(password.getText().isEmpty()){
-			password.addStyleName("textBoxError");
+	public boolean validateNewPassword(){
+		if(newPassword.getText().isEmpty()){
+			newPassword.addStyleName("textBoxError");
 			setPasswordError("Enter New Password");
-			passwordError.setVisible(true);
+			newPasswordError.setVisible(true);
 			return false;
 		}
 		else if( validateForm.ValidatePassword( getPassword() ) ){
-			password.addStyleName("textBoxError");
+			newPassword.addStyleName("textBoxError");
 			setPasswordError("Password should be atleast 6 characters long");
-			passwordError.setVisible(true);
+			newPasswordError.setVisible(true);
 			return false;
 		}
 		else{
-			password.removeStyleName("textBoxError");
-			passwordError.setVisible( false );
+			newPassword.removeStyleName("textBoxError");
+			newPasswordError.setVisible( false );
 			return true;
 		}
 	}
@@ -188,11 +235,11 @@ public class ChangePasswordForm extends Composite {
 	
 	//Get text from input fields.
 	public String getCurrentPassword(){
-		return currentPassword.getText().trim().isEmpty() ? null : currentPassword.getText().trim();
+		return currentPassword.getText().isEmpty() ? null : currentPassword.getText();
 	}
 
 	public String getPassword(){
-		return password.getText().trim().isEmpty() ? null : password.getText().trim();
+		return newPassword.getText().trim().isEmpty() ? null : newPassword.getText().trim();
 	}
 	
 	//set error message	
@@ -201,7 +248,7 @@ public class ChangePasswordForm extends Composite {
 	}
 
 	public void setPasswordError(String msg){
-		passwordError.setText(msg);
+		newPasswordError.setText(msg);
 	}
 
 	public void setconfPassError(String msg){
@@ -226,5 +273,20 @@ public class ChangePasswordForm extends Composite {
 	
 	public void hideServerError(){
 		this.serverError.setVisible( false );
+	}
+	
+	public void setServerSuccess( String message ) {
+		HTML serverMessage = new HTML();
+		serverMessage.setHTML( message );
+		this.serverSuccessMsg.getElement().removeAllChildren();
+		this.serverSuccessMsg.getElement().appendChild( serverMessage.getElement() );
+	}
+	
+	public void showServerSuccess(){
+		this.serverSuccessMsg.setVisible( true );
+	}
+	
+	public void hideServerSuccess(){
+		this.serverSuccessMsg.setVisible( false );
 	}
 }

@@ -258,13 +258,13 @@ public class PratilipiMain extends ClaymusMain {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		List<Pratilipi> bookDataList = new ArrayList<>(6);
-		/*bookDataList.add( dataAccessor.getPratilipi( 5649202965118976L, PratilipiType.BOOK) );
-		bookDataList.add( dataAccessor.getPratilipi( 5702351037923328L, PratilipiType.BOOK) );
-		bookDataList.add( dataAccessor.getPratilipi( 5694209793196032L, PratilipiType.BOOK) );
-		bookDataList.add( dataAccessor.getPratilipi( 6328816980983808L, PratilipiType.BOOK) );
-		bookDataList.add( dataAccessor.getPratilipi( 6026535974731776L, PratilipiType.BOOK) );
-		bookDataList.add( dataAccessor.getPratilipi( 5123639896702976L, PratilipiType.BOOK) );
-		*/
+		bookDataList.add( dataAccessor.getPratilipi( 5255539013451776L, PratilipiType.BOOK) );
+		bookDataList.add( dataAccessor.getPratilipi( 5543928887508992L, PratilipiType.BOOK) );
+		bookDataList.add( dataAccessor.getPratilipi( 4818859890573312L, PratilipiType.BOOK) );
+		bookDataList.add( dataAccessor.getPratilipi( 5331129229901824L, PratilipiType.BOOK) );
+		bookDataList.add( dataAccessor.getPratilipi( 6319699436503040L, PratilipiType.BOOK) );
+		bookDataList.add( dataAccessor.getPratilipi( 5345197126844416L, PratilipiType.BOOK) );
+		
 		Map<String, String> bookCoverMap = new HashMap<>();
 		Map<String, String> bookUrlMap = new HashMap<>();
 		for( Pratilipi book : bookDataList ){
@@ -279,13 +279,13 @@ public class PratilipiMain extends ClaymusMain {
 		}
 		
 		List<Pratilipi> poemDataList = new ArrayList<>( 6 );
-		/*poemDataList.add( dataAccessor.getPratilipi( 5181175278600192L, PratilipiType.POEM) );
-		poemDataList.add( dataAccessor.getPratilipi( 5757715179634688L, PratilipiType.POEM) );
-		poemDataList.add( dataAccessor.getPratilipi( 4688223091556352L, PratilipiType.POEM) );
-		poemDataList.add( dataAccessor.getPratilipi( 6016742643990528L, PratilipiType.POEM) );
-		poemDataList.add( dataAccessor.getPratilipi( 6503881592799232L, PratilipiType.POEM) );
-		poemDataList.add( dataAccessor.getPratilipi( 4822614228860928L, PratilipiType.POEM) );
-*/
+		poemDataList.add( dataAccessor.getPratilipi( 6528878302461952L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 5989123856793600L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 5834154725867520L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 5676982813589504L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 6480374163046400L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 4917068344328192L, PratilipiType.POEM) );
+
 		Map<String, String> poemCoverMap = new HashMap<>();
 		Map<String, String> poemUrlMap = new HashMap<>();
 		for( Pratilipi poem : poemDataList ){
@@ -300,13 +300,13 @@ public class PratilipiMain extends ClaymusMain {
 		}
 		
 		List<Pratilipi> storyDataList = new ArrayList<>( 6 );
-		/*storyDataList.add( dataAccessor.getPratilipi( 4879888423059456L, PratilipiType.STORY) );
-		storyDataList.add( dataAccessor.getPratilipi( 5998899202359296L, PratilipiType.STORY) );
-		storyDataList.add( dataAccessor.getPratilipi( 5670052883857408L, PratilipiType.STORY) );
-		storyDataList.add( dataAccessor.getPratilipi( 6662913897005056L, PratilipiType.STORY) );
-		storyDataList.add( dataAccessor.getPratilipi( 5944759797415936L, PratilipiType.STORY) );
 		storyDataList.add( dataAccessor.getPratilipi( 5898452667990016L, PratilipiType.STORY) );
-		*/
+		storyDataList.add( dataAccessor.getPratilipi( 5100102670614528L, PratilipiType.STORY) );
+		storyDataList.add( dataAccessor.getPratilipi( 6043148908232704L, PratilipiType.STORY) );
+		storyDataList.add( dataAccessor.getPratilipi( 5162535120535552L, PratilipiType.STORY) );
+		storyDataList.add( dataAccessor.getPratilipi( 5690091590647808L, PratilipiType.STORY) );
+		storyDataList.add( dataAccessor.getPratilipi( 4752448690323456L, PratilipiType.STORY) );
+		
 		Map<String, String> storyCoverMap = new HashMap<>();
 		Map<String, String> storyUrlMap = new HashMap<>();
 		for( Pratilipi story : storyDataList ){

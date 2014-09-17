@@ -230,7 +230,7 @@ public class UserForms implements EntryPoint {
 			}});
 		
 /************************************************ Change Password ********************************************/
-		final Panel changePasswordFormDialog = new FlowPanel();
+		final FocusPanel changePasswordFormDialog = new FocusPanel();
 		changePasswordFormDialog.setStyleName( "modal-dialog" );
 		
 		final ChangePasswordForm changePasswordForm = new ChangePasswordForm();
@@ -253,21 +253,49 @@ public class UserForms implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				changePasswordForm.hideServerError();
 				//used when a logged in user chooses to change his password
 				if( isChangePasswordURL 
 					&& changePasswordForm.validateCurrentPassword()
-					&& changePasswordForm.validatePassword() 
-					&& changePasswordForm.validateConfPassword())
+					&& changePasswordForm.validateNewPassword() 
+					&& changePasswordForm.validateConfPassword()) {
+					changePasswordForm.setEnable( false );
 					changePasswordRPC(changePasswordForm, email, password);
+				}
 				//used when user click on reset password link sent to his registered email.
 				else if( !isChangePasswordURL 
-						 && changePasswordForm.validatePassword() 
-						 && changePasswordForm.validateConfPassword() )
-							changePasswordRPC(changePasswordForm, email, password);
+						 && changePasswordForm.validateNewPassword() 
+						 && changePasswordForm.validateConfPassword() ){
+					changePasswordForm.setEnable( false );
+					changePasswordRPC(changePasswordForm, email, password);
+				}
 			}};
 		
 		changePasswordForm.addChangePasswdButtonClickHandler( changePasswdButtonClickHandler );
 		changePasswordFormDialog.add( changePasswordForm );
+		changePasswordFormDialog.addKeyDownHandler( new KeyDownHandler(){
+
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+					changePasswordForm.hideServerError();
+					if( isChangePasswordURL 
+							&& changePasswordForm.validateCurrentPassword()
+							&& changePasswordForm.validateNewPassword() 
+							&& changePasswordForm.validateConfPassword()) {
+							changePasswordForm.setEnable( false );
+							changePasswordRPC(changePasswordForm, email, password);
+						}
+						//used when user click on reset password link sent to his registered email.
+						else if( !isChangePasswordURL 
+								 && changePasswordForm.validateNewPassword() 
+								 && changePasswordForm.validateConfPassword() ){
+							changePasswordForm.setEnable( false );
+							changePasswordRPC(changePasswordForm, email, password);
+						}
+		           }
+			}});
+		
 /* ================================================================================================================================== */
 		//Used when user clicks on links.
 		History.addValueChangeHandler( new ValueChangeHandler<String>() {
@@ -404,14 +432,23 @@ public class UserForms implements EntryPoint {
 			@Override
 			public void onFailure(Throwable caught) {
 				changePasswordForm.setServerError( caught.getMessage() );
-				changePasswordForm.hideServerError();
 				changePasswordForm.showServerError();
+				changePasswordForm.setEnable( true );
 			}
 
 			@Override
 			public void onSuccess(UpdateUserPasswordResponse result) {
-				Window.alert( "Password Changed successfully." );
-				Window.Location.replace( "/" );
+				changePasswordForm.hideForm();
+				changePasswordForm.setServerSuccess( result.getMessage() );
+				changePasswordForm.showServerSuccess();
+				Timer timeout = new Timer() {
+
+					@Override
+					public void run() {
+						hideModal();
+						Window.Location.reload();
+					}};
+				timeout.schedule( 2000 );
 			}});
 	}
 	

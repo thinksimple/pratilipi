@@ -240,9 +240,8 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		TaskQueue taskQueue = TaskQueueFactory.getResetPasswordTaskQueue();
 		taskQueue.add( task );
 		
-		
-		String message = "<strong>Reset password link generated successfully. </strong>"
-							+ "Kindly check your email for the link.";
+		String message = "<Strong>Reset password link generated successfully. </strong>"
+							+ "Please check your email for the link";
 
 		return new ResetUserPasswordResponse( message );
 	}
@@ -265,16 +264,16 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 				
 				if( ! claymusHelper.isUserLoggedIn() )
 					throw new IllegalArgumentException(
-							"You are not logged in. Kindly "
+							"You are not logged in. Please "
 							+ "<a href='" + claymusHelper.createLoginURL() + "' class='alert-link'>login</a> and try again. "
-							+ "If you have forgotten your password, you can reset you password "
+							+ "If you have forgotten your password, you can reset your password "
 							+ "<a href='" + claymusHelper.createForgotPasswordURL() + " ' class='alert-link'>here</a>." );
 
 				user = claymusHelper.getCurrentUser();
 
 				if( request.getCurrentPassword() == null
 						||  ! EncryptPassword.check( request.getCurrentPassword(),  user.getPassword() ) )
-					throw new IllegalArgumentException( "Current password is not correct. Kindly try again." );
+					throw new IllegalArgumentException( "Current password is not correct. Please try again." );
 
 
 			// Request via password reset link
@@ -286,7 +285,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 						|| ! user.getPassword().equals( request.getToken() ) )
 					throw new IllegalArgumentException(
 							"URL used is invalid or expired. "
-							+ "Kindly check the URL and try again." );
+							+ "Please check the URL and try again." );
 			}
 			
 			user.setPassword( EncryptPassword.getSaltedHash( request.getNewPassword() ));
@@ -296,7 +295,9 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			dataAccessor.destroy();
 		}
 		
-		return new UpdateUserPasswordResponse();
+		String message = "<strong>Password changed successfully</strong>";
+		
+		return new UpdateUserPasswordResponse( message );
 	}
 
 }
