@@ -109,6 +109,6 @@ public class ResourceServlet extends HttpServlet {
 				.substring( ClaymusHelper.URL_RESOURCE.length() );
 	}
 	
-	protected void postUpload( HttpServletRequest request ) {}
+	protected void postUpload( HttpServletRequest request ) throws IOException {}
 	
 }
