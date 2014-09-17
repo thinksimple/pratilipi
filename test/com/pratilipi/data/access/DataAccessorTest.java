@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.transfer.Author;
-import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Publisher;

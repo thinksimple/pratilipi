@@ -102,8 +102,9 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 
 	@Override
 	public PratilipiData getPratilipiData() {
-		PratilipiData pratilipiData = pratilipiType.newPratilipiData();
+		PratilipiData pratilipiData = new PratilipiData();
 		pratilipiData.setId( pratilipiId );
+		pratilipiData.setType( pratilipiType );
 		pratilipiData.setTitle( titleInput.getText() );
 		pratilipiData.setAuthorId( Long.valueOf(authorList.getValue()) );
 		pratilipiData.setLanguageId( Long.parseLong( languageList.getValue() ) );

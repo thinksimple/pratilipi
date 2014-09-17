@@ -258,12 +258,12 @@ public class PratilipiMain extends ClaymusMain {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		List<Pratilipi> bookDataList = new ArrayList<>(6);
-		bookDataList.add( dataAccessor.getPratilipi( 5255539013451776L, PratilipiType.BOOK) );
-		bookDataList.add( dataAccessor.getPratilipi( 5543928887508992L, PratilipiType.BOOK) );
-		bookDataList.add( dataAccessor.getPratilipi( 4818859890573312L, PratilipiType.BOOK) );
-		bookDataList.add( dataAccessor.getPratilipi( 5331129229901824L, PratilipiType.BOOK) );
-		bookDataList.add( dataAccessor.getPratilipi( 6319699436503040L, PratilipiType.BOOK) );
-		bookDataList.add( dataAccessor.getPratilipi( 5345197126844416L, PratilipiType.BOOK) );
+		bookDataList.add( dataAccessor.getPratilipi( 5255539013451776L ) );
+		bookDataList.add( dataAccessor.getPratilipi( 5543928887508992L ) );
+		bookDataList.add( dataAccessor.getPratilipi( 4818859890573312L ) );
+		bookDataList.add( dataAccessor.getPratilipi( 5331129229901824L ) );
+		bookDataList.add( dataAccessor.getPratilipi( 6319699436503040L ) );
+		bookDataList.add( dataAccessor.getPratilipi( 5345197126844416L ) );
 		
 		Map<String, String> bookCoverMap = new HashMap<>();
 		Map<String, String> bookUrlMap = new HashMap<>();
@@ -279,12 +279,12 @@ public class PratilipiMain extends ClaymusMain {
 		}
 		
 		List<Pratilipi> poemDataList = new ArrayList<>( 6 );
-		poemDataList.add( dataAccessor.getPratilipi( 6528878302461952L, PratilipiType.POEM) );
-		poemDataList.add( dataAccessor.getPratilipi( 5989123856793600L, PratilipiType.POEM) );
-		poemDataList.add( dataAccessor.getPratilipi( 5834154725867520L, PratilipiType.POEM) );
-		poemDataList.add( dataAccessor.getPratilipi( 5676982813589504L, PratilipiType.POEM) );
-		poemDataList.add( dataAccessor.getPratilipi( 6480374163046400L, PratilipiType.POEM) );
-		poemDataList.add( dataAccessor.getPratilipi( 4917068344328192L, PratilipiType.POEM) );
+		poemDataList.add( dataAccessor.getPratilipi( 6528878302461952L ) );
+		poemDataList.add( dataAccessor.getPratilipi( 5989123856793600L ) );
+		poemDataList.add( dataAccessor.getPratilipi( 5834154725867520L ) );
+		poemDataList.add( dataAccessor.getPratilipi( 5676982813589504L ) );
+		poemDataList.add( dataAccessor.getPratilipi( 6480374163046400L ) );
+		poemDataList.add( dataAccessor.getPratilipi( 4917068344328192L ) );
 
 		Map<String, String> poemCoverMap = new HashMap<>();
 		Map<String, String> poemUrlMap = new HashMap<>();
@@ -300,12 +300,12 @@ public class PratilipiMain extends ClaymusMain {
 		}
 		
 		List<Pratilipi> storyDataList = new ArrayList<>( 6 );
-		storyDataList.add( dataAccessor.getPratilipi( 5898452667990016L, PratilipiType.STORY) );
-		storyDataList.add( dataAccessor.getPratilipi( 5100102670614528L, PratilipiType.STORY) );
-		storyDataList.add( dataAccessor.getPratilipi( 6043148908232704L, PratilipiType.STORY) );
-		storyDataList.add( dataAccessor.getPratilipi( 5162535120535552L, PratilipiType.STORY) );
-		storyDataList.add( dataAccessor.getPratilipi( 5690091590647808L, PratilipiType.STORY) );
-		storyDataList.add( dataAccessor.getPratilipi( 4752448690323456L, PratilipiType.STORY) );
+		storyDataList.add( dataAccessor.getPratilipi( 5898452667990016L ) );
+		storyDataList.add( dataAccessor.getPratilipi( 5100102670614528L ) );
+		storyDataList.add( dataAccessor.getPratilipi( 6043148908232704L ) );
+		storyDataList.add( dataAccessor.getPratilipi( 5162535120535552L ) );
+		storyDataList.add( dataAccessor.getPratilipi( 5690091590647808L ) );
+		storyDataList.add( dataAccessor.getPratilipi( 4752448690323456L ) );
 		
 		Map<String, String> storyCoverMap = new HashMap<>();
 		Map<String, String> storyUrlMap = new HashMap<>();

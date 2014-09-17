@@ -41,8 +41,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		
 		// Fetching Pratilipi, Author and Reviews
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi(
-				pratilipiId, pratilipiType );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		UserPratilipi pratilipiBook = null;
 		if( claymusHelper.isUserLoggedIn() )

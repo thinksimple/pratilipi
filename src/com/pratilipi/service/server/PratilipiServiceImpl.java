@@ -23,7 +23,6 @@ import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
-import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -65,7 +64,6 @@ import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.UserQueryRequest;
 import com.pratilipi.service.shared.UserQueryResponse;
 import com.pratilipi.service.shared.data.AuthorData;
-import com.pratilipi.service.shared.data.BookData;
 import com.pratilipi.service.shared.data.GenreData;
 import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PratilipiContentData;
@@ -97,28 +95,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				if ( ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
 						throw new InsufficientAccessException();
 						
-				switch( pratilipiData.getType() ) {
-					case BOOK:
-						BookData bookData = (BookData) pratilipiData;
-						Book book = (Book) dataAccessor.newBook();
-						book.setPublisherId( bookData.getPublisherId() );
-						pratilipi = book;
-						break;
-					case POEM:
-						pratilipi = dataAccessor.newPoem();
-						break;
-					case STORY:
-						pratilipi = dataAccessor.newStory();
-						break;
-					case ARTICLE:
-						pratilipi = dataAccessor.newArticle();
-						break;
-					default:
-						throw new IllegalArgumentException(
-								"PratilipiType '" + pratilipiData.getType()
-								+ "' is not yet supported !" );
-				}
-				
+				pratilipi = dataAccessor.newPratilipi();
 				pratilipi.setType( pratilipiData.getType() );
 				pratilipi.setListingDate( new Date() );
 				pratilipi.setLastUpdated( new Date() );
@@ -126,7 +103,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			
 			} else { // Update Pratilipi usecase
 			
-				pratilipi =  dataAccessor.getPratilipi( pratilipiData.getId(), pratilipiData.getType() );
+				pratilipi =  dataAccessor.getPratilipi( pratilipiData.getId() );
 				
 				if ( ( claymusHelper.getCurrentUserId() == pratilipi.getAuthorId()
 						&& ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
@@ -190,7 +167,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 			
-			PratilipiData pratilipiData = request.getPratilipiType().newPratilipiData();
+			PratilipiData pratilipiData = new PratilipiData();
 			pratilipiData.setId( pratilipi.getId() );
 			pratilipiData.setTitle( pratilipi.getTitle() );
 			pratilipiData.setLanguageId( language.getId() );
@@ -226,9 +203,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		PratilipiContentData pratilipiContentData = request.getPratilipiContentData();
-		Pratilipi pratilipi =  dataAccessor.getPratilipi(
-				pratilipiContentData.getPratilipiId(),
-				pratilipiContentData.getPratilipiType() );
+		Pratilipi pratilipi =  dataAccessor.getPratilipi( pratilipiContentData.getPratilipiId() );
 				
 		try {
 			if ( ( claymusHelper.getCurrentUserId() == pratilipi.getAuthorId()

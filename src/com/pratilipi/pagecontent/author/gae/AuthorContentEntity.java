@@ -5,6 +5,7 @@ import javax.jdo.annotations.Persistent;
 import com.claymus.data.access.gae.PageContentEntity;
 import com.pratilipi.pagecontent.author.AuthorContent;
 
+@SuppressWarnings("serial")
 public class AuthorContentEntity  extends PageContentEntity
 						implements AuthorContent {
 

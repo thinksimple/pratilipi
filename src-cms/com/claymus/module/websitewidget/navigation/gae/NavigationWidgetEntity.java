@@ -6,6 +6,7 @@ import javax.jdo.annotations.Persistent;
 import com.claymus.data.access.gae.WebsiteWidgetEntity;
 import com.claymus.module.websitewidget.navigation.NavigationWidget;
 
+@SuppressWarnings("serial")
 @PersistenceCapable
 public class NavigationWidgetEntity extends WebsiteWidgetEntity implements NavigationWidget {
 

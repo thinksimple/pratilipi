@@ -5,7 +5,7 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.pratilipi.commons.shared.PratilipiType;
 
-public abstract class PratilipiData implements IsSerializable {
+public class PratilipiData implements IsSerializable {
 
 	private Long id;
 	
@@ -13,6 +13,9 @@ public abstract class PratilipiData implements IsSerializable {
 	
 	private boolean isPublicDomain;
 	private boolean hasPublicDomain;
+	
+	private String isbn;
+	private boolean hasIsbn;
 	
 	private String title;
 	private boolean hasTitle;
@@ -28,6 +31,11 @@ public abstract class PratilipiData implements IsSerializable {
 	
 	private String authorName;
 	
+	private Long publisherId;
+	private boolean hasPublisherId;
+
+	private String publisherName;
+		
 	private Long publicationYear;
 	private boolean hasPublicationYear;
 	
@@ -82,6 +90,19 @@ public abstract class PratilipiData implements IsSerializable {
 		return hasPublicDomain;
 	}
 
+	public String getIsbn(){
+		return isbn;
+	}
+	
+	public void setIsbn( String isbn ){
+		this.isbn = isbn;
+		this.hasIsbn = true;
+	}
+	
+	public boolean hasIsbn(){
+		return this.hasIsbn;
+	}
+		
 	public String getTitle() {
 		return title;
 	}
@@ -135,6 +156,27 @@ public abstract class PratilipiData implements IsSerializable {
 
 	public void setAuthorName( String authorName ) {
 		this.authorName = authorName;
+	}
+	
+	public Long getPublisherId() {
+		return publisherId;
+	}
+
+	public void setPublisherId( Long publisherId ) {
+		this.publisherId = publisherId;
+		this.hasPublisherId = true;
+	}
+
+	public boolean hasPublisherId() {
+		return hasPublisherId;
+	}
+	
+	public String getPublisherName() {
+		return publisherName;
+	}
+
+	public void setPublisherName( String publisherName ) {
+		this.publisherName = publisherName;
 	}
 	
 	public Long getPublicationYear() {

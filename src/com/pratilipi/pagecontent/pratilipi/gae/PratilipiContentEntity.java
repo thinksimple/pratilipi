@@ -7,6 +7,7 @@ import com.claymus.data.access.gae.PageContentEntity;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContent;
 
+@SuppressWarnings("serial")
 @PersistenceCapable
 public class PratilipiContentEntity extends PageContentEntity
 		implements PratilipiContent {

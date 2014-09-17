@@ -7,6 +7,7 @@ import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.module.pagecontent.html.HtmlContent;
 import com.google.appengine.api.datastore.Text;
 
+@SuppressWarnings("serial")
 @PersistenceCapable
 public class HtmlContentEntity extends PageContentEntity implements HtmlContent {
 

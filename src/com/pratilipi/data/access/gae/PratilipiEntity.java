@@ -2,8 +2,6 @@ package com.pratilipi.data.access.gae;
 
 import java.util.Date;
 
-import javax.jdo.annotations.Discriminator;
-import javax.jdo.annotations.DiscriminatorStrategy;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -15,8 +13,7 @@ import com.pratilipi.data.transfer.Pratilipi;
 
 @SuppressWarnings("serial")
 @PersistenceCapable( table = "PRATILIPI" )
-@Discriminator( column = "_TYPE", strategy = DiscriminatorStrategy.CLASS_NAME )
-public abstract class PratilipiEntity implements Pratilipi {
+public class PratilipiEntity implements Pratilipi {
 
 	@PrimaryKey
 	@Persistent( column = "PRATILIPI_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
@@ -38,6 +35,9 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "AUTHOR_ID" )
 	private Long authorId;
 	
+	@Persistent( column = "PUBLISHER_ID" )
+	private Long publisherId;
+
 	@Persistent( column = "PUBLICATION_YEAR" )
 	private Long publicationYear;
 
@@ -48,6 +48,7 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "SUMMARY" )
 	private Text summary;
 
+	@Deprecated
 	@Persistent( column = "CONTENT" )
 	private Text content;
 
@@ -123,6 +124,16 @@ public abstract class PratilipiEntity implements Pratilipi {
 	@Override
 	public void setAuthorId( Long authorId ) {
 		this.authorId = authorId;
+	}
+	
+	@Override
+	public Long getPublisherId() {
+		return publisherId;
+	}
+
+	@Override
+	public void setPublisherId( Long publisherId ) {
+		this.publisherId = publisherId;
 	}
 	
 	@Override

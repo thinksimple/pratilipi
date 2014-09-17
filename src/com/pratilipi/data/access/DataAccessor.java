@@ -4,36 +4,23 @@ import java.util.List;
 
 import com.claymus.data.access.DataListCursorTuple;
 import com.pratilipi.commons.shared.PratilipiType;
-import com.pratilipi.data.transfer.Article;
 import com.pratilipi.data.transfer.Author;
-import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
-import com.pratilipi.data.transfer.Poem;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiAuthor;
 import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.PratilipiTag;
 import com.pratilipi.data.transfer.Publisher;
-import com.pratilipi.data.transfer.Story;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserPratilipi;
 
-
 public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
-	Book newBook();
-
-	Poem newPoem();
-
-	Story newStory();
-
-	Article newArticle();
+	Pratilipi newPratilipi();
 
 	Pratilipi getPratilipi( Long id );
 
-	Pratilipi getPratilipi( Long id, PratilipiType type );
-	
 	DataListCursorTuple<Pratilipi> getPratilipiList(
 			String cursorStr, int resultCount );
 	

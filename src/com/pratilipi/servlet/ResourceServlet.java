@@ -56,7 +56,7 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 			for( PratilipiType pratilipiType : PratilipiType.values() ) {
 				if( url.startsWith( pratilipiType.getCoverImageUrl() ) ) {
 					DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-					Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId, pratilipiType ); 
+					Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId ); 
 					dataAccessor.destroy();
 					
 					String fileName = pratilipiType.getCoverImageResource();

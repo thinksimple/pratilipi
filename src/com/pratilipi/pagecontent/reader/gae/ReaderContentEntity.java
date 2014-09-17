@@ -7,6 +7,7 @@ import com.claymus.data.access.gae.PageContentEntity;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.pagecontent.reader.ReaderContent;
 
+@SuppressWarnings("serial")
 @PersistenceCapable
 public class ReaderContentEntity extends PageContentEntity
 		implements ReaderContent {

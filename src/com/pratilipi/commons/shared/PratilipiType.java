@@ -1,11 +1,6 @@
 package com.pratilipi.commons.shared;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.pratilipi.service.shared.data.ArticleData;
-import com.pratilipi.service.shared.data.BookData;
-import com.pratilipi.service.shared.data.PoemData;
-import com.pratilipi.service.shared.data.PratilipiData;
-import com.pratilipi.service.shared.data.StoryData;
 
 public enum PratilipiType implements IsSerializable {
 	
@@ -157,30 +152,4 @@ public enum PratilipiType implements IsSerializable {
 		return contentImageUrl;
 	}
 	
-
-	public PratilipiData newPratilipiData() {
-		PratilipiData pratilipiData = null;
-		
-		switch( this ) {
-			case BOOK:
-				pratilipiData = new BookData();
-				pratilipiData.setType( BOOK );
-				break;
-			case POEM:
-				pratilipiData = new PoemData();
-				pratilipiData.setType( POEM );
-				break;
-			case STORY:
-				pratilipiData = new StoryData();
-				pratilipiData.setType( STORY );
-				break;
-			case ARTICLE:
-				pratilipiData = new ArticleData();
-				pratilipiData.setType( ARTICLE );
-				break;
-		}
-		
-		return pratilipiData;
-	}
-
 }

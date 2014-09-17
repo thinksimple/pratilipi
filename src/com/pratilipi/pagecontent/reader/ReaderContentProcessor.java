@@ -54,8 +54,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		
 		// Fetching Pratilipi and Author
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi(
-				pratilipiId, pratilipiContent.getPratilipiType() );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		dataAccessor.destroy();
 

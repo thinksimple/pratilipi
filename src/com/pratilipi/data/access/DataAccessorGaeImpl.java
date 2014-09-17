@@ -12,32 +12,24 @@ import com.claymus.data.access.GaeQueryBuilder;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.commons.shared.PratilipiType;
-import com.pratilipi.data.access.gae.ArticleEntity;
 import com.pratilipi.data.access.gae.AuthorEntity;
-import com.pratilipi.data.access.gae.BookEntity;
 import com.pratilipi.data.access.gae.GenreEntity;
 import com.pratilipi.data.access.gae.LanguageEntity;
-import com.pratilipi.data.access.gae.PoemEntity;
 import com.pratilipi.data.access.gae.PratilipiAuthorEntity;
 import com.pratilipi.data.access.gae.PratilipiEntity;
 import com.pratilipi.data.access.gae.PratilipiGenreEntity;
 import com.pratilipi.data.access.gae.PratilipiTagEntity;
 import com.pratilipi.data.access.gae.PublisherEntity;
-import com.pratilipi.data.access.gae.StoryEntity;
 import com.pratilipi.data.access.gae.TagEntity;
 import com.pratilipi.data.access.gae.UserPratilipiEntity;
-import com.pratilipi.data.transfer.Article;
 import com.pratilipi.data.transfer.Author;
-import com.pratilipi.data.transfer.Book;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
-import com.pratilipi.data.transfer.Poem;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiAuthor;
 import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.PratilipiTag;
 import com.pratilipi.data.transfer.Publisher;
-import com.pratilipi.data.transfer.Story;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserPratilipi;
 
@@ -47,23 +39,8 @@ public class DataAccessorGaeImpl
 
 	
 	@Override
-	public Book newBook() {
-		return new BookEntity();
-	}
-
-	@Override
-	public Poem newPoem() {
-		return new PoemEntity();
-	}
-
-	@Override
-	public Story newStory() {
-		return new StoryEntity();
-	}
-
-	@Override
-	public Article newArticle() {
-		return new ArticleEntity();
+	public Pratilipi newPratilipi() {
+		return new PratilipiEntity();
 	}
 
 
@@ -72,23 +49,6 @@ public class DataAccessorGaeImpl
 		return getEntity( PratilipiEntity.class, id );
 	}
 
-	@Override
-	public Pratilipi getPratilipi( Long id, PratilipiType type ) {
-		if( type == PratilipiType.BOOK )
-			return getEntity( BookEntity.class, id );
-		
-		else if( type == PratilipiType.POEM )
-			return getEntity( PoemEntity.class, id );
-		
-		else if( type == PratilipiType.STORY )
-			return getEntity( StoryEntity.class, id );
-
-		else if( type == PratilipiType.ARTICLE )
-			return getEntity( ArticleEntity.class, id );
-		
-		return null;
-	}
-	
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
 			String cursorStr, int resultCount ) {
@@ -119,19 +79,7 @@ public class DataAccessorGaeImpl
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiType type, Boolean publicDomain, String cursorStr, int resultCount ) {
 		
-		Query query = null;
-		
-		if( type == PratilipiType.BOOK )
-			query = pm.newQuery( BookEntity.class );
-		
-		else if( type == PratilipiType.POEM )
-			query = pm.newQuery( PoemEntity.class );
-
-		else if( type == PratilipiType.STORY )
-			query = pm.newQuery( StoryEntity.class );
-
-		else if( type == PratilipiType.ARTICLE )
-			query = pm.newQuery( ArticleEntity.class );
+		Query query = pm.newQuery( PratilipiEntity.class );
 		
 		if( publicDomain != null )
 			query = new GaeQueryBuilder( query )
@@ -171,21 +119,7 @@ public class DataAccessorGaeImpl
 	public DataListCursorTuple<Pratilipi> getPratilipiListByLanguage(
 			PratilipiType type, Long languageId, String cursorStr, int resultCount  ) {
 
-		Query query = null;
-		
-		if( type == PratilipiType.BOOK )
-			query = pm.newQuery( BookEntity.class );
-		
-		else if( type == PratilipiType.POEM )
-			query = pm.newQuery( PoemEntity.class );
-
-		else if( type == PratilipiType.STORY )
-			query = pm.newQuery( StoryEntity.class );
-
-		else if( type == PratilipiType.ARTICLE )
-			query = pm.newQuery( ArticleEntity.class );
-		
-		query = new GaeQueryBuilder( query )
+		Query query = new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) )
 						.addFilter( "type", type )
 						.addFilter( "languageId", languageId )
 						.addOrdering( "title", true )
@@ -213,21 +147,7 @@ public class DataAccessorGaeImpl
 	public DataListCursorTuple<Pratilipi> getPratilipiListByAuthor( 
 			PratilipiType type, Long authorId, String cursorStr, int resultCount  ) {
 	
-		Query query = null;
-		
-		if( type == PratilipiType.BOOK )
-			query = pm.newQuery( BookEntity.class );
-		
-		else if( type == PratilipiType.POEM )
-			query = pm.newQuery( PoemEntity.class );
-
-		else if( type == PratilipiType.STORY )
-			query = pm.newQuery( StoryEntity.class );
-
-		else if( type == PratilipiType.ARTICLE )
-			query = pm.newQuery( ArticleEntity.class );
-		
-		query = new GaeQueryBuilder( query )
+		Query query = new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) )
 						.addFilter( "type", type )
 						.addFilter( "authorId", authorId )
 						.addOrdering( "title", true )

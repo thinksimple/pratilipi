@@ -29,6 +29,10 @@ public interface Pratilipi extends Serializable {
 	
 	void setAuthorId( Long authorId );
 	
+	Long getPublisherId();
+	
+	void setPublisherId( Long publisherId );
+	
 	Long getPublicationYear();
 	
 	void setPublicationYear( Long publicationYear );

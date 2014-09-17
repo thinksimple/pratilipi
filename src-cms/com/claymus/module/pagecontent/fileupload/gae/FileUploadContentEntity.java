@@ -7,6 +7,7 @@ import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.module.pagecontent.fileupload.FileUploadContent;
 
+@SuppressWarnings("serial")
 @PersistenceCapable
 public class FileUploadContentEntity extends PageContentEntity implements FileUploadContent {
 	

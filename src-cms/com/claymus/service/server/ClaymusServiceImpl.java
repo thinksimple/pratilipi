@@ -246,7 +246,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		taskQueue.add( task );
 		
 		String message = "<Strong>Reset password link generated successfully. </strong>"
-							+ "Please check your email for the link";
+							+ "Please check your email for the link.";
 
 		return new ResetUserPasswordResponse( message );
 	}

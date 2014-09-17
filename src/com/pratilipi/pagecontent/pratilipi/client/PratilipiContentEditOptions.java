@@ -121,7 +121,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			String pratilipiIdStr = url.substring( pratilipiType.getPageUrl().length() );
 			Long pratilipiId = Long.parseLong( pratilipiIdStr );
 
-			PratilipiData pratilipiData = pratilipiType.newPratilipiData();
+			PratilipiData pratilipiData = new PratilipiData();
 			pratilipiData.setId( pratilipiId );
 			pratilipiData.setSummary( getHtmlFromEditor( "PageContent-Pratilipi-Summary" ) );
 			

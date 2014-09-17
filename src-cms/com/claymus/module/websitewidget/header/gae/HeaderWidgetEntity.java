@@ -6,6 +6,7 @@ import javax.jdo.annotations.Persistent;
 import com.claymus.data.access.gae.WebsiteWidgetEntity;
 import com.claymus.module.websitewidget.header.HeaderWidget;
 
+@SuppressWarnings("serial")
 @PersistenceCapable
 public class HeaderWidgetEntity extends WebsiteWidgetEntity implements HeaderWidget {
 

@@ -6,6 +6,7 @@ import javax.jdo.annotations.Persistent;
 import com.claymus.data.access.gae.WebsiteWidgetEntity;
 import com.claymus.module.websitewidget.footer.FooterWidget;
 
+@SuppressWarnings("serial")
 @PersistenceCapable
 public class FooterWidgetEntity extends WebsiteWidgetEntity implements FooterWidget {
 

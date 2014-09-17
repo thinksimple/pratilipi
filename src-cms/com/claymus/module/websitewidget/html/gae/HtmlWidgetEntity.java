@@ -7,6 +7,7 @@ import com.claymus.data.access.gae.WebsiteWidgetEntity;
 import com.claymus.module.websitewidget.html.HtmlWidget;
 import com.google.appengine.api.datastore.Text;
 
+@SuppressWarnings("serial")
 @PersistenceCapable
 public class HtmlWidgetEntity extends WebsiteWidgetEntity implements HtmlWidget {
 
