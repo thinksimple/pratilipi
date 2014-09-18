@@ -2,6 +2,7 @@ package com.claymus.data.access;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,14 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 			throws IOException {
 		
 		blobAccessor.createBlob( fileName, mimeType, bytes );
+		memcache.remove( PREFIX + fileName );
+	}
+
+	@Override
+	public void createBlob( String fileName, String mimeType, byte[] bytes,
+			String acl, Map<String, String> metaDataMap) throws IOException {
+		
+		blobAccessor.createBlob( fileName, mimeType, bytes, acl, metaDataMap );
 		memcache.remove( PREFIX + fileName );
 	}
 
@@ -86,5 +95,5 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 
 		blobAccessor.serveBlob( fileName, response );
 	}
-	
+
 }

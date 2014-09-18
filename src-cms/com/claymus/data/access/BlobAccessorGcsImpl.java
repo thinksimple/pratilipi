@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -120,12 +122,24 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 	public void createBlob( String fileName, String mimeType, byte[] bytes )
 			throws IOException {
 		
+		createBlob( fileName, mimeType, bytes, null, null );
+	}
+	
+	@Override
+	public void createBlob( String fileName, String mimeType, byte[] bytes, String acl, Map<String, String> metaDataMap )
+			throws IOException {
+
 		GcsFilename gcsFileName
 				= new GcsFilename( bucketName, fileName );
 		
 		Builder builder = new GcsFileOptions.Builder();
 		if( mimeType != null )
 			builder.mimeType( mimeType );
+		if( acl != null )
+			builder.acl( acl );
+		if( metaDataMap != null )
+			for( Entry<String, String> metaData : metaDataMap.entrySet() )
+				builder.addUserMetadata( metaData.getKey(), metaData.getValue() );
 		GcsFileOptions gcsFileOptions = builder.build();
 		
 		GcsOutputChannel gcsOutputChannel = gcsService

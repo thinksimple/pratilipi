@@ -2,6 +2,7 @@ package com.claymus.data.access;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,9 @@ public interface BlobAccessor {
 	boolean createBlob( HttpServletRequest request, String fileName );
 
 	void createBlob( String fileName, String mimeType, byte[] bytes )
+			throws IOException;
+
+	void createBlob( String fileName, String mimeType, byte[] bytes, String acl, Map<String, String> metaDataMap )
 			throws IOException;
 
 	void createBlob( String fileName, String mimeType, String content, Charset charset )
