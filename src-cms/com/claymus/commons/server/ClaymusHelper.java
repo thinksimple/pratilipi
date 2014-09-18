@@ -20,7 +20,10 @@ public class ClaymusHelper {
 
 	public static final String SESSION_ATTRIB_CURRENT_USER_ID = "CurrentUserId";
 	
-	public static final String URL_RESOURCE = "/resource.";
+	public static final String URL_RESOURCE =
+			ClaymusHelper.getSystemProperty( "resource" );
+	public static final String URL_RESOURCE_STATIC =
+			ClaymusHelper.getSystemProperty( "resource.static" );
 
 	private static final String URL_LOGIN_PAGE = "#signin";
 	private static final String URL_LOGOUT_PAGE = "/logout?dest=";
