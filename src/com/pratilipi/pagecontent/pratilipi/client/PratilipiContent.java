@@ -9,7 +9,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
@@ -25,18 +24,9 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 	private final Button saveReviewButton = new Button( "Submit Review" );
 	
 	private String url = Window.Location.getPath();
-	private PratilipiType pratilipiType;
 
 	
 	public void onModuleLoad() {
-		for( PratilipiType pratilipiType : PratilipiType.values() )
-			if( url.startsWith( pratilipiType.getPageUrl() ) )
-				this.pratilipiType = pratilipiType;
-
-		if( pratilipiType == null )
-			return;
-
-		
 		RootPanel reviewPanel = RootPanel.get( "PageContent-Pratilipi-Review" );
 		RootPanel submitButtonPanel = RootPanel.get( "PageContent-Pratilipi-Review-AddOptions" );
 		if( reviewPanel != null && submitButtonPanel != null ) {
@@ -60,7 +50,7 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 			saveReviewButton.setEnabled( false );
 			saveReviewButton.setText( "Submitting ..." );
 			
-			String pratilipiIdStr = url.substring( pratilipiType.getPageUrl().length() );
+			String pratilipiIdStr = url.substring( url.lastIndexOf( '/' ) + 1 );
 			Long pratilipiId = Long.parseLong( pratilipiIdStr );
 			
 			UserPratilipiData userPratilipiData = new UserPratilipiData();

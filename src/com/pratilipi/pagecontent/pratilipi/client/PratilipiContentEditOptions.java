@@ -47,21 +47,11 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 
 	
 	public void onModuleLoad() {
-		for( PratilipiType pratilipiType : PratilipiType.values() )
-			if( url.startsWith( pratilipiType.getPageUrl() ) )
-				this.pratilipiType = pratilipiType;
-
-		if( pratilipiType == null )
-			return;
-	
-		
-		String pratilipiIdStr = url.substring( pratilipiType.getPageUrl().length() );
-		
 		
 		// Cover image edit options
 		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-CoverImage-EditOptions" );
 		if( rootPanel != null ) {
-			String uploadUrl = pratilipiType.getCoverImageUrl() + pratilipiIdStr;
+			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
 			coverImageUpload.getElement().setAttribute( "data-url", uploadUrl );
 			loadFileUploader( coverImageUpload.getElement() );
 
@@ -72,7 +62,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		// Html content edit options
 		rootPanel = RootPanel.get( "PageContent-Pratilipi-HtmlContent-EditOptions" );
 		if( rootPanel != null ) {
-			String uploadUrl = pratilipiType.getContentHtmlUrl() + pratilipiIdStr;
+			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
 			htmlContentUpload.getElement().setAttribute( "data-url", uploadUrl );
 			loadFileUploader( htmlContentUpload.getElement() );
 
@@ -83,7 +73,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		// Word content edit options
 		rootPanel = RootPanel.get( "PageContent-Pratilipi-WordContent-EditOptions" );
 		if( rootPanel != null ) {
-			String uploadUrl = pratilipiType.getContentWordUrl() + pratilipiIdStr;
+			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
 			wordContentUpload.getElement().setAttribute( "data-url", uploadUrl );
 			loadFileUploader( wordContentUpload.getElement() );
 
@@ -118,7 +108,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			saveSummaryAnchor.setVisible( false );
 			savingSummaryLabel.setVisible( true );
 			
-			String pratilipiIdStr = url.substring( pratilipiType.getPageUrl().length() );
+			String pratilipiIdStr = url.substring( url.lastIndexOf( '/' ) + 1 );
 			Long pratilipiId = Long.parseLong( pratilipiIdStr );
 
 			PratilipiData pratilipiData = new PratilipiData();

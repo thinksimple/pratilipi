@@ -15,7 +15,7 @@ import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.module.pagecontent.PageContentProcessor;
-import com.pratilipi.commons.shared.PratilipiHelper;
+import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -40,11 +40,9 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 		String url = request.getRequestURI();
 		String pratilipiIdStr =
-				url.substring( pratilipiType.getReaderPageUrl().length() );
+				url.substring( url.lastIndexOf( '/' ) + 1 );
 		String pageNoStr =
 				request.getParameter( "page" ) == null ? "1" : request.getParameter( "page" );
-		String readerType =
-				request.getParameter( "reader" ) == null ? "html" : request.getParameter( "reader" );
 		
 
 		Long pratilipiId = Long.parseLong( pratilipiIdStr );
@@ -63,13 +61,13 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		if( pratilipi.getPageCount() != null && pratilipi.getPageCount() > 0 ) {
 
 			pageCount = pratilipi.getPageCount();
-			pageContent = "<img style=\"width:100%;\" src=\"" + pratilipiType.getContentImageUrl() + pratilipiId + "/" + pageNo + "\">";
+			pageContent = "<img style=\"width:100%;\" src=\"" + PratilipiHelper.getContentImageUrl( pratilipiType, pratilipiId ) + "/" + pageNo + "\">";
 
-		} else if( readerType.equals( "html" ) ) {
+		} else {
 
 			// Fetching Pratilipi content
 			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-			BlobEntry blobEntry = blobAccessor.getBlob( pratilipiType.getContentResource() + pratilipiIdStr );
+			BlobEntry blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipiType, pratilipiId ) );
 
 			// TODO: Remove this as soon as possible
 			if( blobEntry == null ) {
@@ -78,7 +76,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 				if( pratilipi.getContent() != null ) {
 					logger.log( Level.INFO, "Creating Blob Store entry using Pratilipi content from Data Store ..." );
 					blobAccessor.createBlob(
-							pratilipiType.getContentResource() + pratilipiIdStr,
+							PratilipiHelper.getContent( pratilipiType, pratilipiId ),
 							"text/html",
 							pratilipi.getContent(), Charset.forName( "UTF-8" ) );
 
@@ -86,11 +84,12 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 				} else {
 					logger.log( Level.INFO, "Creating Blob Store entry using empty string ..." );
 					blobAccessor.createBlob(
-							pratilipiType.getContentResource() + pratilipiIdStr,
+							PratilipiHelper.getContent( pratilipiType, pratilipiId ),
 							"text/html",
 							"&nbsp;", Charset.forName( "UTF-8" ) );
 				}
-				blobEntry = blobAccessor.getBlob( pratilipiType.getContentResource() + pratilipiIdStr );
+				
+				blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipiType, pratilipiId ) );
 			}
 			
 			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
@@ -131,17 +130,15 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 	
 		if( pageNo > 1 )
 			dataModel.put( "previousPageUrl",
-					pratilipiType.getReaderPageUrl() + pratilipiIdStr
-							+ "?&reader=" + readerType 
-							+ "&page=" + ( pageNo -1 ) );
+					PratilipiHelper.getReaderPageUrl( pratilipiType, pratilipiId )
+							+ "?page=" + ( pageNo -1 ) );
 		
 		if( pageNo < pageCount )
 			dataModel.put( "nextPageUrl",
-					pratilipiType.getReaderPageUrl() + pratilipiIdStr
-							+ "?&reader=" + readerType
-							+ "&page=" + ( pageNo + 1 ) );
+					PratilipiHelper.getReaderPageUrl( pratilipiType, pratilipiId )
+							+ "?page=" + ( pageNo + 1 ) );
 
-		dataModel.put( "pratilipiHomeUrl", pratilipiType.getPageUrl() + pratilipi.getId() );
+		dataModel.put( "pratilipiHomeUrl", PratilipiHelper.getPageUrl( pratilipiType, pratilipiId ) );
 		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getAuthorId() );
 
 		dataModel.put( "showEditOptions",

@@ -1,22 +1,23 @@
 package com.pratilipi.service.shared;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 public class SavePratilipiResponse implements IsSerializable {
 	
-	private Long pratilipiId;
+	private PratilipiData pratilipiData;
 
 	
 	@SuppressWarnings("unused")
 	private SavePratilipiResponse() {}
 	
-	public SavePratilipiResponse( Long pratilipiId ) {
-		this.pratilipiId = pratilipiId;
+	public SavePratilipiResponse( PratilipiData pratilipiData ) {
+		this.pratilipiData = pratilipiData;
 	}
 	
 	
-	public Long getPratilipiId() {
-		return this.pratilipiId;
+	public PratilipiData getPratilipiData() {
+		return this.pratilipiData;
 	}
 
 }

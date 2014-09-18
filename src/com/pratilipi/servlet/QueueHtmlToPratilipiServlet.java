@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
-import com.pratilipi.commons.shared.PratilipiHelper;
+import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessorFactory;
 
@@ -37,7 +37,7 @@ public class QueueHtmlToPratilipiServlet extends HttpServlet {
 		
 		// Fetching html content blob store
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String fileName = pratilipiType.getContentWordResource() + pratilipiId;
+		String fileName = PratilipiHelper.getContentHtml( pratilipiType, pratilipiId );
 		BlobEntry blobEntry = blobAccessor.getBlob( fileName );
 		String html = new String( blobEntry.getData() );
 		
@@ -59,7 +59,7 @@ public class QueueHtmlToPratilipiServlet extends HttpServlet {
 
 		// Saving Pratilipi content to blob store
 		blobAccessor.createBlob(
-				pratilipiType.getContentResource() + pratilipiId,
+				PratilipiHelper.getContent( pratilipiType, pratilipiId ),
 				"text/html", html, Charset.forName( "UTF-8" ) );
 	}
 	

@@ -10,7 +10,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.SavePratilipiContentRequest;
@@ -30,18 +29,9 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 
 	
 	private String url = Window.Location.getPath();
-	private PratilipiType pratilipiType;
-
 	
 	public void onModuleLoad() {
-		for( PratilipiType pratilipiType : PratilipiType.values() )
-			if( url.startsWith( pratilipiType.getReaderPageUrl() ) )
-				this.pratilipiType = pratilipiType;
 
-		if( pratilipiType == null )
-			return;
-	
-		
 		// Content edit options
 		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-Content-EditOptions" );
 		if( rootPanel != null ) {
@@ -69,7 +59,7 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 			saveContentAnchor.setVisible( false );
 			savingContentLabel.setVisible( true );
 			
-			String pratilipiIdStr = url.substring( pratilipiType.getReaderPageUrl().length() );
+			String pratilipiIdStr = url.substring( url.lastIndexOf( '/' ) + 1 );
 			String pageNoStr = Window.Location.getParameter( "page" );
 			
 			Long pratilipiId = Long.parseLong( pratilipiIdStr );
@@ -77,7 +67,6 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 
 			PratilipiContentData pratilipiContentData = new PratilipiContentData();
 			pratilipiContentData.setPratilipiId( pratilipiId );
-			pratilipiContentData.setPratilipiType( pratilipiType );
 			pratilipiContentData.setPageNo( pageNo );
 			pratilipiContentData.setContent( getHtmlFromEditor( "PageContent-Pratilipi-Content" ) );
 			

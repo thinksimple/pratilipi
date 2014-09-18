@@ -27,19 +27,31 @@
   <!-- Handler for uploading and serving website resources -->
 
   <servlet>
-    <servlet-name>BookCoverResourceServlet</servlet-name>
+    <servlet-name>CoverImageResourceServlet</servlet-name>
     <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
-    <init-param>
-      <param-name>ResizeImage</param-name>
-      <param-value>300</param-value>
-    </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>BookCoverResourceServlet</servlet-name>
+    <servlet-name>CoverImageResourceServlet</servlet-name>
     <url-pattern>/resource.book-cover/original/*</url-pattern>
     <url-pattern>/resource.poem-cover/original/*</url-pattern>
     <url-pattern>/resource.story-cover/original/*</url-pattern>
     <url-pattern>/resource.article-cover/original/*</url-pattern>
+  </servlet-mapping>
+   
+  <servlet>
+    <servlet-name>CoverImage300ResourceServlet</servlet-name>
+    <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
+    <init-param>
+      <param-name>ResourceServletType</param-name>
+      <param-value>DOWNLOAD_ONLY</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CoverImage300ResourceServlet</servlet-name>
+    <url-pattern>/resource.book-cover/300/*</url-pattern>
+    <url-pattern>/resource.poem-cover/300/*</url-pattern>
+    <url-pattern>/resource.story-cover/300/*</url-pattern>
+    <url-pattern>/resource.article-cover/300/*</url-pattern>
   </servlet-mapping>
    
   <servlet>

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.transfer.User;
 import com.claymus.module.pagecontent.PageContentProcessor;
-import com.pratilipi.commons.shared.PratilipiHelper;
+import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
@@ -75,9 +75,11 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 			userName += " " + currentUser.getLastName();
 		dataModel.put( "userName", userName );
 		
-		dataModel.put( "pratilipiCoverUrl", pratilipiType.getCoverImageUrl() + pratilipi.getId() );
-		dataModel.put( "pratilipiHomeUrl", pratilipiType.getPageUrl() + pratilipi.getId() );
-		dataModel.put( "pratilipiReaderUrl", pratilipiType.getReaderPageUrl() + pratilipi.getId() );
+		dataModel.put( "pratilipiHomeUrl", PratilipiHelper.getPageUrl( pratilipiType, pratilipi.getId() ) );
+		dataModel.put( "pratilipiCoverUrl", PratilipiHelper.getCoverImageUrl( pratilipiType, pratilipi.getId() ) );
+		dataModel.put( "pratilipiReaderUrl", PratilipiHelper.getReaderPageUrl( pratilipiType, pratilipi.getId() ) );
+		dataModel.put( "pratilipiContentHtmlUrl", PratilipiHelper.getContentHtmlUrl( pratilipiType, pratilipi.getId() ) );
+		dataModel.put( "pratilipiContentWordUrl", PratilipiHelper.getContentWordUrl( pratilipiType, pratilipi.getId() ) );
 		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getAuthorId() );
 		
 		dataModel.put( "showReviewedMessage",

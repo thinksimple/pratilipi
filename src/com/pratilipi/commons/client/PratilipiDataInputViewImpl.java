@@ -24,11 +24,14 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	private CheckBoxFormField isPublicDomain = new CheckBoxFormField();
 	private Button addButton = new Button();
 	
-	
 	private final PratilipiType pratilipiType;
 	private Long pratilipiId;
 	private PratilipiView pratilipiView;
-	
+
+	private String pageUrl;
+	private String coverImageUrl;
+	private String authorPageUrl;
+
 	
 	public PratilipiDataInputViewImpl( PratilipiType pratilipiType ) {
 		
@@ -114,6 +117,10 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		pratilipiData.setAuthorName( authorList.getValueText() );
 		pratilipiData.setLanguageName( languageList.getValueText() );
 		
+		pratilipiData.setPageUrl( pageUrl );
+		pratilipiData.setCoverImageUrl( coverImageUrl );
+		pratilipiData.setAuthorPageUrl( authorPageUrl );
+		
 		return pratilipiData;
 	}
 
@@ -126,6 +133,10 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		languageList.setValue( pratilipiData.getLanguageId().toString() );
 		pageCountInput.setValue( pratilipiData.getPageCount() );
 		isPublicDomain.setChecked( pratilipiData.isPublicDomain() );
+		
+		pageUrl = pratilipiData.getPageUrl();
+		coverImageUrl = pratilipiData.getCoverImageUrl();
+		authorPageUrl = pratilipiData.getAuthorPageUrl();
 	}
 
 	@Override

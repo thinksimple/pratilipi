@@ -28,7 +28,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
-import com.pratilipi.commons.shared.PratilipiHelper;
+import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessorFactory;
 
@@ -71,7 +71,7 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 		
 		// Fetching word content blob store
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String fileName = pratilipiType.getContentWordResource() + pratilipiId;
+		String fileName = PratilipiHelper.getContentWord( pratilipiType, pratilipiId );
 		BlobEntry blobEntry = blobAccessor.getBlob( fileName );
 
 
@@ -118,7 +118,7 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 
 		// Saving Pratilipi content to blob store
 		blobAccessor.createBlob(
-				pratilipiType.getContentResource() + pratilipiId,
+				PratilipiHelper.getContent( pratilipiType, pratilipiId ),
 				"text/html", html, Charset.forName( "UTF-8" ) );
 	}
 	

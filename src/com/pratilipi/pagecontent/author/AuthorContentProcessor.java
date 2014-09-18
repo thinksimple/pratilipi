@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.module.pagecontent.PageContentProcessor;
-import com.pratilipi.commons.shared.PratilipiHelper;
+import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -46,11 +46,11 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		for( Pratilipi book : bookDataList ){
 			if( bookCoverMap.get( book.getId() ) == null ){
 				bookCoverMap.put( book.getId().toString(),
-								  PratilipiHelper.URL_BOOK_COVER + book.getId() );
+						PratilipiHelper.getCoverImage300Url( PratilipiType.BOOK, book.getId(), false ) );
 			}
 			if( bookUrlMap.get( book.getId() ) == null ){
 				bookUrlMap.put( book.getId().toString(), 
-								PratilipiHelper.URL_BOOK_PAGE + book.getId() );
+						PratilipiHelper.getPageUrl( PratilipiType.BOOK, book.getId() ) );
 			}
 		}
 		
@@ -62,11 +62,11 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		for( Pratilipi poem : poemDataList ){
 			if( poemCoverMap.get( poem.getId() ) == null ){
 				poemCoverMap.put( poem.getId().toString(),
-								  PratilipiHelper.URL_POEM_COVER + poem.getId() );
+						PratilipiHelper.getCoverImage300Url( PratilipiType.POEM, poem.getId(), false ) );
 			}
 			if( poemUrlMap.get( poem.getId() ) == null ){
 				poemUrlMap.put( poem.getId().toString(),
-								PratilipiHelper.URL_POEM_PAGE + poem.getId() );
+						PratilipiHelper.getPageUrl( PratilipiType.POEM, poem.getId() ) );
 			}
 		}
 		
@@ -78,11 +78,11 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		for( Pratilipi story : storyDataList ){
 			if( storyCoverMap.get( story.getId() ) == null ){
 				storyCoverMap.put( story.getId().toString(),
-								   PratilipiHelper.URL_STORY_COVER + story.getId() );
+						PratilipiHelper.getCoverImage300Url( PratilipiType.STORY, story.getId(), false ) );
 			}
 			if( storyUrlMap.get( story.getId() ) == null ){
 				storyUrlMap.put( story.getId().toString(),
-								 PratilipiHelper.URL_STORY_PAGE + story.getId() );
+						PratilipiHelper.getPageUrl( PratilipiType.STORY, story.getId() ) );
 			}
 		}
 		//Fetching language list

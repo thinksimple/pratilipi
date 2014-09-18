@@ -1,13 +1,10 @@
 package com.pratilipi.service.shared.data;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.pratilipi.commons.shared.PratilipiType;
 
 public class PratilipiContentData implements IsSerializable {
 
 	private Long pratilipiId;
-
-	private PratilipiType pratilipiType;
 
 	private Integer pageNo;
 
@@ -20,14 +17,6 @@ public class PratilipiContentData implements IsSerializable {
 
 	public void setPratilipiId( Long pratilipiId ) {
 		this.pratilipiId = pratilipiId;
-	}
-
-	public PratilipiType getPratilipiType() {
-		return pratilipiType;
-	}
-
-	public void setPratilipiType( PratilipiType pratilipiType ) {
-		this.pratilipiType = pratilipiType;
 	}
 
 	public Integer getPageNo() {

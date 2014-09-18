@@ -131,7 +131,7 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 			public void onSuccess( SavePratilipiResponse response ) {
 				final PratilipiView pratilipiView = pratilipiDataInputView.getPratilipiView();
 				if( pratilipiView == null ) {
-					Window.Location.replace( pratilipiType.getPageUrl() + response.getPratilipiId() );
+					Window.Location.replace( response.getPratilipiData().getPageUrl() );
 
 				} else {
 					pratilipiDataInputView.reset();

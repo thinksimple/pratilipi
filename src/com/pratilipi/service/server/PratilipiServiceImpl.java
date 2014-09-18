@@ -18,7 +18,7 @@ import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.User;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.pratilipi.commons.shared.PratilipiHelper;
+import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -139,7 +139,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			dataAccessor.destroy();
 		}
 		
-		return new SavePratilipiResponse( pratilipi.getId() );
+		pratilipiData = new PratilipiData();
+		pratilipiData.setId( pratilipi.getId() );
+		pratilipiData.setPageUrl( PratilipiHelper.getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
+		
+		return new SavePratilipiResponse( pratilipiData );
 	}
 	
 	@Override
@@ -169,6 +173,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			
 			PratilipiData pratilipiData = new PratilipiData();
 			pratilipiData.setId( pratilipi.getId() );
+			pratilipiData.setType( pratilipi.getType() );
 			pratilipiData.setTitle( pratilipi.getTitle() );
 			pratilipiData.setLanguageId( language.getId() );
 			pratilipiData.setLanguageName( language.getName() );
@@ -184,6 +189,10 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			pratilipiData.setWordCount( pratilipi.getWordCount() );
 			pratilipiData.setType( request.getPratilipiType() );
 			pratilipiDataList.add( pratilipiData );
+			
+			pratilipiData.setPageUrl( PratilipiHelper.getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
+			pratilipiData.setCoverImageUrl( PratilipiHelper.getCoverImage300Url( pratilipi.getType(), pratilipi.getId(), false ) );
+			pratilipiData.setAuthorPageUrl( PratilipiHelper.getAuthorPageUrl( pratilipi.getAuthorId() ) );
 		}
 
 		dataAccessor.destroy();
@@ -221,9 +230,9 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		// Fetching Pratilipi content from Blob Store
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String fileName =
-				pratilipiContentData.getPratilipiType().getContentResource()
-				+ pratilipiContentData.getPratilipiId();
+		String fileName = PratilipiHelper.getContent(
+				pratilipi.getType(),
+				pratilipiContentData.getPratilipiId() );
 		BlobEntry blobEntry;
 		try {
 			blobEntry = blobAccessor.getBlob( fileName );

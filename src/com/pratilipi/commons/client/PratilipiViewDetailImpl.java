@@ -11,8 +11,6 @@ import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
-import com.pratilipi.commons.shared.PratilipiHelper;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiViewDetailImpl extends PratilipiView {
@@ -95,16 +93,14 @@ public class PratilipiViewDetailImpl extends PratilipiView {
 	public void setPratilipiData( PratilipiData pratilipiData ) {
 		this.pratilipiData = pratilipiData;
 		
-		PratilipiType pratilipiType = pratilipiData.getType();
-		
-		coverImageAnchor.setHref( pratilipiType.getPageUrl() + pratilipiData.getId() );
-		coverImage.setUrl( pratilipiType.getCoverImageUrl() + pratilipiData.getId() );
+		coverImageAnchor.setHref( pratilipiData.getPageUrl() );
+		coverImage.setUrl( pratilipiData.getCoverImageUrl() );
 
 		titleAnchor.setText( pratilipiData.getTitle() );
-		titleAnchor.setHref( pratilipiType.getPageUrl() + pratilipiData.getId() );
+		titleAnchor.setHref( pratilipiData.getPageUrl() );
 
 		authorAnchor.setText( pratilipiData.getAuthorName() );
-		authorAnchor.setHref( PratilipiHelper.URL_AUTHOR_PAGE + pratilipiData.getAuthorId() );
+		authorAnchor.setHref( pratilipiData.getAuthorPageUrl() );
 		
 		if( pratilipiData.isPublicDomain() )
 			classicsLabel.removeAttribute( "style" );

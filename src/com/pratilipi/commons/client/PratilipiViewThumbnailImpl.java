@@ -8,8 +8,7 @@ import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.pratilipi.commons.shared.PratilipiHelper;
-import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiViewThumbnailImpl extends PratilipiView {
@@ -78,13 +77,11 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 	public void setPratilipiData( PratilipiData pratilipiData ) {
 		this.pratilipiData = pratilipiData;
 		
-		PratilipiType pratilipiType = pratilipiData.getType();
-		
-		coverImageAnchor.setHref( pratilipiType.getPageUrl() + pratilipiData.getId() );
-		coverImage.setUrl( pratilipiType.getCoverImageUrl() + pratilipiData.getId() );
+		coverImageAnchor.setHref( pratilipiData.getPageUrl() );
+		coverImage.setUrl( pratilipiData.getCoverImageUrl() );
 
 		titleAnchor.setText( pratilipiData.getTitle() );
-		titleAnchor.setHref( pratilipiType.getPageUrl() + pratilipiData.getId() );
+		titleAnchor.setHref( pratilipiData.getPageUrl() );
 
 		authorAnchor.setText( "(" + pratilipiData.getAuthorName() + ")" );
 		authorAnchor.setHref( PratilipiHelper.URL_AUTHOR_PAGE + pratilipiData.getAuthorId() );

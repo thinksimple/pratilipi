@@ -10,6 +10,9 @@ public class PratilipiData implements IsSerializable {
 	private Long id;
 	
 	private PratilipiType type;
+
+	private String pageUrl;
+	private String coverImageUrl;
 	
 	private boolean isPublicDomain;
 	private boolean hasPublicDomain;
@@ -30,6 +33,8 @@ public class PratilipiData implements IsSerializable {
 	private boolean hasAuthorId;
 	
 	private String authorName;
+	
+	private String authorPageUrl;
 	
 	private Long publisherId;
 	private boolean hasPublisherId;
@@ -77,6 +82,22 @@ public class PratilipiData implements IsSerializable {
 		this.type = type;
 	}
 	
+	public String getPageUrl() {
+		return pageUrl;
+	}
+
+	public void setPageUrl( String pageUrl ) {
+		this.pageUrl = pageUrl;
+	}
+
+	public String getCoverImageUrl() {
+		return coverImageUrl;
+	}
+
+	public void setCoverImageUrl( String coverImageUrl ) {
+		this.coverImageUrl = coverImageUrl;
+	}
+
 	public boolean isPublicDomain() {
 		return isPublicDomain;
 	}
@@ -158,6 +179,14 @@ public class PratilipiData implements IsSerializable {
 		this.authorName = authorName;
 	}
 	
+	public String getAuthorPageUrl() {
+		return authorPageUrl;
+	}
+
+	public void setAuthorPageUrl( String authorPageUrl ) {
+		this.authorPageUrl = authorPageUrl;
+	}
+
 	public Long getPublisherId() {
 		return publisherId;
 	}

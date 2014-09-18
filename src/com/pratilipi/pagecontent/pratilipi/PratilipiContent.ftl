@@ -8,9 +8,9 @@
 				<img class="img-responsive" src="${ pratilipiCoverUrl }">
 			</a>
 			<#if showEditOptions>
-				<div id="PageContent-Pratilipi-CoverImage-EditOptions"></div>
-				<div id="PageContent-Pratilipi-HtmlContent-EditOptions"></div>
-				<div id="PageContent-Pratilipi-WordContent-EditOptions"></div>
+				<div id="PageContent-Pratilipi-CoverImage-EditOptions" upload-url="${ pratilipiCoverUrl }" ></div>
+				<div id="PageContent-Pratilipi-HtmlContent-EditOptions" upload-url="${ pratilipiContentHtmlUrl }" ></div>
+				<div id="PageContent-Pratilipi-WordContent-EditOptions" upload-url="${ pratilipiContentWordUrl }" ></div>
 			</#if>
 		</div>
 		
