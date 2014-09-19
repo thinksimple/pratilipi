@@ -330,7 +330,8 @@ public class UserForms implements EntryPoint {
 								@Override
 								public void run() {
 									hideSignupModal();
-									Window.Location.reload();
+									String url = Window.Location.getPath();
+									Window.Location.assign( url + "?action=signup" );
 								}};
 							time.schedule( 2000 );
 						}
