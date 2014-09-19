@@ -164,6 +164,15 @@
   </servlet-mapping>
 
 
+  <filter>
+    <filter-name>PratilipiFilter</filter-name>
+    <filter-class>com.pratilipi.servlet.PratilipiFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>PratilipiFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <servlet>
     <servlet-name>PratilipiMain</servlet-name>
     <servlet-class>com.pratilipi.servlet.PratilipiMain</servlet-class>
@@ -172,7 +181,7 @@
     <servlet-name>PratilipiMain</servlet-name>
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
-   
+
   
   <security-constraint>
     <web-resource-collection>
