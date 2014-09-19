@@ -3,6 +3,7 @@ package com.pratilipi.data.transfer;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 
 public interface Pratilipi extends Serializable {
@@ -68,6 +69,10 @@ public interface Pratilipi extends Serializable {
 	Long getStarCount();
 	
 	void setStarCount( Long starCount );
+	
+	PratilipiState getState();
+	
+	void setState( PratilipiState state );
 	
 	Date getLastUpdated();
 	

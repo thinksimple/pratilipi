@@ -105,6 +105,11 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			loadEditor( RootPanel.get( "PageContent-Pratilipi-Summary" ).getElement() );
 			
 		} else if( event.getSource() == saveSummaryAnchor ) {
+			
+			if( getHtmlFromEditor( "PageContent-Pratilipi-Summary" ).trim().isEmpty() )
+				return;
+
+			
 			saveSummaryAnchor.setVisible( false );
 			savingSummaryLabel.setVisible( true );
 			

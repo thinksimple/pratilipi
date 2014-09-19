@@ -41,7 +41,8 @@ public interface PratilipiService extends RemoteService {
 	
 	SavePratilipiResponse savePratilipi(
 			SavePratilipiRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
+			throws IllegalArgumentException, InsufficientAccessException,
+					UnexpectedServerException;
 
 	GetPratilipiListResponse getPratilipiList(
 			GetPratilipiListRequest request );

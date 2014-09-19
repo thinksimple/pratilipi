@@ -8,6 +8,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.Pratilipi;
 
@@ -67,6 +68,10 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "STAR_COUNT" )
 	private Long starCount;
 
+
+	@Persistent( column = "STATE" )
+	private PratilipiState state;
+	
 	@Persistent( column = "LAST_UPDATED" )
 	private Date lastUpdated;
 
@@ -224,6 +229,16 @@ public class PratilipiEntity implements Pratilipi {
 	@Override
 	public void setStarCount( Long starCount ) {
 		this.starCount = starCount;
+	}
+	
+	@Override
+	public PratilipiState getState() {
+		return state;
+	}
+	
+	@Override
+	public void setState( PratilipiState state ) {
+		this.state = state;
 	}
 	
 	@Override

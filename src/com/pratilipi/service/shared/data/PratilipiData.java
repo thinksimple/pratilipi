@@ -3,6 +3,7 @@ package com.pratilipi.service.shared.data;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 
 public class PratilipiData implements IsSerializable {
@@ -64,6 +65,9 @@ public class PratilipiData implements IsSerializable {
 	private Long ratingCount;
 	
 	private Long starCount;
+	
+	private PratilipiState state;
+	private boolean hasState;
 	
 	
 	public Long getId() {
@@ -303,6 +307,19 @@ public class PratilipiData implements IsSerializable {
 
 	public void setStarCount(Long starCount) {
 		//this.starCount = starCount;
+	}
+	
+	public PratilipiState getState() {
+		return state;
+	}
+	
+	public void setState( PratilipiState state ) {
+		this.state = state;
+		this.hasState = true;
+	}
+	
+	public boolean hasState() {
+		return hasState;
 	}
 	
 }
