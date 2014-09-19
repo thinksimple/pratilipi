@@ -46,7 +46,6 @@
 </div>
 
 <script language="javascript" defer>
-
 	function disableselect(e){
 		return false;
 	}
@@ -55,23 +54,25 @@
 	}
 	//if IE4+
 		document.onselectstart=new Function ("return false");
-		document.oncontextmenu=new Function ("return false");
 	//if NS6
 	if (window.sidebar){
 		document.onmousedown=disableselect;
 		document.onclick=reEnable;
-	}	
+	}
 	
 	window.onload = function() {
 		var $reader = $( '#PageContent-Pratilipi-Content' );
 		if( $reader.height() < 800 )
 			$reader.height( 800 ); 
 		
-		jQuery(document).bind("keyup keydown", function(e){
-	    if(e.ctrlKey && e.keyCode == 80){
+		$( '#PageContent-Pratilipi-Content' ).on("contextmenu",function(e){ return false; });
+			
+		//pkey = 80; ckey = 67; vkey = 86
+		$( document ).bind("keyup keydown", function(e){
+	    if( e.ctrlKey && ( e.keyCode == 80 ) ){
 		        return false;
 		    }
-	});
+		});
 	}
 </script>
 	<style type="text/css">

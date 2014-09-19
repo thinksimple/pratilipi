@@ -2,8 +2,6 @@ package com.pratilipi.servlet.content.client;
 
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.client.ClaymusServiceAsync;
-import com.claymus.service.shared.InviteUserRequest;
-import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
 import com.claymus.service.shared.LoginUserResponse;
 import com.claymus.service.shared.RegisterUserRequest;
@@ -26,11 +24,8 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 
 public class UserForms implements EntryPoint {
 
@@ -42,136 +37,13 @@ public class UserForms implements EntryPoint {
 	private String password = null;
 	
 	public void onModuleLoad() {
-		
-/****************************************************** User Subscription ***********************************************/
-		final Panel opaqueOverlay = new SimplePanel();
-		final Panel transparentOverlay = new SimplePanel();
-		
-		final SubscriptionForm subscriptionForm = new SubscriptionForm();
-		
-		ClickHandler subscribeButtonClickHandler = new ClickHandler() {
-			
-			@Override
-			public void onClick( ClickEvent event ) {
-				subscriptionForm.setEnabled( false );
-				UserData userData = subscriptionForm.getUser();
-				claymusService.inviteUser( new InviteUserRequest( userData ), new AsyncCallback<InviteUserResponse>() {
-					
-					@Override
-					public void onSuccess( InviteUserResponse response ) {
-						Window.Location.assign( "/invite" );
-					}
-					
-					@Override
-					public void onFailure( Throwable caught ) {
-						Window.alert( caught.getMessage() );
-					}
-					
-				});
-			}
-		};
-
-		ClickHandler cancelButtonClickHandler = new ClickHandler() {
-			
-			@Override
-			public void onClick( ClickEvent event ) {
-				opaqueOverlay.setVisible( false );
-				transparentOverlay.setVisible( false );
-				History.newItem( "" );
-			}
-			
-		};
-		
-		subscriptionForm.addSubscribeButtonClickHandler( subscribeButtonClickHandler );
-		subscriptionForm.addCancelButtonClickHandler( cancelButtonClickHandler );
-
-		transparentOverlay.add( subscriptionForm );
-
-		opaqueOverlay.addStyleName( "opaqueOverlay" );
-		transparentOverlay.addStyleName( "transparentOverlay" );
-
-		if( ! History.getToken().equals( "subscribe" ) ) {
-			opaqueOverlay.setVisible( false );
-			transparentOverlay.setVisible( false );
-		}
-	
-		RootPanel.get().add( opaqueOverlay );
-		RootPanel.get().add( transparentOverlay );
-
-		History.addValueChangeHandler( new ValueChangeHandler<String>() {
-
-			public void onValueChange( ValueChangeEvent<String> event ) {
-				String historyToken = event.getValue();
-				if( historyToken.equals( "subscribe" ) ) {
-					opaqueOverlay.setVisible(true);
-					transparentOverlay.setVisible(true);
-				}
-			}
-			
-		});
-	
-/* =========================================================================================================================== */
-		
-		//Modal Div for registration and login forms
-		final FocusPanel modal = new FocusPanel();
-		modal.addStyleName( "modal fade" );
-		modal.getElement().setId( "myModal" );
-		modal.getElement().setAttribute("tabindex", "-1");
-		modal.getElement().setAttribute("role", "dialog");
-		modal.getElement().setAttribute("aria-labelledby", "myModalLabel");
-		modal.getElement().setAttribute("aria-hidden", "true");
-				
-		//Click handler to change history item when modal div is clicked.
-		modal.addClickHandler( new ClickHandler(){
-
-			@Override
-			public void onClick(ClickEvent event) {
-				History.newItem( "" );
-				
-			}});
-				
-		//change history item when ESC key is pressed.
-		modal.addKeyDownHandler( new KeyDownHandler(){
-
-			@Override
-			public void onKeyDown(KeyDownEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE) {
-		               History.newItem( "" );
-		           }
-			}});
-		
-/******************************************** User Registration ********************************************/
-		final FocusPanel registrationFormDialog = new FocusPanel();
-		registrationFormDialog.setStyleName( "modal-dialog" );
-		
-		final RegistrationForm registrationForm = new RegistrationForm();
-		
-		ClickHandler registerButtonClickHandler = new ClickHandler() {
-			
-			@Override
-			public void onClick( ClickEvent event ) {
-				userRegistrationRPC( registrationForm );
-			}	
-		};
-		
-		registrationForm.addRegisterButtonClickHandler( registerButtonClickHandler );
-		registrationFormDialog.add( registrationForm );
-		registrationFormDialog.addKeyDownHandler( new KeyDownHandler(){
-
-			@Override
-			public void onKeyDown(KeyDownEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					userRegistrationRPC( registrationForm );   
-					History.newItem( "" );
-		           }
-			}});
-
-/************************************************** User Login **************************************************/
+/*****************************************************User Login form********************************************************************/
+		RootPanel loginDiv = RootPanel.get( "login" );
 		final FocusPanel loginFormDialog = new FocusPanel();
-		loginFormDialog.setStyleName( "modal-dialog" );
+		loginFormDialog.setStyleName( "modal-body" );
 		
 		final LoginForm loginForm = new LoginForm();
-		
+
 		ClickHandler loginButtonClickHandler = new ClickHandler() {
 			
 			@Override
@@ -180,23 +52,71 @@ public class UserForms implements EntryPoint {
 			}
 		};
 		
+		ClickHandler loginFormLinksClickHandler = new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				hideLoginModal();
+				
+			}};
+
 		loginForm.addLoginButtonClickHandler( loginButtonClickHandler );
+		loginForm.addFormLinksClickHandler( loginFormLinksClickHandler );
 		loginFormDialog.add( loginForm );
 		loginFormDialog.addKeyDownHandler( new KeyDownHandler(){
 
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-		            userLogin( loginForm );   
-					History.newItem( "" );
-		           }
+					userLogin( loginForm );  
+				   }
 			}});
+
+		loginDiv.add( loginFormDialog );
+
+/*********************************************************User SignUp*****************************************************************/
+		RootPanel signupDiv = RootPanel.get( "signup" );
+		final FocusPanel registrationFormDialog = new FocusPanel();
+		registrationFormDialog.setStyleName( "modal-body" );
+
+		final RegistrationForm registrationForm = new RegistrationForm();
+
+		ClickHandler registerButtonClickHandler = new ClickHandler() {
+			
+			@Override
+			public void onClick( ClickEvent event ) {
+				userRegistrationRPC( registrationForm );
+			}	
+		};
+		ClickHandler signinLinkClickHandler = new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				hideSignupModal();
+			}};
+
+		registrationForm.addRegisterButtonClickHandler( registerButtonClickHandler );
+		registrationForm.addSignLinkClickHandler( signinLinkClickHandler );
+		registrationFormDialog.add( registrationForm );
+		registrationFormDialog.addKeyDownHandler( new KeyDownHandler(){
+
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+					userRegistrationRPC( registrationForm );   
+					History.newItem( "" );
+				   }
+			}});
+			
+		signupDiv.add( registrationFormDialog );
+				
 /************************************************ Forgot Password ********************************************/
+		RootPanel forgotPasswordDiv = RootPanel.get( "forgotPassword" );
 		final FocusPanel forgotPasswordFormDialog = new FocusPanel();
-		forgotPasswordFormDialog.setStyleName( "modal-dialog" );
-		
+		forgotPasswordFormDialog.setStyleName( "modal-body" );
+
 		final ForgotPasswordForm forgotPassword = new ForgotPasswordForm();
-		
+
 		ClickHandler genPasswdButtonClickHandler = new ClickHandler(){
 
 			@Override
@@ -204,7 +124,7 @@ public class UserForms implements EntryPoint {
 				forgotPassword.hideServerError();
 				forgotPassword( forgotPassword );
 			}};
-		
+
 		forgotPassword.addGenPasswdButtonClickHandler( genPasswdButtonClickHandler );
 		forgotPasswordFormDialog.add( forgotPassword );
 		forgotPasswordFormDialog.addKeyDownHandler( new KeyDownHandler(){
@@ -214,11 +134,42 @@ public class UserForms implements EntryPoint {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					forgotPassword.hideServerError();
 					forgotPassword( forgotPassword );   
-		           }
+				   }
 			}});
-		
+		forgotPasswordDiv.add( forgotPasswordFormDialog );
+
 /************************************************ Change Password ********************************************/
-		final FocusPanel changePasswordFormDialog = new FocusPanel();
+		//Modal Div for change Password forms. we are still using history token for change password 
+		//because changepassword form should open after clicking a link which is not possible in normal
+		//modal.
+				final FocusPanel modal = new FocusPanel();
+				modal.addStyleName( "modal fade" );
+				modal.getElement().setId( "myModal" );
+				modal.getElement().setAttribute("tabindex", "-1");
+				modal.getElement().setAttribute("role", "dialog");
+				modal.getElement().setAttribute("aria-labelledby", "myModalLabel");
+				modal.getElement().setAttribute("aria-hidden", "true");
+						
+				//Click handler to change history item when modal div is clicked.
+				modal.addClickHandler( new ClickHandler(){
+
+					@Override
+					public void onClick(ClickEvent event) {
+						History.newItem( "" );
+						
+					}});
+						
+				//change history item when ESC key is pressed.
+				modal.addKeyDownHandler( new KeyDownHandler(){
+
+					@Override
+					public void onKeyDown(KeyDownEvent event) {
+						if (event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE) {
+				               History.newItem( "" );
+				           }
+					}});
+
+				final FocusPanel changePasswordFormDialog = new FocusPanel();
 		changePasswordFormDialog.setStyleName( "modal-dialog" );
 		
 		final ChangePasswordForm changePasswordForm = new ChangePasswordForm();
@@ -283,55 +234,26 @@ public class UserForms implements EntryPoint {
 						}
 		           }
 			}});
+	
+		//Adding modal view to root panel
+				RootPanel.get().add( modal );
+				
+		//Showing modal on module load.
+		if( History.getToken().startsWith( "changepassword" ) ) {
+			if( History.getToken().equals( "changepassword" ) )
+				changePasswordForm.showCurrentPassword();
+			modal.remove( registrationFormDialog );
+			modal.remove( loginFormDialog );
+			modal.remove( forgotPasswordFormDialog );
+			modal.remove( changePasswordFormDialog );
+			modal.add( changePasswordFormDialog );
+			showModal();
+		}
 		
-/* ================================================================================================================================== */
-		//Used when user clicks on links.
+		//History change events
 		History.addValueChangeHandler( new ValueChangeHandler<String>() {
 
 			public void onValueChange( ValueChangeEvent<String> event ) {
-				String historyToken = event.getValue();
-				if( historyToken.equals( "signup" ) ) {
-					modal.remove( loginFormDialog );
-					modal.remove( forgotPasswordFormDialog );
-					modal.remove( changePasswordFormDialog );
-					modal.remove( registrationFormDialog );
-					modal.add( registrationFormDialog );
-					showModal();
-				}
-				
-				if( historyToken.equals( "signin" ) ) {
-					modal.remove( registrationFormDialog );
-					modal.remove( forgotPasswordFormDialog );
-					modal.remove( changePasswordFormDialog );
-					modal.remove( loginFormDialog );
-					modal.add( loginFormDialog );
-					showModal();
-				}
-				
-				if( historyToken.equals( "signout" ) ) {
-					claymusService.logoutUser( new AsyncCallback<Void>(){
-
-
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert( caught.getMessage() );
-						}
-
-						@Override
-						public void onSuccess(Void result) {
-							Window.Location.replace( "/" );
-						}} );
-				}
-				
-				if( historyToken.equals( "forgotpassword" ) ) {
-					modal.remove( registrationFormDialog );
-					modal.remove( loginFormDialog );
-					modal.remove( changePasswordFormDialog );
-					modal.remove( forgotPasswordFormDialog );
-					modal.add( forgotPasswordFormDialog );
-					showModal();
-				}
-				
 				if( History.getToken().startsWith( "changepassword" ) ) {
 					email = ( Window.Location.getHash().lastIndexOf( "-" ) != Window.Location.getHash().indexOf( "-" ) )
 							? Window.Location.getHash().substring(Window.Location.getHash().indexOf( "-" )+1, 
@@ -359,57 +281,32 @@ public class UserForms implements EntryPoint {
 					modal.add( changePasswordFormDialog );
 					showModal();
 				}
+				
+				//Logout process
+				if( History.getToken().equals( "signout" ) ) {
+					claymusService.logoutUser( new AsyncCallback<Void>(){
+
+
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert( caught.getMessage() );
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							Window.Location.replace( "/" );
+						}} );
+				}
 			}
 			
 		});
 		
-		//Adding modal view to root panel
-		RootPanel.get().add( modal );
 		
-		//Showing modal on module load.
-		if( History.getToken().equals( "signup" ) ) {
-			modal.remove( loginFormDialog );
-			modal.remove( forgotPasswordFormDialog );
-			modal.remove( changePasswordFormDialog );
-			modal.remove( registrationFormDialog );
-			modal.add( registrationFormDialog );
-			showModal();
-		}
-				
-		if( History.getToken().equals( "signin" ) ) {
-			modal.remove( registrationFormDialog );
-			modal.remove( forgotPasswordFormDialog );
-			modal.remove( changePasswordFormDialog );
-			modal.remove( loginFormDialog );
-			modal.add( loginFormDialog );
-			showModal();
-		}
-				
-		if( History.getToken().equals( "forgotpassword" ) ) {
-			modal.remove( registrationFormDialog );
-			modal.remove( loginFormDialog );
-			modal.remove( changePasswordFormDialog );
-			modal.remove( forgotPasswordFormDialog );
-			modal.add( forgotPasswordFormDialog );
-			showModal();
-		}
-		
-		if( History.getToken().startsWith( "changepassword" ) ) {
-			if( History.getToken().equals( "changepassword" ) )
-				changePasswordForm.showCurrentPassword();
-			modal.remove( registrationFormDialog );
-			modal.remove( loginFormDialog );
-			modal.remove( forgotPasswordFormDialog );
-			modal.remove( changePasswordFormDialog );
-			modal.add( changePasswordFormDialog );
-			showModal();
-		}
-		
-
 		RootPanel contactForm = RootPanel.get("PageContent-PratilipiContact-Form");
 		ContactMailForm contactMailForm = new ContactMailForm();
 		if( contactForm != null )
 			contactForm.add( contactMailForm );
+
 	}
 	
 	public void userRegistrationRPC( final RegistrationForm registrationForm ) {
@@ -432,7 +329,7 @@ public class UserForms implements EntryPoint {
 
 								@Override
 								public void run() {
-									hideModal();
+									hideSignupModal();
 									Window.Location.reload();
 								}};
 							time.schedule( 2000 );
@@ -469,7 +366,7 @@ public class UserForms implements EntryPoint {
 
 					@Override
 					public void run() {
-						hideModal();
+						hideLoginModal();
 						Window.Location.reload();
 					}};
 				timeout.schedule( 2000 );
@@ -484,7 +381,7 @@ public class UserForms implements EntryPoint {
 				
 				@Override
 				public void onSuccess( LoginUserResponse response ) {
-					hideModal();
+					hideLoginModal();
 					Window.Location.reload();
 				}
 				
@@ -519,7 +416,7 @@ public class UserForms implements EntryPoint {
 
 						@Override
 						public void run() {
-							hideModal();
+							hideForgotPasswordModal();
 							Window.Location.reload();
 						}};
 					time.schedule( 5000 );
@@ -533,8 +430,16 @@ public class UserForms implements EntryPoint {
     		
 	}-*/;
 	
-	public static native void hideModal() /*-{
-			$wnd.jQuery('#myModal').modal('hide');
+	public static native void hideLoginModal() /*-{
+			$wnd.jQuery('#loginModal').modal('hide');
+	}-*/;
+	
+	public static native void hideSignupModal() /*-{
+		$wnd.jQuery('#signupModal').modal('hide');
+	}-*/;
+	
+	public static native void hideForgotPasswordModal() /*-{
+		$wnd.jQuery('#forgotPasswordModal').modal('hide');
 	}-*/;
 
 }

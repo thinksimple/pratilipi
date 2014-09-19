@@ -46,10 +46,6 @@ public class RegistrationForm extends Composite {
 	
 	public RegistrationForm(){
 		
-		modalContent.setStyleName( "modal-content" );
-		
-		panel.setStyleName( "modal-body" );
-		
 		FlowPanel namePanel = new FlowPanel();
 		
 		HTML headingElement= new HTML();
@@ -170,7 +166,8 @@ public class RegistrationForm extends Composite {
 		
 		//New user link in login form
 		Anchor signinAnchor = new Anchor( "Sign In" );
-		signinAnchor.setHref( "#signin" );
+		signinAnchor.getElement().setAttribute("data-toggle", "modal");
+		signinAnchor.getElement().setAttribute("data-target", "#loginModal");
 		signin.getElement().appendChild( signinAnchor.getElement() );
 		
 		//All error messages are invisible when page is loaded for first time.
@@ -220,7 +217,11 @@ public class RegistrationForm extends Composite {
 	public void addRegisterButtonClickHandler( ClickHandler clickHandler ) {
 		registerButton.addClickHandler( clickHandler );
 	}
-	
+
+	public void addSignLinkClickHandler( ClickHandler clickHandler ) {
+		signin.addClickHandler( clickHandler );
+	}
+
 	public void setEnable( boolean enabled ) {
 		firstNameInput.setEnabled( enabled );
 		lastNameInput.setEnabled( enabled );

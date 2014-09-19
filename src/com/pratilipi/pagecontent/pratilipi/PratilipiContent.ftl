@@ -46,7 +46,7 @@
 					<div id="PageContent-Pratilipi-Summary-EditOptions"></div>
 				</#if>
 
-				<button type="button" class="btn btn-success hidden-xs" onclick="window.location.href='${ pratilipiReaderUrl }'">Read This ${ pratilipi.getType().getName() }</button>
+				<button type="button" class="btn btn-success hidden-xs" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
 				<#if showReviewedMessage>
 					<button type="button" class="btn btn-info hidden-xs" onclick="window.location.href='#Reviews'">
 						<span class="glyphicon glyphicon-ok"></span> Reviewed

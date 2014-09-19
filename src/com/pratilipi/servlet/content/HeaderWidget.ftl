@@ -14,8 +14,8 @@
 					</div>
 				<#else>
 					<div class="pull-right">
-						<a href="#signin">Login</a> | 
-						<a href="#signup">Signup</a>
+						<a href="" data-toggle='modal' data-target="#loginModal">Login</a> | 
+						<a href="" data-toggle='modal' data-target="#signupModal">Signup</a>
 					</div>
 				</#if>
 			</div>
@@ -90,3 +90,18 @@
 
 	</div>
 </header>
+<div class="modal fade" id="loginModal">
+	<div class="modal-dialog">
+		<div id="login" class="modal-content"></div>
+	</div>
+</div>
+<div class="modal fade" id="signupModal">
+	<div class="modal-dialog">
+		<div id="signup" class="modal-content"></div>
+	</div>
+</div>
+<div class="modal fade" id="forgotPasswordModal">
+	<div class="modal-dialog">
+		<div id="forgotPassword" class="modal-content"></div>
+	</div>
+</div>

@@ -22,7 +22,11 @@ public class LoginForm extends Composite {
 	private TextBox emailInput = new TextBox();
 	private PasswordTextBox password = new PasswordTextBox();
 	private Button loginButton = new Button("Sign In");
-	private Label forgotPassword = new Label();
+	private Label formLinksLabel = new Label();
+	private Anchor forgotPasswdAnchor = new Anchor( "Forgot Password?" );
+	private Anchor newUserAnchor = new Anchor( "Not a member?" );
+	
+	final ValidateForm validateForm = new ValidateForm();
 	
 	//Error messages
 	private Label serverError = new Label();
@@ -32,11 +36,7 @@ public class LoginForm extends Composite {
 	
 	public LoginForm(){
 		
-		Panel modalContent = new FlowPanel();
-		modalContent.setStyleName( "modal-content" );
-		
 		Panel panel = new FlowPanel();
-		panel.setStyleName( "modal-body" );
 		
 		Panel fields = new FlowPanel();
 		Panel button = new FlowPanel();
@@ -95,17 +95,17 @@ public class LoginForm extends Composite {
 		loginButton.addStyleName("btn-block");
 		loginButton.getElement().getStyle().setDisplay(Display.BLOCK);
 		
-		forgotPassword.setStyleName( "modal-link" );
+		formLinksLabel.setStyleName( "modal-link" );
 		
 		//New user link in login form
-		Anchor newUserAnchor = new Anchor( "Not a member?" );
-		newUserAnchor.setHref( "#signup" );
-		forgotPassword.getElement().appendChild( newUserAnchor.getElement() );
+		newUserAnchor.getElement().setAttribute("data-toggle", "modal");
+		newUserAnchor.getElement().setAttribute("data-target", "#signupModal");
+		formLinksLabel.getElement().appendChild( newUserAnchor.getElement() );
 		
 		//forgot password link
-		Anchor forgotPasswdAnchor = new Anchor( "Forgot Password?" );
-		forgotPasswdAnchor.setHref( "#forgotpassword" );
-		forgotPassword.getElement().appendChild( forgotPasswdAnchor.getElement() );
+		forgotPasswdAnchor.getElement().setAttribute("data-toggle", "modal");
+		forgotPasswdAnchor.getElement().setAttribute("data-target", "#forgotPasswordModal");
+		formLinksLabel.getElement().appendChild( forgotPasswdAnchor.getElement() );
 		
 		//Error message Style
 		serverError.addStyleName( "alert alert-danger" );
@@ -126,19 +126,21 @@ public class LoginForm extends Composite {
 		fields.add(passwordError);
 		
 		button.add(loginButton);		
-		button.add( forgotPassword );
+		button.add( formLinksLabel );
 		
 		panel.add( fields );
 		panel.add( button );
 		
-		modalContent.add( panel );
-			
-		initWidget( modalContent );
+		initWidget( panel );
 	}
 	
 	//Click handler functions
 	public void addLoginButtonClickHandler( ClickHandler clickHandler ) {
 		loginButton.addClickHandler( clickHandler );
+	}
+	
+	public void addFormLinksClickHandler( ClickHandler clickHandler ) {
+		formLinksLabel.addClickHandler( clickHandler );
 	}
 	
 	//Enable and Disable login form
@@ -153,6 +155,12 @@ public class LoginForm extends Composite {
 		if( getEmail().isEmpty() ){
 			setEmailErrorStyle();
 			setEmailInputError("Enter your email");
+			showEmailInputError();
+			return false;
+		}
+		else if( validateForm.ValidateEmail( getEmail() ) ){
+			setEmailErrorStyle();
+			setEmailInputError("Email not in proper format");
 			showEmailInputError();
 			return false;
 		}

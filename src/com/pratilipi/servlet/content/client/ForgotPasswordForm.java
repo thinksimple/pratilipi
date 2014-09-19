@@ -31,9 +31,6 @@ public class ForgotPasswordForm extends Composite {
 	
 	public ForgotPasswordForm(){
 		
-		modalContent.setStyleName( "modal-content" );
-		
-		this.form.setStyleName( "modal-body" );
 		this.form.getElement().setId( "forgotPasswordForm" );
 		
 		//Modal heading

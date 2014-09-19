@@ -760,7 +760,7 @@ header {
 	font-family : none;
 }
 
-#myModal {
+#myModal, #loginModal, #signupModal, #forgotPasswordModal {
 	top: 20%;
 }
 
