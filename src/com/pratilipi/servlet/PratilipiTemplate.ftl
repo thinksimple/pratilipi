@@ -75,7 +75,7 @@
 		
 		</#if>
 
-		<title>Pratilipi</title>		
+		<title>${ page.getTitle() }</title>		
 		
 	</head>
 	<body>

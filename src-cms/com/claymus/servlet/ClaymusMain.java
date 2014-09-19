@@ -87,7 +87,7 @@ public class ClaymusMain extends HttpServlet {
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 
-		Page page = getPage();
+		Page page = getPage( request );
 		List<PageContent> pageContentList = getPageContentList( request );
 		List<WebsiteWidget> websiteWidgetList = getWebsiteWidgetList( request );
 		PageLayout pageLayout = getPageLayout();
@@ -153,6 +153,7 @@ public class ClaymusMain extends HttpServlet {
 		}
 		
 		Map<String, Object> input = new HashMap<String, Object>();
+		input.put( "page", page );
 		input.put( "websiteWidgetHtmlListMap", websiteWidgetHtmlListMap );
 		input.put( "pageContentHtmlList", pageContentHtmlList );
 		input.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
@@ -166,7 +167,7 @@ public class ClaymusMain extends HttpServlet {
 		}
 	}
 	
-	private Page getPage() {
+	protected Page getPage( HttpServletRequest request ) {
 		
 		return new Page() {
 

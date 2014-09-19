@@ -23,7 +23,7 @@
 				<a href="${ authorHomeUrl }">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></a>
 			</h4>
 			
-			<button type="button" class="btn btn-success visible-xs-inline-block" onclick="window.location.href='${ pratilipiReaderUrl }'">Read This ${ pratilipi.getType().getName() }</button>
+			<button type="button" class="btn btn-success visible-xs-inline-block" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
 			<#if showReviewedMessage>
 				<button type="button" class="btn btn-info visible-xs-inline-block" onclick="window.location.href='#Reviews'">
 					<span class="glyphicon glyphicon-ok"></span> Reviewed
