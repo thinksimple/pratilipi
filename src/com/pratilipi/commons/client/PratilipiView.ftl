@@ -3,7 +3,7 @@
 		<div style="width:150px; padding-top:10px; padding-bottom:10px;">
 			<div class="bg-gray" style="width:150px; height:240px; overflow:hidden;">
 				<a href="${ pratilipiData.getPageUrl() }">
-					<img src="${ pratilipiData.getCoverImageUrl() }" alt="${ pratilipiData.getTitle() }" class="img-responsive" />
+					<img src="${ pratilipiData.getCoverImageUrl() }" title="${ pratilipiData.getTitle() }" alt="${ pratilipiData.getTitle() }" class="img-responsive" />
 				</a>
 			</div>
 			<div class="bg-gray bg-translucent" style="position:absolute; bottom:10px; width:150px; padding:5px 10px 5px 10px;">
