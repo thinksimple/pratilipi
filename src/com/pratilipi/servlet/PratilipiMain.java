@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,11 +28,12 @@ import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
-import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.author.AuthorContentFactory;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.genres.GenresContentFactory;
+import com.pratilipi.pagecontent.home.HomeContent;
+import com.pratilipi.pagecontent.home.HomeContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentFactory;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
@@ -50,14 +49,14 @@ public class PratilipiMain extends ClaymusMain {
 			Logger.getLogger( PratilipiMain.class.getName() );
 
 	static {
-		PAGE_CONTENT_REGISTRY.register( AuthorContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( GenresContentFactory.class );
-
+		PAGE_CONTENT_REGISTRY.register( HomeContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( PratilipisContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( PratilipiContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ReaderContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( AuthorContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( GenresContentFactory.class );
 	}
 
 
@@ -81,7 +80,7 @@ public class PratilipiMain extends ClaymusMain {
 			page.setTitle( "Hindi Books | " + page.getTitle() );
 		
 		else if( requestUri.equals( "/books/gujarati" ) )
-			page.setTitle( "Hindi Gujarati | " + page.getTitle() );
+			page.setTitle( "Gujarati Books | " + page.getTitle() );
 		
 		else if( requestUri.equals( "/poems" ) )
 			page.setTitle( "Poems | " + page.getTitle() );
@@ -412,116 +411,39 @@ public class PratilipiMain extends ClaymusMain {
 		return htmlWidget;
 	}
 
-	private HtmlContent generateHomePageContent(
+	private PageContent generateHomePageContent(
 			HttpServletRequest request ) throws IOException {
 		
-		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		List<Long> bookIdList = new LinkedList<>();
+		bookIdList.add( 5255539013451776L );
+		bookIdList.add( 5543928887508992L );
+		bookIdList.add( 4818859890573312L );
+		bookIdList.add( 5331129229901824L );
+		bookIdList.add( 6319699436503040L );
+		bookIdList.add( 5345197126844416L );
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<Long> poemIdList = new LinkedList<>();
+		poemIdList.add( 6528878302461952L );
+		poemIdList.add( 5989123856793600L );
+		poemIdList.add( 5834154725867520L );
+		poemIdList.add( 5676982813589504L );
+		poemIdList.add( 6480374163046400L );
+		poemIdList.add( 4917068344328192L );
 		
-		List<Pratilipi> bookDataList = new ArrayList<>(6);
-		bookDataList.add( dataAccessor.getPratilipi( 5255539013451776L ) );
-		bookDataList.add( dataAccessor.getPratilipi( 5543928887508992L ) );
-		bookDataList.add( dataAccessor.getPratilipi( 4818859890573312L ) );
-		bookDataList.add( dataAccessor.getPratilipi( 5331129229901824L ) );
-		bookDataList.add( dataAccessor.getPratilipi( 6319699436503040L ) );
-		bookDataList.add( dataAccessor.getPratilipi( 5345197126844416L ) );
-		
-		Map<String, String> bookCoverMap = new HashMap<>();
-		Map<String, String> bookUrlMap = new HashMap<>();
-		for( Pratilipi book : bookDataList ){
-			if( bookCoverMap.get( book.getId() ) == null ){
-				bookCoverMap.put( book.getId().toString(),
-						  PratilipiHelper.getCoverImage300Url( PratilipiType.BOOK, book.getId(), false ) );
-			}
-			if( bookUrlMap.get( book.getId() ) == null ){
-				bookUrlMap.put( book.getId().toString(), 
-						  PratilipiHelper.getPageUrl( PratilipiType.BOOK, book.getId() ) );
-			}
-		}
-		
-		List<Pratilipi> poemDataList = new ArrayList<>( 6 );
-		poemDataList.add( dataAccessor.getPratilipi( 6528878302461952L ) );
-		poemDataList.add( dataAccessor.getPratilipi( 5989123856793600L ) );
-		poemDataList.add( dataAccessor.getPratilipi( 5834154725867520L ) );
-		poemDataList.add( dataAccessor.getPratilipi( 5676982813589504L ) );
-		poemDataList.add( dataAccessor.getPratilipi( 6480374163046400L ) );
-		poemDataList.add( dataAccessor.getPratilipi( 4917068344328192L ) );
+		List<Long> storyIdList = new LinkedList<>();
+		storyIdList.add( 5898452667990016L );
+		storyIdList.add( 5100102670614528L );
+		storyIdList.add( 6043148908232704L );
+		storyIdList.add( 5162535120535552L );
+		storyIdList.add( 5690091590647808L );
+		storyIdList.add( 4752448690323456L );
 
-		Map<String, String> poemCoverMap = new HashMap<>();
-		Map<String, String> poemUrlMap = new HashMap<>();
-		for( Pratilipi poem : poemDataList ){
-			if( poemCoverMap.get( poem.getId() ) == null ){
-				poemCoverMap.put( poem.getId().toString(),
-						  PratilipiHelper.getCoverImage300Url( PratilipiType.POEM, poem.getId(), false ) );
-			}
-			if( poemUrlMap.get( poem.getId() ) == null ){
-				poemUrlMap.put( poem.getId().toString(),
-						  PratilipiHelper.getPageUrl( PratilipiType.POEM, poem.getId() ) );
-			}
-		}
 		
-		List<Pratilipi> storyDataList = new ArrayList<>( 6 );
-		storyDataList.add( dataAccessor.getPratilipi( 5898452667990016L ) );
-		storyDataList.add( dataAccessor.getPratilipi( 5100102670614528L ) );
-		storyDataList.add( dataAccessor.getPratilipi( 6043148908232704L ) );
-		storyDataList.add( dataAccessor.getPratilipi( 5162535120535552L ) );
-		storyDataList.add( dataAccessor.getPratilipi( 5690091590647808L ) );
-		storyDataList.add( dataAccessor.getPratilipi( 4752448690323456L ) );
-		
-		Map<String, String> storyCoverMap = new HashMap<>();
-		Map<String, String> storyUrlMap = new HashMap<>();
-		for( Pratilipi story : storyDataList ){
-			if( storyCoverMap.get( story.getId() ) == null ){
-				storyCoverMap.put( story.getId().toString(),
-						  PratilipiHelper.getCoverImage300Url( PratilipiType.STORY, story.getId(), false ) );
-			}
-			if( storyUrlMap.get( story.getId() ) == null ){
-				storyUrlMap.put( story.getId().toString(),
-						  PratilipiHelper.getPageUrl( PratilipiType.STORY, story.getId() ) );
-			}
-		}
-		//Fetching language list
-		List<Language> languageList = dataAccessor.getLanguageList();
-		Map<String, String> languageMap = new HashMap<>();
-		for( Language language : languageList ){
-			if( languageMap.get( language.getId() ) == null ){
-				languageMap.put( language.getId().toString(),
-								 language.getName() + " (" + language.getNameEn() + ")" );
-			}
-		}
-		
-		dataAccessor.destroy();
-		
-		
-		// Creating data model required for template processing
-		Map<String, Object> dataModel = new HashMap<>();
-		dataModel.put( "bookDataList", bookDataList );
-		dataModel.put( "bookCoverMap",  bookCoverMap );
-		dataModel.put( "bookUrlMap",  bookUrlMap );
-		dataModel.put( "poemDataList", poemDataList );
-		dataModel.put( "poemCoverMap",  poemCoverMap );
-		dataModel.put( "poemUrlMap",  poemUrlMap );
-		dataModel.put( "storyDataList", storyDataList );
-		dataModel.put( "storyCoverMap", storyCoverMap );
-		dataModel.put( "storyUrlMap", storyUrlMap );
-		dataModel.put( "languageMap", languageMap );
-		dataModel.put( "timeZone", claymusHelper.getCurrentUserTimeZone() );
-		
-		
-		Writer writer = new StringWriter();
-		Template template = FREEMARKER_CONFIGURATION
-				.getTemplate( "com/pratilipi/servlet/content/HomePageContent.ftl" );
-		try {
-			template.process( dataModel , writer );
-		} catch (TemplateException e) {
-			// TODO Auto-generated catch block
-			logger.log( Level.SEVERE, "", e );
-		}
-
-		HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-		htmlContent.setHtml( writer.toString() );
-		return htmlContent;
+		HomeContent homeContent = HomeContentFactory.newHomeContent();
+		homeContent.setBookIdList( bookIdList );
+		homeContent.setPoemIdList( poemIdList );
+		homeContent.setStoryIdList( storyIdList );
+		return homeContent;
 	}
 
 }

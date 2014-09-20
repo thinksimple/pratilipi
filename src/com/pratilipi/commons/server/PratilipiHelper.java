@@ -6,6 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
 import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Language;
+import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiHelper extends ClaymusHelper {
 
@@ -178,4 +182,44 @@ public class PratilipiHelper extends ClaymusHelper {
 		return "/author/" + authorId;
 	}
 	
+
+	public String createAuthorName( Author author ) {
+		return author.getFirstName()
+				+ ( author.getLastName() == null ? "" : " " + author.getLastName() );
+	}
+	
+	public String createAuthorNameEn( Author author ) {
+		return author.getFirstNameEn()
+				+ ( author.getLastNameEn() == null ? "" : " " + author.getLastNameEn() );
+	}
+
+	public PratilipiData createPratilipiData(
+			Pratilipi pratilipi, Language language, Author author ) {
+		
+		PratilipiData pratilipiData = new PratilipiData();
+
+		pratilipiData.setId( pratilipi.getId() );
+		pratilipiData.setType( pratilipi.getType() );
+		pratilipiData.setPageUrl( getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
+		pratilipiData.setCoverImageUrl( getCoverImage300Url( pratilipi.getType(), pratilipi.getId(), false ) );
+		pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
+		
+		pratilipiData.setTitle( pratilipi.getTitle() );
+		pratilipiData.setLanguageId( language.getId() );
+		pratilipiData.setLanguageName( language.getName() );
+		pratilipiData.setLanguageNameEn( language.getNameEn() );
+
+		pratilipiData.setAuthorId( author.getId() );
+		pratilipiData.setAuthorName( createAuthorName( author ) );
+		pratilipiData.setAuthorNameEn( createAuthorNameEn( author ) );
+		pratilipiData.setAuthorPageUrl( getAuthorPageUrl( pratilipi.getAuthorId() ) );
+		
+		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
+		pratilipiData.setListingDate( pratilipi.getListingDate() );
+		
+		pratilipiData.setSummary( pratilipi.getSummary() );
+		pratilipiData.setPageCount( pratilipi.getPageCount() );
+		
+		return pratilipiData;
+	}
 }

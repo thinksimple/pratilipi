@@ -228,7 +228,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				pratilipiData.setAuthorName( author.getFirstName() );
 			else
 				pratilipiData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
-			pratilipiData.setPublicationDate( pratilipi.getPublicationYear() );
+			pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 			pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
 			pratilipiData.setListingDate( pratilipi.getListingDate() );
 			pratilipiData.setSummary( pratilipi.getSummary() );

@@ -115,4 +115,8 @@ public class GaeQueryBuilder {
 		return query;
 	}
 
+	public Map<String, Object> getParamNameValueMap() {
+		return paramNameValueMap;
+	}
+
 }

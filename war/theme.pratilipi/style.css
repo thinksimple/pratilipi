@@ -22,10 +22,15 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 	border-bottom: 1px solid #ddd;
 }
 
-
-.websitewidget-header {
-	border-top: 15px solid #E74C3C;
+.bg-gray {
+	background:#CECECE;
 }
+
+.bg-translucent {
+	opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
 
 
 /* START: Bootstrap Overrides */
@@ -432,7 +437,7 @@ a {
 }
 
 header {
-	border-top: 15px solid #E74C3C;
+	border-top: 5px solid #E74C3C;
 	border-bottom: 1px solid #bbb;
 	padding-top: 25px;
 }

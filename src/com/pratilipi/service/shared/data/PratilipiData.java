@@ -28,12 +28,14 @@ public class PratilipiData implements IsSerializable {
 	private boolean hasLanguageId;
 
 	private String languageName;
+	private String languageNameEn;
 	
 	
 	private Long authorId;
 	private boolean hasAuthorId;
 	
 	private String authorName;
+	private String authorNameEn;
 	
 	private String authorPageUrl;
 	
@@ -162,6 +164,14 @@ public class PratilipiData implements IsSerializable {
 		this.languageName = languageName;
 	}
 
+	public String getLanguageNameEn() {
+		return languageNameEn;
+	}
+
+	public void setLanguageNameEn( String languageNameEn ) {
+		this.languageNameEn = languageNameEn;
+	}
+
 	public Long getAuthorId() {
 		return authorId;
 	}
@@ -181,6 +191,14 @@ public class PratilipiData implements IsSerializable {
 
 	public void setAuthorName( String authorName ) {
 		this.authorName = authorName;
+	}
+	
+	public String getAuthorNameEn() {
+		return authorNameEn;
+	}
+
+	public void setAuthorNameEn( String authorNameEn ) {
+		this.authorNameEn = authorNameEn;
 	}
 	
 	public String getAuthorPageUrl() {
@@ -216,7 +234,7 @@ public class PratilipiData implements IsSerializable {
 		return publicationYear;
 	}
 
-	public void setPublicationDate( Long publicationYear ) {
+	public void setPublicationYear( Long publicationYear ) {
 		this.publicationYear = publicationYear;
 		this.hasPublicationYear = true;
 	}
