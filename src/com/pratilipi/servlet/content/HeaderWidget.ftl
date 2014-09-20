@@ -7,10 +7,21 @@
 				<a href="/" style="color:#E74C3C !important; font-size:24px;"><b><i>Pratilipi.com</i></b></a>
 			</div>
 
-			<div class="col-xs-6">
-				<#if isUserLoggedIn()>
+			<div class="col-xs-6" id="Pratilipi-User-Access" style="display: none;">
+				<#if isUserLoggedIn>
 					<div class="pull-right">
-						<a href="#signout">Logout</a>
+						<ul class="nav navbar-nav">
+						<li class="dropdown">
+			                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome <#if user.getFirstName()??>
+																									${ user.getFirstName() }
+																								<#else>
+																									${ user.getEmail() }
+																								</#if><span class="caret"></span></a>
+			                <ul class="dropdown-menu" role="menu">
+			                  <li style="width: 170px;"><a href="#signout">Logout</a></li>
+			                </ul>
+			          	</li>
+			          	</ul>
 					</div>
 				<#else>
 					<div class="pull-right">

@@ -18,6 +18,7 @@ import org.apache.commons.io.FileUtils;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
+import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.html.HtmlContent;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
@@ -384,8 +385,22 @@ public class PratilipiMain extends ClaymusMain {
 		Writer writer = new StringWriter();
 		Template template = FREEMARKER_CONFIGURATION
 				.getTemplate( "com/pratilipi/servlet/content/HeaderWidget.ftl" );
+		
+		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Long userId = claymusHelper.getCurrentUserId();
+		User user = null;
+		
+		if( userId != 0 )
+			user = dataAccessor.getUser( claymusHelper.getCurrentUserId() );
+		
+		Map<String, Object> dataModal = new HashMap<>();
+		dataModal.put( "user", user);
+		dataModal.put( "isUserLoggedIn", claymusHelper.isUserLoggedIn() );
+		
+		
 		try {
-			template.process( new ClaymusHelper( request ) , writer );
+			template.process( dataModal , writer );
 		} catch (TemplateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
