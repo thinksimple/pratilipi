@@ -6,7 +6,6 @@ import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -27,7 +26,7 @@ public class Accordion extends Composite {
 	
 	public Accordion() {
 
-		String id = HTMLPanel.createUniqueId();
+		String id = Document.get().createUniqueId();
 		titleAnchor.setHref( "#" + id );
 		collapsePanel.getElement().setAttribute( "id", id );
 

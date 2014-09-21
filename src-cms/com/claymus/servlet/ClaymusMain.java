@@ -23,7 +23,6 @@ import com.claymus.data.transfer.WebsiteLayout;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.claymus.module.pagecontent.PageContentRegistry;
-import com.claymus.module.pagecontent.fileupload.FileUploadContentFactory;
 import com.claymus.module.pagecontent.html.HtmlContent;
 import com.claymus.module.pagecontent.html.HtmlContentFactory;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
@@ -57,7 +56,6 @@ public class ClaymusMain extends HttpServlet {
 		WEBSITE_WIDGET_REGISTRY = new WebsiteWidgetRegistry();
 		
 		PAGE_CONTENT_REGISTRY.register( HtmlContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( FileUploadContentFactory.class );
 		
 		WEBSITE_WIDGET_REGISTRY.register( HeaderWidgetFactory.class );
 		WEBSITE_WIDGET_REGISTRY.register( FooterWidgetFactory.class );
