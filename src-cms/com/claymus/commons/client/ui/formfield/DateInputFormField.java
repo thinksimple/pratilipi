@@ -13,6 +13,9 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public class DateInputFormField extends FormField {
 
+	private final static DateTimeFormat dateTimeFormat =
+			DateTimeFormat.getFormat( "yyyy-MM-dd" );
+	
 	private final Panel formGroup = new FlowPanel();
 	private final Element label = Document.get().createLabelElement();
 	private final TextBox textBox = new TextBox();
@@ -49,12 +52,12 @@ public class DateInputFormField extends FormField {
 	}
 
 	
-	public String getDate() {
-		return textBox.getText();
+	public Date getDate() {
+		return textBox.getText().isEmpty() ? null : dateTimeFormat.parse( textBox.getText() );
 	}
 	
 	public void setDate( Date date ) {
-		textBox.setText( DateTimeFormat.getFormat( "yyyy-mm-dd" ).format( date ) );
+		textBox.setText( date == null ? "" : dateTimeFormat.format( date ) );
 	}
 	
 	public void setEnabled( boolean enabled ) {
@@ -64,15 +67,15 @@ public class DateInputFormField extends FormField {
 	
 	@Override
 	public boolean validate() {
-		if( getDate() == "" && !isRequired() ) {
+		if( getDate() == null && !isRequired() ) {
 			markDefault();
 			return true;
 
-		} else if( getDate() == "" && isRequired() ) {
+		} else if( getDate() == null && isRequired() ) {
 			markError( "Input Required !" );
 			return false;
 
-		} else { // if( getDate() != "" ) {
+		} else { // if( getDate() != null ) {
 			markSuccess();
 			return true;
 		}

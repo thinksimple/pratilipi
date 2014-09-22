@@ -45,6 +45,10 @@ public class ListBoxFormField extends FormField {
 	}
 	
 	
+	public void setPlaceholder( String placeholder ) {
+		addItem( placeholder, null );
+	}
+	
 	public void addItem( String item, String value ){
 		listBox.addItem( item, value == null ? "" : value );
 	}

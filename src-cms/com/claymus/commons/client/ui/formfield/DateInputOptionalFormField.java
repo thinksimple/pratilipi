@@ -14,18 +14,21 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 
-public class TimeInputOptionalFormField extends FormField {
+public class DateInputOptionalFormField extends FormField {
 
+	private final static DateTimeFormat dateTimeFormat =
+			DateTimeFormat.getFormat( "yyyy-MM-dd" );
+	
 	private final Panel formGroup = new FlowPanel();
 	private final Element label = Document.get().createLabelElement();
 	private final Panel inputGroup = new FlowPanel();
 	private final Element glyphicon = Document.get().createSpanElement();
-
+	
 	private final CheckBox checkBox = new CheckBox();
 	private final TextBox textBox = new TextBox();
 
 	
-	public TimeInputOptionalFormField() {
+	public DateInputOptionalFormField() {
 		checkBox.addValueChangeHandler( new ValueChangeHandler<Boolean>() {
 			
 			@Override
@@ -36,7 +39,7 @@ public class TimeInputOptionalFormField extends FormField {
 			
 		});
 		checkBox.setValue( false );
-		textBox.getElement().setAttribute( "type", "time" );
+		textBox.getElement().setAttribute( "type", "date" );
 		textBox.getElement().setAttribute( "data-container", "body" );
 		textBox.getElement().setAttribute( "data-placement", "top" );
 		textBox.addBlurHandler( new BlurHandler() {
@@ -48,8 +51,8 @@ public class TimeInputOptionalFormField extends FormField {
 			
 		});
 		textBox.setEnabled( false );
-		
 
+		
 		// Composing the widget
 		formGroup.getElement().appendChild( label );
 		formGroup.add( inputGroup );
@@ -57,7 +60,7 @@ public class TimeInputOptionalFormField extends FormField {
 		
 		inputGroup.add( checkBox );
 		inputGroup.add( textBox );
-		
+
 		
 		// Setting required style classes
 		formGroup.setStyleName( "form-group" );
@@ -70,23 +73,20 @@ public class TimeInputOptionalFormField extends FormField {
 		initWidget( formGroup );
 	}
 
-
-	public String getTime() {
-		return checkBox.getValue() ? textBox.getText() : null;
+	
+	public Date getDate() {
+		if( checkBox.getValue() )
+			return textBox.getText().isEmpty() ? null : dateTimeFormat.parse( textBox.getText() );
+		else
+			return null;
 	}
-
-	public String getTime( Date date ) {
-		String time = getTime();
-		if( time != null ) {
-			int hours = Integer.parseInt( time.substring( 0, 2 ) );
-			int minutes = Integer.parseInt( time.substring( 3 ) );
-			date = new Date( date.getTime() + ( hours * 60 + minutes ) * 60 * 1000 );
-		}
-		return checkBox.getValue() ? textBox.getText() : null;
+	
+	public void setDate( Date date ) {
+		textBox.setText( date == null ? "" : dateTimeFormat.format( date ) );
 	}
-
-	public void setTime( Date date ) {
-		textBox.setValue( DateTimeFormat.getFormat( "HH:mm" ).format( date ) );
+	
+	public void setEnabled( boolean enabled ) {
+		textBox.setEnabled( enabled );
 	}
 	
 	
@@ -95,7 +95,7 @@ public class TimeInputOptionalFormField extends FormField {
 		if( checkBox.getValue() && textBox.getValue().isEmpty() ) {
 			markError( "Input Required !" );
 			return false;
-		
+
 		} else if( checkBox.getValue() && ! textBox.getValue().isEmpty() ) {
 			markSuccess();
 			return true;
@@ -138,5 +138,5 @@ public class TimeInputOptionalFormField extends FormField {
 	private static native void hidePopover( Element element ) /*-{
 		$wnd.jQuery( element ).popover( 'destroy' );
 	}-*/;
-	
+
 }
