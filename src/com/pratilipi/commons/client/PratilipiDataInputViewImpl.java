@@ -18,6 +18,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	private Panel innerPanel = new FlowPanel();
 	
 	private TextInputFormField titleInput = new TextInputFormField();
+	private TextInputFormField titleEnInput = new TextInputFormField();
 	private ListBoxFormField authorList = new ListBoxFormField();
 	private ListBoxFormField languageList = new ListBoxFormField();
 	private NumberInputFormField pageCountInput = new NumberInputFormField();
@@ -39,6 +40,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		
 	    titleInput.setPlaceholder( "Title" );
 	    titleInput.setRequired( true );
+	    titleEnInput.setPlaceholder( "Title (English) " ); 
 	    authorList.addItem( "Select Author", "" );
 	    authorList.setRequired( true );
 	    languageList.addItem( "Select Language", "" );
@@ -52,6 +54,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		panel.add( innerPanel );
 	    
 		innerPanel.add( titleInput );
+		innerPanel.add( titleEnInput );
 		innerPanel.add( authorList );
 		innerPanel.add( languageList );
 		innerPanel.add( pageCountInput );
@@ -88,6 +91,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	public boolean validateInputs() {
 		boolean validated = true;
 		validated = titleInput.validate() && validated;
+		validated = titleEnInput.validate() && validated;
 		validated = authorList.validate() && validated;
 		validated = languageList.validate() && validated;
 		validated = pageCountInput.validate() && validated;
@@ -97,6 +101,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	@Override
 	public void setEnabled(boolean enabled) {
 		titleInput.setEnabled( enabled );
+		titleEnInput.setEnabled( enabled );
 		authorList.setEnabled( enabled );
 		languageList.setEnabled( enabled );	
 		pageCountInput.setEnabled( enabled );
@@ -109,6 +114,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		pratilipiData.setId( pratilipiId );
 		pratilipiData.setType( pratilipiType );
 		pratilipiData.setTitle( titleInput.getText() );
+		pratilipiData.setTitleEn( titleEnInput.getText() );
 		pratilipiData.setAuthorId( Long.valueOf(authorList.getValue()) );
 		pratilipiData.setLanguageId( Long.parseLong( languageList.getValue() ) );
 		pratilipiData.setPageCount( pageCountInput.getValue() );
@@ -129,6 +135,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		pratilipiId = pratilipiData.getId();
 		
 		titleInput.setText( pratilipiData.getTitle() );
+		titleEnInput.setText( pratilipiData.getTitleEn() );
 		authorList.setValue( pratilipiData.getAuthorId().toString() );
 		languageList.setValue( pratilipiData.getLanguageId().toString() );
 		pageCountInput.setValue( pratilipiData.getPageCount() );
@@ -154,12 +161,14 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		pratilipiId = null;
 		
 		titleInput.setText( null );
+		titleEnInput.setText( null );
 		authorList.setValue( null );
 		languageList.setValue( null );
 		pageCountInput.setValue( null );
 		isPublicDomain.setChecked( false );
 		
 		titleInput.resetValidation();
+		titleEnInput.resetValidation();
 		authorList.resetValidation();
 		languageList.resetValidation();
 		isPublicDomain.resetValidation();

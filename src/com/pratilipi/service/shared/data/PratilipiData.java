@@ -24,6 +24,9 @@ public class PratilipiData implements IsSerializable {
 	private String title;
 	private boolean hasTitle;
 	
+	private String titleEn;
+	private boolean hasTitleEn;
+	
 	private Long languageId;
 	private boolean hasLanguageId;
 
@@ -143,6 +146,20 @@ public class PratilipiData implements IsSerializable {
 		return hasTitle;
 	}
 
+	public String getTitleEn() {
+		return titleEn;
+	}
+
+	public void setTitleEn( String titleEn ) {
+		this.titleEn = titleEn;
+		this.hasTitleEn = true;
+	}
+	
+	public boolean hasTitleEn() {
+		return hasTitleEn;
+	}
+
+	
 	public Long getLanguageId() {
 		return languageId;
 	}

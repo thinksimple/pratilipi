@@ -122,6 +122,8 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				pratilipi.setPublicDomain( pratilipiData.isPublicDomain() );
 			if( pratilipiData.hasTitle() )
 				pratilipi.setTitle( pratilipiData.getTitle() );
+			if( pratilipiData.hasTitleEn() )
+				pratilipi.setTitleEn( pratilipiData.getTitleEn() );
 			if( pratilipiData.hasLanguageId() )
 				pratilipi.setLanguageId( pratilipiData.getLanguageId() );
 			if( pratilipiData.hasAuthorId() )

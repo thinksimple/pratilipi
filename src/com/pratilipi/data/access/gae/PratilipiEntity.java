@@ -29,6 +29,11 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "TITLE" )
 	private String title;
 	
+	@Persistent( column = "TITLE_EN" )
+	private String titleEn;
+	
+	
+
 	@Persistent( column = "LANGUAGE_ID" )
 	private Long languageId;
 
@@ -111,6 +116,16 @@ public class PratilipiEntity implements Pratilipi {
 		this.title = title;
 	}
 
+	@Override
+	public String getTitleEn() {
+		return this.titleEn;
+	}
+
+	@Override
+	public void setTitleEn(String titleEn) {
+		this.titleEn = titleEn;
+	}
+	
 	@Override
 	public Long getLanguageId() {
 		return languageId;
