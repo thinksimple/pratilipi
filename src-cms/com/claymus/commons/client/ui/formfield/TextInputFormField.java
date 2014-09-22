@@ -57,6 +57,7 @@ public class TextInputFormField extends FormField {
 		textBox.setText( text == null ? "" : text );
 	}
 	
+	@Override
 	public void setEnabled( boolean enabled ) {
 		textBox.setEnabled( enabled );
 	}

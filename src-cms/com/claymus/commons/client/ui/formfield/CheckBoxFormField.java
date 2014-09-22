@@ -45,6 +45,7 @@ public class CheckBoxFormField extends FormField {
 		label.setInnerText( text );
 	}
 	
+	@Override
 	public void setEnabled( boolean enabled ) {
 		if( enabled )
 			checkBox.removeAttribute( "disabled" );

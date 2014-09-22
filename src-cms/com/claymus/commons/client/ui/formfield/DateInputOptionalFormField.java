@@ -85,10 +85,11 @@ public class DateInputOptionalFormField extends FormField {
 		textBox.setText( date == null ? "" : dateTimeFormat.format( date ) );
 	}
 	
+	@Override
 	public void setEnabled( boolean enabled ) {
-		textBox.setEnabled( enabled );
+		checkBox.setEnabled( enabled );
+		textBox.setEnabled( enabled ? checkBox.getValue() : enabled );
 	}
-	
 	
 	@Override
 	public boolean validate() {

@@ -83,6 +83,11 @@ public class Modal extends Composite {
 		footer.add( button );
 	}
 	
+	public void setEnabled( boolean enabled ) {
+		xButton.setEnabled( enabled );
+		closeButton.setEnabled( enabled );
+	}
+
 	public void show() {
 		showModal( panel.getElement() );
 	}

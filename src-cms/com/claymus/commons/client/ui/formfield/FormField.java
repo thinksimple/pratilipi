@@ -15,6 +15,8 @@ public abstract class FormField extends Composite {
 		this.isRequired = required;
 	}
 	
+	public abstract void setEnabled( boolean enabled );
+
 	public abstract boolean validate();
 	
 	public abstract void resetValidation();

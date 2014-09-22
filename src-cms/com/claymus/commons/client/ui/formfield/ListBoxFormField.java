@@ -75,6 +75,7 @@ public class ListBoxFormField extends FormField {
 		return value.isEmpty() ? null : value;
 	}
 	
+	@Override
 	public void setEnabled( boolean enabled ) {
 		listBox.setEnabled( enabled );
 	}

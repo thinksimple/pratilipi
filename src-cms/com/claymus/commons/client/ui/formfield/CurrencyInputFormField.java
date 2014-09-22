@@ -74,6 +74,11 @@ public class CurrencyInputFormField extends FormField {
 	
 	
 	@Override
+	public void setEnabled( boolean enabled ) {
+		textBox.setEnabled( enabled );
+	}
+
+	@Override
 	public boolean validate() {
 		if( getAmount() == null && !isRequired() ) {
 			markDefault();

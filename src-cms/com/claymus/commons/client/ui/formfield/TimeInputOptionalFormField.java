@@ -75,20 +75,25 @@ public class TimeInputOptionalFormField extends FormField {
 		return checkBox.getValue() ? textBox.getText() : null;
 	}
 
-	public String getTime( Date date ) {
+	public Date getTime( Date date ) {
 		String time = getTime();
-		if( time != null ) {
+		if( date != null && time != null ) {
 			int hours = Integer.parseInt( time.substring( 0, 2 ) );
 			int minutes = Integer.parseInt( time.substring( 3 ) );
 			date = new Date( date.getTime() + ( hours * 60 + minutes ) * 60 * 1000 );
 		}
-		return checkBox.getValue() ? textBox.getText() : null;
+		return date;
 	}
 
 	public void setTime( Date date ) {
 		textBox.setValue( DateTimeFormat.getFormat( "HH:mm" ).format( date ) );
 	}
 	
+	@Override
+	public void setEnabled( boolean enabled ) {
+		checkBox.setEnabled( enabled );
+		textBox.setEnabled( enabled ? checkBox.getValue() : enabled );
+	}
 	
 	@Override
 	public boolean validate() {

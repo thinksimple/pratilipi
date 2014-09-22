@@ -65,6 +65,7 @@ public class NumberInputFormField extends FormField {
 		inputBox.setText( number == null ? "" : Long.toString( number ) );
 	}
 	
+	@Override
 	public void setEnabled( boolean enabled ) {
 		inputBox.setEnabled( enabled );
 	}
@@ -79,7 +80,7 @@ public class NumberInputFormField extends FormField {
 			markDefault();
 			return true;
 
-		} else if( inputBox.getText().trim().isEmpty() && !isRequired() ){
+		} else if( inputBox.getText().trim().isEmpty() && isRequired() ){
 			markError( "Input Required !" );
 			return false;
 			

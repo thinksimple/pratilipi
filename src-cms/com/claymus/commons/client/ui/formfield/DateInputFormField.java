@@ -60,10 +60,10 @@ public class DateInputFormField extends FormField {
 		textBox.setText( date == null ? "" : dateTimeFormat.format( date ) );
 	}
 	
+	@Override
 	public void setEnabled( boolean enabled ) {
 		textBox.setEnabled( enabled );
 	}
-	
 	
 	@Override
 	public boolean validate() {
