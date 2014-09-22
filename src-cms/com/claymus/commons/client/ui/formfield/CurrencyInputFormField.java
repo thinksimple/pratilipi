@@ -1,4 +1,5 @@
 package com.claymus.commons.client.ui.formfield;
+import com.claymus.commons.client.Amount;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -61,26 +62,28 @@ public class CurrencyInputFormField extends FormField {
 		textBox.getElement().setAttribute( "placeholder", placeholder );
 	}
 	
-	public String getAmount() {
-		return textBox.getValue().trim();
+	public Amount getAmount() {
+		return textBox.getValue().isEmpty() ?
+				null :
+				new Amount( Double.parseDouble( textBox.getValue().trim() ) );
 	}
 
-	public void setAmount( Long amount ) {
-		textBox.setValue( amount.toString() );
+	public void setAmount( Amount amount ) {
+		textBox.setValue( amount == null ? "" : amount.getDecimalValue() + "" );
 	}
 	
 	
 	@Override
 	public boolean validate() {
-		if( getAmount() == "" && !isRequired() ) {
+		if( getAmount() == null && !isRequired() ) {
 			markDefault();
 			return true;
 			
-		} else if( getAmount() == "" && isRequired() ) {
+		} else if( getAmount() == null && isRequired() ) {
 			markError( "Input Required !" );
 			return false;
 
-		} else { // if( textBox.getText() != "" ) {
+		} else { // if( getAmount() != null ) {
 			if( regExp.test( textBox.getText() ) ) {
 				markSuccess();
 				return true;
