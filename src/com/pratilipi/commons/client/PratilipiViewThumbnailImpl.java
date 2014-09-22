@@ -48,12 +48,15 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 		
 		
 		// Setting required style classes
-		colPanel.setStyleName( "col-lg-2 col-md-2 col-sm-3 col-xs-4" );
-		panel.getElement().setAttribute( "style", "width:100px; padding-top: 10px; padding-bottom:10px;" );
-		thumbnailPanel.getElement().setAttribute( "style", "width:100px; height:160px; overflow: hidden;" );
+		colPanel.setStyleName( "col-lg-2 col-md-3 col-sm-3 col-xs-6" );
+		colPanel.getElement().setAttribute( "style", "margin-bottom:30px;" );
+		panel.getElement().setAttribute( "style", "width:150px; height:240px;" );
+		thumbnailPanel.setStyleName( "bg-gray" );
+		thumbnailPanel.getElement().setAttribute( "style", "width:150px; height:240px; overflow:hidden;" );
+		infoPanel.setStyleName( "bg-gray bg-translucent" );
 		infoPanel.getElement().setAttribute( "style",
-				"position:absolute; bottom:10px;"
-				+ "width:100px; height:60px; overflow: hidden; font-size:12px" );
+				"position:absolute; bottom:0px; "
+				+ "width:150px; padding:5px 10px 5px 10px;" );
 		coverImage.setStyleName( "img-responsive" );
 		titleAnchor.getElement().setAttribute( "style", "display:block;");
 		authorAnchor.getElement().setAttribute( "style", "display:block;");
@@ -78,11 +81,13 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 		
 		coverImageAnchor.setHref( pratilipiData.getPageUrl() );
 		coverImage.setUrl( pratilipiData.getCoverImageUrl() );
-
-		titleAnchor.setText( pratilipiData.getTitle() );
+		coverImage.setTitle( pratilipiData.getTitle() );
+		coverImage.setAltText( pratilipiData.getTitle() );
+		
+		titleAnchor.setHTML( "<strong style='color:black !important;'>" + pratilipiData.getTitle() + "</strong>" );
 		titleAnchor.setHref( pratilipiData.getPageUrl() );
 
-		authorAnchor.setText( "(" + pratilipiData.getAuthorName() + ")" );
+		authorAnchor.setHTML( "<i><small style='color:black !important;'>-" + pratilipiData.getAuthorName() + "</small></i>" );
 		authorAnchor.setHref( pratilipiData.getAuthorPageUrl() );
 	}
 
