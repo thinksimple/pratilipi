@@ -64,6 +64,9 @@ public class HomeContentProcessor extends PageContentProcessor<HomeContent> {
 		}
 
 		
+		dataAccessor.destroy();
+		
+		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "bookDataList", bookDataList );

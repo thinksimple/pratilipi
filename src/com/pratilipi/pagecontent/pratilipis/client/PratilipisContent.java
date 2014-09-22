@@ -94,17 +94,16 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 		
 		rootPanel = RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" );
 		if( rootPanel != null ) {
-			rootPanel.clear();
 			String filters = rootPanel.getElement().getAttribute( "pratilipi-filters" );
 			if( filters != null && filters.equals( "CLASSICS" ) )
-				rootPanel.add( new PratilipiList( pratilipiType, true, null, pratilipiDataInputView ) );
+				new PratilipiList( rootPanel, pratilipiType, true, null, pratilipiDataInputView );
 			else if( filters != null && filters.startsWith( "LANGUAGE" ) )
-				rootPanel.add( new PratilipiList(
-						pratilipiType, null,
+				new PratilipiList(
+						rootPanel, pratilipiType, null,
 						Long.parseLong( filters.substring( filters.indexOf( ':' ) + 1 ) ),
-						pratilipiDataInputView ) );
+						pratilipiDataInputView );
 			else
-				rootPanel.add( new PratilipiList( pratilipiType, null, null, pratilipiDataInputView ) );
+				new PratilipiList( rootPanel, pratilipiType, null, null, pratilipiDataInputView );
 		}
 	
 	}

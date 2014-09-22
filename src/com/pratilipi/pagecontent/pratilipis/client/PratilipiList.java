@@ -6,10 +6,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Panel;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiView;
 import com.pratilipi.commons.client.PratilipiViewDetailImpl;
-import com.pratilipi.commons.client.PratilipiViewThumbnailBookImpl;
 import com.pratilipi.commons.client.PratilipiViewThumbnailImpl;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
@@ -27,22 +27,25 @@ public class PratilipiList extends InfiniteScrollPanel {
 	private final Boolean publicDomain;
 	private final Long languageId;
 	private final PratilipiDataInputView pratilipiDataInputView;
+	private boolean cleared = false;
 	private String cursor = null;
 	private int resultCount = 20;
 
 	private Image loadingImage = new Image( "/theme.pratilipi/images/loading.gif" );
 	
 	
-	public PratilipiList( PratilipiType pratilipiType ) {
-		this( pratilipiType, null, null, null );
+	public PratilipiList( Panel panel, PratilipiType pratilipiType ) {
+		this( panel, pratilipiType, null, null, null );
 	}
 	
-	public PratilipiList( PratilipiType pratilipiType, Boolean publicDomain ) {
-		this( pratilipiType, publicDomain, null, null );
+	public PratilipiList( Panel panel, PratilipiType pratilipiType, Boolean publicDomain ) {
+		this( panel, pratilipiType, publicDomain, null, null );
 	}
 	
-	public PratilipiList( PratilipiType pratilipiType, Boolean publicDomain,
+	public PratilipiList( Panel panel, PratilipiType pratilipiType, Boolean publicDomain,
 			Long languageId, PratilipiDataInputView pratilipiDataInputView ) {
+		
+		super( panel );
 		
 		this.pratilipiType = pratilipiType;
 		this.publicDomain = publicDomain;
@@ -68,14 +71,15 @@ public class PratilipiList extends InfiniteScrollPanel {
 
 				loadingImage.removeFromParent();
 				
+				if( ! cleared ) {
+					clear();
+					cleared = true;
+				}
+					
 				for( final PratilipiData pratilipiData : response.getPratilipiDataList() ) {
 					final PratilipiView pratilipiView;
 					
-					if( pratilipiDataInputView == null && pratilipiType == PratilipiType.BOOK ) {
-						pratilipiView = new PratilipiViewThumbnailBookImpl();
-						pratilipiView.setPratilipiData( pratilipiData );
-
-					} else if( pratilipiDataInputView == null && pratilipiType != PratilipiType.BOOK ) {
+					if( pratilipiDataInputView == null ) {
 						pratilipiView = new PratilipiViewThumbnailImpl();
 						pratilipiView.setPratilipiData( pratilipiData );
 
@@ -99,9 +103,9 @@ public class PratilipiList extends InfiniteScrollPanel {
 				}
 				
 				cursor = response.getCursor();
-				loadSuccessful();
 				if( response.getPratilipiDataList().size() < resultCount )
 					loadFinished();
+				loadSuccessful();
 			}
 			
 			@Override

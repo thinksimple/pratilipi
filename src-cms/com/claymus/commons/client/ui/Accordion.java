@@ -48,6 +48,7 @@ public class Accordion extends Composite {
 		collapsePanel.setStyleName( "panel-collapse collapse" );
 		
 		titleAnchor.getElement().setAttribute( "data-toggle", "collapse" );
+		titleAnchor.getElement().setAttribute( "style", "text-decoration:none;" );
 		titleElement.setAttribute( "class", "panel-title" );
 		
 		bodyPanel.setStyleName( "panel-body" );
@@ -56,8 +57,8 @@ public class Accordion extends Composite {
 		initWidget( panel );
 	}
 	
-	public void setTitle( String title ) {
-		titleElement.setInnerText( title );
+	public void setTitle( String html ) {
+		titleElement.setInnerHTML( html );
 	}
 
 	public void add( Widget child ) {
@@ -66,6 +67,10 @@ public class Accordion extends Composite {
 
 	public void add( IsWidget child ) {
 		bodyPanel.add( child );
+	}
+	
+	public void clear() {
+		bodyPanel.clear();
 	}
 	
 	public void show() {
