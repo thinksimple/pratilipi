@@ -1,6 +1,9 @@
 package com.claymus.service.client;
 
 import com.claymus.commons.client.IllegalArgumentException;
+import com.claymus.commons.client.UnexpectedServerException;
+import com.claymus.service.shared.SendQueryRequest;
+import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
 import com.claymus.service.shared.InviteUserRequest;
@@ -34,4 +37,7 @@ public interface ClaymusService extends RemoteService {
 	UpdateUserPasswordResponse updateUserPassword( UpdateUserPasswordRequest request )
 			throws IllegalArgumentException;
 	
+	SendQueryResponse sendQuery( SendQueryRequest request )
+			throws UnexpectedServerException;
+
 }

@@ -33,8 +33,6 @@ import com.pratilipi.service.shared.SavePratilipiContentRequest;
 import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
-import com.pratilipi.service.shared.UserQueryRequest;
-import com.pratilipi.service.shared.UserQueryResponse;
 
 @RemoteServiceRelativePath("../service.pratilipi")
 public interface PratilipiService extends RemoteService {
@@ -88,6 +86,4 @@ public interface PratilipiService extends RemoteService {
 	
 	GetUserPratilipiListResponse getUserPratilipiList( GetUserPratilipiListRequest request );
 	
-	UserQueryResponse userQueryMail( UserQueryRequest request );
-
 }

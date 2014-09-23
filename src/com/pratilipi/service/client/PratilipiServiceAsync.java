@@ -29,8 +29,6 @@ import com.pratilipi.service.shared.SavePratilipiContentRequest;
 import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
-import com.pratilipi.service.shared.UserQueryRequest;
-import com.pratilipi.service.shared.UserQueryResponse;
 
 public interface PratilipiServiceAsync {
 	
@@ -96,8 +94,4 @@ public interface PratilipiServiceAsync {
 			GetUserPratilipiListRequest request,
 			AsyncCallback<GetUserPratilipiListResponse> callback );
 	
-	void userQueryMail(
-			UserQueryRequest request,
-			AsyncCallback<UserQueryResponse> callback );
-
 }

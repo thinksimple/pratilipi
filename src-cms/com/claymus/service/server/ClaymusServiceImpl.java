@@ -1,17 +1,23 @@
 package com.claymus.service.server;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.mail.MessagingException;
+
 import com.claymus.commons.client.IllegalArgumentException;
+import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.EncryptPassword;
 import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
+import com.claymus.data.transfer.EmailTemplate;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
+import com.claymus.email.EmailUtil;
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
@@ -21,6 +27,8 @@ import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
 import com.claymus.service.shared.ResetUserPasswordRequest;
 import com.claymus.service.shared.ResetUserPasswordResponse;
+import com.claymus.service.shared.SendQueryRequest;
+import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
 import com.claymus.service.shared.data.UserData;
@@ -28,6 +36,8 @@ import com.claymus.taskqueue.Task;
 import com.claymus.taskqueue.TaskQueue;
 import com.claymus.taskqueue.TaskQueueFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import freemarker.template.TemplateException;
 
 @SuppressWarnings("serial")
 public class ClaymusServiceImpl extends RemoteServiceServlet
@@ -303,6 +313,82 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		String message = "<strong>Password changed successfully</strong>";
 		
 		return new UpdateUserPasswordResponse( message );
+	}
+
+	@Override
+	public SendQueryResponse sendQuery( final SendQueryRequest request )
+			throws UnexpectedServerException {
+		
+		EmailTemplate emailTemplate = new EmailTemplate() {
+
+			@Override
+			public String getId() {
+				return null;
+			}
+
+			@Override
+			public void setId(String id) {}
+
+			@Override
+			public String getSenderName() {
+				return "Query Form";
+			}
+
+			@Override
+			public void setSenderName( String senderName ) {}
+
+			@Override
+			public String getSenderEmail() {
+				return ClaymusHelper.getSystemProperty( "email.noreply" );
+			}
+
+			@Override
+			public void setSenderEmail( String senderEmail ) {}
+
+			@Override
+			public String getReplyToName() {
+				return request.getName();
+			}
+
+			@Override
+			public void setReplyToName( String replyToName ) {}
+
+			@Override
+			public String getReplyToEmail() {
+				return request.getEmail();
+			}
+
+			@Override
+			public void setReplyToEmail( String replyToEmail ) {}
+
+			@Override
+			public String getSubject() {
+				return "Query from " + request.getName();
+			}
+
+			@Override
+			public void setSubject( String subject ) {}
+
+			@Override
+			public String getBody() {
+				return request.getQuery();
+			}
+
+			@Override
+			public void setBody( String body ) {}
+			
+		};
+		
+		try {
+			EmailUtil.sendMail(
+					null, ClaymusHelper.getSystemProperty( "email.contact" ),
+					emailTemplate, null );
+			return new SendQueryResponse( "Query submitted successfully !" );
+			
+		} catch ( MessagingException | IOException | TemplateException e ) {
+			throw new UnexpectedServerException();
+		}
+		
 	}
 
 }

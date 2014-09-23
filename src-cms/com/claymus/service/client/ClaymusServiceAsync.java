@@ -1,5 +1,7 @@
 package com.claymus.service.client;
 
+import com.claymus.service.shared.SendQueryRequest;
+import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
 import com.claymus.service.shared.InviteUserRequest;
@@ -35,5 +37,9 @@ public interface ClaymusServiceAsync {
 	void updateUserPassword(
 			UpdateUserPasswordRequest request,
 			AsyncCallback<UpdateUserPasswordResponse> callback );
+
+	void sendQuery(
+			SendQueryRequest request,
+			AsyncCallback<SendQueryResponse> callback );
 
 }

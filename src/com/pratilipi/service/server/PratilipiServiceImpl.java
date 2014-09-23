@@ -63,8 +63,6 @@ import com.pratilipi.service.shared.SavePratilipiContentRequest;
 import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
-import com.pratilipi.service.shared.UserQueryRequest;
-import com.pratilipi.service.shared.UserQueryResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.GenreData;
 import com.pratilipi.service.shared.data.LanguageData;
@@ -695,12 +693,5 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		return new GetUserPratilipiListResponse( userBookDataList );
 	}
-
 	
-	@Override
-	public UserQueryResponse userQueryMail( UserQueryRequest request ) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

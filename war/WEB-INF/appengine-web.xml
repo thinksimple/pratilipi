@@ -2,7 +2,7 @@
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 
   <application>devo-pratilipi</application>
-  <version>mark-2p6</version>
+  <version>mark-2p7</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>
@@ -34,6 +34,13 @@
 
     <property name="devo-pratilipi.resource.static" value="/resource."/>
     <property name="prod-pratilipi.resource.static" value="//static.pratilipi.com/"/>
+
+	<!-- Configure emails -->
+    <property name="devo-pratilipi.email.contact" value="dev-team@pratilipi.com"/>
+    <property name="prod-pratilipi.email.contact" value="contact@pratilipi.com"/>
+
+    <property name="devo-pratilipi.email.noreply" value="no-reply@pratilipi.com"/>
+    <property name="prod-pratilipi.email.noreply" value="no-reply@pratilipi.com"/>
 
 	<!-- Configure Blob Storage -->
     <property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
