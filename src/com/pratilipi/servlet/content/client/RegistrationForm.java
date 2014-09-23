@@ -228,6 +228,7 @@ public class RegistrationForm extends Composite {
 		emailInput.setEnabled( enabled );
 		password.setEnabled( enabled );
 		confirmPassword.setEnabled( enabled );
+		registerButton.setEnabled( enabled );
 	}
 	
 	public void showForm() {
