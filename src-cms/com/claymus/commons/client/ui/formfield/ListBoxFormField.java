@@ -62,10 +62,10 @@ public class ListBoxFormField extends FormField {
 		if( value == null )
 			value = "";
 		int itemCount = listBox.getItemCount();
-		for( int i = 0; i < itemCount; ++i ){
+		for( int i = 0; i < itemCount; i++ ) {
 			if( listBox.getValue( i ).equals( value ) ) {
 				listBox.setSelectedIndex( i );
-				return;
+				break;
 			}
 		}
 	}

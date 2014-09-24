@@ -327,7 +327,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			}
 
 			@Override
-			public void setId(String id) {}
+			public void setId( String id ) {}
 
 			@Override
 			public String getSenderName() {
