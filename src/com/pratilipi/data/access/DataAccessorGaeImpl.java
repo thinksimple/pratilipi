@@ -215,6 +215,18 @@ public class DataAccessorGaeImpl
 	public Author getAuthor( Long id ) {
 		return getEntity( AuthorEntity.class, id );
 	}
+	
+	@Override
+	public Author getAuthorByUserId( Long userId ) {
+		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
+							.addFilter( "userId", userId )
+							.build();
+		
+		@SuppressWarnings("unchecked")
+		List<Author> authorList = (List<Author>) query.execute( userId );
+		
+		return authorList.size() == 0 ? null : pm.detachCopy( authorList.get( 0 ) );
+	}
 
 	@Override
 	public DataListCursorTuple<Author> getAuthorList( String cursorStr, int resultCount ) {

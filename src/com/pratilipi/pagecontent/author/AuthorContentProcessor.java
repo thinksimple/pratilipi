@@ -20,7 +20,7 @@ import com.pratilipi.data.transfer.Pratilipi;
 
 public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> {
 
-	public static final String ACCESS_ID_AUTHOR_ADD = "author_add";
+	public static final String ACCESS_ID_AUTHOR_UPDATE = "author_update";
 	
 	@Override
 	public String getHtml( AuthorContent authorContent,
@@ -28,15 +28,22 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		
 		Long authorId = authorContent.getAuthorId();
 		ClaymusHelper claymusHelper = new ClaymusHelper( request );
-		boolean showAddOption =
-				claymusHelper.hasUserAccess( ACCESS_ID_AUTHOR_ADD, false );
-
+		
+		//Fetching current user id
+		Long currentUserId = claymusHelper.getCurrentUserId();
 		
 		// Fetching Author list
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
 		String authorImage = PratilipiHelper.URL_AUTHOR_IMAGE + authorId;
 		
+		//Update privileges
+		boolean isAuthor = currentUserId.equals( author.getUserId());
+		boolean showUpdateOption =
+				claymusHelper.hasUserAccess( ACCESS_ID_AUTHOR_UPDATE, false )
+				|| isAuthor ;
+		
+		//Fetching pratilipi list for the author.
 		DataListCursorTuple<Pratilipi> bookList = dataAccessor.getPratilipiListByAuthor( 
 								PratilipiType.BOOK, authorId, null, 200 );
 		List<Pratilipi> bookDataList = bookList.getDataList();
@@ -112,7 +119,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		dataModel.put( "storyCoverMap", storyCoverMap );
 		dataModel.put( "storyUrlMap", storyUrlMap );
 		dataModel.put( "languageMap", languageMap );
-		dataModel.put( "showAddOption", showAddOption );
+		dataModel.put( "showUpdateOption", showUpdateOption );
 		dataModel.put( "timeZone", claymusHelper.getCurrentUserTimeZone() );
 		
 

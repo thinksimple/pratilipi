@@ -48,6 +48,8 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	Author newAuthor();
 
 	Author getAuthor( Long id );
+	
+	Author getAuthorByUserId( Long userId );
 
 	DataListCursorTuple<Author> getAuthorList( String cursor, int resultCount );
 

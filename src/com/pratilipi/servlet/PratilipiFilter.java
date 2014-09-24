@@ -12,6 +12,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.commons.server.ClaymusHelper;
+import com.pratilipi.data.access.DataAccessor;
+import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Author;
+
 public class PratilipiFilter implements Filter {
 
 	@Override
@@ -27,23 +32,39 @@ public class PratilipiFilter implements Filter {
 
 		HttpServletRequest request = ( HttpServletRequest ) req;
 		HttpServletResponse response = ( HttpServletResponse ) resp;
-
+		
+		ClaymusHelper claymusHelper = 
+				new ClaymusHelper( request ); 
+		
+		Long currentUser = claymusHelper.getCurrentUserId();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Author author = dataAccessor.getAuthorByUserId( currentUser );
+		
 		String host = request.getServerName();
-		if( host.equals( "www.pratilipi.com" )
-				|| host.equals( "devo.pratilipi.com" )
-				|| host.endsWith( ".appspot.com" )
-				|| host.equals( "localhost" )
-				|| host.equals( "127.0.0.1" ) ) {
+		String action = request.getParameter( "action" );
+		if( !host.equals( "www.pratilipi.com" )
+				&& !host.equals( "devo.pratilipi.com" )
+				&& !host.endsWith( ".appspot.com" )
+				&& !host.equals( "localhost" )
+				&& !host.equals( "127.0.0.1" ) ) {
 			
-			chain.doFilter( request, response );
-			
-		} else {
 			response.sendRedirect(
 					"http://www.pratilipi.com" + request.getRequestURI() );
 
 			PrintWriter out = response.getWriter();
 			out.println( "Redirecting to www.pratilipi.com ..." );
 			out.close();
+			
+		} else if ( action != null && action.equals( "login" ) ) {
+			if( author != null ) {
+				response.sendRedirect( "author/" + author.getId() );
+			}
+			else
+				chain.doFilter( request, response ); 
+		}
+		else {
+			chain.doFilter( request, response );
 		}
 		
 	}

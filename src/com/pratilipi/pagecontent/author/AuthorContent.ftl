@@ -149,7 +149,7 @@ window.onload = function(){
 		<div class="container margin-top25 clearfix">
 			<div class="col-md-3">
 				<img style="width:75%" src="${ authorImage }"></img>
-				<#if showAddOption>
+				<#if showUpdateOption>
 					<!-- Add Author Image -->
 					<div id="PageContent-Author-Image-EditOptions"></div>
 				</#if>
@@ -165,7 +165,7 @@ window.onload = function(){
 									${ author.getSummary() }
 								</#if>
 							</div>
-							<#if showAddOption>
+							<#if showUpdateOption>
 								<div id="PageContent-Author-Summary-EditOptions"></div>
 							</#if>
 						</div>
@@ -273,7 +273,7 @@ window.onload = function(){
 		</div>
 	</div>
 </div>
-<#if showAddOption>
+<#if showUpdateOption>
 	<!-- Add Author Image Javascript -->
 	<script type="text/javascript" language="javascript" src="/pagecontent.author/pagecontent.author.nocache.js" defer></script>
 </#if>

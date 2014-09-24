@@ -386,7 +386,7 @@ public class UserForms implements EntryPoint {
 				@Override
 				public void onSuccess( LoginUserResponse response ) {
 					hideLoginModal();
-					Window.Location.reload();
+					Window.Location.assign( Window.Location.getHref() + "?action=login" );
 				}
 				
 				@Override
