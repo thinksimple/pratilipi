@@ -3,9 +3,10 @@
 	
 		<div class="row">
 		
-			<div class="col-xs-6">
-				<a href="/" style="color:#E74C3C !important; font-size:24px;"><b><i>Pratilipi.com</i></b></a>
-			</div>
+			<h1 class="col-xs-6" style="margin:0px;">
+				<a href="/" style="color:#E74C3C !important; text-decoration:none;">Pratilipi</a>
+				<small style="position:absolute; top:0px;"><small>beta</small></small>
+			</h1>
 
 			<div class="col-xs-6" id="Pratilipi-User-Access" style="display: none;">
 				<#if isUserLoggedIn>

@@ -2,21 +2,21 @@
 
 <div class="container">
 
-	<h2 class="hr-below">Books</h2>
+	<h1 class="hr-below">Books</h1>
 	<div class="row">
 		<#list bookDataList as bookData >
 			<@pratilipiView.thumbnail pratilipiData=bookData />
 		</#list>
 	</div>
 
-	<h2 class="hr-below">Poems</h2>
+	<h1 class="hr-below">Poems</h1>
 	<div class="row">
 		<#list poemDataList as poemData >
 			<@pratilipiView.thumbnail pratilipiData=poemData />
 		</#list>
 	</div>
 
-	<h2 class="hr-below">Stories</h2>
+	<h1 class="hr-below">Stories</h1>
 	<div class="row">
 		<#list storyDataList as storyData >
 			<@pratilipiView.thumbnail pratilipiData=storyData />
