@@ -11,7 +11,7 @@ import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiView;
 import com.pratilipi.commons.client.PratilipiViewDetailImpl;
 import com.pratilipi.commons.client.PratilipiViewThumbnailImpl;
-import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
@@ -23,33 +23,23 @@ public class PratilipiList extends InfiniteScrollPanel {
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
 
-	private final PratilipiType pratilipiType;
-	private final Boolean publicDomain;
-	private final Long languageId;
+	private final Panel panelToHide;
+	private final PratilipiFilter pratilipiFilter;
 	private final PratilipiDataInputView pratilipiDataInputView;
-	private boolean cleared = false;
+	
+	private boolean hidden = false;
 	private String cursor = null;
 	private int resultCount = 20;
 
 	private Image loadingImage = new Image( "/theme.pratilipi/images/loading.gif" );
 	
 	
-	public PratilipiList( Panel panel, PratilipiType pratilipiType ) {
-		this( panel, pratilipiType, null, null, null );
-	}
-	
-	public PratilipiList( Panel panel, PratilipiType pratilipiType, Boolean publicDomain ) {
-		this( panel, pratilipiType, publicDomain, null, null );
-	}
-	
-	public PratilipiList( Panel panel, PratilipiType pratilipiType, Boolean publicDomain,
-			Long languageId, PratilipiDataInputView pratilipiDataInputView ) {
+	public PratilipiList(
+			Panel panelToHide, PratilipiFilter pratilipiFilter,
+			PratilipiDataInputView pratilipiDataInputView ) {
 		
-		super( panel );
-		
-		this.pratilipiType = pratilipiType;
-		this.publicDomain = publicDomain;
-		this.languageId = languageId;
+		this.panelToHide = panelToHide;
+		this.pratilipiFilter = pratilipiFilter;
 		this.pratilipiDataInputView = pratilipiDataInputView;
 		
 		setStyleName( "row" );
@@ -58,12 +48,11 @@ public class PratilipiList extends InfiniteScrollPanel {
 	
 	@Override
 	protected void loadItems() {
-		// TODO: show loading image/text while while waiting for RPC response
 		
 		add( loadingImage );
 		
 		pratilipiService.getPratilipiList(
-				new GetPratilipiListRequest( pratilipiType, publicDomain, languageId, cursor, resultCount ),
+				new GetPratilipiListRequest( pratilipiFilter, cursor, resultCount ),
 				new AsyncCallback<GetPratilipiListResponse>() {
 			
 			@Override
@@ -71,9 +60,9 @@ public class PratilipiList extends InfiniteScrollPanel {
 
 				loadingImage.removeFromParent();
 				
-				if( ! cleared ) {
-					clear();
-					cleared = true;
+				if( ! hidden ) {
+					panelToHide.setVisible( false );
+					hidden = true;
 				}
 					
 				for( final PratilipiData pratilipiData : response.getPratilipiDataList() ) {

@@ -196,19 +196,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple;
-		if( request.getLanguageId() != null )
-			pratilipiListCursorTuple = dataAccessor.getPratilipiListByLanguage(
-				request.getPratilipiType(),
-				request.getLanguageId(),
-				request.getCursor(),
-				request.getResultCount() );
-		else
-			pratilipiListCursorTuple = dataAccessor.getPratilipiList(
-					request.getPratilipiType(),
-					request.getPublicDomain(),
-					request.getCursor(),
-					request.getResultCount() );
+		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple
+				= dataAccessor.getPratilipiList(
+						request.getPratilipiFilter(),
+						request.getCursor(),
+						request.getResultCount() );
 
 		List<Pratilipi> pratilipiList = pratilipiListCursorTuple.getDataList();
 		
@@ -233,12 +225,15 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			pratilipiData.setListingDate( pratilipi.getListingDate() );
 			pratilipiData.setSummary( pratilipi.getSummary() );
 			pratilipiData.setWordCount( pratilipi.getWordCount() );
-			pratilipiData.setType( request.getPratilipiType() );
+			pratilipiData.setType( pratilipi.getType() );
 			pratilipiDataList.add( pratilipiData );
 			
-			pratilipiData.setPageUrl( PratilipiHelper.getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
-			pratilipiData.setCoverImageUrl( PratilipiHelper.getCoverImage300Url( pratilipi.getType(), pratilipi.getId(), false ) );
-			pratilipiData.setAuthorPageUrl( PratilipiHelper.getAuthorPageUrl( pratilipi.getAuthorId() ) );
+			pratilipiData.setPageUrl(
+					PratilipiHelper.getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
+			pratilipiData.setCoverImageUrl(
+					PratilipiHelper.getCoverImage300Url( pratilipi.getType(), pratilipi.getId(), false ) );
+			pratilipiData.setAuthorPageUrl(
+					PratilipiHelper.getAuthorPageUrl( pratilipi.getAuthorId() ) );
 		}
 
 		dataAccessor.destroy();

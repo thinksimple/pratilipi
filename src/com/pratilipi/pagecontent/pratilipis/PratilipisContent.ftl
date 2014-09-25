@@ -1,20 +1,21 @@
 <#import "../../../../com/pratilipi/commons/client/PratilipiView.ftl" as pratilipiView>
 
-<!-- PageContent :: ${ pratilipiType } List :: Start -->
+<!-- PageContent :: Pratilipi List :: Start -->
 
 <#if showAddOption>
-	<div id="PageContent-${ pratilipiType }-DataInput"></div>
+	<div id="PageContent-Pratilipi-DataInput"></div>
 </#if>
 
 <div class="container">
-	<h2 class="hr-below">${ pratilipisType }</h2>
-	<div class="row" id="PageContent-${ pratilipiType }-List" pratilipi-filters="${ pratilipiFilters }" >
+	<h1 class="hr-below">${ pratilipisType }</h1>
+	<div class="row" id="PageContent-Pratilipi-List-Preloaded" pratilipi-filters="${ pratilipiFilters }" >
 		<#list pratilipiDataList as pratilipiData >
 			<@pratilipiView.thumbnail pratilipiData=pratilipiData />
 		</#list>
 	</div>
+	<div id="PageContent-Pratilipi-List" ></div>
 </div>
 
 <script type="text/javascript" language="javascript" src="/pagecontent.pratilipis/pagecontent.pratilipis.nocache.js" async></script>
 
-<!-- PageContent :: ${ pratilipiType } List :: End -->
+<!-- PageContent :: Pratilipi List :: End -->

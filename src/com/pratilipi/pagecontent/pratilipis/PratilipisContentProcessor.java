@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -31,7 +32,7 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 	public String getHtml( PratilipisContent pratilipisContent,
 			HttpServletRequest request, HttpServletResponse response ) {
 		
-		PratilipiHelper pratilipiHelper = new PratilipiHelper( request );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		
@@ -43,33 +44,10 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 
 		
 		PratilipiType pratilipiType = pratilipisContent.getPratilipiType();
-		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple;
+		PratilipiFilter pratilipiFilter = pratilipisContent.toFilter();
 		
-		// Creating data model required for template processing
-		Map<String, Object> dataModel = new HashMap<>();
-		dataModel.put( "pratilipiType", pratilipiType.getName() );
-		dataModel.put( "pratilipisType", pratilipiType.getNamePlural() );
-		
-		if( pratilipisContent.getPublicDomain() != null && pratilipisContent.getPublicDomain() ) {
-			pratilipiListCursorTuple = dataAccessor.getPratilipiList( pratilipiType, true, null, 20 );
-			dataModel.put( "pratilipisType", "Classic " + dataModel.get( "pratilipisType" ) );
-			dataModel.put( "pratilipiFilters", "CLASSICS" );
-			
-		} else if( pratilipisContent.getLanguageId() != null ){
-			Long languageId = pratilipisContent.getLanguageId();
-			Language language = dataAccessor.getLanguage( languageId );
-			
-			pratilipiListCursorTuple = dataAccessor.getPratilipiListByLanguage( pratilipiType, languageId, null, 20 );
-			dataModel.put( "pratilipisType",  language.getNameEn() + " " + dataModel.get( "pratilipisType" ) );
-			dataModel.put( "pratilipiFilters", "LANGUAGE:" + languageId );
-
-		} else {
-			pratilipiListCursorTuple = dataAccessor.getPratilipiList( pratilipiType, null, null, 20 );
-			dataModel.put( "pratilipiFilters", "" );
-
-		}
-		
-		
+		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple =
+				dataAccessor.getPratilipiList( pratilipiFilter, null, 20 );
 		List<PratilipiData> pratilipiDataList = new ArrayList<>( 20 );
 		for( Pratilipi pratilipi : pratilipiListCursorTuple.getDataList() ) {
 			Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
@@ -79,6 +57,19 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 		}
 
 		
+		// Creating data model required for template processing
+		Map<String, Object> dataModel = new HashMap<>();
+		dataModel.put( "pratilipiType", pratilipiType.getName() );
+		dataModel.put( "pratilipisType", pratilipiType.getNamePlural() );
+		if( pratilipisContent.getPublicDomain() != null && pratilipisContent.getPublicDomain() ) {
+			dataModel.put( "pratilipisType", "Classic " + dataModel.get( "pratilipisType" ) );
+			
+		} else if( pratilipisContent.getLanguageId() != null ) {
+			Language language = dataAccessor.getLanguage( pratilipisContent.getLanguageId() );
+			dataModel.put( "pratilipisType",  language.getNameEn() + " " + dataModel.get( "pratilipisType" ) );
+
+		}
+		dataModel.put( "pratilipiFilters", pratilipiFilter.toString() );
 		dataModel.put( "pratilipiDataList", pratilipiDataList );
 		dataModel.put( "showAddOption", showAddOption );
 		

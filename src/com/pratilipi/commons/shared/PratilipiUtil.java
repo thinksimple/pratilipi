@@ -3,6 +3,7 @@ package com.pratilipi.commons.shared;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.LanguageData;
 
+@Deprecated
 public class PratilipiUtil {
 
 	public static String createLanguageName( LanguageData languageData ) {

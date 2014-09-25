@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public abstract class InfiniteScrollPanel extends Composite implements Window.ScrollHandler {
 
-	private final Panel panel;
+	private final Panel panel = new FlowPanel();
 
 	private int pagesToPreLoad = 5;
 	private boolean loadingItems = false;
@@ -17,11 +17,6 @@ public abstract class InfiniteScrollPanel extends Composite implements Window.Sc
 
 	
 	public InfiniteScrollPanel() {
-		this( new FlowPanel() );
-	}
-
-	public InfiniteScrollPanel( Panel panel ) {
-		this.panel = panel;
 
 		initWidget( panel );
 		
@@ -39,7 +34,6 @@ public abstract class InfiniteScrollPanel extends Composite implements Window.Sc
 
 	public void clear() {
 		panel.clear();
-		panel.getElement().setInnerHTML( "" );
 	}
 
 	@Override

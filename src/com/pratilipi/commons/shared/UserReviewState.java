@@ -1,6 +1,8 @@
 package com.pratilipi.commons.shared;
 
-public enum UserReviewState {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public enum UserReviewState implements IsSerializable {
 	
 	NOT_SUBMITTED,
 	PENDING_APPROVAL,

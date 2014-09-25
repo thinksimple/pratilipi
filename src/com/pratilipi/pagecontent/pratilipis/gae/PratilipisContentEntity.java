@@ -4,6 +4,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.claymus.data.access.gae.PageContentEntity;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContent;
 
@@ -50,6 +51,15 @@ public class PratilipisContentEntity extends PageContentEntity
 	@Override
 	public void setLanguageId( Long languageId ) {
 		this.languageId = languageId;
+	}
+
+	@Override
+	public PratilipiFilter toFilter() {
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setType( pratilipiType );
+		pratilipiFilter.setPublicDomain( publicDomain );
+		pratilipiFilter.setLanguageId( languageId );
+		return pratilipiFilter;
 	}
 	
 }

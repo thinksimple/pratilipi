@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewAccordionImpl;
 import com.pratilipi.commons.client.PratilipiView;
-import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiUtil;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
@@ -31,29 +31,31 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 			GWT.create( PratilipiService.class );
 	
 
+	private PratilipiFilter pratilipiFilter;
 	private PratilipiDataInputView pratilipiDataInputView;
-	
-	private PratilipiType pratilipiType;
-	
+
 	
 	public void onModuleLoad() {
-		for( PratilipiType pratilipiType : PratilipiType.values() )
-			if( RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" ) != null )
-				this.pratilipiType = pratilipiType;
+		RootPanel rootPanel =
+				RootPanel.get( "PageContent-Pratilipi-List-Preloaded" );
+		String filterStr =
+				rootPanel.getElement().getAttribute( "pratilipi-filters" );
+		pratilipiFilter = filterStr == null ?
+				null : PratilipiFilter.fromString( filterStr );
 		
-		if( pratilipiType == null )
-			return;
 		
-		
-		RootPanel rootPanel = RootPanel.get( "PageContent-" + pratilipiType.getName() + "-DataInput" );
+		rootPanel = RootPanel.get( "PageContent-Pratilipi-DataInput" );
 		if( rootPanel != null ) {
-			pratilipiDataInputView = new PratilipiDataInputViewAccordionImpl( pratilipiType );
+			pratilipiDataInputView = new PratilipiDataInputViewAccordionImpl(
+					pratilipiFilter.getType() );
 			pratilipiDataInputView.addAddButtonClickHandler( this );
 
 			rootPanel.add( pratilipiDataInputView );
 			
 			// Load list of authors.
-			pratilipiService.getAuthorList( new GetAuthorListRequest( null , 250 ), new AsyncCallback<GetAuthorListResponse>() {
+			pratilipiService.getAuthorList(
+					new GetAuthorListRequest( null , 250 ),
+					new AsyncCallback<GetAuthorListResponse>() {
 
 				@Override
 				public void onFailure( Throwable caught ) {
@@ -71,7 +73,9 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 			});
 			
 			// Load list of languages
-		    pratilipiService.getLanguageList( new GetLanguageListRequest(), new AsyncCallback<GetLanguageListResponse>() {
+		    pratilipiService.getLanguageList(
+		    		new GetLanguageListRequest(),
+		    		new AsyncCallback<GetLanguageListResponse>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -92,19 +96,12 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 		}
 
 		
-		rootPanel = RootPanel.get( "PageContent-" + pratilipiType.getName() + "-List" );
-		if( rootPanel != null ) {
-			String filters = rootPanel.getElement().getAttribute( "pratilipi-filters" );
-			if( filters != null && filters.equals( "CLASSICS" ) )
-				new PratilipiList( rootPanel, pratilipiType, true, null, pratilipiDataInputView );
-			else if( filters != null && filters.startsWith( "LANGUAGE" ) )
-				new PratilipiList(
-						rootPanel, pratilipiType, null,
-						Long.parseLong( filters.substring( filters.indexOf( ':' ) + 1 ) ),
-						pratilipiDataInputView );
-			else
-				new PratilipiList( rootPanel, pratilipiType, null, null, pratilipiDataInputView );
-		}
+		rootPanel = RootPanel.get( "PageContent-Pratilipi-List" );
+		if( rootPanel != null )
+			rootPanel.add(
+					new PratilipiList(
+							RootPanel.get( "PageContent-Pratilipi-List-Preloaded" ),
+							pratilipiFilter, pratilipiDataInputView ) );
 	
 	}
 	
