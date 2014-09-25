@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.access.Memcache;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Genre;
@@ -60,9 +61,9 @@ public class DataAccessorWithMemcache
 
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
-			String cursorStr, int resultCount ) {
+			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount ) {
 		// TODO: enable caching
-		return dataAccessor.getPratilipiList( cursorStr, resultCount );
+		return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
 	}
 	
 	@Override

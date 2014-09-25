@@ -11,6 +11,7 @@ import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.access.GaeQueryBuilder;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.gae.AuthorEntity;
 import com.pratilipi.data.access.gae.GenreEntity;
@@ -51,13 +52,23 @@ public class DataAccessorGaeImpl
 
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
-			String cursorStr, int resultCount ) {
+			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount ) {
 		
-		Query query = new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) )
+		GaeQueryBuilder gaeQueryBuilder =
+				new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) )
 						.addOrdering( "title", true )
-						.setRange( 0, resultCount )
-						.build();
+						.setRange( 0, resultCount );
 
+		if( pratilipiFilter.getType() != null )
+			gaeQueryBuilder.addFilter( "type", pratilipiFilter.getType() );
+		if( pratilipiFilter.getPublicDomain() != null )
+			gaeQueryBuilder.addFilter( "publicDomain", pratilipiFilter.getPublicDomain() );
+		if( pratilipiFilter.getLanguageId() != null )
+			gaeQueryBuilder.addFilter( "languageId", pratilipiFilter.getLanguageId() );
+		if( pratilipiFilter.getAuthorId() != null )
+			gaeQueryBuilder.addFilter( "authorId", pratilipiFilter.getAuthorId() );
+		
+		Query query = gaeQueryBuilder.build();
 		if( cursorStr != null ) {
 			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
 			Map<String, Object> extensionMap = new HashMap<String, Object>();
@@ -66,7 +77,8 @@ public class DataAccessorGaeImpl
 		}
 		
 		@SuppressWarnings("unchecked")
-		List<Pratilipi> pratilipiEntityList = (List<Pratilipi>) query.execute();
+		List<Pratilipi> pratilipiEntityList =
+				(List<Pratilipi>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
 		
 		return new DataListCursorTuple<Pratilipi>(
