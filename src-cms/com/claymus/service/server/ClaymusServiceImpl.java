@@ -386,6 +386,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			return new SendQueryResponse( "Query submitted successfully !" );
 			
 		} catch ( MessagingException | IOException | TemplateException e ) {
+			logger.log( Level.SEVERE, "Failed to e-mail contact query.", e );
 			throw new UnexpectedServerException();
 		}
 		

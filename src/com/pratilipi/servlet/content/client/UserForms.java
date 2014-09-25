@@ -8,6 +8,8 @@ import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
 import com.claymus.service.shared.ResetUserPasswordRequest;
 import com.claymus.service.shared.ResetUserPasswordResponse;
+import com.claymus.service.shared.SendQueryRequest;
+import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
 import com.claymus.service.shared.data.UserData;
@@ -302,12 +304,56 @@ public class UserForms implements EntryPoint {
 			
 		});
 		
-		
+		//Contact Page mail API
 		RootPanel contactForm = RootPanel.get("PageContent-PratilipiContact-Form");
-		ContactMailForm contactMailForm = new ContactMailForm();
-		if( contactForm != null )
+		final ContactMailForm contactMailForm = new ContactMailForm();
+		if( contactForm != null ) {
 			contactForm.add( contactMailForm );
+			ClickHandler sendMailButtonClickHandler = new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					//TODO : hide server message
+					if( contactMailForm.validateName()
+							&& contactMailForm.validateEmail() 
+							&& contactMailForm.validateBody() ) {
+						contactMailForm.setEnable( false );
+						SendQueryRequest sendQueryRequest = new SendQueryRequest();
+						sendQueryRequest.setEmail( contactMailForm.getEmail() );
+						sendQueryRequest.setName( contactMailForm.getName() );
+						sendQueryRequest.setQuery( contactMailForm.getMailBody() );
+						claymusService.sendQuery( sendQueryRequest, new AsyncCallback<SendQueryResponse>() {
 
+							@Override
+							public void onFailure(Throwable caught) {
+								contactMailForm.setEnable( true );
+								contactMailForm.setServerMsg( caught.getMessage() );
+								contactMailForm.setServerMsgClass( "alert alert-danger" );
+								contactMailForm.setVisibleServerMsg( true );
+							}
+
+							@Override
+							public void onSuccess(SendQueryResponse result) {
+								contactMailForm.setServerMsg( result.getMessage() );
+								contactMailForm.setServerMsgClass( "alert alert-success" );
+								contactMailForm.setVisibleServerMsg( true );
+								contactMailForm.resetForm();
+								contactMailForm.setEnable( true );
+								Timer time = new Timer() {
+
+									@Override
+									public void run() {
+										contactMailForm.setVisibleServerMsg( false );
+									}};
+								time.schedule( 5000 );
+							}});
+					}
+				}};
+			
+			contactMailForm.addSendButtonClickHandler( sendMailButtonClickHandler );	
+		}
+		
+		//To change visible type of login and signup links after GWT components are loaded.
 		RootPanel userAccessDiv = RootPanel.get( "Pratilipi-User-Access" );
 		userAccessDiv.getElement().getStyle().setDisplay( Display.INLINE );
 	}

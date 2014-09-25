@@ -6,7 +6,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -19,6 +21,7 @@ public class ContactMailForm extends Composite {
 	
 	private ValidateForm validateForm = new ValidateForm();
 	
+	private Label serverMessage = new Label();
 	private InlineLabel emailInputError = new InlineLabel();
 	private InlineLabel nameInputError = new InlineLabel();
 	private InlineLabel mailBodyError = new InlineLabel();
@@ -59,7 +62,11 @@ public class ContactMailForm extends Composite {
 		sendMail.addStyleName( "btn btn-md btn-success" );
 		sendMail.getElement().getStyle().setProperty("marginTop", "15px");
 		
-		//Error messages
+		serverMessage.getElement().getStyle().setProperty("marginTop", "15px");
+		serverMessage.getElement().setAttribute( "role", "alert" );
+		serverMessage.setVisible( false );
+		
+		//Error message Style
 		emailInputError.addStyleName( "errorMessage" );
 		nameInputError.addStyleName( "errorMessage" );
 		mailBodyError.addStyleName( "errorMessage" );
@@ -71,6 +78,7 @@ public class ContactMailForm extends Composite {
 		contactMailForm.add( mailBody );
 		contactMailForm.add( mailBodyError );
 		contactMailForm.add( sendMail );
+		contactMailForm.add( serverMessage );
 		
 		initWidget( contactMailForm );
 	}
@@ -78,7 +86,24 @@ public class ContactMailForm extends Composite {
 	public void addSendButtonClickHandler( ClickHandler clickHandler ) {
 		sendMail.addClickHandler( clickHandler );
 	}
+
+	public void setEnable( boolean enabled ) {
+		emailInput.setEnabled( enabled );
+		nameInput.setEnabled( enabled );
+		mailBody.setEnabled( enabled );
+	}
+
+	public String getEmail() {
+		return emailInput.getText();
+	}
 	
+	public String getName() {
+		return nameInput.getText();
+	}
+	
+	public String getMailBody() {
+		return mailBody.getText();
+	}
 	
 	public boolean validateEmail(){
 		if( emailInput.getText().isEmpty() ){
@@ -103,13 +128,13 @@ public class ContactMailForm extends Composite {
 	public boolean validateName(){
 		if( nameInput.getText().isEmpty() ){
 			nameInput.addStyleName( "textBoxError" );
-			setSubjectInputError("Enter subject of mail");
-			showSubjectInputError();
+			setNameInputError("Enter Your Name");
+			showNameInputError();
 			return false;
 		}
 		else{
 			nameInput.removeStyleName( "textBoxError" );
-			hideSubjectInputError();
+			hideNameInputError();
 			return true;
 		}
 	}
@@ -117,7 +142,7 @@ public class ContactMailForm extends Composite {
 	public boolean validateBody(){
 		if( mailBody.getText().isEmpty() ){
 			mailBody.addStyleName( "textBoxError" );
-			setBodyError("Enter Your Name");
+			setBodyError("Enter Your Query");
 			showBodyError();
 			return false;
 		}
@@ -137,19 +162,19 @@ public class ContactMailForm extends Composite {
 	}
 	
 	public void hideEmailInputError(){
-		emailInputError.setVisible( true );
+		emailInputError.setVisible( false );
 	}
 	
-	public void setSubjectInputError(String error){
+	public void setNameInputError(String error){
 		nameInputError.setText( error );
 	}
 	
-	public void showSubjectInputError(){
+	public void showNameInputError(){
 		nameInputError.setVisible( true );
 	}
 	
-	public void hideSubjectInputError(){
-		nameInputError.setVisible( true );
+	public void hideNameInputError(){
+		nameInputError.setVisible( false );
 	}
 	
 	public void setBodyError(String error){
@@ -161,6 +186,27 @@ public class ContactMailForm extends Composite {
 	}
 	
 	public void hideBodyError(){
-		mailBodyError.setVisible( true );
+		mailBodyError.setVisible( false );
+	}
+	
+	public void setServerMsg( String message ) {
+		this.serverMessage.getElement().removeAllChildren();
+		HTML msg = new HTML();
+		msg.setHTML( message );
+		this.serverMessage.getElement().appendChild( msg.getElement() );
+	}
+	
+	public void setServerMsgClass ( String messageClass ) {
+		this.serverMessage.addStyleName( messageClass );
+	}
+	
+	public void setVisibleServerMsg( boolean isVisible ) {
+		this.serverMessage.setVisible( isVisible );
+	}
+	
+	public void resetForm() {
+		nameInput.setText( "" );
+		emailInput.setText( "" );
+		mailBody.setText( "" );
 	}
 }
