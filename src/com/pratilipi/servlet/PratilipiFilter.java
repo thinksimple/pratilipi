@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.commons.server.ClaymusHelper;
+import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
@@ -33,37 +33,46 @@ public class PratilipiFilter implements Filter {
 		HttpServletRequest request = ( HttpServletRequest ) req;
 		HttpServletResponse response = ( HttpServletResponse ) resp;
 		
-		ClaymusHelper claymusHelper = 
-				new ClaymusHelper( request ); 
-		
-		Long currentUser = claymusHelper.getCurrentUserId();
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		Author author = dataAccessor.getAuthorByUserId( currentUser );
-		
 		String host = request.getServerName();
+		String requestUri = request.getRequestURI();
 		String action = request.getParameter( "action" );
+
 		if( !host.equals( "www.pratilipi.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( ".appspot.com" )
 				&& !host.equals( "localhost" )
-				&& !host.equals( "127.0.0.1" ) ) {
+				&& !host.equals( "127.0.0.1" ) ) { // Redirecting to www.pratilipi.com
 			
 			response.sendRedirect(
-					"http://www.pratilipi.com" + request.getRequestURI() );
+					"http://www.pratilipi.com" + requestUri );
 
 			PrintWriter out = response.getWriter();
 			out.println( "Redirecting to www.pratilipi.com ..." );
 			out.close();
 			
-		} else if ( action != null && action.equals( "login" ) ) {
-			if( author != null ) {
-				response.sendRedirect( "author/" + author.getId() );
-			}
+		} else if( requestUri.length() > 1 && requestUri.endsWith( "/" ) ) { // Removing trailing "/"
+			requestUri = requestUri.substring( 0, requestUri.length() -1 );
+			response.sendRedirect( requestUri );
+			
+			PrintWriter out = response.getWriter();
+			out.println( "Redirecting to www.pratilipi.com" + requestUri + " ..." );
+			out.close();
+
+			
+		} else if ( action != null && action.equals( "login" ) ) { // Redirecting to profile page on login
+			
+			PratilipiHelper pratilipiHelper = PratilipiHelper.get( request ); 
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+			Long currentUserId = pratilipiHelper.getCurrentUserId();
+			Author author = dataAccessor.getAuthorByUserId( currentUserId );
+			
+			if( author != null )
+				response.sendRedirect( "/author/" + author.getId() );
 			else
 				chain.doFilter( request, response ); 
-		}
-		else {
+		
+		} else {
 			chain.doFilter( request, response );
 		}
 		
