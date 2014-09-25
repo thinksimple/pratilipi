@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 
-import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.User;
@@ -387,17 +386,17 @@ public class PratilipiMain extends ClaymusMain {
 		Template template = FREEMARKER_CONFIGURATION
 				.getTemplate( "com/pratilipi/servlet/content/HeaderWidget.ftl" );
 		
-		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Long userId = claymusHelper.getCurrentUserId();
+		Long userId = pratilipiHelper.getCurrentUserId();
 		User user = null;
 		
 		if( userId != 0 )
-			user = dataAccessor.getUser( claymusHelper.getCurrentUserId() );
+			user = dataAccessor.getUser( pratilipiHelper.getCurrentUserId() );
 		
 		Map<String, Object> dataModal = new HashMap<>();
 		dataModal.put( "user", user);
-		dataModal.put( "isUserLoggedIn", claymusHelper.isUserLoggedIn() );
+		dataModal.put( "isUserLoggedIn", pratilipiHelper.isUserLoggedIn() );
 		
 		
 		try {

@@ -1,13 +1,13 @@
 package com.pratilipi.pagecontent.authors;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
@@ -23,14 +23,14 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 	
 	
 	@Override
-	public String getHtml( AuthorsContent authorsContent,
-			HttpServletRequest request, HttpServletResponse response ) {
+	protected String generateHtml( AuthorsContent authorsContent, HttpServletRequest request )
+			throws IOException, UnexpectedServerException {
 		
-		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		boolean showMetaData =
-				claymusHelper.hasUserAccess( ACCESS_ID_AUTHOR_READ_META_DATA, false );
+				pratilipiHelper.hasUserAccess( ACCESS_ID_AUTHOR_READ_META_DATA, false );
 		boolean showAddOption =
-				claymusHelper.hasUserAccess( ACCESS_ID_AUTHOR_ADD, false );
+				pratilipiHelper.hasUserAccess( ACCESS_ID_AUTHOR_ADD, false );
 
 		
 		// Fetching Author list
@@ -55,7 +55,7 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 		dataModel.put( "authorPageUrl", PratilipiHelper.URL_AUTHOR_PAGE );
 		dataModel.put( "showMetaData", showMetaData );
 		dataModel.put( "showAddOption", showAddOption );
-		dataModel.put( "timeZone", claymusHelper.getCurrentUserTimeZone() );
+		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		
 
 		// Processing template

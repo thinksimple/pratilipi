@@ -9,9 +9,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.module.pagecontent.PageContentProcessor;
@@ -33,8 +32,8 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 	
 	@Override
-	public String getHtml( ReaderContent pratilipiContent,
-			HttpServletRequest request, HttpServletResponse response ) throws IOException {
+	protected String generateHtml( ReaderContent pratilipiContent, HttpServletRequest request )
+			throws IOException, UnexpectedServerException {
 
 		PratilipiType pratilipiType = pratilipiContent.getPratilipiType();
 
@@ -47,7 +46,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 		Long pratilipiId = Long.parseLong( pratilipiIdStr );
 		int pageNo = Integer.parseInt( pageNoStr );
-		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 
 		
 		// Fetching Pratilipi and Author
@@ -142,8 +141,8 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getAuthorId() );
 
 		dataModel.put( "showEditOptions",
-				( claymusHelper.getCurrentUserId() == pratilipi.getAuthorId() && claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false ) )
-				|| claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_UPDATE, false ) );
+				( pratilipiHelper.getCurrentUserId() == pratilipi.getAuthorId() && pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false ) )
+				|| pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_UPDATE, false ) );
 
 		
 		return super.processTemplate(

@@ -1,13 +1,13 @@
 package com.pratilipi.pagecontent.languages;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
@@ -23,14 +23,14 @@ public class LanguagesContentProcessor
 	
 	
 	@Override
-	public String getHtml( LanguagesContent languagesContent,
-			HttpServletRequest request, HttpServletResponse response ) {
+	protected String generateHtml( LanguagesContent languagesContent, HttpServletRequest request )
+			throws IOException, UnexpectedServerException {
 		
-		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		boolean showMetaData =
-				claymusHelper.hasUserAccess( ACCESS_ID_LANGUAGE_READ_META_DATA, false );
+				pratilipiHelper.hasUserAccess( ACCESS_ID_LANGUAGE_READ_META_DATA, false );
 		boolean showAddOption =
-				claymusHelper.hasUserAccess( ACCESS_ID_LANGUAGE_ADD, false );
+				pratilipiHelper.hasUserAccess( ACCESS_ID_LANGUAGE_ADD, false );
 
 		
 		// Fetching Language list
@@ -45,7 +45,7 @@ public class LanguagesContentProcessor
 		dataModel.put( "languagePageUrl", PratilipiHelper.URL_LANGUAGE_PAGE );
 		dataModel.put( "showMetaData", showMetaData );
 		dataModel.put( "showAddOption", showAddOption );
-		dataModel.put( "timeZone", claymusHelper.getCurrentUserTimeZone() );
+		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		
 
 		// Processing template

@@ -1,13 +1,14 @@
 package com.pratilipi.pagecontent.pratilipis;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
@@ -29,8 +30,8 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 	
 	
 	@Override
-	public String getHtml( PratilipisContent pratilipisContent,
-			HttpServletRequest request, HttpServletResponse response ) {
+	protected String generateHtml( PratilipisContent pratilipisContent, HttpServletRequest request )
+			throws IOException, UnexpectedServerException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

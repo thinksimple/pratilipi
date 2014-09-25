@@ -1,13 +1,13 @@
 package com.pratilipi.pagecontent.pratilipi;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.data.transfer.User;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
@@ -31,12 +31,12 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 
 	
 	@Override
-	public String getHtml( PratilipiContent pratilipiContent,
-			HttpServletRequest request, HttpServletResponse response ) {
+	protected String generateHtml( PratilipiContent pratilipiContent, HttpServletRequest request )
+			throws IOException, UnexpectedServerException {
 
 		Long pratilipiId = pratilipiContent.getPratilipiId();
 		PratilipiType pratilipiType = pratilipiContent.getPratilipiType();
-		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 
 		
 		// Fetching Pratilipi, Author and Reviews
@@ -44,9 +44,9 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		UserPratilipi pratilipiBook = null;
-		if( claymusHelper.isUserLoggedIn() )
+		if( pratilipiHelper.isUserLoggedIn() )
 			pratilipiBook = dataAccessor.getUserPratilipi(
-				claymusHelper.getCurrentUserId(), pratilipiId );
+				pratilipiHelper.getCurrentUserId(), pratilipiId );
 		List<UserPratilipi> reviewList =
 				dataAccessor.getUserPratilipiList( pratilipiId );
 		
@@ -69,7 +69,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "reviewList", reviewList );
 		dataModel.put( "userIdNameMap", userIdNameMap );
 		
-		User currentUser = claymusHelper.getCurrentUser();
+		User currentUser = pratilipiHelper.getCurrentUser();
 		String userName = currentUser.getFirstName();
 		if( currentUser.getLastName() != null )
 			userName += " " + currentUser.getLastName();
@@ -86,13 +86,13 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 				pratilipiBook != null && pratilipiBook.getReviewState() != UserReviewState.NOT_SUBMITTED );
 
 		dataModel.put( "showReviewOption",
-				claymusHelper.getCurrentUserId() != pratilipi.getAuthorId()
+				pratilipiHelper.getCurrentUserId() != pratilipi.getAuthorId()
 				&& ( pratilipiBook == null || pratilipiBook.getReviewState() == UserReviewState.NOT_SUBMITTED )
-				&& claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_REVIEW_ADD, false ) );
+				&& pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_REVIEW_ADD, false ) );
 
 		dataModel.put( "showEditOptions",
-				( claymusHelper.getCurrentUserId() == pratilipi.getAuthorId() && claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false ) )
-				|| claymusHelper.hasUserAccess( ACCESS_ID_PRATILIPI_UPDATE, false ) );
+				( pratilipiHelper.getCurrentUserId() == pratilipi.getAuthorId() && pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false ) )
+				|| pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_UPDATE, false ) );
 		
 
 		return super.processTemplate(

@@ -11,7 +11,6 @@ import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.access.Memcache;
-import com.claymus.data.access.MemcacheClaymusImpl;
 import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
@@ -42,27 +41,25 @@ public class ClaymusHelper implements Serializable {
 	private List<UserRole> currentUserRoleList;
 
 	
-	private static final Memcache memcache = new MemcacheClaymusImpl();
-	
-	public static ClaymusHelper get( HttpServletRequest request ) {
-		ClaymusHelper claymusHelper = memcache.get( "ClaymusHelper-" + request.hashCode() );
-		if( claymusHelper == null ) {
-			claymusHelper = new ClaymusHelper( request );
-			memcache.put( "ClaymusHelper-" + request.hashCode(), claymusHelper );
-		}
-		return claymusHelper;
-	}
-	
 	@Deprecated
 	public ClaymusHelper() {
 		this.request = null;
 		this.session = null;
 	}
 	
-	@Deprecated
-	public ClaymusHelper( HttpServletRequest request ) {
+	protected ClaymusHelper( HttpServletRequest request ) {
 		this.request = request;
 		this.session = request.getSession();
+	}
+	
+	public static ClaymusHelper get( HttpServletRequest request ) {
+		Memcache memcache = DataAccessorFactory.getL1CacheAccessor();
+		ClaymusHelper claymusHelper = memcache.get( "ClaymusHelper-" + request.hashCode() );
+		if( claymusHelper == null ) {
+			claymusHelper = new ClaymusHelper( request );
+			memcache.put( "ClaymusHelper-" + request.hashCode(), claymusHelper );
+		}
+		return claymusHelper;
 	}
 	
 	

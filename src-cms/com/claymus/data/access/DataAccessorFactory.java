@@ -7,25 +7,28 @@ public class DataAccessorFactory {
 	private static final String GOOGLE_CLOUD_STORAGE_BUCKET =
 			ClaymusHelper.getSystemProperty( "blobservice.gcs.bucket" );
 
+	private static final Memcache cacheL1 = new MemcacheClaymusImpl();
+	private static final Memcache cacheL2 = new MemcacheGaeImpl();
 	private static BlobAccessor blobAccessor;
-	private static Memcache memcache;
+	
+
+	public static Memcache getL1CacheAccessor() {
+		return cacheL1;
+	}
+
+	public static Memcache getL2CacheAccessor() {
+		return cacheL2;
+	}
 	
 	public static DataAccessor getDataAccessor() {
-		if( memcache == null )
-			memcache = new MemcacheGaeImpl();
-		return new DataAccessorWithMemcache( new DataAccessorGaeImpl(), memcache );
+		return new DataAccessorWithMemcache( new DataAccessorGaeImpl(), cacheL2 );
 	}
 	
 	public static BlobAccessor getBlobAccessor() {
-		if( blobAccessor == null ) {
-			
-			if( memcache == null )
-				memcache = new MemcacheGaeImpl();
-			
+		if( blobAccessor == null )
 			blobAccessor = new BlobAccessorWithMemcache(
 					new BlobAccessorGcsImpl( GOOGLE_CLOUD_STORAGE_BUCKET ),
-					memcache );
-		}		
+					cacheL2 );
 		return blobAccessor;
 	}
 	

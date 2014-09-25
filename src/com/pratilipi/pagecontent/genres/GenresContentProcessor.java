@@ -1,13 +1,13 @@
 package com.pratilipi.pagecontent.genres;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
@@ -23,14 +23,14 @@ public class GenresContentProcessor
 	
 	
 	@Override
-	public String getHtml( GenresContent genreContent,
-			HttpServletRequest request, HttpServletResponse response ) {
+	protected String generateHtml( GenresContent genreContent, HttpServletRequest request )
+			throws IOException, UnexpectedServerException {
 		
-		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		boolean showMetaData =
-				claymusHelper.hasUserAccess( ACCESS_ID_GENRE_READ_META_DATA, false );
+				pratilipiHelper.hasUserAccess( ACCESS_ID_GENRE_READ_META_DATA, false );
 		boolean showAddOption =
-				claymusHelper.hasUserAccess( ACCESS_ID_GENRE_ADD, false );
+				pratilipiHelper.hasUserAccess( ACCESS_ID_GENRE_ADD, false );
 
 		
 		// Fetching Language list
@@ -45,7 +45,7 @@ public class GenresContentProcessor
 		dataModel.put( "genrePageUrl", PratilipiHelper.URL_GENRE_PAGE );
 		dataModel.put( "showMetaData", showMetaData );
 		dataModel.put( "showAddOption", showAddOption );
-		dataModel.put( "timeZone", claymusHelper.getCurrentUserTimeZone() );
+		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		
 
 		// Processing template

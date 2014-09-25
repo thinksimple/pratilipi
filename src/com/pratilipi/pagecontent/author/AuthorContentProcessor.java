@@ -1,13 +1,13 @@
 package com.pratilipi.pagecontent.author;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
@@ -23,14 +23,14 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 	public static final String ACCESS_ID_AUTHOR_UPDATE = "author_update";
 	
 	@Override
-	public String getHtml( AuthorContent authorContent,
-			HttpServletRequest request, HttpServletResponse response ) {
+	protected String generateHtml( AuthorContent authorContent, HttpServletRequest request )
+			throws IOException, UnexpectedServerException {
 		
 		Long authorId = authorContent.getAuthorId();
-		ClaymusHelper claymusHelper = new ClaymusHelper( request );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		
 		//Fetching current user id
-		Long currentUserId = claymusHelper.getCurrentUserId();
+		Long currentUserId = pratilipiHelper.getCurrentUserId();
 		
 		// Fetching Author list
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -40,7 +40,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		//Update privileges
 		boolean isAuthor = currentUserId.equals( author.getUserId());
 		boolean showUpdateOption =
-				claymusHelper.hasUserAccess( ACCESS_ID_AUTHOR_UPDATE, false )
+				pratilipiHelper.hasUserAccess( ACCESS_ID_AUTHOR_UPDATE, false )
 				|| isAuthor ;
 		
 		//Fetching pratilipi list for the author.
@@ -120,7 +120,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		dataModel.put( "storyUrlMap", storyUrlMap );
 		dataModel.put( "languageMap", languageMap );
 		dataModel.put( "showUpdateOption", showUpdateOption );
-		dataModel.put( "timeZone", claymusHelper.getCurrentUserTimeZone() );
+		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		
 
 		// Processing template

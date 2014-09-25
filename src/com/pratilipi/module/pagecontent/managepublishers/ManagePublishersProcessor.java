@@ -1,11 +1,14 @@
 package com.pratilipi.module.pagecontent.managepublishers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.claymus.module.pagecontent.PageContentProcessor;
 
 public class ManagePublishersProcessor extends PageContentProcessor<ManagePublishers> {
 
 	@Override
-	public String getHtml( ManagePublishers author ) {
+	protected String generateHtml( ManagePublishers author, HttpServletRequest request ) {
+		
 		return "<script "
 				+ "type='text/javascript' "
 				+ "language='javascript' "

@@ -85,7 +85,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 					UnexpectedServerException {
 	
 		PratilipiHelper pratilipiHelper =
-				new PratilipiHelper( this.getThreadLocalRequest() );
+				PratilipiHelper.get( this.getThreadLocalRequest() );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		PratilipiData pratilipiData = request.getPratilipiData();
@@ -249,16 +249,16 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 					InsufficientAccessException,
 					UnexpectedServerException {
 	
-		ClaymusHelper claymusHelper = new ClaymusHelper( this.getThreadLocalRequest() );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( this.getThreadLocalRequest() );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		PratilipiContentData pratilipiContentData = request.getPratilipiContentData();
 		Pratilipi pratilipi =  dataAccessor.getPratilipi( pratilipiContentData.getPratilipiId() );
 				
 		try {
-			if ( ( claymusHelper.getCurrentUserId() == pratilipi.getAuthorId()
-					&& ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
-					|| ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
+			if ( ( pratilipiHelper.getCurrentUserId() == pratilipi.getAuthorId()
+					&& ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
+					|| ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
 				throw new InsufficientAccessException();
 			
 			pratilipi.setLastUpdated( new Date() );
@@ -342,10 +342,10 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 					"LanguageId exist already. Did you mean to call updateLanguage ?" );
 
 		
-		ClaymusHelper claymusHelper =
-				new ClaymusHelper( this.getThreadLocalRequest() );
+		PratilipiHelper pratilipiHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
 		
-		if( ! claymusHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_ADD, false ) )
+		if( ! pratilipiHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_ADD, false ) )
 			throw new InsufficientAccessException();
 		
 		
@@ -365,13 +365,13 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public GetLanguageListResponse getLanguageList(
 			GetLanguageListRequest request ) throws InsufficientAccessException {
 		
-		ClaymusHelper claymusHelper =
-				new ClaymusHelper( this.getThreadLocalRequest() );
+		PratilipiHelper pratilipiHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
 		
-		if( ! claymusHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_LIST, false ) )
+		if( ! pratilipiHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_LIST, false ) )
 			throw new InsufficientAccessException();
 
-		boolean sendMetaData = claymusHelper.hasUserAccess(
+		boolean sendMetaData = pratilipiHelper.hasUserAccess(
 				LanguagesContentProcessor.ACCESS_ID_LANGUAGE_READ_META_DATA, false );
 		
 		
@@ -407,8 +407,8 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 					"AuthorId exist already. Did you mean to call updateAuthor ?" );
 		
 		
-		ClaymusHelper claymusHelper =
-				new ClaymusHelper( this.getThreadLocalRequest() );
+		PratilipiHelper claymusHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
 		
 		if( ! claymusHelper.hasUserAccess( AuthorsContentProcessor.ACCESS_ID_AUTHOR_ADD, false ) )
 			throw new InsufficientAccessException();
@@ -437,10 +437,10 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		AuthorData authorData = request.getAuthor();
 		
-		ClaymusHelper claymusHelper =
-				new ClaymusHelper( this.getThreadLocalRequest() );
+		PratilipiHelper pratilipiHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
 		
-		if( ! claymusHelper.hasUserAccess( AuthorsContentProcessor.ACCESS_ID_AUTHOR_ADD, false ) )
+		if( ! pratilipiHelper.hasUserAccess( AuthorsContentProcessor.ACCESS_ID_AUTHOR_ADD, false ) )
 			throw new InsufficientAccessException();
 
 		
@@ -484,13 +484,13 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public GetAuthorListResponse getAuthorList( GetAuthorListRequest request )
 			throws InsufficientAccessException {
 		
-		ClaymusHelper claymusHelper =
-				new ClaymusHelper( this.getThreadLocalRequest() );
+		PratilipiHelper pratilipiHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
 		
-		if( ! claymusHelper.hasUserAccess( AuthorsContentProcessor.ACCESS_ID_AUTHOR_LIST, false ) )
+		if( ! pratilipiHelper.hasUserAccess( AuthorsContentProcessor.ACCESS_ID_AUTHOR_LIST, false ) )
 			throw new InsufficientAccessException();
 
-		boolean sendMetaData = claymusHelper.hasUserAccess(
+		boolean sendMetaData = pratilipiHelper.hasUserAccess(
 				AuthorsContentProcessor.ACCESS_ID_AUTHOR_READ_META_DATA, false );
 
 		
@@ -538,10 +538,10 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 					"GenreId exist already. Did you mean to call updateGenre ?" );
 
 		
-		ClaymusHelper claymusHelper =
-				new ClaymusHelper( this.getThreadLocalRequest() );
+		PratilipiHelper pratilipiHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
 		
-		if( ! claymusHelper.hasUserAccess( GenresContentProcessor.ACCESS_ID_GENRE_ADD, false ) )
+		if( ! pratilipiHelper.hasUserAccess( GenresContentProcessor.ACCESS_ID_GENRE_ADD, false ) )
 			throw new InsufficientAccessException();
 		
 		
@@ -609,22 +609,22 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		UserPratilipiData userBookData = request.getUserPratilipi();
 
-		ClaymusHelper claymusHelper =
-				new ClaymusHelper( this.getThreadLocalRequest() );
+		PratilipiHelper pratilipiHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		Pratilipi book = dataAccessor.getPratilipi( userBookData.getPratilipiId() );
 		UserPratilipi userBook = dataAccessor.getUserPratilipi(
-				claymusHelper.getCurrentUserId(), book.getId() );
+				pratilipiHelper.getCurrentUserId(), book.getId() );
 		
-		if( claymusHelper.getCurrentUserId() == book.getAuthorId()
+		if( pratilipiHelper.getCurrentUserId() == book.getAuthorId()
 				|| ( userBook != null && userBook.getReviewState() != UserReviewState.NOT_SUBMITTED )
-				|| ! claymusHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_REVIEW_ADD, false ) )
+				|| ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_REVIEW_ADD, false ) )
 			throw new InsufficientAccessException();
 
 		userBook = dataAccessor.newUserPratilipi();
-		userBook.setUserId( claymusHelper.getCurrentUserId() );
+		userBook.setUserId( pratilipiHelper.getCurrentUserId() );
 		userBook.setPratilipiId( book.getId() );
 		userBook.setRating( userBookData.getRating() );
 		userBook.setReview( userBookData.getReview() );

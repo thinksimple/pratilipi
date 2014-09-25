@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
@@ -145,9 +146,14 @@ public class ClaymusMain extends HttpServlet {
 			@SuppressWarnings("rawtypes")
 			PageContentProcessor pageContentProcessor =
 					PAGE_CONTENT_REGISTRY.getPageContentProcessor( pageContent.getClass() );
-			@SuppressWarnings("unchecked")
-			String pageContentHtml = pageContentProcessor.getHtml( pageContent, request, response );
-			pageContentHtmlList.add( pageContentHtml );
+			try {
+				@SuppressWarnings("unchecked")
+				String pageContentHtml = pageContentProcessor.getHtml( pageContent, request );
+				pageContentHtmlList.add( pageContentHtml );
+			} catch( UnexpectedServerException e ) {
+				logger.log( Level.SEVERE, "Failed to generate page content html.", e );
+				response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+			}
 		}
 		
 		Map<String, Object> input = new HashMap<String, Object>();

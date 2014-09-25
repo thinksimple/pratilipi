@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.Memcache;
-import com.claymus.data.access.MemcacheClaymusImpl;
 import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -37,9 +37,12 @@ public class PratilipiHelper extends ClaymusHelper {
 	public static final String URL_GENRE_PAGE = "/genre/";
 
 
-	private static final Memcache memcache = new MemcacheClaymusImpl();
+	protected PratilipiHelper( HttpServletRequest request ) {
+		super( request );
+	}
 	
 	public static PratilipiHelper get( HttpServletRequest request ) {
+		Memcache memcache = DataAccessorFactory.getL1CacheAccessor();
 		PratilipiHelper pratilipiHelper = memcache.get( "PratilipiHelper-" + request.hashCode() );
 		if( pratilipiHelper == null ) {
 			pratilipiHelper = new PratilipiHelper( request );
@@ -47,11 +50,6 @@ public class PratilipiHelper extends ClaymusHelper {
 			memcache.put( "PratilipiHelper-" + request.hashCode(), pratilipiHelper );
 		}
 		return pratilipiHelper;
-	}
-	
-	@Deprecated
-	public PratilipiHelper( HttpServletRequest request ) {
-		super( request );
 	}
 	
 
