@@ -1,5 +1,6 @@
 package com.claymus.commons.server;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
+import com.claymus.data.access.Memcache;
+import com.claymus.data.access.MemcacheClaymusImpl;
 import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
@@ -16,7 +19,8 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.apphosting.api.ApiProxy;
 
-public class ClaymusHelper {
+@SuppressWarnings("serial")
+public class ClaymusHelper implements Serializable {
 
 	public static final String SESSION_ATTRIB_CURRENT_USER_ID = "CurrentUserId";
 	
@@ -38,12 +42,24 @@ public class ClaymusHelper {
 	private List<UserRole> currentUserRoleList;
 
 	
+	private static final Memcache memcache = new MemcacheClaymusImpl();
+	
+	public static ClaymusHelper get( HttpServletRequest request ) {
+		ClaymusHelper claymusHelper = memcache.get( "ClaymusHelper-" + request.hashCode() );
+		if( claymusHelper == null ) {
+			claymusHelper = new ClaymusHelper( request );
+			memcache.put( "ClaymusHelper-" + request.hashCode(), claymusHelper );
+		}
+		return claymusHelper;
+	}
+	
 	@Deprecated
 	public ClaymusHelper() {
 		this.request = null;
 		this.session = null;
 	}
 	
+	@Deprecated
 	public ClaymusHelper( HttpServletRequest request ) {
 		this.request = request;
 		this.session = request.getSession();
@@ -68,7 +84,6 @@ public class ClaymusHelper {
 		return currentUserId;
 	}
 
-	@SuppressWarnings("serial")
 	public User getCurrentUser() {
 		if( currentUser == null ) {
 

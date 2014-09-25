@@ -5,12 +5,15 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.data.access.Memcache;
+import com.claymus.data.access.MemcacheClaymusImpl;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.service.shared.data.PratilipiData;
 
+@SuppressWarnings("serial")
 public class PratilipiHelper extends ClaymusHelper {
 
 	public static final Pattern REGEX_PAGE_BREAK = Pattern.compile(
@@ -34,6 +37,19 @@ public class PratilipiHelper extends ClaymusHelper {
 	public static final String URL_GENRE_PAGE = "/genre/";
 
 
+	private static final Memcache memcache = new MemcacheClaymusImpl();
+	
+	public static PratilipiHelper get( HttpServletRequest request ) {
+		PratilipiHelper pratilipiHelper = memcache.get( "PratilipiHelper-" + request.hashCode() );
+		if( pratilipiHelper == null ) {
+			pratilipiHelper = new PratilipiHelper( request );
+			memcache.put( "ClaymusHelper-" + request.hashCode(), pratilipiHelper );
+			memcache.put( "PratilipiHelper-" + request.hashCode(), pratilipiHelper );
+		}
+		return pratilipiHelper;
+	}
+	
+	@Deprecated
 	public PratilipiHelper( HttpServletRequest request ) {
 		super( request );
 	}

@@ -68,7 +68,7 @@ public class PratilipiFilter implements Filter {
 			Author author = dataAccessor.getAuthorByUserId( currentUserId );
 			
 			if( author != null )
-				response.sendRedirect( "/author/" + author.getId() );
+				response.sendRedirect( PratilipiHelper.getAuthorPageUrl( author.getId() ) );
 			else
 				chain.doFilter( request, response ); 
 		
