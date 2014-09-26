@@ -826,6 +826,20 @@ header {
 	margin-top: 10px;
 }
 
+/* Below CSS is used to show upload profile pic link when user hover over profile picture */
+
+#upload-link {
+	display: none;
+	cursor: pointer;
+}
+
+#upload-link:hover {
+	text-decoration: underline;
+}
+
+#profile-pic-div:hover #upload-link {
+	display: block;
+}
 
 
 /* Below piece of formating is for horizontal scroll */

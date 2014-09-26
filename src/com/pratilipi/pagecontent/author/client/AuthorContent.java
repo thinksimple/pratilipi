@@ -3,6 +3,7 @@ package com.pratilipi.pagecontent.author.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -46,6 +47,8 @@ public class AuthorContent implements EntryPoint, ClickHandler {
 		if( rootPanel != null ) {
 			String uploadUrl = PratilipiHelper.URL_AUTHOR_IMAGE + authorIdStr;
 			authorImageUpload.getElement().setAttribute( "data-url", uploadUrl );
+			authorImageUpload.getElement().setAttribute( "id", "Upload-image");
+			authorImageUpload.getElement().getStyle().setDisplay( Display.NONE );
 			loadFileUploader( authorImageUpload.getElement() );
 
 			rootPanel.add( authorImageUpload );

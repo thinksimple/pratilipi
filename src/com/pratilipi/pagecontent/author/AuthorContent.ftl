@@ -138,7 +138,13 @@ window.onload = function(){
 	          	$poemR.css("cursor", "pointer");
 	          }
 	       }
-	    });
+	   
+	    }); 
+  
+	    $("#upload-link").on('click', function(e){
+			e.preventDefault();
+		    $("#Upload-image:hidden").trigger('click');
+		});
 	}
 </script>
 
@@ -147,9 +153,10 @@ window.onload = function(){
 <div id="PageContent-Author">
 	<div id="PageContent-Author-Detail" class="row margin0">
 		<div class="container margin-top25 clearfix">
-			<div class="col-md-3">
-				<img style="width:75%" src="${ authorImage }"></img>
+			<div id="profile-pic-div" class="col-md-3">
+				<img style="width:75%" src="${ authorImage }"></img><br/>
 				<#if showUpdateOption>
+					<span id="upload-link">Upload your photo</span>
 					<!-- Add Author Image -->
 					<div id="PageContent-Author-Image-EditOptions"></div>
 				</#if>
