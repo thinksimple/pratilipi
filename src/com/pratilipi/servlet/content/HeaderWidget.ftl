@@ -5,7 +5,7 @@
 		
 			<h1 class="col-xs-6" style="margin:0px;">
 				<a href="/" style="color:#E74C3C !important; text-decoration:none;">Pratilipi</a>
-				<small style="position:absolute; top:0px;"><small>beta</small></small>
+				<small style="position:absolute; top:0px; padding-left: 3px;"><small>beta</small></small>
 			</h1>
 
 			<div class="col-xs-6" id="Pratilipi-User-Access" style="display: none;">

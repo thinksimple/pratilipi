@@ -81,7 +81,27 @@
 		
 	</head>
 	<body>
-		
+		<!-- Facebook js import -->
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=293990794105516&version=v2.0";
+			  fjs.parentNode.insertBefore(js, fjs);
+			  }(document, 'script', 'facebook-jssdk'));
+		</script>
+		<!-- Twitter js import -->
+		<script type="text/javascript">
+			window.twttr = (function (d, s, id) {
+			  var t, js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src= "https://platform.twitter.com/widgets.js";
+			  fjs.parentNode.insertBefore(js, fjs);
+			  return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
+			}(document, "script", "twitter-wjs"));
+		</script> 
 		<#if websiteWidgetHtmlListMap["HEADER"] ??>
 			<#list websiteWidgetHtmlListMap["HEADER"] as websiteWidgetHtml>
 				${ websiteWidgetHtml }

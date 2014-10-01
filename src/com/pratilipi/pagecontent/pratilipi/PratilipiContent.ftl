@@ -22,7 +22,14 @@
 			<h4>
 				<a href="${ authorHomeUrl }">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></a>
 			</h4>
-			
+			<div style="line-height: 15px;">
+				<div id="fb-like" class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true">
+				</div>
+				<a class="twitter-share-button"
+					  href="https://twitter.com/share"
+					  data-size="small">
+				</a>
+			</div>
 			<button type="button" class="btn btn-success visible-xs-inline-block" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
 			<#if showReviewedMessage>
 				<button type="button" class="btn btn-info visible-xs-inline-block" onclick="window.location.href='#Reviews'">
@@ -45,8 +52,16 @@
 				<#if showEditOptions>
 					<div id="PageContent-Pratilipi-Summary-EditOptions"></div>
 				</#if>
-
-				<button type="button" class="btn btn-success hidden-xs" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
+				
+				<#if isAuthor>
+					<!-- Current is not author of this book -->
+					<button type="button" class="btn btn-success hidden-xs" onclick="window.location.href='${ pratilipiReaderUrl }'">Read This ${ pratilipi.getType().getName() }</button>
+					<!-- TODO: EDIT THIS BOOK URL -->
+					<button type="button" class="btn btn-primary hidden-xs" onclick="">Edit This ${ pratilipi.getType().getName() }</button>
+				<#else>
+					<!-- Current is author of this book -->
+					<button type="button" class="btn btn-success hidden-xs" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
+				</#if>
 				<#if showReviewedMessage>
 					<button type="button" class="btn btn-info hidden-xs" onclick="window.location.href='#Reviews'">
 						<span class="glyphicon glyphicon-ok"></span> Reviewed
