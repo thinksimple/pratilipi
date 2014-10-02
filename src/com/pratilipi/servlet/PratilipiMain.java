@@ -72,87 +72,90 @@ public class PratilipiMain extends ClaymusMain {
 		Page page = dataAccessor.newPage();
 		page.setTitle( "Pratilipi | Read Free and Paid Hindi and Gujarati Stories, Poems and Books" );
 		
+		//Could not think of proper variable name.
+		String siteName = page.getTitle().substring(0, page.getTitle().indexOf( " " ));
+		
 		// Home pages
 		String requestUri = request.getRequestURI();
 		if( requestUri.equals( "/books" ) )
-			page.setTitle( "Books | " + page.getTitle() );
+			page.setTitle( "Books | " + siteName );
 		
 		else if( requestUri.equals( "/books/hindi" ) )
-			page.setTitle( "Hindi Books | " + page.getTitle() );
+			page.setTitle( "Hindi Books | " + siteName );
 		
 		else if( requestUri.equals( "/books/gujarati" ) )
-			page.setTitle( "Gujarati Books | " + page.getTitle() );
+			page.setTitle( "Gujarati Books | " + siteName );
 		
 		else if( requestUri.equals( "/poems" ) )
-			page.setTitle( "Poems | " + page.getTitle() );
+			page.setTitle( "Poems | " + siteName );
 		
 		else if( requestUri.equals( "/poems/hindi" ) )
-			page.setTitle( "Hindi Poems | " + page.getTitle() );
+			page.setTitle( "Hindi Poems | " + siteName );
 		
 		else if( requestUri.equals( "/poems/gujarati" ) )
-			page.setTitle( "Gujarati Poems | " + page.getTitle() );
+			page.setTitle( "Gujarati Poems | " + siteName );
 		
 		else if( requestUri.equals( "/stories" ) )
-			page.setTitle( "Stories | " + page.getTitle() );
+			page.setTitle( "Stories | " + siteName );
 		
 		else if( requestUri.equals( "/stories/hindi" ) )
-			page.setTitle( "Hindi Stories | " + page.getTitle() );
+			page.setTitle( "Hindi Stories | " + siteName );
 		
 		else if( requestUri.equals( "/stories/gujarati" ) )
-			page.setTitle( "Gujarati Stories | " + page.getTitle() );
+			page.setTitle( "Gujarati Stories | " + siteName );
 		
 		else if( requestUri.equals( "/articles" ) )
-			page.setTitle( "Articles | " + page.getTitle() );
+			page.setTitle( "Articles | " + siteName );
 		
 		else if( requestUri.equals( "/articles/hindi" ) )
-			page.setTitle( "Hindi Articles | " + page.getTitle() );
+			page.setTitle( "Hindi Articles | " + siteName );
 		
 		else if( requestUri.equals( "/articles/gujarati" ) )
-			page.setTitle( "Gujarati Articles | " + page.getTitle() );
+			page.setTitle( "Gujarati Articles | " + siteName );
 		
 		else if( requestUri.startsWith( "/classics/books" ) )
-			page.setTitle( "Classic Books | " + page.getTitle() );
+			page.setTitle( "Classic Books | " + siteName );
 
 		else if( requestUri.startsWith( "/classics/poems" ) )
-			page.setTitle( "Classic Poems | " + page.getTitle() );
+			page.setTitle( "Classic Poems | " + siteName );
 
 		else if( requestUri.startsWith( "/classics/stories" ) )
-			page.setTitle( "Classic Stories | " + page.getTitle() );
+			page.setTitle( "Classic Stories | " + siteName );
 
 		else if( requestUri.startsWith( "/classics/articles" ) )
-			page.setTitle( "Classic Articles | " + page.getTitle() );
+			page.setTitle( "Classic Articles | " + siteName );
 
 		
 		else if( requestUri.equals( "/languages" ) )
-			page.setTitle( "Languages | " + page.getTitle() );
+			page.setTitle( "Languages | " + siteName );
 
 		else if( requestUri.equals( "/authors" ) )
-			page.setTitle( "Authors | " + page.getTitle() );
+			page.setTitle( "Authors | " + siteName );
 
 		else if( requestUri.equals( "/genres" ) )
-			page.setTitle( "Genres | " + page.getTitle() );
+			page.setTitle( "Genres | " + siteName );
 
 		
 		// Individual item's pages
 		else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.BOOK, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle( pratilipi.getTitle() + " | " + siteName );
 
 		} else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.POEM, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle( pratilipi.getTitle() + " | " + siteName );
 
 		} else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.STORY, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle( pratilipi.getTitle() + " | " + siteName );
 
 		} else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.ARTICLE, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle( pratilipi.getTitle() + " | " + siteName );
 
 
 		} else if( requestUri.startsWith( PratilipiHelper.URL_AUTHOR_PAGE ) ) {
@@ -161,7 +164,7 @@ public class PratilipiMain extends ClaymusMain {
 			String authorName = author.getFirstName();
 			if( author.getLastName() != null )
 				authorName += " " + author.getLastName();
-			page.setTitle( authorName + " | " + page.getTitle() );
+			page.setTitle( authorName + " | " + siteName );
 		}
 		
 		
@@ -169,22 +172,22 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.BOOK, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle( pratilipi.getTitle() + " | " + siteName );
 		
 		} else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.POEM, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle( pratilipi.getTitle() + " | " + siteName );
 		
 		} else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.STORY, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle( pratilipi.getTitle() + " | " + siteName );
 		
 		} else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.ARTICLE, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle( pratilipi.getTitle() + " | " + siteName );
 		
 		} 
 
@@ -192,19 +195,19 @@ public class PratilipiMain extends ClaymusMain {
 		// Static pages
 		// Migrate these PageContents to DataStore
 		else if( requestUri.equals( "/contact" ) )
-			page.setTitle( "Contact | " + page.getTitle() );
+			page.setTitle( "Contact | " + siteName );
 			
 		else if( requestUri.equals( "/faq" ) )
-			page.setTitle( "FAQ | " + page.getTitle() );
+			page.setTitle( "FAQ | " + siteName );
 		
 		else if( requestUri.equals( "/about/pratilipi" ) )
-			page.setTitle( "About Pratilipi | " + page.getTitle() );
+			page.setTitle( "About Pratilipi | " + siteName );
 		
 		else if( requestUri.equals( "/about/team" ) )
-			page.setTitle( "About Team | " + page.getTitle() );		
+			page.setTitle( "About Team | " + siteName );		
 
 		else if( requestUri.equals( "/about/the-founding-readers" ) )
-			page.setTitle( "About The Founding Readers | " + page.getTitle() );
+			page.setTitle( "About The Founding Readers | " + siteName );
 		
 		dataAccessor.destroy();
 
@@ -416,28 +419,28 @@ public class PratilipiMain extends ClaymusMain {
 			HttpServletRequest request ) throws IOException {
 		
 		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 5145363304415232L );
-		bookIdList.add( 5206507264147456L );
-		bookIdList.add( 5186766520713216L );
-		bookIdList.add( 5157903266742272L );
-		bookIdList.add( 6221184697892864L );
+		bookIdList.add( 5670976570261504L );
+		bookIdList.add( 5110699831328768L );
 		bookIdList.add( 6029594259881984L );
+		bookIdList.add( 4538710716579840L );
+		bookIdList.add( 5196828823781376L );
+		bookIdList.add( 5699942098141184L );
 
 		List<Long> poemIdList = new LinkedList<>();
-		poemIdList.add( 5122107398684672L );
-		poemIdList.add( 5405337406406656L );
-		poemIdList.add( 5725485073956864L );
-		poemIdList.add( 5721489412194304L );
-		poemIdList.add( 5095141714952192L );
+		poemIdList.add( 5740240702537728L );
+		poemIdList.add( 4822614228860928L );
+		poemIdList.add( 5629652273987584L );
 		poemIdList.add( 5744125232021504L );
+		poemIdList.add( 5405337406406656L );
+		poemIdList.add( 5122107398684672L );
 		
 		List<Long> storyIdList = new LinkedList<>();
-		storyIdList.add( 5766239481757696L );
-		storyIdList.add( 5998899202359296L );
-		storyIdList.add( 5998899202359296L );
-		storyIdList.add( 6329330900664320L );
 		storyIdList.add( 5684961520648192L );
 		storyIdList.add( 6311069236592640L );
+		storyIdList.add( 5998899202359296L );
+		storyIdList.add( 5663284820705280L );
+		storyIdList.add( 5766239481757696L );
+		storyIdList.add( 5091881566339072L );
 
 		
 		HomeContent homeContent = HomeContentFactory.newHomeContent();
