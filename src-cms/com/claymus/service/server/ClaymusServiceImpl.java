@@ -36,7 +36,6 @@ import com.claymus.taskqueue.Task;
 import com.claymus.taskqueue.TaskQueue;
 import com.claymus.taskqueue.TaskQueueFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.pratilipi.commons.server.PratilipiHelper;
 
 import freemarker.template.TemplateException;
 
@@ -225,8 +224,8 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 	public ResetUserPasswordResponse resetUserPassword(
 			ResetUserPasswordRequest request ) throws IllegalArgumentException {
 		
-		PratilipiHelper pratilipiHelper =
-				PratilipiHelper.get( this.getThreadLocalRequest() );
+		ClaymusHelper claymusHelper =
+				ClaymusHelper.get( this.getThreadLocalRequest() );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( request.getUserEmail().toLowerCase() );
@@ -238,7 +237,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 				|| user.getStatus() == UserStatus.POSTLAUNCH_REFERRAL ) {
 			throw new IllegalArgumentException(
 					"This email id is not yet registered. Kindly "
-					+ "<a href='" + pratilipiHelper.createRegisterURL() + "' class='alert-link'>register</a>"
+					+ "<a href='" + claymusHelper.createRegisterURL() + "' class='alert-link'>register</a>"
 					+ " or try again with a different email id." );
 			
 		} else if( user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP ) {
