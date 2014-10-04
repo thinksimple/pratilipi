@@ -70,11 +70,15 @@ public class PratilipiMain extends ClaymusMain {
 	protected Page getPage( HttpServletRequest request ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page page = dataAccessor.newPage();
-		page.setTitle( "Pratilipi | Read Free and Paid Hindi and Gujarati Stories, Poems and Books" );
+		page.setTitle( "Pratilipi" );
 		
 		// Home pages
 		String requestUri = request.getRequestURI();
-		if( requestUri.equals( "/books" ) )
+		
+		if( requestUri.equals( "/" ) )
+			page.setTitle( page.getTitle() + " | Read Free and Paid Hindi and Gujarati Stories, Poems and Books" );
+		
+		else if( requestUri.equals( "/books" ) )
 			page.setTitle( "Books | " + page.getTitle() );
 		
 		else if( requestUri.equals( "/books/hindi" ) )
@@ -190,7 +194,6 @@ public class PratilipiMain extends ClaymusMain {
 
 		
 		// Static pages
-		// Migrate these PageContents to DataStore
 		else if( requestUri.equals( "/contact" ) )
 			page.setTitle( "Contact | " + page.getTitle() );
 			
