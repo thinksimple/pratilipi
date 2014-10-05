@@ -55,11 +55,12 @@ public abstract class PageContentProcessor<T extends PageContent> {
 				default:
 					break;
 			}
+			key += "-" + pageContent.getLastUpdated().getTime();
 			html = memcache.get( key );
 			
 			if( html == null ) {
 				html = generateHtml( pageContent, request );
-				memcache.put( key, html, 60 * 60 * 1000 );
+				memcache.put( key, html );
 			}
 
 		} else {
