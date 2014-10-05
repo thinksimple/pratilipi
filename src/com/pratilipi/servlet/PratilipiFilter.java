@@ -43,17 +43,18 @@ public class PratilipiFilter implements Filter {
 				&& !host.equals( "localhost" )
 				&& !host.equals( "127.0.0.1" ) ) { // Redirecting to www.pratilipi.com
 			
-			response.sendRedirect(
-					"http://www.pratilipi.com" + requestUri );
-
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", "http://www.pratilipi.com" + requestUri );
+			
 			PrintWriter out = response.getWriter();
 			out.println( "Redirecting to www.pratilipi.com ..." );
 			out.close();
 			
 		} else if( requestUri.length() > 1 && requestUri.endsWith( "/" ) ) { // Removing trailing "/"
-			requestUri = requestUri.substring( 0, requestUri.length() -1 );
-			response.sendRedirect( requestUri );
-			
+
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", requestUri.substring( 0, requestUri.length() -1 ) );
+
 			PrintWriter out = response.getWriter();
 			out.println( "Redirecting to www.pratilipi.com" + requestUri + " ..." );
 			out.close();
