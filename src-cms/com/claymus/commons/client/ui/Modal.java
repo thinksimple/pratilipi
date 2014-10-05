@@ -83,10 +83,6 @@ public class Modal extends Composite {
 		footer.add( button );
 	}
 	
-	public void addStyleName( String styleName ) {
-		this.panel.addStyleName( styleName );
-	}
-	
 	public void setEnabled( boolean enabled ) {
 		xButton.setEnabled( enabled );
 		closeButton.setEnabled( enabled );

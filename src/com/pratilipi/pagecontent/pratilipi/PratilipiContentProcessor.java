@@ -70,19 +70,9 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "userIdNameMap", userIdNameMap );
 		
 		User currentUser = pratilipiHelper.getCurrentUser();
-		String userName = "";
 		
-		if( currentUser.getFirstName() != null )
-			userName = currentUser.getFirstName();
-		
-		if( currentUser.getLastName() != null )
-			userName = userName + " " + currentUser.getLastName();
-		
-		if( currentUser.getFirstName() == null && currentUser.getLastName() == null )
-			userName = currentUser.getEmail();
-		
-		dataModel.put( "userName", userName );
-		
+		dataModel.put( "userName", pratilipiHelper.createUserName( currentUser ) );
+		dataModel.put( "isAuthor", pratilipiHelper.getCurrentUserId().equals( author.getUserId()) );
 		dataModel.put( "pratilipiHomeUrl", PratilipiHelper.getPageUrl( pratilipiType, pratilipi.getId() ) );
 		dataModel.put( "pratilipiCoverUrl", PratilipiHelper.getCoverImageUrl( pratilipiType, pratilipi.getId() ) );
 		dataModel.put( "pratilipiReaderUrl", PratilipiHelper.getReaderPageUrl( pratilipiType, pratilipi.getId() ) );
@@ -101,8 +91,6 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "showEditOptions",
 				( pratilipiHelper.getCurrentUserId() == pratilipi.getAuthorId() && pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false ) )
 				|| pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_UPDATE, false ) );
-		
-		dataModel.put( "isAuthor", pratilipiHelper.getCurrentUserId().equals( author.getUserId()) );
 		
 		return super.processTemplate(
 				dataModel,

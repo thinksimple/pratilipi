@@ -260,4 +260,22 @@ public class ClaymusHelper implements Serializable {
 		return System.getProperty( appId + "." + propertyName );
 	}
 	
+	
+	public String createUserName( User user ) {
+		
+		if( user.getFirstName() != null && user.getLastName() != null )
+			return user.getFirstName() + " " + user.getLastName();
+
+		else if( user.getFirstName() != null && user.getLastName() == null )
+			return user.getFirstName();
+
+		else if( user.getFirstName() == null && user.getLastName() != null )
+			return user.getLastName();
+
+		else
+			return user.getEmail();
+
+	}
+	
+	
 }
