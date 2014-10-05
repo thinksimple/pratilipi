@@ -151,6 +151,8 @@ window.onload = function(){
 <#setting time_zone="${ timeZone }">
 
 <div id="PageContent-Author">
+	<!-- Refactor below code to use one div for all 4 pratilipi types -->
+	<div id="PageContent-Author-AddPratilipi"></div>
 	<div id="PageContent-Author-Detail" class="row margin0">
 		<div class="container margin-top25 clearfix">
 			<div id="profile-pic-div" class="col-md-3">
@@ -162,7 +164,7 @@ window.onload = function(){
 				</#if>
 			</div>
 			<div class="col-md-9">
-				<div class="row margin0 published-works">
+				<div class="row margin0">
 					<div class="col-sm-7" style="border: 1px solid #DDD;">
 						<h3 style="text-align: center;">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></h3>
 						<h4 style="text-align: center;">${ author.getFirstNameEn() }<#if author.getLastNameEn()??> ${ author.getLastNameEn() }</#if></h4>
@@ -177,15 +179,38 @@ window.onload = function(){
 							</#if>
 						</div>
 					</div>
-					<div class="col-sm-4">
-						<h3>Published Works</h3>
+					<div class="col-sm-4 published-works">
+						<h3>Works</h3>
 						<#assign _bookCount = bookDataList?size>
 						<#assign _poemCount = poemDataList?size>
 						<#assign _storyCount = storyDataList?size>
+						<#assign _articleCount = articleDataList?size>
 						<table>
-							<tr><td>Books</td><td>${ _bookCount }</td></tr>
-							<tr><td>Stories</td><td>${ _storyCount }</td></tr>
-							<tr><td>Poems</td><td>${ _poemCount }</td></tr>
+							<tr><th></th><th>Published</th><th>Drafted</th></tr>
+							<tr>
+								<td>Books</td>
+								<td>${ _bookCount }</td>
+								<td>0</td>
+								<#if showUpdateOption><td><a href="" id="addBook" data-toggle='modal' data-target="#PageContent-Author-AddBook">Add</a></td></#if>
+							</tr>
+							<tr>
+								<td>Stories</td>
+								<td>${ _storyCount }</td>
+								<td>0</td>
+								<#if showUpdateOption><td><a href="" id="addStory" data-toggle='modal' data-target="#PageContent-Author-AddStory">Add</a></td></#if>
+							</tr>
+							<tr>
+								<td>Poems</td>
+								<td>${ _poemCount }</td>
+								<td>0</td>
+								<#if showUpdateOption><td><a href="" id="addPoem" data-toggle='modal' data-target="#PageContent-Author-AddPoem">Add</a></td></#if>
+							</tr>
+							<tr>
+								<td>Article</td>
+								<td>${ _articleCount }</td>
+								<td>0</td>
+								<#if showUpdateOption><td><a href="" id="addArticle" data-toggle='modal' data-target="#PageContent-Author-AddArticle">Add</a></td></#if>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -276,6 +301,33 @@ window.onload = function(){
 						</div>
 					</div>
 				</#if>
+				<#if articleDataList?has_content>
+					<hr></hr>
+					<h4 class="published">PUBLISHED ARTICLES</h4>
+					<div id="container" class="row new-arrivals">
+						<div id="list-container">
+							<div id="articleL"></div>
+							<div id="articleR"></div>
+							<div class="list">
+								<#list articleDataList as article >
+									<div class="prod-info article">
+										<div style="width:100px; padding-top: 10px; padding-bottom:10px;">
+											<div style="width:100px; height:160px; overflow: hidden;">
+												<a href="${ articleUrlMap[ article.getId()?string("#") ] }">
+													<img class="img-responsive" src="${ articleCoverMap[ article.getId()?string("#") ] }"></img>
+												</a>
+											</div>
+											<div style="width:100px; height:55px; overflow: hidden; white-space: normal; font-size: 12px;">
+												<a href="${ articleUrlMap[ article.getId()?string("#") ] }">${ article.getTitle() }</a>
+												<p>${ languageMap[ article.getLanguageId()?string("#") ] }</p>
+											</div>
+										</div>
+									</div>
+								</#list>
+							</div>
+						</div>
+					</div>
+				</#if>
 			</div>
 		</div>
 	</div>
@@ -283,6 +335,8 @@ window.onload = function(){
 <#if showUpdateOption>
 	<!-- Add Author Image Javascript -->
 	<script type="text/javascript" language="javascript" src="/pagecontent.author/pagecontent.author.nocache.js" defer></script>
+	<!-- Add Pratilipi javascript -->
+	<script type="text/javascript" language="javascript" src="/pagecontent.pratilipis/pagecontent.pratilipis.nocache.js" async></script>
 </#if>
 
 <!-- PageContent :: Author Profile :: End -->

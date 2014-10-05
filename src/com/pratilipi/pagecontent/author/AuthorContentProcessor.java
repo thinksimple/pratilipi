@@ -11,6 +11,7 @@ import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -43,7 +44,12 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 				pratilipiHelper.hasUserAccess( ACCESS_ID_AUTHOR_UPDATE, false )
 				|| isAuthor ;
 		
+		//Setting Pratilipi Filter
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setAuthorId( authorId );
+		
 		//Fetching pratilipi list for the author.
+		@SuppressWarnings("deprecation")
 		DataListCursorTuple<Pratilipi> bookList = dataAccessor.getPratilipiListByAuthor( 
 								PratilipiType.BOOK, authorId, null, 200 );
 		List<Pratilipi> bookDataList = bookList.getDataList();
@@ -61,6 +67,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 			}
 		}
 		
+		@SuppressWarnings("deprecation")
 		DataListCursorTuple<Pratilipi> poemList = dataAccessor.getPratilipiListByAuthor( 
 				PratilipiType.POEM, authorId, null, 300 );
 		List<Pratilipi> poemDataList = poemList.getDataList();
@@ -77,6 +84,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 			}
 		}
 		
+		@SuppressWarnings("deprecation")
 		DataListCursorTuple<Pratilipi> storyList = dataAccessor.getPratilipiListByAuthor( 
 				PratilipiType.STORY, authorId, null, 500 );
 		List<Pratilipi> storyDataList = storyList.getDataList();
@@ -92,6 +100,27 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 						PratilipiHelper.getPageUrl( PratilipiType.STORY, story.getId() ) );
 			}
 		}
+		
+		//Fetching article list.
+		pratilipiFilter.setType( PratilipiType.ARTICLE );
+		DataListCursorTuple<Pratilipi> articleList = dataAccessor.getPratilipiList( 
+				pratilipiFilter, null, 300);
+		
+		List<Pratilipi> articleDataList = articleList.getDataList();
+		Map<String, String> articleCoverMap = new HashMap<>();
+		Map<String, String> articleUrlMap = new HashMap<>();
+		for( Pratilipi article : articleDataList ){
+			if( articleCoverMap.get( article.getId() ) == null ){
+				articleCoverMap.put( article.getId().toString(),
+						PratilipiHelper.getCoverImage300Url( PratilipiType.ARTICLE, article.getId(), false ) );
+			}
+			if( articleUrlMap.get( article.getId() ) == null ){
+				articleUrlMap.put( article.getId().toString(),
+						PratilipiHelper.getPageUrl( PratilipiType.ARTICLE, article.getId() ) );
+			}
+		}
+		
+		
 		//Fetching language list
 		List<Language> languageList = dataAccessor.getLanguageList();
 		Map<String, String> languageMap = new HashMap<>();
@@ -109,6 +138,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "author", author );
 		dataModel.put( "authorImage", authorImage );
+		dataModel.put( "pratilipiFilter", pratilipiFilter );
 		dataModel.put( "bookDataList", bookDataList );
 		dataModel.put( "bookCoverMap",  bookCoverMap );
 		dataModel.put( "bookUrlMap",  bookUrlMap );
@@ -118,6 +148,9 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		dataModel.put( "storyDataList", storyDataList );
 		dataModel.put( "storyCoverMap", storyCoverMap );
 		dataModel.put( "storyUrlMap", storyUrlMap );
+		dataModel.put( "articleDataList", articleDataList );
+		dataModel.put( "articleCoverMap", articleCoverMap );
+		dataModel.put( "articleUrlMap", articleUrlMap );
 		dataModel.put( "languageMap", languageMap );
 		dataModel.put( "showUpdateOption", showUpdateOption );
 		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
