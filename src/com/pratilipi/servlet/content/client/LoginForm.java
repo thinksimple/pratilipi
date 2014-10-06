@@ -11,6 +11,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -19,6 +21,9 @@ import com.google.gwt.user.client.ui.TextBox;
 public class LoginForm extends Composite {
 	
 	private Label heading = new Label();
+	private Anchor fbLoginAnchor = new Anchor();
+	private Image fbLoginImage = new Image( "/theme.pratilipi/images/fbLogin.png" );
+	private InlineLabel inlineLabel = new InlineLabel( "OR" );
 	private TextBox emailInput = new TextBox();
 	private PasswordTextBox password = new PasswordTextBox();
 	private Button loginButton = new Button("Sign In");
@@ -46,6 +51,12 @@ public class LoginForm extends Composite {
 		HTML headingElement= new HTML();
 		headingElement.setHTML("<h3>Welcome Back</h3>");
 		
+		fbLoginAnchor.getElement().appendChild( fbLoginImage.getElement() );
+		fbLoginAnchor.setVisible( false );
+		inlineLabel.getElement().getStyle().setDisplay( Display.BLOCK );
+		inlineLabel.setStyleName( "hr-line-through" );
+		inlineLabel.setVisible( false );
+		
 		heading.addStyleName( "page-header" );
 		heading.getElement().appendChild( headingElement.getElement() );
 		
@@ -55,6 +66,7 @@ public class LoginForm extends Composite {
 
 			@Override
 			public void onBlur(BlurEvent event) {
+				
 				validateEmail();
 			}});
 		emailInput.addFocusHandler( new FocusHandler() {
@@ -119,6 +131,8 @@ public class LoginForm extends Composite {
 		serverError.setVisible( false );
 		
 		fields.add( heading );
+		fields.add( fbLoginAnchor );
+		fields.add( inlineLabel );
 		fields.add( serverError );
 		fields.add(emailInput);
 		fields.add(emailInputError);
@@ -141,6 +155,10 @@ public class LoginForm extends Composite {
 	
 	public void addFormLinksClickHandler( ClickHandler clickHandler ) {
 		formLinksLabel.addClickHandler( clickHandler );
+	}
+	
+	public void addFbLoginClickHandler( ClickHandler clickHandler ) {
+		this.fbLoginAnchor.addClickHandler( clickHandler );
 	}
 	
 	//Enable and Disable login form

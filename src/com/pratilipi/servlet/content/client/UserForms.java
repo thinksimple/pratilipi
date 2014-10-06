@@ -2,6 +2,8 @@ package com.pratilipi.servlet.content.client;
 
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.client.ClaymusServiceAsync;
+import com.claymus.service.shared.FacebookLoginUserRequest;
+import com.claymus.service.shared.FacebookLoginUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
 import com.claymus.service.shared.LoginUserResponse;
 import com.claymus.service.shared.RegisterUserRequest;
@@ -12,6 +14,7 @@ import com.claymus.service.shared.SendQueryRequest;
 import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
+import com.claymus.service.shared.data.FacebookLoginData;
 import com.claymus.service.shared.data.UserData;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -46,7 +49,7 @@ public class UserForms implements EntryPoint {
 		loginFormDialog.setStyleName( "modal-body" );
 		
 		final LoginForm loginForm = new LoginForm();
-
+		
 		ClickHandler loginButtonClickHandler = new ClickHandler() {
 			
 			@Override
@@ -63,8 +66,16 @@ public class UserForms implements EntryPoint {
 				
 			}};
 
+		ClickHandler fbLoginClickHandler = new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				facebookLogin();
+			}};
+			
 		loginForm.addLoginButtonClickHandler( loginButtonClickHandler );
 		loginForm.addFormLinksClickHandler( loginFormLinksClickHandler );
+		loginForm.addFbLoginClickHandler( fbLoginClickHandler );
 		loginFormDialog.add( loginForm );
 		loginFormDialog.addKeyDownHandler( new KeyDownHandler(){
 
@@ -474,6 +485,33 @@ public class UserForms implements EntryPoint {
 		}
 	}
 	
+	
+	public void facebookLoginRPC( String accessToken,String email, String firstName, String lastName ) {
+		FacebookLoginData facebookLoginData = new FacebookLoginData();
+		facebookLoginData.setAccessToken( accessToken );
+		facebookLoginData.setEmail( email );
+		facebookLoginData.setFirstName( firstName );
+		facebookLoginData.setLastName( lastName );
+		facebookLoginData.setCampaign( "PreLaunch" );
+		facebookLoginData.setReferer( Window.Location.getParameter( "ref" ));
+		Window.alert( email );
+		claymusService.facebookLogin( new FacebookLoginUserRequest( facebookLoginData ), new AsyncCallback<FacebookLoginUserResponse>(){
+
+					@Override
+					public void onFailure(
+							Throwable caught) {
+						Window.alert( caught.getMessage() );
+					}
+
+					@Override
+					public void onSuccess(
+							FacebookLoginUserResponse result) {
+						hideLoginModal();
+						Window.Location.assign( Window.Location.getHref() + "?action=login" );
+					}});
+		
+	}
+	
 	//JQuery function to show and hide bootstrap modal view
 	public static native void showModal() /*-{
     		$wnd.jQuery("#myModal").modal("show");
@@ -492,4 +530,24 @@ public class UserForms implements EntryPoint {
 		$wnd.jQuery('#forgotPasswordModal').modal('hide');
 	}-*/;
 
+	public native void facebookLogin() /*-{
+		var instance = this;
+		$wnd.FB.login(function(response) {
+							   if(response.status=='connected'){
+							   		var accessToken = $wnd.FB.getAuthResponse()['accessToken'];
+							   		$wnd.FB.api('/me', function(response) {
+									    try{
+									    	instance.@com.pratilipi.servlet.content.client.UserForms::facebookLoginRPC(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)( accessToken, response.email, response.first_name, response.last_name );
+									    }
+									    catch(err){
+									    	alert( err);
+									    }
+									});
+							   }
+							 }, {
+							 		scope: ['public_profile', 'email'],
+							 		auth_type: 'rerequest' 
+							 	});
+	}-*/;
+	
 }

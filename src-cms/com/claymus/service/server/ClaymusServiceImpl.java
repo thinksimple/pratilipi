@@ -11,6 +11,7 @@ import com.claymus.commons.client.IllegalArgumentException;
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.EncryptPassword;
+import com.claymus.commons.server.ValidateFbAccessToken;
 import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
@@ -19,6 +20,8 @@ import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.claymus.email.EmailUtil;
 import com.claymus.service.client.ClaymusService;
+import com.claymus.service.shared.FacebookLoginUserRequest;
+import com.claymus.service.shared.FacebookLoginUserResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -31,6 +34,7 @@ import com.claymus.service.shared.SendQueryRequest;
 import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
+import com.claymus.service.shared.data.FacebookLoginData;
 import com.claymus.service.shared.data.UserData;
 import com.claymus.taskqueue.Task;
 import com.claymus.taskqueue.TaskQueue;
@@ -188,6 +192,12 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		User user = dataAccessor.getUserByEmail( request.getLoginId().toLowerCase() );
 		dataAccessor.destroy();
 		
+		if( user != null && user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP_SOCIALLOGIN ) 
+			throw new IllegalArgumentException(
+					"You used social media account to login. Please click "
+					+ "<a href='" + claymusHelper.createForgotPasswordURL() + "' class='alert-link'>here</a>"
+					+ " to generate your password or kindly use social login to login again." );
+		
 		if( user == null
 				|| user.getStatus() == UserStatus.PRELAUNCH_REFERRAL
 				|| user.getStatus() == UserStatus.PRELAUNCH_SIGNUP
@@ -240,7 +250,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 					+ "<a href='" + claymusHelper.createRegisterURL() + "' class='alert-link'>register</a>"
 					+ " or try again with a different email id." );
 			
-		} else if( user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP ) {
+		} else if( user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP || user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP_SOCIALLOGIN ) {
 
 		} else {
 			logger.log( Level.SEVERE,
@@ -301,6 +311,9 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 					throw new IllegalArgumentException(
 							"URL used is invalid or expired. "
 							+ "Please check the URL and try again." );
+				
+				if( user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP_SOCIALLOGIN )
+					user.setStatus( UserStatus.POSTLAUNCH_SIGNUP );
 			}
 			
 			user.setPassword( EncryptPassword.getSaltedHash( request.getNewPassword() ));
@@ -392,4 +405,51 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		
 	}
 
+	
+	@Override
+	public FacebookLoginUserResponse facebookLogin(
+			FacebookLoginUserRequest request)
+			throws IllegalArgumentException {
+		
+		FacebookLoginData fbLoginUserData = request.getFacebookLoginData();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = null;
+		
+		if( fbLoginUserData.getEmail() != null )
+			user = dataAccessor.getUserByEmail( fbLoginUserData.getEmail() );
+		else 
+			throw new IllegalArgumentException( "Your Email address is required to complete basic login activities. Please provide provide access to your facebook email address" );
+		
+		ValidateFbAccessToken validateToken = new ValidateFbAccessToken( fbLoginUserData.getAccessToken() );
+		try {
+			if( validateToken.isValid() ) {
+				if( user == null ) {
+					user = dataAccessor.newUser();
+					user.setEmail( fbLoginUserData.getEmail() );
+					user.setFirstName( fbLoginUserData.getFirstName() );
+					user.setLastName( fbLoginUserData.getLastName() );
+					user.setCampaign( fbLoginUserData.getCampaign() );
+					user.setReferer( fbLoginUserData.getReferer() );
+					user.setStatus( UserStatus.POSTLAUNCH_SIGNUP_SOCIALLOGIN );
+					user.setSignUpDate( new Date() );
+					
+					dataAccessor.createOrUpdateUser( user );
+					//Getting new user.
+					user = dataAccessor.getUserByEmail( user.getEmail() );
+				}
+				//Setting session for the user.
+				this.getThreadLocalRequest().getSession().setAttribute(
+						ClaymusHelper.SESSION_ATTRIB_CURRENT_USER_ID, user.getId() );
+			}
+			else
+				throw new IllegalArgumentException( "Not a valid access token" );
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "" , e);
+		} 
+		
+		return new FacebookLoginUserResponse();
+	}
+
+	
+	
 }
