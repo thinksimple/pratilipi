@@ -35,7 +35,6 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 			throws IOException, UnexpectedServerException {
 
 		Long pratilipiId = pratilipiContent.getPratilipiId();
-		PratilipiType pratilipiType = pratilipiContent.getPratilipiType();
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 
 		
@@ -54,9 +53,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		for( UserPratilipi review : reviewList) {
 			if( userIdNameMap.get( review.getUserId() ) == null ) {
 				User user = dataAccessor.getUser( review.getUserId() );
-				userIdNameMap.put(
-						user.getId().toString(),
-						user.getFirstName() + ( user.getLastName() == null ? "" : " " + user.getLastName() ) );
+				userIdNameMap.put( user.getId().toString(), pratilipiHelper.createUserName( user ) );
 			}
 		}
 		dataAccessor.destroy();
@@ -70,11 +67,12 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "userIdNameMap", userIdNameMap );
 		
 		User currentUser = pratilipiHelper.getCurrentUser();
-		
+		PratilipiType pratilipiType = pratilipi.getType();
+
 		dataModel.put( "userName", pratilipiHelper.createUserName( currentUser ) );
-		dataModel.put( "isAuthor", pratilipiHelper.getCurrentUserId().equals( author.getUserId()) );
 		dataModel.put( "pratilipiHomeUrl", PratilipiHelper.getPageUrl( pratilipiType, pratilipi.getId() ) );
-		dataModel.put( "pratilipiCoverUrl", PratilipiHelper.getCoverImageUrl( pratilipiType, pratilipi.getId() ) );
+		dataModel.put( "pratilipiCoverUrl", PratilipiHelper.getCoverImage300Url( pratilipiType, pratilipi.getId() ) );
+		dataModel.put( "pratilipiCoverUploadUrl", PratilipiHelper.getCoverImageUrl( pratilipiType, pratilipi.getId() ) );
 		dataModel.put( "pratilipiReaderUrl", PratilipiHelper.getReaderPageUrl( pratilipiType, pratilipi.getId() ) );
 		dataModel.put( "pratilipiContentHtmlUrl", PratilipiHelper.getContentHtmlUrl( pratilipiType, pratilipi.getId() ) );
 		dataModel.put( "pratilipiContentWordUrl", PratilipiHelper.getContentWordUrl( pratilipiType, pratilipi.getId() ) );
@@ -84,12 +82,12 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 				pratilipiBook != null && pratilipiBook.getReviewState() != UserReviewState.NOT_SUBMITTED );
 
 		dataModel.put( "showReviewOption",
-				pratilipiHelper.getCurrentUserId() != pratilipi.getAuthorId()
+				! currentUser.getId().equals( author.getUserId() )
 				&& ( pratilipiBook == null || pratilipiBook.getReviewState() == UserReviewState.NOT_SUBMITTED )
 				&& pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_REVIEW_ADD, false ) );
 
 		dataModel.put( "showEditOptions",
-				( pratilipiHelper.getCurrentUserId() == pratilipi.getAuthorId() && pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false ) )
+				( ! currentUser.getId().equals( author.getUserId() ) && pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false ) )
 				|| pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_UPDATE, false ) );
 		
 		return super.processTemplate(

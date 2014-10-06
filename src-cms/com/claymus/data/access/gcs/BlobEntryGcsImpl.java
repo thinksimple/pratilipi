@@ -2,6 +2,7 @@ package com.claymus.data.access.gcs;
 
 import java.nio.ByteBuffer;
 import java.util.Date;
+import java.util.Map;
 
 import com.claymus.data.transfer.BlobEntry;
 import com.google.appengine.tools.cloudstorage.GcsFileMetadata;
@@ -14,6 +15,7 @@ public class BlobEntryGcsImpl implements BlobEntry {
 	private final String mimeType;
 	private final String eTag;
 	private final Date lastModified;
+	private final Map<String, String> metaData;
 	
 	
 	public BlobEntryGcsImpl( ByteBuffer byteBuffer, GcsFileMetadata gcsFileMetadata ) {
@@ -22,6 +24,7 @@ public class BlobEntryGcsImpl implements BlobEntry {
 		this.mimeType = gcsFileMetadata.getOptions().getMimeType();
 		this.eTag = gcsFileMetadata.getEtag();
 		this.lastModified = gcsFileMetadata.getLastModified();
+		this.metaData = gcsFileMetadata.getOptions().getUserMetadata();
 	}
 
 
@@ -48,6 +51,16 @@ public class BlobEntryGcsImpl implements BlobEntry {
 	@Override
 	public Date getLastModified() {
 		return lastModified;
+	}
+
+	@Override
+	public Map<String, String> getMetaData() {
+		return metaData;
+	}
+
+	@Override
+	public String getMetaData( String key ) {
+		return metaData.get( key );
 	}
 
 }

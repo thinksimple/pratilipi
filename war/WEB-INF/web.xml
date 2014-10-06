@@ -146,6 +146,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>QueueCreateOrUpdateDefaultCoverServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.QueueCreateOrUpdateDefaultCoverServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueueCreateOrUpdateDefaultCoverServlet</servlet-name>
+    <url-pattern>/_ah/queue/create-or-update-default-cover</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>QueueHtmlToPratilipiServlet</servlet-name>
     <servlet-class>com.pratilipi.servlet.QueueHtmlToPratilipiServlet</servlet-class>
   </servlet>

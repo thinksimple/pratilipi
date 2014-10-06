@@ -8,7 +8,7 @@
 				<img class="img-responsive" src="${ pratilipiCoverUrl }">
 			</a>
 			<#if showEditOptions>
-				<div id="PageContent-Pratilipi-CoverImage-EditOptions" upload-url="${ pratilipiCoverUrl }" ></div>
+				<div id="PageContent-Pratilipi-CoverImage-EditOptions" upload-url="${ pratilipiCoverUploadUrl }" ></div>
 				<div id="PageContent-Pratilipi-HtmlContent-EditOptions" upload-url="${ pratilipiContentHtmlUrl }" ></div>
 				<div id="PageContent-Pratilipi-WordContent-EditOptions" upload-url="${ pratilipiContentWordUrl }" ></div>
 			</#if>
@@ -53,7 +53,7 @@
 					<div id="PageContent-Pratilipi-Summary-EditOptions"></div>
 				</#if>
 				
-				<#if isAuthor>
+				<#if showEditOptions>
 					<!-- Current is not author of this book -->
 					<button type="button" class="btn btn-success hidden-xs" onclick="window.location.href='${ pratilipiReaderUrl }'">Read This ${ pratilipi.getType().getName() }</button>
 					<!-- TODO: EDIT THIS BOOK URL -->

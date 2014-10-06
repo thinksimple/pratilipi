@@ -17,6 +17,8 @@ import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.User;
+import com.claymus.taskqueue.Task;
+import com.claymus.taskqueue.TaskQueue;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiState;
@@ -70,6 +72,7 @@ import com.pratilipi.service.shared.data.PratilipiContentData;
 import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.service.shared.data.PublisherData;
 import com.pratilipi.service.shared.data.UserPratilipiData;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 public class PratilipiServiceImpl extends RemoteServiceServlet
@@ -184,6 +187,14 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		} finally {
 			dataAccessor.destroy();
 		}
+
+		
+		Task task = TaskQueueFactory.newTask();
+		task.addParam( "pratilipiId", pratilipi.getId().toString() );
+		
+		TaskQueue taskQueue = TaskQueueFactory.getCreateOrUpdateDefaultCoverTaskQueue();
+		taskQueue.add( task );
+
 		
 		pratilipiData = new PratilipiData();
 		pratilipiData.setId( pratilipi.getId() );
