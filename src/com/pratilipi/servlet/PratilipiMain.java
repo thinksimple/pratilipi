@@ -420,12 +420,12 @@ public class PratilipiMain extends ClaymusMain {
 			HttpServletRequest request ) throws IOException {
 		
 		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 6262664149860352L );
-		bookIdList.add( 5757907245203456L );
-		bookIdList.add( 6229935693758464L );
-		bookIdList.add( 6221184697892864L );
-		bookIdList.add( 4793635010772992L );
-		bookIdList.add( 6026535974731776L );
+		bookIdList.add( 5726348362383360L );
+		bookIdList.add( 5144374119759872L );
+		bookIdList.add( 5202396712009728L );
+		bookIdList.add( 5186766520713216L );
+		bookIdList.add( 5969765231230976L );
+		bookIdList.add( 5722383033827328L );
 
 		List<Long> poemIdList = new LinkedList<>();
 		poemIdList.add( 6000473039437824L );
@@ -448,7 +448,7 @@ public class PratilipiMain extends ClaymusMain {
 		homeContent.setBookIdList( bookIdList );
 		homeContent.setPoemIdList( poemIdList );
 		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 16 ) );
+		homeContent.setLastUpdated( new Date( 18 ) );
 		return homeContent;
 	}
 
