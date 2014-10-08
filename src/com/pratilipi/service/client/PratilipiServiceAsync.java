@@ -3,8 +3,8 @@ package com.pratilipi.service.client;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
-import com.pratilipi.service.shared.AddGenreRequest;
-import com.pratilipi.service.shared.AddGenreResponse;
+import com.pratilipi.service.shared.SaveGenreRequest;
+import com.pratilipi.service.shared.SaveGenreResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
@@ -13,6 +13,8 @@ import com.pratilipi.service.shared.AddUserPratilipiRequest;
 import com.pratilipi.service.shared.AddUserPratilipiResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
+import com.pratilipi.service.shared.GetGenreListRequest;
+import com.pratilipi.service.shared.GetGenreListResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
@@ -77,9 +79,13 @@ public interface PratilipiServiceAsync {
 			AsyncCallback<GetPublisherListResponse> callback );
 
 	
-	void addGenre(
-			AddGenreRequest request,
-			AsyncCallback<AddGenreResponse> callback );
+	void saveGenre(
+			SaveGenreRequest request,
+			AsyncCallback<SaveGenreResponse> callback );
+
+	void getGenreList(
+			GetGenreListRequest request,
+			AsyncCallback<GetGenreListResponse> callback );
 
 
 	void addUserPratilipi(

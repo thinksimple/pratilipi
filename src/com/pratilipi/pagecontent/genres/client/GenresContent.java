@@ -12,8 +12,8 @@ import com.pratilipi.commons.client.GenreDataInputView;
 import com.pratilipi.commons.client.GenreDataInputViewImpl;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
-import com.pratilipi.service.shared.AddGenreRequest;
-import com.pratilipi.service.shared.AddGenreResponse;
+import com.pratilipi.service.shared.SaveGenreRequest;
+import com.pratilipi.service.shared.SaveGenreResponse;
 import com.pratilipi.service.shared.data.GenreData;
 
 public class GenresContent implements EntryPoint, ClickHandler {
@@ -44,12 +44,12 @@ public class GenresContent implements EntryPoint, ClickHandler {
 			return;
 		
 		genreDataInputView.setEnabled( false );
-		GenreData languageData = genreDataInputView.getGenreData();
-		AddGenreRequest request = new AddGenreRequest( languageData );
-		pratilipiService.addGenre( request, new AsyncCallback<AddGenreResponse>() {
+		GenreData genreData = genreDataInputView.getGenreData();
+		SaveGenreRequest request = new SaveGenreRequest( genreData );
+		pratilipiService.saveGenre( request, new AsyncCallback<SaveGenreResponse>() {
 
 			@Override
-			public void onSuccess( AddGenreResponse response ) {
+			public void onSuccess( SaveGenreResponse response ) {
 				// TODO: Display success message
 				Window.Location.reload();
 			}

@@ -6,7 +6,7 @@ import com.pratilipi.commons.shared.PratilipiType;
 
 public interface PratilipiGenre extends Serializable {
 
-	Long getId();
+	String getId();
 	
 	Long getPratilipiId();
 	

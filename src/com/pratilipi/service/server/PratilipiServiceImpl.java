@@ -39,8 +39,6 @@ import com.pratilipi.pagecontent.pratilipi.PratilipiContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
-import com.pratilipi.service.shared.AddGenreRequest;
-import com.pratilipi.service.shared.AddGenreResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
@@ -49,6 +47,8 @@ import com.pratilipi.service.shared.AddUserPratilipiRequest;
 import com.pratilipi.service.shared.AddUserPratilipiResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
+import com.pratilipi.service.shared.GetGenreListRequest;
+import com.pratilipi.service.shared.GetGenreListResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
@@ -61,6 +61,8 @@ import com.pratilipi.service.shared.GetUserPratilipiRequest;
 import com.pratilipi.service.shared.GetUserPratilipiResponse;
 import com.pratilipi.service.shared.SaveAuthorRequest;
 import com.pratilipi.service.shared.SaveAuthorResponse;
+import com.pratilipi.service.shared.SaveGenreRequest;
+import com.pratilipi.service.shared.SaveGenreResponse;
 import com.pratilipi.service.shared.SavePratilipiContentRequest;
 import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
@@ -458,11 +460,17 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = null;
 		
-		if( authorData.getId() != null)
-			author = dataAccessor.getAuthor( authorData.getId() );
-		else
+		if( authorData.getId() == null) { // Add Author usecase
+		
 			author = dataAccessor.newAuthor();
+			author.setRegistrationDate( new Date() );
 
+		} else { // Update Author usecase
+		
+			author = dataAccessor.getAuthor( authorData.getId() );
+		
+		}
+		
 		if( authorData.hasLanguageId() )
 			author.setLanguageId( authorData.getLanguageId() );
 		if( authorData.hasFirstName() )
@@ -482,8 +490,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		if( authorData.hasEmail() )
 			author.setEmail( authorData.getEmail().toLowerCase() );
 		
-		author.setRegistrationDate( new Date() );
-
 		author = dataAccessor.createOrUpdateAuthor( author );
 		dataAccessor.destroy();
 		
@@ -540,35 +546,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 	
 	@Override
-	public AddGenreResponse addGenre( AddGenreRequest request )
-			throws IllegalArgumentException, InsufficientAccessException {
-		
-		GenreData genreData = request.getGenre();
-		if( genreData.getId() != null )
-			throw new IllegalArgumentException(
-					"GenreId exist already. Did you mean to call updateGenre ?" );
-
-		
-		PratilipiHelper pratilipiHelper =
-				PratilipiHelper.get( this.getThreadLocalRequest() );
-		
-		if( ! pratilipiHelper.hasUserAccess( GenresContentProcessor.ACCESS_ID_GENRE_ADD, false ) )
-			throw new InsufficientAccessException();
-		
-		
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Genre genre = dataAccessor.newGenre();
-		genre.setName( genreData.getName() );
-		genre.setCreationDate( new Date() );
-		genre = dataAccessor.createOrUpdateGenre( genre );
-		dataAccessor.destroy();
-		
-		return new AddGenreResponse( genre.getId() );
-	}
-
-
-	@Override
 	public AddPublisherResponse addPublisher(AddPublisherRequest request)
 			throws InsufficientAccessException {
 		
@@ -613,6 +590,76 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		return new GetPublisherListResponse( publisherDataList );
 	}
 
+	
+	@Override
+	public SaveGenreResponse saveGenre( SaveGenreRequest request )
+			throws IllegalArgumentException, InsufficientAccessException {
+		
+		GenreData genreData = request.getGenre();
+		
+		PratilipiHelper pratilipiHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
+		
+		if( ! pratilipiHelper.hasUserAccess( GenresContentProcessor.ACCESS_ID_GENRE_ADD, false ) )
+			throw new InsufficientAccessException();
+		
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Genre genre = null;
+		
+		if( genreData.getId() == null) { // Add Genre usecase
+			
+			genre = dataAccessor.newGenre();
+			genre.setCreationDate( new Date() );
+				
+		} else { // Update Genre usecase
+		
+			genre = dataAccessor.getGenre( genreData.getId() );
+			
+		}
+		
+		genre.setName( genreData.getName() );
+		
+		
+		genre = dataAccessor.createOrUpdateGenre( genre );
+		dataAccessor.destroy();
+		
+		return new SaveGenreResponse( genre.getId() );
+	}
+
+	public GetGenreListResponse getGenreList( GetGenreListRequest request )
+			throws IllegalArgumentException, InsufficientAccessException {
+		
+		PratilipiHelper pratilipiHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
+		
+		if( ! pratilipiHelper.hasUserAccess( GenresContentProcessor.ACCESS_ID_GENRE_LIST, false ) )
+			throw new InsufficientAccessException();
+
+		boolean sendMetaData = pratilipiHelper.hasUserAccess(
+				GenresContentProcessor.ACCESS_ID_GENRE_READ_META_DATA, false );
+
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<Genre> genreList = dataAccessor.getGenreList();
+		dataAccessor.destroy();
+		
+		
+		ArrayList<GenreData> genreDataList = new ArrayList<>( genreList.size() );
+		for( Genre genre : genreList ) {
+			GenreData genreData = new GenreData();
+			genreData.setId( genre.getId() );
+			genreData.setName( genre.getName() );
+			if( sendMetaData )
+				genreData.setCreationDate( genre.getCreationDate() );
+			
+			genreDataList.add( genreData );
+		}
+
+
+		return new GetGenreListResponse( genreDataList );
+	}
+	
 	
 	@Override
 	public AddUserPratilipiResponse addUserPratilipi( AddUserPratilipiRequest request )

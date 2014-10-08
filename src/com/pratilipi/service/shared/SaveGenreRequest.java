@@ -3,15 +3,15 @@ package com.pratilipi.service.shared;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.pratilipi.service.shared.data.GenreData;
 
-public class AddGenreRequest implements IsSerializable {
+public class SaveGenreRequest implements IsSerializable {
 
 	private GenreData genreData;
 
 
 	@SuppressWarnings("unused")
-	private AddGenreRequest() {}
+	private SaveGenreRequest() {}
 	
-	public AddGenreRequest( GenreData genreData ) {
+	public SaveGenreRequest( GenreData genreData ) {
 		this.genreData = genreData;
 	}
 	
