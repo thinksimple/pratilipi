@@ -49,6 +49,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return pm.detachCopy( entity );
 	}
 	
+	protected <T> void deleteEntity( Class<T> clazz, Object id ) {
+		T entity = (T) pm.getObjectById( clazz, id );
+		pm.deletePersistent( entity );
+	}
+
 	
 	@Override
 	public User newUser() {

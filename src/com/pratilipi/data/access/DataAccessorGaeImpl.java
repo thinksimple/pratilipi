@@ -362,6 +362,15 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
+	public PratilipiGenre getPratilipiGenre( Long pratilipiId, Long genreId ) {
+		try {
+			return getEntity( PratilipiGenreEntity.class, pratilipiId + "-" + genreId );
+		} catch( JDOObjectNotFoundException e ) {
+			return null;
+		}
+	}
+	
+	@Override
 	public List<PratilipiGenre> getPratilipiGenreList( Long pratilipiId ) {
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( PratilipiGenreEntity.class ) )
@@ -379,8 +388,12 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
-	public void deletePratilipiGenre( PratilipiGenre pratilipiGenre ) {
-		deleteEntity( pratilipiGenre );
+	public void deletePratilipiGenre( Long pratilipiId, Long genreId ) {
+		try {
+			deleteEntity( PratilipiGenreEntity.class, pratilipiId + "-" + genreId );
+		} catch( JDOObjectNotFoundException e ) {
+			// Do nothing
+		}
 	}
 
 	

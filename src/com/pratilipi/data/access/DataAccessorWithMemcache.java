@@ -28,6 +28,7 @@ public class DataAccessorWithMemcache
 	private static final String PREFIX_AUTHOR = "Author-";
 	private static final String PREFIX_GENRE = "Genre-";
 	private static final String PREFIX_GENRE_LIST = "GenreList-";
+	private static final String PREFIX_PRATILIPI_GENRE = "PratilipiGenre-";
 	private static final String PREFIX_PRATILIPI_GENRE_LIST = "PratilipiGenreList-";
 	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
 	private static final String PREFIX_USER_PRATILIPI_LIST = "UserPratilipiList-";
@@ -265,6 +266,21 @@ public class DataAccessorWithMemcache
 	}
 
 	@Override
+	public PratilipiGenre getPratilipiGenre( Long pratilipiId, Long genreId ) {
+		PratilipiGenre pratilipiGenre = memcache.get(
+				PREFIX_PRATILIPI_GENRE + pratilipiId + "-" + genreId );
+		if( pratilipiGenre == null ) {
+			pratilipiGenre =
+					dataAccessor.getPratilipiGenre( pratilipiId, genreId );
+			if( pratilipiGenre != null )
+				memcache.put(
+						PREFIX_PRATILIPI_GENRE + pratilipiId + "-" + genreId,
+						pratilipiGenre );
+		}
+		return pratilipiGenre;
+	}
+
+	@Override
 	public List<PratilipiGenre> getPratilipiGenreList( Long pratilipiId ) {
 		List<PratilipiGenre> pratilipiGenreList =
 				memcache.get( PREFIX_PRATILIPI_GENRE_LIST + pratilipiId );
@@ -281,16 +297,21 @@ public class DataAccessorWithMemcache
 	@Override
 	public PratilipiGenre createPratilipiGenre( PratilipiGenre pratilipiGenre ) {
 		pratilipiGenre = dataAccessor.createPratilipiGenre( pratilipiGenre );
+		memcache.put(
+				PREFIX_PRATILIPI_GENRE + pratilipiGenre.getId(),
+				pratilipiGenre );
 		memcache.remove(
 				PREFIX_PRATILIPI_GENRE_LIST + pratilipiGenre.getPratilipiId() );
 		return pratilipiGenre;
 	}
 
 	@Override
-	public void deletePratilipiGenre( PratilipiGenre pratilipiGenre ) {
-		dataAccessor.deletePratilipiGenre( pratilipiGenre );
+	public void deletePratilipiGenre( Long pratilipiId, Long genreId ) {
+		dataAccessor.deletePratilipiGenre( pratilipiId, genreId );
 		memcache.remove(
-				PREFIX_PRATILIPI_GENRE_LIST + pratilipiGenre.getPratilipiId() );
+				PREFIX_PRATILIPI_GENRE + pratilipiId + "-" + genreId );
+		memcache.remove(
+				PREFIX_PRATILIPI_GENRE_LIST + pratilipiId );
 	}
 
 	
