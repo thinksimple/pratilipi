@@ -362,11 +362,28 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
-	public PratilipiGenre createOrUpdatePratilipiGenre( PratilipiGenre pratilipiGenre ) {
+	public List<PratilipiGenre> getPratilipiGenreList( Long pratilipiId ) {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( PratilipiGenreEntity.class ) )
+						.build();
+		
+		@SuppressWarnings("unchecked")
+		List<PratilipiGenre> pratilipiGenreEntityList = (List<PratilipiGenre>) query.execute();
+		return (List<PratilipiGenre>) pm.detachCopyAll( pratilipiGenreEntityList );
+	}
+	
+	@Override
+	public PratilipiGenre createPratilipiGenre( PratilipiGenre pratilipiGenre ) {
+		( (PratilipiGenreEntity) pratilipiGenre ).setId( pratilipiGenre.getPratilipiId() + "-" + pratilipiGenre.getGenreId() );
 		return createOrUpdateEntity( pratilipiGenre );
 	}
 
+	@Override
+	public void deletePratilipiGenre( PratilipiGenre pratilipiGenre ) {
+		deleteEntity( pratilipiGenre );
+	}
 
+	
 	@Override
 	public PratilipiTag newPratilipiTag() {
 		return new PratilipiTagEntity();

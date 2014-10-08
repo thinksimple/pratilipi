@@ -1,6 +1,5 @@
 package com.pratilipi.data.access.gae;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -13,8 +12,8 @@ import com.pratilipi.data.transfer.PratilipiGenre;
 public class PratilipiGenreEntity implements PratilipiGenre {
 
 	@PrimaryKey
-	@Persistent( column = "PRATILIPI_GENRE_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
-	private Long id;
+	@Persistent( column = "PRATILIPI_GENRE_ID" )
+	private String id;
 	
 	@Persistent( column = "PRATILIPI_ID" )
 	private Long pratilipiId;
@@ -26,14 +25,21 @@ public class PratilipiGenreEntity implements PratilipiGenre {
 	private Long genreId;
 	
 	
-	public Long getId() {
+	public void setId( String id ) {
+		this.id = id;
+	}
+	
+	@Override
+	public String getId() {
 		return id;
 	}
 	
+	@Override
 	public Long getPratilipiId() {
 		return pratilipiId;
 	}
 	
+	@Override
 	public void setPratilipiId( Long pratilipiId ) {
 		this.pratilipiId = pratilipiId;
 	}
@@ -48,10 +54,12 @@ public class PratilipiGenreEntity implements PratilipiGenre {
 		this.pratilipiType = pratilipiType;
 	}
 
+	@Override
 	public Long getGenreId() {
 		return genreId;
 	}
 	
+	@Override
 	public void setGenreId( Long genreId ) {
 		this.genreId = genreId;
 	}

@@ -92,8 +92,12 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	PratilipiGenre newPratilipiGenre();
 
-	PratilipiGenre createOrUpdatePratilipiGenre( PratilipiGenre pratilipiGenere );
+	List<PratilipiGenre> getPratilipiGenreList( Long pratilipiId );
 	
+	PratilipiGenre createPratilipiGenre( PratilipiGenre pratilipiGenere );
+
+	void deletePratilipiGenre( PratilipiGenre pratilipiGenere );
+
 
 	PratilipiTag newPratilipiTag();
 

@@ -26,6 +26,9 @@ public class DataAccessorWithMemcache
 	private static final String PREFIX_LANGUAGE = "Language-";
 	private static final String PREFIX_LANGUAGE_LIST = "LanguageList-";
 	private static final String PREFIX_AUTHOR = "Author-";
+	private static final String PREFIX_GENRE = "Genre-";
+	private static final String PREFIX_GENRE_LIST = "GenreList-";
+	private static final String PREFIX_PRATILIPI_GENRE_LIST = "PratilipiGenreList-";
 	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
 	private static final String PREFIX_USER_PRATILIPI_LIST = "UserPratilipiList-";
 
@@ -197,20 +200,31 @@ public class DataAccessorWithMemcache
 
 	@Override
 	public Genre getGenre( Long id ) {
-		// TODO: enable caching
-		return dataAccessor.getGenre( id );
+		Genre genre = memcache.get( PREFIX_GENRE + id );
+		if( genre == null ) {
+			genre = dataAccessor.getGenre( id );
+			if( genre != null )
+				memcache.put( PREFIX_GENRE + id, genre );
+		}
+		return genre;
 	}
 
 	@Override
 	public List<Genre> getGenreList() {
-		// TODO: enable caching
-		return dataAccessor.getGenreList();
+		List<Genre> genreList = memcache.get( PREFIX_GENRE_LIST );
+		if( genreList == null ) {
+			genreList = dataAccessor.getGenreList();
+			memcache.put( PREFIX_GENRE_LIST, new ArrayList<>( genreList ) );
+		}
+		return genreList;
 	}
 	
 	@Override
 	public Genre createOrUpdateGenre( Genre genre ) {
-		// TODO: enable caching
-		return dataAccessor.createOrUpdateGenre( genre );
+		genre = dataAccessor.createOrUpdateGenre( genre );
+		memcache.put( PREFIX_GENRE + genre.getId(), genre );
+		memcache.remove( PREFIX_GENRE_LIST );
+		return genre;
 	}
 
 
@@ -247,17 +261,39 @@ public class DataAccessorWithMemcache
 	
 	@Override
 	public PratilipiGenre newPratilipiGenre() {
-		// TODO: enable caching
 		return dataAccessor.newPratilipiGenre();
 	}
 
 	@Override
-	public PratilipiGenre createOrUpdatePratilipiGenre( PratilipiGenre pratilipiGenre ) {
-		// TODO: enable caching
-		return dataAccessor.createOrUpdatePratilipiGenre( pratilipiGenre );
+	public List<PratilipiGenre> getPratilipiGenreList( Long pratilipiId ) {
+		List<PratilipiGenre> pratilipiGenreList =
+				memcache.get( PREFIX_PRATILIPI_GENRE_LIST + pratilipiId );
+		if( pratilipiGenreList == null ) {
+			pratilipiGenreList =
+					dataAccessor.getPratilipiGenreList( pratilipiId );
+			memcache.put(
+					PREFIX_PRATILIPI_GENRE_LIST + pratilipiId,
+					new ArrayList<>( pratilipiGenreList ) );
+		}
+		return pratilipiGenreList;
 	}
 
+	@Override
+	public PratilipiGenre createPratilipiGenre( PratilipiGenre pratilipiGenre ) {
+		pratilipiGenre = dataAccessor.createPratilipiGenre( pratilipiGenre );
+		memcache.remove(
+				PREFIX_PRATILIPI_GENRE_LIST + pratilipiGenre.getPratilipiId() );
+		return pratilipiGenre;
+	}
 
+	@Override
+	public void deletePratilipiGenre( PratilipiGenre pratilipiGenre ) {
+		dataAccessor.deletePratilipiGenre( pratilipiGenre );
+		memcache.remove(
+				PREFIX_PRATILIPI_GENRE_LIST + pratilipiGenre.getPratilipiId() );
+	}
+
+	
 	@Override
 	public PratilipiTag newPratilipiTag() {
 		// TODO: enable caching
@@ -315,9 +351,5 @@ public class DataAccessorWithMemcache
 				PREFIX_USER_PRATILIPI_LIST + userPratilipi.getPratilipiId() );
 		return userPratilipi;
 	}
-
-
-	
-	
 	
 }
