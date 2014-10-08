@@ -23,7 +23,7 @@ public class Modal extends Composite {
 	private final Panel footer = new FlowPanel();
 
 	private final Button xButton = new Button();
-	private final HeadingElement titleElement = Document.get().createHElement( 4 );
+	private final HeadingElement titleElement = Document.get().createHElement( 3 );
 	private final Button closeButton = new Button();
 
 	
@@ -51,7 +51,7 @@ public class Modal extends Composite {
 
 		// Setting required style classes
 		panel.setStyleName( "modal fade" );
-		panelDialog.setStyleName( "modal-dialog modal-lg" );
+		panelDialog.setStyleName( "modal-dialog" );
 		panelContent.setStyleName( "modal-content" );
 
 		header.setStyleName( "modal-header" );
