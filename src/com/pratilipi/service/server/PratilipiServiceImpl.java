@@ -30,6 +30,7 @@ import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
@@ -41,10 +42,14 @@ import com.pratilipi.service.shared.AddAuthorRequest;
 import com.pratilipi.service.shared.AddAuthorResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
+import com.pratilipi.service.shared.AddPratilipiGenreRequest;
+import com.pratilipi.service.shared.AddPratilipiGenreResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
 import com.pratilipi.service.shared.AddPublisherResponse;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
 import com.pratilipi.service.shared.AddUserPratilipiResponse;
+import com.pratilipi.service.shared.DeletePratilipiGenreRequest;
+import com.pratilipi.service.shared.DeletePratilipiGenreResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
 import com.pratilipi.service.shared.GetAuthorListResponse;
 import com.pratilipi.service.shared.GetGenreListRequest;
@@ -112,7 +117,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			
 				pratilipi =  dataAccessor.getPratilipi( pratilipiData.getId() );
 				
-				if ( ( pratilipiHelper.getCurrentUserId() == pratilipi.getAuthorId()
+				if( ( pratilipiHelper.getCurrentUserId().equals( pratilipi.getAuthorId() )
 						&& ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
 						|| ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
 					throw new InsufficientAccessException();
@@ -660,6 +665,53 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		return new GetGenreListResponse( genreDataList );
 	}
 	
+	
+	public AddPratilipiGenreResponse addPratilipiGenre( AddPratilipiGenreRequest request )
+			throws IllegalArgumentException, InsufficientAccessException {
+		
+		PratilipiHelper pratilipiHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
+
+		if( ( pratilipiHelper.getCurrentUserId().equals( pratilipi.getAuthorId() )
+				&& ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
+				|| ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
+			throw new InsufficientAccessException();
+		
+		
+		PratilipiGenre pratilipiGenre = dataAccessor.newPratilipiGenre();
+		pratilipiGenre.setPratilipiId( request.getPratilipiId() );
+		pratilipiGenre.setGenreId( request.getGenreId() );
+		
+		dataAccessor.createPratilipiGenre( pratilipiGenre );
+		dataAccessor.destroy();
+		
+		return new AddPratilipiGenreResponse();
+	}
+
+	public DeletePratilipiGenreResponse deletePratilipiGenre( DeletePratilipiGenreRequest request )
+			throws IllegalArgumentException, InsufficientAccessException {
+
+		PratilipiHelper pratilipiHelper =
+				PratilipiHelper.get( this.getThreadLocalRequest() );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
+
+		if( ( pratilipiHelper.getCurrentUserId().equals( pratilipi.getAuthorId() )
+				&& ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
+				|| ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
+			throw new InsufficientAccessException();
+
+		
+		dataAccessor.deletePratilipiGenre( request.getPratilipiId(), request.getGenreId() );
+		dataAccessor.destroy();
+		
+		return new DeletePratilipiGenreResponse();
+	}
+
 	
 	@Override
 	public AddUserPratilipiResponse addUserPratilipi( AddUserPratilipiRequest request )
