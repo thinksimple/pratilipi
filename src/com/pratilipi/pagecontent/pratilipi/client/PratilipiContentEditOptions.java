@@ -1,5 +1,6 @@
 package com.pratilipi.pagecontent.pratilipi.client;
 
+import com.claymus.commons.client.ui.Dropdown;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -7,6 +8,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.client.rpc.SerializationStreamFactory;
+import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.Label;
@@ -24,6 +28,11 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			GWT.create( PratilipiService.class );
 	
 
+	private AddRemoveGenre addRemoveGenre;
+	private Anchor genreAnchor;
+	
+	
+	
 	// Cover image edit options widgets
 	private final FileUpload coverImageUpload = new FileUpload();
 	
@@ -42,14 +51,46 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	private final Label savingSummaryLabel = new Label( "Saving Summary ..." );
 
 	
+	private PratilipiData pratilipiData;
 	private String url = Window.Location.getPath();
 	private PratilipiType pratilipiType;
 
 	
 	public void onModuleLoad() {
+
+		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
+		String pratilipiDataEncodedStr = rootPanel.getElement().getInnerText();
+		try {
+			SerializationStreamReader streamReader =
+					( (SerializationStreamFactory) pratilipiService )
+							.createStreamReader( pratilipiDataEncodedStr );
+			pratilipiData = (PratilipiData) streamReader.readObject();
+		} catch( SerializationException e ) {
+			Window.alert( e.getMessage() );
+		}
+
+		
+		genreAnchor = new Anchor( "Add/Remove Genre" );
+		genreAnchor.addClickHandler( this );
+		addRemoveGenre = new AddRemoveGenre( pratilipiData );
+		
+		
+		Dropdown dropdown = new Dropdown( pratilipiData.getTitle() );
+		dropdown.add( genreAnchor );
+
+		rootPanel = RootPanel.get( "PageContent-Pratilipi-Title" );
+		rootPanel.getElement().setInnerHTML( "" );
+		rootPanel.add( dropdown );
+		RootPanel.get().add( addRemoveGenre );
+		
+		
+		
+		
+		
+		
 		
 		// Cover image edit options
-		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-CoverImage-EditOptions" );
+		rootPanel = RootPanel.get( "PageContent-Pratilipi-CoverImage-EditOptions" );
 		if( rootPanel != null ) {
 			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
 			coverImageUpload.getElement().setAttribute( "data-url", uploadUrl );
@@ -99,7 +140,10 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	@Override
 	public void onClick( ClickEvent event ) {
 		
-		if( event.getSource() == editSummaryAnchor ) {
+		if( event.getSource() == genreAnchor ) {
+			addRemoveGenre.setVisible( true );
+			
+		} else if( event.getSource() == editSummaryAnchor ) {
 			editSummaryAnchor.setVisible( false );
 			saveSummaryAnchor.setVisible( true );
 			loadEditor( RootPanel.get( "PageContent-Pratilipi-Summary" ).getElement() );

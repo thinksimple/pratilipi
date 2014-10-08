@@ -17,7 +17,6 @@ import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
-import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentProcessor;
@@ -44,19 +43,18 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 
 		Long pratilipiId = pratilipiContent.getPratilipiId();
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipiId );
 
 		
-		// Fetching Pratilipi, Author, Language and Reviews
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
-		UserPratilipi pratilipiBook = null;
+
+		UserPratilipi userPratilipi = null;
 		if( pratilipiHelper.isUserLoggedIn() )
-			pratilipiBook = dataAccessor.getUserPratilipi(
-				pratilipiHelper.getCurrentUserId(), pratilipiId );
-		List<UserPratilipi> reviewList =
-				dataAccessor.getUserPratilipiList( pratilipiId );
+			userPratilipi = dataAccessor.getUserPratilipi( pratilipiHelper.getCurrentUserId(), pratilipiId );
+		List<UserPratilipi> reviewList = dataAccessor.getUserPratilipiList( pratilipiId );
 		
 		Map<String, String> userIdNameMap = new HashMap<>();
 		for( UserPratilipi review : reviewList) {
@@ -65,9 +63,9 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 				userIdNameMap.put( user.getId().toString(), pratilipiHelper.createUserName( user ) );
 			}
 		}
+
 		dataAccessor.destroy();
 		
-		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, language, author );
 		
 
 		// Creating data model required for template processing
@@ -93,11 +91,11 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getAuthorId() );
 		
 		dataModel.put( "showReviewedMessage",
-				pratilipiBook != null && pratilipiBook.getReviewState() != UserReviewState.NOT_SUBMITTED );
+				userPratilipi != null && userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED );
 
 		dataModel.put( "showReviewOption",
 				! currentUser.getId().equals( author.getUserId() )
-				&& ( pratilipiBook == null || pratilipiBook.getReviewState() == UserReviewState.NOT_SUBMITTED )
+				&& ( userPratilipi == null || userPratilipi.getReviewState() == UserReviewState.NOT_SUBMITTED )
 				&& pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_REVIEW_ADD, false ) );
 
 		dataModel.put( "showEditOptions",

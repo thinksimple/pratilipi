@@ -39,6 +39,20 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 	border-radius: 1px;
 }
 
+.modal-body {
+	padding: 0px;
+}
+
+.modal-body table {
+	margin: 0px;
+}
+
+.modal-body table tr td {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+
 .well {
 	border-radius: 1px;
 }
@@ -183,10 +197,6 @@ hr {
 
 .badge {
 	background-color: #2C3E50;
-}
-
-.modal-header {
-	margin-bottom: 30px;
 }
 
 ::selection {
@@ -429,7 +439,6 @@ hr {
 
 a {
 	color: #777 !important;
-	font-size: 1.05em;
 }
 
 .bold {
@@ -615,7 +624,7 @@ header {
 	text-align: center;
 }
 
-.reader-panel th,td {
+.reader-panel th {
 	padding: 0 45px 15px 0;
 	text-align: center;
 }
@@ -910,4 +919,4 @@ header {
     float:left;
     position:relative;
 }
-s
+
