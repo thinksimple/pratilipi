@@ -1,6 +1,8 @@
 package com.pratilipi.servlet.content.client;
 
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.TextAlign;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -21,8 +23,9 @@ import com.google.gwt.user.client.ui.TextBox;
 public class LoginForm extends Composite {
 	
 	private Label heading = new Label();
-	private Anchor fbLoginAnchor = new Anchor();
+	private Button fbLoginAnchor = new Button();
 	private Image fbLoginImage = new Image( "/theme.pratilipi/images/fbLogin.png" );
+	private Label orLabel = new Label();
 	private InlineLabel inlineLabel = new InlineLabel( "OR" );
 	private TextBox emailInput = new TextBox();
 	private PasswordTextBox password = new PasswordTextBox();
@@ -51,11 +54,17 @@ public class LoginForm extends Composite {
 		HTML headingElement= new HTML();
 		headingElement.setHTML("<h3>Welcome Back</h3>");
 		
+		fbLoginAnchor.addStyleName("btn btn-block");
+		fbLoginAnchor.getElement().getStyle().setPadding( 0, Unit.PX );
+		fbLoginAnchor.getElement().getStyle().setBackgroundColor( "#4F6AA2" );
 		fbLoginAnchor.getElement().appendChild( fbLoginImage.getElement() );
-		fbLoginAnchor.setVisible( false );
-		inlineLabel.getElement().getStyle().setDisplay( Display.BLOCK );
+		
+		
+		orLabel.setStyleName( "clearfix" );
+		orLabel.getElement().appendChild( inlineLabel.getElement() );
+		orLabel.getElement().getStyle().setMargin( 15, Unit.PX );
+		orLabel.getElement().getStyle().setTextAlign( TextAlign.CENTER );
 		inlineLabel.setStyleName( "hr-line-through" );
-		inlineLabel.setVisible( false );
 		
 		heading.addStyleName( "page-header" );
 		heading.getElement().appendChild( headingElement.getElement() );
@@ -122,8 +131,8 @@ public class LoginForm extends Composite {
 		//Error message Style
 		serverError.addStyleName( "alert alert-danger" );
 		serverError.getElement().setAttribute( "role", "alert") ;
-		emailInputError.setStyleName("errorMessage");
-		passwordError.setStyleName("errorMessage");
+		emailInputError.setStyleName( "errorMessage" );
+		passwordError.setStyleName( "errorMessage" );
 		
 		//All error messages are invisible when page is loaded for first time.
 		emailInputError.setVisible(false);
@@ -132,14 +141,14 @@ public class LoginForm extends Composite {
 		
 		fields.add( heading );
 		fields.add( fbLoginAnchor );
-		fields.add( inlineLabel );
+		fields.add( orLabel );
 		fields.add( serverError );
-		fields.add(emailInput);
-		fields.add(emailInputError);
-		fields.add(password);
-		fields.add(passwordError);
+		fields.add( emailInput );
+		fields.add( emailInputError );
+		fields.add( password );
+		fields.add( passwordError );
 		
-		button.add(loginButton);		
+		button.add( loginButton );		
 		button.add( formLinksLabel );
 		
 		panel.add( fields );
@@ -166,6 +175,7 @@ public class LoginForm extends Composite {
 		emailInput.setEnabled( enabled );
 		password.setEnabled( enabled );
 		loginButton.setEnabled( enabled );
+		fbLoginAnchor.setEnabled( enabled );
 	}
 	
 	//Login validation functions

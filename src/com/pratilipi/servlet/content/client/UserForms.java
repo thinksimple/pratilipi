@@ -38,6 +38,7 @@ public class UserForms implements EntryPoint {
 	private static final ClaymusServiceAsync claymusService =
 			GWT.create( ClaymusService.class );
 	
+	private LoginForm loginForm = new LoginForm();
 	private boolean isChangePasswordURL = false;
 	private String email = null;
 	private String password = null;
@@ -48,13 +49,11 @@ public class UserForms implements EntryPoint {
 		final FocusPanel loginFormDialog = new FocusPanel();
 		loginFormDialog.setStyleName( "modal-body" );
 		
-		final LoginForm loginForm = new LoginForm();
-		
 		ClickHandler loginButtonClickHandler = new ClickHandler() {
 			
 			@Override
 			public void onClick( ClickEvent event ) {
-				userLogin( loginForm );	
+				userLogin();	
 			}
 		};
 		
@@ -82,7 +81,7 @@ public class UserForms implements EntryPoint {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					userLogin( loginForm );  
+					userLogin();  
 				   }
 			}});
 
@@ -434,7 +433,7 @@ public class UserForms implements EntryPoint {
 			}});
 	}
 	
-	public void userLogin(final LoginForm loginForm){
+	public void userLogin(){
 		if( loginForm.validateEmail() && loginForm.validatePassword() ){
 			loginForm.setEnabled( false );
 			loginForm.hideServerError();
@@ -494,13 +493,17 @@ public class UserForms implements EntryPoint {
 		facebookLoginData.setLastName( lastName );
 		facebookLoginData.setCampaign( "PreLaunch" );
 		facebookLoginData.setReferer( Window.Location.getParameter( "ref" ));
-		Window.alert( email );
+		
+		loginForm.setEnabled( false );
+		loginForm.hideServerError();
 		claymusService.facebookLogin( new FacebookLoginUserRequest( facebookLoginData ), new AsyncCallback<FacebookLoginUserResponse>(){
 
 					@Override
 					public void onFailure(
 							Throwable caught) {
-						Window.alert( caught.getMessage() );
+						loginForm.setServerError( caught.getMessage() );
+						loginForm.showServerError();
+						loginForm.setEnabled( true );
 					}
 
 					@Override

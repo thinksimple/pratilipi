@@ -165,7 +165,7 @@ window.onload = function(){
 			</div>
 			<div class="col-md-9">
 				<div class="row margin0">
-					<div class="col-sm-7" style="border: 1px solid #DDD;">
+					<div class="col-sm-7" style="border-right: 1px solid #DDD;">
 						<h3 style="text-align: center;">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></h3>
 						<h4 style="text-align: center;">${ author.getFirstNameEn() }<#if author.getLastNameEn()??> ${ author.getLastNameEn() }</#if></h4>
 						<div>
@@ -179,8 +179,8 @@ window.onload = function(){
 							</#if>
 						</div>
 					</div>
-					<div class="col-sm-4 published-works">
-						<h3>Works</h3>
+					<div class="col-sm-4 published-works" style="margin-left: 4px;">
+						<h3 style="text-align: center;">Works</h3>
 						<#assign _bookCount = bookDataList?size>
 						<#assign _poemCount = poemDataList?size>
 						<#assign _storyCount = storyDataList?size>

@@ -31,8 +31,8 @@ public class ValidateFbAccessToken {
 		try {
 			String urlParameters = "input_token=" + URLEncoder.encode( inputToken, "UTF-8" )
 					+ "&client_id=" + URLEncoder.encode( "293990794105516", "UTF-8" )
-					+ "&redirect_uri=" + URLEncoder.encode( "http://mark-2d3.devo-pratilipi.appspot.com", "UTF-8" )
-					+ "&access_token=" + URLEncoder.encode( "293990794105516|f819f062c33100f80809c48d77cfedcb", "UTF-8" );
+					+ "&redirect_url=" + URLEncoder.encode( "http://mark-2d3.devo-pratilipi.appspot.com", "UTF-8" )
+					+ "&access_token=" + URLEncoder.encode( "293990794105516|XXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "UTF-8" );
 					
 			String validateURL = "https://graph.facebook.com/debug_token?" + urlParameters;
 			
