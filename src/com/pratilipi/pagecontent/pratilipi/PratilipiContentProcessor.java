@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.client.UnexpectedServerException;
+import com.claymus.commons.server.SerializationUtil;
 import com.claymus.data.transfer.User;
 import com.claymus.module.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
@@ -16,18 +17,25 @@ import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentProcessor;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiContentProcessor extends PageContentProcessor<PratilipiContent> {
 
-	public static final String ACCESS_ID_PRATILIPI_READ_META_DATA = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_READ_META_DATA;
-	public static final String ACCESS_ID_PRATILIPI_ADD = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_ADD;
-	public static final String ACCESS_ID_PRATILIPI_UPDATE = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_UPDATE;
+	public static final String ACCESS_ID_PRATILIPI_READ_META_DATA =
+			PratilipisContentProcessor.ACCESS_ID_PRATILIPI_READ_META_DATA;
+	public static final String ACCESS_ID_PRATILIPI_ADD =
+			PratilipisContentProcessor.ACCESS_ID_PRATILIPI_ADD;
+	public static final String ACCESS_ID_PRATILIPI_UPDATE =
+			PratilipisContentProcessor.ACCESS_ID_PRATILIPI_UPDATE;
 	
-	public static final String ACCESS_ID_PRATILIPI_REVIEW_VIEW = "pratilipi_review_view";
-	public static final String ACCESS_ID_PRATILIPI_REVIEW_ADD = "pratilipi_review_add";
+	public static final String ACCESS_ID_PRATILIPI_REVIEW_VIEW =
+			"pratilipi_review_view";
+	public static final String ACCESS_ID_PRATILIPI_REVIEW_ADD =
+			"pratilipi_review_add";
 
 	
 	@Override
@@ -38,10 +46,11 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 
 		
-		// Fetching Pratilipi, Author and Reviews
+		// Fetching Pratilipi, Author, Language and Reviews
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
 		UserPratilipi pratilipiBook = null;
 		if( pratilipiHelper.isUserLoggedIn() )
 			pratilipiBook = dataAccessor.getUserPratilipi(
@@ -58,9 +67,14 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		}
 		dataAccessor.destroy();
 		
+		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, language, author );
+		
 
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
+		dataModel.put( "pratilipiData", pratilipiData );
+		dataModel.put( "pratilipiDataEncodedStr", SerializationUtil.encode( pratilipiData ) );
+
 		dataModel.put( "pratilipi", pratilipi );
 		dataModel.put( "author", author );
 		dataModel.put( "reviewList", reviewList );

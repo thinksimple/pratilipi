@@ -1,3 +1,5 @@
+<!-- PageContent :: Pratilipi :: Start -->
+
 <div class="container">
 	
 	<div class="row">
@@ -16,9 +18,9 @@
 		
 		<#-- Title, Author Name and Buttons -->
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-8" style="padding-bottom:15px;">
-			<h2>
-				<a href="${ pratilipiHomeUrl }">${ pratilipi.getTitle() }</a>
-			</h2>
+			<h1 id="PageContent-Pratilipi-Title">
+				${ pratilipi.getTitle() }
+			</h1>
 			<h4>
 				<a href="${ authorHomeUrl }">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></a>
 			</h4>
@@ -76,6 +78,12 @@
 
 	</div> <#-- END of row -->
 
+</div> <#-- END of container -->
+
+
+
+<div class="container">
+
 	<div id="Reviews" class="well" style="margin-top:25px;">
 		<#list reviewList as review >
 			<div class="hr-below">
@@ -97,7 +105,14 @@
 	
 </div> <#-- END of container -->
 
-<script type="text/javascript" language="javascript" src="/pagecontent.pratilipi/pagecontent.pratilipi.nocache.js" defer></script>
+
+
 <#if showEditOptions>
-	<script type="text/javascript" language="javascript" src="/pagecontent.pratilipi.edit/pagecontent.pratilipi.edit.nocache.js" defer></script>
+	<div id="PageContent-Pratilipi-EncodedData" style="display:none;">${ pratilipiDataEncodedStr }</div>
+	<script type="text/javascript" language="javascript" src="/pagecontent.pratilipi.witheditoptions/pagecontent.pratilipi.witheditoptions.nocache.js" defer></script>
+<#else>
+	<script type="text/javascript" language="javascript" src="/pagecontent.pratilipi/pagecontent.pratilipi.nocache.js" defer></script>
 </#if>
+
+
+<!-- PageContent :: Pratilipi :: End -->
