@@ -140,8 +140,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
 			if( pratilipiData.hasSummary() )
 				pratilipi.setSummary( pratilipiData.getSummary() );
-			if( pratilipiData.hasContent() )
-				pratilipi.setContent( pratilipiData.getContent() );
 			if( pratilipiData.hasWordCount() )
 				pratilipi.setWordCount( pratilipiData.getWordCount() );
 			if( pratilipiData.hasPageCount() )

@@ -1,6 +1,7 @@
 package com.pratilipi.service.shared.data;
 
 import java.util.Date;
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.pratilipi.commons.shared.PratilipiState;
@@ -56,9 +57,6 @@ public class PratilipiData implements IsSerializable {
 	private String summary;
 	private boolean hasSummary;
 	
-	private String content;
-	private boolean hasContent;
-	
 	private Long wordCount;
 	private boolean hasWordCount;
 	
@@ -74,6 +72,10 @@ public class PratilipiData implements IsSerializable {
 	private PratilipiState state;
 	private boolean hasState;
 	
+
+	private List<Long> genreIdList;
+	private List<String> genreNameList;
+
 	
 	public Long getId() {
 		return id;
@@ -281,19 +283,6 @@ public class PratilipiData implements IsSerializable {
 		return hasSummary;
 	}
 	
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent( String content ) {
-		this.content = content;
-		this.hasContent = true;
-	}
-
-	public boolean hasContent() {
-		return hasContent;
-	}
-	
 	public Long getWordCount() {
 		return wordCount;
 	}
@@ -355,6 +344,22 @@ public class PratilipiData implements IsSerializable {
 	
 	public boolean hasState() {
 		return hasState;
+	}
+	
+	public List<Long> getGenreIdList() {
+		return genreIdList;
+	}
+
+	public void setGenreIdList( List<Long> genreIdList ) {
+		this.genreIdList = genreIdList;
+	}
+	
+	public List<String> getGenreNameList() {
+		return genreNameList;
+	}
+
+	public void setGenreNameList( List<String> genreNameList ) {
+		this.genreNameList = genreNameList;
 	}
 	
 }

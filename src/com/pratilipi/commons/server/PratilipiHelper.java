@@ -1,5 +1,7 @@
 package com.pratilipi.commons.server;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,10 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.Memcache;
 import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 @SuppressWarnings("serial")
@@ -193,7 +198,7 @@ public class PratilipiHelper extends ClaymusHelper {
 
 	
 	public static String getAuthorPageUrl( Long authorId ) {
-		return "/author/" + authorId;
+		return URL_AUTHOR_PAGE + authorId;
 	}
 	
 
@@ -207,6 +212,60 @@ public class PratilipiHelper extends ClaymusHelper {
 				+ ( author.getLastNameEn() == null ? "" : " " + author.getLastNameEn() );
 	}
 
+	public PratilipiData createPratilipiData( Long pratilipiId ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
+		List<PratilipiGenre> pratilipiGenreList = dataAccessor.getPratilipiGenreList( pratilipiId );
+		
+		List<Genre> genreList = new ArrayList<>( pratilipiGenreList.size() );
+		for( PratilipiGenre pratilipiGenre : pratilipiGenreList )
+			genreList.add( dataAccessor.getGenre( pratilipiGenre.getGenreId() ) );
+		
+		dataAccessor.destroy();
+		
+		
+		PratilipiData pratilipiData = new PratilipiData();
+
+		pratilipiData.setId( pratilipi.getId() );
+		pratilipiData.setType( pratilipi.getType() );
+		pratilipiData.setPageUrl( getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
+		pratilipiData.setCoverImageUrl( getCoverImage300Url( pratilipi.getType(), pratilipi.getId(), false ) );
+		pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
+		
+		pratilipiData.setTitle( pratilipi.getTitle() );
+		pratilipiData.setLanguageId( language.getId() );
+		pratilipiData.setLanguageName( language.getName() );
+		pratilipiData.setLanguageNameEn( language.getNameEn() );
+
+		pratilipiData.setAuthorId( author.getId() );
+		pratilipiData.setAuthorName( createAuthorName( author ) );
+		pratilipiData.setAuthorNameEn( createAuthorNameEn( author ) );
+		pratilipiData.setAuthorPageUrl( getAuthorPageUrl( pratilipi.getAuthorId() ) );
+		
+		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
+		pratilipiData.setListingDate( pratilipi.getListingDate() );
+		
+		pratilipiData.setSummary( pratilipi.getSummary() );
+		pratilipiData.setPageCount( pratilipi.getPageCount() );
+		
+		List<Long> genreIdList = new ArrayList<>( genreList.size() );
+		List<String> genreNameList = new ArrayList<>( genreList.size() );
+		for( Genre genre : genreList ) {
+			genreIdList.add( genre.getId() );
+			genreNameList.add( genre.getName() );
+		}
+		pratilipiData.setGenreIdList( genreIdList );
+		pratilipiData.setGenreNameList( genreNameList );
+		
+		
+		return pratilipiData;
+	}
+
+	@Deprecated
 	public PratilipiData createPratilipiData(
 			Pratilipi pratilipi, Language language, Author author ) {
 		
@@ -236,4 +295,5 @@ public class PratilipiHelper extends ClaymusHelper {
 		
 		return pratilipiData;
 	}
+
 }
