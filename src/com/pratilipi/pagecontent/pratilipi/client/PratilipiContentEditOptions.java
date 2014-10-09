@@ -6,6 +6,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.SerializationException;
@@ -28,9 +30,14 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			GWT.create( PratilipiService.class );
 	
 
-	private AddRemoveGenre addRemoveGenre;
+	// Genre list edit options widgets
+	private GenreList genreList;
 	private Anchor genreAnchor;
+	private AddRemoveGenre addRemoveGenre;
 	
+	
+	private PratilipiData pratilipiData;
+
 	
 	
 	// Cover image edit options widgets
@@ -51,13 +58,13 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	private final Label savingSummaryLabel = new Label( "Saving Summary ..." );
 
 	
-	private PratilipiData pratilipiData;
 	private String url = Window.Location.getPath();
 	private PratilipiType pratilipiType;
 
 	
 	public void onModuleLoad() {
 
+		// Decoding PratilipiData
 		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
 		String pratilipiDataEncodedStr = rootPanel.getElement().getInnerText();
 		try {
@@ -70,9 +77,19 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		}
 
 		
+		// Genre list and edit options
+		genreList = new GenreList( pratilipiData.getGenreNameList() );
 		genreAnchor = new Anchor( "Add/Remove Genre" );
 		genreAnchor.addClickHandler( this );
 		addRemoveGenre = new AddRemoveGenre( pratilipiData );
+		addRemoveGenre.addValueChangeHandler( new ValueChangeHandler<PratilipiData>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<PratilipiData> event) {
+				genreList.set( event.getValue().getGenreNameList() );
+			}
+			
+		});
 		
 		
 		Dropdown dropdown = new Dropdown( pratilipiData.getTitle() );
@@ -81,11 +98,12 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		rootPanel = RootPanel.get( "PageContent-Pratilipi-Title" );
 		rootPanel.getElement().setInnerHTML( "" );
 		rootPanel.add( dropdown );
+
+		rootPanel = RootPanel.get( "PageContent-Pratilipi-GenreList" );
+		rootPanel.getElement().setInnerHTML( "" );
+		rootPanel.add( genreList );
+		
 		RootPanel.get().add( addRemoveGenre );
-		
-		
-		
-		
 		
 		
 		
@@ -137,6 +155,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 
 	}
 
+	
 	@Override
 	public void onClick( ClickEvent event ) {
 		

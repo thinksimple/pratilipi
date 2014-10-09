@@ -6,6 +6,10 @@ import com.claymus.commons.client.ui.Modal;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -24,7 +28,7 @@ import com.pratilipi.service.shared.GetGenreListResponse;
 import com.pratilipi.service.shared.data.GenreData;
 import com.pratilipi.service.shared.data.PratilipiData;
 
-public class AddRemoveGenre extends Composite {
+public class AddRemoveGenre extends Composite implements HasValueChangeHandlers<PratilipiData> {
 
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
@@ -78,6 +82,9 @@ public class AddRemoveGenre extends Composite {
 											addButton.setVisible( false );
 											removeButton.setVisible( true );
 											removeButton.setEnabled( true );
+											pratilipiData.getGenreIdList().add( genreData.getId() );
+											pratilipiData.getGenreNameList().add( genreData.getName() );
+											ValueChangeEvent.fire( AddRemoveGenre.this, pratilipiData );
 										}
 										
 										@Override
@@ -105,6 +112,9 @@ public class AddRemoveGenre extends Composite {
 											removeButton.setVisible( false );
 											addButton.setVisible( true );
 											addButton.setEnabled( true );
+											pratilipiData.getGenreIdList().remove( genreData.getId() );
+											pratilipiData.getGenreNameList().remove( genreData.getName() );
+											ValueChangeEvent.fire( AddRemoveGenre.this, pratilipiData );
 										}
 										
 										@Override
@@ -135,7 +145,7 @@ public class AddRemoveGenre extends Composite {
 			
 			@Override
 			public void onFailure( Throwable caught ) {
-				Window.alert( caught.getMessage() );
+				Window.Location.reload();
 			}
 			
 		});
@@ -152,4 +162,9 @@ public class AddRemoveGenre extends Composite {
 			modal.hide();
 	}
 
+	@Override
+	public HandlerRegistration addValueChangeHandler( ValueChangeHandler<PratilipiData> handler ) {
+		return addHandler( handler, ValueChangeEvent.getType() );
+	}
+	
 }

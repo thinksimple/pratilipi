@@ -16,14 +16,19 @@
 			</#if>
 		</div>
 		
-		<#-- Title, Author Name and Buttons -->
+		<#-- Title, Author Name, Genre List and Buttons -->
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-8" style="padding-bottom:15px;">
 			<h1 id="PageContent-Pratilipi-Title">
-				${ pratilipi.getTitle() }
+				${ pratilipiData.getTitle() }
 			</h1>
 			<h4>
 				<a href="${ authorHomeUrl }">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></a>
 			</h4>
+			<h5 id="PageContent-Pratilipi-GenreList">
+				<#list pratilipiData.getGenreNameList() as genreName>
+					${ genreName }<#if genreName_has_next>,</#if>
+				</#list>
+			</h5>
 			<div style="line-height: 15px;">
 				<div id="fb-like" class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true">
 				</div>
