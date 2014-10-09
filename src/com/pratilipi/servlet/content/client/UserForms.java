@@ -389,8 +389,11 @@ public class UserForms implements EntryPoint {
 								@Override
 								public void run() {
 									hideSignupModal();
-									String url = Window.Location.getPath();
-									Window.Location.assign( url + "?action=signup" );
+									String url = Window.Location.getHref();
+									if( url.indexOf( "?" ) == -1 )
+										Window.Location.assign( url + "?action=login" );
+									else
+										Window.Location.assign( url + "&action=login" );
 								}};
 							time.schedule( 2000 );
 						}
@@ -442,7 +445,11 @@ public class UserForms implements EntryPoint {
 				@Override
 				public void onSuccess( LoginUserResponse response ) {
 					hideLoginModal();
-					Window.Location.assign( Window.Location.getHref() + "?action=login" );
+					String currentUrl = Window.Location.getHref();
+					if( currentUrl.indexOf( "?" ) == -1 )
+						Window.Location.assign( currentUrl + "?action=login" );
+					else
+						Window.Location.assign( currentUrl + "&action=login" );
 				}
 				
 				@Override

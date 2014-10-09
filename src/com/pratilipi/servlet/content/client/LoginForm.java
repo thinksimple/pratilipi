@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.TextBox;
 public class LoginForm extends Composite {
 	
 	private Label heading = new Label();
-	private Button fbLoginAnchor = new Button();
+	private Button fbLoginButton = new Button();
 	private Image fbLoginImage = new Image( "/theme.pratilipi/images/fbLogin.png" );
 	private Label orLabel = new Label();
 	private InlineLabel inlineLabel = new InlineLabel( "OR" );
@@ -54,10 +54,10 @@ public class LoginForm extends Composite {
 		HTML headingElement= new HTML();
 		headingElement.setHTML("<h3>Welcome Back</h3>");
 		
-		fbLoginAnchor.addStyleName("btn btn-block");
-		fbLoginAnchor.getElement().getStyle().setPadding( 0, Unit.PX );
-		fbLoginAnchor.getElement().getStyle().setBackgroundColor( "#4F6AA2" );
-		fbLoginAnchor.getElement().appendChild( fbLoginImage.getElement() );
+		fbLoginButton.addStyleName("btn btn-block");
+		fbLoginButton.getElement().getStyle().setPadding( 0, Unit.PX );
+		fbLoginButton.getElement().getStyle().setBackgroundColor( "#4F6AA2" );
+		fbLoginButton.getElement().appendChild( fbLoginImage.getElement() );
 		
 		
 		orLabel.setStyleName( "clearfix" );
@@ -140,8 +140,8 @@ public class LoginForm extends Composite {
 		serverError.setVisible( false );
 		
 		fields.add( heading );
-		fields.add( fbLoginAnchor );
-		fields.add( orLabel );
+//		fields.add( fbLoginButton );
+//		fields.add( orLabel );
 		fields.add( serverError );
 		fields.add( emailInput );
 		fields.add( emailInputError );
@@ -167,7 +167,7 @@ public class LoginForm extends Composite {
 	}
 	
 	public void addFbLoginClickHandler( ClickHandler clickHandler ) {
-		this.fbLoginAnchor.addClickHandler( clickHandler );
+		this.fbLoginButton.addClickHandler( clickHandler );
 	}
 	
 	//Enable and Disable login form
@@ -175,7 +175,7 @@ public class LoginForm extends Composite {
 		emailInput.setEnabled( enabled );
 		password.setEnabled( enabled );
 		loginButton.setEnabled( enabled );
-		fbLoginAnchor.setEnabled( enabled );
+		fbLoginButton.setEnabled( enabled );
 	}
 	
 	//Login validation functions

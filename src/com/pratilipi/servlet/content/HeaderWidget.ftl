@@ -104,16 +104,16 @@
 </header>
 <div class="modal fade" id="loginModal">
 	<div class="modal-dialog">
-		<div id="login" class="modal-content"></div>
+		<div id="login" class="modal-content" style="padding: 15px;"></div>
 	</div>
 </div>
 <div class="modal fade" id="signupModal">
 	<div class="modal-dialog">
-		<div id="signup" class="modal-content"></div>
+		<div id="signup" class="modal-content" style="padding: 15px;"></div>
 	</div>
 </div>
 <div class="modal fade" id="forgotPasswordModal">
 	<div class="modal-dialog">
-		<div id="forgotPassword" class="modal-content"></div>
+		<div id="forgotPassword" class="modal-content" style="padding: 15px;"></div>
 	</div>
 </div>
