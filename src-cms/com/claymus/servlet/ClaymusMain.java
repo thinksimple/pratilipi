@@ -3,7 +3,6 @@ package com.claymus.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +32,9 @@ import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
 import com.claymus.module.websitewidget.html.HtmlWidgetFactory;
 import com.claymus.module.websitewidget.navigation.NavigationWidgetFactory;
 import com.claymus.module.websitewidget.user.UserWidgetFactory;
+import com.claymus.pagecontent.roleaccess.RoleAccessContentHelper;
+import com.pratilipi.data.access.DataAccessor;
+import com.pratilipi.data.access.DataAccessorFactory;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -47,8 +49,8 @@ public class ClaymusMain extends HttpServlet {
 	private static final Logger logger = 
 			Logger.getLogger( ClaymusMain.class.getName() );
 
-	protected static final PageContentRegistry PAGE_CONTENT_REGISTRY;
-	protected static final WebsiteWidgetRegistry WEBSITE_WIDGET_REGISTRY;
+	public static final PageContentRegistry PAGE_CONTENT_REGISTRY;
+	public static final WebsiteWidgetRegistry WEBSITE_WIDGET_REGISTRY;
 
 	public static final Configuration FREEMARKER_CONFIGURATION;
 	
@@ -56,6 +58,7 @@ public class ClaymusMain extends HttpServlet {
 		PAGE_CONTENT_REGISTRY = new PageContentRegistry();
 		WEBSITE_WIDGET_REGISTRY = new WebsiteWidgetRegistry();
 		
+		PAGE_CONTENT_REGISTRY.register( RoleAccessContentHelper.class );
 		PAGE_CONTENT_REGISTRY.register( HtmlContentFactory.class );
 		
 		WEBSITE_WIDGET_REGISTRY.register( HeaderWidgetFactory.class );
@@ -173,52 +176,31 @@ public class ClaymusMain extends HttpServlet {
 	
 	protected Page getPage( HttpServletRequest request ) {
 		
-		return new Page() {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Page page = dataAccessor.newPage();
 
-			@Override
-			public Long getId() {
-				return null;
-			}
-
-			@Override
-			public String getUri() {
-				return null;
-			}
-
-			@Override
-			public void setUri( String uri ) { }
-
-			@Override
-			public String getTitle() {
-				return null;
-			}
-
-			@Override
-			public void setTitle( String title ) { }
-
-			@Override
-			public Long getLayoutId() {
-				return null;
-			}
-
-			@Override
-			public void setLayout( Long layoutId ) { }
-
-			@Override
-			public Date getCreationDate() {
-				return null;
-			}
-
-			@Override
-			public void setCreationDate( Date creationDate ) { }
+		String requestUri = request.getRequestURI();
 		
-		};
+		if( requestUri.equals( "/access" ) )
+			page.setTitle( "Access" );
+		
+		dataAccessor.destroy();
+		
+		return page;
 		
 	}
 	
 	protected List<PageContent> getPageContentList(
 			HttpServletRequest request ) throws IOException {
-		return new LinkedList<>();
+
+		List<PageContent> pageContentList = new LinkedList<>();
+		
+		String requestUri = request.getRequestURI();
+
+		if( requestUri.equals( "/roleaccess" ) )
+			pageContentList.add( RoleAccessContentHelper.newAccessContent() );
+
+		return pageContentList;
 	}
 
 	protected List<WebsiteWidget> getWebsiteWidgetList(

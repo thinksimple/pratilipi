@@ -207,6 +207,10 @@ public class ClaymusHelper implements Serializable {
 		return userService.isUserLoggedIn() && userService.isUserAdmin();
 	}
 	
+	public boolean hasUserAccess( Access access ) {
+		return hasUserAccess( access.getId(), access.getDefault() );
+	}
+
 	public boolean hasUserAccess( String accessId, boolean defaultAccess ) {
 		Boolean access = null;
 

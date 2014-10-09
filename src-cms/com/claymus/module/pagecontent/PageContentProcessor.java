@@ -83,7 +83,7 @@ public abstract class PageContentProcessor<T extends PageContent> {
 	}
 	
 	protected String getTemplateName() {
-		return null;
+		return this.getClass().getName().replaceAll( "[.]", "/" ).replace( "Processor", ".ftl" );
 	}
 	
 	protected String processTemplate( Object dataModel, String templateName )

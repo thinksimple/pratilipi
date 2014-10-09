@@ -2,19 +2,24 @@
 
 <#setting time_zone="${ timeZone }">
 
-<#if showAddOption>
-	<div id="PageContent-Genres-DataInput"></div>
-</#if>
+<div class="container">
 
-<div>
+	<#if showAddOption>
+		<div id="PageContent-Genres-DataInput"></div>
+	</#if>
 
-	<table class="table">
+	<h1>Genres</h1>
+
+	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>#</th>
 				<th>Genre</th>
 				<#if showMetaData>
 					<th>Date Added</th>
+				</#if>
+				<#if showAddOption>
+					<th>Add New</th>
 				</#if>
 			</tr>
 		</thead>
@@ -26,6 +31,9 @@
 					<td><a href="${ _genrePageUrl }">${ genre.getName() }</td>
 					<#if showMetaData>
 						<td>${ genre.getCreationDate()?date }</td>
+					</#if>
+					<#if showAddOption>
+						<td>Edit</td>
 					</#if>
 				</tr>
 			</#list>

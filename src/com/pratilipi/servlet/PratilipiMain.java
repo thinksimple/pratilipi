@@ -33,7 +33,7 @@ import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.author.AuthorContentFactory;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
-import com.pratilipi.pagecontent.genres.GenresContentFactory;
+import com.pratilipi.pagecontent.genres.GenresContentHelper;
 import com.pratilipi.pagecontent.home.HomeContent;
 import com.pratilipi.pagecontent.home.HomeContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
@@ -58,7 +58,7 @@ public class PratilipiMain extends ClaymusMain {
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( AuthorContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( GenresContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( GenresContentHelper.class );
 	}
 
 
@@ -210,6 +210,13 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/about/the-founding-readers" ) )
 			page.setTitle( "About The Founding Readers | " + page.getTitle() );
 		
+		
+		else {
+			String pageTitle = page.getTitle();
+			page = super.getPage( request );
+			page.setTitle( ( page.getTitle() == null ? "" : page.getTitle() + " | " ) + pageTitle );
+		}
+		
 		dataAccessor.destroy();
 
 		return page;
@@ -283,7 +290,7 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( AuthorsContentFactory.newAuthorsContent() );
 
 		else if( requestUri.equals( "/genres" ) )
-			pageContentList.add( GenresContentFactory.newGenresContent() );
+			pageContentList.add( GenresContentHelper.newGenresContent() );
 
 		
 		// Individual item's pages

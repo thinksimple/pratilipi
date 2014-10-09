@@ -33,7 +33,7 @@ public class GenresContentProcessor
 				pratilipiHelper.hasUserAccess( ACCESS_ID_GENRE_ADD, false );
 
 		
-		// Fetching Language list
+		// Fetching Genre list
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Genre> genreList = dataAccessor.getGenreList();
 		dataAccessor.destroy();
