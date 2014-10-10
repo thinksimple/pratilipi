@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.mail.MessagingException;
 
 import com.claymus.commons.client.IllegalArgumentException;
+import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.EncryptPassword;
@@ -16,9 +17,11 @@ import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.EmailTemplate;
+import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.claymus.email.EmailUtil;
+import com.claymus.pagecontent.roleaccess.RoleAccessContentHelper;
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.shared.FacebookLoginUserRequest;
 import com.claymus.service.shared.FacebookLoginUserResponse;
@@ -35,6 +38,8 @@ import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
 import com.claymus.service.shared.data.FacebookLoginData;
+import com.claymus.service.shared.data.SaveRoleAccessRequest;
+import com.claymus.service.shared.data.SaveRoleAccessResponse;
 import com.claymus.service.shared.data.UserData;
 import com.claymus.taskqueue.Task;
 import com.claymus.taskqueue.TaskQueue;
@@ -451,5 +456,26 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 	}
 
 	
+	/*
+	 * Owner Module: RoleAccess (PageContent)
+	 * API Version: 3.0
+	 */
+	@Override
+	public SaveRoleAccessResponse saveRoleAccess( SaveRoleAccessRequest request )
+			throws InsufficientAccessException {
+		
+		if( ! RoleAccessContentHelper.hasRequestAccessToUpdate( this.getThreadLocalRequest() ) )
+			throw new InsufficientAccessException();
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		RoleAccess roleAccess = dataAccessor.newRoleAccess();
+		roleAccess.setRoleId( request.getRoleId() );
+		roleAccess.setAccessId( request.getAccessId() );
+		roleAccess.setAccess( request.getAccess() );
+		dataAccessor.createOrUpdateRoleAccess( roleAccess );
+		dataAccessor.destroy();
+		
+		return new SaveRoleAccessResponse();
+	}
 	
 }

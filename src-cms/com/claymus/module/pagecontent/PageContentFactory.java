@@ -7,6 +7,8 @@ public interface PageContentFactory<P extends PageContent, Q extends PageContent
 	
 	String getModuleName();
 	
+	Double getModuleVersion();
+
 	Access[] getAccessList();
 	
 }

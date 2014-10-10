@@ -13,6 +13,11 @@ public class LanguagesContentFactory
 	}
 
 	@Override
+	public Double getModuleVersion() {
+		return 2.0;
+	}
+
+	@Override
 	public Access[] getAccessList() {
 		return new Access[] {};
 	}

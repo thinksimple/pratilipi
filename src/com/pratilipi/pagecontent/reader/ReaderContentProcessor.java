@@ -33,7 +33,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 	
 	@Override
 	protected String generateHtml( ReaderContent pratilipiContent, HttpServletRequest request )
-			throws IOException, UnexpectedServerException {
+			throws UnexpectedServerException {
 
 		PratilipiType pratilipiType = pratilipiContent.getPratilipiType();
 
@@ -66,7 +66,13 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 			// Fetching Pratilipi content
 			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-			BlobEntry blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipiType, pratilipiId ) );
+			BlobEntry blobEntry = null;
+			try {
+				blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipiType, pratilipiId ) );
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 			// TODO: Remove this as soon as possible
 			if( blobEntry == null ) {
@@ -74,21 +80,36 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 				// Hack to copy Pratilipi content from Data Store to Blob Store
 				if( pratilipi.getContent() != null ) {
 					logger.log( Level.INFO, "Creating Blob Store entry using Pratilipi content from Data Store ..." );
-					blobAccessor.createBlob(
-							PratilipiHelper.getContent( pratilipiType, pratilipiId ),
-							"text/html",
-							pratilipi.getContent(), Charset.forName( "UTF-8" ) );
+					try {
+						blobAccessor.createBlob(
+								PratilipiHelper.getContent( pratilipiType, pratilipiId ),
+								"text/html",
+								pratilipi.getContent(), Charset.forName( "UTF-8" ) );
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				// Hack to create empty Pratilipi content from old Pratilipis
 				} else {
 					logger.log( Level.INFO, "Creating Blob Store entry using empty string ..." );
-					blobAccessor.createBlob(
-							PratilipiHelper.getContent( pratilipiType, pratilipiId ),
-							"text/html",
-							"&nbsp;", Charset.forName( "UTF-8" ) );
+					try {
+						blobAccessor.createBlob(
+								PratilipiHelper.getContent( pratilipiType, pratilipiId ),
+								"text/html",
+								"&nbsp;", Charset.forName( "UTF-8" ) );
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				
-				blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipiType, pratilipiId ) );
+				try {
+					blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipiType, pratilipiId ) );
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );

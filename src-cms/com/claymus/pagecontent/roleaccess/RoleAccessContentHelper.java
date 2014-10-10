@@ -10,15 +10,20 @@ import com.pratilipi.commons.server.PratilipiHelper;
 public class RoleAccessContentHelper
 		implements PageContentFactory<RoleAccessContent, RoleAccessContentProcessor> {
 	
-	public static final Access ACCESS_TO_LIST =
+	private static final Access ACCESS_TO_LIST =
 			new Access( "access_list", false, "View" );
-	public static final Access ACCESS_TO_UPDATE =
+	private static final Access ACCESS_TO_UPDATE =
 			new Access( "access_update", false, "Update" );
 
 	
 	@Override
 	public String getModuleName() {
 		return "Role Access";
+	}
+
+	@Override
+	public Double getModuleVersion() {
+		return 3.0;
 	}
 
 	@Override

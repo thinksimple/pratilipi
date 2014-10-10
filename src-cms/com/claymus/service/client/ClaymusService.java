@@ -1,6 +1,7 @@
 package com.claymus.service.client;
 
 import com.claymus.commons.client.IllegalArgumentException;
+import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.service.shared.FacebookLoginUserRequest;
 import com.claymus.service.shared.FacebookLoginUserResponse;
@@ -16,6 +17,8 @@ import com.claymus.service.shared.SendQueryRequest;
 import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
+import com.claymus.service.shared.data.SaveRoleAccessRequest;
+import com.claymus.service.shared.data.SaveRoleAccessResponse;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -23,7 +26,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface ClaymusService extends RemoteService {
 	
 	InviteUserResponse inviteUser( InviteUserRequest request )
-		throws IllegalArgumentException;
+			throws IllegalArgumentException;
 	
 	RegisterUserResponse registerUser( RegisterUserRequest request )
 			throws IllegalArgumentException;
@@ -46,5 +49,7 @@ public interface ClaymusService extends RemoteService {
 			throws UnexpectedServerException;
 
 	
+	SaveRoleAccessResponse saveRoleAccess( SaveRoleAccessRequest request )
+			throws IllegalArgumentException, InsufficientAccessException;
 	
 }

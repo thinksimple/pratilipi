@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.transfer.Page;
@@ -153,6 +154,8 @@ public class ClaymusMain extends HttpServlet {
 				@SuppressWarnings("unchecked")
 				String pageContentHtml = pageContentProcessor.getHtml( pageContent, request );
 				pageContentHtmlList.add( pageContentHtml );
+			} catch( InsufficientAccessException e ) {
+				// TODO: add 405 messaage
 			} catch( UnexpectedServerException e ) {
 				logger.log( Level.SEVERE, "Failed to generate page content html.", e );
 				response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
@@ -181,7 +184,7 @@ public class ClaymusMain extends HttpServlet {
 
 		String requestUri = request.getRequestURI();
 		
-		if( requestUri.equals( "/access" ) )
+		if( requestUri.equals( "/roleaccess" ) )
 			page.setTitle( "Access" );
 		
 		dataAccessor.destroy();

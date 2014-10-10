@@ -1,6 +1,5 @@
 package com.pratilipi.pagecontent.genres;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class GenresContentProcessor
 	
 	@Override
 	protected String generateHtml( GenresContent genreContent, HttpServletRequest request )
-			throws IOException, UnexpectedServerException {
+			throws UnexpectedServerException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		boolean showMetaData =

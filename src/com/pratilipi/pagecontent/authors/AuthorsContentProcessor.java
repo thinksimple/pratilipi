@@ -1,6 +1,5 @@
 package com.pratilipi.pagecontent.authors;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 	
 	@Override
 	protected String generateHtml( AuthorsContent authorsContent, HttpServletRequest request )
-			throws IOException, UnexpectedServerException {
+			throws UnexpectedServerException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		boolean showMetaData =

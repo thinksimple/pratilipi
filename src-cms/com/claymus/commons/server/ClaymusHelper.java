@@ -1,6 +1,7 @@
 package com.claymus.commons.server;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -189,7 +190,17 @@ public class ClaymusHelper implements Serializable {
 	}
 	
 	public List<UserRole> getCurrentUserRoleList() {
-		if( currentUserRoleList == null ) {
+		if( getCurrentUserId() == 0L ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			UserRole userRole = dataAccessor.newUserRole();
+			userRole.setRoleId( "guest" );
+			userRole.setUserId( 0L );
+			dataAccessor.destroy();
+			
+			currentUserRoleList = new ArrayList<>( 1 );
+			currentUserRoleList.add( userRole );
+			
+		} else if( currentUserRoleList == null ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			currentUserRoleList = dataAccessor.getUserRoleList( getCurrentUserId() );
 			dataAccessor.destroy();

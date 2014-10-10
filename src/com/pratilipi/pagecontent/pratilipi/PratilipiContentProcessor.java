@@ -1,6 +1,5 @@
 package com.pratilipi.pagecontent.pratilipi;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +38,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 	
 	@Override
 	protected String generateHtml( PratilipiContent pratilipiContent, HttpServletRequest request )
-			throws IOException, UnexpectedServerException {
+			throws UnexpectedServerException {
 
 		Long pratilipiId = pratilipiContent.getPratilipiId();
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );

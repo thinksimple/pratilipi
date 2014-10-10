@@ -1,6 +1,5 @@
 package com.pratilipi.pagecontent.author;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 	
 	@Override
 	protected String generateHtml( AuthorContent authorContent, HttpServletRequest request )
-			throws IOException, UnexpectedServerException {
+			throws UnexpectedServerException {
 		
 		Long authorId = authorContent.getAuthorId();
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );

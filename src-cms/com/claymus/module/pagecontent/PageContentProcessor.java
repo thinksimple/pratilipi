@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.DataAccessorFactory;
@@ -34,7 +35,7 @@ public abstract class PageContentProcessor<T extends PageContent> {
 	
 	
 	public final String getHtml( T pageContent, HttpServletRequest request )
-			throws IOException, UnexpectedServerException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		Memcache memcache = DataAccessorFactory.getL2CacheAccessor();
 		CacheLevel cacheLevel = getCacheLevel();
@@ -77,7 +78,7 @@ public abstract class PageContentProcessor<T extends PageContent> {
 	
 	
 	protected String generateHtml( T pageContent, HttpServletRequest request )
-			throws IOException, UnexpectedServerException {
+			throws InsufficientAccessException, UnexpectedServerException {
 		
 		return processTemplate( pageContent, getTemplateName() );
 	}
@@ -87,7 +88,7 @@ public abstract class PageContentProcessor<T extends PageContent> {
 	}
 	
 	protected String processTemplate( Object dataModel, String templateName )
-			throws UnexpectedServerException, IOException {
+			throws UnexpectedServerException {
 		
 		Writer writer = new StringWriter();
 
@@ -95,7 +96,7 @@ public abstract class PageContentProcessor<T extends PageContent> {
 			Template template = ClaymusMain.FREEMARKER_CONFIGURATION
 							.getTemplate( templateName );
 			template.process( dataModel, writer );
-		} catch ( TemplateException e ) {
+		} catch ( TemplateException | IOException e ) {
 			logger.log( Level.SEVERE, "Template processing failed.", e );
 			throw new UnexpectedServerException();
 		}
