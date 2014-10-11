@@ -122,7 +122,6 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		pratilipiId = pratilipiData.getId();
 		
 		titleInput.setText( pratilipiData.getTitle() );
-		System.out.println( "In setPratilipiData function : " + pratilipiData.getTitleEn() );
 		titleEnInput.setText( pratilipiData.getTitleEn() );
 		languageList.setValue( pratilipiData.getLanguageId().toString() );
 		pageCountInput.setValue( pratilipiData.getPageCount() );
