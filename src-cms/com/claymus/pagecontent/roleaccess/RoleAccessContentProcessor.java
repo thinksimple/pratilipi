@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
+import com.claymus.data.access.DataAccessor;
+import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.pagecontent.PageContentFactory;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.claymus.pagecontent.PageContentRegistry;
-import com.pratilipi.data.access.DataAccessor;
-import com.pratilipi.data.access.DataAccessorFactory;
 
 public class RoleAccessContentProcessor extends PageContentProcessor<RoleAccessContent> {
 

@@ -427,12 +427,12 @@ public class PratilipiMain extends ClaymusMain {
 			HttpServletRequest request ) throws IOException {
 		
 		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 5202396712009728L );
-		bookIdList.add( 6116163083829248L );
-		bookIdList.add( 5683257223938048L );
+		bookIdList.add( 5710758973276160L );
 		bookIdList.add( 4843865324388352L );
+		bookIdList.add( 5202396712009728L );
+		bookIdList.add( 5157903266742272L );
+		bookIdList.add( 6248007305527296L );
 		bookIdList.add( 5673309542809600L );
-		bookIdList.add( 5633267831144448L );
 
 		List<Long> poemIdList = new LinkedList<>();
 		poemIdList.add( 6000473039437824L );

@@ -3,10 +3,10 @@ package com.claymus.pagecontent.roleaccess;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.pagecontent.PageContentFactory;
 import com.claymus.pagecontent.roleaccess.gae.RoleAccessContentEntity;
 import com.claymus.pagecontent.roleaccess.shared.RoleAccessContentData;
-import com.pratilipi.commons.server.PratilipiHelper;
 
 public class RoleAccessContentHelper extends PageContentFactory<
 		RoleAccessContent,
@@ -43,11 +43,11 @@ public class RoleAccessContentHelper extends PageContentFactory<
 
 	
 	public static boolean hasRequestAccessToListAccessData( HttpServletRequest request ) {
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_LIST_ACCESS_DATA );
+		return ClaymusHelper.get( request ).hasUserAccess( ACCESS_TO_LIST_ACCESS_DATA );
 	}
 	
 	public static boolean hasRequestAccessToUpdateAccessData( HttpServletRequest request ) {
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_ACCESS_DATA );
+		return ClaymusHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_ACCESS_DATA );
 	}
 
 }

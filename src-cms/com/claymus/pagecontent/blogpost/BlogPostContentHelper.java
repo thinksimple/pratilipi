@@ -3,10 +3,10 @@ package com.claymus.pagecontent.blogpost;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.pagecontent.PageContentFactory;
 import com.claymus.pagecontent.blogpost.gae.BlogPostContentEntity;
 import com.claymus.pagecontent.blogpost.shared.BlogPostContentData;
-import com.pratilipi.commons.server.PratilipiHelper;
 
 public class BlogPostContentHelper extends PageContentFactory<
 		BlogPostContent,
@@ -14,9 +14,9 @@ public class BlogPostContentHelper extends PageContentFactory<
 		BlogPostContentProcessor> {
 	
 	private static final Access ACCESS_TO_ADD =
-			new Access( "blogpost_add", false, "Add" );
+			new Access( "blogpost_add", false, "Add Post" );
 	private static final Access ACCESS_TO_UPDATE =
-			new Access( "blogpost_update", false, "Update" );
+			new Access( "blogpost_update", false, "Update Post" );
 
 	
 	@Override
@@ -56,12 +56,12 @@ public class BlogPostContentHelper extends PageContentFactory<
 
 	@Override
 	public boolean hasRequestAccessToAddContent( HttpServletRequest request ) {
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD );
+		return ClaymusHelper.get( request ).hasUserAccess( ACCESS_TO_ADD );
 	}
 	
 	@Override
 	public boolean hasRequestAccessToUpdateContent( HttpServletRequest request ) {
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE );
+		return ClaymusHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE );
 	}
 
 }

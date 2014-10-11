@@ -33,7 +33,21 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 
 
 
-/* START: Bootstrap Overrides */
+/* START :: Claymus Overrides :: START */
+
+#PageContent-BlogPost-Content {
+	background:#E5F7B0;
+	border: 1px solid #ddd;
+}
+
+#PageContent-BlogPost-Content p {
+	margin: 15px;
+}
+
+/* END :: Claymus Overrides :: END */
+
+
+/* START:: Bootstrap Overrides :: START */
 
 .btn {
 	border-radius: 1px;
@@ -57,7 +71,7 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 	border-radius: 1px;
 }
 
-/* END: Bootstrap Overrides*/
+/* END :: Bootstrap Overrides :: END */
 
 
 
