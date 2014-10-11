@@ -1,12 +1,12 @@
 package com.pratilipi.pagecontent.reader;
 
 import com.claymus.commons.server.Access;
-import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.pagecontent.reader.gae.ReaderContentEntity;
 import com.pratilipi.pagecontent.reader.shared.ReaderContentData;
 
-public class ReaderContentFactory extends PageContentFactory<
+public class ReaderContentFactory extends PageContentHelper<
 		ReaderContent,
 		ReaderContentData,
 		ReaderContentProcessor> {

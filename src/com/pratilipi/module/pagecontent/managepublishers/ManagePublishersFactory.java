@@ -1,11 +1,11 @@
 package com.pratilipi.module.pagecontent.managepublishers;
 
 import com.claymus.commons.server.Access;
-import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.module.pagecontent.managepublishers.gae.ManagePublishersEntity;
 import com.pratilipi.module.pagecontent.managepublishers.shared.ManagePublishersData;
 
-public class ManagePublishersFactory extends PageContentFactory<
+public class ManagePublishersFactory extends PageContentHelper<
 		ManagePublishers,
 		ManagePublishersData,
 		ManagePublishersProcessor> {

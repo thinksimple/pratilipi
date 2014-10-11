@@ -4,11 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
 import com.claymus.commons.server.ClaymusHelper;
-import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentHelper;
 import com.claymus.pagecontent.roleaccess.gae.RoleAccessContentEntity;
 import com.claymus.pagecontent.roleaccess.shared.RoleAccessContentData;
 
-public class RoleAccessContentHelper extends PageContentFactory<
+public class RoleAccessContentHelper extends PageContentHelper<
 		RoleAccessContent,
 		RoleAccessContentData,
 		RoleAccessContentProcessor> {

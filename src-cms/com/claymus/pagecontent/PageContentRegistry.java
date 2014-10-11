@@ -18,12 +18,12 @@ public class PageContentRegistry {
 
 	
 	@SuppressWarnings("rawtypes")
-	private static final List<PageContentFactory> helperList = new LinkedList<>();
+	private static final List<PageContentHelper> helperList = new LinkedList<>();
 	
 	@SuppressWarnings("rawtypes")
 	private static final Map<
 			Class<? extends PageContentData>,
-			PageContentFactory > mapContentDataToHelper = new HashMap<>();
+			PageContentHelper > mapContentDataToHelper = new HashMap<>();
 
 	private static final Map<
 			Class<? extends PageContent>,
@@ -34,7 +34,7 @@ public class PageContentRegistry {
 			P extends PageContent,
 			Q extends PageContentData,
 			R extends PageContentProcessor<P>,
-			S extends PageContentFactory<P, Q, R> > void register( Class<S> pageContentFactoryClass ) {
+			S extends PageContentHelper<P, Q, R> > void register( Class<S> pageContentFactoryClass ) {
 		
 		ParameterizedType parameterizedType =
 				(ParameterizedType) pageContentFactoryClass.getGenericSuperclass();
@@ -62,13 +62,13 @@ public class PageContentRegistry {
 	
 
 	@SuppressWarnings("rawtypes")
-	public static List<PageContentFactory> getPageContentHelperList() {
+	public static List<PageContentHelper> getPageContentHelperList() {
 		return helperList;
 	}
 	
 	@SuppressWarnings("rawtypes")
 	public static <
-			Q extends PageContentData> PageContentFactory getPageContentHelper(
+			Q extends PageContentData> PageContentHelper getPageContentHelper(
 					Class<Q> pageContentDataClass ) {
 		
 		return mapContentDataToHelper.get( pageContentDataClass );

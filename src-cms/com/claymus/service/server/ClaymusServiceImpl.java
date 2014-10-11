@@ -22,7 +22,7 @@ import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.claymus.email.EmailUtil;
-import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentHelper;
 import com.claymus.pagecontent.PageContentRegistry;
 import com.claymus.pagecontent.roleaccess.RoleAccessContentHelper;
 import com.claymus.service.client.ClaymusService;
@@ -473,7 +473,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		
 		PageContentData pageContentData = request.getPageContentData();
 		@SuppressWarnings("rawtypes")
-		PageContentFactory pageContentHelper =
+		PageContentHelper pageContentHelper =
 				PageContentRegistry.getPageContentHelper( pageContentData.getClass() );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 

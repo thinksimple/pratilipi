@@ -4,11 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
 import com.claymus.commons.server.ClaymusHelper;
-import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentHelper;
 import com.claymus.pagecontent.blogpost.gae.BlogPostContentEntity;
 import com.claymus.pagecontent.blogpost.shared.BlogPostContentData;
 
-public class BlogPostContentHelper extends PageContentFactory<
+public class BlogPostContentHelper extends PageContentHelper<
 		BlogPostContent,
 		BlogPostContentData,
 		BlogPostContentProcessor> {

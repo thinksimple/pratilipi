@@ -1,11 +1,14 @@
 package com.claymus.pagecontent.html;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.claymus.commons.server.Access;
-import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.pagecontent.PageContentHelper;
 import com.claymus.pagecontent.html.gae.HtmlContentEntity;
 import com.claymus.pagecontent.html.shared.HtmlContentData;
 
-public class HtmlContentHelper extends PageContentFactory<
+public class HtmlContentHelper extends PageContentHelper<
 		HtmlContent,
 		HtmlContentData,
 		HtmlContentProcessor> {
@@ -50,4 +53,15 @@ public class HtmlContentHelper extends PageContentFactory<
 		return htmlContent;
 	}
 	
+
+	@Override
+	public boolean hasRequestAccessToAddContent( HttpServletRequest request ) {
+		return ClaymusHelper.get( request ).hasUserAccess( ACCESS_TO_ADD );
+	}
+	
+	@Override
+	public boolean hasRequestAccessToUpdateContent( HttpServletRequest request ) {
+		return ClaymusHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE );
+	}
+
 }

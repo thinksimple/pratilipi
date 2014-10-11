@@ -1,11 +1,11 @@
 package com.pratilipi.pagecontent.home;
 
 import com.claymus.commons.server.Access;
-import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.pagecontent.home.gae.HomeContentEntity;
 import com.pratilipi.pagecontent.home.shared.HomeContentData;
 
-public class HomeContentFactory extends PageContentFactory<
+public class HomeContentFactory extends PageContentHelper<
 		HomeContent,
 		HomeContentData,
 		HomeContentProcessor> {

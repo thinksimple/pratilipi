@@ -6,7 +6,7 @@ import com.claymus.commons.server.Access;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.service.shared.data.PageContentData;
 
-public abstract class PageContentFactory<
+public abstract class PageContentHelper<
 		P extends PageContent,
 		Q extends PageContentData,
 		R extends PageContentProcessor<P> > {

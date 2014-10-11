@@ -10,7 +10,7 @@ import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
-import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentHelper;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.claymus.pagecontent.PageContentRegistry;
 
@@ -31,7 +31,7 @@ public class RoleAccessContentProcessor extends PageContentProcessor<RoleAccessC
 				RoleAccessContentHelper.hasRequestAccessToUpdateAccessData( request );
 
 		@SuppressWarnings("rawtypes")
-		List<PageContentFactory> pageContentHelperList =
+		List<PageContentHelper> pageContentHelperList =
 				PageContentRegistry.getPageContentHelperList();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

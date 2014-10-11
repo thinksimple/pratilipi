@@ -1,11 +1,11 @@
 package com.pratilipi.pagecontent.languages;
 
 import com.claymus.commons.server.Access;
-import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.pagecontent.languages.gae.LanguagesContentEntity;
 import com.pratilipi.pagecontent.languages.shared.LanguagesContentData;
 
-public class LanguagesContentFactory extends PageContentFactory<
+public class LanguagesContentFactory extends PageContentHelper<
 		LanguagesContent,
 		LanguagesContentData,
 		LanguagesContentProcessor> {
