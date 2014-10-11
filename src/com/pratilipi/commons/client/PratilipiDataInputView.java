@@ -10,8 +10,6 @@ public abstract class PratilipiDataInputView extends Composite {
 	public abstract HandlerRegistration addAddButtonClickHandler(
 			ClickHandler clickHandler );
 	
-	public abstract void addAuthorListItem( String item, String value );
-	
 	public abstract void addLanguageListItem( String item, String value );
 	
 

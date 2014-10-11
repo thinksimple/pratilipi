@@ -1,35 +1,40 @@
 package com.pratilipi.commons.client;
 
-import com.claymus.commons.client.ui.Accordion;
+import com.claymus.commons.client.ui.Modal;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.shared.data.PratilipiData;
 
-public class PratilipiDataInputViewAccordionImpl extends PratilipiDataInputView {
+public class PratilipiDataInputViewModalImpl extends PratilipiDataInputView {
 	
 	private final FocusPanel focusPanel = new FocusPanel();
 	private final PratilipiType pratilipiType;
-	private final Accordion accordion = new Accordion();
+	private final Modal modal = new Modal();
 	private final PratilipiDataInputView pratilipiDataInputView;
 
 	
-	public PratilipiDataInputViewAccordionImpl( PratilipiType pratilipiType ) {
+	public PratilipiDataInputViewModalImpl( PratilipiType pratilipiType ) {
 		
 		this.pratilipiType = pratilipiType;
 	
-		focusPanel.add( accordion );
-		accordion.setTitle( "Add " + pratilipiType.getName() );
+		modal.setTitle( "Add " + pratilipiType.getName() );
 		pratilipiDataInputView = new PratilipiDataInputViewImpl( pratilipiType );
+		pratilipiDataInputView.getElement().getStyle().setPadding( 15, Unit.PX );
+		modal.add( pratilipiDataInputView );
 		
-		
-		accordion.add( pratilipiDataInputView );
-
-		
-		initWidget( focusPanel );
+		initWidget( modal );
 	}
 	
+	@Override
+	public void setVisible( boolean visible ) {
+		if( visible )
+			modal.show();
+		else
+			modal.hide();
+	}
 	
 	@Override
 	public HandlerRegistration addAddButtonClickHandler(ClickHandler clickHandler) {
@@ -59,8 +64,8 @@ public class PratilipiDataInputViewAccordionImpl extends PratilipiDataInputView 
 	@Override
 	public void setPratilipiData( PratilipiData pratilipiData ) {
 		focusPanel.setFocus( true );
-		accordion.setTitle( "Edit " + pratilipiType.getName() );
-		accordion.show();
+		modal.setTitle( "Edit " + pratilipiType.getName() );
+		modal.show();
 		pratilipiDataInputView.setPratilipiData( pratilipiData );
 	}
 
@@ -76,9 +81,10 @@ public class PratilipiDataInputViewAccordionImpl extends PratilipiDataInputView 
 
 	@Override
 	public void reset() {
-		accordion.hide();
-		accordion.setTitle( "Add " + pratilipiType.getName() );
+		modal.hide();
+		modal.setTitle( "Add " + pratilipiType.getName() );
 		pratilipiDataInputView.reset();
 	}
 
+	
 }

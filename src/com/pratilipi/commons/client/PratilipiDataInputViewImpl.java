@@ -19,7 +19,6 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	
 	private TextInputFormField titleInput = new TextInputFormField();
 	private TextInputFormField titleEnInput = new TextInputFormField();
-	private ListBoxFormField authorList = new ListBoxFormField();
 	private ListBoxFormField languageList = new ListBoxFormField();
 	private NumberInputFormField pageCountInput = new NumberInputFormField();
 	private CheckBoxFormField isPublicDomain = new CheckBoxFormField();
@@ -41,8 +40,6 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	    titleInput.setPlaceholder( "Title" );
 	    titleInput.setRequired( true );
 	    titleEnInput.setPlaceholder( "Title (English) " ); 
-	    authorList.addItem( "Select Author", "" );
-	    authorList.setRequired( true );
 	    languageList.addItem( "Select Language", "" );
 	    languageList.setRequired( true );
 	    pageCountInput.setPlaceholder( "Page Count" );
@@ -55,7 +52,6 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	    
 		innerPanel.add( titleInput );
 		innerPanel.add( titleEnInput );
-		innerPanel.add( authorList );
 		innerPanel.add( languageList );
 		innerPanel.add( pageCountInput );
 		innerPanel.add( isPublicDomain );
@@ -64,7 +60,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		
 		// Setting required style classes
 		panel.setStyleName( "row" );
-		innerPanel.setStyleName( "col-sm-4" );
+		innerPanel.setStyleName( "col-sm-9" );
 	    addButton.setStyleName( "btn btn-default" );
 
 		
@@ -78,11 +74,6 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	}
 
 	@Override
-	public void addAuthorListItem( String item, String value ) {
-		authorList.addItem( item, value );
-	}
-
-	@Override
 	public void addLanguageListItem( String item, String value ) {
 		languageList.addItem( item, value );
 	}
@@ -92,7 +83,6 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		boolean validated = true;
 		validated = titleInput.validate() && validated;
 		validated = titleEnInput.validate() && validated;
-		validated = authorList.validate() && validated;
 		validated = languageList.validate() && validated;
 		validated = pageCountInput.validate() && validated;
 		return validated;
@@ -102,7 +92,6 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	public void setEnabled(boolean enabled) {
 		titleInput.setEnabled( enabled );
 		titleEnInput.setEnabled( enabled );
-		authorList.setEnabled( enabled );
 		languageList.setEnabled( enabled );	
 		pageCountInput.setEnabled( enabled );
 		isPublicDomain.setEnabled( enabled );
@@ -115,12 +104,10 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		pratilipiData.setType( pratilipiType );
 		pratilipiData.setTitle( titleInput.getText() );
 		pratilipiData.setTitleEn( titleEnInput.getText() );
-		pratilipiData.setAuthorId( Long.valueOf(authorList.getValue()) );
 		pratilipiData.setLanguageId( Long.parseLong( languageList.getValue() ) );
 		pratilipiData.setPageCount( pageCountInput.getValue() );
 		pratilipiData.setPublicDomain( isPublicDomain.isChecked() );
 		
-		pratilipiData.setAuthorName( authorList.getValueText() );
 		pratilipiData.setLanguageName( languageList.getValueText() );
 		
 		pratilipiData.setPageUrl( pageUrl );
@@ -135,8 +122,8 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		pratilipiId = pratilipiData.getId();
 		
 		titleInput.setText( pratilipiData.getTitle() );
+		System.out.println( "In setPratilipiData function : " + pratilipiData.getTitleEn() );
 		titleEnInput.setText( pratilipiData.getTitleEn() );
-		authorList.setValue( pratilipiData.getAuthorId().toString() );
 		languageList.setValue( pratilipiData.getLanguageId().toString() );
 		pageCountInput.setValue( pratilipiData.getPageCount() );
 		isPublicDomain.setChecked( pratilipiData.isPublicDomain() );
@@ -162,14 +149,12 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		
 		titleInput.setText( null );
 		titleEnInput.setText( null );
-		authorList.setValue( null );
 		languageList.setValue( null );
 		pageCountInput.setValue( null );
 		isPublicDomain.setChecked( false );
 		
 		titleInput.resetValidation();
 		titleEnInput.resetValidation();
-		authorList.resetValidation();
 		languageList.resetValidation();
 		isPublicDomain.resetValidation();
 		
