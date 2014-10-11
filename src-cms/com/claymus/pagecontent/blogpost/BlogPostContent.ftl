@@ -1,18 +1,15 @@
+<#import "../../../../com/claymus/commons/client/ui/Social.ftl" as social>
+
 <!-- PageContent :: BlogPost :: Start -->
 
 <div class="container">
 	<h1 id="PageContent-BlogPost-Title" page-content-id="${ (blogPostContent.getId()?c)! }">${ blogPostContent.getTitle() }</h1>
-	<div style="line-height: 15px; display: inline;">
-		<div id="fb-like" class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true">
-		</div>
-		<a class="twitter-share-button"
-			  href="https://twitter.com/share"
-			  data-size="small">
-		</a>
-	</div>
+	<#if blogUrl??>
+		<div style="margin-top:10px; margin-bottom:10px;"><@social.toolbar shareUrl=blogUrl/></div>
+	</#if>
 	<div id="PageContent-BlogPost-Content">${ blogPostContent.getContent() }</div>
 	<#if showEditOptions>
-		<div id="PageContent-BlogPost-EditOptions"></div>
+		<div id="PageContent-BlogPost-EditOptions" style="margin-top:10px; text-align:right;"></div>
 	</#if>
 </div>
 

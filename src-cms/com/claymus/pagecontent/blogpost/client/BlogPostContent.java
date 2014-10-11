@@ -51,7 +51,6 @@ public class BlogPostContent implements EntryPoint, ClickHandler {
 
 		editButton.setStyleName( "btn btn-primary" );
 		saveButton.setStyleName( "btn btn-danger" );
-		editOptionsPanel.getElement().setAttribute( "style", "margin-top:15px; text-align:right;" );
 	}
 
 	@Override

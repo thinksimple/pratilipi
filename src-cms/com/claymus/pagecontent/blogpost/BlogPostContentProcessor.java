@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.claymus.pagecontent.PageContentRegistry;
 import com.claymus.pagecontent.blogpost.shared.BlogPostContentData;
@@ -27,6 +28,8 @@ public class BlogPostContentProcessor extends PageContentProcessor<BlogPostConte
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "blogPostContent", blogPostContent );
+		if( blogPostContent.getId() != null )
+			dataModel.put( "blogUrl", "http://" + ClaymusHelper.getSystemProperty( "domain" ) + "/blog/" + blogPostContent.getId() );
 		dataModel.put( "showEditOptions", showEditOptions );
 		
 		return super.processTemplate( dataModel, getTemplateName() );
