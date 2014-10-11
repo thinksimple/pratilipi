@@ -23,7 +23,7 @@ import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.websitewidget.html.HtmlWidget;
 import com.claymus.module.websitewidget.html.HtmlWidgetFactory;
 import com.claymus.pagecontent.html.HtmlContent;
-import com.claymus.pagecontent.html.HtmlContentFactory;
+import com.claymus.pagecontent.html.HtmlContentHelper;
 import com.claymus.servlet.ClaymusMain;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
@@ -372,8 +372,8 @@ public class PratilipiMain extends ClaymusMain {
 		String html = "";
 		for( String line : lines )
 			html = html + line;
-		HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-		htmlContent.setHtml( html );
+		HtmlContent htmlContent = HtmlContentHelper.newHtmlContent();
+		htmlContent.setContent( html );
 		return htmlContent;
 	}
 	

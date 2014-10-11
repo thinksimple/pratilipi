@@ -34,8 +34,8 @@ public class BlogPostContentEntity extends PageContentEntity implements BlogPost
 	}
 
 	@Override
-	public void setContent( String content ) {
-		this.content = new Text( content );
+	public void setContent( String html ) {
+		this.content = new Text( html );
 	}
 
 }

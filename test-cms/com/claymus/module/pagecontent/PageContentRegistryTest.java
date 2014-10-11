@@ -7,7 +7,7 @@ import com.claymus.data.transfer.PageContent;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.claymus.pagecontent.PageContentRegistry;
 import com.claymus.pagecontent.html.HtmlContent;
-import com.claymus.pagecontent.html.HtmlContentFactory;
+import com.claymus.pagecontent.html.HtmlContentHelper;
 import com.claymus.pagecontent.html.HtmlContentProcessor;
 
 public class PageContentRegistryTest {
@@ -16,7 +16,7 @@ public class PageContentRegistryTest {
     public void testRegister() {
     	
     	PageContentRegistry pageContentRegistry = new PageContentRegistry();
-    	pageContentRegistry.register( HtmlContentFactory.class );
+    	pageContentRegistry.register( HtmlContentHelper.class );
     	
     	PageContentProcessor<? extends PageContent> pageContentProcessor =
     			pageContentRegistry.getPageContentProcessor( HtmlContent.class );

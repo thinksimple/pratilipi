@@ -4,8 +4,12 @@ import com.claymus.data.transfer.PageContent;
 
 public interface HtmlContent extends PageContent {
 
-	String getHtml();
+	String getTitle();
 	
-	void setHtml( String html );
+	void setTitle( String title );
+
+	String getContent();
+	
+	void setContent( String html );
 	
 }

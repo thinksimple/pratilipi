@@ -10,7 +10,7 @@ import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.pagecontent.html.HtmlContent;
-import com.claymus.pagecontent.html.HtmlContentFactory;
+import com.claymus.pagecontent.html.HtmlContentHelper;
 
 public abstract class HtmlContentModuleTest {
 
@@ -22,10 +22,10 @@ public abstract class HtmlContentModuleTest {
     	String position = "position";
     	String html = "html";
     	
-    	HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
+    	HtmlContent htmlContent = HtmlContentHelper.newHtmlContent();
     	htmlContent.setPageId( pageId );
     	htmlContent.setPosition( position );
-    	htmlContent.setHtml( html );
+    	htmlContent.setContent( html );
     	
     	DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
     	htmlContent = (HtmlContent) dataAccessor.createOrUpdatePageContent( (PageContentEntity) htmlContent );
@@ -42,7 +42,7 @@ public abstract class HtmlContentModuleTest {
     	Assert.assertEquals( id, htmlContent.getId() );
     	Assert.assertEquals( pageId, htmlContent.getPageId() );
     	Assert.assertEquals( position, htmlContent.getPosition() );
-    	Assert.assertEquals( html, htmlContent.getHtml() );
+    	Assert.assertEquals( html, htmlContent.getContent() );
     	
     	dataAccessor.destroy();
     	

@@ -10,6 +10,6 @@ public interface BlogPostContent extends PageContent {
 	
 	String getContent();
 	
-	void setContent( String content );
+	void setContent( String html );
 	
 }

@@ -36,7 +36,7 @@ import com.claymus.pagecontent.PageContentRegistry;
 import com.claymus.pagecontent.blogpost.BlogPostContent;
 import com.claymus.pagecontent.blogpost.BlogPostContentHelper;
 import com.claymus.pagecontent.html.HtmlContent;
-import com.claymus.pagecontent.html.HtmlContentFactory;
+import com.claymus.pagecontent.html.HtmlContentHelper;
 import com.claymus.pagecontent.roleaccess.RoleAccessContentHelper;
 
 import freemarker.template.Configuration;
@@ -61,9 +61,9 @@ public class ClaymusMain extends HttpServlet {
 		PAGE_CONTENT_REGISTRY = new PageContentRegistry();
 		WEBSITE_WIDGET_REGISTRY = new WebsiteWidgetRegistry();
 		
+		PageContentRegistry.register( HtmlContentHelper.class );
 		PageContentRegistry.register( BlogPostContentHelper.class );
 		PageContentRegistry.register( RoleAccessContentHelper.class );
-		PAGE_CONTENT_REGISTRY.register( HtmlContentFactory.class );
 		
 		WEBSITE_WIDGET_REGISTRY.register( HeaderWidgetFactory.class );
 		WEBSITE_WIDGET_REGISTRY.register( FooterWidgetFactory.class );
@@ -103,8 +103,8 @@ public class ClaymusMain extends HttpServlet {
 
 		if( pageContentList.size() == 0 ) {
 			response.setStatus( HttpServletResponse.SC_NOT_FOUND );
-			HtmlContent htmlContent = HtmlContentFactory.newHtmlContent();
-			htmlContent.setHtml( "Page not found !" );
+			HtmlContent htmlContent = HtmlContentHelper.newHtmlContent();
+			htmlContent.setContent( "Page not found !" );
 			pageContentList.add( htmlContent );
 		}
 		

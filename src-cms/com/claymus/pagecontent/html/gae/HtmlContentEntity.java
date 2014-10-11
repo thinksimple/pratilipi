@@ -15,17 +15,27 @@ public class HtmlContentEntity extends PageContentEntity implements HtmlContent 
 	private String title;
 	
 	@Persistent( column = "X_COL_1" )
-	private Text html;
+	private Text content;
 
 	
 	@Override
-	public String getHtml() {
-		return html == null ? null : html.getValue();
+	public String getTitle() {
+		return title;
 	}
 
 	@Override
-	public void setHtml( String html ) {
-		this.html = new Text( html );
+	public void setTitle( String title ) {
+		this.title = title;
+	}
+
+	@Override
+	public String getContent() {
+		return content == null ? null : content.getValue();
+	}
+
+	@Override
+	public void setContent( String html ) {
+		this.content = new Text( html );
 	}
 
 }

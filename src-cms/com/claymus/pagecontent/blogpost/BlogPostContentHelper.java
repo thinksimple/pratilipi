@@ -14,9 +14,9 @@ public class BlogPostContentHelper extends PageContentFactory<
 		BlogPostContentProcessor> {
 	
 	private static final Access ACCESS_TO_ADD =
-			new Access( "blogpost_add", false, "Add Post" );
+			new Access( "blogpost_content_add", false, "Add Post" );
 	private static final Access ACCESS_TO_UPDATE =
-			new Access( "blogpost_update", false, "Update Post" );
+			new Access( "blogpost_content_update", false, "Update Post" );
 
 	
 	@Override

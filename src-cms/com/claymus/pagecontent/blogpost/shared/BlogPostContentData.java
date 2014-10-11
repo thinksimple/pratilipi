@@ -21,8 +21,8 @@ public class BlogPostContentData extends PageContentData {
 		return content;
 	};
 	
-	public void setContent( String content ) {
-		this.content = content;
+	public void setContent( String html ) {
+		this.content = html;
 	};
 	
 }
