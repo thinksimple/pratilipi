@@ -17,15 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.data.access.DataAccessor;
+import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.PageLayout;
 import com.claymus.data.transfer.WebsiteLayout;
 import com.claymus.data.transfer.WebsiteWidget;
-import com.claymus.module.pagecontent.PageContentProcessor;
-import com.claymus.module.pagecontent.PageContentRegistry;
-import com.claymus.module.pagecontent.html.HtmlContent;
-import com.claymus.module.pagecontent.html.HtmlContentFactory;
 import com.claymus.module.websitewidget.WebsiteWidgetProcessor;
 import com.claymus.module.websitewidget.WebsiteWidgetRegistry;
 import com.claymus.module.websitewidget.footer.FooterWidgetFactory;
@@ -33,9 +31,13 @@ import com.claymus.module.websitewidget.header.HeaderWidgetFactory;
 import com.claymus.module.websitewidget.html.HtmlWidgetFactory;
 import com.claymus.module.websitewidget.navigation.NavigationWidgetFactory;
 import com.claymus.module.websitewidget.user.UserWidgetFactory;
+import com.claymus.pagecontent.PageContentProcessor;
+import com.claymus.pagecontent.PageContentRegistry;
+import com.claymus.pagecontent.blogpost.BlogPostContent;
+import com.claymus.pagecontent.blogpost.BlogPostContentHelper;
+import com.claymus.pagecontent.html.HtmlContent;
+import com.claymus.pagecontent.html.HtmlContentFactory;
 import com.claymus.pagecontent.roleaccess.RoleAccessContentHelper;
-import com.pratilipi.data.access.DataAccessor;
-import com.pratilipi.data.access.DataAccessorFactory;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -59,7 +61,8 @@ public class ClaymusMain extends HttpServlet {
 		PAGE_CONTENT_REGISTRY = new PageContentRegistry();
 		WEBSITE_WIDGET_REGISTRY = new WebsiteWidgetRegistry();
 		
-		PAGE_CONTENT_REGISTRY.register( RoleAccessContentHelper.class );
+		PageContentRegistry.register( BlogPostContentHelper.class );
+		PageContentRegistry.register( RoleAccessContentHelper.class );
 		PAGE_CONTENT_REGISTRY.register( HtmlContentFactory.class );
 		
 		WEBSITE_WIDGET_REGISTRY.register( HeaderWidgetFactory.class );
@@ -184,7 +187,10 @@ public class ClaymusMain extends HttpServlet {
 
 		String requestUri = request.getRequestURI();
 		
-		if( requestUri.equals( "/roleaccess" ) )
+		if( requestUri.equals( "/blog/new" ) )
+			page.setTitle( "New Blog Post" );
+
+		else if( requestUri.equals( "/roleaccess" ) )
 			page.setTitle( "Access" );
 		
 		dataAccessor.destroy();
@@ -200,9 +206,24 @@ public class ClaymusMain extends HttpServlet {
 		
 		String requestUri = request.getRequestURI();
 
-		if( requestUri.equals( "/roleaccess" ) )
-			pageContentList.add( RoleAccessContentHelper.newAccessContent() );
+		if( requestUri.equals( "/blog/new" ) ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			BlogPostContent blogPost = BlogPostContentHelper.newBlogPostContent();
+			blogPost.setTitle( "New Blog Post" );
+			blogPost.setContent( "Blog content ..." );
+			dataAccessor.destroy();
+			pageContentList.add( blogPost );
+		
+		} else if( requestUri.equals( "/roleaccess" ) )
+			pageContentList.add( RoleAccessContentHelper.newRoleAccessContent() );
 
+		else if( requestUri.startsWith( "/blog/" ) ) {
+			Long blogId = Long.parseLong( requestUri.substring( 6 ) );
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			pageContentList.add( dataAccessor.getPageContent( blogId ) );
+			dataAccessor.destroy();
+		}
+		
 		return pageContentList;
 	}
 

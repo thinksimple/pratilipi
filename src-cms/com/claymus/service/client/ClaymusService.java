@@ -13,12 +13,14 @@ import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
 import com.claymus.service.shared.ResetUserPasswordRequest;
 import com.claymus.service.shared.ResetUserPasswordResponse;
+import com.claymus.service.shared.SavePageContentRequest;
+import com.claymus.service.shared.SavePageContentResponse;
+import com.claymus.service.shared.SaveRoleAccessRequest;
+import com.claymus.service.shared.SaveRoleAccessResponse;
 import com.claymus.service.shared.SendQueryRequest;
 import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
-import com.claymus.service.shared.data.SaveRoleAccessRequest;
-import com.claymus.service.shared.data.SaveRoleAccessResponse;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -49,7 +51,10 @@ public interface ClaymusService extends RemoteService {
 			throws UnexpectedServerException;
 
 	
+	SavePageContentResponse savePageContent( SavePageContentRequest request )
+			throws InsufficientAccessException;
+
 	SaveRoleAccessResponse saveRoleAccess( SaveRoleAccessRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
+			throws InsufficientAccessException;
 	
 }

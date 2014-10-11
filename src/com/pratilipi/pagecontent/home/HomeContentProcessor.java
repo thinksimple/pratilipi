@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.client.UnexpectedServerException;
-import com.claymus.module.pagecontent.PageContentProcessor;
+import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 
-  <application>prod-pratilipi</application>
+  <application>devo-pratilipi</application>
   <version>mark-2p21</version>
 
   <threadsafe>true</threadsafe>

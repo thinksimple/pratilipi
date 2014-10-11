@@ -1,10 +1,10 @@
-package com.claymus.module.pagecontent.html.gae;
+package com.claymus.pagecontent.html.gae;
 
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.claymus.data.access.gae.PageContentEntity;
-import com.claymus.module.pagecontent.html.HtmlContent;
+import com.claymus.pagecontent.html.HtmlContent;
 import com.google.appengine.api.datastore.Text;
 
 @SuppressWarnings("serial")

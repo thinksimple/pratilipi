@@ -50,6 +50,8 @@ public interface DataAccessor {
 	Page createOrUpdatePage( Page page );
 	
 
+	PageContent getPageContent( Long id );
+
 	List<PageContent> getPageContentList( Long pageId );
 
 	PageContent createOrUpdatePageContent( PageContent pageContent );

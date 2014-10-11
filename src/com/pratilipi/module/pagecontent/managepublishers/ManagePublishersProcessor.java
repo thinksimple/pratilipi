@@ -2,7 +2,7 @@ package com.pratilipi.module.pagecontent.managepublishers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.claymus.module.pagecontent.PageContentProcessor;
+import com.claymus.pagecontent.PageContentProcessor;
 
 public class ManagePublishersProcessor extends PageContentProcessor<ManagePublishers> {
 

@@ -4,9 +4,11 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.claymus.data.transfer.PageContent;
-import com.claymus.module.pagecontent.html.HtmlContent;
-import com.claymus.module.pagecontent.html.HtmlContentFactory;
-import com.claymus.module.pagecontent.html.HtmlContentProcessor;
+import com.claymus.pagecontent.PageContentProcessor;
+import com.claymus.pagecontent.PageContentRegistry;
+import com.claymus.pagecontent.html.HtmlContent;
+import com.claymus.pagecontent.html.HtmlContentFactory;
+import com.claymus.pagecontent.html.HtmlContentProcessor;
 
 public class PageContentRegistryTest {
 

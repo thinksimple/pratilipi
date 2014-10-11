@@ -18,6 +18,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private final static String PREFIX_ROLE = "Role-";
 	private final static String PREFIX_USER_ROLE_LIST = "UserRoleList-";
 	private final static String PREFIX_ROLE_ACCESS = "RoleAccess-";
+	private final static String PREFIX_PAGE_CONTENT = "PageConent-";
 	
 	
 	private final DataAccessor dataAccessor;
@@ -159,6 +160,17 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	
 	@Override
+	public PageContent getPageContent( Long id ) {
+		PageContent pageContent = memcache.get( PREFIX_PAGE_CONTENT + id );
+		if( pageContent == null ) {
+			pageContent = dataAccessor.getPageContent( id );
+			if( pageContent != null )
+				memcache.put( PREFIX_PAGE_CONTENT + id, pageContent );
+		}
+		return pageContent;
+	}
+	
+	@Override
 	public List<PageContent> getPageContentList( Long pageId ) {
 		// TODO; enable caching
 		return dataAccessor.getPageContentList( pageId );
@@ -166,8 +178,9 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	@Override
 	public PageContent createOrUpdatePageContent( PageContent pageContent ) {
-		// TODO; enable caching
-		return dataAccessor.createOrUpdatePageContent( pageContent );
+		pageContent = dataAccessor.createOrUpdatePageContent( pageContent );
+		memcache.put( PREFIX_PAGE_CONTENT + pageContent.getId(), pageContent );
+		return pageContent;
 	}
 
 

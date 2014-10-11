@@ -1,11 +1,14 @@
 package com.pratilipi.pagecontent.pratilipi;
 
 import com.claymus.commons.server.Access;
-import com.claymus.module.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentFactory;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
+import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
 
-public class PratilipiContentFactory
-		implements PageContentFactory<PratilipiContent, PratilipiContentProcessor> {
+public class PratilipiContentFactory extends PageContentFactory<
+		PratilipiContent,
+		PratilipiContentData,
+		PratilipiContentProcessor> {
 	
 	@Override
 	public String getModuleName() {

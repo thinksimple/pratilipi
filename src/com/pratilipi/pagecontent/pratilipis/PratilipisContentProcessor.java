@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
-import com.claymus.module.pagecontent.PageContentProcessor;
+import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;

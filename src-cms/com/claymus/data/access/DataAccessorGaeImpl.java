@@ -1,6 +1,8 @@
 package com.claymus.data.access;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.JDOObjectNotFoundException;
@@ -10,6 +12,7 @@ import javax.jdo.Query;
 
 import com.claymus.data.access.gae.EmailTemplateEntity;
 import com.claymus.data.access.gae.PageContentEntity;
+import com.claymus.data.access.gae.PageContentEntityStub;
 import com.claymus.data.access.gae.PageEntity;
 import com.claymus.data.access.gae.PageLayoutEntity;
 import com.claymus.data.access.gae.RoleAccessEntity;
@@ -26,6 +29,9 @@ import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 
 public class DataAccessorGaeImpl implements DataAccessor {
+
+	private static final Logger logger = 
+			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
 
 	private static final PersistenceManagerFactory pmfInstance =
 			JDOHelper.getPersistenceManagerFactory( "transactions-optional" );
@@ -170,6 +176,17 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( page );
 	}
 
+	
+	@Override
+	public PageContent getPageContent( Long id ) {
+		PageContentEntityStub stub = getEntity( PageContentEntityStub.class, id );
+		try {
+			return (PageContent) getEntity( Class.forName( stub.getType() ), id );
+		} catch( ClassNotFoundException e ) {
+			logger.log( Level.SEVERE, "PageContentEntity Type not found !", e );
+			return null;
+		}
+	}
 	
 	@Override
 	public List<PageContent> getPageContentList( Long pageId ) {

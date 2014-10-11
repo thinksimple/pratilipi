@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
-import com.claymus.module.pagecontent.PageContentProcessor;
+import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;

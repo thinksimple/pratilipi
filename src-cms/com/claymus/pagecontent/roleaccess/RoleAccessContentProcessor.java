@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
-import com.claymus.module.pagecontent.PageContentFactory;
-import com.claymus.module.pagecontent.PageContentProcessor;
-import com.claymus.module.pagecontent.PageContentRegistry;
+import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentProcessor;
+import com.claymus.pagecontent.PageContentRegistry;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 
@@ -24,12 +24,13 @@ public class RoleAccessContentProcessor extends PageContentProcessor<RoleAccessC
 			RoleAccessContent roleAccessContent, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
-		if( ! RoleAccessContentHelper.hasRequestAccessToList( request ) )
+		if( ! RoleAccessContentHelper.hasRequestAccessToListAccessData( request ) )
 			throw new InsufficientAccessException();
 		
 		boolean showUpdateOptions =
-				RoleAccessContentHelper.hasRequestAccessToUpdate( request );
+				RoleAccessContentHelper.hasRequestAccessToUpdateAccessData( request );
 
+		@SuppressWarnings("rawtypes")
 		List<PageContentFactory> pageContentHelperList =
 				PageContentRegistry.getPageContentHelperList();
 		

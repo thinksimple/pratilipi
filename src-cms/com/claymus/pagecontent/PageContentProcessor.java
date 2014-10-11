@@ -1,4 +1,4 @@
-package com.claymus.module.pagecontent;
+package com.claymus.pagecontent;
 
 import java.io.IOException;
 import java.io.StringWriter;

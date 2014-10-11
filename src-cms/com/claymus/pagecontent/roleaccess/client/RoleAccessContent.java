@@ -2,8 +2,8 @@ package com.claymus.pagecontent.roleaccess.client;
 
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.client.ClaymusServiceAsync;
-import com.claymus.service.shared.data.SaveRoleAccessRequest;
-import com.claymus.service.shared.data.SaveRoleAccessResponse;
+import com.claymus.service.shared.SaveRoleAccessRequest;
+import com.claymus.service.shared.SaveRoleAccessResponse;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

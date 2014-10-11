@@ -1,4 +1,4 @@
-package com.claymus.module.pagecontent.html;
+package com.claymus.pagecontent.html;
 
 import com.claymus.data.transfer.PageContent;
 

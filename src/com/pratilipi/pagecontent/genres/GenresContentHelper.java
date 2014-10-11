@@ -1,11 +1,14 @@
 package com.pratilipi.pagecontent.genres;
 
 import com.claymus.commons.server.Access;
-import com.claymus.module.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentFactory;
 import com.pratilipi.pagecontent.genres.gae.GenresContentEntity;
+import com.pratilipi.pagecontent.genres.shared.GenresContentData;
 
-public class GenresContentHelper
-		implements PageContentFactory<GenresContent, GenresContentProcessor> {
+public class GenresContentHelper extends PageContentFactory<
+		GenresContent,
+		GenresContentData,
+		GenresContentProcessor> {
 	
 	@Override
 	public String getModuleName() {

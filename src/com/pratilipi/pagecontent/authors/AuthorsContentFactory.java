@@ -1,11 +1,14 @@
 package com.pratilipi.pagecontent.authors;
 
 import com.claymus.commons.server.Access;
-import com.claymus.module.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentFactory;
+import com.pratilipi.pagecontent.author.shared.AuthorContentData;
 import com.pratilipi.pagecontent.authors.gae.AuthorsContentEntity;
 
-public class AuthorsContentFactory
-		implements PageContentFactory<AuthorsContent, AuthorsContentProcessor> {
+public class AuthorsContentFactory extends PageContentFactory<
+		AuthorsContent,
+		AuthorContentData,
+		AuthorsContentProcessor> {
 	
 	@Override
 	public String getModuleName() {

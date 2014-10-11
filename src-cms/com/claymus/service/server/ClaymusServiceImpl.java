@@ -17,10 +17,13 @@ import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.EmailTemplate;
+import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.claymus.email.EmailUtil;
+import com.claymus.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentRegistry;
 import com.claymus.pagecontent.roleaccess.RoleAccessContentHelper;
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.shared.FacebookLoginUserRequest;
@@ -33,13 +36,16 @@ import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
 import com.claymus.service.shared.ResetUserPasswordRequest;
 import com.claymus.service.shared.ResetUserPasswordResponse;
+import com.claymus.service.shared.SavePageContentRequest;
+import com.claymus.service.shared.SavePageContentResponse;
+import com.claymus.service.shared.SaveRoleAccessRequest;
+import com.claymus.service.shared.SaveRoleAccessResponse;
 import com.claymus.service.shared.SendQueryRequest;
 import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
 import com.claymus.service.shared.data.FacebookLoginData;
-import com.claymus.service.shared.data.SaveRoleAccessRequest;
-import com.claymus.service.shared.data.SaveRoleAccessResponse;
+import com.claymus.service.shared.data.PageContentData;
 import com.claymus.service.shared.data.UserData;
 import com.claymus.taskqueue.Task;
 import com.claymus.taskqueue.TaskQueue;
@@ -457,6 +463,46 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 
 	
 	/*
+	 * Owner Module: PageContent
+	 * API Version: 3.0
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public SavePageContentResponse savePageContent( SavePageContentRequest request )
+			throws InsufficientAccessException {
+		
+		PageContentData pageContentData = request.getPageContentData();
+		@SuppressWarnings("rawtypes")
+		PageContentFactory pageContentHelper =
+				PageContentRegistry.getPageContentHelper( pageContentData.getClass() );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		PageContent pageContent;
+		if( pageContentData.getId() == null ) { // Add PageContent usecase
+			
+			if( ! pageContentHelper.hasRequestAccessToAddContent( this.getThreadLocalRequest() ) )
+				throw new InsufficientAccessException();
+		
+			pageContent = pageContentHelper.createOrUpdateFromData( pageContentData, null );
+			pageContent.setCreationDate( new Date() );
+
+		} else { // Update PageContent usecase
+		
+			if( ! pageContentHelper.hasRequestAccessToUpdateContent( this.getThreadLocalRequest() ) )
+				throw new InsufficientAccessException();
+			
+			pageContent = dataAccessor.getPageContent( pageContentData.getId() );
+			pageContent = pageContentHelper.createOrUpdateFromData( pageContentData, pageContent );
+			pageContent.setLastUpdated( new Date() );
+		}
+		
+		dataAccessor.createOrUpdatePageContent( pageContent );
+		dataAccessor.destroy();
+		
+		return new SavePageContentResponse( pageContent.getId() );
+	}
+	
+	/*
 	 * Owner Module: RoleAccess (PageContent)
 	 * API Version: 3.0
 	 */
@@ -464,7 +510,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 	public SaveRoleAccessResponse saveRoleAccess( SaveRoleAccessRequest request )
 			throws InsufficientAccessException {
 		
-		if( ! RoleAccessContentHelper.hasRequestAccessToUpdate( this.getThreadLocalRequest() ) )
+		if( ! RoleAccessContentHelper.hasRequestAccessToUpdateAccessData( this.getThreadLocalRequest() ) )
 			throw new InsufficientAccessException();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

@@ -4,7 +4,7 @@
 
 	<h1>Role Access</h1>
 
-	<table id="PageContent-Access" class="table table-hover">
+	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>Module</th>

@@ -10,12 +10,14 @@ import com.claymus.service.shared.RegisterUserRequest;
 import com.claymus.service.shared.RegisterUserResponse;
 import com.claymus.service.shared.ResetUserPasswordRequest;
 import com.claymus.service.shared.ResetUserPasswordResponse;
+import com.claymus.service.shared.SavePageContentRequest;
+import com.claymus.service.shared.SavePageContentResponse;
+import com.claymus.service.shared.SaveRoleAccessRequest;
+import com.claymus.service.shared.SaveRoleAccessResponse;
 import com.claymus.service.shared.SendQueryRequest;
 import com.claymus.service.shared.SendQueryResponse;
 import com.claymus.service.shared.UpdateUserPasswordRequest;
 import com.claymus.service.shared.UpdateUserPasswordResponse;
-import com.claymus.service.shared.data.SaveRoleAccessRequest;
-import com.claymus.service.shared.data.SaveRoleAccessResponse;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ClaymusServiceAsync {
@@ -51,6 +53,10 @@ public interface ClaymusServiceAsync {
 			AsyncCallback<SendQueryResponse> callback );
 
 	
+	void savePageContent(
+			SavePageContentRequest request,
+			AsyncCallback<SavePageContentResponse> callback );
+
 	void saveRoleAccess(
 			SaveRoleAccessRequest request,
 			AsyncCallback<SaveRoleAccessResponse> callback );

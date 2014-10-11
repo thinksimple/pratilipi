@@ -1,11 +1,14 @@
 package com.pratilipi.module.pagecontent.managepublishers;
 
 import com.claymus.commons.server.Access;
-import com.claymus.module.pagecontent.PageContentFactory;
+import com.claymus.pagecontent.PageContentFactory;
 import com.pratilipi.module.pagecontent.managepublishers.gae.ManagePublishersEntity;
+import com.pratilipi.module.pagecontent.managepublishers.shared.ManagePublishersData;
 
-public class ManagePublishersFactory
-		implements PageContentFactory<ManagePublishers, ManagePublishersProcessor> {
+public class ManagePublishersFactory extends PageContentFactory<
+		ManagePublishers,
+		ManagePublishersData,
+		ManagePublishersProcessor> {
 	
 	@Override
 	public String getModuleName() {

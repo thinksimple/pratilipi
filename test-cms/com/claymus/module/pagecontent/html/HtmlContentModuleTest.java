@@ -9,6 +9,8 @@ import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.transfer.PageContent;
+import com.claymus.pagecontent.html.HtmlContent;
+import com.claymus.pagecontent.html.HtmlContentFactory;
 
 public abstract class HtmlContentModuleTest {
 
