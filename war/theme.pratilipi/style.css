@@ -616,6 +616,7 @@ header {
 
 .published-works td {
 	padding: 0 0 5px 0;
+	text-align: center;
 }
 
 .published-works th {

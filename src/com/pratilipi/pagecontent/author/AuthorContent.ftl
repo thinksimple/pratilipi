@@ -145,6 +145,13 @@ window.onload = function(){
 			e.preventDefault();
 		    $("#Upload-image:hidden").trigger('click');
 		});
+		
+		//Hide error popup by clicking anywhere on the screen.
+		$('body').click(function(e) {
+			$('.popover ').each(function() {
+				$(this).popover('hide');
+			});
+		});	
 	}
 </script>
 
@@ -155,13 +162,23 @@ window.onload = function(){
 	<div id="PageContent-Author-AddPratilipi"></div>
 	<div id="PageContent-Author-Detail" class="row margin0">
 		<div class="container margin-top25 clearfix">
-			<div id="profile-pic-div" class="col-md-3">
-				<img style="width:75%" src="${ authorImage }"></img><br/>
-				<#if showUpdateOption>
-					<span id="upload-link">Upload your photo</span>
-					<!-- Add Author Image -->
-					<div id="PageContent-Author-Image-EditOptions"></div>
-				</#if>
+			<div class="col-md-3">
+				<div id="profile-pic-div">
+					<img style="width:75%" src="${ authorImage }"></img><br/>
+					<#if showUpdateOption>
+						<span id="upload-link">Upload your photo</span>
+						<!-- Add Author Image -->
+						<div id="PageContent-Author-Image-EditOptions"></div>
+					</#if>
+				</div>
+				<div style="line-height: 15px; padding-top: 10px;">
+					<div id="fb-like" class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true">
+					</div>
+					<a class="twitter-share-button"
+						  href="https://twitter.com/share"
+						  data-size="small">
+					</a>
+				</div>
 			</div>
 			<div class="col-md-9">
 				<div class="row margin0">
@@ -191,25 +208,25 @@ window.onload = function(){
 								<td>Books</td>
 								<td>${ _bookCount }</td>
 								<td>0</td>
-								<#if showUpdateOption><td><a href="" id="addBook" data-toggle='modal' data-target="#PageContent-Author-AddBook">Add</a></td></#if>
+								<#if showUpdateOption><td id="addBook"></td></#if>
 							</tr>
 							<tr>
 								<td>Stories</td>
 								<td>${ _storyCount }</td>
 								<td>0</td>
-								<#if showUpdateOption><td><a href="" id="addStory" data-toggle='modal' data-target="#PageContent-Author-AddStory">Add</a></td></#if>
+								<#if showUpdateOption><td id="addStory"></td></#if>
 							</tr>
 							<tr>
 								<td>Poems</td>
 								<td>${ _poemCount }</td>
 								<td>0</td>
-								<#if showUpdateOption><td><a href="" id="addPoem" data-toggle='modal' data-target="#PageContent-Author-AddPoem">Add</a></td></#if>
+								<#if showUpdateOption><td id="addPoem"></td></#if>
 							</tr>
 							<tr>
 								<td>Article</td>
 								<td>${ _articleCount }</td>
 								<td>0</td>
-								<#if showUpdateOption><td><a href="" id="addArticle" data-toggle='modal' data-target="#PageContent-Author-AddArticle">Add</a></td></#if>
+								<#if showUpdateOption><td id="addArticle"></td></#if>
 							</tr>
 						</table>
 					</div>
