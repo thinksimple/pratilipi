@@ -1,3 +1,5 @@
+<#import "../../../../com/claymus/commons/client/ui/Social.ftl" as social>
+
 <!-- PageContent :: Author Profile :: Start -->
 
 <script type="text/javascript">
@@ -171,14 +173,10 @@ window.onload = function(){
 						<div id="PageContent-Author-Image-EditOptions"></div>
 					</#if>
 				</div>
-				<div style="line-height: 15px; padding-top: 10px;">
-					<div id="fb-like" class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true">
-					</div>
-					<a class="twitter-share-button"
-						  href="https://twitter.com/share"
-						  data-size="small">
-					</a>
-				</div>
+				<#if authorUrl??>
+					<!-- This is for testing and should not be present in the prod code -->
+					<div style="margin-top:10px; margin-bottom:10px;"><@social.toolbar shareUrl=authorUrl/></div>
+				</#if>
 			</div>
 			<div class="col-md-9">
 				<div class="row margin0">

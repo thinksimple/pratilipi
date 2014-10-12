@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.client.UnexpectedServerException;
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.SerializationUtil;
 import com.claymus.data.transfer.User;
 import com.claymus.pagecontent.PageContentProcessor;
@@ -70,6 +71,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "pratilipiData", pratilipiData );
+		dataModel.put( "pratilipiUrl", "http://" + ClaymusHelper.getSystemProperty( "domain" ) + "/" + pratilipiData.getType() + "/" + pratilipiId );
 		dataModel.put( "pratilipiDataEncodedStr", SerializationUtil.encode( pratilipiData ) );
 
 		dataModel.put( "pratilipi", pratilipi );

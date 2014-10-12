@@ -877,6 +877,16 @@ header {
 	display: block;
 }
 
+#upload-coverImage-link, #upload-htmlContent-link, #upload-wordContent-link{
+	cursor: pointer;
+	display: block;
+	font-size: 14px;
+}
+
+#upload-coverImage-link:hover, #upload-htmlContent-link:hover, #upload-wordContent-link:hover{
+	text-decoration: underline;
+}
+
 
 /* Below piece of formating is for horizontal scroll */
 

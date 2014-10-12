@@ -237,6 +237,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
 		
 		pratilipiData.setTitle( pratilipi.getTitle() );
+		pratilipiData.setTitleEn( pratilipi.getTitleEn() );
 		pratilipiData.setLanguageId( language.getId() );
 		pratilipiData.setLanguageName( language.getName() );
 		pratilipiData.setLanguageNameEn( language.getNameEn() );

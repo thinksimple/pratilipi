@@ -7,8 +7,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.client.UnexpectedServerException;
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.pagecontent.PageContentProcessor;
+import com.google.gwt.user.client.Window;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
@@ -132,10 +134,10 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		
 		dataAccessor.destroy();
 		
-		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "author", author );
+		dataModel.put( "authorUrl", "http://" + ClaymusHelper.getSystemProperty( "domain" ) + "/author/" + authorId );
 		dataModel.put( "authorImage", authorImage );
 		dataModel.put( "pratilipiFilter", pratilipiFilter );
 		dataModel.put( "bookDataList", bookDataList );

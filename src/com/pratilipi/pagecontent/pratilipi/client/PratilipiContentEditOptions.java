@@ -121,6 +121,8 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		if( rootPanel != null ) {
 			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
 			coverImageUpload.getElement().setAttribute( "data-url", uploadUrl );
+			coverImageUpload.getElement().setAttribute( "id", "upload-coverImage" );
+			coverImageUpload.setVisible( false );
 			loadFileUploader( coverImageUpload.getElement() );
 
 			rootPanel.add( coverImageUpload );
@@ -132,6 +134,8 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		if( rootPanel != null ) {
 			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
 			htmlContentUpload.getElement().setAttribute( "data-url", uploadUrl );
+			htmlContentUpload.getElement().setAttribute( "id", "upload-htmlContent" );
+			htmlContentUpload.setVisible( false );
 			loadFileUploader( htmlContentUpload.getElement() );
 
 			rootPanel.add( htmlContentUpload );
@@ -143,6 +147,8 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		if( rootPanel != null ) {
 			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
 			wordContentUpload.getElement().setAttribute( "data-url", uploadUrl );
+			wordContentUpload.getElement().setAttribute( "id", "upload-wordContent" );
+			wordContentUpload.setVisible( false );
 			loadFileUploader( wordContentUpload.getElement() );
 
 			rootPanel.add( wordContentUpload );

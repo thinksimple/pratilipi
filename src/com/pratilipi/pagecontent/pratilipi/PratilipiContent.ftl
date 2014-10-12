@@ -1,5 +1,24 @@
-<!-- PageContent :: Pratilipi :: Start -->
+<#import "../../../../com/claymus/commons/client/ui/Social.ftl" as social>
 
+<!-- PageContent :: Pratilipi :: Start -->
+<script type="text/javascript">
+	window.onload = function(){
+		$("#upload-coverImage-link").on('click', function(e){
+			e.preventDefault();
+		    $("#upload-coverImage:hidden").trigger('click');
+		});
+		
+		$("#upload-htmlContent-link").on('click', function(e){
+			e.preventDefault();
+		    $("#upload-htmlContent:hidden").trigger('click');
+		});
+		
+		$("#upload-wordContent-link").on('click', function(e){
+			e.preventDefault();
+		    $("#upload-wordContent:hidden").trigger('click');
+		});
+	}
+</script>
 <div class="container">
 	
 	<div class="row">
@@ -10,8 +29,11 @@
 				<img class="img-responsive" src="${ pratilipiCoverUrl }">
 			</a>
 			<#if showEditOptions>
+				<span id="upload-coverImage-link">Upload Cover Image</span>
 				<div id="PageContent-Pratilipi-CoverImage-EditOptions" upload-url="${ pratilipiCoverUploadUrl }" ></div>
+				<span id="upload-htmlContent-link">Upload HTML Content</span>
 				<div id="PageContent-Pratilipi-HtmlContent-EditOptions" upload-url="${ pratilipiContentHtmlUrl }" ></div>
+				<span id="upload-wordContent-link">Upload Word File</span>
 				<div id="PageContent-Pratilipi-WordContent-EditOptions" upload-url="${ pratilipiContentWordUrl }" ></div>
 			</#if>
 		</div>
@@ -29,14 +51,9 @@
 					${ genreName }<#if genreName_has_next>,</#if>
 				</#list>
 			</h5>
-			<div style="line-height: 15px;">
-				<div id="fb-like" class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true">
-				</div>
-				<a class="twitter-share-button"
-					  href="https://twitter.com/share"
-					  data-size="small">
-				</a>
-			</div>
+			<#if pratilipiUrl??>
+				<div style="margin-top:10px; margin-bottom:10px;"><@social.toolbar shareUrl=pratilipiUrl/></div>
+			</#if>
 			<button type="button" class="btn btn-success visible-xs-inline-block" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
 			<#if showReviewedMessage>
 				<button type="button" class="btn btn-info visible-xs-inline-block" onclick="window.location.href='#Reviews'">
