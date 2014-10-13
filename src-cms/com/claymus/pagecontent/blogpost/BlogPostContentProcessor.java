@@ -16,7 +16,7 @@ public class BlogPostContentProcessor extends PageContentProcessor<BlogPostConte
 
 	@Override
 	protected CacheLevel getCacheLevel() {
-		return CacheLevel.GLOBAL;
+		return CacheLevel.USER_ROLE;
 	}
 
 	@Override

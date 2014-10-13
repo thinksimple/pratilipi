@@ -27,10 +27,10 @@ public abstract class PageContentProcessor<T extends PageContent> {
 
 
 	protected enum CacheLevel {
-		NONE,
 		USER,
 		USER_ROLE,
-		GLOBAL
+		GLOBAL,
+		NONE
 	}
 	
 	
@@ -43,7 +43,9 @@ public abstract class PageContentProcessor<T extends PageContent> {
 		
 		if( cacheLevel != CacheLevel.NONE ) {
 			ClaymusHelper claymusHelper = ClaymusHelper.get( request );
-			String key = getClass().getSimpleName();
+			String key = getClass().getSimpleName()
+					+ "-" + pageContent.getId()
+					+ "-" + pageContent.getLastUpdated().getTime();
 			switch( cacheLevel ) {
 				case USER:
 					key += "-User-" + claymusHelper.getCurrentUserId();
@@ -51,12 +53,14 @@ public abstract class PageContentProcessor<T extends PageContent> {
 				case USER_ROLE:
 					key += "-UserRole";
 					for( UserRole userRole : claymusHelper.getCurrentUserRoleList() )
-						key += "-" + userRole.getId();
+						key += "-" + userRole.getRoleId();
+					break;
+				case GLOBAL:
+					key += "-Global";
 					break;
 				default:
 					break;
 			}
-			key += "-" + pageContent.getLastUpdated().getTime();
 			html = memcache.get( key );
 			
 			if( html == null ) {

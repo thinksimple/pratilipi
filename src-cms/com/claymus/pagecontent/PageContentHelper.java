@@ -15,7 +15,9 @@ public abstract class PageContentHelper<
 	
 	public abstract Double getModuleVersion();
 
-	public abstract Access[] getAccessList();
+	public Access[] getAccessList() {
+		return new Access[]{};
+	};
 	
 	public boolean hasRequestAccessToAddContent( HttpServletRequest request ) {
 		return false;
