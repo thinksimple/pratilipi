@@ -25,7 +25,12 @@ public class MemcacheGaeImpl implements Memcache {
 		try {
 			Cache cache = CacheManager.getInstance().getCacheFactory()
 					.createCache( Collections.emptyMap() );
-			return (T) cache.get(key);
+			T value = (T) cache.get(key);
+			if( value == null )
+				logger.log( Level.INFO, "Cache Miss: " + key );
+			else
+				logger.log( Level.INFO, "Cache Hit: " + key );
+			return value;
 		} catch( InvalidValueException e ) {
 			logger.log( Level.SEVERE, "Failed to typecaste cached value to required type.", e );
 			return null;

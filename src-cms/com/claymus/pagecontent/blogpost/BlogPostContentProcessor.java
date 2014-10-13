@@ -15,6 +15,11 @@ import com.claymus.pagecontent.blogpost.shared.BlogPostContentData;
 public class BlogPostContentProcessor extends PageContentProcessor<BlogPostContent> {
 
 	@Override
+	protected CacheLevel getCacheLevel() {
+		return CacheLevel.GLOBAL;
+	}
+
+	@Override
 	protected String generateHtml(
 			BlogPostContent blogPostContent, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
