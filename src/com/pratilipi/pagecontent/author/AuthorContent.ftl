@@ -174,15 +174,20 @@ window.onload = function(){
 					</#if>
 				</div>
 				<#if authorUrl??>
-					<!-- This is for testing and should not be present in the prod code -->
 					<div style="margin-top:10px; margin-bottom:10px;"><@social.toolbar shareUrl=authorUrl/></div>
 				</#if>
 			</div>
 			<div class="col-md-9">
 				<div class="row margin0">
 					<div class="col-sm-7" style="border-right: 1px solid #DDD;">
-						<h3 style="text-align: center;">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></h3>
-						<h4 style="text-align: center;">${ author.getFirstNameEn() }<#if author.getLastNameEn()??> ${ author.getLastNameEn() }</#if></h4>
+						<h3 style="text-align: center;"> ${ author.getFirstName() }
+							<#if author.getLastName()??> ${ author.getLastName() }</#if>
+							<#if author.getPenName()??>'${ author.getPenName() }'</#if>
+						</h3>
+						<h4 style="text-align: center;">${ author.getFirstNameEn() }
+							<#if author.getLastNameEn()??> ${ author.getLastNameEn() }</#if>
+							<#if author.getPenNameEn()??>'${ author.getPenNameEn() }'</#if>
+						</h4>
 						<div>
 							<div id="PageContent-Author-Summary">
 								<#if author.getSummary()??>
