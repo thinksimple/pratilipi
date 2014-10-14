@@ -15,7 +15,7 @@ public class SaveGenreResponse implements IsSerializable {
 	}
 
 	
-	public Long getLanguageId() {
+	public Long getGenreId() {
 		return genreId;
 	}
 	
