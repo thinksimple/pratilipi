@@ -2,6 +2,8 @@ package com.claymus.service.client;
 
 import com.claymus.service.shared.FacebookLoginUserRequest;
 import com.claymus.service.shared.FacebookLoginUserResponse;
+import com.claymus.service.shared.GetBlogListRequest;
+import com.claymus.service.shared.GetBlogListResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -56,6 +58,10 @@ public interface ClaymusServiceAsync {
 	void savePageContent(
 			SavePageContentRequest request,
 			AsyncCallback<SavePageContentResponse> callback );
+
+	void getBlogPostList( 
+			GetBlogListRequest request,
+			AsyncCallback<GetBlogListResponse> callback );
 
 	void saveRoleAccess(
 			SaveRoleAccessRequest request,

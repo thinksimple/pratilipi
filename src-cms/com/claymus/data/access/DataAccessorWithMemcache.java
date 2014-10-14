@@ -182,19 +182,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 			Class<? extends PageContent> pageContentClass,
 			String cursorStr, int resultCount ) {
 		
-		String cacheKey = PREFIX_PAGE_CONTENT_LIST
-				+ pageContentClass.getSimpleName()
-				+ "-" + cursorStr + "-" + resultCount;
-		
-		DataListCursorTuple<PageContent> dataListCursorTuple = memcache.get( cacheKey );
-		
-		if( dataListCursorTuple == null ) {
-			dataListCursorTuple = dataAccessor.getPageContentList( pageContentClass, cursorStr, resultCount );
-			if( dataListCursorTuple != null )
-				memcache.put( cacheKey, dataListCursorTuple );
-		}
-
-		return dataListCursorTuple;
+		return dataAccessor.getPageContentList( pageContentClass, cursorStr, resultCount );
 	}
 	
 	@Override

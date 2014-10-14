@@ -6,7 +6,7 @@
 	<#list blogPostHtmlList as blogPostHtml>
 		${ blogPostHtml }
 	</#list>
-<div>
+</div>
 
 <script type="text/javascript" language="javascript" src="/pagecontent.blog/pagecontent.blog.nocache.js" defer></script>
 

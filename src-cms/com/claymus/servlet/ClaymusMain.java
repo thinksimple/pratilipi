@@ -223,15 +223,15 @@ public class ClaymusMain extends HttpServlet {
 		if( requestUri.equals( "/author-interviews" ) ) {
 			BlogContent blogContent = BlogContentHelper.newPostContent();
 			blogContent.setCursor( null );
-			blogContent.setPostCount( 10 );
+			blogContent.setPostCount( 5 );
 			blogContent.setLastUpdated( new Date() );
 			pageContentList.add( blogContent );
 		
 		} else if( requestUri.equals( "/author-interview/new" ) ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			BlogPostContent blogPost = BlogPostContentHelper.newBlogPostContent();
-			blogPost.setTitle( "New Blog Post" );
-			blogPost.setContent( "Blog content ..." );
+			blogPost.setTitle( "New Author Interview" );
+			blogPost.setContent( "Interview content goes here ..." );
 			blogPost.setLastUpdated( new Date() );
 			dataAccessor.destroy();
 			pageContentList.add( blogPost );

@@ -1,7 +1,9 @@
 package com.claymus.service.server;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +18,7 @@ import com.claymus.commons.server.ValidateFbAccessToken;
 import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
+import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.EmailTemplate;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.RoleAccess;
@@ -23,11 +26,16 @@ import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.claymus.email.EmailUtil;
 import com.claymus.pagecontent.PageContentHelper;
+import com.claymus.pagecontent.PageContentProcessor;
 import com.claymus.pagecontent.PageContentRegistry;
+import com.claymus.pagecontent.blogpost.BlogPostContent;
+import com.claymus.pagecontent.blogpost.BlogPostContentHelper;
 import com.claymus.pagecontent.roleaccess.RoleAccessContentHelper;
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.shared.FacebookLoginUserRequest;
 import com.claymus.service.shared.FacebookLoginUserResponse;
+import com.claymus.service.shared.GetBlogListRequest;
+import com.claymus.service.shared.GetBlogListResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -503,6 +511,37 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		return new SavePageContentResponse( pageContent.getId() );
 	}
 	
+	/*
+	 * Owner Module: Blog (PageContent)
+	 * API Version: 3.0
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public GetBlogListResponse getBlogPostList( GetBlogListRequest request )
+			throws InsufficientAccessException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataListCursorTuple<PageContent> dataListCursorTuple =
+				dataAccessor.getPageContentList(
+						BlogPostContentHelper.newBlogPostContent().getClass(),
+						request.getCursor(), request.getResultCount() );
+		dataAccessor.destroy();
+		
+		List<PageContent> blogPostContentList = dataListCursorTuple.getDataList();
+		List<String> blogPostHtmlList = new ArrayList<>( blogPostContentList.size() );
+		PageContentProcessor blogPostContentProcessor =
+				PageContentRegistry.getPageContentProcessor(
+						BlogPostContentHelper.newBlogPostContent().getClass() );
+		for( PageContent blogPostContent : blogPostContentList ) {
+			((BlogPostContent) blogPostContent).setPreview( true );
+			blogPostHtmlList.add(
+					blogPostContentProcessor.generateHtml(
+							blogPostContent, this.getThreadLocalRequest() ) );
+		}
+		
+		return new GetBlogListResponse( blogPostHtmlList, dataListCursorTuple.getCursor() );
+	}
+
 	/*
 	 * Owner Module: RoleAccess (PageContent)
 	 * API Version: 3.0

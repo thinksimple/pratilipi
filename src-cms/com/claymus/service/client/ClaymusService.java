@@ -5,6 +5,8 @@ import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.service.shared.FacebookLoginUserRequest;
 import com.claymus.service.shared.FacebookLoginUserResponse;
+import com.claymus.service.shared.GetBlogListRequest;
+import com.claymus.service.shared.GetBlogListResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -53,6 +55,9 @@ public interface ClaymusService extends RemoteService {
 	
 	SavePageContentResponse savePageContent( SavePageContentRequest request )
 			throws InsufficientAccessException;
+
+	GetBlogListResponse getBlogPostList( GetBlogListRequest request )
+			throws UnexpectedServerException, InsufficientAccessException;
 
 	SaveRoleAccessResponse saveRoleAccess( SaveRoleAccessRequest request )
 			throws InsufficientAccessException;
