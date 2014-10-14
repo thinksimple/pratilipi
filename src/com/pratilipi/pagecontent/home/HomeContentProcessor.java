@@ -25,7 +25,7 @@ public class HomeContentProcessor extends PageContentProcessor<HomeContent> {
 	}
 
 	@Override
-	protected String generateHtml( HomeContent homeContent, HttpServletRequest request )
+	public String generateHtml( HomeContent homeContent, HttpServletRequest request )
 			throws UnexpectedServerException {
 
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );

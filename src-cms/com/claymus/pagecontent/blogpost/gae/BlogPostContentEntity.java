@@ -1,5 +1,6 @@
 package com.claymus.pagecontent.blogpost.gae;
 
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -16,6 +17,9 @@ public class BlogPostContentEntity extends PageContentEntity implements BlogPost
 	
 	@Persistent( column = "X_COL_1" )
 	private Text content;
+
+	@NotPersistent
+	private Boolean preview;
 
 	
 	@Override
@@ -36,6 +40,16 @@ public class BlogPostContentEntity extends PageContentEntity implements BlogPost
 	@Override
 	public void setContent( String html ) {
 		this.content = new Text( html );
+	}
+
+	@Override
+	public Boolean preview() {
+		return preview == null ? false : preview;
+	}
+
+	@Override
+	public void setPreview( Boolean preview ) {
+		this.preview = preview;
 	}
 
 }

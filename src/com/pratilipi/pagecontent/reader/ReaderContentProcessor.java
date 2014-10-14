@@ -32,7 +32,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 	
 	@Override
-	protected String generateHtml( ReaderContent pratilipiContent, HttpServletRequest request )
+	public String generateHtml( ReaderContent pratilipiContent, HttpServletRequest request )
 			throws UnexpectedServerException {
 
 		PratilipiType pratilipiType = pratilipiContent.getPratilipiType();

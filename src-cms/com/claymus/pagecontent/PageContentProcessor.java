@@ -81,7 +81,7 @@ public abstract class PageContentProcessor<T extends PageContent> {
 	}
 	
 	
-	protected String generateHtml( T pageContent, HttpServletRequest request )
+	public String generateHtml( T pageContent, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
 		return processTemplate( pageContent, getTemplateName() );

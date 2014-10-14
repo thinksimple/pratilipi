@@ -3,6 +3,7 @@ package com.claymus.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +34,8 @@ import com.claymus.module.websitewidget.navigation.NavigationWidgetFactory;
 import com.claymus.module.websitewidget.user.UserWidgetFactory;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.claymus.pagecontent.PageContentRegistry;
+import com.claymus.pagecontent.blog.BlogContent;
+import com.claymus.pagecontent.blog.BlogContentHelper;
 import com.claymus.pagecontent.blogpost.BlogPostContent;
 import com.claymus.pagecontent.blogpost.BlogPostContentHelper;
 import com.claymus.pagecontent.html.HtmlContent;
@@ -62,6 +65,7 @@ public class ClaymusMain extends HttpServlet {
 		WEBSITE_WIDGET_REGISTRY = new WebsiteWidgetRegistry();
 		
 		PageContentRegistry.register( HtmlContentHelper.class );
+		PageContentRegistry.register( BlogContentHelper.class );
 		PageContentRegistry.register( BlogPostContentHelper.class );
 		PageContentRegistry.register( RoleAccessContentHelper.class );
 		
@@ -187,10 +191,20 @@ public class ClaymusMain extends HttpServlet {
 
 		String requestUri = request.getRequestURI();
 		
-		if( requestUri.equals( "/blog/new" ) )
-			page.setTitle( "New Blog Post" );
+		if( requestUri.equals( "/author-interviews" ) )
+			page.setTitle( "Author Interviews" );
 
-		else if( requestUri.equals( "/roleaccess" ) )
+		else if( requestUri.equals( "/author-interview/new" ) )
+			page.setTitle( "New Author Interview" );
+
+		else if( requestUri.startsWith( "/author-interview/" ) ) {
+			Long blogId = Long.parseLong( requestUri.substring( 18 ) );
+			BlogPostContent blogPostContent =
+					(BlogPostContent) dataAccessor.getPageContent( blogId );
+			page.setTitle( blogPostContent.getTitle() );
+			dataAccessor.destroy();
+
+		} else if( requestUri.equals( "/roleaccess" ) )
 			page.setTitle( "Access" );
 		
 		dataAccessor.destroy();
@@ -206,22 +220,31 @@ public class ClaymusMain extends HttpServlet {
 		
 		String requestUri = request.getRequestURI();
 
-		if( requestUri.equals( "/blog/new" ) ) {
+		if( requestUri.equals( "/author-interviews" ) ) {
+			BlogContent blogContent = BlogContentHelper.newPostContent();
+			blogContent.setCursor( null );
+			blogContent.setPostCount( 10 );
+			blogContent.setLastUpdated( new Date() );
+			pageContentList.add( blogContent );
+		
+		} else if( requestUri.equals( "/author-interview/new" ) ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			BlogPostContent blogPost = BlogPostContentHelper.newBlogPostContent();
 			blogPost.setTitle( "New Blog Post" );
 			blogPost.setContent( "Blog content ..." );
+			blogPost.setLastUpdated( new Date() );
 			dataAccessor.destroy();
 			pageContentList.add( blogPost );
 		
-		} else if( requestUri.equals( "/roleaccess" ) )
-			pageContentList.add( RoleAccessContentHelper.newRoleAccessContent() );
-
-		else if( requestUri.startsWith( "/blog/" ) ) {
-			Long blogId = Long.parseLong( requestUri.substring( 6 ) );
+		} else if( requestUri.startsWith( "/author-interview/" ) ) {
+			Long blogId = Long.parseLong( requestUri.substring( 18 ) );
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			pageContentList.add( dataAccessor.getPageContent( blogId ) );
 			dataAccessor.destroy();
+
+		} else if( requestUri.equals( "/roleaccess" ) ) {
+			pageContentList.add( RoleAccessContentHelper.newRoleAccessContent() );
+
 		}
 		
 		return pageContentList;

@@ -479,15 +479,16 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 
 		PageContent pageContent;
 		if( pageContentData.getId() == null ) { // Add PageContent usecase
-			
+
 			if( ! pageContentHelper.hasRequestAccessToAddContent( this.getThreadLocalRequest() ) )
 				throw new InsufficientAccessException();
 		
 			pageContent = pageContentHelper.createOrUpdateFromData( pageContentData, null );
 			pageContent.setCreationDate( new Date() );
+			pageContent.setLastUpdated( new Date() );
 
 		} else { // Update PageContent usecase
-		
+
 			if( ! pageContentHelper.hasRequestAccessToUpdateContent( this.getThreadLocalRequest() ) )
 				throw new InsufficientAccessException();
 			

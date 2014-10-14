@@ -38,7 +38,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 
 	
 	@Override
-	protected String generateHtml( PratilipiContent pratilipiContent, HttpServletRequest request )
+	public String generateHtml( PratilipiContent pratilipiContent, HttpServletRequest request )
 			throws UnexpectedServerException {
 
 		Long pratilipiId = pratilipiContent.getPratilipiId();

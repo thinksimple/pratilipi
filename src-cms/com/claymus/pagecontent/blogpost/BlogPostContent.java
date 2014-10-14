@@ -12,4 +12,8 @@ public interface BlogPostContent extends PageContent {
 	
 	void setContent( String html );
 	
+	Boolean preview();
+	
+	void setPreview( Boolean preview );
+	
 }

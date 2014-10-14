@@ -22,7 +22,7 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 	
 	
 	@Override
-	protected String generateHtml( AuthorsContent authorsContent, HttpServletRequest request )
+	public String generateHtml( AuthorsContent authorsContent, HttpServletRequest request )
 			throws UnexpectedServerException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );

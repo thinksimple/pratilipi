@@ -27,11 +27,7 @@ public abstract class PageContentHelper<
 		return false;
 	};
 	
-	public Q toDataObject( P pageContent ) {
-		return null;
-	};
-	
-	public P fromDataObject( Q pageContentData ) {
+	public Q createData( P pageContent ) {
 		return null;
 	};
 

@@ -38,8 +38,16 @@ public class PratilipiFilter implements Filter {
 		String action = request.getParameter( "action" );
 
 		if( !host.equals( "www.pratilipi.com" )
+				&& !host.equals( "mark-2p21.prod-pratilipi.appspot.com" )
 				&& !host.equals( "mark-2p22.prod-pratilipi.appspot.com" )
 				&& !host.equals( "mark-2p23.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-2p24.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-2p25.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-2p26.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-2p27.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-2p28.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-2p29.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-2p30.prod-pratilipi.appspot.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( "devo-pratilipi.appspot.com" )
 				&& !host.equals( "localhost" )
@@ -47,22 +55,15 @@ public class PratilipiFilter implements Filter {
 			
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", "http://www.pratilipi.com" + requestUri );
-			
-			PrintWriter out = response.getWriter();
-			out.println( "Redirecting to www.pratilipi.com ..." );
-			out.close();
+
 			
 		} else if( requestUri.length() > 1 && requestUri.endsWith( "/" ) ) { // Removing trailing "/"
 
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", requestUri.substring( 0, requestUri.length() -1 ) );
 
-			PrintWriter out = response.getWriter();
-			out.println( "Redirecting to www.pratilipi.com" + requestUri + " ..." );
-			out.close();
-
 			
-		} else if ( action != null && action.equals( "login" ) ) { // Redirecting to profile page on login
+		} else if( action != null && action.equals( "login" ) ) { // Redirecting to profile page on login
 			
 			PratilipiHelper pratilipiHelper = PratilipiHelper.get( request ); 
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -75,6 +76,12 @@ public class PratilipiFilter implements Filter {
 			else
 				chain.doFilter( request, response ); 
 		
+			
+		} else if( requestUri.startsWith( "/blog/" ) ) { // Redirecting /blog/* pages to /author-interview/*
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", requestUri.replaceFirst( "/blog/", "/author-interview/" ) );
+
+			
 		} else {
 			chain.doFilter( request, response );
 		}

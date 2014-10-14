@@ -25,7 +25,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 	public static final String ACCESS_ID_AUTHOR_UPDATE = "author_update";
 	
 	@Override
-	protected String generateHtml( AuthorContent authorContent, HttpServletRequest request )
+	public String generateHtml( AuthorContent authorContent, HttpServletRequest request )
 			throws UnexpectedServerException {
 		
 		Long authorId = authorContent.getAuthorId();

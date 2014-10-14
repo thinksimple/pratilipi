@@ -20,7 +20,7 @@ public class RoleAccessContentProcessor extends PageContentProcessor<RoleAccessC
 	
 	
 	@Override
-	protected String generateHtml(
+	public String generateHtml(
 			RoleAccessContent roleAccessContent, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 		

@@ -1,6 +1,8 @@
 package com.claymus.data.access;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +29,8 @@ import com.claymus.data.transfer.Role;
 import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.datanucleus.query.JDOCursorHelper;
 
 public class DataAccessorGaeImpl implements DataAccessor {
 
@@ -200,6 +204,33 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return pageContentList.size() == 0 ? null : (List<PageContent>) pm.detachCopyAll( pageContentList );
 	}
 
+	@Override
+	public DataListCursorTuple<PageContent> getPageContentList(
+			Class<? extends PageContent> pageContentClass,
+			String cursorStr, int resultCount ) {
+		
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( pageContentClass ) )
+						.addOrdering( "creationDate", false )
+						.setRange( 0, resultCount )
+						.build();
+
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions(extensionMap);
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<PageContent> pageContentList = (List<PageContent>) query.execute();
+		Cursor cursor = JDOCursorHelper.getCursor( pageContentList );
+
+		return new DataListCursorTuple<PageContent>(
+				(List<PageContent>) pm.detachCopyAll( pageContentList ),
+				cursor == null ? null : cursor.toWebSafeString() );
+	}
+	
 	@Override
 	public PageContent createOrUpdatePageContent( PageContent pageContent ) {
 		return createOrUpdateEntity( pageContent );

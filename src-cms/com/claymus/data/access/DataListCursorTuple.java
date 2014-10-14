@@ -1,8 +1,10 @@
 package com.claymus.data.access;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DataListCursorTuple<T> {
+@SuppressWarnings("serial")
+public class DataListCursorTuple<T> implements Serializable {
 
 	private List<T> dataList;
 	private String cursor;

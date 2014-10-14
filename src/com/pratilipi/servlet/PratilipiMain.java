@@ -455,7 +455,7 @@ public class PratilipiMain extends ClaymusMain {
 		homeContent.setBookIdList( bookIdList );
 		homeContent.setPoemIdList( poemIdList );
 		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 24 ) );
+		homeContent.setLastUpdated( new Date( 25 ) );
 		return homeContent;
 	}
 

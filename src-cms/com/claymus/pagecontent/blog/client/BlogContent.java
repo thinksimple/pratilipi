@@ -1,8 +1,8 @@
-package com.claymus.pagecontent.blogpost.client;
+package com.claymus.pagecontent.blog.client;
 
 import com.claymus.commons.client.ui.formfield.RichTextInputFormField;
 import com.claymus.commons.client.ui.formfield.TextInputFormField;
-import com.claymus.pagecontent.blogpost.shared.BlogPostContentData;
+import com.claymus.pagecontent.blog.shared.BlogContentData;
 import com.claymus.service.client.ClaymusService;
 import com.claymus.service.client.ClaymusServiceAsync;
 import com.claymus.service.shared.SavePageContentRequest;
@@ -16,7 +16,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class BlogPostContent implements EntryPoint, ClickHandler {
+public class BlogContent implements EntryPoint, ClickHandler {
 
 	private static final ClaymusServiceAsync claymusService =
 			GWT.create( ClaymusService.class );
@@ -74,12 +74,10 @@ public class BlogPostContent implements EntryPoint, ClickHandler {
 		} else if( event.getSource() == saveButton ) {
 			saveButton.setEnabled( false );
 
-			BlogPostContentData blogPostContentData = new BlogPostContentData();
+			BlogContentData blogPostContentData = new BlogContentData();
 			
 			if( ! pageConentIdStr.isEmpty() )
 				blogPostContentData.setId( Long.parseLong( pageConentIdStr ) );
-			blogPostContentData.setTitle( titleInput.getText() );
-			blogPostContentData.setContent( contentInput.getHtml() );
 			
 			claymusService.savePageContent(
 					new SavePageContentRequest( blogPostContentData ),
@@ -89,7 +87,7 @@ public class BlogPostContent implements EntryPoint, ClickHandler {
 				public void onSuccess(SavePageContentResponse response) {
 					
 					if( pageConentIdStr.isEmpty() ) {
-						Window.Location.replace( "/author-interview/" + response.getPageContentId() );
+						Window.Location.replace( "/blog/" + response.getPageContentId() );
 					
 					} else {
 						titlePanel.remove( titleInput );

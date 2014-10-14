@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.claymus.commons.client.InsufficientAccessException;
 import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.pagecontent.PageContentProcessor;
@@ -20,9 +19,9 @@ public class BlogPostContentProcessor extends PageContentProcessor<BlogPostConte
 	}
 
 	@Override
-	protected String generateHtml(
+	public String generateHtml(
 			BlogPostContent blogPostContent, HttpServletRequest request )
-			throws InsufficientAccessException, UnexpectedServerException {
+			throws UnexpectedServerException {
 		
 		BlogPostContentHelper blogPostContentHelper =
 				(BlogPostContentHelper) PageContentRegistry.getPageContentHelper( BlogPostContentData.class );
@@ -32,9 +31,8 @@ public class BlogPostContentProcessor extends PageContentProcessor<BlogPostConte
 		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
-		dataModel.put( "blogPostContent", blogPostContent );
-		if( blogPostContent.getId() != null )
-			dataModel.put( "blogUrl", "http://" + ClaymusHelper.getSystemProperty( "domain" ) + "/blog/" + blogPostContent.getId() );
+		dataModel.put( "blogPostContentData", blogPostContentHelper.createData( blogPostContent ) );
+		dataModel.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
 		dataModel.put( "showEditOptions", showEditOptions );
 		
 		return super.processTemplate( dataModel, getTemplateName() );

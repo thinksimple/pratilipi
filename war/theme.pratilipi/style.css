@@ -35,12 +35,12 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 
 /* START :: Claymus Overrides :: START */
 
-#PageContent-BlogPost-Content {
+.pageContent-BlogPost-Content {
 	background:#E5F7B0;
 	border: 1px solid #ddd;
 }
 
-#PageContent-BlogPost-Content p {
+.pageContent-BlogPost-Content p {
 	margin: 15px;
 }
 

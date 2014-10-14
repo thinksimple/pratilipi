@@ -22,7 +22,7 @@ public class GenresContentProcessor
 	
 	
 	@Override
-	protected String generateHtml( GenresContent genreContent, HttpServletRequest request )
+	public String generateHtml( GenresContent genreContent, HttpServletRequest request )
 			throws UnexpectedServerException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );

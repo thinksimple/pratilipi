@@ -54,6 +54,8 @@ public interface DataAccessor {
 
 	List<PageContent> getPageContentList( Long pageId );
 
+	DataListCursorTuple<PageContent> getPageContentList( Class<? extends PageContent> pageContentClass, String cursorStr, int resultCount );
+
 	PageContent createOrUpdatePageContent( PageContent pageContent );
 	
 	
