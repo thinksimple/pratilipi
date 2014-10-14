@@ -1,3 +1,6 @@
+
+
+<!-- This is reader page -->
 <div class="container">
 
 	<div class="row">
@@ -61,6 +64,21 @@
 	}
 	
 	window.onload = function() {
+		$('body').keydown(function(e) {
+			if(e.keyCode == 37)
+			{
+				<#if previousPageUrl??>
+					window.location = '${ previousPageUrl }';
+				</#if>
+			}
+			else if(e.keyCode == 39)
+			{
+				<#if nextPageUrl??>
+					window.location = '${ nextPageUrl }';
+				</#if>
+			}
+	    });
+	    
 		var $reader = $( '#PageContent-Pratilipi-Content' );
 		if( $reader.height() < 800 )
 			$reader.height( 800 ); 
