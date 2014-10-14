@@ -3,7 +3,7 @@ package com.claymus.commons.server;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.claymus.commons.client.UnexpectedServerException;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;

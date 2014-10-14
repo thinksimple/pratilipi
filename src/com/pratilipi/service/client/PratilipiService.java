@@ -1,8 +1,8 @@
 package com.pratilipi.service.client;
 
-import com.claymus.commons.client.IllegalArgumentException;
-import com.claymus.commons.client.InsufficientAccessException;
-import com.claymus.commons.client.UnexpectedServerException;
+import com.claymus.commons.shared.exception.IllegalArgumentException;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.pratilipi.service.shared.AddAuthorRequest;

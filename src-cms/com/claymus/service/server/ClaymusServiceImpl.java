@@ -9,13 +9,13 @@ import java.util.logging.Logger;
 
 import javax.mail.MessagingException;
 
-import com.claymus.commons.client.IllegalArgumentException;
-import com.claymus.commons.client.InsufficientAccessException;
-import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.EncryptPassword;
 import com.claymus.commons.server.ValidateFbAccessToken;
 import com.claymus.commons.shared.UserStatus;
+import com.claymus.commons.shared.exception.IllegalArgumentException;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.access.DataListCursorTuple;

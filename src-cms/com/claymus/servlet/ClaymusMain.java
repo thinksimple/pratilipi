@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.commons.client.InsufficientAccessException;
-import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.transfer.Page;

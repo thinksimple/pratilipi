@@ -1,4 +1,4 @@
-package com.claymus.commons.client;
+package com.claymus.commons.shared.exception;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

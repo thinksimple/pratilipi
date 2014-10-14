@@ -8,9 +8,9 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.claymus.commons.client.InsufficientAccessException;
-import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.access.Memcache;
 import com.claymus.data.transfer.PageContent;

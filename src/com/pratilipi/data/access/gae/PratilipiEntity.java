@@ -33,7 +33,6 @@ public class PratilipiEntity implements Pratilipi {
 	private String titleEn;
 	
 	
-
 	@Persistent( column = "LANGUAGE_ID" )
 	private Long languageId;
 

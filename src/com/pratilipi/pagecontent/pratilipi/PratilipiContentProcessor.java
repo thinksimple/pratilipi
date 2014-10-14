@@ -6,9 +6,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.claymus.commons.client.UnexpectedServerException;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.SerializationUtil;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.User;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;

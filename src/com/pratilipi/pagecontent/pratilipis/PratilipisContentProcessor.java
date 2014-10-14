@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.claymus.commons.client.UnexpectedServerException;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;

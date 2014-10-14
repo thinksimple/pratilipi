@@ -1,8 +1,8 @@
 package com.claymus.service.client;
 
-import com.claymus.commons.client.IllegalArgumentException;
-import com.claymus.commons.client.InsufficientAccessException;
-import com.claymus.commons.client.UnexpectedServerException;
+import com.claymus.commons.shared.exception.IllegalArgumentException;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.service.shared.FacebookLoginUserRequest;
 import com.claymus.service.shared.FacebookLoginUserResponse;
 import com.claymus.service.shared.GetBlogListRequest;
