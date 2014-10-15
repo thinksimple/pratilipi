@@ -42,20 +42,6 @@ public class BlogPostContentHelper extends PageContentHelper<
 	}
 
 	@Override
-	public BlogPostContentData createData( BlogPostContent blogPostContent ) {
-		BlogPostContentData blogPostContentData = new BlogPostContentData();
-		blogPostContentData.setId( blogPostContent.getId() );
-		blogPostContentData.setTitle( blogPostContent.getTitle() );
-		blogPostContentData.setContent( blogPostContent.getContent() );
-		if( blogPostContent.getId() == null ) // TODO: Hack for "New Blog" Page
-			blogPostContentData.setPageUrl( "/" );
-		else
-			blogPostContentData.setPageUrl( "/author-interview/" + blogPostContent.getId() );
-		blogPostContentData.setPreview( blogPostContent.preview() );
-		return blogPostContentData;
-	}
-	
-	@Override
 	public BlogPostContent createOrUpdateFromData(
 			BlogPostContentData blogPostContentData,
 			BlogPostContent blogPostContent ) {

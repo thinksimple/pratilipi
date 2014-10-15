@@ -1,5 +1,6 @@
 package com.claymus.pagecontent.blog.gae;
 
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 
 import com.claymus.data.access.gae.PageContentEntity;
@@ -9,8 +10,10 @@ import com.claymus.pagecontent.blog.BlogContent;
 @PersistenceCapable
 public class BlogContentEntity extends PageContentEntity implements BlogContent {
 
+	@NotPersistent
 	private String cursor;
 	
+	@NotPersistent
 	private Integer postCount;
 	
 	

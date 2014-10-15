@@ -24,15 +24,20 @@ public class BlogPostContentProcessor extends PageContentProcessor<BlogPostConte
 			throws UnexpectedServerException {
 		
 		BlogPostContentHelper blogPostContentHelper =
-				(BlogPostContentHelper) PageContentRegistry.getPageContentHelper( BlogPostContentData.class );
+				(BlogPostContentHelper) PageContentRegistry.getPageContentHelper(
+						BlogPostContentData.class );
 		
 		boolean showEditOptions =
 				blogPostContentHelper.hasRequestAccessToAddContent( request );
 		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
-		dataModel.put( "blogPostContentData", blogPostContentHelper.createData( blogPostContent ) );
+		dataModel.put( "blogPostContent", blogPostContent );
 		dataModel.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
+		if( blogPostContent.getId() == null ) // TODO: Hack for "New Blog" Page
+			dataModel.put( "pageUrl", "/" );
+		else
+			dataModel.put( "pageUrl", "/author-interview/" + blogPostContent.getId() );
 		dataModel.put( "showEditOptions", showEditOptions );
 		
 		return super.processTemplate( dataModel, getTemplateName() );

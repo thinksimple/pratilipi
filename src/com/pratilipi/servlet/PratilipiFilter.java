@@ -1,7 +1,6 @@
 package com.pratilipi.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -38,7 +37,6 @@ public class PratilipiFilter implements Filter {
 		String action = request.getParameter( "action" );
 
 		if( !host.equals( "www.pratilipi.com" )
-				&& !host.equals( "mark-2p26.prod-pratilipi.appspot.com" )
 				&& !host.equals( "mark-2p27.prod-pratilipi.appspot.com" )
 				&& !host.equals( "mark-2p28.prod-pratilipi.appspot.com" )
 				&& !host.equals( "mark-2p29.prod-pratilipi.appspot.com" )

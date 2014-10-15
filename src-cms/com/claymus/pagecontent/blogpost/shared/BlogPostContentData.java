@@ -8,10 +8,6 @@ public class BlogPostContentData extends PageContentData {
 	
 	private String content;
 
-	private String pageUrl;
-
-	private Boolean preview;
-
 	
 	public String getTitle() {
 		return title;
@@ -27,22 +23,6 @@ public class BlogPostContentData extends PageContentData {
 	
 	public void setContent( String html ) {
 		this.content = html;
-	};
-	
-	public String getPageUrl() {
-		return pageUrl;
-	};
-	
-	public void setPageUrl( String pageUrl ) {
-		this.pageUrl = pageUrl;
-	};
-	
-	public Boolean preview() {
-		return preview;
-	};
-	
-	public void setPreview( Boolean preview ) {
-		this.preview = preview;
 	};
 	
 }

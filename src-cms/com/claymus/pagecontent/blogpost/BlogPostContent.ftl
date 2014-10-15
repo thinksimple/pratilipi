@@ -2,14 +2,14 @@
 
 <!-- PageContent :: BlogPost :: Start -->
 
-<#assign shareUrl="http://${ domain }${ blogPostContentData.getPageUrl() }">
+<#assign shareUrl="http://${ domain }${ pageUrl }">
 
-<#if blogPostContentData.preview()>
+<#if blogPostContent.preview()>
 
 	<div class="container">
-		<h1><a href="${ blogPostContentData.getPageUrl() }">${ blogPostContentData.getTitle() }</a></h1>
+		<h1><a href="${ pageUrl }">${ blogPostContent.getTitle() }</a></h1>
 		<div style="margin-top:10px; margin-bottom:10px;"><@social.toolbar shareUrl=shareUrl/></div>
-		<div class="pageContent-BlogPost-Content">${ blogPostContentData.getContent() }</div>
+		<div class="pageContent-BlogPost-Content">${ blogPostContent.getContent() }</div>
 	</div>
 	<br/>
 	<br/>
@@ -17,9 +17,9 @@
 <#else>
 
 	<div class="container">
-		<h1 id="PageContent-BlogPost-Title" page-content-id="${ (blogPostContentData.getId()?c)! }">${ blogPostContentData.getTitle() }</h1>
+		<h1 id="PageContent-BlogPost-Title" page-content-id="${ (blogPostContent.getId()?c)! }">${ blogPostContent.getTitle() }</h1>
 		<div style="margin-top:10px; margin-bottom:10px;"><@social.toolbar shareUrl=shareUrl/></div>
-		<div id="PageContent-BlogPost-Content" class="pageContent-BlogPost-Content">${ blogPostContentData.getContent() }</div>
+		<div id="PageContent-BlogPost-Content" class="pageContent-BlogPost-Content">${ blogPostContent.getContent() }</div>
 		<#if showEditOptions>
 			<div id="PageContent-BlogPost-EditOptions" style="margin-top:10px; text-align:right;"></div>
 		</#if>

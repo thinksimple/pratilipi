@@ -22,6 +22,7 @@ import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.module.websitewidget.html.HtmlWidget;
 import com.claymus.module.websitewidget.html.HtmlWidgetFactory;
+import com.claymus.pagecontent.PageContentRegistry;
 import com.claymus.pagecontent.html.HtmlContent;
 import com.claymus.pagecontent.html.HtmlContentHelper;
 import com.claymus.servlet.ClaymusMain;
@@ -37,7 +38,7 @@ import com.pratilipi.pagecontent.genres.GenresContentHelper;
 import com.pratilipi.pagecontent.home.HomeContent;
 import com.pratilipi.pagecontent.home.HomeContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
-import com.pratilipi.pagecontent.pratilipi.PratilipiContentFactory;
+import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
 import com.pratilipi.pagecontent.reader.ReaderContentFactory;
 
@@ -51,9 +52,9 @@ public class PratilipiMain extends ClaymusMain {
 			Logger.getLogger( PratilipiMain.class.getName() );
 
 	static {
+		PageContentRegistry.register( PratilipiContentHelper.class );
 		PAGE_CONTENT_REGISTRY.register( HomeContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( PratilipisContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( PratilipiContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ReaderContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( AuthorContentFactory.class );
@@ -295,16 +296,16 @@ public class PratilipiMain extends ClaymusMain {
 		
 		// Individual item's pages
 		else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.BOOK, null ) ) )
-			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) ) ) );
+			pageContentList.add( PratilipiContentHelper.newPratilipiContent( Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) ) ) );
 
 		else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.POEM, null ) ) )
-			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) ) ) );
+			pageContentList.add( PratilipiContentHelper.newPratilipiContent( Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) ) ) );
 
 		else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.STORY, null ) ) )
-			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) ) ) );
+			pageContentList.add( PratilipiContentHelper.newPratilipiContent( Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) ) ) );
 
 		else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.ARTICLE, null ) ) )
-			pageContentList.add( PratilipiContentFactory.newPratilipiContent( Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) ) ) );
+			pageContentList.add( PratilipiContentHelper.newPratilipiContent( Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) ) ) );
 
 		
 		else if( requestUri.startsWith( PratilipiHelper.URL_AUTHOR_PAGE ) )
@@ -455,7 +456,7 @@ public class PratilipiMain extends ClaymusMain {
 		homeContent.setBookIdList( bookIdList );
 		homeContent.setPoemIdList( poemIdList );
 		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 25 ) );
+		homeContent.setLastUpdated( new Date( 26 ) );
 		return homeContent;
 	}
 

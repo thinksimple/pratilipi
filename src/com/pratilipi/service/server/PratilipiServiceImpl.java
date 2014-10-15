@@ -22,7 +22,6 @@ import com.claymus.taskqueue.TaskQueue;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiState;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -36,6 +35,7 @@ import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
 import com.pratilipi.pagecontent.genres.GenresContentProcessor;
 import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
+import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddAuthorRequest;
@@ -94,8 +94,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			throws IllegalArgumentException, InsufficientAccessException,
 					UnexpectedServerException {
 	
-		PratilipiHelper pratilipiHelper =
-				PratilipiHelper.get( this.getThreadLocalRequest() );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		PratilipiData pratilipiData = request.getPratilipiData();
@@ -104,7 +102,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		try {
 			if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
 
-				if ( ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
+				if ( ! PratilipiContentHelper.hasRequestAccessToAddData( this.getThreadLocalRequest() ) )
 						throw new InsufficientAccessException();
 						
 				pratilipi = dataAccessor.newPratilipi();
@@ -117,9 +115,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			
 				pratilipi =  dataAccessor.getPratilipi( pratilipiData.getId() );
 				
-				if( ( pratilipiHelper.getCurrentUserId().equals( pratilipi.getAuthorId() )
-						&& ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
-						|| ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
+				if( ! PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
 					throw new InsufficientAccessException();
 				
 				pratilipi.setLastUpdated( new Date() );
@@ -147,43 +143,14 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			if( pratilipiData.hasState() ) {
 
 				if( pratilipiData.getState() == PratilipiState.PUBLISHED ) {
-					PratilipiType pratilipiType = pratilipi.getType();
-					BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-
-					String coverImageFileName = PratilipiHelper.getCoverImage300( pratilipiType, pratilipi.getId() );
-					try {
-						BlobEntry coverImageBlob = blobAccessor.getBlob( coverImageFileName );
-						if( coverImageBlob == null )
-							throw new IllegalArgumentException(
-									pratilipi.getType().getName() + " cover is missing. " +
-									pratilipi.getType().getName() + " can not be published without cover image." );
-					} catch( IOException e ) {
-						logger.log( Level.SEVERE, "Failed to fetch cover image blob entry.", e );
-						throw new UnexpectedServerException();
-					}
-
 					if( pratilipi.getSummary() == null ) {
 						throw new IllegalArgumentException(
 								pratilipi.getType().getName() + " summary is missing. " +
 								pratilipi.getType().getName() + " can not be published without a summary." );
 					}
-					
-					if( pratilipi.getPageCount() == null || pratilipi.getPageCount() <= 0 ) {
-						String contentFileName = PratilipiHelper.getContent( pratilipiType, pratilipi.getId() );
-						try {
-							BlobEntry coverImageBlob = blobAccessor.getBlob( contentFileName );
-							if( coverImageBlob == null )
-								throw new IllegalArgumentException(
-										pratilipi.getType().getName() + " content. " +
-										pratilipi.getType().getName() + " can not be published without content." );
-						} catch( IOException e ) {
-							logger.log( Level.SEVERE, "Failed to fetch cover image blob entry.", e );
-							throw new UnexpectedServerException();
-						}
-					}
-					
 				}
-			
+
+				pratilipi.setState( pratilipiData.getState() );
 			}
 				
 				
