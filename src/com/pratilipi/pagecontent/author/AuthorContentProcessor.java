@@ -10,7 +10,6 @@ import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.pagecontent.PageContentProcessor;
-import com.google.gwt.user.client.Window;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;

@@ -32,7 +32,7 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
-import com.pratilipi.pagecontent.author.AuthorContentFactory;
+import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.genres.GenresContentHelper;
 import com.pratilipi.pagecontent.home.HomeContent;
@@ -57,7 +57,7 @@ public class PratilipiMain extends ClaymusMain {
 		PAGE_CONTENT_REGISTRY.register( PratilipisContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( ReaderContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( AuthorContentFactory.class );
+		PAGE_CONTENT_REGISTRY.register( AuthorContentHelper.class );
 		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
 		PAGE_CONTENT_REGISTRY.register( GenresContentHelper.class );
 	}
@@ -309,7 +309,7 @@ public class PratilipiMain extends ClaymusMain {
 
 		
 		else if( requestUri.startsWith( PratilipiHelper.URL_AUTHOR_PAGE ) )
-			pageContentList.add( AuthorContentFactory.newAuthorContent( Long.parseLong( requestUri.substring( PratilipiHelper.URL_AUTHOR_PAGE.length() ) ) ) );
+			pageContentList.add( AuthorContentHelper.newAuthorContent( Long.parseLong( requestUri.substring( PratilipiHelper.URL_AUTHOR_PAGE.length() ) ) ) );
 
 		
 		// Individual item's readers

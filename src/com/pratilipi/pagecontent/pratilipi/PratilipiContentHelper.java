@@ -3,8 +3,8 @@ package com.pratilipi.pagecontent.pratilipi;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
-import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.pagecontent.PageContentHelper;
+import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
@@ -62,31 +62,31 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 	
 	public static boolean hasRequestAccessToAddData( HttpServletRequest request ) {
-		return ClaymusHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_PRATILIPI_DATA );
+		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_PRATILIPI_DATA );
 	}
 	
 	public static boolean hasRequestAccessToUpdateData(
 			HttpServletRequest request, Pratilipi pratilipi ) {
 		
-		return ClaymusHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA ) ||
+		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA ) ||
 				(
 					hasRequestAccessToAddData( request ) &&
-					pratilipi.getAuthorId().equals( ClaymusHelper.get( request ).getCurrentUserId() )
+					pratilipi.getAuthorId().equals( PratilipiHelper.get( request ).getCurrentUserId() )
 				);
 	}
 		
 	public static boolean hasRequestAccessToUpdateData(
 			HttpServletRequest request, PratilipiData pratilipiData ) {
 		
-		return ClaymusHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA ) ||
+		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA ) ||
 				(
 					hasRequestAccessToAddData( request ) &&
-					pratilipiData.getAuthorId().equals( ClaymusHelper.get( request ).getCurrentUserId() )
+					pratilipiData.getAuthorId().equals( PratilipiHelper.get( request ).getCurrentUserId() )
 				);
 	}
 
 	public static boolean hasRequestAccessToReadMetaData( HttpServletRequest request ) {
-		return ClaymusHelper.get( request ).hasUserAccess( ACCESS_TO_READ_PRATILIPI_META_DATA );
+		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_READ_PRATILIPI_META_DATA );
 	}
 	
 }
