@@ -25,7 +25,7 @@ public class Modal extends Composite {
 	private final Button xButton = new Button();
 	private final HeadingElement titleElement = Document.get().createHElement( 3 );
 	private final Button closeButton = new Button();
-
+	
 	
 	public Modal() {
 
@@ -71,6 +71,10 @@ public class Modal extends Composite {
 		titleElement.setInnerText( title );
 	}
 
+	public void add( Button button ) {
+		footer.add( button );
+	}
+	
 	public void add( Widget child ) {
 		body.add( child );
 	}
@@ -79,15 +83,6 @@ public class Modal extends Composite {
 		body.add( child );
 	}
 	
-	public void addButton( Button button ) {
-		footer.add( button );
-	}
-	
-	public void setEnabled( boolean enabled ) {
-		xButton.setEnabled( enabled );
-		closeButton.setEnabled( enabled );
-	}
-
 	public void show() {
 		showModal( panel.getElement() );
 	}

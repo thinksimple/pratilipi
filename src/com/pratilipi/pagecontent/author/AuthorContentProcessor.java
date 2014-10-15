@@ -30,12 +30,16 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 			throws UnexpectedServerException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
 		Long authorId = authorContent.getAuthorId();
-		AuthorData authorData = pratilipiHelper.createAuthorData( authorId );
+		Author author = dataAccessor.getAuthor( authorId );
+		Language language = dataAccessor.getLanguage( author.getLanguageId() );
+
+		AuthorData authorData = pratilipiHelper.createAuthorData( author, language );
 		
 		boolean showEditOption = AuthorContentHelper
-				.hasRequestAccessToUpdateData( request, authorData );
+				.hasRequestAccessToUpdateData( request, author );
 
 		
 		// Creating data model required for template processing
@@ -51,8 +55,6 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		Long currentUserId = pratilipiHelper.getCurrentUserId();
 		
 		// Fetching Author list
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = dataAccessor.getAuthor( authorId );
 		String authorImage = PratilipiHelper.URL_AUTHOR_IMAGE + authorId;
 		
 		//Update privileges
@@ -135,10 +137,10 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		//Fetching language list
 		List<Language> languageList = dataAccessor.getLanguageList();
 		Map<String, String> languageMap = new HashMap<>();
-		for( Language language : languageList ){
-			if( languageMap.get( language.getId() ) == null ){
-				languageMap.put( language.getId().toString(),
-								 language.getName() + " (" + language.getNameEn() + ")" );
+		for( Language language2 : languageList ){
+			if( languageMap.get( language2.getId() ) == null ){
+				languageMap.put( language2.getId().toString(),
+								 language2.getName() + " (" + language2.getNameEn() + ")" );
 			}
 		}
 		

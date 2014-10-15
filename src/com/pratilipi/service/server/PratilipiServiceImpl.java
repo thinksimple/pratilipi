@@ -32,6 +32,7 @@ import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
+import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
 import com.pratilipi.pagecontent.genres.GenresContentProcessor;
 import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
@@ -420,18 +421,16 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		AuthorData authorData = request.getAuthor();
 		
-		PratilipiHelper pratilipiHelper =
-				PratilipiHelper.get( this.getThreadLocalRequest() );
-		
-		if( ! pratilipiHelper.hasUserAccess( AuthorsContentProcessor.ACCESS_ID_AUTHOR_ADD, false ) )
-			throw new InsufficientAccessException();
-
-		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = null;
 		
 		if( authorData.getId() == null) { // Add Author usecase
 		
+			if( ! AuthorContentHelper.hasRequestAccessToAddData( this.getThreadLocalRequest() ) ) {
+				dataAccessor.destroy();
+				throw new InsufficientAccessException();
+			}
+			
 			author = dataAccessor.newAuthor();
 			author.setRegistrationDate( new Date() );
 
@@ -439,6 +438,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 			author = dataAccessor.getAuthor( authorData.getId() );
 		
+			if( ! AuthorContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), author ) ) {
+				dataAccessor.destroy();
+				throw new InsufficientAccessException();
+			}
+
 		}
 		
 		if( authorData.hasLanguageId() )
@@ -458,7 +462,8 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		if( authorData.hasSummary() )
 			author.setSummary( authorData.getSummary() );
 		if( authorData.hasEmail() )
-			author.setEmail( authorData.getEmail().toLowerCase() );
+			author.setEmail( authorData.getEmail() == null ? null : authorData.getEmail().toLowerCase() );
+		
 		
 		author = dataAccessor.createOrUpdateAuthor( author );
 		dataAccessor.destroy();

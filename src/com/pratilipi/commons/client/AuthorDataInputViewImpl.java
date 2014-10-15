@@ -2,15 +2,14 @@ package com.pratilipi.commons.client;
 
 import com.claymus.commons.client.ui.formfield.ListBoxFormField;
 import com.claymus.commons.client.ui.formfield.TextInputFormField;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.pratilipi.service.shared.data.AuthorData;
+import com.pratilipi.service.shared.data.LanguageData;
 
-public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
+public class AuthorDataInputViewImpl extends AuthorDataInputView {
 	
 	private Panel panel = new FlowPanel();
 	
@@ -36,10 +35,10 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 	private TextInputFormField penNameEnInput = new TextInputFormField();	
 	private ListBoxFormField languageList = new ListBoxFormField();
 	private TextInputFormField emailInput = new TextInputFormField();
-	private Button addButton = new Button( "Add" );
 	
+	private Long authorId = null;
 	
-	public AuthorsDataInputViewImpl(){
+	public AuthorDataInputViewImpl(){
 		firstNameInput.setPlaceholder( "First Name" );
 		firstNameInput.setRequired( true );
 		
@@ -55,6 +54,7 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 		penNameEnInput.setPlaceholder( "Pen Name (English)" );
 
 		languageList.setRequired( true );
+		languageList.setPlaceholder( "Primary Language" );
 		emailInput.setPlaceholder( "Email" );
 
 		
@@ -63,7 +63,6 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 		panel.add( lastNameRow );
 		panel.add( penNameRow);
 		panel.add( languageEmailRow );
-		panel.add( addButton );
 
 		firstNameRow.add( firstNameCol );
 		firstNameRow.add( firstNameEnCol );
@@ -110,20 +109,20 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 		emailCol.addStyleName( "col-sm-4" );
 		languageCol.addStyleName( "col-sm-4" );
 		
-		addButton.addStyleName( "btn btn-default" );
-				
 		initWidget( panel );
 	}
 
 
 	@Override
-	public HandlerRegistration addAddButtonClickHandler(ClickHandler clickHandler) {
-		return addButton.addClickHandler( clickHandler );
+	public void add( Button button ) {
+		panel.add( button );
 	}
-
+	
 	@Override
-	public void addLanguageListItem( String item, String value ) {
-		languageList.addItem( item, value );
+	public void addLanguageListItem( LanguageData languageData ) {
+		languageList.addItem(
+				languageData.getName() + " (" + languageData.getNameEn() + ")",
+				languageData.getId().toString() );
 	}
 		
 	@Override
@@ -155,6 +154,9 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 	@Override
 	public AuthorData getAuthorData() {
 		AuthorData authorData = new AuthorData();
+		
+		authorData.setId( this.authorId );
+		
 		authorData.setLanguageId( Long.parseLong( languageList.getValue() ) );
 		authorData.setFirstName( firstNameInput.getText() );
 		authorData.setLastName( lastNameInput.getText() );
@@ -168,6 +170,8 @@ public class AuthorsDataInputViewImpl extends AuthorsDataInputView {
 
 	@Override
 	public void setAuthorData( AuthorData authorData ) {
+		this.authorId = authorData.getId();
+
 		languageList.setValue( authorData.getLanguageId().toString() );
 		firstNameInput.setText( authorData.getFirstName() );
 		lastNameInput.setText( authorData.getLastName() );

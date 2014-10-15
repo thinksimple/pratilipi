@@ -8,7 +8,6 @@ import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.pagecontent.author.gae.AuthorContentEntity;
 import com.pratilipi.pagecontent.author.shared.AuthorContentData;
-import com.pratilipi.service.shared.data.AuthorData;
 
 public class AuthorContentHelper extends PageContentHelper<
 		AuthorContent,
@@ -61,14 +60,4 @@ public class AuthorContentHelper extends PageContentHelper<
 				);
 	}
 		
-	public static boolean hasRequestAccessToUpdateData(
-			HttpServletRequest request, AuthorData authorData ) {
-		
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_AUTHOR_DATA ) ||
-				(
-					hasRequestAccessToAddData( request ) &&
-					authorData.getUserId().equals( PratilipiHelper.get( request ).getCurrentUserId() )
-				);
-	}
-	
 }

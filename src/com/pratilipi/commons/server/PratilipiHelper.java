@@ -301,13 +301,15 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 
 	public AuthorData createAuthorData( Long authorId ) {
-		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
 		Language language = dataAccessor.getLanguage( author.getLanguageId() );
 		dataAccessor.destroy();
 		
-		
+		return createAuthorData( author, language );
+	}
+	
+	public AuthorData createAuthorData( Author author, Language language ) {
 		AuthorData authorData = new AuthorData();
 		
 		authorData.setId( author.getId() );
@@ -325,7 +327,6 @@ public class PratilipiHelper extends ClaymusHelper {
 		authorData.setSummary( author.getSummary() );
 		authorData.setEmail( author.getEmail() );
 		authorData.setRegistrationDate( new Date() );
-		
 		
 		return authorData;
 	}

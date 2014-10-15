@@ -8,8 +8,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.pratilipi.commons.client.AuthorsDataInputView;
-import com.pratilipi.commons.client.AuthorsDataInputViewImpl;
+import com.pratilipi.commons.client.AuthorDataInputView;
+import com.pratilipi.commons.client.AuthorDataInputViewImpl;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddAuthorRequest;
@@ -27,8 +27,8 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 	
 	private final Accordion accordion = new Accordion();
 	
-	private final AuthorsDataInputView authorsDataInputView =
-			new AuthorsDataInputViewImpl();
+	private final AuthorDataInputView authorsDataInputView =
+			new AuthorDataInputViewImpl();
 
 	
 	public void onModuleLoad() {
@@ -40,22 +40,22 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 			accordion.add( authorsDataInputView );
 			rootPanel.add( accordion );
 
-			pratilipiService.getLanguageList( new GetLanguageListRequest(), new AsyncCallback<GetLanguageListResponse>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-					
-				}
+			pratilipiService.getLanguageList(
+					new GetLanguageListRequest(),
+					new AsyncCallback<GetLanguageListResponse>() {
 
 				@Override
 				public void onSuccess(GetLanguageListResponse response) {
 					for( LanguageData languageData : response.getLanguageList())
-						authorsDataInputView.addLanguageListItem(
-								languageData.getName() + " (" + languageData.getNameEn() + ")",
-								languageData.getId().toString() );
+						authorsDataInputView.addLanguageListItem( languageData );
 				}
 				
+				@Override
+				public void onFailure( Throwable caught ) {
+					Window.alert(caught.getMessage());
+					
+				}
+
 			});
 		}
 		
