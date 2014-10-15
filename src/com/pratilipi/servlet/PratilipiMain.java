@@ -77,7 +77,7 @@ public class PratilipiMain extends ClaymusMain {
 		String requestUri = request.getRequestURI();
 		
 		if( requestUri.equals( "/" ) )
-			page.setTitle( page.getTitle() + " | Read Free and Paid Hindi and Gujarati Stories, Poems and Books" );
+			page.setTitle( page.getTitle() + " | Read Hindi and Gujarati Stories, Poems and Books" );
 		
 		else if( requestUri.equals( "/books" ) )
 			page.setTitle( "Books | " + page.getTitle() );
