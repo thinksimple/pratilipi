@@ -1,6 +1,7 @@
+<#setting time_zone="${ timeZone }">
 <#import "../../../../com/claymus/commons/client/ui/Social.ftl" as social>
 
-<!-- PageContent :: Author Profile :: Start -->
+<!-- PageContent :: Author :: Start -->
 
 <script type="text/javascript">
 window.onload = function(){
@@ -157,8 +158,6 @@ window.onload = function(){
 	}
 </script>
 
-<#setting time_zone="${ timeZone }">
-
 <div id="PageContent-Author">
 	<!-- Refactor below code to use one div for all 4 pratilipi types -->
 	<div id="PageContent-Author-AddPratilipi"></div>
@@ -167,7 +166,7 @@ window.onload = function(){
 			<div class="col-md-3">
 				<div id="profile-pic-div">
 					<img style="width:75%" src="${ authorImage }"></img><br/>
-					<#if showUpdateOption>
+					<#if showEditOption>
 						<span id="upload-link">Upload your photo</span>
 						<!-- Add Author Image -->
 						<div id="PageContent-Author-Image-EditOptions"></div>
@@ -180,21 +179,20 @@ window.onload = function(){
 			<div class="col-md-9">
 				<div class="row margin0">
 					<div class="col-sm-7" style="border-right: 1px solid #DDD;">
-						<h3 style="text-align: center;"> ${ author.getFirstName() }
-							<#if author.getLastName()??> ${ author.getLastName() }</#if>
-							<#if author.getPenName()??>'${ author.getPenName() }'</#if>
-						</h3>
-						<h4 style="text-align: center;">${ author.getFirstNameEn() }
-							<#if author.getLastNameEn()??> ${ author.getLastNameEn() }</#if>
-							<#if author.getPenNameEn()??>'${ author.getPenNameEn() }'</#if>
-						</h4>
+
+
+						<h1 id="PageContent-Author-Title" style="text-align:center;">${ authorData.getName() }</h1>
+						<h3 style="text-align:center; margin-top:10px;">${ authorData.getNameEn() }</h3>
+
+
+
 						<div>
 							<div id="PageContent-Author-Summary">
 								<#if author.getSummary()??>
 									${ author.getSummary() }
 								</#if>
 							</div>
-							<#if showUpdateOption>
+							<#if showEditOption>
 								<div id="PageContent-Author-Summary-EditOptions"></div>
 							</#if>
 						</div>
@@ -211,25 +209,25 @@ window.onload = function(){
 								<td>Books</td>
 								<td>${ _bookCount }</td>
 								<td>0</td>
-								<#if showUpdateOption><td id="addBook"></td></#if>
+								<#if showEditOption><td id="addBook"></td></#if>
 							</tr>
 							<tr>
 								<td>Stories</td>
 								<td>${ _storyCount }</td>
 								<td>0</td>
-								<#if showUpdateOption><td id="addStory"></td></#if>
+								<#if showEditOption><td id="addStory"></td></#if>
 							</tr>
 							<tr>
 								<td>Poems</td>
 								<td>${ _poemCount }</td>
 								<td>0</td>
-								<#if showUpdateOption><td id="addPoem"></td></#if>
+								<#if showEditOption><td id="addPoem"></td></#if>
 							</tr>
 							<tr>
 								<td>Article</td>
 								<td>${ _articleCount }</td>
 								<td>0</td>
-								<#if showUpdateOption><td id="addArticle"></td></#if>
+								<#if showEditOption><td id="addArticle"></td></#if>
 							</tr>
 						</table>
 					</div>
@@ -352,11 +350,15 @@ window.onload = function(){
 		</div>
 	</div>
 </div>
-<#if showUpdateOption>
-	<!-- Add Author Image Javascript -->
-	<script type="text/javascript" language="javascript" src="/pagecontent.author/pagecontent.author.nocache.js" defer></script>
+
+<#if showEditOption>
+	<div id="PageContent-Author-EncodedData" style="display:none;">${ authorDataEncodedStr }</div>
+	<script type="text/javascript" language="javascript" src="/pagecontent.author.witheditoptions/pagecontent.author.witheditoptions.nocache.js" defer></script>
+
 	<!-- Add Pratilipi javascript -->
 	<script type="text/javascript" language="javascript" src="/pagecontent.pratilipis/pagecontent.pratilipis.nocache.js" async></script>
+<#else>
+	<script type="text/javascript" language="javascript" src="/pagecontent.author/pagecontent.author.nocache.js" defer></script>
 </#if>
 
-<!-- PageContent :: Author Profile :: End -->
+<!-- PageContent :: Author :: End -->

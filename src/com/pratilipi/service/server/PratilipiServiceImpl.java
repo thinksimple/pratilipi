@@ -494,7 +494,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			AuthorData authorData = new AuthorData();
 			authorData.setId( author.getId() );
 			authorData.setLanguageId( language.getId() );
-			authorData.setLanguageName( language.getName() );
+//			authorData.setLanguageName( language.getName() );
 			authorData.setFirstName( author.getFirstName() );
 			authorData.setLastName( author.getLastName() );
 			authorData.setPenName( author.getPenName() );

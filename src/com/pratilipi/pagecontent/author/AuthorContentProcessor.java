@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.server.SerializationUtil;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.pagecontent.PageContentProcessor;
@@ -18,6 +19,7 @@ import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.service.shared.data.AuthorData;
 
 public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> {
 
@@ -27,8 +29,23 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 	public String generateHtml( AuthorContent authorContent, HttpServletRequest request )
 			throws UnexpectedServerException {
 		
-		Long authorId = authorContent.getAuthorId();
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		
+		Long authorId = authorContent.getAuthorId();
+		AuthorData authorData = pratilipiHelper.createAuthorData( authorId );
+		
+		boolean showEditOption = AuthorContentHelper
+				.hasRequestAccessToUpdateData( request, authorData );
+
+		
+		// Creating data model required for template processing
+		Map<String, Object> dataModel = new HashMap<>();
+		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
+		dataModel.put( "authorData", authorData );
+		dataModel.put( "authorDataEncodedStr", SerializationUtil.encode( authorData ) );
+		dataModel.put( "showEditOption", showEditOption );
+		
+
 		
 		//Fetching current user id
 		Long currentUserId = pratilipiHelper.getCurrentUserId();
@@ -40,16 +57,12 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		
 		//Update privileges
 		boolean isAuthor = currentUserId.equals( author.getUserId());
-		boolean showUpdateOption =
-				pratilipiHelper.hasUserAccess( ACCESS_ID_AUTHOR_UPDATE, false )
-				|| isAuthor ;
 		
 		//Setting Pratilipi Filter
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setAuthorId( authorId );
 		
 		//Fetching pratilipi list for the author.
-		@SuppressWarnings("deprecation")
 		DataListCursorTuple<Pratilipi> bookList = dataAccessor.getPratilipiListByAuthor( 
 								PratilipiType.BOOK, authorId, null, 200 );
 		List<Pratilipi> bookDataList = bookList.getDataList();
@@ -67,7 +80,6 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 			}
 		}
 		
-		@SuppressWarnings("deprecation")
 		DataListCursorTuple<Pratilipi> poemList = dataAccessor.getPratilipiListByAuthor( 
 				PratilipiType.POEM, authorId, null, 300 );
 		List<Pratilipi> poemDataList = poemList.getDataList();
@@ -84,7 +96,6 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 			}
 		}
 		
-		@SuppressWarnings("deprecation")
 		DataListCursorTuple<Pratilipi> storyList = dataAccessor.getPratilipiListByAuthor( 
 				PratilipiType.STORY, authorId, null, 500 );
 		List<Pratilipi> storyDataList = storyList.getDataList();
@@ -133,8 +144,6 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		
 		dataAccessor.destroy();
 		
-		// Creating data model required for template processing
-		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "author", author );
 		dataModel.put( "authorUrl", "http://" + ClaymusHelper.getSystemProperty( "domain" ) + "/author/" + authorId );
 		dataModel.put( "authorImage", authorImage );
@@ -152,17 +161,11 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		dataModel.put( "articleCoverMap", articleCoverMap );
 		dataModel.put( "articleUrlMap", articleUrlMap );
 		dataModel.put( "languageMap", languageMap );
-		dataModel.put( "showUpdateOption", showUpdateOption );
-		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		
 
+		
 		// Processing template
 		return super.processTemplate( dataModel, getTemplateName() );
 	}
 	
-	@Override
-	protected String getTemplateName() {
-		return "com/pratilipi/pagecontent/author/AuthorContent.ftl";
-	}
-
 }

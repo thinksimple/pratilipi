@@ -57,7 +57,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_AUTHOR_DATA ) ||
 				(
 					hasRequestAccessToAddData( request ) &&
-					author.getId().equals( PratilipiHelper.get( request ).getCurrentUserId() )
+					author.getUserId().equals( PratilipiHelper.get( request ).getCurrentUserId() )
 				);
 	}
 		
@@ -67,7 +67,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_AUTHOR_DATA ) ||
 				(
 					hasRequestAccessToAddData( request ) &&
-					authorData.getId().equals( PratilipiHelper.get( request ).getCurrentUserId() )
+					authorData.getUserId().equals( PratilipiHelper.get( request ).getCurrentUserId() )
 				);
 	}
 	

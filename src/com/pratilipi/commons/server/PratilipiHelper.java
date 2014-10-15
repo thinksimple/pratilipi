@@ -1,6 +1,7 @@
 package com.pratilipi.commons.server;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -16,6 +17,8 @@ import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiGenre;
+import com.pratilipi.service.shared.data.AuthorData;
+import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 @SuppressWarnings("serial")
@@ -295,6 +298,53 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		
 		return pratilipiData;
+	}
+
+	public AuthorData createAuthorData( Long authorId ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( authorId );
+		Language language = dataAccessor.getLanguage( author.getLanguageId() );
+		dataAccessor.destroy();
+		
+		
+		AuthorData authorData = new AuthorData();
+		
+		authorData.setId( author.getId() );
+		authorData.setUserId( author.getUserId() );
+
+		authorData.setLanguageId( language.getId() );
+		authorData.setLanguageData( createLanguageData( language ) );
+
+		authorData.setFirstName( author.getFirstName() );
+		authorData.setLastName( author.getLastName() );
+		authorData.setPenName( author.getPenName() );
+		authorData.setFirstNameEn( author.getFirstNameEn() );
+		authorData.setLastNameEn( author.getLastNameEn() );
+		authorData.setPenNameEn( author.getPenNameEn() );
+		authorData.setSummary( author.getSummary() );
+		authorData.setEmail( author.getEmail() );
+		authorData.setRegistrationDate( new Date() );
+		
+		
+		return authorData;
+	}
+	
+	public LanguageData createLanguageData( Long languageId ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Language language = dataAccessor.getLanguage( languageId );
+		dataAccessor.destroy();
+
+		return createLanguageData( language );
+	}
+	
+	public LanguageData createLanguageData( Language language ) {
+		LanguageData languageData = new LanguageData();
+		languageData.setId( language.getId() );
+		languageData.setName( language.getName() );
+		languageData.setNameEn( language.getNameEn() );
+		languageData.setCreationDate( language.getCreationDate() );
+		return languageData;
 	}
 
 }

@@ -8,10 +8,12 @@ public class AuthorData implements IsSerializable {
 
 	private Long id;
 	
+	private Long userId;
+
 	private Long languageId;
-	
 	private boolean hasLanguageId;
-	private String languageName;
+
+	private LanguageData languageData;
 
 	private String firstName;
 	private boolean hasFirstName;
@@ -38,7 +40,6 @@ public class AuthorData implements IsSerializable {
 	private boolean hasEmail;
 
 	private Date registrationDate;
-	private boolean hasRegistrationDate;
 	
 	
 	public Long getId() {
@@ -49,25 +50,37 @@ public class AuthorData implements IsSerializable {
 		this.id = id;
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId( Long userId ) {
+		this.userId = userId;
+	}
+
 	public Long getLanguageId() {
 		return languageId;
 	}
 
 	public void setLanguageId( Long languageId ) {
-		this.hasLanguageId = true;
 		this.languageId = languageId;
+		this.hasLanguageId = true;
 	}
 	
-	public boolean hasLanguageId(){
+	public boolean hasLanguageId() {
 		return hasLanguageId;
 	}
 
-	public String getLanguageName() {
-		return languageName;
+	public LanguageData getLanguageData() {
+		return languageData;
 	}
 
-	public void setLanguageName( String languageName ) {
-		this.languageName = languageName;
+	public void setLanguageData( LanguageData languageData ) {
+		this.languageData = languageData;
+	}
+
+	public String getName() {
+		return firstName + ( lastName == null ? "" : " " + lastName );
 	}
 
 	public String getFirstName() {
@@ -75,11 +88,11 @@ public class AuthorData implements IsSerializable {
 	}
 
 	public void setFirstName( String firstName ) {
-		this.hasFirstName = true;
 		this.firstName = firstName;
+		this.hasFirstName = true;
 	}
 
-	public boolean hasFirstName(){
+	public boolean hasFirstName() {
 		return hasFirstName;
 	}
 	
@@ -88,11 +101,11 @@ public class AuthorData implements IsSerializable {
 	}
 
 	public void setLastName( String lastName ) {
-		this.hasLastName = true;
 		this.lastName = lastName;
+		this.hasLastName = true;
 	}
 	
-	public boolean hasLastName(){
+	public boolean hasLastName() {
 		return hasLastName;
 	}
 
@@ -101,12 +114,16 @@ public class AuthorData implements IsSerializable {
 	}
 
 	public void setPenName( String penName ) {
-		this.hasPenName = true;
 		this.penName = penName;
+		this.hasPenName = true;
 	}
 	
-	public boolean hasPenName(){
+	public boolean hasPenName() {
 		return hasPenName;
+	}
+
+	public String getNameEn() {
+		return firstNameEn + ( lastNameEn == null ? "" : " " + lastNameEn );
 	}
 
 	public String getFirstNameEn() {
@@ -114,11 +131,11 @@ public class AuthorData implements IsSerializable {
 	}
 
 	public void setFirstNameEn( String firstNameEn ) {
-		this.hasFirstNameEn = true;
 		this.firstNameEn = firstNameEn;
+		this.hasFirstNameEn = true;
 	}
 	
-	public boolean hasFirstNameEn(){
+	public boolean hasFirstNameEn() {
 		return hasFirstNameEn;
 	}
 
@@ -127,11 +144,11 @@ public class AuthorData implements IsSerializable {
 	}
 
 	public void setLastNameEn( String lastNameEn ) {
-		this.hasLastNameEn = true;
 		this.lastNameEn = lastNameEn;
+		this.hasLastNameEn = true;
 	}
 	
-	public boolean hasLastNameEn(){
+	public boolean hasLastNameEn() {
 		return hasLastNameEn;
 	}
 
@@ -140,11 +157,11 @@ public class AuthorData implements IsSerializable {
 	}
 
 	public void setPenNameEn( String penNameEn ) {
-		this.hasPenNameEn = true;
 		this.penNameEn = penNameEn;
+		this.hasPenNameEn = true;
 	}
 	
-	public boolean hasPenNameEn(){
+	public boolean hasPenNameEn() {
 		return hasPenNameEn;
 	}
 
@@ -152,12 +169,12 @@ public class AuthorData implements IsSerializable {
 		return summary;
 	}
 
-	public void setSummary(String summary) {
-		this.hasSummary = true;
+	public void setSummary( String summary ) {
 		this.summary = summary;
+		this.hasSummary = true;
 	}
 	
-	public boolean hasSummary(){
+	public boolean hasSummary() {
 		return this.hasSummary;
 	}
 
@@ -166,11 +183,11 @@ public class AuthorData implements IsSerializable {
 	}
 
 	public void setEmail( String email ) {
-		this.hasEmail = true;
 		this.email = email;
+		this.hasEmail = true;
 	}
 	
-	public boolean hasEmail(){
+	public boolean hasEmail() {
 		return hasEmail;
 	}
 
@@ -179,12 +196,7 @@ public class AuthorData implements IsSerializable {
 	}
 
 	public void setRegistrationDate( Date registrationDate ) {
-		this.hasRegistrationDate = true;
 		this.registrationDate = registrationDate;
-	}
-	
-	public boolean hasRegistrationDate(){
-		return hasRegistrationDate;
 	}
 
 }

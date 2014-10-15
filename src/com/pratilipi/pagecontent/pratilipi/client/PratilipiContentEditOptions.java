@@ -76,12 +76,10 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
 		String pratilipiDataEncodedStr = rootPanel.getElement().getInnerText();
 		try {
-			System.out.println( "Encoder : " + pratilipiDataEncodedStr );
 			SerializationStreamReader streamReader =
 					( (SerializationStreamFactory) pratilipiService )
 							.createStreamReader( pratilipiDataEncodedStr );
 			pratilipiData = (PratilipiData) streamReader.readObject();
-			System.out.println( "After RPC" + pratilipiData.getTitleEn() );
 		} catch( SerializationException e ) {
 			Window.alert( e.getMessage() );
 		}
