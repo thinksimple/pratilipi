@@ -29,6 +29,7 @@ public class Modal extends Composite {
 	
 	public Modal() {
 
+		panel.getElement().setTabIndex( -1 );
 		xButton.getElement().setAttribute( "data-dismiss", "modal" );
 		xButton.setHTML( "<span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span>" );
 		closeButton.getElement().setAttribute( "data-dismiss", "modal" );

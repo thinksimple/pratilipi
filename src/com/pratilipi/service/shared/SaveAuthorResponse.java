@@ -1,22 +1,23 @@
 package com.pratilipi.service.shared;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.pratilipi.service.shared.data.AuthorData;
 
 public class SaveAuthorResponse implements IsSerializable {
 
-	private Long authorId;
+	private AuthorData authorData;
 
 	
 	@SuppressWarnings("unused")
 	private SaveAuthorResponse() {}
 	
-	public SaveAuthorResponse( Long authorId ) {
-		this.authorId = authorId;
+	public SaveAuthorResponse( AuthorData authorData ) {
+		this.authorData = authorData;
 	}
 	
 	
-	public Long getAuthorId() {
-		return this.authorId;
+	public AuthorData getAuthorData() {
+		return authorData;
 	}
 	
 }

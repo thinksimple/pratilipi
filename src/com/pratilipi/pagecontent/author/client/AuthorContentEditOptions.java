@@ -1,6 +1,7 @@
 package com.pratilipi.pagecontent.author.client;
 
 import com.claymus.commons.client.ui.Dropdown;
+import com.claymus.commons.client.ui.formfield.RichTextInputFormField;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -30,33 +31,42 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 			GWT.create( PratilipiService.class );
 	
 	
-	// Author data edit options widgets
-	private Anchor editAuthorDataAnchor = new Anchor( "Edit Info" );
-	private Button saveAuthorDataButton = new Button( "Save" );
+	private final RootPanel authorNamePanel =
+			RootPanel.get( "PageContent-Author-Name" );
+	private final RootPanel authorNameEnPanel =
+			RootPanel.get( "PageContent-Author-NameEn" );
+	private final RootPanel authorSummaryPanel =
+			RootPanel.get( "PageContent-Author-Summary" );
+	private final RootPanel authorSummaryEditOptionsPanel =
+			RootPanel.get( "PageContent-Author-Summary-EditOptions" );
 	
-	private AuthorData authorData;
-	private AuthorDataInputView authorDataInputView = new AuthorDataInputViewModalImpl();
+	
+	private final Dropdown dropdown = new Dropdown();
+
+	
+	// Author data edit options widgets
+	private final Anchor editAuthorDataAnchor = new Anchor( "Edit Info" );
+	private final Button saveAuthorDataButton = new Button( "Save" );
+	private final AuthorDataInputView authorDataInputView = new AuthorDataInputViewModalImpl();
+	
+	private final Anchor editAuthorSummaryAnchor = new Anchor( "Edit Summary" );
+	private final Button saveAuthorSummaryButton = new Button( "Save" );
+	private final RichTextInputFormField authorSummaryInput = new RichTextInputFormField();
 
 
+	private AuthorData authorData = null;
+	
+	
 	@Override
 	public void onModuleLoad() {
 		
-		// Decoding AuthorData
-		RootPanel rootPanel = RootPanel.get( "PageContent-Author-EncodedData" );
-		String authorDataEncodedStr = rootPanel.getElement().getInnerText();
-		try {
-			SerializationStreamReader streamReader =
-					( (SerializationStreamFactory) pratilipiService )
-							.createStreamReader( authorDataEncodedStr );
-			authorData = (AuthorData) streamReader.readObject();
-		} catch( SerializationException e ) {
-			Window.Location.reload();
-		}
-
-
 		// Author data edit options widgets
 		editAuthorDataAnchor.addClickHandler( this );
 		saveAuthorDataButton.addClickHandler( this );
+		
+		editAuthorSummaryAnchor.addClickHandler( this );
+		saveAuthorSummaryButton.addClickHandler( this );
+		saveAuthorSummaryButton.setVisible( false );
 		
 		pratilipiService.getLanguageList(
 				new GetLanguageListRequest(),
@@ -74,25 +84,46 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 			}
 
 		});
-		authorDataInputView.add( saveAuthorDataButton );
 		
-		saveAuthorDataButton.setStyleName( "btn btn-success" );
+		dropdown.add( editAuthorDataAnchor );
+		authorDataInputView.add( saveAuthorDataButton );
 		RootPanel.get().add( authorDataInputView );
 		
+		dropdown.add( editAuthorSummaryAnchor );
+		authorSummaryEditOptionsPanel.add( saveAuthorSummaryButton );
 		
+		saveAuthorDataButton.setStyleName( "btn btn-success" );
+		saveAuthorSummaryButton.setStyleName( "btn btn-success" );
 		
-		
-		Dropdown dropdown = new Dropdown( authorData.getName() );
-		dropdown.add( editAuthorDataAnchor );
-
-		rootPanel = RootPanel.get( "PageContent-Author-Title" );
-		rootPanel.getElement().setInnerHTML( "" );
-		rootPanel.add( dropdown );
 
 		
+		authorNamePanel.getElement().setInnerHTML( "" );
+		authorNamePanel.add( dropdown );
+		
+
+		// Decoding AuthorData
+		RootPanel rootPanel = RootPanel.get( "PageContent-Author-EncodedData" );
+		String authorDataEncodedStr = rootPanel.getElement().getInnerText();
+		try {
+			SerializationStreamReader streamReader =
+					( (SerializationStreamFactory) pratilipiService )
+							.createStreamReader( authorDataEncodedStr );
+			authorData = (AuthorData) streamReader.readObject();
+			setAuthorData( authorData );
+		} catch( SerializationException e ) {
+			Window.Location.reload();
+		}
+
 	}
 	
-	
+	private void setAuthorData( AuthorData authorData ) {
+		this.authorData = authorData;
+		dropdown.setTitle( authorData.getName() );
+		authorNameEnPanel.getElement().setInnerText( authorData.getNameEn() );
+		authorSummaryPanel.getElement().setInnerHTML( authorData.getSummary() );
+		authorSummaryInput.setHtml( authorData.getSummary() );
+	}
+
 	@Override
 	public void onClick( ClickEvent event ) {
 		
@@ -110,7 +141,9 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 						
 						@Override
 						public void onSuccess( SaveAuthorResponse response ) {
-							Window.Location.reload();
+							setAuthorData( response.getAuthorData() );
+							authorDataInputView.setVisible( false );
+							authorDataInputView.setEnabled( true );
 						}
 						
 						@Override
@@ -120,8 +153,42 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 						
 					});
 			
+		} else if( event.getSource() == editAuthorSummaryAnchor ) {
+			authorSummaryPanel.getElement().setInnerHTML( "" );
+			authorSummaryPanel.add( authorSummaryInput );
+			saveAuthorSummaryButton.setVisible( true );
+		
+		} else if( event.getSource() == saveAuthorSummaryButton ) {
+			authorSummaryInput.setEnabled( false );
+			saveAuthorSummaryButton.setEnabled( false );
+			
+			AuthorData authorData = new AuthorData();
+			authorData.setId( this.authorData.getId() );
+			authorData.setSummary( authorSummaryInput.getHtml() );
+			
+			pratilipiService.saveAuthor(
+					new SaveAuthorRequest( authorData ),
+					new AsyncCallback<SaveAuthorResponse>() {
+						
+						@Override
+						public void onSuccess( SaveAuthorResponse response ) {
+							authorSummaryPanel.remove( authorSummaryInput );
+							saveAuthorSummaryButton.setVisible( false );
+							setAuthorData( response.getAuthorData() );
+
+							authorSummaryInput.setEnabled( true );
+							saveAuthorSummaryButton.setEnabled( true );
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							authorSummaryInput.setEnabled( true );
+							saveAuthorSummaryButton.setEnabled( true );
+						}
+						
+					});
 		}
 		
 	}
-
+	
 }

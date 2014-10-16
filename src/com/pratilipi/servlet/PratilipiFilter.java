@@ -37,7 +37,6 @@ public class PratilipiFilter implements Filter {
 		String action = request.getParameter( "action" );
 
 		if( !host.equals( "www.pratilipi.com" )
-				&& !host.equals( "mark-2p27.prod-pratilipi.appspot.com" )
 				&& !host.equals( "mark-2p28.prod-pratilipi.appspot.com" )
 				&& !host.equals( "mark-2p29.prod-pratilipi.appspot.com" )
 				&& !host.equals( "mark-2p30.prod-pratilipi.appspot.com" )

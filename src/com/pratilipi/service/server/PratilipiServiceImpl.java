@@ -434,9 +434,10 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		
 		author = dataAccessor.createOrUpdateAuthor( author );
+		Language language = dataAccessor.getLanguage( author.getLanguageId() );
 		dataAccessor.destroy();
 		
-		return new SaveAuthorResponse( author.getId() );
+		return new SaveAuthorResponse( PratilipiHelper.get( this.getThreadLocalRequest() ).createAuthorData( author, language ) );
 	}
 
 	@Override

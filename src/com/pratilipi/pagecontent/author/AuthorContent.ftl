@@ -3,166 +3,11 @@
 
 <!-- PageContent :: Author :: Start -->
 
-<script type="text/javascript">
-window.onload = function(){
-	     var $book = $('div.book'), //Cache your DOM selector
-			 $story = $('div.story'),
-			 $poem = $('div.poem'),
-			 $pratilipiWidth = 130,
-	     	 $bookL = $('div#bookL'),
-	     	 $bookR = $('div#bookR'),
-			 $storyL = $('div#storyL'),
-	     	 $storyR = $('div#storyR'),
-			 $poemL = $('div#poemL'),
-	     	 $poemR = $('div#poemR'),
-	         visible = Math.floor($('div#list-container').outerWidth()/$pratilipiWidth), //Starting index
-			 bookIndex = visible,
-			 storyIndex = visible,
-			 poemIndex = visible;
-	    
-	    
-	    //maxList
-		 var $maxList = ( $('div.book').length >= $('div.story').length )?
-									   (( $('div.book').length >= $('div.poem').length )? $('div.book').length : $('div.poem').length ):
-									   (( $('div.story').length >= $('div.poem').length )? $('div.story').length : $('div.poem').length );
-		
-	    
-	    //Setting width of list div containing all books/stories/poems to stop wrapping of elements
-		$('div.list').css( "min-width", $maxList*$pratilipiWidth+'px' );
-		
-	    $('div#bookR').click(function(){
-	    	endIndex = $book.length; 
-	        if(bookIndex <= endIndex ){
-	          if(bookIndex+visible < endIndex) { 
-	            var shift = visible*$pratilipiWidth;     
-	          	$book.animate({'left':'-=' + shift + 'px'});
-	          	bookIndex = bookIndex+visible;
-	          	$bookL.css("cursor", "pointer");
-	          }
-	          else{
-	           var shift = (endIndex - bookIndex)*$pratilipiWidth;
-	          	$book.animate({'left':'-=' + shift + 'px'});
-	          	bookIndex = endIndex;
-	          	$bookR.css("cursor", "default");
-	          	$bookL.css("cursor", "pointer");
-	          }
-	        }
-	    });
-	    
-	    $('div#bookL').click(function(){
-	    	endIndex = $book.length; 
-	        if(bookIndex > 0){
-	          if(bookIndex-visible > visible) { 
-	          	var shift = visible*$pratilipiWidth;            
-	          	$book.animate({'left':'+='+ shift + 'px'});
-	          	bookIndex = bookIndex-visible;
-	          	$bookR.css("cursor", "pointer");
-	          }
-	          else{
-	          	var shift = (bookIndex - visible)*$pratilipiWidth;
-	          	$book.animate({'left':'+=' + shift + 'px'});
-	          	bookIndex = visible;
-	          	$bookL.css("cursor", "default");
-	          	$bookR.css("cursor", "pointer");
-	          }
-	       }
-		});
-		   
-		$('div#storyR').click(function(){
-		    endIndex = $story.length ; 
-	        if(storyIndex <= endIndex ){
-	          if(storyIndex+visible < endIndex) { 
-	            var shift = visible*$pratilipiWidth;     
-	          	$story.animate({'left':'-=' + shift + 'px'});
-	          	storyIndex = storyIndex+visible;
-	          	$storyL.css("cursor", "pointer");
-	          }
-	          else{
-	           var shift = (endIndex - storyIndex)*$pratilipiWidth;
-	          	$story.animate({'left':'-=' + shift + 'px'});
-	          	storyIndex = endIndex;
-	          	$storyR.css("cursor", "default");
-	          	$storyL.css("cursor", "pointer");
-	          }
-	        }
-	    });
-	    
-	    $('div#storyL').click(function(){
-	    	endIndex = $story.length; 
-	        if(storyIndex > 0){
-	          if(storyIndex-visible > visible) { 
-	          	var shift = visible*$pratilipiWidth;            
-	          	$story.animate({'left':'+='+ shift + 'px'});
-	          	storyIndex = storyIndex-visible;
-	          	$storyR.css("cursor", "pointer");
-	          }
-	          else{
-	          	var shift = (storyIndex - visible)*$pratilipiWidth;
-	          	$story.animate({'left':'+=' + shift + 'px'});
-	          	storyIndex = visible;
-	          	$storyL.css("cursor", "default");
-	          	$storyR.css("cursor", "pointer");
-	          }
-	       }
-		});
-		$('div#poemR').click(function(){
-		    endIndex = $poem.length; 
-	        if(poemIndex <= endIndex ){
-	          if(poemIndex+visible < endIndex) { 
-	            var shift = visible*$pratilipiWidth;     
-	          	$poem.animate({'left':'-=' + shift + 'px'});
-	          	poemIndex = poemIndex+visible;
-	          	$poemL.css("cursor", "pointer");
-	          }
-	          else{
-	           var shift = (endIndex - poemIndex)*$pratilipiWidth;
-	          	$poem.animate({'left':'-=' + shift + 'px'});
-	          	poemIndex = endIndex;
-	          	$poemR.css("cursor", "default");
-	          	$poemL.css("cursor", "pointer");
-	          }
-	        }
-	    });
-	    
-	    $('div#poemL').click(function(){
-	    	endIndex = $poem.length; 
-	        if(poemIndex > 0){
-	          if(poemIndex-visible > visible) { 
-	          	var shift = visible*$pratilipiWidth;            
-	          	$poem.animate({'left':'+='+ shift + 'px'});
-	          	poemIndex = poemIndex-visible;
-	          	$poemR.css("cursor", "pointer");
-	          }
-	          else{
-	          	var shift = (poemIndex - visible)*$pratilipiWidth;
-	          	$poem.animate({'left':'+=' + shift + 'px'});
-	          	poemIndex = visible;
-	          	$poemL.css("cursor", "default");
-	          	$poemR.css("cursor", "pointer");
-	          }
-	       }
-	   
-	    }); 
-  
-	    $("#upload-link").on('click', function(e){
-			e.preventDefault();
-		    $("#Upload-image:hidden").trigger('click');
-		});
-		
-		//Hide error popup by clicking anywhere on the screen.
-		$('body').click(function(e) {
-			$('.popover ').each(function() {
-				$(this).popover('hide');
-			});
-		});	
-	}
-</script>
-
 <div id="PageContent-Author">
 	<!-- Refactor below code to use one div for all 4 pratilipi types -->
 	<div id="PageContent-Author-AddPratilipi"></div>
 	<div id="PageContent-Author-Detail" class="row margin0">
-		<div class="container margin-top25 clearfix">
+		<div class="container">
 			<div class="col-md-3">
 				<div id="profile-pic-div">
 					<img style="width:75%" src="${ authorImage }"></img><br/>
@@ -181,21 +26,19 @@ window.onload = function(){
 					<div class="col-sm-7" style="border-right: 1px solid #DDD;">
 
 
-						<h1 id="PageContent-Author-Title" style="text-align:center;">${ authorData.getName() }</h1>
-						<h3 style="text-align:center; margin-top:10px;">${ authorData.getNameEn() }</h3>
 
+						<h1 id="PageContent-Author-Name" style="text-align:center;">${ authorData.getName() }</h1>
+						<h3 id="PageContent-Author-NameEn" style="text-align:center; margin-top:10px;">${ authorData.getNameEn() }</h3>
 
-
-						<div>
-							<div id="PageContent-Author-Summary">
-								<#if author.getSummary()??>
-									${ author.getSummary() }
-								</#if>
-							</div>
-							<#if showEditOption>
-								<div id="PageContent-Author-Summary-EditOptions"></div>
-							</#if>
+						<div id="PageContent-Author-Summary" style="margin-top:20px; margin-bottom:10px;">
+							${ author.getSummary()! }
 						</div>
+						<#if showEditOption>
+							<div id="PageContent-Author-Summary-EditOptions" style="text-align:right;"></div>
+						</#if>
+						
+						
+						
 					</div>
 					<div class="col-sm-4 published-works" style="margin-left: 4px;">
 						<h3 style="text-align: center;">Works</h3>
