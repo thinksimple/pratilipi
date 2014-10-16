@@ -28,10 +28,6 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	private Long pratilipiId;
 	private PratilipiView pratilipiView;
 
-	private String pageUrl;
-	private String coverImageUrl;
-	private String authorPageUrl;
-
 	
 	public PratilipiDataInputViewImpl( PratilipiType pratilipiType ) {
 		
@@ -108,12 +104,6 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		pratilipiData.setPageCount( pageCountInput.getValue() );
 		pratilipiData.setPublicDomain( isPublicDomain.isChecked() );
 		
-		pratilipiData.setLanguageName( languageList.getValueText() );
-		
-		pratilipiData.setPageUrl( pageUrl );
-		pratilipiData.setCoverImageUrl( coverImageUrl );
-		pratilipiData.setAuthorPageUrl( authorPageUrl );
-		
 		return pratilipiData;
 	}
 
@@ -126,10 +116,6 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		languageList.setValue( pratilipiData.getLanguageId().toString() );
 		pageCountInput.setValue( pratilipiData.getPageCount() );
 		isPublicDomain.setChecked( pratilipiData.isPublicDomain() );
-		
-		pageUrl = pratilipiData.getPageUrl();
-		coverImageUrl = pratilipiData.getCoverImageUrl();
-		authorPageUrl = pratilipiData.getAuthorPageUrl();
 	}
 
 	@Override

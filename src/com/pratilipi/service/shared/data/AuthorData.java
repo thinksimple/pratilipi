@@ -7,6 +7,9 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class AuthorData implements IsSerializable {
 
 	private Long id;
+
+	private String pageUrl;
+	private String authorImageUrl;
 	
 	private Long userId;
 
@@ -48,6 +51,22 @@ public class AuthorData implements IsSerializable {
 
 	public void setId( Long id ) {
 		this.id = id;
+	}
+
+	public String getPageUrl() {
+		return pageUrl;
+	}
+
+	public void setPageUrl( String pageUrl ) {
+		this.pageUrl = pageUrl;
+	}
+
+	public String getAuthorImageUrl() {
+		return authorImageUrl;
+	}
+
+	public void setAuthorImageUrl( String authorImageUrl ) {
+		this.authorImageUrl = authorImageUrl;
 	}
 
 	public Long getUserId() {

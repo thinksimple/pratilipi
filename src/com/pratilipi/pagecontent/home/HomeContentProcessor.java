@@ -13,7 +13,6 @@ import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
-import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.service.shared.data.PratilipiData;
 
@@ -36,11 +35,10 @@ public class HomeContentProcessor extends PageContentProcessor<HomeContent> {
 				new ArrayList<>( homeContent.getBookIdList().size() );
 		for( Long bookId : homeContent.getBookIdList() ) {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( bookId );
-			Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 			
 			bookDataList.add(
-					pratilipiHelper.createPratilipiData( pratilipi, language, author ) );
+					pratilipiHelper.createPratilipiData( pratilipi, null, author, null ) );
 		}
 		
 		
@@ -48,11 +46,10 @@ public class HomeContentProcessor extends PageContentProcessor<HomeContent> {
 				new ArrayList<>( homeContent.getPoemIdList().size() );
 		for( Long bookId : homeContent.getPoemIdList() ) {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( bookId );
-			Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 			
 			poemDataList.add(
-					pratilipiHelper.createPratilipiData( pratilipi, language, author ) );
+					pratilipiHelper.createPratilipiData( pratilipi, null, author, null ) );
 		}
 		
 		
@@ -60,11 +57,10 @@ public class HomeContentProcessor extends PageContentProcessor<HomeContent> {
 				new ArrayList<>( homeContent.getStoryIdList().size() );
 		for( Long bookId : homeContent.getStoryIdList() ) {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( bookId );
-			Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 			
 			storyDataList.add(
-					pratilipiHelper.createPratilipiData( pratilipi, language, author ) );
+					pratilipiHelper.createPratilipiData( pratilipi, null, author, null ) );
 		}
 
 		

@@ -1,5 +1,6 @@
 package com.pratilipi.pagecontent.author;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,14 +21,16 @@ import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.service.shared.data.AuthorData;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> {
 
 	public static final String ACCESS_ID_AUTHOR_UPDATE = "author_update";
 	
 	@Override
-	public String generateHtml( AuthorContent authorContent, HttpServletRequest request )
-			throws UnexpectedServerException {
+	public String generateHtml(
+			AuthorContent authorContent,
+			HttpServletRequest request ) throws UnexpectedServerException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -36,135 +39,71 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		Author author = dataAccessor.getAuthor( authorId );
 		Language language = dataAccessor.getLanguage( author.getLanguageId() );
 
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setAuthorId( authorId );
+
+		pratilipiFilter.setType( PratilipiType.BOOK );
+		DataListCursorTuple<Pratilipi> bookListCursorTuple =
+				dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 );  
+
+		pratilipiFilter.setType( PratilipiType.POEM );
+		DataListCursorTuple<Pratilipi> poemListCursorTuple =
+				dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 );  
+
+		pratilipiFilter.setType( PratilipiType.STORY );
+		DataListCursorTuple<Pratilipi> storyListCursorTuple =
+				dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 );  
+
+		pratilipiFilter.setType( PratilipiType.ARTICLE );
+		DataListCursorTuple<Pratilipi> articleListCursorTuple =
+				dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 );  
+
+		dataAccessor.destroy();
+
+		
 		AuthorData authorData = pratilipiHelper.createAuthorData( author, language );
+
+		List<PratilipiData> bookDataList =
+				new ArrayList<>( bookListCursorTuple.getDataList().size() );
+		for( Pratilipi pratilipi : bookListCursorTuple.getDataList() )
+			bookDataList.add(
+					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
+		
+		List<PratilipiData> poemDataList =
+				new ArrayList<>( poemListCursorTuple.getDataList().size() );
+		for( Pratilipi pratilipi : poemListCursorTuple.getDataList() )
+			poemDataList.add(
+					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
+		
+		List<PratilipiData> storyDataList =
+				new ArrayList<>( storyListCursorTuple.getDataList().size() );
+		for( Pratilipi pratilipi : storyListCursorTuple.getDataList() )
+			bookDataList.add(
+					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
+
+		List<PratilipiData> articleDataList =
+				new ArrayList<>( articleListCursorTuple.getDataList().size() );
+		for( Pratilipi pratilipi : articleListCursorTuple.getDataList() )
+			bookDataList.add(
+					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
+
 		
 		boolean showEditOption = AuthorContentHelper
 				.hasRequestAccessToUpdateData( request, author );
 
-		
+
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		dataModel.put( "authorData", authorData );
 		dataModel.put( "authorDataEncodedStr", SerializationUtil.encode( authorData ) );
+		dataModel.put( "bookDataList", bookDataList );
+		dataModel.put( "poemDataList", poemDataList );
+		dataModel.put( "storyDataList", storyDataList );
+		dataModel.put( "articleDataList", articleDataList );
+		dataModel.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
 		dataModel.put( "showEditOption", showEditOption );
 		
-
-		
-		//Fetching current user id
-		Long currentUserId = pratilipiHelper.getCurrentUserId();
-		
-		// Fetching Author list
-		String authorImage = PratilipiHelper.URL_AUTHOR_IMAGE + authorId;
-		
-		//Update privileges
-		boolean isAuthor = currentUserId.equals( author.getUserId());
-		
-		//Setting Pratilipi Filter
-		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setAuthorId( authorId );
-		
-		//Fetching pratilipi list for the author.
-		DataListCursorTuple<Pratilipi> bookList = dataAccessor.getPratilipiListByAuthor( 
-								PratilipiType.BOOK, authorId, null, 200 );
-		List<Pratilipi> bookDataList = bookList.getDataList();
-		
-		Map<String, String> bookCoverMap = new HashMap<>();
-		Map<String, String> bookUrlMap = new HashMap<>();
-		for( Pratilipi book : bookDataList ){
-			if( bookCoverMap.get( book.getId() ) == null ){
-				bookCoverMap.put( book.getId().toString(),
-						PratilipiHelper.getCoverImage300Url( PratilipiType.BOOK, book.getId(), false ) );
-			}
-			if( bookUrlMap.get( book.getId() ) == null ){
-				bookUrlMap.put( book.getId().toString(), 
-						PratilipiHelper.getPageUrl( PratilipiType.BOOK, book.getId() ) );
-			}
-		}
-		
-		DataListCursorTuple<Pratilipi> poemList = dataAccessor.getPratilipiListByAuthor( 
-				PratilipiType.POEM, authorId, null, 300 );
-		List<Pratilipi> poemDataList = poemList.getDataList();
-		Map<String, String> poemCoverMap = new HashMap<>();
-		Map<String, String> poemUrlMap = new HashMap<>();
-		for( Pratilipi poem : poemDataList ){
-			if( poemCoverMap.get( poem.getId() ) == null ){
-				poemCoverMap.put( poem.getId().toString(),
-						PratilipiHelper.getCoverImage300Url( PratilipiType.POEM, poem.getId(), false ) );
-			}
-			if( poemUrlMap.get( poem.getId() ) == null ){
-				poemUrlMap.put( poem.getId().toString(),
-						PratilipiHelper.getPageUrl( PratilipiType.POEM, poem.getId() ) );
-			}
-		}
-		
-		DataListCursorTuple<Pratilipi> storyList = dataAccessor.getPratilipiListByAuthor( 
-				PratilipiType.STORY, authorId, null, 500 );
-		List<Pratilipi> storyDataList = storyList.getDataList();
-		Map<String, String> storyCoverMap = new HashMap<>();
-		Map<String, String> storyUrlMap = new HashMap<>();
-		for( Pratilipi story : storyDataList ){
-			if( storyCoverMap.get( story.getId() ) == null ){
-				storyCoverMap.put( story.getId().toString(),
-						PratilipiHelper.getCoverImage300Url( PratilipiType.STORY, story.getId(), false ) );
-			}
-			if( storyUrlMap.get( story.getId() ) == null ){
-				storyUrlMap.put( story.getId().toString(),
-						PratilipiHelper.getPageUrl( PratilipiType.STORY, story.getId() ) );
-			}
-		}
-		
-		//Fetching article list.
-		pratilipiFilter.setType( PratilipiType.ARTICLE );
-		DataListCursorTuple<Pratilipi> articleList = dataAccessor.getPratilipiList( 
-				pratilipiFilter, null, 300);
-		
-		List<Pratilipi> articleDataList = articleList.getDataList();
-		Map<String, String> articleCoverMap = new HashMap<>();
-		Map<String, String> articleUrlMap = new HashMap<>();
-		for( Pratilipi article : articleDataList ){
-			if( articleCoverMap.get( article.getId() ) == null ){
-				articleCoverMap.put( article.getId().toString(),
-						PratilipiHelper.getCoverImage300Url( PratilipiType.ARTICLE, article.getId(), false ) );
-			}
-			if( articleUrlMap.get( article.getId() ) == null ){
-				articleUrlMap.put( article.getId().toString(),
-						PratilipiHelper.getPageUrl( PratilipiType.ARTICLE, article.getId() ) );
-			}
-		}
-		
-		
-		//Fetching language list
-		List<Language> languageList = dataAccessor.getLanguageList();
-		Map<String, String> languageMap = new HashMap<>();
-		for( Language language2 : languageList ){
-			if( languageMap.get( language2.getId() ) == null ){
-				languageMap.put( language2.getId().toString(),
-								 language2.getName() + " (" + language2.getNameEn() + ")" );
-			}
-		}
-		
-		dataAccessor.destroy();
-		
-		dataModel.put( "author", author );
-		dataModel.put( "authorUrl", "http://" + ClaymusHelper.getSystemProperty( "domain" ) + "/author/" + authorId );
-		dataModel.put( "authorImage", authorImage );
-		dataModel.put( "pratilipiFilter", pratilipiFilter );
-		dataModel.put( "bookDataList", bookDataList );
-		dataModel.put( "bookCoverMap",  bookCoverMap );
-		dataModel.put( "bookUrlMap",  bookUrlMap );
-		dataModel.put( "poemDataList", poemDataList );
-		dataModel.put( "poemCoverMap",  poemCoverMap );
-		dataModel.put( "poemUrlMap",  poemUrlMap );
-		dataModel.put( "storyDataList", storyDataList );
-		dataModel.put( "storyCoverMap", storyCoverMap );
-		dataModel.put( "storyUrlMap", storyUrlMap );
-		dataModel.put( "articleDataList", articleDataList );
-		dataModel.put( "articleCoverMap", articleCoverMap );
-		dataModel.put( "articleUrlMap", articleUrlMap );
-		dataModel.put( "languageMap", languageMap );
-		
-
 		
 		// Processing template
 		return super.processTemplate( dataModel, getTemplateName() );

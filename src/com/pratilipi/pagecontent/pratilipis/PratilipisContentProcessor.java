@@ -50,10 +50,10 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 				dataAccessor.getPratilipiList( pratilipiFilter, null, 20 );
 		List<PratilipiData> pratilipiDataList = new ArrayList<>( 20 );
 		for( Pratilipi pratilipi : pratilipiListCursorTuple.getDataList() ) {
-			Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 			
-			pratilipiDataList.add( pratilipiHelper.createPratilipiData( pratilipi, language, author ) );
+			pratilipiDataList.add(
+					pratilipiHelper.createPratilipiData( pratilipi, null, author, null ) );
 		}
 
 		

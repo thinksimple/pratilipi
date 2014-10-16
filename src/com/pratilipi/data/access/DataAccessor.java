@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.claymus.data.access.DataListCursorTuple;
 import com.pratilipi.commons.shared.PratilipiFilter;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
@@ -25,18 +24,6 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount );
 	
-	@Deprecated
-	DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiType type, Boolean publicDomain, String cursorStr, int resultCount );
-
-	@Deprecated
-	DataListCursorTuple<Pratilipi> getPratilipiListByLanguage( 
-			PratilipiType type, Long languageId, String cursorStr, int resultCount );
-
-	@Deprecated
-	DataListCursorTuple<Pratilipi> getPratilipiListByAuthor( 
-			PratilipiType type, Long authorId, String cursorStr, int resultCount );
-
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
 	
 

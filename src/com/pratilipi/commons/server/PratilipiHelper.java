@@ -199,7 +199,8 @@ public class PratilipiHelper extends ClaymusHelper {
 				getContentImage( pratilipiType, pratilipiId );
 	}
 
-	
+
+	@Deprecated
 	public static String getAuthorPageUrl( Long authorId ) {
 		return URL_AUTHOR_PAGE + authorId;
 	}
@@ -231,6 +232,19 @@ public class PratilipiHelper extends ClaymusHelper {
 		dataAccessor.destroy();
 		
 		
+		return createPratilipiData( pratilipi, language, author, genreList );
+	}
+
+	public PratilipiData createPratilipiData(
+			Pratilipi pratilipi, Language language,
+			Author author, List<Genre> genreList ) {
+		
+		if( pratilipi == null )
+			return null;
+		
+		if( genreList == null )
+			genreList = new ArrayList<Genre>( 0 );
+		
 		PratilipiData pratilipiData = new PratilipiData();
 
 		pratilipiData.setId( pratilipi.getId() );
@@ -241,22 +255,19 @@ public class PratilipiHelper extends ClaymusHelper {
 		
 		pratilipiData.setTitle( pratilipi.getTitle() );
 		pratilipiData.setTitleEn( pratilipi.getTitleEn() );
-		pratilipiData.setLanguageId( language.getId() );
-		pratilipiData.setLanguageName( language.getName() );
-		pratilipiData.setLanguageNameEn( language.getNameEn() );
+		pratilipiData.setLanguageId( pratilipi.getLanguageId() );
+		pratilipiData.setLanguageData( createLanguageData( language ) );
 
-		pratilipiData.setAuthorId( author.getId() );
-		pratilipiData.setAuthorName( createAuthorName( author ) );
-		pratilipiData.setAuthorNameEn( createAuthorNameEn( author ) );
-		pratilipiData.setAuthorPageUrl( getAuthorPageUrl( pratilipi.getAuthorId() ) );
+		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
+		pratilipiData.setAuthorData( createAuthorData( author, null ) );
 		
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
 		
-		pratilipiData.setState( pratilipi.getState() );
 		pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
-		
+		pratilipiData.setState( pratilipi.getState() );
+
 		List<Long> genreIdList = new ArrayList<>( genreList.size() );
 		List<String> genreNameList = new ArrayList<>( genreList.size() );
 		for( Genre genre : genreList ) {
@@ -265,38 +276,6 @@ public class PratilipiHelper extends ClaymusHelper {
 		}
 		pratilipiData.setGenreIdList( genreIdList );
 		pratilipiData.setGenreNameList( genreNameList );
-		
-		
-		return pratilipiData;
-	}
-
-	@Deprecated
-	public PratilipiData createPratilipiData(
-			Pratilipi pratilipi, Language language, Author author ) {
-		
-		PratilipiData pratilipiData = new PratilipiData();
-
-		pratilipiData.setId( pratilipi.getId() );
-		pratilipiData.setType( pratilipi.getType() );
-		pratilipiData.setPageUrl( getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
-		pratilipiData.setCoverImageUrl( getCoverImage300Url( pratilipi.getType(), pratilipi.getId(), false ) );
-		pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
-		
-		pratilipiData.setTitle( pratilipi.getTitle() );
-		pratilipiData.setLanguageId( language.getId() );
-		pratilipiData.setLanguageName( language.getName() );
-		pratilipiData.setLanguageNameEn( language.getNameEn() );
-
-		pratilipiData.setAuthorId( author.getId() );
-		pratilipiData.setAuthorName( createAuthorName( author ) );
-		pratilipiData.setAuthorNameEn( createAuthorNameEn( author ) );
-		pratilipiData.setAuthorPageUrl( getAuthorPageUrl( pratilipi.getAuthorId() ) );
-		
-		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
-		pratilipiData.setListingDate( pratilipi.getListingDate() );
-		
-		pratilipiData.setSummary( pratilipi.getSummary() );
-		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		
 		return pratilipiData;
 	}
@@ -311,12 +290,18 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 	
 	public AuthorData createAuthorData( Author author, Language language ) {
+		
+		if( author == null )
+			return null;
+		
 		AuthorData authorData = new AuthorData();
 		
 		authorData.setId( author.getId() );
+		authorData.setPageUrl( URL_AUTHOR_PAGE + author.getId() );
+		authorData.setAuthorImageUrl( URL_AUTHOR_IMAGE + author.getId() );
 		authorData.setUserId( author.getUserId() );
 
-		authorData.setLanguageId( language.getId() );
+		authorData.setLanguageId( author.getLanguageId() );
 		authorData.setLanguageData( createLanguageData( language ) );
 
 		authorData.setFirstName( author.getFirstName() );
@@ -341,6 +326,10 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 	
 	public LanguageData createLanguageData( Language language ) {
+		
+		if( language == null )
+			return null;
+		
 		LanguageData languageData = new LanguageData();
 		languageData.setId( language.getId() );
 		languageData.setName( language.getName() );

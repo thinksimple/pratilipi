@@ -186,36 +186,12 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 		List<Pratilipi> pratilipiList = pratilipiListCursorTuple.getDataList();
 		
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( this.getThreadLocalRequest() );
 		ArrayList<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
 		for( Pratilipi pratilipi : pratilipiList ) {
-			Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			
-			PratilipiData pratilipiData = new PratilipiData();
-			pratilipiData.setId( pratilipi.getId() );
-			pratilipiData.setType( pratilipi.getType() );
-			pratilipiData.setTitle( pratilipi.getTitle() );
-			pratilipiData.setLanguageId( language.getId() );
-			pratilipiData.setLanguageName( language.getName() );
-			pratilipiData.setAuthorId( author.getId() );
-			if( author.getLastName() == null )
-				pratilipiData.setAuthorName( author.getFirstName() );
-			else
-				pratilipiData.setAuthorName( author.getFirstName() + " " + author.getLastName() );
-			pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
-			pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
-			pratilipiData.setListingDate( pratilipi.getListingDate() );
-			pratilipiData.setSummary( pratilipi.getSummary() );
-			pratilipiData.setWordCount( pratilipi.getWordCount() );
-			pratilipiData.setType( pratilipi.getType() );
-			pratilipiDataList.add( pratilipiData );
-			
-			pratilipiData.setPageUrl(
-					PratilipiHelper.getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
-			pratilipiData.setCoverImageUrl(
-					PratilipiHelper.getCoverImage300Url( pratilipi.getType(), pratilipi.getId(), false ) );
-			pratilipiData.setAuthorPageUrl(
-					PratilipiHelper.getAuthorPageUrl( pratilipi.getAuthorId() ) );
+			pratilipiDataList.add(
+					pratilipiHelper.createPratilipiData( pratilipi, null, author, null ) );
 		}
 
 		dataAccessor.destroy();

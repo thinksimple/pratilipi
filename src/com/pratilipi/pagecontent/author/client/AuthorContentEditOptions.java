@@ -181,7 +181,7 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 						}
 						
 						@Override
-						public void onFailure(Throwable caught) {
+						public void onFailure( Throwable caught ) {
 							authorSummaryInput.setEnabled( true );
 							saveAuthorSummaryButton.setEnabled( true );
 						}

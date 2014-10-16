@@ -6,7 +6,6 @@ import java.util.List;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.access.Memcache;
 import com.pratilipi.commons.shared.PratilipiFilter;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
@@ -70,27 +69,6 @@ public class DataAccessorWithMemcache
 		return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
 	}
 	
-	@Override
-	public DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiType type, Boolean publicDomain, String cursorStr, int resultCount ) {
-		// TODO: enable caching
-		return dataAccessor.getPratilipiList( type, publicDomain, cursorStr, resultCount );
-	}
-	
-	@Override
-	public DataListCursorTuple<Pratilipi> getPratilipiListByLanguage( 
-			PratilipiType type, Long languageId, String cursorStr, int resultCount  ) {
-		// TODO: enable caching
-		return dataAccessor.getPratilipiListByLanguage( type, languageId, cursorStr, resultCount );
-	}
-
-	@Override
-	public DataListCursorTuple<Pratilipi> getPratilipiListByAuthor( 
-			PratilipiType type, Long authorId, String cursorStr, int resultCount  ) {
-		// TODO: enable caching
-		return dataAccessor.getPratilipiListByAuthor( type, authorId, cursorStr, resultCount );
-	}
-
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );

@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiViewThumbnailImpl extends PratilipiView {
@@ -78,6 +79,7 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 	@Override
 	public void setPratilipiData( PratilipiData pratilipiData ) {
 		this.pratilipiData = pratilipiData;
+		AuthorData authorData = pratilipiData.getAuthorData();
 		
 		coverImageAnchor.setHref( pratilipiData.getPageUrl() );
 		coverImage.setUrl( pratilipiData.getCoverImageUrl() );
@@ -87,8 +89,8 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 		titleAnchor.setHTML( "<strong style='color:black !important;'>" + pratilipiData.getTitle() + "</strong>" );
 		titleAnchor.setHref( pratilipiData.getPageUrl() );
 
-		authorAnchor.setHTML( "<i><small style='color:black !important;'>-" + pratilipiData.getAuthorName() + "</small></i>" );
-		authorAnchor.setHref( pratilipiData.getAuthorPageUrl() );
+		authorAnchor.setHTML( "<i><small style='color:black !important;'>-" + authorData.getName() + "</small></i>" );
+		authorAnchor.setHref( authorData.getPageUrl() );
 	}
 
 	@Override

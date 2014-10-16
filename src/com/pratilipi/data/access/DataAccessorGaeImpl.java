@@ -12,7 +12,6 @@ import com.claymus.data.access.GaeQueryBuilder;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.commons.shared.PratilipiFilter;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.gae.AuthorEntity;
 import com.pratilipi.data.access.gae.GenreEntity;
 import com.pratilipi.data.access.gae.LanguageEntity;
@@ -86,104 +85,6 @@ public class DataAccessorGaeImpl
 				cursor == null ? null : cursor.toWebSafeString() );
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiType type, Boolean publicDomain, String cursorStr, int resultCount ) {
-		
-		Query query = pm.newQuery( PratilipiEntity.class );
-		
-		if( publicDomain != null )
-			query = new GaeQueryBuilder( query )
-							.addFilter( "type", type )
-							.addFilter( "publicDomain", publicDomain )
-							.addOrdering( "title", true )
-							.setRange( 0, resultCount )
-							.build();
-		else
-			query = new GaeQueryBuilder( query )
-							.addFilter( "type", type )
-							.addOrdering( "title", true )
-							.setRange( 0, resultCount )
-							.build();
-
-		
-		if( cursorStr != null ) {
-			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-			Map<String, Object> extensionMap = new HashMap<String, Object>();
-			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions(extensionMap);
-		}
-		
-		List<Pratilipi> pratilipiEntityList;
-		if( publicDomain == null )
-			pratilipiEntityList = (List<Pratilipi>) query.execute( type );
-		else
-			pratilipiEntityList = (List<Pratilipi>) query.execute( type, publicDomain );
-		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
-		
-		return new DataListCursorTuple<Pratilipi>(
-				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
-				cursor == null ? null : cursor.toWebSafeString() );
-	}
-
-	@Override
-	public DataListCursorTuple<Pratilipi> getPratilipiListByLanguage(
-			PratilipiType type, Long languageId, String cursorStr, int resultCount  ) {
-
-		Query query = new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) )
-						.addFilter( "type", type )
-						.addFilter( "languageId", languageId )
-						.addOrdering( "title", true )
-						.setRange( 0, resultCount )
-						.build();
-
-		if( cursorStr != null ) {
-			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-			Map<String, Object> extensionMap = new HashMap<String, Object>();
-			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions(extensionMap);
-		}
-		
-		@SuppressWarnings("unchecked")
-		List<Pratilipi> pratilipiEntityList = (List<Pratilipi>) query.execute( type, languageId );
-		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
-		
-		return new DataListCursorTuple<Pratilipi>(
-				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
-				cursor == null ? null : cursor.toWebSafeString() );
-		
-	}
-
-	@Override
-	public DataListCursorTuple<Pratilipi> getPratilipiListByAuthor( 
-			PratilipiType type, Long authorId, String cursorStr, int resultCount  ) {
-	
-		Query query = new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) )
-						.addFilter( "type", type )
-						.addFilter( "authorId", authorId )
-						.addOrdering( "title", true )
-						.setRange( 0, resultCount )
-						.build();
-
-		if( cursorStr != null ) {
-			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-			Map<String, Object> extensionMap = new HashMap<String, Object>();
-			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions(extensionMap);
-		}
-		
-		@SuppressWarnings("unchecked")
-		List<Pratilipi> pratilipiEntityList = (List<Pratilipi>) query.execute( type, authorId );
-		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
-		
-		return new DataListCursorTuple<Pratilipi>(
-				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
-				cursor == null ? null : cursor.toWebSafeString() );
-		
-	}
-	
-	
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
 		return createOrUpdateEntity( pratilipi );

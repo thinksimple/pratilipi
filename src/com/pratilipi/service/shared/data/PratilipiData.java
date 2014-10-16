@@ -31,18 +31,14 @@ public class PratilipiData implements IsSerializable {
 	private Long languageId;
 	private boolean hasLanguageId;
 
-	private String languageName;
-	private String languageNameEn;
-	
+	private LanguageData languageData;
+
 	
 	private Long authorId;
 	private boolean hasAuthorId;
 	
-	private String authorName;
-	private String authorNameEn;
-	
-	private String authorPageUrl;
-	
+	private AuthorData authorData;
+
 	private Long publisherId;
 	private boolean hasPublisherId;
 
@@ -175,20 +171,12 @@ public class PratilipiData implements IsSerializable {
 		return hasLanguageId;
 	}
 	
-	public String getLanguageName() {
-		return languageName;
+	public LanguageData getLanguageData() {
+		return languageData;
 	}
 
-	public void setLanguageName( String languageName ) {
-		this.languageName = languageName;
-	}
-
-	public String getLanguageNameEn() {
-		return languageNameEn;
-	}
-
-	public void setLanguageNameEn( String languageNameEn ) {
-		this.languageNameEn = languageNameEn;
+	public void setLanguageData( LanguageData languageData ) {
+		this.languageData = languageData;
 	}
 
 	public Long getAuthorId() {
@@ -204,30 +192,14 @@ public class PratilipiData implements IsSerializable {
 		return hasAuthorId;
 	}
 	
-	public String getAuthorName() {
-		return authorName;
+	public AuthorData getAuthorData() {
+		return authorData;
 	}
 
-	public void setAuthorName( String authorName ) {
-		this.authorName = authorName;
+	public void setAuthorData( AuthorData authorData ) {
+		this.authorData = authorData;
 	}
 	
-	public String getAuthorNameEn() {
-		return authorNameEn;
-	}
-
-	public void setAuthorNameEn( String authorNameEn ) {
-		this.authorNameEn = authorNameEn;
-	}
-	
-	public String getAuthorPageUrl() {
-		return authorPageUrl;
-	}
-
-	public void setAuthorPageUrl( String authorPageUrl ) {
-		this.authorPageUrl = authorPageUrl;
-	}
-
 	public Long getPublisherId() {
 		return publisherId;
 	}
