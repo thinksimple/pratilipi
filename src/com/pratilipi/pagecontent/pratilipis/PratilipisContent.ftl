@@ -2,10 +2,6 @@
 
 <!-- PageContent :: Pratilipi List :: Start -->
 
-<#if showAddOption>
-	<div id="PageContent-Pratilipi-DataInput"></div>
-</#if>
-
 <div class="container">
 	<h1 class="hr-below">${ pratilipisType }</h1>
 	<div class="row" id="PageContent-Pratilipi-List-Preloaded" pratilipi-filters="${ pratilipiFilters }" >

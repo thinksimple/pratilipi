@@ -19,17 +19,14 @@ import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.UserPratilipi;
-import com.pratilipi.pagecontent.pratilipis.PratilipisContentProcessor;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiContentProcessor extends PageContentProcessor<PratilipiContent> {
 
-	public static final String ACCESS_ID_PRATILIPI_READ_META_DATA =
-			PratilipisContentProcessor.ACCESS_ID_PRATILIPI_READ_META_DATA;
-	public static final String ACCESS_ID_PRATILIPI_ADD =
-			PratilipisContentProcessor.ACCESS_ID_PRATILIPI_ADD;
-	public static final String ACCESS_ID_PRATILIPI_UPDATE =
-			PratilipisContentProcessor.ACCESS_ID_PRATILIPI_UPDATE;
+	public static final String ACCESS_ID_PRATILIPI_LIST = "pratilipi_list";
+	public static final String ACCESS_ID_PRATILIPI_READ_META_DATA = "pratilipi_read_meta_data";
+	public static final String ACCESS_ID_PRATILIPI_ADD = "pratilipi_add";
+	public static final String ACCESS_ID_PRATILIPI_UPDATE = "pratilipi_update";
 	
 	public static final String ACCESS_ID_PRATILIPI_REVIEW_VIEW =
 			"pratilipi_review_view";

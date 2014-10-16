@@ -20,15 +20,15 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
-import com.pratilipi.pagecontent.pratilipis.PratilipisContentProcessor;
+import com.pratilipi.pagecontent.pratilipi.PratilipiContentProcessor;
 
 public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> {
 
 	private static final Logger logger =
 			Logger.getLogger( ReaderContentProcessor.class.getName() );
 
-	public static final String ACCESS_ID_PRATILIPI_ADD = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_ADD;
-	public static final String ACCESS_ID_PRATILIPI_UPDATE = PratilipisContentProcessor.ACCESS_ID_PRATILIPI_UPDATE;
+	public static final String ACCESS_ID_PRATILIPI_ADD = PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD;
+	public static final String ACCESS_ID_PRATILIPI_UPDATE = PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE;
 
 	
 	@Override

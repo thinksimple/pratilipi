@@ -22,12 +22,6 @@ import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipisContentProcessor extends PageContentProcessor<PratilipisContent> {
 
-	public static final String ACCESS_ID_PRATILIPI_LIST = "pratilipi_list";
-	public static final String ACCESS_ID_PRATILIPI_READ_META_DATA = "pratilipi_read_meta_data";
-	public static final String ACCESS_ID_PRATILIPI_ADD = "pratilipi_add";
-	public static final String ACCESS_ID_PRATILIPI_UPDATE = "pratilipi_update";
-	
-	
 	@Override
 	public String generateHtml( PratilipisContent pratilipisContent, HttpServletRequest request )
 			throws UnexpectedServerException {
@@ -36,22 +30,14 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		
-		@SuppressWarnings("unused")
-		boolean showMetaData =
-				pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_READ_META_DATA, false );
-		boolean showAddOption =
-				pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false );
-
-		
 		PratilipiType pratilipiType = pratilipisContent.getPratilipiType();
 		PratilipiFilter pratilipiFilter = pratilipisContent.toFilter();
 		
 		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple =
-				dataAccessor.getPratilipiList( pratilipiFilter, null, 20 );
-		List<PratilipiData> pratilipiDataList = new ArrayList<>( 20 );
+				dataAccessor.getPratilipiList( pratilipiFilter, null, 25 );
+		List<PratilipiData> pratilipiDataList = new ArrayList<>( 25 );
 		for( Pratilipi pratilipi : pratilipiListCursorTuple.getDataList() ) {
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			
 			pratilipiDataList.add(
 					pratilipiHelper.createPratilipiData( pratilipi, null, author, null ) );
 		}
@@ -71,7 +57,6 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 		}
 		dataModel.put( "pratilipiFilters", pratilipiFilter.toString() );
 		dataModel.put( "pratilipiDataList", pratilipiDataList );
-		dataModel.put( "showAddOption", showAddOption );
 		
 
 		dataAccessor.destroy();
@@ -79,10 +64,6 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 		
 		// Processing template
 		return super.processTemplate( dataModel, getTemplateName() );
-	}
-	
-	protected String getTemplateName() {
-		return "com/pratilipi/pagecontent/pratilipis/PratilipisContent.ftl";
 	}
 	
 }
