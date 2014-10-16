@@ -21,8 +21,16 @@
 </script>
 <div class="container">
 	<#if pratilipiData.getState() != "PUBLISHED">
-		<div id="PageContent-Pratilipi-Publish" class="col-sm-12"></div>
-		<div id="PageContent-Pratilipi-Unpublish" class="col-sm-12"></div>
+		<div id="PageContent-Pratilipi-Publish" class="col-sm-12" style="text-align:center; margin-top: 10px;">
+			<span class="alert alert-danger" role="alert" style="padding: 6px 10px;margin-bottom: 20px;">
+				This ${ pratilipiData.getType().getName() } is not published. Click this button to publish.
+			</span>
+		</div>
+		<div id="PageContent-Pratilipi-Unpublish" class="col-sm-12" style="text-align: center; margin-top: 10px; display: none;">
+			<span class="alert alert-success" role="alert" style="padding: 6px 10px;margin-bottom: 20px;">
+				This ${ pratilipiData.getType().getName() } is published. Click this button to mark it unpublished.
+			</span>
+		</div>
 	</#if>
 	<div class="row">
 
