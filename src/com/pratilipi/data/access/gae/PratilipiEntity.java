@@ -247,7 +247,7 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public PratilipiState getState() {
-		return state;
+		return state == null ? PratilipiState.PUBLISHED : state ;
 	}
 	
 	@Override

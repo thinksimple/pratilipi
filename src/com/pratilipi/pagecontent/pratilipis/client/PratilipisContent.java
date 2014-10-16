@@ -14,6 +14,7 @@ import com.pratilipi.commons.client.PratilipiDataInputViewAccordionImpl;
 import com.pratilipi.commons.client.PratilipiDataInputViewModalImpl;
 import com.pratilipi.commons.client.PratilipiView;
 import com.pratilipi.commons.shared.PratilipiFilter;
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.PratilipiUtil;
 import com.pratilipi.service.client.PratilipiService;
@@ -137,6 +138,7 @@ public class PratilipisContent implements EntryPoint, ClickHandler {
 			
 			final PratilipiData pratilipiData = pratilipiDataInputView.getPratilipiData();
 			pratilipiData.setAuthorId( authorId );
+			pratilipiData.setState( PratilipiState.DRAFTED );
 			
 			pratilipiDataInputView.setEnabled( false );
 			pratilipiService.savePratilipi(

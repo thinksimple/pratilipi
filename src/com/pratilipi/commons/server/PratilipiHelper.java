@@ -253,6 +253,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
 		
+		pratilipiData.setState( pratilipi.getState() );
 		pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		

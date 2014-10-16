@@ -1,8 +1,10 @@
 package com.pratilipi.commons.shared;
 
-public enum PratilipiState {
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-	INCOMPLETE,
+public enum PratilipiState implements IsSerializable {
+
+	DRAFTED,
 	PUBLISHED,
 	HIDDEN,
 	

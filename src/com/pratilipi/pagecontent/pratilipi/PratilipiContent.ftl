@@ -20,11 +20,14 @@
 	}
 </script>
 <div class="container">
-	
+	<#if pratilipiData.getState() != "PUBLISHED">
+		<div id="PageContent-Pratilipi-Publish" class="col-sm-12"></div>
+		<div id="PageContent-Pratilipi-Unpublish" class="col-sm-12"></div>
+	</#if>
 	<div class="row">
 
 		<#-- Cover Image -->
-		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4" style="padding-top:25px;padding-bottom:15px;">
+		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4" style="display: block; padding-top:25px;padding-bottom:15px;">
 			<a href="${ pratilipiHomeUrl }">
 				<img class="img-responsive" src="${ pratilipiCoverUrl }">
 			</a>
