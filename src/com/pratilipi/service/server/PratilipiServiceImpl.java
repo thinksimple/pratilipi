@@ -39,8 +39,6 @@ import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
-import com.pratilipi.service.shared.AddAuthorRequest;
-import com.pratilipi.service.shared.AddAuthorResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPratilipiGenreRequest;
@@ -381,50 +379,20 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	}
 
 
+	/*
+	 * Owner Module: Author (PageContent)
+	 * API Version: 3.0
+	 */
 	@Override
-	public AddAuthorResponse addAuthor( AddAuthorRequest request )
-			throws IllegalArgumentException, InsufficientAccessException {
-		
-		AuthorData authorData = request.getAuthor();
-		if( authorData.getId() != null )
-			throw new IllegalArgumentException(
-					"AuthorId exist already. Did you mean to call updateAuthor ?" );
-		
-		
-		PratilipiHelper claymusHelper =
-				PratilipiHelper.get( this.getThreadLocalRequest() );
-		
-		if( ! claymusHelper.hasUserAccess( AuthorsContentProcessor.ACCESS_ID_AUTHOR_ADD, false ) )
-			throw new InsufficientAccessException();
-
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = dataAccessor.newAuthor();
-		author.setLanguageId( authorData.getLanguageId() );
-		author.setFirstName( authorData.getFirstName() );
-		author.setLastName( authorData.getLastName() );
-		author.setPenName( authorData.getPenName() );
-		author.setFirstNameEn( authorData.getFirstNameEn() );
-		author.setLastNameEn( authorData.getLastNameEn() );
-		author.setPenNameEn( authorData.getPenNameEn() );
-		author.setEmail( authorData.getEmail() == null ? null : authorData.getEmail().toLowerCase() );
-		author.setRegistrationDate( new Date() );
-		author = dataAccessor.createOrUpdateAuthor( author );
-		dataAccessor.destroy();
-		
-		return new AddAuthorResponse( author.getId() );
-	}
-	
-	@Override
-	public SaveAuthorResponse saveAuthor(SaveAuthorRequest request)
-			throws IllegalArgumentException, InsufficientAccessException {
+	public SaveAuthorResponse saveAuthor( SaveAuthorRequest request )
+			throws InsufficientAccessException {
 		
 		AuthorData authorData = request.getAuthor();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = null;
 		
-		if( authorData.getId() == null) { // Add Author usecase
+		if( authorData.getId() == null ) { // Add Author usecase
 		
 			if( ! AuthorContentHelper.hasRequestAccessToAddData( this.getThreadLocalRequest() ) ) {
 				dataAccessor.destroy();
@@ -451,12 +419,12 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			author.setFirstName( authorData.getFirstName() );
 		if( authorData.hasLastName() )
 			author.setLastName( authorData.getLastName() );
+		if( authorData.hasPenName() )
+			author.setPenName( authorData.getPenName() );
 		if( authorData.hasFirstNameEn() )
 			author.setFirstNameEn( authorData.getFirstNameEn() );
 		if( authorData.hasLastNameEn() )
 			author.setLastNameEn( authorData.getLastNameEn() );
-		if( authorData.hasPenName() )
-			author.setPenName( authorData.getPenName() );
 		if( authorData.hasPenNameEn() )
 			author.setPenNameEn( authorData.getPenNameEn() );
 		if( authorData.hasSummary() )
@@ -469,7 +437,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		dataAccessor.destroy();
 		
 		return new SaveAuthorResponse( author.getId() );
-		
 	}
 
 	@Override

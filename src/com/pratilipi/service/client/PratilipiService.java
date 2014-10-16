@@ -5,8 +5,6 @@ import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.pratilipi.service.shared.AddAuthorRequest;
-import com.pratilipi.service.shared.AddAuthorResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPratilipiGenreRequest;
@@ -65,11 +63,8 @@ public interface PratilipiService extends RemoteService {
 			throws InsufficientAccessException;
 
 
-	AddAuthorResponse addAuthor( AddAuthorRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
-	
 	SaveAuthorResponse saveAuthor( SaveAuthorRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
+			throws InsufficientAccessException;
 
 	GetAuthorListResponse getAuthorList( GetAuthorListRequest request )
 			throws InsufficientAccessException;

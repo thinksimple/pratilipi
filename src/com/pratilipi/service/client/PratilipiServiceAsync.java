@@ -1,8 +1,6 @@
 package com.pratilipi.service.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.pratilipi.service.shared.AddAuthorRequest;
-import com.pratilipi.service.shared.AddAuthorResponse;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPratilipiGenreRequest;
@@ -60,10 +58,6 @@ public interface PratilipiServiceAsync {
 			GetLanguageListRequest request,
 			AsyncCallback<GetLanguageListResponse> callback );
 
-	
-	void addAuthor(
-			AddAuthorRequest request,
-			AsyncCallback<AddAuthorResponse> callback );
 	
 	void saveAuthor(
 			SaveAuthorRequest request,

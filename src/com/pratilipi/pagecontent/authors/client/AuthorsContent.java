@@ -7,15 +7,16 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.AuthorDataInputView;
 import com.pratilipi.commons.client.AuthorDataInputViewImpl;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
-import com.pratilipi.service.shared.AddAuthorRequest;
-import com.pratilipi.service.shared.AddAuthorResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
+import com.pratilipi.service.shared.SaveAuthorRequest;
+import com.pratilipi.service.shared.SaveAuthorResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.LanguageData;
 
@@ -26,6 +27,7 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 	
 	
 	private final Accordion accordion = new Accordion();
+	private final Button addButton = new Button( "Add" );
 	
 	private final AuthorDataInputView authorsDataInputView =
 			new AuthorDataInputViewImpl();
@@ -35,9 +37,10 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 		RootPanel rootPanel = RootPanel.get( "PageContent-Authors-DataInput" );
 		if( rootPanel != null ) {
 			accordion.setTitle( "Add Author" );
-			authorsDataInputView.addAddButtonClickHandler( this );
+			addButton.addClickHandler( this );
 
 			accordion.add( authorsDataInputView );
+			accordion.add( addButton );
 			rootPanel.add( accordion );
 
 			pratilipiService.getLanguageList(
@@ -57,6 +60,8 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 				}
 
 			});
+			
+			addButton.setStyleName( "btn btn-success" );
 		}
 		
 	}
@@ -68,18 +73,19 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 			return;
 		
 		authorsDataInputView.setEnabled( false );
+		addButton.setEnabled( false );
 		AuthorData authorData = authorsDataInputView.getAuthorData();
-		AddAuthorRequest request = new AddAuthorRequest( authorData );
-		pratilipiService.addAuthor( request, new AsyncCallback<AddAuthorResponse>(){
+		SaveAuthorRequest request = new SaveAuthorRequest( authorData );
+		pratilipiService.saveAuthor( request, new AsyncCallback<SaveAuthorResponse>(){
 
 			@Override
 			public void onFailure( Throwable caught ) {
 				authorsDataInputView.setEnabled( true );
-				Window.alert( caught.getMessage() );
+				addButton.setEnabled( true );
 			}
 
 			@Override
-			public void onSuccess(AddAuthorResponse result) {
+			public void onSuccess( SaveAuthorResponse result) {
 				Window.Location.reload();				
 			}
 			
