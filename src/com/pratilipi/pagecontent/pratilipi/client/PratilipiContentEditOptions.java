@@ -4,9 +4,8 @@ import com.claymus.commons.client.ui.Dropdown;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.TextAlign;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.dom.client.Style.VerticalAlign;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -19,10 +18,7 @@ import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FileUpload;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewModalImpl;
@@ -134,6 +130,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
 			coverImageUpload.getElement().setAttribute( "data-url", uploadUrl );
 			coverImageUpload.getElement().setAttribute( "id", "upload-coverImage" );
+			coverImageUpload.getElement().setAttribute( "name", "myfile[]");
 			coverImageUpload.setVisible( false );
 			loadFileUploader( coverImageUpload.getElement() );
 
@@ -147,6 +144,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
 			htmlContentUpload.getElement().setAttribute( "data-url", uploadUrl );
 			htmlContentUpload.getElement().setAttribute( "id", "upload-htmlContent" );
+			htmlContentUpload.getElement().setAttribute( "name", "myfile[]");
 			htmlContentUpload.setVisible( false );
 			loadFileUploader( htmlContentUpload.getElement() );
 
@@ -160,6 +158,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
 			wordContentUpload.getElement().setAttribute( "data-url", uploadUrl );
 			wordContentUpload.getElement().setAttribute( "id", "upload-wordContent" );
+			wordContentUpload.getElement().setAttribute( "name", "myfile[]");
 			wordContentUpload.setVisible( false );
 			loadFileUploader( wordContentUpload.getElement() );
 
@@ -369,7 +368,30 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	
 	private native void loadFileUploader( Element element ) /*-{
 		$wnd.jQuery( element ).fileupload({
+			add: function(e, data) {
+                var uploadErrors = [];
+                var acceptFileTypes = /^image\/(jpe?g|png|bmp)$/i;
+                if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                    uploadErrors.push('Not an accepted file type. Please upload ".jpg" file');
+                }
+                if( data.originalFiles[0]['size'] > 10000000 ) {
+                    uploadErrors.push('File size should be less than ');
+                }
+                if(uploadErrors.length > 0) {
+                    alert(uploadErrors.join("\n"));
+                } else {
+                    data.submit();
+                }
+	        },
 			dataType: 'html',
+			progressall: function (e, data) {
+	            var progress = parseInt(data.loaded / data.total * 100, 10);
+	            $wnd.jQuery('#progress .bar').css(
+	                'width',
+	                progress + '%'
+	            );
+	            $wnd.jQuery('.percent').html( progress + '%' );
+			},
 			done: function( e, data ) {
 				$wnd.document.location.reload();
 			}

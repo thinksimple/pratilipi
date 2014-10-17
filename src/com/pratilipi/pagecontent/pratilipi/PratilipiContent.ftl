@@ -42,6 +42,11 @@
 			<#if showEditOptions>
 				<span id="upload-coverImage-link">Upload Cover Image</span>
 				<div id="PageContent-Pratilipi-CoverImage-EditOptions" upload-url="${ pratilipiCoverUploadUrl }" ></div>
+				<div id="progress" style="position:relative; width:150px; border: 1px solid #ddd; padding: 1px; border-radius: 3px;">
+				    <div class="bar" style="width: 0%;height: 18px;background: red;"></div>
+				    <div class="percent">0%</div >
+				    <div id="status"></div>
+				</div>
 				<span id="upload-htmlContent-link">Upload HTML Content</span>
 				<div id="PageContent-Pratilipi-HtmlContent-EditOptions" upload-url="${ pratilipiContentHtmlUrl }" ></div>
 				<span id="upload-wordContent-link">Upload Word File</span>
