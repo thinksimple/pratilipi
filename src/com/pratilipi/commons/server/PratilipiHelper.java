@@ -33,7 +33,7 @@ public class PratilipiHelper extends ClaymusHelper {
 			"(.*?<body\\s.*?>)(.*?)(</body>.*?)" );
 
 	
-	private static final String URL_RESOURCE = ClaymusHelper.URL_RESOURCE;
+	public static final String URL_RESOURCE = ClaymusHelper.URL_RESOURCE;
 	private static final String URL_RESOURCE_STATIC = ClaymusHelper.URL_RESOURCE_STATIC;
 
 	

@@ -56,7 +56,7 @@
    
   <servlet>
     <servlet-name>AuthorImageResourceServlet</servlet-name>
-    <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
+    <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
     <init-param>
       <param-name>ResizeImage</param-name>
       <param-value>300</param-value>

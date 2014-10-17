@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.taskqueue.Task;
@@ -17,11 +18,54 @@ import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
+	
+	@Override
+	public void doPost(
+			HttpServletRequest request,
+			HttpServletResponse response ) throws IOException {
+		
+		String url = request.getRequestURI();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// Author Image
+		if( url.startsWith( PratilipiHelper.URL_AUTHOR_IMAGE ) ) {
+			String authorIdStr = url.substring( PratilipiHelper.URL_AUTHOR_IMAGE.length() );
+			Long authorId = Long.parseLong( authorIdStr );
+			Author author = dataAccessor.getAuthor( authorId );
+			
+			if( ! AuthorContentHelper.hasRequestAccessToUpdateData( request, author ) ) {
+				response.setStatus( HttpServletResponse.SC_FORBIDDEN );
+				return;
+			}
+		}
+		
+		dataAccessor.destroy();
+		
+		super.doPost( request, response );
+	}
+	
+	@Override
+	protected BlobEntry getBlobEntry( HttpServletRequest request ) throws IOException {
+		BlobEntry blobEntry = super.getBlobEntry( request );
+		String url = request.getRequestURI();
+
+		if( blobEntry == null && url.startsWith( PratilipiHelper.URL_AUTHOR_IMAGE ) ) {
+			String fileName =
+					PratilipiHelper.URL_AUTHOR_IMAGE
+							.substring( PratilipiHelper.URL_RESOURCE.length() )
+					+ "author";
+			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
+		}
+		
+		return blobEntry;
+	}
 	
 	@Override
 	protected void postUpload( HttpServletRequest request ) throws IOException {
@@ -50,25 +94,29 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 					PratilipiHelper.getCoverImage300( pratilipiType, pratilipiId ),
 					blobEntry.getMimeType(), newImage.getImageData(),
 					"public-read", metaDataMap );
-		}
 
+			
 		// Pratilipi Content (Html Format)
-		if( url.equals( PratilipiHelper.getContentHtmlUrl( pratilipiType, pratilipiId ) ) ) {
+		} else if( url.equals( PratilipiHelper.getContentHtmlUrl( pratilipiType, pratilipiId ) ) ) {
 			Task task = TaskQueueFactory.newTask();
 			task.addParam( "pratilipiId", pratilipiIdStr );
 			task.addParam( "pratilipiType", pratilipiType.toString() );
 			TaskQueue taskQueue = TaskQueueFactory.getHtmlToPrailipiTaskQueue();
 			taskQueue.add( task );
-		}
+			
 			
 		// Pratilipi Content (Word Format)
-		if( url.equals( PratilipiHelper.getContentWordUrl( pratilipiType, pratilipiId ) ) ) {
+		} else if( url.equals( PratilipiHelper.getContentWordUrl( pratilipiType, pratilipiId ) ) ) {
 			Task task = TaskQueueFactory.newTask();
 			task.addParam( "pratilipiId", pratilipiIdStr );
 			task.addParam( "pratilipiType", pratilipiType.toString() );
 			TaskQueue taskQueue = TaskQueueFactory.getWordToPrailipiTaskQueue();
 			taskQueue.add( task );
+		
+		
 		}
+		
+		dataAccessor.destroy();
 	}
 	
 }
