@@ -68,7 +68,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "pratilipiData", pratilipiData );
-		dataModel.put( "pratilipiUrl", "http://" + ClaymusHelper.getSystemProperty( "domain" ) + "/" + pratilipiData.getType() + "/" + pratilipiId );
+		dataModel.put( "pratilipiUrl", "http://" + ClaymusHelper.getSystemProperty( "domain" ) + PratilipiHelper.getPageUrl( pratilipiData.getType(), pratilipiId ) );
 		dataModel.put( "pratilipiDataEncodedStr", SerializationUtil.encode( pratilipiData ) );
 
 		dataModel.put( "pratilipi", pratilipi );

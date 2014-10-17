@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.server.Access;
 import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.data.access.DataAccessor;
+import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
@@ -60,15 +63,27 @@ public class PratilipiContentHelper extends PageContentHelper<
 	public static boolean hasRequestAccessToAddData(
 			HttpServletRequest request, Pratilipi pratilipi ) {
 		
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_PRATILIPI_DATA ) ||
-				pratilipi.getAuthorId().equals( PratilipiHelper.get( request ).getCurrentUserId() );
+		if( PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_PRATILIPI_DATA ) )
+			return true;
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		dataAccessor.destroy();
+		
+		return author.getId().equals( PratilipiHelper.get( request ).getCurrentUserId() );
 	}
 	
 	public static boolean hasRequestAccessToUpdateData(
 			HttpServletRequest request, Pratilipi pratilipi ) {
 		
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA ) ||
-				pratilipi.getAuthorId().equals( PratilipiHelper.get( request ).getCurrentUserId() );
+		if( PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA ) )
+			return true;
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		dataAccessor.destroy();
+		
+		return author.getId().equals( PratilipiHelper.get( request ).getCurrentUserId() );
 	}
 		
 	public static boolean hasRequestAccessToReadMetaData( HttpServletRequest request ) {
