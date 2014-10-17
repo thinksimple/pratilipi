@@ -1,28 +1,23 @@
 package com.pratilipi.commons.client;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.claymus.commons.client.ui.Modal;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.FocusPanel;
-import com.pratilipi.commons.shared.PratilipiType;
+import com.google.gwt.user.client.ui.Button;
+import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiDataInputViewModalImpl extends PratilipiDataInputView {
 	
-	private final FocusPanel focusPanel = new FocusPanel();
-	private final PratilipiType pratilipiType;
 	private final Modal modal = new Modal();
-	private final PratilipiDataInputView pratilipiDataInputView;
-
+	private final PratilipiDataInputView pratilipiDataInputView = new PratilipiDataInputViewImpl();
+	private final List<Button> addedButtonList = new LinkedList<>();
 	
-	public PratilipiDataInputViewModalImpl( PratilipiType pratilipiType ) {
+	
+	public PratilipiDataInputViewModalImpl() {
 		
-		this.pratilipiType = pratilipiType;
-	
-		modal.setTitle( "Add " + pratilipiType.getName() );
-		pratilipiDataInputView = new PratilipiDataInputViewImpl( pratilipiType );
-		pratilipiDataInputView.getElement().getStyle().setPadding( 15, Unit.PX );
+		modal.setTitle( "New Pratilipi" );
 		modal.add( pratilipiDataInputView );
 		
 		initWidget( modal );
@@ -37,13 +32,14 @@ public class PratilipiDataInputViewModalImpl extends PratilipiDataInputView {
 	}
 	
 	@Override
-	public HandlerRegistration addAddButtonClickHandler(ClickHandler clickHandler) {
-		return pratilipiDataInputView.addAddButtonClickHandler( clickHandler );
+	public void add( Button button ) {
+		modal.add( button );
+		addedButtonList.add( button );
 	}
 
 	@Override
-	public void addLanguageListItem( String item, String value ) {
-		pratilipiDataInputView.addLanguageListItem( item, value );
+	public void addLanguageListItem( LanguageData languageData ) {
+		pratilipiDataInputView.addLanguageListItem( languageData );
 	}
 		
 	@Override
@@ -54,6 +50,8 @@ public class PratilipiDataInputViewModalImpl extends PratilipiDataInputView {
 	@Override
 	public void setEnabled(boolean enabled) {
 		pratilipiDataInputView.setEnabled( enabled );
+		for( Button button : addedButtonList )
+			button.setEnabled( enabled );
 	}
 
 	@Override
@@ -63,28 +61,8 @@ public class PratilipiDataInputViewModalImpl extends PratilipiDataInputView {
 
 	@Override
 	public void setPratilipiData( PratilipiData pratilipiData ) {
-		focusPanel.setFocus( true );
-		modal.setTitle( "Edit " + pratilipiType.getName() );
-		modal.show();
 		pratilipiDataInputView.setPratilipiData( pratilipiData );
+		modal.setTitle( "Edit " + pratilipiData.getType().getName() );
 	}
 
-	@Override
-	public PratilipiView getPratilipiView() {
-		return pratilipiDataInputView.getPratilipiView();
-	}
-
-	@Override
-	public void setPratilipiView( PratilipiView pratilipiView ) {
-		pratilipiDataInputView.setPratilipiView( pratilipiView );
-	}
-
-	@Override
-	public void reset() {
-		modal.hide();
-		modal.setTitle( "Add " + pratilipiType.getName() );
-		pratilipiDataInputView.reset();
-	}
-
-	
 }

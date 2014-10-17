@@ -101,13 +101,14 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		try {
 			if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
 
-				if ( ! PratilipiContentHelper.hasRequestAccessToAddData( this.getThreadLocalRequest() ) )
-						throw new InsufficientAccessException();
-						
 				pratilipi = dataAccessor.newPratilipi();
 				pratilipi.setType( pratilipiData.getType() );
+				pratilipi.setAuthorId( pratilipiData.getAuthorId() );
 				pratilipi.setListingDate( new Date() );
 				pratilipi.setLastUpdated( new Date() );
+
+				if ( ! PratilipiContentHelper.hasRequestAccessToAddData( this.getThreadLocalRequest(), pratilipi ) )
+					throw new InsufficientAccessException();
 
 			
 			} else { // Update Pratilipi usecase
@@ -121,7 +122,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			}
 			
 			
-			if( pratilipiData.hasPublicDomain() )
+			if( pratilipiData.hasPublicDomain() && PratilipiContentHelper.hasRequestAccessToUpdateMetaData( this.getThreadLocalRequest() ) )
 				pratilipi.setPublicDomain( pratilipiData.isPublicDomain() );
 			if( pratilipiData.hasTitle() )
 				pratilipi.setTitle( pratilipiData.getTitle() );
@@ -129,15 +130,13 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				pratilipi.setTitleEn( pratilipiData.getTitleEn() );
 			if( pratilipiData.hasLanguageId() )
 				pratilipi.setLanguageId( pratilipiData.getLanguageId() );
-			if( pratilipiData.hasAuthorId() )
-				pratilipi.setAuthorId( pratilipiData.getAuthorId() );
 			if( pratilipiData.hasPublicationYear() )
 				pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
 			if( pratilipiData.hasSummary() )
 				pratilipi.setSummary( pratilipiData.getSummary() );
 			if( pratilipiData.hasWordCount() )
 				pratilipi.setWordCount( pratilipiData.getWordCount() );
-			if( pratilipiData.hasPageCount() )
+			if( pratilipiData.hasPageCount() && PratilipiContentHelper.hasRequestAccessToUpdateMetaData( this.getThreadLocalRequest() ) )
 				pratilipi.setPageCount( pratilipiData.getPageCount() );
 			if( pratilipiData.hasState() ) {
 
@@ -167,11 +166,9 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		taskQueue.add( task );
 
 		
-		pratilipiData = new PratilipiData();
-		pratilipiData.setId( pratilipi.getId() );
-		pratilipiData.setPageUrl( PratilipiHelper.getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
-		
-		return new SavePratilipiResponse( pratilipiData );
+		return new SavePratilipiResponse(
+				PratilipiHelper.get( this.getThreadLocalRequest() )
+						.createPratilipiData( pratilipi, null, null, null ) );
 	}
 	
 	@Override

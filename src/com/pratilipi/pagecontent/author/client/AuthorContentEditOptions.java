@@ -16,14 +16,19 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.AuthorDataInputView;
 import com.pratilipi.commons.client.AuthorDataInputViewModalImpl;
+import com.pratilipi.commons.client.PratilipiDataInputView;
+import com.pratilipi.commons.client.PratilipiDataInputViewModalImpl;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.SaveAuthorRequest;
 import com.pratilipi.service.shared.SaveAuthorResponse;
+import com.pratilipi.service.shared.SavePratilipiRequest;
+import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.LanguageData;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 	
@@ -53,8 +58,14 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 	private final Button saveAuthorSummaryButton = new Button( "Save" );
 	private final RichTextInputFormField authorSummaryInput = new RichTextInputFormField();
 
-
 	private AuthorData authorData = null;
+	
+
+	// New Pratilipi option widgets
+	private final Anchor newPratilipiAnchor = new Anchor( "New Pratilipi" );
+	private final Button savePratilipiDataButton = new Button( "Save" );
+	private final PratilipiDataInputView pratilipiDataInputView =
+			new PratilipiDataInputViewModalImpl();
 	
 	
 	@Override
@@ -68,23 +79,6 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 		saveAuthorSummaryButton.addClickHandler( this );
 		saveAuthorSummaryButton.setVisible( false );
 		
-		pratilipiService.getLanguageList(
-				new GetLanguageListRequest(),
-				new AsyncCallback<GetLanguageListResponse>() {
-
-			@Override
-			public void onSuccess( GetLanguageListResponse response ) {
-				for( LanguageData languageData : response.getLanguageList() )
-					authorDataInputView.addLanguageListItem( languageData );
-			}
-
-			@Override
-			public void onFailure( Throwable caught ) {
-				Window.Location.reload();
-			}
-
-		});
-		
 		dropdown.add( editAuthorDataAnchor );
 		authorDataInputView.add( saveAuthorDataButton );
 		RootPanel.get().add( authorDataInputView );
@@ -94,11 +88,6 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 		
 		saveAuthorDataButton.setStyleName( "btn btn-success" );
 		saveAuthorSummaryButton.setStyleName( "btn btn-success" );
-		
-
-		
-		authorNamePanel.getElement().setInnerHTML( "" );
-		authorNamePanel.add( dropdown );
 		
 
 		// Decoding AuthorData
@@ -113,6 +102,41 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 		} catch( SerializationException e ) {
 			Window.Location.reload();
 		}
+
+		
+		// New Pratilipi option widgets
+		newPratilipiAnchor.addClickHandler( this );
+		savePratilipiDataButton.addClickHandler( this );
+
+		dropdown.add( newPratilipiAnchor );
+		pratilipiDataInputView.add( savePratilipiDataButton );
+		RootPanel.get().add( pratilipiDataInputView );
+		
+		savePratilipiDataButton.setStyleName( "btn btn-success" );
+
+		
+		authorNamePanel.getElement().setInnerHTML( "" );
+		authorNamePanel.add( dropdown );
+		
+		
+		pratilipiService.getLanguageList(
+				new GetLanguageListRequest(),
+				new AsyncCallback<GetLanguageListResponse>() {
+
+			@Override
+			public void onSuccess( GetLanguageListResponse response ) {
+				for( LanguageData languageData : response.getLanguageList() ) {
+					authorDataInputView.addLanguageListItem( languageData );
+					pratilipiDataInputView.addLanguageListItem( languageData );
+				}
+			}
+
+			@Override
+			public void onFailure( Throwable caught ) {
+				Window.Location.reload();
+			}
+
+		});
 
 	}
 	
@@ -184,6 +208,32 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 						public void onFailure( Throwable caught ) {
 							authorSummaryInput.setEnabled( true );
 							saveAuthorSummaryButton.setEnabled( true );
+						}
+						
+					});
+		
+		} else if( event.getSource() == newPratilipiAnchor ) {
+			pratilipiDataInputView.setVisible( true );
+		
+		} else if( event.getSource() == savePratilipiDataButton ) {
+			pratilipiDataInputView.setEnabled( false );
+			savePratilipiDataButton.setEnabled( false );
+			
+			PratilipiData pratilipiData = pratilipiDataInputView.getPratilipiData();
+			pratilipiData.setAuthorId( authorData.getId() );
+			pratilipiService.savePratilipi(
+					new SavePratilipiRequest( pratilipiData ),
+					new AsyncCallback<SavePratilipiResponse>() {
+						
+						@Override
+						public void onSuccess( SavePratilipiResponse response ) {
+							Window.Location.assign( response.getPratilipiData().getPageUrl() );
+						}
+						
+						@Override
+						public void onFailure( Throwable caught ) {
+							pratilipiDataInputView.setEnabled( true );
+							savePratilipiDataButton.setEnabled( true );
 						}
 						
 					});

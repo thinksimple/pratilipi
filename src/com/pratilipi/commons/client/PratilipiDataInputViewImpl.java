@@ -2,62 +2,53 @@ package com.pratilipi.commons.client;
 
 import com.claymus.commons.client.ui.formfield.CheckBoxFormField;
 import com.claymus.commons.client.ui.formfield.ListBoxFormField;
-import com.claymus.commons.client.ui.formfield.NumberInputFormField;
 import com.claymus.commons.client.ui.formfield.TextInputFormField;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	
 	private Panel panel = new FlowPanel();
-	private Panel innerPanel = new FlowPanel();
 	
 	private TextInputFormField titleInput = new TextInputFormField();
 	private TextInputFormField titleEnInput = new TextInputFormField();
+	private ListBoxFormField typeList = new ListBoxFormField();
 	private ListBoxFormField languageList = new ListBoxFormField();
-	private NumberInputFormField pageCountInput = new NumberInputFormField();
 	private CheckBoxFormField isPublicDomain = new CheckBoxFormField();
-	private Button addButton = new Button();
 	
-	private final PratilipiType pratilipiType;
 	private Long pratilipiId;
-	private PratilipiView pratilipiView;
 
 	
-	public PratilipiDataInputViewImpl( PratilipiType pratilipiType ) {
-		
-		this.pratilipiType = pratilipiType;
+	public PratilipiDataInputViewImpl() {
 		
 	    titleInput.setPlaceholder( "Title" );
 	    titleInput.setRequired( true );
-	    titleEnInput.setPlaceholder( "Title (English) " ); 
-	    languageList.addItem( "Select Language", "" );
+	    titleEnInput.setPlaceholder( "Title (English)" );
+	    typeList.setPlaceholder( "Select Type" );
+	    typeList.setRequired( true );
+	    languageList.setPlaceholder( "Select Language" );
 	    languageList.setRequired( true );
-	    pageCountInput.setPlaceholder( "Page Count" );
 		isPublicDomain.setText( "Classics" );
-		addButton.setText(  "Save " + pratilipiType.getName() );
+		isPublicDomain.setVisible( false );
+		
+		for( PratilipiType pratilipiType : PratilipiType.values() )
+			typeList.addItem( pratilipiType.getName(), pratilipiType.toString() );
 		
 	
 		// Composing the widget
-		panel.add( innerPanel );
-	    
-		innerPanel.add( titleInput );
-		innerPanel.add( titleEnInput );
-		innerPanel.add( languageList );
-		innerPanel.add( pageCountInput );
-		innerPanel.add( isPublicDomain );
-		innerPanel.add( addButton );
+		panel.add( titleInput );
+		panel.add( titleEnInput );
+		panel.add( typeList );
+		panel.add( languageList );
+		panel.add( isPublicDomain );
 
 		
 		// Setting required style classes
-		panel.setStyleName( "row" );
-		innerPanel.setStyleName( "col-sm-9" );
-	    addButton.setStyleName( "btn btn-default" );
+		panel.getElement().setAttribute( "style", "margin:15px" );
 
 		
 		initWidget( panel );
@@ -65,13 +56,15 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	
 	
 	@Override
-	public HandlerRegistration addAddButtonClickHandler(ClickHandler clickHandler) {
-		return addButton.addClickHandler( clickHandler );
+	public void add( Button button ) {
+		panel.add( button );
 	}
 
 	@Override
-	public void addLanguageListItem( String item, String value ) {
-		languageList.addItem( item, value );
+	public void addLanguageListItem( LanguageData languageData ) {
+		languageList.addItem(
+				languageData.getName() + " (" + languageData.getNameEn() + ")",
+				languageData.getId().toString() );
 	}
 		
 	@Override
@@ -79,8 +72,8 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		boolean validated = true;
 		validated = titleInput.validate() && validated;
 		validated = titleEnInput.validate() && validated;
+		validated = typeList.validate() && validated;
 		validated = languageList.validate() && validated;
-		validated = pageCountInput.validate() && validated;
 		return validated;
 	}
 
@@ -88,8 +81,8 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	public void setEnabled(boolean enabled) {
 		titleInput.setEnabled( enabled );
 		titleEnInput.setEnabled( enabled );
+		typeList.setEnabled( enabled );	
 		languageList.setEnabled( enabled );	
-		pageCountInput.setEnabled( enabled );
 		isPublicDomain.setEnabled( enabled );
 	}
 
@@ -97,11 +90,11 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	public PratilipiData getPratilipiData() {
 		PratilipiData pratilipiData = new PratilipiData();
 		pratilipiData.setId( pratilipiId );
-		pratilipiData.setType( pratilipiType );
+		
+		pratilipiData.setType( PratilipiType.valueOf( typeList.getValue() ) );
 		pratilipiData.setTitle( titleInput.getText() );
 		pratilipiData.setTitleEn( titleEnInput.getText() );
 		pratilipiData.setLanguageId( Long.parseLong( languageList.getValue() ) );
-		pratilipiData.setPageCount( pageCountInput.getValue() );
 		pratilipiData.setPublicDomain( isPublicDomain.isChecked() );
 		
 		return pratilipiData;
@@ -111,39 +104,14 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	public void setPratilipiData( PratilipiData pratilipiData ) {
 		pratilipiId = pratilipiData.getId();
 		
+		typeList.setValue( pratilipiData.getType().toString() );
 		titleInput.setText( pratilipiData.getTitle() );
 		titleEnInput.setText( pratilipiData.getTitleEn() );
 		languageList.setValue( pratilipiData.getLanguageId().toString() );
-		pageCountInput.setValue( pratilipiData.getPageCount() );
-		isPublicDomain.setChecked( pratilipiData.isPublicDomain() );
-	}
-
-	@Override
-	public PratilipiView getPratilipiView() {
-		return pratilipiView;
-	}
-
-	@Override
-	public void setPratilipiView( PratilipiView pratilipiView ) {
-		this.pratilipiView = pratilipiView;
-	}
-
-	@Override
-	public void reset() {
-		pratilipiId = null;
-		
-		titleInput.setText( null );
-		titleEnInput.setText( null );
-		languageList.setValue( null );
-		pageCountInput.setValue( null );
-		isPublicDomain.setChecked( false );
-		
-		titleInput.resetValidation();
-		titleEnInput.resetValidation();
-		languageList.resetValidation();
-		isPublicDomain.resetValidation();
-		
-		pratilipiView = null;
+		if( pratilipiData.hasPublicDomain() ) {
+			isPublicDomain.setChecked( pratilipiData.isPublicDomain() );
+			isPublicDomain.setVisible( true );
+		}
 	}
 
 }

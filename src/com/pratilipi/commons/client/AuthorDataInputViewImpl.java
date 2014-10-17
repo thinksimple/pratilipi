@@ -38,6 +38,7 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 	
 	private Long authorId = null;
 	
+	
 	public AuthorDataInputViewImpl(){
 		firstNameInput.setPlaceholder( "First Name" );
 		firstNameInput.setRequired( true );

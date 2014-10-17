@@ -28,7 +28,6 @@ import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewModalImpl;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
-import com.pratilipi.commons.shared.PratilipiUtil;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.GetLanguageListRequest;
@@ -189,7 +188,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			editPratilipiInfo.addClickHandler( this );
 			editInfoRootPanel.add( editPratilipiInfo );
 			
-			pratilipiDataInputView = new PratilipiDataInputViewModalImpl( pratilipiData.getType() );
+			pratilipiDataInputView = new PratilipiDataInputViewModalImpl();
 			
 			//Add language list to book info edit modal
 			pratilipiService.getLanguageList(
@@ -205,14 +204,11 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 				@Override
 				public void onSuccess( GetLanguageListResponse response ) {
 					for( LanguageData languageData : response.getLanguageList() )
-						pratilipiDataInputView.addLanguageListItem(
-								PratilipiUtil.createLanguageName( languageData ),
-								languageData.getId().toString() );
+						pratilipiDataInputView.addLanguageListItem( languageData );
 				}
 				
 		    });
 			
-			pratilipiDataInputView.addAddButtonClickHandler( this );
 		}
 		
 		RootPanel publishRoot = RootPanel.get( "PageContent-Pratilipi-Publish" );

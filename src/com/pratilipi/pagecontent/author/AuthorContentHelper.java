@@ -55,7 +55,6 @@ public class AuthorContentHelper extends PageContentHelper<
 		
 		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_AUTHOR_DATA ) ||
 				(
-					hasRequestAccessToAddData( request ) &&
 					author.getUserId() != null &&
 					author.getUserId().equals( PratilipiHelper.get( request ).getCurrentUserId() )
 				);

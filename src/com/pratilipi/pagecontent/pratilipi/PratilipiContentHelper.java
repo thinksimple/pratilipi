@@ -19,10 +19,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 	public static final Access ACCESS_TO_UPDATE_PRATILIPI_DATA =
 			new Access( "pratilipi_data_update", false, "Update Pratilipi Data" );
 	
-	public static final Access ACCESS_TO_READ_PRATILIPI_META_DATA =
+	public static final Access ACCESS_TO_READ_PRATILIPI_DATA_META =
 			new Access( "pratilipi_data_read_meta", false, "View Pratilipi Meta Data" );
-	public static final Access ACCESS_TO_ADD_PRATILIPI_DATA_META =
-			new Access( "pratilipi_data_add_meta", false, "Add Pratilipi Meta Data" );
 	public static final Access ACCESS_TO_UPDATE_PRATILIPI_DATA_META =
 			new Access( "pratilipi_data_update_meta", false, "Update Pratilipi Meta Data" );
 
@@ -45,8 +43,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		return new Access[] {
 				ACCESS_TO_ADD_PRATILIPI_DATA,
 				ACCESS_TO_UPDATE_PRATILIPI_DATA,
-				ACCESS_TO_READ_PRATILIPI_META_DATA,
-				ACCESS_TO_ADD_PRATILIPI_DATA_META,
+				ACCESS_TO_READ_PRATILIPI_DATA_META,
 				ACCESS_TO_UPDATE_PRATILIPI_DATA_META,
 				ACCESS_TO_ADD_PRATILIPI_REVIEW
 		};
@@ -60,22 +57,26 @@ public class PratilipiContentHelper extends PageContentHelper<
 	}
 
 	
-	public static boolean hasRequestAccessToAddData( HttpServletRequest request ) {
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_PRATILIPI_DATA );
+	public static boolean hasRequestAccessToAddData(
+			HttpServletRequest request, Pratilipi pratilipi ) {
+		
+		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_PRATILIPI_DATA ) ||
+				pratilipi.getAuthorId().equals( PratilipiHelper.get( request ).getCurrentUserId() );
 	}
 	
 	public static boolean hasRequestAccessToUpdateData(
 			HttpServletRequest request, Pratilipi pratilipi ) {
 		
 		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA ) ||
-				(
-					hasRequestAccessToAddData( request ) &&
-					pratilipi.getAuthorId().equals( PratilipiHelper.get( request ).getCurrentUserId() )
-				);
+				pratilipi.getAuthorId().equals( PratilipiHelper.get( request ).getCurrentUserId() );
 	}
 		
 	public static boolean hasRequestAccessToReadMetaData( HttpServletRequest request ) {
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_READ_PRATILIPI_META_DATA );
+		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_READ_PRATILIPI_DATA_META );
+	}
+	
+	public static boolean hasRequestAccessToUpdateMetaData( HttpServletRequest request ) {
+		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA_META );
 	}
 	
 }

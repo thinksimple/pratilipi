@@ -17,7 +17,7 @@ public class AuthorDataInputViewModalImpl extends AuthorDataInputView {
 	
 	public AuthorDataInputViewModalImpl() {
 		
-		modal.setTitle( "Add Author" );
+		modal.setTitle( "New Author" );
 		modal.add( authorDataInputView );
 				
 		initWidget( modal );
