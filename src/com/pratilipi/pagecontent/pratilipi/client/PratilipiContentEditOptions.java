@@ -4,8 +4,6 @@ import com.claymus.commons.client.ui.Dropdown;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -385,12 +383,11 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	        },
 			dataType: 'html',
 			progressall: function (e, data) {
+				$wnd.jQuery('#cover-image').css( 'opacity', '0.3' );
 	            var progress = parseInt(data.loaded / data.total * 100, 10);
-	            $wnd.jQuery('#progress .bar').css(
-	                'width',
-	                progress + '%'
-	            );
-	            $wnd.jQuery('.percent').html( progress + '%' );
+	            $wnd.jQuery('#progress').css( 'display', 'block' );
+	            $wnd.jQuery('#progress .bar').css( 'width', progress + '%' );
+	            $wnd.jQuery('#percent').html( progress + '%' );
 			},
 			done: function( e, data ) {
 				$wnd.document.location.reload();

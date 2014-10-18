@@ -37,20 +37,19 @@
 		<#-- Cover Image -->
 		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4" style="display: block; padding-top:25px;padding-bottom:15px;">
 			<a href="${ pratilipiHomeUrl }">
-				<img class="img-responsive" src="${ pratilipiCoverUrl }">
+				<img id="cover-image" class="img-responsive" src="${ pratilipiCoverUrl }">
 			</a>
 			<#if showEditOptions>
 				<span id="upload-coverImage-link">Upload Cover Image</span>
 				<div id="PageContent-Pratilipi-CoverImage-EditOptions" upload-url="${ pratilipiCoverUploadUrl }" ></div>
-				<div id="progress" style="position:relative; width:150px; border: 1px solid #ddd; padding: 1px; border-radius: 3px;">
-				    <div class="bar" style="width: 0%;height: 18px;background: red;"></div>
-				    <div class="percent">0%</div >
-				    <div id="status"></div>
-				</div>
 				<span id="upload-htmlContent-link">Upload HTML Content</span>
 				<div id="PageContent-Pratilipi-HtmlContent-EditOptions" upload-url="${ pratilipiContentHtmlUrl }" ></div>
 				<span id="upload-wordContent-link">Upload Word File</span>
 				<div id="PageContent-Pratilipi-WordContent-EditOptions" upload-url="${ pratilipiContentWordUrl }" ></div>
+				<div id="progress" class="col-lg-2 col-md-2 col-sm-3 col-xs-4" style="display: block; width:150px; z-index: 1; bottom: 120px;">
+				    <div class="bar" style="width: 0%;height: 20px;background: #ddd;"></div>
+				    <div id="percent" style="position: absolute; color: grey; display: inline-block; top: 1px;left: 40%"></div>
+				</div>
 			</#if>
 		</div>
 		
