@@ -11,7 +11,12 @@
 
 		<#-- Cover image and edit options -->
 		<div class="col-lg-offset-0 col-lg-2 col-md-offset-0 col-md-3 col-sm-offset-0 col-sm-3 col-xs-offset-3 col-xs-6" style="margin-top:25px; margin-bottom:15px;">
-			<img class="img-responsive" src="${ authorData.getAuthorImageUrl() }">
+			<div class="on-hover">
+				<img class="img-responsive" src="${ authorData.getAuthorImageUrl() }">
+				<#if showEditOption>
+					<div id="PageContent-Author-Image-EditOptions"></div>
+				</#if>
+			</div>
 			<div style="margin-top:10px; margin-bottom:10px; text-align:center">
 				<@social.vToolbar shareUrl=shareUrl/>
 			</div>
@@ -19,8 +24,8 @@
 			
 		<#-- Author data and edit options -->
 		<div class="col-lg-7 col-md-6 col-sm-9 col-xs-12" style="margin-bottom:15px;">
-			<h1 id="PageContent-Author-Name" style="text-align:center;">${ authorData.getName() }</h1>
-			<h3 id="PageContent-Author-NameEn" style="text-align:center; margin-top:10px;">${ authorData.getNameEn() }</h3>
+			<h1 id="PageContent-Author-Name" style="text-align:center;">${ authorData.getFullName() }</h1>
+			<h3 id="PageContent-Author-NameEn" style="text-align:center; margin-top:10px;">${ authorData.getFullNameEn() }</h3>
 
 			<div id="PageContent-Author-Summary" style="margin-top:20px; margin-bottom:10px;">
 				${ authorData.getSummary()! }

@@ -32,6 +32,15 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 }
 
 
+.on-hover .show-up {
+	display: none;
+}
+
+.on-hover:hover .show-up {
+	display: block;
+}
+
+
 
 /* START :: Claymus Overrides :: START */
 

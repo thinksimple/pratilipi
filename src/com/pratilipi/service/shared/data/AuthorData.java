@@ -102,6 +102,10 @@ public class AuthorData implements IsSerializable {
 		return firstName + ( lastName == null ? "" : " " + lastName );
 	}
 
+	public String getFullName() {
+		return penName == null ? getName() : getName() + " '" + penName + "'";
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -143,6 +147,10 @@ public class AuthorData implements IsSerializable {
 
 	public String getNameEn() {
 		return firstNameEn + ( lastNameEn == null ? "" : " " + lastNameEn );
+	}
+
+	public String getFullNameEn() {
+		return penNameEn == null ? getNameEn() : getNameEn() + " '" + penNameEn + "'";
 	}
 
 	public String getFirstNameEn() {

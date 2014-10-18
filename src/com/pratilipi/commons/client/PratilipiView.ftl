@@ -15,7 +15,7 @@
 				<#if pratilipiData.getAuthorData()??>
 					<#assign authorData=pratilipiData.getAuthorData()>
 					<a href="${ authorData.getPageUrl() }" style="display:block">
-						<i><small style="color:black !important;">-${ authorData.getName() }</small></i>
+						<i><small style="color:black !important;">-${ authorData.getFullName() }</small></i>
 					</a>
 				</#if>
 			</div>

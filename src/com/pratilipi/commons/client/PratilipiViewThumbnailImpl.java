@@ -89,7 +89,7 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 		titleAnchor.setHTML( "<strong style='color:black !important;'>" + pratilipiData.getTitle() + "</strong>" );
 		titleAnchor.setHref( pratilipiData.getPageUrl() );
 
-		authorAnchor.setHTML( "<i><small style='color:black !important;'>-" + authorData.getName() + "</small></i>" );
+		authorAnchor.setHTML( "<i><small style='color:black !important;'>-" + authorData.getFullName() + "</small></i>" );
 		authorAnchor.setHref( authorData.getPageUrl() );
 	}
 

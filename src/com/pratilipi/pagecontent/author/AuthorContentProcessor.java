@@ -78,13 +78,13 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		List<PratilipiData> storyDataList =
 				new ArrayList<>( storyListCursorTuple.getDataList().size() );
 		for( Pratilipi pratilipi : storyListCursorTuple.getDataList() )
-			bookDataList.add(
+			storyDataList.add(
 					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
 
 		List<PratilipiData> articleDataList =
 				new ArrayList<>( articleListCursorTuple.getDataList().size() );
 		for( Pratilipi pratilipi : articleListCursorTuple.getDataList() )
-			bookDataList.add(
+			articleDataList.add(
 					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
 
 		

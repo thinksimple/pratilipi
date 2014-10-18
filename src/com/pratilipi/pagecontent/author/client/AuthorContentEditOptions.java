@@ -1,6 +1,7 @@
 package com.pratilipi.pagecontent.author.client;
 
 import com.claymus.commons.client.ui.Dropdown;
+import com.claymus.commons.client.ui.FileUploadWithProgressBar;
 import com.claymus.commons.client.ui.formfield.RichTextInputFormField;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
@@ -44,6 +45,8 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 			RootPanel.get( "PageContent-Author-Summary" );
 	private final RootPanel authorSummaryEditOptionsPanel =
 			RootPanel.get( "PageContent-Author-Summary-EditOptions" );
+	private final RootPanel authorImageEditOptionsPanel =
+			RootPanel.get( "PageContent-Author-Image-EditOptions" );
 	
 	
 	private final Dropdown dropdown = new Dropdown();
@@ -58,9 +61,14 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 	private final Button saveAuthorSummaryButton = new Button( "Save" );
 	private final RichTextInputFormField authorSummaryInput = new RichTextInputFormField();
 
-	private AuthorData authorData = null;
-	
 
+	// Author image edit options widgets
+	private final FileUploadWithProgressBar authorImageUpload = new FileUploadWithProgressBar();
+	
+	
+	private AuthorData authorData = null;
+
+	
 	// New Pratilipi option widgets
 	private final Anchor newPratilipiAnchor = new Anchor( "New Pratilipi" );
 	private final Button savePratilipiDataButton = new Button( "Save" );
@@ -90,6 +98,14 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 		saveAuthorSummaryButton.setStyleName( "btn btn-success" );
 		
 
+		// Author image edit options widgets
+		authorImageUpload.setTitle( "Upload Picture" );
+		authorImageUpload.setStyleName( "show-up bg-gray bg-translucent" );
+		authorImageUpload.getElement().setAttribute( "style", "height:20px; margin-top:-20px;" );
+		authorImageEditOptionsPanel.add( authorImageUpload );
+		authorImageEditOptionsPanel.add( authorImageUpload.getProgressBar() );
+		
+		
 		// Decoding AuthorData
 		RootPanel rootPanel = RootPanel.get( "PageContent-Author-EncodedData" );
 		String authorDataEncodedStr = rootPanel.getElement().getInnerText();
@@ -142,10 +158,11 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 	
 	private void setAuthorData( AuthorData authorData ) {
 		this.authorData = authorData;
-		dropdown.setTitle( authorData.getName() );
-		authorNameEnPanel.getElement().setInnerText( authorData.getNameEn() );
+		dropdown.setTitle( authorData.getFullName() );
+		authorNameEnPanel.getElement().setInnerText( authorData.getFullNameEn() );
 		authorSummaryPanel.getElement().setInnerHTML( authorData.getSummary() );
 		authorSummaryInput.setHtml( authorData.getSummary() );
+		authorImageUpload.setUploadUrl( authorData.getAuthorImageUrl() );
 	}
 
 	@Override
