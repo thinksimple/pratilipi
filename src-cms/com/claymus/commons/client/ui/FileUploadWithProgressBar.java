@@ -36,7 +36,7 @@ public class FileUploadWithProgressBar extends Composite {
 		progressBar.getElement().setAttribute( "aria-valuemax", "100" );
 		progressBar.getElement().setAttribute( "style", "width:0%" );
 		
-		fileUpload.getElement().setAttribute( "data-sequential-uploads", "true" );
+		fileUpload.getElement().setAttribute( "name", "file[]" );
 		fileUpload.addChangeHandler( new ChangeHandler() {
 			
 			@Override
@@ -57,12 +57,6 @@ public class FileUploadWithProgressBar extends Composite {
 			
 		});
 		
-		
-		initializeFileUploader(
-				fileUpload.getElement(),
-				uploadAnchor.getElement(),
-				progress.getElement() );
-
 		
 		progress.add( progressBar );
 		panel.add( progress );
@@ -89,6 +83,7 @@ public class FileUploadWithProgressBar extends Composite {
 		
 		$wnd.jQuery( fileUpload ).fileupload({
 			dataType: 'html',
+			replaceFileInput: false,
 			progressall: function( e, data ) {
 				var completed = parseInt( data.loaded / data.total * 100, 10 );
 				$wnd.jQuery( progress ).children().first().css( 'width', completed + '%' );
@@ -104,5 +99,13 @@ public class FileUploadWithProgressBar extends Composite {
 	private native void setFileUploadUrl( Element fileUpload, String uploadUrl ) /*-{
 		$wnd.jQuery( fileUpload ).fileupload( 'option', 'url', uploadUrl );
 	}-*/;
+	
+	@Override
+	protected void onLoad() {
+		initializeFileUploader(
+				fileUpload.getElement(),
+				uploadAnchor.getElement(),
+				progress.getElement() );
+	}
 	
 }
