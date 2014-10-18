@@ -72,6 +72,11 @@ public class PratilipiFilter implements Filter {
 			response.setHeader( "Location", requestUri.replaceFirst( "/blog/", "/author-interview/" ) );
 
 			
+		} else if( requestUri.equals( "/about" ) ) { // Redirecting /about page to /about/pratilipi
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", "/about/pratilipi" );
+
+			
 		} else {
 			chain.doFilter( request, response );
 		}

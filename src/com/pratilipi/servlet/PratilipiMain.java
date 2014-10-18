@@ -41,6 +41,7 @@ import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
 import com.pratilipi.pagecontent.reader.ReaderContentFactory;
+import com.pratilipi.service.shared.data.AuthorData;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -143,31 +144,44 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.BOOK, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle(
+					pratilipi.getTitle() + " | " + 
+					( pratilipi.getTitleEn() == null ? "" : pratilipi.getTitleEn() + " | " ) +
+					page.getTitle() );
 
 		} else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.POEM, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle(
+					pratilipi.getTitle() + " | " + 
+					( pratilipi.getTitleEn() == null ? "" : pratilipi.getTitleEn() + " | " ) +
+					page.getTitle() );
 
 		} else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.STORY, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle(
+					pratilipi.getTitle() + " | " + 
+					( pratilipi.getTitleEn() == null ? "" : pratilipi.getTitleEn() + " | " ) +
+					page.getTitle() );
 
 		} else if( requestUri.startsWith( PratilipiHelper.getPageUrl( PratilipiType.ARTICLE, null ) ) ) {
 			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() + " | " + page.getTitle() );
+			page.setTitle(
+					pratilipi.getTitle() + " | " + 
+					( pratilipi.getTitleEn() == null ? "" : pratilipi.getTitleEn() + " | " ) +
+					page.getTitle() );
 
 
 		} else if( requestUri.startsWith( PratilipiHelper.URL_AUTHOR_PAGE ) ) {
 			Long authorId = Long.parseLong( requestUri.substring( PratilipiHelper.URL_AUTHOR_PAGE.length() ) );
 			Author author = dataAccessor.getAuthor( authorId );
-			String authorName = author.getFirstName();
-			if( author.getLastName() != null )
-				authorName += " " + author.getLastName();
-			page.setTitle( authorName + " | " + page.getTitle() );
+			AuthorData authorData = PratilipiHelper.get( request ).createAuthorData( author, null );
+			page.setTitle(
+					authorData.getFullName() + " | " +
+					authorData.getFullNameEn() + " | " +
+					page.getTitle() );
 		}
 		
 		
