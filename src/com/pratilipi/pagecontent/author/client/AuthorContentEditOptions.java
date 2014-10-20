@@ -121,7 +121,6 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 			}
 			
 		});
-		
 		authorImageUpload.getProgressBar().getElement().setAttribute(
 				"style",
 				authorImageUpload.getProgressBar().getElement().getAttribute( "style" )
@@ -258,6 +257,8 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 			pratilipiDataInputView.setVisible( true );
 		
 		} else if( event.getSource() == savePratilipiDataButton ) {
+			if( !pratilipiDataInputView.validateInputs() )
+				return;
 			pratilipiDataInputView.setEnabled( false );
 			savePratilipiDataButton.setEnabled( false );
 			

@@ -275,10 +275,11 @@ public class DataAccessorGaeImpl
 	public List<PratilipiGenre> getPratilipiGenreList( Long pratilipiId ) {
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( PratilipiGenreEntity.class ) )
+						.addFilter( "pratilipiId", pratilipiId )
 						.build();
 		
 		@SuppressWarnings("unchecked")
-		List<PratilipiGenre> pratilipiGenreEntityList = (List<PratilipiGenre>) query.execute();
+		List<PratilipiGenre> pratilipiGenreEntityList = (List<PratilipiGenre>) query.execute( pratilipiId );
 		return (List<PratilipiGenre>) pm.detachCopyAll( pratilipiGenreEntityList );
 	}
 	

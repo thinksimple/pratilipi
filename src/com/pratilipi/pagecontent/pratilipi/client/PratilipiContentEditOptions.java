@@ -1,6 +1,10 @@
 package com.pratilipi.pagecontent.pratilipi.client;
 
+import java.util.Date;
+
 import com.claymus.commons.client.ui.Dropdown;
+import com.claymus.commons.client.ui.FileUploadWithProgressBar;
+import com.claymus.commons.client.ui.formfield.RichTextInputFormField;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -15,13 +19,11 @@ import com.google.gwt.user.client.rpc.SerializationStreamFactory;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewModalImpl;
 import com.pratilipi.commons.shared.PratilipiState;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.GetLanguageListRequest;
@@ -36,33 +38,54 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
 	
+	
+	private final RootPanel titePanel =
+			RootPanel.get( "PageContent-Pratilipi-Title" );
+	private final RootPanel authorNamePanel =
+			RootPanel.get( "PageContent-Pratilipi-AuthorName" );
+	private final RootPanel summaryPanel =
+			RootPanel.get( "PageContent-Pratilipi-Summary" );
+	private final RootPanel summaryEditOptionsPanel =
+			RootPanel.get( "PageContent-Pratilipi-Summary-EditOptions" );
+	private final RootPanel coverImagePanel =
+			RootPanel.get( "PageContent-Pratilipi-CoverImage" );
+	private final RootPanel coverImageEditOptionsPanel =
+			RootPanel.get( "PageContent-Pratilipi-CoverImage-EditOptions" );
 
+
+	private final Dropdown dropdown = new Dropdown();
+
+
+	// Author data edit options widgets
+	private final Anchor editPratilipiDataAnchor = new Anchor( "Edit Info" );
+	private final Button savePratilipiDataButton = new Button( "Save" );
+	private final PratilipiDataInputView pratilipiDataInputView = new PratilipiDataInputViewModalImpl();
+	
+	private final Anchor editSummaryAnchor = new Anchor( "Edit Summary" );
+	private final Button saveSummaryButton = new Button( "Save" );
+	private final RichTextInputFormField summaryInput = new RichTextInputFormField();
+
+	
 	// Genre list edit options widgets
 	private GenreList genreList;
 	private Anchor genreAnchor;
 	private AddRemoveGenre addRemoveGenre;
 	
-	private PratilipiData pratilipiData;
-
-	
 	
 	// Cover image edit options widgets
-	private final FileUpload coverImageUpload = new FileUpload();
+	private final FileUploadWithProgressBar coverImageUpload = new FileUploadWithProgressBar();
 	
-	
-	// Word content edit options widgets
-	private final FileUpload wordContentUpload = new FileUpload();
-
-	
-	// Html content edit options widgets
-	private final FileUpload htmlContentUpload = new FileUpload();
-
 	
 	// Summary edit options widgets
-	private final Anchor editSummaryAnchor = new Anchor( "Edit Summary" );
-	private final Anchor saveSummaryAnchor = new Anchor( "Save Summary" );
 	private final Label savingSummaryLabel = new Label( "Saving Summary ..." );
 	private Button editPratilipiInfo;
+	
+	
+	private PratilipiData pratilipiData;
+
+
+	
+	
 	
 	// Publish message
 	RootPanel publishRootPanel;
@@ -72,14 +95,53 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	RootPanel unPublishRootPanel;
 	private Button unPublishButton;
 	
-	private PratilipiDataInputView pratilipiDataInputView;
-	
-	private String url = Window.Location.getPath();
-	private PratilipiType pratilipiType;
-
 	
 	public void onModuleLoad() {
 
+		// Author data edit options widgets
+		editPratilipiDataAnchor.addClickHandler( this );
+		savePratilipiDataButton.addClickHandler( this );
+		
+		editSummaryAnchor.addClickHandler( this );
+		saveSummaryButton.addClickHandler( this );
+		saveSummaryButton.setVisible( false );
+		
+		dropdown.add( editPratilipiDataAnchor );
+		pratilipiDataInputView.add( savePratilipiDataButton );
+		RootPanel.get().add( pratilipiDataInputView );
+		
+		dropdown.add( editSummaryAnchor );
+		summaryEditOptionsPanel.add( saveSummaryButton );
+		
+		savePratilipiDataButton.setStyleName( "btn btn-success" );
+		saveSummaryButton.setStyleName( "btn btn-success" );
+		
+
+		// Cover image edit options
+		coverImageUpload.setTitle( "<h1 class='bg-translucent' style='margin-top:-41px; text-align:right;'><span class='glyphicon glyphicon-camera' style='margin-right:10px;'></span></h1>" );
+		coverImageUpload.setAcceptedFileTypes( "image/jpg, image/jpeg, image/png, image/bmp" );
+		coverImageUpload.addValueChangeHandler( new ValueChangeHandler<String>( ) {
+			
+			@Override
+			public void onValueChange( ValueChangeEvent<String> event ) {
+				Element imgElement = coverImagePanel.getElement();
+				String src = imgElement.getAttribute( "src" );
+				if( src.indexOf( '?' ) != -1 )
+					src = src.substring( 0, src.indexOf( '?' ) );
+				src = src + "?" + new Date().getTime();
+				imgElement.setAttribute( "src", src );
+			}
+			
+		});
+		coverImageUpload.getProgressBar().getElement().setAttribute(
+				"style",
+				coverImageUpload.getProgressBar().getElement().getAttribute( "style" )
+				+ "margin-top:10px; margin-bottom:10px;" );
+		
+		coverImageEditOptionsPanel.add( coverImageUpload );
+		coverImageEditOptionsPanel.add( coverImageUpload.getProgressBar() );
+
+		
 		// Decoding PratilipiData
 		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
 		String pratilipiDataEncodedStr = rootPanel.getElement().getInnerText();
@@ -88,6 +150,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 					( (SerializationStreamFactory) pratilipiService )
 							.createStreamReader( pratilipiDataEncodedStr );
 			pratilipiData = (PratilipiData) streamReader.readObject();
+			setPratilipiData( pratilipiData );
 		} catch( SerializationException e ) {
 			Window.alert( e.getMessage() );
 		}
@@ -122,61 +185,6 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		RootPanel.get().add( addRemoveGenre );
 		
 		
-		// Cover image edit options
-		rootPanel = RootPanel.get( "PageContent-Pratilipi-CoverImage-EditOptions" );
-		if( rootPanel != null ) {
-			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
-			coverImageUpload.getElement().setAttribute( "data-url", uploadUrl );
-			coverImageUpload.getElement().setAttribute( "id", "upload-coverImage" );
-			coverImageUpload.getElement().setAttribute( "name", "myfile[]");
-			coverImageUpload.setVisible( false );
-			loadFileUploader( coverImageUpload.getElement() );
-
-			rootPanel.add( coverImageUpload );
-		}
-		
-		
-		// Html content edit options
-		rootPanel = RootPanel.get( "PageContent-Pratilipi-HtmlContent-EditOptions" );
-		if( rootPanel != null ) {
-			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
-			htmlContentUpload.getElement().setAttribute( "data-url", uploadUrl );
-			htmlContentUpload.getElement().setAttribute( "id", "upload-htmlContent" );
-			htmlContentUpload.getElement().setAttribute( "name", "myfile[]");
-			htmlContentUpload.setVisible( false );
-			loadFileUploader( htmlContentUpload.getElement() );
-
-			rootPanel.add( htmlContentUpload );
-		}
-		
-		
-		// Word content edit options
-		rootPanel = RootPanel.get( "PageContent-Pratilipi-WordContent-EditOptions" );
-		if( rootPanel != null ) {
-			String uploadUrl = rootPanel.getElement().getAttribute( "upload-url" );
-			wordContentUpload.getElement().setAttribute( "data-url", uploadUrl );
-			wordContentUpload.getElement().setAttribute( "id", "upload-wordContent" );
-			wordContentUpload.getElement().setAttribute( "name", "myfile[]");
-			wordContentUpload.setVisible( false );
-			loadFileUploader( wordContentUpload.getElement() );
-
-			rootPanel.add( wordContentUpload );
-		}
-		
-		
-		// Summary edit options
-		rootPanel = RootPanel.get( "PageContent-Pratilipi-Summary-EditOptions" );
-		if( rootPanel != null ) {
-			editSummaryAnchor.addClickHandler( this );
-			saveSummaryAnchor.addClickHandler( this );
-			saveSummaryAnchor.setVisible( false );
-			savingSummaryLabel.setVisible( false );
-	
-			rootPanel.add( editSummaryAnchor );
-			rootPanel.add( saveSummaryAnchor );
-			rootPanel.add( savingSummaryLabel );
-		}
-		
 		//Edit Book info.
 		RootPanel editInfoRootPanel = RootPanel.get( "PageContent-Pratilipi-Info-EditOption" );
 		if( editInfoRootPanel != null ) {
@@ -184,8 +192,6 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			editPratilipiInfo.addStyleName( "btn btn-primary hidden-xs" );
 			editPratilipiInfo.addClickHandler( this );
 			editInfoRootPanel.add( editPratilipiInfo );
-			
-			pratilipiDataInputView = new PratilipiDataInputViewModalImpl();
 			
 			//Add language list to book info edit modal
 			pratilipiService.getLanguageList(
@@ -241,51 +247,21 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	}
 
 	
+	private void setPratilipiData( PratilipiData pratilipiData ) {
+		this.pratilipiData = pratilipiData;
+		dropdown.setTitle( pratilipiData.getTitle() );
+		authorNamePanel.getElement().setInnerText( pratilipiData.getAuthorData().getFullName() );
+		summaryPanel.getElement().setInnerHTML( pratilipiData.getSummary() );
+		summaryInput.setHtml( pratilipiData.getSummary() );
+		coverImageUpload.setUploadUrl( pratilipiData.getCoverImageUploadUrl() );
+	}
+
 	@Override
 	public void onClick( ClickEvent event ) {
 		
 		if( event.getSource() == genreAnchor ) {
 			addRemoveGenre.setVisible( true );
 			
-		} else if( event.getSource() == editSummaryAnchor ) {
-			editSummaryAnchor.setVisible( false );
-			saveSummaryAnchor.setVisible( true );
-			loadEditor( RootPanel.get( "PageContent-Pratilipi-Summary" ).getElement() );
-			
-		} else if( event.getSource() == saveSummaryAnchor ) {
-			
-			if( getHtmlFromEditor( "PageContent-Pratilipi-Summary" ).trim().isEmpty() )
-				return;
-
-			
-			saveSummaryAnchor.setVisible( false );
-			savingSummaryLabel.setVisible( true );
-			
-			String pratilipiIdStr = url.substring( url.lastIndexOf( '/' ) + 1 );
-			Long pratilipiId = Long.parseLong( pratilipiIdStr );
-
-			PratilipiData pratilipiData = new PratilipiData();
-			pratilipiData.setId( pratilipiId );
-			pratilipiData.setSummary( getHtmlFromEditor( "PageContent-Pratilipi-Summary" ) );
-			
-			pratilipiService.savePratilipi(
-					new SavePratilipiRequest( pratilipiData ),
-					new AsyncCallback<SavePratilipiResponse>() {
-				
-				@Override
-				public void onSuccess( SavePratilipiResponse result ) {
-					Window.Location.reload();
-				}
-				
-				@Override
-				public void onFailure( Throwable caught ) {
-					Window.alert( caught.getMessage() );
-					savingSummaryLabel.setVisible( false );
-					saveSummaryAnchor.setVisible( true );
-				}
-				
-			});
-		
 		} else if( event.getSource() == editPratilipiInfo ) {
 			pratilipiDataInputView.setPratilipiData( pratilipiData );
 			pratilipiDataInputView.setVisible( true );

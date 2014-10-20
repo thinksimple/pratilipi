@@ -67,6 +67,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
+		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		dataModel.put( "pratilipiData", pratilipiData );
 		dataModel.put( "pratilipiUrl", "http://" + ClaymusHelper.getSystemProperty( "domain" ) + PratilipiHelper.getPageUrl( pratilipiData.getType(), pratilipiId ) );
 		dataModel.put( "pratilipiDataEncodedStr", SerializationUtil.encode( pratilipiData ) );
@@ -87,7 +88,8 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "pratilipiContentHtmlUrl", PratilipiHelper.getContentHtmlUrl( pratilipiType, pratilipi.getId() ) );
 		dataModel.put( "pratilipiContentWordUrl", PratilipiHelper.getContentWordUrl( pratilipiType, pratilipi.getId() ) );
 		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getAuthorId() );
-		
+		dataModel.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
+
 		dataModel.put( "showReviewedMessage",
 				userPratilipi != null && userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED );
 

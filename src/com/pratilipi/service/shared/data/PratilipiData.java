@@ -15,6 +15,7 @@ public class PratilipiData implements IsSerializable {
 
 	private String pageUrl;
 	private String coverImageUrl;
+	private String coverImageUploadUrl;
 	
 	private boolean isPublicDomain;
 	private boolean hasPublicDomain;
@@ -103,6 +104,14 @@ public class PratilipiData implements IsSerializable {
 
 	public void setCoverImageUrl( String coverImageUrl ) {
 		this.coverImageUrl = coverImageUrl;
+	}
+
+	public String getCoverImageUploadUrl() {
+		return coverImageUploadUrl;
+	}
+
+	public void setCoverImageUploadUrl( String coverImageUploadUrl ) {
+		this.coverImageUploadUrl = coverImageUploadUrl;
 	}
 
 	public boolean isPublicDomain() {

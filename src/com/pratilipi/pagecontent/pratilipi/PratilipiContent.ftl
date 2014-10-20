@@ -1,24 +1,10 @@
+<#setting time_zone="${ timeZone }">
 <#import "../../../../com/claymus/commons/client/ui/Social.ftl" as social>
 
 <!-- PageContent :: Pratilipi :: Start -->
-<script type="text/javascript">
-	window.onload = function(){
-		$("#upload-coverImage-link").on('click', function(e){
-			e.preventDefault();
-		    $("#upload-coverImage:hidden").trigger('click');
-		});
-		
-		$("#upload-htmlContent-link").on('click', function(e){
-			e.preventDefault();
-		    $("#upload-htmlContent:hidden").trigger('click');
-		});
-		
-		$("#upload-wordContent-link").on('click', function(e){
-			e.preventDefault();
-		    $("#upload-wordContent:hidden").trigger('click');
-		});
-	}
-</script>
+
+<#assign shareUrl="http://${ domain }${ pratilipiData.getPageUrl() }">
+
 <div class="container">
 	<#if pratilipiData.getState() != "PUBLISHED">
 		<div id="PageContent-Pratilipi-Publish" class="col-sm-12" style="text-align:center; margin-top: 10px;">
@@ -32,43 +18,31 @@
 			</span>
 		</div>
 	</#if>
+	
+
+
 	<div class="row">
 
 		<#-- Cover Image -->
-		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4" style="display: block; padding-top:25px;padding-bottom:15px;">
-			<a href="${ pratilipiHomeUrl }">
-				<img id="cover-image" class="img-responsive" src="${ pratilipiCoverUrl }">
-			</a>
+		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4" style="margin-top:25px; margin-bottom:15px;">
+			<img id="PageContent-Pratilipi-CoverImage" class="img-responsive" src="${ pratilipiCoverUrl }">
 			<#if showEditOptions>
-				<span id="upload-coverImage-link">Upload Cover Image</span>
-				<div id="PageContent-Pratilipi-CoverImage-EditOptions" upload-url="${ pratilipiCoverUploadUrl }" ></div>
-				<span id="upload-htmlContent-link">Upload HTML Content</span>
-				<div id="PageContent-Pratilipi-HtmlContent-EditOptions" upload-url="${ pratilipiContentHtmlUrl }" ></div>
-				<span id="upload-wordContent-link">Upload Word File</span>
-				<div id="PageContent-Pratilipi-WordContent-EditOptions" upload-url="${ pratilipiContentWordUrl }" ></div>
-				<div id="progress" class="col-lg-2 col-md-2 col-sm-3 col-xs-4" style="display: block; width:150px; z-index: 1; bottom: 120px;">
-				    <div class="bar" style="width: 0%;height: 20px;background: #ddd;"></div>
-				    <div id="percent" style="position: absolute; color: grey; display: inline-block; top: 1px;left: 40%"></div>
-				</div>
+				<div id="PageContent-Pratilipi-CoverImage-EditOptions"></div>
 			</#if>
+			<div style="margin-top:10px; margin-bottom:10px; text-align:center">
+				<@social.vToolbar shareUrl=shareUrl/>
+			</div>
 		</div>
 		
 		<#-- Title, Author Name, Genre List and Buttons -->
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-8" style="padding-bottom:15px;">
-			<h1 id="PageContent-Pratilipi-Title">
-				${ pratilipiData.getTitle() }
-			</h1>
-			<h4>
-				<a href="${ authorHomeUrl }">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></a>
-			</h4>
+			<h1 id="PageContent-Pratilipi-Title">${ pratilipiData.getTitle() }</h1>
+			<h4><a href="${ pratilipiData.getAuthorData().getPageUrl() }" id="PageContent-Pratilipi-AuthorName">${ pratilipiData.getAuthorData().getFullName() }</a></h4>
 			<h5 id="PageContent-Pratilipi-GenreList">
 				<#list pratilipiData.getGenreNameList() as genreName>
 					${ genreName }<#if genreName_has_next>,</#if>
 				</#list>
 			</h5>
-			<#if pratilipiUrl??>
-				<div style="margin-top:10px; margin-bottom:10px;"><@social.toolbar shareUrl=pratilipiUrl/></div>
-			</#if>
 			<button type="button" class="btn btn-success visible-xs-inline-block" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
 			<#if showReviewedMessage>
 				<button type="button" class="btn btn-info visible-xs-inline-block" onclick="window.location.href='#Reviews'">
