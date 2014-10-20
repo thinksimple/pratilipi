@@ -15,8 +15,7 @@ import com.claymus.data.access.Memcache;
 import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
+import com.claymus.service.shared.data.UserData;
 import com.google.apphosting.api.ApiProxy;
 
 @SuppressWarnings("serial")
@@ -212,12 +211,6 @@ public class ClaymusHelper implements Serializable {
 		return "Asia/Kolkata";
 	}
 	
-	@Deprecated
-	public static boolean isUserAdmin() {
-		UserService userService = UserServiceFactory.getUserService();
-		return userService.isUserLoggedIn() && userService.isUserAdmin();
-	}
-	
 	public boolean hasUserAccess( Access access ) {
 		return hasUserAccess( access.getId(), access.getDefault() );
 	}
@@ -275,22 +268,15 @@ public class ClaymusHelper implements Serializable {
 		return System.getProperty( appId + "." + propertyName );
 	}
 	
-	
-	public String createUserName( User user ) {
+	public UserData createUserData( User user ) {
+		UserData userData = new UserData();
 		
-		if( user.getFirstName() != null && user.getLastName() != null )
-			return user.getFirstName() + " " + user.getLastName();
-
-		else if( user.getFirstName() != null && user.getLastName() == null )
-			return user.getFirstName();
-
-		else if( user.getFirstName() == null && user.getLastName() != null )
-			return user.getLastName();
-
-		else
-			return user.getEmail();
-
+		userData.setId( user.getId() );
+		userData.setFirstName( user.getFirstName() );
+		userData.setLastName( user.getLastName() );
+		userData.setEmail( user.getEmail() );
+		
+		return userData;
 	}
-	
 	
 }

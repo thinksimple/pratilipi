@@ -25,8 +25,6 @@ import com.pratilipi.service.shared.data.PratilipiData;
 
 public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> {
 
-	public static final String ACCESS_ID_AUTHOR_UPDATE = "author_update";
-	
 	@Override
 	public String generateHtml(
 			AuthorContent authorContent,

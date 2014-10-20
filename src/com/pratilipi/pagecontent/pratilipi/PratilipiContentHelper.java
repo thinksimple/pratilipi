@@ -70,7 +70,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		dataAccessor.destroy();
 		
-		return author.getId().equals( PratilipiHelper.get( request ).getCurrentUserId() );
+		return PratilipiHelper.get( request ).getCurrentUserId().equals( author.getUserId() );
 	}
 	
 	public static boolean hasRequestAccessToUpdateData(
@@ -83,7 +83,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		dataAccessor.destroy();
 		
-		return author.getId().equals( PratilipiHelper.get( request ).getCurrentUserId() );
+		return PratilipiHelper.get( request ).getCurrentUserId().equals( author.getUserId() );
 	}
 		
 	public static boolean hasRequestAccessToReadMetaData( HttpServletRequest request ) {
@@ -92,6 +92,19 @@ public class PratilipiContentHelper extends PageContentHelper<
 	
 	public static boolean hasRequestAccessToUpdateMetaData( HttpServletRequest request ) {
 		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA_META );
+	}
+	
+	public static boolean hasRequestAccessToAddReview(
+			HttpServletRequest request, Pratilipi pratilipi ) {
+		
+		if( ! PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_PRATILIPI_REVIEW ) )
+			return false;
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		dataAccessor.destroy();
+		
+		return ! PratilipiHelper.get( request ).getCurrentUserId().equals( author.getUserId() );
 	}
 	
 }

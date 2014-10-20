@@ -20,17 +20,14 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
-import com.pratilipi.pagecontent.pratilipi.PratilipiContentProcessor;
+import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 
 public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> {
 
 	private static final Logger logger =
 			Logger.getLogger( ReaderContentProcessor.class.getName() );
 
-	public static final String ACCESS_ID_PRATILIPI_ADD = PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD;
-	public static final String ACCESS_ID_PRATILIPI_UPDATE = PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE;
 
-	
 	@Override
 	public String generateHtml( ReaderContent pratilipiContent, HttpServletRequest request )
 			throws UnexpectedServerException {
@@ -46,7 +43,6 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 		Long pratilipiId = Long.parseLong( pratilipiIdStr );
 		int pageNo = Integer.parseInt( pageNoStr );
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 
 		
 		// Fetching Pratilipi and Author
@@ -162,8 +158,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getAuthorId() );
 
 		dataModel.put( "showEditOptions",
-				( pratilipiHelper.getCurrentUserId() == pratilipi.getAuthorId() && pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_ADD, false ) )
-				|| pratilipiHelper.hasUserAccess( ACCESS_ID_PRATILIPI_UPDATE, false ) );
+				PratilipiContentHelper.hasRequestAccessToUpdateData( request, pratilipi ) );
 
 		
 		return super.processTemplate(

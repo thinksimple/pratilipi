@@ -20,7 +20,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	private ListBoxFormField languageList = new ListBoxFormField();
 	private CheckBoxFormField isPublicDomain = new CheckBoxFormField();
 	
-	private Long pratilipiId;
+	private PratilipiData pratilipiData = null;
 
 	
 	public PratilipiDataInputViewImpl() {
@@ -65,6 +65,9 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 		languageList.addItem(
 				languageData.getName() + " (" + languageData.getNameEn() + ")",
 				languageData.getId().toString() );
+
+		if( pratilipiData.getLanguageId().equals( languageData.getId() ) )
+			languageList.setValue( languageData.getId().toString() );
 	}
 		
 	@Override
@@ -89,7 +92,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	@Override
 	public PratilipiData getPratilipiData() {
 		PratilipiData pratilipiData = new PratilipiData();
-		pratilipiData.setId( pratilipiId );
+		pratilipiData.setId( this.pratilipiData.getId() );
 		
 		pratilipiData.setType( PratilipiType.valueOf( typeList.getValue() ) );
 		pratilipiData.setTitle( titleInput.getText() );
@@ -102,7 +105,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 
 	@Override
 	public void setPratilipiData( PratilipiData pratilipiData ) {
-		pratilipiId = pratilipiData.getId();
+		this.pratilipiData = pratilipiData;
 		
 		typeList.setValue( pratilipiData.getType().toString() );
 		titleInput.setText( pratilipiData.getTitle() );

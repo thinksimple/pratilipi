@@ -36,7 +36,7 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 	private ListBoxFormField languageList = new ListBoxFormField();
 	private TextInputFormField emailInput = new TextInputFormField();
 	
-	private Long authorId = null;
+	private AuthorData authorData = null;
 	
 	
 	public AuthorDataInputViewImpl(){
@@ -124,6 +124,9 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 		languageList.addItem(
 				languageData.getName() + " (" + languageData.getNameEn() + ")",
 				languageData.getId().toString() );
+		
+		if( authorData.getLanguageId().equals( languageData.getId() ) )
+			languageList.setValue( languageData.getId().toString() );
 	}
 		
 	@Override
@@ -155,8 +158,7 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 	@Override
 	public AuthorData getAuthorData() {
 		AuthorData authorData = new AuthorData();
-		
-		authorData.setId( this.authorId );
+		authorData.setId( this.authorData.getId() );
 		
 		authorData.setLanguageId( Long.parseLong( languageList.getValue() ) );
 		authorData.setFirstName( firstNameInput.getText() );
@@ -171,7 +173,7 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 
 	@Override
 	public void setAuthorData( AuthorData authorData ) {
-		this.authorId = authorData.getId();
+		this.authorData = authorData;
 
 		languageList.setValue( authorData.getLanguageId().toString() );
 		firstNameInput.setText( authorData.getFirstName() );

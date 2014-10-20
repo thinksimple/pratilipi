@@ -25,7 +25,7 @@
 
 		<#-- Cover Image -->
 		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4" style="margin-top:25px; margin-bottom:15px;">
-			<img id="PageContent-Pratilipi-CoverImage" class="img-responsive" src="${ pratilipiCoverUrl }">
+			<img id="PageContent-Pratilipi-CoverImage" class="img-responsive" src="${ pratilipiData.getCoverImageUrl() }">
 			<#if showEditOptions>
 				<div id="PageContent-Pratilipi-CoverImage-EditOptions"></div>
 			</#if>
@@ -46,20 +46,20 @@
 			</h5>
 			
 			<div id="PageContent-Pratilipi-Summary" style="margin-top:20px; margin-bottom:10px;">
-				${ pratilipi.getSummary()! }
+				${ pratilipiData.getSummary()! }
 			</div>
 			<#if showEditOptions>
 				<div id="PageContent-Pratilipi-Summary-EditOptions" style="text-align:right;"></div>
 			</#if>
 				
-			<button type="button" class="btn btn-success" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
+			<button type="button" class="btn btn-success" onclick="window.location.href='${ pratilipiData.getReaderPageUrl() }'">Read For Free</button>
 			<#if showReviewedMessage>
-				<button type="button" class="btn btn-info visible-xs-inline-block" onclick="window.location.href='#Reviews'">
+				<button type="button" class="btn btn-info" onclick="window.location.href='#Reviews'">
 					<span class="glyphicon glyphicon-ok"></span> Reviewed
 				</button>
 			</#if>
 			<#if showReviewOption>
-				<button type="button" class="btn btn-primary visible-xs-inline-block" onclick="window.location.href='#Review'">Review This ${ pratilipi.getType().getName() }</button>
+				<button type="button" class="btn btn-primary" onclick="window.location.href='#Review'">Review This ${ pratilipiData.getType().getName() }</button>
 			</#if>
 		</div>
 
@@ -74,7 +74,7 @@
 	<div id="Reviews" class="well" style="margin-top:25px;">
 		<#list reviewList as review >
 			<div class="hr-below">
-				<h4 style="display:inline-block">${ userIdNameMap[ review.getUserId()?string("#") ] } Says,</h4>
+				<h4 style="display:inline-block">${ userIdNameMap[ review.getUserId()?c ] } Says,</h4>
 				<span class="pull-right"> ${ review.getReviewDate()?date }</span>
 				<p>
 					${ review.getReview() }
@@ -83,7 +83,7 @@
 		</#list>
 		<#if showReviewOption>
 			<div id="Review">
-				<h4 style="display:inline-block">${ userName } Says,</h4>
+				<h4 style="display:inline-block">${ userData.getName() } Says,</h4>
 				<div id="PageContent-Pratilipi-Review"></div>
 				<div id="PageContent-Pratilipi-Review-AddOptions" style="padding-top:15px"></div>
 			</div>

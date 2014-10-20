@@ -19,7 +19,6 @@ import com.google.gwt.user.client.rpc.SerializationStreamFactory;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewModalImpl;
@@ -76,11 +75,6 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	
 	// Cover image edit options widgets
 	private final FileUploadWithProgressBar coverImageUpload = new FileUploadWithProgressBar();
-	
-	
-	// Summary edit options widgets
-	private final Label savingSummaryLabel = new Label( "Saving Summary ..." );
-	private Button editPratilipiInfo;
 	
 	
 	private PratilipiData pratilipiData;
@@ -180,36 +174,26 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		titePanel.add( dropdown );
 
 		
+		pratilipiService.getLanguageList(
+				new GetLanguageListRequest(),
+				new AsyncCallback<GetLanguageListResponse>() {
+
+			@Override
+			public void onSuccess( GetLanguageListResponse response ) {
+				for( LanguageData languageData : response.getLanguageList() )
+					pratilipiDataInputView.addLanguageListItem( languageData );
+			}
+
+			@Override
+			public void onFailure( Throwable caught ) {
+				Window.Location.reload();
+			}
+
+		});
+
 		
 		
-		//Edit Book info.
-		RootPanel editInfoRootPanel = RootPanel.get( "PageContent-Pratilipi-Info-EditOption" );
-		if( editInfoRootPanel != null ) {
-			editPratilipiInfo = new Button( "Edit " + pratilipiData.getType().getName() + " Info" );
-			editPratilipiInfo.addStyleName( "btn btn-primary hidden-xs" );
-			editPratilipiInfo.addClickHandler( this );
-			editInfoRootPanel.add( editPratilipiInfo );
-			
-			//Add language list to book info edit modal
-			pratilipiService.getLanguageList(
-		    		new GetLanguageListRequest(),
-		    		new AsyncCallback<GetLanguageListResponse>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-					
-				}
-
-				@Override
-				public void onSuccess( GetLanguageListResponse response ) {
-					for( LanguageData languageData : response.getLanguageList() )
-						pratilipiDataInputView.addLanguageListItem( languageData );
-				}
-				
-		    });
-			
-		}
+		
 		
 		publishRootPanel = RootPanel.get( "PageContent-Pratilipi-Publish" );
 		if( publishRootPanel != null ) {
@@ -326,10 +310,6 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			
 			
 			
-		} else if( event.getSource() == editPratilipiInfo ) {
-			pratilipiDataInputView.setPratilipiData( pratilipiData );
-			pratilipiDataInputView.setVisible( true );
-			RootPanel.get().add( pratilipiDataInputView );
 		} else if( event.getSource() == publishButton ) {
 			
 			//This is used to make a pratilipi entity published
@@ -404,43 +384,4 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		});
 	}
 	
-	private native void loadFileUploader( Element element ) /*-{
-		$wnd.jQuery( element ).fileupload({
-			add: function(e, data) {
-                var uploadErrors = [];
-                var acceptFileTypes = /^image\/(jpe?g|png|bmp)$/i;
-                if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
-                    uploadErrors.push('Not an accepted file type. Please upload ".jpg" file');
-                }
-                if( data.originalFiles[0]['size'] > 10000000 ) {
-                    uploadErrors.push('File size should be less than ');
-                }
-                if(uploadErrors.length > 0) {
-                    alert(uploadErrors.join("\n"));
-                } else {
-                    data.submit();
-                }
-	        },
-			dataType: 'html',
-			progressall: function (e, data) {
-				$wnd.jQuery('#cover-image').css( 'opacity', '0.3' );
-	            var progress = parseInt(data.loaded / data.total * 100, 10);
-	            $wnd.jQuery('#progress').css( 'display', 'block' );
-	            $wnd.jQuery('#progress .bar').css( 'width', progress + '%' );
-	            $wnd.jQuery('#percent').html( progress + '%' );
-			},
-			done: function( e, data ) {
-				$wnd.document.location.reload();
-			}
-		});
-	}-*/;
-
-	private native void loadEditor( Element element ) /*-{
-		$wnd.CKEDITOR.replace( element );
-	}-*/;
-	
-	private native String getHtmlFromEditor( String editorName ) /*-{
-		return $wnd.CKEDITOR.instances[ editorName ].getData();
-	}-*/;
-
 }

@@ -217,6 +217,11 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 
 	public PratilipiData createPratilipiData( Long pratilipiId ) {
+		return createPratilipiData( pratilipiId, false );
+	}
+	
+	public PratilipiData createPratilipiData(
+			Long pratilipiId, boolean includeMetaData ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -232,12 +237,19 @@ public class PratilipiHelper extends ClaymusHelper {
 		dataAccessor.destroy();
 		
 		
-		return createPratilipiData( pratilipi, language, author, genreList );
+		return createPratilipiData( pratilipi, language, author, genreList, includeMetaData );
 	}
 
 	public PratilipiData createPratilipiData(
 			Pratilipi pratilipi, Language language,
 			Author author, List<Genre> genreList ) {
+		
+		return createPratilipiData( pratilipi, language, author, genreList, false );
+	}
+	
+	public PratilipiData createPratilipiData(
+			Pratilipi pratilipi, Language language,
+			Author author, List<Genre> genreList, boolean includeMetaData ) {
 		
 		if( pratilipi == null )
 			return null;
@@ -252,7 +264,9 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setPageUrl( getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
 		pratilipiData.setCoverImageUrl( getCoverImage300Url( pratilipi.getType(), pratilipi.getId(), false ) );
 		pratilipiData.setCoverImageUploadUrl( getCoverImageUrl( pratilipi.getType(), pratilipi.getId(), true ) );
-		pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
+		pratilipiData.setReaderPageUrl( getReaderPageUrl( pratilipi.getType(), pratilipi.getId() ) );
+		if( includeMetaData )
+			pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
 		
 		pratilipiData.setTitle( pratilipi.getTitle() );
 		pratilipiData.setTitleEn( pratilipi.getTitleEn() );

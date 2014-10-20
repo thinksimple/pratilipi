@@ -186,6 +186,7 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 		authorNameEnPanel.getElement().setInnerText( authorData.getFullNameEn() );
 		authorSummaryPanel.getElement().setInnerHTML( authorData.getSummary() );
 		authorSummaryInput.setHtml( authorData.getSummary() );
+		authorDataInputView.setAuthorData( authorData );
 		authorImageUpload.setUploadUrl( authorData.getAuthorImageUrl() );
 	}
 
@@ -193,7 +194,6 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 	public void onClick( ClickEvent event ) {
 		
 		if( event.getSource() == editAuthorDataAnchor ) {
-			authorDataInputView.setAuthorData( authorData );
 			authorDataInputView.setVisible( true );
 		
 		} else if( event.getSource() == saveAuthorDataButton ) {

@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
-import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.shared.exception.IllegalArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
@@ -37,7 +36,6 @@ import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
 import com.pratilipi.pagecontent.genres.GenresContentProcessor;
 import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
-import com.pratilipi.pagecontent.pratilipi.PratilipiContentProcessor;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddLanguageRequest;
 import com.pratilipi.service.shared.AddLanguageResponse;
@@ -168,7 +166,9 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		return new SavePratilipiResponse(
 				PratilipiHelper.get( this.getThreadLocalRequest() )
-						.createPratilipiData( pratilipi.getId() ) );
+						.createPratilipiData(
+								pratilipi.getId(),
+								PratilipiContentHelper.hasRequestAccessToReadMetaData( this.getThreadLocalRequest() ) ) );
 	}
 	
 	@Override
@@ -204,16 +204,13 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 					InsufficientAccessException,
 					UnexpectedServerException {
 	
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( this.getThreadLocalRequest() );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		PratilipiContentData pratilipiContentData = request.getPratilipiContentData();
 		Pratilipi pratilipi =  dataAccessor.getPratilipi( pratilipiContentData.getPratilipiId() );
 				
 		try {
-			if ( ( pratilipiHelper.getCurrentUserId() == pratilipi.getAuthorId()
-					&& ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
-					|| ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
+			if ( PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
 				throw new InsufficientAccessException();
 			
 			pratilipi.setLastUpdated( new Date() );
@@ -465,9 +462,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public AddPublisherResponse addPublisher(AddPublisherRequest request)
 			throws InsufficientAccessException {
 		
-		if( ! ClaymusHelper.isUserAdmin() )
-			throw new InsufficientAccessException();
-		
 		PublisherData publisherData = request.getPublisher();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -580,15 +574,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public AddPratilipiGenreResponse addPratilipiGenre( AddPratilipiGenreRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
 		
-		PratilipiHelper pratilipiHelper =
-				PratilipiHelper.get( this.getThreadLocalRequest() );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 
-		if( ( pratilipiHelper.getCurrentUserId().equals( pratilipi.getAuthorId() )
-				&& ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
-				|| ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
+		if( PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
 			throw new InsufficientAccessException();
 		
 		
@@ -605,15 +595,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public DeletePratilipiGenreResponse deletePratilipiGenre( DeletePratilipiGenreRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
 
-		PratilipiHelper pratilipiHelper =
-				PratilipiHelper.get( this.getThreadLocalRequest() );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 
-		if( ( pratilipiHelper.getCurrentUserId().equals( pratilipi.getAuthorId() )
-				&& ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_ADD, false ) )
-				|| ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_UPDATE, false ) )
+		if( PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
 			throw new InsufficientAccessException();
 
 		
@@ -628,34 +614,33 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public AddUserPratilipiResponse addUserPratilipi( AddUserPratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
 		
-		UserPratilipiData userBookData = request.getUserPratilipi();
+		UserPratilipiData userPratilipiData = request.getUserPratilipi();
 
 		PratilipiHelper pratilipiHelper =
 				PratilipiHelper.get( this.getThreadLocalRequest() );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		Pratilipi book = dataAccessor.getPratilipi( userBookData.getPratilipiId() );
-		UserPratilipi userBook = dataAccessor.getUserPratilipi(
-				pratilipiHelper.getCurrentUserId(), book.getId() );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( userPratilipiData.getPratilipiId() );
+		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(
+				pratilipiHelper.getCurrentUserId(), pratilipi.getId() );
 		
-		if( pratilipiHelper.getCurrentUserId() == book.getAuthorId()
-				|| ( userBook != null && userBook.getReviewState() != UserReviewState.NOT_SUBMITTED )
-				|| ! pratilipiHelper.hasUserAccess( PratilipiContentProcessor.ACCESS_ID_PRATILIPI_REVIEW_ADD, false ) )
+		if( ( userPratilipi != null && userPratilipi.getReviewState() == UserReviewState.NOT_SUBMITTED )
+				|| !PratilipiContentHelper.hasRequestAccessToAddReview( this.getThreadLocalRequest(), pratilipi ) )
 			throw new InsufficientAccessException();
 
-		userBook = dataAccessor.newUserPratilipi();
-		userBook.setUserId( pratilipiHelper.getCurrentUserId() );
-		userBook.setPratilipiId( book.getId() );
-		userBook.setRating( userBookData.getRating() );
-		userBook.setReview( userBookData.getReview() );
-		userBook.setReviewState( UserReviewState.PENDING_APPROVAL );
-		userBook.setReviewDate( new Date() );
+		userPratilipi = dataAccessor.newUserPratilipi();
+		userPratilipi.setUserId( pratilipiHelper.getCurrentUserId() );
+		userPratilipi.setPratilipiId( pratilipi.getId() );
+		userPratilipi.setRating( userPratilipiData.getRating() );
+		userPratilipi.setReview( userPratilipiData.getReview() );
+		userPratilipi.setReviewState( UserReviewState.PENDING_APPROVAL );
+		userPratilipi.setReviewDate( new Date() );
 
-		userBook = dataAccessor.createOrUpdateUserPratilipi( userBook );
+		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		dataAccessor.destroy();
 		
-		return new AddUserPratilipiResponse( userBook.getId() );
+		return new AddUserPratilipiResponse( userPratilipi.getId() );
 	}
 	
 	@Override
