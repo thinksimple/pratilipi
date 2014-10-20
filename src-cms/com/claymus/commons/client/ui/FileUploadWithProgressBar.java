@@ -6,6 +6,10 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
@@ -14,7 +18,7 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FileUploadWithProgressBar extends Composite {
+public class FileUploadWithProgressBar extends Composite implements HasValueChangeHandlers<String> {
 
 	private final Panel panel = new FlowPanel();
 	
@@ -22,6 +26,8 @@ public class FileUploadWithProgressBar extends Composite {
 	private final Panel progressBar = new SimplePanel();
 	private final FileUpload fileUpload = new FileUpload();
 	private final Anchor uploadAnchor = new Anchor( "Select File" );
+	
+	private String uploadUrl;
 
 	
 	public FileUploadWithProgressBar() {
@@ -36,7 +42,6 @@ public class FileUploadWithProgressBar extends Composite {
 		progressBar.getElement().setAttribute( "aria-valuemax", "100" );
 		progressBar.getElement().setAttribute( "style", "width:0%" );
 		
-		fileUpload.getElement().setAttribute( "name", "file[]" );
 		fileUpload.addChangeHandler( new ChangeHandler() {
 			
 			@Override
@@ -64,48 +69,72 @@ public class FileUploadWithProgressBar extends Composite {
 		panel.add( uploadAnchor );
 		
 		initWidget( panel );
+		
+		
+		initializeFileUploader(
+				this,
+				fileUpload.getElement(),
+				progressBar.getElement() );
+		
 	}
 	
-	public void setTitle( String title ) {
-		uploadAnchor.setText( title );
+	
+	public HandlerRegistration addValueChangeHandler( ValueChangeHandler<String> handler ) {
+		return addHandler( handler, ValueChangeEvent.getType() );
+	}
+
+	public void setTitle( String html ) {
+		uploadAnchor.setHTML( html );
+	}
+	
+	public void setAcceptedFileTypes( String fileTypes ) {
+		fileUpload.getElement().setAttribute( "accept", fileTypes );
 	}
 	
 	public void setUploadUrl( String uploadUrl ) {
-		setFileUploadUrl( fileUpload.getElement(), uploadUrl );
+		this.uploadUrl = uploadUrl;
+		setFileUploadOption( fileUpload.getElement(), "url", uploadUrl );
 	}
 	
 	public Widget getProgressBar() {
 		return progress;
 	}
 	
+	private void fileUploadDone() {
+		progress.setVisible( false );
+		uploadAnchor.setVisible( true );
+		ValueChangeEvent.fire( this, uploadUrl );
+	}
+
+	private static void fileUploadDone( FileUploadWithProgressBar fileUploadWithProgressBar ) {
+		fileUploadWithProgressBar.fileUploadDone();
+	}
+
 	private native void initializeFileUploader(
-			Element fileUpload, Element anchor, Element progress ) /*-{
-		
+			FileUploadWithProgressBar fileUploadWithProgressBar, Element fileUpload, Element progressBar ) /*-{
+
+		if( typeof $wnd.fileUploadDone == "undefined" )
+			$wnd.fileUploadDone = $entry(@com.claymus.commons.client.ui.FileUploadWithProgressBar::fileUploadDone(Lcom/claymus/commons/client/ui/FileUploadWithProgressBar;));
+
 		$wnd.jQuery( fileUpload ).fileupload({
 			dataType: 'html',
 			replaceFileInput: false,
 			progressall: function( e, data ) {
-				var completed = parseInt( data.loaded / data.total * 100, 10 );
-				$wnd.jQuery( progress ).children().first().css( 'width', completed + '%' );
-				$wnd.jQuery( progress ).children().first().attr( "aria-valuenow", completed );
+				var progress = parseInt( data.loaded / data.total * 100, 10 );
+				$wnd.jQuery( progressBar ).css( 'width', progress + '%' );
+				$wnd.jQuery( progressBar ).attr( "aria-valuenow", progress );
 		    },
 		    done: function( e, data ) {
-	            $wnd.jQuery( progress ).hide();
-	            $wnd.jQuery( anchor ).show();
-	        }
+				$wnd.fileUploadDone( fileUploadWithProgressBar );
+				$wnd.jQuery( progressBar ).css( 'width', '0%' );
+				$wnd.jQuery( progressBar ).attr( "aria-valuenow", 0 );
+		    }
 		});
+		
 	}-*/;
 
-	private native void setFileUploadUrl( Element fileUpload, String uploadUrl ) /*-{
-		$wnd.jQuery( fileUpload ).fileupload( 'option', 'url', uploadUrl );
+	private native void setFileUploadOption( Element fileUpload, String option, String value ) /*-{
+		$wnd.jQuery( fileUpload ).fileupload( 'option', option, value );
 	}-*/;
-	
-	@Override
-	protected void onLoad() {
-		initializeFileUploader(
-				fileUpload.getElement(),
-				uploadAnchor.getElement(),
-				progress.getElement() );
-	}
-	
+
 }

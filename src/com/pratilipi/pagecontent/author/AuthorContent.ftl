@@ -11,12 +11,10 @@
 
 		<#-- Cover image and edit options -->
 		<div class="col-lg-offset-0 col-lg-2 col-md-offset-0 col-md-3 col-sm-offset-0 col-sm-3 col-xs-offset-3 col-xs-6" style="margin-top:25px; margin-bottom:15px;">
-			<div class="on-hover">
-				<img class="img-responsive" src="${ authorData.getAuthorImageUrl() }">
-				<#if showEditOption>
-					<div id="PageContent-Author-Image-EditOptions"></div>
-				</#if>
-			</div>
+			<img id="PageContent-Author-Image" class="img-responsive" src="${ authorData.getAuthorImageUrl() }">
+			<#if showEditOption>
+				<div id="PageContent-Author-Image-EditOptions"></div>
+			</#if>
 			<div style="margin-top:10px; margin-bottom:10px; text-align:center">
 				<@social.vToolbar shareUrl=shareUrl/>
 			</div>

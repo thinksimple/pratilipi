@@ -1,12 +1,17 @@
 package com.pratilipi.pagecontent.author.client;
 
+import java.util.Date;
+
 import com.claymus.commons.client.ui.Dropdown;
 import com.claymus.commons.client.ui.FileUploadWithProgressBar;
 import com.claymus.commons.client.ui.formfield.RichTextInputFormField;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.SerializationException;
@@ -45,6 +50,8 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 			RootPanel.get( "PageContent-Author-Summary" );
 	private final RootPanel authorSummaryEditOptionsPanel =
 			RootPanel.get( "PageContent-Author-Summary-EditOptions" );
+	private final RootPanel authorImagePanel =
+			RootPanel.get( "PageContent-Author-Image" );
 	private final RootPanel authorImageEditOptionsPanel =
 			RootPanel.get( "PageContent-Author-Image-EditOptions" );
 	
@@ -99,9 +106,27 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 		
 
 		// Author image edit options widgets
-		authorImageUpload.setTitle( "Upload Picture" );
-		authorImageUpload.setStyleName( "show-up bg-gray bg-translucent" );
-		authorImageUpload.getElement().setAttribute( "style", "height:20px; margin-top:-20px;" );
+		authorImageUpload.setTitle( "<h1 class='bg-translucent' style='margin-top:-41px; text-align:right;'><span class='glyphicon glyphicon-camera' style='margin-right:10px;'></span></h1>" );
+		authorImageUpload.setAcceptedFileTypes( "image/jpg, image/jpeg, image/png, image/bmp" );
+		authorImageUpload.addValueChangeHandler( new ValueChangeHandler<String>( ) {
+			
+			@Override
+			public void onValueChange( ValueChangeEvent<String> event ) {
+				Element imgElement = authorImagePanel.getElement();
+				String src = imgElement.getAttribute( "src" );
+				if( src.indexOf( '?' ) != -1 )
+					src = src.substring( 0, src.indexOf( '?' ) );
+				src = src + "?" + new Date().getTime();
+				imgElement.setAttribute( "src", src );
+			}
+			
+		});
+		
+		authorImageUpload.getProgressBar().getElement().setAttribute(
+				"style",
+				authorImageUpload.getProgressBar().getElement().getAttribute( "style" )
+				+ "margin-top:10px; margin-bottom:10px;" );
+		
 		authorImageEditOptionsPanel.add( authorImageUpload );
 		authorImageEditOptionsPanel.add( authorImageUpload.getProgressBar() );
 		
