@@ -153,7 +153,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				
 				
 			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-
+			
 		} finally {
 			dataAccessor.destroy();
 		}
@@ -168,7 +168,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		return new SavePratilipiResponse(
 				PratilipiHelper.get( this.getThreadLocalRequest() )
-						.createPratilipiData( pratilipi, null, null, null ) );
+						.createPratilipiData( pratilipi.getId() ) );
 	}
 	
 	@Override

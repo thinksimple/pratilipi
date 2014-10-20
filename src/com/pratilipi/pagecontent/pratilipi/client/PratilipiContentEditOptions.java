@@ -47,6 +47,8 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			RootPanel.get( "PageContent-Pratilipi-Summary" );
 	private final RootPanel summaryEditOptionsPanel =
 			RootPanel.get( "PageContent-Pratilipi-Summary-EditOptions" );
+	private final RootPanel genreListPanel =
+			RootPanel.get( "PageContent-Pratilipi-GenreList" );
 	private final RootPanel coverImagePanel =
 			RootPanel.get( "PageContent-Pratilipi-CoverImage" );
 	private final RootPanel coverImageEditOptionsPanel =
@@ -56,7 +58,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	private final Dropdown dropdown = new Dropdown();
 
 
-	// Author data edit options widgets
+	// Pratilipi data edit options widgets
 	private final Anchor editPratilipiDataAnchor = new Anchor( "Edit Info" );
 	private final Button savePratilipiDataButton = new Button( "Save" );
 	private final PratilipiDataInputView pratilipiDataInputView = new PratilipiDataInputViewModalImpl();
@@ -67,9 +69,9 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 
 	
 	// Genre list edit options widgets
-	private GenreList genreList;
-	private Anchor genreAnchor;
-	private AddRemoveGenre addRemoveGenre;
+	private final GenreList genreList = new GenreList();
+	private final Anchor genreAnchor = new Anchor( "Add/Remove Genre" );
+	private final AddRemoveGenre addRemoveGenre = new AddRemoveGenre();
 	
 	
 	// Cover image edit options widgets
@@ -98,7 +100,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	
 	public void onModuleLoad() {
 
-		// Author data edit options widgets
+		// Pratilipi data edit options widgets
 		editPratilipiDataAnchor.addClickHandler( this );
 		savePratilipiDataButton.addClickHandler( this );
 		
@@ -142,6 +144,24 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		coverImageEditOptionsPanel.add( coverImageUpload.getProgressBar() );
 
 		
+		// Genre list and edit options
+		genreAnchor.addClickHandler( this );
+		addRemoveGenre.addValueChangeHandler( new ValueChangeHandler<PratilipiData>() {
+			
+			@Override
+			public void onValueChange( ValueChangeEvent<PratilipiData> event ) {
+				genreList.set( event.getValue().getGenreNameList() );
+			}
+			
+		});
+		
+		genreListPanel.getElement().setInnerHTML( "" );
+		genreListPanel.add( genreList );
+
+		dropdown.add( genreAnchor );
+		RootPanel.get().add( addRemoveGenre );
+
+		
 		// Decoding PratilipiData
 		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
 		String pratilipiDataEncodedStr = rootPanel.getElement().getInnerText();
@@ -156,33 +176,10 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		}
 		
 		
-		// Genre list and edit options
-		genreList = new GenreList( pratilipiData.getGenreNameList() );
-		genreAnchor = new Anchor( "Add/Remove Genre" );
-		genreAnchor.addClickHandler( this );
-		addRemoveGenre = new AddRemoveGenre( pratilipiData );
-		addRemoveGenre.addValueChangeHandler( new ValueChangeHandler<PratilipiData>() {
-			
-			@Override
-			public void onValueChange(ValueChangeEvent<PratilipiData> event) {
-				genreList.set( event.getValue().getGenreNameList() );
-			}
-			
-		});
-				
-		Dropdown dropdown = new Dropdown( pratilipiData.getTitle() );
-		dropdown.add( genreAnchor );
+		titePanel.getElement().setInnerHTML( "" );
+		titePanel.add( dropdown );
 
 		
-		rootPanel = RootPanel.get( "PageContent-Pratilipi-Title" );
-		rootPanel.getElement().setInnerHTML( "" );
-		rootPanel.add( dropdown );
-
-		rootPanel = RootPanel.get( "PageContent-Pratilipi-GenreList" );
-		rootPanel.getElement().setInnerHTML( "" );
-		rootPanel.add( genreList );
-		
-		RootPanel.get().add( addRemoveGenre );
 		
 		
 		//Edit Book info.
@@ -251,16 +248,83 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		this.pratilipiData = pratilipiData;
 		dropdown.setTitle( pratilipiData.getTitle() );
 		authorNamePanel.getElement().setInnerText( pratilipiData.getAuthorData().getFullName() );
+		pratilipiDataInputView.setPratilipiData( pratilipiData );
 		summaryPanel.getElement().setInnerHTML( pratilipiData.getSummary() );
 		summaryInput.setHtml( pratilipiData.getSummary() );
+		genreList.set( pratilipiData.getGenreNameList() );
+		addRemoveGenre.setPratilipiData( pratilipiData );
 		coverImageUpload.setUploadUrl( pratilipiData.getCoverImageUploadUrl() );
 	}
 
 	@Override
 	public void onClick( ClickEvent event ) {
 		
-		if( event.getSource() == genreAnchor ) {
+		if( event.getSource() == editPratilipiDataAnchor ) {
+			pratilipiDataInputView.setVisible( true );
+		
+		} else if( event.getSource() == savePratilipiDataButton ) {
+			if( !pratilipiDataInputView.validateInputs() )
+				return;
+			pratilipiDataInputView.setEnabled( false );
+			pratilipiService.savePratilipi(
+					new SavePratilipiRequest( pratilipiDataInputView.getPratilipiData() ),
+					new AsyncCallback<SavePratilipiResponse>() {
+						
+						@Override
+						public void onSuccess( SavePratilipiResponse response ) {
+							setPratilipiData( response.getPratilipiData() );
+							pratilipiDataInputView.setVisible( false );
+							pratilipiDataInputView.setEnabled( true );
+						}
+						
+						@Override
+						public void onFailure( Throwable caught ) {
+							pratilipiDataInputView.setEnabled( true );
+						}
+						
+					});
+			
+		} else if( event.getSource() == editSummaryAnchor ) {
+			summaryPanel.getElement().setInnerHTML( "" );
+			summaryPanel.add( summaryInput );
+			saveSummaryButton.setVisible( true );
+		
+		} else if( event.getSource() == saveSummaryButton ) {
+			summaryInput.setEnabled( false );
+			saveSummaryButton.setEnabled( false );
+			
+			PratilipiData pratilipiData = new PratilipiData();
+			pratilipiData.setId( this.pratilipiData.getId() );
+			pratilipiData.setSummary( summaryInput.getHtml() );
+			
+			pratilipiService.savePratilipi(
+					new SavePratilipiRequest( pratilipiData ),
+					new AsyncCallback<SavePratilipiResponse>() {
+						
+						@Override
+						public void onSuccess( SavePratilipiResponse response ) {
+							summaryPanel.remove( summaryInput );
+							saveSummaryButton.setVisible( false );
+							setPratilipiData( response.getPratilipiData() );
+
+							summaryInput.setEnabled( true );
+							saveSummaryButton.setEnabled( true );
+						}
+						
+						@Override
+						public void onFailure( Throwable caught ) {
+							summaryInput.setEnabled( true );
+							saveSummaryButton.setEnabled( true );
+						}
+						
+					});
+		
+		} else if( event.getSource() == genreAnchor ) {
 			addRemoveGenre.setVisible( true );
+			
+			
+			
+			
 			
 		} else if( event.getSource() == editPratilipiInfo ) {
 			pratilipiDataInputView.setPratilipiData( pratilipiData );

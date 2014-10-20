@@ -34,16 +34,25 @@
 			</div>
 		</div>
 		
-		<#-- Title, Author Name, Genre List and Buttons -->
+		<#-- Title, Author Name, Genre List, Summary and Buttons -->
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-8" style="padding-bottom:15px;">
 			<h1 id="PageContent-Pratilipi-Title">${ pratilipiData.getTitle() }</h1>
 			<h4><a href="${ pratilipiData.getAuthorData().getPageUrl() }" id="PageContent-Pratilipi-AuthorName">${ pratilipiData.getAuthorData().getFullName() }</a></h4>
+			
 			<h5 id="PageContent-Pratilipi-GenreList">
 				<#list pratilipiData.getGenreNameList() as genreName>
 					${ genreName }<#if genreName_has_next>,</#if>
 				</#list>
 			</h5>
-			<button type="button" class="btn btn-success visible-xs-inline-block" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
+			
+			<div id="PageContent-Pratilipi-Summary" style="margin-top:20px; margin-bottom:10px;">
+				${ pratilipi.getSummary()! }
+			</div>
+			<#if showEditOptions>
+				<div id="PageContent-Pratilipi-Summary-EditOptions" style="text-align:right;"></div>
+			</#if>
+				
+			<button type="button" class="btn btn-success" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
 			<#if showReviewedMessage>
 				<button type="button" class="btn btn-info visible-xs-inline-block" onclick="window.location.href='#Reviews'">
 					<span class="glyphicon glyphicon-ok"></span> Reviewed
@@ -53,40 +62,6 @@
 				<button type="button" class="btn btn-primary visible-xs-inline-block" onclick="window.location.href='#Review'">Review This ${ pratilipi.getType().getName() }</button>
 			</#if>
 		</div>
-
-		<#-- Summary and Buttons -->
-		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
-			<div>
-				<div id="PageContent-Pratilipi-Summary">
-					<#if pratilipi.getSummary()?? >
-						${ pratilipi.getSummary() }
-					</#if>
-				</div>
-				<#if showEditOptions>
-					<div id="PageContent-Pratilipi-Summary-EditOptions"></div>
-				</#if>
-				
-				<#if showEditOptions>
-					<!-- Current is not author of this book -->
-					<button type="button" class="btn btn-success hidden-xs" onclick="window.location.href='${ pratilipiReaderUrl }'">Read This ${ pratilipi.getType().getName() }</button>
-					<!-- TODO: EDIT THIS BOOK URL -->
-					<button type="button" class="btn btn-primary hidden-xs" onclick="">Edit ${ pratilipi.getType().getName() } Content</button>
-					<div id="PageContent-Pratilipi-Info-EditOption" style="display: inline;"></div>
-				<#else>
-					<!-- Current is author of this book -->
-					<button type="button" class="btn btn-success hidden-xs" onclick="window.location.href='${ pratilipiReaderUrl }'">Read For Free</button>
-				</#if>
-				<#if showReviewedMessage>
-					<button type="button" class="btn btn-info hidden-xs" onclick="window.location.href='#Reviews'">
-						<span class="glyphicon glyphicon-ok"></span> Reviewed
-					</button>
-				</#if>
-				<#if showReviewOption>
-					<button type="button" class="btn btn-primary hidden-xs" onclick="window.location.href='#Review'">Review This ${ pratilipi.getType().getName() }</button>
-				</#if>
-			</div>
-		</div>
-		
 
 	</div> <#-- END of row -->
 
