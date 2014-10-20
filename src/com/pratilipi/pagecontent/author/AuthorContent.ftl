@@ -49,11 +49,11 @@
 				</tr>
 				<tr>
 					<td style="text-align:center;">Poems</td>
-					<td style="text-align:center;">${ storyDataList?size }</td>
+					<td style="text-align:center;">${ poemDataList?size }</td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">Stories</td>
-					<td style="text-align:center;">${ poemDataList?size }</td>
+					<td style="text-align:center;">${ storyDataList?size }</td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">Article</td>
