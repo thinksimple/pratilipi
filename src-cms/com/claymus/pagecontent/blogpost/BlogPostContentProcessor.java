@@ -37,7 +37,7 @@ public class BlogPostContentProcessor extends PageContentProcessor<BlogPostConte
 		if( blogPostContent.getId() == null ) // TODO: Hack for "New Blog" Page
 			dataModel.put( "pageUrl", "/" );
 		else
-			dataModel.put( "pageUrl", "/author-interview/" + blogPostContent.getId() );
+			dataModel.put( "pageUrl", "/blog/" + blogPostContent.getId() );
 		dataModel.put( "showEditOptions", showEditOptions );
 		
 		return super.processTemplate( dataModel, getTemplateName() );

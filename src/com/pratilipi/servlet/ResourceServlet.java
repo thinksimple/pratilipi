@@ -35,7 +35,7 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 		String url = request.getRequestURI();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		// Checking is user has access to upload Author Image
+		// Checking if user has access to upload Author Image
 		if( url.startsWith( PratilipiHelper.URL_AUTHOR_IMAGE ) ) {
 			String authorIdStr = url.substring( PratilipiHelper.URL_AUTHOR_IMAGE.length() );
 			Long authorId = Long.parseLong( authorIdStr );
@@ -47,7 +47,7 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 			}
 			
 			
-		// Checking is user has access to upload Cover Image
+		// Checking if user has access to upload Cover Image
 		} else {
 			for( PratilipiType pratilipiType : PratilipiType.values() ) {
 				if( url.startsWith( PratilipiHelper.getCoverImageUrl( pratilipiType, null, true ) ) ) {

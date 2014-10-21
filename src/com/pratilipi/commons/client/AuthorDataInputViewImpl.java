@@ -125,7 +125,7 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 				languageData.getName() + " (" + languageData.getNameEn() + ")",
 				languageData.getId().toString() );
 		
-		if( authorData.getLanguageId().equals( languageData.getId() ) )
+		if( authorData != null && authorData.getLanguageId().equals( languageData.getId() ) )
 			languageList.setValue( languageData.getId().toString() );
 	}
 		
@@ -158,7 +158,7 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 	@Override
 	public AuthorData getAuthorData() {
 		AuthorData authorData = new AuthorData();
-		authorData.setId( this.authorData.getId() );
+		authorData.setId( this.authorData == null ? null : this.authorData.getId() );
 		
 		authorData.setLanguageId( Long.parseLong( languageList.getValue() ) );
 		authorData.setFirstName( firstNameInput.getText() );

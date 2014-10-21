@@ -17,7 +17,7 @@
 <#else>
 
 	<div class="container">
-		<h1 id="PageContent-BlogPost-Title" page-content-id="${ (blogPostContent.getId()?c)! }">${ blogPostContent.getTitle() }</h1>
+		<h1 id="PageContent-BlogPost-Title" data-pageContentId="${ (blogPostContent.getId()?c)! }">${ blogPostContent.getTitle() }</h1>
 		<div style="margin-top:10px; margin-bottom:10px;"><@social.toolbar shareUrl=shareUrl/></div>
 		<div id="PageContent-BlogPost-Content" class="pageContent-BlogPost-Content">${ blogPostContent.getContent() }</div>
 		<#if showEditOptions>

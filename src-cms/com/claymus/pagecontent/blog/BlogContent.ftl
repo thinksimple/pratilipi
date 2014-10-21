@@ -2,7 +2,13 @@
 
 <!-- PageContent :: Blog :: Start -->
 
-<div id="PageContent-Blog" list-cursor="${ cursor }">
+<#if showEditOptions>
+	<div class="container alert alert-info" role="alert" style="text-align:center; margin-top:20px; margin-bottom:0px;">
+		<b>Click <a href="/blog/new?blogId=${ blogId?c }">here</a> to create new post.</b>
+	</div>
+</#if>
+
+<div id="PageContent-Blog" data-blogId="${ blogId?c }" data-cursor="${ cursor }">
 	<#list blogPostHtmlList as blogPostHtml>
 		${ blogPostHtml }
 	</#list>

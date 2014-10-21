@@ -48,8 +48,14 @@ public class BlogPostContentHelper extends PageContentHelper<
 		
 		if( blogPostContent == null )
 			blogPostContent = newBlogPostContent();
-		blogPostContent.setTitle( blogPostContentData.getTitle() );
-		blogPostContent.setContent( blogPostContentData.getContent() );
+	
+		if( blogPostContentData.hasTitle() )
+			blogPostContent.setTitle( blogPostContentData.getTitle() );
+		if( blogPostContentData.hasContent() )
+			blogPostContent.setContent( blogPostContentData.getContent() );
+		if( blogPostContentData.hasBlogId() )
+			blogPostContent.setBlogId( blogPostContentData.getBlogId() );
+		
 		return blogPostContent;
 	}
 

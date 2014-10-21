@@ -521,13 +521,13 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		DataListCursorTuple<PageContent> dataListCursorTuple =
-				dataAccessor.getPageContentList(
-						BlogPostContentHelper.newBlogPostContent().getClass(),
-						request.getCursor(), request.getResultCount() );
+		DataListCursorTuple<BlogPostContent> dataListCursorTuple =
+				dataAccessor.getBlogPostContentList(
+						request.getBlogId(), request.getCursor(),
+						request.getResultCount() );
 		dataAccessor.destroy();
 		
-		List<PageContent> blogPostContentList = dataListCursorTuple.getDataList();
+		List<BlogPostContent> blogPostContentList = dataListCursorTuple.getDataList();
 		List<String> blogPostHtmlList = new ArrayList<>( blogPostContentList.size() );
 		PageContentProcessor blogPostContentProcessor =
 				PageContentRegistry.getPageContentProcessor(

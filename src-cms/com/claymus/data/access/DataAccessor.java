@@ -10,6 +10,7 @@ import com.claymus.data.transfer.Role;
 import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
+import com.claymus.pagecontent.blogpost.BlogPostContent;
 
 public interface DataAccessor {
 
@@ -54,7 +55,7 @@ public interface DataAccessor {
 
 	List<PageContent> getPageContentList( Long pageId );
 
-	DataListCursorTuple<PageContent> getPageContentList( Class<? extends PageContent> pageContentClass, String cursorStr, int resultCount );
+	DataListCursorTuple<BlogPostContent> getBlogPostContentList( Long blogId, String cursorStr, int resultCount );
 
 	PageContent createOrUpdatePageContent( PageContent pageContent );
 	

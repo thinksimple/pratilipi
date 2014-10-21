@@ -194,15 +194,23 @@ public class ClaymusMain extends HttpServlet {
 		if( requestUri.equals( "/author-interviews" ) )
 			page.setTitle( "Author Interviews" );
 
-		else if( requestUri.equals( "/author-interview/new" ) )
-			page.setTitle( "New Author Interview" );
+		else if( requestUri.equals( "/blog" ) )
+			page.setTitle( "Blog" );
+
+		else if( requestUri.equals( "/blog/new" ) )
+			page.setTitle( "New Blog Post" );
 
 		else if( requestUri.startsWith( "/author-interview/" ) ) {
 			Long blogId = Long.parseLong( requestUri.substring( 18 ) );
 			BlogPostContent blogPostContent =
 					(BlogPostContent) dataAccessor.getPageContent( blogId );
 			page.setTitle( blogPostContent.getTitle() );
-			dataAccessor.destroy();
+
+		} else if( requestUri.startsWith( "/blog/" ) ) {
+			Long blogId = Long.parseLong( requestUri.substring( 6 ) );
+			BlogPostContent blogPostContent =
+					(BlogPostContent) dataAccessor.getPageContent( blogId );
+			page.setTitle( blogPostContent.getTitle() );
 
 		} else if( requestUri.equals( "/roleaccess" ) )
 			page.setTitle( "Access" );
@@ -217,36 +225,42 @@ public class ClaymusMain extends HttpServlet {
 			HttpServletRequest request ) throws IOException {
 
 		List<PageContent> pageContentList = new LinkedList<>();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		String requestUri = request.getRequestURI();
 
 		if( requestUri.equals( "/author-interviews" ) ) {
-			BlogContent blogContent = BlogContentHelper.newPostContent();
-			blogContent.setCursor( null );
+			BlogContent blogContent = (BlogContent) dataAccessor.getPageContent( 5197509039226880L );
 			blogContent.setPostCount( 5 );
-			blogContent.setLastUpdated( new Date() );
 			pageContentList.add( blogContent );
 		
-		} else if( requestUri.equals( "/author-interview/new" ) ) {
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			BlogPostContent blogPost = BlogPostContentHelper.newBlogPostContent();
-			blogPost.setTitle( "New Author Interview" );
-			blogPost.setContent( "Interview content goes here ..." );
-			blogPost.setLastUpdated( new Date() );
-			dataAccessor.destroy();
-			pageContentList.add( blogPost );
+		} else if( requestUri.equals( "/blog" ) ) {
+			BlogContent blogContent = (BlogContent) dataAccessor.getPageContent( 5683739602452480L );
+			blogContent.setPostCount( 5 );
+			pageContentList.add( blogContent );
 		
+		} else if( requestUri.equals( "/blog/new" ) ) {
+			BlogPostContent blogPost = BlogPostContentHelper.newBlogPostContent();
+			blogPost.setTitle( "New Post Blog" );
+			blogPost.setContent( "Blog post content goes here ..." );
+			blogPost.setLastUpdated( new Date() );
+			pageContentList.add( blogPost );
+			
 		} else if( requestUri.startsWith( "/author-interview/" ) ) {
-			Long blogId = Long.parseLong( requestUri.substring( 18 ) );
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			pageContentList.add( dataAccessor.getPageContent( blogId ) );
-			dataAccessor.destroy();
+			Long blogPostId = Long.parseLong( requestUri.substring( 18 ) );
+			pageContentList.add( dataAccessor.getPageContent( blogPostId ) );
+
+		} else if( requestUri.startsWith( "/blog/" ) ) {
+			Long blogPostId = Long.parseLong( requestUri.substring( 6 ) );
+			pageContentList.add( dataAccessor.getPageContent( blogPostId ) );
 
 		} else if( requestUri.equals( "/roleaccess" ) ) {
 			pageContentList.add( RoleAccessContentHelper.newRoleAccessContent() );
 
 		}
-		
+
+		dataAccessor.destroy();
+
 		return pageContentList;
 	}
 

@@ -29,7 +29,7 @@ public class BlogPostContent implements EntryPoint, ClickHandler {
 	private RootPanel editOptionsPanel =
 			RootPanel.get( "PageContent-BlogPost-EditOptions" );
 
-	private String pageConentIdStr = titlePanel.getElement().getAttribute( "page-content-id" );
+	private String pageConentIdStr = titlePanel.getElement().getAttribute( "data-pageContentId" );
 	
 	private TextInputFormField titleInput = new TextInputFormField();
 	private RichTextInputFormField contentInput = new RichTextInputFormField();
@@ -71,13 +71,19 @@ public class BlogPostContent implements EntryPoint, ClickHandler {
 			titlePanel.add( titleInput );
 			contentPanel.add( contentInput );
 
+			
 		} else if( event.getSource() == saveButton ) {
+			if( ! titleInput.validate() )
+				return;
+			
 			saveButton.setEnabled( false );
 
 			BlogPostContentData blogPostContentData = new BlogPostContentData();
 			
 			if( ! pageConentIdStr.isEmpty() )
 				blogPostContentData.setId( Long.parseLong( pageConentIdStr ) );
+			else
+				blogPostContentData.setBlogId( Long.parseLong( Window.Location.getParameter( "blogId" ) ) ); 
 			blogPostContentData.setTitle( titleInput.getText() );
 			blogPostContentData.setContent( contentInput.getHtml() );
 			
@@ -89,7 +95,7 @@ public class BlogPostContent implements EntryPoint, ClickHandler {
 				public void onSuccess(SavePageContentResponse response) {
 					
 					if( pageConentIdStr.isEmpty() ) {
-						Window.Location.replace( "/author-interview/" + response.getPageContentId() );
+						Window.Location.replace( "/blog/" + response.getPageContentId() );
 					
 					} else {
 						titlePanel.remove( titleInput );

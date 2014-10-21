@@ -65,7 +65,7 @@ public abstract class PageContentProcessor<T extends PageContent> {
 			
 			if( html == null ) {
 				html = generateHtml( pageContent, request );
-				memcache.put( key, html );
+				memcache.put( key, html, 60 * 60 * 1000 );
 			}
 
 		} else {

@@ -18,6 +18,9 @@ public class BlogPostContentEntity extends PageContentEntity implements BlogPost
 	@Persistent( column = "X_COL_1" )
 	private Text content;
 
+	@Persistent( column = "X_COL_2" )
+	private Long blogId;
+	
 	@NotPersistent
 	private Boolean preview;
 
@@ -40,6 +43,16 @@ public class BlogPostContentEntity extends PageContentEntity implements BlogPost
 	@Override
 	public void setContent( String html ) {
 		this.content = new Text( html );
+	}
+
+	@Override
+	public Long getBlogId() {
+		return blogId;
+	}
+
+	@Override
+	public void setBlogId( Long blogId ) {
+		this.blogId = blogId;
 	}
 
 	@Override

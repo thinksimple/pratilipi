@@ -95,8 +95,11 @@
                   <li><a href="/about/the-founding-readers">The Founding Readers</a></li>
                 </ul>
             </li>
-            <li class="dropdown">
+            <li>
               <a href="/author-interviews">Author Interviews</a>
+            </li>
+            <li>
+              <a href="/blog">Blog</a>
             </li>
             </ul>
           </div><!--/.nav-collapse -->

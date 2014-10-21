@@ -18,20 +18,22 @@ public class BlogContent implements EntryPoint {
 			GWT.create( ClaymusService.class );
 	
 	
+	private Long blogId = null;
 	private String cursor = null;
 	private int resultCount = 5;
 
 	public void onModuleLoad() {
 		
 		RootPanel rootPanel = RootPanel.get( "PageContent-Blog" );
-		cursor = rootPanel.getElement().getAttribute( "list-cursor" );
+		blogId = Long.parseLong( rootPanel.getElement().getAttribute( "data-blogId" ) );
+		cursor = rootPanel.getElement().getAttribute( "data-cursor" );
 		
 		InfiniteScrollPanel infiniteScrollPanel = new InfiniteScrollPanel() {
 			
 			@Override
 			protected void loadItems() {
 				claymusService.getBlogPostList(
-						new GetBlogListRequest( cursor, resultCount ),
+						new GetBlogListRequest( blogId, cursor, resultCount ),
 						new AsyncCallback<GetBlogListResponse>() {
 							
 							@Override

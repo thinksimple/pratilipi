@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.pagecontent.blogpost.BlogPostContent;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -37,7 +38,7 @@ public class PratilipiFilter implements Filter {
 		String action = request.getParameter( "action" );
 
 		if( !host.equals( "www.pratilipi.com" )
-				&& !host.equals( "mark-2p39.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-2p40.prod-pratilipi.appspot.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( "devo-pratilipi.appspot.com" )
 				&& !host.equals( "localhost" )
@@ -64,18 +65,29 @@ public class PratilipiFilter implements Filter {
 			if( author != null )
 				response.sendRedirect( PratilipiHelper.getAuthorPageUrl( author.getId() ) );
 			else
-				chain.doFilter( request, response ); 
+				chain.doFilter( request, response );
 		
-			
-		} else if( requestUri.startsWith( "/blog/" ) ) { // Redirecting /blog/* pages to /author-interview/*
-			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", requestUri.replaceFirst( "/blog/", "/author-interview/" ) );
-
 			
 		} else if( requestUri.equals( "/about" ) ) { // Redirecting /about page to /about/pratilipi
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", "/about/pratilipi" );
 
+			
+		} else if( requestUri.startsWith( "/blog/" ) ) { // Redirecting author interviews to /author-interview/*
+			String blogIdStr = requestUri.substring( 6 );
+			if( ! blogIdStr.equals( "new" ) ) {
+				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+				BlogPostContent blogPostContent = (BlogPostContent) dataAccessor.getPageContent( Long.parseLong( blogIdStr ) );
+				if( blogPostContent.getBlogId() == 5197509039226880L ) {
+					response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+					response.setHeader( "Location", "/author-interview/" + blogIdStr );
+				} else {
+					chain.doFilter( request, response );
+				}
+			} else {
+				chain.doFilter( request, response );
+			}
+			
 			
 		} else {
 			chain.doFilter( request, response );

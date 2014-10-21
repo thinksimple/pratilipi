@@ -6,7 +6,6 @@
 
 <#assign shareUrl="http://${ domain }${ pratilipiData.getPageUrl() }">
 
-
 	
 
 <div class="container">

@@ -29,6 +29,8 @@ import com.claymus.data.transfer.Role;
 import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
+import com.claymus.pagecontent.blogpost.BlogPostContent;
+import com.claymus.pagecontent.blogpost.gae.BlogPostContentEntity;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 
@@ -205,12 +207,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataListCursorTuple<PageContent> getPageContentList(
-			Class<? extends PageContent> pageContentClass,
-			String cursorStr, int resultCount ) {
+	public DataListCursorTuple<BlogPostContent> getBlogPostContentList(
+			Long blogId, String cursorStr, int resultCount ) {
 		
 		Query query =
-				new GaeQueryBuilder( pm.newQuery( pageContentClass ) )
+				new GaeQueryBuilder( pm.newQuery( BlogPostContentEntity.class ) )
+						.addFilter( "blogId", blogId )
 						.addOrdering( "creationDate", false )
 						.setRange( 0, resultCount )
 						.build();
@@ -223,11 +225,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		}
 		
 		@SuppressWarnings("unchecked")
-		List<PageContent> pageContentList = (List<PageContent>) query.execute();
-		Cursor cursor = JDOCursorHelper.getCursor( pageContentList );
+		List<BlogPostContent> blogPostContentList = (List<BlogPostContent>) query.execute( blogId );
+		Cursor cursor = JDOCursorHelper.getCursor( blogPostContentList );
 
-		return new DataListCursorTuple<PageContent>(
-				(List<PageContent>) pm.detachCopyAll( pageContentList ),
+		return new DataListCursorTuple<BlogPostContent>(
+				(List<BlogPostContent>) pm.detachCopyAll( blogPostContentList ),
 				cursor == null ? null : cursor.toWebSafeString() );
 	}
 	

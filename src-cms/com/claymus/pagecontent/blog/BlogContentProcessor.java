@@ -17,6 +17,7 @@ import com.claymus.pagecontent.PageContentProcessor;
 import com.claymus.pagecontent.PageContentRegistry;
 import com.claymus.pagecontent.blogpost.BlogPostContent;
 import com.claymus.pagecontent.blogpost.BlogPostContentHelper;
+import com.claymus.pagecontent.blogpost.shared.BlogPostContentData;
 
 public class BlogContentProcessor extends PageContentProcessor<BlogContent> {
 
@@ -27,14 +28,14 @@ public class BlogContentProcessor extends PageContentProcessor<BlogContent> {
 			throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		DataListCursorTuple<PageContent> dataListCursorTuple =
-				dataAccessor.getPageContentList(
-						BlogPostContentHelper.newBlogPostContent().getClass(),
-						blogContent.getCursor(), blogContent.getPostCount() );
+		DataListCursorTuple<BlogPostContent> dataListCursorTuple =
+				dataAccessor.getBlogPostContentList(
+						blogContent.getId(), blogContent.getCursor(),
+						blogContent.getPostCount() );
 		dataAccessor.destroy();
 		
 		
-		List<PageContent> blogPostContentList = dataListCursorTuple.getDataList();
+		List<BlogPostContent> blogPostContentList = dataListCursorTuple.getDataList();
 		List<String> blogPostHtmlList = new ArrayList<>( blogPostContentList.size() );
 		PageContentProcessor blogPostContentProcessor =
 				PageContentRegistry.getPageContentProcessor(
@@ -48,7 +49,11 @@ public class BlogContentProcessor extends PageContentProcessor<BlogContent> {
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "blogPostHtmlList", blogPostHtmlList );
+		dataModel.put( "blogId", blogContent.getId() );
 		dataModel.put( "cursor", dataListCursorTuple.getCursor() );
+		dataModel.put( "showEditOptions", PageContentRegistry
+				.getPageContentHelper( BlogPostContentData.class )
+				.hasRequestAccessToAddContent( request ) );
 		
 		return super.processTemplate( dataModel, getTemplateName() );
 	}

@@ -14,6 +14,10 @@ public interface BlogPostContent extends PageContent {
 	
 	Boolean preview();
 	
+	Long getBlogId();
+	
+	void setBlogId( Long blogId );
+	
 	void setPreview( Boolean preview );
 	
 }
