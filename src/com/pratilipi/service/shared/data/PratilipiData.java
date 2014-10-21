@@ -75,6 +75,13 @@ public class PratilipiData implements IsSerializable {
 	private List<String> genreNameList;
 
 	
+	public PratilipiData() {}
+	
+	public PratilipiData( Long id ) {
+		this.id = id;
+	}
+	
+
 	public Long getId() {
 		return id;
 	}

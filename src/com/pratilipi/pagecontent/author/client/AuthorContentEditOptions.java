@@ -24,6 +24,7 @@ import com.pratilipi.commons.client.AuthorDataInputView;
 import com.pratilipi.commons.client.AuthorDataInputViewModalImpl;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewModalImpl;
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.GetLanguageListRequest;
@@ -174,6 +175,7 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 			@Override
 			public void onFailure( Throwable caught ) {
 				Window.Location.reload();
+				
 			}
 
 		});
@@ -264,6 +266,7 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 			
 			PratilipiData pratilipiData = pratilipiDataInputView.getPratilipiData();
 			pratilipiData.setAuthorId( authorData.getId() );
+			pratilipiData.setState( PratilipiState.DRAFTED );
 			pratilipiService.savePratilipi(
 					new SavePratilipiRequest( pratilipiData ),
 					new AsyncCallback<SavePratilipiResponse>() {

@@ -66,7 +66,7 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 				languageData.getName() + " (" + languageData.getNameEn() + ")",
 				languageData.getId().toString() );
 
-		if( pratilipiData.getLanguageId().equals( languageData.getId() ) )
+		if( pratilipiData != null && pratilipiData.getLanguageId().equals( languageData.getId() ) )
 			languageList.setValue( languageData.getId().toString() );
 	}
 		
@@ -92,7 +92,8 @@ public class PratilipiDataInputViewImpl extends PratilipiDataInputView {
 	@Override
 	public PratilipiData getPratilipiData() {
 		PratilipiData pratilipiData = new PratilipiData();
-		pratilipiData.setId( this.pratilipiData.getId() );
+		if( this.pratilipiData != null )
+			pratilipiData.setId( this.pratilipiData.getId() );
 		
 		pratilipiData.setType( PratilipiType.valueOf( typeList.getValue() ) );
 		pratilipiData.setTitle( titleInput.getText() );

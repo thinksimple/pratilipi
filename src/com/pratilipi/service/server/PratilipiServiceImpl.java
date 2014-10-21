@@ -88,8 +88,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	
 	@Override
 	public SavePratilipiResponse savePratilipi( SavePratilipiRequest request )
-			throws IllegalArgumentException, InsufficientAccessException,
-					UnexpectedServerException {
+			throws IllegalArgumentException, InsufficientAccessException {
 	
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -349,10 +348,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	}
 
 
-	/*
-	 * Owner Module: Author (PageContent)
-	 * API Version: 3.0
-	 */
 	@Override
 	public SaveAuthorResponse saveAuthor( SaveAuthorRequest request )
 			throws InsufficientAccessException {
@@ -625,7 +620,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(
 				pratilipiHelper.getCurrentUserId(), pratilipi.getId() );
 		
-		if( ( userPratilipi != null && userPratilipi.getReviewState() == UserReviewState.NOT_SUBMITTED )
+		if( ( userPratilipi != null && userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED )
 				|| !PratilipiContentHelper.hasRequestAccessToAddReview( this.getThreadLocalRequest(), pratilipi ) )
 			throw new InsufficientAccessException();
 

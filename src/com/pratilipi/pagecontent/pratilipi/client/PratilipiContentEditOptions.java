@@ -7,6 +7,7 @@ import com.claymus.commons.client.ui.FileUploadWithProgressBar;
 import com.claymus.commons.client.ui.formfield.RichTextInputFormField;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -52,6 +53,8 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			RootPanel.get( "PageContent-Pratilipi-CoverImage" );
 	private final RootPanel coverImageEditOptionsPanel =
 			RootPanel.get( "PageContent-Pratilipi-CoverImage-EditOptions" );
+	private final RootPanel publishPanel =
+			RootPanel.get( "PageContent-Pratilipi-Publish" );
 
 
 	private final Dropdown dropdown = new Dropdown();
@@ -73,24 +76,17 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	private final AddRemoveGenre addRemoveGenre = new AddRemoveGenre();
 	
 	
+	// Publish-Unpublish options widgets
+	private final Anchor publishAnchor = new Anchor( "here" );
+	private final Anchor unpublishAnchor = new Anchor( "Un-publish" );
+	
+	
 	// Cover image edit options widgets
 	private final FileUploadWithProgressBar coverImageUpload = new FileUploadWithProgressBar();
 	
 	
 	private PratilipiData pratilipiData;
 
-
-	
-	
-	
-	// Publish message
-	RootPanel publishRootPanel;
-	private Button publishButton;
-
-	// Un-publish message
-	RootPanel unPublishRootPanel;
-	private Button unPublishButton;
-	
 	
 	public void onModuleLoad() {
 
@@ -112,7 +108,31 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		savePratilipiDataButton.setStyleName( "btn btn-success" );
 		saveSummaryButton.setStyleName( "btn btn-success" );
 		
+		
+		// Genre list and edit options
+		genreAnchor.addClickHandler( this );
+		addRemoveGenre.addValueChangeHandler( new ValueChangeHandler<PratilipiData>() {
+			
+			@Override
+			public void onValueChange( ValueChangeEvent<PratilipiData> event ) {
+				genreList.set( event.getValue().getGenreNameList() );
+			}
+			
+		});
+		
+		genreListPanel.getElement().setInnerHTML( "" );
+		genreListPanel.add( genreList );
 
+		dropdown.add( genreAnchor );
+		RootPanel.get().add( addRemoveGenre );
+
+		
+		// Un-publish option widgets
+		publishAnchor.addClickHandler( this );
+		unpublishAnchor.addClickHandler( this );
+		dropdown.add( unpublishAnchor );
+
+		
 		// Cover image edit options
 		coverImageUpload.setTitle( "<h1 class='bg-translucent' style='margin-top:-41px; text-align:right;'><span class='glyphicon glyphicon-camera' style='margin-right:10px;'></span></h1>" );
 		coverImageUpload.setAcceptedFileTypes( "image/jpg, image/jpeg, image/png, image/bmp" );
@@ -136,24 +156,6 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		
 		coverImageEditOptionsPanel.add( coverImageUpload );
 		coverImageEditOptionsPanel.add( coverImageUpload.getProgressBar() );
-
-		
-		// Genre list and edit options
-		genreAnchor.addClickHandler( this );
-		addRemoveGenre.addValueChangeHandler( new ValueChangeHandler<PratilipiData>() {
-			
-			@Override
-			public void onValueChange( ValueChangeEvent<PratilipiData> event ) {
-				genreList.set( event.getValue().getGenreNameList() );
-			}
-			
-		});
-		
-		genreListPanel.getElement().setInnerHTML( "" );
-		genreListPanel.add( genreList );
-
-		dropdown.add( genreAnchor );
-		RootPanel.get().add( addRemoveGenre );
 
 		
 		// Decoding PratilipiData
@@ -191,40 +193,6 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 
 		});
 
-		
-		
-		
-		
-		publishRootPanel = RootPanel.get( "PageContent-Pratilipi-Publish" );
-		if( publishRootPanel != null ) {
-			
-			publishButton = new Button( "Publish This " + pratilipiData.getType().getName() );
-			publishButton.setStyleName( "btn btn-success" );
-			publishButton.addClickHandler( this );
-			publishButton.getElement().setAttribute( "style", "margin: 0px 0px 4px 15px");
-			
-			if( pratilipiData.getState() != null && pratilipiData.getState().equals( PratilipiState.PUBLISHED )) {
-				publishRootPanel.setVisible( false );
-			}
-			
-			publishRootPanel.add( publishButton );
-		}
-		
-		unPublishRootPanel = RootPanel.get( "PageContent-Pratilipi-Unpublish" );
-		if( unPublishRootPanel != null ) {
-			
-			unPublishButton = new Button( "Unpublish This " + pratilipiData.getType().getName() );
-			unPublishButton.setStyleName( "btn btn-danger" );
-			unPublishButton.addClickHandler( this );
-			unPublishButton.getElement().setAttribute( "style", "margin: 0px 0px 4px 15px");
-			
-			if( pratilipiData.getState() != null && pratilipiData.getState().equals( PratilipiState.DRAFTED )) {
-				unPublishRootPanel.setVisible( false );
-			}
-			
-			unPublishRootPanel.add( unPublishButton );
-		}
-
 	}
 
 	
@@ -237,6 +205,24 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		summaryInput.setHtml( pratilipiData.getSummary() );
 		genreList.set( pratilipiData.getGenreNameList() );
 		addRemoveGenre.setPratilipiData( pratilipiData );
+		if( pratilipiData.getState() == PratilipiState.PUBLISHED ) {
+			publishPanel.setVisible( false );
+			unpublishAnchor.setVisible( true );
+			unpublishAnchor.setText( "Un-Publish This " + pratilipiData.getType().getName() );
+		} else {
+			Element el1 = Document.get().createSpanElement();
+			Element el2 = Document.get().createSpanElement();
+			el1.setInnerText( "This " + pratilipiData.getType().getName() + " is not yet published ! Click " );
+			el2.setInnerText( " to publish it. " );
+			
+			publishPanel.setVisible( true );
+			publishPanel.clear();
+			publishPanel.getElement().removeAllChildren();
+			publishPanel.getElement().appendChild( el1 );
+			publishPanel.add( publishAnchor );
+			publishPanel.getElement().appendChild( el2 );
+			unpublishAnchor.setVisible( false );
+		}
 		coverImageUpload.setUploadUrl( pratilipiData.getCoverImageUploadUrl() );
 	}
 
@@ -246,6 +232,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		if( event.getSource() == editPratilipiDataAnchor ) {
 			pratilipiDataInputView.setVisible( true );
 		
+			
 		} else if( event.getSource() == savePratilipiDataButton ) {
 			if( !pratilipiDataInputView.validateInputs() )
 				return;
@@ -268,11 +255,13 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 						
 					});
 			
+			
 		} else if( event.getSource() == editSummaryAnchor ) {
 			summaryPanel.getElement().setInnerHTML( "" );
 			summaryPanel.add( summaryInput );
 			saveSummaryButton.setVisible( true );
 		
+			
 		} else if( event.getSource() == saveSummaryButton ) {
 			summaryInput.setEnabled( false );
 			saveSummaryButton.setEnabled( false );
@@ -303,85 +292,55 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 						
 					});
 		
+			
 		} else if( event.getSource() == genreAnchor ) {
 			addRemoveGenre.setVisible( true );
+
 			
-			
-			
-			
-			
-		} else if( event.getSource() == publishButton ) {
-			
-			//This is used to make a pratilipi entity published
-			publishButton.setEnabled( false );
-			PratilipiData updatedState = new PratilipiData();
-			updatedState.setId( pratilipiData.getId() );
-			updatedState.setState( PratilipiState.PUBLISHED );
-			updateStateRPC(publishButton, updatedState );
-		} else if( event.getSource() == unPublishButton ) {
-			
-			//This is used to make a pratilipi entity unpublished
-			unPublishButton.setEnabled( false );
-			PratilipiData updatedState = new PratilipiData();
-			updatedState.setId( pratilipiData.getId() );
-			updatedState.setState( PratilipiState.DRAFTED );
-			updateStateRPC(unPublishButton, updatedState );
-		} else {
-			
-			//This is used when save button is clicked.
-			if( ! pratilipiDataInputView.validateInputs() )
-				return;
-			
-			PratilipiData editedBook = pratilipiDataInputView.getPratilipiData();
-			pratilipiDataInputView.setEnabled( false );
+		} else if( event.getSource() == publishAnchor ) {
+			publishAnchor.setEnabled( false );
+			PratilipiData pratilipiData = new PratilipiData( this.pratilipiData.getId() );
+			pratilipiData.setState( PratilipiState.PUBLISHED );
 			pratilipiService.savePratilipi(
-					new SavePratilipiRequest( editedBook ),
-					new AsyncCallback<SavePratilipiResponse>(){
-	
-				@Override
-				public void onFailure(Throwable caught) {
-					pratilipiDataInputView.setEnabled( true );
-					Window.alert( caught.getMessage() );
-				}
-	
-				@Override
-				public void onSuccess( SavePratilipiResponse response ) {
-					Window.Location.reload();
-				}
-				
-			});
+					new SavePratilipiRequest( pratilipiData ),
+					new AsyncCallback<SavePratilipiResponse>() {
+
+						@Override
+						public void onSuccess( SavePratilipiResponse response ) {
+							publishAnchor.setEnabled( true );
+							setPratilipiData( response.getPratilipiData() );
+						}
+			
+						@Override
+						public void onFailure( Throwable caught ) {
+							Window.alert( caught.getMessage() );
+							publishAnchor.setEnabled( true );
+						}
+
+					});
+			
+		
+		} else if( event.getSource() == unpublishAnchor ) {
+			PratilipiData pratilipiData = new PratilipiData( this.pratilipiData.getId() );
+			pratilipiData.setState( PratilipiState.DRAFTED );
+			pratilipiService.savePratilipi(
+					new SavePratilipiRequest( pratilipiData ),
+					new AsyncCallback<SavePratilipiResponse>() {
+
+						@Override
+						public void onSuccess( SavePratilipiResponse response ) {
+							setPratilipiData( response.getPratilipiData() );
+						}
+
+						@Override
+						public void onFailure( Throwable caught ) {
+							// Do nothing
+						}
+
+					});
+		
 		}
 		
-	}
-	
-	private void updateStateRPC( final Button buttonClicked, final PratilipiData updatedState ) {
-		pratilipiService.savePratilipi(
-				new SavePratilipiRequest( updatedState ),
-				new AsyncCallback<SavePratilipiResponse>(){
-
-			@Override
-			public void onFailure(Throwable caught) {
-				buttonClicked.setEnabled( true );
-				Window.alert( caught.getMessage() );
-			}
-
-			@Override
-			public void onSuccess( SavePratilipiResponse response ) {
-				pratilipiData.setState( updatedState.getState() );
-				if( pratilipiData.getState().equals( PratilipiState.PUBLISHED) ) {
-					publishRootPanel.setVisible( false );
-					unPublishButton.setEnabled( true );
-					unPublishRootPanel.setVisible( true );
-				}
-				
-				if( pratilipiData.getState().equals( PratilipiState.DRAFTED) ) {
-					unPublishRootPanel.setVisible( false );
-					publishButton.setEnabled( true );
-					publishRootPanel.setVisible( true );
-				}
-			}
-			
-		});
 	}
 	
 }

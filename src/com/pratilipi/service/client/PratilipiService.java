@@ -41,10 +41,10 @@ import com.pratilipi.service.shared.SavePratilipiResponse;
 @RemoteServiceRelativePath("../service.pratilipi")
 public interface PratilipiService extends RemoteService {
 	
+	// API Version: 3.0; Owner Module: PratilipiContent;
 	SavePratilipiResponse savePratilipi(
 			SavePratilipiRequest request )
-			throws IllegalArgumentException, InsufficientAccessException,
-					UnexpectedServerException;
+			throws IllegalArgumentException, InsufficientAccessException;
 
 	GetPratilipiListResponse getPratilipiList(
 			GetPratilipiListRequest request );
@@ -63,6 +63,7 @@ public interface PratilipiService extends RemoteService {
 			throws InsufficientAccessException;
 
 
+	// API Version: 3.0; Owner Module: AuthorContent;
 	SaveAuthorResponse saveAuthor( SaveAuthorRequest request )
 			throws InsufficientAccessException;
 
@@ -83,9 +84,11 @@ public interface PratilipiService extends RemoteService {
 			throws IllegalArgumentException, InsufficientAccessException;
 
 
+	// API Version: 3.0; Owner Module: PratilipiContent;
 	AddPratilipiGenreResponse addPratilipiGenre( AddPratilipiGenreRequest request )
 			throws IllegalArgumentException, InsufficientAccessException;
 
+	// API Version: 3.0; Owner Module: PratilipiContent;
 	DeletePratilipiGenreResponse deletePratilipiGenre( DeletePratilipiGenreRequest request )
 			throws IllegalArgumentException, InsufficientAccessException;
 

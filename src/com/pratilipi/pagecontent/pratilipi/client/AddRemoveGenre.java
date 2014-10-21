@@ -82,7 +82,7 @@ public class AddRemoveGenre extends Composite implements HasValueChangeHandlers<
 		
 		int genreCount = genreDataList.size();
 		
-		Grid grid = new Grid( genreCount, 1 );
+		grid = new Grid( genreCount, 1 );
 		
 		for( int i = 0; i < genreCount; i++ ) {
 			final GenreData genreData = genreDataList.get( i );

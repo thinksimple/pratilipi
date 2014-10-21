@@ -1,3 +1,4 @@
+
 <#setting time_zone="${ timeZone }">
 <#import "../../../../com/claymus/commons/client/ui/Social.ftl" as social>
 
@@ -5,21 +6,12 @@
 
 <#assign shareUrl="http://${ domain }${ pratilipiData.getPageUrl() }">
 
-<div class="container">
-	<#if pratilipiData.getState() != "PUBLISHED">
-		<div id="PageContent-Pratilipi-Publish" class="col-sm-12" style="text-align:center; margin-top: 10px;">
-			<span class="alert alert-danger" role="alert" style="padding: 6px 10px;margin-bottom: 20px;">
-				This ${ pratilipiData.getType().getName() } is not published. Click this button to publish.
-			</span>
-		</div>
-		<div id="PageContent-Pratilipi-Unpublish" class="col-sm-12" style="text-align: center; margin-top: 10px; display: none;">
-			<span class="alert alert-success" role="alert" style="padding: 6px 10px;margin-bottom: 20px;">
-				This ${ pratilipiData.getType().getName() } is published. Click this button to mark it unpublished.
-			</span>
-		</div>
-	</#if>
+
 	
 
+<div class="container">
+
+	<div id="PageContent-Pratilipi-Publish" class="alert alert-danger" role="alert" style="text-align:center; margin-top:20px; margin-bottom:0px; display:none;"></div>
 
 	<div class="row">
 
