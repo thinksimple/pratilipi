@@ -21,6 +21,7 @@ import com.claymus.taskqueue.TaskQueue;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiState;
+import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -137,7 +138,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				pratilipi.setPageCount( pratilipiData.getPageCount() );
 			if( pratilipiData.hasState() ) {
 
-				if( pratilipiData.getState() == PratilipiState.PUBLISHED ) {
+				if( pratilipiData.getState() == PratilipiState.PUBLISHED && pratilipi.getType() == PratilipiType.BOOK ) {
 					if( pratilipi.getSummary() == null ) {
 						throw new IllegalArgumentException(
 								pratilipi.getType().getName() + " summary is missing. " +
@@ -209,7 +210,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		Pratilipi pratilipi =  dataAccessor.getPratilipi( pratilipiContentData.getPratilipiId() );
 				
 		try {
-			if ( PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
+			if( ! PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
 				throw new InsufficientAccessException();
 			
 			pratilipi.setLastUpdated( new Date() );

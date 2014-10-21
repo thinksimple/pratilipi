@@ -208,7 +208,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		if( pratilipiData.getState() == PratilipiState.PUBLISHED ) {
 			publishPanel.setVisible( false );
 			unpublishAnchor.setVisible( true );
-			unpublishAnchor.setText( "Un-Publish This " + pratilipiData.getType().getName() );
+			unpublishAnchor.setText( "Un-Publish this " + pratilipiData.getType().getName() );
 		} else {
 			Element el1 = Document.get().createSpanElement();
 			Element el2 = Document.get().createSpanElement();

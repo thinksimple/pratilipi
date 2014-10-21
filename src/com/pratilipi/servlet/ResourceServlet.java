@@ -21,6 +21,7 @@ import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.author.AuthorContentHelper;
+import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
@@ -34,21 +35,36 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 		String url = request.getRequestURI();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		// Author Image
+		// Checking is user has access to upload Author Image
 		if( url.startsWith( PratilipiHelper.URL_AUTHOR_IMAGE ) ) {
 			String authorIdStr = url.substring( PratilipiHelper.URL_AUTHOR_IMAGE.length() );
 			Long authorId = Long.parseLong( authorIdStr );
 			Author author = dataAccessor.getAuthor( authorId );
 			
-			if( ! AuthorContentHelper.hasRequestAccessToUpdateData( request, author ) ) {
-				response.setStatus( HttpServletResponse.SC_FORBIDDEN );
+			if( AuthorContentHelper.hasRequestAccessToUpdateData( request, author ) ) {
+				super.doPost( request, response );
 				return;
 			}
+			
+			
+		// Checking is user has access to upload Cover Image
+		} else {
+			for( PratilipiType pratilipiType : PratilipiType.values() ) {
+				if( url.startsWith( PratilipiHelper.getCoverImageUrl( pratilipiType, null, true ) ) ) {
+					String pratilipiIdStr = url.substring( PratilipiHelper.getCoverImageUrl( pratilipiType, null, true ).length() );
+					Long pratilipiId = Long.parseLong( pratilipiIdStr );
+					Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+					
+					if( PratilipiContentHelper.hasRequestAccessToUpdateData( request, pratilipi ) ) {
+						super.doPost( request, response );
+						return;
+					}
+				}
+			}
+			
 		}
 		
-		dataAccessor.destroy();
-		
-		super.doPost( request, response );
+		response.setStatus( HttpServletResponse.SC_FORBIDDEN );
 	}
 	
 	@Override
@@ -56,6 +72,7 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 		BlobEntry blobEntry = super.getBlobEntry( request );
 		String url = request.getRequestURI();
 
+		// Setting default image for Author, if missing.
 		if( blobEntry == null && url.startsWith( PratilipiHelper.URL_AUTHOR_IMAGE ) ) {
 			String fileName =
 					PratilipiHelper.URL_AUTHOR_IMAGE

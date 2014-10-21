@@ -11,7 +11,9 @@
 
 <div class="container">
 
-	<div id="PageContent-Pratilipi-Publish" class="alert alert-danger" role="alert" style="text-align:center; margin-top:20px; margin-bottom:0px; display:none;"></div>
+	<#if showEditOptions>
+		<div id="PageContent-Pratilipi-Publish" class="alert alert-danger" role="alert" style="text-align:center; margin-top:20px; margin-bottom:0px; display:none;"></div>
+	</#if>
 
 	<div class="row">
 
