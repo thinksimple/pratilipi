@@ -89,6 +89,16 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return userList.size() == 0 ? null : pm.detachCopy( userList.get( 0 ) );
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getUserList() {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( UserEntity.class ) )
+						.build();
+
+		return (List<User>) query.execute();
+	}
+	
 	@Override
 	public User createOrUpdateUser( User user ) {
 		return createOrUpdateEntity( user );

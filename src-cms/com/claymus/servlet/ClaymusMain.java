@@ -41,6 +41,7 @@ import com.claymus.pagecontent.blogpost.BlogPostContentHelper;
 import com.claymus.pagecontent.html.HtmlContent;
 import com.claymus.pagecontent.html.HtmlContentHelper;
 import com.claymus.pagecontent.roleaccess.RoleAccessContentHelper;
+import com.claymus.pagecontent.user.UserContentHelper;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -67,6 +68,7 @@ public class ClaymusMain extends HttpServlet {
 		PageContentRegistry.register( HtmlContentHelper.class );
 		PageContentRegistry.register( BlogContentHelper.class );
 		PageContentRegistry.register( BlogPostContentHelper.class );
+		PageContentRegistry.register( UserContentHelper.class );
 		PageContentRegistry.register( RoleAccessContentHelper.class );
 		
 		WEBSITE_WIDGET_REGISTRY.register( HeaderWidgetFactory.class );
@@ -257,7 +259,9 @@ public class ClaymusMain extends HttpServlet {
 		} else if( requestUri.equals( "/roleaccess" ) ) {
 			pageContentList.add( RoleAccessContentHelper.newRoleAccessContent() );
 
-		}
+		} else if( requestUri.equals( "/users" ) ) {
+			pageContentList.add( UserContentHelper.newUserContent() );
+		}	
 
 		dataAccessor.destroy();
 

@@ -275,6 +275,7 @@ public class ClaymusHelper implements Serializable {
 		userData.setFirstName( user.getFirstName() );
 		userData.setLastName( user.getLastName() );
 		userData.setEmail( user.getEmail() );
+		userData.setStatus( user.getStatus() );
 		
 		return userData;
 	}

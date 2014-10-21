@@ -19,6 +19,8 @@ public interface DataAccessor {
 	User getUser( Long id );
 
 	User getUserByEmail( String email );
+	
+	List<User> getUserList();
 
 	User createOrUpdateUser( User user );
 

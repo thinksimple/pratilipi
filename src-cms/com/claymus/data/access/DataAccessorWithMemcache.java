@@ -16,6 +16,7 @@ import com.claymus.pagecontent.blogpost.BlogPostContent;
 public class DataAccessorWithMemcache implements DataAccessor {
 	
 	private final static String PREFIX_USER = "User-";
+	private final static String PREFIX_USER_LIST = "UserList-";
 	private final static String PREFIX_ROLE = "Role-";
 	private final static String PREFIX_USER_ROLE_LIST = "UserRoleList-";
 	private final static String PREFIX_ROLE_ACCESS = "RoleAccess-";
@@ -63,10 +64,23 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	@Override
+	public List<User> getUserList() {
+		List<User> userList = memcache.get( PREFIX_USER_LIST );
+		if( userList == null ) {
+			userList = dataAccessor.getUserList();
+			memcache.put(
+					PREFIX_USER_LIST,
+					new ArrayList<>( userList ) );
+		}
+		return userList;
+	}
+	
+	@Override
 	public User createOrUpdateUser( User user ) {
 		user = dataAccessor.createOrUpdateUser( user );
 		memcache.put( PREFIX_USER + user.getId(), user );
 		memcache.put( PREFIX_USER + user.getEmail(), user );
+		memcache.remove( PREFIX_USER_LIST );
 		return user;
 	}
 
