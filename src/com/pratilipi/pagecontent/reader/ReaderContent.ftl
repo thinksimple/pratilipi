@@ -17,7 +17,9 @@
 			<#if showEditOptions>
 				<div id="PageContent-Pratilipi-Content-EditOptions"></div>
 			</#if>
+			<div id="PageContent-Pratilipi-Content-Fullscreen"></div>
 		</div>
+		<div id="PageContent-Pratilipi-Content-Fullscreen" style="margin-bottom:10px;"></div>
 
 	</div> <#-- END of row -->
 
@@ -30,23 +32,14 @@
 			</div>
 		</div>
 		
-		<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="padding:0px;">
-			<#if previousPageUrl??>
-				<button type="button" class="btn btn-default" onclick="window.location.href='${ previousPageUrl }'">
-					<span class="glyphicon glyphicon-chevron-left"></span>&nbsp;&nbsp;Previous
-				</button>
-			</#if>
-				
-			<#if nextPageUrl??>
-				<button type="button" class="btn btn-default pull-right" onclick="window.location.href='${ nextPageUrl }'">
-					Next&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
-				</button>
-			</#if>
-		</div>
-
+		<#if previousPageUrl?? || nextPageUrl??>
+			<div id="PageContent-Pratilipi-Content-Buttons" class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="padding:0px;"></div>
+		</#if>
 	</div> <#-- END of second row -->
 
 </div>
+
+<div id="PageContent-Reader-EncodedData" style="display:none;">${ pratilipiDataEncodedStr }</div>
 
 <script language="javascript" defer>
 	function disableselect(e){
@@ -79,9 +72,9 @@
 			}
 	    });
 	    
-		var $reader = $( '#PageContent-Pratilipi-Content' );
-		if( $reader.height() < 800 )
-			$reader.height( 800 ); 
+		//var $reader = $( '#PageContent-Pratilipi-Content' );
+		//if( $reader.height() < 800 )
+		//	$reader.height( 800 ); 
 		
 		$( '#PageContent-Pratilipi-Content' ).on("contextmenu",function(e){ return false; });
 			
@@ -99,6 +92,4 @@
 		}
 </style>
 
-<#if showEditOptions>
-	<script type="text/javascript" language="javascript" src="/pagecontent.reader/pagecontent.reader.nocache.js" defer></script>
-</#if>
+<script type="text/javascript" language="javascript" src="/pagecontent.reader/pagecontent.reader.nocache.js" defer></script>

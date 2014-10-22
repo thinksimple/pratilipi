@@ -25,6 +25,8 @@ import com.pratilipi.service.shared.GetPratilipiListRequest;
 import com.pratilipi.service.shared.GetPratilipiListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
+import com.pratilipi.service.shared.GetReaderContentRequest;
+import com.pratilipi.service.shared.GetReaderContentResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -55,7 +57,9 @@ public interface PratilipiService extends RemoteService {
 			throws IllegalArgumentException, InsufficientAccessException,
 					UnexpectedServerException;
 
-
+	GetReaderContentResponse getReaderContent( GetReaderContentRequest request )
+			throws IllegalArgumentException;
+	
 	AddLanguageResponse addLanguage( AddLanguageRequest request )
 			throws IllegalArgumentException, InsufficientAccessException;
 

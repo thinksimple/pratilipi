@@ -3,18 +3,26 @@ package com.pratilipi.pagecontent.reader.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.client.rpc.SerializationStreamFactory;
+import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
+import com.pratilipi.service.shared.GetReaderContentRequest;
+import com.pratilipi.service.shared.GetReaderContentResponse;
 import com.pratilipi.service.shared.SavePratilipiContentRequest;
 import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.data.PratilipiContentData;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 public class ReaderContent implements EntryPoint, ClickHandler {
 
@@ -26,14 +34,62 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 	private final Anchor editContentAnchor = new Anchor( "Edit Content" );
 	private final Anchor saveContentAnchor = new Anchor( "Save Content" );
 	private final Label savingContentLabel = new Label( "Saving Content ..." );
-
+	
+	//Full Screen button
+	private Button fullScreenButton = new Button();
+	private Button fullScreenExitButton = new Button();
+	
+	//Reader Div
+	private RootPanel readerRootPanel;
+	private Label readerContent = new Label();
+	
+	
+	//Previous and next buttons
+	private Button previousPageButton = new Button();
+	private Button nextPageButton = new Button();
 	
 	private String url = Window.Location.getPath();
+	private String pageNumber = Window.Location.getParameter( "page" );
+	
+	private PratilipiData pratilipiData = new PratilipiData();
+	private String pageContent;
 	
 	public void onModuleLoad() {
+		
+		readerRootPanel = RootPanel.get( "PageContent-Pratilipi-Content" );
+		
+		//FullScreen Logic
+		RootPanel fullScreenRootPanel = RootPanel.get( "PageContent-Pratilipi-Content-Fullscreen" );
+		fullScreenRootPanel.add( fullScreenButton );
+		fullScreenRootPanel.add( fullScreenExitButton );
+		
+		fullScreenButton.setHTML( "<span class=\"glyphicon glyphicon-resize-full\"></span>" );
+		fullScreenButton.setTitle( "Full Screen" );
+		fullScreenButton.addStyleName( "pull-right" );
+		fullScreenButton.getElement().getStyle().setMarginBottom( 5, Unit.PX );
+		fullScreenButton.addClickHandler( this );
+		
+		fullScreenExitButton.setHTML( "<span class=\"glyphicon glyphicon-resize-small\"></span>" );
+		fullScreenExitButton.setTitle( "Exit Full Screen" );
+		fullScreenExitButton.addClickHandler( this );
+		fullScreenExitButton.getElement().setAttribute( "style", 
+							" position : fixed; right: 10%; top: 10%; "
+							+ " display: none; z-index: 3; " );
+		
+		// Decoding PratilipiData
+		RootPanel rootPanel = RootPanel.get( "PageContent-Reader-EncodedData" );
+		String pratilipiDataEncodedStr = rootPanel.getElement().getInnerText();
+		try {
+			SerializationStreamReader streamReader =
+					( (SerializationStreamFactory) pratilipiService )
+							.createStreamReader( pratilipiDataEncodedStr );
+			pratilipiData = (PratilipiData) streamReader.readObject();
+		} catch( SerializationException e ) {
+			Window.alert( e.getMessage() );
+		}
 
 		// Content edit options
-		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-Content-EditOptions" );
+		rootPanel = RootPanel.get( "PageContent-Pratilipi-Content-EditOptions" );
 		if( rootPanel != null ) {
 			editContentAnchor.addClickHandler( this );
 			saveContentAnchor.addClickHandler( this );
@@ -44,6 +100,28 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 			rootPanel.add( saveContentAnchor );
 			rootPanel.add( savingContentLabel );
 		}
+		
+		RootPanel buttonRootPanel = RootPanel.get( "PageContent-Pratilipi-Content-Buttons" );
+		if( buttonRootPanel != null ) {
+			previousPageButton.setHTML( "<span class=\"glyphicon glyphicon-chevron-left\"></span>&nbsp;&nbsp;Previous" );
+			previousPageButton.addStyleName( "btn btn-default" );
+			previousPageButton.addClickHandler( this );
+			previousPageButton.getElement().setAttribute( "style", 
+					"position: fixed; left: 10%; top: 25%; z-index: 3;");
+			//Hide previous page button for first page.
+			if( pageNumber == null || pageNumber.equals( "1" ) )
+				previousPageButton.setVisible( false );
+			
+			nextPageButton.setHTML( "Next&nbsp;&nbsp;<span class=\"glyphicon glyphicon-chevron-right\"  ></span>" );
+			nextPageButton.addStyleName( "btn btn-default pull-right" );
+			nextPageButton.addClickHandler( this );
+			nextPageButton.getElement().setAttribute( "style", 
+					"position: fixed; right: 10%; top: 25%; z-index: 3;");
+			
+			buttonRootPanel.add( previousPageButton );
+			buttonRootPanel.add( nextPageButton );
+		}
+		
 
 	}
 
@@ -87,17 +165,132 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 				}
 				
 			});
+		} else if( event.getSource() == previousPageButton ) {
+			
+			previousPageButton.setEnabled( false );
+			nextPageButton.setEnabled( false );
+			String pageNoStr = Window.Location.getParameter( "page" );
+			Integer pageNo = pageNoStr == null ? 1 : Integer.parseInt( pageNoStr );
+			
+			if( pageNo == 1 ) {
+				Window.alert( "This is First page" );
+			}
+			else {
+				String currentUrl = Window.Location.getHref();
+				String newUrl;
+				Integer previousPage = pageNo - 1;
+				loadReaderContent( previousPage );
+				newUrl = currentUrl.substring( 0, currentUrl.indexOf( "=" )+1 ) + previousPage ;
+				pushState( newUrl );
+			}
+			
+			previousPageButton.setEnabled( true );
+			nextPageButton.setEnabled( true );
+			
+			if( !nextPageButton.isVisible() )
+				nextPageButton.setVisible( true );
+			
+			readerRootPanel.add( readerContent );
+			
+		} else if( event.getSource() == nextPageButton ) {
+			
+			nextPageButton.setEnabled( false );
+			previousPageButton.setEnabled( false );
+			String pageNoStr = Window.Location.getParameter( "page" );
+			Integer pageNo = pageNoStr == null ? 1 : Integer.parseInt( pageNoStr );
+			Integer nextPage = pageNo + 1;
+			
+			loadReaderContent( nextPage );
+			
+			//TODO : CHANGE THIS ASAP
+			//URL of next page.
+			String currentUrl = Window.Location.getHref();
+			String newUrl;
+			if( pageNoStr == null && currentUrl.indexOf( "?") == -1 ) {
+				newUrl = currentUrl + "?page=" + nextPage;
+			} else {
+				newUrl = currentUrl.substring( 0, currentUrl.indexOf( "?" ) ) + "?page=" + nextPage;
+			}
+			
+			pushState( newUrl );
+			previousPageButton.setEnabled( true );
+			nextPageButton.setEnabled( true );
+			
+			if( !previousPageButton.isVisible() )
+				previousPageButton.setVisible( true );
+			
+			readerRootPanel.add( readerContent );
+		} else if( event.getSource() == fullScreenButton ) {
+			RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-Content" );
+			rootPanel.addStyleName( "fullscreen-reader" );
+			fullScreenExitButton.setVisible( true );
+			fullScreenButton.setVisible( false );
+		} else if( event.getSource() == fullScreenExitButton ) {
+			RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-Content" );
+			rootPanel.removeStyleName( "fullscreen-reader" );
+			fullScreenExitButton.setVisible( false );
+			fullScreenButton.setVisible( true );
 		}
 		
 	}
 	
+	private void loadReaderContent( int pageNo ) {
+		if( pratilipiData.getPageCount() != null && pratilipiData.getPageCount() > 0 ) {
+			//TODO : REMOVE STATIC URL ASAP
+			String urlPrefix = "/resource." + pratilipiData.getType().getName().toLowerCase() + "-content/image/" + pratilipiData.getId();
+			pageContent = "<img style=\"width:100%;\" src=\"" + urlPrefix + "/" + pageNo + "\">";
+			readerRootPanel.getElement().setInnerHTML( pageContent );
 
+		} else {
+			pratilipiService.getReaderContent( 
+					new GetReaderContentRequest( pratilipiData.getId(), pageNo ), 
+					new AsyncCallback<GetReaderContentResponse>() {
+		
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert( caught.getMessage() );
+						}
+		
+						@Override
+						public void onSuccess(
+								GetReaderContentResponse result) {
+							readerRootPanel.getElement().setInnerHTML( result.getPageContent() );
+							if( result.isLastPage() )
+								nextPageButton.setVisible( false );
+						}
+					});
+		}
+			
+		if( pageNo == 1 )
+			previousPageButton.setVisible( false );
+
+		if( pratilipiData.getPageCount() != null && pageNo == pratilipiData.getPageCount() )
+			nextPageButton.setVisible( false );
+	}
+	
 	private native void loadEditor( Element element ) /*-{
 		$wnd.CKEDITOR.replace( element );
 	}-*/;
 	
 	private native String getHtmlFromEditor( String editorName ) /*-{
 		return $wnd.CKEDITOR.instances[ editorName ].getData();
+	}-*/;
+
+	private native void pushState( String newUrl ) /*-{
+		$wnd.history.pushState( {}, '', newUrl );
+	}-*/;
+
+	private native void fullScreen( Element element ) /*-{
+		var request;
+
+		request = element.requestFullScreen 
+						|| element.webkitRequestFullScreen 
+						|| element.mozRequestFullScreen 
+						|| element.msRequestFullScreen();
+
+		if(typeof request!="undefined" && request){
+			request.call( element );
+		}
 	}-*/;
 
 }

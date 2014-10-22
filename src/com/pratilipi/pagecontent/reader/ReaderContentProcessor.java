@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.claymus.commons.server.SerializationUtil;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
@@ -21,6 +22,7 @@ import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> {
 
@@ -135,6 +137,11 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 					pageContent = content.substring( startIndex, endIndex );
 			}
 		}
+		
+		//creating pratilipi data
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData(
+				pratilipiId, true );
 
 
 		// Creating data model required for template processing
@@ -159,6 +166,8 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 		dataModel.put( "showEditOptions",
 				PratilipiContentHelper.hasRequestAccessToUpdateData( request, pratilipi ) );
+		
+		dataModel.put( "pratilipiDataEncodedStr", SerializationUtil.encode( pratilipiData ) );
 
 		
 		return super.processTemplate(
