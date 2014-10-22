@@ -278,7 +278,7 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 		loadReaderContent( nextPage );
 		
 		//This is used to throw message when right arrow key is pushed on last page.
-		if( nextPageButton.isVisible() ) {
+		if( !nextPageButton.isVisible() ) {
 			Window.alert( "You have reached end of this " + pratilipiData.getType().getName() );
 		}
 		
