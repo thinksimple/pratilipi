@@ -6,6 +6,8 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.SerializationException;
@@ -107,7 +109,7 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 			previousPageButton.addStyleName( "btn btn-default" );
 			previousPageButton.addClickHandler( this );
 			previousPageButton.getElement().setAttribute( "style", 
-					"position: fixed; left: 10%; top: 25%; z-index: 3;");
+					"position: fixed; left: 10%; top: 25%;");
 			//Hide previous page button for first page.
 			if( pageNumber == null || pageNumber.equals( "1" ) )
 				previousPageButton.setVisible( false );
@@ -116,12 +118,25 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 			nextPageButton.addStyleName( "btn btn-default pull-right" );
 			nextPageButton.addClickHandler( this );
 			nextPageButton.getElement().setAttribute( "style", 
-					"position: fixed; right: 10%; top: 25%; z-index: 3;");
+					"position: fixed; right: 10%; top: 25%;");
 			
 			buttonRootPanel.add( previousPageButton );
 			buttonRootPanel.add( nextPageButton );
 		}
 		
+		//Attaching key down handler to body.
+		RootPanel.get().addDomHandler(new KeyDownHandler() {
+
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				if( event.isRightArrow()) {
+					onClickNextPageButton();
+				}
+				
+				if( event.isLeftArrow() ) {
+					onClickPreviousPageButton();
+				}
+			}}, KeyDownEvent.getType() );
 
 	}
 
@@ -167,59 +182,12 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 			});
 		} else if( event.getSource() == previousPageButton ) {
 			
-			previousPageButton.setEnabled( false );
-			nextPageButton.setEnabled( false );
-			String pageNoStr = Window.Location.getParameter( "page" );
-			Integer pageNo = pageNoStr == null ? 1 : Integer.parseInt( pageNoStr );
-			
-			if( pageNo == 1 ) {
-				Window.alert( "This is First page" );
-			}
-			else {
-				String currentUrl = Window.Location.getHref();
-				String newUrl;
-				Integer previousPage = pageNo - 1;
-				loadReaderContent( previousPage );
-				newUrl = currentUrl.substring( 0, currentUrl.indexOf( "=" )+1 ) + previousPage ;
-				pushState( newUrl );
-			}
-			
-			previousPageButton.setEnabled( true );
-			nextPageButton.setEnabled( true );
-			
-			if( !nextPageButton.isVisible() )
-				nextPageButton.setVisible( true );
-			
-			readerRootPanel.add( readerContent );
+			onClickPreviousPageButton();
 			
 		} else if( event.getSource() == nextPageButton ) {
 			
-			nextPageButton.setEnabled( false );
-			previousPageButton.setEnabled( false );
-			String pageNoStr = Window.Location.getParameter( "page" );
-			Integer pageNo = pageNoStr == null ? 1 : Integer.parseInt( pageNoStr );
-			Integer nextPage = pageNo + 1;
+			onClickNextPageButton();
 			
-			loadReaderContent( nextPage );
-			
-			//TODO : CHANGE THIS ASAP
-			//URL of next page.
-			String currentUrl = Window.Location.getHref();
-			String newUrl;
-			if( pageNoStr == null && currentUrl.indexOf( "?") == -1 ) {
-				newUrl = currentUrl + "?page=" + nextPage;
-			} else {
-				newUrl = currentUrl.substring( 0, currentUrl.indexOf( "?" ) ) + "?page=" + nextPage;
-			}
-			
-			pushState( newUrl );
-			previousPageButton.setEnabled( true );
-			nextPageButton.setEnabled( true );
-			
-			if( !previousPageButton.isVisible() )
-				previousPageButton.setVisible( true );
-			
-			readerRootPanel.add( readerContent );
 		} else if( event.getSource() == fullScreenButton ) {
 			RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-Content" );
 			rootPanel.addStyleName( "fullscreen-reader" );
@@ -249,6 +217,9 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 						@Override
 						public void onFailure(Throwable caught) {
 							Window.alert( caught.getMessage() );
+							
+							nextPageButton.setEnabled( true );
+							previousPageButton.setEnabled( true );
 						}
 		
 						@Override
@@ -257,6 +228,9 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 							readerRootPanel.getElement().setInnerHTML( result.getPageContent() );
 							if( result.isLastPage() )
 								nextPageButton.setVisible( false );
+							
+							nextPageButton.setEnabled( true );
+							previousPageButton.setEnabled( true );
 						}
 					});
 		}
@@ -266,6 +240,64 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 
 		if( pratilipiData.getPageCount() != null && pageNo == pratilipiData.getPageCount() )
 			nextPageButton.setVisible( false );
+	}
+
+	private void onClickPreviousPageButton() {
+
+		previousPageButton.setEnabled( false );
+		nextPageButton.setEnabled( false );
+		String pageNoStr = Window.Location.getParameter( "page" );
+		Integer pageNo = pageNoStr == null ? 1 : Integer.parseInt( pageNoStr );
+		
+		if( pageNo == 1 ) {
+			Window.alert( "This is starting of this " + pratilipiData.getType().getName() );
+		}
+		else {
+			String currentUrl = Window.Location.getHref();
+			String newUrl;
+			Integer previousPage = pageNo - 1;
+			loadReaderContent( previousPage );
+			newUrl = currentUrl.substring( 0, currentUrl.indexOf( "=" )+1 ) + previousPage ;
+			pushState( newUrl );
+		}
+
+		if( !nextPageButton.isVisible() )
+			nextPageButton.setVisible( true );
+		
+		readerRootPanel.add( readerContent );
+	}
+	
+	private void onClickNextPageButton() {
+		
+		nextPageButton.setEnabled( false );
+		previousPageButton.setEnabled( false );
+		String pageNoStr = Window.Location.getParameter( "page" );
+		Integer pageNo = pageNoStr == null ? 1 : Integer.parseInt( pageNoStr );
+		Integer nextPage = pageNo + 1;
+		
+		loadReaderContent( nextPage );
+		
+		//This is used to throw message when right arrow key is pushed on last page.
+		if( nextPageButton.isVisible() ) {
+			Window.alert( "You have reached end of this " + pratilipiData.getType().getName() );
+		}
+		
+		//TODO : CHANGE THIS ASAP
+		//URL of next page.
+		String currentUrl = Window.Location.getHref();
+		String newUrl;
+		if( pageNoStr == null && currentUrl.indexOf( "?") == -1 ) {
+			newUrl = currentUrl + "?page=" + nextPage;
+		} else {
+			newUrl = currentUrl.substring( 0, currentUrl.indexOf( "?" ) ) + "?page=" + nextPage;
+		}
+		
+		pushState( newUrl );
+		
+		if( !previousPageButton.isVisible() )
+			previousPageButton.setVisible( true );
+		
+		readerRootPanel.add( readerContent );
 	}
 	
 	private native void loadEditor( Element element ) /*-{
@@ -280,17 +312,5 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 		$wnd.history.pushState( {}, '', newUrl );
 	}-*/;
 
-	private native void fullScreen( Element element ) /*-{
-		var request;
-
-		request = element.requestFullScreen 
-						|| element.webkitRequestFullScreen 
-						|| element.mozRequestFullScreen 
-						|| element.msRequestFullScreen();
-
-		if(typeof request!="undefined" && request){
-			request.call( element );
-		}
-	}-*/;
 
 }
