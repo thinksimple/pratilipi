@@ -629,7 +629,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 
-		if( PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
+		if( ! PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
 			throw new InsufficientAccessException();
 		
 		
@@ -650,7 +650,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 
-		if( PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
+		if( ! PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
 			throw new InsufficientAccessException();
 
 		
