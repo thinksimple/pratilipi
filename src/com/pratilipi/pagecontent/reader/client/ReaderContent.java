@@ -6,6 +6,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Window;
@@ -136,6 +137,13 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 				if( event.isLeftArrow() ) {
 					onClickPreviousPageButton();
 				}
+				
+				if( event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE ){
+					RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-Content" );
+					rootPanel.removeStyleName( "fullscreen-reader" );
+					fullScreenExitButton.setVisible( false );
+					fullScreenButton.setVisible( true );
+				}
 			}}, KeyDownEvent.getType() );
 
 	}
@@ -185,8 +193,11 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 			onClickPreviousPageButton();
 			
 		} else if( event.getSource() == nextPageButton ) {
-			
-			onClickNextPageButton();
+			//This is used to throw message when right arrow key is pushed on last page.
+			if( !nextPageButton.isVisible() )
+				Window.alert( "You have reached end of this " + pratilipiData.getType().getName() );
+			else
+				onClickNextPageButton();
 			
 		} else if( event.getSource() == fullScreenButton ) {
 			RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-Content" );
@@ -276,11 +287,6 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 		Integer nextPage = pageNo + 1;
 		
 		loadReaderContent( nextPage );
-		
-		//This is used to throw message when right arrow key is pushed on last page.
-		if( !nextPageButton.isVisible() ) {
-			Window.alert( "You have reached end of this " + pratilipiData.getType().getName() );
-		}
 		
 		//TODO : CHANGE THIS ASAP
 		//URL of next page.

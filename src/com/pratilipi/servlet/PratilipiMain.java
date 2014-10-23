@@ -258,6 +258,9 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/books/gujarati" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, 5965057007550464L ) );
 		
+		else if( requestUri.equals( "/books/tamil" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, 6319546696728576L ) );
+		
 		else if( requestUri.equals( "/poems" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM ) );
 		
@@ -442,35 +445,35 @@ public class PratilipiMain extends ClaymusMain {
 			HttpServletRequest request ) throws IOException {
 		
 		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 5144374119759872L );
-		bookIdList.add( 5157903266742272L );
-		bookIdList.add( 5156048109305856L );
-		bookIdList.add( 6288435027378176L );
-		bookIdList.add( 6317853942743040L );
-		bookIdList.add( 4843865324388352L );
+		bookIdList.add( 6026535974731776L );
+		bookIdList.add( 6221184697892864L );
+		bookIdList.add( 6328816980983808L );
+		bookIdList.add( 5994268690743296L );
+		bookIdList.add( 5196828823781376L );
+		bookIdList.add( 5969765231230976L );
 
 		List<Long> poemIdList = new LinkedList<>();
-		poemIdList.add( 5749095851360256L );
-		poemIdList.add( 5724681378201600L );
-		poemIdList.add( 5659569942429696L );
-		poemIdList.add( 5760293099536384L );
-		poemIdList.add( 5665625309446144L );
-		poemIdList.add( 4792479396134912L );
+		poemIdList.add( 5705718560718848L );
+		poemIdList.add( 5834688107118592L );
+		poemIdList.add( 6292771602169856L );
+		poemIdList.add( 5355429349556224L );
+		poemIdList.add( 5193799529660416L );
+		poemIdList.add( 6044738583003136L );
 		
 		List<Long> storyIdList = new LinkedList<>();
-		storyIdList.add( 5079448978194432L );
+		storyIdList.add( 6174784018710528L );
 		storyIdList.add( 5674248798470144L );
-		storyIdList.add( 5174400772997120L );
+		storyIdList.add( 5737350726418432L );
+		storyIdList.add( 5726911808405504L );
 		storyIdList.add( 5642398931615744L );
 		storyIdList.add( 5660460074401792L );
-		storyIdList.add( 6212598789832704L );
 
 		
 		HomeContent homeContent = HomeContentFactory.newHomeContent();
 		homeContent.setBookIdList( bookIdList );
 		homeContent.setPoemIdList( poemIdList );
 		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 40 ) );
+		homeContent.setLastUpdated( new Date( 41 ) );
 		return homeContent;
 	}
 

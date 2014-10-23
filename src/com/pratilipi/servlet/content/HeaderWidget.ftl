@@ -52,6 +52,7 @@
                   <li><a href="/books">All</a></li>
                   <li><a href="/books/hindi">Hindi</a></li>
                   <li><a href="/books/gujarati">Gujarati</a></li>
+                  <li><a href="/books/tamil">Tamil</a></li>
                 </ul>
           	</li>
             <li class="dropdown">
