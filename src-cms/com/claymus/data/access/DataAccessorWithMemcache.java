@@ -13,6 +13,7 @@ import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.claymus.pagecontent.blogpost.BlogPostContent;
 
+@SuppressWarnings("serial")
 public class DataAccessorWithMemcache implements DataAccessor {
 	
 	private final static String PREFIX_USER = "User-";
@@ -21,7 +22,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private final static String PREFIX_USER_ROLE_LIST = "UserRoleList-";
 	private final static String PREFIX_ROLE_ACCESS = "RoleAccess-";
 	private final static String PREFIX_PAGE_CONTENT = "PageConent-";
-	private final static String PREFIX_PAGE_CONTENT_LIST = "PageConentList-";
 	
 	
 	private final DataAccessor dataAccessor;

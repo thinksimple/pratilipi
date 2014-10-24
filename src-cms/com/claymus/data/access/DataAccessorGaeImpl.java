@@ -34,6 +34,7 @@ import com.claymus.pagecontent.blogpost.gae.BlogPostContentEntity;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 
+@SuppressWarnings("serial")
 public class DataAccessorGaeImpl implements DataAccessor {
 
 	private static final Logger logger = 

@@ -1,5 +1,6 @@
 package com.claymus.data.access;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.claymus.data.transfer.EmailTemplate;
@@ -12,7 +13,7 @@ import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
 import com.claymus.pagecontent.blogpost.BlogPostContent;
 
-public interface DataAccessor {
+public interface DataAccessor extends Serializable {
 
 	User newUser();
 

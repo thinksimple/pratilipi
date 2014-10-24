@@ -60,12 +60,15 @@ public class PratilipiFilter implements Filter {
 		String requestUri = request.getRequestURI();
 		String action = request.getParameter( "action" );
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		
+		
 		if( redirections.get( requestUri ) != null ){
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
 		} else if( !host.equals( "www.pratilipi.com" )
-				&& !host.equals( "mark-3p1.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-3p2.prod-pratilipi.appspot.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( "devo-pratilipi.appspot.com" )
 				&& !host.equals( "localhost" )
@@ -83,8 +86,7 @@ public class PratilipiFilter implements Filter {
 			
 		} else if( action != null && action.equals( "login" ) ) { // Redirecting to profile page on login
 			
-			PratilipiHelper pratilipiHelper = PratilipiHelper.get( request ); 
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 
 			Long currentUserId = pratilipiHelper.getCurrentUserId();
 			Author author = dataAccessor.getAuthorByUserId( currentUserId );
@@ -98,7 +100,6 @@ public class PratilipiFilter implements Filter {
 		} else if( requestUri.startsWith( "/blog/" ) ) { // Redirecting author interviews to /author-interview/*
 			String blogIdStr = requestUri.substring( 6 );
 			if( ! blogIdStr.equals( "new" ) ) {
-				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 				BlogPostContent blogPostContent = (BlogPostContent) dataAccessor.getPageContent( Long.parseLong( blogIdStr ) );
 				if( blogPostContent.getBlogId() == 5197509039226880L ) {
 					response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
@@ -115,6 +116,8 @@ public class PratilipiFilter implements Filter {
 			chain.doFilter( request, response );
 		}
 		
+		
+		dataAccessor.destroy();
 	}
 
 }

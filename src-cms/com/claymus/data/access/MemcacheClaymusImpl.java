@@ -9,11 +9,11 @@ import java.util.logging.Logger;
 public class MemcacheClaymusImpl implements Memcache {
 
 	private static final Logger logger = 
-			Logger.getLogger( Memcache.class.getName() );
+			Logger.getLogger( MemcacheClaymusImpl.class.getName() );
 
-	private static final int cacheSize = 128;
+	private final int cacheSize = 128;
 	@SuppressWarnings("serial")
-	private static final Map<Object, Object> cache
+	private final Map<Object, Object> cache
 			= new LinkedHashMap<Object, Object>( 16, 0.75f, true ) {
 	
 		@Override
@@ -23,22 +23,14 @@ public class MemcacheClaymusImpl implements Memcache {
 	
 	};
 
-	public static int putCount = 0;
-	public static int hitCount = 0;
-	public static int missCount = 0;
-	
 	
 	@SuppressWarnings("unchecked")
 	public <K, T extends Serializable> T get( K key ) {
 		T value = (T) cache.get(key);
-
-		if( value != null )
-			hitCount++;
+		if( value == null )
+			logger.log( Level.INFO, "Cache Miss: " + key );
 		else
-			missCount++;
-		
-		logStats();
-
+			logger.log( Level.INFO, "Cache Hit: " + key );
 		return value;
 	}
 
@@ -46,16 +38,10 @@ public class MemcacheClaymusImpl implements Memcache {
 			K key, T value, long expirationDeltaMillis ) {
 
 		cache.put( key, value );
-		putCount++;
-
-		logStats();
 	}
 
 	public <K, T extends Serializable> void put( K key, T value ) {
-		cache.put(key, value);
-		putCount++;
-
-		logStats();
+		cache.put( key, value );
 	}
 
 	public <K> void remove( K key ) {
@@ -66,14 +52,4 @@ public class MemcacheClaymusImpl implements Memcache {
 		cache.clear();
 	}
 	
-	public void logStats() {
-		logger.log( Level.INFO, "Cache stats:\n"
-				+ "\tPut Count = " + putCount
-				+ "\tHit Count = " + hitCount
-				+ "\tMiss Count = " + missCount
-				+ "\tHit/Put = " + (double) hitCount / (double) putCount
-				+ "\tHit Ratio = " + (double) hitCount / (double) ( hitCount + missCount )
-				);
-	}
-
 }

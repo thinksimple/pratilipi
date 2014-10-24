@@ -1,5 +1,7 @@
 package com.claymus.data.access;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.claymus.commons.server.ClaymusHelper;
 
 public class DataAccessorFactory {
@@ -7,9 +9,9 @@ public class DataAccessorFactory {
 	private static final String GOOGLE_CLOUD_STORAGE_BUCKET =
 			ClaymusHelper.getSystemProperty( "blobservice.gcs.bucket" );
 
-	private static final Memcache cacheL1 = new MemcacheClaymusImpl();
-	private static final Memcache cacheL2 = new MemcacheGaeImpl();
-	private static BlobAccessor blobAccessor;
+	protected static final Memcache cacheL1 = new MemcacheClaymusImpl();
+	protected static final Memcache cacheL2 = new MemcacheGaeImpl();
+	private static BlobAccessor blobAccessor = new BlobAccessorGcsImpl( GOOGLE_CLOUD_STORAGE_BUCKET );
 	
 
 	public static Memcache getL1CacheAccessor() {
@@ -20,16 +22,24 @@ public class DataAccessorFactory {
 		return cacheL2;
 	}
 	
+	@Deprecated
 	public static DataAccessor getDataAccessor() {
 		return new DataAccessorWithMemcache( new DataAccessorGaeImpl(), cacheL2 );
 	}
 	
+	public static DataAccessor getDataAccessor( HttpServletRequest request ) {
+		DataAccessor dataAccessor = cacheL1.get( "DataAccessor-" + request.hashCode() );
+		if( dataAccessor == null ) {
+			dataAccessor = new DataAccessorGaeImpl();
+			dataAccessor = new DataAccessorWithMemcache( dataAccessor, cacheL2 );
+			dataAccessor = new DataAccessorWithMemcache( dataAccessor, new MemcacheClaymusImpl() );
+			cacheL1.put( "DataAccessor-" + request.hashCode(), dataAccessor );
+		}
+		return dataAccessor;
+	}
+	
 	public static BlobAccessor getBlobAccessor() {
-		if( blobAccessor == null )
-			blobAccessor = new BlobAccessorWithMemcache(
-					new BlobAccessorGcsImpl( GOOGLE_CLOUD_STORAGE_BUCKET ),
-					cacheL2 );
-		return blobAccessor;
+		return new BlobAccessorWithMemcache( blobAccessor, cacheL2 );
 	}
 	
 }
