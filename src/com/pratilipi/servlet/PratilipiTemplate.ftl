@@ -8,10 +8,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
-		<link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic&subset=devanagari,latin' rel='stylesheet' type='text/css'>
 
 		<link rel="stylesheet" href="//static.pratilipi.com/third-party/bootstrap-3.2.0/css/bootstrap.min.css">
 	
+		<script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.3/webfont.js"></script>
+		<script>
+			WebFont.load({
+				google: {
+					families: [ 'Noto+Sans:400,700,400italic,700italic:latin' ]
+				}
+			});
+		</script>
+
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" defer></script>
 		<script src="//static.pratilipi.com/third-party/bootstrap-3.2.0/js/bootstrap.min.js" defer></script>
 	
@@ -46,12 +54,12 @@
 		<![endif]-->
 	
 	
-		<script type="text/javascript" language="javascript" src="/theme.default/script.js" async></script>
-		<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
-	
 		<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
 		<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
 
+		<script type="text/javascript" language="javascript" src="/theme.default/script.js" async></script>
+		<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
+	
 		<#if domain == "devo.pratilipi.com">
 		
 			<script async>
