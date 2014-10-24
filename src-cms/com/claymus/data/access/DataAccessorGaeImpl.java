@@ -179,15 +179,39 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
 						.addFilter( "uri", uri )
-						.addOrdering( "creationDate", false )
-						.setRange( 0, 1 )
+						.addOrdering( "creationDate", true )
 						.build();
 		
 		@SuppressWarnings("unchecked")
 		List<Page> pageList = (List<Page>) query.execute( uri );
+		if( pageList.size() > 1 )
+			logger.log( Level.SEVERE, "More than one page entities found for " + uri );
 		return pageList.size() == 0 ? null : pm.detachCopy( pageList.get( 0 ) );
 	}
 	
+	@Override
+	public DataListCursorTuple<Page> getPageList( String cursorStr, int resultCount ) {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
+						.setRange( 0, resultCount )
+						.build();
+		
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions(extensionMap);
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<Page> pageList = (List<Page>) query.execute();
+		Cursor cursor = JDOCursorHelper.getCursor( pageList );
+
+		return new DataListCursorTuple<Page>(
+				(List<Page>) pm.detachCopyAll( pageList ),
+				cursor == null ? null : cursor.toWebSafeString() );
+	}
+
 	@Override
 	public Page createOrUpdatePage( Page page ) {
 		return createOrUpdateEntity( page );

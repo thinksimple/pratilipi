@@ -40,6 +40,7 @@ import com.claymus.pagecontent.blogpost.BlogPostContent;
 import com.claymus.pagecontent.blogpost.BlogPostContentHelper;
 import com.claymus.pagecontent.html.HtmlContent;
 import com.claymus.pagecontent.html.HtmlContentHelper;
+import com.claymus.pagecontent.pages.PagesContentHelper;
 import com.claymus.pagecontent.roleaccess.RoleAccessContentHelper;
 import com.claymus.pagecontent.user.UserContentHelper;
 
@@ -69,6 +70,7 @@ public class ClaymusMain extends HttpServlet {
 		PageContentRegistry.register( BlogContentHelper.class );
 		PageContentRegistry.register( BlogPostContentHelper.class );
 		PageContentRegistry.register( UserContentHelper.class );
+		PageContentRegistry.register( PagesContentHelper.class );
 		PageContentRegistry.register( RoleAccessContentHelper.class );
 		
 		WEBSITE_WIDGET_REGISTRY.register( HeaderWidgetFactory.class );
@@ -217,6 +219,9 @@ public class ClaymusMain extends HttpServlet {
 		} else if( requestUri.equals( "/roleaccess" ) )
 			page.setTitle( "Access" );
 		
+		else if( requestUri.equals( "/pages" ) )
+			page.setTitle( "Pages" );
+		
 		dataAccessor.destroy();
 		
 		return page;
@@ -261,7 +266,10 @@ public class ClaymusMain extends HttpServlet {
 
 		} else if( requestUri.equals( "/users" ) ) {
 			pageContentList.add( UserContentHelper.newUserContent() );
-		}	
+		
+		} else if( requestUri.equals( "/pages" ) ) {
+			pageContentList.add( PagesContentHelper.newPagesContent() );
+		}
 
 		dataAccessor.destroy();
 

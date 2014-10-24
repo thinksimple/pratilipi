@@ -12,9 +12,11 @@ import com.claymus.commons.shared.UserStatus;
 import com.claymus.data.access.DataAccessor;
 import com.claymus.data.access.DataAccessorFactory;
 import com.claymus.data.access.Memcache;
+import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.RoleAccess;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.UserRole;
+import com.claymus.service.shared.data.PageData;
 import com.claymus.service.shared.data.UserData;
 import com.google.apphosting.api.ApiProxy;
 
@@ -40,12 +42,6 @@ public class ClaymusHelper implements Serializable {
 	private User currentUser;
 	private List<UserRole> currentUserRoleList;
 
-	
-	@Deprecated
-	public ClaymusHelper() {
-		this.request = null;
-		this.session = null;
-	}
 	
 	protected ClaymusHelper( HttpServletRequest request ) {
 		this.request = request;
@@ -278,6 +274,16 @@ public class ClaymusHelper implements Serializable {
 		userData.setStatus( user.getStatus() );
 		
 		return userData;
+	}
+	
+	public PageData createPageData( Page page ) {
+		PageData pageData = new PageData();
+		
+		pageData.setId( page.getId() );
+		pageData.setUri( page.getUri() );
+		pageData.setTitle( page.getTitle() );
+		
+		return pageData;
 	}
 	
 }

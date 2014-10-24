@@ -7,6 +7,8 @@ import com.claymus.service.shared.FacebookLoginUserRequest;
 import com.claymus.service.shared.FacebookLoginUserResponse;
 import com.claymus.service.shared.GetBlogListRequest;
 import com.claymus.service.shared.GetBlogListResponse;
+import com.claymus.service.shared.GetPageListRequest;
+import com.claymus.service.shared.GetPageListResponse;
 import com.claymus.service.shared.InviteUserRequest;
 import com.claymus.service.shared.InviteUserResponse;
 import com.claymus.service.shared.LoginUserRequest;
@@ -17,6 +19,8 @@ import com.claymus.service.shared.ResetUserPasswordRequest;
 import com.claymus.service.shared.ResetUserPasswordResponse;
 import com.claymus.service.shared.SavePageContentRequest;
 import com.claymus.service.shared.SavePageContentResponse;
+import com.claymus.service.shared.SavePageRequest;
+import com.claymus.service.shared.SavePageResponse;
 import com.claymus.service.shared.SaveRoleAccessRequest;
 import com.claymus.service.shared.SaveRoleAccessResponse;
 import com.claymus.service.shared.SendQueryRequest;
@@ -53,6 +57,14 @@ public interface ClaymusService extends RemoteService {
 			throws UnexpectedServerException;
 
 	
+	// API Version: 4.0; Owner Module: PagesContent;
+	SavePageResponse savePage( SavePageRequest request )
+			throws IllegalArgumentException, InsufficientAccessException;
+
+	// API Version: 4.0; Owner Module: PagesContent;
+	GetPageListResponse getPageList( GetPageListRequest request )
+			throws InsufficientAccessException;
+
 	SavePageContentResponse savePageContent( SavePageContentRequest request )
 			throws InsufficientAccessException;
 
