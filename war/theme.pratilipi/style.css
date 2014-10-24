@@ -446,9 +446,8 @@ a {
 }
 
 header {
-	border-top: 5px solid #E74C3C;
 	border-bottom: 1px solid #bbb;
-	padding-top: 25px;
+	padding-top: 10px;
 }
 
 .logo {

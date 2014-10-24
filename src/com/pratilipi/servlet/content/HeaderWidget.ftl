@@ -1,14 +1,8 @@
 <header>
 	<div class="container">		
 	
-		<div class="row">
-		
-			<h1 class="col-xs-6" style="margin:0px;">
-				<a href="/" style="color:#E74C3C !important; text-decoration:none;">Pratilipi</a>
-				<small style="position:absolute; top:0px; padding-left: 3px;"><small>beta</small></small>
-			</h1>
-
-			<div class="col-xs-6" id="Pratilipi-User-Access" style="display: none;">
+		<div style="height:50px;">
+			<div id="Pratilipi-User-Access" class="pull-right" style="display:none;">
 				<#if isUserLoggedIn>
 					<div class="pull-right">
 						<ul class="nav navbar-nav">
@@ -31,9 +25,7 @@
 					</div>
 				</#if>
 			</div>
-			
 		</div>
-		
 		
 		<div class="navbar navbar-default" role="navigation">
           <div class="navbar-header">
@@ -43,6 +35,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
+            <a class="navbar-brand" href="/" style="width:100px;"><img src="/theme.pratilipi/logo.png" width="60px;" style="position:absolute; bottom:15px;"/></a>
           </div>
           <div class="navbar-collapse collapse" style="height: 1px;">
             <ul class="nav navbar-nav">
@@ -109,6 +102,7 @@
 
 	</div>
 </header>
+
 <div class="modal fade" id="loginModal">
 	<div class="modal-dialog">
 		<div id="login" class="modal-content" style="padding: 15px;"></div>
