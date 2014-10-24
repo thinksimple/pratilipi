@@ -65,7 +65,7 @@ public class PratilipiFilter implements Filter {
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
 		} else if( !host.equals( "www.pratilipi.com" )
-				&& !host.equals( "mark-3.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-3p1.prod-pratilipi.appspot.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( "devo-pratilipi.appspot.com" )
 				&& !host.equals( "localhost" )
