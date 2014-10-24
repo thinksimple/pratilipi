@@ -219,6 +219,8 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 			String urlPrefix = "/resource." + pratilipiData.getType().getName().toLowerCase() + "-content/image/" + pratilipiData.getId();
 			pageContent = "<img style=\"width:100%;\" src=\"" + urlPrefix + "/" + pageNo + "\">";
 			readerRootPanel.getElement().setInnerHTML( pageContent );
+			nextPageButton.setEnabled( true );
+			previousPageButton.setEnabled( true );
 
 		} else {
 			pratilipiService.getReaderContent( 
