@@ -79,14 +79,14 @@ public class PratilipiHelper extends ClaymusHelper {
 	public static String getCoverImage(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
-		return pratilipiType.getName().toLowerCase() + "-cover/original/" +
+		return "pratilipi-cover/original/" +
 				( pratilipiId == null ? "" : pratilipiId );
 	}
 	
 	public static String getCoverImage300(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
-		return pratilipiType.getName().toLowerCase() + "-cover/300/" +
+		return "pratilipi-cover/300/" +
 				( pratilipiId == null ? "" : pratilipiId );
 	}
 	
@@ -121,28 +121,28 @@ public class PratilipiHelper extends ClaymusHelper {
 	public static String getContent(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
-		return pratilipiType.getName().toLowerCase() + "-content/pratilipi/" +
+		return "pratilipi-content/pratilipi/" +
 				( pratilipiId == null ? "" : pratilipiId );
 	}
 	
 	public static String getContentHtml(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
-		return pratilipiType.getName().toLowerCase() + "-content/html/" +
+		return "pratilipi-content/html/" +
 				( pratilipiId == null ? "" : pratilipiId );
 	}
 	
 	public static String getContentWord(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
-		return pratilipiType.getName().toLowerCase() + "-content/word/" +
+		return "pratilipi-content/word/" +
 				( pratilipiId == null ? "" : pratilipiId );
 	}
 	
 	public static String getContentImage(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
-		return pratilipiType.getName().toLowerCase() + "-content/image/" +
+		return "pratilipi-content/image/" +
 				( pratilipiId == null ? "" : pratilipiId );
 	}
 

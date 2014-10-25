@@ -32,26 +32,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>CoverImageResourceServlet</servlet-name>
-    <url-pattern>/resource.book-cover/original/*</url-pattern>
-    <url-pattern>/resource.poem-cover/original/*</url-pattern>
-    <url-pattern>/resource.story-cover/original/*</url-pattern>
-    <url-pattern>/resource.article-cover/original/*</url-pattern>
-  </servlet-mapping>
-   
-  <servlet>
-    <servlet-name>CoverImage300ResourceServlet</servlet-name>
-    <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
-    <init-param>
-      <param-name>ResourceServletType</param-name>
-      <param-value>DOWNLOAD_ONLY</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CoverImage300ResourceServlet</servlet-name>
-    <url-pattern>/resource.book-cover/300/*</url-pattern>
-    <url-pattern>/resource.poem-cover/300/*</url-pattern>
-    <url-pattern>/resource.story-cover/300/*</url-pattern>
-    <url-pattern>/resource.article-cover/300/*</url-pattern>
+    <url-pattern>/resource.pratilipi-cover/original/*</url-pattern>
   </servlet-mapping>
    
   <servlet>
@@ -77,10 +58,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>WordContentResourceServlet</servlet-name>
-    <url-pattern>/resource.book-content/word/*</url-pattern>
-    <url-pattern>/resource.poem-content/word/*</url-pattern>
-    <url-pattern>/resource.story-content/word/*</url-pattern>
-    <url-pattern>/resource.article-content/word/*</url-pattern>
+    <url-pattern>/resource.pratilipi-content/word/*</url-pattern>
   </servlet-mapping>
    
   <servlet>
@@ -93,10 +71,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>WordContentResourceServlet</servlet-name>
-    <url-pattern>/resource.book-content/html/*</url-pattern>
-    <url-pattern>/resource.poem-content/html/*</url-pattern>
-    <url-pattern>/resource.story-content/html/*</url-pattern>
-    <url-pattern>/resource.article-content/html/*</url-pattern>
+    <url-pattern>/resource.pratilipi-content/html/*</url-pattern>
   </servlet-mapping>
    
   <servlet>
@@ -109,10 +84,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ImageContentResourceServlet</servlet-name>
-    <url-pattern>/resource.book-content/image/*</url-pattern>
-    <url-pattern>/resource.poem-content/image/*</url-pattern>
-    <url-pattern>/resource.story-content/image/*</url-pattern>
-    <url-pattern>/resource.article-content/image/*</url-pattern>
+    <url-pattern>/resource.pratilipi-content/image/*</url-pattern>
   </servlet-mapping>
   
    

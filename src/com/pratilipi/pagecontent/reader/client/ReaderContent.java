@@ -219,7 +219,7 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 	private void loadReaderContent( int pageNo ) {
 		if( pratilipiData.getPageCount() != null && pratilipiData.getPageCount() > 0 ) {
 			//TODO : REMOVE STATIC URL ASAP
-			String urlPrefix = "/resource." + pratilipiData.getType().getName().toLowerCase() + "-content/image/" + pratilipiData.getId();
+			String urlPrefix = "/resource.pratilipi-content/image/" + pratilipiData.getId();
 			pageContent = "<img style=\"width:100%;\" src=\"" + urlPrefix + "/" + pageNo + "\">";
 			readerRootPanel.getElement().setInnerHTML( pageContent );
 			nextPageButton.setEnabled( true );
