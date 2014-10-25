@@ -131,14 +131,14 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
 				if( event.isRightArrow()) {
-					onClickNextPageButton();
+					if( nextPageButton.isVisible() )
+						onClickNextPageButton();
+					else
+						Window.alert( "You have reached end of this " + pratilipiData.getType().getName() );
 				}
 				
 				if( event.isLeftArrow() ) {
-					if( nextPageButton.isVisible() )
-						onClickPreviousPageButton();
-					else
-						Window.alert( "You have reached end of this " + pratilipiData.getType().getName() );
+					onClickPreviousPageButton();	
 				}
 				
 				if( event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE ){
