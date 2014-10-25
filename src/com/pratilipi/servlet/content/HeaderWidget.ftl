@@ -78,7 +78,6 @@
                   <li><a href="/classics/books">Classic Books</a></li>
                   <li><a href="/classics/poems">Classic Poems</a></li>
                   <li><a href="/classics/stories">Classic Stories</a></li>
-                  <li><a href="/classics/articles">Classic Articles</a></li>
                 </ul>
           	</li>
             <li class="dropdown">

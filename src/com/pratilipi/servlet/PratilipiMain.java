@@ -127,9 +127,6 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.startsWith( "/classics/stories" ) )
 			page.setTitle( "Classic Stories | " + page.getTitle() );
 
-		else if( requestUri.startsWith( "/classics/articles" ) )
-			page.setTitle( "Classic Articles | " + page.getTitle() );
-
 		
 		else if( requestUri.equals( "/languages" ) )
 			page.setTitle( "Languages | " + page.getTitle() );
@@ -297,9 +294,6 @@ public class PratilipiMain extends ClaymusMain {
 
 		else if( requestUri.startsWith( "/classics/stories" ) )
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY, true, PratilipiState.PUBLISHED ) );
-
-		else if( requestUri.startsWith( "/classics/articles" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.ARTICLE, true, PratilipiState.PUBLISHED ) );
 
 		
 		else if( requestUri.equals( "/languages" ) )
