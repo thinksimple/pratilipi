@@ -55,7 +55,7 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 					Long pratilipiId = Long.parseLong( pratilipiIdStr );
 					Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 					
-					if( PratilipiContentHelper.hasRequestAccessToUpdateData( request, pratilipi ) ) {
+					if( PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( request, pratilipi ) ) {
 						super.doPost( request, response );
 						return;
 					}

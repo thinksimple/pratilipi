@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.SerializationUtil;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.User;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.claymus.service.shared.data.UserData;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -24,13 +26,19 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 
 	@Override
 	public String generateHtml( PratilipiContent pratilipiContent, HttpServletRequest request )
-			throws UnexpectedServerException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
-		Long pratilipiId = pratilipiContent.getPratilipiId();
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		
+		Long pratilipiId = pratilipiContent.getPratilipiId();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		boolean showEditOption = PratilipiContentHelper
+				.hasRequestAccessToUpdatePratilipiData( request, pratilipi );
+
+		if( pratilipi.getState() != PratilipiState.PUBLISHED && !showEditOption )
+			throw new InsufficientAccessException();
+		
 		
 		UserPratilipi userPratilipi = null;
 		if( pratilipiHelper.isUserLoggedIn() )
@@ -43,17 +51,11 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 			UserData userData = pratilipiHelper.createUserData( user );
 			userIdNameMap.put( userData.getId().toString(), userData.getName() );
 		}
-
-		dataAccessor.destroy();
-		
 		
 		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData(
 				pratilipiId,
-				PratilipiContentHelper.hasRequestAccessToReadMetaData( request ) );
+				PratilipiContentHelper.hasRequestAccessToReadPratilipiMetaData( request ) );
 		
-		boolean showEditOption = PratilipiContentHelper
-				.hasRequestAccessToUpdateData( request, pratilipi );
-
 
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
@@ -70,7 +72,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 				&& userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED );
 		dataModel.put( "showReviewOption",
 				( userPratilipi == null || userPratilipi.getReviewState() == UserReviewState.NOT_SUBMITTED )
-				&& PratilipiContentHelper.hasRequestAccessToAddReview( request, pratilipi ) );
+				&& PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( request, pratilipi ) );
 
 
 		return super.processTemplate( dataModel, getTemplateName() );

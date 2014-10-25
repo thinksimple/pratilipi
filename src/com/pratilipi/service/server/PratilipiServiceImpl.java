@@ -107,7 +107,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				pratilipi.setListingDate( new Date() );
 				pratilipi.setLastUpdated( new Date() );
 
-				if ( ! PratilipiContentHelper.hasRequestAccessToAddData( this.getThreadLocalRequest(), pratilipi ) )
+				if ( ! PratilipiContentHelper.hasRequestAccessToAddPratilipiData( this.getThreadLocalRequest(), pratilipi ) )
 					throw new InsufficientAccessException();
 
 			
@@ -115,14 +115,14 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			
 				pratilipi =  dataAccessor.getPratilipi( pratilipiData.getId() );
 				
-				if( ! PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
+				if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( this.getThreadLocalRequest(), pratilipi ) )
 					throw new InsufficientAccessException();
 				
 				pratilipi.setLastUpdated( new Date() );
 			}
 			
 			
-			if( pratilipiData.hasPublicDomain() && PratilipiContentHelper.hasRequestAccessToUpdateMetaData( this.getThreadLocalRequest() ) )
+			if( pratilipiData.hasPublicDomain() && PratilipiContentHelper.hasRequestAccessToUpdatePratilipiMetaData( this.getThreadLocalRequest() ) )
 				pratilipi.setPublicDomain( pratilipiData.isPublicDomain() );
 			if( pratilipiData.hasTitle() )
 				pratilipi.setTitle( pratilipiData.getTitle() );
@@ -136,7 +136,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				pratilipi.setSummary( pratilipiData.getSummary() );
 			if( pratilipiData.hasWordCount() )
 				pratilipi.setWordCount( pratilipiData.getWordCount() );
-			if( pratilipiData.hasPageCount() && PratilipiContentHelper.hasRequestAccessToUpdateMetaData( this.getThreadLocalRequest() ) )
+			if( pratilipiData.hasPageCount() && PratilipiContentHelper.hasRequestAccessToUpdatePratilipiMetaData( this.getThreadLocalRequest() ) )
 				pratilipi.setPageCount( pratilipiData.getPageCount() );
 			if( pratilipiData.hasState() ) {
 
@@ -170,7 +170,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				PratilipiHelper.get( this.getThreadLocalRequest() )
 						.createPratilipiData(
 								pratilipi.getId(),
-								PratilipiContentHelper.hasRequestAccessToReadMetaData( this.getThreadLocalRequest() ) ) );
+								PratilipiContentHelper.hasRequestAccessToReadPratilipiMetaData( this.getThreadLocalRequest() ) ) );
 	}
 	
 	@Override
@@ -210,7 +210,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		Pratilipi pratilipi =  dataAccessor.getPratilipi( pratilipiContentData.getPratilipiId() );
 				
 		try {
-			if( ! PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
+			if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( this.getThreadLocalRequest(), pratilipi ) )
 				throw new InsufficientAccessException();
 			
 			pratilipi.setLastUpdated( new Date() );
@@ -627,7 +627,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 
-		if( ! PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
+		if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( this.getThreadLocalRequest(), pratilipi ) )
 			throw new InsufficientAccessException();
 		
 		
@@ -648,7 +648,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 
-		if( ! PratilipiContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), pratilipi ) )
+		if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( this.getThreadLocalRequest(), pratilipi ) )
 			throw new InsufficientAccessException();
 
 		
@@ -675,7 +675,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				pratilipiHelper.getCurrentUserId(), pratilipi.getId() );
 		
 		if( ( userPratilipi != null && userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED )
-				|| !PratilipiContentHelper.hasRequestAccessToAddReview( this.getThreadLocalRequest(), pratilipi ) )
+				|| !PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( this.getThreadLocalRequest(), pratilipi ) )
 			throw new InsufficientAccessException();
 
 		userPratilipi = dataAccessor.newUserPratilipi();

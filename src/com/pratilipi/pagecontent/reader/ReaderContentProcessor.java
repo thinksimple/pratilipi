@@ -150,7 +150,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getAuthorId() );
 
 		dataModel.put( "showEditOptions",
-				PratilipiContentHelper.hasRequestAccessToUpdateData( request, pratilipi ) );
+				PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( request, pratilipi ) );
 		
 		dataModel.put( "pratilipiDataEncodedStr", SerializationUtil.encode( pratilipiData ) );
 

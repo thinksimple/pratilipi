@@ -6,7 +6,6 @@ public enum PratilipiState implements IsSerializable {
 
 	DRAFTED,
 	PUBLISHED,
-	HIDDEN,
 	DELETED,
 	
 }
