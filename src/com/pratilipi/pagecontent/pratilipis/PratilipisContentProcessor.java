@@ -35,8 +35,8 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 		PratilipiFilter pratilipiFilter = pratilipisContent.toFilter();
 		
 		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple =
-				dataAccessor.getPratilipiList( pratilipiFilter, null, 25 );
-		List<PratilipiData> pratilipiDataList = new ArrayList<>( 25 );
+				dataAccessor.getPratilipiList( pratilipiFilter, null, 20 );
+		List<PratilipiData> pratilipiDataList = new ArrayList<>( 20 );
 		for( Pratilipi pratilipi : pratilipiListCursorTuple.getDataList() ) {
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 			pratilipiDataList.add(

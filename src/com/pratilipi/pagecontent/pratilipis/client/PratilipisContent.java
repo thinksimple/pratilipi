@@ -34,7 +34,7 @@ public class PratilipisContent implements EntryPoint {
 
 	private boolean hidden = false;
 	private String cursor = null;
-	private int resultCount = 50;
+	private int resultCount = 20;
 
 	private PratilipiFilter pratilipiFilter;
 	

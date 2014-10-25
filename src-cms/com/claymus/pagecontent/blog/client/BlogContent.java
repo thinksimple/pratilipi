@@ -20,7 +20,7 @@ public class BlogContent implements EntryPoint {
 	
 	private Long blogId = null;
 	private String cursor = null;
-	private int resultCount = 5;
+	private int resultCount = 2;
 
 	public void onModuleLoad() {
 		

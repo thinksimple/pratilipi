@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.claymus.data.transfer.BlobEntry;
+import com.claymus.servlet.ResourceServlet;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
@@ -13,7 +14,7 @@ import com.pratilipi.pagecontent.author.AuthorContentHelper;
 
 // Servlet Version: 4.0; Owner Module: AuthorContent;
 @SuppressWarnings("serial")
-public class ResourceAuthorImageServlet extends com.claymus.servlet.ResourceServlet {
+public class ResourceAuthorImageServlet extends ResourceServlet {
 	
 	@Override
 	public void doPost(

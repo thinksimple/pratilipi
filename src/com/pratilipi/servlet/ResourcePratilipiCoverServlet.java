@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.claymus.data.transfer.BlobEntry;
+import com.claymus.servlet.ResourceServlet;
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
@@ -19,7 +20,7 @@ import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 
 //Servlet Version: 4.0; Owner Module: PratilipiContent;
 @SuppressWarnings("serial")
-public class ResourcePratilipiCoverServlet extends com.claymus.servlet.ResourceServlet {
+public class ResourcePratilipiCoverServlet extends ResourceServlet {
 	
 	@Override
 	public void doPost(
