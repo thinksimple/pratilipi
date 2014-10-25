@@ -27,16 +27,16 @@
   <!-- Handler for uploading and serving website resources -->
 
   <servlet>
-    <servlet-name>CoverImageResourceServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
+    <servlet-name>ResourcePratilipiCoverServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.ResourcePratilipiCoverServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CoverImageResourceServlet</servlet-name>
+    <servlet-name>ResourcePratilipiCoverServlet</servlet-name>
     <url-pattern>/resource.pratilipi-cover/original/*</url-pattern>
   </servlet-mapping>
    
   <servlet>
-    <servlet-name>CoverImage300ResourceServlet</servlet-name>
+    <servlet-name>ResourcePratilipiCover300Servlet</servlet-name>
     <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
     <init-param>
       <param-name>ResourceServletType</param-name>
@@ -44,7 +44,7 @@
     </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CoverImage300ResourceServlet</servlet-name>
+    <servlet-name>ResourcePratilipiCover300Servlet</servlet-name>
     <url-pattern>/resource.pratilipi-cover/300/*</url-pattern>
   </servlet-mapping>
 
@@ -62,33 +62,7 @@
   </servlet-mapping>
    
   <servlet>
-    <servlet-name>WordContentResourceServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
-    <init-param>
-      <param-name>ResourceServletType</param-name>
-      <param-value>UPLOAD_ONLY</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>WordContentResourceServlet</servlet-name>
-    <url-pattern>/resource.pratilipi-content/word/*</url-pattern>
-  </servlet-mapping>
-   
-  <servlet>
-    <servlet-name>HtmlContentResourceServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
-    <init-param>
-      <param-name>ResourceServletType</param-name>
-      <param-value>UPLOAD_ONLY</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>WordContentResourceServlet</servlet-name>
-    <url-pattern>/resource.pratilipi-content/html/*</url-pattern>
-  </servlet-mapping>
-   
-  <servlet>
-    <servlet-name>ImageContentResourceServlet</servlet-name>
+    <servlet-name>ResourceImageContentServlet</servlet-name>
     <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
     <init-param>
       <param-name>ResourceServletType</param-name>
@@ -96,7 +70,7 @@
     </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ImageContentResourceServlet</servlet-name>
+    <servlet-name>ResourceImageContentServlet</servlet-name>
     <url-pattern>/resource.pratilipi-content/image/*</url-pattern>
   </servlet-mapping>
   
