@@ -49,15 +49,15 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>AuthorImageResourceServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
+    <servlet-name>ResourceAuthorImageServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.ResourceAuthorImageServlet</servlet-class>
     <init-param>
       <param-name>ResizeImage</param-name>
       <param-value>300</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>AuthorImageResourceServlet</servlet-name>
+    <servlet-name>ResourceAuthorImageServlet</servlet-name>
     <url-pattern>/resource.author-image/original/*</url-pattern>
   </servlet-mapping>
    

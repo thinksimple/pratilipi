@@ -37,7 +37,9 @@ public class PratilipiHelper extends ClaymusHelper {
 	private static final String URL_RESOURCE_STATIC = ClaymusHelper.URL_RESOURCE_STATIC;
 
 	
+	@Deprecated
 	public static final String URL_AUTHOR_PAGE = "/author/";
+	@Deprecated
 	public static final String URL_AUTHOR_IMAGE = "/resource.author-image/original/";
 
 	public static final String URL_LANGUAGE_PAGE = "/language/";
