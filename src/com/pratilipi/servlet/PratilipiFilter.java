@@ -24,21 +24,18 @@ public class PratilipiFilter implements Filter {
 	private Map<String, String> redirections = new HashMap<>();
 	
 	{
-		redirections.put(
-				"/favicon.ico",
-				"/theme.pratilipi/favicon.png" );
+		redirections.put( "/favicon.ico", "/theme.pratilipi/favicon.png" );
+		redirections.put( "/apple-touch-icon.png", "/theme.pratilipi/favicon.png" );
+		redirections.put( "/apple-touch-icon-precomposed.png", "/theme.pratilipi/favicon.png" );
 
-		redirections.put(
-				"/apple-touch-icon.png",
-				"/theme.pratilipi/favicon.png" );
+		redirections.put( "/give-away", "/" );
+		redirections.put( "/give-away/Gora.pdf", "/" );
+		redirections.put( "/give-away/Kukurmutta.pdf", "/" );
+		redirections.put( "/give-away/Ram_Ki_Shakti_Pooja.pdf", "/" );
+		redirections.put( "/give-away/Utkrasht_Sahitya_1.pdf", "/" );
+		redirections.put( "/give-away/Chandrakanta.pdf", "/book/5673309542809600" );
 
-		redirections.put(
-				"/apple-touch-icon-precomposed.png",
-				"/theme.pratilipi/favicon.png" );
-
-		redirections.put(
-				"/about",
-				"/about/pratilipi" );
+		redirections.put( "/about", "/about/pratilipi" );
 	}
 	
 
