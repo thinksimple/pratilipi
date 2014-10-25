@@ -76,15 +76,13 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 	
 	
-	public static String getCoverImage(
-			PratilipiType pratilipiType, Long pratilipiId ) {
+	public static String getCoverImage( Long pratilipiId ) {
 		
 		return "pratilipi-cover/original/" +
 				( pratilipiId == null ? "" : pratilipiId );
 	}
 	
-	public static String getCoverImage300(
-			PratilipiType pratilipiType, Long pratilipiId ) {
+	public static String getCoverImage300( Long pratilipiId ) {
 		
 		return "pratilipi-cover/300/" +
 				( pratilipiId == null ? "" : pratilipiId );
@@ -101,7 +99,7 @@ public class PratilipiHelper extends ClaymusHelper {
 			PratilipiType pratilipiType, Long pratilipiId, boolean dynamic ) {
 		
 		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) +
-				getCoverImage( pratilipiType, pratilipiId );
+				getCoverImage( pratilipiId );
 	}
 	
 	public static String getCoverImage300Url(
@@ -114,89 +112,57 @@ public class PratilipiHelper extends ClaymusHelper {
 			PratilipiType pratilipiType, Long pratilipiId, boolean dynamic ) {
 		
 		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) +
-				getCoverImage300( pratilipiType, pratilipiId );
+				getCoverImage300( pratilipiId );
 	}
 
 	
-	public static String getContent(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return "pratilipi-content/pratilipi/" +
-				( pratilipiId == null ? "" : pratilipiId );
+	public static String getContent( Long pratilipiId ) {
+		return "pratilipi-content/pratilipi/" + ( pratilipiId == null ? "" : pratilipiId );
 	}
 	
-	public static String getContentHtml(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return "pratilipi-content/html/" +
-				( pratilipiId == null ? "" : pratilipiId );
+	public static String getContentHtml( Long pratilipiId ) {
+		return "pratilipi-content/html/" + ( pratilipiId == null ? "" : pratilipiId );
 	}
 	
-	public static String getContentWord(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return "pratilipi-content/word/" +
-				( pratilipiId == null ? "" : pratilipiId );
+	public static String getContentWord( Long pratilipiId ) {
+		return "pratilipi-content/word/" + ( pratilipiId == null ? "" : pratilipiId );
 	}
 	
-	public static String getContentImage(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return "pratilipi-content/image/" +
-				( pratilipiId == null ? "" : pratilipiId );
+	public static String getContentImage( Long pratilipiId ) {
+		return "pratilipi-content/image/" + ( pratilipiId == null ? "" : pratilipiId );
 	}
 
 
-	public static String getContentUrl(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return getContentUrl( pratilipiType, pratilipiId, true );
+	public static String getContentUrl( Long pratilipiId ) {
+		return getContentUrl( pratilipiId, true );
 	}
 	
-	public static String getContentUrl(
-			PratilipiType pratilipiType, Long pratilipiId, boolean dynamic ) {
-		
-		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) +
-				getContent( pratilipiType, pratilipiId );
+	public static String getContentUrl( Long pratilipiId, boolean dynamic ) {
+		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) + getContent( pratilipiId );
 	}
 	
-	public static String getContentHtmlUrl(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return getContentHtmlUrl( pratilipiType, pratilipiId, true );
+	public static String getContentHtmlUrl( Long pratilipiId ) {
+		return getContentHtmlUrl( pratilipiId, true );
 	}
 	
-	public static String getContentHtmlUrl(
-			PratilipiType pratilipiType, Long pratilipiId, boolean dynamic ) {
-		
-		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) +
-				getContentHtml( pratilipiType, pratilipiId );
+	public static String getContentHtmlUrl( Long pratilipiId, boolean dynamic ) {
+		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) + getContentHtml( pratilipiId );
 	}
 	
-	public static String getContentWordUrl(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return getContentWordUrl( pratilipiType, pratilipiId, true );
+	public static String getContentWordUrl( Long pratilipiId ) {
+		return getContentWordUrl( pratilipiId, true );
 	}
 	
-	public static String getContentWordUrl(
-			PratilipiType pratilipiType, Long pratilipiId, boolean dynamic ) {
-		
-		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) +
-				getContentWord( pratilipiType, pratilipiId );
+	public static String getContentWordUrl( Long pratilipiId, boolean dynamic ) {
+		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) + getContentWord( pratilipiId );
 	}
 	
-	public static String getContentImageUrl(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return getContentImageUrl( pratilipiType, pratilipiId, true );
+	public static String getContentImageUrl( Long pratilipiId ) {
+		return getContentImageUrl( pratilipiId, true );
 	}
 
-	public static String getContentImageUrl(
-			PratilipiType pratilipiType, Long pratilipiId, boolean dynamic ) {
-		
-		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) +
-				getContentImage( pratilipiType, pratilipiId );
+	public static String getContentImageUrl( Long pratilipiId, boolean dynamic ) {
+		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) + getContentImage( pratilipiId );
 	}
 
 

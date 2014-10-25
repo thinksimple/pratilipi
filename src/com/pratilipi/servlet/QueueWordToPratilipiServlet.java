@@ -71,7 +71,7 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 		
 		// Fetching word content blob store
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String fileName = PratilipiHelper.getContentWord( pratilipiType, pratilipiId );
+		String fileName = PratilipiHelper.getContentWord( pratilipiId );
 		BlobEntry blobEntry = blobAccessor.getBlob( fileName );
 
 
@@ -118,7 +118,7 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 
 		// Saving Pratilipi content to blob store
 		blobAccessor.createBlob(
-				PratilipiHelper.getContent( pratilipiType, pratilipiId ),
+				PratilipiHelper.getContent( pratilipiId ),
 				"text/html", html, Charset.forName( "UTF-8" ) );
 	}
 	

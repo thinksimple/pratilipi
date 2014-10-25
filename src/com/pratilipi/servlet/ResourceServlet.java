@@ -108,13 +108,13 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 			Image newImage = imagesService.applyTransform( resize, oldImage );
 			
 			DataAccessorFactory.getBlobAccessor().createBlob(
-					PratilipiHelper.getCoverImage300( pratilipiType, pratilipiId ),
+					PratilipiHelper.getCoverImage300( pratilipiId ),
 					blobEntry.getMimeType(), newImage.getImageData(),
 					"public-read", metaDataMap );
 
 			
 		// Pratilipi Content (Html Format)
-		} else if( url.equals( PratilipiHelper.getContentHtmlUrl( pratilipiType, pratilipiId ) ) ) {
+		} else if( url.equals( PratilipiHelper.getContentHtmlUrl( pratilipiId ) ) ) {
 			Task task = TaskQueueFactory.newTask();
 			task.addParam( "pratilipiId", pratilipiIdStr );
 			task.addParam( "pratilipiType", pratilipiType.toString() );
@@ -123,7 +123,7 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 			
 			
 		// Pratilipi Content (Word Format)
-		} else if( url.equals( PratilipiHelper.getContentWordUrl( pratilipiType, pratilipiId ) ) ) {
+		} else if( url.equals( PratilipiHelper.getContentWordUrl( pratilipiId ) ) ) {
 			Task task = TaskQueueFactory.newTask();
 			task.addParam( "pratilipiId", pratilipiIdStr );
 			task.addParam( "pratilipiType", pratilipiType.toString() );

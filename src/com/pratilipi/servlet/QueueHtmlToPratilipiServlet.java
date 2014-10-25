@@ -37,7 +37,7 @@ public class QueueHtmlToPratilipiServlet extends HttpServlet {
 		
 		// Fetching html content blob store
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String fileName = PratilipiHelper.getContentHtml( pratilipiType, pratilipiId );
+		String fileName = PratilipiHelper.getContentHtml( pratilipiId );
 		BlobEntry blobEntry = blobAccessor.getBlob( fileName );
 		String html = new String( blobEntry.getData() );
 		
@@ -59,7 +59,7 @@ public class QueueHtmlToPratilipiServlet extends HttpServlet {
 
 		// Saving Pratilipi content to blob store
 		blobAccessor.createBlob(
-				PratilipiHelper.getContent( pratilipiType, pratilipiId ),
+				PratilipiHelper.getContent( pratilipiId ),
 				"text/html", html, Charset.forName( "UTF-8" ) );
 	}
 	

@@ -102,7 +102,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
 
 			pratilipi = dataAccessor.newPratilipi();
-			pratilipi.setType( pratilipiData.getType() );
 			pratilipi.setAuthorId( pratilipiData.getAuthorId() );
 			pratilipi.setListingDate( new Date() );
 			pratilipi.setLastUpdated( new Date() );
@@ -121,7 +120,9 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			pratilipi.setLastUpdated( new Date() );
 		}
 			
-			
+		
+		if( pratilipiData.hasType() )
+			pratilipi.setType( pratilipiData.getType() );
 		if( pratilipiData.hasPublicDomain() && PratilipiContentHelper.hasRequestAccessToUpdatePratilipiMetaData( this.getThreadLocalRequest() ) )
 			pratilipi.setPublicDomain( pratilipiData.isPublicDomain() );
 		if( pratilipiData.hasTitle() )
@@ -219,9 +220,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		// Fetching Pratilipi content from Blob Store
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String fileName = PratilipiHelper.getContent(
-				pratilipi.getType(),
-				pratilipiContentData.getPratilipiId() );
+		String fileName = PratilipiHelper.getContent( pratilipiContentData.getPratilipiId() );
 		BlobEntry blobEntry;
 		try {
 			blobEntry = blobAccessor.getBlob( fileName );
@@ -297,7 +296,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		BlobEntry blobEntry = null;
 		try {
-			blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipi.getType(), pratilipi.getId() ) );
+			blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipi.getId() ) );
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

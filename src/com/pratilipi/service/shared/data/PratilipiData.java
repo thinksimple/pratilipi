@@ -12,6 +12,7 @@ public class PratilipiData implements IsSerializable {
 	private Long id;
 	
 	private PratilipiType type;
+	private boolean hasType;
 
 	private String pageUrl;
 	private String coverImageUrl;
@@ -94,8 +95,13 @@ public class PratilipiData implements IsSerializable {
 		return this.type;
 	}
 	
-	public void setType( PratilipiType type ){
+	public void setType( PratilipiType type ) {
 		this.type = type;
+		this.hasType = true;
+	}
+	
+	public boolean hasType() {
+		return hasType;
 	}
 	
 	public String getPageUrl() {

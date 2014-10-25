@@ -36,6 +36,19 @@
   </servlet-mapping>
    
   <servlet>
+    <servlet-name>CoverImage300ResourceServlet</servlet-name>
+    <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
+    <init-param>
+      <param-name>ResourceServletType</param-name>
+      <param-value>DOWNLOAD_ONLY</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CoverImage300ResourceServlet</servlet-name>
+    <url-pattern>/resource.pratilipi-cover/300/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>AuthorImageResourceServlet</servlet-name>
     <servlet-class>com.pratilipi.servlet.ResourceServlet</servlet-class>
     <init-param>

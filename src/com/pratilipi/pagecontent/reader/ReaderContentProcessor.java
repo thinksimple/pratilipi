@@ -58,7 +58,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		if( pratilipi.getPageCount() != null && pratilipi.getPageCount() > 0 ) {
 
 			pageCount = pratilipi.getPageCount();
-			pageContent = "<img style=\"width:100%;\" src=\"" + PratilipiHelper.getContentImageUrl( pratilipiType, pratilipiId ) + "/" + pageNo + "\">";
+			pageContent = "<img style=\"width:100%;\" src=\"" + PratilipiHelper.getContentImageUrl( pratilipiId ) + "/" + pageNo + "\">";
 
 		} else {
 
@@ -66,7 +66,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 			BlobEntry blobEntry = null;
 			try {
-				blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipiType, pratilipiId ) );
+				blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipiId ) );
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -79,7 +79,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 				logger.log( Level.INFO, "Creating Blob Store entry using empty string ..." );
 				try {
 					blobAccessor.createBlob(
-							PratilipiHelper.getContent( pratilipiType, pratilipiId ),
+							PratilipiHelper.getContent( pratilipiId ),
 							"text/html",
 							"&nbsp;", Charset.forName( "UTF-8" ) );
 				} catch (IOException e) {
@@ -88,7 +88,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 				}
 				
 				try {
-					blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipiType, pratilipiId ) );
+					blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipiId ) );
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

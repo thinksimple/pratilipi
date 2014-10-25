@@ -42,11 +42,11 @@ public class QueueCreateOrUpdateDefaultCoverServlet extends HttpServlet {
 		
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String coverImage = PratilipiHelper.getCoverImage300( pratilipiType, pratilipiId );
+		String coverImage = PratilipiHelper.getCoverImage300( pratilipiId );
 		BlobEntry blobEntry = blobAccessor.getBlob( coverImage );
 		if( blobEntry == null || blobEntry.getMetaData( "default" ).equals( "true" ) ) {
 			String originalCoverImage =
-					PratilipiHelper.getCoverImage( pratilipiType, null ) + "pratilipi" ;
+					PratilipiHelper.getCoverImage( null ) + "pratilipi" ;
 			if( pratilipi.isPublicDomain() )
 				originalCoverImage += "-classic-" + pratilipi.getLanguageId();
 			blobEntry = blobAccessor.getBlob( originalCoverImage );
