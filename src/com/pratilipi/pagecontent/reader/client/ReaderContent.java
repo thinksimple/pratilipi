@@ -135,7 +135,10 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 				}
 				
 				if( event.isLeftArrow() ) {
-					onClickPreviousPageButton();
+					if( nextPageButton.isVisible() )
+						onClickPreviousPageButton();
+					else
+						Window.alert( "You have reached end of this " + pratilipiData.getType().getName() );
 				}
 				
 				if( event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE ){
