@@ -93,71 +93,67 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public SavePratilipiResponse savePratilipi( SavePratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
 	
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 
 		PratilipiData pratilipiData = request.getPratilipiData();
 		Pratilipi pratilipi = null;
 
-		try {
-			if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
+		
+		if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
 
-				pratilipi = dataAccessor.newPratilipi();
-				pratilipi.setType( pratilipiData.getType() );
-				pratilipi.setAuthorId( pratilipiData.getAuthorId() );
-				pratilipi.setListingDate( new Date() );
-				pratilipi.setLastUpdated( new Date() );
+			pratilipi = dataAccessor.newPratilipi();
+			pratilipi.setType( pratilipiData.getType() );
+			pratilipi.setAuthorId( pratilipiData.getAuthorId() );
+			pratilipi.setListingDate( new Date() );
+			pratilipi.setLastUpdated( new Date() );
 
-				if ( ! PratilipiContentHelper.hasRequestAccessToAddPratilipiData( this.getThreadLocalRequest(), pratilipi ) )
-					throw new InsufficientAccessException();
+			if ( ! PratilipiContentHelper.hasRequestAccessToAddPratilipiData( this.getThreadLocalRequest(), pratilipi ) )
+				throw new InsufficientAccessException();
 
+		
+		} else { // Update Pratilipi usecase
+		
+			pratilipi =  dataAccessor.getPratilipi( pratilipiData.getId() );
 			
-			} else { // Update Pratilipi usecase
+			if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( this.getThreadLocalRequest(), pratilipi ) )
+				throw new InsufficientAccessException();
 			
-				pratilipi =  dataAccessor.getPratilipi( pratilipiData.getId() );
-				
-				if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( this.getThreadLocalRequest(), pratilipi ) )
-					throw new InsufficientAccessException();
-				
-				pratilipi.setLastUpdated( new Date() );
-			}
-			
-			
-			if( pratilipiData.hasPublicDomain() && PratilipiContentHelper.hasRequestAccessToUpdatePratilipiMetaData( this.getThreadLocalRequest() ) )
-				pratilipi.setPublicDomain( pratilipiData.isPublicDomain() );
-			if( pratilipiData.hasTitle() )
-				pratilipi.setTitle( pratilipiData.getTitle() );
-			if( pratilipiData.hasTitleEn() )
-				pratilipi.setTitleEn( pratilipiData.getTitleEn() );
-			if( pratilipiData.hasLanguageId() )
-				pratilipi.setLanguageId( pratilipiData.getLanguageId() );
-			if( pratilipiData.hasPublicationYear() )
-				pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
-			if( pratilipiData.hasSummary() )
-				pratilipi.setSummary( pratilipiData.getSummary() );
-			if( pratilipiData.hasWordCount() )
-				pratilipi.setWordCount( pratilipiData.getWordCount() );
-			if( pratilipiData.hasPageCount() && PratilipiContentHelper.hasRequestAccessToUpdatePratilipiMetaData( this.getThreadLocalRequest() ) )
-				pratilipi.setPageCount( pratilipiData.getPageCount() );
-			if( pratilipiData.hasState() ) {
-
-				if( pratilipiData.getState() == PratilipiState.PUBLISHED && pratilipi.getType() == PratilipiType.BOOK ) {
-					if( pratilipi.getSummary() == null ) {
-						throw new IllegalArgumentException(
-								pratilipi.getType().getName() + " summary is missing. " +
-								pratilipi.getType().getName() + " can not be published without a summary." );
-					}
-				}
-
-				pratilipi.setState( pratilipiData.getState() );
-			}
-				
-				
-			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-			
-		} finally {
-			dataAccessor.destroy();
+			pratilipi.setLastUpdated( new Date() );
 		}
+			
+			
+		if( pratilipiData.hasPublicDomain() && PratilipiContentHelper.hasRequestAccessToUpdatePratilipiMetaData( this.getThreadLocalRequest() ) )
+			pratilipi.setPublicDomain( pratilipiData.isPublicDomain() );
+		if( pratilipiData.hasTitle() )
+			pratilipi.setTitle( pratilipiData.getTitle() );
+		if( pratilipiData.hasTitleEn() )
+			pratilipi.setTitleEn( pratilipiData.getTitleEn() );
+		if( pratilipiData.hasLanguageId() )
+			pratilipi.setLanguageId( pratilipiData.getLanguageId() );
+		if( pratilipiData.hasPublicationYear() )
+			pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
+		if( pratilipiData.hasSummary() )
+			pratilipi.setSummary( pratilipiData.getSummary() );
+		if( pratilipiData.hasWordCount() )
+			pratilipi.setWordCount( pratilipiData.getWordCount() );
+		if( pratilipiData.hasPageCount() && PratilipiContentHelper.hasRequestAccessToUpdatePratilipiMetaData( this.getThreadLocalRequest() ) )
+			pratilipi.setPageCount( pratilipiData.getPageCount() );
+		if( pratilipiData.hasState() ) {
 
+			if( pratilipiData.getState() == PratilipiState.PUBLISHED && pratilipi.getType() == PratilipiType.BOOK ) {
+				if( pratilipi.getSummary() == null ) {
+					throw new IllegalArgumentException(
+							pratilipi.getType().getName() + " summary is missing. " +
+							pratilipi.getType().getName() + " can not be published without a summary." );
+				}
+			}
+
+			pratilipi.setState( pratilipiData.getState() );
+		}
+		
+		
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+			
 		
 		Task task = TaskQueueFactory.newTask();
 		task.addParam( "pratilipiId", pratilipi.getId().toString() );
@@ -408,12 +404,12 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		AuthorData authorData = request.getAuthor();
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		Author author = null;
 		
 		if( authorData.getId() == null ) { // Add Author usecase
 		
-			if( ! AuthorContentHelper.hasRequestAccessToAddData( this.getThreadLocalRequest() ) ) {
+			if( ! AuthorContentHelper.hasRequestAccessToAddAuthorData( this.getThreadLocalRequest() ) ) {
 				dataAccessor.destroy();
 				throw new InsufficientAccessException();
 			}
@@ -425,7 +421,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 			author = dataAccessor.getAuthor( authorData.getId() );
 		
-			if( ! AuthorContentHelper.hasRequestAccessToUpdateData( this.getThreadLocalRequest(), author ) ) {
+			if( ! AuthorContentHelper.hasRequestAccessToUpdateAuthorData( this.getThreadLocalRequest(), author ) ) {
 				dataAccessor.destroy();
 				throw new InsufficientAccessException();
 			}
@@ -454,7 +450,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		author = dataAccessor.createOrUpdateAuthor( author );
 		Language language = dataAccessor.getLanguage( author.getLanguageId() );
-		dataAccessor.destroy();
 		
 		return new SaveAuthorResponse( PratilipiHelper.get( this.getThreadLocalRequest() ).createAuthorData( author, language ) );
 	}
@@ -623,7 +618,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public AddPratilipiGenreResponse addPratilipiGenre( AddPratilipiGenreRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 
@@ -636,7 +631,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		pratilipiGenre.setGenreId( request.getGenreId() );
 		
 		dataAccessor.createPratilipiGenre( pratilipiGenre );
-		dataAccessor.destroy();
 		
 		return new AddPratilipiGenreResponse();
 	}
@@ -644,7 +638,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public DeletePratilipiGenreResponse deletePratilipiGenre( DeletePratilipiGenreRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 
@@ -653,7 +647,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 		
 		dataAccessor.deletePratilipiGenre( request.getPratilipiId(), request.getGenreId() );
-		dataAccessor.destroy();
 		
 		return new DeletePratilipiGenreResponse();
 	}

@@ -41,7 +41,7 @@ public class ResourceServlet extends com.claymus.servlet.ResourceServlet {
 			Long authorId = Long.parseLong( authorIdStr );
 			Author author = dataAccessor.getAuthor( authorId );
 			
-			if( AuthorContentHelper.hasRequestAccessToUpdateData( request, author ) ) {
+			if( AuthorContentHelper.hasRequestAccessToUpdateAuthorData( request, author ) ) {
 				super.doPost( request, response );
 				return;
 			}

@@ -64,6 +64,18 @@
 </div>
 
 
+<#if draftedPratilipiDataList?has_content>
+	<div class="container">
+		<h3 class="hr-below">Work in Progress</h3>
+		<div class="row">
+			<#list draftedPratilipiDataList as pratilipiData>
+				<@pratilipiView.thumbnail pratilipiData=pratilipiData />
+			</#list>
+		</div>
+	</div>
+</#if>
+
+
 <#if bookDataList?has_content>
 	<div class="container">
 		<h3 class="hr-below">Published Books</h3>

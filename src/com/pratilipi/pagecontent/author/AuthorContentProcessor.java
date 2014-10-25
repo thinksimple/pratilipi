@@ -14,6 +14,7 @@ import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiFilter;
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -31,14 +32,24 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 			HttpServletRequest request ) throws UnexpectedServerException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
 		Long authorId = authorContent.getAuthorId();
 		Author author = dataAccessor.getAuthor( authorId );
 		Language language = dataAccessor.getLanguage( author.getLanguageId() );
 
+		boolean showEditOption = AuthorContentHelper
+				.hasRequestAccessToUpdateAuthorData( request, author );
+
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setAuthorId( authorId );
+
+		pratilipiFilter.setState( PratilipiState.DRAFTED );
+		DataListCursorTuple<Pratilipi> draftedPratilipiListCursorTuple = showEditOption
+				? (DataListCursorTuple<Pratilipi>) dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 )
+				: new DataListCursorTuple<Pratilipi>( new ArrayList<Pratilipi>(0), null );
+
+		pratilipiFilter.setState( PratilipiState.PUBLISHED );
 
 		pratilipiFilter.setType( PratilipiType.BOOK );
 		DataListCursorTuple<Pratilipi> bookListCursorTuple =
@@ -56,11 +67,15 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		DataListCursorTuple<Pratilipi> articleListCursorTuple =
 				dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 );  
 
-		dataAccessor.destroy();
-
 		
 		AuthorData authorData = pratilipiHelper.createAuthorData( author, language );
 
+		List<PratilipiData> draftedPratilipiDataList =
+				new ArrayList<>( draftedPratilipiListCursorTuple.getDataList().size() );
+		for( Pratilipi pratilipi : draftedPratilipiListCursorTuple.getDataList() )
+			draftedPratilipiDataList.add(
+					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
+		
 		List<PratilipiData> bookDataList =
 				new ArrayList<>( bookListCursorTuple.getDataList().size() );
 		for( Pratilipi pratilipi : bookListCursorTuple.getDataList() )
@@ -86,15 +101,12 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
 
 		
-		boolean showEditOption = AuthorContentHelper
-				.hasRequestAccessToUpdateData( request, author );
-
-
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		dataModel.put( "authorData", authorData );
 		dataModel.put( "authorDataEncodedStr", SerializationUtil.encode( authorData ) );
+		dataModel.put( "draftedPratilipiDataList", draftedPratilipiDataList );
 		dataModel.put( "bookDataList", bookDataList );
 		dataModel.put( "poemDataList", poemDataList );
 		dataModel.put( "storyDataList", storyDataList );

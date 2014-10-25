@@ -27,7 +27,7 @@ public class AuthorContentHelper extends PageContentHelper<
 
 	@Override
 	public Double getModuleVersion() {
-		return 3.0;
+		return 4.0;
 	}
 
 	@Override
@@ -46,11 +46,11 @@ public class AuthorContentHelper extends PageContentHelper<
 	}
 
 	
-	public static boolean hasRequestAccessToAddData( HttpServletRequest request ) {
+	public static boolean hasRequestAccessToAddAuthorData( HttpServletRequest request ) {
 		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_AUTHOR_DATA );
 	}
 	
-	public static boolean hasRequestAccessToUpdateData(
+	public static boolean hasRequestAccessToUpdateAuthorData(
 			HttpServletRequest request, Author author ) {
 		
 		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_AUTHOR_DATA ) ||
