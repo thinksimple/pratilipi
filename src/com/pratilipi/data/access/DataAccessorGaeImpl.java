@@ -33,6 +33,7 @@ import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserPratilipi;
 
+@SuppressWarnings("serial")
 public class DataAccessorGaeImpl
 		extends com.claymus.data.access.DataAccessorGaeImpl
 		implements DataAccessor {
@@ -66,6 +67,8 @@ public class DataAccessorGaeImpl
 			gaeQueryBuilder.addFilter( "languageId", pratilipiFilter.getLanguageId() );
 		if( pratilipiFilter.getAuthorId() != null )
 			gaeQueryBuilder.addFilter( "authorId", pratilipiFilter.getAuthorId() );
+		if( pratilipiFilter.getState() != null )
+			gaeQueryBuilder.addFilter( "state", pratilipiFilter.getState() );
 		
 		Query query = gaeQueryBuilder.build();
 		if( cursorStr != null ) {

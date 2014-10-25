@@ -500,6 +500,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			page = dataAccessor.newPage();
 			page.setUri( uri );
 			page.setTitle( pageData.getTitle() );
+			page.setCreationDate( new Date() );
 
 			
 		} else { // Update page usecase

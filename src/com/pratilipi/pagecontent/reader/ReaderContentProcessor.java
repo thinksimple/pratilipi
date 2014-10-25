@@ -75,31 +75,16 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			// TODO: Remove this as soon as possible
 			if( blobEntry == null ) {
 
-				// Hack to copy Pratilipi content from Data Store to Blob Store
-				if( pratilipi.getContent() != null ) {
-					logger.log( Level.INFO, "Creating Blob Store entry using Pratilipi content from Data Store ..." );
-					try {
-						blobAccessor.createBlob(
-								PratilipiHelper.getContent( pratilipiType, pratilipiId ),
-								"text/html",
-								pratilipi.getContent(), Charset.forName( "UTF-8" ) );
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
 				// Hack to create empty Pratilipi content from old Pratilipis
-				} else {
-					logger.log( Level.INFO, "Creating Blob Store entry using empty string ..." );
-					try {
-						blobAccessor.createBlob(
-								PratilipiHelper.getContent( pratilipiType, pratilipiId ),
-								"text/html",
-								"&nbsp;", Charset.forName( "UTF-8" ) );
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				logger.log( Level.INFO, "Creating Blob Store entry using empty string ..." );
+				try {
+					blobAccessor.createBlob(
+							PratilipiHelper.getContent( pratilipiType, pratilipiId ),
+							"text/html",
+							"&nbsp;", Charset.forName( "UTF-8" ) );
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
 				try {

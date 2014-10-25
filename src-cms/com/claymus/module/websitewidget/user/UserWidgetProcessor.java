@@ -27,7 +27,7 @@ public class UserWidgetProcessor extends WebsiteWidgetProcessor<UserWidget> {
 					= ClaymusMain
 							.FREEMARKER_CONFIGURATION
 							.getTemplate( getTemplateName() );
-			template.process( new ClaymusHelper(), writer );
+			template.process( ClaymusHelper.get( null ), writer );
 		} catch ( IOException | TemplateException e ) {
 			logger.log( Level.SEVERE, "Template processing failed.", e );
 		}

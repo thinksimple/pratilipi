@@ -2,6 +2,7 @@ package com.pratilipi.pagecontent.pratilipis;
 
 import com.claymus.data.transfer.PageContent;
 import com.pratilipi.commons.shared.PratilipiFilter;
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 
 public interface PratilipisContent extends PageContent {
@@ -17,6 +18,10 @@ public interface PratilipisContent extends PageContent {
 	Long getLanguageId();
 
 	void setLanguageId( Long languageId );
+	
+	PratilipiState getPratilipiState();
+
+	void setPratilipiState( PratilipiState state );
 	
 	PratilipiFilter toFilter();
 

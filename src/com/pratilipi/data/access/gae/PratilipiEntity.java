@@ -53,10 +53,6 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "SUMMARY" )
 	private Text summary;
 
-	@Deprecated
-	@Persistent( column = "CONTENT" )
-	private Text content;
-
 	@Persistent( column = "WORD_COUNT" )
 	private Long wordCount;
 
@@ -186,16 +182,6 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
-	public String getContent() {
-		return content == null ? null : content.getValue();
-	}
-
-	@Override
-	public void setContent( String content ) {
-		this.content = content == null ? null : new Text( content );
-	}
-	
-	@Override
 	public Long getWordCount() {
 		return wordCount;
 	}
@@ -247,7 +233,7 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public PratilipiState getState() {
-		return state == null ? PratilipiState.PUBLISHED : state ;
+		return state;
 	}
 	
 	@Override

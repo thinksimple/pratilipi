@@ -176,7 +176,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	@Override
 	public GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request ) {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple
 				= dataAccessor.getPratilipiList(
 						request.getPratilipiFilter(),
@@ -192,10 +192,8 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			pratilipiDataList.add(
 					pratilipiHelper.createPratilipiData( pratilipi, null, author, null ) );
 		}
-
-		dataAccessor.destroy();
 		
-		return new GetPratilipiListResponse( pratilipiDataList, pratilipiListCursorTuple.getCursor() );
+		return new GetPratilipiListResponse( pratilipiDataList, null, pratilipiListCursorTuple.getCursor() );
 	}
 
 

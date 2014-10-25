@@ -48,6 +48,7 @@ public interface PratilipiService extends RemoteService {
 			SavePratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException;
 
+	// API Version: 4.0; Owner Module: PratilipisContent;
 	GetPratilipiListResponse getPratilipiList(
 			GetPratilipiListRequest request );
 	

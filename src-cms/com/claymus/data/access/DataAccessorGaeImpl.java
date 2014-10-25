@@ -193,6 +193,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public DataListCursorTuple<Page> getPageList( String cursorStr, int resultCount ) {
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
+						.addOrdering( "creationDate", false )
 						.setRange( 0, resultCount )
 						.build();
 		

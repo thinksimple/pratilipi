@@ -5,6 +5,7 @@ import javax.jdo.annotations.Persistent;
 
 import com.claymus.data.access.gae.PageContentEntity;
 import com.pratilipi.commons.shared.PratilipiFilter;
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContent;
 
@@ -21,6 +22,9 @@ public class PratilipisContentEntity extends PageContentEntity
 	
 	@Persistent( column = "X_COL_2" )
 	private Long languageId;
+
+	@Persistent( column = "X_COL_3" )
+	private PratilipiState pratilipiState;
 
 	
 	@Override
@@ -54,11 +58,22 @@ public class PratilipisContentEntity extends PageContentEntity
 	}
 
 	@Override
+	public PratilipiState getPratilipiState() {
+		return pratilipiState;
+	}
+
+	@Override
+	public void setPratilipiState( PratilipiState pratilipiState ) {
+		this.pratilipiState = pratilipiState;
+	}
+
+	@Override
 	public PratilipiFilter toFilter() {
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setType( pratilipiType );
 		pratilipiFilter.setPublicDomain( publicDomain );
 		pratilipiFilter.setLanguageId( languageId );
+		pratilipiFilter.setState( pratilipiState );
 		return pratilipiFilter;
 	}
 	

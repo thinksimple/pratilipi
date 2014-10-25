@@ -11,8 +11,10 @@ public class PratilipiFilter implements IsSerializable {
 	private Long languageId;
 	
 	private Long authorId;
+
+	private PratilipiState state;
 	
-	
+
 	public PratilipiType getType() {
 		return type;
 	}
@@ -45,28 +47,12 @@ public class PratilipiFilter implements IsSerializable {
 		this.authorId = authorId;
 	}
 	
-	@Override
-	public String toString() {
-		return type + ":" + publicDomain + ":" + languageId + ":" + authorId;
+	public PratilipiState getState() {
+		return state;
 	}
 
-	public static PratilipiFilter fromString( String filterStr ) {
-		String[] filters = filterStr.split( ":" );
-		String typeStr = filters[0];
-		String publicDomainStr = filters[1];
-		String languageIdStr = filters[2];
-		String authorIdStr = filters[3];
-		
-		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setType(
-				typeStr.equals( "null" ) ? null : PratilipiType.valueOf( typeStr ) );
-		pratilipiFilter.setPublicDomain(
-				publicDomainStr.equals( "null" ) ? null : Boolean.parseBoolean( publicDomainStr ) );
-		pratilipiFilter.setLanguageId(
-				languageIdStr.equals( "null" ) ? null : Long.parseLong( languageIdStr ) );
-		pratilipiFilter.setAuthorId(
-				authorIdStr.equals( "null" ) ? null : Long.parseLong( authorIdStr ) );
-		return pratilipiFilter;
+	public void setState( PratilipiState state ) {
+		this.state = state;
 	}
-
+	
 }

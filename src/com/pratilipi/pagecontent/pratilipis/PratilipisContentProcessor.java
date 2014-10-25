@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.claymus.commons.server.SerializationUtil;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.pagecontent.PageContentProcessor;
@@ -27,7 +28,7 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 			throws UnexpectedServerException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		
 		
 		PratilipiType pratilipiType = pratilipisContent.getPratilipiType();
@@ -55,13 +56,10 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 			dataModel.put( "pratilipisType",  language.getNameEn() + " " + dataModel.get( "pratilipisType" ) );
 
 		}
-		dataModel.put( "pratilipiFilters", pratilipiFilter.toString() );
 		dataModel.put( "pratilipiDataList", pratilipiDataList );
+		dataModel.put( "pratilipiFilterEncodedStr", SerializationUtil.encode( pratilipiFilter ) );
 		
 
-		dataAccessor.destroy();
-		
-		
 		// Processing template
 		return super.processTemplate( dataModel, getTemplateName() );
 	}
