@@ -484,10 +484,8 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		PageData pageData = request.getPageData();
 		String uri = pageData.getUri().toLowerCase();
 		
-		DataAccessor dataAccessor = DataAccessorFactory
-				.getDataAccessor( this.getThreadLocalRequest() );
-		
-		Page page = dataAccessor.getPage( uri );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		Page page = dataAccessor.getPage( uri, true );
 		
 		if( pageData.getId() == null ) { // Add page usecasee
 			
@@ -498,7 +496,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 				throw new IllegalArgumentException( "Another page is already associated with this URL." );
 			
 			page = dataAccessor.newPage();
-			page.setUri( uri );
+			page.setUriAlias( uri );
 			page.setTitle( pageData.getTitle() );
 			page.setCreationDate( new Date() );
 
@@ -508,9 +506,14 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			if( ! PagesContentHelper.hasRequestAccessToUpdatePageData( this.getThreadLocalRequest() ) )
 				throw new InsufficientAccessException();
 
-			if( ! page.getId().equals( pageData.getId() ) )
+			if( page != null && ! page.getId().equals( pageData.getId() ) )
 				throw new IllegalArgumentException( "Another page is already associated with this URL." );
 
+			if( page == null ) {
+				page = dataAccessor.getPage( pageData.getId() );
+				page.setUri( pageData.getUri() );
+			}
+			
 			page.setTitle( pageData.getTitle() );
 		}
 
@@ -579,21 +582,16 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		return new SavePageContentResponse( pageContent.getId() );
 	}
 	
-	/*
-	 * Owner Module: Blog (PageContent)
-	 * API Version: 3.0
-	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public GetBlogListResponse getBlogPostList( GetBlogListRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		DataListCursorTuple<BlogPostContent> dataListCursorTuple =
 				dataAccessor.getBlogPostContentList(
 						request.getBlogId(), request.getCursor(),
 						request.getResultCount() );
-		dataAccessor.destroy();
 		
 		List<BlogPostContent> blogPostContentList = dataListCursorTuple.getDataList();
 		List<String> blogPostHtmlList = new ArrayList<>( blogPostContentList.size() );

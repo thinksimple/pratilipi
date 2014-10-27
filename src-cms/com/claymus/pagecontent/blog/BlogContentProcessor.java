@@ -27,12 +27,10 @@ public class BlogContentProcessor extends PageContentProcessor<BlogContent> {
 			BlogContent blogContent, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		DataListCursorTuple<BlogPostContent> dataListCursorTuple =
 				dataAccessor.getBlogPostContentList(
-						blogContent.getId(), blogContent.getCursor(),
-						blogContent.getPostCount() );
-		dataAccessor.destroy();
+						blogContent.getId(), blogContent.getCursor(), 5 );
 		
 		
 		List<BlogPostContent> blogPostContentList = dataListCursorTuple.getDataList();

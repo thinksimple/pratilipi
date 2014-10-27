@@ -18,13 +18,13 @@
 	</classpathentry>
 
 	<!-- Google Cloud Storage integration -->
-	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/storage-v1r16lv1.18.0-rc"/>
+	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/storage-v1r17lv1.18.0-rc"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-gcs-client-0.4.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-17.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-2.4.jar"/>
 
 	<!-- Google Drive SDK -->
-	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/drive-v2r149lv1.18.0-rc"/>
+	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/drive-v2r150lv1.18.0-rc"/>
 
 	<!-- Set up for Apache Commons FileUpload -->
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-fileupload-1.3.1.jar"/>

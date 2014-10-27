@@ -17,6 +17,7 @@ import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.Tag;
 import com.pratilipi.data.transfer.UserPratilipi;
 
+@SuppressWarnings("serial")
 public class DataAccessorWithMemcache
 		extends com.claymus.data.access.DataAccessorWithMemcache
 		implements DataAccessor {

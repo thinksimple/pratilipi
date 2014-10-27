@@ -68,6 +68,7 @@ public interface ClaymusService extends RemoteService {
 	SavePageContentResponse savePageContent( SavePageContentRequest request )
 			throws InsufficientAccessException;
 
+	// API Version: 4.0; Owner Module: BlogContent;
 	GetBlogListResponse getBlogPostList( GetBlogListRequest request )
 			throws UnexpectedServerException, InsufficientAccessException;
 

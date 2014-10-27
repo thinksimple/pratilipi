@@ -1,5 +1,6 @@
 package com.claymus.data.access;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
 import com.claymus.data.access.gae.EmailTemplateEntity;
-import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.data.access.gae.PageContentEntityStub;
 import com.claymus.data.access.gae.PageEntity;
 import com.claymus.data.access.gae.PageLayoutEntity;
@@ -60,6 +60,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	protected <T> T createOrUpdateEntity( T entity ) {
 		entity = pm.makePersistent( entity );
 		return pm.detachCopy( entity );
+	}
+	
+	protected <T> List<T> createOrUpdateEntityList( List<T> entityList ) {
+		entityList = (List<T>) pm.makePersistentAll( entityList );
+		return (List<T>) pm.detachCopyAll( entityList );
 	}
 	
 	protected <T> void deleteEntity( Class<T> clazz, Object id ) {
@@ -175,12 +180,28 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Page getPage( Long id ) {
+		return getEntity( PageEntity.class, id );
+	}
+	
+	@Override
 	public Page getPage( String uri ) {
-		Query query =
-				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
-						.addFilter( "uri", uri )
-						.addOrdering( "creationDate", true )
-						.build();
+		return getPage( uri, false );
+	}
+	
+	@Override
+	public Page getPage( String uri, boolean isAlias ) {
+		GaeQueryBuilder queryBuilder =
+				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) );
+		
+		if( isAlias )
+			queryBuilder.addFilter( "uriAlias", uri );
+		else
+			queryBuilder.addFilter( "uri", uri );
+
+		queryBuilder.addOrdering( "creationDate", true );
+
+		Query query = queryBuilder.build();
 		
 		@SuppressWarnings("unchecked")
 		List<Page> pageList = (List<Page>) query.execute( uri );
@@ -233,13 +254,23 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public List<PageContent> getPageContentList( Long pageId ) {
 		Query query =
-				new GaeQueryBuilder( pm.newQuery( PageContentEntity.class ) )
+				new GaeQueryBuilder( pm.newQuery( PageContentEntityStub.class ) )
 						.addFilter( "pageId", pageId )
 						.build();
-		
+
 		@SuppressWarnings("unchecked")
-		List<PageContent> pageContentList = (List<PageContent>) query.execute( pageId );
-		return pageContentList.size() == 0 ? null : (List<PageContent>) pm.detachCopyAll( pageContentList );
+		List<PageContentEntityStub> stubList = (List<PageContentEntityStub>) query.execute( pageId );
+		
+		List<PageContent> pageContentList = new ArrayList<>( stubList.size() );
+		for( PageContentEntityStub stub : stubList ) {
+			try {
+				pageContentList.add( (PageContent) getEntity( Class.forName( stub.getType() ), stub.getId() ) );
+			} catch( ClassNotFoundException e ) {
+				logger.log( Level.SEVERE, "PageContentEntity Type not found !", e );
+			}
+		}
+		
+		return pageContentList;
 	}
 
 	@Override

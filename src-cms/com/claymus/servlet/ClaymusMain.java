@@ -34,7 +34,6 @@ import com.claymus.module.websitewidget.navigation.NavigationWidgetFactory;
 import com.claymus.module.websitewidget.user.UserWidgetFactory;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.claymus.pagecontent.PageContentRegistry;
-import com.claymus.pagecontent.blog.BlogContent;
 import com.claymus.pagecontent.blog.BlogContentHelper;
 import com.claymus.pagecontent.blogpost.BlogPostContent;
 import com.claymus.pagecontent.blogpost.BlogPostContentHelper;
@@ -190,18 +189,14 @@ public class ClaymusMain extends HttpServlet {
 	
 	protected Page getPage( HttpServletRequest request ) {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Page page = dataAccessor.newPage();
-
 		String requestUri = request.getRequestURI();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Page page = dataAccessor.getPage( requestUri, true );
 		
-		if( requestUri.equals( "/author-interviews" ) )
-			page.setTitle( "Author Interviews" );
-
-		else if( requestUri.equals( "/blog" ) )
-			page.setTitle( "Blog" );
-
-		else if( requestUri.equals( "/blog/new" ) )
+		if( page == null )
+			page = dataAccessor.newPage();
+		
+		if( requestUri.equals( "/blog/new" ) )
 			page.setTitle( "New Blog Post" );
 
 		else if( requestUri.startsWith( "/author-interview/" ) ) {
@@ -222,8 +217,6 @@ public class ClaymusMain extends HttpServlet {
 		else if( requestUri.equals( "/pages" ) )
 			page.setTitle( "Pages" );
 		
-		dataAccessor.destroy();
-		
 		return page;
 		
 	}
@@ -231,22 +224,15 @@ public class ClaymusMain extends HttpServlet {
 	protected List<PageContent> getPageContentList(
 			HttpServletRequest request ) throws IOException {
 
-		List<PageContent> pageContentList = new LinkedList<>();
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
 		String requestUri = request.getRequestURI();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
-		if( requestUri.equals( "/author-interviews" ) ) {
-			BlogContent blogContent = (BlogContent) dataAccessor.getPageContent( 5197509039226880L );
-			blogContent.setPostCount( 5 );
-			pageContentList.add( blogContent );
-		
-		} else if( requestUri.equals( "/blog" ) ) {
-			BlogContent blogContent = (BlogContent) dataAccessor.getPageContent( 5683739602452480L );
-			blogContent.setPostCount( 5 );
-			pageContentList.add( blogContent );
-		
-		} else if( requestUri.equals( "/blog/new" ) ) {
+		Page page = dataAccessor.getPage( requestUri, true );
+		List<PageContent> pageContentList = page == null
+				? new LinkedList<PageContent>()
+				: (List<PageContent>) dataAccessor.getPageContentList( page.getId() );
+
+		if( requestUri.equals( "/blog/new" ) ) {
 			BlogPostContent blogPost = BlogPostContentHelper.newBlogPostContent();
 			blogPost.setTitle( "New Post Blog" );
 			blogPost.setContent( "Blog post content goes here ..." );
@@ -270,8 +256,6 @@ public class ClaymusMain extends HttpServlet {
 		} else if( requestUri.equals( "/pages" ) ) {
 			pageContentList.add( PagesContentHelper.newPagesContent() );
 		}
-
-		dataAccessor.destroy();
 
 		return pageContentList;
 	}

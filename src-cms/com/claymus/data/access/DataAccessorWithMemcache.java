@@ -23,6 +23,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private final static String PREFIX_ROLE_ACCESS = "RoleAccess-";
 	private final static String PREFIX_PAGE = "Page-";
 	private final static String PREFIX_PAGE_CONTENT = "PageConent-";
+	private final static String PREFIX_PAGE_CONTENT_LIST = "PageConentList-";
 	
 	
 	private final DataAccessor dataAccessor;
@@ -164,10 +165,32 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	@Override
+	public Page getPage( Long id ) {
+		Page page = memcache.get( PREFIX_PAGE + id );
+		if( page == null ) {
+			page = dataAccessor.getPage( id );
+			if( page != null )
+				memcache.put( PREFIX_PAGE + id, page );
+		}
+		return page;
+	}
+	
+	@Override
 	public Page getPage( String uri ) {
 		Page page = memcache.get( PREFIX_PAGE + uri );
 		if( page == null ) {
 			page = dataAccessor.getPage( uri );
+			if( page != null )
+				memcache.put( PREFIX_PAGE + uri, page );
+		}
+		return page;
+	}
+	
+	@Override
+	public Page getPage( String uri, boolean isAlias ) {
+		Page page = memcache.get( PREFIX_PAGE + uri );
+		if( page == null ) {
+			page = dataAccessor.getPage( uri, isAlias );
 			if( page != null )
 				memcache.put( PREFIX_PAGE + uri, page );
 		}
@@ -181,8 +204,17 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	@Override
 	public Page createOrUpdatePage( Page page ) {
+		if( page.getUriAlias() != null )
+			memcache.remove( PREFIX_PAGE + page.getUriAlias() );
+		
 		page = dataAccessor.createOrUpdatePage( page );
-		memcache.put( PREFIX_PAGE + page.getUri(), page );
+		
+		memcache.put( PREFIX_PAGE + page.getId(), page );
+		if( page.getUri() != null )
+			memcache.put( PREFIX_PAGE + page.getUri(), page );
+		if( page.getUriAlias() != null )
+			memcache.put( PREFIX_PAGE + page.getUriAlias(), page );
+		
 		return page;
 	}
 
@@ -200,8 +232,12 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	@Override
 	public List<PageContent> getPageContentList( Long pageId ) {
-		// TODO; enable caching
-		return dataAccessor.getPageContentList( pageId );
+		List<PageContent> pageContentList = memcache.get( PREFIX_PAGE_CONTENT_LIST + pageId );
+		if( pageContentList == null ) {
+			pageContentList = dataAccessor.getPageContentList( pageId );
+			memcache.put( PREFIX_PAGE_CONTENT_LIST + pageId, new ArrayList<>( pageContentList ) );
+		}
+		return pageContentList;
 	}
 
 	@Override
@@ -215,6 +251,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	public PageContent createOrUpdatePageContent( PageContent pageContent ) {
 		pageContent = dataAccessor.createOrUpdatePageContent( pageContent );
 		memcache.put( PREFIX_PAGE_CONTENT + pageContent.getId(), pageContent );
+		memcache.remove( PREFIX_PAGE_CONTENT_LIST + pageContent.getPageId() );
 		return pageContent;
 	}
 

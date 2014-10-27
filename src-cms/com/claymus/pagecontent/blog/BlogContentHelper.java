@@ -16,7 +16,7 @@ public class BlogContentHelper extends PageContentHelper<
 
 	@Override
 	public Double getModuleVersion() {
-		return 3.0;
+		return 4.0;
 	}
 
 

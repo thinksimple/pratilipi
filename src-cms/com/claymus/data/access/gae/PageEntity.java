@@ -17,11 +17,20 @@ public class PageEntity implements Page {
 	@Persistent( column = "PAGE_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
+	@Persistent( column = "PAGE_TYPE" )
+	private String type;
+
 	@Persistent( column = "URI" )
 	private String uri;
 
+	@Persistent( column = "URI_ALIAS" )
+	private String uriAlias;
+
 	@Persistent( column = "TITLE" )
 	private String title;
+	
+	@Persistent( column = "PRIMARY_CONTENT_ID" )
+	private Long primaryContentId;
 	
 	@Persistent( column = "LAYOUT_ID" )
 	private Long layoutId;
@@ -36,6 +45,16 @@ public class PageEntity implements Page {
 	}
 
 	@Override
+	public String getType() {
+		return type;
+	}
+
+	@Override
+	public void setType( String type ) {
+		this.type = type;
+	}
+
+	@Override
 	public String getUri() {
 		return uri;
 	}
@@ -46,6 +65,16 @@ public class PageEntity implements Page {
 	}
 
 	@Override
+	public String getUriAlias() {
+		return uriAlias;
+	}
+
+	@Override
+	public void setUriAlias( String uri ) {
+		this.uriAlias = uri;
+	}
+
+	@Override
 	public String getTitle() {
 		return title;
 	}
@@ -53,6 +82,16 @@ public class PageEntity implements Page {
 	@Override
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	@Override
+	public Long getPrimaryContentId() {
+		return primaryContentId;
+	}
+
+	@Override
+	public void setPrimaryContentId( Long pageContentId ) {
+		this.primaryContentId = pageContentId;
 	}
 
 	@Override

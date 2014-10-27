@@ -2,6 +2,7 @@ package com.claymus.pagecontent.blog.gae;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 import com.claymus.data.access.gae.PageContentEntity;
 import com.claymus.pagecontent.blog.BlogContent;
@@ -10,6 +11,9 @@ import com.claymus.pagecontent.blog.BlogContent;
 @PersistenceCapable
 public class BlogContentEntity extends PageContentEntity implements BlogContent {
 
+	@Persistent( column = "X_COL_0" )
+	private String title;
+	
 	@NotPersistent
 	private String cursor;
 	
@@ -17,6 +21,16 @@ public class BlogContentEntity extends PageContentEntity implements BlogContent 
 	private Integer postCount;
 	
 	
+	@Override
+	public String getTitle() {
+		return title;
+	}
+
+	@Override
+	public void setTitle( String title ) {
+		this.title = title;
+	}
+
 	@Override
 	public String getCursor() {
 		return cursor;

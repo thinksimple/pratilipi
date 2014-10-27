@@ -49,7 +49,11 @@ public interface DataAccessor extends Serializable {
 	
 	Page newPage();
 	
+	Page getPage( Long id );
+	
 	Page getPage( String uri );
+	
+	Page getPage( String uri, boolean isAlias );
 	
 	DataListCursorTuple<Page> getPageList( String cursorStr, int resultCount );
 
