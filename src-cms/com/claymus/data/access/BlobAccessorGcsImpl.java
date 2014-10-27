@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -27,6 +29,9 @@ import com.google.appengine.tools.cloudstorage.GcsInputChannel;
 import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
 import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
+import com.google.appengine.tools.cloudstorage.ListItem;
+import com.google.appengine.tools.cloudstorage.ListOptions;
+import com.google.appengine.tools.cloudstorage.ListResult;
 import com.google.appengine.tools.cloudstorage.RetryParams;
 
 public class BlobAccessorGcsImpl implements BlobAccessor {
@@ -116,6 +121,24 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 		}
 		
 		return blobCreated;
+	}
+	
+	@Override
+	public List<String> filenameList( String prefix ) throws IOException {
+
+		ListOptions.Builder folder = new ListOptions.Builder();
+		folder.setPrefix( prefix );
+		
+		ListResult filenameList = gcsService.list( bucketName, folder.build() );
+		
+		List<String> imageNameList = new ArrayList<String>();
+		
+		while( filenameList.hasNext() ) {
+			ListItem filename = filenameList.next();
+			imageNameList.add( filename.getName() );
+		}
+		
+		return imageNameList;
 	}
 
 	@Override

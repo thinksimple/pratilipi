@@ -2,6 +2,7 @@ package com.claymus.data.access;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,6 +95,12 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 			throws IOException {
 
 		blobAccessor.serveBlob( fileName, response );
+	}
+
+	@Override
+	public List<String> filenameList(String prefix) throws IOException {
+		// TODO : ADD MEMECACHE LOGIC
+		return null;
 	}
 
 }
