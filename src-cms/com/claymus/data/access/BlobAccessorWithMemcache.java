@@ -98,7 +98,7 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 	}
 
 	@Override
-	public List<String> filenameList(String prefix) throws IOException {
+	public List<String> getFilenameList(String prefix) throws IOException {
 		// TODO : ADD MEMECACHE LOGIC
 		return null;
 	}

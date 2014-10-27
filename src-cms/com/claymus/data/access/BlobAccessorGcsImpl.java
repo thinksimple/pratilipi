@@ -124,18 +124,23 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 	}
 	
 	@Override
-	public List<String> filenameList( String prefix ) throws IOException {
+	public List<String> getFilenameList( String prefix ) {
 
-		ListOptions.Builder folder = new ListOptions.Builder();
-		folder.setPrefix( prefix );
-		
-		ListResult filenameList = gcsService.list( bucketName, folder.build() );
-		
-		List<String> imageNameList = new ArrayList<String>();
-		
-		while( filenameList.hasNext() ) {
-			ListItem filename = filenameList.next();
-			imageNameList.add( filename.getName() );
+		List<String> imageNameList = new ArrayList<>();
+		try {
+			ListOptions.Builder folder = new ListOptions.Builder();
+			folder.setPrefix( prefix );
+			
+			ListResult filenameList = gcsService.list( bucketName, folder.build() );
+			
+			while( filenameList.hasNext() ) {
+				ListItem filename = filenameList.next();
+				imageNameList.add( filename.getName() );
+			}
+			
+		}
+		catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to ceate blob !", e );
 		}
 		
 		return imageNameList;
