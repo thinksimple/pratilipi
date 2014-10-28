@@ -23,6 +23,14 @@
     <url-pattern>/service.pratilipi</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>SiteMap</servlet-name>
+    <servlet-class>com.claymus.servlet.SiteMapServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SiteMap</servlet-name>
+    <url-pattern>/service.sitemap</url-pattern>
+  </servlet-mapping>
 
   <!-- Handler for uploading and serving website resources -->
 

@@ -59,18 +59,31 @@ public class PratilipiFilter implements Filter {
 		String action = request.getParameter( "action" );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		Page page = dataAccessor.getPage( requestUri );
+		Page page;
+
 		
-		if( page != null && page.getUriAlias() != null && ! requestUri.equals( page.getUriAlias() ) ) {
+		if( requestUri.startsWith( "/service." )
+				|| requestUri.startsWith( "/resource." )
+				|| requestUri.startsWith( "/_ah/queue/" ) ) {
+			
+			chain.doFilter( request, response );
+		
+			
+		} else if( ( page = dataAccessor.getPage( requestUri ) ) != null
+				&& page.getUriAlias() != null
+				&& ! requestUri.equals( page.getUriAlias() ) ) {
+			
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", page.getUriAlias() );
+			
 			
 		} else if( redirections.get( requestUri ) != null ){
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
+			
 		} else if( !host.equals( "www.pratilipi.com" )
-				&& !host.equals( "mark-3p8.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-3p9.prod-pratilipi.appspot.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( "devo-pratilipi.appspot.com" )
 				&& !host.equals( "localhost" )

@@ -163,7 +163,7 @@ public class ClaymusMain extends HttpServlet {
 			try {
 				String pageContentHtml = pageContentProcessor.getHtml( pageContent, request );
 				pageContentHtmlList.add( pageContentHtml );
-				if( page.getTitle() == null && pageContent.getId().equals( page.getPrimaryContentId() ) )
+				if( page.getTitle() == null && page.getPrimaryContentId() != null && pageContent.getId().equals( page.getPrimaryContentId() ) )
 					page.setTitle( pageContentProcessor.getTitle( pageContent, request ) );
 			} catch( InsufficientAccessException e ) {
 				// TODO: add 405 messaage

@@ -86,7 +86,7 @@
 		
 		</#if>
 
-		<title>${ page.getTitle() } | Pratilipi</title>		
+		<title>${ (page.getTitle() + " | Pratilipi") ! "Pratilipi" }</title>		
 		
 	</head>
 	<body>
