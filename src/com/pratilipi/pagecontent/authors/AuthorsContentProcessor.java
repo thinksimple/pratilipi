@@ -33,7 +33,7 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 
 		
 		// Fetching Author list
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		List<Author> authorList = dataAccessor.getAuthorList( null, 250 ).getDataList();
 		Map<String, String> languageIdNameMap = new HashMap<>();
 		for( Author author : authorList ) {
@@ -44,7 +44,6 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 						language.getName() + " (" + language.getNameEn() + ")" );
 			}
 		}
-		dataAccessor.destroy();
 		
 		
 		// Creating data model required for template processing

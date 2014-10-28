@@ -19,13 +19,18 @@ import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
-import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> {
 
+	@Override
+	public String generateTitle( AuthorContent authorContent, HttpServletRequest request ) {
+		AuthorData authorData = PratilipiHelper.get( request ).createAuthorData( authorContent.getId() );
+		return authorData.getFullName() + " (" + authorData.getFullNameEn() + ")";
+	}
+	
 	@Override
 	public String generateHtml(
 			AuthorContent authorContent,
@@ -34,9 +39,8 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
-		Long authorId = authorContent.getAuthorId();
+		Long authorId = authorContent.getId();
 		Author author = dataAccessor.getAuthor( authorId );
-		Language language = dataAccessor.getLanguage( author.getLanguageId() );
 
 		boolean showEditOption = AuthorContentHelper
 				.hasRequestAccessToUpdateAuthorData( request, author );
@@ -68,7 +72,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 				dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 );  
 
 		
-		AuthorData authorData = pratilipiHelper.createAuthorData( author, language );
+		AuthorData authorData = pratilipiHelper.createAuthorData( author.getId() );
 
 		List<PratilipiData> draftedPratilipiDataList =
 				new ArrayList<>( draftedPratilipiListCursorTuple.getDataList().size() );

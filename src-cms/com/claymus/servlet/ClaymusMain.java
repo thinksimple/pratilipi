@@ -124,6 +124,7 @@ public class ClaymusMain extends HttpServlet {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void renderPage(
 			Page page,
 			List<PageContent> pageContentList,
@@ -150,7 +151,6 @@ public class ClaymusMain extends HttpServlet {
 			@SuppressWarnings("rawtypes")
 			WebsiteWidgetProcessor websiteWidgetProcessor = 
 					WEBSITE_WIDGET_REGISTRY.getWebsiteWidgetProcessor( websiteWidget.getClass() );
-			@SuppressWarnings("unchecked")
 			String websiteWidgetHtml = websiteWidgetProcessor.getHtml( websiteWidget );
 			websiteWidgetHtmlList.add( websiteWidgetHtml );
 		}
@@ -161,9 +161,10 @@ public class ClaymusMain extends HttpServlet {
 			PageContentProcessor pageContentProcessor =
 					PAGE_CONTENT_REGISTRY.getPageContentProcessor( pageContent.getClass() );
 			try {
-				@SuppressWarnings("unchecked")
 				String pageContentHtml = pageContentProcessor.getHtml( pageContent, request );
 				pageContentHtmlList.add( pageContentHtml );
+				if( page.getTitle() == null && pageContent.getId().equals( page.getPrimaryContentId() ) )
+					page.setTitle( pageContentProcessor.getTitle( pageContent, request ) );
 			} catch( InsufficientAccessException e ) {
 				// TODO: add 405 messaage
 			} catch( UnexpectedServerException e ) {
@@ -191,7 +192,7 @@ public class ClaymusMain extends HttpServlet {
 		
 		String requestUri = request.getRequestURI();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		Page page = dataAccessor.getPage( requestUri, true );
+		Page page = dataAccessor.getPage( requestUri );
 		
 		if( page == null )
 			page = dataAccessor.newPage();
@@ -227,7 +228,7 @@ public class ClaymusMain extends HttpServlet {
 		String requestUri = request.getRequestURI();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
-		Page page = dataAccessor.getPage( requestUri, true );
+		Page page = dataAccessor.getPage( requestUri );
 		List<PageContent> pageContentList = page == null
 				? new LinkedList<PageContent>()
 				: (List<PageContent>) dataAccessor.getPageContentList( page.getId() );

@@ -1,7 +1,5 @@
 package com.pratilipi.pagecontent.author.gae;
 
-import javax.jdo.annotations.Persistent;
-
 import com.claymus.data.access.gae.PageContentEntity;
 import com.pratilipi.pagecontent.author.AuthorContent;
 
@@ -9,18 +7,9 @@ import com.pratilipi.pagecontent.author.AuthorContent;
 public class AuthorContentEntity extends PageContentEntity
 		implements AuthorContent {
 
-	@Persistent( column = "X_COL_0" )
-	private Long authorId;
+	public AuthorContentEntity( Long authorId ) {
+		super.setId( authorId );
+	}
 	
-	@Override
-	public Long getAuthorId() {		
-		return this.authorId;
-	}
-
-	@Override
-	public void setAuthorId(Long authorId) {
-		this.authorId = authorId;
-	}
-
 }
  

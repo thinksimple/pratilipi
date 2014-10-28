@@ -184,29 +184,46 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return getEntity( PageEntity.class, id );
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Page getPage( String uri ) {
-		return getPage( uri, false );
+		Query query = new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
+						.addFilter( "uriAlias", uri )
+						.addOrdering( "creationDate", true )
+						.build();
+
+		List<Page> pageList = (List<Page>) query.execute( uri );
+		if( pageList.size() > 1 )
+			logger.log( Level.SEVERE, "More than one page entities found for uri " + uri );
+		
+		if( pageList.size() != 0 )
+			return pm.detachCopy( pageList.get( 0 ) );
+
+		
+		query = new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
+						.addFilter( "uri", uri )
+						.addOrdering( "creationDate", true )
+						.build();
+
+		pageList = (List<Page>) query.execute( uri );
+		if( pageList.size() > 1 )
+			logger.log( Level.SEVERE, "More than one page entities found for uri alias " + uri );
+
+		return pageList.size() == 0 ? null : pm.detachCopy( pageList.get( 0 ) );
 	}
 	
 	@Override
-	public Page getPage( String uri, boolean isAlias ) {
-		GaeQueryBuilder queryBuilder =
-				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) );
-		
-		if( isAlias )
-			queryBuilder.addFilter( "uriAlias", uri );
-		else
-			queryBuilder.addFilter( "uri", uri );
-
-		queryBuilder.addOrdering( "creationDate", true );
-
-		Query query = queryBuilder.build();
+	public Page getPageByPrimaryContentId( Long id ) {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
+						.addFilter( "primaryContentId", id )
+						.addOrdering( "creationDate", true )
+						.build();
 		
 		@SuppressWarnings("unchecked")
-		List<Page> pageList = (List<Page>) query.execute( uri );
+		List<Page> pageList = (List<Page>) query.execute( id );
 		if( pageList.size() > 1 )
-			logger.log( Level.SEVERE, "More than one page entities found for " + uri );
+			logger.log( Level.SEVERE, "More than one page entities found for PageContent " + id );
 		return pageList.size() == 0 ? null : pm.detachCopy( pageList.get( 0 ) );
 	}
 	

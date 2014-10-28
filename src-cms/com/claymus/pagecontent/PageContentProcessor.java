@@ -34,6 +34,10 @@ public abstract class PageContentProcessor<T extends PageContent> {
 	}
 	
 	
+	public final String getTitle( T pageContent, HttpServletRequest request ) {
+		return generateTitle( pageContent, request );
+	}
+	
 	public final String getHtml( T pageContent, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
@@ -80,6 +84,10 @@ public abstract class PageContentProcessor<T extends PageContent> {
 		return CacheLevel.NONE;
 	}
 	
+	
+	public String generateTitle( T pageContent, HttpServletRequest request ) {
+		return null;
+	}
 	
 	public String generateHtml( T pageContent, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {

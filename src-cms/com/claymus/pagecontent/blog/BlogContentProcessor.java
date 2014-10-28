@@ -21,6 +21,13 @@ import com.claymus.pagecontent.blogpost.shared.BlogPostContentData;
 
 public class BlogContentProcessor extends PageContentProcessor<BlogContent> {
 
+	@Override
+	public String generateTitle(
+			BlogContent blogContent, HttpServletRequest request ) {
+		
+		return blogContent.getTitle();
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public String generateHtml(

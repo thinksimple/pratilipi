@@ -482,10 +482,10 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			throws IllegalArgumentException, InsufficientAccessException {
 
 		PageData pageData = request.getPageData();
-		String uri = pageData.getUri().toLowerCase();
+		String uri = pageData.getUriAlias().toLowerCase();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-		Page page = dataAccessor.getPage( uri, true );
+		Page page = dataAccessor.getPage( uri );
 		
 		if( pageData.getId() == null ) { // Add page usecasee
 			
@@ -511,7 +511,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 
 			if( page == null ) {
 				page = dataAccessor.getPage( pageData.getId() );
-				page.setUri( pageData.getUri() );
+				page.setUri( uri );
 			}
 			
 			page.setTitle( pageData.getTitle() );

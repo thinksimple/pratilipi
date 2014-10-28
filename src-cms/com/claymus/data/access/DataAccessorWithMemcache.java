@@ -22,6 +22,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private final static String PREFIX_USER_ROLE_LIST = "UserRoleList-";
 	private final static String PREFIX_ROLE_ACCESS = "RoleAccess-";
 	private final static String PREFIX_PAGE = "Page-";
+	private final static String PREFIX_PAGE_BY_CONTENT = "PageByContent-";
 	private final static String PREFIX_PAGE_CONTENT = "PageConent-";
 	private final static String PREFIX_PAGE_CONTENT_LIST = "PageConentList-";
 	
@@ -187,12 +188,12 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	@Override
-	public Page getPage( String uri, boolean isAlias ) {
-		Page page = memcache.get( PREFIX_PAGE + uri );
+	public Page getPageByPrimaryContentId( Long id ) {
+		Page page = memcache.get( PREFIX_PAGE_BY_CONTENT + id );
 		if( page == null ) {
-			page = dataAccessor.getPage( uri, isAlias );
+			page = dataAccessor.getPageByPrimaryContentId( id );
 			if( page != null )
-				memcache.put( PREFIX_PAGE + uri, page );
+				memcache.put( PREFIX_PAGE_BY_CONTENT + id, page );
 		}
 		return page;
 	}
@@ -204,17 +205,14 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	@Override
 	public Page createOrUpdatePage( Page page ) {
-		if( page.getUriAlias() != null )
-			memcache.remove( PREFIX_PAGE + page.getUriAlias() );
-		
 		page = dataAccessor.createOrUpdatePage( page );
-		
 		memcache.put( PREFIX_PAGE + page.getId(), page );
 		if( page.getUri() != null )
 			memcache.put( PREFIX_PAGE + page.getUri(), page );
 		if( page.getUriAlias() != null )
 			memcache.put( PREFIX_PAGE + page.getUriAlias(), page );
-		
+		if( page.getPrimaryContentId() != null )
+			memcache.put( PREFIX_PAGE_BY_CONTENT + page.getPrimaryContentId(), page );
 		return page;
 	}
 

@@ -15,11 +15,13 @@ import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.BlobEntry;
+import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.taskqueue.Task;
 import com.claymus.taskqueue.TaskQueue;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.UserReviewState;
@@ -403,6 +405,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		AuthorData authorData = request.getAuthor();
 		
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( this.getThreadLocalRequest() );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		Author author = null;
 		
@@ -416,6 +419,15 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			author = dataAccessor.newAuthor();
 			author.setRegistrationDate( new Date() );
 
+			author = dataAccessor.createOrUpdateAuthor( author );
+			
+			Page page = dataAccessor.newPage();
+			page.setType( PratilipiPageType.AUTHOR.toString() );
+			page.setUri( PratilipiPageType.AUTHOR.getUrlPrefix() + "/" + author.getId() );
+			page.setPrimaryContentId( author.getId() );
+			page.setCreationDate( new Date() );
+			page = dataAccessor.createOrUpdatePage( page );
+			
 		} else { // Update Author usecase
 		
 			author = dataAccessor.getAuthor( authorData.getId() );
@@ -448,9 +460,22 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		
 		author = dataAccessor.createOrUpdateAuthor( author );
-		Language language = dataAccessor.getLanguage( author.getLanguageId() );
+
 		
-		return new SaveAuthorResponse( PratilipiHelper.get( this.getThreadLocalRequest() ).createAuthorData( author, language ) );
+		// Updating Author page uri
+		if( authorData.hasFirstNameEn() || authorData.hasLastNameEn() || authorData.hasPenNameEn() ) {
+			Page page = dataAccessor.getPageByPrimaryContentId( author.getId() );
+			String uriAlias = pratilipiHelper.generateUriAlias(
+					page.getUriAlias(), "/",
+					author.getFirstNameEn(), author.getLastNameEn(), author.getPenNameEn() );
+			if( ! uriAlias.equals( page.getUriAlias() ) ) {
+				page.setUriAlias( uriAlias );
+				page = dataAccessor.createOrUpdatePage( page );
+			}
+		}
+
+		
+		return new SaveAuthorResponse( pratilipiHelper.createAuthorData( author.getId() ) );
 	}
 
 	@Override

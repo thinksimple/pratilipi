@@ -86,7 +86,7 @@
 		
 		</#if>
 
-		<title>${ page.getTitle() }</title>		
+		<title>${ page.getTitle() } | Pratilipi</title>		
 		
 	</head>
 	<body>

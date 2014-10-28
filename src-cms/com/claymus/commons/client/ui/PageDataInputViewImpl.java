@@ -60,7 +60,7 @@ public class PageDataInputViewImpl extends PageDataInputView {
 		PageData pageData = new PageData();
 		pageData.setId( this.pageData == null ? null : this.pageData.getId() );
 		
-		pageData.setUri( uriInput.getText() );
+		pageData.setUriAlias( uriInput.getText() );
 		pageData.setTitle( titleInput.getText() );
 		
 		return pageData;

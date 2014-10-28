@@ -10,7 +10,12 @@
     <property name="URI_ALIAS" direction="asc"/>
     <property name="CREATION_DATE" direction="asc"/>
   </datastore-index>
-
+  
+  <datastore-index kind="PAGE" ancestor="false" source="manual">
+    <property name="PRIMARY_CONTENT_ID" direction="asc"/>
+    <property name="CREATION_DATE" direction="asc"/>
+  </datastore-index>
+  
   
   <!-- Required by ClaymusService.getBlogPostContentList -->
   <datastore-index kind="PAGE_CONTENT" ancestor="false" source="manual">

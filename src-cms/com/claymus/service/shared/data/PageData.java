@@ -8,6 +8,8 @@ public class PageData implements IsSerializable {
 	
 	private String uri;
 	
+	private String uriAlias;
+	
 	private String title;
 	
 	
@@ -25,6 +27,14 @@ public class PageData implements IsSerializable {
 
 	public void setUri( String uri ) {
 		this.uri = uri;
+	}
+
+	public String getUriAlias() {
+		return uriAlias;
+	}
+
+	public void setUriAlias( String uriAlias ) {
+		this.uriAlias = uriAlias;
 	}
 
 	public String getTitle() {

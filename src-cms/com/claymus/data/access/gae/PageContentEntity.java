@@ -38,6 +38,10 @@ public abstract class PageContentEntity implements PageContent {
 		return id;
 	}
 
+	protected void setId( Long id ) {
+		this.id = id;
+	}
+
 	@Override
 	public Long getPageId() {
 		return pageId;

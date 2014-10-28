@@ -52,9 +52,9 @@ public interface DataAccessor extends Serializable {
 	Page getPage( Long id );
 	
 	Page getPage( String uri );
-	
-	Page getPage( String uri, boolean isAlias );
-	
+
+	Page getPageByPrimaryContentId( Long id );
+
 	DataListCursorTuple<Page> getPageList( String cursorStr, int resultCount );
 
 	Page createOrUpdatePage( Page page );

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.Memcache;
+import com.claymus.data.transfer.Page;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -242,7 +243,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setLanguageData( createLanguageData( language ) );
 
 		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
-		pratilipiData.setAuthorData( createAuthorData( author, null ) );
+		pratilipiData.setAuthorData( createAuthorData( pratilipi.getAuthorId() ) );
 		
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
@@ -264,28 +265,22 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 
 	public AuthorData createAuthorData( Long authorId ) {
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+
 		Author author = dataAccessor.getAuthor( authorId );
-		Language language = dataAccessor.getLanguage( author.getLanguageId() );
-		dataAccessor.destroy();
+		Page authorPage = dataAccessor.getPageByPrimaryContentId( authorId );
 		
-		return createAuthorData( author, language );
-	}
-	
-	public AuthorData createAuthorData( Author author, Language language ) {
-		
-		if( author == null )
-			return null;
-		
+
 		AuthorData authorData = new AuthorData();
 		
 		authorData.setId( author.getId() );
-		authorData.setPageUrl( URL_AUTHOR_PAGE + author.getId() );
+		authorData.setPageUrl( authorPage.getUri() );
+		authorData.setPageUrlAlias( authorPage.getUriAlias() );
 		authorData.setAuthorImageUrl( URL_AUTHOR_IMAGE + author.getId() );
 		authorData.setUserId( author.getUserId() );
 
 		authorData.setLanguageId( author.getLanguageId() );
-		authorData.setLanguageData( createLanguageData( language ) );
+		authorData.setLanguageData( createLanguageData( author.getLanguageId() ) );
 
 		authorData.setFirstName( author.getFirstName() );
 		authorData.setLastName( author.getLastName() );

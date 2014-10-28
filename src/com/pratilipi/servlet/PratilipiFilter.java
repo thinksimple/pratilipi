@@ -13,6 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.data.transfer.Page;
 import com.claymus.pagecontent.blogpost.BlogPostContent;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
@@ -58,14 +59,18 @@ public class PratilipiFilter implements Filter {
 		String action = request.getParameter( "action" );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Page page = dataAccessor.getPage( requestUri );
 		
-		
-		if( redirections.get( requestUri ) != null ){
+		if( page != null && page.getUriAlias() != null && ! requestUri.equals( page.getUriAlias() ) ) {
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", page.getUriAlias() );
+			
+		} else if( redirections.get( requestUri ) != null ){
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
 		} else if( !host.equals( "www.pratilipi.com" )
-				&& !host.equals( "mark-3p7.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-3p8.prod-pratilipi.appspot.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( "devo-pratilipi.appspot.com" )
 				&& !host.equals( "localhost" )

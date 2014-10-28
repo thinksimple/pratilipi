@@ -40,9 +40,7 @@ public class AuthorContentHelper extends PageContentHelper<
 	
 	
 	public static AuthorContent newAuthorContent( Long authorId ) {
-		AuthorContent authorContent = new AuthorContentEntity();
-		authorContent.setAuthorId( authorId );
-		return authorContent;
+		return new AuthorContentEntity( authorId );
 	}
 
 	

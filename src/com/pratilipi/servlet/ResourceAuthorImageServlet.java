@@ -41,8 +41,8 @@ public class ResourceAuthorImageServlet extends ResourceServlet {
 
 		BlobEntry blobEntry = super.getBlobEntry( request );
 		if( blobEntry == null ) { // Setting default image
-			String url = request.getRequestURI();
-			String fileName = url.substring( 0, url.lastIndexOf( '/' ) + 1 ) + "author";
+			String fileName = getFileName( request );
+			fileName = fileName.substring( 0, fileName.lastIndexOf( '/' ) + 1 ) + "author";
 			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
 		}
 		return blobEntry;

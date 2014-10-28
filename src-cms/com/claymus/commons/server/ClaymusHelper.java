@@ -35,7 +35,7 @@ public class ClaymusHelper implements Serializable {
 	private static final String URL_REGISTER_PAGE = "#signup";
 	private static final String URL_FORGOTPASSWORD_PAGE = "#forgotpassword";
 	
-	private final HttpServletRequest request;
+	protected final HttpServletRequest request;
 	private final HttpSession session;
 	
 	private Long currentUserId;
@@ -281,9 +281,40 @@ public class ClaymusHelper implements Serializable {
 		
 		pageData.setId( page.getId() );
 		pageData.setUri( page.getUri() );
+		pageData.setUriAlias( page.getUriAlias() );
 		pageData.setTitle( page.getTitle() );
 		
 		return pageData;
+	}
+	
+	public String generateUriAlias( String oldUriAlias, String uriPrefix, String... keywords ) {
+		String uriAlias = uriPrefix;
+		for( String keyword : keywords )
+			if( keyword != null )
+				uriAlias += keyword
+								.trim()
+								.toLowerCase()
+								.replaceAll( "[^a-z0-9]+", "-" )
+						+ "-";
+		
+		uriAlias = uriAlias.replaceAll( "[-]+", "-" );
+		if( uriAlias.charAt( uriPrefix.length() ) == '-' )
+			uriAlias = uriPrefix + uriAlias.substring( uriPrefix.length() + 1, uriAlias.length() - 1 );
+		else
+			uriAlias = uriAlias.substring( 0, uriAlias.length() - 1 );
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		
+		for( int i = 0; ; i++ ) {
+			String aUriAlias = i == 0 ? uriAlias :  uriAlias + "-" + i;
+			if( oldUriAlias != null && oldUriAlias.equals( aUriAlias ) )
+				return aUriAlias;
+
+			Page page = dataAccessor.getPage( aUriAlias );
+			if( page == null )
+				return aUriAlias;
+		}
+
 	}
 	
 }
