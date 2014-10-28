@@ -84,8 +84,18 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 
 	private native void loadBasicEditor( Element element ) /*-{
 		$wnd.CKEDITOR.replace( element, {
-				toolbar : 'BASIC'
+				toolbar : 'BASIC',
+				filebrowserImageBrowseUrl : "/filebrowser",
 		} );
+		$wnd.CKEDITOR.on( 'dialogDefinition', function(e){
+			var dialogName = e.data.name;
+			var dialogDefinition = e.data.definition;
+			
+			if( dialogName == 'image' ){
+				dialogDefinition.removeContents( 'Link' );
+				dialogDefinition.removeContents( 'advanced' );
+			}
+		});
 	}-*/;
 
 	private native String getHtmlFromEditor( String editorName ) /*-{

@@ -17,12 +17,15 @@ import com.claymus.pagecontent.PageContentProcessor;
 
 public class FileBrowserProcessor extends PageContentProcessor<FileBrowser> {
 
+	private static final String GOOGLE_CLOUD_STORAGE_BUCKET =
+			ClaymusHelper.getSystemProperty( "blobservice.gcs.bucket" );
+	
 	@Override
 	public String generateHtml(
 			FileBrowser fileBrowser, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
-		BlobAccessor blobAccessor = new BlobAccessorGcsImpl( ClaymusHelper.URL_RESOURCE_STATIC );
+		BlobAccessor blobAccessor = new BlobAccessorGcsImpl( GOOGLE_CLOUD_STORAGE_BUCKET );
 		String prefix = "pratilipi-cover/300";
 		List<String> imageNameList = null;
 		try {
@@ -33,12 +36,11 @@ public class FileBrowserProcessor extends PageContentProcessor<FileBrowser> {
 		
 		List<String> imageUrlList = new ArrayList<>();
 		
-		for( String imageName : imageNameList )
-			//Wasn't sure about using PratilipiHelper.getCoverImage300Url() here.
-			imageUrlList.add( ClaymusHelper.URL_RESOURCE_STATIC + 
-								"/" + prefix +"/" + imageName );
-		
-		
+		for( String imageName : imageNameList ) {
+			//TODO : THIS IS FOR EXPERIMENT PURPOSE AND SHOULD BE REPLACED BY ACTUAL CODE ONCE TESTING IS SUCCESSFULL
+			imageUrlList.add( "/resource.pratilipi-cover/300/"  + imageName.substring( imageName.lastIndexOf( "/" )+1 ) );
+		}
+			
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "imageUrlList", imageUrlList );
