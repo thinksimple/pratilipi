@@ -425,35 +425,35 @@ public class PratilipiMain extends ClaymusMain {
 			HttpServletRequest request ) throws IOException {
 		
 		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 5918379302977536L );
-		bookIdList.add( 4983124941340672L );
-		bookIdList.add( 5111065843073024L );
-		bookIdList.add( 5142641637326848L );
-		bookIdList.add( 5169145746292736L );
-		bookIdList.add( 5385510763626496L );
+		bookIdList.add( 6288435027378176L );
+		bookIdList.add( 5390660966285312L );
+		bookIdList.add( 5397577474244608L );
+		bookIdList.add( 5994268690743296L );
+		bookIdList.add( 5680735809699840L );
+		bookIdList.add( 6288587767152640L );
 
 		List<Long> poemIdList = new LinkedList<>();
-		poemIdList.add( 6272148242956288L );
-		poemIdList.add( 5673385510043648L );
-		poemIdList.add( 5135695064596480L );
-		poemIdList.add( 5398371237888000L );
-		poemIdList.add( 5725485073956864L );
-		poemIdList.add( 5095141714952192L );
+		poemIdList.add( 5744125232021504L );
+		poemIdList.add( 5743680166035456L );
+		poemIdList.add( 5650238052237312L );
+		poemIdList.add( 4695001086820352L );
+		poemIdList.add( 5760293099536384L );
+		poemIdList.add( 5355429349556224L );
 		
 		List<Long> storyIdList = new LinkedList<>();
-		storyIdList.add( 5161363399770112L );
-		storyIdList.add( 5174400772997120L );
-		storyIdList.add( 6036509157228544L );
-		storyIdList.add( 5740423507083264L );
-		storyIdList.add( 5658702627471360L );
-		storyIdList.add( 5688681230761984L );
+		storyIdList.add( 4814537274425344L );
+		storyIdList.add( 5655352284545024L );
+		storyIdList.add( 6040655411281920L );
+		storyIdList.add( 5726911808405504L );
+		storyIdList.add( 5633779737559040L );
+		storyIdList.add( 5161516139544576L );
 
 		
 		HomeContent homeContent = HomeContentFactory.newHomeContent();
 		homeContent.setBookIdList( bookIdList );
 		homeContent.setPoemIdList( poemIdList );
 		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 5 ) );
+		homeContent.setLastUpdated( new Date( 6 ) );
 		return homeContent;
 	}
 
