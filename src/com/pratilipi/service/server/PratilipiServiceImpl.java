@@ -411,10 +411,8 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		if( authorData.getId() == null ) { // Add Author usecase
 		
-			if( ! AuthorContentHelper.hasRequestAccessToAddAuthorData( this.getThreadLocalRequest() ) ) {
-				dataAccessor.destroy();
+			if( ! AuthorContentHelper.hasRequestAccessToAddAuthorData( this.getThreadLocalRequest() ) )
 				throw new InsufficientAccessException();
-			}
 			
 			author = dataAccessor.newAuthor();
 			author.setRegistrationDate( new Date() );
@@ -432,10 +430,8 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 			author = dataAccessor.getAuthor( authorData.getId() );
 		
-			if( ! AuthorContentHelper.hasRequestAccessToUpdateAuthorData( this.getThreadLocalRequest(), author ) ) {
-				dataAccessor.destroy();
+			if( ! AuthorContentHelper.hasRequestAccessToUpdateAuthorData( this.getThreadLocalRequest(), author ) )
 				throw new InsufficientAccessException();
-			}
 
 		}
 		

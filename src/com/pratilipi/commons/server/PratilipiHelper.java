@@ -298,7 +298,6 @@ public class PratilipiHelper extends ClaymusHelper {
 	public LanguageData createLanguageData( Long languageId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Language language = dataAccessor.getLanguage( languageId );
-		dataAccessor.destroy();
 
 		return createLanguageData( language );
 	}
