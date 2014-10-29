@@ -25,13 +25,23 @@ import com.pratilipi.service.shared.data.PratilipiData;
 public class PratilipiContentProcessor extends PageContentProcessor<PratilipiContent> {
 
 	@Override
+	public String generateTitle( PratilipiContent pratilipiContent, HttpServletRequest request ) {
+		Pratilipi pratilipi = DataAccessorFactory
+				.getDataAccessor( request )
+				.getPratilipi( pratilipiContent.getId() );
+		
+		return pratilipi.getTitle()
+				+ ( pratilipi.getTitleEn() == null ? "" : " (" + pratilipi.getTitleEn() + ")" );
+	}
+	
+	@Override
 	public String generateHtml( PratilipiContent pratilipiContent, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		
-		Long pratilipiId = pratilipiContent.getPratilipiId();
+		Long pratilipiId = pratilipiContent.getId();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		boolean showEditOption = PratilipiContentHelper
 				.hasRequestAccessToUpdatePratilipiData( request, pratilipi );

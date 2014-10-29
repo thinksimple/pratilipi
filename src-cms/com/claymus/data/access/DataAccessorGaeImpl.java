@@ -213,17 +213,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Page getPageByPrimaryContentId( Long id ) {
+	public Page getPage( String pageType, Long primaryContentId ) {
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
-						.addFilter( "primaryContentId", id )
+						.addFilter( "pageType", pageType )
+						.addFilter( "primaryContentId", primaryContentId )
 						.addOrdering( "creationDate", true )
 						.build();
 		
 		@SuppressWarnings("unchecked")
-		List<Page> pageList = (List<Page>) query.execute( id );
+		List<Page> pageList = (List<Page>) query.execute( pageType, primaryContentId );
 		if( pageList.size() > 1 )
-			logger.log( Level.SEVERE, "More than one page entities found for PageContent " + id );
+			logger.log( Level.SEVERE, "More than one page entities found for PageType " + pageType + ", PageContent " + primaryContentId );
 		return pageList.size() == 0 ? null : pm.detachCopy( pageList.get( 0 ) );
 	}
 	

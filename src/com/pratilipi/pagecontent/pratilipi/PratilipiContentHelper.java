@@ -54,9 +54,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 	
 	
 	public static PratilipiContent newPratilipiContent( Long pratilipiId ) {
-		PratilipiContent pratilipiContent = new PratilipiContentEntity();
-		pratilipiContent.setPratilipiId( pratilipiId );
-		return pratilipiContent;
+		return new PratilipiContentEntity( pratilipiId );
 	}
 
 	

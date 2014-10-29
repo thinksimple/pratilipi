@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.Memcache;
 import com.claymus.data.transfer.Page;
+import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -268,7 +269,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
 		Author author = dataAccessor.getAuthor( authorId );
-		Page authorPage = dataAccessor.getPageByPrimaryContentId( authorId );
+		Page authorPage = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), authorId );
 		
 
 		AuthorData authorData = new AuthorData();

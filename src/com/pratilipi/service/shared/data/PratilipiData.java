@@ -15,6 +15,7 @@ public class PratilipiData implements IsSerializable {
 	private boolean hasType;
 
 	private String pageUrl;
+	private String pageUrlAlias;
 	private String coverImageUrl;
 	private String coverImageUploadUrl;
 	private String readerPageUrl;
@@ -110,6 +111,14 @@ public class PratilipiData implements IsSerializable {
 
 	public void setPageUrl( String pageUrl ) {
 		this.pageUrl = pageUrl;
+	}
+
+	public String getPageUrlAlias() {
+		return pageUrlAlias;
+	}
+
+	public void setPageUrlAlias( String pageUrlAlias ) {
+		this.pageUrlAlias = pageUrlAlias;
 	}
 
 	public String getCoverImageUrl() {

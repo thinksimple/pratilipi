@@ -95,11 +95,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public SavePratilipiResponse savePratilipi( SavePratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
 	
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-
 		PratilipiData pratilipiData = request.getPratilipiData();
-		Pratilipi pratilipi = null;
 
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( this.getThreadLocalRequest() );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		Pratilipi pratilipi = null;
 		
 		if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
 
@@ -111,6 +111,14 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			if ( ! PratilipiContentHelper.hasRequestAccessToAddPratilipiData( this.getThreadLocalRequest(), pratilipi ) )
 				throw new InsufficientAccessException();
 
+			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+			
+			Page page = dataAccessor.newPage();
+			page.setType( PratilipiPageType.PRATILIPI.toString() );
+			page.setUri( PratilipiPageType.PRATILIPI.getUrlPrefix() + "/" + pratilipi.getId() );
+			page.setPrimaryContentId( pratilipi.getId() );
+			page.setCreationDate( new Date() );
+			page = dataAccessor.createOrUpdatePage( page );
 		
 		} else { // Update Pratilipi usecase
 		
@@ -156,7 +164,20 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-			
+		
+		
+		// Updating Pratilipi page uri
+		if( pratilipiData.hasTitleEn() ) {
+			Page page = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipi.getId() );
+			Page authorPage = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), pratilipi.getAuthorId() );
+			String uriAlias = pratilipiHelper.generateUriAlias(
+					page.getUriAlias(), authorPage.getUriAlias() + "/", page.getTitle() );
+			if( ! uriAlias.equals( page.getUriAlias() ) ) {
+				page.setUriAlias( uriAlias );
+				page = dataAccessor.createOrUpdatePage( page );
+			}
+		}
+		
 		
 		Task task = TaskQueueFactory.newTask();
 		task.addParam( "pratilipiId", pratilipi.getId().toString() );
@@ -165,11 +186,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		taskQueue.add( task );
 
 		
-		return new SavePratilipiResponse(
-				PratilipiHelper.get( this.getThreadLocalRequest() )
-						.createPratilipiData(
-								pratilipi.getId(),
-								PratilipiContentHelper.hasRequestAccessToReadPratilipiMetaData( this.getThreadLocalRequest() ) ) );
+		pratilipiData = pratilipiHelper.createPratilipiData(
+				pratilipi.getId(),
+				PratilipiContentHelper.hasRequestAccessToReadPratilipiMetaData( this.getThreadLocalRequest() ) );
+		
+		return new SavePratilipiResponse( pratilipiData );
 	}
 	
 	@Override
@@ -416,7 +437,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			
 			author = dataAccessor.newAuthor();
 			author.setRegistrationDate( new Date() );
-
+			
 			author = dataAccessor.createOrUpdateAuthor( author );
 			
 			Page page = dataAccessor.newPage();
@@ -460,7 +481,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		// Updating Author page uri
 		if( authorData.hasFirstNameEn() || authorData.hasLastNameEn() || authorData.hasPenNameEn() ) {
-			Page page = dataAccessor.getPageByPrimaryContentId( author.getId() );
+			Page page = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), author.getId() );
 			String uriAlias = pratilipiHelper.generateUriAlias(
 					page.getUriAlias(), "/",
 					author.getFirstNameEn(), author.getLastNameEn(), author.getPenNameEn() );

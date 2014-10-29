@@ -1,7 +1,6 @@
 package com.pratilipi.pagecontent.pratilipi.gae;
 
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 
 import com.claymus.data.access.gae.PageContentEntity;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContent;
@@ -11,18 +10,8 @@ import com.pratilipi.pagecontent.pratilipi.PratilipiContent;
 public class PratilipiContentEntity extends PageContentEntity
 		implements PratilipiContent {
 
-	@Persistent( column = "X_COL_0" )
-	private Long pratilipiId;
-
-	
-	@Override
-	public Long getPratilipiId() {
-		return pratilipiId;
+	public PratilipiContentEntity( Long pratilipiId ) {
+		setId( pratilipiId );
 	}
-
-	@Override
-	public void setPratilipiId( Long pratilipiId ) {
-		this.pratilipiId = pratilipiId;
-	} 
 
 }
