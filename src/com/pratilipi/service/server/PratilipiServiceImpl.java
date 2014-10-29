@@ -18,7 +18,6 @@ import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.taskqueue.Task;
-import com.claymus.taskqueue.TaskQueue;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiPageType;
@@ -181,9 +180,10 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		Task task = TaskQueueFactory.newTask();
 		task.addParam( "pratilipiId", pratilipi.getId().toString() );
-		
-		TaskQueue taskQueue = TaskQueueFactory.getCreateOrUpdateDefaultCoverTaskQueue();
-		taskQueue.add( task );
+		// Creating/Updating default cover image
+		TaskQueueFactory.getCreateOrUpdateDefaultCoverTaskQueue().add( task );
+		// Updating PRATILIPI search index
+		TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
 
 		
 		pratilipiData = pratilipiHelper.createPratilipiData(
@@ -491,6 +491,21 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			}
 		}
 
+
+		// Updating PRATILIPI search index
+		if( authorData.getId() != null
+				&& ( authorData.hasFirstName()
+						|| authorData.hasLastName()
+						|| authorData.hasPenName()
+						|| authorData.hasFirstNameEn()
+						|| authorData.hasLastNameEn()
+						|| authorData.hasPenNameEn() ) ) {
+			
+			Task task = TaskQueueFactory.newTask();
+			task.addParam( "authorId", author.getId().toString() );
+			TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
+		}
+
 		
 		return new SaveAuthorResponse( pratilipiHelper.createAuthorData( author.getId() ) );
 	}
@@ -522,7 +537,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			AuthorData authorData = new AuthorData();
 			authorData.setId( author.getId() );
 			authorData.setLanguageId( language.getId() );
-//			authorData.setLanguageName( language.getName() );
 			authorData.setFirstName( author.getFirstName() );
 			authorData.setLastName( author.getLastName() );
 			authorData.setPenName( author.getPenName() );
@@ -672,6 +686,13 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		pratilipiGenre.setGenreId( request.getGenreId() );
 		
 		dataAccessor.createPratilipiGenre( pratilipiGenre );
+
+		
+		// Updating PRATILIPI search index
+		Task task = TaskQueueFactory.newTask();
+		task.addParam( "pratilipiId", request.getPratilipiId().toString() );
+		TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
+
 		
 		return new AddPratilipiGenreResponse();
 	}
@@ -688,6 +709,13 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 		
 		dataAccessor.deletePratilipiGenre( request.getPratilipiId(), request.getGenreId() );
+		
+		
+		// Updating PRATILIPI search index
+		Task task = TaskQueueFactory.newTask();
+		task.addParam( "pratilipiId", request.getPratilipiId().toString() );
+		TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
+
 		
 		return new DeletePratilipiGenreResponse();
 	}

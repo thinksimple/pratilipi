@@ -10,6 +10,8 @@ public class TaskQueueFactory extends com.claymus.taskqueue.TaskQueueFactory {
 	
 	private static final String QUEUE_WORD_TO_PRATILIPI = "word-to-pratilipi";
 
+	private static final String QUEUE_UPDATE_INDEX_PRATILIPI = "update-index-pratilipi";
+
 	
 	public static TaskQueue getCreateOrUpdateDefaultCoverTaskQueue() {
 		return getTaskQueue( QUEUE_CREATE_OR_UPDATE_DEFAULT_COVER );
@@ -21,6 +23,10 @@ public class TaskQueueFactory extends com.claymus.taskqueue.TaskQueueFactory {
 
 	public static TaskQueue getWordToPrailipiTaskQueue() {
 		return getTaskQueue( QUEUE_WORD_TO_PRATILIPI );
+	}
+
+	public static TaskQueue getUpdatePratilipiIndexQueue() {
+		return getTaskQueue( QUEUE_UPDATE_INDEX_PRATILIPI );
 	}
 
 }

@@ -49,6 +49,11 @@
     
   <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
     <property name="AUTHOR_ID" direction="asc"/>
+    <property name="TITLE" direction="asc"/>
+  </datastore-index>
+
+  <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
+    <property name="AUTHOR_ID" direction="asc"/>
     <property name="STATE" direction="asc"/>
     <property name="TITLE" direction="asc"/>
   </datastore-index>

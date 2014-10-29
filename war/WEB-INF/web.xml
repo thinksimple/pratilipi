@@ -82,7 +82,6 @@
     <url-pattern>/resource.pratilipi-content/image/*</url-pattern>
   </servlet-mapping>
   
-   
   <!-- Handlers for Task Queues -->
   
   <servlet>
@@ -139,6 +138,16 @@
     <url-pattern>/_ah/queue/word-to-pratilipi</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>QueueUpdatePratilipiIndexServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.QueueUpdatePratilipiIndexServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueueUpdatePratilipiIndexServlet</servlet-name>
+    <url-pattern>/_ah/queue/update-index-pratilipi</url-pattern>
+  </servlet-mapping>
+
+  
 
   <filter>
     <filter-name>PratilipiFilter</filter-name>
