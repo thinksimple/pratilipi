@@ -65,6 +65,7 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 	
 
+	@Deprecated
 	public static String getPageUrl(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
@@ -72,6 +73,7 @@ public class PratilipiHelper extends ClaymusHelper {
 				( pratilipiId == null ? "" : pratilipiId );
 	}
 	
+	@Deprecated
 	public static String getReaderPageUrl(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
@@ -93,12 +95,14 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 	
 
+	@Deprecated
 	public static String getCoverImageUrl(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
 		return getCoverImageUrl( pratilipiType, pratilipiId, true );
 	}
 	
+	@Deprecated
 	public static String getCoverImageUrl(
 			PratilipiType pratilipiType, Long pratilipiId, boolean dynamic ) {
 		
@@ -106,12 +110,14 @@ public class PratilipiHelper extends ClaymusHelper {
 				getCoverImage( pratilipiId );
 	}
 	
+	@Deprecated
 	public static String getCoverImage300Url(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
 		return getCoverImage300Url( pratilipiType, pratilipiId, true );
 	}
 	
+	@Deprecated
 	public static String getCoverImage300Url(
 			PratilipiType pratilipiType, Long pratilipiId, boolean dynamic ) {
 		
@@ -176,16 +182,19 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 	
 
+	@Deprecated
 	public String createAuthorName( Author author ) {
 		return author.getFirstName()
 				+ ( author.getLastName() == null ? "" : " " + author.getLastName() );
 	}
 	
+	@Deprecated
 	public String createAuthorNameEn( Author author ) {
 		return author.getFirstNameEn()
 				+ ( author.getLastNameEn() == null ? "" : " " + author.getLastNameEn() );
 	}
 
+	
 	public PratilipiData createPratilipiData( Long pratilipiId ) {
 		return createPratilipiData( pratilipiId, false );
 	}
@@ -193,7 +202,7 @@ public class PratilipiHelper extends ClaymusHelper {
 	public PratilipiData createPratilipiData(
 			Long pratilipiId, boolean includeMetaData ) {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
@@ -204,12 +213,11 @@ public class PratilipiHelper extends ClaymusHelper {
 		for( PratilipiGenre pratilipiGenre : pratilipiGenreList )
 			genreList.add( dataAccessor.getGenre( pratilipiGenre.getGenreId() ) );
 		
-		dataAccessor.destroy();
-		
 		
 		return createPratilipiData( pratilipi, language, author, genreList, includeMetaData );
 	}
 
+		
 	public PratilipiData createPratilipiData(
 			Pratilipi pratilipi, Language language,
 			Author author, List<Genre> genreList ) {
@@ -221,9 +229,8 @@ public class PratilipiHelper extends ClaymusHelper {
 			Pratilipi pratilipi, Language language,
 			Author author, List<Genre> genreList, boolean includeMetaData ) {
 		
-		if( pratilipi == null )
-			return null;
-		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Page pratilipiPage = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipi.getId() );
 		if( genreList == null )
 			genreList = new ArrayList<Genre>( 0 );
 		
@@ -231,7 +238,8 @@ public class PratilipiHelper extends ClaymusHelper {
 
 		pratilipiData.setId( pratilipi.getId() );
 		pratilipiData.setType( pratilipi.getType() );
-		pratilipiData.setPageUrl( getPageUrl( pratilipi.getType(), pratilipi.getId() ) );
+		pratilipiData.setPageUrl( pratilipiPage.getUri() );
+		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
 		pratilipiData.setCoverImageUrl( getCoverImage300Url( pratilipi.getType(), pratilipi.getId(), false ) );
 		pratilipiData.setCoverImageUploadUrl( getCoverImageUrl( pratilipi.getType(), pratilipi.getId(), true ) );
 		pratilipiData.setReaderPageUrl( getReaderPageUrl( pratilipi.getType(), pratilipi.getId() ) );
@@ -244,7 +252,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setLanguageData( createLanguageData( language ) );
 
 		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
-		pratilipiData.setAuthorData( createAuthorData( pratilipi.getAuthorId() ) );
+		pratilipiData.setAuthorData( createAuthorData( author, null ) );
 		
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
@@ -267,11 +275,18 @@ public class PratilipiHelper extends ClaymusHelper {
 
 	public AuthorData createAuthorData( Long authorId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-
 		Author author = dataAccessor.getAuthor( authorId );
-		Page authorPage = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), authorId );
+		Language language = dataAccessor.getLanguage( author.getLanguageId() );
+		return createAuthorData( author, language );
+	}
+	
+	public AuthorData createAuthorData( Author author, Language language ) {
+		if( author == null )
+			return null;
 		
-
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Page authorPage = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), author.getId() );
+		
 		AuthorData authorData = new AuthorData();
 		
 		authorData.setId( author.getId() );
@@ -281,7 +296,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		authorData.setUserId( author.getUserId() );
 
 		authorData.setLanguageId( author.getLanguageId() );
-		authorData.setLanguageData( createLanguageData( author.getLanguageId() ) );
+		authorData.setLanguageData( createLanguageData( language ) );
 
 		authorData.setFirstName( author.getFirstName() );
 		authorData.setLastName( author.getLastName() );
@@ -299,12 +314,10 @@ public class PratilipiHelper extends ClaymusHelper {
 	public LanguageData createLanguageData( Long languageId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Language language = dataAccessor.getLanguage( languageId );
-
 		return createLanguageData( language );
 	}
 	
 	public LanguageData createLanguageData( Language language ) {
-		
 		if( language == null )
 			return null;
 		

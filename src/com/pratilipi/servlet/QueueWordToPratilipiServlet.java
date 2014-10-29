@@ -29,7 +29,6 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.pratilipi.commons.server.PratilipiHelper;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessorFactory;
 
 @SuppressWarnings("serial")
@@ -63,10 +62,7 @@ public class QueueWordToPratilipiServlet extends HttpServlet {
 		
 
 		String pratilipiIdStr = request.getParameter( "pratilipiId" );
-		String pratilipiTypeStr = request.getParameter( "pratilipiType" );
-		
 		Long pratilipiId = Long.parseLong( pratilipiIdStr );
-		PratilipiType pratilipiType = PratilipiType.valueOf( pratilipiTypeStr );
 		
 		
 		// Fetching word content blob store

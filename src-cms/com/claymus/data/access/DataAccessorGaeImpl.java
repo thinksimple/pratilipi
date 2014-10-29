@@ -216,7 +216,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public Page getPage( String pageType, Long primaryContentId ) {
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
-						.addFilter( "pageType", pageType )
+						.addFilter( "type", pageType )
 						.addFilter( "primaryContentId", primaryContentId )
 						.addOrdering( "creationDate", true )
 						.build();

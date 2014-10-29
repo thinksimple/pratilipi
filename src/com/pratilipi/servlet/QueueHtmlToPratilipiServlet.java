@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
 import com.pratilipi.commons.server.PratilipiHelper;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessorFactory;
 
 @SuppressWarnings("serial")
@@ -29,10 +28,7 @@ public class QueueHtmlToPratilipiServlet extends HttpServlet {
 			HttpServletResponse response ) throws IOException {
 
 		String pratilipiIdStr = request.getParameter( "pratilipiId" );
-		String pratilipiTypeStr = request.getParameter( "pratilipiType" );
-		
 		Long pratilipiId = Long.parseLong( pratilipiIdStr );
-		PratilipiType pratilipiType = PratilipiType.valueOf( pratilipiTypeStr );
 		
 		
 		// Fetching html content blob store

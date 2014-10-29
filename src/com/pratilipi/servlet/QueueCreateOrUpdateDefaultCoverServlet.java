@@ -15,7 +15,6 @@ import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
 import com.pratilipi.commons.server.PratilipiHelper;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -37,9 +36,6 @@ public class QueueCreateOrUpdateDefaultCoverServlet extends HttpServlet {
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		dataAccessor.destroy();
 	
-		
-		PratilipiType pratilipiType = pratilipi.getType();
-		
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		String coverImage = PratilipiHelper.getCoverImage300( pratilipiId );

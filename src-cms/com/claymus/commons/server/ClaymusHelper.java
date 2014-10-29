@@ -175,9 +175,8 @@ public class ClaymusHelper implements Serializable {
 					
 				};
 			} else {
-				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 				currentUser = dataAccessor.getUser( getCurrentUserId() );
-				dataAccessor.destroy();
 			}
 			
 		}
@@ -186,20 +185,19 @@ public class ClaymusHelper implements Serializable {
 	
 	public List<UserRole> getCurrentUserRoleList() {
 		if( getCurrentUserId() == 0L ) {
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 			UserRole userRole = dataAccessor.newUserRole();
 			userRole.setRoleId( "guest" );
 			userRole.setUserId( 0L );
-			dataAccessor.destroy();
 			
 			currentUserRoleList = new ArrayList<>( 1 );
 			currentUserRoleList.add( userRole );
 			
 		} else if( currentUserRoleList == null ) {
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 			currentUserRoleList = dataAccessor.getUserRoleList( getCurrentUserId() );
-			dataAccessor.destroy();
 		}
+		
 		return currentUserRoleList;
 	}
 	
@@ -214,7 +212,7 @@ public class ClaymusHelper implements Serializable {
 	public boolean hasUserAccess( String accessId, boolean defaultAccess ) {
 		Boolean access = null;
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		for( UserRole userRole : getCurrentUserRoleList() ) {
 			RoleAccess roleAccess = dataAccessor
 					.getRoleAccess( userRole.getRoleId(), accessId );
@@ -224,7 +222,6 @@ public class ClaymusHelper implements Serializable {
 					break;
 			}
 		}
-		dataAccessor.destroy();
 		
 		if( access == null )
 			return defaultAccess;
@@ -298,11 +295,15 @@ public class ClaymusHelper implements Serializable {
 						+ "-";
 		
 		uriAlias = uriAlias.replaceAll( "[-]+", "-" );
-		if( uriAlias.charAt( uriPrefix.length() ) == '-' )
-			uriAlias = uriPrefix + uriAlias.substring( uriPrefix.length() + 1, uriAlias.length() - 1 );
-		else
-			uriAlias = uriAlias.substring( 0, uriAlias.length() - 1 );
-
+		if( uriAlias.length() > uriPrefix.length() ) {
+			if( uriAlias.charAt( uriPrefix.length() ) == '-' )
+				uriAlias = uriPrefix + uriAlias.substring( uriPrefix.length() + 1, uriAlias.length() - 1 );
+			else
+				uriAlias = uriAlias.substring( 0, uriAlias.length() - 1 );
+		} else {
+			uriAlias = uriAlias + "page";
+		}
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		
 		for( int i = 0; ; i++ ) {
