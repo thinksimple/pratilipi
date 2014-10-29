@@ -7,7 +7,9 @@ public enum PratilipiType implements IsSerializable {
 	BOOK( "Book", "Books" ),
 	POEM( "Poem", "Poems" ),
 	STORY( "Story", "Stories" ),
-	ARTICLE( "Article", "Articles" );
+	ARTICLE( "Article", "Articles" ),
+	MAGAZINE( "Magazine", "Magazines" ),
+	;
 	
 	
 	private final String name;

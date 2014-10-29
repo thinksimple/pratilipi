@@ -126,6 +126,10 @@ public class PratilipiMain extends ClaymusMain {
 			page.setTitle( "Classic Stories" );
 
 		
+		else if( requestUri.startsWith( "/magazines" ) )
+			page.setTitle( "Magazines" );
+
+		
 		else if( requestUri.equals( "/languages" ) )
 			page.setTitle( "Languages" );
 
@@ -255,6 +259,10 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY, true, PratilipiState.PUBLISHED ) );
 
 		
+		else if( requestUri.startsWith( "/magazines" ) )
+			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.MAGAZINE, PratilipiState.PUBLISHED ) );
+
+		
 		else if( requestUri.equals( "/languages" ) )
 			pageContentList.add( LanguagesContentFactory.newLanguagesContent() );
 
@@ -277,6 +285,9 @@ public class PratilipiMain extends ClaymusMain {
 		
 		else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.ARTICLE, null ) ) )
 			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.ARTICLE ) );
+
+		else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.MAGAZINE, null ) ) )
+			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.MAGAZINE ) );
 
 		
 		// Static pages
