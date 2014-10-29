@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.search.Document;
+import com.google.appengine.api.search.Field;
 import com.google.appengine.api.search.Index;
 import com.google.appengine.api.search.IndexSpec;
 import com.google.appengine.api.search.PutException;
@@ -80,12 +81,32 @@ public class QueueUpdatePratilipiIndexServlet extends HttpServlet {
 			
 			PratilipiData pratilipiData =
 					pratilipiHelper.createPratilipiData( pratilipi, language, author, genreList );
+			
+			//Comma separated genre name list.
+			String commaSeparatedGenreList = null;
+			if( genreList.size() > 1 ){
+				for( int i = 1; i < genreList.size(); i++ )
+					commaSeparatedGenreList +=  ", " + genreList.get( i );
+			}
+			else if( genreList.size() == 1 )
+				commaSeparatedGenreList = genreList.get( 0 ).toString();
+			else
+				commaSeparatedGenreList = "";
 
 			Document document = Document.newBuilder()
 					.setId( pratilipiData.getId().toString() )
-					
-					// TODO: set index data here ...
-
+					.addField( Field.newBuilder().setName( "Pratilipi-Type" ).setAtom( pratilipiData.getType().getName() ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-Title" ).setText( pratilipiData.getTitle() ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-Title-En" ).setText( pratilipiData.getTitleEn() ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-Language-Id" ).setAtom( pratilipiData.getLanguageId().toString() ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-Language-Name" ).setText( pratilipiData.getLanguageData().getName() ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-Language-Name-En" ).setText( pratilipiData.getLanguageData().getNameEn() ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-Author-Id" ).setAtom( pratilipiData.getAuthorId().toString() ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-Author-Name" ).setText( pratilipiData.getAuthorData().getFullName() ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-Author-Name-En" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-Genre-List" ).setText( commaSeparatedGenreList ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-Summary" ).setHTML( pratilipiData.getSummary() ) )
+					.addField( Field.newBuilder().setName( "Pratilipi-State" ).setAtom( pratilipiData.getState().toString().toLowerCase() ) )
 					.build();
 			
 			documentList.add( document );
