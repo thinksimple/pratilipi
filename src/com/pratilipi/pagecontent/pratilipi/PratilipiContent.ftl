@@ -8,7 +8,7 @@
 
 	
 
-<div class="container">
+<div class="container" itemscope itemtype="http://schema.org/Product">
 
 	<#if showEditOptions>
 		<div id="PageContent-Pratilipi-Publish" class="alert alert-danger" role="alert" style="text-align:center; margin-top:20px; margin-bottom:0px; display:none;"></div>
@@ -18,7 +18,7 @@
 
 		<#-- Cover Image -->
 		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4" style="margin-top:25px; margin-bottom:15px;">
-			<img id="PageContent-Pratilipi-CoverImage" class="img-responsive" src="${ pratilipiData.getCoverImageUrl() }">
+			<img id="PageContent-Pratilipi-CoverImage" class="img-responsive" src="${ pratilipiData.getCoverImageUrl() }" itemprop="image">
 			<#if showEditOptions>
 				<div id="PageContent-Pratilipi-CoverImage-EditOptions"></div>
 			</#if>
@@ -29,7 +29,7 @@
 		
 		<#-- Title, Author Name, Genre List, Summary and Buttons -->
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-8" style="padding-bottom:15px;">
-			<h1 id="PageContent-Pratilipi-Title">${ pratilipiData.getTitle() }</h1>
+			<h1 id="PageContent-Pratilipi-Title" itemprop="name">${ pratilipiData.getTitle() }</h1>
 			<h4><a href="${ pratilipiData.getAuthorData().getPageUrlAlias() }" id="PageContent-Pratilipi-AuthorName">${ pratilipiData.getAuthorData().getFullName() }</a></h4>
 			
 			<h5 id="PageContent-Pratilipi-GenreList">
@@ -38,7 +38,7 @@
 				</#list>
 			</h5>
 			
-			<div id="PageContent-Pratilipi-Summary" style="margin-top:20px; margin-bottom:10px;">
+			<div id="PageContent-Pratilipi-Summary" style="margin-top:20px; margin-bottom:10px;" itemprop="description">
 				${ pratilipiData.getSummary()! }
 			</div>
 			<#if showEditOptions>
