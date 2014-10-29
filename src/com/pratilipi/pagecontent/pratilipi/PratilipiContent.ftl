@@ -30,7 +30,7 @@
 		<#-- Title, Author Name, Genre List, Summary and Buttons -->
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-8" style="padding-bottom:15px;">
 			<h1 id="PageContent-Pratilipi-Title">${ pratilipiData.getTitle() }</h1>
-			<h4><a href="${ pratilipiData.getAuthorData().getPageUrl() }" id="PageContent-Pratilipi-AuthorName">${ pratilipiData.getAuthorData().getFullName() }</a></h4>
+			<h4><a href="${ pratilipiData.getAuthorData().getPageUrlAlias() }" id="PageContent-Pratilipi-AuthorName">${ pratilipiData.getAuthorData().getFullName() }</a></h4>
 			
 			<h5 id="PageContent-Pratilipi-GenreList">
 				<#list pratilipiData.getGenreNameList() as genreName>

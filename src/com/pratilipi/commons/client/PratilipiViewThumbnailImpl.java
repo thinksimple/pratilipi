@@ -81,16 +81,16 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 		this.pratilipiData = pratilipiData;
 		AuthorData authorData = pratilipiData.getAuthorData();
 		
-		coverImageAnchor.setHref( pratilipiData.getPageUrl() );
+		coverImageAnchor.setHref( pratilipiData.getPageUrlAlias() );
 		coverImage.setUrl( pratilipiData.getCoverImageUrl() );
 		coverImage.setTitle( pratilipiData.getTitle() );
 		coverImage.setAltText( pratilipiData.getTitle() );
 		
 		titleAnchor.setHTML( "<strong style='color:black !important;'>" + pratilipiData.getTitle() + "</strong>" );
-		titleAnchor.setHref( pratilipiData.getPageUrl() );
+		titleAnchor.setHref( pratilipiData.getPageUrlAlias() );
 
 		authorAnchor.setHTML( "<i><small style='color:black !important;'>-" + authorData.getFullName() + "</small></i>" );
-		authorAnchor.setHref( authorData.getPageUrl() );
+		authorAnchor.setHref( authorData.getPageUrlAlias() );
 	}
 
 	@Override
