@@ -146,7 +146,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 					PratilipiHelper.getReaderPageUrl( pratilipiType, pratilipiId )
 							+ "?page=" + ( pageNo + 1 ) );
 
-		dataModel.put( "pratilipiHomeUrl", PratilipiHelper.getPageUrl( pratilipiType, pratilipiId ) );
+		dataModel.put( "pratilipiHomeUrl", pratilipiData.getPageUrlAlias() );
 		dataModel.put( "authorHomeUrl", PratilipiPageType.AUTHOR.getUrlPrefix() + pratilipi.getAuthorId() );
 
 		dataModel.put( "showEditOptions",

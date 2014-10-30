@@ -18,6 +18,7 @@ import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 @SuppressWarnings("serial")
 public class QueueCreateOrUpdateDefaultCoverServlet extends HttpServlet {
@@ -33,15 +34,15 @@ public class QueueCreateOrUpdateDefaultCoverServlet extends HttpServlet {
 		
 		// Fetching Pratilipi entity
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-	
+		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, null, null, null );
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String coverImage = PratilipiHelper.getCoverImage300( pratilipiId );
+		String coverImage = pratilipiData.getCoverImage300UploadUrl().substring( PratilipiHelper.URL_RESOURCE.length() );
 		BlobEntry blobEntry = blobAccessor.getBlob( coverImage );
 		if( blobEntry == null || blobEntry.getMetaData( "default" ).equals( "true" ) ) {
-			String originalCoverImage =
-					PratilipiHelper.getCoverImage( null ) + "pratilipi" ;
+			String originalCoverImage = PratilipiHelper.URL_RESOURCE + "pratilipi-cover/original/pratilipi";
 			if( pratilipi.isPublicDomain() )
 				originalCoverImage += "-classic-" + pratilipi.getLanguageId();
 			blobEntry = blobAccessor.getBlob( originalCoverImage );

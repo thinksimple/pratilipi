@@ -206,13 +206,9 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		List<Pratilipi> pratilipiList = pratilipiListCursorTuple.getDataList();
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( this.getThreadLocalRequest() );
-		ArrayList<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
-		for( Pratilipi pratilipi : pratilipiList ) {
-			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			pratilipiDataList.add(
-					pratilipiHelper.createPratilipiData( pratilipi, null, author, null ) );
-		}
-		
+		List<PratilipiData> pratilipiDataList = pratilipiHelper
+				.createPratilipiDataList( pratilipiList, false, true, false );
+				
 		return new GetPratilipiListResponse( pratilipiDataList, null, pratilipiListCursorTuple.getCursor() );
 	}
 

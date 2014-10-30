@@ -2,7 +2,9 @@ package com.pratilipi.commons.server;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,14 +41,6 @@ public class PratilipiHelper extends ClaymusHelper {
 	private static final String URL_RESOURCE_STATIC = ClaymusHelper.URL_RESOURCE_STATIC;
 
 	
-	@Deprecated
-	public static final String URL_AUTHOR_IMAGE = "/resource.author-image/original/";
-
-	public static final String URL_LANGUAGE_PAGE = "/language/";
-
-	public static final String URL_GENRE_PAGE = "/genre/";
-
-
 	protected PratilipiHelper( HttpServletRequest request ) {
 		super( request );
 	}
@@ -64,14 +58,6 @@ public class PratilipiHelper extends ClaymusHelper {
 	
 
 	@Deprecated
-	public static String getPageUrl(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return "/" + pratilipiType.getName().toLowerCase() + "/" +
-				( pratilipiId == null ? "" : pratilipiId );
-	}
-	
-	@Deprecated
 	public static String getReaderPageUrl(
 			PratilipiType pratilipiType, Long pratilipiId ) {
 		
@@ -79,50 +65,6 @@ public class PratilipiHelper extends ClaymusHelper {
 				( pratilipiId == null ? "" : pratilipiId );
 	}
 	
-	
-	public static String getCoverImage( Long pratilipiId ) {
-		
-		return "pratilipi-cover/original/" +
-				( pratilipiId == null ? "" : pratilipiId );
-	}
-	
-	public static String getCoverImage300( Long pratilipiId ) {
-		
-		return "pratilipi-cover/300/" +
-				( pratilipiId == null ? "" : pratilipiId );
-	}
-	
-
-	@Deprecated
-	public static String getCoverImageUrl(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return getCoverImageUrl( pratilipiType, pratilipiId, true );
-	}
-	
-	@Deprecated
-	public static String getCoverImageUrl(
-			PratilipiType pratilipiType, Long pratilipiId, boolean dynamic ) {
-		
-		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) +
-				getCoverImage( pratilipiId );
-	}
-	
-	@Deprecated
-	public static String getCoverImage300Url(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return getCoverImage300Url( pratilipiType, pratilipiId, true );
-	}
-	
-	@Deprecated
-	public static String getCoverImage300Url(
-			PratilipiType pratilipiType, Long pratilipiId, boolean dynamic ) {
-		
-		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) +
-				getCoverImage300( pratilipiId );
-	}
-
 	
 	public static String getContent( Long pratilipiId ) {
 		return "pratilipi-content/pratilipi/" + ( pratilipiId == null ? "" : pratilipiId );
@@ -174,18 +116,75 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 
 
-	@Deprecated
-	public String createAuthorName( Author author ) {
-		return author.getFirstName()
-				+ ( author.getLastName() == null ? "" : " " + author.getLastName() );
+	public List<PratilipiData> createPratilipiDataList(
+			List<Pratilipi> pratilipiList ) {
+
+		return createPratilipiDataList( pratilipiList, true, true, true );
 	}
 	
-	@Deprecated
-	public String createAuthorNameEn( Author author ) {
-		return author.getFirstNameEn()
-				+ ( author.getLastNameEn() == null ? "" : " " + author.getLastNameEn() );
+	public List<PratilipiData> createPratilipiDataList(
+			List<Pratilipi> pratilipiList,
+			boolean includeLanguageData, boolean includeAuthorData,
+			boolean includeGenreData ) { 
+		
+		return createPratilipiDataList(
+				pratilipiList, includeLanguageData,
+				includeAuthorData, includeGenreData, false );
 	}
+	
+	public List<PratilipiData> createPratilipiDataList(
+			List<Pratilipi> pratilipiList,
+			boolean includeLanguageData, boolean includeAuthorData,
+			boolean includeGenreData, boolean includeMetaData ) {
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+
+		Map<Long, LanguageData> languageIdToDataMap =
+				includeLanguageData ? new HashMap<Long, LanguageData>() : null;
+		Map<Long, AuthorData> authorIdToDataMap =
+				includeAuthorData ? new HashMap<Long, AuthorData>() : null;
+		
+		List<PratilipiData> pratilipiDataList =
+				new ArrayList<>( pratilipiList.size() );
+
+		for( Pratilipi pratilipi : pratilipiList ) {
+
+			PratilipiData pratilipiData = null;
+			if( includeGenreData ) {
+				List<PratilipiGenre> pratilipiGenreList = dataAccessor.getPratilipiGenreList( pratilipi.getId() );
+				List<Genre> genreList = new ArrayList<>( pratilipiGenreList.size() );
+				for( PratilipiGenre pratilipiGenre : pratilipiGenreList )
+					genreList.add( dataAccessor.getGenre( pratilipiGenre.getGenreId() ) );
+			} else {
+				pratilipiData = createPratilipiData( pratilipi, null, null, null );
+			}
+			
+			if( includeLanguageData ) {
+				LanguageData languageData = languageIdToDataMap.get( pratilipi.getLanguageId() );
+				if( languageData == null ) {
+					Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
+					languageData = createLanguageData( language );
+					languageIdToDataMap.put( languageData.getId(), languageData );
+				}
+				pratilipiData.setLanguageData( languageData );
+			}
+
+			if( includeAuthorData ) {
+				AuthorData authorData = authorIdToDataMap.get( pratilipi.getAuthorId() );
+				if( authorData == null ) {
+					Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+					authorData = createAuthorData( author, null );
+					authorIdToDataMap.put( authorData.getId(), authorData );
+				}
+				pratilipiData.setAuthorData( authorData );
+			}
+			
+			pratilipiDataList.add( pratilipiData );
+		}
+		
+		return pratilipiDataList;
+	}
+	
 	
 	public PratilipiData createPratilipiData( Long pratilipiId ) {
 		return createPratilipiData( pratilipiId, false );
@@ -232,8 +231,9 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setType( pratilipi.getType() );
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
-		pratilipiData.setCoverImageUrl( getCoverImage300Url( pratilipi.getType(), pratilipi.getId(), false ) );
-		pratilipiData.setCoverImageUploadUrl( getCoverImageUrl( pratilipi.getType(), pratilipi.getId(), true ) );
+		pratilipiData.setCoverImageUrl( URL_RESOURCE_STATIC + "pratilipi-cover/300/" + pratilipi.getId() );
+		pratilipiData.setCoverImageUploadUrl( URL_RESOURCE + "pratilipi-cover/original/" + pratilipi.getId() );
+		pratilipiData.setCoverImage300UploadUrl( URL_RESOURCE + "pratilipi-cover/300/" + pratilipi.getId() );
 		pratilipiData.setReaderPageUrl( getReaderPageUrl( pratilipi.getType(), pratilipi.getId() ) );
 		if( includeMetaData )
 			pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
@@ -265,6 +265,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		return pratilipiData;
 	}
 
+	
 	public AuthorData createAuthorData( Long authorId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Author author = dataAccessor.getAuthor( authorId );
@@ -284,7 +285,8 @@ public class PratilipiHelper extends ClaymusHelper {
 		authorData.setId( author.getId() );
 		authorData.setPageUrl( authorPage.getUri() );
 		authorData.setPageUrlAlias( authorPage.getUriAlias() );
-		authorData.setAuthorImageUrl( URL_AUTHOR_IMAGE + author.getId() );
+		authorData.setAuthorImageUrl( URL_RESOURCE + "author-image/original/" + author.getId() );
+		authorData.setAuthorImageUploadUrl( URL_RESOURCE + "author-image/original/" + author.getId() );
 		authorData.setUserId( author.getUserId() );
 
 		authorData.setLanguageId( author.getLanguageId() );
@@ -302,6 +304,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		
 		return authorData;
 	}
+	
 	
 	public LanguageData createLanguageData( Long languageId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );

@@ -40,7 +40,7 @@ public class GenresContentProcessor
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "genreList", genreList );
-		dataModel.put( "genrePageUrl", PratilipiHelper.URL_GENRE_PAGE );
+		dataModel.put( "genrePageUrl", "/genre/" );
 		dataModel.put( "showMetaData", showMetaData );
 		dataModel.put( "showAddOption", showAddOption );
 		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );

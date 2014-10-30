@@ -40,7 +40,7 @@ public class LanguagesContentProcessor
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "languageList", languageList );
-		dataModel.put( "languagePageUrl", PratilipiHelper.URL_LANGUAGE_PAGE );
+		dataModel.put( "languagePageUrl", "/language/" );
 		dataModel.put( "showMetaData", showMetaData );
 		dataModel.put( "showAddOption", showAddOption );
 		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
