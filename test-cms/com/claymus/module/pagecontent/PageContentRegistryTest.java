@@ -15,11 +15,10 @@ public class PageContentRegistryTest {
     @Test
     public void testRegister() {
     	
-    	PageContentRegistry pageContentRegistry = new PageContentRegistry();
-    	pageContentRegistry.register( HtmlContentHelper.class );
+    	PageContentRegistry.register( HtmlContentHelper.class );
     	
     	PageContentProcessor<? extends PageContent> pageContentProcessor =
-    			pageContentRegistry.getPageContentProcessor( HtmlContent.class );
+    			PageContentRegistry.getPageContentProcessor( HtmlContent.class );
     	
     	Assert.assertNotNull( pageContentProcessor );
     	Assert.assertEquals( HtmlContentProcessor.class, pageContentProcessor.getClass() );

@@ -40,8 +40,6 @@ public class PratilipiHelper extends ClaymusHelper {
 
 	
 	@Deprecated
-	public static final String URL_AUTHOR_PAGE = "/author/";
-	@Deprecated
 	public static final String URL_AUTHOR_IMAGE = "/resource.author-image/original/";
 
 	public static final String URL_LANGUAGE_PAGE = "/language/";
@@ -175,12 +173,6 @@ public class PratilipiHelper extends ClaymusHelper {
 		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) + getContentImage( pratilipiId );
 	}
 
-
-	@Deprecated
-	public static String getAuthorPageUrl( Long authorId ) {
-		return URL_AUTHOR_PAGE + authorId;
-	}
-	
 
 	@Deprecated
 	public String createAuthorName( Author author ) {

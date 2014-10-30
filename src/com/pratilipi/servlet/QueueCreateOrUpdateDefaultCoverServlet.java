@@ -32,9 +32,8 @@ public class QueueCreateOrUpdateDefaultCoverServlet extends HttpServlet {
 
 		
 		// Fetching Pratilipi entity
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		dataAccessor.destroy();
 	
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();

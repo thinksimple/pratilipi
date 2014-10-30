@@ -4,8 +4,8 @@ import com.claymus.commons.shared.PageType;
 
 public enum PratilipiPageType implements PageType {
 	
-	AUTHOR( "/author" ),
-	PRATILIPI( "/pratilipi" );
+	AUTHOR( "/author/" ),
+	PRATILIPI( "/pratilipi/" );
 	
 	
 	private String urlPrefix;

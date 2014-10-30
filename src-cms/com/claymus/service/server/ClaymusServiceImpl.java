@@ -83,7 +83,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		
 		UserData userData = request.getUser();
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		User user = dataAccessor.getUserByEmail( userData.getEmail().toLowerCase() );
 
 		if( user == null ) {
@@ -100,7 +100,6 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			user.setSignUpDate( new Date() );
 			
 		} else if( userData.getStatus() == UserStatus.PRELAUNCH_SIGNUP ) {
-			dataAccessor.destroy();
 			throw new IllegalArgumentException( "User registered already !" );
 			
 		} else if( userData.getStatus() == UserStatus.POSTLAUNCH_REFERRAL ) {
@@ -109,11 +108,9 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			user.setSignUpDate( new Date() );
 			
 		} else if( userData.getStatus() == UserStatus.POSTLAUNCH_SIGNUP ) {
-			dataAccessor.destroy();
 			throw new IllegalArgumentException( "User registered alread !" );
 	
 		} else {
-			dataAccessor.destroy();
 			logger.log( Level.SEVERE,
 					"User status " + user.getStatus() + " is not handeled !"  );
 			throw new IllegalArgumentException( "Invitation failed ! "
@@ -125,7 +122,6 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		user.setStatus( UserStatus.POSTLAUNCH_REFERRAL );
 
 		user = dataAccessor.createOrUpdateUser( user );
-		dataAccessor.destroy();
 		
 		Task task = TaskQueueFactory.newTask();
 		task.addParam( "userId", user.getId().toString() );
@@ -142,7 +138,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 
 		UserData userData = request.getUser();
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		User user = dataAccessor.getUserByEmail( userData.getEmail().toLowerCase() );
 
 		if( user == null ) {
@@ -168,11 +164,9 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			user.setSignUpDate( new Date() );
 
 		} else if( user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP ) {
-			dataAccessor.destroy();
 			throw new IllegalArgumentException( "This email id is already registered !" );
 
 		} else {
-			dataAccessor.destroy();
 			logger.log( Level.SEVERE,
 					"User status " + user.getStatus() + " is not handeled !"  );
 			throw new IllegalArgumentException( "User registration failed ! "
@@ -190,8 +184,6 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		userRole.setUserId( user.getId() );
 		userRole.setRoleId( "member" );
 		dataAccessor.createOrUpdateUserRole( userRole );
-		
-		dataAccessor.destroy();
 
 		Task task = TaskQueueFactory.newTask();
 		task.addParam( "userId", user.getId().toString() );
@@ -214,9 +206,8 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		ClaymusHelper claymusHelper =
 				ClaymusHelper.get( this.getThreadLocalRequest() );
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		User user = dataAccessor.getUserByEmail( request.getLoginId().toLowerCase() );
-		dataAccessor.destroy();
 		
 		if( user != null && user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP_SOCIALLOGIN ) 
 			throw new IllegalArgumentException(
@@ -263,9 +254,8 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		ClaymusHelper claymusHelper =
 				ClaymusHelper.get( this.getThreadLocalRequest() );
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		User user = dataAccessor.getUserByEmail( request.getUserEmail().toLowerCase() );
-		dataAccessor.destroy();
 		
 		if( user == null
 				|| user.getStatus() == UserStatus.PRELAUNCH_REFERRAL
@@ -304,50 +294,45 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		ClaymusHelper claymusHelper =
 				ClaymusHelper.get( this.getThreadLocalRequest() );
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		
 		String userEmail = request.getUserEmail();
 		User user = null;
 		
-		try {
-			// Request from user profile
-			if( userEmail == null ) {
-				
-				if( ! claymusHelper.isUserLoggedIn() )
-					throw new IllegalArgumentException(
-							"You are not logged in. Please "
-							+ "<a href='" + claymusHelper.createLoginURL() + "' class='alert-link'>login</a> and try again. "
-							+ "If you have forgotten your password, you can reset your password "
-							+ "<a href='" + claymusHelper.createForgotPasswordURL() + " ' class='alert-link'>here</a>." );
-
-				user = claymusHelper.getCurrentUser();
-
-				if( request.getCurrentPassword() == null
-						||  ! EncryptPassword.check( request.getCurrentPassword(),  user.getPassword() ) )
-					throw new IllegalArgumentException( "Current password is not correct. Please try again." );
-
-
-			// Request via password reset link
-			} else {
-				
-				user = dataAccessor.getUserByEmail( userEmail );
-				
-				if( request.getToken() == null
-						|| ! user.getPassword().equals( request.getToken() ) )
-					throw new IllegalArgumentException(
-							"URL used is invalid or expired. "
-							+ "Please check the URL and try again." );
-				
-				if( user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP_SOCIALLOGIN )
-					user.setStatus( UserStatus.POSTLAUNCH_SIGNUP );
-			}
+		// Request from user profile
+		if( userEmail == null ) {
 			
-			user.setPassword( EncryptPassword.getSaltedHash( request.getNewPassword() ));
-			dataAccessor.createOrUpdateUser( user );
+			if( ! claymusHelper.isUserLoggedIn() )
+				throw new IllegalArgumentException(
+						"You are not logged in. Please "
+						+ "<a href='" + claymusHelper.createLoginURL() + "' class='alert-link'>login</a> and try again. "
+						+ "If you have forgotten your password, you can reset your password "
+						+ "<a href='" + claymusHelper.createForgotPasswordURL() + " ' class='alert-link'>here</a>." );
 
-		} finally {
-			dataAccessor.destroy();
+			user = claymusHelper.getCurrentUser();
+
+			if( request.getCurrentPassword() == null
+					||  ! EncryptPassword.check( request.getCurrentPassword(),  user.getPassword() ) )
+				throw new IllegalArgumentException( "Current password is not correct. Please try again." );
+
+
+		// Request via password reset link
+		} else {
+			
+			user = dataAccessor.getUserByEmail( userEmail );
+			
+			if( request.getToken() == null
+					|| ! user.getPassword().equals( request.getToken() ) )
+				throw new IllegalArgumentException(
+						"URL used is invalid or expired. "
+						+ "Please check the URL and try again." );
+			
+			if( user.getStatus() == UserStatus.POSTLAUNCH_SIGNUP_SOCIALLOGIN )
+				user.setStatus( UserStatus.POSTLAUNCH_SIGNUP );
 		}
+		
+		user.setPassword( EncryptPassword.getSaltedHash( request.getNewPassword() ));
+		dataAccessor.createOrUpdateUser( user );
 		
 		String message = "<strong>Password changed successfully</strong>";
 		
@@ -438,7 +423,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 			throws IllegalArgumentException {
 		
 		FacebookLoginData fbLoginUserData = request.getFacebookLoginData();
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		User user = null;
 		
 		if( fbLoginUserData.getEmail() != null )
@@ -554,7 +539,7 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		@SuppressWarnings("rawtypes")
 		PageContentHelper pageContentHelper =
 				PageContentRegistry.getPageContentHelper( pageContentData.getClass() );
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 
 		PageContent pageContent;
 		if( pageContentData.getId() == null ) { // Add PageContent usecase
@@ -577,7 +562,6 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		}
 		
 		dataAccessor.createOrUpdatePageContent( pageContent );
-		dataAccessor.destroy();
 		
 		return new SavePageContentResponse( pageContent.getId() );
 	}
@@ -619,13 +603,12 @@ public class ClaymusServiceImpl extends RemoteServiceServlet
 		if( ! RoleAccessContentHelper.hasRequestAccessToUpdateAccessData( this.getThreadLocalRequest() ) )
 			throw new InsufficientAccessException();
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		RoleAccess roleAccess = dataAccessor.newRoleAccess();
 		roleAccess.setRoleId( request.getRoleId() );
 		roleAccess.setAccessId( request.getAccessId() );
 		roleAccess.setAccess( request.getAccess() );
 		dataAccessor.createOrUpdateRoleAccess( roleAccess );
-		dataAccessor.destroy();
 		
 		return new SaveRoleAccessResponse();
 	}

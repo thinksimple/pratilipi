@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.data.transfer.Page;
 import com.claymus.pagecontent.blogpost.BlogPostContent;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
@@ -107,7 +108,7 @@ public class PratilipiFilter implements Filter {
 			Author author = dataAccessor.getAuthorByUserId( currentUserId );
 			
 			if( author != null )
-				response.sendRedirect( PratilipiHelper.getAuthorPageUrl( author.getId() ) );
+				response.sendRedirect( PratilipiPageType.AUTHOR.getUrlPrefix() + author.getId() );
 			else
 				chain.doFilter( request, response );
 		
@@ -130,7 +131,7 @@ public class PratilipiFilter implements Filter {
 		} else {
 			chain.doFilter( request, response );
 		}
-		
+
 		
 		dataAccessor.destroy();
 	}

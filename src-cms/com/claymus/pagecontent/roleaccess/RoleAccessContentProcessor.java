@@ -34,7 +34,7 @@ public class RoleAccessContentProcessor extends PageContentProcessor<RoleAccessC
 		List<PageContentHelper> pageContentHelperList =
 				PageContentRegistry.getPageContentHelperList();
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
 		
 		// Creating data model required for template processing
@@ -46,11 +46,7 @@ public class RoleAccessContentProcessor extends PageContentProcessor<RoleAccessC
 		
 
 		// Processing template
-		String html = super.processTemplate( dataModel, getTemplateName() );
-
-		dataAccessor.destroy();
-		
-		return html;
+		return super.processTemplate( dataModel, getTemplateName() );
 	}
 
 }

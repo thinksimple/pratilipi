@@ -35,7 +35,7 @@ public class QueueInviteUserServlet extends HttpServlet {
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Long userId = Long.parseLong( request.getParameter( "userId" ) );
 		User user = dataAccessor.getUser( userId );
 		User referer = dataAccessor.getUser( Long.parseLong( user.getReferer() ) );
@@ -81,7 +81,6 @@ public class QueueInviteUserServlet extends HttpServlet {
 			logger.log( Level.SEVERE, "Failed to send the email !", e );
 		}
 		
-		dataAccessor.destroy();
 	}
 	
 }

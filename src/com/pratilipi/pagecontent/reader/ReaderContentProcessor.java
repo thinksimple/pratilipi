@@ -16,6 +16,7 @@ import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -48,10 +49,9 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 		
 		// Fetching Pratilipi and Author
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		dataAccessor.destroy();
 
 		long pageCount = 0;
 		String pageContent = "";
@@ -147,7 +147,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 							+ "?page=" + ( pageNo + 1 ) );
 
 		dataModel.put( "pratilipiHomeUrl", PratilipiHelper.getPageUrl( pratilipiType, pratilipiId ) );
-		dataModel.put( "authorHomeUrl", PratilipiHelper.URL_AUTHOR_PAGE + pratilipi.getAuthorId() );
+		dataModel.put( "authorHomeUrl", PratilipiPageType.AUTHOR.getUrlPrefix() + pratilipi.getAuthorId() );
 
 		dataModel.put( "showEditOptions",
 				PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( request, pratilipi ) );

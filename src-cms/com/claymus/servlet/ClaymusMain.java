@@ -159,7 +159,7 @@ public class ClaymusMain extends HttpServlet {
 		for( PageContent pageContent : pageContentList ) {
 			@SuppressWarnings("rawtypes")
 			PageContentProcessor pageContentProcessor =
-					PAGE_CONTENT_REGISTRY.getPageContentProcessor( pageContent.getClass() );
+					PageContentRegistry.getPageContentProcessor( pageContent.getClass() );
 			try {
 				String pageContentHtml = pageContentProcessor.getHtml( pageContent, request );
 				pageContentHtmlList.add( pageContentHtml );

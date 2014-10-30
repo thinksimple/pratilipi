@@ -33,9 +33,8 @@ public class GenresContentProcessor
 
 		
 		// Fetching Genre list
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		List<Genre> genreList = dataAccessor.getGenreList();
-		dataAccessor.destroy();
 
 		
 		// Creating data model required for template processing

@@ -11,6 +11,7 @@ public class AuthorData implements IsSerializable {
 	private String pageUrl;
 	private String pageUrlAlias;
 	private String authorImageUrl;
+	private String authorImageUploadUrl;
 	
 	private Long userId;
 
@@ -76,6 +77,14 @@ public class AuthorData implements IsSerializable {
 
 	public void setAuthorImageUrl( String authorImageUrl ) {
 		this.authorImageUrl = authorImageUrl;
+	}
+
+	public String getAuthorImageUploadUrl() {
+		return authorImageUploadUrl;
+	}
+
+	public void setAuthorImageUploadUrl( String authorImageUploadUrl ) {
+		this.authorImageUploadUrl = authorImageUploadUrl;
 	}
 
 	public Long getUserId() {

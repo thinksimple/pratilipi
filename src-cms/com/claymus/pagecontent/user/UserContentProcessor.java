@@ -27,9 +27,8 @@ public class UserContentProcessor extends PageContentProcessor<UserContent> {
 			throw new InsufficientAccessException();
 		
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		List<User> userList = dataAccessor.getUserList();
-		dataAccessor.destroy();
 
 		ClaymusHelper claymusHelper = ClaymusHelper.get( request );
 		List<UserData> userDataList = new ArrayList<>( userList.size() );

@@ -33,9 +33,8 @@ public class LanguagesContentProcessor
 
 		
 		// Fetching Language list
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		List<Language> languageList = dataAccessor.getLanguageList();
-		dataAccessor.destroy();
 
 		
 		// Creating data model required for template processing

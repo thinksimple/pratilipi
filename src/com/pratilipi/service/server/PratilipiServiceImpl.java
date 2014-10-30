@@ -114,7 +114,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			
 			Page page = dataAccessor.newPage();
 			page.setType( PratilipiPageType.PRATILIPI.toString() );
-			page.setUri( PratilipiPageType.PRATILIPI.getUrlPrefix() + "/" + pratilipi.getId() );
+			page.setUri( PratilipiPageType.PRATILIPI.getUrlPrefix() + pratilipi.getId() );
 			page.setPrimaryContentId( pratilipi.getId() );
 			page.setCreationDate( new Date() );
 			page = dataAccessor.createOrUpdatePage( page );
@@ -224,22 +224,17 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 					InsufficientAccessException,
 					UnexpectedServerException {
 	
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 
 		PratilipiContentData pratilipiContentData = request.getPratilipiContentData();
 		Pratilipi pratilipi =  dataAccessor.getPratilipi( pratilipiContentData.getPratilipiId() );
 				
-		try {
-			if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( this.getThreadLocalRequest(), pratilipi ) )
-				throw new InsufficientAccessException();
-			
-			pratilipi.setLastUpdated( new Date() );
-			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-
-		} finally {
-			dataAccessor.destroy();
-		}
+		if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( this.getThreadLocalRequest(), pratilipi ) )
+			throw new InsufficientAccessException();
 		
+		pratilipi.setLastUpdated( new Date() );
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+
 		
 		// Fetching Pratilipi content from Blob Store
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
@@ -305,11 +300,10 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public GetReaderContentResponse getReaderContent(
 			GetReaderContentRequest request) throws IllegalArgumentException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		int pageNumber = request.getPageNumber();
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
-		dataAccessor.destroy();
 
 		long pageCount = 0;
 		String pageContent = "";
@@ -373,13 +367,12 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		Language language = dataAccessor.newLanguage();
 		language.setName( languageData.getName() );
 		language.setNameEn( languageData.getNameEn() );
 		language.setCreationDate( new Date() );
 		language = dataAccessor.createOrUpdateLanguage( language );
-		dataAccessor.destroy();
 		
 		return new AddLanguageResponse( language.getId() );
 	}
@@ -398,9 +391,8 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				LanguagesContentProcessor.ACCESS_ID_LANGUAGE_READ_META_DATA, false );
 		
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		List<Language> languageList = dataAccessor.getLanguageList();
-		dataAccessor.destroy();
 		
 		
 		ArrayList<LanguageData> languageDataList = new ArrayList<>( languageList.size() );
@@ -442,7 +434,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			
 			Page page = dataAccessor.newPage();
 			page.setType( PratilipiPageType.AUTHOR.toString() );
-			page.setUri( PratilipiPageType.AUTHOR.getUrlPrefix() + "/" + author.getId() );
+			page.setUri( PratilipiPageType.AUTHOR.getUrlPrefix() + author.getId() );
 			page.setPrimaryContentId( author.getId() );
 			page.setCreationDate( new Date() );
 			page = dataAccessor.createOrUpdatePage( page );
@@ -524,7 +516,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				AuthorsContentProcessor.ACCESS_ID_AUTHOR_READ_META_DATA, false );
 
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		DataListCursorTuple<Author> authorListCursorTuple =
 				dataAccessor.getAuthorList( request.getCursor(), request.getResultCount() );
 		List<Author> authorList = authorListCursorTuple.getDataList();
@@ -550,8 +542,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			authorDataList.add( authorData );
 		}
 
-		dataAccessor.destroy();
-
 		
 		return new GetAuthorListResponse( authorDataList, cursor );
 	}
@@ -563,7 +553,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		PublisherData publisherData = request.getPublisher();
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		
 		Publisher publisher = dataAccessor.newPublisher();
 		publisher.setName( publisherData.getName() );
@@ -571,7 +561,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		publisher.setRegistrationDate( new Date() );
 		
 		publisher = dataAccessor.createOrUpdatePublisher( publisher );
-		dataAccessor.destroy();
 		
 		return new AddPublisherResponse( publisher.getId() );
 	}
@@ -580,7 +569,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public GetPublisherListResponse getPublisherList(
 			GetPublisherListRequest request) {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		List<Publisher> publisherList = dataAccessor.getPublisherList();
 		
 		ArrayList<PublisherData> publisherDataList = new ArrayList<>( publisherList.size() );
@@ -594,8 +583,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			publisherDataList.add( publisherData );
 		}
 
-		dataAccessor.destroy();
-		
 		return new GetPublisherListResponse( publisherDataList );
 	}
 
@@ -613,7 +600,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			throw new InsufficientAccessException();
 		
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		Genre genre = null;
 		
 		if( genreData.getId() == null) { // Add Genre usecase
@@ -631,7 +618,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		
 		genre = dataAccessor.createOrUpdateGenre( genre );
-		dataAccessor.destroy();
 		
 		return new SaveGenreResponse( genre.getId() );
 	}
@@ -649,9 +635,8 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				GenresContentProcessor.ACCESS_ID_GENRE_READ_META_DATA, false );
 
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		List<Genre> genreList = dataAccessor.getGenreList();
-		dataAccessor.destroy();
 		
 		
 		ArrayList<GenreData> genreDataList = new ArrayList<>( genreList.size() );
@@ -730,7 +715,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		PratilipiHelper pratilipiHelper =
 				PratilipiHelper.get( this.getThreadLocalRequest() );
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( userPratilipiData.getPratilipiId() );
 		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(
@@ -749,7 +734,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		userPratilipi.setReviewDate( new Date() );
 
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
-		dataAccessor.destroy();
 		
 		return new AddUserPratilipiResponse( userPratilipi.getId() );
 	}
@@ -757,7 +741,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	@Override
 	public GetUserPratilipiResponse getUserPratilipi( GetUserPratilipiRequest request ) {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		UserPratilipi userBook = dataAccessor.getUserPratilipi(
 				request.getUserId(),
 				request.getPratilipiId());
@@ -780,7 +764,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	@Override
 	public GetUserPratilipiListResponse getUserPratilipiList(GetUserPratilipiListRequest request) {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		List<UserPratilipi> userBookList = dataAccessor.getUserPratilipiList( request.getPratilipiId() );
 		
 		ArrayList<UserPratilipiData> userBookDataList = new ArrayList<>( userBookList.size() );
@@ -801,8 +785,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			
 		}
 
-		dataAccessor.destroy();
-		
 		return new GetUserPratilipiListResponse( userBookDataList );
 	}
 

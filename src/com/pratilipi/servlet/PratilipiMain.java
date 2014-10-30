@@ -55,12 +55,13 @@ public class PratilipiMain extends ClaymusMain {
 	static {
 		PageContentRegistry.register( PratilipiContentHelper.class );
 		PageContentRegistry.register( AuthorContentHelper.class );
-		PAGE_CONTENT_REGISTRY.register( HomeContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( PratilipisContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( ReaderContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( LanguagesContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( AuthorsContentFactory.class );
-		PAGE_CONTENT_REGISTRY.register( GenresContentHelper.class );
+		
+		PageContentRegistry.register( HomeContentFactory.class );
+		PageContentRegistry.register( PratilipisContentFactory.class );
+		PageContentRegistry.register( ReaderContentFactory.class );
+		PageContentRegistry.register( LanguagesContentFactory.class );
+		PageContentRegistry.register( AuthorsContentFactory.class );
+		PageContentRegistry.register( GenresContentHelper.class );
 	}
 
 
@@ -363,7 +364,7 @@ public class PratilipiMain extends ClaymusMain {
 				.getTemplate( "com/pratilipi/servlet/content/HeaderWidget.ftl" );
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Long userId = pratilipiHelper.getCurrentUserId();
 		User user = null;
 		

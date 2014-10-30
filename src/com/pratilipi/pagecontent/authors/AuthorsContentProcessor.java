@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
@@ -50,7 +51,7 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "authorList", authorList );
 		dataModel.put( "languageIdNameMap", languageIdNameMap );
-		dataModel.put( "authorPageUrl", PratilipiHelper.URL_AUTHOR_PAGE );
+		dataModel.put( "authorPageUrl", PratilipiPageType.AUTHOR.getUrlPrefix() );
 		dataModel.put( "showMetaData", showMetaData );
 		dataModel.put( "showAddOption", showAddOption );
 		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );

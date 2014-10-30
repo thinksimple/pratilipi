@@ -28,7 +28,7 @@ public class HomeContentProcessor extends PageContentProcessor<HomeContent> {
 			throws UnexpectedServerException {
 
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
 		
 		List<PratilipiData> bookDataList =
@@ -63,9 +63,6 @@ public class HomeContentProcessor extends PageContentProcessor<HomeContent> {
 					pratilipiHelper.createPratilipiData( pratilipi, null, author, null ) );
 		}
 
-		
-		dataAccessor.destroy();
-		
 		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
