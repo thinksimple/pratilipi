@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /*/undefined.cache.js
+Sitemap: http://www.pratilipi.com/service.sitemap
