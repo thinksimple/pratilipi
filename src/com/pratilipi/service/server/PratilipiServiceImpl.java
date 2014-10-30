@@ -18,6 +18,15 @@ import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.taskqueue.Task;
+import com.google.appengine.api.search.Cursor;
+import com.google.appengine.api.search.Index;
+import com.google.appengine.api.search.IndexSpec;
+import com.google.appengine.api.search.Query;
+import com.google.appengine.api.search.QueryOptions;
+import com.google.appengine.api.search.Results;
+import com.google.appengine.api.search.ScoredDocument;
+import com.google.appengine.api.search.SearchException;
+import com.google.appengine.api.search.SearchServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiPageType;
@@ -61,6 +70,8 @@ import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetReaderContentRequest;
 import com.pratilipi.service.shared.GetReaderContentResponse;
+import com.pratilipi.service.shared.GetSearchRequest;
+import com.pratilipi.service.shared.GetSearchResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -782,6 +793,54 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		}
 
 		return new GetUserPratilipiListResponse( userBookDataList );
+	}
+
+	@Override
+	public GetSearchResponse getSearchResults(GetSearchRequest request) {
+
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( this.getThreadLocalRequest() );
+		String searchRequest = request.getsearchQuery();
+		
+		Results<ScoredDocument> result = null;
+		try {
+			//Per-query cursor
+			Cursor cursor = Cursor.newBuilder().build();
+
+			do{
+			    // Build the QueryOptions
+			    QueryOptions options = QueryOptions.newBuilder()
+			        .setLimit(1000)
+			        .setReturningIdsOnly( true )
+			        .build();
+	
+			    //  Build the Query and run the search
+			    Query query = Query.newBuilder().setOptions(options).build( searchRequest );
+			    IndexSpec indexSpec = IndexSpec.newBuilder().setName( "PRATILIPI" ).build();
+			    Index index = SearchServiceFactory.getSearchService().getIndex( indexSpec );
+			    result =  index.search( query );
+			    int numberReturned = result.getNumberReturned();
+			    cursor = result.getCursor();
+			    
+			    if( numberReturned > 0 ){
+			    	List<PratilipiData> pratilipiDataList = new ArrayList<>( numberReturned );
+			    	
+					for( ScoredDocument document : result ){
+						String pratilipiId = document.getId();
+						//TODO : use PratilipiHelper.createPratilipiDataList() function to create pratilipiData list.
+						PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( Long.parseLong( pratilipiId ) );
+						pratilipiDataList.add( pratilipiData );
+					}
+					
+					return new GetSearchResponse( pratilipiDataList, false );
+			    }
+			    
+			}
+			while( cursor != null );
+		} catch (SearchException e) {
+		    logger.log( Level.SEVERE, "Searching Failed", e );
+		}
+		
+		return new GetSearchResponse( new ArrayList<PratilipiData>(0), true );
 	}
 
 	

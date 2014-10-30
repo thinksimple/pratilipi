@@ -23,6 +23,8 @@ import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetReaderContentRequest;
 import com.pratilipi.service.shared.GetReaderContentResponse;
+import com.pratilipi.service.shared.GetSearchRequest;
+import com.pratilipi.service.shared.GetSearchResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -111,5 +113,9 @@ public interface PratilipiServiceAsync {
 	void getUserPratilipiList( 
 			GetUserPratilipiListRequest request,
 			AsyncCallback<GetUserPratilipiListResponse> callback );
+	
+	void getSearchResults( 
+			GetSearchRequest request,
+			AsyncCallback<GetSearchResponse> callback );
 	
 }
