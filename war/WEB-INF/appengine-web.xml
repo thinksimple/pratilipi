@@ -7,7 +7,7 @@
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>
 
-  <instance-class>F4_1G</instance-class>
+  <instance-class>F1</instance-class>
 
   <automatic-scaling>
     <min-idle-instances>1</min-idle-instances>

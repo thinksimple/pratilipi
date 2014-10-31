@@ -1,6 +1,5 @@
 package com.pratilipi.pagecontent.pratilipis;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,6 @@ import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
-import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.service.shared.data.PratilipiData;
@@ -36,12 +34,9 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 		
 		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple =
 				dataAccessor.getPratilipiList( pratilipiFilter, null, 20 );
-		List<PratilipiData> pratilipiDataList = new ArrayList<>( 20 );
-		for( Pratilipi pratilipi : pratilipiListCursorTuple.getDataList() ) {
-			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			pratilipiDataList.add(
-					pratilipiHelper.createPratilipiData( pratilipi, null, author, null ) );
-		}
+		List<PratilipiData> pratilipiDataList =
+				pratilipiHelper.createPratilipiDataList(
+						pratilipiListCursorTuple.getDataList(), false, true, false );
 
 		
 		// Creating data model required for template processing

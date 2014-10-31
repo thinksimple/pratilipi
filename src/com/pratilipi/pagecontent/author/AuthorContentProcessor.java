@@ -75,34 +75,24 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		AuthorData authorData = pratilipiHelper.createAuthorData( author.getId() );
 
 		List<PratilipiData> draftedPratilipiDataList =
-				new ArrayList<>( draftedPratilipiListCursorTuple.getDataList().size() );
-		for( Pratilipi pratilipi : draftedPratilipiListCursorTuple.getDataList() )
-			draftedPratilipiDataList.add(
-					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
+				pratilipiHelper.createPratilipiDataList(
+						draftedPratilipiListCursorTuple.getDataList(), false, false, false );
 		
 		List<PratilipiData> bookDataList =
-				new ArrayList<>( bookListCursorTuple.getDataList().size() );
-		for( Pratilipi pratilipi : bookListCursorTuple.getDataList() )
-			bookDataList.add(
-					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
+				pratilipiHelper.createPratilipiDataList(
+						bookListCursorTuple.getDataList(), false, false, false );
 		
 		List<PratilipiData> poemDataList =
-				new ArrayList<>( poemListCursorTuple.getDataList().size() );
-		for( Pratilipi pratilipi : poemListCursorTuple.getDataList() )
-			poemDataList.add(
-					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
+				pratilipiHelper.createPratilipiDataList(
+						poemListCursorTuple.getDataList(), false, false, false );
 		
 		List<PratilipiData> storyDataList =
-				new ArrayList<>( storyListCursorTuple.getDataList().size() );
-		for( Pratilipi pratilipi : storyListCursorTuple.getDataList() )
-			storyDataList.add(
-					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
+				pratilipiHelper.createPratilipiDataList(
+						storyListCursorTuple.getDataList(), false, false, false );
 
 		List<PratilipiData> articleDataList =
-				new ArrayList<>( articleListCursorTuple.getDataList().size() );
-		for( Pratilipi pratilipi : articleListCursorTuple.getDataList() )
-			articleDataList.add(
-					pratilipiHelper.createPratilipiData( pratilipi, null, null, null ) );
+				pratilipiHelper.createPratilipiDataList(
+						articleListCursorTuple.getDataList(), false, false, false );
 
 		
 		// Creating data model required for template processing
