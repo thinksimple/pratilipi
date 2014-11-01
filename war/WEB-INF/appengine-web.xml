@@ -3,7 +3,7 @@
 
   <application>prod-pratilipi</application>
   <module>gamma</module>
-  <version>mark-3p16</version>
+  <version>mark-3p17</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>

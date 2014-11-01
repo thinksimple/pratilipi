@@ -13,7 +13,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.data.transfer.Page;
 import com.claymus.pagecontent.blogpost.BlogPostContent;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiPageType;
@@ -66,7 +65,6 @@ public class PratilipiFilter implements Filter {
 		String action = request.getParameter( "action" );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		Page page;
 
 		
 		if( redirections.get( requestUri ) != null ){
@@ -74,24 +72,9 @@ public class PratilipiFilter implements Filter {
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
 			
-		} else if( requestUri.startsWith( "/service." )
-				|| requestUri.startsWith( "/resource." )
-				|| requestUri.startsWith( "/_ah/queue/" ) ) {
-			
-			chain.doFilter( request, response );
-		
-			
-		} else if( ( page = dataAccessor.getPage( requestUri ) ) != null
-				&& page.getUriAlias() != null
-				&& ! requestUri.equals( page.getUriAlias() ) ) {
-			
-			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", page.getUriAlias() );
-			
-			
 		} else if( !host.equals( "www.pratilipi.com" )
 				&& !host.equals( "gamma.pratilipi.com" )
-				&& !host.equals( "mark-3p16.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-3p17.prod-pratilipi.appspot.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( "devo-pratilipi.appspot.com" )
 				&& !host.equals( "localhost" )
@@ -99,12 +82,6 @@ public class PratilipiFilter implements Filter {
 			
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", "http://www.pratilipi.com" + requestUri );
-
-			
-		} else if( requestUri.length() > 1 && requestUri.endsWith( "/" ) ) { // Removing trailing "/"
-
-			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", requestUri.substring( 0, requestUri.length() -1 ) );
 
 			
 		} else if( action != null && action.equals( "login" ) ) { // Redirecting to profile page on login

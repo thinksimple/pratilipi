@@ -3,6 +3,8 @@ package com.claymus.data.access;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
+
 import com.claymus.data.transfer.EmailTemplate;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
@@ -35,6 +37,12 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 		this.dataAccessor = dataAccessor;
 		this.memcache = memcache;
+	}
+
+	
+	@Override
+	public PersistenceManager getPersistenceManager() {
+		return dataAccessor.getPersistenceManager();
 	}
 
 	

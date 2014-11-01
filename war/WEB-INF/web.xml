@@ -5,6 +5,28 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
+  <!-- Filters -->
+
+  <filter>
+    <filter-name>PratilipiFilter</filter-name>
+    <filter-class>com.pratilipi.servlet.PratilipiFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>PratilipiFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>ClaymusFilter</filter-name>
+    <filter-class>com.claymus.servlet.ClaymusFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ClaymusFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- Handlers for GWT Services -->
+
   <servlet>
     <servlet-name>ClaymusService</servlet-name>
     <servlet-class>com.claymus.service.server.ClaymusServiceImpl</servlet-class>
@@ -32,7 +54,7 @@
     <url-pattern>/service.sitemap</url-pattern>
   </servlet-mapping>
 
-  <!-- Handler for uploading and serving website resources -->
+  <!-- Handlers for Uploading and Serving Website Resources -->
 
   <servlet>
     <servlet-name>ResourcePratilipiCoverServlet</servlet-name>
@@ -147,16 +169,7 @@
     <url-pattern>/_ah/queue/update-index-pratilipi</url-pattern>
   </servlet-mapping>
 
-  
-
-  <filter>
-    <filter-name>PratilipiFilter</filter-name>
-    <filter-class>com.pratilipi.servlet.PratilipiFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>PratilipiFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+  <!-- Main Claymus Handler -->
 
   <servlet>
     <servlet-name>PratilipiMain</servlet-name>

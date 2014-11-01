@@ -42,7 +42,7 @@ public class QueueCreateOrUpdateDefaultCoverServlet extends HttpServlet {
 		String coverImage = pratilipiData.getCoverImage300UploadUrl().substring( PratilipiHelper.URL_RESOURCE.length() );
 		BlobEntry blobEntry = blobAccessor.getBlob( coverImage );
 		if( blobEntry == null || blobEntry.getMetaData( "default" ).equals( "true" ) ) {
-			String originalCoverImage = PratilipiHelper.URL_RESOURCE + "pratilipi-cover/original/pratilipi";
+			String originalCoverImage = "pratilipi-cover/original/pratilipi";
 			if( pratilipi.isPublicDomain() )
 				originalCoverImage += "-classic-" + pratilipi.getLanguageId();
 			blobEntry = blobAccessor.getBlob( originalCoverImage );

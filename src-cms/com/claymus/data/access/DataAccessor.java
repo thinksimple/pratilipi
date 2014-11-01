@@ -3,6 +3,8 @@ package com.claymus.data.access;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
+
 import com.claymus.data.transfer.EmailTemplate;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
@@ -15,6 +17,10 @@ import com.claymus.pagecontent.blogpost.BlogPostContent;
 
 public interface DataAccessor extends Serializable {
 
+	@Deprecated
+	PersistenceManager getPersistenceManager();
+
+	
 	User newUser();
 
 	User getUser( Long id );

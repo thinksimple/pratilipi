@@ -52,6 +52,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	
+	@Override
+	public PersistenceManager getPersistenceManager() {
+		return this.pm;
+	}
+	
+	
 	protected <T> T getEntity( Class<T> clazz, Object id ) {
 		T entity = (T) pm.getObjectById( clazz, id );
 		return pm.detachCopy( entity );
@@ -348,7 +354,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public void destroy() {
-		this.pm.close();
+		pm.close();
 	}
 
 }
