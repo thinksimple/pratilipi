@@ -43,6 +43,8 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/resource.poem-cover/300/5704726691708928", "http://static.pratilipi.com/pratilipi-cover/300/5704726691708928" );
 		redirections.put( "/resource.poem-cover/300/5705718560718848", "http://static.pratilipi.com/pratilipi-cover/300/5705718560718848" );
 		redirections.put( "/resource.story-cover/300/5690599873183744", "http://static.pratilipi.com/pratilipi-cover/300/5690599873183744" );
+		redirections.put( "/resource.story-cover/300/5726911808405504", "http://static.pratilipi.com/pratilipi-cover/300/5726911808405504" );
+		redirections.put( "/resource.story-cover/300/5735865741475840", "http://static.pratilipi.com/pratilipi-cover/300/5735865741475840" );
 	}
 	
 

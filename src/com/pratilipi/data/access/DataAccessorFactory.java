@@ -7,11 +7,6 @@ import com.claymus.data.access.MemcacheClaymusImpl;
 public class DataAccessorFactory
 		extends com.claymus.data.access.DataAccessorFactory {
 
-	@Deprecated
-	public static DataAccessor getDataAccessor() {
-		return new DataAccessorWithMemcache( new DataAccessorGaeImpl(), cacheL2 );
-	}
-	
 	public static DataAccessor getDataAccessor( HttpServletRequest request ) {
 		DataAccessor dataAccessor = cacheL1.get( "PratilipiDataAccessor-" + request.hashCode() );
 		if( dataAccessor == null ) {

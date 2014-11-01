@@ -22,11 +22,6 @@ public class DataAccessorFactory {
 		return cacheL2;
 	}
 	
-	@Deprecated
-	public static DataAccessor getDataAccessor() {
-		return new DataAccessorWithMemcache( new DataAccessorGaeImpl(), cacheL2 );
-	}
-	
 	public static DataAccessor getDataAccessor( HttpServletRequest request ) {
 		DataAccessor dataAccessor = cacheL1.get( "DataAccessor-" + request.hashCode() );
 		if( dataAccessor == null ) {
