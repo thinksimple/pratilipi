@@ -9,7 +9,9 @@ public class GetSearchResponse implements IsSerializable {
 
 	private List<PratilipiData> pratilipiDataList;
 	
-	private Boolean loadFinished;
+	private String serverMsg;
+	
+	private String cursor;
 
 	
 	@SuppressWarnings("unused")
@@ -17,10 +19,11 @@ public class GetSearchResponse implements IsSerializable {
 	
 	public GetSearchResponse(
 			List<PratilipiData> pratilipiDataList,
-			boolean loadFinished ) {
+			String serverMsg, String cursor ) {
 		
 		this.pratilipiDataList = pratilipiDataList;
-		this.loadFinished = loadFinished;
+		this.serverMsg = serverMsg;
+		this.cursor = cursor;
 	}
 	
 	
@@ -28,8 +31,12 @@ public class GetSearchResponse implements IsSerializable {
 		return pratilipiDataList;
 	}
 
-	public Boolean isLoadFinished() {
-		return loadFinished;
+	public String getServerMsg() {
+		return serverMsg;
+	}
+	
+	public String getCursor(){
+		return this.cursor;
 	}
 	
 }

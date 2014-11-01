@@ -116,6 +116,22 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 
 
+	public List<PratilipiData> createPratilipiDataListFromIdList(
+			List<Long> pratilipiIdList,
+			boolean includeLanguageData, boolean includeAuthorData,
+			boolean includeGenreData ) { 
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+
+		List<Pratilipi> pratilipiList = new ArrayList<>( pratilipiIdList.size() );
+		for( Long pratilipiId : pratilipiIdList )
+			pratilipiList.add( dataAccessor.getPratilipi( pratilipiId ) );
+		
+		return createPratilipiDataList(
+				pratilipiList, includeLanguageData,
+				includeAuthorData, includeGenreData, false );
+	}
+	
 	public List<PratilipiData> createPratilipiDataList(
 			List<Pratilipi> pratilipiList ) {
 

@@ -796,51 +796,62 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	}
 
 	@Override
-	public GetSearchResponse getSearchResults(GetSearchRequest request) {
+	public GetSearchResponse getSearchResults(GetSearchRequest request)
+			throws SearchException {
 
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( this.getThreadLocalRequest() );
 		String searchRequest = request.getsearchQuery();
+		String serverMsg;
 		
 		Results<ScoredDocument> result = null;
-		try {
-			//Per-query cursor
-			Cursor cursor = Cursor.newBuilder().build();
-
-			do{
-			    // Build the QueryOptions
-			    QueryOptions options = QueryOptions.newBuilder()
-			        .setLimit(1000)
-			        .setReturningIdsOnly( true )
-			        .build();
-	
-			    //  Build the Query and run the search
-			    Query query = Query.newBuilder().setOptions(options).build( searchRequest );
-			    IndexSpec indexSpec = IndexSpec.newBuilder().setName( "PRATILIPI" ).build();
-			    Index index = SearchServiceFactory.getSearchService().getIndex( indexSpec );
-			    result =  index.search( query );
-			    int numberReturned = result.getNumberReturned();
-			    cursor = result.getCursor();
-			    
-			    if( numberReturned > 0 ){
-			    	List<PratilipiData> pratilipiDataList = new ArrayList<>( numberReturned );
-			    	
-					for( ScoredDocument document : result ){
-						String pratilipiId = document.getId();
-						//TODO : use PratilipiHelper.createPratilipiDataList() function to create pratilipiData list.
-						PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( Long.parseLong( pratilipiId ) );
-						pratilipiDataList.add( pratilipiData );
-					}
-					
-					return new GetSearchResponse( pratilipiDataList, false );
-			    }
-			    
-			}
-			while( cursor != null );
-		} catch (SearchException e) {
-		    logger.log( Level.SEVERE, "Searching Failed", e );
-		}
+		Cursor cursor;
+		//Per-query cursor
+		if( request.getCursor() != null )
+			cursor = Cursor.newBuilder().build( request.getCursor() );
+		else 
+			cursor = Cursor.newBuilder().build();
 		
-		return new GetSearchResponse( new ArrayList<PratilipiData>(0), true );
+	    // Build the QueryOptions
+	    QueryOptions options = QueryOptions.newBuilder()
+	        .setLimit( request.getResultCount() )
+	        .setReturningIdsOnly( true )
+	        .setCursor( cursor )
+	        .build();
+
+	    //  Build the Query and run the search
+	    Query query = Query.newBuilder().setOptions(options).build( searchRequest );
+	    IndexSpec indexSpec = IndexSpec.newBuilder().setName( "PRATILIPI" ).build();
+	    Index index = SearchServiceFactory.getSearchService().getIndex( indexSpec );
+	    result =  index.search( query );
+	    int numberReturned = result.getNumberReturned();
+	    cursor = result.getCursor();
+	    
+	    logger.log( Level.SEVERE, numberReturned + "" );
+	    logger.log( Level.SEVERE, result.getNumberFound() + "" );
+	    
+	    List<Long> pratilipiIdList = new ArrayList<>(); 
+	    
+	    if( numberReturned > 0 ){
+	    	
+			for( ScoredDocument document : result ){
+				pratilipiIdList.add( Long.parseLong( document.getId() ));
+			}
+			
+			List<PratilipiData> pratilipiDataList = pratilipiHelper.createPratilipiDataListFromIdList( pratilipiIdList, false, true, false );
+			if( cursor != null )
+				return new GetSearchResponse( pratilipiDataList, "Results Found", cursor.toWebSafeString() );
+			else {
+				serverMsg = "<p style=\"width: 100%;text-align: center; border: 1px solid black;"
+						+ " padding: 5px;\">No more records are found</p>" ;
+				return new GetSearchResponse( pratilipiDataList, serverMsg, null );
+			}
+	    }
+	    else{
+	    	serverMsg = "<h5>We can't find what you are looking for."
+					+ "Please <a href='/contact'>mail us</a> if you are looking for something special. </h5>" ;
+	    	return new GetSearchResponse( new ArrayList<PratilipiData>(0), serverMsg, null );
+	    }
+		    
 	}
 
 	
