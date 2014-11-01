@@ -38,6 +38,12 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/give-away/Chandrakanta.pdf", "/book/5673309542809600" );
 
 		redirections.put( "/about", "/about/pratilipi" );
+
+		redirections.put( "/resource.book-cover/original/5710758973276160", "http://static.pratilipi.com/pratilipi-cover/300/5710758973276160" );
+		redirections.put( "/resource.book-cover/300/6248007305527296", "http://static.pratilipi.com/pratilipi-cover/300/6248007305527296" );
+		redirections.put( "/resource.poem-cover/300/5704726691708928", "http://static.pratilipi.com/pratilipi-cover/300/5704726691708928" );
+		redirections.put( "/resource.poem-cover/300/5705718560718848", "http://static.pratilipi.com/pratilipi-cover/300/5705718560718848" );
+		redirections.put( "/resource.story-cover/300/5690599873183744", "http://static.pratilipi.com/pratilipi-cover/300/5690599873183744" );
 	}
 	
 
@@ -63,7 +69,12 @@ public class PratilipiFilter implements Filter {
 		Page page;
 
 		
-		if( requestUri.startsWith( "/service." )
+		if( redirections.get( requestUri ) != null ){
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", redirections.get( requestUri ) );
+
+			
+		} else if( requestUri.startsWith( "/service." )
 				|| requestUri.startsWith( "/resource." )
 				|| requestUri.startsWith( "/_ah/queue/" ) ) {
 			
@@ -78,13 +89,9 @@ public class PratilipiFilter implements Filter {
 			response.setHeader( "Location", page.getUriAlias() );
 			
 			
-		} else if( redirections.get( requestUri ) != null ){
-			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", redirections.get( requestUri ) );
-
-			
 		} else if( !host.equals( "www.pratilipi.com" )
-				&& !host.equals( "mark-3p15.prod-pratilipi.appspot.com" )
+				&& !host.equals( "gamma.pratilipi.com" )
+				&& !host.equals( "mark-3p16.prod-pratilipi.appspot.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( "devo-pratilipi.appspot.com" )
 				&& !host.equals( "localhost" )
