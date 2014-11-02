@@ -21,12 +21,15 @@ import com.claymus.taskqueue.Task;
 import com.google.appengine.api.search.Cursor;
 import com.google.appengine.api.search.Index;
 import com.google.appengine.api.search.IndexSpec;
+import com.google.appengine.api.search.MatchScorer;
 import com.google.appengine.api.search.Query;
 import com.google.appengine.api.search.QueryOptions;
 import com.google.appengine.api.search.Results;
 import com.google.appengine.api.search.ScoredDocument;
 import com.google.appengine.api.search.SearchException;
 import com.google.appengine.api.search.SearchServiceFactory;
+import com.google.appengine.api.search.SortExpression;
+import com.google.appengine.api.search.SortOptions;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiPageType;
@@ -811,11 +814,16 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		else 
 			cursor = Cursor.newBuilder().build();
 		
+		SortOptions sortOptions = SortOptions.newBuilder()
+		        .setMatchScorer(MatchScorer.newBuilder())
+		        .build();
+		
 	    // Build the QueryOptions
 	    QueryOptions options = QueryOptions.newBuilder()
 	        .setLimit( request.getResultCount() )
 	        .setReturningIdsOnly( true )
 	        .setCursor( cursor )
+	        .setSortOptions( sortOptions )
 	        .build();
 
 	    //  Build the Query and run the search
