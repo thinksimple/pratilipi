@@ -8,6 +8,14 @@
 	<div class="row margin0 static-page-fonts">
 		<div class="container">
 			<p>
+				Pratilipi is possibly India's fastest growing self-publishing and reading platform.
+				<br/><br/>
+				For writers: We provide a self publishing platform in various Indian languages, and provide you a bigger reach than almost any other player.
+				<br/>
+				For readers: We provide access to awesome stories, poems and books in various Indian languages including some of India's best classic literature. A large part of this(including all of classical literature) is completely free. We also bring your favorite authors closer to you :)
+				<br/><br/>
+			</p>
+			<p>
 				We believe in the age old adage: <i>"You become what you read"</i>, and that's why we want us to be able to.
 			</p>
 			<ol>
