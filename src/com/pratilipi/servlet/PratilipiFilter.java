@@ -39,12 +39,20 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/about", "/about/pratilipi" );
 
 		redirections.put( "/resource.book-cover/original/5710758973276160", "http://static.pratilipi.com/pratilipi-cover/300/5710758973276160" );
+		redirections.put( "/resource.book-cover/original/5963192723308544", "http://static.pratilipi.com/pratilipi-cover/300/5963192723308544" );
+		
 		redirections.put( "/resource.book-cover/300/6248007305527296", "http://static.pratilipi.com/pratilipi-cover/300/6248007305527296" );
+
 		redirections.put( "/resource.poem-cover/300/5704726691708928", "http://static.pratilipi.com/pratilipi-cover/300/5704726691708928" );
 		redirections.put( "/resource.poem-cover/300/5705718560718848", "http://static.pratilipi.com/pratilipi-cover/300/5705718560718848" );
+
 		redirections.put( "/resource.story-cover/300/5690599873183744", "http://static.pratilipi.com/pratilipi-cover/300/5690599873183744" );
 		redirections.put( "/resource.story-cover/300/5726911808405504", "http://static.pratilipi.com/pratilipi-cover/300/5726911808405504" );
-		redirections.put( "/resource.story-cover/300/5735865741475840", "http://static.pratilipi.com/pratilipi-cover/300/5735865741475840" );
+		redirections.put( "/resource.story-cover/300/5690599873183744", "http://static.pratilipi.com/pratilipi-cover/300/5690599873183744" );
+		
+		redirections.put( "/resource.article-cover/300/5154850081865728", "http://static.pratilipi.com/pratilipi-cover/300/5154850081865728" );
+		redirections.put( "/resource.article-cover/300/5161516139544576", "http://static.pratilipi.com/pratilipi-cover/300/5161516139544576" );
+		redirections.put( "/resource.article-cover/300/5724466092965888", "http://static.pratilipi.com/pratilipi-cover/300/5724466092965888" );
 	}
 	
 
@@ -76,7 +84,7 @@ public class PratilipiFilter implements Filter {
 			
 		} else if( !host.equals( "www.pratilipi.com" )
 				&& !host.equals( "gamma.pratilipi.com" )
-				&& !host.equals( "mark-3p17.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-3p19.prod-pratilipi.appspot.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( "devo-pratilipi.appspot.com" )
 				&& !host.equals( "localhost" )
