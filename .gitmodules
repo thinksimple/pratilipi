@@ -1,0 +1,3 @@
+[submodule "claymus"]
+	path = claymus
+	url = https://github.com/Claymus/claymus.git
