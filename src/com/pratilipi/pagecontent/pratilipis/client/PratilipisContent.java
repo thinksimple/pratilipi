@@ -81,7 +81,7 @@ public class PratilipisContent implements EntryPoint {
 						}
 						
 						cursor = response.getCursor();
-						if( response.getPratilipiDataList().size() < resultCount )
+						if( response.getPratilipiDataList().size() < resultCount || cursor == null )
 							loadFinished();
 						loadSuccessful();
 					}

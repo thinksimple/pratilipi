@@ -815,7 +815,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			cursor = Cursor.newBuilder().build();
 		
 		SortOptions sortOptions = SortOptions.newBuilder()
-		        .setMatchScorer(MatchScorer.newBuilder())
+		        .setMatchScorer( MatchScorer.newBuilder() )
 		        .build();
 		
 	    // Build the QueryOptions
@@ -833,9 +833,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	    result =  index.search( query );
 	    int numberReturned = result.getNumberReturned();
 	    cursor = result.getCursor();
-	    
-	    logger.log( Level.SEVERE, numberReturned + "" );
-	    logger.log( Level.SEVERE, result.getNumberFound() + "" );
 	    
 	    List<Long> pratilipiIdList = new ArrayList<>(); 
 	    

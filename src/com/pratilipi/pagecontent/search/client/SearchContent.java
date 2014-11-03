@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -29,8 +30,9 @@ public class SearchContent implements EntryPoint {
 	
 	private Search search = new Search();
 	private String cursor = null;
-	private int resultCount = 1;
+	private int resultCount = 20;
 	private Label searchEndMsg = new Label();
+	private String modifiedSearchQuery;
 	
 	private final Image loadingImage = new Image( "/theme.pratilipi/images/loading.gif" );
 	
@@ -38,6 +40,12 @@ public class SearchContent implements EntryPoint {
 		RootPanel searchBoxRootPanel = RootPanel.get( "PageContent-Search-SearchBox" );
 		if( searchBoxRootPanel != null ){
 			searchBoxRootPanel.add( search );
+			String queryParameter = Window.Location.getParameter( "query" );
+			if( queryParameter != null ) {
+				search.setSearchQuery( queryParameter );
+				setSearchResults();
+			}
+			
 			ClickHandler searchButtonClickHandler = new ClickHandler(){
 
 				@Override
@@ -64,6 +72,25 @@ public class SearchContent implements EntryPoint {
 	private void setSearchResults(){
 		if( search.validate() ){
 			
+			String[] query = search.getSearchQuery().toLowerCase().split( " " );
+			
+			modifiedSearchQuery = "";
+			
+			for( int i=0; i< query.length; i++ ) {
+				if( ( query[i].toUpperCase().equals( "AND" ) ||
+								query[i].toUpperCase().equals( "NOT" ) ) && i != ( query.length - 1 ) ) {
+					modifiedSearchQuery += ( " " + query[i].toUpperCase() + " " + query[++i] );
+					continue;
+				}else if( query[i].toUpperCase().equals( "OR" ))
+					continue;
+				else {
+					if( i == 0 )
+						modifiedSearchQuery += query[i];
+					else
+						modifiedSearchQuery += ( " OR " + query[i] );
+				}
+			}
+			
 			InfiniteScrollPanel infiniteScrollPanel = new InfiniteScrollPanel() {
 				
 				@Override
@@ -72,7 +99,7 @@ public class SearchContent implements EntryPoint {
 					add( loadingImage );
 					
 					pratilipiService.getSearchResults(
-							new GetSearchRequest( search.getSearchQuery(), cursor, resultCount ),
+							new GetSearchRequest( modifiedSearchQuery, cursor, resultCount ),
 							new AsyncCallback<GetSearchResponse>() {
 						
 						@Override

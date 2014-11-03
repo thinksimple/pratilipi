@@ -1,10 +1,26 @@
+<script>
+function validateForm() {
+    var x = document.forms["searchForm"]["query"].value;
+    if (x==null || x=="") {
+        return false;
+    }
+}
+</script>
 <header>
 	<div class="container">		
 	
 		<div style="height:50px;">
-			<div id="Pratilipi-User-Access" class="pull-right" style="display:none;">
+			<div id="Pratilipi-User-Access" class="pull-right" style="display:none; vertical-align: middle;">
+				<form id="qp-search" name="searchForm" class="navbar-form navbar-left" action="/search" onsubmit="return validateForm()" method="GET">
+					<div class="input-group">
+						<input name="query" type="text" class="form-control" value="" placeholder="Search Pratilipi" style="height: 25px; padding: 3px 6px; font-size: 11px; width: 150px;">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit" style="height: 25px; padding: 2px 6px;"><span class="glyphicon glyphicon-search"></span></button>
+						</span>
+					</div><!-- /input-group -->
+				</form>
 				<#if isUserLoggedIn>
-					<div class="pull-right">
+					<div class="pull-right" style="padding-top: 9px;">
 						<ul class="nav navbar-nav">
 						<li class="dropdown">
 			                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome <#if user.getFirstName()??>
@@ -19,7 +35,7 @@
 			          	</ul>
 					</div>
 				<#else>
-					<div class="pull-right">
+					<div class="pull-right" style="padding-top: 9px;">
 						<a href="" data-toggle='modal' data-target="#loginModal">Login</a> | 
 						<a href="" data-toggle='modal' data-target="#signupModal">Signup</a>
 					</div>
