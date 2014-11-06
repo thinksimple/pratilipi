@@ -8,7 +8,7 @@
   <inherits name='com.pratilipi.commons.Pratilipi'/>
   <inherits name='com.pratilipi.service.PratilipiService'/>
 
-  <entry-point class='com.pratilipi.pagecontent.upload.client.UploadContent'/>
+  <entry-point class='com.pratilipi.pagecontent.uploadcontent.client.UploadContent'/>
 
   <source path='client'/>
   <source path='shared'/>

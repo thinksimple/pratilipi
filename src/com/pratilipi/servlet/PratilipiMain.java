@@ -284,9 +284,6 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/filebrowser" ))
 			pageContentList.add( FileBrowserHelper.newFileBrowser() );
 		
-		else if( requestUri.equals( "/search" ) )
-			pageContentList.add( SearchContentHelper.newSearchContent() );
-		
 		else if( requestUri.equals( "/upload" ) )
 			pageContentList.add( UploadContentFactory.newUploadContent() );
 

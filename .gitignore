@@ -10,7 +10,6 @@
 /war/pagecontent.blogpost
 /war/pagecontent.roleaccess
 /war/pagecontent.filebrowser
-/war/pagecontent.search
 
 /war/WEB-INF/PratilipiDevo-a987225aa0b1.p12
 /war/pagecontent.pratilipi
@@ -23,6 +22,8 @@
 /war/pagecontent.languages
 /war/pagecontent.genres
 /war/pagecontent.managepublishers
+/war/pagecontent.search
+/war/pagecontent.upload
 /war/pagecontent.homepagecontent
 /war/pagecontent.invitepage
 /war/pagecontent.userforms
