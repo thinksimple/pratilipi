@@ -30,7 +30,7 @@ public class SearchContent implements EntryPoint {
 	private final String query = Window.Location.getParameter( "q" );
 	private final String docType = Window.Location.getParameter( "dt" );
 	private String cursor = searchResultPanel.getElement().getAttribute( "data-cursor" );
-	private final int resultCount = 20;
+	private final int resultCount = 4;
 	
 
 	public void onModuleLoad() {
