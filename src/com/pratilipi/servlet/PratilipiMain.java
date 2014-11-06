@@ -44,6 +44,7 @@ import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
 import com.pratilipi.pagecontent.reader.ReaderContentFactory;
 import com.pratilipi.pagecontent.search.SearchContentFactory;
+import com.pratilipi.pagecontent.uploadcontent.UploadContentFactory;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -65,6 +66,7 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( AuthorsContentFactory.class );
 		PageContentRegistry.register( GenresContentHelper.class );
 		PageContentRegistry.register( SearchContentFactory.class );
+		PageContentRegistry.register( UploadContentFactory.class );
 	}
 
 
@@ -142,6 +144,9 @@ public class PratilipiMain extends ClaymusMain {
 
 		else if( requestUri.equals( "/genres" ) )
 			page.setTitle( "Genres" );
+		
+		else if( requestUri.equals( "/upload" ) )
+			page.setTitle( "Upload Content" );
 
 		
 		// Individual item's readers
@@ -281,6 +286,9 @@ public class PratilipiMain extends ClaymusMain {
 		
 		else if( requestUri.equals( "/search" ) )
 			pageContentList.add( SearchContentFactory.newSearchContent() );
+		
+		else if( requestUri.equals( "/upload" ) )
+			pageContentList.add( UploadContentFactory.newUploadContent() );
 
 		
 		// Individual item's readers
