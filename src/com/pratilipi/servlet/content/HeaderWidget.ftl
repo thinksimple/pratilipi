@@ -1,6 +1,6 @@
 <script>
 function validateForm() {
-    var x = document.forms["searchForm"]["query"].value;
+    var x = document.forms["searchForm"]["q"].value;
     if (x==null || x=="") {
         return false;
     }
@@ -13,7 +13,7 @@ function validateForm() {
 			<div id="Pratilipi-User-Access" class="pull-right" style="display:none; vertical-align: middle;">
 				<form id="qp-search" name="searchForm" class="navbar-form navbar-left" action="/search" onsubmit="return validateForm()" method="GET">
 					<div class="input-group">
-						<input name="query" type="text" class="form-control" value="" placeholder="Search Pratilipi" style="height: 25px; padding: 3px 6px; font-size: 11px; width: 150px;">
+						<input name="q" type="text" class="form-control" value="" placeholder="Search Pratilipi" style="height: 25px; padding: 3px 6px; font-size: 11px; width: 150px;">
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="submit" style="height: 25px; padding: 2px 6px;"><span class="glyphicon glyphicon-search"></span></button>
 						</span>

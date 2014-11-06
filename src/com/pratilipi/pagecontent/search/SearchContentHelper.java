@@ -5,18 +5,19 @@ import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.pagecontent.search.gae.SearchContentEntity;
 import com.pratilipi.pagecontent.search.shared.SearchContentData;
 
-
-public class SearchContentFactory extends PageContentHelper<SearchContent, 
-											SearchContentData, SearchContentProcessor> {
+public class SearchContentHelper extends PageContentHelper<
+		SearchContent, 
+		SearchContentData,
+		SearchContentProcessor> {
 	
 	@Override
 	public String getModuleName() {
-		return "File Browser";
+		return "Search";
 	}
 
 	@Override
 	public Double getModuleVersion() {
-		return 3.0;
+		return 4.0;
 	}
 
 	@Override
@@ -28,4 +29,5 @@ public class SearchContentFactory extends PageContentHelper<SearchContent,
 	public static SearchContent newSearchContent() {
 		return new SearchContentEntity();
 	}
+	
 }

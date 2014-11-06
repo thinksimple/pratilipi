@@ -3,7 +3,6 @@ package com.pratilipi.service.client;
 import com.claymus.commons.shared.exception.IllegalArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
-import com.google.appengine.api.search.SearchException;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.pratilipi.service.shared.AddLanguageRequest;
@@ -28,8 +27,8 @@ import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetReaderContentRequest;
 import com.pratilipi.service.shared.GetReaderContentResponse;
-import com.pratilipi.service.shared.GetSearchRequest;
-import com.pratilipi.service.shared.GetSearchResponse;
+import com.pratilipi.service.shared.SearchRequest;
+import com.pratilipi.service.shared.SearchResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -108,5 +107,7 @@ public interface PratilipiService extends RemoteService {
 	
 	GetUserPratilipiListResponse getUserPratilipiList( GetUserPratilipiListRequest request );
 	
-	GetSearchResponse getSearchResults( GetSearchRequest request );
+	
+	// API Version: 4.0; Owner Module: SearchContent;
+	SearchResponse search( SearchRequest request );
 }

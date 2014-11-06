@@ -57,7 +57,7 @@
 		<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
 		<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
 
-		<script type="text/javascript" language="javascript" src="/theme.default/script.js" async></script>
+		<script type="text/javascript" language="javascript" src="/theme.default/script.js" defer></script>
 		<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
 	
 		<#if domain == "devo.pratilipi.com">

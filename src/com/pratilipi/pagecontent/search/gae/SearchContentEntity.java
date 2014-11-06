@@ -8,8 +8,4 @@ import com.pratilipi.pagecontent.search.SearchContent;
 @SuppressWarnings("serial")
 @PersistenceCapable
 public class SearchContentEntity extends PageContentEntity
-		implements SearchContent {
-	
- 
-	
-}
+		implements SearchContent { }

@@ -8,6 +8,7 @@ public class GetReaderContentResponse implements IsSerializable {
 	
 	private Boolean isLastPage; 
 	
+	
 	@SuppressWarnings("unused")
 	private GetReaderContentResponse() {}
 	

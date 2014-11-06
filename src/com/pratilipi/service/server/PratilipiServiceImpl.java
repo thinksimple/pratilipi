@@ -18,19 +18,9 @@ import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.taskqueue.Task;
-import com.google.appengine.api.search.Cursor;
-import com.google.appengine.api.search.Index;
-import com.google.appengine.api.search.IndexSpec;
-import com.google.appengine.api.search.MatchScorer;
-import com.google.appengine.api.search.Query;
-import com.google.appengine.api.search.QueryOptions;
-import com.google.appengine.api.search.Results;
-import com.google.appengine.api.search.ScoredDocument;
-import com.google.appengine.api.search.SearchException;
-import com.google.appengine.api.search.SearchServiceFactory;
-import com.google.appengine.api.search.SortExpression;
-import com.google.appengine.api.search.SortOptions;
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.pratilipi.commons.server.GlobalSearch;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.commons.shared.PratilipiState;
@@ -73,8 +63,8 @@ import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetReaderContentRequest;
 import com.pratilipi.service.shared.GetReaderContentResponse;
-import com.pratilipi.service.shared.GetSearchRequest;
-import com.pratilipi.service.shared.GetSearchResponse;
+import com.pratilipi.service.shared.SearchRequest;
+import com.pratilipi.service.shared.SearchResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -103,7 +93,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	private static final Logger logger =
 			Logger.getLogger( PratilipiServiceImpl.class.getName() );
 
-	
+    
 	@Override
 	public SavePratilipiResponse savePratilipi( SavePratilipiRequest request )
 			throws IllegalArgumentException, InsufficientAccessException {
@@ -196,7 +186,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		task.addParam( "pratilipiId", pratilipi.getId().toString() );
 		// Creating/Updating default cover image
 		TaskQueueFactory.getCreateOrUpdateDefaultCoverTaskQueue().add( task );
-		// Updating PRATILIPI search index
+		// Creating/Updating search index
 		TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
 
 		
@@ -494,7 +484,10 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		}
 
 
-		// Updating PRATILIPI search index
+		// Creating/Updating search index
+		Task task = TaskQueueFactory.newTask();
+		task.addParam( "authorId", author.getId().toString() );
+		TaskQueueFactory.getUpdateAuthorIndexQueue().add( task );
 		if( authorData.getId() != null
 				&& ( authorData.hasFirstName()
 						|| authorData.hasLastName()
@@ -503,8 +496,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 						|| authorData.hasLastNameEn()
 						|| authorData.hasPenNameEn() ) ) {
 			
-			Task task = TaskQueueFactory.newTask();
-			task.addParam( "authorId", author.getId().toString() );
 			TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
 		}
 
@@ -683,7 +674,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		dataAccessor.createPratilipiGenre( pratilipiGenre );
 
 		
-		// Updating PRATILIPI search index
+		// Updating search index
 		Task task = TaskQueueFactory.newTask();
 		task.addParam( "pratilipiId", request.getPratilipiId().toString() );
 		TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
@@ -706,7 +697,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		dataAccessor.deletePratilipiGenre( request.getPratilipiId(), request.getGenreId() );
 		
 		
-		// Updating PRATILIPI search index
+		// Updating search index
 		Task task = TaskQueueFactory.newTask();
 		task.addParam( "pratilipiId", request.getPratilipiId().toString() );
 		TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
@@ -799,66 +790,17 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	}
 
 	@Override
-	public GetSearchResponse getSearchResults(GetSearchRequest request)
-			throws SearchException {
-
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( this.getThreadLocalRequest() );
-		String searchRequest = request.getsearchQuery();
-		String serverMsg;
+	public SearchResponse search( SearchRequest request ) {
+		GlobalSearch globalSearch = new GlobalSearch( this.getThreadLocalRequest() );
+		globalSearch.setCursor( request.getCursor() );
+		if( request.getResultCount() != null )
+			globalSearch.setResultCount( request.getResultCount() );
 		
-		Results<ScoredDocument> result = null;
-		Cursor cursor;
-		//Per-query cursor
-		if( request.getCursor() != null )
-			cursor = Cursor.newBuilder().build( request.getCursor() );
-		else 
-			cursor = Cursor.newBuilder().build();
+		List<IsSerializable> dataList = request.getDocType() == null || request.getDocType().isEmpty()
+				? globalSearch.search( request.getQuery() )
+				: globalSearch.search( request.getQuery(), "docType:" + request.getDocType() );
 		
-		SortOptions sortOptions = SortOptions.newBuilder()
-		        .setMatchScorer( MatchScorer.newBuilder() )
-		        .build();
-		
-	    // Build the QueryOptions
-	    QueryOptions options = QueryOptions.newBuilder()
-	        .setLimit( request.getResultCount() )
-	        .setReturningIdsOnly( true )
-	        .setCursor( cursor )
-	        .setSortOptions( sortOptions )
-	        .build();
-
-	    //  Build the Query and run the search
-	    Query query = Query.newBuilder().setOptions(options).build( searchRequest );
-	    IndexSpec indexSpec = IndexSpec.newBuilder().setName( "PRATILIPI" ).build();
-	    Index index = SearchServiceFactory.getSearchService().getIndex( indexSpec );
-	    result =  index.search( query );
-	    int numberReturned = result.getNumberReturned();
-	    cursor = result.getCursor();
-	    
-	    List<Long> pratilipiIdList = new ArrayList<>(); 
-	    
-	    if( numberReturned > 0 ){
-	    	
-			for( ScoredDocument document : result ){
-				pratilipiIdList.add( Long.parseLong( document.getId() ));
-			}
-			
-			List<PratilipiData> pratilipiDataList = pratilipiHelper.createPratilipiDataListFromIdList( pratilipiIdList, false, true, false );
-			if( cursor != null )
-				return new GetSearchResponse( pratilipiDataList, "Results Found", cursor.toWebSafeString() );
-			else {
-				serverMsg = "<p style=\"width: 100%;text-align: center; border: 1px solid black;"
-						+ " padding: 5px;\">No more records are found</p>" ;
-				return new GetSearchResponse( pratilipiDataList, serverMsg, null );
-			}
-	    }
-	    else{
-	    	serverMsg = "<h5>We can't find what you are looking for."
-					+ "Please <a href='/contact'>mail us</a> if you are looking for something special. </h5>" ;
-	    	return new GetSearchResponse( new ArrayList<PratilipiData>(0), serverMsg, null );
-	    }
-		    
+		return new SearchResponse( dataList, globalSearch.getCursor() );
 	}
-
-	
 	
 }

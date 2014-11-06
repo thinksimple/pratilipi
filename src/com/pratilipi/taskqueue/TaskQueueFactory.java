@@ -12,6 +12,8 @@ public class TaskQueueFactory extends com.claymus.taskqueue.TaskQueueFactory {
 
 	private static final String QUEUE_UPDATE_INDEX_PRATILIPI = "update-index-pratilipi";
 
+	private static final String QUEUE_UPDATE_INDEX_AUTHOR = "update-index-author";
+
 	
 	public static TaskQueue getCreateOrUpdateDefaultCoverTaskQueue() {
 		return getTaskQueue( QUEUE_CREATE_OR_UPDATE_DEFAULT_COVER );
@@ -27,6 +29,10 @@ public class TaskQueueFactory extends com.claymus.taskqueue.TaskQueueFactory {
 
 	public static TaskQueue getUpdatePratilipiIndexQueue() {
 		return getTaskQueue( QUEUE_UPDATE_INDEX_PRATILIPI );
+	}
+
+	public static TaskQueue getUpdateAuthorIndexQueue() {
+		return getTaskQueue( QUEUE_UPDATE_INDEX_AUTHOR );
 	}
 
 }

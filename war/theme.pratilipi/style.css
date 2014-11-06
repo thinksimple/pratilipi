@@ -41,6 +41,14 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 }
 
 
+.ajax-loader {
+	background-image: url( "/theme.pratilipi/ajax-loader.gif" );
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 100px;
+}
+
+
 
 /* START :: Claymus Overrides :: START */
 
@@ -76,7 +84,7 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 }
 
 
-.well {
+.dropdown-menu, .well {
 	border-radius: 1px;
 }
 
@@ -113,11 +121,6 @@ ul, li {
 
 .navbar-toggle {
 	background-color: #eee;
-}
-
-.dropdown-menu {
-	margin: 11px 0 0;
-	border-radius: 1px;
 }
 
 .navbar-nav {

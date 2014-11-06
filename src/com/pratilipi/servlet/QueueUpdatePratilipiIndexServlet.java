@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.commons.server.ClaymusHelper;
 import com.google.appengine.api.search.Document;
 import com.google.appengine.api.search.Field;
 import com.google.appengine.api.search.Index;
 import com.google.appengine.api.search.IndexSpec;
 import com.google.appengine.api.search.PutException;
+import com.google.appengine.api.search.Document.Builder;
 import com.google.appengine.api.search.SearchServiceFactory;
 import com.google.appengine.api.search.StatusCode;
 import com.pratilipi.commons.server.PratilipiHelper;
@@ -35,9 +37,11 @@ public class QueueUpdatePratilipiIndexServlet extends HttpServlet {
 	private static final Logger logger = 
 			Logger.getLogger( QueueWordToPratilipiServlet.class.getName() );
 	
-	private static final IndexSpec indexSpec = IndexSpec.newBuilder().setName( "PRATILIPI" ).build(); 
-	private static final Index index = SearchServiceFactory.getSearchService().getIndex( indexSpec );
+	private static final Index searchIndex = SearchServiceFactory
+			.getSearchService()
+			.getIndex( IndexSpec.newBuilder().setName( ClaymusHelper.SEARCH_INDEX_NAME ) );
 
+	
 	@Override
 	public void doPost(
 			HttpServletRequest request,
@@ -83,40 +87,42 @@ public class QueueUpdatePratilipiIndexServlet extends HttpServlet {
 			
 			PratilipiData pratilipiData =
 					pratilipiHelper.createPratilipiData( pratilipi, language, author, genreList );
-			
+			String docId = "PratilipiData:" + pratilipiData.getId().toString();
 			
 			if( pratilipiData.getState() == PratilipiState.PUBLISHED ) {
 			
-				// Comma separated genre name list.
-				String genreCsv = null;
-				if( genreList.size() > 0 )
-					genreCsv = genreList.get( 0 ).getName();
-				for( int i = 1; i < genreList.size(); i++ )
-					genreCsv +=  ", " + genreList.get( i ).getName();
-	
-				Document document = Document.newBuilder()
-						.setId( pratilipiData.getId().toString() )
-						
-						.addField( Field.newBuilder().setName( "type" ).setAtom( pratilipiData.getType().getName() ) )
+				Builder docBuilder = Document.newBuilder()
+						.setId( docId )
+						.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi" ) )
+						.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi-" + pratilipiData.getType().getName() ) )
+
+						.addField( Field.newBuilder().setName( "pageUrl" ).setAtom( pratilipiData.getPageUrlAlias() ) )
+						.addField( Field.newBuilder().setName( "imageUrl" ).setAtom( pratilipiData.getCoverImageUrl() ) )
+
 						.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitle() ) )
-						.addField( Field.newBuilder().setName( "titleEn" ).setText( pratilipiData.getTitleEn() ) )
+						.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitleEn() ) )
 	
-						.addField( Field.newBuilder().setName( "languageId" ).setAtom( pratilipiData.getLanguageId().toString() ) )
-						.addField( Field.newBuilder().setName( "languageName" ).setText( pratilipiData.getLanguageData().getName() ) )
-						.addField( Field.newBuilder().setName( "languageNameEn" ).setText( pratilipiData.getLanguageData().getNameEn() ) )
+						.addField( Field.newBuilder().setName( "language" ).setAtom( pratilipiData.getLanguageId().toString() ) )
+						.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getName() ) )
+						.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getNameEn() ) )
 						
-						.addField( Field.newBuilder().setName( "authorId" ).setAtom( pratilipiData.getAuthorId().toString() ) )
-						.addField( Field.newBuilder().setName( "authorName" ).setText( pratilipiData.getAuthorData().getFullName() ) )
-						.addField( Field.newBuilder().setName( "authorNameEn" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) )
+						.addField( Field.newBuilder().setName( "author" ).setAtom( pratilipiData.getAuthorId().toString() ) )
+						.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullName() ) )
+						.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) )
 	
-						.addField( Field.newBuilder().setName( "genreList" ).setText( genreCsv ) )
-						.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) )
-						.build();
+						.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) );
+
+				for( Genre genre : genreList ) {
+					docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genre.getId().toString() ) );
+					docBuilder.addField( Field.newBuilder().setName( "genre" ).setText( genre.getName() ) );
+				}
+				
+				Document document = docBuilder.build();
 				
 				documentList.add( document );
 				
 			} else {
-				index.delete( pratilipiData.getId().toString() );
+				searchIndex.delete( docId );
 			}
 			
 		}
@@ -124,7 +130,7 @@ public class QueueUpdatePratilipiIndexServlet extends HttpServlet {
 		
 		for( int i = 0; i < documentList.size(); i = i + 200 ) {
 			try {
-				index.put( documentList.subList( i, i + 200 > documentList.size() ? documentList.size() : i + 200 ) );
+				searchIndex.put( documentList.subList( i, i + 200 > documentList.size() ? documentList.size() : i + 200 ) );
 
 			} catch( PutException e ) {
 				if( StatusCode.TRANSIENT_ERROR.equals( e.getOperationResult().getCode() ) ) {

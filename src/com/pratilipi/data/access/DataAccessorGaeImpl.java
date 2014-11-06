@@ -75,7 +75,7 @@ public class DataAccessorGaeImpl
 			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
 			Map<String, Object> extensionMap = new HashMap<String, Object>();
 			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions(extensionMap);
+			query.setExtensions( extensionMap );
 		}
 		
 		@SuppressWarnings("unchecked")

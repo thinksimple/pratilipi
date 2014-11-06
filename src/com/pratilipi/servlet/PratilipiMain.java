@@ -43,7 +43,7 @@ import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
 import com.pratilipi.pagecontent.reader.ReaderContentFactory;
-import com.pratilipi.pagecontent.search.SearchContentFactory;
+import com.pratilipi.pagecontent.search.SearchContentHelper;
 import com.pratilipi.pagecontent.uploadcontent.UploadContentFactory;
 
 import freemarker.template.Template;
@@ -65,7 +65,7 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( LanguagesContentFactory.class );
 		PageContentRegistry.register( AuthorsContentFactory.class );
 		PageContentRegistry.register( GenresContentHelper.class );
-		PageContentRegistry.register( SearchContentFactory.class );
+		PageContentRegistry.register( SearchContentHelper.class );
 		PageContentRegistry.register( UploadContentFactory.class );
 	}
 
@@ -285,7 +285,7 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( FileBrowserHelper.newFileBrowser() );
 		
 		else if( requestUri.equals( "/search" ) )
-			pageContentList.add( SearchContentFactory.newSearchContent() );
+			pageContentList.add( SearchContentHelper.newSearchContent() );
 		
 		else if( requestUri.equals( "/upload" ) )
 			pageContentList.add( UploadContentFactory.newUploadContent() );
