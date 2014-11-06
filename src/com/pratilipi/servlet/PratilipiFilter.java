@@ -84,7 +84,7 @@ public class PratilipiFilter implements Filter {
 			
 		} else if( !host.equals( "www.pratilipi.com" )
 				&& !host.equals( "gamma.pratilipi.com" )
-				&& !host.equals( "mark-3p20.prod-pratilipi.appspot.com" )
+				&& !host.equals( "mark-3p21.prod-pratilipi.appspot.com" )
 				&& !host.equals( "devo.pratilipi.com" )
 				&& !host.endsWith( "devo-pratilipi.appspot.com" )
 				&& !host.equals( "localhost" )
