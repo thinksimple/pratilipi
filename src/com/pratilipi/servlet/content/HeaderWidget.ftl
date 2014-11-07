@@ -20,7 +20,7 @@ function validateForm() {
 					</div><!-- /input-group -->
 				</form>
 				<#if isUserLoggedIn>
-					<div class="pull-right" style="padding-top: 9px;">
+					<div class="pull-right" style="padding-left: 4px;">
 						<ul class="nav navbar-nav">
 						<li class="dropdown">
 			                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome <#if user.getFirstName()??>
