@@ -3,7 +3,7 @@
 
   <application>prod-pratilipi</application>
   <module>default</module>
-  <version>mark-3p22</version>
+  <version>mark-3p24</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>

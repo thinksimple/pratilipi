@@ -30,6 +30,7 @@
   <servlet>
     <servlet-name>PratilipiService</servlet-name>
     <servlet-class>com.pratilipi.service.server.PratilipiServiceImpl</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>PratilipiService</servlet-name>
@@ -39,6 +40,7 @@
   <servlet>
     <servlet-name>ClaymusService</servlet-name>
     <servlet-class>com.claymus.service.server.ClaymusServiceImpl</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>ClaymusService</servlet-name>
@@ -59,6 +61,7 @@
   <servlet>
     <servlet-name>ResourcePratilipiCoverServlet</servlet-name>
     <servlet-class>com.pratilipi.servlet.ResourcePratilipiCoverServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>ResourcePratilipiCoverServlet</servlet-name>
@@ -72,6 +75,7 @@
       <param-name>ResourceServletType</param-name>
       <param-value>DOWNLOAD_ONLY</param-value>
     </init-param>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>ResourcePratilipiCover300Servlet</servlet-name>
@@ -85,6 +89,7 @@
       <param-name>ResizeImage</param-name>
       <param-value>300</param-value>
     </init-param>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>ResourceAuthorImageServlet</servlet-name>
@@ -98,6 +103,7 @@
       <param-name>ResourceServletType</param-name>
       <param-value>DOWNLOAD_ONLY</param-value>
     </init-param>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>ResourceImageContentServlet</servlet-name>
@@ -183,6 +189,7 @@
   <servlet>
     <servlet-name>PratilipiMain</servlet-name>
     <servlet-class>com.pratilipi.servlet.PratilipiMain</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>PratilipiMain</servlet-name>
