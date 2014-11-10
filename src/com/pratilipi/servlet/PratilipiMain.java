@@ -407,35 +407,35 @@ public class PratilipiMain extends ClaymusMain {
 			HttpServletRequest request ) throws IOException {
 		
 		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 6545160791916544L );
-		bookIdList.add( 6221184697892864L );
-		bookIdList.add( 5649202965118976L );
-		bookIdList.add( 5743257380192256L );
-		bookIdList.add( 5389501593550848L );
-		bookIdList.add( 6248007305527296L );
+		bookIdList.add( 5636953047302144L );
+		bookIdList.add( 5431799236788224L );
+		bookIdList.add( 5726348362383360L );
+		bookIdList.add( 5969765231230976L );
+		bookIdList.add( 6267930585071616L );
+		bookIdList.add( 5091722920984576L );
 
 		List<Long> poemIdList = new LinkedList<>();
-		poemIdList.add( 6330509734969344L );
-		poemIdList.add( 5167242941562880L );
-		poemIdList.add( 5702010661765120L );
-		poemIdList.add( 6305456519643136L );
-		poemIdList.add( 5750345418407936L );
-		poemIdList.add( 5405337406406656L );
+		poemIdList.add( 5702096292675584L );
+		poemIdList.add( 5969899851612160L );
+		poemIdList.add( 6218216741273600L );
+		poemIdList.add( 6717415018725376L );
+		poemIdList.add( 4695001086820352L );
+		poemIdList.add( 6323408946069504L );
 		
 		List<Long> storyIdList = new LinkedList<>();
-		storyIdList.add( 5755997729587200L );
-		storyIdList.add( 5639221461123072L );
-		storyIdList.add( 5483871688720384L );
-		storyIdList.add( 5706971080556544L );
-		storyIdList.add( 5671464854355968L );
-		storyIdList.add( 5717424225648640L );
+		storyIdList.add( 5699127396532224L );
+		storyIdList.add( 6215862428106752L );
+		storyIdList.add( 5160138260348928L );
+		storyIdList.add( 5635663080718336L );
+		storyIdList.add( 5148948125712384L );
+		storyIdList.add( 5678053736841216L );
 
 		
 		HomeContent homeContent = HomeContentFactory.newHomeContent();
 		homeContent.setBookIdList( bookIdList );
 		homeContent.setPoemIdList( poemIdList );
 		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 25 ) );
+		homeContent.setLastUpdated( new Date( 26 ) );
 		return homeContent;
 	}
 
