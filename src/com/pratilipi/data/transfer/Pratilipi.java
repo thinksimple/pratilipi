@@ -74,6 +74,10 @@ public interface Pratilipi extends Serializable {
 	
 	void setState( PratilipiState state );
 	
+	String getContentType();
+	
+	void setContentType( String contentType );
+	
 	Date getLastUpdated();
 	
 	void setLastUpdated( Date lastUpdated );

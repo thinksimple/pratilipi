@@ -75,6 +75,8 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "LAST_UPDATED" )
 	private Date lastUpdated;
 
+	@Persistent( column = "CONTENT_TYPE" )
+	private String contentType;
 	
 	@Override
 	public Long getId() {
@@ -249,6 +251,16 @@ public class PratilipiEntity implements Pratilipi {
 	@Override
 	public void setLastUpdated( Date lastUpdated ) {
 		this.lastUpdated = lastUpdated;
+	}
+
+	@Override
+	public String getContentType() {
+		return this.contentType;
+	}
+
+	@Override
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 }

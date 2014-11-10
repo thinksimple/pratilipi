@@ -19,6 +19,7 @@ public class PratilipiData implements IsSerializable {
 	private String coverImageUrl;
 	private String coverImageUploadUrl;
 	private String coverImage300UploadUrl;
+	private String contentUploadUrl;
 	private String readerPageUrl;
 	
 	private boolean isPublicDomain;
@@ -76,6 +77,8 @@ public class PratilipiData implements IsSerializable {
 
 	private List<Long> genreIdList;
 	private List<String> genreNameList;
+	
+	private String contentType;
 
 	
 	public PratilipiData() {}
@@ -146,6 +149,14 @@ public class PratilipiData implements IsSerializable {
 		this.coverImage300UploadUrl = coverImage300UploadUrl;
 	}
 
+	public String getContentUploadUrl() {
+		return this.contentUploadUrl;
+	}
+	
+	public void setContentUploadUrl( String contentUploadUrl ) {
+		this.contentUploadUrl = contentUploadUrl;
+	}
+	
 	public String getReaderPageUrl() {
 		return readerPageUrl;
 	}
@@ -383,4 +394,11 @@ public class PratilipiData implements IsSerializable {
 		this.genreNameList = genreNameList;
 	}
 	
+	public String getContentType(){
+		return this.contentType;
+	}
+	
+	public void setContentType( String contentType ){
+		this.contentType = contentType;
+	}
 }

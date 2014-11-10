@@ -250,6 +250,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setCoverImageUrl( URL_RESOURCE_STATIC + "pratilipi-cover/300/" + pratilipi.getId() );
 		pratilipiData.setCoverImageUploadUrl( URL_RESOURCE + "pratilipi-cover/original/" + pratilipi.getId() );
 		pratilipiData.setCoverImage300UploadUrl( URL_RESOURCE + "pratilipi-cover/300/" + pratilipi.getId() );
+		pratilipiData.setContentUploadUrl( URL_RESOURCE + "pratilipi-content/" + pratilipi.getContentType()+ "/" + pratilipi.getId() );
 		pratilipiData.setReaderPageUrl( getReaderPageUrl( pratilipi.getType(), pratilipi.getId() ) );
 		if( includeMetaData )
 			pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
@@ -277,6 +278,8 @@ public class PratilipiHelper extends ClaymusHelper {
 		}
 		pratilipiData.setGenreIdList( genreIdList );
 		pratilipiData.setGenreNameList( genreNameList );
+		
+		pratilipiData.setContentType( pratilipi.getContentType() );
 		
 		return pratilipiData;
 	}
