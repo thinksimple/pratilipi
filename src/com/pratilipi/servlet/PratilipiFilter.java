@@ -2,6 +2,8 @@ package com.pratilipi.servlet;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
@@ -23,6 +25,8 @@ import com.pratilipi.data.transfer.Author;
 public class PratilipiFilter implements Filter {
 	
 	private Map<String, String> redirections = new HashMap<>();
+	private List<String> nonExistents = new LinkedList<>();
+	private List<String> validHosts = new LinkedList<>();
 	
 	{
 		redirections.put( "/favicon.ico", "/theme.pratilipi/favicon.png" );
@@ -50,6 +54,7 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/resource.poem-cover/300/5704726691708928", "http://static.pratilipi.com/pratilipi-cover/300/5704726691708928" );
 		redirections.put( "/resource.poem-cover/300/5631639635886080", "http://static.pratilipi.com/pratilipi-cover/300/5631639635886080" );
 		redirections.put( "/resource.poem-cover/300/5662197925543936", "http://static.pratilipi.com/pratilipi-cover/300/5662197925543936" );
+		redirections.put( "/resource.poem-cover/300/5688737870643200", "http://static.pratilipi.com/pratilipi-cover/300/5688737870643200" );
 		redirections.put( "/resource.poem-cover/300/5705718560718848", "http://static.pratilipi.com/pratilipi-cover/300/5705718560718848" );
 		redirections.put( "/resource.poem-cover/300/5717648100818944", "http://static.pratilipi.com/pratilipi-cover/300/5717648100818944" );
 		redirections.put( "/resource.poem-cover/300/5718156383354880", "http://static.pratilipi.com/pratilipi-cover/300/5718156383354880" );
@@ -63,6 +68,27 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/resource.article-cover/300/5154850081865728", "http://static.pratilipi.com/pratilipi-cover/300/5154850081865728" );
 		redirections.put( "/resource.article-cover/300/5161516139544576", "http://static.pratilipi.com/pratilipi-cover/300/5161516139544576" );
 		redirections.put( "/resource.article-cover/300/5724466092965888", "http://static.pratilipi.com/pratilipi-cover/300/5724466092965888" );
+		redirections.put( "/resource.article-cover/300/5702949112119296", "http://static.pratilipi.com/pratilipi-cover/300/5702949112119296" );
+	
+	
+		
+		nonExistents.add( "/pagecontent.userforms/undefined.cache.js" );
+		nonExistents.add( "/pagecontent.pratilipi/undefined.cache.js" );
+		nonExistents.add( "/pagecontent.reader/undefined.cache.js" );
+		nonExistents.add( "/pagecontent.author/undefined.cache.js" );
+	
+		
+		
+		validHosts.add( "www.pratilipi.com" );
+		validHosts.add( "gamma.pratilipi.com" );
+		validHosts.add( "mark-3p26.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-3p27.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-3p28.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-3p29.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-3p30.prod-pratilipi.appspot.com" );
+		validHosts.add( "devo.pratilipi.com" );
+		validHosts.add( "localhost" );
+		validHosts.add( "127.0.0.1" );
 	}
 	
 
@@ -87,27 +113,15 @@ public class PratilipiFilter implements Filter {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
 		
-		if( redirections.get( requestUri ) != null ){
+		if( nonExistents.contains( requestUri ) ) {
+			response.setStatus( HttpServletResponse.SC_NOT_FOUND );
+
+		} else if( redirections.get( requestUri ) != null ){
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
 			
-		} else if( !host.equals( "www.pratilipi.com" )
-				&& !host.equals( "gamma.pratilipi.com" )
-				&& !host.equals( "mark-3p22.prod-pratilipi.appspot.com" )
-				&& !host.equals( "mark-3p23.prod-pratilipi.appspot.com" )
-				&& !host.equals( "mark-3p24.prod-pratilipi.appspot.com" )
-				&& !host.equals( "mark-3p25.prod-pratilipi.appspot.com" )
-				&& !host.equals( "mark-3p26.prod-pratilipi.appspot.com" )
-				&& !host.equals( "mark-3p27.prod-pratilipi.appspot.com" )
-				&& !host.equals( "mark-3p28.prod-pratilipi.appspot.com" )
-				&& !host.equals( "mark-3p29.prod-pratilipi.appspot.com" )
-				&& !host.equals( "mark-3p30.prod-pratilipi.appspot.com" )
-				&& !host.equals( "devo.pratilipi.com" )
-				&& !host.endsWith( "devo-pratilipi.appspot.com" )
-				&& !host.equals( "localhost" )
-				&& !host.equals( "127.0.0.1" ) ) { // Redirecting to www.pratilipi.com
-			
+		} else if( !validHosts.contains( host ) && !host.endsWith( "devo-pratilipi.appspot.com" ) ) { // Redirecting to www.pratilipi.com
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", "http://www.pratilipi.com" + requestUri );
 

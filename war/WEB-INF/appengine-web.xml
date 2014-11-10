@@ -3,7 +3,7 @@
 
   <application>prod-pratilipi</application>
   <module>default</module>
-  <version>mark-3p25</version>
+  <version>mark-3p26</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>
@@ -12,6 +12,7 @@
 
   <automatic-scaling>
     <min-idle-instances>1</min-idle-instances>
+    <max-idle-instances>3</max-idle-instances>
     <max-pending-latency>10ms</max-pending-latency>
   </automatic-scaling>
     
