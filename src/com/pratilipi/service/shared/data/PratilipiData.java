@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 
@@ -19,7 +20,8 @@ public class PratilipiData implements IsSerializable {
 	private String coverImageUrl;
 	private String coverImageUploadUrl;
 	private String coverImage300UploadUrl;
-	private String contentUploadUrl;
+	private String imageContentUploadUrl;
+	private String wordContentUploadUrl;
 	private String readerPageUrl;
 	
 	private boolean isPublicDomain;
@@ -78,7 +80,8 @@ public class PratilipiData implements IsSerializable {
 	private List<Long> genreIdList;
 	private List<String> genreNameList;
 	
-	private String contentType;
+	private PratilipiContentType contentType;
+	private boolean hasContentType;
 
 	
 	public PratilipiData() {}
@@ -149,12 +152,20 @@ public class PratilipiData implements IsSerializable {
 		this.coverImage300UploadUrl = coverImage300UploadUrl;
 	}
 
-	public String getContentUploadUrl() {
-		return this.contentUploadUrl;
+	public String getImageContentUploadUrl() {
+		return this.imageContentUploadUrl;
 	}
 	
-	public void setContentUploadUrl( String contentUploadUrl ) {
-		this.contentUploadUrl = contentUploadUrl;
+	public void setImageContentUploadUrl( String imageContentUploadUrl ) {
+		this.imageContentUploadUrl = imageContentUploadUrl;
+	}
+	
+	public String getWordContentUploadUrl(){
+		return this.wordContentUploadUrl;
+	}
+	
+	public void setWordContentUplaodUrl( String wordContentUploadUrl ){
+		this.wordContentUploadUrl = wordContentUploadUrl;
 	}
 	
 	public String getReaderPageUrl() {
@@ -394,11 +405,16 @@ public class PratilipiData implements IsSerializable {
 		this.genreNameList = genreNameList;
 	}
 	
-	public String getContentType(){
+	public PratilipiContentType getContentType(){
 		return this.contentType;
 	}
 	
-	public void setContentType( String contentType ){
+	public void setContentType( PratilipiContentType contentType ){
+		this.hasContentType = true;
 		this.contentType = contentType;
+	}
+	
+	public boolean hasContentType(){
+		return this.hasContentType;
 	}
 }

@@ -8,6 +8,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
+import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -76,7 +77,7 @@ public class PratilipiEntity implements Pratilipi {
 	private Date lastUpdated;
 
 	@Persistent( column = "CONTENT_TYPE" )
-	private String contentType;
+	private PratilipiContentType contentType;
 	
 	@Override
 	public Long getId() {
@@ -254,12 +255,12 @@ public class PratilipiEntity implements Pratilipi {
 	}
 
 	@Override
-	public String getContentType() {
+	public PratilipiContentType getContentType() {
 		return this.contentType;
 	}
 
 	@Override
-	public void setContentType(String contentType) {
+	public void setContentType( PratilipiContentType contentType) {
 		this.contentType = contentType;
 	}
 

@@ -164,6 +164,8 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 			pratilipi.setState( pratilipiData.getState() );
 		}
+		if( pratilipiData.hasContentType() && PratilipiContentHelper.hasRequestAccessToUpdatePratilipiMetaData( this.getThreadLocalRequest() ) )
+			pratilipi.setContentType( pratilipiData.getContentType() );
 		
 		
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );

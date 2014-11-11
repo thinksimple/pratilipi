@@ -3,6 +3,7 @@ package com.pratilipi.data.transfer;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 
@@ -74,9 +75,9 @@ public interface Pratilipi extends Serializable {
 	
 	void setState( PratilipiState state );
 	
-	String getContentType();
+	PratilipiContentType getContentType();
 	
-	void setContentType( String contentType );
+	void setContentType( PratilipiContentType contentType );
 	
 	Date getLastUpdated();
 	
