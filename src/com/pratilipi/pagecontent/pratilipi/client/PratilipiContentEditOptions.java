@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewModalImpl;
+import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
@@ -84,11 +85,28 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	// Cover image edit options widgets
 	private final FileUploadWithProgressBar coverImageUpload = new FileUploadWithProgressBar();
 	
+	//Upload content
+	private final Anchor uploadImageContentAnchor = new Anchor( "Upload Image Content" );
+	private final Anchor uploadWordContentAnchor = new Anchor( "Upload Word Content" );
+	
 	
 	private PratilipiData pratilipiData;
 
 	
 	public void onModuleLoad() {
+		
+		// Decoding PratilipiData
+		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
+		String pratilipiDataEncodedStr = rootPanel.getElement().getInnerText();
+		try {
+			SerializationStreamReader streamReader =
+					( (SerializationStreamFactory) pratilipiService )
+							.createStreamReader( pratilipiDataEncodedStr );
+			pratilipiData = (PratilipiData) streamReader.readObject();
+			setPratilipiData( pratilipiData );
+		} catch( SerializationException e ) {
+			Window.alert( e.getMessage() );
+		}
 
 		// Pratilipi data edit options widgets
 		editPratilipiDataAnchor.addClickHandler( this );
@@ -125,7 +143,22 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 
 		dropdown.add( genreAnchor );
 		RootPanel.get().add( addRemoveGenre );
+		
 
+		//Upload Content links
+		if( pratilipiData.getContentType().equals( PratilipiContentType.IMAGE )){
+			dropdown.add( uploadImageContentAnchor );
+			uploadImageContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=image" );
+		} else if( pratilipiData.getContentType().equals( PratilipiContentType.WORD )){
+			dropdown.add( uploadWordContentAnchor );
+			uploadWordContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=word" );
+		} else{
+			dropdown.add( uploadImageContentAnchor );
+			uploadImageContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=image" );
+			
+			dropdown.add( uploadWordContentAnchor );
+			uploadWordContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=word" ); 
+		}
 		
 		// Un-publish option widgets
 		publishAnchor.addClickHandler( this );
@@ -157,20 +190,6 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		coverImageEditOptionsPanel.add( coverImageUpload );
 		coverImageEditOptionsPanel.add( coverImageUpload.getProgressBar() );
 
-		
-		// Decoding PratilipiData
-		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
-		String pratilipiDataEncodedStr = rootPanel.getElement().getInnerText();
-		try {
-			SerializationStreamReader streamReader =
-					( (SerializationStreamFactory) pratilipiService )
-							.createStreamReader( pratilipiDataEncodedStr );
-			pratilipiData = (PratilipiData) streamReader.readObject();
-			setPratilipiData( pratilipiData );
-		} catch( SerializationException e ) {
-			Window.alert( e.getMessage() );
-		}
-		
 		
 		titePanel.getElement().setInnerHTML( "" );
 		titePanel.add( dropdown );
