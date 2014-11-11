@@ -51,10 +51,10 @@ public class PratilipiFilter implements Filter {
 
 		redirections.put( "/resource.poem-cover/300/5145057824866304", "http://static.pratilipi.com/pratilipi-cover/300/5145057824866304" );
 		redirections.put( "/resource.poem-cover/300/5200909848018944", "http://static.pratilipi.com/pratilipi-cover/300/5200909848018944" );
-		redirections.put( "/resource.poem-cover/300/5704726691708928", "http://static.pratilipi.com/pratilipi-cover/300/5704726691708928" );
 		redirections.put( "/resource.poem-cover/300/5631639635886080", "http://static.pratilipi.com/pratilipi-cover/300/5631639635886080" );
 		redirections.put( "/resource.poem-cover/300/5662197925543936", "http://static.pratilipi.com/pratilipi-cover/300/5662197925543936" );
 		redirections.put( "/resource.poem-cover/300/5688737870643200", "http://static.pratilipi.com/pratilipi-cover/300/5688737870643200" );
+		redirections.put( "/resource.poem-cover/300/5704726691708928", "http://static.pratilipi.com/pratilipi-cover/300/5704726691708928" );
 		redirections.put( "/resource.poem-cover/300/5705718560718848", "http://static.pratilipi.com/pratilipi-cover/300/5705718560718848" );
 		redirections.put( "/resource.poem-cover/300/5717648100818944", "http://static.pratilipi.com/pratilipi-cover/300/5717648100818944" );
 		redirections.put( "/resource.poem-cover/300/5718156383354880", "http://static.pratilipi.com/pratilipi-cover/300/5718156383354880" );
@@ -63,12 +63,11 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/resource.story-cover/300/5690599873183744", "http://static.pratilipi.com/pratilipi-cover/300/5690599873183744" );
 		redirections.put( "/resource.story-cover/300/5726911808405504", "http://static.pratilipi.com/pratilipi-cover/300/5726911808405504" );
 		redirections.put( "/resource.story-cover/300/5737350726418432", "http://static.pratilipi.com/pratilipi-cover/300/5737350726418432" );
-		redirections.put( "/resource.story-cover/300/5690599873183744", "http://static.pratilipi.com/pratilipi-cover/300/5690599873183744" );
 		
 		redirections.put( "/resource.article-cover/300/5154850081865728", "http://static.pratilipi.com/pratilipi-cover/300/5154850081865728" );
 		redirections.put( "/resource.article-cover/300/5161516139544576", "http://static.pratilipi.com/pratilipi-cover/300/5161516139544576" );
-		redirections.put( "/resource.article-cover/300/5724466092965888", "http://static.pratilipi.com/pratilipi-cover/300/5724466092965888" );
 		redirections.put( "/resource.article-cover/300/5702949112119296", "http://static.pratilipi.com/pratilipi-cover/300/5702949112119296" );
+		redirections.put( "/resource.article-cover/300/5724466092965888", "http://static.pratilipi.com/pratilipi-cover/300/5724466092965888" );
 	
 	
 		
@@ -86,6 +85,11 @@ public class PratilipiFilter implements Filter {
 		validHosts.add( "mark-3p28.prod-pratilipi.appspot.com" );
 		validHosts.add( "mark-3p29.prod-pratilipi.appspot.com" );
 		validHosts.add( "mark-3p30.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-3p31.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-3p32.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-3p33.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-3p34.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-3p35.prod-pratilipi.appspot.com" );
 		validHosts.add( "devo.pratilipi.com" );
 		validHosts.add( "localhost" );
 		validHosts.add( "127.0.0.1" );
