@@ -131,7 +131,7 @@ function validateForm() {
 		<div id="signup" class="modal-content" style="padding: 15px;"></div>
 	</div>
 </div>
-<div class="modal fade" id="forgotPasswordModal">
+<div class="modal fade" id="forgotPasswordModal" style="padding: 15px;"
 	<div class="modal-dialog">
 		<div id="forgotPassword" class="modal-content" style="padding: 15px;"></div>
 	</div>
