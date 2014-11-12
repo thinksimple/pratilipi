@@ -120,11 +120,16 @@ public class PratilipiFilter implements Filter {
 		if( nonExistents.contains( requestUri ) ) {
 			response.setStatus( HttpServletResponse.SC_NOT_FOUND );
 
-		} else if( redirections.get( requestUri ) != null ){
+		
+		} else if( redirections.get( requestUri ) != null ) {
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
 			
+		} else if( requestUri.equals( "/_ah/start" ) ) {
+			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
+			
+
 		} else if( !validHosts.contains( host ) && !host.endsWith( "devo-pratilipi.appspot.com" ) ) { // Redirecting to www.pratilipi.com
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", "http://www.pratilipi.com" + requestUri );
