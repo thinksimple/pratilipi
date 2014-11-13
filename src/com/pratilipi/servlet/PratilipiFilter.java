@@ -126,8 +126,15 @@ public class PratilipiFilter implements Filter {
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
 			
-		} else if( requestUri.equals( "/_ah/start" ) ) {
+		} else if( requestUri.equals( "/_ah/start" ) || requestUri.equals( "/_ah/stop" ) ) {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
+			
+			
+		} else if( requestUri.startsWith( "/static.pratilipi.com/" )
+				|| requestUri.startsWith( "/cdn.ckeditor.com/" )
+				|| requestUri.startsWith( "/ajax.googleapis.com/" ) ) {
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", ( request.isSecure() ? "https:/" : "http:/" ) + requestUri );
 			
 
 		} else if( !validHosts.contains( host ) && !host.endsWith( "devo-pratilipi.appspot.com" ) ) { // Redirecting to www.pratilipi.com
