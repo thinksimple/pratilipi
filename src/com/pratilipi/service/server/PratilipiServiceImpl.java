@@ -152,6 +152,8 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			pratilipi.setWordCount( pratilipiData.getWordCount() );
 		if( pratilipiData.hasPageCount() && PratilipiContentHelper.hasRequestAccessToUpdatePratilipiMetaData( this.getThreadLocalRequest() ) )
 			pratilipi.setPageCount( pratilipiData.getPageCount() );
+		if( pratilipiData.hasContentType() )
+			pratilipi.setContentType( pratilipiData.getContentType() );
 		if( pratilipiData.hasState() ) {
 
 			if( pratilipiData.getState() == PratilipiState.PUBLISHED && pratilipi.getType() == PratilipiType.BOOK ) {
@@ -164,8 +166,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 			pratilipi.setState( pratilipiData.getState() );
 		}
-		if( pratilipiData.hasContentType() && PratilipiContentHelper.hasRequestAccessToUpdatePratilipiMetaData( this.getThreadLocalRequest() ) )
-			pratilipi.setContentType( pratilipiData.getContentType() );
 		
 		
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );

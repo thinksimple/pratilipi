@@ -98,7 +98,7 @@
    
   <servlet>
     <servlet-name>ResourceImageContentServlet</servlet-name>
-    <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
+    <servlet-class>com.pratilipi.servlet.ResourceImageContentServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>

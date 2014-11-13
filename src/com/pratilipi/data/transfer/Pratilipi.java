@@ -71,13 +71,13 @@ public interface Pratilipi extends Serializable {
 	
 	void setStarCount( Long starCount );
 	
-	PratilipiState getState();
-	
-	void setState( PratilipiState state );
-	
 	PratilipiContentType getContentType();
 	
 	void setContentType( PratilipiContentType contentType );
+	
+	PratilipiState getState();
+	
+	void setState( PratilipiState state );
 	
 	Date getLastUpdated();
 	

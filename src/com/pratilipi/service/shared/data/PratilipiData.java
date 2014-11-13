@@ -73,6 +73,9 @@ public class PratilipiData implements IsSerializable {
 	
 	private Long starCount;
 	
+	private PratilipiContentType contentType;
+	private boolean hasContentType;
+	
 	private PratilipiState state;
 	private boolean hasState;
 	
@@ -80,9 +83,6 @@ public class PratilipiData implements IsSerializable {
 	private List<Long> genreIdList;
 	private List<String> genreNameList;
 	
-	private PratilipiContentType contentType;
-	private boolean hasContentType;
-
 	
 	public PratilipiData() {}
 	
@@ -153,18 +153,18 @@ public class PratilipiData implements IsSerializable {
 	}
 
 	public String getImageContentUploadUrl() {
-		return this.imageContentUploadUrl;
+		return imageContentUploadUrl;
 	}
 	
 	public void setImageContentUploadUrl( String imageContentUploadUrl ) {
 		this.imageContentUploadUrl = imageContentUploadUrl;
 	}
 	
-	public String getWordContentUploadUrl(){
-		return this.wordContentUploadUrl;
+	public String getWordContentUploadUrl() {
+		return wordContentUploadUrl;
 	}
 	
-	public void setWordContentUplaodUrl( String wordContentUploadUrl ){
+	public void setWordContentUplaodUrl( String wordContentUploadUrl ) {
 		this.wordContentUploadUrl = wordContentUploadUrl;
 	}
 	
@@ -376,6 +376,19 @@ public class PratilipiData implements IsSerializable {
 		//this.starCount = starCount;
 	}
 	
+	public PratilipiContentType getContentType() {
+		return contentType;
+	}
+	
+	public void setContentType( PratilipiContentType contentType ){
+		this.contentType = contentType;
+		this.hasContentType = true;
+	}
+	
+	public boolean hasContentType() {
+		return hasContentType;
+	}
+
 	public PratilipiState getState() {
 		return state;
 	}
@@ -405,16 +418,4 @@ public class PratilipiData implements IsSerializable {
 		this.genreNameList = genreNameList;
 	}
 	
-	public PratilipiContentType getContentType(){
-		return this.contentType;
-	}
-	
-	public void setContentType( PratilipiContentType contentType ){
-		this.hasContentType = true;
-		this.contentType = contentType;
-	}
-	
-	public boolean hasContentType(){
-		return this.hasContentType;
-	}
 }

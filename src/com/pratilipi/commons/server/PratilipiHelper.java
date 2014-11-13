@@ -250,8 +250,8 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setCoverImageUrl( URL_RESOURCE_STATIC + "pratilipi-cover/300/" + pratilipi.getId() );
 		pratilipiData.setCoverImageUploadUrl( URL_RESOURCE + "pratilipi-cover/original/" + pratilipi.getId() );
 		pratilipiData.setCoverImage300UploadUrl( URL_RESOURCE + "pratilipi-cover/300/" + pratilipi.getId() );
-		pratilipiData.setImageContentUploadUrl( URL_RESOURCE + "pratilipi-content/image/" + pratilipi.getId() + "/" );
-		pratilipiData.setWordContentUplaodUrl( URL_RESOURCE + "pratilipi-content/word/" + pratilipi.getId() + "/" );
+		pratilipiData.setImageContentUploadUrl( URL_RESOURCE + "pratilipi-content/image/" + pratilipi.getId() );
+		pratilipiData.setWordContentUplaodUrl( URL_RESOURCE + "pratilipi-content/word/" + pratilipi.getId() );
 		pratilipiData.setReaderPageUrl( getReaderPageUrl( pratilipi.getType(), pratilipi.getId() ) );
 		if( includeMetaData )
 			pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
@@ -269,6 +269,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		
 		pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
+		pratilipiData.setContentType( pratilipi.getContentType() );
 		pratilipiData.setState( pratilipi.getState() );
 
 		List<Long> genreIdList = new ArrayList<>( genreList.size() );
@@ -279,8 +280,6 @@ public class PratilipiHelper extends ClaymusHelper {
 		}
 		pratilipiData.setGenreIdList( genreIdList );
 		pratilipiData.setGenreNameList( genreNameList );
-		
-		pratilipiData.setContentType( pratilipi.getContentType() );
 		
 		return pratilipiData;
 	}

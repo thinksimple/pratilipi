@@ -70,14 +70,15 @@ public class PratilipiEntity implements Pratilipi {
 	private Long starCount;
 
 
+	@Persistent( column = "CONTENT_TYPE" )
+	private PratilipiContentType contentType;
+	
 	@Persistent( column = "STATE" )
 	private PratilipiState state;
 	
 	@Persistent( column = "LAST_UPDATED" )
 	private Date lastUpdated;
 
-	@Persistent( column = "CONTENT_TYPE" )
-	private PratilipiContentType contentType;
 	
 	@Override
 	public Long getId() {
@@ -235,6 +236,16 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
+	public PratilipiContentType getContentType() {
+		return contentType;
+	}
+	
+	@Override
+	public void setContentType( PratilipiContentType contentType ) {
+		this.contentType = contentType;
+	}
+	
+	@Override
 	public PratilipiState getState() {
 		return state;
 	}
@@ -252,16 +263,6 @@ public class PratilipiEntity implements Pratilipi {
 	@Override
 	public void setLastUpdated( Date lastUpdated ) {
 		this.lastUpdated = lastUpdated;
-	}
-
-	@Override
-	public PratilipiContentType getContentType() {
-		return this.contentType;
-	}
-
-	@Override
-	public void setContentType( PratilipiContentType contentType) {
-		this.contentType = contentType;
 	}
 
 }
