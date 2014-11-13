@@ -141,6 +141,8 @@ public class UploadContent implements EntryPoint {
 		    },
 		    fail: function( e, data ){
 		    	var filename = data.files[0].name.split('.')[0];
+		    	if( pageCount < parseFloat( filename ) )
+		    		newPagesCount = newPagesCount + 1;
 		    	$wnd.$( "#" + filename ).css( 'width', '0%'  );
 				$wnd.$( "#" + filename + "Div" ).css( 'color', 'red' );
 				$wnd.$( "#" + filename + "Div" ).html( 'Failed' );
@@ -160,12 +162,10 @@ public class UploadContent implements EntryPoint {
 	
 	//Update pageCount and contentType in pratilipiData.
 	private void updatePratilipi( String pageCount ){
-		String temp = pageCount.trim();
-		Long pageUploaded =  Long.parseLong( temp );
+		Long pageUploaded = Long.parseLong( String.valueOf( pageCount ));
 		pratilipiData.setPageCount(( pratilipiData.getPageCount() == null ? 0 : pratilipiData.getPageCount() )
 										+ pageUploaded );
-		Window.alert( pratilipiData.getPageCount().toString()+ "/" + pageUploaded 
-								+ "/" + Long.valueOf( temp ) + "/" + pageCount );
+	
 		pratilipiService.savePratilipi( new SavePratilipiRequest( pratilipiData ), new AsyncCallback<SavePratilipiResponse> (){
 
 			@Override
