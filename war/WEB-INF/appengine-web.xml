@@ -8,7 +8,7 @@
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>
 
-  <instance-class>B4</instance-class>
+  <instance-class>B2</instance-class>
 
   <manual-scaling>
     <instances>3</instances>
