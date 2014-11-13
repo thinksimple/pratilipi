@@ -77,6 +77,11 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	private final AddRemoveGenre addRemoveGenre = new AddRemoveGenre();
 	
 	
+	//Upload content
+	private final Anchor uploadImageContentAnchor = new Anchor( "Upload Image Content" );
+	private final Anchor uploadWordContentAnchor = new Anchor( "Upload Word Content" );
+	
+	
 	// Publish-Unpublish options widgets
 	private final Anchor publishAnchor = new Anchor( "here" );
 	private final Anchor unpublishAnchor = new Anchor( "Un-publish" );
@@ -85,29 +90,12 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	// Cover image edit options widgets
 	private final FileUploadWithProgressBar coverImageUpload = new FileUploadWithProgressBar();
 	
-	//Upload content
-	private final Anchor uploadImageContentAnchor = new Anchor( "Upload Image Content" );
-	private final Anchor uploadWordContentAnchor = new Anchor( "Upload Word Content" );
-	
 	
 	private PratilipiData pratilipiData;
 
 	
 	public void onModuleLoad() {
 		
-		// Decoding PratilipiData
-		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
-		String pratilipiDataEncodedStr = rootPanel.getElement().getInnerText();
-		try {
-			SerializationStreamReader streamReader =
-					( (SerializationStreamFactory) pratilipiService )
-							.createStreamReader( pratilipiDataEncodedStr );
-			pratilipiData = (PratilipiData) streamReader.readObject();
-			setPratilipiData( pratilipiData );
-		} catch( SerializationException e ) {
-			Window.alert( e.getMessage() );
-		}
-
 		// Pratilipi data edit options widgets
 		editPratilipiDataAnchor.addClickHandler( this );
 		savePratilipiDataButton.addClickHandler( this );
@@ -146,19 +134,9 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		
 
 		//Upload Content links
-		if( pratilipiData.getContentType().equals( PratilipiContentType.IMAGE )){
-			dropdown.add( uploadImageContentAnchor );
-			uploadImageContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=image" );
-		} else if( pratilipiData.getContentType().equals( PratilipiContentType.WORD )){
-			dropdown.add( uploadWordContentAnchor );
-			uploadWordContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=word" );
-		} else{
-			dropdown.add( uploadImageContentAnchor );
-			uploadImageContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=image" );
-			
-			dropdown.add( uploadWordContentAnchor );
-			uploadWordContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=word" ); 
-		}
+		dropdown.add( uploadImageContentAnchor );
+		dropdown.add( uploadWordContentAnchor );
+
 		
 		// Un-publish option widgets
 		publishAnchor.addClickHandler( this );
@@ -191,6 +169,20 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		coverImageEditOptionsPanel.add( coverImageUpload.getProgressBar() );
 
 		
+		// Decoding PratilipiData
+		RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
+		String pratilipiDataEncodedStr = rootPanel.getElement().getInnerText();
+		try {
+			SerializationStreamReader streamReader =
+					( (SerializationStreamFactory) pratilipiService )
+							.createStreamReader( pratilipiDataEncodedStr );
+			pratilipiData = (PratilipiData) streamReader.readObject();
+			setPratilipiData( pratilipiData );
+		} catch( SerializationException e ) {
+			Window.Location.reload();
+		}
+
+
 		titePanel.getElement().setInnerHTML( "" );
 		titePanel.add( dropdown );
 
@@ -224,6 +216,12 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		summaryInput.setHtml( pratilipiData.getSummary() );
 		genreList.set( pratilipiData.getGenreNameList() );
 		addRemoveGenre.setPratilipiData( pratilipiData );
+		uploadImageContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=image" );
+		uploadWordContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=pratilipi" );
+		if( pratilipiData.getContentType() == PratilipiContentType.IMAGE )
+			uploadWordContentAnchor.setVisible( false );
+		else if( pratilipiData.getContentType() == PratilipiContentType.PRATILIPI )
+			uploadImageContentAnchor.setVisible( false );
 		if( pratilipiData.getState() == PratilipiState.PUBLISHED ) {
 			publishPanel.setVisible( false );
 			unpublishAnchor.setVisible( true );

@@ -59,7 +59,7 @@ public class UploadContent implements EntryPoint {
 		if( pratilipiData.getContentType() != null ){
 			if( pratilipiData.getContentType().equals( PratilipiContentType.IMAGE ))
 				uploadUrl = pratilipiData.getImageContentUploadUrl();
-			else if( pratilipiData.getContentType().equals( PratilipiContentType.WORD ))
+			else if( pratilipiData.getContentType().equals( PratilipiContentType.PRATILIPI ))
 				uploadUrl = pratilipiData.getWordContentUploadUrl();
 		}
 		else{
@@ -69,7 +69,7 @@ public class UploadContent implements EntryPoint {
 			}
 			else if( Window.Location.getParameter( "type" ).equals( "word" ) ){
 				uploadUrl = pratilipiData.getWordContentUploadUrl();
-				pratilipiData.setContentType( PratilipiContentType.WORD );
+				pratilipiData.setContentType( PratilipiContentType.PRATILIPI );
 			}
 		}
 		
