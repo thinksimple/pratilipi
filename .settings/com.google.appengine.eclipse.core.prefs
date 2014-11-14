@@ -6,3 +6,4 @@ gaeHrdEnabled=true
 gaeLaunchAppInBrowser=false
 googleCloudSqlEnabled=false
 localDevMySqlEnabled=true
+ormEnhancementInclusions=src/**/*Entity.java|claymus/src/**/*Entity.java|claymus/src/**/*EntityStub.java
