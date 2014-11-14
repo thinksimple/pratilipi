@@ -20,6 +20,7 @@ import com.claymus.data.transfer.User;
 import com.claymus.taskqueue.Task;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.pratilipi.commons.server.ConvertWordToHtml;
 import com.pratilipi.commons.server.GlobalSearch;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiPageType;
@@ -63,8 +64,6 @@ import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetReaderContentRequest;
 import com.pratilipi.service.shared.GetReaderContentResponse;
-import com.pratilipi.service.shared.SearchRequest;
-import com.pratilipi.service.shared.SearchResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -77,6 +76,8 @@ import com.pratilipi.service.shared.SavePratilipiContentRequest;
 import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
+import com.pratilipi.service.shared.SearchRequest;
+import com.pratilipi.service.shared.SearchResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.GenreData;
 import com.pratilipi.service.shared.data.LanguageData;
@@ -803,6 +804,15 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				: globalSearch.search( request.getQuery(), "docType:" + request.getDocType() );
 		
 		return new SearchResponse( dataList, globalSearch.getCursor() );
+	}
+	
+	@Override
+	public void ConvertWordToHtml( GetReaderContentRequest request ) throws IOException {
+
+		Long pratilipiId = request.getPratilipiId();
+		ConvertWordToHtml convertWordToHtml = new ConvertWordToHtml( pratilipiId );
+		convertWordToHtml.convert();
+		
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.pratilipi.service.client;
 
+import java.io.IOException;
+
 import com.claymus.commons.shared.exception.IllegalArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
@@ -27,8 +29,6 @@ import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetReaderContentRequest;
 import com.pratilipi.service.shared.GetReaderContentResponse;
-import com.pratilipi.service.shared.SearchRequest;
-import com.pratilipi.service.shared.SearchResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -41,6 +41,8 @@ import com.pratilipi.service.shared.SavePratilipiContentRequest;
 import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
+import com.pratilipi.service.shared.SearchRequest;
+import com.pratilipi.service.shared.SearchResponse;
 
 @RemoteServiceRelativePath("../service.pratilipi")
 public interface PratilipiService extends RemoteService {
@@ -110,4 +112,7 @@ public interface PratilipiService extends RemoteService {
 	
 	// API Version: 4.0; Owner Module: SearchContent;
 	SearchResponse search( SearchRequest request );
+	
+	void ConvertWordToHtml( GetReaderContentRequest request )
+			throws IOException;
 }

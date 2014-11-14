@@ -22,7 +22,7 @@ public class ResourceImageContentServlet extends ResourceServlet {
 		
 		String url = request.getRequestURI();
 		String pratilipiIdStr = url
-				.substring( 0, url.lastIndexOf( '/' ) + 1 )
+				.substring( 0, url.lastIndexOf( '/' ) )
 				.substring( url.lastIndexOf( '/' ) + 1 );
 		Long pratilipiId = Long.parseLong( pratilipiIdStr );
 

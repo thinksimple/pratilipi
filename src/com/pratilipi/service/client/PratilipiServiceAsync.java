@@ -23,8 +23,6 @@ import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetReaderContentRequest;
 import com.pratilipi.service.shared.GetReaderContentResponse;
-import com.pratilipi.service.shared.SearchRequest;
-import com.pratilipi.service.shared.SearchResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -37,6 +35,8 @@ import com.pratilipi.service.shared.SavePratilipiContentRequest;
 import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
+import com.pratilipi.service.shared.SearchRequest;
+import com.pratilipi.service.shared.SearchResponse;
 
 public interface PratilipiServiceAsync {
 	
@@ -119,4 +119,7 @@ public interface PratilipiServiceAsync {
 			SearchRequest request,
 			AsyncCallback<SearchResponse> callback );
 	
+	void ConvertWordToHtml( 
+			GetReaderContentRequest request,
+			AsyncCallback<Void> callback );
 }

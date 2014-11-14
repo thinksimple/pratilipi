@@ -106,6 +106,16 @@
     <url-pattern>/resource.pratilipi-content/image/*</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ResourceWordContentServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.ResourceWordContentServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResourceWordContentServlet</servlet-name>
+    <url-pattern>/resource.pratilipi-content/word/*</url-pattern>
+  </servlet-mapping>
+  
   <!-- Handlers for Task Queues -->
   
   <servlet>
