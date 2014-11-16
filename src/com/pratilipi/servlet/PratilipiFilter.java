@@ -84,7 +84,6 @@ public class PratilipiFilter implements Filter {
 		
 		validHosts.add( "www.pratilipi.com" );
 		validHosts.add( "gamma.pratilipi.com" );
-		validHosts.add( "mark-3p35.prod-pratilipi.appspot.com" );
 		validHosts.add( "mark-3p36.prod-pratilipi.appspot.com" );
 		validHosts.add( "mark-3p37.prod-pratilipi.appspot.com" );
 		validHosts.add( "mark-3p38.prod-pratilipi.appspot.com" );

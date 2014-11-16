@@ -9,7 +9,7 @@
 
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 
-		<link rel="stylesheet" href="//static.pratilipi.com/third-party/bootstrap-3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn-asia.pratilipi.com/third-party/bootstrap-3.2.0/css/bootstrap.min.css">
 	
 		<script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.3/webfont.js"></script>
 		<script>
@@ -20,10 +20,10 @@
 			});
 		</script>
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" defer></script>
-		<script src="//static.pratilipi.com/third-party/bootstrap-3.2.0/js/bootstrap.min.js" defer></script>
+		<script src="//cdn-asia.pratilipi.com/third-party/jquery-1.11.1/jquery-1.11.1.min.js" defer></script>
+		<script src="//cdn-asia.pratilipi.com/third-party/bootstrap-3.2.0/js/bootstrap.min.js" defer></script>
 	
-		<script src="//cdn.ckeditor.com/4.4.3/full/ckeditor.js" charset="utf-8" defer></script>
+		<script src="//cdn-asia.pratilipi.com/third-party/ckeditor-4.4.5-full/ckeditor.js" charset="utf-8" defer></script>
 		<script language="javascript" defer>
 			window.onload = function() {
 				CKEDITOR.config.toolbar = [
@@ -42,9 +42,9 @@
 			}
 		</script>
 		
-		<script src="//static.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/vendor/jquery.ui.widget.js" defer></script>
-		<script src="//static.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/jquery.iframe-transport.js" defer></script>
-		<script src="//static.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/jquery.fileupload.js" defer></script>
+		<script src="//cdn-asia.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/vendor/jquery.ui.widget.js" defer></script>
+		<script src="//cdn-asia.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/jquery.iframe-transport.js" defer></script>
+		<script src="//cdn-asia.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/jquery.fileupload.js" defer></script>
 		
 	
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
