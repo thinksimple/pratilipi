@@ -1,11 +1,11 @@
-package com.pratilipi.pagecontent.reader.gae;
+package com.pratilipi.pagecontent.readerbasic.gae;
 
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.claymus.data.access.gae.PageContentEntity;
 import com.pratilipi.commons.shared.PratilipiType;
-import com.pratilipi.pagecontent.reader.ReaderContent;
+import com.pratilipi.pagecontent.readerbasic.ReaderContent;
 
 @SuppressWarnings("serial")
 @PersistenceCapable

@@ -1,4 +1,4 @@
-package com.pratilipi.pagecontent.reader.client;
+package com.pratilipi.pagecontent.readerbasic.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

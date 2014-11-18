@@ -1,4 +1,4 @@
-package com.pratilipi.pagecontent.reader;
+package com.pratilipi.pagecontent.readerbasic;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

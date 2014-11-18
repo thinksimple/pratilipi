@@ -1,10 +1,10 @@
-package com.pratilipi.pagecontent.reader;
+package com.pratilipi.pagecontent.readerbasic;
 
 import com.claymus.commons.server.Access;
 import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.commons.shared.PratilipiType;
-import com.pratilipi.pagecontent.reader.gae.ReaderContentEntity;
-import com.pratilipi.pagecontent.reader.shared.ReaderContentData;
+import com.pratilipi.pagecontent.readerbasic.gae.ReaderContentEntity;
+import com.pratilipi.pagecontent.readerbasic.shared.ReaderContentData;
 
 public class ReaderContentFactory extends PageContentHelper<
 		ReaderContent,
@@ -13,7 +13,7 @@ public class ReaderContentFactory extends PageContentHelper<
 	
 	@Override
 	public String getModuleName() {
-		return "Reader";
+		return "Basic Reader";
 	}
 
 	@Override

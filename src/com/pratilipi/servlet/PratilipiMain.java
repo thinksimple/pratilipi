@@ -42,7 +42,7 @@ import com.pratilipi.pagecontent.home.HomeContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
-import com.pratilipi.pagecontent.reader.ReaderContentFactory;
+import com.pratilipi.pagecontent.readerbasic.ReaderContentFactory;
 import com.pratilipi.pagecontent.search.SearchContentHelper;
 import com.pratilipi.pagecontent.uploadcontent.UploadContentFactory;
 

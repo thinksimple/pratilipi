@@ -1,4 +1,4 @@
-package com.pratilipi.pagecontent.reader.shared;
+package com.pratilipi.pagecontent.readerbasic.shared;
 
 import com.claymus.service.shared.data.PageContentData;
 
