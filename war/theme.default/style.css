@@ -2,6 +2,26 @@ body {
 	margin: 0px;
 }
 
+paper-fab.white {
+  background: #FFFFFF;
+}
+
+paper-fab.blue {
+  background: #5677fc;
+}
+
+paper-fab.green {
+  background: #259b24;
+}
+
+paper-fab.yellow {
+  background: #ffeb3b;
+}
+
+
+
+
+
 .opaqueOverlay {
 	position: absolute;
 	top: 0px;

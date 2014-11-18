@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pratilipi" default='all' basedir="." >
+
+  <target name="all">
+    <copy todir="war/theme.default">
+      <fileset dir="claymus/war/theme.default"/>
+    </copy>
+  </target>
+
+</project>
