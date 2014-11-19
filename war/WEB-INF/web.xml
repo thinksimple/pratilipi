@@ -24,6 +24,15 @@
     <filter-name>ClaymusFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  <filter>
+    <filter-name>UserAgentFilter</filter-name>
+    <filter-class>com.pratilipi.servlet.UserAgentFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>UserAgentFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
   <!-- Handlers for GWT Services -->
 
