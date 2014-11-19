@@ -11,15 +11,6 @@
 
 		<link rel="stylesheet" href="//cdn-asia.pratilipi.com/third-party/bootstrap-3.2.0/css/bootstrap.min.css">
 	
-		<script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.3/webfont.js"></script>
-		<script>
-			WebFont.load({
-				google: {
-					families: [ 'Noto+Sans:400,700,400italic,700italic:latin' ]
-				}
-			});
-		</script>
-
 		<script src="//cdn-asia.pratilipi.com/third-party/jquery-1.11.1/jquery-1.11.1.min.js" defer></script>
 		<script src="//cdn-asia.pratilipi.com/third-party/bootstrap-3.2.0/js/bootstrap.min.js" defer></script>
 	
@@ -58,34 +49,9 @@
 		<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
 
 		<script type="text/javascript" language="javascript" src="/theme.default/script.js" defer></script>
+		<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" defer></script>
 		<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
 	
-		<#if domain == "devo.pratilipi.com">
-		
-			<script async>
-			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			
-			  ga('create', 'UA-53742841-1', 'auto');
-			  ga('send', 'pageview');
-			</script>
-		
-		<#elseif domain == "www.pratilipi.com" >
-		
-			<script async>
-			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			
-			  ga('create', 'UA-53742841-2', 'auto');
-			  ga('send', 'pageview');
-			</script>
-		
-		</#if>
-
 		<title>${ (page.getTitle() + " | Pratilipi") ! "Pratilipi" }</title>		
 		
 	</head>

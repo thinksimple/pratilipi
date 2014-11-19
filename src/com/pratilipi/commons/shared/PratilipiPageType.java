@@ -6,7 +6,7 @@ public enum PratilipiPageType implements PageType {
 	
 	AUTHOR( "/author/" ),
 	PRATILIPI( "/pratilipi/" ),
-	READ( null )
+	READ( null ),
 	;
 	
 	

@@ -8,12 +8,15 @@
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>
 
-  <instance-class>B2</instance-class>
+  <instance-class>F2</instance-class>
 
-  <manual-scaling>
-    <instances>3</instances>
-  </manual-scaling>
-    
+  <automatic-scaling>
+    <min-idle-instances>1</min-idle-instances>
+    <max-idle-instances>automatic</max-idle-instances>
+    <min-pending-latency>automatic</min-pending-latency>
+    <max-pending-latency>10ms</max-pending-latency>
+  </automatic-scaling>
+
   <static-files>
     <include path="**" />
     <include path="**.nocache.*" expiration="0s" />
