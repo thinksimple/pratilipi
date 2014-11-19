@@ -56,6 +56,15 @@
     <url-pattern>/service.sitemap</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>RobotsTxt</servlet-name>
+    <servlet-class>com.pratilipi.servlet.RobotsTxtServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RobotsTxt</servlet-name>
+    <url-pattern>/service.robots</url-pattern>
+  </servlet-mapping>
+
   <!-- Handlers for Uploading and Serving Website Resources -->
 
   <servlet>

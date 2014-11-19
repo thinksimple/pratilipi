@@ -75,9 +75,9 @@ public class PratilipiMain extends ClaymusMain {
 	@Override
 	protected String getTemplateName( HttpServletRequest request ) {
 		if( request.getRequestURI().equals( "/read" ) )
-			return "com/pratilipi/servlet/ReadTemplate.ftl";
+			return "com/pratilipi/servlet/ftl/ReadTemplate.ftl";
 		else
-			return "com/pratilipi/servlet/PratilipiTemplate.ftl";
+			return "com/pratilipi/servlet/ftl/DefaultTemplate.ftl";
 	}
 
 	@Override

@@ -33,6 +33,8 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/apple-touch-icon.png", "/theme.pratilipi/favicon.png" );
 		redirections.put( "/apple-touch-icon-precomposed.png", "/theme.pratilipi/favicon.png" );
 
+		redirections.put( "/robots.txt", "/service.robots" );
+
 		redirections.put( "/give-away", "/" );
 		redirections.put( "/give-away/Gora.pdf", "/" );
 		redirections.put( "/give-away/Kukurmutta.pdf", "/" );
