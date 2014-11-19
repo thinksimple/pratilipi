@@ -9,7 +9,7 @@ function validateForm() {
 <header>
 	<div class="container">		
 	
-		<div id="variable-height" style="height:50px;">
+		<div id="Pratilipi-Search-UserAccess" style="height:50px;">
 			<div id="Pratilipi-User-Access" style="display:none; vertical-align: middle;">
 				<#if isUserLoggedIn>
 					<div class="pull-right" style="padding-left: 15px;">
