@@ -157,7 +157,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		
 		return super.processTemplate(
 				dataModel,
-				"com/pratilipi/pagecontent/reader/ReaderContent.ftl" );
+				"com/pratilipi/pagecontent/readerbasic/ReaderContent.ftl" );
 	}
 	
 }

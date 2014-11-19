@@ -135,6 +135,7 @@ public class PratilipiFilter implements Filter {
 			
 			
 		} else if( requestUri.startsWith( "/static.pratilipi.com/" )
+				|| requestUri.startsWith( "/cdn-asia.pratilipi.com/" )
 				|| requestUri.startsWith( "/cdn.ckeditor.com/" )
 				|| requestUri.startsWith( "/ajax.googleapis.com/" ) ) {
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );

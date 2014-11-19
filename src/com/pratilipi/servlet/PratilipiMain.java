@@ -42,6 +42,7 @@ import com.pratilipi.pagecontent.home.HomeContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
+import com.pratilipi.pagecontent.reader.ReaderContentHelper;
 import com.pratilipi.pagecontent.readerbasic.ReaderContentFactory;
 import com.pratilipi.pagecontent.search.SearchContentHelper;
 import com.pratilipi.pagecontent.uploadcontent.UploadContentFactory;
@@ -61,6 +62,7 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( AuthorContentHelper.class );
 		PageContentRegistry.register( HomeContentFactory.class );
 		PageContentRegistry.register( PratilipisContentFactory.class );
+		PageContentRegistry.register( ReaderContentHelper.class );
 		PageContentRegistry.register( ReaderContentFactory.class );
 		PageContentRegistry.register( LanguagesContentFactory.class );
 		PageContentRegistry.register( AuthorsContentFactory.class );
@@ -71,8 +73,11 @@ public class PratilipiMain extends ClaymusMain {
 
 
 	@Override
-	protected String getTemplateName() {
-		return "com/pratilipi/servlet/PratilipiTemplate.ftl";
+	protected String getTemplateName( HttpServletRequest request ) {
+		if( request.getRequestURI().equals( "/read" ) )
+			return "com/pratilipi/servlet/ReadTemplate.ftl";
+		else
+			return "com/pratilipi/servlet/PratilipiTemplate.ftl";
 	}
 
 	@Override
@@ -207,11 +212,16 @@ public class PratilipiMain extends ClaymusMain {
 		
 		List<PageContent> pageContentList = super.getPageContentList( request );
 		
-		if( page != null && page.getType().equals( PratilipiPageType.AUTHOR.toString() ) ) {
-			pageContentList.add( AuthorContentHelper.newAuthorContent( page.getPrimaryContentId() ) );
+		if( page != null ) {
+			
+			if( page.getType().equals( PratilipiPageType.PRATILIPI.toString() ) ) {
+				pageContentList.add( PratilipiContentHelper.newPratilipiContent( page.getPrimaryContentId() ) );
+
+			} else if( page.getType().equals( PratilipiPageType.AUTHOR.toString() ) ) {
+				pageContentList.add( AuthorContentHelper.newAuthorContent( page.getPrimaryContentId() ) );
 		
-		} else if( page != null && page.getType().equals( PratilipiPageType.PRATILIPI.toString() ) ) {
-			pageContentList.add( PratilipiContentHelper.newPratilipiContent( page.getPrimaryContentId() ) );
+			}
+			
 		}
 		
 		
@@ -322,6 +332,9 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/about/the-founding-readers" ) )
 			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/AboutFoundingReadersPageContent.ftl" ) );
 			
+		
+		else if( requestUri.equals( "/read" ) )
+			pageContentList.add( ReaderContentHelper.newReaderContent() );
 		
 		return pageContentList;
 	}
