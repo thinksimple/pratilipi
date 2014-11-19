@@ -22,7 +22,7 @@ public class UploadContentProcessor extends PageContentProcessor<UploadContent> 
 		
 		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( Long.parseLong( request.getParameter( "id" ))); 
 		boolean hasImageContent = false;
-		if( pratilipiData.getContentType() != null && request.getParameter( "type" ).equals( "image" ) )
+		if( pratilipiData.getContentType() == null && request.getParameter( "type" ).equals( "image" ) )
 			hasImageContent = true;
 		else if( pratilipiData.getContentType() == PratilipiContentType.IMAGE )
 			hasImageContent = true;

@@ -68,7 +68,7 @@ public class UploadContent implements EntryPoint {
 				uploadUrl = pratilipiData.getImageContentUploadUrl();
 				pratilipiData.setContentType( PratilipiContentType.IMAGE );
 			}
-			else if( Window.Location.getParameter( "type" ).equals( "word" ) ){
+			else if( Window.Location.getParameter( "type" ).equals( "pratilipi" ) ){
 				uploadUrl = pratilipiData.getWordContentUploadUrl();
 				pratilipiData.setContentType( PratilipiContentType.PRATILIPI );
 			}
@@ -90,8 +90,12 @@ public class UploadContent implements EntryPoint {
 		
 		//Word content upload panel
 		RootPanel wordUpload = RootPanel.get( "PageContent-UploadContent-Word" );
-		if( wordUpload != null )
+		if( wordUpload != null ){
 			wordUpload.add( wordContentUpload );
+			initializeWordContentUploader( wordContentUpload.getElement(), 
+					uploadUrl,
+					loadingMsg.getElement() );
+		}
 		
 		//Adding button which redirects on the reader's page.
 		loadingMsg.getElement().getStyle().setColor( "red" );
@@ -112,13 +116,14 @@ public class UploadContent implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				wordToHtml();
+				wordToHtml( "" );
 			}} );
 		
 		RootPanel buttonPanel = RootPanel.get( "PageContent-UploadContent-button" );
 		if( buttonPanel != null ){
 			buttonPanel.add( loadingMsg );
 			buttonPanel.add( doneButton );
+			buttonPanel.add( convertWordButton );
 		}
 		
 	}
@@ -131,14 +136,19 @@ public class UploadContent implements EntryPoint {
 		var that = this;
 		var statusDiv = $wnd.jQuery('#status-div');
 		var newPagesCount = 0;
+		var failedUpload = "";
+		var uploadFailed = 0;
 		
 		$wnd.jQuery( fileUpload ).fileupload({
 			dataType: 'html',
 			replaceFileInput: false,
 			add: function( e, data ){
+				if( uploadFailed > 0 )
+					$wnd.$( statusDiv ).empty();
+					
 				$wnd.$( this ).prop( 'disabled', true );
 				var filename =  data.files[0].name;
-				data.url = url + filename.split('.')[0];
+				data.url = url + "/" + filename.split('.')[0];
 				$wnd.$( statusDiv ).append('<div class="col-sm-6" ><i>' + filename + '</i></div>' +
 							'<div class="progress col-sm-2" style="padding-left: 0px; padding-right: 0px;">' + 
 							'<div id="progressbar" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
@@ -164,7 +174,9 @@ public class UploadContent implements EntryPoint {
 				$wnd.$( "#" + filename + "Div" ).html( 'Done' );
 		    },
 		    fail: function( e, data ){
+				uploadFailed = uploadFailed + 1;
 		    	var filename = data.files[0].name.split('.')[0];
+		    	failedUpload = failedUpload + data.files[0].name + " " ;
 		    	if( pageCount < parseFloat( filename ) )
 		    		newPagesCount = newPagesCount + 1;
 		    	$wnd.$( "#" + filename ).css( 'width', '0%'  );
@@ -174,13 +186,21 @@ public class UploadContent implements EntryPoint {
 		    stop: function( e ){
 		    	$wnd.$( loadingMsg ).css( 'display', 'block' );
 		    	$wnd.$( this ).prop( 'disabled', false );
-		    	that.@com.pratilipi.pagecontent.uploadcontent.client.UploadContent::updatePratilipi(Ljava/lang/String;)( newPagesCount );
+		    	that.@com.pratilipi.pagecontent.uploadcontent.client.UploadContent::updatePratilipi(Ljava/lang/String;Ljava/lang/String;)( newPagesCount, failedUpload );
+		    	newPagesCount = 0;
 		    }
 		});
 		
 	}-*/;
 	
-	private native void initializeWordContentUploader( Element fileUpload, String url )/*-{
+	private native void initializeWordContentUploader( Element fileUpload, 
+							String url,
+							Element loadingMsg )/*-{
+		
+		var that = this;
+		var statusDiv = $wnd.jQuery('#status-div');
+		var uploadFailed = "";
+		
 		$wnd.jQuery( fileUpload ).fileupload({
 			dataType: 'html',
 			replaceFileInput: false,
@@ -192,7 +212,7 @@ public class UploadContent implements EntryPoint {
 							'<div class="progress col-sm-2" style="padding-left: 0px; padding-right: 0px;">' + 
 							'<div id="progressbar" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
 							'</div>' + 
-							'<div id="statusDiv" class="status col-sm-3" >Pending</div>' );
+							'<div class="status col-sm-3" >Pending</div>' );
 				data.submit();
 			},
 			progress: function( e, data ) {
@@ -204,17 +224,19 @@ public class UploadContent implements EntryPoint {
 		    },
 		    done: function( e, data ) {
 		    	$wnd.$( '.progressbar' ).css( 'width', '0%'  );
-				$wnd.$( '.status' ).css( 'color', 'red' );
-				$wnd.$( '.status' ).html( 'Failed' );
+				$wnd.$( '.status' ).css( 'color', 'Green' );
+				$wnd.$( '.status' ).html( 'Done' );
 		    },
 		    fail: function( e, data ){
+		    	uploadFailed = data.files[0].name;
 		    	$wnd.$( '.progressbar' ).css( 'width', '0%'  );
 				$wnd.$( '.status' ).css( 'color', 'red' );
 				$wnd.$( '.status' ).html( 'Failed' );
 		    },
 		    stop: function( e ){
 		    	$wnd.$( this ).prop( 'disabled', false );
-		    	that.@com.pratilipi.pagecontent.uploadcontent.client.UploadContent::wordToHtml();
+		    	$wnd.$( loadingMsg ).css( 'color', 'red' );
+		    	that.@com.pratilipi.pagecontent.uploadcontent.client.UploadContent::wordToHtml(Ljava/lang/String;)( uploadFailed );
 		    }
 		});
 	}-*/;
@@ -224,7 +246,7 @@ public class UploadContent implements EntryPoint {
 	}-*/;
 	
 	//Update pageCount and contentType in pratilipiData.
-	private void updatePratilipi( String pageCount ){
+	private void updatePratilipi( String pageCount, final String failedUpload ){
 		Long pageUploaded = Long.parseLong( String.valueOf( pageCount ));
 		pratilipiData.setPageCount(( pratilipiData.getPageCount() == null ? 0 : pratilipiData.getPageCount() )
 										+ pageUploaded );
@@ -239,33 +261,49 @@ public class UploadContent implements EntryPoint {
 
 			@Override
 			public void onSuccess(SavePratilipiResponse result) {
-				loadingMsg.setVisible( false );
-				doneButton.setVisible( true );
+				if( failedUpload.length() > 0 ){
+					loadingMsg.setText( "Upload failed for " + failedUpload + ". Please try again." );
+				}
+				else{
+					loadingMsg.setVisible( false );
+					doneButton.setVisible( true );
+				}
 				pratilipiData = result.getPratilipiData();
 			}} );
 	}
 	
 	//Convert word to html
-	private void wordToHtml(){
-		loadingMsg.setText( "Converting word to HTML. This might take some time. Please Wait..." );
-		loadingMsg.setVisible( true );
-		
-		pratilipiService.ConvertWordToHtml( new GetReaderContentRequest( pratilipiData.getId(), 0 ), 
-						new AsyncCallback<Void> (){
-
-							@Override
-							public void onFailure(Throwable caught) {
-								Window.alert( caught.getMessage() );
-								loadingMsg.setText( "Word to HTML conversion <b>FAILED</b>. Please Try again" );
-								convertWordButton.setVisible( true );
-								
-							}
-
-							@Override
-							public void onSuccess(Void result) {
-								loadingMsg.setVisible( false );
-								doneButton.setVisible( true );
-							}} );
+	private void wordToHtml( String uploadFailed ){
+		if( uploadFailed.length() > 0 ){
+			//When Fileupload to the cloud failed.
+			loadingMsg.getElement().getStyle().setColor( "red" );
+			loadingMsg.setText( "Upload failed. Please try again." );
+			loadingMsg.setVisible( true );
+		}
+		else{
+			//When file is successfully uploaded to the cloud
+			convertWordButton.setVisible( false );
+			loadingMsg.getElement().getStyle().setColor( "green" );
+			loadingMsg.setText( "Converting word to HTML. This might take some time. Please Wait..." );
+			loadingMsg.setVisible( true );
+			
+			pratilipiService.ConvertWordToHtml( new GetReaderContentRequest( pratilipiData.getId(), 0 ), 
+					new AsyncCallback<Void> (){
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert( caught.getMessage() );
+					loadingMsg.getElement().getStyle().setColor( "red" );
+					loadingMsg.getElement().setInnerHTML( "Word to HTML conversion <b>FAILED</b>. Please click button below to try again. <br/><br/>" );
+					convertWordButton.setVisible( true );
+				}
+				
+				@Override
+				public void onSuccess(Void result) {
+					loadingMsg.setVisible( false );
+					doneButton.setVisible( true );
+				}} );
+		}
 	}
 	
 }

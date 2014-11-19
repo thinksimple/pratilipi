@@ -25,12 +25,11 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.pratilipi.data.access.DataAccessorFactory;
-import com.pratilipi.servlet.QueueWordToPratilipiServlet;
 
 public class ConvertWordToHtml {
 	
 	private static final Logger logger = 
-			Logger.getLogger( QueueWordToPratilipiServlet.class.getName() );
+			Logger.getLogger( ConvertWordToHtml.class.getName() );
 	
 	// TODO: Move these credentials to a more secure location
 	private static final String SERVICE_ACCOUNT_EMAIL =

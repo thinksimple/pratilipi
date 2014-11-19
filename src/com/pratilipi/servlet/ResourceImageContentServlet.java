@@ -21,9 +21,9 @@ public class ResourceImageContentServlet extends ResourceServlet {
 			HttpServletResponse response ) throws IOException {
 		
 		String url = request.getRequestURI();
-		String pratilipiIdStr = url
-				.substring( 0, url.lastIndexOf( '/' ) )
-				.substring( url.lastIndexOf( '/' ) + 1 );
+		String uri = url.substring( 0, url.lastIndexOf( '/' ) );
+		String pratilipiIdStr = uri.substring( uri.lastIndexOf( '/' ) + 1 );
+		
 		Long pratilipiId = Long.parseLong( pratilipiIdStr );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );

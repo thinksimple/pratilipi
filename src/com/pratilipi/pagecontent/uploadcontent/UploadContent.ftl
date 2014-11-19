@@ -10,7 +10,7 @@
 		</p>
 		<div id="PageContent-UploadContent-Image" style="margin-top: 10px;"></div>
 	<#else>
-		<div id="PageContent-UploadContent-word" style="margin-top: 10px;"></div>
+		<div id="PageContent-UploadContent-Word" style="margin-top: 10px;"></div>
 	</#if>
 	<div id="status-div" style="margin-top: 20px;"></div>
 	<div id="PageContent-UploadContent-button" class="col-xs-12"></div>
