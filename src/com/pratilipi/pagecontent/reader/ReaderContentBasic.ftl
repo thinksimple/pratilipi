@@ -1,46 +1,40 @@
 
-
 <!-- This is reader page -->
-<div id="Pratilipi-Reader-Basic"  class="paper">
+<div id="Pratilipi-Reader-Basic" style="background-color: #f5f5f5;">
 
 	<table>
 		<tr>
 			<td>
 				<#-- Title and Author Name -->
-				<div>
+				<div style="margin-left: 5px; margin-right:5px;">
 					<h2>
-						<a href="${ pratilipiHomeUrl }">${ pratilipi.getTitle() }</a>
-						<small>
-							<a href="${ authorHomeUrl }">- ${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></a>
-						</small>
+						<a href="${ pratilipiData.getPageUrlAlias() }">${ pratilipiData.getTitle() }</a>
 					</h2>
-		
-					<#if showEditOptions>
-						<div id="PageContent-Pratilipi-Content-EditOptions" align="right" style="margin: 5px;"></div>
-					</#if>
 				</div>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<div>
+				<div style="margin: 5px;">
 					<div style="display: inline;">
-					<button type="button" ><span class="glyphicon glyphicon-minus"></span></button>
-					<button type="button" ><span class="glyphicon glyphicon-plus"></span></button>
+					<button type="button" onclick="decreaseSize()"><span class="glyphicon glyphicon-minus"></span></button>
+					<button type="button" onclick="increaseSize()"><span class="glyphicon glyphicon-plus"></span></button>
 					</div>
 					<div align="right" style="display: inline-block; float: right;">
-					<#if previousPageUrl?? || nextPageUrl??>
-						<button type="button" ><span class="glyphicon glyphicon-chevron-left"></span></button>
-						<button type="button" ><span class="glyphicon glyphicon-chevron-right"></span></button>
-					</#if>
+						<#if previousPageUrl?? >
+							<button type="button" onclick="window.location.href='${ previousPageUrl }'" ><span class="glyphicon glyphicon-chevron-left"></span></button>
+						</#if>
+						<#if nextPageUrl?? >
+							<button type="button" onclick="window.location.href='${ nextPageUrl }'" ><span class="glyphicon glyphicon-chevron-right"></span></button>
+						</#if>
 					</div>
 				</div>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<div style="padding:0px;">
-					<div id="PageContent-Pratilipi-Content" class="well" style="margin-top:10px; margin-bottom:10px; width: 100%">
+				<div id="paper" class="paper" style="padding:0px;">
+					<div id="PageContent-Pratilipi-Content" style="width: 100%">
 						${ pageContent }
 					</div>
 				</div>
@@ -48,24 +42,21 @@
 		</tr>
 		<tr>
 			<td>
-				<div>
-					<div style="display: inline;">
-						<button type="button" ><span class="glyphicon glyphicon-minus"></span></button>
-						<button type="button" ><span class="glyphicon glyphicon-plus"></span></button>
-					</div>
+				<div style="margin: 5px;">
+					<p style="display: inline; line-height: 28px;">${ pageNumber }</p>
 					<div align="right" style="display: inline-block; float: right;">
-					<#if previousPageUrl?? || nextPageUrl??>
-						<button type="button" ><span class="glyphicon glyphicon-chevron-left"></span></button>
-						<button type="button" ><span class="glyphicon glyphicon-chevron-right"></span></button>
-					</#if>
+						<#if previousPageUrl?? >
+							<button type="button" onclick="window.location.href='${ previousPageUrl }'" ><span class="glyphicon glyphicon-chevron-left"></span></button>
+						</#if>
+						<#if nextPageUrl?? >
+							<button type="button" onclick="window.location.href='${ nextPageUrl }'" ><span class="glyphicon glyphicon-chevron-right"></span></button>
+						</#if>
 					</div>
 				</div>
 			</td>
 		</tr>
 	</table>
 </div>
-
-<div id="PageContent-Reader-EncodedData" style="display:none;">${ pratilipiDataEncodedStr }</div>
 
 <script language="javascript" defer>
 	function disableselect(e){
@@ -96,7 +87,42 @@
 		        return false;
 		    }
 		});
+		
 	}
+	
+	/* Zoom Support */
+	var zoomNo = 0;
+	function increaseSize(){
+		zoomNo++;
+		var windowsize = window.innerHeight || document.documentElement.clientHeight || document.body.clientheight;
+		var imageContent = document.getElementById( "imageContent" );
+		var imageContainer = document.getElementById( "PageContent-Pratilipi-Content" );
+		imageContainer.setAttribute( "style", "overflow: auto;" );
+		
+		/*Fixing height of the container. NOT WORKING TILL NOW*/
+		if( zoomNo == 1)
+			imageContainer.height = windowsize;
+			
+		if( imageContent  ){
+			imageContent.height = imageContent.height + 100;
+			imageContent.style.width = 'auto';
+		}
+
+	}
+	
+	function decreaseSize(){
+		zoomNo--;
+		var imageContent = document.getElementById( "imageContent" );
+		var imageContainer = document.getElementById( "PageContent-Pratilipi-Content" );
+		if( imageContent && zoomNo >= 0 ){
+			imageContent.height = imageContent.height - 100;
+			imageContent.style.width = 'auto';
+		}
+		else{
+			zoomNo = 0;
+		}
+	}
+	
 </script>
 	<style type="text/css">
 		@media print{
@@ -104,4 +130,3 @@
 		}
 </style>
 
-<script type="text/javascript" language="javascript" src="/pagecontent.reader/pagecontent.reader.nocache.js" defer></script>
