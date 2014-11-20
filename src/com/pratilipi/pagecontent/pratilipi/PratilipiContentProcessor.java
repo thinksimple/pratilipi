@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.server.SerializationUtil;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
@@ -85,7 +86,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 				&& PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( request, pratilipi ) );
 
 
-		return super.processTemplate( dataModel, getTemplateName() );
+		return FreeMarkerUtil.processTemplate( dataModel, getTemplateName() );
 	}
 	
 }

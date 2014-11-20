@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.server.SerializationUtil;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
@@ -155,9 +156,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		dataModel.put( "pratilipiDataEncodedStr", SerializationUtil.encode( pratilipiData ) );
 
 		
-		return super.processTemplate(
-				dataModel,
-				"com/pratilipi/pagecontent/readerbasic/ReaderContent.ftl" );
+		return FreeMarkerUtil.processTemplate( dataModel, getTemplateName() );
 	}
 	
 }

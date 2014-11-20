@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.pagecontent.PageContentProcessor;
@@ -46,7 +47,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "pratilipiData", pratilipiData );
 
-		return super.processTemplate( dataModel, getTemplateName() );
+		return FreeMarkerUtil.processTemplate( dataModel, getTemplateName() );
 	}
 	
 }

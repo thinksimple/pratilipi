@@ -2,8 +2,7 @@ package com.pratilipi.servlet;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,17 +15,19 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 
+import com.claymus.commons.server.FreeMarkerUtil;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.WebsiteWidget;
-import com.claymus.module.websitewidget.html.HtmlWidget;
-import com.claymus.module.websitewidget.html.HtmlWidgetFactory;
 import com.claymus.pagecontent.PageContentRegistry;
 import com.claymus.pagecontent.filebrowser.FileBrowserHelper;
 import com.claymus.pagecontent.html.HtmlContent;
 import com.claymus.pagecontent.html.HtmlContentHelper;
 import com.claymus.servlet.ClaymusMain;
+import com.claymus.websitewidget.html.HtmlWidget;
+import com.claymus.websitewidget.html.HtmlWidgetHelper;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.commons.shared.PratilipiState;
@@ -46,9 +47,6 @@ import com.pratilipi.pagecontent.reader.ReaderContentHelper;
 import com.pratilipi.pagecontent.readerbasic.ReaderContentFactory;
 import com.pratilipi.pagecontent.search.SearchContentHelper;
 import com.pratilipi.pagecontent.uploadcontent.UploadContentFactory;
-
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 
 
 @SuppressWarnings("serial")
@@ -71,14 +69,6 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( UploadContentFactory.class );
 	}
 
-
-	@Override
-	protected String getTemplateName( HttpServletRequest request ) {
-		if( request.getRequestURI().equals( "/read" ) )
-			return "com/pratilipi/servlet/ftl/ReadTemplate.ftl";
-		else
-			return "com/pratilipi/servlet/ftl/DefaultTemplate.ftl";
-	}
 
 	@Override
 	protected Page getPage( HttpServletRequest request ) {
@@ -203,8 +193,7 @@ public class PratilipiMain extends ClaymusMain {
 	}
 	
 	@Override
-	protected List<PageContent> getPageContentList(
-			HttpServletRequest request ) throws IOException {
+	protected List<PageContent> getPageContentList( HttpServletRequest request ) {
 	
 		String requestUri = request.getRequestURI();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
@@ -340,8 +329,7 @@ public class PratilipiMain extends ClaymusMain {
 	}
 	
 	@Override
-	protected List<WebsiteWidget> getWebsiteWidgetList(
-			HttpServletRequest request ) throws IOException {
+	protected List<WebsiteWidget> getWebsiteWidgetList( HttpServletRequest request ) {
 		
 		List<WebsiteWidget> websiteWidgetList
 				= super.getWebsiteWidgetList( request );
@@ -350,18 +338,27 @@ public class PratilipiMain extends ClaymusMain {
 		headerWidget.setPosition( "HEADER" );
 		websiteWidgetList.add( headerWidget );
 		
-		HtmlWidget footerWidget = generateHtmlWidgetFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/FooterWidget.ftl" );
-		footerWidget.setPosition( "FOOTER" );
-		websiteWidgetList.add( footerWidget );
+		HtmlWidget footerWidget;
+		try {
+			footerWidget = generateHtmlWidgetFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/FooterWidget.ftl" );
+			footerWidget.setPosition( "FOOTER" );
+			websiteWidgetList.add( footerWidget );
+		} catch( UnexpectedServerException e ) {
+			// Do nothing
+		}
 		
 		return websiteWidgetList;
 	}
 
-	private HtmlContent generateHtmlContentFromFile(
-			String fileName ) throws IOException {
-		
+	private HtmlContent generateHtmlContentFromFile( String fileName ) {
 		File file = new File( fileName );
-		List<String> lines = FileUtils.readLines( file, "UTF-8" );
+		List<String> lines;
+		try {
+			lines = FileUtils.readLines( file, "UTF-8" );
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to read from file.", e );
+			lines = new ArrayList<>( 0 );
+		}
 		String html = "";
 		for( String line : lines )
 			html = html + line;
@@ -370,25 +367,26 @@ public class PratilipiMain extends ClaymusMain {
 		return htmlContent;
 	}
 	
-	private HtmlWidget generateHtmlWidgetFromFile(
-			String fileName ) throws IOException {
+	private HtmlWidget generateHtmlWidgetFromFile( String fileName )
+			throws UnexpectedServerException {
 		
-		File file = new File( fileName );
-		List<String> lines = FileUtils.readLines( file, "UTF-8" );
-		String html = "";
-		for( String line : lines )
-			html = html + line;
-		HtmlWidget htmlWidget = HtmlWidgetFactory.newHtmlWidget();
-		htmlWidget.setHtml( html );
-		return htmlWidget;
+		try {
+			File file = new File( fileName );
+			List<String> lines = FileUtils.readLines( file, "UTF-8" );
+			String html = "";
+			for( String line : lines )
+				html = html + line;
+			HtmlWidget htmlWidget = HtmlWidgetHelper.newHtmlWidget();
+			htmlWidget.setHtml( html );
+			return htmlWidget;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new UnexpectedServerException();
+		}
 	}
 
-	private HtmlWidget generateHeaderWidget(
-			HttpServletRequest request ) throws IOException {
-		
-		Writer writer = new StringWriter();
-		Template template = FREEMARKER_CONFIGURATION
-				.getTemplate( "com/pratilipi/servlet/content/HeaderWidget.ftl" );
+	private HtmlWidget generateHeaderWidget( HttpServletRequest request ) {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
@@ -402,22 +400,19 @@ public class PratilipiMain extends ClaymusMain {
 		dataModal.put( "user", user);
 		dataModal.put( "isUserLoggedIn", pratilipiHelper.isUserLoggedIn() );
 		
-		
+		String html = "";
 		try {
-			template.process( dataModal , writer );
-		} catch (TemplateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.log( Level.SEVERE, "", e );
+			html = FreeMarkerUtil.processTemplate( dataModal, "com/pratilipi/servlet/content/HeaderWidget.ftl" );
+		} catch( UnexpectedServerException e ) {
+			// Do Nothing
 		}
 
-		HtmlWidget htmlWidget = HtmlWidgetFactory.newHtmlWidget();
-		htmlWidget.setHtml( writer.toString() );
+		HtmlWidget htmlWidget = HtmlWidgetHelper.newHtmlWidget();
+		htmlWidget.setHtml( html );
 		return htmlWidget;
 	}
 
-	private PageContent generateHomePageContent(
-			HttpServletRequest request ) throws IOException {
+	private PageContent generateHomePageContent( HttpServletRequest request ) {
 		
 		List<Long> bookIdList = new LinkedList<>();
 		bookIdList.add( 5157903266742272L );
