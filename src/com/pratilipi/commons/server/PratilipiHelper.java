@@ -13,7 +13,6 @@ import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.Memcache;
 import com.claymus.data.transfer.Page;
 import com.pratilipi.commons.shared.PratilipiPageType;
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
@@ -57,15 +56,6 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 	
 
-	@Deprecated
-	public static String getReaderPageUrl(
-			PratilipiType pratilipiType, Long pratilipiId ) {
-		
-		return "/read/" + pratilipiType.getName().toLowerCase() + "/" +
-				( pratilipiId == null ? "" : pratilipiId );
-	}
-	
-	
 	public static String getContent( Long pratilipiId ) {
 		return "pratilipi-content/pratilipi/" + ( pratilipiId == null ? "" : pratilipiId );
 	}
@@ -252,7 +242,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setCoverImage300UploadUrl( URL_RESOURCE + "pratilipi-cover/300/" + pratilipi.getId() );
 		pratilipiData.setImageContentUploadUrl( URL_RESOURCE + "pratilipi-content/image/" + pratilipi.getId() );
 		pratilipiData.setWordContentUplaodUrl( URL_RESOURCE + "pratilipi-content/word/" + pratilipi.getId() );
-		pratilipiData.setReaderPageUrl( getReaderPageUrl( pratilipi.getType(), pratilipi.getId() ) );
+		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
 		if( includeMetaData )
 			pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
 		

@@ -34,7 +34,6 @@ import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
-import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.genres.GenresContentHelper;
@@ -44,7 +43,6 @@ import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
 import com.pratilipi.pagecontent.reader.ReaderContentHelper;
-import com.pratilipi.pagecontent.readerbasic.ReaderContentFactory;
 import com.pratilipi.pagecontent.search.SearchContentHelper;
 import com.pratilipi.pagecontent.uploadcontent.UploadContentFactory;
 
@@ -61,7 +59,6 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( HomeContentFactory.class );
 		PageContentRegistry.register( PratilipisContentFactory.class );
 		PageContentRegistry.register( ReaderContentHelper.class );
-		PageContentRegistry.register( ReaderContentFactory.class );
 		PageContentRegistry.register( LanguagesContentFactory.class );
 		PageContentRegistry.register( AuthorsContentFactory.class );
 		PageContentRegistry.register( GenresContentHelper.class );
@@ -142,30 +139,6 @@ public class PratilipiMain extends ClaymusMain {
 		
 		else if( requestUri.equals( "/upload" ) )
 			page.setTitle( "Upload Content" );
-
-		
-		// Individual item's readers
-		else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.BOOK, null ) ) ) {
-			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
-			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() );
-		
-		} else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.POEM, null ) ) ) {
-			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
-			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() );
-		
-		} else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.STORY, null ) ) ) {
-			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
-			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() );
-		
-		} else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.ARTICLE, null ) ) ) {
-			Long pratilipiId = Long.parseLong( requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 ) );
-			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			page.setTitle( pratilipi.getTitle() );
-		
-		} 
 
 		
 		// Static pages
@@ -285,23 +258,6 @@ public class PratilipiMain extends ClaymusMain {
 		
 		else if( requestUri.equals( "/upload" ) )
 			pageContentList.add( UploadContentFactory.newUploadContent() );
-
-		
-		// Individual item's readers
-		else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.BOOK, null ) ) )
-			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.BOOK ) );
-
-		else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.POEM, null ) ) )
-			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.POEM ) );
-		
-		else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.STORY, null ) ) )
-			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.STORY ) );
-		
-		else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.ARTICLE, null ) ) )
-			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.ARTICLE ) );
-
-		else if( requestUri.startsWith( PratilipiHelper.getReaderPageUrl( PratilipiType.MAGAZINE, null ) ) )
-			pageContentList.add( ReaderContentFactory.newReaderContent( PratilipiType.MAGAZINE ) );
 
 		
 		// Static pages

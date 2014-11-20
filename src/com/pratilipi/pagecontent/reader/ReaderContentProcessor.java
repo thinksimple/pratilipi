@@ -47,7 +47,11 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "pratilipiData", pratilipiData );
 
-		return FreeMarkerUtil.processTemplate( dataModel, getTemplateName() );
+		String templateName = pratilipiHelper.isModeBasic()
+				? getTemplateName().replace( ".ftl", "Basic.ftl" )
+				: getTemplateName();
+		
+		return FreeMarkerUtil.processTemplate( dataModel, templateName );
 	}
 	
 }
