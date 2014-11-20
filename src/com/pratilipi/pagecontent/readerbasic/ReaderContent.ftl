@@ -1,42 +1,68 @@
 
 
 <!-- This is reader page -->
-<div class="container">
+<div id="Pratilipi-Reader-Basic"  class="paper">
 
-	<div class="row">
-	
-		<#-- Title and Author Name -->
-		<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-			<h2>
-				<a href="${ pratilipiHomeUrl }">${ pratilipi.getTitle() }</a>
-			</h2>
-			<h4>
-				<a href="${ authorHomeUrl }">${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></a>
-			</h4>
-
-			<#if showEditOptions>
-				<div id="PageContent-Pratilipi-Content-EditOptions"></div>
-			</#if>
-			<div id="PageContent-Pratilipi-Content-Fullscreen"></div>
-		</div>
-		<div id="PageContent-Pratilipi-Content-Fullscreen" style="margin-bottom:10px;"></div>
-
-	</div> <#-- END of row -->
-
-
-	<div class="row">
-
-		<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="padding:0px;">
-			<div id="PageContent-Pratilipi-Content" class="well" style="margin-bottom:10px;">
-				${ pageContent }
-			</div>
-		</div>
+	<table>
+		<tr>
+			<td>
+				<#-- Title and Author Name -->
+				<div>
+					<h2>
+						<a href="${ pratilipiHomeUrl }">${ pratilipi.getTitle() }</a>
+						<small>
+							<a href="${ authorHomeUrl }">- ${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if></a>
+						</small>
+					</h2>
 		
-		<#if previousPageUrl?? || nextPageUrl??>
-			<div id="PageContent-Pratilipi-Content-Buttons" class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="padding:0px;"></div>
-		</#if>
-	</div> <#-- END of second row -->
-
+					<#if showEditOptions>
+						<div id="PageContent-Pratilipi-Content-EditOptions" align="right" style="margin: 5px;"></div>
+					</#if>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div>
+					<div style="display: inline;">
+					<button type="button" ><span class="glyphicon glyphicon-minus"></span></button>
+					<button type="button" ><span class="glyphicon glyphicon-plus"></span></button>
+					</div>
+					<div align="right" style="display: inline-block; float: right;">
+					<#if previousPageUrl?? || nextPageUrl??>
+						<button type="button" ><span class="glyphicon glyphicon-chevron-left"></span></button>
+						<button type="button" ><span class="glyphicon glyphicon-chevron-right"></span></button>
+					</#if>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="padding:0px;">
+					<div id="PageContent-Pratilipi-Content" class="well" style="margin-top:10px; margin-bottom:10px; width: 100%">
+						${ pageContent }
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div>
+					<div style="display: inline;">
+						<button type="button" ><span class="glyphicon glyphicon-minus"></span></button>
+						<button type="button" ><span class="glyphicon glyphicon-plus"></span></button>
+					</div>
+					<div align="right" style="display: inline-block; float: right;">
+					<#if previousPageUrl?? || nextPageUrl??>
+						<button type="button" ><span class="glyphicon glyphicon-chevron-left"></span></button>
+						<button type="button" ><span class="glyphicon glyphicon-chevron-right"></span></button>
+					</#if>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
 </div>
 
 <div id="PageContent-Reader-EncodedData" style="display:none;">${ pratilipiDataEncodedStr }</div>

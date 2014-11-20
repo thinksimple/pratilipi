@@ -3,7 +3,6 @@ package com.pratilipi.pagecontent.readerbasic.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -60,24 +59,6 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 	public void onModuleLoad() {
 		
 		readerRootPanel = RootPanel.get( "PageContent-Pratilipi-Content" );
-		
-		//FullScreen Logic
-		RootPanel fullScreenRootPanel = RootPanel.get( "PageContent-Pratilipi-Content-Fullscreen" );
-		fullScreenRootPanel.add( fullScreenButton );
-		fullScreenRootPanel.add( fullScreenExitButton );
-		
-		fullScreenButton.setHTML( "<span class=\"glyphicon glyphicon-resize-full\"></span>" );
-		fullScreenButton.setTitle( "Full Screen" );
-		fullScreenButton.addStyleName( "pull-right" );
-		fullScreenButton.getElement().getStyle().setMarginBottom( 5, Unit.PX );
-		fullScreenButton.addClickHandler( this );
-		
-		fullScreenExitButton.setHTML( "<span class=\"glyphicon glyphicon-resize-small\"></span>" );
-		fullScreenExitButton.setTitle( "Exit Full Screen" );
-		fullScreenExitButton.addClickHandler( this );
-		fullScreenExitButton.getElement().setAttribute( "style", 
-							" position : fixed; right: 10%; top: 10%; "
-							+ " display: none; z-index: 3; " );
 		
 		// Decoding PratilipiData
 		RootPanel rootPanel = RootPanel.get( "PageContent-Reader-EncodedData" );
@@ -202,17 +183,7 @@ public class ReaderContent implements EntryPoint, ClickHandler {
 			else
 				onClickNextPageButton();
 			
-		} else if( event.getSource() == fullScreenButton ) {
-			RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-Content" );
-			rootPanel.addStyleName( "fullscreen-reader" );
-			fullScreenExitButton.setVisible( true );
-			fullScreenButton.setVisible( false );
-		} else if( event.getSource() == fullScreenExitButton ) {
-			RootPanel rootPanel = RootPanel.get( "PageContent-Pratilipi-Content" );
-			rootPanel.removeStyleName( "fullscreen-reader" );
-			fullScreenExitButton.setVisible( false );
-			fullScreenButton.setVisible( true );
-		}
+		} 
 		
 	}
 	
