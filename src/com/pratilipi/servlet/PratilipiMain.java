@@ -330,21 +330,25 @@ public class PratilipiMain extends ClaymusMain {
 	
 	@Override
 	protected List<WebsiteWidget> getWebsiteWidgetList( HttpServletRequest request ) {
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		
 		List<WebsiteWidget> websiteWidgetList
 				= super.getWebsiteWidgetList( request );
 
-		HtmlWidget headerWidget = generateHeaderWidget( request );
-		headerWidget.setPosition( "HEADER" );
-		websiteWidgetList.add( headerWidget );
-		
-		HtmlWidget footerWidget;
-		try {
-			footerWidget = generateHtmlWidgetFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/FooterWidget.ftl" );
-			footerWidget.setPosition( "FOOTER" );
-			websiteWidgetList.add( footerWidget );
-		} catch( UnexpectedServerException e ) {
-			// Do nothing
+		if( pratilipiHelper.isModeBasic() ) {
+			
+			HtmlWidget headerWidget = generateHeaderWidget( request );
+			headerWidget.setPosition( "HEADER" );
+			websiteWidgetList.add( headerWidget );
+			
+			HtmlWidget footerWidget;
+			try {
+				footerWidget = generateHtmlWidgetFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/FooterWidget.ftl" );
+				footerWidget.setPosition( "FOOTER" );
+				websiteWidgetList.add( footerWidget );
+			} catch( UnexpectedServerException e ) {
+				// Do nothing
+			}
 		}
 		
 		return websiteWidgetList;

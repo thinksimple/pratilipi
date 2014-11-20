@@ -12,7 +12,7 @@
 
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 
-		<#if showBasicVersion>
+		<#if basicMode>
 			<script src="//cdn-asia.pratilipi.com/third-party/jquery-1.11.1/jquery-1.11.1.min.js" defer></script>
 			<script src="//cdn-asia.pratilipi.com/third-party/bootstrap-3.2.0/js/bootstrap.min.js" defer></script>
 			<link rel="stylesheet" href="//cdn-asia.pratilipi.com/third-party/bootstrap-3.2.0/css/bootstrap.min.css">
@@ -38,6 +38,7 @@
 				}
 			</script>
 		<#else>
+			<!-- Polymer 0.5.1 -->
 			<script src="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/webcomponentsjs/webcomponents.js"></script>
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-collapse/core-collapse.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-icon-button/core-icon-button.html">
@@ -59,17 +60,34 @@
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-slider/paper-slider.html">
 		</#if>
 
-		<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
-		<script type="text/javascript" language="javascript" src="/theme.default/script.js" defer></script>
-		<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
-		<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" defer></script>
+		<!-- Claymus Resources -->
+		<#if basicMode>
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
+			<script type="text/javascript" language="javascript" src="/theme.default/script.js" async></script>
+			<script type="text/javascript" language="javascript" src="/theme.default/script.basicmode.js" defer></script>
+		<#else>
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.polymer.css">
+			<script type="text/javascript" language="javascript" src="/theme.default/script.js" defer></script>
+		</#if>
+
+		<!-- Pratilipi Resources -->
+		<#if basicMode>
+			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
+			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.basicmode.css">
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" async></script>
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicmode.js" defer></script>
+		<#else>
+			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" defer></script>
+		</#if>
 			
 		<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
 
 		<title>${ (page.getTitle() + " | Pratilipi") ! "Pratilipi" }</title>		
 		
 	</head>
-	<body <#if !showBasicVersion>fullbleed layout vertical</#if>>
+	<body <#if !basicMode>fullbleed layout vertical</#if>>
 		
 		<#if websiteWidgetHtmlListMap["HEADER"] ??>
 			<#list websiteWidgetHtmlListMap["HEADER"] as websiteWidgetHtml>
