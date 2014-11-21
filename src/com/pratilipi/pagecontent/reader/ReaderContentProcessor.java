@@ -119,7 +119,10 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 							+ "&page=" + ( pageNo + 1 ) );
 		
 		dataModel.put( "pageNumber", pageNo + " of " + pageCount );
-
+		
+		String returningUrl = request.getParameter( "ret" ) != null ? request.getParameter( "ret" ) : pratilipiData.getPageUrl();
+		dataModel.put( "returningUrl", returningUrl );
+		
 		String templateName = pratilipiHelper.isModeBasic()
 				? getTemplateName().replace( ".ftl", "Basic.ftl" )
 				: getTemplateName();

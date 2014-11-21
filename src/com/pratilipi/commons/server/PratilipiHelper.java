@@ -242,7 +242,14 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setCoverImage300UploadUrl( URL_RESOURCE + "pratilipi-cover/300/" + pratilipi.getId() );
 		pratilipiData.setImageContentUploadUrl( URL_RESOURCE + "pratilipi-content/image/" + pratilipi.getId() );
 		pratilipiData.setWordContentUplaodUrl( URL_RESOURCE + "pratilipi-content/word/" + pratilipi.getId() );
-		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
+		
+		if( request.getParameter( "ret" ) != null ) 
+			//All pages except first page of books, stories, poems etc.
+			pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() + "&ret=" + request.getParameter( "ret" ) );
+		else	
+			//First page of the books, stories, poems etc.
+			pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() + "&ret=" + request.getRequestURI() );
+		
 		if( includeMetaData )
 			pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
 		
