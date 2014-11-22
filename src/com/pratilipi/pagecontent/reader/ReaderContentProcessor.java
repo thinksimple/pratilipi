@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.FreeMarkerUtil;
@@ -61,7 +62,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		if( pratilipiData.getPageCount() != null && pratilipiData.getPageCount() > 0 ) {
 
 			pageCount = pratilipiData.getPageCount();
-			pageContent = "<img id=\"imageContent\" style=\"width:100%;\" src=\"" + PratilipiHelper.getContentImageUrl( pratilipiId ) + "/" + pageNo + "\">";
+			pageContent = "<img id=\"imageContent\" style=\"width:auto;\" src=\"" + PratilipiHelper.getContentImageUrl( pratilipiId ) + "/" + pageNo + "\">";
 
 		} else {
 

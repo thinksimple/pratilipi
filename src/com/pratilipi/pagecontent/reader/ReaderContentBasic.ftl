@@ -17,15 +17,15 @@
 			<td>
 				<div style="margin: 5px;">
 					<div style="display: inline;">
-					<button type="button" onclick="decreaseSize()"><span class="glyphicon glyphicon-minus"></span></button>
-					<button type="button" onclick="increaseSize()"><span class="glyphicon glyphicon-plus"></span></button>
+					<button type="button" onclick="decreaseSize()"><img src="/theme.pratilipi/images/minus.png" title="Decrease size" /></button>
+					<button type="button" onclick="increaseSize()"><img src="/theme.pratilipi/images/plus.png" title="Increase size"/></button>
 					</div>
 					<div align="right" style="display: inline-block; float: right;">
 						<#if previousPageUrl?? >
-							<button type="button" onclick="window.location.href='${ previousPageUrl }'" ><span class="glyphicon glyphicon-chevron-left"></span></button>
+							<button type="button" onclick="window.location.href='${ previousPageUrl }'" ><img src="/theme.pratilipi/images/previous.png" title="Previous Page" /></button>
 						</#if>
 						<#if nextPageUrl?? >
-							<button type="button" onclick="window.location.href='${ nextPageUrl }'" ><span class="glyphicon glyphicon-chevron-right"></span></button>
+							<button type="button" onclick="window.location.href='${ nextPageUrl }'" ><img src="/theme.pratilipi/images/next.png" title="Next Page" /></button>
 						</#if>
 					</div>
 				</div>
@@ -43,14 +43,14 @@
 		<tr>
 			<td>
 				<div style="margin: 5px; text-align: center;">
-					<button type="button" onclick="window.location.href='${ returningUrl }'" style="float: left;" ><span class="glyphicon glyphicon-arrow-left"></span></button>
+					<button type="button" onclick="window.location.href='${ returningUrl }'" style="float: left;" ><img src="/theme.pratilipi/images/left.png" /></button>
 					<p style="display: inline; line-height: 28px; ">${ pageNumber }</p>
 					<div align="right" style="display: inline-block; float: right;">
 						<#if previousPageUrl?? >
-							<button type="button" onclick="window.location.href='${ previousPageUrl }'" ><span class="glyphicon glyphicon-chevron-left"></span></button>
+							<button type="button" onclick="window.location.href='${ previousPageUrl }'" ><img src="/theme.pratilipi/images/previous.png" title="Previous Page" /></button>
 						</#if>
 						<#if nextPageUrl?? >
-							<button type="button" onclick="window.location.href='${ nextPageUrl }'" ><span class="glyphicon glyphicon-chevron-right"></span></button>
+							<button type="button" onclick="window.location.href='${ nextPageUrl }'" ><img src="/theme.pratilipi/images/next.png" title="Next Page" /></button>
 						</#if>
 					</div>
 				</div>
@@ -104,6 +104,7 @@
 			/* For Image content */
 			imageContent.height = imageContent.height + 50;
 			imageContent.style.width = 'auto';
+			setCookie( "image-height", imageContent.height, 365 );
 			contentTd.width = imageContent.offsetWidth;
 			var padding = ( windowSize - imageContent.offsetWidth )/2;
 			basicReader.setAttribute("style", "padding-left:" + padding.toString() + "px; background-color: #f5f5f5;"); 
@@ -120,8 +121,9 @@
 				
 			var fontSize = parseInt( fontSizeStr.substring( 0, fontSizeStr.indexOf( 'p' )) );
 			tagList.forEach( function( value, index, p ) {
-				p[index].style.fontSize = ( fontSize + 2 ) + "px;";
+				p[index].style.fontSize = ( fontSize + 2 ) + "px";
 			} );
+			setCookie( "font-size", ( fontSize + 2 ), 365 );
 		}
 
 	}
@@ -137,9 +139,11 @@
 			/* For Image content */
 			imageContent.height = imageContent.height - 50;
 			imageContent.style.width = 'auto';
+			setCookie( "image-height", imageContent.height, 365 );
 			contentTd.width = imageContent.offsetWidth;
 			var padding = ( windowSize - imageContent.offsetWidth )/2;
 			basicReader.setAttribute("style", "padding-left:" + padding.toString() + "px; background-color: #f5f5f5;");
+			
 		} 
 		else if( pTags ){
 			/* For word content */
@@ -153,6 +157,7 @@
 			tagList.forEach( function( value, index, p ) {
 				p[index].style.fontSize = ( fontSize - 2 ) + "px";
 			} );
+			setCookie( "font-size", ( fontSize - 2 ), 365 );
 		}
 	}
 	
