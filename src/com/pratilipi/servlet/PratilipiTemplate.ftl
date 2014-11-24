@@ -39,6 +39,7 @@
 			</script>
 		<#else>
 			<!-- Polymer 0.5.1 -->
+			<script src="//cdn-asia.pratilipi.com/third-party/jquery-1.11.1/jquery-1.11.1.min.js" defer></script>
 			<script src="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/webcomponentsjs/webcomponents.js"></script>
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-ajax/core-ajax.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-collapse/core-collapse.html">

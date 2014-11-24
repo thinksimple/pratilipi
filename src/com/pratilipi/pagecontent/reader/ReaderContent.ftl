@@ -97,9 +97,17 @@
 			}
 
 		<#elseif pratilipiData.getContentType() == "IMAGE" >
-
-			document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img src='${ pratilipiData.getImageContentUrl() }/" + scope.pageNo + "' style='width:100%;'/>"
-
+			if( contentArray[scope.pageNo] == null ){
+				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img id='imageContent' src='/theme.pratilipi/GIF/loading-scifi.gif'/>"
+				var img = $('<img id="imageContent" src="${ pratilipiData.getImageContentUrl() }/' + scope.pageNo + '" style="width:100%;"/>' );
+				img.on( 'load', function() {
+					document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img id='imageContent' src='${ pratilipiData.getImageContentUrl() }/" + scope.pageNo + "' style='width:100%;'/>"	
+				});
+			} else {
+				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img id='imageContent' src='${ pratilipiData.getImageContentUrl() }/" + scope.pageNo + "' style='width:100%;'/>"
+			}
+			
+		    
 		</#if>
 	}
 	
@@ -119,8 +127,14 @@
 			}
 
 		<#elseif pratilipiData.getContentType() == "IMAGE" >
-
-			// TODO: Implementation
+		
+			if( scope.pageNo > 1 && contentArray[scope.pageNo - 1] == null ) {
+				contentArray[scope.pageNo-1] = "<img id='imageContent' src='${ pratilipiData.getImageContentUrl() }/" + (scope.pageNo-1) + "' style='width:100%;'/>";
+			}
+		
+			if( scope.pageNo < scope.pageCount && contentArray[scope.pageNo + 1] == null ) {
+				contentArray[scope.pageNo+1] = "<img id='imageContent' src='${ pratilipiData.getImageContentUrl() }/" + scope.pageNo+1 + "' style='width:100%;'/>";
+			}
 
 		</#if>
 	}
