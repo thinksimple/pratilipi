@@ -98,7 +98,7 @@
 
 		<#elseif pratilipiData.getContentType() == "IMAGE" >
 			if( contentArray[scope.pageNo] == null ){
-				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img id='imageContent' src='/theme.pratilipi/GIF/loading-scifi.gif'/>"
+				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img id='imageContent' src='/theme.pratilipi/loading-scifi.gif'/>"
 				var img = $('<img id="imageContent" src="${ pratilipiData.getImageContentUrl() }/' + scope.pageNo + '" style="width:100%;"/>' );
 				img.on( 'load', function() {
 					document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img id='imageContent' src='${ pratilipiData.getImageContentUrl() }/" + scope.pageNo + "' style='width:100%;'/>"	
