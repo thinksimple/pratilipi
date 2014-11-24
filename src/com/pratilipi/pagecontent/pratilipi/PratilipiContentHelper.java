@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.server.Access;
 import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
@@ -61,6 +62,9 @@ public class PratilipiContentHelper extends PageContentHelper<
 	public static boolean hasRequestAccessToAddPratilipiData(
 			HttpServletRequest request, Pratilipi pratilipi ) {
 		
+		if( pratilipi.getState() == PratilipiState.DELETED )
+			return false;
+
 		if( PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_PRATILIPI_DATA ) )
 			return true;
 		
@@ -72,6 +76,9 @@ public class PratilipiContentHelper extends PageContentHelper<
 	
 	public static boolean hasRequestAccessToUpdatePratilipiData(
 			HttpServletRequest request, Pratilipi pratilipi ) {
+		
+		if( pratilipi.getState() == PratilipiState.DELETED )
+			return false;
 		
 		if( PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA ) )
 			return true;

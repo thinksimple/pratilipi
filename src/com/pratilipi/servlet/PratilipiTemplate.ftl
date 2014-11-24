@@ -40,6 +40,7 @@
 		<#else>
 			<!-- Polymer 0.5.1 -->
 			<script src="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/webcomponentsjs/webcomponents.js"></script>
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-ajax/core-ajax.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-collapse/core-collapse.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-icon-button/core-icon-button.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-icons/core-icons.html">
@@ -58,6 +59,7 @@
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-item/paper-item.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-menu-button/paper-menu-button.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-slider/paper-slider.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/polymer/polymer.html">
 		</#if>
 
 		<!-- Claymus Resources -->

@@ -1,5 +1,6 @@
+<!-- PageContent :: Reader :: Start -->
 
-<!-- This is reader page -->
+
 <div id="Pratilipi-Reader-Basic" style="background-color: #f5f5f5;">
 
 	<table>
@@ -43,8 +44,8 @@
 		<tr>
 			<td>
 				<div style="margin: 5px; text-align: center;">
-					<button type="button" onclick="window.location.href='${ returningUrl }'" style="float: left;" ><img src="/theme.pratilipi/images/left.png" /></button>
-					<p style="display: inline; line-height: 28px; ">${ pageNumber }</p>
+					<button type="button" onclick="window.location.href='${ exitUrl ! pratilipiData.getPageUrl() }'" style="float: left;" ><img src="/theme.pratilipi/images/left.png" /></button>
+					<p style="display: inline; line-height: 28px; ">${ pageNumber } of ${ pageCount }</p>
 					<div align="right" style="display: inline-block; float: right;">
 						<#if previousPageUrl?? >
 							<button type="button" onclick="window.location.href='${ previousPageUrl }'" ><img src="/theme.pratilipi/images/previous.png" title="Previous Page" /></button>
@@ -168,3 +169,5 @@
 		}
 </style>
 
+
+<!-- PageContent :: Reader :: End -->

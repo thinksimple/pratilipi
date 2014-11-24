@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.Memcache;
 import com.claymus.data.transfer.Page;
+import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -27,6 +28,7 @@ import com.pratilipi.service.shared.data.PratilipiData;
 @SuppressWarnings("serial")
 public class PratilipiHelper extends ClaymusHelper {
 
+	@Deprecated
 	public static final Pattern REGEX_PAGE_BREAK = Pattern.compile(
 			"(<hr\\s+style=\"page-break-(before|after).+?>)"
 			+ "|"
@@ -240,16 +242,10 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setCoverImageUrl( URL_RESOURCE_STATIC + "pratilipi-cover/300/" + pratilipi.getId() );
 		pratilipiData.setCoverImageUploadUrl( URL_RESOURCE + "pratilipi-cover/original/" + pratilipi.getId() );
 		pratilipiData.setCoverImage300UploadUrl( URL_RESOURCE + "pratilipi-cover/300/" + pratilipi.getId() );
+		pratilipiData.setImageContentUrl( URL_RESOURCE + "pratilipi-content/image/" + pratilipi.getId() );
 		pratilipiData.setImageContentUploadUrl( URL_RESOURCE + "pratilipi-content/image/" + pratilipi.getId() );
 		pratilipiData.setWordContentUplaodUrl( URL_RESOURCE + "pratilipi-content/word/" + pratilipi.getId() );
-		
-		if( request.getParameter( "ret" ) != null ) 
-			//All pages except first page of books, stories, poems etc.
-			pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() + "&ret=" + request.getParameter( "ret" ) );
-		else	
-			//First page of the books, stories, poems etc.
-			pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() + "&ret=" + request.getRequestURI() );
-		
+		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
 		if( includeMetaData )
 			pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
 		
@@ -266,7 +262,10 @@ public class PratilipiHelper extends ClaymusHelper {
 		
 		pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
-		pratilipiData.setContentType( pratilipi.getContentType() );
+		if( pratilipi.getContentType() != null )
+			pratilipiData.setContentType( pratilipi.getContentType() );
+		else
+			pratilipiData.setContentType( pratilipi.getPageCount() == null || pratilipi.getPageCount() == 0L ? PratilipiContentType.PRATILIPI : PratilipiContentType.IMAGE );
 		pratilipiData.setState( pratilipi.getState() );
 
 		List<Long> genreIdList = new ArrayList<>( genreList.size() );

@@ -1,11 +1,10 @@
+<!-- PageContent :: Pratilipi :: Start -->
+
 
 <#setting time_zone="${ timeZone }">
 <#import "../../../../com/claymus/commons/client/ui/Social.ftl" as social>
 
-<!-- PageContent :: Pratilipi :: Start -->
-
 <#assign shareUrl="http://${ domain }${ pratilipiData.getPageUrl() }">
-
 	
 
 <div class="container" itemscope itemtype="http://schema.org/Product">
@@ -93,5 +92,6 @@
 <#else>
 	<script type="text/javascript" language="javascript" src="/pagecontent.pratilipi/pagecontent.pratilipi.nocache.js" defer></script>
 </#if>
+
 
 <!-- PageContent :: Pratilipi :: End -->
