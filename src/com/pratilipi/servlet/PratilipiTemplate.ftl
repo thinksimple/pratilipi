@@ -54,7 +54,6 @@
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-dialog/paper-action-dialog.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-dialog/paper-dialog.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-fab/paper-fab.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-dropdown/paper-dropdown.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-icon-button/paper-icon-button.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-item/paper-item.html">
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-menu-button/paper-menu-button.html">

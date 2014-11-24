@@ -32,6 +32,11 @@
 		<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:25px;" on-tap="{{displayNext}}"></paper-fab>
 	</div>
 
+
+	<#if pratilipiData.getContentType() == "PRATILIPI" >
+		<core-ajax id="PageContent-Reader-Ajax" url="/service.pratilipi.json" handleAs="json" on-core-response="{{handleAjaxResponse}}"></core-ajax>
+	</#if>
+
 </template>
 
 
@@ -42,40 +47,84 @@
 	scope.pageCount = ${ pageCount };
 	scope.pageNo = ${ pageNo };
 
+	var contentArray = [];
+
 	
-	scope.performExit = function(e) {
+	scope.performExit = function( e ) {
 		window.location.href="${ exitUrl ! pratilipiData.getPageUrl() }";
 	};
 
-	scope.displayOptions = function(e) {
+	scope.displayOptions = function( e ) {
 		var dialog = e.target.querySelector( 'paper-dialog' );
 		if( dialog ) {
 			dialog.toggle();
 		}
 	};
 
-	scope.displayPage = function(e) {
+	scope.displayPage = function( e ) {
 		updateContent();
+		prefetchContent();
 	};
 	
-	scope.displayPrevious = function(e) {
+	scope.displayPrevious = function( e ) {
 		if( scope.pageNo > 1 ) {
 			scope.pageNo = scope.pageNo - 1;
-			updateContent();
 		}
 	};
 
-	scope.displayNext = function(e) {
+	scope.displayNext = function( e ) {
 		if( scope.pageNo < scope.pageCount ) {
 			scope.pageNo = scope.pageNo + 1;
-			updateContent();
 		}
 	};
-
+	
+	scope.handleAjaxResponse = function( event, response ) {
+		contentArray[response.response['pageNo']] = response.response['content'];
+		updateContent();
+    };
+    
+    
 	function updateContent() {
-		document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img src='${ pratilipiData.getImageContentUrl() }/" + scope.pageNo + "'/>"
-	}
+		<#if pratilipiData.getContentType() == "PRATILIPI" >
 
+			if( contentArray[scope.pageNo] == null ) {
+				var ajax = document.querySelector( "#PageContent-Reader-Ajax" );
+				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "Loading ...";
+				ajax.params = '{ "pratilipiId":"${ pratilipiData.getId()?c }", "pageNo":' + scope.pageNo + ' }';
+				ajax.go();
+			} else {
+				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = contentArray[scope.pageNo];
+			}
+
+		<#elseif pratilipiData.getContentType() == "IMAGE" >
+
+			document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img src='${ pratilipiData.getImageContentUrl() }/" + scope.pageNo + "' style='width:100%;'/>"
+
+		</#if>
+	}
+	
+	function prefetchContent() {
+		<#if pratilipiData.getContentType() == "PRATILIPI" >
+
+			var ajax = document.querySelector( "#PageContent-Reader-Ajax" );
+
+			if( scope.pageNo > 1 && contentArray[scope.pageNo - 1] == null ) {
+				ajax.params = '{ "pratilipiId":"${ pratilipiData.getId()?c }", "pageNo":' + (scope.pageNo - 1) + ' }';
+				ajax.go();
+			}
+		
+			if( scope.pageNo < scope.pageCount && contentArray[scope.pageNo + 1] == null ) {
+				ajax.params = '{ "pratilipiId":"${ pratilipiData.getId()?c }", "pageNo":' + (scope.pageNo + 1) + ' }';
+				ajax.go();
+			}
+
+		<#elseif pratilipiData.getContentType() == "IMAGE" >
+
+			// TODO: Implementation
+
+		</#if>
+	}
+	
 </script>
 
 
