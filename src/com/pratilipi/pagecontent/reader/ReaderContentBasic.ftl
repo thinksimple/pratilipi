@@ -1,3 +1,5 @@
+<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicreader.js" defer></script>
+
 <!-- PageContent :: Reader :: Start -->
 <#assign pageNumber = pageNo?number>
 <#assign totalPageCount = pageCount?number>
@@ -28,10 +30,10 @@
 					</div>
 					<div align="right" style="display: inline-block; float: right;">
 						<#if previousPageUrl?? >
-							<button type="button" onclick="newPage( '${ previousPageUrl }' )" ><img src="/theme.pratilipi/images/previous.png" title="Previous Page" /></button>
+							<button type="button" onclick="window.location.href= '${ previousPageUrl }'" ><img src="/theme.pratilipi/images/previous.png" title="Previous Page" /></button>
 						</#if>
 						<#if nextPageUrl?? >
-							<button type="button" onclick="newPage( '${ nextPageUrl }' )" ><img src="/theme.pratilipi/images/next.png" title="Next Page" /></button>
+							<button type="button" onclick="window.location.href= '${ nextPageUrl }'" ><img src="/theme.pratilipi/images/next.png" title="Next Page" /></button>
 						</#if>
 					</div>
 				</div>

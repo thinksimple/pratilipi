@@ -46,22 +46,22 @@ function setPageContent(){
 	}
 }
 
-/* SAVES PRATILIPI ID AND PAGE NUMBER IN COOKIES AND REDIRECTS PAGE TO NEXT OR PREVIOUS PAGE BASED ON WHICH BUTTON IS CLICKED */
-function newPage( url ){
+/* SAVES PRATILIPI ID AND PAGE NUMBER IN COOKIE */
+function saveAutoBookmark(){
 	var urlParameters = window.location.search.substring(1).split( '&' );
+	var pratilipiId;
+	var pageNo;
 	for( i=0; i< urlParameters.length; ++i){
 		var param = urlParameters[i].split( '=' );
 		if( param && param[0] == "id" ){
-			setCookie( "pratilipiId", param[1], 365 );
+			pratilipiId = param[1];
 		}
 		
 		if( param && param[0] == "page" ){
-			setCookie( "pageNo", param[1], 365 );
-		} else{
-			
+			pageNo = param[1];
+			setCookie( pratilipiId, param[1], 365 );
 		}
 	}
-	window.location.replace( url );
 }
 
 
@@ -134,3 +134,19 @@ function decreaseSize(){
 		setCookie( "font-size", ( fontSize - 2 ), 365 );
 	}
 }
+
+//EXECEUTE ON WINDOW LOAD
+$(document).ready(function(){
+	$( '#PageContent-Pratilipi-Content' ).on("contextmenu",function(e){ return false; });
+	//pkey = 80; ckey = 67; vkey = 86
+	$( document ).bind("keyup keydown", function(e){
+    if( e.ctrlKey && ( e.keyCode == 80 ) ){
+	        return false;
+	    }
+	});
+	
+	setPageContent();
+	setMargin();
+	saveAutoBookmark();
+});
+

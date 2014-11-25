@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.FreeMarkerUtil;
@@ -75,9 +76,24 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		PratilipiData pratilipiData =
 				pratilipiHelper.createPratilipiData( pratilipi, null, author, null );
 
+		//Getting PratilipiId and page number stored in cookies.
+		String idInCookie = "";
+		String pageInCookie = "";
+		Cookie[] cookies = request.getCookies();
+		for( Cookie cookie : cookies ){
+			if( cookie.getName().equals( pratilipiData.getId().toString() )){
+				idInCookie = cookie.getName().toString();
+				pageInCookie = cookie.getValue().toString();
+			}
+		}
 
 		// Page # to display
-		String pageNoStr = request.getParameter( "page" ) == null ? "1" : request.getParameter( "page" );
+		String pageNoStr;
+		if( pratilipiIdStr.equals( idInCookie ))
+			pageNoStr = request.getParameter( "page" ) == null ? pageInCookie : request.getParameter( "page" );
+		else
+			pageNoStr = request.getParameter( "page" ) == null ? "1" : request.getParameter( "page" );
+		
 		int pageNo = Integer.parseInt( pageNoStr );
 
 		
@@ -115,7 +131,6 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		if( request.getParameter( "ret" ) != null && !request.getParameter( "ret" ).trim().isEmpty()  )
 			dataModel.put( "exitUrl", request.getParameter( "ret" ) );
 
-		
 		String templateName = pratilipiHelper.isModeBasic()
 				? getTemplateName().replace( ".ftl", "Basic.ftl" )
 				: getTemplateName();
