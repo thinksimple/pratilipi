@@ -39,7 +39,7 @@
 			</script>
 		<#else>
 			<!-- jQuery 2.1.1 -->
-			<script src="//cdn-asia.pratilipi.com/third-party/jquery-2.1.1/jquery-2.1.1.min.js" defer></script>
+			<script src="//cdn-asia.pratilipi.com/third-party/jquery-2.1.1/jquery-2.1.1.min.js"></script>
 			<!-- Polymer 0.5.1 -->
 			<script src="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/webcomponentsjs/webcomponents.js"></script>
 			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-ajax/core-ajax.html">

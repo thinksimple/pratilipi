@@ -52,9 +52,16 @@
 	
 	scope.pageCount = ${ pageCount };
 	scope.pageNo = ${ pageNo };
-
+	
 	var contentArray = [];
-
+	
+	jQuery( "body" ).keydown( function( event ) {
+		if( event.which == 37 && scope.pageNo > 1 ) {
+			scope.pageNo--;
+		} else if( event.which == 39 && scope.pageNo < scope.pageCount ) {
+			scope.pageNo++;
+		}
+	});
 	
 	scope.performExit = function( e ) {
 		window.location.href="${ exitUrl ! pratilipiData.getPageUrl() }";
@@ -68,28 +75,28 @@
 	};
 
 	scope.displayPage = function( e ) {
-		document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "Loading ...";
-		setTimeout( function() {
-			updateContent();
-			prefetchContent();
-		}, 1 );
+		updateContent();
+		document.querySelector( 'core-scroll-header-panel' ).scroller.scrollTop = 0;
+		prefetchContent();
 	};
 	
 	scope.displayPrevious = function( e ) {
 		if( scope.pageNo > 1 ) {
-			scope.pageNo = scope.pageNo - 1;
+			scope.pageNo--;
 		}
 	};
 
 	scope.displayNext = function( e ) {
 		if( scope.pageNo < scope.pageCount ) {
-			scope.pageNo = scope.pageNo + 1;
+			scope.pageNo++;
 		}
 	};
 	
     
 	<#if pratilipiData.getContentType() == "PRATILIPI" >
     
+		contentArray[scope.pageNo] = ${ pageContent }
+		
 		scope.handleAjaxResponse = function( event, response ) {
 			contentArray[response.response['pageNo']] = response.response['pageContent'];
 			updateContent();
@@ -97,6 +104,7 @@
 	    
 		function updateContent() {
 			if( contentArray[scope.pageNo] == null ) {
+				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
 				var ajax = document.querySelector( "#PageContent-Reader-Ajax" );
 				ajax.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo } );
 				ajax.go();
@@ -129,6 +137,7 @@
 		
 		function updateContent() {
 			if( contentArray[scope.pageNo] == null ){
+				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
 				loadImage( scope.pageNo );
 			} else {
 				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = contentArray[scope.pageNo];

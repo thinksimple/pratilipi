@@ -15,6 +15,8 @@ import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.pagecontent.PageContentProcessor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pratilipi.commons.server.PratilipiContentUtil;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiContentType;
@@ -30,6 +32,8 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 	
 	private static final Logger logger =
 			Logger.getLogger( ReaderContentProcessor.class.getName() );
+
+	private static final Gson gson = new GsonBuilder().create();
 
 	
 	@Override
@@ -96,9 +100,10 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			
 			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+			String pageContent = pratilipiContentUtil.getContent( pageNo );
 			
 			dataModel.put( "pageCount", pratilipiContentUtil.getPageCount() );
-			dataModel.put( "pageContent", pratilipiContentUtil.getContent( pageNo ) );
+			dataModel.put( "pageContent", pratilipiHelper.isModeBasic() ? pageContent : gson.toJson( pageContent ) );
 			
 		} else { // if( pratilipiData.getContentType() == PratilipiContentType.IMAGE )
 			
@@ -110,19 +115,6 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		if( request.getParameter( "ret" ) != null && !request.getParameter( "ret" ).trim().isEmpty()  )
 			dataModel.put( "exitUrl", request.getParameter( "ret" ) );
 
-		
-//			if( pageNo > 1 )
-//				dataModel.put( "previousPageUrl",
-//						pratilipiData.getReaderPageUrl()
-//								+ "&page=" + ( pageNo -1 ) );
-//			
-//			if( pageNo < pageCount )
-//				dataModel.put( "nextPageUrl",
-//						pratilipiData.getReaderPageUrl()
-//								+ "&page=" + ( pageNo + 1 ) );
-		
-//		pageContent = "<img id=\"imageContent\" style=\"width:auto;\" src=\"" + PratilipiHelper.getContentImageUrl( pratilipiId ) + "/" + pageNo + "\">";
-		
 		
 		String templateName = pratilipiHelper.isModeBasic()
 				? getTemplateName().replace( ".ftl", "Basic.ftl" )
