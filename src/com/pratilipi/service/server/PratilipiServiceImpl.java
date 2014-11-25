@@ -58,12 +58,11 @@ import com.pratilipi.service.shared.GetGenreListRequest;
 import com.pratilipi.service.shared.GetGenreListResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
+import com.pratilipi.service.shared.GetPratilipiContentRequest;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
 import com.pratilipi.service.shared.GetPratilipiListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
-import com.pratilipi.service.shared.GetReaderContentRequest;
-import com.pratilipi.service.shared.GetReaderContentResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -297,59 +296,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		}
 		
 		return new SavePratilipiContentResponse();
-	}
-	
-	@Override
-	public GetReaderContentResponse getReaderContent(
-			GetReaderContentRequest request) throws IllegalArgumentException {
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-		int pageNumber = request.getPageNumber();
-		
-		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
-
-		long pageCount = 0;
-		String pageContent = "";
-		Boolean isLastPage = false;
-
-		// Fetching Pratilipi content
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		BlobEntry blobEntry = null;
-		try {
-			blobEntry = blobAccessor.getBlob( PratilipiHelper.getContent( pratilipi.getId() ) );
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}			
-		String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-
-		Matcher matcher =  PratilipiHelper.REGEX_PAGE_BREAK.matcher( content );
-		int startIndex = 0;
-		int endIndex = 0;
-		while( endIndex < content.length() ) {
-			pageCount++;
-			startIndex = endIndex;
-			if( matcher.find() ) {
-				endIndex = matcher.end();
-				logger.log( Level.INFO, "Page " + pageCount + " length: "
-						+ ( endIndex - startIndex )
-						+ " (" + startIndex + " - " + endIndex + ") "
-						+ matcher.group() );
-			} else {
-				endIndex = content.length();
-				isLastPage = true;
-				logger.log( Level.INFO, "Page " + pageCount + " length: "
-						+ ( endIndex - startIndex )
-						+ " (" + startIndex + " - " + endIndex + ")");
-			}
-			
-			if( pageCount == pageNumber ) {
-				pageContent = content.substring( startIndex, endIndex );
-				break;
-			}
-		}
-		
-		return new GetReaderContentResponse( pageContent, isLastPage );
 	}
 	
 	@Override
@@ -807,7 +753,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	}
 	
 	@Override
-	public void ConvertWordToHtml( GetReaderContentRequest request ) throws IOException {
+	public void ConvertWordToHtml( GetPratilipiContentRequest request ) throws IOException {
 
 		Long pratilipiId = request.getPratilipiId();
 		ConvertWordToHtml convertWordToHtml = new ConvertWordToHtml( pratilipiId );

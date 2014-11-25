@@ -1,9 +1,18 @@
 package com.pratilipi.pagecontent.pratilipi;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
+import com.claymus.data.access.BlobAccessor;
+import com.claymus.data.transfer.BlobEntry;
 import com.claymus.pagecontent.PageContentHelper;
+import com.pratilipi.commons.server.PratilipiContentUtil;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.data.access.DataAccessor;
@@ -12,12 +21,18 @@ import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
+import com.pratilipi.service.shared.GetPratilipiContentRequest;
+import com.pratilipi.service.shared.GetPratilipiContentResponse;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiContentHelper extends PageContentHelper<
 		PratilipiContent,
 		PratilipiContentData,
 		PratilipiContentProcessor> {
 	
+	private static final Logger logger =
+			Logger.getLogger( PratilipiContentHelper.class.getName() );
+
 	public static final Access ACCESS_TO_ADD_PRATILIPI_DATA =
 			new Access( "pratilipi_data_add", false, "Add Pratilipi Data" );
 	public static final Access ACCESS_TO_UPDATE_PRATILIPI_DATA =
@@ -107,6 +122,35 @@ public class PratilipiContentHelper extends PageContentHelper<
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		
 		return ! PratilipiHelper.get( request ).getCurrentUserId().equals( author.getUserId() );
+	}
+	
+	public static GetPratilipiContentResponse getPratilipiContent(
+			GetPratilipiContentRequest apiRequest, HttpServletRequest httpRequest )
+			throws UnexpectedServerException {
+		
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( httpRequest );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( httpRequest );
+
+		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getPratilipiId() );
+		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, null, null, null, true );
+				
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		BlobEntry blobEntry = null;
+		try {
+			blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
+			throw new UnexpectedServerException();
+		}
+		
+		String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+		PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+		String pageContent = pratilipiContentUtil.getContent( apiRequest.getPageNumber() );
+		
+		return new GetPratilipiContentResponse(
+				apiRequest.getPratilipiId(),
+				apiRequest.getPageNumber(),
+				pageContent );
 	}
 	
 }

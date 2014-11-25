@@ -34,7 +34,13 @@
 
 
 	<#if pratilipiData.getContentType() == "PRATILIPI" >
-		<core-ajax id="PageContent-Reader-Ajax" url="/service.pratilipi.json" handleAs="json" on-core-response="{{handleAjaxResponse}}"></core-ajax>
+		<core-ajax
+				id="PageContent-Reader-Ajax"
+				url="/service.pratilipi/json?api=getPratilipiContent"
+				contentType="application/json"
+				method="POST"
+				handleAs="json"
+				on-core-response="{{handleAjaxResponse}}" ></core-ajax>
 	</#if>
 
 </template>
@@ -62,8 +68,11 @@
 	};
 
 	scope.displayPage = function( e ) {
-		updateContent();
-		prefetchContent();
+		document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "Loading ...";
+		setTimeout( function() {
+			updateContent();
+			prefetchContent();
+		}, 1 );
 	};
 	
 	scope.displayPrevious = function( e ) {
@@ -78,66 +87,64 @@
 		}
 	};
 	
-	scope.handleAjaxResponse = function( event, response ) {
-		contentArray[response.response['pageNo']] = response.response['content'];
-		updateContent();
-    };
     
+	<#if pratilipiData.getContentType() == "PRATILIPI" >
     
-	function updateContent() {
-		<#if pratilipiData.getContentType() == "PRATILIPI" >
-
+		scope.handleAjaxResponse = function( event, response ) {
+			contentArray[response.response['pageNo']] = response.response['pageContent'];
+			updateContent();
+	    };
+	    
+		function updateContent() {
 			if( contentArray[scope.pageNo] == null ) {
 				var ajax = document.querySelector( "#PageContent-Reader-Ajax" );
-				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "Loading ...";
-				ajax.params = '{ "pratilipiId":"${ pratilipiData.getId()?c }", "pageNo":' + scope.pageNo + ' }';
+				ajax.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo } );
 				ajax.go();
 			} else {
 				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = contentArray[scope.pageNo];
 			}
-
-		<#elseif pratilipiData.getContentType() == "IMAGE" >
-			if( contentArray[scope.pageNo] == null ){
-				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img id='imageContent' src='/theme.pratilipi/loading-scifi.gif'/>"
-				var img = $('<img id="imageContent" src="${ pratilipiData.getImageContentUrl() }/' + scope.pageNo + '" style="width:100%;"/>' );
-				img.on( 'load', function() {
-					document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img id='imageContent' src='${ pratilipiData.getImageContentUrl() }/" + scope.pageNo + "' style='width:100%;'/>"	
-				});
-			} else {
-				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<img id='imageContent' src='${ pratilipiData.getImageContentUrl() }/" + scope.pageNo + "' style='width:100%;'/>"
-			}
-			
-		    
-		</#if>
-	}
-	
-	function prefetchContent() {
-		<#if pratilipiData.getContentType() == "PRATILIPI" >
-
+		}
+		
+		function prefetchContent() {
 			var ajax = document.querySelector( "#PageContent-Reader-Ajax" );
-
 			if( scope.pageNo > 1 && contentArray[scope.pageNo - 1] == null ) {
-				ajax.params = '{ "pratilipiId":"${ pratilipiData.getId()?c }", "pageNo":' + (scope.pageNo - 1) + ' }';
+				ajax.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo - 1 } );
 				ajax.go();
 			}
-		
 			if( scope.pageNo < scope.pageCount && contentArray[scope.pageNo + 1] == null ) {
-				ajax.params = '{ "pratilipiId":"${ pratilipiData.getId()?c }", "pageNo":' + (scope.pageNo + 1) + ' }';
+				ajax.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1 } );
 				ajax.go();
 			}
-
-		<#elseif pratilipiData.getContentType() == "IMAGE" >
+		}
 		
+	<#elseif pratilipiData.getContentType() == "IMAGE" >
+		
+		function loadImage( pageNo ) {
+			var img = "<img src='${ pratilipiData.getImageContentUrl() }/" + pageNo + "' />";
+			$(img).on( 'load', function() {
+				contentArray[pageNo] = img;
+				updateContent();
+			});
+		}
+		
+		function updateContent() {
+			if( contentArray[scope.pageNo] == null ){
+				loadImage( scope.pageNo );
+			} else {
+				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = contentArray[scope.pageNo];
+			}
+		}
+
+		function prefetchContent() {
 			if( scope.pageNo > 1 && contentArray[scope.pageNo - 1] == null ) {
-				contentArray[scope.pageNo-1] = "<img id='imageContent' src='${ pratilipiData.getImageContentUrl() }/" + (scope.pageNo-1) + "' style='width:100%;'/>";
+				loadImage( scope.pageNo - 1 );
 			}
-		
 			if( scope.pageNo < scope.pageCount && contentArray[scope.pageNo + 1] == null ) {
-				contentArray[scope.pageNo+1] = "<img id='imageContent' src='${ pratilipiData.getImageContentUrl() }/" + scope.pageNo+1 + "' style='width:100%;'/>";
+				loadImage( scope.pageNo + 1 );
 			}
-
-		</#if>
-	}
+		}
+		
+	</#if>
 	
 </script>
 
@@ -148,6 +155,15 @@
 		position: fixed;
 		top: 0px;
 		right: 0px;
+	}
+	
+</style>
+
+
+<style>
+
+	#PageContent-Reader-Content img {
+		width:100%;
 	}
 	
 </style>

@@ -37,13 +37,13 @@
   <!-- Handlers for GWT Services -->
 
   <servlet>
-    <servlet-name>PratilipiJsonService</servlet-name>
-    <servlet-class>com.pratilipi.servlet.PratilipiService</servlet-class>
+    <servlet-name>PratilipiServiceJson</servlet-name>
+    <servlet-class>com.pratilipi.service.server.PratilipiServiceJson</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>PratilipiJsonService</servlet-name>
-    <url-pattern>/service.pratilipi.json</url-pattern>
+    <servlet-name>PratilipiServiceJson</servlet-name>
+    <url-pattern>/service.pratilipi/json</url-pattern>
   </servlet-mapping>
 
   <servlet>

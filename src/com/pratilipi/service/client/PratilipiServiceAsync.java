@@ -17,12 +17,11 @@ import com.pratilipi.service.shared.GetGenreListRequest;
 import com.pratilipi.service.shared.GetGenreListResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
+import com.pratilipi.service.shared.GetPratilipiContentRequest;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
 import com.pratilipi.service.shared.GetPratilipiListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
-import com.pratilipi.service.shared.GetReaderContentRequest;
-import com.pratilipi.service.shared.GetReaderContentResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -53,10 +52,6 @@ public interface PratilipiServiceAsync {
 			SavePratilipiContentRequest request,
 			AsyncCallback<SavePratilipiContentResponse> callback );
 
-	void getReaderContent( 
-			GetReaderContentRequest request,
-			AsyncCallback<GetReaderContentResponse> callback );
-	
 	void addLanguage(
 			AddLanguageRequest request,
 			AsyncCallback<AddLanguageResponse> callback );
@@ -120,6 +115,6 @@ public interface PratilipiServiceAsync {
 			AsyncCallback<SearchResponse> callback );
 	
 	void ConvertWordToHtml( 
-			GetReaderContentRequest request,
+			GetPratilipiContentRequest request,
 			AsyncCallback<Void> callback );
 }

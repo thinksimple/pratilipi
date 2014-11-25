@@ -86,16 +86,9 @@ public class PratilipiFilter implements Filter {
 		
 		validHosts.add( "www.pratilipi.com" );
 		validHosts.add( "gamma.pratilipi.com" );
-		validHosts.add( "mark-3p36.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-3p37.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-3p38.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-3p39.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-3p40.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-3p41.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-3p42.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-3p43.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-3p44.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-3p45.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4.gamma.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p1.gamma.prod-pratilipi.appspot.com" );
 		validHosts.add( "devo.pratilipi.com" );
 		validHosts.add( "localhost" );
 		validHosts.add( "127.0.0.1" );
