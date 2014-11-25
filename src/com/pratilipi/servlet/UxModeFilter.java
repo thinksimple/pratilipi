@@ -34,6 +34,8 @@ public class UxModeFilter implements Filter {
 			
 		} else if( userAgent.contains( "OPR" ) ) { // Opera
 			/*
+			 * Opera on Microsoft Windows 8.1
+			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36 OPR/26.0.1656.24"
 			 * Opera on Android 4.3
 			 *   "Mozilla/5.0 (Linux; Android 4.3; GT-I9300 Build/JSS15J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.102 Mobile Safari/537.36 OPR/25.0.1619.84037"
 			 */
@@ -108,10 +110,12 @@ public class UxModeFilter implements Filter {
 			basicMode = false;
 
 			
-//		else if ( userAgent.contains( "safari" ) ) // Apple Safari
-//			basicMode = false;
-//		else if ( userAgent.contains( "gecko" ) ) // Gecko Family Browsers
-//			basicMode = false;
+		} else if ( userAgent.contains( "Safari" ) ) { // Apple Safari
+			/*
+			 * Apple Safari on Microsoft Windows 8.1
+			 *   "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2"
+			 */
+			basicMode = true; // Polymer 0.5.1 not supported !
 
 		}
 		
