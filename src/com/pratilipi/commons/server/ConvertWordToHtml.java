@@ -35,7 +35,7 @@ public class ConvertWordToHtml {
 	private static final String SERVICE_ACCOUNT_EMAIL =
 			"562691904657-ef96v23igs7p4rb49fdhshcd2udev71s@developer.gserviceaccount.com";
 	private static final String SERVICE_ACCOUNT_PKCS12_FILE_PATH =
-			"WEB-INF/PratilipiDevo-a987225aa0b1.p12";
+			"WEB-INF/PratilipiDevo-8a02ceae5f67.p12";
 	
 	private static Drive driveService;
 	
