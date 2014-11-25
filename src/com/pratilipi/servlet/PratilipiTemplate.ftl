@@ -79,6 +79,7 @@
 			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
 			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.basicmode.css">
 			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" async></script>
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicreader.js" defer></script>
 			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicmode.js" defer></script>
 		<#else>
 			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">

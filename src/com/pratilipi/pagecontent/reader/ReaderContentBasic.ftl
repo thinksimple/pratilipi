@@ -1,5 +1,3 @@
-<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicreader.js" defer></script>
-
 <!-- PageContent :: Reader :: Start -->
 <#assign pageNumber = pageNo?number>
 <#assign totalPageCount = pageCount?number>
