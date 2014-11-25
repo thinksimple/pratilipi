@@ -30,16 +30,14 @@ function getCookie(cname) {
     return "";
 }
 
-$(document).ready(function() {
-	checkWidth();
-});
 
-$(window).resize(function(event){
+//EXECUTE ON WINDOW RESIZE EVENT
+window.onresize = function(event){
 	checkWidth();
 	
 	var readerContent = document.getElementById( 'PageContent-Pratilipi-Content' );
 	if( readerContent ){
-		setMargin();
+		centerAlignBasicReader();
 	}
-});
+}
 

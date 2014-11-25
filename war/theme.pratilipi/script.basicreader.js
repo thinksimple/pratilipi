@@ -3,28 +3,31 @@
  */
 
 /* SCRIPT TO KEEP READER CENTER ALIGNED IRRESPECTIVE OF THE SCREEN SIZE */
-function setMargin(){
+function centerAlignBasicReader(){
 	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
 	var imageContent = document.getElementById( "imageContent" );
-	var wordContent = document.getElementById( "PageContent-Pratilipi-Content" );
+	var contentDiv = document.getElementById( "PageContent-Pratilipi-Content" );
 	var basicReaderWidth = basicReader.offsetWidth;
 	var padding;
 
 	if( basicReaderWidth >= 1000 ){
-		if( imageContent )
+		if( imageContent ){
 			padding = ( windowSize - imageContent.offsetWidth )/2;
+		}
 		else
-			padding = ( windowSize - wordContent.offsetWidth )/2;
+			padding = ( windowSize - contentDiv.offsetWidth )/2;
 		basicReader.setAttribute("style", "padding-left:" + padding.toString() + "px; background-color: #f5f5f5;");
 	}
 	else{
-		basicReader.setAttribute("style", "padding-left: 10px; padding-right: 10px; background-color: #f5f5f5;");
+		padding = ( windowSize - contentDiv.offsetWidth )/2;
+		basicReader.setAttribute("style", "padding-left:" + padding.toString() + "px; background-color: #f5f5f5;");
 	}
 }
 
+
 /* SET PAGE CONTENT AS PER COOKIE  */
-function setPageContent(){
+function setReaderContentSize(){
 	var imageHeight = getCookie( "image-height" );
 	var fontSize = getCookie( "font-size" );
 	var pageContentDiv = document.getElementById( "PageContent-Pratilipi-Content" );
@@ -45,6 +48,7 @@ function setPageContent(){
 		}
 	}
 }
+
 
 /* SAVES PRATILIPI ID AND PAGE NUMBER IN COOKIE */
 function saveAutoBookmark(){
@@ -80,8 +84,7 @@ function increaseSize(){
 		imageContent.style.width = 'auto';
 		setCookie( "image-height", imageContent.height, 365 );
 		contentTd.width = imageContent.offsetWidth;
-		var padding = ( windowSize - imageContent.offsetWidth )/2;
-		basicReader.setAttribute("style", "padding-left:" + padding.toString() + "px; background-color: #f5f5f5;"); 
+		centerAlignBasicReader(); 
 	}
 	else if( pTags ) {
 		/* For word content */
@@ -115,8 +118,7 @@ function decreaseSize(){
 		imageContent.style.width = 'auto';
 		setCookie( "image-height", imageContent.height, 365 );
 		contentTd.width = imageContent.offsetWidth;
-		var padding = ( windowSize - imageContent.offsetWidth )/2;
-		basicReader.setAttribute("style", "padding-left:" + padding.toString() + "px; background-color: #f5f5f5;");
+		centerAlignBasicReader();
 		
 	} 
 	else if( pTags ){
@@ -135,8 +137,7 @@ function decreaseSize(){
 	}
 }
 
-//EXECEUTE ON WINDOW LOAD
-$(document).ready(function(){
+function onReaderLoad(){
 	$( '#PageContent-Pratilipi-Content' ).on("contextmenu",function(e){ return false; });
 	//pkey = 80; ckey = 67; vkey = 86
 	$( document ).bind("keyup keydown", function(e){
@@ -145,8 +146,8 @@ $(document).ready(function(){
 	    }
 	});
 	
-	setPageContent();
-	setMargin();
+	setReaderContentSize();
+	centerAlignBasicReader();
 	saveAutoBookmark();
-});
+}
 

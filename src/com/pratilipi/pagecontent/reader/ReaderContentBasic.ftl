@@ -87,7 +87,8 @@
 	}
 	
 </script>
-	<style type="text/css">
+
+<style type="text/css">
 		@media print{
 			body {display:none;}
 		}

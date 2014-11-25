@@ -34,8 +34,16 @@
 							['Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],
 							['NumberedList','BulletedList'],
 							['Blockquote','Smiley','HorizontalRule'],
-							['Link','Unlink']];					
-				}
+							['Link','Unlink']];	
+					
+					// Function to set height of search/userAccess div based on width of the device to accumudate both search form and Login options.
+					checkWidth();
+	
+					var readerContent = document.getElementById( 'PageContent-Pratilipi-Content' );
+					if( readerContent ){
+						onReaderLoad();
+					}				
+				}				
 			</script>
 		<#else>
 			<!-- jQuery 2.1.1 -->
