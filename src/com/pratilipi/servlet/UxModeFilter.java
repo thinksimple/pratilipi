@@ -23,7 +23,7 @@ public class UxModeFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		
 		HttpServletRequest request = ( HttpServletRequest ) req;
-		String userAgent = request.getHeader( "user-agent" ).toLowerCase();
+		String userAgent = request.getHeader( "user-agent" );
 		
 		boolean basicMode = true;
 		
@@ -35,10 +35,43 @@ public class UxModeFilter implements Filter {
 //			basicMode = false;
 //		else if ( userAgent.contains( "msie" ) ) // Microsoft Internet Explorer
 //			basicMode = false;
-//		else if ( userAgent.contains( "firefox" ) ) // Mozilla Firfox
-//			basicMode = false;
-		if( userAgent.contains( "chrome" ) ) // Google Chrome
+		if( userAgent.contains( "Chrome" ) ) { // Google Chrome
+			/*
+			 * Google Chrome on Microsoft Windows 8.1
+			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36"
+			 * Google Chrome on Android 4.3
+			 *   "Mozilla/5.0 (Linux; Android 4.3; GT-I9300 Build/JSS15J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.59 Mobile Safari/537.36"
+			 * */
+			int version = Integer.parseInt(
+					userAgent.substring(
+							userAgent.indexOf( "Chrome" ) + 7,
+							userAgent.indexOf( "Chrome" ) + 9 ) );
+
+			basicMode = version <= 35;
+		
+			
+		} else if( userAgent.contains( "Firefox" ) ) { // Mozilla Firefox
+			/*
+			 * Mozilla Firefox on Microsoft 8.1
+			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0 AlexaToolbar/alxf-2.21"
+			 * Mozilla Firefox on Android 4.3
+			 *   "Mozilla/5.0 (Android; Mobile; rv:33.0) Gecko/33.0 Firefox/33.0"
+			 * */
+			int version = Integer.parseInt(
+					userAgent.substring(
+							userAgent.indexOf( "Firefox" ) + 8,
+							userAgent.indexOf( "Firefox" ) + 10 ) );
+
+			basicMode = version <= 30;
+			
+			
+		} else if( userAgent.contains( "Trident/7" ) && userAgent.contains( "rv:11" ) ) { // Microsoft Internet Explorer 11
+			/*
+			 * Microsoft Internet Explorer 11 on Microsoft Windows 8.1
+			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; LCJB; rv:11.0) like Gecko"
+			 * */
 			basicMode = false;
+		}
 //		else if ( userAgent.contains( "safari" ) ) // Apple Safari
 //			basicMode = false;
 //		else if ( userAgent.contains( "gecko" ) ) // Gecko Family Browsers
