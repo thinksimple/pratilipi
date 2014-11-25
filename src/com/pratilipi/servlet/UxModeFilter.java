@@ -27,21 +27,47 @@ public class UxModeFilter implements Filter {
 		
 		boolean basicMode = true;
 		
-//		if( userAgent.contains( "opera" ) ) // Opera Mini
-//			basicMode = false;
-//		else if ( userAgent.contains( "opr" ) ) // Opera
-//			basicMode = false;
-//		else if ( userAgent.contains( "ucbrowser" ) ) // UC Browser
-//			basicMode = false;
-//		else if ( userAgent.contains( "msie" ) ) // Microsoft Internet Explorer
-//			basicMode = false;
-		if( userAgent.contains( "Chrome" ) ) { // Google Chrome
+		
+		if( request.getParameter( "basicMode" ) != null ) {
+			basicMode = Boolean.parseBoolean( request.getParameter( "basicMode" ) );
+
+			
+		} else if( userAgent.contains( "OPR" ) ) { // Opera
+			/*
+			 * Opera on Android 4.3
+			 *   "Mozilla/5.0 (Linux; Android 4.3; GT-I9300 Build/JSS15J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.102 Mobile Safari/537.36 OPR/25.0.1619.84037"
+			 */
+			int version = Integer.parseInt(
+					userAgent.substring(
+							userAgent.indexOf( "OPR" ) + 4,
+							userAgent.indexOf( "OPR" ) + 6 ) );
+			
+			basicMode = version <= 22;
+			
+
+		} else if( userAgent.contains( "Opera" ) && userAgent.contains( "Opera Mobi" ) ) { // Opera Classic
+			/*
+			 * Opera Classic on Android 4.3
+			 *   "Opera/9.80 (Android 4.3; Linux; Opera Mobi/ADR-1411061201) Presto/2.11.355 Version/12.10"
+			 */
+			basicMode = true; // Polymer 0.5.1 not supported !
+
+			
+		} else if( userAgent.contains( "Opera" ) && userAgent.contains( "Opera Mini" ) ) { // Opera Mini
+			/*
+			 * Opera Mini on Android 4.3
+			 *   "Opera/9.80 (Android; Opera Mini/7.6.40077/35.5706; U; en) Presto/2.8.119 Version/11.10"
+			 */
+			basicMode = true; // Polymer 0.5.1 not supported !
+			
+			
+		} else if( userAgent.contains( "Chrome" ) ) { // Google Chrome
 			/*
 			 * Google Chrome on Microsoft Windows 8.1
 			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36"
 			 * Google Chrome on Android 4.3
 			 *   "Mozilla/5.0 (Linux; Android 4.3; GT-I9300 Build/JSS15J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.59 Mobile Safari/537.36"
-			 * */
+			 */
 			int version = Integer.parseInt(
 					userAgent.substring(
 							userAgent.indexOf( "Chrome" ) + 7,
@@ -50,13 +76,22 @@ public class UxModeFilter implements Filter {
 			basicMode = version <= 35;
 		
 			
+		} else if( userAgent.contains( "UCBrowser" ) ) { // UCBrowser
+			/*
+			 * UCBrowser on Android 4.3
+			 *   "Mozilla/5.0 (Linux; U; Android 4.3; en-US; GT-I9300 Build/JSS15J) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 UCBrowser/10.0.1.512 U3/0.8.0 Mobile Safari/533.1"
+			 */
+			
+			basicMode = true; // Polymer 0.5.1 not supported !
+			
+			
 		} else if( userAgent.contains( "Firefox" ) ) { // Mozilla Firefox
 			/*
 			 * Mozilla Firefox on Microsoft 8.1
 			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0 AlexaToolbar/alxf-2.21"
 			 * Mozilla Firefox on Android 4.3
 			 *   "Mozilla/5.0 (Android; Mobile; rv:33.0) Gecko/33.0 Firefox/33.0"
-			 * */
+			 */
 			int version = Integer.parseInt(
 					userAgent.substring(
 							userAgent.indexOf( "Firefox" ) + 8,
@@ -69,13 +104,17 @@ public class UxModeFilter implements Filter {
 			/*
 			 * Microsoft Internet Explorer 11 on Microsoft Windows 8.1
 			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; LCJB; rv:11.0) like Gecko"
-			 * */
+			 */
 			basicMode = false;
-		}
+
+			
 //		else if ( userAgent.contains( "safari" ) ) // Apple Safari
 //			basicMode = false;
 //		else if ( userAgent.contains( "gecko" ) ) // Gecko Family Browsers
 //			basicMode = false;
+
+		}
+		
 		
 		if( !basicMode ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
@@ -83,6 +122,7 @@ public class UxModeFilter implements Filter {
 			basicMode = page == null
 					|| !page.getType().equals( PratilipiPageType.READ.toString() );
 		}
+		
 		
 		request.setAttribute( ClaymusHelper.REQUEST_ATTRIB_MODE_BASIC, basicMode );
 		
