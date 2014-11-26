@@ -38,6 +38,8 @@
 		<div class="bg-gray green" style="text-align:center;padding-bottom:16px;<#if pageCount gt 1>margin-bottom:65px;</#if>">
 			<b>{{ pageNo }} / ${ pageCount }</b>
 		</div>
+		
+		<div id="PageContent-Reader-Overlay"></div>
 				
 	</core-scroll-header-panel>
 	
@@ -137,6 +139,7 @@
 				ajax.go();
 			} else {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
+				jQuery( '#PageContent-Reader-Overlay' ).css( 'height', $( '#PageContent-Reader-Content' ).height() + 115 + 'px' );
 			}
 		}
 		
@@ -187,6 +190,7 @@
 				loadImage( scope.pageNo );
 			} else {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
+				jQuery( '#PageContent-Reader-Overlay' ).css( 'height', $( '#PageContent-Reader-Content' ).height() + 115 + 'px' );
 			}
 		}
 
@@ -236,6 +240,14 @@
 
 	#PageContent-Reader-Content img {
 		width:100%;
+	}
+	
+	#PageContent-Reader-Overlay {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
 	}
 
 </style>
