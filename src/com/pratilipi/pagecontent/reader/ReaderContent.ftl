@@ -10,19 +10,23 @@
 			<div flex>
 				<a href="${ pratilipiData.getPageUrlAlias() }">${ pratilipiData.getTitle() }</a>
 			</div>
-			<paper-icon-button icon="more-vert" title="Display Options" on-tap="{{displayOptions}}">
-				<paper-dialog class="pageContent-Reader-Options">
-					<div><b>Text Size</b></div>
-					<core-icon-button icon="remove" title="Decrease Text Size"></core-icon-button>
-					<core-icon-button icon="add" title="Increase Text Size"></core-icon-button>
-				</paper-dialog>
-			</paper-icon-button>
+			<paper-icon-button icon="more-vert" title="Display Options" on-tap="{{displayOptions}}"></paper-icon-button>
 		</core-toolbar>
 		
-		<div horizontal center-justified layout class="bg-gray">
-			<div id="PageContent-Reader-Content" class="paper" style="margin-bottom:65px;"></div>
+		<div horizontal center-justified layout class="bg-gray" style="margin-bottom:65px;">
+			<#if pratilipiData.getContentType() == "PRATILIPI" >
+	
+				<div id="PageContent-Reader-Content" class="paper"></div>
+			
+			<#elseif pratilipiData.getContentType() == "IMAGE" >			
+
+				<div class="paper" style="width:inherit; max-width:none; min-height:inherit; overflow-x:overlay;">
+					<div id="PageContent-Reader-Content"></div>
+				</div>
+
+			</#if>
 		</div>
-		
+				
 	</core-scroll-header-panel>
 	
 	
@@ -31,6 +35,13 @@
 		<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" on-tap="{{displayPrevious}}"></paper-fab>
 		<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:25px;" on-tap="{{displayNext}}"></paper-fab>
 	</div>
+
+
+	<paper-dialog id="PageContent-Reader-Options">
+		<div><b>Text Size</b></div>
+		<core-icon-button icon="remove" title="Decrease Text Size" on-tap="{{decTextSize}}"></core-icon-button>
+		<core-icon-button icon="add" title="Increase Text Size" on-tap="{{incTextSize}}"></core-icon-button>
+	</paper-dialog>
 
 
 	<#if pratilipiData.getContentType() == "PRATILIPI" >
@@ -48,14 +59,14 @@
 
 <script>
 
-	var scope = document.querySelector( "#PageContent-Reader" );
+	var scope = document.querySelector( '#PageContent-Reader' );
 	
 	scope.pageCount = ${ pageCount };
 	scope.pageNo = ${ pageNo };
 	
 	var contentArray = [];
 	
-	jQuery( "body" ).keydown( function( event ) {
+	jQuery( 'body' ).keydown( function( event ) {
 		if( event.which == 37 && scope.pageNo > 1 ) {
 			scope.pageNo--;
 		} else if( event.which == 39 && scope.pageNo < scope.pageCount ) {
@@ -68,7 +79,7 @@
 	};
 
 	scope.displayOptions = function( e ) {
-		var dialog = e.target.querySelector( 'paper-dialog' );
+		var dialog = document.querySelector( '#PageContent-Reader-Options' );
 		if( dialog ) {
 			dialog.toggle();
 		}
@@ -104,17 +115,17 @@
 	    
 		function updateContent() {
 			if( contentArray[scope.pageNo] == null ) {
-				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
-				var ajax = document.querySelector( "#PageContent-Reader-Ajax" );
+				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
+				var ajax = document.querySelector( '#PageContent-Reader-Ajax' );
 				ajax.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo } );
 				ajax.go();
 			} else {
-				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = contentArray[scope.pageNo];
+				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
 			}
 		}
 		
 		function prefetchContent() {
-			var ajax = document.querySelector( "#PageContent-Reader-Ajax" );
+			var ajax = document.querySelector( '#PageContent-Reader-Ajax' );
 			if( scope.pageNo > 1 && contentArray[scope.pageNo - 1] == null ) {
 				ajax.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo - 1 } );
 				ajax.go();
@@ -124,6 +135,23 @@
 				ajax.go();
 			}
 		}
+		
+		
+		scope.decTextSize = function( e ) {
+			var fontSize = parseInt( jQuery( '#PageContent-Reader-Content' ).css( 'font-size' ).replace( 'px', '' ) );
+			var newFontSize = fontSize - 2;
+			if( newFontSize < 10 )
+				newFontSize = 10;
+			jQuery( '#PageContent-Reader-Content' ).css( 'font-size', newFontSize + 'px' );
+	    };
+
+		scope.incTextSize = function( e ) {
+			var fontSize = parseInt( jQuery( '#PageContent-Reader-Content' ).css( 'font-size' ).replace( 'px', '' ) );
+			var newFontSize = fontSize + 2;
+			if( newFontSize > 30 )
+				newFontSize = 30;
+			jQuery( '#PageContent-Reader-Content' ).css( 'font-size', newFontSize + 'px' );
+	    };
 		
 	<#elseif pratilipiData.getContentType() == "IMAGE" >
 		
@@ -137,10 +165,10 @@
 		
 		function updateContent() {
 			if( contentArray[scope.pageNo] == null ){
-				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
+				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
 				loadImage( scope.pageNo );
 			} else {
-				document.querySelector( "#PageContent-Reader-Content" ).innerHTML = contentArray[scope.pageNo];
+				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
 			}
 		}
 
@@ -153,20 +181,24 @@
 			}
 		}
 		
+		
+		scope.decTextSize = function( e ) {
+			var width = jQuery( '#PageContent-Reader-Content' ).width();
+			var newWidth = width - 50;
+			if( newWidth < 300 )
+				newWidth = 300;
+			jQuery( '#PageContent-Reader-Content' ).css( 'width', newWidth + 'px' );
+	    };
+
+		scope.incTextSize = function( e ) {
+			var width = jQuery( '#PageContent-Reader-Content' ).width();
+			var newWidth = width + 50;
+			jQuery( '#PageContent-Reader-Content' ).css( 'width', newWidth + 'px' );
+	    };
+		
 	</#if>
 	
 </script>
-
-
-<style shim-shadowdom>
-	
-	html /deep/ .pageContent-Reader-Options {
-		position: fixed;
-		top: 0px;
-		right: 0px;
-	}
-	
-</style>
 
 
 <style>
@@ -174,7 +206,7 @@
 	#PageContent-Reader-Content img {
 		width:100%;
 	}
-	
+
 </style>
 
 
