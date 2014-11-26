@@ -13,7 +13,7 @@
 			<paper-icon-button icon="more-vert" title="Display Options" on-tap="{{displayOptions}}"></paper-icon-button>
 		</core-toolbar>
 		
-		<div horizontal center-justified layout class="bg-gray" style="margin-bottom:65px;">
+		<div horizontal center-justified layout class="bg-gray">
 			<#if pratilipiData.getContentType() == "PRATILIPI" >
 	
 				<#if contentSize??>
@@ -34,16 +34,21 @@
 
 			</#if>
 		</div>
+		
+		<div class="bg-gray green" style="text-align:center;padding-bottom:16px;<#if pageCount gt 1>margin-bottom:65px;</#if>">
+			<b>{{ pageNo }} / ${ pageCount }</b>
+		</div>
 				
 	</core-scroll-header-panel>
 	
 	
-	<div center horizontal layout style="position:fixed; bottom:10px; width:100%;">
-		<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount }}" value="{{ pageNo }}" class="bg-green" style="width:100%" on-core-change="{{displayPage}}"></paper-slider>
-		<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" on-tap="{{displayPrevious}}"></paper-fab>
-		<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:25px;" on-tap="{{displayNext}}"></paper-fab>
-	</div>
-
+	<#if pageCount gt 1>
+		<div center horizontal layout style="position:fixed; bottom:10px; width:100%;">
+			<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount }}" value="{{ pageNo }}" class="bg-green" style="width:100%" on-change="{{displayPage}}"></paper-slider>
+			<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" on-tap="{{displayPrevious}}"></paper-fab>
+			<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:25px;" on-tap="{{displayNext}}"></paper-fab>
+		</div>
+	</#if>
 
 	<paper-dialog id="PageContent-Reader-Options">
 		<div><b>Text Size</b></div>
@@ -103,15 +108,17 @@
 	scope.displayPrevious = function( e ) {
 		if( scope.pageNo > 1 ) {
 			scope.pageNo--;
+			scope.displayPage();
 		}
 	};
 
 	scope.displayNext = function( e ) {
 		if( scope.pageNo < scope.pageCount ) {
 			scope.pageNo++;
+			scope.displayPage();
 		}
 	};
-	
+    
     
 	<#if pratilipiData.getContentType() == "PRATILIPI" >
     
@@ -210,6 +217,17 @@
 	    };
 		
 	</#if>
+	
+
+	function initReader() {
+		try {
+			scope.displayPage();
+		} catch( err ) {
+			console.log( 'Reader initialization failed with error - ' + '\"' + err.message + '\". Retrying in 100ms ...' );
+			window.setTimeout( initReader, 100 );
+		}
+	}
+	initReader();
 	
 </script>
 
