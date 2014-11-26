@@ -16,12 +16,20 @@
 		<div horizontal center-justified layout class="bg-gray" style="margin-bottom:65px;">
 			<#if pratilipiData.getContentType() == "PRATILIPI" >
 	
-				<div id="PageContent-Reader-Content" class="paper"></div>
-			
+				<#if contentSize??>
+					<div id="PageContent-Reader-Content" class="paper" style="font-size:${ contentSize }"></div>
+				<#else>
+					<div id="PageContent-Reader-Content" class="paper"></div>
+				</#if>
+
 			<#elseif pratilipiData.getContentType() == "IMAGE" >			
 
-				<div class="paper" style="width:inherit; max-width:none; min-height:inherit; overflow-x:overlay;">
-					<div id="PageContent-Reader-Content"></div>
+				<div class="paper" style="width:inherit; max-width:none; min-height:inherit; overflow-x:auto;">
+					<#if contentSize??>
+						<div id="PageContent-Reader-Content" style="width:${ contentSize }"></div>
+					<#else>
+						<div id="PageContent-Reader-Content"></div>
+					</#if>
 				</div>
 
 			</#if>
@@ -89,6 +97,7 @@
 		updateContent();
 		document.querySelector( 'core-scroll-header-panel' ).scroller.scrollTop = 0;
 		prefetchContent();
+		setCookie( '${ pageNoCookieName }', scope.pageNo );
 	};
 	
 	scope.displayPrevious = function( e ) {
@@ -143,7 +152,8 @@
 			if( newFontSize < 10 )
 				newFontSize = 10;
 			jQuery( '#PageContent-Reader-Content' ).css( 'font-size', newFontSize + 'px' );
-	    };
+			setCookie( '${ contentSizeCookieName }', newFontSize + 'px' );
+		};
 
 		scope.incTextSize = function( e ) {
 			var fontSize = parseInt( jQuery( '#PageContent-Reader-Content' ).css( 'font-size' ).replace( 'px', '' ) );
@@ -151,7 +161,8 @@
 			if( newFontSize > 30 )
 				newFontSize = 30;
 			jQuery( '#PageContent-Reader-Content' ).css( 'font-size', newFontSize + 'px' );
-	    };
+			setCookie( '${ contentSizeCookieName }', newFontSize + 'px' );
+		};
 		
 	<#elseif pratilipiData.getContentType() == "IMAGE" >
 		
@@ -188,12 +199,14 @@
 			if( newWidth < 300 )
 				newWidth = 300;
 			jQuery( '#PageContent-Reader-Content' ).css( 'width', newWidth + 'px' );
+			setCookie( '${ contentSizeCookieName }', newWidth + 'px' );
 	    };
 
 		scope.incTextSize = function( e ) {
 			var width = jQuery( '#PageContent-Reader-Content' ).width();
 			var newWidth = width + 50;
 			jQuery( '#PageContent-Reader-Content' ).css( 'width', newWidth + 'px' );
+			setCookie( '${ contentSizeCookieName }', newWidth + 'px' );
 	    };
 		
 	</#if>

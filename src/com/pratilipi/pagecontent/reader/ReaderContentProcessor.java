@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.FreeMarkerUtil;
@@ -36,6 +35,10 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 	private static final Gson gson = new GsonBuilder().create();
 
+	private static final String COOKIE_PAGE_NUMBER = "reader_page_number_";
+	private static final String COOKIE_CONTENT_SIZE_PRATILIPI = "reader_size_pratilipi";
+	private static final String COOKIE_CONTENT_SIZE_IMAGE = "reader_size_image";
+	
 	
 	@Override
 	public String generateTitle( ReaderContent readerContent, HttpServletRequest request ) {
@@ -76,32 +79,21 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		PratilipiData pratilipiData =
 				pratilipiHelper.createPratilipiData( pratilipi, null, author, null );
 
-		//Getting PratilipiId and page number stored in cookies.
-		String idInCookie = "";
-		String pageInCookie = "";
-		Cookie[] cookies = request.getCookies();
-		for( Cookie cookie : cookies ){
-			if( cookie.getName().equals( pratilipiData.getId().toString() )){
-				idInCookie = cookie.getName().toString();
-				pageInCookie = cookie.getValue().toString();
-			}
-		}
-
-		// Page # to display
-		String pageNoStr;
-		if( pratilipiIdStr.equals( idInCookie ))
-			pageNoStr = request.getParameter( "page" ) == null ? pageInCookie : request.getParameter( "page" );
-		else
-			pageNoStr = request.getParameter( "page" ) == null ? "1" : request.getParameter( "page" );
 		
-		int pageNo = Integer.parseInt( pageNoStr );
+		// Page # to display
+		String pageNoStr = request.getParameter( "page" ) == null
+				? pratilipiHelper.getCookieValue( COOKIE_PAGE_NUMBER + pratilipiId )
+				: request.getParameter( "page" );
+
+		int pageNo = pageNoStr == null || pageNoStr.isEmpty() ? 1 : Integer.parseInt( pageNoStr );
 
 		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "pratilipiData", pratilipiData );
 		dataModel.put( "pageNo", pageNo );
-		
+		dataModel.put( "pageNoCookieName", COOKIE_PAGE_NUMBER + pratilipiId );
+
 		
 		if( pratilipiData.getContentType() == PratilipiContentType.PRATILIPI ) {
 
@@ -120,10 +112,14 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			
 			dataModel.put( "pageCount", pratilipiContentUtil.getPageCount() );
 			dataModel.put( "pageContent", pratilipiHelper.isModeBasic() ? pageContent : gson.toJson( pageContent ) );
-			
+			dataModel.put( "contentSize", pratilipiHelper.getCookieValue( COOKIE_CONTENT_SIZE_PRATILIPI ) );
+			dataModel.put( "contentSizeCookieName", COOKIE_CONTENT_SIZE_PRATILIPI );
+
 		} else { // if( pratilipiData.getContentType() == PratilipiContentType.IMAGE )
 			
 			dataModel.put( "pageCount", (int) (long) pratilipiData.getPageCount() );
+			dataModel.put( "contentSize", pratilipiHelper.getCookieValue( COOKIE_CONTENT_SIZE_IMAGE ) );
+			dataModel.put( "contentSizeCookieName", COOKIE_CONTENT_SIZE_IMAGE );
 			
 		}
 		
@@ -131,6 +127,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		if( request.getParameter( "ret" ) != null && !request.getParameter( "ret" ).trim().isEmpty()  )
 			dataModel.put( "exitUrl", request.getParameter( "ret" ) );
 
+		
 		String templateName = pratilipiHelper.isModeBasic()
 				? getTemplateName().replace( ".ftl", "Basic.ftl" )
 				: getTemplateName();
