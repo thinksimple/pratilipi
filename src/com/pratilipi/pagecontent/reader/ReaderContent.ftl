@@ -84,8 +84,10 @@
 	jQuery( 'body' ).keydown( function( event ) {
 		if( event.which == 37 && scope.pageNo > 1 ) {
 			scope.pageNo--;
+			updateContent();
 		} else if( event.which == 39 && scope.pageNo < scope.pageCount ) {
 			scope.pageNo++;
+			updateContent();
 		}
 	});
 	

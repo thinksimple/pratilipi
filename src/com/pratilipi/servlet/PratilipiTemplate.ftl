@@ -36,13 +36,6 @@
 							['Blockquote','Smiley','HorizontalRule'],
 							['Link','Unlink']];	
 					
-					// Function to set height of search/userAccess div based on width of the device to accumudate both search form and Login options.
-					checkWidth();
-	
-					var readerContent = document.getElementById( 'PageContent-Pratilipi-Content' );
-					if( readerContent ){
-						onReaderLoad();
-					}				
 				}				
 			</script>
 		<#else>

@@ -1,5 +1,3 @@
-<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicreader.js" defer></script>
-
 <!-- PageContent :: Reader :: Start -->
 <#assign pageNumber = pageNo?number>
 <#assign totalPageCount = pageCount?number>
@@ -9,7 +7,7 @@
 <#if ( pageNo < totalPageCount )>
 	<#assign nextPageUrl= pratilipiData.getReaderPageUrl()+'&page='+(pageNumber+1) >
 </#if>
-<div id="Pratilipi-Reader-Basic" style="background-color: #f5f5f5;">
+<div id="Pratilipi-Reader-Basic" style="background-color: #f5f5f5; visibility: hidden;">
 	<table>
 		<tr>
 			<td>
@@ -40,16 +38,30 @@
 			</td>
 		</tr>
 		<tr>
-			<td id="Pratilipi-Content-td">
-				<div id="paper" class="paper" style="padding:0px;">
-					<div id="PageContent-Pratilipi-Content" style="width: 100%">
-						<#if pratilipiData.getContentType() == "PRATILIPI" >
-							${ pageContent }
-						<#elseif pratilipiData.getContentType() == "IMAGE" >
-							<img id="imageContent" src='${ pratilipiData.getImageContentUrl() }/${ pageNo }' style="width: 100%;"/>
+			<td id="Pratilipi-Content-td" align="center">
+				<#if pratilipiData.getContentType() == "PRATILIPI" >
+	
+					<#if contentSize??>
+						<div id="PageContent-Reader-Content" class="paper" style="font-size:${ contentSize }"> ${ pageContent } </div>
+					<#else>
+						<div id="PageContent-Reader-Content" class="paper"> ${ pageContent } </div>
+					</#if>
+	
+				<#elseif pratilipiData.getContentType() == "IMAGE" >			
+	
+					<div class="paper" style="width:inherit; max-width:none; min-height:inherit; overflow-x:auto;">
+						<#if contentSize??>
+							<div id="PageContent-Reader-Content">
+								<img id="imageContent" src='${ pratilipiData.getImageContentUrl() }/${ pageNo }' width=${ contentSize }/>
+							</div>
+						<#else>
+							<div id="PageContent-Reader-Content">
+								<img id="imageContent" src='${ pratilipiData.getImageContentUrl() }/${ pageNo }' width="100%"/>
+							</div>
 						</#if>
 					</div>
-				</div>
+	
+				</#if>
 			</td>
 		</tr>
 		<tr>
@@ -71,6 +83,7 @@
 	</table>
 </div>
 
+<!-- JAVASCRIPT START -->
 <script language="javascript" defer>
 	function disableselect(e){
 		return false;
@@ -95,4 +108,169 @@
 </style>
 
 
+<script language="javascript">
+
+/**
+ * THIS FILE CONTAINS ALL JS USED IN BASIC MODE READER.
+ */
+
+/* SCRIPT TO KEEP READER CENTER ALIGNED IRRESPECTIVE OF THE SCREEN SIZE */
+function centerAlignBasicReader(){
+	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
+	var imageContent = document.getElementById( "imageContent" );
+	var contentDiv = document.getElementById( "PageContent-Reader-Content" );
+	var basicReaderWidth = basicReader.offsetWidth;
+	var padding;
+	if( basicReaderWidth >= 1000 ){
+		if( imageContent ){
+			padding = ( windowSize - imageContent.offsetWidth )/2;
+		}
+		else
+			padding = ( windowSize - contentDiv.offsetWidth )/2;
+		basicReader.setAttribute("style", "padding-left:" + padding.toString() + "px; background-color: #f5f5f5;");
+	}
+	else{
+		padding = ( windowSize - contentDiv.offsetWidth )/2;
+		basicReader.setAttribute("style", "padding-left:" + padding.toString() + "px; background-color: #f5f5f5;");
+	}
+	basicReader.style.visibility = 'visible';
+}
+
+
+/* SET PAGE CONTENT AS PER COOKIE  */
+function setReaderContentSize(){
+	var imageHeight = getCookie( "image-height" );
+	var fontSize = getCookie( "font-size" );
+	var pageContentDiv = document.getElementById( "PageContent-Pratilipi-Content" );
+	
+	if( pageContentDiv){
+		if( document.getElementById( "imageContent" ) && imageHeight ){
+			document.getElementById( "imageContent" ).height = imageHeight;
+			document.getElementById( "imageContent" ).style.width = 'auto';
+			var contentTd = document.getElementById( "Pratilipi-Content-td" );
+			contentTd.width = document.getElementById( "imageContent" ).width; 
+		}
+		
+		if( pageContentDiv.getElementsByTagName( "p" ) && fontSize ){
+			var tagList = Array.prototype.slice.call( pageContentDiv.getElementsByTagName( "p" ) );
+			tagList.forEach( function( value, index, p ) {
+				p[index].style.fontSize = fontSize + "px";
+			} );
+		}
+	}
+}
+
+
+/* SAVES PRATILIPI ID AND PAGE NUMBER IN COOKIE */
+function saveAutoBookmark(){
+	var urlParameters = window.location.search.substring(1).split( '&' );
+	var pratilipiId;
+	var pageNo;
+	for( i=0; i< urlParameters.length; ++i){
+		var param = urlParameters[i].split( '=' );
+		if( param && param[0] == "id" ){
+			pratilipiId = param[1];
+		}
+		
+		if( param && param[0] == "page" ){
+			pageNo = param[1];
+			setCookie( '${ pageNoCookieName }', param[1], 365 );
+		}
+	}
+}
+
+
+/* Zoom Support */
+
+function increaseSize(){
+	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	var imageContent = document.getElementById( "imageContent" );
+	var contentTd = document.getElementById( "Pratilipi-Content-td" );
+	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
+	var wordContent = document.getElementById( "PageContent-Reader-Content" );
+		
+	if( imageContent ){
+		/* For Image content */
+		imageContent.width = imageContent.width + 50;
+		imageContent.style.height = 'auto';
+		setCookie( '${ contentSizeCookieName }', imageContent.width + 'px', 365 );
+		contentTd.width = imageContent.offsetWidth;
+		centerAlignBasicReader(); 
+	}
+	else if( wordContent ) {
+		/* For word content */
+		var fontSizeStr = wordContent.style.fontSize;
+		
+		/* By default font size of paragraphs in content is not set. Hence initializing fontSizeStr to default font-size of p tags across website */
+		if( !fontSizeStr )
+			fontSizeStr = "16px";
+			
+		var fontSize = parseInt( fontSizeStr.substring( 0, fontSizeStr.indexOf( 'p' )) );
+		wordContent.style.fontSize = ( fontSize + 2 ) + "px";
+		
+		setCookie( '${ contentSizeCookieName }', ( fontSize + 2 ) + 'px', 365 );
+	}
+
+}
+	
+function decreaseSize(){
+	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	var imageContent = document.getElementById( "imageContent" );
+	var contentTd = document.getElementById( "Pratilipi-Content-td" );
+	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
+	var wordContent = document.getElementById( "PageContent-Reader-Content" );
+	
+	if( imageContent ){
+		/* For Image content */
+		imageContent.width = imageContent.width - 50;
+		imageContent.style.height = 'auto';
+		setCookie( '${ contentSizeCookieName }', imageContent.width + 'px', 365 );
+		contentTd.width = imageContent.offsetWidth;
+		centerAlignBasicReader();
+		
+	} 
+	else if( wordContent ){
+		/* For word content */
+		var fontSizeStr = wordContent.style.fontSize;
+		
+		if( !fontSizeStr )
+			fontSizeStr = "16px";
+			
+		var fontSize = parseInt( fontSizeStr.substring( 0, fontSizeStr.indexOf( 'p' )) );
+		wordContent.style.fontSize = ( fontSize - 2 ) + "px";
+
+		setCookie( '${ contentSizeCookieName }', ( fontSize - 2 ) + 'px', 365 );
+	}
+}
+
+//EXECUTE ON WINDOW LOAD EVENT
+window.addEventListener( 'load', function( event ){
+	var pratilipiContent = document.getElementById( "PageContent-Reader-Content" );
+	pratilipiContent.addEventListener( 'contextmenu', function( event){
+		event.preventDefault();
+		return false;
+	});
+	//pkey = 80; ckey = 67; vkey = 86
+	document.addEventListener("keyup keypress", function(e){
+    if( e.ctrlKey && ( e.keyCode == 80 ) ){
+	        return false;
+	    }
+	});
+	
+	setReaderContentSize();
+	centerAlignBasicReader();
+	saveAutoBookmark();
+});
+
+//EXECUTE ON WINDOW RESIZE EVENT
+window.addEventListener( 'resize', function( event ){
+	centerAlignBasicReader();
+});
+
+
+
+</script>
+
+<!-- JAVASCRIPT END -->
 <!-- PageContent :: Reader :: End -->

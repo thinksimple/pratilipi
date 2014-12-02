@@ -1,22 +1,23 @@
 /* SCRIPT IS USED TO CHANGE HEIGHT OF LOGIN/SIGHNUP PANEL TO ACCOMODATE IN SMALL SCREENS */
 // Optimalisation: Store the references outside the event handler:
-function checkWidth() {
+function checkScreenWidth() {
 	var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	var userAccessDiv = document.getElementById( "Pratilipi-Search-UserAccess" );
 	if (windowsize > 768) {
-		$('#Pratilipi-Search-UserAccess').height( '50px' );
+		userAccessDiv.style.height = '50px';
 	}
 	else
-		$('#Pratilipi-Search-UserAccess').height( '80px' );
+		userAccessDiv.style.height = '80px';
 }
 
+
+//EXECUTE ON WINDOW LOAD EVENT
+window.addEventListener( 'load', function( event ){
+	checkScreenWidth();
+});
 
 //EXECUTE ON WINDOW RESIZE EVENT
-window.onresize = function(event){
-	checkWidth();
-	
-	var readerContent = document.getElementById( 'PageContent-Pratilipi-Content' );
-	if( readerContent ){
-		centerAlignBasicReader();
-	}
-}
+window.addEventListener( 'resize', function( event ){
+	checkScreenWidth();
+});
 
