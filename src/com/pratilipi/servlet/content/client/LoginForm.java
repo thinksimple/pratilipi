@@ -54,6 +54,8 @@ public class LoginForm extends Composite {
 		HTML headingElement= new HTML();
 		headingElement.setHTML("<h3>Welcome Back</h3>");
 		
+		fbLoginImage.setWidth( "100%" );
+		
 		fbLoginButton.addStyleName("btn btn-block");
 		fbLoginButton.getElement().getStyle().setPadding( 0, Unit.PX );
 		fbLoginButton.getElement().getStyle().setBackgroundColor( "#4F6AA2" );
@@ -140,8 +142,8 @@ public class LoginForm extends Composite {
 		serverError.setVisible( false );
 		
 		fields.add( heading );
-//		fields.add( fbLoginButton );
-//		fields.add( orLabel );
+		fields.add( fbLoginButton );
+		fields.add( orLabel );
 		fields.add( serverError );
 		fields.add( emailInput );
 		fields.add( emailInputError );
