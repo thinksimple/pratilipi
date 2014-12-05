@@ -80,6 +80,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	//Upload content
 	private final Anchor uploadImageContentAnchor = new Anchor( "Upload Image Content" );
 	private final Anchor uploadWordContentAnchor = new Anchor( "Upload Word Content" );
+	private final Anchor uploadPDFContentAnchor = new Anchor( "Upload PDF Content" );
 	
 	
 	// Publish-Unpublish options widgets
@@ -136,6 +137,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		//Upload Content links
 		dropdown.add( uploadImageContentAnchor );
 		dropdown.add( uploadWordContentAnchor );
+		dropdown.add( uploadPDFContentAnchor );
 
 		
 		// Un-publish option widgets
@@ -218,10 +220,21 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		addRemoveGenre.setPratilipiData( pratilipiData );
 		uploadImageContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=image" );
 		uploadWordContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=pratilipi" );
-		if( pratilipiData.getContentType() == PratilipiContentType.IMAGE )
+		uploadPDFContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=pdf" );
+		
+		if( pratilipiData.getContentType() != null && pratilipiData.getContentType() == PratilipiContentType.IMAGE ){
 			uploadWordContentAnchor.setVisible( false );
-		else if( pratilipiData.getContentType() == PratilipiContentType.PRATILIPI )
+			uploadPDFContentAnchor.setVisible( false );
+		}
+		else if( pratilipiData.getContentType() != null && pratilipiData.getContentType() == PratilipiContentType.PRATILIPI ){
 			uploadImageContentAnchor.setVisible( false );
+			uploadPDFContentAnchor.setVisible( false );
+		}
+		else if( pratilipiData.getContentType() != null && pratilipiData.getContentType() == PratilipiContentType.PDF ){
+			uploadImageContentAnchor.setVisible( false );
+			uploadWordContentAnchor.setVisible( false );
+		}
+		
 		if( pratilipiData.getState() == PratilipiState.PUBLISHED ) {
 			publishPanel.setVisible( false );
 			unpublishAnchor.setVisible( true );

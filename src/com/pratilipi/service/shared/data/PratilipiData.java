@@ -24,6 +24,7 @@ public class PratilipiData implements IsSerializable {
 	private String imageContentUrl;
 	private String imageContentUploadUrl;
 	private String wordContentUploadUrl;
+	private String pdfContentUploadUrl;
 	private String readerPageUrl;
 	
 	private boolean isPublicDomain;
@@ -184,6 +185,14 @@ public class PratilipiData implements IsSerializable {
 	
 	public void setWordContentUplaodUrl( String wordContentUploadUrl ) {
 		this.wordContentUploadUrl = wordContentUploadUrl;
+	}
+	
+	public String getPDFContentUploadUrl() {
+		return pdfContentUploadUrl;
+	}
+	
+	public void setPDFContentUplaodUrl( String pdfContentUploadUrl ) {
+		this.pdfContentUploadUrl = pdfContentUploadUrl;
 	}
 	
 	public String getReaderPageUrl() {

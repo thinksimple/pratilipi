@@ -144,6 +144,16 @@
     <url-pattern>/resource.pratilipi-content/word/*</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ResourcePdfContentServlet</servlet-name>
+    <servlet-class>com.pratilipi.servlet.ResourcePdfContentServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResourcePdfContentServlet</servlet-name>
+    <url-pattern>/resource.pratilipi-content/pdf/*</url-pattern>
+  </servlet-mapping>
+  
   <!-- Handlers for Task Queues -->
   
   <servlet>

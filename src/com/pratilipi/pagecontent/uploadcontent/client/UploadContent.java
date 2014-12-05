@@ -62,6 +62,8 @@ public class UploadContent implements EntryPoint {
 				uploadUrl = pratilipiData.getImageContentUploadUrl();
 			else if( pratilipiData.getContentType().equals( PratilipiContentType.PRATILIPI ))
 				uploadUrl = pratilipiData.getWordContentUploadUrl();
+			else if( pratilipiData.getContentType().equals( PratilipiContentType.PDF ))
+				uploadUrl = pratilipiData.getPDFContentUploadUrl();
 		}
 		else{
 			if( Window.Location.getParameter( "type" ).equals( "image" ) ){
@@ -72,6 +74,10 @@ public class UploadContent implements EntryPoint {
 				uploadUrl = pratilipiData.getWordContentUploadUrl();
 				pratilipiData.setContentType( PratilipiContentType.PRATILIPI );
 			}
+			else if( Window.Location.getParameter( "type" ).equals( "pdf" )){
+				uploadUrl = pratilipiData.getPDFContentUploadUrl();
+				pratilipiData.setContentType( PratilipiContentType.PDF );
+			}
 		}
 		
 		//Image Content upload panel
@@ -80,7 +86,7 @@ public class UploadContent implements EntryPoint {
 			imageUpload.add( imageContentUpload );
 			
 			//Initializing jquery fileupload script
-			initializeImageContentUploader( imageContentUpload.getElement(), 
+			initializeImageOrPDFContentUploader( imageContentUpload.getElement(), 
 					uploadUrl, 
 					pratilipiData.getPageCount() == null ? 0 : ( float ) pratilipiData.getPageCount(), 
 					loadingMsg.getElement() );
@@ -128,7 +134,7 @@ public class UploadContent implements EntryPoint {
 		
 	}
 	
-	private native void initializeImageContentUploader( Element fileUpload, 
+	private native void initializeImageOrPDFContentUploader( Element fileUpload, 
 								String url,
 								float pageCount,
 								Element loadingMsg  ) /*-{
@@ -147,8 +153,15 @@ public class UploadContent implements EntryPoint {
 					$wnd.$( statusDiv ).empty();
 					
 				$wnd.$( this ).prop( 'disabled', true );
+				
 				var filename =  data.files[0].name;
-				data.url = url + "/" + filename.split('.')[0];
+				
+				if( filename.split('.')[1] === "pdf"){
+					data.url = url;
+				}
+				else
+					data.url = url + "/" + filename.split('.')[0];
+					
 				$wnd.$( statusDiv ).append('<div class="col-sm-6" ><i>' + filename + '</i></div>' +
 							'<div class="progress col-sm-2" style="padding-left: 0px; padding-right: 0px;">' + 
 							'<div id="progressbar" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
@@ -248,7 +261,8 @@ public class UploadContent implements EntryPoint {
 	//Update pageCount and contentType in pratilipiData.
 	private void updatePratilipi( String pageCount, final String failedUpload ){
 		Long pageUploaded = Long.parseLong( String.valueOf( pageCount ));
-		pratilipiData.setPageCount(( pratilipiData.getPageCount() == null ? 0 : pratilipiData.getPageCount() )
+		if( pratilipiData.getContentType() == PratilipiContentType.IMAGE )
+			pratilipiData.setPageCount(( pratilipiData.getPageCount() == null ? 0 : pratilipiData.getPageCount() )
 										+ pageUploaded );
 	
 		pratilipiService.savePratilipi( new SavePratilipiRequest( pratilipiData ), new AsyncCallback<SavePratilipiResponse> (){

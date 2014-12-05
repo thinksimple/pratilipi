@@ -6,5 +6,5 @@ public enum PratilipiContentType implements IsSerializable {
 
 	PRATILIPI,
 	IMAGE,
-	
+	PDF
 }
