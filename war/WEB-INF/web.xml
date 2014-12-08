@@ -8,6 +8,15 @@
   <!-- Filters -->
 
   <filter>
+    <filter-name>RemoteAPIFilter</filter-name>
+    <filter-class>com.pratilipi.servlet.RemoteAPIFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>RemoteAPIFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
     <filter-name>PratilipiFilter</filter-name>
     <filter-class>com.pratilipi.servlet.PratilipiFilter</filter-class>
   </filter>
@@ -84,6 +93,18 @@
     <url-pattern>/service.robots</url-pattern>
   </servlet-mapping>
 
+  <!-- AppEngine Remote API -->
+  
+  <servlet>
+    <servlet-name>RemoteApiServlet</servlet-name>
+    <servlet-class>com.google.apphosting.utils.remoteapi.RemoteApiServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoteApiServlet</servlet-name>
+    <url-pattern>/service.remote-api</url-pattern>
+  </servlet-mapping>
+
   <!-- Handlers for Uploading and Serving Website Resources -->
 
   <servlet>
@@ -154,18 +175,6 @@
     <url-pattern>/resource.pratilipi-content/pdf/*</url-pattern>
   </servlet-mapping>
   
-  <!-- AppEngine Remote API -->
-  
-  <servlet>
-    <servlet-name>RemoteApiServlet</servlet-name>
-    <servlet-class>com.google.apphosting.utils.remoteapi.RemoteApiServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RemoteApiServlet</servlet-name>
-    <url-pattern>/remote_api</url-pattern>
-  </servlet-mapping>
-
   <!-- Handlers for Task Queues -->
   
   <servlet>

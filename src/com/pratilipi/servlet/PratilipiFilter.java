@@ -90,6 +90,7 @@ public class PratilipiFilter implements Filter {
 		validHosts.add( "mark-4.gamma.prod-pratilipi.appspot.com" );
 		validHosts.add( "mark-4p1.gamma.prod-pratilipi.appspot.com" );
 		validHosts.add( "devo.pratilipi.com" );
+		validHosts.add( "alpha.pratilipi.com" );
 		validHosts.add( "localhost" );
 		validHosts.add( "127.0.0.1" );
 	}
