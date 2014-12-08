@@ -34,7 +34,7 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <!-- Handlers for GWT Services -->
+  <!-- Handlers for Services -->
 
   <servlet>
     <servlet-name>PratilipiServiceJson</servlet-name>
@@ -154,6 +154,18 @@
     <url-pattern>/resource.pratilipi-content/pdf/*</url-pattern>
   </servlet-mapping>
   
+  <!-- AppEngine Remote API -->
+  
+  <servlet>
+    <servlet-name>RemoteApiServlet</servlet-name>
+    <servlet-class>com.google.apphosting.utils.remoteapi.RemoteApiServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoteApiServlet</servlet-name>
+    <url-pattern>/remote_api</url-pattern>
+  </servlet-mapping>
+
   <!-- Handlers for Task Queues -->
   
   <servlet>
