@@ -3,7 +3,6 @@ package com.pratilipi.service.server;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.UUID;
@@ -14,9 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 
+import com.claymus.commons.server.GenerateAccessTokenUtil;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.AccessToken;
 import com.google.gson.Gson;
@@ -46,9 +45,6 @@ public class PratilipiService extends HttpServlet {
 	//BELOW VARIABLES ARE USED FOR TESTING PURPOSE
 	private static final String PUBLISHER_ID = "5131259839774720";
 	private static final String PUBLISHER_SECRET = "WythcpbjPW5DqPLWDRnjgETbLbZiUbTvGTgMR8QtzC0";
-
-	private int accessTokenLength = 64;
-
 
 	@Override
 	public void doGet(
@@ -87,21 +83,18 @@ public class PratilipiService extends HttpServlet {
 					serveBlob( (byte[]) apiResponse.getPageContent(), apiResponse.getPageContentMimeType(), request, response);
 				
 			} else if( resourceName.equals( PRATILIPI_OAUTH ) ) {
-				if( requestPayloadJson.get( "publisherId" ).equals( PUBLISHER_ID ) && requestPayloadJson.get( "publisherSecret" ).equals( PUBLISHER_SECRET ) ){
+				if( requestPayloadJson.get( "publisherId" ).getAsString().equals( PUBLISHER_ID ) && 
+						requestPayloadJson.get( "publisherSecret" ).getAsString().equals( PUBLISHER_SECRET ) ){
 					DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 					//Generating Unique UserID
 					String uuid = UUID.randomUUID().toString();
 					
 					//Generating 64 bytes access token
-					byte[] accessTokenInBytes = SecureRandom.getInstance("SHA1PRNG").generateSeed( accessTokenLength );
-					String accessTokenString = Base64.encodeBase64String( accessTokenInBytes );
-					
-					//Storing data received in http request and acces token generated in a json object
-					JsonObject accessTokenJson = new JsonObject();
-					accessTokenJson.addProperty( "publisherId", requestPayloadJson.get( "publisher_id" ).toString() );
-					accessTokenJson.addProperty( "publisherSecret", requestPayloadJson.get( "publisherSecret" ).toString() );
-					accessTokenJson.addProperty( "accessToken", accessTokenString );
-					
+					GenerateAccessTokenUtil accessTokenUtil = 
+							new GenerateAccessTokenUtil(requestPayloadJson.get( "publisherId" ).toString(),
+														requestPayloadJson.get( "publisherSecret" ).toString() 
+														);
+					JsonObject accessTokenValue = accessTokenUtil.generateAccessToken();
 					//Setting expiry time to 60 mins from token create time.
 					Date expiry = new Date();
 					expiry.setTime( expiry.getTime() + 60*60*1000 );
@@ -110,11 +103,15 @@ public class PratilipiService extends HttpServlet {
 					AccessToken accessToken = dataAccessor.newAccessToken();
 					accessToken.setUuid( uuid );
 					accessToken.setExpiry( expiry );
-					accessToken.setValues( accessTokenJson.toString() );
+					accessToken.setValues( accessTokenValue.toString() );
 					//Persisting access token entity
 					dataAccessor.createAccessToken( accessToken );
 					
-					serveJson( gson.toJson( uuid ), request, response );
+					JsonObject returnObj = new JsonObject();
+					returnObj.addProperty( "accessToken", accessTokenValue.get("accessToken").getAsString() );
+					returnObj.addProperty( "expiry", expiry.toString() );
+					
+					serveJson( gson.toJson( returnObj ), request, response );
 				} else
 					response.sendError( HttpServletResponse.SC_FORBIDDEN );
 			}
