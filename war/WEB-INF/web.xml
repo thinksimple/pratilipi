@@ -56,16 +56,6 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>PratilipiService</servlet-name>
-    <servlet-class>com.pratilipi.service.server.PratilipiService</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PratilipiService</servlet-name>
-    <url-pattern>/service.pratilipi/*</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
     <servlet-name>ClaymusService</servlet-name>
     <servlet-class>com.claymus.service.server.ClaymusServiceImpl</servlet-class>
     <load-on-startup>1</load-on-startup>
@@ -93,16 +83,26 @@
     <url-pattern>/service.robots</url-pattern>
   </servlet-mapping>
 
-  <!-- AppEngine Remote API -->
+  <!-- Handlers for API -->
   
   <servlet>
-    <servlet-name>RemoteApiServlet</servlet-name>
-    <servlet-class>com.google.apphosting.utils.remoteapi.RemoteApiServlet</servlet-class>
+    <servlet-name>AuthApi</servlet-name>
+    <servlet-class>com.pratilipi.api.AuthApi</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>RemoteApiServlet</servlet-name>
-    <url-pattern>/service.remote-api</url-pattern>
+    <servlet-name>AuthApi</servlet-name>
+    <url-pattern>/api.pratilipi/oauth</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PratilipiApi</servlet-name>
+    <servlet-class>com.pratilipi.api.PratilipiApi</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PratilipiApi</servlet-name>
+    <url-pattern>/api.pratilipi/pratilipi/content</url-pattern>
   </servlet-mapping>
 
   <!-- Handlers for Uploading and Serving Website Resources -->
