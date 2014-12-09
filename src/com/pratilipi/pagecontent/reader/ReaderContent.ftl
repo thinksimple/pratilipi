@@ -62,7 +62,7 @@
 	<#if pratilipiData.getContentType() == "PRATILIPI" >
 		<core-ajax
 				id="PageContent-Reader-Ajax"
-				url="/service.pratilipi/pratilipi/content"
+				url="/api.pratilipi/pratilipi/content"
 				contentType="application/json"
 				method="GET"
 				handleAs="json"
@@ -179,7 +179,7 @@
 	<#elseif pratilipiData.getContentType() == "IMAGE" >
 		
 		function loadImage( pageNo ) {
-			var img = "<img src='/service.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=" + pageNo + "&contentType=IMAGE' />";
+			var img = "<img src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=" + pageNo + "&contentType=IMAGE' />";
 			$(img).on( 'load', function() {
 				contentArray[pageNo] = img;
 				updateContent();

@@ -8,6 +8,9 @@ public class ConvertPratilipiWordToHtmlRequest implements IsSerializable {
 	private int pageNo;
 	
 
+	@SuppressWarnings("unused")
+	private ConvertPratilipiWordToHtmlRequest() {}
+	
 	public ConvertPratilipiWordToHtmlRequest( Long pratilipiId, int pageNo ) {
 		this.pratilipiId = pratilipiId;
 		this.pageNo = pageNo;
@@ -20,6 +23,5 @@ public class ConvertPratilipiWordToHtmlRequest implements IsSerializable {
 	public int getPageNumber() {
 		return pageNo;
 	}
-	
 
 }
