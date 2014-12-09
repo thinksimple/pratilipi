@@ -61,6 +61,7 @@ import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPratilipiContentRequest;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
 import com.pratilipi.service.shared.GetPratilipiListResponse;
+import com.pratilipi.service.shared.ConvertPratilipiWordToHtmlRequest;
 import com.pratilipi.service.shared.GetPublisherListRequest;
 import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
@@ -753,7 +754,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	}
 	
 	@Override
-	public void ConvertWordToHtml( GetPratilipiContentRequest request ) throws IOException {
+	public void ConvertWordToHtml( ConvertPratilipiWordToHtmlRequest request ) throws IOException {
 
 		Long pratilipiId = request.getPratilipiId();
 		ConvertWordToHtml convertWordToHtml = new ConvertWordToHtml( pratilipiId );

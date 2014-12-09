@@ -198,11 +198,11 @@ public class PratilipiData implements IsSerializable {
 		this.wordContentUploadUrl = wordContentUploadUrl;
 	}
 	
-	public String getPDFContentUploadUrl() {
+	public String getPdfContentUploadUrl() {
 		return pdfContentUploadUrl;
 	}
 	
-	public void setPDFContentUplaodUrl( String pdfContentUploadUrl ) {
+	public void setPdfContentUplaodUrl( String pdfContentUploadUrl ) {
 		this.pdfContentUploadUrl = pdfContentUploadUrl;
 	}
 	

@@ -15,6 +15,7 @@ import com.pratilipi.service.shared.AddPublisherRequest;
 import com.pratilipi.service.shared.AddPublisherResponse;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
 import com.pratilipi.service.shared.AddUserPratilipiResponse;
+import com.pratilipi.service.shared.ConvertPratilipiWordToHtmlRequest;
 import com.pratilipi.service.shared.DeletePratilipiGenreRequest;
 import com.pratilipi.service.shared.DeletePratilipiGenreResponse;
 import com.pratilipi.service.shared.GetAuthorListRequest;
@@ -23,7 +24,6 @@ import com.pratilipi.service.shared.GetGenreListRequest;
 import com.pratilipi.service.shared.GetGenreListResponse;
 import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
-import com.pratilipi.service.shared.GetPratilipiContentRequest;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
 import com.pratilipi.service.shared.GetPratilipiListResponse;
 import com.pratilipi.service.shared.GetPublisherListRequest;
@@ -109,6 +109,6 @@ public interface PratilipiService extends RemoteService {
 	// API Version: 4.0; Owner Module: SearchContent;
 	SearchResponse search( SearchRequest request );
 	
-	void ConvertWordToHtml( GetPratilipiContentRequest request )
+	void ConvertWordToHtml( ConvertPratilipiWordToHtmlRequest request )
 			throws IOException;
 }

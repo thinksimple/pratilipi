@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
-import com.pratilipi.service.shared.GetPratilipiContentRequest;
+import com.pratilipi.service.shared.ConvertPratilipiWordToHtmlRequest;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.data.PratilipiData;
@@ -63,7 +63,7 @@ public class UploadContent implements EntryPoint {
 			else if( pratilipiData.getContentType().equals( PratilipiContentType.PRATILIPI ))
 				uploadUrl = pratilipiData.getWordContentUploadUrl();
 			else if( pratilipiData.getContentType().equals( PratilipiContentType.PDF ))
-				uploadUrl = pratilipiData.getPDFContentUploadUrl();
+				uploadUrl = pratilipiData.getPdfContentUploadUrl();
 		}
 		else{
 			if( Window.Location.getParameter( "type" ).equals( "image" ) ){
@@ -75,7 +75,7 @@ public class UploadContent implements EntryPoint {
 				pratilipiData.setContentType( PratilipiContentType.PRATILIPI );
 			}
 			else if( Window.Location.getParameter( "type" ).equals( "pdf" )){
-				uploadUrl = pratilipiData.getPDFContentUploadUrl();
+				uploadUrl = pratilipiData.getPdfContentUploadUrl();
 				pratilipiData.setContentType( PratilipiContentType.PDF );
 			}
 		}
@@ -301,7 +301,7 @@ public class UploadContent implements EntryPoint {
 			loadingMsg.setText( "Converting word to HTML. This might take some time. Please Wait..." );
 			loadingMsg.setVisible( true );
 			
-			pratilipiService.ConvertWordToHtml( new GetPratilipiContentRequest( pratilipiData.getId(), 0 ), 
+			pratilipiService.ConvertWordToHtml( new ConvertPratilipiWordToHtmlRequest( pratilipiData.getId(), 0 ), 
 					new AsyncCallback<Void> (){
 				
 				@Override
