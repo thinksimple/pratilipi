@@ -62,9 +62,9 @@
 	<#if pratilipiData.getContentType() == "PRATILIPI" >
 		<core-ajax
 				id="PageContent-Reader-Ajax"
-				url="/service.pratilipi/json?api=getPratilipiContent"
+				url="/service.pratilipi/pratilipi/content/pratilipi"
 				contentType="application/json"
-				method="POST"
+				method="GET"
 				handleAs="json"
 				on-core-response="{{handleAjaxResponse}}" ></core-ajax>
 	</#if>
@@ -137,7 +137,7 @@
 			if( contentArray[scope.pageNo] == null ) {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
 				var ajax = document.querySelector( '#PageContent-Reader-Ajax' );
-				ajax.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo } );
+				ajax.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo } );
 				ajax.go();
 			} else {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
@@ -148,11 +148,11 @@
 		function prefetchContent() {
 			var ajax = document.querySelector( '#PageContent-Reader-Ajax' );
 			if( scope.pageNo > 1 && contentArray[scope.pageNo - 1] == null ) {
-				ajax.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo - 1 } );
+				ajax.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo - 1 } );
 				ajax.go();
 			}
 			if( scope.pageNo < scope.pageCount && contentArray[scope.pageNo + 1] == null ) {
-				ajax.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1 } );
+				ajax.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1 } );
 				ajax.go();
 			}
 		}

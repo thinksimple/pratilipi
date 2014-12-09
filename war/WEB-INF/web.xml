@@ -46,23 +46,23 @@
   <!-- Handlers for Services -->
 
   <servlet>
-    <servlet-name>PratilipiServiceJson</servlet-name>
-    <servlet-class>com.pratilipi.service.server.PratilipiServiceJson</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PratilipiServiceJson</servlet-name>
-    <url-pattern>/service.pratilipi/json</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>PratilipiService</servlet-name>
+    <servlet-name>PratilipiServiceGwt</servlet-name>
     <servlet-class>com.pratilipi.service.server.PratilipiServiceImpl</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>PratilipiService</servlet-name>
+    <servlet-name>PratilipiServiceGwt</servlet-name>
     <url-pattern>/service.pratilipi</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PratilipiService</servlet-name>
+    <servlet-class>com.pratilipi.service.server.PratilipiService</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PratilipiService</servlet-name>
+    <url-pattern>/service.pratilipi/*</url-pattern>
   </servlet-mapping>
 
   <servlet>

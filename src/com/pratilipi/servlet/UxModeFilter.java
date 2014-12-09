@@ -32,6 +32,10 @@ public class UxModeFilter implements Filter {
 			basicMode = Boolean.parseBoolean( request.getParameter( "basicMode" ) );
 
 			
+		} else if( userAgent == null || userAgent.isEmpty() ) {
+			basicMode = true;
+			
+			
 		} else if( userAgent.contains( "OPR" ) ) { // Opera
 			/*
 			 * Opera on Microsoft Windows 8.1

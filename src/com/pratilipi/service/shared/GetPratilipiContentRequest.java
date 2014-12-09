@@ -1,17 +1,23 @@
 package com.pratilipi.service.shared;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import com.pratilipi.commons.shared.GenericRequest;
 
-public class GetPratilipiContentRequest implements IsSerializable {
+public class GetPratilipiContentRequest extends GenericRequest {
 
 	private long pratilipiId;
 	private int pageNo;
 
 
-	@SuppressWarnings("unused")
-	private GetPratilipiContentRequest() {}
+	private GetPratilipiContentRequest() {
+		super( null );
+	}
 
 	public GetPratilipiContentRequest( long pratilipiId, int pageNo ) {
+		this( null, pratilipiId, pageNo );
+	}
+
+	public GetPratilipiContentRequest( String accessToken, long pratilipiId, int pageNo ) {
+		super( accessToken );
 		this.pratilipiId = pratilipiId;
 		this.pageNo = pageNo;
 	}

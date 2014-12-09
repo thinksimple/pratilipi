@@ -133,7 +133,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getPratilipiId() );
 		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, null, null, null, true );
-				
+		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		BlobEntry blobEntry = null;
 		try {
