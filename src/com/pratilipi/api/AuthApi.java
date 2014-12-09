@@ -26,7 +26,6 @@ public class AuthApi extends GenericApi {
 	
 	@Override
 	protected void executeGet(
-			String resourceName,
 			JsonObject requestPayloadJson,
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException, UnexpectedServerException {

@@ -22,12 +22,13 @@ public class PratilipiApi extends GenericApi {
 
 	@Override
 	protected void executeGet(
-			String resourceName,
 			JsonObject requestPayloadJson,
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException, UnexpectedServerException {
 
-		if( resourceName.equals( RESOURCE_PRATILIPI_CONTENT ) ) {
+		String requestUri = request.getRequestURI();
+		
+		if( requestUri.endsWith( RESOURCE_PRATILIPI_CONTENT ) ) {
 			GetPratilipiContentRequest apiRequest =
 					gson.fromJson( requestPayloadJson, GetPratilipiContentRequest.class );
 			GetPratilipiContentResponse apiResponse =
