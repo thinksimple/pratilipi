@@ -21,6 +21,7 @@ public class PratilipiData implements IsSerializable {
 	private String coverImageUploadUrl;
 	private String coverImage300UploadUrl;
 	private String pratilipiContentName;
+	private String pratilipiContentImageName;
 	private String imageContentUrl;
 	private String imageContentUploadUrl;
 	private String wordContentUploadUrl;
@@ -163,10 +164,20 @@ public class PratilipiData implements IsSerializable {
 		this.pratilipiContentName = pratilipiContentName;
 	}
 	
+	public String getPratilipiContentImageName( int pageNo ) {
+		return pratilipiContentImageName + "/" + pageNo;
+	}
+	
+	public void setPratilipiContentImageName( String pratilipiContentImageName ) {
+		this.pratilipiContentImageName = pratilipiContentImageName;
+	}
+	
+	@Deprecated
 	public String getImageContentUrl() {
 		return imageContentUrl;
 	}
 	
+	@Deprecated
 	public void setImageContentUrl( String imageContentUrl ) {
 		this.imageContentUrl = imageContentUrl;
 	}

@@ -14,6 +14,7 @@ import com.claymus.data.transfer.BlobEntry;
 import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.commons.server.PratilipiContentUtil;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -130,27 +131,49 @@ public class PratilipiContentHelper extends PageContentHelper<
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( httpRequest );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( httpRequest );
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 
 		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getPratilipiId() );
 		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, null, null, null, true );
 		
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		BlobEntry blobEntry = null;
-		try {
-			blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
-			throw new UnexpectedServerException();
-		}
+		Object pageContent = null;
+		String pageContentMimeType = null;
 		
-		String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-		PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-		String pageContent = pratilipiContentUtil.getContent( apiRequest.getPageNumber() );
+		
+		if( apiRequest.getContentType() == PratilipiContentType.PRATILIPI ) {
+			BlobEntry blobEntry = null;
+			try {
+				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+			pageContent = pratilipiContentUtil.getContent( apiRequest.getPageNumber() );
+			pageContentMimeType = blobEntry.getMimeType();
+		
+			
+		} else if( apiRequest.getContentType() == PratilipiContentType.IMAGE ) {
+			BlobEntry blobEntry = null;
+			try {
+				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentImageName( apiRequest.getPageNumber() ) );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+			pageContent = blobEntry.getData();
+			pageContentMimeType = blobEntry.getMimeType();
+		}
+
 		
 		return new GetPratilipiContentResponse(
 				apiRequest.getPratilipiId(),
 				apiRequest.getPageNumber(),
-				pageContent );
+				apiRequest.getContentType(),
+				pageContent, pageContentMimeType );
 	}
 	
 }
