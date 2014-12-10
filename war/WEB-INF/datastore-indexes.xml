@@ -68,4 +68,12 @@
     <property name="PEN_NAME_EN" direction="asc"/>
   </datastore-index>
 
+
+  <!-- Required by Publisher PageContent Module -->
+  <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
+    <property name="PUBLISHER_ID" direction="asc"/>
+    <property name="STATE" direction="asc"/>
+    <property name="TITLE" direction="asc"/>
+  </datastore-index>
+  
 </datastore-indexes>

@@ -42,6 +42,7 @@ import com.pratilipi.pagecontent.home.HomeContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
+import com.pratilipi.pagecontent.publisher.PublisherContentHelper;
 import com.pratilipi.pagecontent.reader.ReaderContentHelper;
 import com.pratilipi.pagecontent.search.SearchContentHelper;
 import com.pratilipi.pagecontent.uploadcontent.UploadContentFactory;
@@ -56,6 +57,7 @@ public class PratilipiMain extends ClaymusMain {
 	static {
 		PageContentRegistry.register( PratilipiContentHelper.class );
 		PageContentRegistry.register( AuthorContentHelper.class );
+		PageContentRegistry.register( PublisherContentHelper.class );
 		PageContentRegistry.register( HomeContentFactory.class );
 		PageContentRegistry.register( PratilipisContentFactory.class );
 		PageContentRegistry.register( ReaderContentHelper.class );
@@ -182,6 +184,9 @@ public class PratilipiMain extends ClaymusMain {
 			} else if( page.getType().equals( PratilipiPageType.AUTHOR.toString() ) ) {
 				pageContentList.add( AuthorContentHelper.newAuthorContent( page.getPrimaryContentId() ) );
 		
+			} else if( page.getType().equals( PratilipiPageType.PUBLISHER.toString() ) ) {
+				pageContentList.add( PublisherContentHelper.newPublisherContent( page.getPrimaryContentId() ) );
+		
 			}
 			
 		}
@@ -277,9 +282,6 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/about/the-founding-readers" ) )
 			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/AboutFoundingReadersPageContent.ftl" ) );
 			
-		
-		else if( requestUri.equals( "/read" ) )
-			pageContentList.add( ReaderContentHelper.newReaderContent() );
 		
 		return pageContentList;
 	}
