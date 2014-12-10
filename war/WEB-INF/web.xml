@@ -86,12 +86,12 @@
   <!-- Handlers for API -->
   
   <servlet>
-    <servlet-name>AuthApi</servlet-name>
-    <servlet-class>com.pratilipi.api.AuthApi</servlet-class>
+    <servlet-name>OAuthApi</servlet-name>
+    <servlet-class>com.pratilipi.api.OAuthApi</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>AuthApi</servlet-name>
+    <servlet-name>OAuthApi</servlet-name>
     <url-pattern>/api.pratilipi/oauth</url-pattern>
   </servlet-mapping>
 

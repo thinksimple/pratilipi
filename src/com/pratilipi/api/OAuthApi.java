@@ -11,13 +11,15 @@ import com.claymus.api.GenericApi;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.AccessToken;
 import com.google.gson.JsonObject;
+import com.pratilipi.api.shared.GetOAuthRequest;
+import com.pratilipi.api.shared.GetOAuthResponse;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Publisher;
 
 
 @SuppressWarnings("serial")
-public class AuthApi extends GenericApi {
+public class OAuthApi extends GenericApi {
 
 	private static final long ACCESS_TOKEN_VALIDITY = 60 * 60 * 1000; // 1 Hr
 	
@@ -27,18 +29,14 @@ public class AuthApi extends GenericApi {
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException, UnexpectedServerException {
 		
+		GetOAuthRequest apiRequest =
+				gson.fromJson( requestPayloadJson, GetOAuthRequest.class );
+		
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Publisher publisher = dataAccessor.getPublisher( apiRequest.getPublisherId() );
 		
-		long publisherId = requestPayloadJson.get( "publisherId" ).getAsLong();
-		String publisherSecret = requestPayloadJson.get( "publisherSecret" ).getAsString();
-		
-		Publisher publisher = dataAccessor.getPublisher( publisherId );
-		
-		if( publisher == null ){
-			response.sendError( HttpServletResponse.SC_BAD_REQUEST );
-			return;
-		}else if( publisherId != publisher.getId() 
-					|| !publisherSecret.equals( publisher.getPublisherSecret()  ) ) {
+		if( publisher == null || !apiRequest.getPublisherSecret().equals( publisher.getPublisherSecret() ) ) {
 			response.sendError( HttpServletResponse.SC_UNAUTHORIZED );
 			return;
 		}
@@ -47,26 +45,17 @@ public class AuthApi extends GenericApi {
 		String tokenId = UUID.randomUUID().toString();
 		Date expiry = new Date( new Date().getTime() + ACCESS_TOKEN_VALIDITY );
 		
-		JsonObject values = new JsonObject();
-		values.addProperty( "publisherId", publisherId );
-		values.addProperty( "publisherSecret", publisherSecret );
-		
-		
+
 		// Creating and persisting AccessToken entity
 		AccessToken accessToken = dataAccessor.newAccessToken();
-		accessToken.setUuid( tokenId );
+		accessToken.setId( tokenId );
 		accessToken.setExpiry( expiry );
-		accessToken.setValues( values.toString() );
+		accessToken.setValues( requestPayloadJson.toString() );
+		accessToken = dataAccessor.createAccessToken( accessToken );
 
-		dataAccessor.createAccessToken( accessToken );
-
 		
-		JsonObject returnObj = new JsonObject();
-		returnObj.addProperty( "accessToken", tokenId );
-		returnObj.addProperty( "expiry", expiry.toString() );
-		
-		serveJson( gson.toJson( returnObj ), request, response );
-		
+		GetOAuthResponse apiResponse = new GetOAuthResponse( tokenId , expiry.getTime() );
+		serveJson( gson.toJson( apiResponse ), request, response );
 	}
 	
 }
