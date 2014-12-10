@@ -51,8 +51,23 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
+	public DataListCursorTuple<Long> getPratilipiIdList(
+			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount ) {
+		
+		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, true );
+	}
+	
+	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount ) {
+		
+		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, false );
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> DataListCursorTuple<T> getPratilipiList(
+			PratilipiFilter pratilipiFilter, String cursorStr,
+			int resultCount, boolean idOnly ) {
 		
 		GaeQueryBuilder gaeQueryBuilder =
 				new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) )
@@ -67,6 +82,8 @@ public class DataAccessorGaeImpl
 			gaeQueryBuilder.addFilter( "languageId", pratilipiFilter.getLanguageId() );
 		if( pratilipiFilter.getAuthorId() != null )
 			gaeQueryBuilder.addFilter( "authorId", pratilipiFilter.getAuthorId() );
+		if( pratilipiFilter.getPublisherId() != null )
+			gaeQueryBuilder.addFilter( "publisherId", pratilipiFilter.getPublisherId() );
 		if( pratilipiFilter.getState() != null )
 			gaeQueryBuilder.addFilter( "state", pratilipiFilter.getState() );
 		
@@ -77,14 +94,16 @@ public class DataAccessorGaeImpl
 			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
 			query.setExtensions( extensionMap );
 		}
+
+		if( idOnly )
+			query.setResult( "pratilipiId" );
 		
-		@SuppressWarnings("unchecked")
-		List<Pratilipi> pratilipiEntityList =
-				(List<Pratilipi>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
+		List<T> pratilipiEntityList =
+				(List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
 		
-		return new DataListCursorTuple<Pratilipi>(
-				(List<Pratilipi>) pm.detachCopyAll( pratilipiEntityList ),
+		return new DataListCursorTuple<T>(
+				(List<T>) pm.detachCopyAll( pratilipiEntityList ),
 				cursor == null ? null : cursor.toWebSafeString() );
 	}
 

@@ -18,6 +18,8 @@ public class UserPratilipiData implements IsSerializable {
 	
 	private PurchasedFrom purchasedFrom;
 	
+	private Date purchaseDate;
+	
 	private Long rating;
 	
 	private String review;
@@ -26,8 +28,6 @@ public class UserPratilipiData implements IsSerializable {
 	
 	private Date reviewDate;
 	
-	private Date purchaseDate;
-
 	
 	public String getId() {
 		return id;
@@ -69,6 +69,14 @@ public class UserPratilipiData implements IsSerializable {
 		this.purchasedFrom = purchasedFrom;
 	}
 
+	public Date getPurchaseDate() {
+		return purchaseDate;
+	}
+
+	public void setPurchaseDate( Date purchaseDate ) {
+		this.purchaseDate = purchaseDate;
+	}
+
 	public Long getRating() {
 		return rating;
 	}
@@ -101,12 +109,4 @@ public class UserPratilipiData implements IsSerializable {
 		this.reviewDate = reviewDate;
 	}
 	
-	public Date getPurchaseDate() {
-		return purchaseDate;
-	}
-
-	public void setPurchaseDate( Date purchaseDate ) {
-		this.purchaseDate = purchaseDate;
-	}
-
 }

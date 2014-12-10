@@ -28,6 +28,9 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Persistent( column = "PURCHASED_FROM" )
 	private PurchasedFrom purchasedFrom;
 	
+	@Persistent( column = "PURCHASE_DATE" )
+	private Date purchaseDate;
+
 	@Persistent( column = "RATING" )
 	private Long rating;
 	
@@ -39,9 +42,6 @@ public class UserPratilipiEntity implements UserPratilipi {
 	
 	@Persistent( column = "REVIEW_DATE" )
 	private Date reviewDate;
-	
-	@Persistent( column = "PURCHASE_DATE" )
-	private Date purchaseDate;
 
 	
 	public void setId( String id ) {
@@ -84,6 +84,16 @@ public class UserPratilipiEntity implements UserPratilipi {
 	}
 
 	@Override
+	public Date getPurchaseDate() {
+		return this.purchaseDate;
+	}
+
+	@Override
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
+
+	@Override
 	public Long getRating() {
 		return rating;
 	}
@@ -121,16 +131,6 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Override
 	public void setReviewDate( Date reviewDate ) {
 		this.reviewDate = reviewDate;
-	}
-
-	@Override
-	public Date getPurchaseDate() {
-		return this.purchaseDate;
-	}
-
-	@Override
-	public void setPurchaseDate(Date purchaseDate) {
-		this.purchaseDate = purchaseDate;
 	}
 
 }

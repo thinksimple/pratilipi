@@ -64,12 +64,19 @@ public class DataAccessorWithMemcache
 	}
 
 	@Override
-	public DataListCursorTuple<Pratilipi> getPratilipiList(
+	public DataListCursorTuple<Long> getPratilipiIdList(
 			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount ) {
-		// TODO: enable caching
-		return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
+		
+		return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, resultCount );
 	}
 	
+	@Override
+	public DataListCursorTuple<Pratilipi> getPratilipiList(
+			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount ) {
+
+		return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
+	}
+
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );

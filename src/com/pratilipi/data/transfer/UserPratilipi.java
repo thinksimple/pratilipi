@@ -22,6 +22,10 @@ public interface UserPratilipi extends Serializable {
 	
 	void setPurchasedFrom( PurchasedFrom purchasedFrom );
 	
+	Date getPurchaseDate();
+	
+	void setPurchaseDate( Date purchaseDate );
+	
 	Long getRating();
 	
 	void setRating( Long rating );
@@ -38,8 +42,4 @@ public interface UserPratilipi extends Serializable {
 	
 	void setReviewDate( Date reviewDate );
 	
-	Date getPurchaseDate();
-	
-	void setPurchaseDate( Date purchaseDate );
-
 }

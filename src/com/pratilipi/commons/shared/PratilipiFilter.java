@@ -12,6 +12,8 @@ public class PratilipiFilter implements IsSerializable {
 	
 	private Long authorId;
 
+	private Long publisherId;
+
 	private PratilipiState state;
 	
 
@@ -45,6 +47,14 @@ public class PratilipiFilter implements IsSerializable {
 
 	public void setAuthorId( Long authorId ) {
 		this.authorId = authorId;
+	}
+	
+	public Long getPublisherId() {
+		return publisherId;
+	}
+
+	public void setPublisherId( Long publisherId ) {
+		this.publisherId = publisherId;
 	}
 	
 	public PratilipiState getState() {
