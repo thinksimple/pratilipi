@@ -1,0 +1,14 @@
+Website 						 www.pratilipi.com | prod-pratilipi.appspot.com
+Website (Gamma)				   gamma.pratilipi.com
+Website (Legacy)			  legacy.pratilipi.com
+
+Website (Devo)					devo.pratilipi.com | devo-pratilipi.appspot.com
+Website (Alpha)				   alpha.pratilipi.com
+
+Pratilipi API					 api.pratilipi.com | api.prod-pratilipi.appspot.com
+Pratilipi API (Devo)							   | api.devo-pratilipi.appspot.com
+
+CDN on GCS bucket (US) 		  static.pratilipi.com
+CDN on GCS bucket (ASIA) 	cdn-asia.pratilipi.com
+
+Workstation						  ws.pratilipi.com

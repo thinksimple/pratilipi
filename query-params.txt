@@ -1,0 +1,8 @@
+id				long		Pratilipi id
+page			int			Pratilipi page number
+
+q				String		Search query
+dt				String		Search document type
+
+basicMode		boolean 	Force 'Basic Mode' ON/OFF
+accessToken		String		OAuth 2.0 access token
