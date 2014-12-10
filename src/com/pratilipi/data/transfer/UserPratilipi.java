@@ -3,7 +3,7 @@ package com.pratilipi.data.transfer;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.pratilipi.commons.shared.PurchasedFrom;
+import com.pratilipi.commons.shared.SellerType;
 import com.pratilipi.commons.shared.UserReviewState;
 
 public interface UserPratilipi extends Serializable {
@@ -18,9 +18,9 @@ public interface UserPratilipi extends Serializable {
 	
 	void setPratilipiId( Long pratilipiId );
 	
-	PurchasedFrom getPurchasedFrom();
+	SellerType getPurchasedFrom();
 	
-	void setPurchasedFrom( PurchasedFrom purchasedFrom );
+	void setPurchasedFrom( SellerType purchasedFrom );
 	
 	Date getPurchaseDate();
 	

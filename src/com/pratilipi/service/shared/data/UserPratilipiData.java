@@ -3,7 +3,7 @@ package com.pratilipi.service.shared.data;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.pratilipi.commons.shared.PurchasedFrom;
+import com.pratilipi.commons.shared.SellerType;
 import com.pratilipi.commons.shared.UserReviewState;
 
 public class UserPratilipiData implements IsSerializable {
@@ -16,7 +16,7 @@ public class UserPratilipiData implements IsSerializable {
 	
 	private Long pratilipiId;
 	
-	private PurchasedFrom purchasedFrom;
+	private SellerType purchasedFrom;
 	
 	private Date purchaseDate;
 	
@@ -61,11 +61,11 @@ public class UserPratilipiData implements IsSerializable {
 		this.pratilipiId = pratilipiId;
 	}
 
-	public PurchasedFrom getPurchasedFrom() {
+	public SellerType getPurchasedFrom() {
 		return purchasedFrom;
 	}
 
-	public void setPurchasedFrom(PurchasedFrom purchasedFrom) {
+	public void setPurchasedFrom(SellerType purchasedFrom) {
 		this.purchasedFrom = purchasedFrom;
 	}
 

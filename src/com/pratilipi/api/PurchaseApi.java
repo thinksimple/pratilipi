@@ -12,7 +12,7 @@ import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.User;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.pratilipi.commons.shared.PurchasedFrom;
+import com.pratilipi.commons.shared.SellerType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -84,7 +84,7 @@ public class PurchaseApi extends GenericApi {
 			userPratilipi.setUserId( user.getId() );
 		}
 
-		userPratilipi.setPurchasedFrom( PurchasedFrom.PUBLISHER );
+		userPratilipi.setPurchasedFrom( SellerType.PUBLISHER );
 		userPratilipi.setPurchaseDate( new Date() );
 		
 		dataAccessor.createOrUpdateUserPratilipi( userPratilipi );

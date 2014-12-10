@@ -75,5 +75,10 @@
     <property name="STATE" direction="asc"/>
     <property name="TITLE" direction="asc"/>
   </datastore-index>
+
+  <datastore-index kind="USER_PRATILIPI" ancestor="false" source="manual">
+    <property name="USER_ID" direction="asc"/>
+    <property name="PURCHASED_FROM" direction="asc"/>
+  </datastore-index>
   
 </datastore-indexes>

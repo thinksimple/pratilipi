@@ -96,7 +96,7 @@ public class DataAccessorGaeImpl
 		}
 
 		if( idOnly )
-			query.setResult( "pratilipiId" );
+			query.setResult( "id" );
 		
 		List<T> pratilipiEntityList =
 				(List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
@@ -365,6 +365,7 @@ public class DataAccessorGaeImpl
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) )
 						.addFilter( "userId", userId )
+						.addFilter( "purchasedFrom", null, GaeQueryBuilder.Operator.NOT_NULL )
 						.setResult( "pratilipiId" )
 						.build();
 		

@@ -7,7 +7,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
-import com.pratilipi.commons.shared.PurchasedFrom;
+import com.pratilipi.commons.shared.SellerType;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.transfer.UserPratilipi;
 
@@ -26,7 +26,7 @@ public class UserPratilipiEntity implements UserPratilipi {
 	private Long pratilipiId;
 	
 	@Persistent( column = "PURCHASED_FROM" )
-	private PurchasedFrom purchasedFrom;
+	private SellerType purchasedFrom;
 	
 	@Persistent( column = "PURCHASE_DATE" )
 	private Date purchaseDate;
@@ -74,12 +74,12 @@ public class UserPratilipiEntity implements UserPratilipi {
 	}
 	
 	@Override
-	public PurchasedFrom getPurchasedFrom() {
+	public SellerType getPurchasedFrom() {
 		return purchasedFrom;
 	}
 	
 	@Override
-	public void setPurchasedFrom( PurchasedFrom purchasedFrom ) {
+	public void setPurchasedFrom( SellerType purchasedFrom ) {
 		this.purchasedFrom = purchasedFrom;
 	}
 
