@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.commons.shared.PurchasedFrom;
 import com.pratilipi.commons.shared.UserReviewState;
 
 public interface UserPratilipi extends Serializable {
@@ -18,9 +19,9 @@ public interface UserPratilipi extends Serializable {
 	
 	void setPratilipiId( Long pratilipiId );
 	
-	PratilipiType getPratilipiType();
+	PurchasedFrom getPurchasedFrom();
 	
-	void setPratilipiType( PratilipiType pratilipiType );
+	void setPurchasedFrom( PurchasedFrom purchasedFrom );
 	
 	Long getRating();
 	
