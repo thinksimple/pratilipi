@@ -65,13 +65,15 @@
 
 	<div id="Reviews" class="well" style="margin-top:25px;">
 		<#list reviewList as review >
-			<div class="hr-below">
-				<h4 style="display:inline-block">${ userIdNameMap[ review.getUserId()?c ] } Says,</h4>
-				<span class="pull-right"> ${ review.getReviewDate()?date }</span>
-				<p>
-					${ review.getReview() }
-				</p>
-			</div>
+			<#if review.getReview()??>
+				<div class="hr-below">
+					<h4 style="display:inline-block">${ userIdNameMap[ review.getUserId()?c ] } Says,</h4>
+					<span class="pull-right"> ${ review.getReviewDate()?date }</span>
+					<p>
+						${ review.getReview() }
+					</p>
+				</div>
+			</#if>
 		</#list>
 		<#if showReviewOption>
 			<div id="Review">

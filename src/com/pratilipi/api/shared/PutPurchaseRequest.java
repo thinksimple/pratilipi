@@ -5,8 +5,8 @@ import com.claymus.api.shared.GenericRequest;
 @SuppressWarnings("serial")
 public class PutPurchaseRequest extends GenericRequest {
 
-	private Long bookId;
-	private String userEmail;
+	private Long pratilipiId;
+	private String userId;
 
 	
 	private PutPurchaseRequest() {
@@ -14,12 +14,12 @@ public class PutPurchaseRequest extends GenericRequest {
 	}
 
 	
-	public Long getBookId() {
-		return bookId;
+	public Long getPratilipiId() {
+		return pratilipiId;
 	}
 
-	public String getUserEmail() {
-		return userEmail;
+	public String getUserId() {
+		return userId;
 	}
 
 }

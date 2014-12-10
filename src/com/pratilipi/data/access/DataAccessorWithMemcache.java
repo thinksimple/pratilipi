@@ -371,6 +371,8 @@ public class DataAccessorWithMemcache
 				userPratilipi );
 		memcache.remove(
 				PREFIX_USER_PRATILIPI_LIST + userPratilipi.getPratilipiId() );
+		memcache.remove(
+				PREFIX_USER_PRATILIPI_PURCHASE_LIST + userPratilipi.getUserId() );
 		return userPratilipi;
 	}
 	

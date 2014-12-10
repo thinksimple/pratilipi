@@ -42,7 +42,7 @@ public class PurchaseApi extends GenericApi {
 		}
 		
 		//BOOK VERIFICATION : bookId exist in database
-		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getBookId() );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getPratilipiId() );
 		if( pratilipi == null ){
 			response.sendError( HttpServletResponse.SC_BAD_REQUEST, "INVALID BOOKID" );
 			return;
@@ -58,10 +58,10 @@ public class PurchaseApi extends GenericApi {
 		}
 		
 		//User email verification. In case email doesnot exists in database, new user is created.
-		User user = dataAccessor.getUserByEmail( apiRequest.getUserEmail() );
+		User user = dataAccessor.getUserByEmail( apiRequest.getUserId() );
 		if( user == null ){
 			user = dataAccessor.newUser();
-			user.setEmail( apiRequest.getUserEmail() );
+			user.setEmail( apiRequest.getUserId() );
 			user.setSignUpDate( new Date() );
 			user.setCampaign( "B2B" );
 			
@@ -73,7 +73,7 @@ public class PurchaseApi extends GenericApi {
 		if( userPratilipi == null ){
 			//When userpratilipi entity doesnot exists for userId and pratilipiId pair send in the request.
 			userPratilipi = dataAccessor.newUserPratilipi();
-			userPratilipi.setPratilipiId( apiRequest.getBookId() );
+			userPratilipi.setPratilipiId( apiRequest.getPratilipiId() );
 			userPratilipi.setUserId( user.getId() );
 		}
 
