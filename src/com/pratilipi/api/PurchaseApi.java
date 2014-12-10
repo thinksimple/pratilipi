@@ -13,6 +13,8 @@ import com.claymus.data.transfer.User;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.pratilipi.commons.shared.SellerType;
+import com.pratilipi.api.shared.GetPurchaseRequest;
+import com.pratilipi.api.shared.GetPurchaseResponse;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -22,32 +24,25 @@ import com.pratilipi.data.transfer.UserPratilipi;
 @SuppressWarnings("serial")
 public class PurchaseApi extends GenericApi {
 
-	
 	@Override
 	protected void executeGet(
 			JsonObject requestPayloadJson,
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException, UnexpectedServerException {
 		
-		String accessToken = requestPayloadJson.get( "accessToken" ).getAsString();
-		String userEmail = requestPayloadJson.get( "userId" ).getAsString(); 	//userId send will be user email.
-		long bookId = requestPayloadJson.get( "bookId" ).getAsLong();
+		GetPurchaseRequest apiRequest = gson.fromJson( requestPayloadJson, GetPurchaseRequest.class );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		
 		//Access Token verification
-		AccessToken accessTokenEntity = dataAccessor.getAccessToken( accessToken );
-		if( accessTokenEntity == null  ){
-			response.sendError( HttpServletResponse.SC_BAD_REQUEST, "INVALID ACCESS TOKEN" );
+		AccessToken accessTokenEntity = dataAccessor.getAccessToken( apiRequest.getAccessToken() );
+		if( accessTokenEntity == null ){
+			response.sendError( HttpServletResponse.SC_BAD_REQUEST, "ACCESS TOKEN IS INVALID OR EXPIRED" );
 			return;
-		} else if ( accessTokenEntity != null && accessTokenEntity.getExpiry().before( new Date() )){
-			response.sendError( HttpServletResponse.SC_BAD_REQUEST, "ACCESS TOKEN EXPIRED" );
-			//TODO : REFRESH USER WEBPAGE TO START AUTHNETICATION PROCESS
-			return;
-		} 
+		}
 		
 		//BOOK VERIFICATION : bookId exist in database
-		Pratilipi pratilipi = dataAccessor.getPratilipi( bookId );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getBookId() );
 		if( pratilipi == null ){
 			response.sendError( HttpServletResponse.SC_BAD_REQUEST, "INVALID BOOKID" );
 			return;
@@ -62,13 +57,11 @@ public class PurchaseApi extends GenericApi {
 			return;
 		}
 		
-		
-		
 		//User email verification. In case email doesnot exists in database, new user is created.
-		User user = dataAccessor.getUserByEmail( userEmail );
+		User user = dataAccessor.getUserByEmail( apiRequest.getUserEmail() );
 		if( user == null ){
 			user = dataAccessor.newUser();
-			user.setEmail( userEmail );
+			user.setEmail( apiRequest.getUserEmail() );
 			user.setSignUpDate( new Date() );
 			user.setCampaign( "B2B" );
 			
@@ -80,7 +73,7 @@ public class PurchaseApi extends GenericApi {
 		if( userPratilipi == null ){
 			//When userpratilipi entity doesnot exists for userId and pratilipiId pair send in the request.
 			userPratilipi = dataAccessor.newUserPratilipi();
-			userPratilipi.setPratilipiId( bookId );
+			userPratilipi.setPratilipiId( apiRequest.getBookId() );
 			userPratilipi.setUserId( user.getId() );
 		}
 
@@ -89,10 +82,9 @@ public class PurchaseApi extends GenericApi {
 		
 		dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		
-		JsonObject returnObj = new JsonObject();
-		returnObj.addProperty( "transactionId", userPratilipi.getId() );
+		GetPurchaseResponse apiResponse = new GetPurchaseResponse( userPratilipi.getId() );
 		
-		serveJson( gson.toJson( returnObj ), request, response );
+		serveJson( gson.toJson( apiResponse ), request, response );
 		
 	}
 	

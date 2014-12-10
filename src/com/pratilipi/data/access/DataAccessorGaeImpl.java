@@ -47,7 +47,12 @@ public class DataAccessorGaeImpl
 
 	@Override
 	public Pratilipi getPratilipi( Long id ) {
-		return getEntity( PratilipiEntity.class, id );
+		try{
+			return getEntity( PratilipiEntity.class, id );
+		} catch( JDOObjectNotFoundException e ){
+			return null;
+		}
+		
 	}
 
 	@Override
