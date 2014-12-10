@@ -509,6 +509,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		Publisher publisher = dataAccessor.newPublisher();
 		publisher.setName( publisherData.getName() );
 		publisher.setEmail( publisherData.getEmail() );
+		publisher.setPublisherSecret( publisherData.getPublisherSecret() );
 		publisher.setRegistrationDate( new Date() );
 		
 		publisher = dataAccessor.createOrUpdatePublisher( publisher );
@@ -529,6 +530,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			publisherData.setId( publisher.getId() );
 			publisherData.setName( publisher.getName() );
 			publisherData.setEmail( publisher.getEmail() );
+			publisherData.setPublisherSecret( publisherData.getPublisherSecret() );
 			publisherData.setRegistrationDate( publisher.getRegistrationDate() );
 			
 			publisherDataList.add( publisherData );

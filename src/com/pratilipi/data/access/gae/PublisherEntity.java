@@ -31,6 +31,9 @@ public class PublisherEntity implements Publisher {
 
 	@Persistent( column = "EMAIL" )
 	private String email;
+	
+	@Persistent( column = "PUBLISHER_SECRET" )
+	private String publisherSecret;
 
 	@Persistent( column = "REGISTRATION_DATE" )
 	private Date registrationDate;
@@ -99,6 +102,17 @@ public class PublisherEntity implements Publisher {
 	@Override
 	public void setRegistrationDate( Date registrationDate ) {
 		this.registrationDate = registrationDate;
+	}
+
+	@Override
+	public String getPublisherSecret() {
+		return this.publisherSecret;
+	}
+
+	@Override
+	public void setPublisherSecret(String publisherSecret) {
+		this.publisherSecret = publisherSecret;
+		
 	}
 	
 }

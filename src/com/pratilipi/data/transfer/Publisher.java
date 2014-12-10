@@ -27,6 +27,10 @@ public interface Publisher extends Serializable {
 	
 	void setEmail( String email );
 	
+	String getPublisherSecret();
+	
+	void setPublisherSecret( String publisherSecret );
+	
 	Date getRegistrationDate();
 	
 	void setRegistrationDate( Date registrationDate );
