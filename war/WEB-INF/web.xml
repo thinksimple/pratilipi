@@ -104,6 +104,16 @@
     <servlet-name>PratilipiApi</servlet-name>
     <url-pattern>/api.pratilipi/pratilipi/content</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>PurchaseApi</servlet-name>
+    <servlet-class>com.pratilipi.api.PurchaseApi</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PurchaseApi</servlet-name>
+    <url-pattern>/api.pratilipi/user/purchase</url-pattern>
+  </servlet-mapping>
 
   <!-- Handlers for Uploading and Serving Website Resources -->
 

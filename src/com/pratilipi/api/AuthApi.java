@@ -13,6 +13,7 @@ import com.claymus.data.transfer.AccessToken;
 import com.google.gson.JsonObject;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Publisher;
 
 
 @SuppressWarnings("serial")
@@ -20,21 +21,24 @@ public class AuthApi extends GenericApi {
 
 	private static final long ACCESS_TOKEN_VALIDITY = 60 * 60 * 1000; // 1 Hr
 	
-	private static final long PUBLISHER_ID = 5131259839774720L;
-	private static final String PUBLISHER_SECRET = "WythcpbjPW5DqPLWDRnjgETbLbZiUbTvGTgMR8QtzC0";
-
-	
 	@Override
 	protected void executeGet(
 			JsonObject requestPayloadJson,
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException, UnexpectedServerException {
 		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		
 		long publisherId = requestPayloadJson.get( "publisherId" ).getAsLong();
 		String publisherSecret = requestPayloadJson.get( "publisherSecret" ).getAsString();
 		
+		Publisher publisher = dataAccessor.getPublisher( publisherId );
 		
-		if( publisherId != PUBLISHER_ID || !publisherSecret.equals( PUBLISHER_SECRET ) ) {
+		if( publisher == null ){
+			response.sendError( HttpServletResponse.SC_BAD_REQUEST );
+			return;
+		}else if( publisherId != publisher.getId() 
+					|| !publisherSecret.equals( publisher.getPublisherSecret()  ) ) {
 			response.sendError( HttpServletResponse.SC_UNAUTHORIZED );
 			return;
 		}
@@ -49,8 +53,6 @@ public class AuthApi extends GenericApi {
 		
 		
 		// Creating and persisting AccessToken entity
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-
 		AccessToken accessToken = dataAccessor.newAccessToken();
 		accessToken.setUuid( tokenId );
 		accessToken.setExpiry( expiry );
