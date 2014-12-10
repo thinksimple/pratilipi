@@ -32,6 +32,7 @@ public class DataAccessorWithMemcache
 	private static final String PREFIX_PRATILIPI_GENRE_LIST = "PratilipiGenreList-";
 	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
 	private static final String PREFIX_USER_PRATILIPI_LIST = "UserPratilipiList-";
+	private static final String PREFIX_USER_PRATILIPI_PURCHASE_LIST = "UserPratilipiPurchaseList-";
 
 	
 	private final DataAccessor dataAccessor;
@@ -346,6 +347,20 @@ public class DataAccessorWithMemcache
 					new ArrayList<>( userPratilipiList ) );
 		}
 		return userPratilipiList;
+	}
+
+	@Override
+	public List<Long> getPurchaseList( Long userId ) {
+		List<Long> purchaseList =
+				memcache.get( PREFIX_USER_PRATILIPI_PURCHASE_LIST + userId );
+		if( purchaseList == null ) {
+			purchaseList =
+					dataAccessor.getPurchaseList( userId );
+			memcache.put(
+					PREFIX_USER_PRATILIPI_PURCHASE_LIST + userId,
+					new ArrayList<>( purchaseList ) );
+		}
+		return purchaseList;
 	}
 
 	@Override

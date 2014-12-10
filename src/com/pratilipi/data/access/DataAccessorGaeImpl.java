@@ -103,7 +103,7 @@ public class DataAccessorGaeImpl
 		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
 		
 		return new DataListCursorTuple<T>(
-				(List<T>) pm.detachCopyAll( pratilipiEntityList ),
+				idOnly ? pratilipiEntityList : (List<T>) pm.detachCopyAll( pratilipiEntityList ),
 				cursor == null ? null : cursor.toWebSafeString() );
 	}
 
@@ -355,15 +355,26 @@ public class DataAccessorGaeImpl
 						.build();
 		
 		@SuppressWarnings("unchecked")
-		List<UserPratilipi> userBookList = (List<UserPratilipi>) query.execute( pratilipiId );
-		return (List<UserPratilipi>) pm.detachCopyAll( userBookList );
+		List<UserPratilipi> userPratilipiList = (List<UserPratilipi>) query.execute( pratilipiId );
+		return (List<UserPratilipi>) pm.detachCopyAll( userPratilipiList );
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Long> getPurchaseList( Long userId ) {
+		Query query =
+				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) )
+						.addFilter( "userId", userId )
+						.setResult( "pratilipiId" )
+						.build();
+		
+		return (List<Long>) query.execute( userId );
+	}
+	
 	@Override
 	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
 		return createOrUpdateEntity( userPratilipi );
 	}
-
+	
 }

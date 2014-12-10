@@ -102,6 +102,8 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	List<UserPratilipi> getUserPratilipiList( Long pratilipiId );
 	
-	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
+	List<Long> getPurchaseList( Long userId );
 
+	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
+	
 }
