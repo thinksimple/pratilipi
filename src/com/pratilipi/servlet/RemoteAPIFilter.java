@@ -31,17 +31,20 @@ public class RemoteAPIFilter implements Filter {
 
 		if( host.equals( "alpha.pratilipi.com" ) ) {
 			RemoteApiOptions options = new RemoteApiOptions()
-					.server( "devo-pratilipi.appspot.com", 443 )
-					.remoteApiPath( "/service.remote-api" )
+					.server( "api.devo-pratilipi.appspot.com", 443 )
+					.remoteApiPath( "/remote-api" )
 					.credentials( "@pratilipi.com", "" );
 
 			RemoteApiInstaller installer = new RemoteApiInstaller();
-			installer.install(options);
+			try {
+				installer.install( options );
+				chain.doFilter( req, resp );
+			} finally {
+				try {
+					installer.uninstall();
+				} catch( Exception e ) {}
+			}
 			
-			chain.doFilter( req, resp );
-
-			installer.uninstall();
-		
 		} else {
 			chain.doFilter( req, resp );
 
