@@ -7,9 +7,21 @@ public interface Publisher extends Serializable {
 
 	Long getId();
 	
+	Long getUserId();
+	
+	void setUserId( Long userId );
+	
+	Long getLanguageId();
+	
+	void setLanguageId( Long languageId );
+	
 	String getName();
 	
 	void setName( String name );
+	
+	String getNameEn();
+	
+	void setNameEn( String nameEn );
 	
 	String getEmail();
 	

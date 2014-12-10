@@ -17,9 +17,17 @@ public class PublisherEntity implements Publisher {
 	@Persistent( column = "PUBLISHER_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
+	@Persistent( column = "USER_ID" )
+	private Long userId;
+	
+	@Persistent( column = "LANGUAGE_ID" )
+	private Long languageId;
+
 	@Persistent( column = "NAME" )
 	private String name;
 	
+	@Persistent( column = "NAME_EN" )
+	private String nameEn;
 
 	@Persistent( column = "EMAIL" )
 	private String email;
@@ -34,6 +42,26 @@ public class PublisherEntity implements Publisher {
 	}
 
 	@Override
+	public Long getUserId() {
+		return userId;
+	}
+
+	@Override
+	public void setUserId( Long userId ) {
+		this.userId = userId;
+	}
+
+	@Override
+	public Long getLanguageId() {
+		return languageId;
+	}
+
+	@Override
+	public void setLanguageId( Long languageId ) {
+		this.languageId = languageId;
+	}
+
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -41,6 +69,16 @@ public class PublisherEntity implements Publisher {
 	@Override
 	public void setName( String name ) {
 		this.name = name;
+	}
+
+	@Override
+	public String getNameEn() {
+		return nameEn;
+	}
+
+	@Override
+	public void setNameEn( String nameEn ) {
+		this.nameEn = nameEn;
 	}
 
 	@Override
