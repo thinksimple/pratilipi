@@ -4,9 +4,10 @@ import com.claymus.commons.shared.PageType;
 
 public enum PratilipiPageType implements PageType {
 	
-	AUTHOR( "/author/" ),
 	PRATILIPI( "/pratilipi/" ),
 	READ( "/read?id=" ),
+	AUTHOR( "/author/" ),
+	PUBLISHER( "/publisher/" ),
 	;
 	
 	

@@ -21,9 +21,11 @@ import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiGenre;
+import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PratilipiData;
+import com.pratilipi.service.shared.data.PublisherData;
 
 @SuppressWarnings("serial")
 public class PratilipiHelper extends ClaymusHelper {
@@ -70,10 +72,6 @@ public class PratilipiHelper extends ClaymusHelper {
 		return "pratilipi-content/word/" + ( pratilipiId == null ? "" : pratilipiId );
 	}
 	
-	public static String getContentImage( Long pratilipiId ) {
-		return "pratilipi-content/image/" + ( pratilipiId == null ? "" : pratilipiId );
-	}
-
 
 	public static String getContentUrl( Long pratilipiId ) {
 		return getContentUrl( pratilipiId, true );
@@ -98,14 +96,7 @@ public class PratilipiHelper extends ClaymusHelper {
 	public static String getContentWordUrl( Long pratilipiId, boolean dynamic ) {
 		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) + getContentWord( pratilipiId );
 	}
-	
-	public static String getContentImageUrl( Long pratilipiId ) {
-		return getContentImageUrl( pratilipiId, true );
-	}
 
-	public static String getContentImageUrl( Long pratilipiId, boolean dynamic ) {
-		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) + getContentImage( pratilipiId );
-	}
 
 
 	public List<PratilipiData> createPratilipiDataListFromIdList(
@@ -342,6 +333,41 @@ public class PratilipiHelper extends ClaymusHelper {
 		languageData.setNameEn( language.getNameEn() );
 		languageData.setCreationDate( language.getCreationDate() );
 		return languageData;
+	}
+
+	
+	public PublisherData createPublisherData( Long publisherId ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Publisher publisher = dataAccessor.getPublisher( publisherId );
+		Language language = dataAccessor.getLanguage( publisher.getLanguageId() );
+		return createPublisherData( publisher, language );
+	}
+	
+	public PublisherData createPublisherData( Publisher publisher, Language language ) {
+		if( publisher == null )
+			return null;
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Page publisherPage = dataAccessor.getPage( PratilipiPageType.PUBLISHER.toString(), publisher.getId() );
+		
+		PublisherData publisherData = new PublisherData();
+		
+		publisherData.setId( publisher.getId() );
+		publisherData.setPageUrl( publisherPage.getUri() );
+		publisherData.setPageUrlAlias( publisherPage.getUriAlias() );
+		publisherData.setPublisherImageUrl( URL_RESOURCE + "publisher-image/original/" + publisher.getId() );
+		publisherData.setPublisherImageUploadUrl( URL_RESOURCE + "publisher-image/original/" + publisher.getId() );
+		publisherData.setUserId( publisher.getUserId() );
+
+		publisherData.setLanguageId( publisher.getLanguageId() );
+		publisherData.setLanguageData( createLanguageData( language ) );
+
+		publisherData.setName( publisher.getName() );
+		publisherData.setNameEn( publisher.getNameEn() );
+		publisherData.setEmail( publisher.getEmail() );
+		publisherData.setRegistrationDate( new Date() );
+		
+		return publisherData;
 	}
 
 }
