@@ -13,8 +13,8 @@ import com.claymus.data.transfer.User;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.pratilipi.commons.shared.SellerType;
-import com.pratilipi.api.shared.GetPurchaseRequest;
-import com.pratilipi.api.shared.GetPurchaseResponse;
+import com.pratilipi.api.shared.PutPurchaseRequest;
+import com.pratilipi.api.shared.PutPurchaseResponse;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -25,12 +25,12 @@ import com.pratilipi.data.transfer.UserPratilipi;
 public class PurchaseApi extends GenericApi {
 
 	@Override
-	protected void executeGet(
+	protected void executePut(
 			JsonObject requestPayloadJson,
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException, UnexpectedServerException {
 		
-		GetPurchaseRequest apiRequest = gson.fromJson( requestPayloadJson, GetPurchaseRequest.class );
+		PutPurchaseRequest apiRequest = gson.fromJson( requestPayloadJson, PutPurchaseRequest.class );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		
@@ -82,7 +82,7 @@ public class PurchaseApi extends GenericApi {
 		
 		dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		
-		GetPurchaseResponse apiResponse = new GetPurchaseResponse( userPratilipi.getId() );
+		PutPurchaseResponse apiResponse = new PutPurchaseResponse( userPratilipi.getId() );
 		
 		serveJson( gson.toJson( apiResponse ), request, response );
 		

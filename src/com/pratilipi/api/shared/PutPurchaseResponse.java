@@ -3,15 +3,15 @@ package com.pratilipi.api.shared;
 import com.claymus.api.shared.GenericResponse;
 
 @SuppressWarnings("serial")
-public class GetPurchaseResponse extends GenericResponse { 
+public class PutPurchaseResponse extends GenericResponse { 
 	
 	private String transactionId;
 
 	
 	@SuppressWarnings("unused")
-	private GetPurchaseResponse() {}
+	private PutPurchaseResponse() {}
 	
-	public GetPurchaseResponse( String transactionId ) {
+	public PutPurchaseResponse( String transactionId ) {
 		this.transactionId = transactionId;
 	}
 	
@@ -19,6 +19,5 @@ public class GetPurchaseResponse extends GenericResponse {
 	public String getTransactionId() {
 		return transactionId;
 	}
-
 	
 }

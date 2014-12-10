@@ -112,7 +112,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>PurchaseApi</servlet-name>
-    <url-pattern>/api.pratilipi/user/purchase</url-pattern>
+    <url-pattern>/api.pratilipi/purchase</url-pattern>
   </servlet-mapping>
 
   <!-- Handlers for Uploading and Serving Website Resources -->
