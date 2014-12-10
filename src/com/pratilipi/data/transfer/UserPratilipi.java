@@ -3,7 +3,6 @@ package com.pratilipi.data.transfer;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.PurchasedFrom;
 import com.pratilipi.commons.shared.UserReviewState;
 
@@ -38,5 +37,9 @@ public interface UserPratilipi extends Serializable {
 	Date getReviewDate();
 	
 	void setReviewDate( Date reviewDate );
+	
+	Date getPurchaseDate();
+	
+	void setPurchaseDate( Date purchaseDate );
 
 }
