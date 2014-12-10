@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.claymus.api.GenericApi;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.google.gson.JsonObject;
+import com.pratilipi.api.shared.GetPratilipiContentRequest;
+import com.pratilipi.api.shared.GetPratilipiContentResponse;
 import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
-import com.pratilipi.service.shared.GetPratilipiContentRequest;
-import com.pratilipi.service.shared.GetPratilipiContentResponse;
 
 
 @SuppressWarnings("serial")

@@ -12,6 +12,8 @@ import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.pagecontent.PageContentHelper;
+import com.pratilipi.api.shared.GetPratilipiContentRequest;
+import com.pratilipi.api.shared.GetPratilipiContentResponse;
 import com.pratilipi.commons.server.PratilipiContentUtil;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiContentType;
@@ -22,8 +24,6 @@ import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
-import com.pratilipi.service.shared.GetPratilipiContentRequest;
-import com.pratilipi.service.shared.GetPratilipiContentResponse;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiContentHelper extends PageContentHelper<

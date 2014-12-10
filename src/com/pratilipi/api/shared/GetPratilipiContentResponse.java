@@ -1,12 +1,13 @@
-package com.pratilipi.service.shared;
+package com.pratilipi.api.shared;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import com.claymus.api.shared.GenericResponse;
 import com.pratilipi.commons.shared.PratilipiContentType;
 
-public class GetPratilipiContentResponse implements IsSerializable { 
+@SuppressWarnings("serial")
+public class GetPratilipiContentResponse extends GenericResponse { 
 	
-	private long pratilipiId;
-	private int pageNo;
+	private Long pratilipiId;
+	private Integer pageNo;
 	private PratilipiContentType contentType;
 	private Object pageContent;
 	private String pageContentMimeType;
@@ -16,7 +17,7 @@ public class GetPratilipiContentResponse implements IsSerializable {
 	private GetPratilipiContentResponse() {}
 	
 	public GetPratilipiContentResponse(
-			long pratilipiId, int pageNo, PratilipiContentType contentType,
+			Long pratilipiId, Integer pageNo, PratilipiContentType contentType,
 			Object pageContent, String pageContentMimeType ) {
 		
 		this.pratilipiId = pratilipiId;
@@ -31,7 +32,7 @@ public class GetPratilipiContentResponse implements IsSerializable {
 		return pratilipiId;
 	}
 
-	public int getPageNumber() {
+	public Integer getPageNumber() {
 		return pageNo;
 	}
 	
