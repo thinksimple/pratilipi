@@ -84,7 +84,7 @@
 </div>
 
 <!-- JAVASCRIPT START -->
-<script language="javascript" defer>
+<script language="javascript">
 	function disableselect(e){
 		return false;
 	}
@@ -137,49 +137,10 @@ function centerAlignBasicReader(){
 	basicReader.style.visibility = 'visible';
 }
 
-
-/* SET PAGE CONTENT AS PER COOKIE  */
-function setReaderContentSize(){
-	var imageHeight = getCookie( "image-height" );
-	var fontSize = getCookie( "font-size" );
-	var pageContentDiv = document.getElementById( "PageContent-Pratilipi-Content" );
-	
-	if( pageContentDiv){
-		if( document.getElementById( "imageContent" ) && imageHeight ){
-			document.getElementById( "imageContent" ).height = imageHeight;
-			document.getElementById( "imageContent" ).style.width = 'auto';
-			var contentTd = document.getElementById( "Pratilipi-Content-td" );
-			contentTd.width = document.getElementById( "imageContent" ).width; 
-		}
-		
-		if( pageContentDiv.getElementsByTagName( "p" ) && fontSize ){
-			var tagList = Array.prototype.slice.call( pageContentDiv.getElementsByTagName( "p" ) );
-			tagList.forEach( function( value, index, p ) {
-				p[index].style.fontSize = fontSize + "px";
-			} );
-		}
-	}
-}
-
-
 /* SAVES PRATILIPI ID AND PAGE NUMBER IN COOKIE */
 function saveAutoBookmark(){
-	var urlParameters = window.location.search.substring(1).split( '&' );
-	var pratilipiId;
-	var pageNo;
-	for( i=0; i< urlParameters.length; ++i){
-		var param = urlParameters[i].split( '=' );
-		if( param && param[0] == "id" ){
-			pratilipiId = param[1];
-		}
-		
-		if( param && param[0] == "page" ){
-			pageNo = param[1];
-			setCookie( '${ pageNoCookieName }', param[1], 365 );
-		}
-	}
+	setCookie( '${ pageNoCookieName }', ${ pageNo }, 365 );
 }
-
 
 /* Zoom Support */
 
@@ -258,7 +219,6 @@ window.addEventListener( 'load', function( event ){
 	    }
 	});
 	
-	setReaderContentSize();
 	centerAlignBasicReader();
 	saveAutoBookmark();
 });
