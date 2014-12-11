@@ -7,7 +7,7 @@ public class GetOAuthRequest extends GenericRequest {
 
 	private Long publisherId;
 	private String publisherSecret;
-	private String userEmail;
+	private String userId;
 	
 
 	private GetOAuthRequest() {
@@ -22,8 +22,8 @@ public class GetOAuthRequest extends GenericRequest {
 		return publisherSecret;
 	}
 	
-	public String getUserEmail() {
-		return userEmail;
+	public String getUserId() {
+		return userId;
 	}
 
 }
