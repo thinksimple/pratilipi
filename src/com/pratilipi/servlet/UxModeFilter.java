@@ -44,7 +44,7 @@ public class UxModeFilter implements Filter {
 			 *   "Mozilla/5.0 (Linux; Android 4.3; GT-I9300 Build/JSS15J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.102 Mobile Safari/537.36 OPR/25.0.1619.84037"
 			 */
 			String userAgentSubStr = userAgent.substring( userAgent.indexOf( "OPR" ) + 4 );
-			int version = Integer.parseInt( userAgent.substring( 0, userAgentSubStr.indexOf( "." ) ) );
+			int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
 			
 			basicMode = version <= 22;
 			
@@ -73,7 +73,7 @@ public class UxModeFilter implements Filter {
 			 *   "Mozilla/5.0 (Linux; Android 4.3; GT-I9300 Build/JSS15J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.59 Mobile Safari/537.36"
 			 */
 			String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Chrome" ) + 7 );
-			int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgent.indexOf( "." ) ) );
+			int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
 
 			basicMode = version <= 35;
 		
