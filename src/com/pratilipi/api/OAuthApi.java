@@ -1,16 +1,12 @@
 package com.pratilipi.api;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.claymus.api.GenericApi;
-import com.claymus.commons.shared.exception.UnexpectedServerException;
+import com.claymus.api.annotation.Get;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.data.transfer.AccessToken;
-import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GetOAuthRequest;
 import com.pratilipi.api.shared.GetOAuthResponse;
 import com.pratilipi.data.access.DataAccessor;
@@ -23,23 +19,16 @@ public class OAuthApi extends GenericApi {
 
 	private static final long ACCESS_TOKEN_VALIDITY = 60 * 60 * 1000; // 1 Hr
 	
-	@Override
-	protected void executeGet(
-			JsonObject requestPayloadJson,
-			HttpServletRequest request,
-			HttpServletResponse response ) throws IOException, UnexpectedServerException {
+
+	@Get
+	public GetOAuthResponse getOAuth( GetOAuthRequest request )
+			throws InsufficientAccessException {
 		
-		GetOAuthRequest apiRequest =
-				gson.fromJson( requestPayloadJson, GetOAuthRequest.class );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		Publisher publisher = dataAccessor.getPublisher( request.getPublisherId() );
 		
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		Publisher publisher = dataAccessor.getPublisher( apiRequest.getPublisherId() );
-		
-		if( publisher == null || !apiRequest.getPublisherSecret().equals( publisher.getPublisherSecret() ) ) {
-			response.sendError( HttpServletResponse.SC_UNAUTHORIZED );
-			return;
-		}
+		if( publisher == null || !request.getPublisherSecret().equals( publisher.getPublisherSecret() ) )
+			throw new InsufficientAccessException( "Invalid publisher id or secret." );
 		
 
 		String tokenId = UUID.randomUUID().toString();
@@ -50,12 +39,11 @@ public class OAuthApi extends GenericApi {
 		AccessToken accessToken = dataAccessor.newAccessToken();
 		accessToken.setId( tokenId );
 		accessToken.setExpiry( expiry );
-		accessToken.setValues( requestPayloadJson.toString() );
+		accessToken.setValues( gson.toJson( request ) );
 		accessToken = dataAccessor.createAccessToken( accessToken );
 
 		
-		GetOAuthResponse apiResponse = new GetOAuthResponse( tokenId , expiry.getTime() );
-		serveJson( gson.toJson( apiResponse ), request, response );
+		return new GetOAuthResponse( tokenId , expiry.getTime() );
 	}
 	
 }

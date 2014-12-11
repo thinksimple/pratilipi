@@ -96,12 +96,12 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>PratilipiApi</servlet-name>
-    <servlet-class>com.pratilipi.api.PratilipiApi</servlet-class>
+    <servlet-name>PratilipiContentApi</servlet-name>
+    <servlet-class>com.pratilipi.api.PratilipiContentApi</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>PratilipiApi</servlet-name>
+    <servlet-name>PratilipiContentApi</servlet-name>
     <url-pattern>/api.pratilipi/pratilipi/content</url-pattern>
   </servlet-mapping>
   

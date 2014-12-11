@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
+import com.claymus.commons.shared.exception.IllegalArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
@@ -125,9 +126,9 @@ public class PratilipiContentHelper extends PageContentHelper<
 		return ! PratilipiHelper.get( request ).getCurrentUserId().equals( author.getUserId() );
 	}
 	
-	public static GetPratilipiContentResponse getPratilipiContent(
+	public static Object getPratilipiContent(
 			GetPratilipiContentRequest apiRequest, HttpServletRequest httpRequest )
-			throws UnexpectedServerException {
+			throws UnexpectedServerException, IllegalArgumentException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( httpRequest );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( httpRequest );
@@ -154,26 +155,24 @@ public class PratilipiContentHelper extends PageContentHelper<
 			pageContent = pratilipiContentUtil.getContent( apiRequest.getPageNumber() );
 			pageContentMimeType = blobEntry.getMimeType();
 		
+			return new GetPratilipiContentResponse(
+					apiRequest.getPratilipiId(),
+					apiRequest.getPageNumber(),
+					apiRequest.getContentType(),
+					pageContent, pageContentMimeType );
 			
 		} else if( apiRequest.getContentType() == PratilipiContentType.IMAGE ) {
-			BlobEntry blobEntry = null;
 			try {
-				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentImageName( apiRequest.getPageNumber() ) );
+				return blobAccessor.getBlob( pratilipiData.getPratilipiContentImageName( apiRequest.getPageNumber() ) );
 			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
 				throw new UnexpectedServerException();
 			}
-			
-			pageContent = blobEntry.getData();
-			pageContentMimeType = blobEntry.getMimeType();
-		}
-
 		
-		return new GetPratilipiContentResponse(
-				apiRequest.getPratilipiId(),
-				apiRequest.getPageNumber(),
-				apiRequest.getContentType(),
-				pageContent, pageContentMimeType );
+		} else {
+			throw new IllegalArgumentException( apiRequest.getContentType() + " content type is not yet supported." );
+		}
+		
 	}
 	
 }

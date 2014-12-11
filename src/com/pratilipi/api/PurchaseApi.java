@@ -1,20 +1,19 @@
 package com.pratilipi.api;
 
-import java.io.IOException;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.claymus.api.GenericApi;
+import com.claymus.api.annotation.Put;
+import com.claymus.commons.shared.exception.IllegalArgumentException;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.User;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.pratilipi.commons.shared.SellerType;
 import com.pratilipi.api.shared.PutPurchaseRequest;
 import com.pratilipi.api.shared.PutPurchaseResponse;
+import com.pratilipi.commons.shared.SellerType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -24,68 +23,58 @@ import com.pratilipi.data.transfer.UserPratilipi;
 @SuppressWarnings("serial")
 public class PurchaseApi extends GenericApi {
 
-	@Override
-	protected void executePut(
-			JsonObject requestPayloadJson,
-			HttpServletRequest request,
-			HttpServletResponse response ) throws IOException, UnexpectedServerException {
+	@Put
+	public PutPurchaseResponse purchase( PutPurchaseRequest apiRequest )
+			throws IllegalArgumentException, InsufficientAccessException,
+			UnexpectedServerException {
 		
-		PutPurchaseRequest apiRequest = gson.fromJson( requestPayloadJson, PutPurchaseRequest.class );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+
+		if( apiRequest.getAccessToken() == null )
+			throw new IllegalArgumentException( "Access Token is missing." );
+
 		
-		//Access Token verification
-		AccessToken accessTokenEntity = dataAccessor.getAccessToken( apiRequest.getAccessToken() );
-		if( accessTokenEntity == null ){
-			response.sendError( HttpServletResponse.SC_BAD_REQUEST, "ACCESS TOKEN IS INVALID OR EXPIRED" );
-			return;
-		}
+		AccessToken accessToken = dataAccessor.getAccessToken( apiRequest.getAccessToken() );
+		JsonObject accessTokenValues = gson.fromJson( accessToken.getValues(), JsonElement.class ).getAsJsonObject();
+		Long publisherId = accessTokenValues.get( "publisherId" ).getAsLong();
 		
-		//BOOK VERIFICATION : bookId exist in database
+		
+		if( publisherId == null )
+			throw new InsufficientAccessException();
+		
+		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getPratilipiId() );
-		if( pratilipi == null ){
-			response.sendError( HttpServletResponse.SC_BAD_REQUEST, "INVALID BOOKID" );
-			return;
-		}
+		if( pratilipi == null )
+			throw new IllegalArgumentException( "Invalid Pratilipi Id." );
+
 		
-		//Checking if book belongs to the publisher
-		JsonParser parser = new JsonParser();
-		JsonObject accessTokenValue = parser.parse( accessTokenEntity.getValues() ).getAsJsonObject();
-		Long publisherId = accessTokenValue.get( "publisherId" ).getAsLong();
-		if( (long) pratilipi.getPublisherId() != (long) publisherId ){
-			response.sendError( HttpServletResponse.SC_BAD_REQUEST, "BOOK DOESNOT BELONG TO THE PUBLISHER" );
-			return;
-		}
+		if( pratilipi.getPublisherId() == null || (long) pratilipi.getPublisherId() != (long) publisherId )
+			throw new InsufficientAccessException( "Insufficient privilege to take this action on Pratilipi Id " + apiRequest.getPratilipiId() );
+
 		
-		//User email verification. In case email doesnot exists in database, new user is created.
 		User user = dataAccessor.getUserByEmail( apiRequest.getUserId() );
-		if( user == null ){
+		if( user == null ) {
 			user = dataAccessor.newUser();
 			user.setEmail( apiRequest.getUserId() );
 			user.setSignUpDate( new Date() );
-			user.setCampaign( "B2B" );
-			
+			user.setCampaign( "Publisher:" + publisherId );
 			dataAccessor.createOrUpdateUser( user );
 		}
 		
-		//Update UserPratilipi Entity
-		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( user.getId(), pratilipi.getId() );
-		if( userPratilipi == null ){
-			//When userpratilipi entity doesnot exists for userId and pratilipiId pair send in the request.
-			userPratilipi = dataAccessor.newUserPratilipi();
-			userPratilipi.setPratilipiId( apiRequest.getPratilipiId() );
-			userPratilipi.setUserId( user.getId() );
-		}
 
+		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( user.getId(), pratilipi.getId() );
+		if( userPratilipi == null ) {
+			userPratilipi = dataAccessor.newUserPratilipi();
+			userPratilipi.setUserId( user.getId() );
+			userPratilipi.setPratilipiId( pratilipi.getId() );
+		}
 		userPratilipi.setPurchasedFrom( SellerType.PUBLISHER );
 		userPratilipi.setPurchaseDate( new Date() );
-		
 		dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+
 		
-		PutPurchaseResponse apiResponse = new PutPurchaseResponse( userPratilipi.getId() );
-		
-		serveJson( gson.toJson( apiResponse ), request, response );
-		
+		return new PutPurchaseResponse( userPratilipi.getId() );
 	}
 	
 }

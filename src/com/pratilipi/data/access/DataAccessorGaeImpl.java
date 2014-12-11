@@ -207,7 +207,11 @@ public class DataAccessorGaeImpl
 
 	@Override
 	public Publisher getPublisher( Long id ) {
-		return getEntity( PublisherEntity.class, id );
+		try {
+			return getEntity( PublisherEntity.class, id );
+		} catch( JDOObjectNotFoundException e ) {
+			return null;
+		}
 	}
 	
 	@Override
