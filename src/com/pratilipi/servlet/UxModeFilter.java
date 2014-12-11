@@ -25,11 +25,17 @@ public class UxModeFilter implements Filter {
 		HttpServletRequest request = ( HttpServletRequest ) req;
 		String userAgent = request.getHeader( "user-agent" );
 		
+		String host = request.getServerName();
+
+		String basicModeParam = request.getParameter( "basicMode" );
+		String embedModeParam = request.getParameter( "embedMode" );
+		
+		
 		boolean basicMode = true;
 		
 		
-		if( request.getParameter( "basicMode" ) != null ) {
-			basicMode = Boolean.parseBoolean( request.getParameter( "basicMode" ) );
+		if( basicModeParam != null ) {
+			basicMode = Boolean.parseBoolean( basicModeParam );
 
 			
 		} else if( userAgent == null || userAgent.isEmpty() ) {
@@ -127,7 +133,13 @@ public class UxModeFilter implements Filter {
 		}
 		
 		
+		boolean embedMode = host.equals( "embed.pratilipi.com" );
+		if( embedModeParam != null )
+			embedMode = Boolean.parseBoolean( embedModeParam );
+		
+		
 		request.setAttribute( ClaymusHelper.REQUEST_ATTRIB_MODE_BASIC, basicMode );
+		request.setAttribute( ClaymusHelper.REQUEST_ATTRIB_EMBED_BASIC, embedMode );
 		
 		chain.doFilter( req, resp );
 	}

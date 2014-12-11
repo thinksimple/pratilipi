@@ -1,4 +1,5 @@
 Website 						 www.pratilipi.com | prod-pratilipi.appspot.com
+Website (Embed Mode)		   embed.pratilipi.com
 Website (Gamma)				   gamma.pratilipi.com
 Website (Legacy)			  legacy.pratilipi.com
 

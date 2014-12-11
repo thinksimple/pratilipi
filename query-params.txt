@@ -5,4 +5,5 @@ q				String		Search query
 dt				String		Search document type
 
 basicMode		boolean 	Force 'Basic Mode' ON/OFF
+embedMode		boolean 	Force 'Embed Mode' ON/OFF
 accessToken		String		OAuth 2.0 access token
