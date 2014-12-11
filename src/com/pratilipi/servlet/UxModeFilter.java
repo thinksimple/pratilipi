@@ -43,10 +43,8 @@ public class UxModeFilter implements Filter {
 			 * Opera on Android 4.3
 			 *   "Mozilla/5.0 (Linux; Android 4.3; GT-I9300 Build/JSS15J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.102 Mobile Safari/537.36 OPR/25.0.1619.84037"
 			 */
-			int version = Integer.parseInt(
-					userAgent.substring(
-							userAgent.indexOf( "OPR" ) + 4,
-							userAgent.indexOf( "OPR" ) + 6 ) );
+			String userAgentSubStr = userAgent.substring( userAgent.indexOf( "OPR" ) + 4 );
+			int version = Integer.parseInt( userAgent.substring( 0, userAgentSubStr.indexOf( "." ) ) );
 			
 			basicMode = version <= 22;
 			
@@ -74,10 +72,8 @@ public class UxModeFilter implements Filter {
 			 * Google Chrome on Android 4.3
 			 *   "Mozilla/5.0 (Linux; Android 4.3; GT-I9300 Build/JSS15J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.59 Mobile Safari/537.36"
 			 */
-			int version = Integer.parseInt(
-					userAgent.substring(
-							userAgent.indexOf( "Chrome" ) + 7,
-							userAgent.indexOf( "Chrome" ) + 9 ) );
+			String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Chrome" ) + 7 );
+			int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgent.indexOf( "." ) ) );
 
 			basicMode = version <= 35;
 		
@@ -98,11 +94,10 @@ public class UxModeFilter implements Filter {
 			 * Mozilla Firefox on Android 4.3
 			 *   "Mozilla/5.0 (Android; Mobile; rv:33.0) Gecko/33.0 Firefox/33.0"
 			 */
-			int version = Integer.parseInt(
-					userAgent.substring(
-							userAgent.indexOf( "Firefox" ) + 8,
-							userAgent.indexOf( "Firefox" ) + 10 ) );
-
+			
+			String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Firefox" ) + 8 );
+			int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
+			
 			basicMode = version <= 30;
 			
 			
