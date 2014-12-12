@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
-import com.claymus.commons.shared.exception.IllegalArgumentException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
@@ -128,7 +128,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 	
 	public static Object getPratilipiContent(
 			GetPratilipiContentRequest apiRequest, HttpServletRequest httpRequest )
-			throws UnexpectedServerException, IllegalArgumentException {
+			throws UnexpectedServerException, InvalidArgumentException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( httpRequest );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( httpRequest );
@@ -170,7 +170,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 			}
 		
 		} else {
-			throw new IllegalArgumentException( apiRequest.getContentType() + " content type is not yet supported." );
+			throw new InvalidArgumentException( apiRequest.getContentType() + " content type is not yet supported." );
 		}
 		
 	}

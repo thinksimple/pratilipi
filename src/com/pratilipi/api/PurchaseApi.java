@@ -5,7 +5,7 @@ import java.util.Date;
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Put;
 import com.claymus.commons.shared.AccessTokenType;
-import com.claymus.commons.shared.exception.IllegalArgumentException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.AccessToken;
@@ -24,14 +24,14 @@ public class PurchaseApi extends GenericApi {
 
 	@Put
 	public PutPurchaseResponse purchase( PutPurchaseRequest apiRequest )
-			throws IllegalArgumentException, InsufficientAccessException,
+			throws InvalidArgumentException, InsufficientAccessException,
 			UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		
 
 		if( apiRequest.getAccessToken() == null )
-			throw new IllegalArgumentException( "Access Token is missing." );
+			throw new InvalidArgumentException( "Access Token is missing." );
 
 		
 		AccessToken accessToken = dataAccessor.getAccessToken( apiRequest.getAccessToken() );
@@ -45,7 +45,7 @@ public class PurchaseApi extends GenericApi {
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getPratilipiId() );
 		if( pratilipi == null )
-			throw new IllegalArgumentException( "Invalid Pratilipi id." );
+			throw new InvalidArgumentException( "Invalid Pratilipi id." );
 
 		
 		if( pratilipi.getPublisherId() == null || (long) pratilipi.getPublisherId() != (long) accessToken.getPublisherId() )
@@ -68,7 +68,7 @@ public class PurchaseApi extends GenericApi {
 			userPratilipi.setUserId( user.getId() );
 			userPratilipi.setPratilipiId( pratilipi.getId() );
 		} else if( userPratilipi.getPurchasedFrom() != null ) {
-			throw new IllegalArgumentException( "Pratilipi already purchased by the user." );
+			throw new InvalidArgumentException( "Pratilipi already purchased by the user." );
 		}
 		userPratilipi.setPurchasedFrom( SellerType.PUBLISHER );
 		userPratilipi.setPurchaseDate( new Date() );

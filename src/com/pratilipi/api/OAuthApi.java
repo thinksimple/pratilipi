@@ -7,7 +7,7 @@ import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Get;
 import com.claymus.commons.server.EncryptPassword;
 import com.claymus.commons.shared.AccessTokenType;
-import com.claymus.commons.shared.exception.IllegalArgumentException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.User;
@@ -26,24 +26,24 @@ public class OAuthApi extends GenericApi {
 
 	@Get
 	public GetOAuthResponse getOAuth( GetOAuthRequest request )
-			throws IllegalArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 
 
 		// Validating minimum requirements
 		if( request.getUserId() == null && request.getPublisherId() == null ) {
-			throw new IllegalArgumentException( "User/Publisher id is required." );
+			throw new InvalidArgumentException( "User/Publisher id is required." );
 
 		} else if( request.getUserId() != null && request.getPublisherId() != null ) {
 			if( request.getUserSecret() == null && request.getPublisherSecret() == null )
-				throw new IllegalArgumentException( "User/Publisher secret is required." );
+				throw new InvalidArgumentException( "User/Publisher secret is required." );
 
 		} else if( request.getUserId() != null && request.getUserSecret() == null ) { // && request.getPublisherId() == null
-			throw new IllegalArgumentException( "User secret is required." );
+			throw new InvalidArgumentException( "User secret is required." );
 	
 		} else if( request.getPublisherId() != null && request.getPublisherSecret() == null ) { // && request.getUserId() == null
-			throw new IllegalArgumentException( "Publisher secret is required." );
+			throw new InvalidArgumentException( "Publisher secret is required." );
 		}
 		
 		
@@ -52,18 +52,15 @@ public class OAuthApi extends GenericApi {
 		Publisher publisher = null;
 		
 		if( request.getUserId() != null ) {
-			String userId = request.getUserId();
-			user = userId.indexOf( '@' ) == -1
-					? dataAccessor.getUser( Long.parseLong( userId ) )
-					: dataAccessor.getUserByEmail( userId );
+			user = dataAccessor.getUserByEmail( request.getUserId() );
 			if( user == null )
-				throw new IllegalArgumentException( "Invalid user id." );
+				throw new InvalidArgumentException( "Invalid user id." );
 		}
 
 		if( request.getPublisherId() != null ) {
 			publisher = dataAccessor.getPublisher( request.getPublisherId() );
 			if( publisher == null )
-				throw new IllegalArgumentException( "Invalid publisher id." );
+				throw new InvalidArgumentException( "Invalid publisher id." );
 		}
 		
 		
@@ -71,13 +68,13 @@ public class OAuthApi extends GenericApi {
 		AccessToken accessToken = dataAccessor.newAccessToken();
 		if( user != null && request.getUserSecret() != null ) {
 			if( !EncryptPassword.check( request.getUserSecret(), user.getPassword() ) )
-				throw new IllegalArgumentException( "Invalid user secret." );
+				throw new InvalidArgumentException( "Invalid user secret." );
 			accessToken.setUserId( user.getId() );
 			accessToken.setType( AccessTokenType.USER );
 			
 		} else if( publisher != null && request.getPublisherSecret() != null ) {
 			if( !request.getPublisherSecret().equals( publisher.getSecret() ) )
-				throw new IllegalArgumentException( "Invalid publisher secret." );
+				throw new InvalidArgumentException( "Invalid publisher secret." );
 			
 			accessToken.setPublisherId( publisher.getId() );
 			if( user == null ) {

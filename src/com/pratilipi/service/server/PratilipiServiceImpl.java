@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
-import com.claymus.commons.shared.exception.IllegalArgumentException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
@@ -96,7 +96,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
     
 	@Override
 	public SavePratilipiResponse savePratilipi( SavePratilipiRequest request )
-			throws IllegalArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException {
 	
 		PratilipiData pratilipiData = request.getPratilipiData();
 
@@ -158,7 +158,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 			if( pratilipiData.getState() == PratilipiState.PUBLISHED && pratilipi.getType() == PratilipiType.BOOK ) {
 				if( pratilipi.getSummary() == null ) {
-					throw new IllegalArgumentException(
+					throw new InvalidArgumentException(
 							pratilipi.getType().getName() + " summary is missing. " +
 							pratilipi.getType().getName() + " can not be published without a summary." );
 				}
@@ -222,7 +222,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	@Override
 	public SavePratilipiContentResponse savePratilipiContent(
 			SavePratilipiContentRequest request )
-			throws IllegalArgumentException,
+			throws InvalidArgumentException,
 					InsufficientAccessException,
 					UnexpectedServerException {
 	
@@ -300,11 +300,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	
 	@Override
 	public AddLanguageResponse addLanguage( AddLanguageRequest request )
-			throws IllegalArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		LanguageData languageData = request.getLanguage();
 		if( languageData.getId() != null )
-			throw new IllegalArgumentException(
+			throw new InvalidArgumentException(
 					"LanguageId exist already. Did you mean to call updateLanguage ?" );
 
 		
@@ -541,7 +541,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	
 	@Override
 	public SaveGenreResponse saveGenre( SaveGenreRequest request )
-			throws IllegalArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		GenreData genreData = request.getGenre();
 		
@@ -575,7 +575,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	}
 
 	public GetGenreListResponse getGenreList( GetGenreListRequest request )
-			throws IllegalArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		PratilipiHelper pratilipiHelper =
 				PratilipiHelper.get( this.getThreadLocalRequest() );
@@ -608,7 +608,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	
 	
 	public AddPratilipiGenreResponse addPratilipiGenre( AddPratilipiGenreRequest request )
-			throws IllegalArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 
@@ -635,7 +635,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	}
 
 	public DeletePratilipiGenreResponse deletePratilipiGenre( DeletePratilipiGenreRequest request )
-			throws IllegalArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 
@@ -660,7 +660,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	
 	@Override
 	public AddUserPratilipiResponse addUserPratilipi( AddUserPratilipiRequest request )
-			throws IllegalArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		UserPratilipiData userPratilipiData = request.getUserPratilipi();
 

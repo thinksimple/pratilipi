@@ -2,7 +2,7 @@ package com.pratilipi.service.client;
 
 import java.io.IOException;
 
-import com.claymus.commons.shared.exception.IllegalArgumentException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -49,7 +49,7 @@ public interface PratilipiService extends RemoteService {
 	// API Version: 4.0; Owner Module: PratilipiContent;
 	SavePratilipiResponse savePratilipi(
 			SavePratilipiRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
+			throws InvalidArgumentException, InsufficientAccessException;
 
 	// API Version: 4.0; Owner Module: PratilipisContent;
 	GetPratilipiListResponse getPratilipiList(
@@ -58,11 +58,11 @@ public interface PratilipiService extends RemoteService {
 
 	SavePratilipiContentResponse savePratilipiContent(
 			SavePratilipiContentRequest request )
-			throws IllegalArgumentException, InsufficientAccessException,
+			throws InvalidArgumentException, InsufficientAccessException,
 					UnexpectedServerException;
 
 	AddLanguageResponse addLanguage( AddLanguageRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
+			throws InvalidArgumentException, InsufficientAccessException;
 
 	GetLanguageListResponse getLanguageList( GetLanguageListRequest request )
 			throws InsufficientAccessException;
@@ -83,23 +83,23 @@ public interface PratilipiService extends RemoteService {
 	
 
 	SaveGenreResponse saveGenre( SaveGenreRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
+			throws InvalidArgumentException, InsufficientAccessException;
 
 	GetGenreListResponse getGenreList( GetGenreListRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
+			throws InvalidArgumentException, InsufficientAccessException;
 
 
 	// API Version: 4.0; Owner Module: PratilipiContent;
 	AddPratilipiGenreResponse addPratilipiGenre( AddPratilipiGenreRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
+			throws InvalidArgumentException, InsufficientAccessException;
 
 	// API Version: 4.0; Owner Module: PratilipiContent;
 	DeletePratilipiGenreResponse deletePratilipiGenre( DeletePratilipiGenreRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
+			throws InvalidArgumentException, InsufficientAccessException;
 
 	
 	AddUserPratilipiResponse addUserPratilipi( AddUserPratilipiRequest request )
-			throws IllegalArgumentException, InsufficientAccessException;
+			throws InvalidArgumentException, InsufficientAccessException;
 
 	GetUserPratilipiResponse getUserPratilipi( GetUserPratilipiRequest request );
 	

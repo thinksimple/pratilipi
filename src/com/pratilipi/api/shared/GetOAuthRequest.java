@@ -1,10 +1,12 @@
 package com.pratilipi.api.shared;
 
+import com.claymus.api.annotation.Validate;
 import com.claymus.api.shared.GenericRequest;
 
 @SuppressWarnings("serial")
 public class GetOAuthRequest extends GenericRequest {
 
+	@Validate( regEx = REGEX_EMAIL )
 	private String userId;
 	private String userSecret;
 	

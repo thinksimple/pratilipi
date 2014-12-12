@@ -1,13 +1,19 @@
 package com.pratilipi.api.shared;
 
+import com.claymus.api.annotation.Validate;
 import com.claymus.api.shared.GenericRequest;
 import com.pratilipi.commons.shared.PratilipiContentType;
 
 @SuppressWarnings("serial")
 public class GetPratilipiContentRequest extends GenericRequest {
 
+	@Validate( required = true )
 	private Long pratilipiId;
+
+	@Validate( required = true )
 	private Integer pageNo;
+	
+	@Validate( required = true )
 	private PratilipiContentType contentType;
 	
 
