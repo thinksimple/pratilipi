@@ -47,10 +47,13 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/resource.book-cover/original/4920152667717632", "http://static.pratilipi.com/pratilipi-cover/300/4920152667717632" );
 		redirections.put( "/resource.book-cover/original/5710758973276160", "http://static.pratilipi.com/pratilipi-cover/300/5710758973276160" );
 		redirections.put( "/resource.book-cover/original/5963192723308544", "http://static.pratilipi.com/pratilipi-cover/300/5963192723308544" );
+		redirections.put( "/resource.book-cover/original/6029594259881984", "http://static.pratilipi.com/pratilipi-cover/300/6029594259881984" );
 		
 		redirections.put( "/resource.book-cover/300/5682462386552832", "http://static.pratilipi.com/pratilipi-cover/300/5682462386552832" );
 		redirections.put( "/resource.book-cover/300/6116163083829248", "http://static.pratilipi.com/pratilipi-cover/300/6116163083829248" );
 		redirections.put( "/resource.book-cover/300/6248007305527296", "http://static.pratilipi.com/pratilipi-cover/300/6248007305527296" );
+		
+		redirections.put( "//resource.poem-cover/original/5095141714952192", "http://static.pratilipi.com/pratilipi-cover/300/5095141714952192" );
 
 		redirections.put( "/resource.poem-cover/300/4768179276480512", "http://static.pratilipi.com/pratilipi-cover/300/4768179276480512" );
 		redirections.put( "/resource.poem-cover/300/5145057824866304", "http://static.pratilipi.com/pratilipi-cover/300/5145057824866304" );
