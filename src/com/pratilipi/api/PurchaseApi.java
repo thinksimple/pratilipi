@@ -41,7 +41,7 @@ public class PurchaseApi extends GenericApi {
 		JsonElement userId = accessTokenValues.get( "userId" );
 		
 		if( userId != null ){
-			throw new IllegalArgumentException( "Invalid Access Token" );
+			throw new InsufficientAccessException();
 		}
 		
 		if( publisherId == null )
