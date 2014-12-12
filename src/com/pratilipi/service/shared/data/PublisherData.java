@@ -29,7 +29,7 @@ public class PublisherData implements IsSerializable {
 	private String email;
 	private boolean hasEmail;
 
-	private String publisherSecret;
+	private String secret;
 	
 	private Date registrationDate;
 	
@@ -142,12 +142,12 @@ public class PublisherData implements IsSerializable {
 		return hasEmail;
 	}
 	
-	public String getPublisherSecret() {
-		return publisherSecret;
+	public String getSecret() {
+		return secret;
 	}
 
-	public void setPublisherSecret(String publisherSecret) {
-		this.publisherSecret = publisherSecret;
+	public void setSecret( String secret ) {
+		this.secret = secret;
 	}
 
 	public Date getRegistrationDate() {

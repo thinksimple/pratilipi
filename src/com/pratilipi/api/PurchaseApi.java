@@ -4,13 +4,12 @@ import java.util.Date;
 
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Put;
+import com.claymus.commons.shared.AccessTokenType;
 import com.claymus.commons.shared.exception.IllegalArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.User;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.PutPurchaseRequest;
 import com.pratilipi.api.shared.PutPurchaseResponse;
 import com.pratilipi.commons.shared.SellerType;
@@ -36,31 +35,29 @@ public class PurchaseApi extends GenericApi {
 
 		
 		AccessToken accessToken = dataAccessor.getAccessToken( apiRequest.getAccessToken() );
-		JsonObject accessTokenValues = gson.fromJson( accessToken.getValues(), JsonElement.class ).getAsJsonObject();
-		Long publisherId = accessTokenValues.get( "publisherId" ).getAsLong();
-		JsonElement userId = accessTokenValues.get( "userId" );
+		if( accessToken == null )
+			throw new InsufficientAccessException( "Access token is invalid or expired." );
 		
-		if( userId != null ){
-			throw new InsufficientAccessException();
-		}
 		
-		if( publisherId == null )
+		if( accessToken.getType() != AccessTokenType.PUBLISHER )
 			throw new InsufficientAccessException();
+		
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getPratilipiId() );
 		if( pratilipi == null )
-			throw new IllegalArgumentException( "Invalid Pratilipi Id." );
+			throw new IllegalArgumentException( "Invalid Pratilipi id." );
 
 		
-		if( pratilipi.getPublisherId() == null || (long) pratilipi.getPublisherId() != (long) publisherId )
+		if( pratilipi.getPublisherId() == null || (long) pratilipi.getPublisherId() != (long) accessToken.getPublisherId() )
 			throw new InsufficientAccessException( "Insufficient privilege to take this action on Pratilipi Id " + apiRequest.getPratilipiId() );
 
+		
 		User user = dataAccessor.getUserByEmail( apiRequest.getUserId() );
 		if( user == null ) {
 			user = dataAccessor.newUser();
 			user.setEmail( apiRequest.getUserId() );
 			user.setSignUpDate( new Date() );
-			user.setCampaign( "Publisher:" + publisherId );
+			user.setCampaign( "Publisher:" + accessToken.getPublisherId() );
 			dataAccessor.createOrUpdateUser( user );
 		}
 		
@@ -70,11 +67,9 @@ public class PurchaseApi extends GenericApi {
 			userPratilipi = dataAccessor.newUserPratilipi();
 			userPratilipi.setUserId( user.getId() );
 			userPratilipi.setPratilipiId( pratilipi.getId() );
+		} else if( userPratilipi.getPurchasedFrom() != null ) {
+			throw new IllegalArgumentException( "Pratilipi already purchased by the user" );
 		}
-		else if( userPratilipi.getPurchaseDate() != null ){
-			throw new IllegalArgumentException( "Content already purchased by the user" );
-		}
-		
 		userPratilipi.setPurchasedFrom( SellerType.PUBLISHER );
 		userPratilipi.setPurchaseDate( new Date() );
 		dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
