@@ -68,7 +68,7 @@ public class PurchaseApi extends GenericApi {
 			userPratilipi.setUserId( user.getId() );
 			userPratilipi.setPratilipiId( pratilipi.getId() );
 		} else if( userPratilipi.getPurchasedFrom() != null ) {
-			throw new IllegalArgumentException( "Pratilipi already purchased by the user" );
+			throw new IllegalArgumentException( "Pratilipi already purchased by the user." );
 		}
 		userPratilipi.setPurchasedFrom( SellerType.PUBLISHER );
 		userPratilipi.setPurchaseDate( new Date() );

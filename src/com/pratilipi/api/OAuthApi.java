@@ -32,19 +32,20 @@ public class OAuthApi extends GenericApi {
 
 
 		// Validating minimum requirements
-		if( request.getUserId() == null && request.getPublisherId() == null )
+		if( request.getUserId() == null && request.getPublisherId() == null ) {
 			throw new IllegalArgumentException( "User/Publisher id is required." );
 
-		else if( request.getUserId() != null && request.getPublisherId() != null )
+		} else if( request.getUserId() != null && request.getPublisherId() != null ) {
 			if( request.getUserSecret() == null && request.getPublisherSecret() == null )
 				throw new IllegalArgumentException( "User/Publisher secret is required." );
 
-		else if( request.getUserId() != null && request.getUserSecret() == null ) // && request.getPublisherId() == null
+		} else if( request.getUserId() != null && request.getUserSecret() == null ) { // && request.getPublisherId() == null
 			throw new IllegalArgumentException( "User secret is required." );
-
-		else if( request.getPublisherId() != null && request.getPublisherId() == null ) // && request.getUserId() == null
+	
+		} else if( request.getPublisherId() != null && request.getPublisherSecret() == null ) { // && request.getUserId() == null
 			throw new IllegalArgumentException( "Publisher secret is required." );
-
+		}
+		
 		
 		// Fetching User and/or Publisher entities
 		User user = null;
