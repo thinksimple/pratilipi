@@ -38,11 +38,14 @@ public class PurchaseApi extends GenericApi {
 		AccessToken accessToken = dataAccessor.getAccessToken( apiRequest.getAccessToken() );
 		JsonObject accessTokenValues = gson.fromJson( accessToken.getValues(), JsonElement.class ).getAsJsonObject();
 		Long publisherId = accessTokenValues.get( "publisherId" ).getAsLong();
+		JsonElement userId = accessTokenValues.get( "userId" );
 		
+		if( userId != null ){
+			throw new IllegalArgumentException( "Invalid Access Token" );
+		}
 		
 		if( publisherId == null )
 			throw new InsufficientAccessException();
-		
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getPratilipiId() );
 		if( pratilipi == null )
@@ -52,7 +55,6 @@ public class PurchaseApi extends GenericApi {
 		if( pratilipi.getPublisherId() == null || (long) pratilipi.getPublisherId() != (long) publisherId )
 			throw new InsufficientAccessException( "Insufficient privilege to take this action on Pratilipi Id " + apiRequest.getPratilipiId() );
 
-		
 		User user = dataAccessor.getUserByEmail( apiRequest.getUserId() );
 		if( user == null ) {
 			user = dataAccessor.newUser();
@@ -69,6 +71,10 @@ public class PurchaseApi extends GenericApi {
 			userPratilipi.setUserId( user.getId() );
 			userPratilipi.setPratilipiId( pratilipi.getId() );
 		}
+		else if( userPratilipi.getPurchaseDate() != null ){
+			throw new IllegalArgumentException( "Content already purchased by the user" );
+		}
+		
 		userPratilipi.setPurchasedFrom( SellerType.PUBLISHER );
 		userPratilipi.setPurchaseDate( new Date() );
 		dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
