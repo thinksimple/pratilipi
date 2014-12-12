@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+
+  <servlet>
+    <servlet-name>RemoteApiServlet</servlet-name>
+    <servlet-class>com.google.apphosting.utils.remoteapi.RemoteApiServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoteApiServlet</servlet-name>
+    <url-pattern>/remote_api</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>OAuthApi</servlet-name>
+    <servlet-class>com.pratilipi.api.OAuthApi</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OAuthApi</servlet-name>
+    <url-pattern>/oauth</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>PurchaseApi</servlet-name>
+    <servlet-class>com.pratilipi.api.PurchaseApi</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PurchaseApi</servlet-name>
+    <url-pattern>/purchase</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>PratilipiContentApi</servlet-name>
+    <servlet-class>com.pratilipi.api.PratilipiContentApi</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PratilipiContentApi</servlet-name>
+    <url-pattern>/pratilipi/content</url-pattern>
+  </servlet-mapping>
+
+</web-app>

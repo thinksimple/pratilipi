@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+
+  <application>devo-pratilipi</application>
+  <module>api</module>
+  <version>mark-4p5</version>
+
+  <threadsafe>true</threadsafe>
+
+  <instance-class>F1</instance-class>
+
+  <automatic-scaling>
+    <min-idle-instances>1</min-idle-instances>
+    <max-idle-instances>2</max-idle-instances>
+    <min-pending-latency>automatic</min-pending-latency>
+    <max-pending-latency>10ms</max-pending-latency>
+  </automatic-scaling>
+
+  <system-properties>
+    <!-- Configure java.util.logging -->
+    <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+
+	<!-- Configure web domain -->
+    <property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>
+    <property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
+
+	<!-- Configure resource path -->
+    <property name="devo-pratilipi.resource" value="/resource."/>
+    <property name="prod-pratilipi.resource" value="/resource."/>
+
+    <property name="devo-pratilipi.resource.static" value="/resource."/>
+    <property name="prod-pratilipi.resource.static" value="//static.pratilipi.com/"/>
+
+	<!-- Configure emails -->
+    <property name="devo-pratilipi.email.contact" value="dev-team@pratilipi.com"/>
+    <property name="prod-pratilipi.email.contact" value="contact@pratilipi.com"/>
+
+    <property name="devo-pratilipi.email.noreply" value="no-reply@pratilipi.com"/>
+    <property name="prod-pratilipi.email.noreply" value="no-reply@pratilipi.com"/>
+
+	<!-- Configure Blob Storage -->
+    <property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
+    <property name="prod-pratilipi.blobservice.gcs.bucket" value="static.pratilipi.com"/>
+  </system-properties>
+
+</appengine-web-app>

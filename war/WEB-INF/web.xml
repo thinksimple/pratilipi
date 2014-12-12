@@ -96,16 +96,6 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>PratilipiContentApi</servlet-name>
-    <servlet-class>com.pratilipi.api.PratilipiContentApi</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PratilipiContentApi</servlet-name>
-    <url-pattern>/api.pratilipi/pratilipi/content</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
     <servlet-name>PurchaseApi</servlet-name>
     <servlet-class>com.pratilipi.api.PurchaseApi</servlet-class>
     <load-on-startup>1</load-on-startup>
@@ -115,6 +105,16 @@
     <url-pattern>/api.pratilipi/purchase</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>PratilipiContentApi</servlet-name>
+    <servlet-class>com.pratilipi.api.PratilipiContentApi</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PratilipiContentApi</servlet-name>
+    <url-pattern>/api.pratilipi/pratilipi/content</url-pattern>
+  </servlet-mapping>
+  
   <!-- Handlers for Uploading and Serving Website Resources -->
 
   <servlet>
