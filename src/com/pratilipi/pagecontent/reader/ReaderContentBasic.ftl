@@ -13,7 +13,8 @@
 			<td>
 				<#-- Title and Author Name -->
 				<div style="margin-left: 5px; margin-right:5px;">
-					<h2>
+					<button type="button" onclick="window.location.href='${ exitUrl ! pratilipiData.getPageUrl() }'" style="float: left; margin-right: 10px;" ><img src="/theme.pratilipi/images/left.png" /></button>
+					<h2 style="line-height: 27px;">
 						<a href="${ pratilipiData.getPageUrlAlias() }">${ pratilipiData.getTitle() }</a>
 					</h2>
 				</div>
@@ -67,7 +68,6 @@
 		<tr>
 			<td>
 				<div style="margin: 5px; text-align: center;">
-					<button type="button" onclick="window.location.href='${ exitUrl ! pratilipiData.getPageUrl() }'" style="float: left;" ><img src="/theme.pratilipi/images/left.png" /></button>
 					<p style="display: inline; line-height: 28px; ">${ pageNumber } of ${ pageCount }</p>
 					<div align="right" style="display: inline-block; float: right;">
 						<#if previousPageUrl?? >
