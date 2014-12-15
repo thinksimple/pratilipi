@@ -168,7 +168,7 @@ public class PratilipiHelper extends ClaymusHelper {
 				pratilipiData.setLanguageData( languageData );
 			}
 
-			if( includeAuthorData ) {
+			if( includeAuthorData && pratilipi.getAuthorId() != null ) {
 				AuthorData authorData = authorIdToDataMap.get( pratilipi.getAuthorId() );
 				if( authorData == null ) {
 					Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );

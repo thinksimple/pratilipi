@@ -3,7 +3,7 @@
 
   <application>devo-pratilipi</application>
   <module>default</module>
-  <version>mark-4p5</version>
+  <version>mark-4p9</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>

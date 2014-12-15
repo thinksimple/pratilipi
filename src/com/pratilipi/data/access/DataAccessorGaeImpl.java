@@ -151,7 +151,7 @@ public class DataAccessorGaeImpl
 
 	@Override
 	public Author getAuthor( Long id ) {
-		return getEntity( AuthorEntity.class, id );
+		return id == null ? null : getEntity( AuthorEntity.class, id );
 	}
 	
 	@Override
