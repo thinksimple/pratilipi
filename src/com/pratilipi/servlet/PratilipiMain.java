@@ -377,35 +377,35 @@ public class PratilipiMain extends ClaymusMain {
 	private PageContent generateHomePageContent( HttpServletRequest request ) {
 		
 		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 5123639896702976L );
-		bookIdList.add( 6026535974731776L );
-		bookIdList.add( 5850454932062208L );
-		bookIdList.add( 5255539013451776L );
-		bookIdList.add( 6210385002627072L );
-		bookIdList.add( 5091659838652416L );
+		bookIdList.add( 5074327900782592L );
+		bookIdList.add( 5710758973276160L );
+		bookIdList.add( 5997080149491712L );
+		bookIdList.add( 5675573259010048L );
+		bookIdList.add( 4815549678747648L );
+		bookIdList.add( 5725637813731328L );
 
 		List<Long> poemIdList = new LinkedList<>();
+		poemIdList.add( 5110435556622336L );
+		poemIdList.add( 5195192575459328L );
 		poemIdList.add( 6231361757118464L );
-		poemIdList.add( 5191790156054528L );
-		poemIdList.add( 6292342239657984L );
-		poemIdList.add( 5724681378201600L );
-		poemIdList.add( 5141700368400384L );
-		poemIdList.add( 5753237407793152L );
+		poemIdList.add( 5670377556541440L );
+		poemIdList.add( 5121659782561792L );
+		poemIdList.add( 5749846262677504L );
 		
 		List<Long> storyIdList = new LinkedList<>();
-		storyIdList.add( 6204477409329152L );
-		storyIdList.add( 4797102525775872L );
-		storyIdList.add( 5195498055008256L );
-		storyIdList.add( 5069631354044416L );
-		storyIdList.add( 5181328018374656L );
-		storyIdList.add( 5769584590192640L );
+		storyIdList.add( 5163398408962048L );
+		storyIdList.add( 5177138009341952L );
+		storyIdList.add( 5649483882823680L );
+		storyIdList.add( 5196637563518976L );
+		storyIdList.add( 5691035543928832L );
+		storyIdList.add( 6041301266989056L );
 
 		
 		HomeContent homeContent = HomeContentFactory.newHomeContent();
 		homeContent.setBookIdList( bookIdList );
 		homeContent.setPoemIdList( poemIdList );
 		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 64 ) );
+		homeContent.setLastUpdated( new Date( 65 ) );
 		return homeContent;
 	}
 
