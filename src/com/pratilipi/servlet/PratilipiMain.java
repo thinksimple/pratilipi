@@ -41,7 +41,7 @@ import com.pratilipi.pagecontent.home.HomeContent;
 import com.pratilipi.pagecontent.home.HomeContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
-import com.pratilipi.pagecontent.pratilipis.PratilipisContentFactory;
+import com.pratilipi.pagecontent.pratilipis.PratilipisContentHelper;
 import com.pratilipi.pagecontent.publisher.PublisherContentHelper;
 import com.pratilipi.pagecontent.reader.ReaderContentHelper;
 import com.pratilipi.pagecontent.search.SearchContentHelper;
@@ -59,7 +59,7 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( AuthorContentHelper.class );
 		PageContentRegistry.register( PublisherContentHelper.class );
 		PageContentRegistry.register( HomeContentFactory.class );
-		PageContentRegistry.register( PratilipisContentFactory.class );
+		PageContentRegistry.register( PratilipisContentHelper.class );
 		PageContentRegistry.register( ReaderContentHelper.class );
 		PageContentRegistry.register( LanguagesContentFactory.class );
 		PageContentRegistry.register( AuthorsContentFactory.class );
@@ -197,56 +197,56 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( generateHomePageContent( request ) );
 
 		else if( requestUri.equals( "/books" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.BOOK, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/books/hindi" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, 5130467284090880L, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.BOOK, 5130467284090880L, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/books/gujarati" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, 5965057007550464L, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.BOOK, 5965057007550464L, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/books/tamil" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, 6319546696728576L, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.BOOK, 6319546696728576L, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/poems" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.POEM, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/poems/hindi" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM, 5130467284090880L, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.POEM, 5130467284090880L, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/poems/gujarati" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM, 5965057007550464L, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.POEM, 5965057007550464L, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/stories" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.STORY, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/stories/hindi" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY, 5130467284090880L, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.STORY, 5130467284090880L, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/stories/gujarati" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY, 5965057007550464L, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.STORY, 5965057007550464L, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/articles" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.ARTICLE, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.ARTICLE, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/articles/hindi" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.ARTICLE, 5130467284090880L, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.ARTICLE, 5130467284090880L, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.equals( "/articles/gujarati" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.ARTICLE, 5965057007550464L, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.ARTICLE, 5965057007550464L, PratilipiState.PUBLISHED ) );
 		
 		else if( requestUri.startsWith( "/classics/books" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.BOOK, true, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.BOOK, true, PratilipiState.PUBLISHED ) );
 
 		else if( requestUri.startsWith( "/classics/poems" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.POEM, true, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.POEM, true, PratilipiState.PUBLISHED ) );
 
 		else if( requestUri.startsWith( "/classics/stories" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.STORY, true, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.STORY, true, PratilipiState.PUBLISHED ) );
 
 		
 		else if( requestUri.startsWith( "/magazines" ) )
-			pageContentList.add( PratilipisContentFactory.newPratilipisContent( PratilipiType.MAGAZINE, PratilipiState.PUBLISHED ) );
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.MAGAZINE, PratilipiState.PUBLISHED ) );
 
 		
 		else if( requestUri.equals( "/languages" ) )

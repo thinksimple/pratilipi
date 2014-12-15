@@ -7,7 +7,7 @@ import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.pagecontent.pratilipis.gae.PratilipisContentEntity;
 import com.pratilipi.pagecontent.pratilipis.shared.PratilipisContentData;
 
-public class PratilipisContentFactory extends PageContentHelper<
+public class PratilipisContentHelper extends PageContentHelper<
 		PratilipisContent,
 		PratilipisContentData,
 		PratilipisContentProcessor> {

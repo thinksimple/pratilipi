@@ -106,15 +106,16 @@ public class QueueUpdatePratilipiIndexServlet extends HttpServlet {
 						.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getName() ) )
 						.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getNameEn() ) )
 						
-						.addField( Field.newBuilder().setName( "author" ).setAtom( pratilipiData.getAuthorId().toString() ) )
-						.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullName() ) )
-						.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) )
-	
 						.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) );
+				
+				if( author != null )
+					docBuilder.addField( Field.newBuilder().setName( "author" ).setAtom( pratilipiData.getAuthorId().toString() ) )
+							.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullName() ) )
+							.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) );
 
 				for( Genre genre : genreList ) {
-					docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genre.getId().toString() ) );
-					docBuilder.addField( Field.newBuilder().setName( "genre" ).setText( genre.getName() ) );
+					docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genre.getId().toString() ) )
+							.addField( Field.newBuilder().setName( "genre" ).setText( genre.getName() ) );
 				}
 				
 				Document document = docBuilder.build();
