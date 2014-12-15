@@ -54,11 +54,14 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/resource.book-cover/300/6248007305527296", "http://static.pratilipi.com/pratilipi-cover/300/6248007305527296" );
 		
 		redirections.put( "//resource.poem-cover/original/5095141714952192", "http://static.pratilipi.com/pratilipi-cover/300/5095141714952192" );
+		redirections.put( "//resource.poem-cover/original/5725485073956864", "http://static.pratilipi.com/pratilipi-cover/300/5725485073956864" );
 
 		redirections.put( "/resource.poem-cover/300/4768179276480512", "http://static.pratilipi.com/pratilipi-cover/300/4768179276480512" );
 		redirections.put( "/resource.poem-cover/300/5145057824866304", "http://static.pratilipi.com/pratilipi-cover/300/5145057824866304" );
 		redirections.put( "/resource.poem-cover/300/5200909848018944", "http://static.pratilipi.com/pratilipi-cover/300/5200909848018944" );
+		redirections.put( "/resource.poem-cover/300/5621792483835904", "http://static.pratilipi.com/pratilipi-cover/300/5621792483835904" );
 		redirections.put( "/resource.poem-cover/300/5631639635886080", "http://static.pratilipi.com/pratilipi-cover/300/5631639635886080" );
+		redirections.put( "/resource.poem-cover/300/5651757665353728", "http://static.pratilipi.com/pratilipi-cover/300/5651757665353728" );
 		redirections.put( "/resource.poem-cover/300/5662197925543936", "http://static.pratilipi.com/pratilipi-cover/300/5662197925543936" );
 		redirections.put( "/resource.poem-cover/300/5688737870643200", "http://static.pratilipi.com/pratilipi-cover/300/5688737870643200" );
 		redirections.put( "/resource.poem-cover/300/5704726691708928", "http://static.pratilipi.com/pratilipi-cover/300/5704726691708928" );
@@ -78,8 +81,6 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/resource.article-cover/300/5702949112119296", "http://static.pratilipi.com/pratilipi-cover/300/5702949112119296" );
 		redirections.put( "/resource.article-cover/300/5724466092965888", "http://static.pratilipi.com/pratilipi-cover/300/5724466092965888" );
 	
-	
-		
 		nonExistents.add( "/pagecontent.userforms/undefined.cache.js" );
 		nonExistents.add( "/pagecontent.pratilipi/undefined.cache.js" );
 		nonExistents.add( "/pagecontent.reader/undefined.cache.js" );
