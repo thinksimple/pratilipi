@@ -45,7 +45,7 @@
 	
 	
 	<#if pageCount gt 1>
-		<div center horizontal layout style="position:fixed; bottom:10px; width:100%;">
+		<div center horizontal layout id="sliderDiv" style="position:fixed; bottom:10px; width:100%;">
 			<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount }}" value="{{ pageNo }}" class="bg-green" style="width:100%" on-change="{{displayPage}}"></paper-slider>
 			<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" on-tap="{{displayPrevious}}"></paper-fab>
 			<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:25px;" on-tap="{{displayNext}}"></paper-fab>
@@ -71,7 +71,6 @@
 
 </template>
 
-
 <script>
 
 	var scope = document.querySelector( '#PageContent-Reader' );
@@ -80,6 +79,12 @@
 	scope.pageNo = ${ pageNo };
 	
 	var contentArray = [];
+	
+	jQuery( 'body' ).click( function(){
+		jQuery("#sliderDiv").fadeToggle( "fast", function(){
+			setTimeout( function() { jQuery("#sliderDiv").fadeOut( "slow" ); }, 2000);
+		});
+	});
 	
 	jQuery( 'body' ).keydown( function( event ) {
 		if( event.which == 37 && scope.pageNo > 1 ) {
@@ -131,6 +136,7 @@
 		scope.handleAjaxResponse = function( event, response ) {
 			contentArray[response.response['pageNo']] = response.response['pageContent'];
 			updateContent();
+			fadeOut();
 	    };
 	    
 		function updateContent() {
@@ -183,6 +189,7 @@
 			$(img).on( 'load', function() {
 				contentArray[pageNo] = img;
 				updateContent();
+				fadeOut();
 			});
 		}
 		
@@ -224,6 +231,11 @@
 		
 	</#if>
 	
+	function fadeOut(){
+		setTimeout( function(){ 
+			jQuery("#sliderDiv").fadeOut( "slow" );
+		}, 2000);
+	}
 
 	function initReader() {
 		try {
