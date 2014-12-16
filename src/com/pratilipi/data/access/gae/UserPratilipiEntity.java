@@ -25,6 +25,12 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Persistent( column = "PRATILIPI_ID" )
 	private Long pratilipiId;
 	
+	@Persistent( column = "LAST_OPENED_PAGE" )
+	private Integer lastOpenedPage;
+	
+	@Persistent( column = "LAST_OPENED_DATE" )
+	private Date lastOpenedDate;
+
 	@Persistent( column = "PURCHASED_FROM" )
 	private SellerType purchasedFrom;
 	
@@ -32,7 +38,7 @@ public class UserPratilipiEntity implements UserPratilipi {
 	private Date purchaseDate;
 
 	@Persistent( column = "RATING" )
-	private Long rating;
+	private Integer rating;
 	
 	@Persistent( column = "REVIEW" )
 	private Text review;
@@ -74,6 +80,26 @@ public class UserPratilipiEntity implements UserPratilipi {
 	}
 	
 	@Override
+	public Integer getLastOpenedPage() {
+		return lastOpenedPage;
+	}
+	
+	@Override
+	public void setLastOpenedPage( Integer lastOpenedPage ) {
+		this.lastOpenedPage = lastOpenedPage;
+	}
+
+	@Override
+	public Date getLastOpenedDate() {
+		return lastOpenedDate;
+	}
+	
+	@Override
+	public void setLastOpenedDate( Date lastOpenedDate ) {
+		this.lastOpenedDate = lastOpenedDate;
+	}
+
+	@Override
 	public SellerType getPurchasedFrom() {
 		return purchasedFrom;
 	}
@@ -94,12 +120,12 @@ public class UserPratilipiEntity implements UserPratilipi {
 	}
 
 	@Override
-	public Long getRating() {
+	public Integer getRating() {
 		return rating;
 	}
 	
 	@Override
-	public void setRating( Long rating ) {
+	public void setRating( Integer rating ) {
 		this.rating = rating;
 	}
 	

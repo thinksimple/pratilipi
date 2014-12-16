@@ -18,6 +18,14 @@ public interface UserPratilipi extends Serializable {
 	
 	void setPratilipiId( Long pratilipiId );
 	
+	Integer getLastOpenedPage();
+	
+	void setLastOpenedPage( Integer lastOpenedPage );
+
+	Date getLastOpenedDate();
+	
+	void setLastOpenedDate( Date lastOpenedDate );
+	
 	SellerType getPurchasedFrom();
 	
 	void setPurchasedFrom( SellerType purchasedFrom );
@@ -26,9 +34,9 @@ public interface UserPratilipi extends Serializable {
 	
 	void setPurchaseDate( Date purchaseDate );
 	
-	Long getRating();
+	Integer getRating();
 	
-	void setRating( Long rating );
+	void setRating( Integer rating );
 	
 	String getReview();
 	

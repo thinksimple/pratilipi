@@ -20,7 +20,7 @@ public class UserPratilipiData implements IsSerializable {
 	
 	private Date purchaseDate;
 	
-	private Long rating;
+	private Integer rating;
 	
 	private String review;
 	
@@ -77,11 +77,11 @@ public class UserPratilipiData implements IsSerializable {
 		this.purchaseDate = purchaseDate;
 	}
 
-	public Long getRating() {
+	public Integer getRating() {
 		return rating;
 	}
 
-	public void setRating( Long rating ) {
+	public void setRating( Integer rating ) {
 		this.rating = rating;
 	}
 

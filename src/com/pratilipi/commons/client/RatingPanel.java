@@ -41,7 +41,7 @@ public class RatingPanel extends Composite {
 		initWidget( flowPanel );	
 	}
 	
-	public RatingPanel( Long rating, boolean isReadOnly ){
+	public RatingPanel( Integer rating, boolean isReadOnly ){
 		stars  = new StarRating( rating, isReadOnly);
 		FlowPanel flowPanel = new FlowPanel();
 		
@@ -67,11 +67,11 @@ public class RatingPanel extends Composite {
 				if (!stars.isReadOnly()) {
 		            final Image image = (Image)event.getSource();
 		            if( stars.getHoverIndex() == stars.getRating() ){
-		            	stars.setValue(0L, true);
+		            	stars.setValue(0, true);
 		            }
 		            else {
 		                userPratilipi.setPratilipiId( Long.valueOf( bookId ) );
-		        		userPratilipi.setRating( (long) stars.getRating() );
+		        		userPratilipi.setRating( stars.getRating() );
 		                pratilipiService.addUserPratilipi(new AddUserPratilipiRequest( userPratilipi ), new AsyncCallback<AddUserPratilipiResponse>(){
 
 							@Override
@@ -81,7 +81,7 @@ public class RatingPanel extends Composite {
 
 							@Override
 							public void onSuccess(AddUserPratilipiResponse result) {
-								stars.setValue(Long.parseLong(image.getTitle()), true);
+								stars.setValue(Integer.parseInt(image.getTitle()), true);
 								Window.alert( "Rated Successfully!" );
 							}});
 		            }
