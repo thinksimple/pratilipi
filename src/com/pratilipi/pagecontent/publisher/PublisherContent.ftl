@@ -3,12 +3,15 @@
 
 <!-- PageContent :: Publisher :: Start -->
 
-<img src="${ publisherData.getPublisherBannerUrl() }" style="width:100%">
+<div style="margin-bottom:20px;">
+	<img src="${ publisherData.getPublisherBannerUrl() }" style="width:100%">
+</div>
+	
 <#if pratilipiDataList?has_content>
 	<div class="container">
 		<div class="row">
 			<#list pratilipiDataList as pratilipiData>
-				<@pratilipiView.thumbnail pratilipiData=pratilipiData />
+				<@pratilipiView.thumbnail pratilipiData=pratilipiData readerRetUrl=readerRetUrl />
 			</#list>
 		</div>
 	</div>

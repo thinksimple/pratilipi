@@ -86,22 +86,20 @@ public class PratilipiFilter implements Filter {
 		nonExistents.add( "/pagecontent.reader/undefined.cache.js" );
 		nonExistents.add( "/pagecontent.author/undefined.cache.js" );
 	
-		
-		
 		validHosts.add( "www.pratilipi.com" );
 		validHosts.add( "embed.pratilipi.com" );
 		validHosts.add( "gamma.pratilipi.com" );
 		validHosts.add( "legacy.pratilipi.com" );
-		validHosts.add( "mark-4.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-4p1.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-4p2.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-4p3.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-4p4.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-4p5.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-4p6.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-4p7.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-4p8.prod-pratilipi.appspot.com" );
-		validHosts.add( "mark-4p9.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p11.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p12.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p13.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p14.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p15.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p16.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p17.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p18.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p19.prod-pratilipi.appspot.com" );
+		validHosts.add( "mark-4p20.prod-pratilipi.appspot.com" );
 		validHosts.add( "devo.pratilipi.com" );
 		validHosts.add( "alpha.pratilipi.com" );
 		validHosts.add( "localhost" );

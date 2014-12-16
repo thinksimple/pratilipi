@@ -75,6 +75,7 @@ public class PublisherContentProcessor extends PageContentProcessor<PublisherCon
 				pratilipiIdList.add( pratilipiId );
 		}
 		
+		pratilipiIdList.add( 5671536392404992L );
 		
 		List<PratilipiData> pratilipiDataList =
 				pratilipiHelper.createPratilipiDataListFromIdList(
@@ -86,6 +87,7 @@ public class PublisherContentProcessor extends PageContentProcessor<PublisherCon
 		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		dataModel.put( "publisherData", publisherData );
 		dataModel.put( "pratilipiDataList", pratilipiDataList );
+		dataModel.put( "readerRetUrl", publisherData.getPageUrlAlias() );
 		dataModel.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
 		
 		

@@ -1,6 +1,8 @@
 id				long		Pratilipi id
 page			int			Pratilipi page number
 
+ret				String		Returning url
+
 q				String		Search query
 dt				String		Search document type
 

@@ -23,3 +23,14 @@
 		</div>
 	</div>
 </#macro>
+
+
+<#macro thumbnail pratilipiData readerRetUrl>
+	<div class="col-lg-2 col-md-3 col-sm-3 col-xs-6" style="margin-bottom:30px;" >
+		<div style="width:150px;">
+			<a href="${ pratilipiData.getReaderPageUrl() }&ret=${ readerRetUrl }">
+				<img src="${ pratilipiData.getCoverImageUrl() }" title="${ pratilipiData.getTitle() }" alt="${ pratilipiData.getTitle() }" class="img-responsive" />
+			</a>
+		</div>
+	</div>
+</#macro>
