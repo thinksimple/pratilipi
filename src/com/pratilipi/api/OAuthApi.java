@@ -85,7 +85,6 @@ public class OAuthApi extends GenericApi {
 			}
 			
 		}
-		accessToken.setId( UUID.randomUUID().toString() );
 		accessToken.setExpiry( new Date( new Date().getTime() + ACCESS_TOKEN_VALIDITY ) );
 		accessToken = dataAccessor.createAccessToken( accessToken );
 

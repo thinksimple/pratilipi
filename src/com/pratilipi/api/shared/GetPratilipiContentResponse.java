@@ -9,8 +9,7 @@ public class GetPratilipiContentResponse extends GenericResponse {
 	private Long pratilipiId;
 	private Integer pageNo;
 	private PratilipiContentType contentType;
-	private Object pageContent;
-	private String pageContentMimeType;
+	private String pageContent;
 
 	
 	@SuppressWarnings("unused")
@@ -18,13 +17,12 @@ public class GetPratilipiContentResponse extends GenericResponse {
 	
 	public GetPratilipiContentResponse(
 			Long pratilipiId, Integer pageNo, PratilipiContentType contentType,
-			Object pageContent, String pageContentMimeType ) {
+			String pageContent ) {
 		
 		this.pratilipiId = pratilipiId;
 		this.pageNo = pageNo;
 		this.contentType = contentType;
 		this.pageContent = pageContent;
-		this.pageContentMimeType = pageContentMimeType;
 	}
 	
 	
@@ -42,10 +40,6 @@ public class GetPratilipiContentResponse extends GenericResponse {
 	
 	public Object getPageContent() {
 		return pageContent;
-	}
-
-	public String getPageContentMimeType() {
-		return pageContentMimeType;
 	}
 
 }

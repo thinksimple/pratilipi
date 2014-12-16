@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.BlobEntry;
@@ -20,7 +21,6 @@ import com.google.gson.GsonBuilder;
 import com.pratilipi.commons.server.PratilipiContentUtil;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiContentType;
-import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
@@ -55,31 +55,28 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 	
 	@Override
 	public String generateHtml( ReaderContent readerContent, HttpServletRequest request )
-			throws InsufficientAccessException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		String pratilipiIdStr = request.getParameter( "id" );
 		Long pratilipiId = Long.parseLong( pratilipiIdStr );
-
+		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		
+		// AccessToReadPratilipiContent ?
+		if( !PratilipiContentHelper.hasRequestAccessToReadPratilipiContent( request, pratilipi ) )
+			throw new InsufficientAccessException();
 		
 		// AccessToUpdatePratilipiData ?
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		boolean showEditOption = PratilipiContentHelper
 				.hasRequestAccessToUpdatePratilipiData( request, pratilipi );
 
-		// Pratilipi should either be published OR user should have edit access.
-		if( pratilipi.getState() != PratilipiState.PUBLISHED && !showEditOption )
-			throw new InsufficientAccessException();
-
-		
 		// Creating PratilipiData
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData =
 				pratilipiHelper.createPratilipiData( pratilipi, null, author, null );
 
-		
 		// Page # to display
 		String pageNoStr = request.getParameter( "page" ) == null
 				? pratilipiHelper.getCookieValue( COOKIE_PAGE_NUMBER + pratilipiId )
@@ -115,17 +112,23 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			dataModel.put( "contentSize", pratilipiHelper.getCookieValue( COOKIE_CONTENT_SIZE_PRATILIPI ) );
 			dataModel.put( "contentSizeCookieName", COOKIE_CONTENT_SIZE_PRATILIPI );
 
-		} else { // if( pratilipiData.getContentType() == PratilipiContentType.IMAGE )
+		} else if( pratilipiData.getContentType() == PratilipiContentType.IMAGE ) {
 			
 			dataModel.put( "pageCount", (int) (long) pratilipiData.getPageCount() );
 			dataModel.put( "contentSize", pratilipiHelper.getCookieValue( COOKIE_CONTENT_SIZE_IMAGE ) );
 			dataModel.put( "contentSizeCookieName", COOKIE_CONTENT_SIZE_IMAGE );
+			
+		} else {
+			
+			throw new InvalidArgumentException( pratilipiData.getContentType() + " content type is not yet supported." );
 			
 		}
 		
 		
 		if( request.getParameter( "ret" ) != null && !request.getParameter( "ret" ).trim().isEmpty()  )
 			dataModel.put( "exitUrl", request.getParameter( "ret" ) );
+
+		dataModel.put( "showEditOption", showEditOption );
 
 		
 		String templateName = pratilipiHelper.isModeBasic()

@@ -8,13 +8,16 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
+import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.server.UserAccessHelper;
+import com.claymus.commons.shared.AccessTokenType;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
+import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.pagecontent.PageContentHelper;
-import com.pratilipi.api.shared.GetPratilipiContentRequest;
-import com.pratilipi.api.shared.GetPratilipiContentResponse;
 import com.pratilipi.commons.server.PratilipiContentUtil;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiContentType;
@@ -24,6 +27,7 @@ import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.Publisher;
+import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
 import com.pratilipi.service.shared.data.PratilipiData;
@@ -49,7 +53,10 @@ public class PratilipiContentHelper extends PageContentHelper<
 	public static final Access ACCESS_TO_ADD_PRATILIPI_REVIEW =
 			new Access( "pratilipi_data_add_review", false, "Add Pratilipi Review" );
 
-	
+	public static final Access ACCESS_TO_READ_PRATILIPI_CONTENT =
+			new Access( "pratilipi_data_read_content", false, "View Pratilipi Content" );
+
+
 	@Override
 	public String getModuleName() {
 		return "Pratilipi";
@@ -67,7 +74,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 				ACCESS_TO_UPDATE_PRATILIPI_DATA,
 				ACCESS_TO_READ_PRATILIPI_DATA_META,
 				ACCESS_TO_UPDATE_PRATILIPI_DATA_META,
-				ACCESS_TO_ADD_PRATILIPI_REVIEW
+				ACCESS_TO_ADD_PRATILIPI_REVIEW,
+				ACCESS_TO_READ_PRATILIPI_CONTENT
 		};
 	}
 	
@@ -149,22 +157,66 @@ public class PratilipiContentHelper extends PageContentHelper<
 			return true;
 	}
 	
-	public static Object getPratilipiContent(
-			GetPratilipiContentRequest apiRequest, HttpServletRequest httpRequest )
-			throws UnexpectedServerException, InvalidArgumentException {
+	public static boolean hasRequestAccessToReadPratilipiContent(
+			HttpServletRequest request, Pratilipi pratilipi ) {
 		
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( httpRequest );
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( httpRequest );
+		if( pratilipi.getState() == PratilipiState.PUBLISHED )
+			return true;
+		
+		if( pratilipi.getState() == PratilipiState.DELETED )
+			return false;
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		String accessTokenId = (String) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); 
+		AccessToken accessToken = dataAccessor.getAccessToken( accessTokenId );
+		
+		if( pratilipi.getState() == PratilipiState.DRAFTED
+				|| pratilipi.getState() == PratilipiState.PUBLISHED_PAID
+				|| pratilipi.getState() == PratilipiState.PUBLISHED_DISCONTINUED ) {
+			
+			if( accessToken.getType() == AccessTokenType.USER ) {
+				if( UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_READ_PRATILIPI_CONTENT, request ) )
+					return true;
+				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( accessToken.getUserId(), pratilipi.getId() );
+				return userPratilipi != null && userPratilipi.getPurchasedFrom() != null;
+				
+			} else if( accessToken.getType() == AccessTokenType.PUBLISHER ) {
+				return (long) accessToken.getPublisherId() == (long) pratilipi.getPublisherId();
+				
+			} else if( accessToken.getType() == AccessTokenType.USER_PUBLISHER ) {
+				if( (long) accessToken.getPublisherId() != (long) pratilipi.getPublisherId() )
+					return false;
+				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( accessToken.getUserId(), pratilipi.getId() );
+				return userPratilipi != null && userPratilipi.getPurchasedFrom() != null;
+				
+			} else {
+				return false;
+			}
+			
+		}
+		
+		return false;
+	}
+
+
+	public static Object getPratilipiContent(
+			long pratilipiId, int pageNo, PratilipiContentType contentType,
+			HttpServletRequest request ) throws InvalidArgumentException,
+			InsufficientAccessException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		
+		if( !PratilipiContentHelper.hasRequestAccessToReadPratilipiContent( request, pratilipi ) )
+			throw new InsufficientAccessException();
+
+		
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 
-		Pratilipi pratilipi = dataAccessor.getPratilipi( apiRequest.getPratilipiId() );
 		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, null, null, null, true );
 		
-		Object pageContent = null;
-		String pageContentMimeType = null;
-		
-		
-		if( apiRequest.getContentType() == PratilipiContentType.PRATILIPI ) {
+		if( contentType == PratilipiContentType.PRATILIPI ) {
 			BlobEntry blobEntry = null;
 			try {
 				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
@@ -175,25 +227,18 @@ public class PratilipiContentHelper extends PageContentHelper<
 			
 			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-			pageContent = pratilipiContentUtil.getContent( apiRequest.getPageNumber() );
-			pageContentMimeType = blobEntry.getMimeType();
-		
-			return new GetPratilipiContentResponse(
-					apiRequest.getPratilipiId(),
-					apiRequest.getPageNumber(),
-					apiRequest.getContentType(),
-					pageContent, pageContentMimeType );
+			return pratilipiContentUtil.getContent( pageNo );
 			
-		} else if( apiRequest.getContentType() == PratilipiContentType.IMAGE ) {
+		} else if( contentType == PratilipiContentType.IMAGE ) {
 			try {
-				return blobAccessor.getBlob( pratilipiData.getPratilipiContentImageName( apiRequest.getPageNumber() ) );
+				return blobAccessor.getBlob( pratilipiData.getPratilipiContentImageName( pageNo ) );
 			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
 				throw new UnexpectedServerException();
 			}
 		
 		} else {
-			throw new InvalidArgumentException( apiRequest.getContentType() + " content type is not yet supported." );
+			throw new InvalidArgumentException( contentType + " content type is not yet supported." );
 		}
 		
 	}

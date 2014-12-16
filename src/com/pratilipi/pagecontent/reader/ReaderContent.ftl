@@ -8,7 +8,7 @@
 		<core-toolbar class="bg-green">
 			<paper-icon-button icon="arrow-back" title="Exit Reader" on-tap="{{performExit}}"></paper-icon-button>
 			<div flex>
-				<a href="${ pratilipiData.getPageUrlAlias() }">${ pratilipiData.getTitle() }</a>
+				${ pratilipiData.getTitle() }
 			</div>
 			<paper-icon-button icon="more-vert" title="Display Options" on-tap="{{displayOptions}}"></paper-icon-button>
 		</core-toolbar>

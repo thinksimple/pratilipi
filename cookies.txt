@@ -1,0 +1,3 @@
+access_token		OAuth 2.0 access token
+
+reader_*			Reader PageContent module data
