@@ -11,7 +11,7 @@
 	<div class="container">
 		<div class="row">
 			<#list pratilipiDataList as pratilipiData>
-				<@pratilipiView.thumbnail pratilipiData=pratilipiData readerRetUrl=readerRetUrl />
+				<@pratilipiView.libThumbnail pratilipiData=pratilipiData readerRetUrl=readerRetUrl />
 			</#list>
 		</div>
 	</div>
