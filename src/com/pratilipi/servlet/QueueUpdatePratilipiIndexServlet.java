@@ -113,10 +113,9 @@ public class QueueUpdatePratilipiIndexServlet extends HttpServlet {
 							.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullName() ) )
 							.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) );
 
-				for( Genre genre : genreList ) {
+				for( Genre genre : genreList )
 					docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genre.getId().toString() ) )
 							.addField( Field.newBuilder().setName( "genre" ).setText( genre.getName() ) );
-				}
 				
 				Document document = docBuilder.build();
 				
