@@ -10,8 +10,8 @@ public class PublisherData implements IsSerializable {
 	
 	private String pageUrl;
 	private String pageUrlAlias;
-	private String publisherImageUrl;
-	private String publisherImageUploadUrl;
+	private String publisherBannerUrl;
+	private String publisherBannerUploadUrl;
 
 	private Long userId;
 
@@ -58,20 +58,20 @@ public class PublisherData implements IsSerializable {
 		this.pageUrlAlias = pageUrlAlias;
 	}
 
-	public String getPublisherImageUrl() {
-		return publisherImageUrl;
+	public String getPublisherBannerUrl() {
+		return publisherBannerUrl;
 	}
 
-	public void setPublisherImageUrl( String publisherImageUrl ) {
-		this.publisherImageUrl = publisherImageUrl;
+	public void setPublisherBannerUrl( String publisherBannerUrl ) {
+		this.publisherBannerUrl = publisherBannerUrl;
 	}
 
-	public String getPublisherImageUploadUrl() {
-		return publisherImageUploadUrl;
+	public String getPublisherBannerUploadUrl() {
+		return publisherBannerUploadUrl;
 	}
 
-	public void setPublisherImageUploadUrl( String publisherImageUploadUrl ) {
-		this.publisherImageUploadUrl = publisherImageUploadUrl;
+	public void setPublisherBannerUploadUrl( String publisherBannerUploadUrl ) {
+		this.publisherBannerUploadUrl = publisherBannerUploadUrl;
 	}
 
 	public Long getUserId() {

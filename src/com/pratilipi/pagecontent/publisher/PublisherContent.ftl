@@ -3,6 +3,7 @@
 
 <!-- PageContent :: Publisher :: Start -->
 
+<img src="${ publisherData.getPublisherBannerUrl() }" style="width:100%">
 <#if pratilipiDataList?has_content>
 	<div class="container">
 		<div class="row">

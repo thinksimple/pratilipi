@@ -11,12 +11,15 @@ import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
+import com.claymus.data.transfer.AccessToken;
+import com.claymus.data.transfer.User;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.service.shared.data.PublisherData;
 
@@ -24,8 +27,8 @@ public class PublisherContentProcessor extends PageContentProcessor<PublisherCon
 
 	@Override
 	public String generateTitle( PublisherContent publisherContent, HttpServletRequest request ) {
-		PublisherData authorData = PratilipiHelper.get( request ).createPublisherData( publisherContent.getId() );
-		return authorData.getName() + " (" + authorData.getNameEn() + ")";
+		PublisherData publisherData = PratilipiHelper.get( request ).createPublisherData( publisherContent.getId() );
+		return publisherData.getName() + " (" + publisherData.getNameEn() + ")";
 	}
 	
 	@Override
@@ -36,10 +39,20 @@ public class PublisherContentProcessor extends PageContentProcessor<PublisherCon
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		
-		
 		Long userId = pratilipiHelper.getCurrentUserId();
 		Long publisherId = publisherContent.getId();
 
+		Publisher publisher = dataAccessor.getPublisher( publisherId );
+		PublisherData publisherData = pratilipiHelper.createPublisherData( publisher, null );
+		
+		String acessTokenId = request.getParameter( "accessToken" );
+		if( acessTokenId != null && ! acessTokenId.isEmpty() ) {
+			AccessToken accesToken = dataAccessor.getAccessToken( acessTokenId );
+			if( accesToken != null ) {
+				User user = dataAccessor.getUser( accesToken.getUserId() );
+				userId = user.getId();
+			}
+		}
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setPublisherId( publisherId );
@@ -71,6 +84,7 @@ public class PublisherContentProcessor extends PageContentProcessor<PublisherCon
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
+		dataModel.put( "publisherData", publisherData );
 		dataModel.put( "pratilipiDataList", pratilipiDataList );
 		dataModel.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
 		
