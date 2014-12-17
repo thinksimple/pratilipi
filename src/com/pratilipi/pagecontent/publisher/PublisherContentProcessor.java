@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.FreeMarkerUtil;
+import com.claymus.commons.shared.AccessTokenType;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.AccessToken;
-import com.claymus.data.transfer.User;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiFilter;
@@ -38,44 +38,49 @@ public class PublisherContentProcessor extends PageContentProcessor<PublisherCon
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
 		
-		Long userId = pratilipiHelper.getCurrentUserId();
-		Long publisherId = publisherContent.getId();
-
-		Publisher publisher = dataAccessor.getPublisher( publisherId );
+		Publisher publisher = dataAccessor.getPublisher( publisherContent.getId() );
 		PublisherData publisherData = pratilipiHelper.createPublisherData( publisher, null );
 		
-		String acessTokenId = request.getParameter( "accessToken" );
-		if( acessTokenId != null && ! acessTokenId.isEmpty() ) {
-			AccessToken accesToken = dataAccessor.getAccessToken( acessTokenId );
-			if( accesToken != null ) {
-				User user = dataAccessor.getUser( accesToken.getUserId() );
-				userId = user.getId();
-			}
-		}
 
+		List<Long> pratilipiIdList = new LinkedList<>();
+		
+		
+		// Free Pratilipis by this Publisher
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setPublisherId( publisherId );
+		pratilipiFilter.setPublisherId( publisher.getId() );
 		pratilipiFilter.setState( PratilipiState.PUBLISHED );
 
-		DataListCursorTuple<Long> publisherPratilipiIdListCursorTuple =
-				dataAccessor.getPratilipiIdList( pratilipiFilter, null, 1000 );  
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
+				dataAccessor.getPratilipiIdList( pratilipiFilter, null, 1000 ); 
+		pratilipiIdList.addAll( pratilipiIdListCursorTuple.getDataList() );
 
 		
-		List<Long> publisherPratilipiIdList =
-				publisherPratilipiIdListCursorTuple.getDataList();
-		List<Long> purchasedPratilipiIdList =
-				dataAccessor.getPurchaseList( userId );
-		
-		
-		// List of books by "publisherId", purchased by "userId"
-		List<Long> pratilipiIdList = new LinkedList<>();
-		for( Long pratilipiId : publisherPratilipiIdList ) {
-			if( purchasedPratilipiIdList.contains( pratilipiId ) )
-				pratilipiIdList.add( pratilipiId );
+		if( accessToken.getType() == AccessTokenType.PUBLISHER && (long) publisher.getId() == (long) accessToken.getPublisherId() ) {
+			
+			// All paid books by this Publisher
+			pratilipiFilter.setState( PratilipiState.PUBLISHED_PAID );
+			pratilipiIdListCursorTuple =
+					dataAccessor.getPratilipiIdList( pratilipiFilter, null, 1000 ); 
+			pratilipiIdList.addAll( pratilipiIdListCursorTuple.getDataList() );
+			
+		} else if( accessToken.getType() == AccessTokenType.USER
+				|| ( accessToken.getType() == AccessTokenType.USER_PUBLISHER && (long) publisher.getId() == (long) accessToken.getPublisherId() ) ) {
+			
+			// Paid books by this Publisher, purchased by this User
+			pratilipiFilter.setState( PratilipiState.PUBLISHED_PAID );
+			pratilipiIdListCursorTuple =
+					dataAccessor.getPratilipiIdList( pratilipiFilter, null, 1000 ); 
+			
+			List<Long> purchasedPratilipiIdList =
+					dataAccessor.getPurchaseList( accessToken.getUserId() );
+			for( Long pratilipiId : pratilipiIdListCursorTuple.getDataList() ) {
+				if( purchasedPratilipiIdList.contains( pratilipiId ) )
+					pratilipiIdList.add( pratilipiId );
+			}
 		}
-		
-		pratilipiIdList.add( 5671536392404992L );
+	
 		
 		List<PratilipiData> pratilipiDataList =
 				pratilipiHelper.createPratilipiDataListFromIdList(
