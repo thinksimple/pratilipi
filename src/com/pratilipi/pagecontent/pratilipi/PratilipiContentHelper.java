@@ -167,8 +167,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 			return false;
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		String accessTokenId = (String) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); 
-		AccessToken accessToken = dataAccessor.getAccessToken( accessTokenId );
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); ;
 		
 		if( pratilipi.getState() == PratilipiState.DRAFTED
 				|| pratilipi.getState() == PratilipiState.PUBLISHED_PAID

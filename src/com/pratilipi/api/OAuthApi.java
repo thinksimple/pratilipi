@@ -1,14 +1,13 @@
 package com.pratilipi.api;
 
 import java.util.Date;
-import java.util.UUID;
 
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Get;
 import com.claymus.commons.server.EncryptPassword;
 import com.claymus.commons.shared.AccessTokenType;
-import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.User;
 import com.pratilipi.api.shared.GetOAuthRequest;
