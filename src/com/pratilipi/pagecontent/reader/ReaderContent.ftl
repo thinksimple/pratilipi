@@ -95,7 +95,13 @@
 		<#if pageCount gt 1>
 			var bottom = jQuery( '#PageContent-Reader-Content' ).position().top
 					+ jQuery( '#PageContent-Reader-Content' ).outerHeight( true )
-					+ 110;
+					<#if pratilipiData.getContentType() == "PRATILIPI" >
+						+ 60;
+					<#elseif pratilipiData.getContentType() == "IMAGE" >
+						+ 110;
+					<#else>
+						;
+					</#if>
 			console.log(e.target.y);
 			if( e.target.y > 60 && bottom > e.target.scrollHeight && jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
 				jQuery( '#PageContent-Reader-Navigation' ).fadeOut( 'slow' );
