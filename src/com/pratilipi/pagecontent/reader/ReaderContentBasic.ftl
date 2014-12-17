@@ -7,37 +7,35 @@
 <#if ( pageNo < totalPageCount )>
 	<#assign nextPageUrl= pratilipiData.getReaderPageUrl()+'&page='+(pageNumber+1) >
 </#if>
+<div class="bg-green">
+	<table style="width: 100%;color: white; height: 64px;">
+		<tr>
+			<td>
+				<#-- Title -->
+				<div style="margin-left: 5px; margin-right:5px;">
+					<a onclick="window.location.href='${ exitUrl ! pratilipiData.getPageUrl() }'" style="float: left; cursor: pointer; margin-right: 10px; padding-top: 3px;" >
+						<img src="/theme.pratilipi/images/left.png" />
+					</a>
+					<p style="margin : 0px; font-color: white;font-size: 30px; line-height: 30px;">
+						${ pratilipiData.getTitle() }
+					</p>
+				</div>
+			</td>
+			<td valign="middle" style="margin: 0px;">
+				<div style="float: right; margin-right: 10px; width: 100%">
+					<div onclick="increaseSize()" style="display: inline; cursor: pointer;float: right; margin-left: 10px;">
+						<img src="/theme.pratilipi/images/plus.png" title="Increase size">
+					</div>
+					<div onclick="decreaseSize()" style="display: inline; cursor: pointer;float: right;">
+						<img src="/theme.pratilipi/images/minus.png" title="Decrease size">
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
 <div id="Pratilipi-Reader-Basic" style="background-color: #f5f5f5; visibility: hidden;">
 	<table>
-		<tr>
-			<td>
-				<#-- Title and Author Name -->
-				<div style="margin-left: 5px; margin-right:5px;">
-					<button type="button" onclick="window.location.href='${ exitUrl ! pratilipiData.getPageUrl() }'" style="float: left; margin-right: 10px;" ><img src="/theme.pratilipi/images/left.png" /></button>
-					<h2 style="line-height: 27px;">
-						<a href="${ pratilipiData.getPageUrlAlias() }">${ pratilipiData.getTitle() }</a>
-					</h2>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div style="margin: 5px;">
-					<div style="display: inline;">
-					<button type="button" onclick="decreaseSize()"><img src="/theme.pratilipi/images/minus.png" title="Decrease size" /></button>
-					<button type="button" onclick="increaseSize()"><img src="/theme.pratilipi/images/plus.png" title="Increase size"/></button>
-					</div>
-					<div align="right" style="display: inline-block; float: right;">
-						<#if previousPageUrl?? >
-							<button type="button" onclick="window.location.href= '${ previousPageUrl }'" ><img src="/theme.pratilipi/images/previous.png" title="Previous Page" /></button>
-						</#if>
-						<#if nextPageUrl?? >
-							<button type="button" onclick="window.location.href= '${ nextPageUrl }'" ><img src="/theme.pratilipi/images/next.png" title="Next Page" /></button>
-						</#if>
-					</div>
-				</div>
-			</td>
-		</tr>
 		<tr>
 			<td id="Pratilipi-Content-td" align="center">
 				<#if pratilipiData.getContentType() == "PRATILIPI" >
@@ -53,11 +51,11 @@
 					<div class="paper" style="width:inherit; max-width:none; min-height:inherit; overflow-x:auto;">
 						<#if contentSize??>
 							<div id="PageContent-Reader-Content">
-								<img id="imageContent" src='${ pratilipiData.getImageContentUrl() }/${ pageNo }' width=${ contentSize }/>
+								<img id="imageContent" src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }&contentType=IMAGE' width=${ contentSize }/>
 							</div>
 						<#else>
 							<div id="PageContent-Reader-Content">
-								<img id="imageContent" src='${ pratilipiData.getImageContentUrl() }/${ pageNo }' width="100%"/>
+								<img id="imageContent" src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }&contentType=IMAGE' width="100%"/>
 							</div>
 						</#if>
 					</div>
@@ -69,18 +67,22 @@
 			<td>
 				<div style="margin: 5px; text-align: center;">
 					<p style="display: inline; line-height: 28px; ">${ pageNumber } of ${ pageCount }</p>
-					<div align="right" style="display: inline-block; float: right;">
-						<#if previousPageUrl?? >
-							<button type="button" onclick="window.location.href='${ previousPageUrl }'" ><img src="/theme.pratilipi/images/previous.png" title="Previous Page" /></button>
-						</#if>
-						<#if nextPageUrl?? >
-							<button type="button" onclick="window.location.href='${ nextPageUrl }'" ><img src="/theme.pratilipi/images/next.png" title="Next Page" /></button>
-						</#if>
-					</div>
 				</div>
 			</td>
 		</tr>
 	</table>
+</div>
+<div id="readerFooter" style="width: 100%; position: fixed; bottom: 0px; right: 0px;padding-right: 3%; padding-bottom: 10px; padding-top: 10px; ">
+	<#if nextPageUrl?? >
+		<div class="bg-green reader-button" onclick="window.location.href='${ nextPageUrl }'" style="margin-left:10px;">
+			<img src="/theme.pratilipi/images/next.png" title="Next Page" />
+		</div>
+	</#if>
+	<#if previousPageUrl?? >
+		<div class="bg-green reader-button" onclick="window.location.href='${ previousPageUrl }'">
+			<img src="/theme.pratilipi/images/previous.png" title="Previous Page" />
+		</div>
+	</#if>
 </div>
 
 <!-- JAVASCRIPT START -->
@@ -104,6 +106,15 @@
 <style type="text/css">
 		@media print{
 			body {display:none;}
+		}
+		
+		.reader-button {
+			float: right;
+			width: 40px;
+			height: 40px;
+			text-align: center;
+			padding-top: 7px;
+			cursor: pointer;
 		}
 </style>
 
@@ -147,7 +158,6 @@ function saveAutoBookmark(){
 function increaseSize(){
 	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	var imageContent = document.getElementById( "imageContent" );
-	var contentTd = document.getElementById( "Pratilipi-Content-td" );
 	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
 	var wordContent = document.getElementById( "PageContent-Reader-Content" );
 		
@@ -156,7 +166,6 @@ function increaseSize(){
 		imageContent.width = imageContent.width + 50;
 		imageContent.style.height = 'auto';
 		setCookie( '${ contentSizeCookieName }', imageContent.width + 'px', 365 );
-		contentTd.width = imageContent.offsetWidth;
 		centerAlignBasicReader(); 
 	}
 	else if( wordContent ) {
@@ -178,7 +187,6 @@ function increaseSize(){
 function decreaseSize(){
 	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	var imageContent = document.getElementById( "imageContent" );
-	var contentTd = document.getElementById( "Pratilipi-Content-td" );
 	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
 	var wordContent = document.getElementById( "PageContent-Reader-Content" );
 	
@@ -187,7 +195,6 @@ function decreaseSize(){
 		imageContent.width = imageContent.width - 50;
 		imageContent.style.height = 'auto';
 		setCookie( '${ contentSizeCookieName }', imageContent.width + 'px', 365 );
-		contentTd.width = imageContent.offsetWidth;
 		centerAlignBasicReader();
 		
 	} 
