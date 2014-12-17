@@ -16,20 +16,29 @@
 		<div horizontal center-justified layout class="bg-gray">
 			<#if pratilipiData.getContentType() == "PRATILIPI" >
 	
-				<#if contentSize??>
-					<div id="PageContent-Reader-Content" class="paper" style="font-size:${ contentSize }"></div>
-				<#else>
-					<div id="PageContent-Reader-Content" class="paper"></div>
-				</#if>
+				<div class="paper">
+					<div style="position:relative">
+						<#if contentSize??>
+							<div id="PageContent-Reader-Content" style="font-size:${ contentSize }"></div>
+						<#else>
+							<div id="PageContent-Reader-Content" ></div>
+						</#if>
+						<div id="PageContent-Reader-Overlay"></div>
+					</div>
+				</div>
 
 			<#elseif pratilipiData.getContentType() == "IMAGE" >			
 
 				<div class="paper" style="width:inherit; max-width:none; min-height:inherit; overflow-x:auto;">
-					<#if contentSize??>
-						<div id="PageContent-Reader-Content" style="width:${ contentSize }"></div>
-					<#else>
-						<div id="PageContent-Reader-Content"></div>
-					</#if>
+					<div style="position:relative">
+						<#if contentSize??>
+							<div id="PageContent-Reader-Content" style="width:${ contentSize }"></div>
+							<div id="PageContent-Reader-Overlay" style="width:${ contentSize }"></div>
+						<#else>
+							<div id="PageContent-Reader-Content"></div>
+							<div id="PageContent-Reader-Overlay"></div>
+						</#if>
+					</div>
 				</div>
 
 			</#if>
@@ -38,8 +47,6 @@
 		<div class="bg-gray green" style="text-align:center;padding-bottom:16px;<#if pageCount gt 1>margin-bottom:65px;</#if>">
 			<b>{{ pageNo }} / ${ pageCount }</b>
 		</div>
-		
-		<div id="PageContent-Reader-Overlay"></div>
 				
 	</core-scroll-header-panel>
 	
@@ -93,20 +100,14 @@
 	
 	scope.performScrollActions = function( e ) {
 		<#if pageCount gt 1>
-			var bottom = jQuery( '#PageContent-Reader-Content' ).position().top
-					+ jQuery( '#PageContent-Reader-Content' ).outerHeight( true )
-					<#if pratilipiData.getContentType() == "PRATILIPI" >
-						+ 60;
-					<#elseif pratilipiData.getContentType() == "IMAGE" >
-						+ 110;
-					<#else>
-						;
-					</#if>
-			console.log(e.target.y);
+			var bottom = jQuery( '.paper' ).position().top
+					+ jQuery( '.paper' ).outerHeight( true )
+					+ 66;
+			console.log( bottom + " " + e.target.scrollHeight );
 			if( e.target.y > 60 && bottom > e.target.scrollHeight && jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
-				jQuery( '#PageContent-Reader-Navigation' ).fadeOut( 'slow' );
+				jQuery( '#PageContent-Reader-Navigation' ).fadeOut( 'fast' );
 			else if( ( e.target.y <= 60 || bottom <= e.target.scrollHeight ) && !jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
-				jQuery( '#PageContent-Reader-Navigation' ).fadeIn( 'slow' );
+				jQuery( '#PageContent-Reader-Navigation' ).fadeIn( 'fast' );
 		</#if>
 	}
 	
@@ -160,7 +161,6 @@
 				ajax.go();
 			} else {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
-				jQuery( '#PageContent-Reader-Overlay' ).css( 'height', $( '#PageContent-Reader-Content' ).height() + 115 + 'px' );
 			}
 		}
 		
@@ -211,7 +211,6 @@
 				loadImage( scope.pageNo );
 			} else {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
-				jQuery( '#PageContent-Reader-Overlay' ).css( 'height', $( '#PageContent-Reader-Content' ).height() + 115 + 'px' );
 			}
 		}
 
@@ -231,6 +230,7 @@
 			if( newWidth < 300 )
 				newWidth = 300;
 			jQuery( '#PageContent-Reader-Content' ).css( 'width', newWidth + 'px' );
+			jQuery( '#PageContent-Reader-Overlay' ).css( 'width', newWidth + 'px' );
 			setCookie( '${ contentSizeCookieName }', newWidth + 'px' );
 	    };
 
@@ -238,6 +238,7 @@
 			var width = jQuery( '#PageContent-Reader-Content' ).width();
 			var newWidth = width + 50;
 			jQuery( '#PageContent-Reader-Content' ).css( 'width', newWidth + 'px' );
+			jQuery( '#PageContent-Reader-Overlay' ).css( 'width', newWidth + 'px' );
 			setCookie( '${ contentSizeCookieName }', newWidth + 'px' );
 	    };
 		
