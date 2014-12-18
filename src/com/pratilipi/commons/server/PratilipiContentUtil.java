@@ -28,6 +28,8 @@ public class PratilipiContentUtil {
 	public int getPageCount() {
 		logger.log( Level.INFO, "Content length: " + content.length() );
 
+		matcher.reset();
+		
 		int pageCount = 0;
 		int startIndex = 0;
 		int endIndex = 0;
@@ -53,6 +55,8 @@ public class PratilipiContentUtil {
 
 	public String getContent( int pageNo ) {
 		logger.log( Level.INFO, "Content length: " + content.length() );
+
+		matcher.reset();
 
 		int pageCount = 0;
 		int startIndex = 0;
