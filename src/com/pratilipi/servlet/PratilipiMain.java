@@ -288,12 +288,10 @@ public class PratilipiMain extends ClaymusMain {
 	
 	@Override
 	protected List<WebsiteWidget> getWebsiteWidgetList( HttpServletRequest request ) {
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-		
 		List<WebsiteWidget> websiteWidgetList
 				= super.getWebsiteWidgetList( request );
 
-		if( pratilipiHelper.isModeBasic() ) {
+		if( !request.getRequestURI().equals( "/read" ) ) {
 			
 			HtmlWidget headerWidget = generateHeaderWidget( request );
 			headerWidget.setPosition( "HEADER" );

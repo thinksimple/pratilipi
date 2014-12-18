@@ -103,7 +103,6 @@
 			var bottom = jQuery( '.paper' ).position().top
 					+ jQuery( '.paper' ).outerHeight( true )
 					+ 66;
-			console.log( bottom + " " + e.target.scrollHeight );
 			if( e.target.y > 60 && bottom > e.target.scrollHeight && jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
 				jQuery( '#PageContent-Reader-Navigation' ).fadeOut( 'fast' );
 			else if( ( e.target.y <= 60 || bottom <= e.target.scrollHeight ) && !jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
