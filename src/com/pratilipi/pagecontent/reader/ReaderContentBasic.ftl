@@ -34,8 +34,8 @@
 		</tr>
 	</table>
 </div>
-<div id="Pratilipi-Reader-Basic" style="background-color: #f5f5f5; visibility: hidden;">
-	<table>
+<div id="Pratilipi-Reader-Basic" class="bg-gray">
+	<table align="center">
 		<tr>
 			<td id="Pratilipi-Content-td" align="center">
 				<#if pratilipiData.getContentType() == "PRATILIPI" >
@@ -119,29 +119,6 @@
 
 <script language="javascript">
 
-/* SCRIPT TO KEEP READER CENTER ALIGNED IRRESPECTIVE OF THE SCREEN SIZE */
-function centerAlignBasicReader(){
-	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
-	var imageContent = document.getElementById( "imageContent" );
-	var contentDiv = document.getElementById( "PageContent-Reader-Content" );
-	var basicReaderWidth = basicReader.offsetWidth;
-	var padding;
-	if( basicReaderWidth >= 1000 ){
-		if( imageContent ){
-			padding = ( windowSize - imageContent.offsetWidth )/2;
-		}
-		else
-			padding = ( windowSize - contentDiv.offsetWidth )/2;
-		basicReader.setAttribute("style", "padding-left:" + padding.toString() + "px; background-color: #f5f5f5;");
-	}
-	else{
-		padding = ( windowSize - contentDiv.offsetWidth )/2;
-		basicReader.setAttribute("style", "padding-left:" + padding.toString() + "px; background-color: #f5f5f5;");
-	}
-	basicReader.style.visibility = 'visible';
-}
-
 /* SAVES PRATILIPI ID AND PAGE NUMBER IN COOKIE */
 function saveAutoBookmark(){
 	setCookie( '${ pageNoCookieName }', ${ pageNo }, 365 );
@@ -162,7 +139,6 @@ function increaseSize(){
 		overlay = imageContent.width;
 		imageContent.style.height = 'auto';
 		setCookie( '${ contentSizeCookieName }', imageContent.width + 'px', 365 );
-		centerAlignBasicReader(); 
 	}
 	else if( wordContent ) {
 		/* For word content */
@@ -193,7 +169,6 @@ function decreaseSize(){
 		overlay.width = imageContent.width;
 		imageContent.style.height = 'auto';
 		setCookie( '${ contentSizeCookieName }', imageContent.width + 'px', 365 );
-		centerAlignBasicReader();
 	} 
 	else if( wordContent ){
 		/* For word content */
@@ -211,11 +186,7 @@ function decreaseSize(){
 
 //EXECUTE ON WINDOW LOAD EVENT
 window.addEventListener( 'load', function( event ){
-	var pratilipiContent = document.getElementById( "PageContent-Reader-Content" );
-	pratilipiContent.addEventListener( 'contextmenu', function( event){
-		event.preventDefault();
-		return false;
-	});
+	
 	//pkey = 80; ckey = 67; vkey = 86
 	document.addEventListener("keyup keypress", function(e){
     if( e.ctrlKey && ( e.keyCode == 80 ) ){
@@ -223,16 +194,8 @@ window.addEventListener( 'load', function( event ){
 	    }
 	});
 	
-	centerAlignBasicReader();
 	saveAutoBookmark();
 });
-
-//EXECUTE ON WINDOW RESIZE EVENT
-window.addEventListener( 'resize', function( event ){
-	centerAlignBasicReader();
-});
-
-
 
 </script>
 
