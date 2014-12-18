@@ -11,13 +11,21 @@ function checkScreenWidth() {
 }
 
 
-//EXECUTE ON WINDOW LOAD EVENT
-window.addEventListener( 'load', function( event ){
-	checkScreenWidth();
-});
+if( window.attachEvent ){	//For IE8 and below
+	window.attachEvent( 'onload', function( event ){
+		checkScreenWidth();
+	});
 
-//EXECUTE ON WINDOW RESIZE EVENT
-window.addEventListener( 'resize', function( event ){
-	checkScreenWidth();
-});
+	window.attachEvent( 'onresize', function( event ){
+		checkScreenWidth();
+	});
+} else {
+	window.addEventListener( 'load', function( event ){
+		checkScreenWidth();
+	});
+
+	window.addEventListener( 'resize', function( event ){
+		checkScreenWidth();
+	});
+}
 

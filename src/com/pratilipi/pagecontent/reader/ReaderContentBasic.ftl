@@ -35,9 +35,9 @@
 	</table>
 </div>
 <div id="Pratilipi-Reader-Basic" class="bg-gray">
-	<table align="center">
+	<table style="margin-left: auto; margin-right: auto;">
 		<tr>
-			<td id="Pratilipi-Content-td" align="center">
+			<td>
 				<#if pratilipiData.getContentType() == "PRATILIPI" >
 					<div class="paper">
 						<div style="position:relative">
@@ -72,8 +72,8 @@
 		</tr>
 		<tr>
 			<td>
-				<div style="margin: 5px; text-align: center;">
-					<p style="display: inline; line-height: 28px; ">${ pageNo } of ${ pageCount }</p>
+				<div class="green" style="margin: 5px; text-align: center;">
+					<p style="display: inline; line-height: 28px; ">${ pageNo } / ${ pageCount }</p>
 				</div>
 			</td>
 		</tr>
@@ -184,18 +184,26 @@ function decreaseSize(){
 	}
 }
 
-//EXECUTE ON WINDOW LOAD EVENT
-window.addEventListener( 'load', function( event ){
-	
-	//pkey = 80; ckey = 67; vkey = 86
-	document.addEventListener("keyup keypress", function(e){
-    if( e.ctrlKey && ( e.keyCode == 80 ) ){
-	        return false;
-	    }
+
+
+if( window.attachEvent) //for IE8 and below
+	window.attachEvent( 'onload', function( event ){
+		document.attachEvent("onkeyup onkeypress", function(e){
+	    if( e.ctrlKey && ( e.keyCode == 80 ) ){
+		        return false;
+		    }
+		});
+		saveAutoBookmark();
 	});
-	
-	saveAutoBookmark();
-});
+else 
+	window.addEventListener( 'load', function( event ){
+		document.addEventListener("keyup keypress", function(e){
+	    if( e.ctrlKey && ( e.keyCode == 80 ) ){
+		        return false;
+		    }
+		});
+		saveAutoBookmark();
+	});
 
 </script>
 
