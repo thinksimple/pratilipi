@@ -39,7 +39,7 @@ public class PurchaseApi extends GenericApi {
 			throw new InsufficientAccessException( "Access token is invalid or expired." );
 		
 		
-		if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) )
+		if( !accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) )
 			throw new InsufficientAccessException();
 		
 		
