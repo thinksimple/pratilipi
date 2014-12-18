@@ -181,6 +181,10 @@
   <servlet>
     <servlet-name>ResourceImageContentServlet</servlet-name>
     <servlet-class>com.pratilipi.servlet.ResourceImageContentServlet</servlet-class>
+    <init-param>
+      <param-name>ResourceServletType</param-name>
+      <param-value>UPLOAD_ONLY</param-value>
+    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
