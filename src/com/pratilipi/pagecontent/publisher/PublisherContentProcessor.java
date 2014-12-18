@@ -9,12 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.FreeMarkerUtil;
-import com.claymus.commons.shared.AccessTokenType;
+import com.claymus.commons.shared.ClaymusAccessTokenType;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiAccessTokenType;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.data.access.DataAccessor;
@@ -57,7 +58,8 @@ public class PublisherContentProcessor extends PageContentProcessor<PublisherCon
 		pratilipiIdList.addAll( pratilipiIdListCursorTuple.getDataList() );
 
 		
-		if( accessToken.getType() == AccessTokenType.PUBLISHER && (long) publisher.getId() == (long) accessToken.getPublisherId() ) {
+		if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() )
+				&& (long) publisher.getId() == (long) accessToken.getPublisherId() ) {
 			
 			// All paid books by this Publisher
 			pratilipiFilter.setState( PratilipiState.PUBLISHED_PAID );
@@ -65,8 +67,9 @@ public class PublisherContentProcessor extends PageContentProcessor<PublisherCon
 					dataAccessor.getPratilipiIdList( pratilipiFilter, null, 1000 ); 
 			pratilipiIdList.addAll( pratilipiIdListCursorTuple.getDataList() );
 			
-		} else if( accessToken.getType() == AccessTokenType.USER
-				|| ( accessToken.getType() == AccessTokenType.USER_PUBLISHER && (long) publisher.getId() == (long) accessToken.getPublisherId() ) ) {
+		} else if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() )
+				|| ( accessToken.getType().equals( PratilipiAccessTokenType.USER_PUBLISHER.toString() )
+						&& (long) publisher.getId() == (long) accessToken.getPublisherId() ) ) {
 			
 			// Paid books by this Publisher, purchased by this User
 			pratilipiFilter.setState( PratilipiState.PUBLISHED_PAID );

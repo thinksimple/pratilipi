@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.server.Access;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.UserAccessHelper;
-import com.claymus.commons.shared.AccessTokenType;
+import com.claymus.commons.shared.ClaymusAccessTokenType;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
@@ -20,6 +20,7 @@ import com.claymus.data.transfer.BlobEntry;
 import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.commons.server.PratilipiContentUtil;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiAccessTokenType;
 import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.data.access.DataAccessor;
@@ -173,16 +174,16 @@ public class PratilipiContentHelper extends PageContentHelper<
 				|| pratilipi.getState() == PratilipiState.PUBLISHED_PAID
 				|| pratilipi.getState() == PratilipiState.PUBLISHED_DISCONTINUED ) {
 			
-			if( accessToken.getType() == AccessTokenType.USER ) {
+			if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() ) ) {
 				if( UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_READ_PRATILIPI_CONTENT, request ) )
 					return true;
 				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( accessToken.getUserId(), pratilipi.getId() );
 				return userPratilipi != null && userPratilipi.getPurchasedFrom() != null;
 				
-			} else if( accessToken.getType() == AccessTokenType.PUBLISHER ) {
+			} else if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) ) {
 				return (long) accessToken.getPublisherId() == (long) pratilipi.getPublisherId();
 				
-			} else if( accessToken.getType() == AccessTokenType.USER_PUBLISHER ) {
+			} else if( accessToken.getType().equals( PratilipiAccessTokenType.USER_PUBLISHER.toString() ) ) {
 				if( (long) accessToken.getPublisherId() != (long) pratilipi.getPublisherId() )
 					return false;
 				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( accessToken.getUserId(), pratilipi.getId() );

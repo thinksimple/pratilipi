@@ -5,13 +5,14 @@ import java.util.Date;
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Get;
 import com.claymus.commons.server.EncryptPassword;
-import com.claymus.commons.shared.AccessTokenType;
+import com.claymus.commons.shared.ClaymusAccessTokenType;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.User;
 import com.pratilipi.api.shared.GetOAuthRequest;
 import com.pratilipi.api.shared.GetOAuthResponse;
+import com.pratilipi.commons.shared.PratilipiAccessTokenType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Publisher;
@@ -69,7 +70,7 @@ public class OAuthApi extends GenericApi {
 			if( !EncryptPassword.check( request.getUserSecret(), user.getPassword() ) )
 				throw new InvalidArgumentException( "Invalid user secret." );
 			accessToken.setUserId( user.getId() );
-			accessToken.setType( AccessTokenType.USER );
+			accessToken.setType( ClaymusAccessTokenType.USER.toString() );
 			
 		} else if( publisher != null && request.getPublisherSecret() != null ) {
 			if( !request.getPublisherSecret().equals( publisher.getSecret() ) )
@@ -77,10 +78,10 @@ public class OAuthApi extends GenericApi {
 			
 			accessToken.setPublisherId( publisher.getId() );
 			if( user == null ) {
-				accessToken.setType( AccessTokenType.PUBLISHER );
+				accessToken.setType( PratilipiAccessTokenType.PUBLISHER.toString() );
 			} else {
 				accessToken.setUserId( user.getId() );
-				accessToken.setType( AccessTokenType.USER_PUBLISHER );
+				accessToken.setType( PratilipiAccessTokenType.USER_PUBLISHER.toString() );
 			}
 			
 		}

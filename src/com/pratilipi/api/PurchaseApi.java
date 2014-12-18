@@ -4,14 +4,14 @@ import java.util.Date;
 
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Put;
-import com.claymus.commons.shared.AccessTokenType;
-import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.User;
 import com.pratilipi.api.shared.PutPurchaseRequest;
 import com.pratilipi.api.shared.PutPurchaseResponse;
+import com.pratilipi.commons.shared.PratilipiAccessTokenType;
 import com.pratilipi.commons.shared.SellerType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -39,7 +39,7 @@ public class PurchaseApi extends GenericApi {
 			throw new InsufficientAccessException( "Access token is invalid or expired." );
 		
 		
-		if( accessToken.getType() != AccessTokenType.PUBLISHER )
+		if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) )
 			throw new InsufficientAccessException();
 		
 		
