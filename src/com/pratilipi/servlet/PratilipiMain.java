@@ -293,7 +293,8 @@ public class PratilipiMain extends ClaymusMain {
 		List<WebsiteWidget> websiteWidgetList
 				= super.getWebsiteWidgetList( request );
 
-		if( !request.getRequestURI().equals( "/read" ) ) {
+		if( !request.getRequestURI().equals( "/read" )
+				&& !request.getRequestURI().equals( "/write" ) ) {
 			
 			HtmlWidget headerWidget = generateHeaderWidget( request );
 			headerWidget.setPosition( "HEADER" );

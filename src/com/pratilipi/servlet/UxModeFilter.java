@@ -129,7 +129,8 @@ public class UxModeFilter implements Filter {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 			Page page = dataAccessor.getPage( request.getRequestURI() );
 			basicMode = page == null
-					|| !page.getType().equals( PratilipiPageType.READ.toString() );
+					|| !( page.getType().equals( PratilipiPageType.READ.toString() )
+							|| page.getType().equals( PratilipiPageType.WRITE.toString() ) );
 		}
 		
 		

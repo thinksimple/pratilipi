@@ -1,31 +1,25 @@
 <!-- PageContent :: Reader :: Start -->
 
+<script src="//cdn-asia.pratilipi.com/third-party/ckeditor-4.4.5-full/ckeditor.js" charset="utf-8"></script>
+
 
 <template is="auto-binding" id="PageContent-Reader">
 
-	<core-scroll-header-panel flex on-scroll={{performScrollActions}}>
+	<core-header-panel flex mode="scroll" on-scroll={{performScrollActions}}>
 		
 		<core-toolbar class="bg-green">
-			<paper-icon-button icon="arrow-back" title="Exit Reader" on-tap="{{performExit}}"></paper-icon-button>
-			<div flex>
-				${ pratilipiData.getTitle() }
-			</div>
-			<paper-icon-button icon="more-vert" title="Display Options" on-tap="{{displayOptions}}"></paper-icon-button>
+			<paper-icon-button icon="arrow-back" title="Exit Writer" on-tap="{{performExit}}"></paper-icon-button>
+			<div flex>${ pratilipiData.getTitle() }</div>
 		</core-toolbar>
 		
 		<div horizontal center-justified layout class="bg-gray">
 			<#if pratilipiData.getContentType() == "PRATILIPI" >
 	
-				<div class="paper">
-					<div style="position:relative">
-						<#if contentSize??>
-							<div id="PageContent-Reader-Content" style="font-size:${ contentSize }"></div>
-						<#else>
-							<div id="PageContent-Reader-Content" ></div>
-						</#if>
-						<div id="PageContent-Reader-Overlay"></div>
-					</div>
-				</div>
+				<#if contentSize??>
+					<div id="PageContent-Reader-Content" class="paper" contenteditable="true" style="font-size:${ contentSize };" ></div>
+				<#else>
+					<div id="PageContent-Reader-Content" class="paper" contenteditable="true" ></div>
+				</#if>
 
 			<#elseif pratilipiData.getContentType() == "IMAGE" >			
 
@@ -44,25 +38,35 @@
 			</#if>
 		</div>
 		
-		<div class="bg-gray green" style="text-align:center;padding-bottom:16px;<#if pageCount gt 1>margin-bottom:65px;</#if>">
+		<div class="bg-gray green" style="text-align:center; padding-bottom:16px; margin-bottom:75px;">
 			<b>{{ pageNo }} / ${ pageCount }</b>
 		</div>
 				
-	</core-scroll-header-panel>
+	</core-header-panel>
 	
 	
-	<#if pageCount gt 1>
-		<div center horizontal layout id="PageContent-Reader-Navigation" style="position:fixed; bottom:10px; width:100%;">
-			<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount }}" value="{{ pageNo }}" class="bg-green" style="width:100%" on-change="{{displayPage}}"></paper-slider>
-			<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" on-tap="{{displayPrevious}}"></paper-fab>
-			<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:25px;" on-tap="{{displayNext}}"></paper-fab>
-		</div>
-	</#if>
+	<div center horizontal layout id="PageContent-Reader-Navigation" style="position:fixed; bottom:10px; width:100%;">
+		<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount }}" value="{{ pageNo }}" class="bg-green" style="width:100%" disabled="{{ pageCount == 1 }}" on-change="{{displayPage}}"></paper-slider>
+		<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" on-tap="{{displayPrevious}}"></paper-fab>
+		<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:10px;" on-tap="{{displayNext}}"></paper-fab>
+		<paper-fab mini icon="reorder" title="Options" class="bg-green" style="margin-right:10px;" on-tap="{{displayOptions}}"></paper-fab>
+		<paper-fab icon="save" title="Save" class="bg-red" style="margin-right:25px;" on-tap="{{saveContent}}"></paper-fab>
+	</div>
 
-	<paper-dialog id="PageContent-Reader-Options">
-		<div><b>Text Size</b></div>
+	<paper-dialog id="PageContent-Reader-Options" style="color:gray; border:1px solid #EEEEEE;">
 		<core-icon-button icon="remove" title="Decrease Text Size" on-tap="{{decTextSize}}"></core-icon-button>
+		Text Size
 		<core-icon-button icon="add" title="Increase Text Size" on-tap="{{incTextSize}}"></core-icon-button>
+		<br/>
+		<core-icon-button icon="description">&nbsp; Add New Page After This Page</core-icon-button>
+		<br/>
+		<core-icon-button icon="description">&nbsp; Add New Page Before This Page</core-icon-button>
+		<br/>
+		<core-icon-button icon="delete">&nbsp; Delete This Page</core-icon-button>
+		<br/>
+		<core-icon-button icon="history">&nbsp; Version History</core-icon-button>
+		<br/>
+		<core-icon-button icon="file-upload">&nbsp; Upload Word Document</core-icon-button>
 	</paper-dialog>
 
 
@@ -87,16 +91,6 @@
 	scope.pageNo = ${ pageNo };
 	
 	var contentArray = [];
-	
-	jQuery( 'body' ).keydown( function( event ) {
-		if( event.which == 37 && scope.pageNo > 1 ) {
-			scope.pageNo--;
-			scope.displayPage();
-		} else if( event.which == 39 && scope.pageNo < scope.pageCount ) {
-			scope.pageNo++;
-			scope.displayPage();
-		}
-	});
 	
 	scope.performScrollActions = function( e ) {
 		<#if pageCount gt 1>
@@ -123,7 +117,7 @@
 
 	scope.displayPage = function( e ) {
 		updateContent();
-		document.querySelector( 'core-scroll-header-panel' ).scroller.scrollTop = 0;
+		document.querySelector( 'core-header-panel' ).scroller.scrollTop = 0;
 		prefetchContent();
 		setCookie( '${ pageNoCookieName }', scope.pageNo );
 	};
@@ -142,7 +136,7 @@
 		}
 	};
     
-    
+	
 	<#if pratilipiData.getContentType() == "PRATILIPI" >
     
 		contentArray[scope.pageNo] = ${ pageContent }
@@ -176,6 +170,13 @@
 		}
 		
 		
+	    scope.saveContent = function( e ) {
+	    	e.target.icon = 'done';
+			e.target.classList.add( 'bg-green' );
+			e.target.classList.remove( 'bg-red' );
+	    };
+	    
+    
 		scope.decTextSize = function( e ) {
 			var fontSize = parseInt( jQuery( '#PageContent-Reader-Content' ).css( 'font-size' ).replace( 'px', '' ) );
 			var newFontSize = fontSize - 2;
@@ -247,6 +248,18 @@
 	function initReader() {
 		try {
 			scope.displayPage();
+			CKEDITOR.disableAutoInline = true;
+			CKEDITOR.config.toolbar = [
+					['Source','Format','Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],
+					['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Outdent','Indent'],
+					['NumberedList','BulletedList'],
+					['Blockquote','Smiley','HorizontalRule','PageBreak'],
+					['Link','Unlink'],
+					['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'],
+					['ShowBlocks','Maximize']
+			];	
+			CKEDITOR.inline( 'PageContent-Reader-Content' );
+			// window.setTimeout( function(){ jQuery( '#PageContent-Reader-Navigation' ).fadeOut( 'slow' ); }, 5000 );
 		} catch( err ) {
 			console.log( 'Reader initialization failed with error - ' + '\"' + err.message + '\". Retrying in 100ms ...' );
 			window.setTimeout( initReader, 100 );
@@ -263,14 +276,6 @@
 		width:100%;
 	}
 	
-	#PageContent-Reader-Overlay {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		height: 100%;
-		width: 100%;
-	}
-
 </style>
 
 
