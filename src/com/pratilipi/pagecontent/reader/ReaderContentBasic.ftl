@@ -188,20 +188,51 @@ function decreaseSize(){
 
 if( window.attachEvent) //for IE8 and below
 	window.attachEvent( 'onload', function( event ){
-		document.attachEvent("onkeyup onkeypress", function(e){
-	    if( e.ctrlKey && ( e.keyCode == 80 ) ){
-		        return false;
-		    }
-		});
+		var isCtrl = false;
+		document.onkeyup=function(e)
+		{
+			if(e.which == 17)
+			isCtrl = false;
+		}
+		document.onkeydown = function(e)
+		{
+			if(e.which == 17)
+			isCtrl = true;
+			if(( ( e.which == 67 ) || ( e.which == 80 ) ) && isCtrl == true)
+			{
+				return false;
+			}
+		}
+		
+		document.oncontextmenu =  function( event ){
+			var event = event || window.event;
+			event.preventDefault();
+		}
+		
 		saveAutoBookmark();
 	});
 else 
 	window.addEventListener( 'load', function( event ){
-		document.addEventListener("keyup keypress", function(e){
-	    if( e.ctrlKey && ( e.keyCode == 80 ) ){
-		        return false;
-		    }
-		});
+		var isCtrl = false;
+		document.onkeyup=function(e)
+		{
+			if(e.which == 17)
+			isCtrl = false;
+		}
+		document.onkeydown = function(e)
+		{
+			if(e.which == 17)
+			isCtrl = true;
+			if(( ( e.which == 67 ) || ( e.which == 80 ) ) && isCtrl == true)
+			{
+				return false;
+			}
+		}
+		
+		document.oncontextmenu =  function( event ){
+			event.preventDefault();
+		}
+		
 		saveAutoBookmark();
 	});
 

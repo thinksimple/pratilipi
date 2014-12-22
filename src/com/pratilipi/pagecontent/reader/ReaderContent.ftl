@@ -88,6 +88,10 @@
 	
 	var contentArray = [];
 	
+	jQuery( 'body' ).bind( 'contextmenu', function( event ){
+		event.preventDefault();
+	});
+	
 	jQuery( 'body' ).keydown( function( event ) {
 		if( event.which == 37 && scope.pageNo > 1 ) {
 			scope.pageNo--;
@@ -95,6 +99,12 @@
 		} else if( event.which == 39 && scope.pageNo < scope.pageCount ) {
 			scope.pageNo++;
 			scope.displayPage();
+		} else if( event.which == 17 ) { // disable ctrl+c
+			jQuery( 'body' ).keydown( function( event ){ 
+				if( event.which == 67 ) {
+					return false;
+				}
+			});
 		}
 	});
 	
