@@ -2,6 +2,7 @@ package com.pratilipi.pagecontent.pratilipi;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,7 +19,6 @@ import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.pagecontent.PageContentHelper;
-import com.pratilipi.commons.server.PratilipiContentUtil;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiAccessTokenType;
 import com.pratilipi.commons.shared.PratilipiContentType;
@@ -31,6 +31,7 @@ import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
+import com.pratilipi.pagecontent.pratilipi.util.PratilipiContentUtil;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiContentHelper extends PageContentHelper<
@@ -198,6 +199,12 @@ public class PratilipiContentHelper extends PageContentHelper<
 		return false;
 	}
 
+	public static boolean hasRequestAccessToUpdatePratilipiContent(
+			HttpServletRequest request, Pratilipi pratilipi ) {
+		
+		return hasRequestAccessToUpdatePratilipiData( request, pratilipi );
+	}
+	
 
 	public static Object getPratilipiContent(
 			long pratilipiId, int pageNo, PratilipiContentType contentType,
@@ -236,6 +243,109 @@ public class PratilipiContentHelper extends PageContentHelper<
 				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
 				throw new UnexpectedServerException();
 			}
+		
+		} else {
+			throw new InvalidArgumentException( contentType + " content type is not yet supported." );
+		}
+		
+	}
+	
+	public static void updatePratilipiContent(
+			long pratilipiId, int pageNo, PratilipiContentType contentType,
+			Object pageContent, HttpServletRequest request )
+			throws InvalidArgumentException, InsufficientAccessException,
+			UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( !PratilipiContentHelper.hasRequestAccessToUpdatePratilipiContent( request, pratilipi ) )
+			throw new InsufficientAccessException();
+
+		
+		pratilipi.setLastUpdated( new Date() );
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+
+		
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		
+		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, null, null, null, true );
+		
+		if( contentType == PratilipiContentType.PRATILIPI ) {
+			BlobEntry blobEntry = null;
+			try {
+				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+			content = pratilipiContentUtil.updateContent( pageNo, (String) pageContent );
+			
+			blobEntry.setData( content.getBytes( Charset.forName( "UTF-8" ) ) );
+			try {
+				blobAccessor.updateBlob( blobEntry );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to update pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+		} else if( contentType == PratilipiContentType.IMAGE ) {
+			// TODO: implementation
+		
+		} else {
+			throw new InvalidArgumentException( contentType + " content type is not yet supported." );
+		}
+		
+	}
+	
+	public static void insertPratilipiContentPage(
+			long pratilipiId, int pageNo, PratilipiContentType contentType,
+			HttpServletRequest request ) throws InvalidArgumentException,
+			InsufficientAccessException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( !PratilipiContentHelper.hasRequestAccessToUpdatePratilipiContent( request, pratilipi ) )
+			throw new InsufficientAccessException();
+
+		
+		pratilipi.setLastUpdated( new Date() );
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+
+		
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		
+		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, null, null, null, true );
+		
+		if( contentType == PratilipiContentType.PRATILIPI ) {
+			BlobEntry blobEntry = null;
+			try {
+				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+			content = pratilipiContentUtil.insertPage( pageNo );
+			
+			blobEntry.setData( content.getBytes( Charset.forName( "UTF-8" ) ) );
+			try {
+				blobAccessor.updateBlob( blobEntry );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to update pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+		} else if( contentType == PratilipiContentType.IMAGE ) {
+			// TODO: implementation
 		
 		} else {
 			throw new InvalidArgumentException( contentType + " content type is not yet supported." );

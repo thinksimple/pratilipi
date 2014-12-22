@@ -18,7 +18,6 @@ import com.claymus.data.transfer.BlobEntry;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.pratilipi.commons.server.PratilipiContentUtil;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.data.access.DataAccessor;
@@ -26,6 +25,7 @@ import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
+import com.pratilipi.pagecontent.pratilipi.util.PratilipiContentUtil;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> {

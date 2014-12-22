@@ -1,4 +1,4 @@
-package com.pratilipi.commons.server;
+package com.pratilipi.pagecontent.pratilipi.util;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -194,18 +194,18 @@ public class PratilipiContentUtil {
 			content = content.substring( 0, startIndex )
 					+ pageBreak
 					+ content.substring( startIndex );
-			return "";
+			matcher = pageBreakPattern.matcher( content );
 			
 		} else if( pageCount + 1 == pageNo ) {
 			logger.log( Level.INFO, "Inserting page "
 					+ pageNo + ". New page length: " + pageBreak.length() );
 			content = content + pageBreak;
-			return "";
+			matcher = pageBreakPattern.matcher( content );
 		}
 		
 		logger.log( Level.INFO, "Updated content length: " + content.length() );
 
-		return null;
+		return content;
 	}
 	
 }
