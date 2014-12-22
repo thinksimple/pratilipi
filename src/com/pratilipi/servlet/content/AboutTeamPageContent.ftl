@@ -27,7 +27,7 @@
 			</div>
 			<div class="col-sm-6 col-md-6 clearfix">
 				<div class="pull-left">
-					<h3>Shally Modi</h3>
+					<h3>Shelly Modi</h3>
 					<p><a href="//www.facebook.com/sahradayi.modi">Shally Modi</a> - SP University, M.Sc., M.B.A., double gold medalist, <b>loves preparing chai</b> :D</p>
 				</div>
 			</div>
