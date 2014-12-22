@@ -84,8 +84,8 @@
 	var pageNoDisplayed = 0;
 	
 
-	var overlay; // Initialized in initWriter()
 	var dialog; // Initialized in initWriter()
+	var overlay; // Initialized in initWriter()
 	var ajaxGet; // Initialized in initWriter()
 	var ajaxPut; // Initialized in initWriter()
 	
@@ -155,7 +155,7 @@
 	scope.displayNext = function( e ) {
 		checkDirtyAndUpdatePage( scope.pageNo + 1 );
 	};
-    
+	
 	function checkDirtyAndUpdatePage( pageNo ) {
 		if( CKEDITOR.instances[ 'PageContent-Writer-Content' ].checkDirty()
 				&& !confirm( "You haven't saved your changes yet ! Press 'Cancel' to go back and save your changes. Press 'Ok' to discard your changes and continue." ) ) {
@@ -200,42 +200,44 @@
 		}
 	}
 	
-    scope.savePage = function( e ) {
-    	if( scope.isEditorDirty ) {
-    		overlay.open();
-	    	ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:ckEditor.getData() } );
-	    	ajaxPut.go();
+	scope.savePage = function( e ) {
+		if( scope.isEditorDirty ) {
+			overlay.open();
+			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:ckEditor.getData() } );
+			ajaxPut.go();
 		}
-    };
-    
-    scope.addPageAfter = function( e ) {
+	};
+	
+	scope.addPageAfter = function( e ) {
 		dialog.close();
 		overlay.open();
-    	ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
-    	ajaxPut.go();
-    };
-    
-    scope.addPageBefore = function( e ) {
+		ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
+		ajaxPut.go();
+	};
+	
+	scope.addPageBefore = function( e ) {
 		dialog.close();
 		overlay.open();
-    	ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
-    	ajaxPut.go();
-    };
-    
-    scope.deletePage = function( e ) {
+		ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
+		ajaxPut.go();
+	};
+	
+	scope.deletePage = function( e ) {
 		dialog.close();
-		overlay.open();
-    	ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:'' } );
-    	ajaxPut.go();
-    };
+		if( confirm( "Are you sure you want to delete this page ?" ) ) {
+			overlay.open();
+			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:'' } );
+			ajaxPut.go();
+		}
+	};
 
 	scope.handleAjaxGetResponse = function( event, response ) {
 		if( contentArray[response.response['pageNo']] == null ) {
 			contentArray[response.response['pageNo']] = response.response['pageContent'];
 			updateContent();
 		}
-    };
-    
+	};
+	
 	scope.handleAjaxPutResponse = function( event, response ) {
 		overlay.close();
 		scope.pageNo = response.response['pageNo'];
@@ -255,8 +257,8 @@
 
 	function initWriter() {
 		try {
-			overlay = document.querySelector( '#PageContent-Writer-Overlay' );
 			dialog = document.querySelector( '#PageContent-Writer-Options' );
+			overlay = document.querySelector( '#PageContent-Writer-Overlay' );
 			ajaxGet = document.querySelector( '#PageContent-Writer-Ajax-Get' );
 			ajaxPut = document.querySelector( '#PageContent-Writer-Ajax-Put' );
 			ckEditor = CKEDITOR.inline( 'PageContent-Writer-Content', {
