@@ -99,7 +99,7 @@
 			['Source','Format','Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],
 			['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Outdent','Indent'],
 			['NumberedList','BulletedList'],
-			['Blockquote','Smiley','HorizontalRule','PageBreak'],
+			['Blockquote','Smiley','HorizontalRule'],
 			['Link','Unlink'],
 			['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'],
 			['ShowBlocks','Maximize']
