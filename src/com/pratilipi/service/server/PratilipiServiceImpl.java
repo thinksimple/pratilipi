@@ -1,20 +1,13 @@
 package com.pratilipi.service.server;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
 
-import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
-import com.claymus.commons.shared.exception.UnexpectedServerException;
-import com.claymus.data.access.BlobAccessor;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.data.access.DataListCursorTuple;
-import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.taskqueue.Task;
@@ -71,8 +64,6 @@ import com.pratilipi.service.shared.SaveAuthorRequest;
 import com.pratilipi.service.shared.SaveAuthorResponse;
 import com.pratilipi.service.shared.SaveGenreRequest;
 import com.pratilipi.service.shared.SaveGenreResponse;
-import com.pratilipi.service.shared.SavePratilipiContentRequest;
-import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.SearchRequest;
@@ -80,7 +71,6 @@ import com.pratilipi.service.shared.SearchResponse;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.GenreData;
 import com.pratilipi.service.shared.data.LanguageData;
-import com.pratilipi.service.shared.data.PratilipiContentData;
 import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.service.shared.data.PublisherData;
 import com.pratilipi.service.shared.data.UserPratilipiData;
@@ -90,10 +80,6 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 public class PratilipiServiceImpl extends RemoteServiceServlet
 		implements PratilipiService {
 
-	private static final Logger logger =
-			Logger.getLogger( PratilipiServiceImpl.class.getName() );
-
-    
 	@Override
 	public SavePratilipiResponse savePratilipi( SavePratilipiRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
@@ -219,85 +205,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	}
 
 
-	@Override
-	public SavePratilipiContentResponse savePratilipiContent(
-			SavePratilipiContentRequest request )
-			throws InvalidArgumentException,
-					InsufficientAccessException,
-					UnexpectedServerException {
-	
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-
-		PratilipiContentData pratilipiContentData = request.getPratilipiContentData();
-		Pratilipi pratilipi =  dataAccessor.getPratilipi( pratilipiContentData.getPratilipiId() );
-				
-		if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( this.getThreadLocalRequest(), pratilipi ) )
-			throw new InsufficientAccessException();
-		
-		pratilipi.setLastUpdated( new Date() );
-		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-
-		
-		// Fetching Pratilipi content from Blob Store
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String fileName = PratilipiHelper.getContent( pratilipiContentData.getPratilipiId() );
-		BlobEntry blobEntry;
-		try {
-			blobEntry = blobAccessor.getBlob( fileName );
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch blob: " + fileName, e );
-			throw new UnexpectedServerException();
-		}
-		String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-
-		
-		logger.log( Level.INFO, "Content length: " + content.length() );
-		logger.log( Level.INFO, "New page " + pratilipiContentData.getPageNo()
-				+ " length: " + pratilipiContentData.getContent().length() );
-		
-		// Update page
-		Matcher matcher =  PratilipiHelper.REGEX_PAGE_BREAK.matcher( content );	
-		int pageCount = 0;
-		int startIndex = 0;
-		int endIndex = 0;
-		while( pageCount <= pratilipiContentData.getPageNo() ) {
-			pageCount++;
-			startIndex = endIndex;
-			if( matcher.find() ) {
-				endIndex = matcher.end();
-				logger.log( Level.INFO, "Page " + pageCount + " length: "
-						+ ( endIndex - startIndex )
-						+ " (" + startIndex + " - " + endIndex + ") "
-						+ matcher.group() );
-			} else {
-				endIndex = content.length();
-				logger.log( Level.INFO, "Page " + pageCount + " length: "
-						+ ( endIndex - startIndex )
-						+ " (" + startIndex + " - " + endIndex + ")");
-			}
-			
-			if( pageCount == pratilipiContentData.getPageNo() ) {
-				logger.log( Level.INFO, "Updating page " + pageCount + "..." );
-				content = content.substring( 0, startIndex )
-						+ pratilipiContentData.getContent()
-						+ content.substring( endIndex );
-			}
-		}
-		
-		
-		logger.log( Level.INFO, "New content length " + content.length() );
-		
-		
-		try {
-			blobAccessor.updateBlob( blobEntry, content, Charset.forName( "UTF-8" ) );
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to update blob: " + fileName, e );
-			throw new UnexpectedServerException();
-		}
-		
-		return new SavePratilipiContentResponse();
-	}
-	
 	@Override
 	public AddLanguageResponse addLanguage( AddLanguageRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {

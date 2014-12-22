@@ -2,9 +2,8 @@ package com.pratilipi.service.client;
 
 import java.io.IOException;
 
-import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
-import com.claymus.commons.shared.exception.UnexpectedServerException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.pratilipi.service.shared.AddLanguageRequest;
@@ -36,8 +35,6 @@ import com.pratilipi.service.shared.SaveAuthorRequest;
 import com.pratilipi.service.shared.SaveAuthorResponse;
 import com.pratilipi.service.shared.SaveGenreRequest;
 import com.pratilipi.service.shared.SaveGenreResponse;
-import com.pratilipi.service.shared.SavePratilipiContentRequest;
-import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.SearchRequest;
@@ -55,11 +52,6 @@ public interface PratilipiService extends RemoteService {
 	GetPratilipiListResponse getPratilipiList(
 			GetPratilipiListRequest request );
 	
-
-	SavePratilipiContentResponse savePratilipiContent(
-			SavePratilipiContentRequest request )
-			throws InvalidArgumentException, InsufficientAccessException,
-					UnexpectedServerException;
 
 	AddLanguageResponse addLanguage( AddLanguageRequest request )
 			throws InvalidArgumentException, InsufficientAccessException;

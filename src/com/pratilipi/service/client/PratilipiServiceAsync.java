@@ -30,8 +30,6 @@ import com.pratilipi.service.shared.SaveAuthorRequest;
 import com.pratilipi.service.shared.SaveAuthorResponse;
 import com.pratilipi.service.shared.SaveGenreRequest;
 import com.pratilipi.service.shared.SaveGenreResponse;
-import com.pratilipi.service.shared.SavePratilipiContentRequest;
-import com.pratilipi.service.shared.SavePratilipiContentResponse;
 import com.pratilipi.service.shared.SavePratilipiRequest;
 import com.pratilipi.service.shared.SavePratilipiResponse;
 import com.pratilipi.service.shared.SearchRequest;
@@ -48,10 +46,6 @@ public interface PratilipiServiceAsync {
 			AsyncCallback<GetPratilipiListResponse> callback );
 
 	
-	void savePratilipiContent(
-			SavePratilipiContentRequest request,
-			AsyncCallback<SavePratilipiContentResponse> callback );
-
 	void addLanguage(
 			AddLanguageRequest request,
 			AsyncCallback<AddLanguageResponse> callback );
