@@ -249,7 +249,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		
 	}
 	
-	public static void updatePratilipiContent(
+	public static int updatePratilipiContent(
 			long pratilipiId, int pageNo, PratilipiContentType contentType,
 			Object pageContent, boolean insertNew, HttpServletRequest request )
 			throws InvalidArgumentException, InsufficientAccessException,
@@ -291,60 +291,11 @@ public class PratilipiContentHelper extends PageContentHelper<
 				logger.log( Level.SEVERE, "Failed to update pratilipi content.", e );
 				throw new UnexpectedServerException();
 			}
+			return pratilipiContentUtil.getPageCount();
 			
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			// TODO: implementation
-		
-		} else {
-			throw new InvalidArgumentException( contentType + " content type is not yet supported." );
-		}
-		
-	}
-	
-	public static void deletePratilipiContent(
-			long pratilipiId, int pageNo, PratilipiContentType contentType,
-			HttpServletRequest request ) throws InvalidArgumentException,
-			InsufficientAccessException, UnexpectedServerException {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-
-		if( !PratilipiContentHelper.hasRequestAccessToUpdatePratilipiContent( request, pratilipi ) )
-			throw new InsufficientAccessException();
-
-		
-		pratilipi.setLastUpdated( new Date() );
-		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-
-		
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		
-		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, null, null, null, true );
-		
-		if( contentType == PratilipiContentType.PRATILIPI ) {
-			BlobEntry blobEntry = null;
-			try {
-				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
-				throw new UnexpectedServerException();
-			}
-			
-			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-			content = pratilipiContentUtil.deleteContent( pageNo );
-			
-			blobEntry.setData( content.getBytes( Charset.forName( "UTF-8" ) ) );
-			try {
-				blobAccessor.updateBlob( blobEntry );
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to update pratilipi content.", e );
-				throw new UnexpectedServerException();
-			}
-			
-		} else if( contentType == PratilipiContentType.IMAGE ) {
-			// TODO: implementation
+			return -1;
 		
 		} else {
 			throw new InvalidArgumentException( contentType + " content type is not yet supported." );

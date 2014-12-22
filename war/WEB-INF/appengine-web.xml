@@ -32,9 +32,6 @@
     <property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>
     <property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
 
-    <property name="devo-pratilipi.domain.api" value="https://api-dot-devo-pratilipi.appspot.com"/>
-    <property name="prod-pratilipi.domain.ap1" value="https://api-dot-prod-pratilipi.appspot.com"/>
-
 	<!-- Configure resource path -->
     <property name="devo-pratilipi.resource" value="/resource."/>
     <property name="prod-pratilipi.resource" value="/resource."/>

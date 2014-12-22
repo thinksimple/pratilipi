@@ -52,7 +52,7 @@ public class PratilipiContentUtil {
 			logger.log( Level.INFO,
 					"Page " + pageCount + " length: " + ( endIndex - startIndex )
 					+ " (" + startIndex + " - " + endIndex + ") "
-					+ ( endIndex == content.length() ? matcher.group() : "" ) );
+					+ ( endIndex == content.length() ? "" : matcher.group() ) );
 		}
 		
 		return pageCount;
@@ -83,7 +83,7 @@ public class PratilipiContentUtil {
 			logger.log( Level.INFO,
 					"Page " + pageCount + " length: " + ( endIndex - startIndex )
 					+ " (" + startIndex + " - " + endIndex + ") "
-					+ ( endIndex == content.length() ? matcher.group() : "" ) );
+					+ ( endIndex == content.length() ? "" : matcher.group() ) );
 
 			if( pageCount == pageNo )
 				break;
@@ -97,8 +97,6 @@ public class PratilipiContentUtil {
 	}
 	
 	public String updateContent( int pageNo, String pageContent, boolean insertNew ) {
-		logger.log( Level.INFO, "Content length: " + content.length() );
-
 		matcher.reset();
 
 		int pageCount = 0;
@@ -109,83 +107,56 @@ public class PratilipiContentUtil {
 			pageCount++;
 			startIndex = endIndex;
 
-			if( matcher.find() )
+			if( matcher.find() ) {
 				endIndex = matcher.end();
-			else
-				endIndex = content.length();
+				logger.log( Level.INFO,
+						"Page " + pageCount + " length: " + ( endIndex - startIndex )
+						+ " (" + startIndex + " - " + endIndex + ") " + matcher.group() );
 			
-			logger.log( Level.INFO,
-					"Page " + pageCount + " length: " + ( endIndex - startIndex )
-					+ " (" + startIndex + " - " + endIndex + ") "
-					+ ( endIndex == content.length() ? matcher.group() : "" ) );
+			} else {
+				content = content + pageBreak;
+				endIndex = content.length();
+				logger.log( Level.INFO,
+						"Page " + pageCount + " length: " + ( endIndex - startIndex )
+						+ " (" + startIndex + " - " + endIndex + ") " + pageBreak );
+			}
+			
 
 			if( pageCount == pageNo )
 				break;
 		}
 		
+		logger.log( Level.INFO, "Content length: " + content.length() );
+
 		if( pageCount == pageNo ) {
 			if( insertNew ) {
-				pageContent = endIndex == content.length() ? pageBreak + pageContent : pageContent + pageBreak;
+				pageContent = pageContent + pageBreak;
 				logger.log( Level.INFO,
 						"Inserting page " + pageNo + ". "
-						+ "New page length: " + pageContent.length() );
+						+ "New page length: " + pageContent.length() + "." );
 				content = content.substring( 0, startIndex ) + pageContent + content.substring( startIndex );
 
-			} else {
-				pageContent = endIndex == content.length() ? pageContent : pageContent + pageBreak;
+			} else if( !pageContent.isEmpty() ) { // && !insertNew
+				pageContent = pageContent + pageBreak;
 				logger.log( Level.INFO,
 						"Updating page " + pageNo + ". "
 						+ "Page length: " + ( endIndex - startIndex ) + ". "
-						+ "Updated page length: " + pageContent.length() );
+						+ "Updated page length: " + pageContent.length() + "." );
 				content = content.substring( 0, startIndex ) + pageContent + content.substring( endIndex );
+
+			} else { //  if( pageContent.isEmpty() && !insertNew )
+				logger.log( Level.INFO, "Deleting page " + pageNo + "." );
+				content = content.substring( 0, startIndex ) + content.substring( endIndex );
 
 			}
 			matcher = pageBreakPattern.matcher( content );
 
 		} else if( insertNew && pageCount + 1 == pageNo ) {
+			pageContent = pageContent + pageBreak;
 			logger.log( Level.INFO,
 					"Inserting page " + pageNo + ". "
-					+ "New page length: " + pageContent.length() );
-			content = content + pageBreak + pageContent;
-			matcher = pageBreakPattern.matcher( content );
-		}
-		
-		logger.log( Level.INFO, "Updated content length: " + content.length() );
-
-		return content;
-	}
-	
-	public String deleteContent( int pageNo ) {
-		logger.log( Level.INFO, "Content length: " + content.length() );
-
-		matcher.reset();
-
-		int pageCount = 0;
-		int startIndex = 0;
-		int endIndex = 0;
-		
-		while( endIndex < content.length() ) {
-			pageCount++;
-			startIndex = endIndex;
-
-			if( matcher.find() )
-				endIndex = matcher.end();
-			else
-				endIndex = content.length();
-			
-			logger.log( Level.INFO,
-					"Page " + pageCount + " length: " + ( endIndex - startIndex )
-					+ " (" + startIndex + " - " + endIndex + ") "
-					+ ( endIndex == content.length() ? matcher.group() : "" ) );
-
-			if( pageCount == pageNo )
-				break;
-		}
-		
-		
-		if( pageCount == pageNo ) {
-			logger.log( Level.INFO, "Deleting page " + pageNo + "." );
-			content = content.substring( 0, startIndex ) + content.substring( endIndex );
+					+ "New page length: " + pageContent.length() + "." );
+			content = content + pageContent;
 			matcher = pageBreakPattern.matcher( content );
 		}
 		

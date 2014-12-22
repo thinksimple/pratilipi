@@ -6,9 +6,16 @@ import com.pratilipi.commons.shared.PratilipiContentType;
 @SuppressWarnings("serial")
 public class GetPratilipiContentResponse extends GenericResponse { 
 	
+	@SuppressWarnings("unused")
 	private Long pratilipiId;
+	
+	@SuppressWarnings("unused")
 	private Integer pageNo;
+	
+	@SuppressWarnings("unused")
 	private PratilipiContentType contentType;
+	
+	@SuppressWarnings("unused")
 	private String pageContent;
 
 	
@@ -23,23 +30,6 @@ public class GetPratilipiContentResponse extends GenericResponse {
 		this.pageNo = pageNo;
 		this.contentType = contentType;
 		this.pageContent = pageContent;
-	}
-	
-	
-	public Long getPratilipiId() {
-		return pratilipiId;
-	}
-
-	public Integer getPageNumber() {
-		return pageNo;
-	}
-	
-	public PratilipiContentType getContentType() {
-		return contentType;
-	}
-	
-	public Object getPageContent() {
-		return pageContent;
 	}
 
 }
