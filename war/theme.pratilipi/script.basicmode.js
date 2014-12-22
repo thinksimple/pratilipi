@@ -3,11 +3,13 @@
 function checkScreenWidth() {
 	var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	var userAccessDiv = document.getElementById( "Pratilipi-Search-UserAccess" );
-	if (windowsize > 768) {
-		userAccessDiv.style.height = '50px';
+	if( userAccessDiv != null ){
+		if ( windowsize > 768 ) {
+			userAccessDiv.style.height = '50px';
+		}
+		else
+			userAccessDiv.style.height = '80px';
 	}
-	else
-		userAccessDiv.style.height = '80px';
 }
 
 

@@ -22,10 +22,6 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 	border-bottom: 1px solid #ddd;
 }
 
-.bg-gray {
-	background:#CECECE;
-}
-
 .bg-translucent {
 	opacity: 0.8;
     filter: alpha(opacity=80);
