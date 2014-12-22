@@ -1,4 +1,4 @@
-package com.pratilipi.api.shared;
+package com.pratilipi.pagecontent.pratilipi.shared;
 
 import com.claymus.api.shared.GenericResponse;
 import com.pratilipi.commons.shared.PratilipiContentType;

@@ -38,7 +38,7 @@
   
   <servlet>
     <servlet-name>PratilipiContentApi</servlet-name>
-    <servlet-class>com.pratilipi.api.PratilipiContentApi</servlet-class>
+    <servlet-class>com.pratilipi.pagecontent.pratilipi.PratilipiContentApi</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>

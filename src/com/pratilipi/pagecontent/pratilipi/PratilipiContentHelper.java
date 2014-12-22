@@ -31,7 +31,6 @@ import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
-import com.pratilipi.pagecontent.pratilipi.util.PratilipiContentUtil;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiContentHelper extends PageContentHelper<
@@ -252,7 +251,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 	
 	public static void updatePratilipiContent(
 			long pratilipiId, int pageNo, PratilipiContentType contentType,
-			Object pageContent, HttpServletRequest request )
+			Object pageContent, boolean insertNew, HttpServletRequest request )
 			throws InvalidArgumentException, InsufficientAccessException,
 			UnexpectedServerException {
 		
@@ -283,7 +282,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 			
 			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-			content = pratilipiContentUtil.updateContent( pageNo, (String) pageContent );
+			content = pratilipiContentUtil.updateContent( pageNo, (String) pageContent, insertNew );
 			
 			blobEntry.setData( content.getBytes( Charset.forName( "UTF-8" ) ) );
 			try {
@@ -302,7 +301,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		
 	}
 	
-	public static void insertPratilipiContentPage(
+	public static void deletePratilipiContent(
 			long pratilipiId, int pageNo, PratilipiContentType contentType,
 			HttpServletRequest request ) throws InvalidArgumentException,
 			InsufficientAccessException, UnexpectedServerException {
@@ -334,7 +333,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 			
 			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-			content = pratilipiContentUtil.insertPage( pageNo );
+			content = pratilipiContentUtil.deleteContent( pageNo );
 			
 			blobEntry.setData( content.getBytes( Charset.forName( "UTF-8" ) ) );
 			try {
