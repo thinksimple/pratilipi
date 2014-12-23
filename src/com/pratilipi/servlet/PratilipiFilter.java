@@ -95,7 +95,7 @@ public class PratilipiFilter implements Filter {
 			if( queryString == null || queryString.isEmpty() )
 				response.setHeader( "Location", "http://www.pratilipi.com" + requestUri );
 			else
-				response.setHeader( "Location", "http://www.pratilipi.com" + requestUri + "&" + request.getQueryString() );
+				response.setHeader( "Location", "http://www.pratilipi.com" + requestUri + "?" + request.getQueryString() );
 
 			
 		} else if( oldPratilipiCoverUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi cover url
