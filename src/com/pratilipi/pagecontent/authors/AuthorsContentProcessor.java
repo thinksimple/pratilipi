@@ -36,7 +36,7 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 		
 		// Fetching Author list
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		List<Author> authorList = dataAccessor.getAuthorList( null, 250 ).getDataList();
+		List<Author> authorList = dataAccessor.getAuthorList( null, 500 ).getDataList();
 		Map<String, String> languageIdNameMap = new HashMap<>();
 		for( Author author : authorList ) {
 			if( languageIdNameMap.get( author.getLanguageId() ) == null ) {
