@@ -87,9 +87,16 @@
 	scope.pageNo = ${ pageNo };
 	
 	var contentArray = [];
+	var isCtrl = false;
+	
 	
 	jQuery( 'body' ).bind( 'contextmenu', function( event ){
 		event.preventDefault();
+	});
+	
+	jQuery( 'body' ).keyup( function( event) {
+		if( event.which == 17 )
+			isCtrl = false;
 	});
 	
 	jQuery( 'body' ).keydown( function( event ) {
@@ -99,12 +106,11 @@
 		} else if( event.which == 39 && scope.pageNo < scope.pageCount ) {
 			scope.pageNo++;
 			scope.displayPage();
-		} else if( event.which == 17 ) { // disable ctrl+c
-			jQuery( 'body' ).keydown( function( event ){ 
-				if( event.which == 67 ) {
-					return false;
-				}
-			});
+		} else if ( event.which == 17 || event.which == 67 || event.which == 80 ) { // disable ctrl+c
+			if( event.which == 17 )
+				isCtrl = true;
+			if(( ( event.which == 67 ) || ( event.which == 80 ) ) && isCtrl == true)
+				return false;
 		}
 	});
 	
