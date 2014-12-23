@@ -30,7 +30,7 @@ public class PratilipiFilter implements Filter {
 	
 	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile( "/resource\\.(book|poem|story|article)-cover/.*" );
 	private final Pattern validHostRegEx = Pattern.compile(
-			"(www|embed|gamma|legacy|devo|alpha)\\.pratilipi\\.com"
+			"(www|embed|devo|alpha)\\.pratilipi\\.com"
 			+ "|"
 			+ "(mark-4p2\\d\\.prod-pratilipi|.+\\.devo-pratilipi)\\.appspot\\.com"
 			+ "|"
@@ -91,9 +91,13 @@ public class PratilipiFilter implements Filter {
 			
 		} else if( !validHostRegEx.matcher( host ).matches() ) { // Redirecting to www.pratilipi.com
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", "http://www.pratilipi.com" + requestUri );
+			String queryString = request.getQueryString();
+			if( queryString == null || queryString.isEmpty() )
+				response.setHeader( "Location", "http://www.pratilipi.com" + requestUri );
+			else
+				response.setHeader( "Location", "http://www.pratilipi.com" + requestUri + "&" + request.getQueryString() );
 
-		
+			
 		} else if( oldPratilipiCoverUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi cover url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", requestUri.replaceFirst( "book|poem|story|article", "pratilipi" ) );
