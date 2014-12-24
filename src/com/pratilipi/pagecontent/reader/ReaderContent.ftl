@@ -108,8 +108,9 @@
 			scope.displayPage();
 		} else if( event.which == 17 ) {
 			isCtrl = true;
-		} else if( isCtrl && ( event.which == 67 || event.which == 80 ) ) { // Disabled Ctrl + C/P
-			return false;
+		} else if( event.which == 67 || event.which == 80 ) {
+			if( isCtrl)
+				return false; // Disabled Ctrl + C/P
 		}
 	});
 	
