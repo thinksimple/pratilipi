@@ -231,7 +231,9 @@ public class PratilipiContentHelper extends PageContentHelper<
 				throw new UnexpectedServerException();
 			}
 			
-			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			String content = blobEntry == null
+					? "&nbsp;"
+					: new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
 			return pratilipiContentUtil.getContent( pageNo );
 			
@@ -275,6 +277,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 			BlobEntry blobEntry = null;
 			try {
 				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
+				if( blobEntry == null )
+					blobEntry = blobAccessor.newBlob( pratilipiData.getPratilipiContentName(), "&nbsp".getBytes( Charset.forName( "UTF-8" ) ), "text/html" );
 			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
 				throw new UnexpectedServerException();
@@ -283,15 +287,19 @@ public class PratilipiContentHelper extends PageContentHelper<
 			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
 			content = pratilipiContentUtil.updateContent( pageNo, (String) pageContent, insertNew );
-			
+			int pageCount = pratilipiContentUtil.getPageCount();
+			if( content.isEmpty() ) {
+				content = "&nbsp";
+				pageCount = 1;
+			}
 			blobEntry.setData( content.getBytes( Charset.forName( "UTF-8" ) ) );
 			try {
-				blobAccessor.updateBlob( blobEntry );
+				blobAccessor.createOrUpdateBlob( blobEntry );
 			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to update pratilipi content.", e );
 				throw new UnexpectedServerException();
 			}
-			return pratilipiContentUtil.getPageCount();
+			return pageCount;
 			
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			// TODO: implementation

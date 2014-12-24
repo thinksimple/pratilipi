@@ -103,7 +103,9 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 				throw new UnexpectedServerException();
 			}
 			
-			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			String content = blobEntry == null
+					? "&nbsp;"
+					: new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
 			String pageContent = pratilipiContentUtil.getContent( pageNo );
 			
