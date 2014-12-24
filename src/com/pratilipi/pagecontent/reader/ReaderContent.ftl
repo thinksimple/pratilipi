@@ -106,11 +106,10 @@
 		} else if( event.which == 39 && scope.pageNo < scope.pageCount ) {
 			scope.pageNo++;
 			scope.displayPage();
-		} else if ( event.which == 17 || event.which == 67 || event.which == 80 ) { // disable ctrl+c
-			if( event.which == 17 )
-				isCtrl = true;
-			if(( ( event.which == 67 ) || ( event.which == 80 ) ) && isCtrl == true)
-				return false;
+		} else if( event.which == 17 ) {
+			isCtrl = true;
+		} else if( isCtrl && ( event.which == 67 || event.which == 80 ) ) { // Disabled Ctrl + C/P
+			return false;
 		}
 	});
 	
