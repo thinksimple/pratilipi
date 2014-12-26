@@ -29,8 +29,8 @@
 					<ul id="PratilipiContent-writer-menu" style="padding-left: 50px; position:absolute; width:100%; z-index:1;">
 						<li class="menuItem" onclick="decreaseSize( event );">Decrease Text Size</li>
 						<li class="menuItem" onclick="increaseSize( event );">Increase Text Size</li>
-						<li class="menuItem" onclick="addPageBefore();">Before This Add Page</li>
-						<li class="menuItem" onclick="addPageAfter();">After This Add Page</li>
+						<li class="menuItem" onclick="addPageBefore();">Add Page Before This Page</li>
+						<li class="menuItem" onclick="addPageAfter();">Add Page  After This Page</li>
 						<li class="menuItem" onclick="deletePage();">Delete Page</li>
 						<li class="menuItem">Upload Word Document</li>
 					</ul>
