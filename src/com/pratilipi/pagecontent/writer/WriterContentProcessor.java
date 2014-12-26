@@ -49,7 +49,7 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 				.getDataAccessor( request )
 				.getPratilipi( pratilipiId );
 		
-		return "Read | " + pratilipi.getTitle()
+		return "Write | " + pratilipi.getTitle()
 				+ ( pratilipi.getTitleEn() == null ? "" : " (" + pratilipi.getTitleEn() + ")" );
 	}
 	
