@@ -2,13 +2,6 @@
 
 <script src="//cdn-asia.pratilipi.com/third-party/ckeditor-4.4.5-full/ckeditor.js" charset="utf-8"></script>
 
-<#if ( pageNo > 1 )>
-	<#assign previousPageUrl= "/write?id=${ pratilipiData.getId()?c }&page=" +(pageNo -1) >
-</#if>
-<#if ( pageNo < pageCount )>
-	<#assign nextPageUrl= "/write?id=${ pratilipiData.getId()?c }&page=" +(pageNo+1) >
-</#if>
-
 
 <div class="bg-green">
 	<table style="width: 100%;color: white; height: 64px;">
@@ -16,7 +9,7 @@
 			<td>
 				<div style="margin-left: 5px; margin-right:5px;">
 					<div id="PratilipiContent-WriterBasic-ExitButton" class="writer-Button" onclick="window.location.href='${ exitUrl ! pratilipiData.getPageUrl() }'" style="float: left; margin-right: 10px; padding-top: 19px;" >
-						<img src="/theme.pratilipi/images/left.png" />
+						<img src="/theme.pratilipi/images/left.png" / title="Exit">
 					</div>
 					<p style="margin : 0px; font-color: white;font-size: 1.3em; line-height: 64px;">
 						${ pratilipiData.getTitle() }
@@ -25,7 +18,9 @@
 			</td>
 			<td valign="middle" style="margin: 0px; position:relative;">
 				<div style="float: right; margin-right: 10px; padding-right:10px; position:relative;text-align: right; width: 250px;">
-					<a href='#' id="PratilipiContent-writer-dropdown" style="color: white; position:relative; text-decoration: none;">Menu</a>
+					<a href='#' id="PratilipiContent-writer-dropdown" style="color: white; position:relative; text-decoration: none;">
+						<img src="/theme.pratilipi/images/buttons/menu-white.png" title="Options" />
+					</a>
 					<ul id="PratilipiContent-writer-menu" style="padding-left: 50px; position:absolute; width:100%; z-index:1;">
 						<li class="menuItem" onclick="decreaseSize( event );">Decrease Text Size</li>
 						<li class="menuItem" onclick="increaseSize( event );">Increase Text Size</li>
@@ -45,9 +40,9 @@
 			<td>
 			<#if pratilipiData.getContentType() == "PRATILIPI" >
 				<#if contentSize??>
-					<div id="PratilipiContent-Reader-Content" class="paper" contenteditable="true" style="font-size:${ contentSize }"> ${ pageContent } </div>
+					<div id="PratilipiContent-Writer-Content" class="paper" contenteditable="true" style="font-size:${ contentSize }"> ${ pageContent } </div>
 				<#else>
-					<div id="PratilipiContent-Reader-Content" class="paper" contenteditable="true"> ${ pageContent } </div>
+					<div id="PratilipiContent-Writer-Content" class="paper" contenteditable="true"> ${ pageContent } </div>
 				</#if>
 			</#if>
 			</td>
@@ -63,16 +58,12 @@
 	</table>
 </div>
 <div style="width: 100%; position: fixed; bottom: 0px; right: 0px;padding-right: 3%; padding-bottom: 10px; padding-top: 10px; padding-left: 4%;">
-	<#if nextPageUrl?? >
-		<div id="PratilipiContent-WriterBasic-NextPageButton" class="bg-green writer-Button" onclick="displayNextPage();" style="margin-left:10px;">
-			<img src="/theme.pratilipi/images/next.png" title="Next Page" />
-		</div>
-	</#if>
-	<#if previousPageUrl?? >
-		<div id="PratilipiContent-WriterBasic-PreviousPageButton" class="bg-green writer-Button" onclick="displayPreviousPage();">
-			<img src="/theme.pratilipi/images/previous.png" title="Previous Page" />
-		</div>
-	</#if>
+	<div id="PratilipiContent-WriterBasic-NextPageButton" class="bg-green writer-Button" onclick="displayNextPage();" style="margin-left:10px;">
+		<img src="/theme.pratilipi/images/next.png" title="Next Page" />
+	</div>
+	<div id="PratilipiContent-WriterBasic-PreviousPageButton" class="bg-green writer-Button" onclick="displayPreviousPage();">
+		<img src="/theme.pratilipi/images/previous.png" title="Previous Page" />
+	</div>
 	<div id="PratilipiContent-WriterBasic-SaveButton" class="writer-Button" onclick="savePage();" style="float:left;">
 		<img src="/theme.pratilipi/images/buttons/save-white.png" title="Save Changes" />
 	</div>
@@ -99,7 +90,7 @@
 			background-color : #a7d7a7;
 			width: 100%;
 			padding-right: 10px;
-			pointer: cursor;
+			cursor: pointer; 
 		}
 		
 		.menuItem:hover {
@@ -124,7 +115,7 @@ CKEDITOR.disableAutoInline = true;
 
 function initWriter() {
 	try {
-		ckEditor = CKEDITOR.inline( document.getElementById( 'PratilipiContent-Reader-Content' ) ); 
+		ckEditor = CKEDITOR.inline( document.getElementById( 'PratilipiContent-Writer-Content' ) ); 
 		CKEDITOR.config.toolbar = [
 				['Source','Format','Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],
 				['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Outdent','Indent'],
@@ -163,17 +154,14 @@ dropDown.addEventListener('click', function( event ) {
  */ 
 
 function setPageNo(){
-	alert( "SET PAGENO CALLED" );
-	jQuery( "#PratilipiContent-Writer-PageNumber" ).innerHTML = pageNo;
+	jQuery( "#PratilipiContent-Writer-PageNumber" ).html( pageNo );
 }
 
 function setPageCount(){
-	alert( "SET PAGE COUNT CALLED" );
-	jQuery( "#PratilipiContent-Writer-PageCount" ).innerHTML = pageCount;
+	jQuery( "#PratilipiContent-Writer-PageCount" ).html( pageCount );
 }
 
 function prefetchContent(){
-	alert( "PREFETCH CONTENT CALLED" );
 	if( pageNo > 1 && contentArray[ pageNo - 1 ] == null )
 		getPage( pageNo - 1 );
 	
@@ -182,16 +170,15 @@ function prefetchContent(){
 }
 
 function updateContent(){
-	alert( "UPDATE CONTENT" );
 	if( pageNoDisplayed == pageNo )
 		return;
 	
 	if( contentArray[ pageNo ] == null){
-		jQuery( '#PratilipiContent-Writer-Content' ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
+		jQuery( '#PratilipiContent-Writer-Content' ).html( "<div style='text-align:center'>Loading ...</div>" );
 		getPage( pageNo );
 	}
 	else {
-		jQuery( '#PratilipiContent-Writer-Content' ).innerHTML = contentArray[ pageNo ];
+		jQuery( '#PratilipiContent-Writer-Content' ).html( contentArray[ pageNo ] );
 		pageNoDisplayed = pageNo;
 	}
 	
@@ -201,36 +188,17 @@ function updateContent(){
 }
 
 
-function checkDirtyAndUpdatePage( pageNumber ){
-	if( isEditorDirty && 
-			confirm( "You haven't saved your changes yet ! Press 'Cancel' to go back and save your changes. Press 'Ok' to discard your changes and continue." )) {
-		alert( "CHECKDIRTY AND UPDATE PAGE CALLED" );
-		pageNo = pageNumber;
-		updatePage();
-		setCookie( '${ pageNoCookieName }', pageNo );
-	}
-	else{
-		alert( "CHECKDIRTYANDUPDATEPAGE CALLED" );
-		pageNo = pageNumber;
-		updatePage();
-		setCookie( '${ pageNoCookieName }', pageNo );
-	}		
-}
 
 function getPage( pageNumber ){
 	jQuery.ajax({
 		url: "/api.pratilipi/pratilipi/content",
 		type: "GET",
+		contentType: "application/json",
 		dataType: "json",
 		handleAs: "json",
-		data: 
-			JSON.stringify({
-				pratilipiId: ${ pratilipiData.getId()?c }, 
-				pageNo: pageNumber, 
-				contentType:'PRATILIPI'
-			}),
+		data: 'pratilipiId=${ pratilipiData.getId()?c }&pageNo=' + pageNumber + '&contentType=PRATILIPI',
 		beforeSend: function( data, object ){
-			readOnlyMode();
+			setDisabled( true );
 		},
 		success: function( response, status, xhr ) {
 			handleAjaxGetResponse( response );
@@ -244,12 +212,16 @@ function getPage( pageNumber ){
 	});
 }
 
-function updatePage(){
-	alert( "UPDATE PAGE CALLED" );
+function updateDisplay(){
+	jQuery('html, body').animate({scrollTop: '0px'}, 300);
+	setMinWriterWidth();
 	updateContent();
 	setPageNo();
 	setPageCount();
-	preFetchContent();
+	setDisabled( false );
+	jQuery( "#PratilipiContent-WriterBasic-SaveButton" ).removeClass( "bg-red" );
+	jQuery( "#PratilipiContent-WriterBasic-SaveButton" ).removeClass( "bg-green" );
+	prefetchContent();
 }
 
 function savePage(){
@@ -267,7 +239,7 @@ function savePage(){
 				pageContent:ckEditor.getData() 
 			}),
 		beforeSend: function( data, object ){
-			readOnlyMode();
+			setDisabled( true );
 		},
 		success: function( response, status, xhr ) {
 			jQuery( "#PratilipiContent-WriterBasic-SaveButton" ).removeClass( "bg-red" );
@@ -281,7 +253,7 @@ function savePage(){
 			alert( status + " : " + error );
 		},
 		complete: function( event, response ){
-			console.log( response.response );
+			console.log( response );
 		}
 	});
 }
@@ -306,16 +278,16 @@ function addPageBefore(){
 					insertNew: true 
 				}),
 			beforeSend: function( data, object ){
-				readOnlyMode();
+				setDisabled( true );
 			},
 			success: function( response, status, xhr ) {
-				location.reload();
+				handleAjaxPutResponse( response );
 			}, 
 			error: function( xhr, status, error) {
 				alert( status + " : " + error );
 			},
 			complete: function( event, response ){
-				alert( response );
+				console.log( response );
 			}
 		});
 	}
@@ -341,17 +313,16 @@ function addPageAfter(){
 					insertNew: true
 				}),
 			beforeSend: function( data, object ){
-				readOnlyMode();
+				setDisabled( true );
 			},
 			success: function( response, status, xhr ) {
-				pageNo = response[ 'pageNo' ];
-				window.location.href="/write?id=${ pratilipiData.getId()?c }&page=" + pageNo;
+				handleAjaxPutResponse( response );
 			}, 
 			error: function( xhr, status, error) {
 				alert( status + " : " + error );
 			},
 			complete: function( event, response ){
-				alert( response[ 'pageNo' ] + "/" +  response[ 'pageCount' ] );
+				console.log( response );
 			}
 		});
 	}
@@ -373,10 +344,10 @@ function deletePage(){
 					pageContent:''
 				}),
 			beforeSend: function( data, object ){
-				readOnlyMode();
+				setDisabled( true );
 			},
 			success: function( response, status, xhr ) {
-				location.reload();
+				handleAjaxPutResponse( response );
 			}, 
 			error: function( xhr, status, error) {
 				alert( status + " : " + error );
@@ -390,27 +361,25 @@ function deletePage(){
 
 function handleAjaxPutResponse( response ){
 	pageNo = response[ 'pageNo' ];
-	alert( pageNo + "/" + response[ 'pageNo' ] + "/" + pageCount + "/" + response[ 'pageCount' ] );
 	if( pageCount != response[ 'pageCount' ] ){
-		alert( "Page added or deleted" );
 		contentArray = [];
 		pageNoDisplayed = 0;
 		pageCount = response[ 'pageCount' ];
 		if( pageNo > pageCount )
 			pageNo = pageCount;
-		checkDirtyAndUpdatePage( pageNo );
+		updateDisplay();
 	} else {
 		alert( "No new pages added" );
 		contentArray[pageNo] = ckEditor.getData();
 		pageNoDisplayed = 0;
-		updatePage();
+		updateDisplay();
 	}
 }
 
 function handleAjaxGetResponse( response ){
 	if( contentArray[response['pageNo']] == null ) {
 		contentArray[response['pageNo']] = response['pageContent'];
-		updatePage();
+		updateContent();
 	}
 }
 
@@ -427,7 +396,13 @@ function displayNextPage(){
 			!confirm( "You haven't saved your changes yet ! Press 'Cancel' to go back and save your changes. Press 'Ok' to discard your changes and continue." )) {
 		return;
 	} else {
-		window.location.href= '${ nextPageUrl }';
+		if( pageNo < pageCount ){
+			pageNo = pageNo + 1;
+			pageNoDisplayed = 0;
+			updateDisplay();
+		}
+		else
+			alert( "You have reached last page" );
 	}
 }
 
@@ -436,26 +411,31 @@ function displayPreviousPage(){
 			!confirm( "You haven't saved your changes yet ! Press 'Cancel' to go back and save your changes. Press 'Ok' to discard your changes and continue." )) {
 		return;
 	} else {
-		window.location.href= '${ previousPageUrl }';
+		if( pageNo > 1 ){
+			pageNo = pageNo - 1;
+			pageNoDisplayed = 0;
+			updateDisplay();
+		}
+		else
+			alert( "This is first page" );
 	}
 }
 
-function readOnlyMode(){
-	jQuery( "#PratilipiContent-WriterBasic-ExitButton").attr('disabled', 'disabled');
-	jQuery( "#PratilipiContent-writer-dropdown").attr('disabled', 'disabled');
-	jQuery( "#Pratilipi-Write-Basic").attr('disabled', 'disabled');
-	jQuery( "#PratilipiContent-WriterBasic-NextPageButton").attr('disabled', 'disabled');
-	jQuery( "#PratilipiContent-WriterBasic-PreviousPageButton").attr('disabled', 'disabled');
-	jQuery( "#PratilipiContent-WriterBasic-SaveButton").attr('disabled', 'disabled');
+function setDisabled( enabled ){
+	jQuery( "#PratilipiContent-WriterBasic-ExitButton").attr('disabled',enabled);
+	jQuery( "#PratilipiContent-writer-dropdown").attr('disabled', enabled);
+	jQuery( "#Pratilipi-Write-Basic").attr('disabled',enabled);
+	jQuery( "#PratilipiContent-WriterBasic-NextPageButton").attr('disabled',enabled);
+	jQuery( "#PratilipiContent-WriterBasic-PreviousPageButton").attr('disabled',enabled);
+	jQuery( "#PratilipiContent-WriterBasic-SaveButton").attr('disabled',enabled);
 }
 
 function setMinWriterWidth(){
 	var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-	var writeDiv = document.getElementById( '' );
 	if( windowsize > 800 )
-		jQuery( "#PratilipiContent-Reader-Content" ).width( 1000 );
+		jQuery( "#PratilipiContent-Writer-Content" ).width( 1000 );
 	else
-		jQuery( "#PratilipiContent-Reader-Content" ).width( windowsize );
+		jQuery( "#PratilipiContent-Writer-Content" ).width( windowsize );
 }
 
 /* Zoom Support */
