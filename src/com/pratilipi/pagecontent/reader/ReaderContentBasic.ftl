@@ -42,11 +42,11 @@
 					<div class="paper">
 						<div style="position:relative">
 							<#if contentSize??>
-								<div id="PageContent-Reader-Content" style="font-size:${ contentSize }"> ${ pageContent } </div>
+								<div id="PratilipiContent-Reader-Content" style="font-size:${ contentSize }"> ${ pageContent } </div>
 							<#else>
-								<div id="PageContent-Reader-Content"> ${ pageContent } </div>
+								<div id="PratilipiContent-Reader-Content"> ${ pageContent } </div>
 							</#if>
-							<div id="PageContent-Reader-Overlay"></div>
+							<div id="PratilipiContent-Reader-Overlay"></div>
 						</div>
 					</div>
 				<#elseif pratilipiData.getContentType() == "IMAGE" >			
@@ -54,15 +54,15 @@
 					<div class="paper" style="width:inherit; max-width:none; min-height:inherit; overflow-x:auto;">
 						<div style="position:relative">
 							<#if contentSize??>
-								<div id="PageContent-Reader-Content">
+								<div id="PratilipiContent-Reader-Content">
 									<img id="imageContent" src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }&contentType=IMAGE' width=${ contentSize }/>
 								</div>
-								<div id="PageContent-Reader-Overlay"></div>
+								<div id="PratilipiContent-Reader-Overlay"></div>
 							<#else>
-								<div id="PageContent-Reader-Content">
+								<div id="PratilipiContent-Reader-Content">
 									<img id="imageContent" src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }&contentType=IMAGE' width="100%"/>
 								</div>
-								<div id="PageContent-Reader-Overlay"></div>
+								<div id="PratilipiContent-Reader-Overlay"></div>
 							</#if>
 						</div>
 					</div>
@@ -107,7 +107,7 @@
 			cursor: pointer;
 		}
 		
-		#PageContent-Reader-Overlay {
+		#PratilipiContent-Reader-Overlay {
 			position: absolute;
 			top: 0px;
 			left: 0px;
@@ -124,14 +124,22 @@ function saveAutoBookmark(){
 	setCookie( '${ pageNoCookieName }', ${ pageNo }, 365 );
 }
 
+function setMinReaderWidth(){
+	var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	if( windowsize > 800 )
+		document.getElementById( "PratilipiContent-Reader-Content" ).style.width = "1000px" ;
+	else
+		document.getElementById( "PratilipiContent-Reader-Content" ).style.width = windowsize + "px";
+}
+
 /* Zoom Support */
 
 function increaseSize(){
 	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	var imageContent = document.getElementById( "imageContent" );
 	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
-	var wordContent = document.getElementById( "PageContent-Reader-Content" );
-	var overlay = document.getElementById( "PageContent-Reader-Overlay" );
+	var wordContent = document.getElementById( "PratilipiContent-Reader-Content" );
+	var overlay = document.getElementById( "PratilipiContent-Reader-Overlay" );
 		
 	if( imageContent ){
 		/* For Image content */
@@ -160,8 +168,8 @@ function decreaseSize(){
 	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	var imageContent = document.getElementById( "imageContent" );
 	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
-	var wordContent = document.getElementById( "PageContent-Reader-Content" );
-	var overlay = document.getElementById( "PageContent-Reader-Overlay" );
+	var wordContent = document.getElementById( "PratilipiContent-Reader-Content" );
+	var overlay = document.getElementById( "PratilipiContent-Reader-Overlay" );
 	
 	if( imageContent ){
 		/* For Image content */
@@ -209,6 +217,7 @@ if( window.attachEvent) //for IE8 and below
 			event.preventDefault();
 		}
 		
+		setMinReaderWidth();
 		saveAutoBookmark();
 	});
 else 
@@ -233,6 +242,7 @@ else
 			event.preventDefault();
 		}
 		
+		setMinReaderWidth();
 		saveAutoBookmark();
 	});
 
