@@ -139,7 +139,7 @@ public class UxModeFilter implements Filter {
 			embedMode = Boolean.parseBoolean( embedModeParam );
 		
 		
-		request.setAttribute( ClaymusHelper.REQUEST_ATTRIB_MODE_BASIC, true );
+		request.setAttribute( ClaymusHelper.REQUEST_ATTRIB_MODE_BASIC, basicMode );
 		request.setAttribute( ClaymusHelper.REQUEST_ATTRIB_EMBED_BASIC, embedMode );
 		
 		chain.doFilter( req, resp );
