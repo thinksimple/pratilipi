@@ -7,12 +7,16 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.client.rpc.SerializationStreamFactory;
+import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
 import com.pratilipi.service.shared.AddUserPratilipiResponse;
+import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.service.shared.data.UserPratilipiData;
 
 public class PratilipiContent implements EntryPoint, ClickHandler {
@@ -22,11 +26,26 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 
 	
 	private final Button saveReviewButton = new Button( "Submit Review" );
+	private final RootPanel encodedPratilipiDataPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
+	
+	private PratilipiData pratilipiData;
 	
 	private String url = Window.Location.getPath();
 
 	
 	public void onModuleLoad() {
+		if( encodedPratilipiDataPanel != null ){
+			String pratilipiDataEncodedStr = encodedPratilipiDataPanel.getElement().getInnerText();
+			SerializationStreamReader streamReader;
+			try {
+				streamReader = ( (SerializationStreamFactory) pratilipiService )
+					.createStreamReader( pratilipiDataEncodedStr );
+				pratilipiData = ( PratilipiData ) streamReader.readObject();
+			} catch (SerializationException e) {
+				Window.Location.reload();
+			}
+		}
+		
 		RootPanel reviewPanel = RootPanel.get( "PageContent-Pratilipi-Review" );
 		RootPanel submitButtonPanel = RootPanel.get( "PageContent-Pratilipi-Review-AddOptions" );
 		if( reviewPanel != null && submitButtonPanel != null ) {
@@ -50,12 +69,10 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 			saveReviewButton.setEnabled( false );
 			saveReviewButton.setText( "Submitting ..." );
 			
-			String pratilipiIdStr = url.substring( url.lastIndexOf( '/' ) + 1 );
-			Long pratilipiId = Long.parseLong( pratilipiIdStr );
-			
 			UserPratilipiData userPratilipiData = new UserPratilipiData();
-			userPratilipiData.setPratilipiId( pratilipiId );
+			userPratilipiData.setPratilipiId( pratilipiData.getId() );
 			userPratilipiData.setReview( getHtmlFromEditor( "PageContent-Pratilipi-Review" ) );
+			Window.alert( "Pratilipi ID : " + userPratilipiData.getPratilipiId() );
 			
 			pratilipiService.addUserPratilipi(
 					new AddUserPratilipiRequest( userPratilipiData ),
