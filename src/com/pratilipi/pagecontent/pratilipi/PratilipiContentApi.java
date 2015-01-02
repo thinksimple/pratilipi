@@ -1,6 +1,7 @@
 package com.pratilipi.pagecontent.pratilipi;
 
 import com.claymus.api.GenericApi;
+import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Get;
 import com.claymus.api.annotation.Put;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
@@ -14,6 +15,7 @@ import com.pratilipi.pagecontent.pratilipi.shared.PutPratilipiContentResponse;
 
 
 @SuppressWarnings("serial")
+@Bind( uri = "/pratilipi/content" )
 public class PratilipiContentApi extends GenericApi {
 
 	@Get

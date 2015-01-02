@@ -3,6 +3,7 @@ package com.pratilipi.api;
 import java.util.Date;
 
 import com.claymus.api.GenericApi;
+import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Put;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
@@ -20,6 +21,7 @@ import com.pratilipi.data.transfer.UserPratilipi;
 
 
 @SuppressWarnings("serial")
+@Bind( uri = "/purchase" )
 public class PurchaseApi extends GenericApi {
 
 	@Put

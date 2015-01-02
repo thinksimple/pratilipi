@@ -30,12 +30,6 @@ import com.pratilipi.service.shared.data.PublisherData;
 @SuppressWarnings("serial")
 public class PratilipiHelper extends ClaymusHelper {
 
-	@Deprecated
-	public static final Pattern REGEX_PAGE_BREAK = Pattern.compile(
-			"(<hr\\s+style=\"page-break-(before|after).+?>)"
-			+ "|"
-			+ "(<div\\s+style=\"page-break-(before|after).+?>(.+?)</div>)" );
-
 	public static final Pattern REGEX_HTML_BODY = Pattern.compile(
 			"(.*?<body\\s.*?>)(.*?)(</body>.*?)" );
 

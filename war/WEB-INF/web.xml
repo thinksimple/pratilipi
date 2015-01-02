@@ -92,38 +92,6 @@
     <url-pattern>/service.robots</url-pattern>
   </servlet-mapping>
 
-  <!-- Handlers for API -->
-  
-  <servlet>
-    <servlet-name>OAuthApi</servlet-name>
-    <servlet-class>com.pratilipi.api.OAuthApi</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>OAuthApi</servlet-name>
-    <url-pattern>/api.pratilipi/oauth</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>PurchaseApi</servlet-name>
-    <servlet-class>com.pratilipi.api.PurchaseApi</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PurchaseApi</servlet-name>
-    <url-pattern>/api.pratilipi/purchase</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>PratilipiContentApi</servlet-name>
-    <servlet-class>com.pratilipi.pagecontent.pratilipi.PratilipiContentApi</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PratilipiContentApi</servlet-name>
-    <url-pattern>/api.pratilipi/pratilipi/content</url-pattern>
-  </servlet-mapping>
-  
   <!-- Handlers for Uploading and Serving Website Resources -->
 
   <servlet>
@@ -287,6 +255,20 @@
   </servlet-mapping>
 
   <!-- Main Claymus Handler -->
+
+  <servlet>
+    <servlet-name>PratilipiService</servlet-name>
+    <servlet-class>com.pratilipi.servlet.PratilipiService</servlet-class>
+    <load-on-startup>1</load-on-startup>
+    <init-param>
+      <param-name>Prefix</param-name>
+      <param-value>/api.pratilipi</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PratilipiService</servlet-name>
+    <url-pattern>/api.pratilipi/*</url-pattern>
+  </servlet-mapping>
 
   <servlet>
     <servlet-name>PratilipiMain</servlet-name>

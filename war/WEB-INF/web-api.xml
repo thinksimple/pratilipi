@@ -17,33 +17,13 @@
   </servlet-mapping>
   
   <servlet>
-    <servlet-name>OAuthApi</servlet-name>
-    <servlet-class>com.pratilipi.api.OAuthApi</servlet-class>
+    <servlet-name>PratilipiService</servlet-name>
+    <servlet-class>com.pratilipi.servlet.PratilipiService</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>OAuthApi</servlet-name>
-    <url-pattern>/oauth</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>PurchaseApi</servlet-name>
-    <servlet-class>com.pratilipi.api.PurchaseApi</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PurchaseApi</servlet-name>
-    <url-pattern>/purchase</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>PratilipiContentApi</servlet-name>
-    <servlet-class>com.pratilipi.pagecontent.pratilipi.PratilipiContentApi</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PratilipiContentApi</servlet-name>
-    <url-pattern>/pratilipi/content</url-pattern>
+    <servlet-name>PratilipiService</servlet-name>
+    <url-pattern>/*</url-pattern>
   </servlet-mapping>
 
 </web-app>

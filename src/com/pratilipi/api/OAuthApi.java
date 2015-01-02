@@ -3,6 +3,7 @@ package com.pratilipi.api;
 import java.util.Date;
 
 import com.claymus.api.GenericApi;
+import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Get;
 import com.claymus.commons.server.EncryptPassword;
 import com.claymus.commons.shared.ClaymusAccessTokenType;
@@ -19,6 +20,7 @@ import com.pratilipi.data.transfer.Publisher;
 
 
 @SuppressWarnings("serial")
+@Bind( uri= "/oauth" )
 public class OAuthApi extends GenericApi {
 
 	private static final long ACCESS_TOKEN_VALIDITY = 60 * 60 * 1000; // 1 Hr
