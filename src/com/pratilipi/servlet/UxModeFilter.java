@@ -71,7 +71,7 @@ public class UxModeFilter implements Filter {
 			basicMode = true; // Polymer 0.5.1 not supported !
 			
 			
-		} else if( userAgent.contains( "Chrome" ) ) { // Google Chrome
+		} else if( userAgent.contains( "Chrome" ) && !userAgent.contains( "(Chrome)" ) ) { // Google Chrome
 			/*
 			 * Google Chrome on Microsoft Windows 8.1
 			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36"
@@ -99,6 +99,8 @@ public class UxModeFilter implements Filter {
 			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0 AlexaToolbar/alxf-2.21"
 			 * Mozilla Firefox on Android 4.3
 			 *   "Mozilla/5.0 (Android; Mobile; rv:33.0) Gecko/33.0 Firefox/33.0"
+			 * Mozilla Firefox on Linux 
+			 *   "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0 (Chrome)"
 			 */
 			
 			String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Firefox" ) + 8 );
