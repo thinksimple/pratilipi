@@ -32,13 +32,19 @@
 		<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" disabled="{{ disabled || pageNo == 1 }}" on-tap="{{displayPrevious}}"></paper-fab>
 		<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:10px;" disabled="{{ disabled || pageNo == pageCount }}" on-tap="{{displayNext}}"></paper-fab>
 		<paper-fab mini icon="reorder" title="Options" class="bg-green" style="margin-right:10px;" disabled="{{ disabled }}" on-tap="{{displayOptions}}"></paper-fab>
+		<paper-fab mini icon="translate" title="Enable Transliteration" class="bg-green" style="margin-right:10px;" disabled="{{ disabled }}" on-tap="{{displayTransliterationOptions}}"></paper-fab>
 		<paper-fab mini icon="launch" title="View on Reader" class="bg-green" style="margin-right:10px;" disabled="{{ disabled }}" on-tap="{{goToReader}}"></paper-fab>
 		<paper-fab icon="{{ isEditorDirty ? 'save' : 'done' }}" title="{{ isEditorDirty ? 'Save' : 'Saved' }}" class="{{ isEditorDirty ? 'bg-red' : 'bg-green' }}" style="margin-right:25px;" disabled="{{ disabled }}" on-tap="{{savePage}}"></paper-fab>
 	</div>
 
-	<paper-dialog id="PageContent-Writer-Options" style="color:gray; border:1px solid #EEEEEE;">
+	<paper-action-dialog
+			backdrop
+			id="PageContent-Writer-Options"
+			heading="Options"
+			transition="core-transition-top"
+			layered="true">
 		<core-icon-button icon="remove" title="Decrease Text Size" on-tap="{{decTextSize}}"></core-icon-button>
-		Text Size
+		<span>Text Size</span>
 		<core-icon-button icon="add" title="Increase Text Size" on-tap="{{incTextSize}}"></core-icon-button>
 		<br/>
 		<core-icon-button icon="description" on-tap="{{addPageAfter}}">&nbsp; Add New Page After This Page</core-icon-button>
@@ -50,7 +56,22 @@
 		<core-icon-button icon="history">&nbsp; Version History</core-icon-button>
 		<br/>
 		<core-icon-button icon="file-upload">&nbsp; Upload Word Document</core-icon-button>
-	</paper-dialog>
+		<paper-button affirmative autofocus>Close</paper-button>
+	</paper-action-dialog>
+
+	<paper-action-dialog
+			backdrop
+			id="PageContent-Writer-TransliterationOptions"
+			heading="Enable Transliteration"
+			transition="core-transition-top"
+			layered="true">
+		<core-icon-button icon="translate" on-tap="{{enableHindiTransliteration}}">&nbsp; Enable Hindi Transliteration</core-icon-button>
+		<br/>
+		<core-icon-button icon="translate" on-tap="{{enableGujaratiTransliteration}}">&nbsp; Enable Gujarati Transliteration</core-icon-button>
+		<br/>
+		<core-icon-button icon="translate" on-tap="{{enableTamilTransliteration}}">&nbsp; Enable Tamil Transliteration</core-icon-button>
+		<paper-button affirmative autofocus>Close</paper-button>
+	</paper-action-dialog>
 
 
 	<paper-action-dialog
@@ -106,6 +127,7 @@
 	
 
 	var dialog; // Initialized in initWriter()
+	var transliterationDialog; // Initialized in initWriter()
 	var ajaxGet; // Initialized in initWriter()
 	var ajaxPut; // Initialized in initWriter()
 	
@@ -154,6 +176,10 @@
 		dialog.open();
 	};
 
+	scope.displayTransliterationOptions = function( e ) {
+		transliterationDialog.open();
+	};
+	
 	scope.decTextSize = function( e ) {
 		var fontSize = parseInt( jQuery( '#PageContent-Writer-Content' ).css( 'font-size' ).replace( 'px', '' ) );
 		var newFontSize = fontSize - 2;
@@ -298,6 +324,29 @@
 	}
 
 
+	scope.enableHindiTransliteration = function( e ) {
+		enableTransliteration( "Hindi" );
+		transliterationDialog.close();
+	}
+
+	scope.enableGujaratiTransliteration = function( e ) {
+		enableTransliteration( "Gujarati" );
+		transliterationDialog.close();
+	}
+
+	scope.enableTamilTransliteration = function( e ) {
+		enableTransliteration( "Tamil" );
+		transliterationDialog.close();
+	}
+	
+	function enableTransliteration( language ) {
+		var s = document.createElement('script');
+		var p = document.location.protocol;
+		s.setAttribute( 'src', p + '//ytranslitime-widgets.zenfs.com/ytimanywhere/YTimAnywhere_' + language + '.js' );
+		s.setAttribute( 'type', 'text/javascript' );
+		document.getElementsByTagName( 'head' )[0].appendChild( s ); 
+	}
+
 	function setReadOnly( bool ) {
 		scope.disabled = bool;
 		ckEditor.setReadOnly( bool );
@@ -307,6 +356,7 @@
 	function initWriter() {
 		try {
 			dialog = document.querySelector( '#PageContent-Writer-Options' );
+			transliterationDialog = document.querySelector( '#PageContent-Writer-TransliterationOptions' );
 			ajaxGet = document.querySelector( '#PageContent-Writer-Ajax-Get' );
 			ajaxPut = document.querySelector( '#PageContent-Writer-Ajax-Put' );
 			ckEditor = CKEDITOR.inline( 'PageContent-Writer-Content', {

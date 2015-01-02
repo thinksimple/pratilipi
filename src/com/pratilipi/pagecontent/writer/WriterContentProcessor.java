@@ -22,7 +22,6 @@ import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
-import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentUtil;
@@ -64,18 +63,13 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		
-		// AccessToReadPratilipiContent ?
-		if( !PratilipiContentHelper.hasRequestAccessToReadPratilipiContent( request, pratilipi ) )
+		// AccessToUpdatePratilipiContent ?
+		if( !PratilipiContentHelper.hasRequestAccessToUpdatePratilipiContent( request, pratilipi ) )
 			throw new InsufficientAccessException();
 		
-		// AccessToUpdatePratilipiData ?
-		boolean showEditOption = PratilipiContentHelper
-				.hasRequestAccessToUpdatePratilipiData( request, pratilipi );
-
 		// Creating PratilipiData
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData =
-				pratilipiHelper.createPratilipiData( pratilipi, null, author, null );
+				pratilipiHelper.createPratilipiData( pratilipi, null, null, null );
 
 		// Page # to display
 		String pageNoStr = request.getParameter( "page" ) == null
@@ -129,8 +123,6 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 		
 		if( request.getParameter( "ret" ) != null && !request.getParameter( "ret" ).trim().isEmpty()  )
 			dataModel.put( "exitUrl", request.getParameter( "ret" ) );
-
-		dataModel.put( "showEditOption", showEditOption );
 
 		
 		String templateName = pratilipiHelper.isModeBasic()

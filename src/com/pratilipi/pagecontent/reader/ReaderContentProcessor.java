@@ -22,7 +22,6 @@ import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
-import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentUtil;
@@ -73,9 +72,8 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 				.hasRequestAccessToUpdatePratilipiData( request, pratilipi );
 
 		// Creating PratilipiData
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData =
-				pratilipiHelper.createPratilipiData( pratilipi, null, author, null );
+				pratilipiHelper.createPratilipiData( pratilipi, null, null, null );
 
 		// Page # to display
 		String pageNoStr = request.getParameter( "page" ) == null
