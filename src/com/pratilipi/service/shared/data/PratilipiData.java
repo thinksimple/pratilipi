@@ -26,6 +26,7 @@ public class PratilipiData implements IsSerializable {
 	private String wordContentUploadUrl;
 	private String pdfContentUploadUrl;
 	private String readerPageUrl;
+	private String writerPageUrl;
 	
 	private boolean isPublicDomain;
 	private boolean hasPublicDomain;
@@ -201,6 +202,14 @@ public class PratilipiData implements IsSerializable {
 
 	public void setReaderPageUrl( String readerPageUrl ) {
 		this.readerPageUrl = readerPageUrl;
+	}
+	
+	public String getWriterPageUrl(){
+		return this.writerPageUrl;
+	}
+	
+	public void setWriterPageUrl( String writerPageUrl ){
+		this.writerPageUrl = writerPageUrl;
 	}
 
 	public boolean isPublicDomain() {

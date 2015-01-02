@@ -241,6 +241,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setWordContentUplaodUrl( URL_RESOURCE + "pratilipi-content/word/" + pratilipi.getId() );
 		pratilipiData.setPdfContentUplaodUrl( URL_RESOURCE + "pratilipi-content/pdf/" + pratilipi.getId());
 		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
+		pratilipiData.setWriterPageUrl( PratilipiPageType.WRITE.getUrlPrefix() + pratilipi.getId() );
 		if( includeMetaData )
 			pratilipiData.setPublicDomain( pratilipi.isPublicDomain() );
 		
