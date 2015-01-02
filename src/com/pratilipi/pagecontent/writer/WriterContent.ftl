@@ -25,13 +25,14 @@
 		</div>
 		
 	</core-header-panel>
-	
-	
+
+
 	<div center horizontal layout id="PageContent-Writer-Navigation" style="position:fixed; bottom:10px; width:100%;">
 		<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount > 1 ? pageCount : 2 }}" value="${ pageNo }" class="bg-green" style="width:100%" disabled="{{ pageCount == 1 }}" on-change="{{displayPage}}"></paper-slider>
 		<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" disabled="{{ pageNo == 1 }}" on-tap="{{displayPrevious}}"></paper-fab>
 		<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:10px;" disabled="{{ pageNo == pageCount }}" on-tap="{{displayNext}}"></paper-fab>
 		<paper-fab mini icon="reorder" title="Options" class="bg-green" style="margin-right:10px;" on-tap="{{displayOptions}}"></paper-fab>
+		<paper-fab mini icon="launch" title="View on Reader" class="bg-green" style="margin-right:10px;" on-tap="{{goToReader}}"></paper-fab>
 		<paper-fab icon="{{ isEditorDirty ? 'save' : 'done' }}" title="{{ isEditorDirty ? 'Save' : 'Saved' }}" class="{{ isEditorDirty ? 'bg-red' : 'bg-green' }}" style="margin-right:25px;" on-tap="{{savePage}}"></paper-fab>
 	</div>
 
@@ -122,6 +123,10 @@
 		window.location.href="${ exitUrl ! pratilipiData.getPageUrl() }";
 	};
 
+	scope.goToReader = function( e ) {
+		window.location.href="${ pratilipiData.getReaderPageUrl() }";
+	};
+
 	scope.displayOptions = function( e ) {
 		dialog.open();
 	};
@@ -167,7 +172,8 @@
 			document.querySelector( 'core-header-panel' ).scroller.scrollTop = 0;
 			updateContent();
 			prefetchContent();
-			setCookie( '${ pageNoCookieName }', scope.pageNo );
+			setCookie( '${ pageNoCookieName }', scope.pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
+			setCookie( '${ pageNoCookieName }', scope.pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
 		}
 	}
 	
