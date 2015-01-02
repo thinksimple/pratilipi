@@ -10,7 +10,7 @@
 			<div flex>
 				${ pratilipiData.getTitle() }
 			</div>
-			<paper-icon-button icon="more-vert" title="Display Options" on-tap="{{displayOptions}}"></paper-icon-button>
+			<paper-icon-button icon="reorder" title="Display Options" on-tap="{{displayOptions}}"></paper-icon-button>
 		</core-toolbar>
 		
 		<div horizontal center-justified layout class="bg-gray">

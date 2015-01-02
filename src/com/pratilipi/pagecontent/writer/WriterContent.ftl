@@ -8,7 +8,7 @@
 	<core-header-panel flex mode="scroll" on-scroll={{performScrollActions}}>
 		
 		<core-toolbar class="bg-green">
-			<paper-icon-button icon="arrow-back" title="Exit Writer" on-tap="{{performExit}}"></paper-icon-button>
+			<paper-icon-button icon="arrow-back" title="Exit Writer" disabled="{{ disabled }}" on-tap="{{performExit}}"></paper-icon-button>
 			<div flex>${ pratilipiData.getTitle() }</div>
 		</core-toolbar>
 		
@@ -28,12 +28,12 @@
 
 
 	<div center horizontal layout id="PageContent-Writer-Navigation" style="position:fixed; bottom:10px; width:100%;">
-		<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount > 1 ? pageCount : 2 }}" value="${ pageNo }" class="bg-green" style="width:100%" disabled="{{ pageCount == 1 }}" on-change="{{displayPage}}"></paper-slider>
-		<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" disabled="{{ pageNo == 1 }}" on-tap="{{displayPrevious}}"></paper-fab>
-		<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:10px;" disabled="{{ pageNo == pageCount }}" on-tap="{{displayNext}}"></paper-fab>
-		<paper-fab mini icon="reorder" title="Options" class="bg-green" style="margin-right:10px;" on-tap="{{displayOptions}}"></paper-fab>
-		<paper-fab mini icon="launch" title="View on Reader" class="bg-green" style="margin-right:10px;" on-tap="{{goToReader}}"></paper-fab>
-		<paper-fab icon="{{ isEditorDirty ? 'save' : 'done' }}" title="{{ isEditorDirty ? 'Save' : 'Saved' }}" class="{{ isEditorDirty ? 'bg-red' : 'bg-green' }}" style="margin-right:25px;" on-tap="{{savePage}}"></paper-fab>
+		<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount > 1 ? pageCount : 2 }}" value="${ pageNo }" class="bg-green" style="width:100%" disabled="{{ disabled || pageCount == 1 }}" on-change="{{displayPage}}"></paper-slider>
+		<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" disabled="{{ disabled || pageNo == 1 }}" on-tap="{{displayPrevious}}"></paper-fab>
+		<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:10px;" disabled="{{ disabled || pageNo == pageCount }}" on-tap="{{displayNext}}"></paper-fab>
+		<paper-fab mini icon="reorder" title="Options" class="bg-green" style="margin-right:10px;" disabled="{{ disabled }}" on-tap="{{displayOptions}}"></paper-fab>
+		<paper-fab mini icon="launch" title="View on Reader" class="bg-green" style="margin-right:10px;" disabled="{{ disabled }}" on-tap="{{goToReader}}"></paper-fab>
+		<paper-fab icon="{{ isEditorDirty ? 'save' : 'done' }}" title="{{ isEditorDirty ? 'Save' : 'Saved' }}" class="{{ isEditorDirty ? 'bg-red' : 'bg-green' }}" style="margin-right:25px;" disabled="{{ disabled }}" on-tap="{{savePage}}"></paper-fab>
 	</div>
 
 	<paper-dialog id="PageContent-Writer-Options" style="color:gray; border:1px solid #EEEEEE;">
@@ -52,9 +52,26 @@
 		<core-icon-button icon="file-upload">&nbsp; Upload Word Document</core-icon-button>
 	</paper-dialog>
 
-	<core-overlay layered backdrop id="PageContent-Writer-Overlay" autoCloseDisabled="true">
-		<h2>Please wait ...</h2>
-	</core-overlay>
+
+	<paper-action-dialog
+			backdrop autoCloseDisabled
+			id="PageContent-Writer-SessionExpired"
+			heading="Session Expired !"
+			transition="core-transition-top"
+			layered="true">
+		<p>Your session is expired. You will have to login again to continue.</p>
+		<paper-button affirmative autofocus on-tap="{{initLogin}}">log in</paper-button>
+	</paper-action-dialog>
+
+	<paper-action-dialog
+			backdrop autoCloseDisabled
+			id="PageContent-Writer-ServerError"
+			heading="Server Error !"
+			transition="core-transition-top"
+			layered="true">
+		<p>Something unexpected happened at our server. Kindly try again.</p>
+		<paper-button affirmative autofocus>Okay</paper-button>
+	</paper-action-dialog>
 
 
 	<core-ajax
@@ -63,7 +80,8 @@
 			contentType="application/json"
 			method="GET"
 			handleAs="json"
-			on-core-response="{{handleAjaxGetResponse}}" ></core-ajax>
+			on-core-response="{{handleAjaxGetResponse}}"
+			on-core-error="{{handleAjaxGetError}}" ></core-ajax>
 			
 	<core-ajax
 			id="PageContent-Writer-Ajax-Put"
@@ -71,7 +89,8 @@
 			contentType="application/json"
 			method="PUT"
 			handleAs="json"
-			on-core-response="{{handleAjaxPutResponse}}" ></core-ajax>
+			on-core-response="{{handleAjaxPutResponse}}"
+			on-core-error="{{handleAjaxPutError}}" ></core-ajax>
 
 </template>
 
@@ -82,11 +101,11 @@
 	
 	scope.pageCount = ${ pageCount };
 	scope.pageNo = ${ pageNo };
+	scope.disabled = false;
 	var pageNoDisplayed = 0;
 	
 
 	var dialog; // Initialized in initWriter()
-	var overlay; // Initialized in initWriter()
 	var ajaxGet; // Initialized in initWriter()
 	var ajaxPut; // Initialized in initWriter()
 	
@@ -125,6 +144,10 @@
 
 	scope.goToReader = function( e ) {
 		window.location.href="${ pratilipiData.getReaderPageUrl() }";
+	};
+
+	scope.initLogin = function( e ) {
+		window.open( "/login" );
 	};
 
 	scope.displayOptions = function( e ) {
@@ -208,7 +231,7 @@
 	
 	scope.savePage = function( e ) {
 		if( scope.isEditorDirty ) {
-			overlay.open();
+			setReadOnly( true );
 			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:ckEditor.getData() } );
 			ajaxPut.go();
 		}
@@ -216,14 +239,14 @@
 	
 	scope.addPageAfter = function( e ) {
 		dialog.close();
-		overlay.open();
+		setReadOnly( true );
 		ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
 		ajaxPut.go();
 	};
 	
 	scope.addPageBefore = function( e ) {
 		dialog.close();
-		overlay.open();
+		setReadOnly( true );
 		ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
 		ajaxPut.go();
 	};
@@ -231,7 +254,7 @@
 	scope.deletePage = function( e ) {
 		dialog.close();
 		if( confirm( "Are you sure you want to delete this page ?" ) ) {
-			overlay.open();
+			setReadOnly( true );
 			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:'' } );
 			ajaxPut.go();
 		}
@@ -244,8 +267,12 @@
 		}
 	};
 	
+	scope.handleAjaxGetError = function( event, response ) {
+		updateContent();
+	};
+
 	scope.handleAjaxPutResponse = function( event, response ) {
-		overlay.close();
+		setReadOnly( false );
 		scope.pageNo = response.response['pageNo'];
 		if( scope.pageCount != response.response['pageCount'] ) {
 			contentArray = [];
@@ -261,10 +288,25 @@
 		}
 	};
 
+	scope.handleAjaxPutError = function( event, response ) {
+		setReadOnly( false );
+		if( response.xhr.status == 401 ) {
+			document.querySelector( '#PageContent-Writer-SessionExpired' ).open();
+		} else if( response.xhr.status == 500 ) {
+			document.querySelector( '#PageContent-Writer-ServerError' ).open();
+		}
+	}
+
+
+	function setReadOnly( bool ) {
+		scope.disabled = bool;
+		ckEditor.setReadOnly( bool );
+	}
+	
+	
 	function initWriter() {
 		try {
 			dialog = document.querySelector( '#PageContent-Writer-Options' );
-			overlay = document.querySelector( '#PageContent-Writer-Overlay' );
 			ajaxGet = document.querySelector( '#PageContent-Writer-Ajax-Get' );
 			ajaxPut = document.querySelector( '#PageContent-Writer-Ajax-Put' );
 			ckEditor = CKEDITOR.inline( 'PageContent-Writer-Content', {
