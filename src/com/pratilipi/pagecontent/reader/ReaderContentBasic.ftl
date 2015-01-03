@@ -1,11 +1,4 @@
 <!-- PageContent :: Reader :: Start -->
-<#if ( pageNo > 1 )>
-	<#assign previousPageUrl= pratilipiData.getReaderPageUrl()+'&page='+(pageNo -1) >
-</#if>
-<#if ( pageNo < pageCount )>
-	<#assign nextPageUrl= pratilipiData.getReaderPageUrl()+'&page='+(pageNo+1) >
-</#if>
-
 
 <div class="bg-green">
 	<table style="width: 100%;color: white; height: 64px;">
@@ -54,13 +47,13 @@
 					<div class="paper" style="width:inherit; max-width:none; min-height:inherit; overflow-x:auto;">
 						<div style="position:relative">
 							<#if contentSize??>
-								<div id="PratilipiContent-Reader-Content">
-									<img id="imageContent" src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }&contentType=IMAGE' width=${ contentSize }/>
+								<div id="PratilipiContent-Reader-Content" style="width: ${ contentSize };">
+									<img id="imageContent" src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }&contentType=IMAGE' style="width:100%"/>
 								</div>
-								<div id="PratilipiContent-Reader-Overlay"></div>
+								<div id="PratilipiContent-Reader-Overlay" style="width: ${ contentSize };"></div>
 							<#else>
 								<div id="PratilipiContent-Reader-Content">
-									<img id="imageContent" src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }&contentType=IMAGE' width="100%"/>
+									<img id="imageContent" src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }&contentType=IMAGE' style="width:100%"/>
 								</div>
 								<div id="PratilipiContent-Reader-Overlay"></div>
 							</#if>
@@ -73,23 +66,25 @@
 		<tr>
 			<td>
 				<div class="green" style="margin: 5px; text-align: center;">
-					<p style="display: inline; line-height: 28px; ">${ pageNo } / ${ pageCount }</p>
+					<span id="PratilipiContent-Reader-PageNumber" style="display: inline; line-height: 28px; ">${ pageNo }</span> /
+					<span id="PratilipiContent-Reader-PageCount" style="display: inline; line-height: 28px; ">${ pageCount }</span>
 				</div>
 			</td>
 		</tr>
 	</table>
 </div>
-<div style="width: 100%; position: fixed; bottom: 0px; right: 0px;padding-right: 3%; padding-bottom: 10px; padding-top: 10px; ">
-	<#if nextPageUrl?? >
-		<div class="bg-green PratilipiContent-ReaderBasic-button" onclick="window.location.href='${ nextPageUrl }'" style="margin-left:10px;">
-			<img src="/theme.pratilipi/images/next.png" title="Next Page" />
+<div style="width: 100%; position: fixed; bottom: 0px; right: 0px;padding-right: 1.5%; padding-bottom: 10px; padding-top: 10px; ">
+	<#if showEditOption && pratilipiData.getContentType() == 'PRATILIPI'>
+		<div class="bg-green PratilipiContent-ReaderBasic-button" onclick="goToWriter();" style="margin-left:10px;">
+			<img src="/theme.pratilipi/images/buttons/edit-white.png" title="Edit" />
 		</div>
 	</#if>
-	<#if previousPageUrl?? >
-		<div class="bg-green PratilipiContent-ReaderBasic-button" onclick="window.location.href='${ previousPageUrl }'">
-			<img src="/theme.pratilipi/images/previous.png" title="Previous Page" />
-		</div>
-	</#if>
+	<div class="bg-green PratilipiContent-ReaderBasic-button" onclick="displayNextPage();" style="margin-left:10px;">
+		<img src="/theme.pratilipi/images/next.png" title="Next Page" />
+	</div>
+	<div class="bg-green PratilipiContent-ReaderBasic-button" onclick="displayPreviousPage();">
+		<img src="/theme.pratilipi/images/previous.png" title="Previous Page" />
+	</div>
 </div>
 
 <!-- JAVASCRIPT START -->
@@ -119,37 +114,84 @@
 
 <script language="javascript">
 
-/* SAVES PRATILIPI ID AND PAGE NUMBER IN COOKIE */
-function saveAutoBookmark(){
-	setCookie( '${ pageNoCookieName }', ${ pageNo }, 365 );
+/* AJAX CODE START */
+
+var pageNo = ${ pageNo };
+var pageCount = ${ pageCount };
+var pageNoDisplayed;
+var contentArray = [];
+
+function setPageNo(){
+	jQuery( "#PratilipiContent-Reader-PageNumber" ).html( pageNo );
 }
 
-function setMinReaderWidth(){
-	var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-	if( windowsize > 800 )
-		document.getElementById( "PratilipiContent-Reader-Content" ).style.width = "1000px" ;
-	else
-		document.getElementById( "PratilipiContent-Reader-Content" ).style.width = windowsize + "px";
+
+function updateDisplay() {
+	jQuery('html, body').animate({scrollTop: '0px'}, 300);
+	updateContent();
+	setPageNo();
+	prefetchContent();
+	setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
+	setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
 }
 
-/* Zoom Support */
 
-function increaseSize(){
-	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-	var imageContent = document.getElementById( "imageContent" );
-	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
-	var wordContent = document.getElementById( "PratilipiContent-Reader-Content" );
-	var overlay = document.getElementById( "PratilipiContent-Reader-Overlay" );
+<#if pratilipiData.getContentType() == 'PRATILIPI'>
+	function updateContent() {
+		if( pageNoDisplayed == pageNo )
+			return;
 		
-	if( imageContent ){
-		/* For Image content */
-		imageContent.width = imageContent.width + 50;
-		overlay = imageContent.width;
-		imageContent.style.height = 'auto';
-		setCookie( '${ contentSizeCookieName }', imageContent.width + 'px', 365 );
+		if( contentArray[ pageNo ] == null){
+			jQuery( '#PratilipiContent-Reader-Content' ).html( "<div style='text-align:center'>Loading ...</div>" );
+			getPage( pageNo );
+		}
+		else {
+			jQuery( '#PratilipiContent-Reader-Content' ).html( contentArray[ pageNo ] );
+			pageNoDisplayed = pageNo;
+		}
 	}
-	else if( wordContent ) {
-		/* For word content */
+	
+	function prefetchContent() {
+		if( pageNo > 1 && contentArray[ pageNo - 1 ] == null )
+			getPage( pageNo - 1 );
+		
+		if( pageNo < pageCount && contentArray[ pageNo + 1 ] == null )
+			getPage( pageNo + 1 );
+	}
+	function getPage( pageNumber ) {
+		jQuery.ajax({
+			url: "/api.pratilipi/pratilipi/content",
+			type: "GET",
+			contentType: "application/json",
+			dataType: "json",
+			handleAs: "json",
+			data: 'pratilipiId=${ pratilipiData.getId()?c }&pageNo=' + pageNumber + '&contentType=PRATILIPI',
+			beforeSend: function( data, object ){
+			},
+			success: function( response, status, xhr ) {
+				handleAjaxGetResponse( response );
+			}, 
+			error: function( xhr, status, error) {
+				alert( status + " : " + error );
+			},
+			complete: function( event, response ){
+				console.log( response );
+			}
+		});
+	}
+	
+	function handleAjaxGetResponse( response ){
+		if( contentArray[response['pageNo']] == null ) {
+			contentArray[response['pageNo']] = response['pageContent'];
+			updateContent();
+		}
+	}
+	
+	
+	function increaseSize(){
+		var wordContent = document.getElementById( "PratilipiContent-Reader-Content" );
+		var overlay = document.getElementById( "PratilipiContent-Reader-Overlay" );
+			
 		var fontSizeStr = wordContent.style.fontSize;
 		
 		/* By default font size of paragraphs in content is not set. Hence initializing fontSizeStr to default font-size of p tags across website */
@@ -161,38 +203,137 @@ function increaseSize(){
 		
 		setCookie( '${ contentSizeCookieName }', ( fontSize + 2 ) + 'px', 365 );
 	}
-
-}
 	
-function decreaseSize(){
-	var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-	var imageContent = document.getElementById( "imageContent" );
-	var basicReader = document.getElementById("Pratilipi-Reader-Basic");
-	var wordContent = document.getElementById( "PratilipiContent-Reader-Content" );
-	var overlay = document.getElementById( "PratilipiContent-Reader-Overlay" );
-	
-	if( imageContent ){
-		/* For Image content */
-		imageContent.width = imageContent.width - 50;
-		overlay.width = imageContent.width;
-		imageContent.style.height = 'auto';
-		setCookie( '${ contentSizeCookieName }', imageContent.width + 'px', 365 );
-	} 
-	else if( wordContent ){
-		/* For word content */
+	function decreaseSize(){
+		var wordContent = document.getElementById( "PratilipiContent-Reader-Content" );
+		var overlay = document.getElementById( "PratilipiContent-Reader-Overlay" );
+			
 		var fontSizeStr = wordContent.style.fontSize;
 		
+		/* By default font size of paragraphs in content is not set. Hence initializing fontSizeStr to default font-size of p tags across website */
 		if( !fontSizeStr )
 			fontSizeStr = "16px";
 			
 		var fontSize = parseInt( fontSizeStr.substring( 0, fontSizeStr.indexOf( 'p' )) );
 		wordContent.style.fontSize = ( fontSize - 2 ) + "px";
-
+		
 		setCookie( '${ contentSizeCookieName }', ( fontSize - 2 ) + 'px', 365 );
 	}
+	
+	function setMinReaderWidth(){
+		var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		if( windowsize > 800 )
+			jQuery( ".paper" ).width( "1000px" );
+		else
+			jQuery( ".paper" ).width( ( windowsize - 10 ) + "px" );
+	}
+	
+<#elseif pratilipiData.getContentType() == 'IMAGE'>
+
+	function loadImage( pageNumber ){
+		var img = "<img id='imageContent' src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=" + pageNo + "&contentType=IMAGE' style='width:100%' />";
+		jQuery(img).on( 'load', function() {
+			contentArray[pageNo] = img;
+			updateContent();
+		});
+	}
+	
+	function updateContent() {
+		if( pageNoDisplayed == pageNo )
+			return;
+		
+		if( contentArray[ pageNo ] == null){
+			jQuery( '#PratilipiContent-Reader-Content' ).html( "<div style='text-align:center'>Loading ...</div>" );
+			loadImage( pageNo );
+		}
+		else {
+			jQuery( '#PratilipiContent-Reader-Content' ).html( contentArray[ pageNo ] );
+			pageNoDisplayed = pageNo;
+		}
+	}
+	
+	function prefetchContent() {
+		if( pageNo > 1 && contentArray[ pageNo - 1 ] == null )
+			loadImage( pageNo - 1 );
+		
+		if( pageNo < pageCount && contentArray[ pageNo + 1 ] == null )
+			loadImage( pageNo + 1 );
+	}
+	
+	
+	function increaseSize(){
+		var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		var imageContent = document.getElementById( "imageContent" );
+		var basicReader = document.getElementById( "PratilipiContent-Reader-Content" );
+		var overlay = document.getElementById( "PratilipiContent-Reader-Overlay" );
+		var widthStr = basicReader.style.width;
+		
+		if( !widthStr )
+			widthStr = "1000px"; 
+		
+		var width = parseInt( widthStr.substring( 0, widthStr.indexOf( 'p' )) );
+		 
+		/* For Image content */
+		basicReader.style.width = ( width + 50 ) + "px";
+		overlay.style.width = basicReader.style.width;
+		basicReader.style.height = 'auto';
+		setCookie( '${ contentSizeCookieName }', basicReader.style.width, 365 );
+	}
+	
+	function decreaseSize(){
+		var windowSize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		var imageContent = document.getElementById( "imageContent" );
+		var basicReader = document.getElementById( "PratilipiContent-Reader-Content" );
+		var overlay = document.getElementById( "PratilipiContent-Reader-Overlay" );
+		var widthStr = basicReader.style.width;
+		
+		if( !widthStr )
+			widthStr = "1000px"; 
+		
+		var width = parseInt( widthStr.substring( 0, widthStr.indexOf( 'p' )) );
+		 
+		/* For Image content */
+		basicReader.style.width = ( width - 50 ) + "px";
+		overlay.style.width = basicReader.style.width;
+		basicReader.style.height = 'auto';
+		setCookie( '${ contentSizeCookieName }', basicReader.style.width, 365 );
+	}
+	
+	function setMinReaderWidth(){}
+</#if>
+
+
+function displayNextPage() {
+	if( pageNo < pageCount ){
+		pageNo = pageNo + 1;
+		pageNoDisplayed = 0;
+		updateDisplay();
+	}
+	else
+		alert( "You have reached last page" );
 }
 
+function displayPreviousPage() {
+	if( pageNo > 1 ){
+		pageNo = pageNo - 1;
+		pageNoDisplayed = 0;
+		updateDisplay();
+	}
+	else
+		alert( "This is first page" );
+}
 
+/* AJAX CODE END */
+
+
+function saveAutoBookmark(){
+	setCookie( '${ pageNoCookieName }', ${ pageNo }, 365, '${ pratilipiData.getReaderPageUrl() }' );
+	setCookie( '${ pageNoCookieName }', ${ pageNo }, 365, '${ pratilipiData.getWriterPageUrl() }' );
+}
+
+function goToWriter(){
+	window.location.href="${ pratilipiData.getWriterPageUrl() }";
+}
 
 if( window.attachEvent) //for IE8 and below
 	window.attachEvent( 'onload', function( event ){
