@@ -54,7 +54,7 @@
 	<#if pageCount gt 1>
 		<div center horizontal layout id="PageContent-Reader-Navigation" style="position:fixed; bottom:10px; width:100%;">
 			<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount }}" value="{{ pageNo }}" class="bg-green" style="width:100%" on-change="{{displayPage}}"></paper-slider>
-			<#if showEditOption>
+			<#if showEditOption && pratilipiData.getContentType() == 'PRATILIPI'>
 				<paper-fab mini icon="create" title="Edit" class="bg-green" style="margin-right:10px;" on-tap="{{goToWriter}}"></paper-fab>
 			</#if>
 			<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" on-tap="{{displayPrevious}}"></paper-fab>
