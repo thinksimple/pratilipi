@@ -5,7 +5,7 @@
 <div class="bg-green">	
 	<table style="width: 100%;color: white; height: 64px;">
 		<tr>
-			<td>
+			<td style="width: 90%;">
 				<div style="margin-left: 5px; margin-right:5px;">
 					<div id="PratilipiContent-WriterBasic-ExitButton" class="writer-Button" onclick="window.location.href='${ exitUrl ! pratilipiData.getPageUrl() }'" style="float: left; margin-right: 10px; padding-top: 19px;" >
 						<img src="/theme.pratilipi/images/left.png" / title="Exit">
@@ -16,7 +16,7 @@
 				</div>
 			</td>
 			<td valign="middle" style="margin: 0px; position:relative;">
-				<div style="float: right; margin-right: 10px; position:relative;text-align: right; width: 250px;">
+				<div style="float: right; margin-right: 10px; position:relative;text-align: right; width: 200px;">
 					<a href='#' id="PratilipiContent-writer-dropdown" style="color: white; position:relative; text-decoration: none;">
 						<img src="/theme.pratilipi/images/buttons/menu-white.png" title="Options" />
 					</a>
@@ -155,27 +155,9 @@ function initWriter() {
 				['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'],
 				['ShowBlocks','Maximize']
 		];
-		CKEDITOR.plugins.add('TestButton',
-		{
-			icon: this.path + 'theme.pratilipi/images/buttons/save-white.png',
-		    init: function( ckEditor )
-		    {
-			    var pluginName = 'TestButton';
-			    ckEditor.addCommand( pluginName,
-			    {
-			    	exec: function( ckEditor ) {}
-			    });
-			
-			    ckEditor.ui.addButton('TestButton',
-			    {
-			        label: 'TestButton',
-			        command: pluginName,
-			    });
-		    }
-		});
 		ckEditor.on('instanceReady', function(){ 
-			//updateContent();
-			//prefetchContent();
+			updateContent();
+			prefetchContent();
 		});
 		ckEditor.on('change', function(){
 			isEditorDirty = ckEditor.checkDirty();
@@ -205,9 +187,7 @@ subMenu.addEventListener( 'click', function( event ){
 });
 
 
-/* AJAX FUNCTIONS START 
- * Ajax functionality is still not working. $.ajax() GET call is not working properly.	
- */ 
+/* AJAX FUNCTIONS START */ 
 
 function setPageNo(){
 	jQuery( "#PratilipiContent-Writer-PageNumber" ).html( pageNo );
@@ -278,6 +258,8 @@ function updateDisplay(){
 	jQuery( "#PratilipiContent-WriterBasic-SaveButton" ).removeClass( "bg-red" );
 	jQuery( "#PratilipiContent-WriterBasic-SaveButton" ).removeClass( "bg-green" );
 	prefetchContent();
+	setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
+	setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
 }
 
 function savePage(){
@@ -439,14 +421,6 @@ function handleAjaxGetResponse( response ){
 	}
 }
 
-/* AJAX FUNCTIONS END */
-
-
-/* SAVES PRATILIPI ID AND PAGE NUMBER IN COOKIE */
-function saveAutoBookmark(){
-	setCookie( '${ pageNoCookieName }', ${ pageNo }, 365 );
-}
-
 function displayNextPage(){
 	if( isEditorDirty && 
 			!confirm( "You haven't saved your changes yet ! Press 'Cancel' to go back and save your changes. Press 'Ok' to discard your changes and continue." )) {
@@ -477,6 +451,14 @@ function displayPreviousPage(){
 	}
 }
 
+/* AJAX FUNCTIONS END */
+
+
+/* SAVES PRATILIPI ID AND PAGE NUMBER IN COOKIE */
+function saveAutoBookmark(){
+	setCookie( '${ pageNoCookieName }', ${ pageNo }, 365 );
+}
+
 function setDisabled( enabled ){
 	jQuery( "#PratilipiContent-WriterBasic-ExitButton").attr('disabled',enabled);
 	jQuery( "#PratilipiContent-writer-dropdown").attr('disabled', enabled);
@@ -500,7 +482,7 @@ function setMinWriterWidth(){
 	if( windowsize > 800 )
 		jQuery( "#PratilipiContent-Writer-Content" ).width( 1000 );
 	else
-		jQuery( "#PratilipiContent-Writer-Content" ).width( windowsize );
+		jQuery( "#PratilipiContent-Writer-Content" ).width( windowsize - 10 );
 }
 
 /* Zoom Support */
