@@ -2,8 +2,7 @@
 
 <script src="//cdn-asia.pratilipi.com/third-party/ckeditor-4.4.5-full/ckeditor.js" charset="utf-8"></script>
 
-
-<div class="bg-green">
+<div class="bg-green">	
 	<table style="width: 100%;color: white; height: 64px;">
 		<tr>
 			<td>
@@ -17,16 +16,24 @@
 				</div>
 			</td>
 			<td valign="middle" style="margin: 0px; position:relative;">
-				<div style="float: right; margin-right: 10px; padding-right:10px; position:relative;text-align: right; width: 250px;">
+				<div style="float: right; margin-right: 10px; position:relative;text-align: right; width: 250px;">
 					<a href='#' id="PratilipiContent-writer-dropdown" style="color: white; position:relative; text-decoration: none;">
 						<img src="/theme.pratilipi/images/buttons/menu-white.png" title="Options" />
 					</a>
-					<ul id="PratilipiContent-writer-menu" style="padding-left: 50px; position:absolute; width:100%; z-index:1;">
+					<ul id="PratilipiContent-writer-menu" style="padding-left: 0px; position:absolute; width:100%; z-index:1; ">
 						<li class="menuItem" onclick="decreaseSize( event );">Decrease Text Size</li>
 						<li class="menuItem" onclick="increaseSize( event );">Increase Text Size</li>
 						<li class="menuItem" onclick="addPageBefore();">Add Page Before This Page</li>
 						<li class="menuItem" onclick="addPageAfter();">Add Page  After This Page</li>
 						<li class="menuItem" onclick="deletePage();">Delete Page</li>
+						<div id="PratilipiContent-writer-Languages" style="position: relative;">
+							<li id="PratilipiContent-writer-Languages-Text" class="menuItem">Typing Language</li>
+							<ul id="PratilipiContent-writer-Languages-SubMenu" style="position: absolute; width: 60%; top: 0px; right: 100%;">
+								<li class="subMenuItem" onclick="enableTransliteration( this );">Gujarati</li>
+								<li class="subMenuItem" onclick="enableTransliteration( this );">Hindi</li>
+								<li class="subMenuItem" onclick="enableTransliteration( this );">Tamil</li>
+							</ul> 
+						</div>
 						<li class="menuItem">Upload Word Document</li>
 					</ul>
 				</div>
@@ -67,6 +74,9 @@
 	<div id="PratilipiContent-WriterBasic-SaveButton" class="writer-Button" onclick="savePage();" style="float:left;">
 		<img src="/theme.pratilipi/images/buttons/save-white.png" title="Save Changes" />
 	</div>
+	<div id="PratilipiContent-WriterBasic-SaveButton" class="bg-green writer-Button" onclick="goToReader();" style="float:left; margin-left:10px;">
+		<img src="/theme.pratilipi/images/buttons/launch-white.png" title="View on Reader" />
+	</div>
 </div>
 
 <!-- JAVASCRIPT START -->
@@ -84,25 +94,45 @@
 			cursor: pointer;
 		}
 		
-		.menuItem {
+		.menuItem, .subMenuItem {
 			display: none;
 			color: white;
 			background-color : #a7d7a7;
 			width: 100%;
-			padding-right: 10px;
+			padding: 2px 0px 2px 5px;
+			text-align: left;
+			font-size: 15px;
 			cursor: pointer; 
 		}
 		
-		.menuItem:hover {
+		.menuItem:hover, .subMenuItem:hover {
 			background-color: #259B24;
 			color: white;
 			text-decoration: none;
+		}
+		
+		.disableYtimBtn {
+			height: 27px !important;
+			width: 27px !important;
 		}
 		
 </style>
 
 
 <script language="javascript">
+
+<!-- TRANSLITERATION SCRIPT STARTS -->
+function enableTransliteration( object ) {
+
+	jQuery( ".menuItem" ).slideToggle();
+	var language = jQuery( object ).text();
+	var s = document.createElement('script');
+	var p = document.location.protocol;
+	s.setAttribute( 'src', p + '//ytranslitime-widgets.zenfs.com/ytimanywhere/YTimAnywhere_' + language + '.js' );
+	s.setAttribute( 'type', 'text/javascript' );
+	document.getElementsByTagName( 'head' )[0].appendChild( s ); 
+}
+<!-- TRANSLITERATION SCRIPT ENDS -->
 
 var pageNo = ${ pageNo };
 var pageCount = ${ pageCount };
@@ -125,6 +155,24 @@ function initWriter() {
 				['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'],
 				['ShowBlocks','Maximize']
 		];
+		CKEDITOR.plugins.add('TestButton',
+		{
+			icon: this.path + 'theme.pratilipi/images/buttons/save-white.png',
+		    init: function( ckEditor )
+		    {
+			    var pluginName = 'TestButton';
+			    ckEditor.addCommand( pluginName,
+			    {
+			    	exec: function( ckEditor ) {}
+			    });
+			
+			    ckEditor.ui.addButton('TestButton',
+			    {
+			        label: 'TestButton',
+			        command: pluginName,
+			    });
+		    }
+		});
 		ckEditor.on('instanceReady', function(){ 
 			//updateContent();
 			//prefetchContent();
@@ -142,10 +190,18 @@ function initWriter() {
 initWriter();
 
 var dropDown = document.getElementById( "PratilipiContent-writer-dropdown" );
+var subMenu = document.getElementById( "PratilipiContent-writer-Languages" );
 dropDown.addEventListener('click', function( event ) {
 	var event = event || window.event;
     event.stopPropagation();
     jQuery( this ).parent().find( ".menuItem" ).slideToggle();
+    if( jQuery( "#PratilipiContent-writer-Languages-SubMenu" ).find( ".subMenuItem" ).is( ":visible" ))
+    	jQuery( "#PratilipiContent-writer-Languages-SubMenu" ).find( ".subMenuItem" ).slideToggle();
+});
+subMenu.addEventListener( 'click', function( event ){
+	var event = event || window.event;
+	event.stopPropagation();
+	jQuery( this ).find( ".subMenuItem" ).slideToggle();
 });
 
 
@@ -428,6 +484,15 @@ function setDisabled( enabled ){
 	jQuery( "#PratilipiContent-WriterBasic-NextPageButton").attr('disabled',enabled);
 	jQuery( "#PratilipiContent-WriterBasic-PreviousPageButton").attr('disabled',enabled);
 	jQuery( "#PratilipiContent-WriterBasic-SaveButton").attr('disabled',enabled);
+}
+
+function goToReader(){
+	if( isEditorDirty && 
+			!confirm( "You haven't saved your changes yet ! Press 'Cancel' to go back and save your changes. Press 'Ok' to discard your changes and continue." )) {
+		return;
+	} else {
+		window.location.href="${ pratilipiData.getReaderPageUrl() }";
+	}
 }
 
 function setMinWriterWidth(){
