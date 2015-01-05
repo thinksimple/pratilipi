@@ -44,23 +44,21 @@
 			</#if>
 		</div>
 		
-		<div class="bg-gray green" style="text-align:center;padding-bottom:16px;<#if pageCount gt 1>margin-bottom:65px;</#if>">
+		<div class="bg-gray green" style="text-align:center;padding-bottom:16px;margin-bottom:65px;">
 			<b>{{ pageNo }} / ${ pageCount }</b>
 		</div>
 				
 	</core-scroll-header-panel>
 	
 	
-	<#if pageCount gt 1>
-		<div center horizontal layout id="PageContent-Reader-Navigation" style="position:fixed; bottom:10px; width:100%;">
-			<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount }}" value="{{ pageNo }}" class="bg-green" style="width:100%" on-change="{{displayPage}}"></paper-slider>
-			<#if showEditOption>
-				<paper-fab mini icon="create" title="Edit" class="bg-green" style="margin-right:10px;" on-tap="{{goToWriter}}"></paper-fab>
-			</#if>
-			<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" on-tap="{{displayPrevious}}"></paper-fab>
-			<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:25px;" on-tap="{{displayNext}}"></paper-fab>
-		</div>
-	</#if>
+	<div center horizontal layout id="PageContent-Reader-Navigation" style="position:fixed; bottom:10px; width:100%;">
+		<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount > 1 ? pageCount : 2 }}" value="{{ pageNo }}" class="bg-green" style="width:100%" disabled="{{ pageCount == 1 }}" on-change="{{displayPage}}"></paper-slider>
+		<#if showEditOption>
+			<paper-fab mini icon="create" title="Edit" class="bg-green" style="margin-right:10px;" on-tap="{{goToWriter}}"></paper-fab>
+		</#if>
+		<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" disabled="{{ pageNo == 1 }}" on-tap="{{displayPrevious}}"></paper-fab>
+		<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:25px;" disabled="{{ pageNo == pageCount }}" on-tap="{{displayNext}}"></paper-fab>
+	</div>
 
 	<paper-dialog id="PageContent-Reader-Options">
 		<div><b>Text Size</b></div>
@@ -118,15 +116,13 @@
 	});
 	
 	scope.performScrollActions = function( e ) {
-		<#if pageCount gt 1>
-			var bottom = jQuery( '.paper' ).position().top
-					+ jQuery( '.paper' ).outerHeight( true )
-					+ 66;
-			if( e.target.y > 60 && bottom > e.target.scrollHeight && jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
-				jQuery( '#PageContent-Reader-Navigation' ).fadeOut( 'fast' );
-			else if( ( e.target.y <= 60 || bottom <= e.target.scrollHeight ) && !jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
-				jQuery( '#PageContent-Reader-Navigation' ).fadeIn( 'fast' );
-		</#if>
+		var bottom = jQuery( '.paper' ).position().top
+				+ jQuery( '.paper' ).outerHeight( true )
+				+ 66;
+		if( e.target.y > 60 && bottom > e.target.scrollHeight && jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
+			jQuery( '#PageContent-Reader-Navigation' ).fadeOut( 'fast' );
+		else if( ( e.target.y <= 60 || bottom <= e.target.scrollHeight ) && !jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
+			jQuery( '#PageContent-Reader-Navigation' ).fadeIn( 'fast' );
 	}
 	
 	scope.goToWriter = function( e ) {

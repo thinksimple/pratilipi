@@ -86,7 +86,7 @@
 			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" defer></script>
 		</#if>
 		
-		<#if page.getType() != "READ" && page.getType() != "WRITE">
+		<#if page.getType()! != "READ" && page.getType()! != "WRITE">
 			<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
 		</#if>
 
