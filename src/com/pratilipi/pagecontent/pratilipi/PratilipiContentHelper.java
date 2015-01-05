@@ -122,12 +122,12 @@ public class PratilipiContentHelper extends PageContentHelper<
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
 
-		if( author != null )
+		if( author != null && author.getUserId() != null )
 			return PratilipiHelper.get( request ).getCurrentUserId().equals( author.getUserId() );
-		else if( publisher != null )
+		else if( publisher != null && publisher.getUserId() != null ) // Grant access to Publisher iff Author isn't on-boarded.
 			return PratilipiHelper.get( request ).getCurrentUserId().equals( publisher.getUserId() );
 		else
-			return true;
+			return false;
 	}
 		
 	public static boolean hasRequestAccessToReadPratilipiMetaData( HttpServletRequest request ) {
