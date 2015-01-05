@@ -69,7 +69,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		
 		// AccessToUpdatePratilipiData ?
 		boolean showEditOption = PratilipiContentHelper
-				.hasRequestAccessToUpdatePratilipiData( request, pratilipi );
+				.hasRequestAccessToUpdatePratilipiContent( request, pratilipi );
 
 		// Creating PratilipiData
 		PratilipiData pratilipiData =
@@ -128,7 +128,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		if( request.getParameter( "ret" ) != null && !request.getParameter( "ret" ).trim().isEmpty()  )
 			dataModel.put( "exitUrl", request.getParameter( "ret" ) );
 
-		dataModel.put( "showEditOption", showEditOption );
+		dataModel.put( "showEditOption", showEditOption && pratilipiData.getContentType() == PratilipiContentType.PRATILIPI );
 
 		
 		String templateName = pratilipiHelper.isModeBasic()

@@ -5,7 +5,7 @@
 
 <template is="auto-binding" id="PageContent-Writer">
 
-	<core-header-panel flex mode="scroll" on-scroll={{performScrollActions}}>
+	<core-header-panel flex mode="scroll">
 		
 		<core-toolbar class="bg-green">
 			<paper-icon-button icon="arrow-back" title="Exit Writer" disabled="{{ disabled }}" on-tap="{{performExit}}"></paper-icon-button>
@@ -52,10 +52,12 @@
 		<core-icon-button icon="description" on-tap="{{addPageBefore}}">&nbsp; Add New Page Before This Page</core-icon-button>
 		<br/>
 		<core-icon-button icon="delete" on-tap="{{deletePage}}">&nbsp; Delete This Page</core-icon-button>
+<#--
 		<br/>
 		<core-icon-button icon="history">&nbsp; Version History</core-icon-button>
 		<br/>
 		<core-icon-button icon="file-upload">&nbsp; Upload Word Document</core-icon-button>
+-->
 		<paper-button affirmative autofocus>Close</paper-button>
 	</paper-action-dialog>
 
@@ -148,18 +150,6 @@
 	];	
 	
 
-	scope.performScrollActions = function( e ) {
-		<#if pageCount gt 1>
-			var bottom = jQuery( '.paper' ).position().top
-					+ jQuery( '.paper' ).outerHeight( true )
-					+ 66;
-			if( e.target.y > 60 && bottom > e.target.scrollHeight && jQuery( '#PageContent-Writer-Navigation' ).is( ':visible' ) )
-				jQuery( '#PageContent-Writer-Navigation' ).fadeOut( 'fast' );
-			else if( ( e.target.y <= 60 || bottom <= e.target.scrollHeight ) && !jQuery( '#PageContent-Writer-Navigation' ).is( ':visible' ) )
-				jQuery( '#PageContent-Writer-Navigation' ).fadeIn( 'fast' );
-		</#if>
-	}
-	
 	scope.performExit = function( e ) {
 		window.location.href="${ exitUrl ! pratilipiData.getPageUrl() }";
 	};
@@ -169,7 +159,7 @@
 	};
 
 	scope.initLogin = function( e ) {
-		window.open( "/login" );
+		window.open( "/" );
 	};
 
 	scope.displayOptions = function( e ) {
@@ -186,7 +176,8 @@
 		if( newFontSize < 10 )
 			newFontSize = 10;
 		jQuery( '#PageContent-Writer-Content' ).css( 'font-size', newFontSize + 'px' );
-		setCookie( '${ contentSizeCookieName }', newFontSize + 'px' );
+		setCookie( '${ contentSizeCookieName }', newFontSize + 'px', 365, '${ pratilipiData.getReaderPageUrl() }' );
+		setCookie( '${ contentSizeCookieName }', newFontSize + 'px', 365, '${ pratilipiData.getWriterPageUrl() }' );
 	};
 
 	scope.incTextSize = function( e ) {
@@ -195,7 +186,8 @@
 		if( newFontSize > 30 )
 			newFontSize = 30;
 		jQuery( '#PageContent-Writer-Content' ).css( 'font-size', newFontSize + 'px' );
-		setCookie( '${ contentSizeCookieName }', newFontSize + 'px' );
+		setCookie( '${ contentSizeCookieName }', newFontSize + 'px', 365, '${ pratilipiData.getReaderPageUrl() }' );
+		setCookie( '${ contentSizeCookieName }', newFontSize + 'px', 365, '${ pratilipiData.getWriterPageUrl() }' );
 	};
 
 	scope.displayPage = function( e ) {
@@ -377,6 +369,15 @@
 	initWriter();
 	
 </script>
+
+
+<style>
+
+	body {
+	  overflow: hidden;
+	}
+
+</style>
 
 
 <!-- PageContent :: Writer :: End -->

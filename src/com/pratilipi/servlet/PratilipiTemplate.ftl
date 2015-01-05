@@ -85,8 +85,10 @@
 			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
 			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" defer></script>
 		</#if>
-			
-		<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
+		
+		<#if page.getType() != "READ" && page.getType() != "WRITE">
+			<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
+		</#if>
 
 		<title>${ (page.getTitle() + " | Pratilipi") ! "Pratilipi" }</title>		
 		
