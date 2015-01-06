@@ -6,9 +6,11 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 ga('create', 'UA-53742841-2', 'auto');
 ga('require', 'displayfeatures');
-ga('send', 'pageview');
+countPageViews();
 
-
+function countPageViews(){
+	ga( 'send', 'pageview' );
+}
 
 
 /* Get-Set document cookies */

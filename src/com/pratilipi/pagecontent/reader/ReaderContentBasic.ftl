@@ -114,8 +114,6 @@
 
 <script language="javascript">
 
-/* AJAX CODE START */
-
 var pageNo = ${ pageNo };
 var pageCount = ${ pageCount };
 var pageNoDisplayed;
@@ -308,6 +306,7 @@ function displayNextPage() {
 		pageNo = pageNo + 1;
 		pageNoDisplayed = 0;
 		updateDisplay();
+		countPageViews();
 	}
 	else
 		alert( "You have reached last page" );
@@ -318,12 +317,12 @@ function displayPreviousPage() {
 		pageNo = pageNo - 1;
 		pageNoDisplayed = 0;
 		updateDisplay();
+		countPageViews();
 	}
 	else
 		alert( "This is first page" );
 }
 
-/* AJAX CODE END */
 
 
 function saveAutoBookmark(){
@@ -334,6 +333,8 @@ function saveAutoBookmark(){
 function goToWriter(){
 	window.location.href="${ pratilipiData.getWriterPageUrl() }";
 }
+
+
 
 if( window.attachEvent) //for IE8 and below
 	window.attachEvent( 'onload', function( event ){

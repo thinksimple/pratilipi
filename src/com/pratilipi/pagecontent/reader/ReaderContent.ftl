@@ -104,9 +104,11 @@
 		if( event.which == 37 && scope.pageNo > 1 ) {
 			scope.pageNo--;
 			scope.displayPage();
+			countPageViews();
 		} else if( event.which == 39 && scope.pageNo < scope.pageCount ) {
 			scope.pageNo++;
 			scope.displayPage();
+			countPageViews();
 		} else if( event.which == 17 ) {
 			isCtrl = true;
 		} else if( event.which == 67 || event.which == 80 ) {
@@ -152,6 +154,7 @@
 		if( scope.pageNo > 1 ) {
 			scope.pageNo--;
 			scope.displayPage();
+			countPageViews();
 		}
 	};
 
@@ -159,6 +162,7 @@
 		if( scope.pageNo < scope.pageCount ) {
 			scope.pageNo++;
 			scope.displayPage();
+			countPageViews();
 		}
 	};
     
