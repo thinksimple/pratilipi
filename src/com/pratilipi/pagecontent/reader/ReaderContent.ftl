@@ -104,11 +104,11 @@
 		if( event.which == 37 && scope.pageNo > 1 ) {
 			scope.pageNo--;
 			scope.displayPage();
-			countPageViews();
+			scope.recordPageChangeEvent( 'PreviousPage' );
 		} else if( event.which == 39 && scope.pageNo < scope.pageCount ) {
 			scope.pageNo++;
 			scope.displayPage();
-			countPageViews();
+			scope.recordPageChangeEvent( 'NextPage' );
 		} else if( event.which == 17 ) {
 			isCtrl = true;
 		} else if( event.which == 67 || event.which == 80 ) {
@@ -154,7 +154,7 @@
 		if( scope.pageNo > 1 ) {
 			scope.pageNo--;
 			scope.displayPage();
-			countPageViews();
+			scope.recordPageChangeEvent( 'PreviousPage' );
 		}
 	};
 
@@ -162,10 +162,14 @@
 		if( scope.pageNo < scope.pageCount ) {
 			scope.pageNo++;
 			scope.displayPage();
-			countPageViews();
+			scope.recordPageChangeEvent( 'NextPage' );
 		}
 	};
     
+    scope.recordPageChangeEvent = function( eventAction ){
+    	var pageNumber = 'Page ' + scope.pageNo;
+    	ga( 'send', 'event', ${ pratilipiData.getId()?c }, eventAction, pageNumber );
+    };
     
 	<#if pratilipiData.getContentType() == "PRATILIPI" >
     
@@ -273,6 +277,7 @@
 	function initReader() {
 		try {
 			scope.displayPage();
+			scope.recordPageChangeEvent( 'PageLoad' );
 		} catch( err ) {
 			console.log( 'Reader initialization failed with error - ' + '\"' + err.message + '\". Retrying in 100ms ...' );
 			window.setTimeout( initReader, 100 );

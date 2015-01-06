@@ -306,7 +306,7 @@ function displayNextPage() {
 		pageNo = pageNo + 1;
 		pageNoDisplayed = 0;
 		updateDisplay();
-		countPageViews();
+		recordPageChangeEvent( 'NextPage' );
 	}
 	else
 		alert( "You have reached last page" );
@@ -317,7 +317,7 @@ function displayPreviousPage() {
 		pageNo = pageNo - 1;
 		pageNoDisplayed = 0;
 		updateDisplay();
-		countPageViews();
+		recordPageChangeEvent( 'PreviousPage' );
 	}
 	else
 		alert( "This is first page" );
@@ -335,9 +335,16 @@ function goToWriter(){
 }
 
 
+function recordPageChangeEvent( eventAction ) {
+	var pageNumber = 'Page ' + pageNo;
+	ga( 'send', 'event', ${ pratilipiData.getId()?c }, eventAction, pageNumber );
+}
+
+
 
 if( window.attachEvent) //for IE8 and below
 	window.attachEvent( 'onload', function( event ){
+		recordPageChangeEvent( 'PageLoad' );
 		var isCtrl = false;
 		document.onkeyup=function(e)
 		{
@@ -364,6 +371,7 @@ if( window.attachEvent) //for IE8 and below
 	});
 else 
 	window.addEventListener( 'load', function( event ){
+		recordPageChangeEvent( 'PageLoad' );
 		var isCtrl = false;
 		document.onkeyup=function(e)
 		{
