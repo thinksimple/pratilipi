@@ -18,11 +18,15 @@ import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.BlobEntry;
+import com.claymus.data.transfer.Page;
 import com.claymus.pagecontent.PageContentHelper;
+import com.claymus.taskqueue.Task;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiAccessTokenType;
 import com.pratilipi.commons.shared.PratilipiContentType;
+import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.commons.shared.PratilipiState;
+import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
@@ -32,6 +36,7 @@ import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
 import com.pratilipi.service.shared.data.PratilipiData;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class PratilipiContentHelper extends PageContentHelper<
 		PratilipiContent,
@@ -46,6 +51,9 @@ public class PratilipiContentHelper extends PageContentHelper<
 	public static final Access ACCESS_TO_UPDATE_PRATILIPI_DATA =
 			new Access( "pratilipi_data_update", false, "Update Pratilipi Data" );
 	
+	public static final Access ACCESS_TO_PUBLISH_PRATILIPI_DATA =
+			new Access( "pratilipi_data_publish", false, "Publish Pratilipi Data" );
+
 	public static final Access ACCESS_TO_READ_PRATILIPI_DATA_META =
 			new Access( "pratilipi_data_read_meta", false, "View Pratilipi Meta Data" );
 	public static final Access ACCESS_TO_UPDATE_PRATILIPI_DATA_META =
@@ -86,78 +94,181 @@ public class PratilipiContentHelper extends PageContentHelper<
 	}
 
 	
-	public static boolean hasRequestAccessToAddPratilipiData(
-			HttpServletRequest request, Pratilipi pratilipi ) {
+	public static boolean hasRequestAccessToAddPratilipiData( HttpServletRequest request, Pratilipi pratilipi ) {
 		
 		if( pratilipi.getState() == PratilipiState.DELETED )
 			return false;
+		
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); ;
 
-		if( PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_PRATILIPI_DATA ) )
-			return true;
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
-		
-		if( author == null && publisher == null )
+		if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() ) ) {
+			if( UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_ADD_PRATILIPI_DATA, request ) )
+				return true;
+			
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
+			
+			if( author == null && publisher == null )
+				return false;
+			else if( author != null && !accessToken.getUserId().equals( author.getUserId() ) )
+				return false;
+			else if( publisher != null && !accessToken.getUserId().equals( publisher.getUserId() ) )
+				return false;
+			
+			if( publisher != null && accessToken.getUserId().equals( publisher.getUserId() ) )
+				return true;
+			else if( author != null && accessToken.getUserId().equals( author.getUserId() ) )
+				return true;
+
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) ) {
+			return pratilipi.getAuthorId() == null
+					&& accessToken.getPublisherId().equals( pratilipi.getPublisherId() );
+			
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.USER_PUBLISHER.toString() ) ) {
 			return false;
-		else if( author != null && !PratilipiHelper.get( request ).getCurrentUserId().equals( author.getUserId() ) )
-			return false;
-		else if( publisher != null && !PratilipiHelper.get( request ).getCurrentUserId().equals( publisher.getUserId() ) )
-			return false;
-		else
-			return true;
+		}
+
+		return false;
 	}
 	
-	public static boolean hasRequestAccessToUpdatePratilipiData(
-			HttpServletRequest request, Pratilipi pratilipi ) {
+	public static boolean hasRequestAccessToUpdatePratilipiData( HttpServletRequest request, Pratilipi pratilipi ) {
 		
-		if( pratilipi.getState() == PratilipiState.DELETED )
-			return false;
-		
-		if( PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA ) )
-			return true;
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); ;
 
-		if( author != null && author.getUserId() != null )
-			return PratilipiHelper.get( request ).getCurrentUserId().equals( author.getUserId() );
-		else if( publisher != null && publisher.getUserId() != null ) // Grant access to Publisher iff Author isn't on-boarded.
-			return PratilipiHelper.get( request ).getCurrentUserId().equals( publisher.getUserId() );
-		else
+		if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() ) ) {
+			if( UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_UPDATE_PRATILIPI_DATA, request ) )
+				return true;
+			
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+			
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			if( author != null && author.getUserId() != null )
+				return accessToken.getUserId().equals( author.getUserId() );
+			
+			// Grant access to Publisher iff Author is not on-boarded.
+			Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
+			if( publisher != null && publisher.getUserId() != null )
+				return accessToken.getUserId().equals( publisher.getUserId() );
+
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			// Grant access to Publisher iff Author is not on-boarded.
+			return ( author == null || author.getUserId() == null )
+					&& accessToken.getPublisherId().equals( pratilipi.getPublisherId() );
+			
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.USER_PUBLISHER.toString() ) ) {
 			return false;
+		}
+
+		return false;
+	}
+		
+	public static boolean hasRequestAccessToPublishPratilipiData( HttpServletRequest request, Pratilipi pratilipi ) {
+		
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); ;
+
+		if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() ) ) {
+			if( UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_PUBLISH_PRATILIPI_DATA, request ) )
+				return true;
+			
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+			Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
+			if( publisher != null && publisher.getUserId() != null )
+				return accessToken.getUserId().equals( publisher.getUserId() );
+
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) ) {
+			return accessToken.getPublisherId().equals( pratilipi.getPublisherId() );
+			
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.USER_PUBLISHER.toString() ) ) {
+			return false;
+		}
+
+		return false;
 	}
 		
 	public static boolean hasRequestAccessToReadPratilipiMetaData( HttpServletRequest request ) {
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_READ_PRATILIPI_DATA_META );
+
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); ;
+
+		if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() ) ) {
+			return UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_READ_PRATILIPI_DATA_META, request );
+
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) ) {
+			return false;
+			
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.USER_PUBLISHER.toString() ) ) {
+			return false;
+		}
+		
+		return false;
 	}
 	
 	public static boolean hasRequestAccessToUpdatePratilipiMetaData( HttpServletRequest request ) {
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_PRATILIPI_DATA_META );
-	}
-	
-	public static boolean hasRequestAccessToAddPratilipiReview(
-			HttpServletRequest request, Pratilipi pratilipi ) {
-		
-		if( ! PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_PRATILIPI_REVIEW ) )
-			return false;
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
 
-		if( author != null && PratilipiHelper.get( request ).getCurrentUserId().equals( author.getUserId() ) )
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); ;
+
+		if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() ) ) {
+			return UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_UPDATE_PRATILIPI_DATA_META, request );
+
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) ) {
 			return false;
-		else if( publisher != null && PratilipiHelper.get( request ).getCurrentUserId().equals( publisher.getUserId() ) )
+			
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.USER_PUBLISHER.toString() ) ) {
 			return false;
-		else
-			return true;
+		}
+		
+		return false;
 	}
 	
-	public static boolean hasRequestAccessToReadPratilipiContent(
-			HttpServletRequest request, Pratilipi pratilipi ) {
+	public static boolean hasRequestAccessToAddPratilipiReview( HttpServletRequest request, Pratilipi pratilipi ) {
+
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); ;
+
+		if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() ) ) {
+			if( ! UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_ADD_PRATILIPI_REVIEW, request ) )
+				return false;
+			
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			if( author != null && accessToken.getUserId().equals( author.getUserId() ) )
+				return false;
+			
+			Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
+			if( publisher != null && accessToken.getUserId().equals( publisher.getUserId() ) )
+				return false;
+			
+			return true;
+			
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) ) {
+			return false;
+			
+		} else if( accessToken.getType().equals( PratilipiAccessTokenType.USER_PUBLISHER.toString() ) ) {
+			if( ! accessToken.getPublisherId().equals( pratilipi.getPublisherId() ) )
+				return false;
+			
+			if( ! UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_ADD_PRATILIPI_REVIEW, request ) )
+				return false;
+			
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			if( author != null && accessToken.getUserId().equals( author.getUserId() ) )
+				return false;
+			
+			Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
+			if( publisher != null && accessToken.getUserId().equals( publisher.getUserId() ) )
+				return false;
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static boolean hasRequestAccessToReadPratilipiContent( HttpServletRequest request, Pratilipi pratilipi ) {
 		
 		if( pratilipi.getState() == PratilipiState.PUBLISHED )
 			return true;
@@ -165,44 +276,164 @@ public class PratilipiContentHelper extends PageContentHelper<
 		if( pratilipi.getState() == PratilipiState.DELETED )
 			return false;
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); ;
 		
 		if( pratilipi.getState() == PratilipiState.DRAFTED
+				|| pratilipi.getState() == PratilipiState.SUBMITTED
 				|| pratilipi.getState() == PratilipiState.PUBLISHED_PAID
 				|| pratilipi.getState() == PratilipiState.PUBLISHED_DISCONTINUED ) {
 			
 			if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() ) ) {
 				if( UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_READ_PRATILIPI_CONTENT, request ) )
 					return true;
+				
+				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+
+				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+				if( author != null && accessToken.getUserId().equals( author.getUserId() ) )
+					return true;
+				
+				Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
+				if( publisher != null && accessToken.getUserId().equals( publisher.getUserId() ) )
+					return true;
+
 				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( accessToken.getUserId(), pratilipi.getId() );
 				return userPratilipi != null && userPratilipi.getPurchasedFrom() != null;
 				
 			} else if( accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) ) {
-				return (long) accessToken.getPublisherId() == (long) pratilipi.getPublisherId();
+				return accessToken.getPublisherId().equals( pratilipi.getPublisherId() );
 				
 			} else if( accessToken.getType().equals( PratilipiAccessTokenType.USER_PUBLISHER.toString() ) ) {
-				if( (long) accessToken.getPublisherId() != (long) pratilipi.getPublisherId() )
+				if( ! accessToken.getPublisherId().equals( pratilipi.getPublisherId() ) )
 					return false;
+				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( accessToken.getUserId(), pratilipi.getId() );
 				return userPratilipi != null && userPratilipi.getPurchasedFrom() != null;
-				
-			} else {
-				return false;
 			}
-			
 		}
 		
 		return false;
 	}
 
-	public static boolean hasRequestAccessToUpdatePratilipiContent(
-			HttpServletRequest request, Pratilipi pratilipi ) {
+	public static boolean hasRequestAccessToUpdatePratilipiContent( HttpServletRequest request, Pratilipi pratilipi ) {
 		
 		return hasRequestAccessToUpdatePratilipiData( request, pratilipi );
 	}
 	
 
+	public static PratilipiData savePratilipi( PratilipiData pratilipiData, HttpServletRequest request )
+			throws InvalidArgumentException, InsufficientAccessException {
+	
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Pratilipi pratilipi = null;
+		
+		
+		if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
+
+			pratilipi = dataAccessor.newPratilipi();
+			if( pratilipiData.hasAuthorId() )
+				pratilipi.setAuthorId( pratilipiData.getAuthorId() );
+			if( pratilipiData.hasPublisherId() )
+				pratilipi.setAuthorId( pratilipiData.getPublisherId() );
+			pratilipi.setListingDate( new Date() );
+			pratilipi.setLastUpdated( new Date() );
+
+		} else { // Update Pratilipi usecase
+		
+			pratilipi =  dataAccessor.getPratilipi( pratilipiData.getId() );
+			// Do NOT update Author/Publisher
+			pratilipi.setLastUpdated( new Date() );
+		}
+			
+		if( pratilipiData.hasType() )
+			pratilipi.setType( pratilipiData.getType() );
+		if( pratilipiData.hasPublicDomain() && hasRequestAccessToUpdatePratilipiMetaData( request ) )
+			pratilipi.setPublicDomain( pratilipiData.isPublicDomain() );
+		if( pratilipiData.hasTitle() )
+			pratilipi.setTitle( pratilipiData.getTitle() );
+		if( pratilipiData.hasTitleEn() )
+			pratilipi.setTitleEn( pratilipiData.getTitleEn() );
+		if( pratilipiData.hasLanguageId() )
+			pratilipi.setLanguageId( pratilipiData.getLanguageId() );
+		if( pratilipiData.hasPublicationYear() )
+			pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
+		if( pratilipiData.hasSummary() )
+			pratilipi.setSummary( pratilipiData.getSummary() );
+		if( pratilipiData.hasWordCount() )
+			pratilipi.setWordCount( pratilipiData.getWordCount() );
+		if( pratilipiData.hasPageCount() && hasRequestAccessToUpdatePratilipiMetaData( request ) )
+			pratilipi.setPageCount( pratilipiData.getPageCount() );
+		if( pratilipiData.hasContentType() )
+			pratilipi.setContentType( pratilipiData.getContentType() );
+		if( pratilipiData.hasState() )
+			pratilipi.setState( pratilipiData.getState() );
+
+		
+		if( pratilipiData.hasState()
+				&& pratilipiData.getState() != PratilipiState.DRAFTED
+				&& pratilipiData.getState() != PratilipiState.SUBMITTED
+				&& pratilipiData.getState() != PratilipiState.DELETED
+				&& !hasRequestAccessToPublishPratilipiData( request, pratilipi ) )
+			throw new InsufficientAccessException();
+		
+		
+		if( pratilipi.getType() == PratilipiType.BOOK
+				&& pratilipi.getState() != PratilipiState.DRAFTED
+				&& pratilipi.getState() != PratilipiState.DELETED
+				&& ( pratilipi.getSummary() == null || pratilipi.getSummary().trim().isEmpty() ) )
+			throw new InvalidArgumentException(
+					pratilipi.getType().getName() + " summary is missing. " +
+					pratilipi.getType().getName() + " can not be published without a summary." );
+		
+		
+		if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
+			if ( ! PratilipiContentHelper.hasRequestAccessToAddPratilipiData( request, pratilipi ) )
+				throw new InsufficientAccessException();
+
+			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+			
+			Page page = dataAccessor.newPage();
+			page.setType( PratilipiPageType.PRATILIPI.toString() );
+			page.setUri( PratilipiPageType.PRATILIPI.getUrlPrefix() + pratilipi.getId() );
+			page.setPrimaryContentId( pratilipi.getId() );
+			page.setCreationDate( new Date() );
+			page = dataAccessor.createOrUpdatePage( page );
+
+		} else { // Update Pratilipi usecase
+			if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( request, pratilipi ) )
+				throw new InsufficientAccessException();
+			
+			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+		}
+			
+		
+		// Updating Pratilipi page uri
+		if( pratilipiData.hasTitleEn() ) {
+			Page page = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipi.getId() );
+			Page authorPage = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), pratilipi.getAuthorId() );
+			String uriAlias = pratilipiHelper.generateUriAlias(
+					page.getUriAlias(), authorPage.getUriAlias() + "/", pratilipi.getTitleEn() );
+			if( ! uriAlias.equals( page.getUriAlias() ) ) {
+				page.setUriAlias( uriAlias );
+				page = dataAccessor.createOrUpdatePage( page );
+			}
+		}
+		
+		
+		Task task = TaskQueueFactory.newTask();
+		task.addParam( "pratilipiId", pratilipi.getId().toString() );
+		// Creating/Updating default cover image
+		TaskQueueFactory.getCreateOrUpdateDefaultCoverTaskQueue().add( task );
+		// Creating/Updating search index
+		TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
+
+		
+		return pratilipiHelper.createPratilipiData(
+				pratilipi.getId(),
+				PratilipiContentHelper.hasRequestAccessToReadPratilipiMetaData( request ) );
+	}
+	
 	public static Object getPratilipiContent(
 			long pratilipiId, int pageNo, PratilipiContentType contentType,
 			HttpServletRequest request ) throws InvalidArgumentException,
@@ -275,8 +506,11 @@ public class PratilipiContentHelper extends PageContentHelper<
 			BlobEntry blobEntry = null;
 			try {
 				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
-				if( blobEntry == null )
-					blobEntry = blobAccessor.newBlob( pratilipiData.getPratilipiContentName(), "&nbsp".getBytes( Charset.forName( "UTF-8" ) ), "text/html" );
+				if( blobEntry == null ) {
+					blobEntry = blobAccessor.newBlob( pratilipiData.getPratilipiContentName() );
+					blobEntry.setData( "&nbsp".getBytes( Charset.forName( "UTF-8" ) ) );
+					blobEntry.setMimeType( "text/html" );
+				}
 			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
 				throw new UnexpectedServerException();
