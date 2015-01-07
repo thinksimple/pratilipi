@@ -23,7 +23,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.PratilipiDataInputView;
 import com.pratilipi.commons.client.PratilipiDataInputViewModalImpl;
-import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
@@ -78,9 +77,9 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	
 	
 	//Upload content
-	private final Anchor uploadImageContentAnchor = new Anchor( "Upload Image Content" );
-	private final Anchor uploadWordContentAnchor = new Anchor( "Upload Word Content" );
-	private final Anchor uploadPDFContentAnchor = new Anchor( "Upload PDF Content" );
+//	private final Anchor uploadImageContentAnchor = new Anchor( "Upload Image Content" );
+//	private final Anchor uploadWordContentAnchor = new Anchor( "Upload Word Content" );
+//	private final Anchor uploadPDFContentAnchor = new Anchor( "Upload PDF Content" );
 	
 	
 	// Publish-Unpublish options widgets
@@ -135,9 +134,9 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		
 
 		//Upload Content links
-		dropdown.add( uploadImageContentAnchor );
-		dropdown.add( uploadWordContentAnchor );
-		dropdown.add( uploadPDFContentAnchor );
+//		dropdown.add( uploadImageContentAnchor );
+//		dropdown.add( uploadWordContentAnchor );
+//		dropdown.add( uploadPDFContentAnchor );
 
 		
 		// Un-publish option widgets
@@ -219,24 +218,24 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		summaryInput.setHtml( pratilipiData.getSummary() );
 		genreList.set( pratilipiData.getGenreNameList() );
 		addRemoveGenre.setPratilipiData( pratilipiData );
-		uploadImageContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=image" );
-		uploadWordContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=pratilipi" );
-		uploadPDFContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=pdf" );
+//		uploadImageContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=image" );
+//		uploadWordContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=pratilipi" );
+//		uploadPDFContentAnchor.setHref( "/upload?id=" + pratilipiData.getId() + "&type=pdf" );
 		
-		if( pratilipiData.getContentType() != null && pratilipiData.getContentType() == PratilipiContentType.IMAGE ){
-			uploadWordContentAnchor.setVisible( false );
-			uploadPDFContentAnchor.setVisible( false );
-		}
-		else if( pratilipiData.getContentType() != null && pratilipiData.getContentType() == PratilipiContentType.PRATILIPI ){
-			uploadImageContentAnchor.setVisible( false );
-			uploadPDFContentAnchor.setVisible( false );
-		}
-		else if( pratilipiData.getContentType() != null && pratilipiData.getContentType() == PratilipiContentType.PDF ){
-			uploadImageContentAnchor.setVisible( false );
-			uploadWordContentAnchor.setVisible( false );
-		}
+//		if( pratilipiData.getContentType() != null && pratilipiData.getContentType() == PratilipiContentType.IMAGE ){
+//			uploadWordContentAnchor.setVisible( false );
+//			uploadPDFContentAnchor.setVisible( false );
+//		}
+//		else if( pratilipiData.getContentType() != null && pratilipiData.getContentType() == PratilipiContentType.PRATILIPI ){
+//			uploadImageContentAnchor.setVisible( false );
+//			uploadPDFContentAnchor.setVisible( false );
+//		}
+//		else if( pratilipiData.getContentType() != null && pratilipiData.getContentType() == PratilipiContentType.PDF ){
+//			uploadImageContentAnchor.setVisible( false );
+//			uploadWordContentAnchor.setVisible( false );
+//		}
 		
-		if( pratilipiData.getState() == PratilipiState.PUBLISHED ) {
+		if( pratilipiData.getState() == PratilipiState.PUBLISHED || pratilipiData.getState() == PratilipiState.SUBMITTED ) {
 			publishPanel.setVisible( false );
 			unpublishAnchor.setVisible( true );
 			unpublishAnchor.setText( "Un-Publish this " + pratilipiData.getType().getName() );
@@ -333,7 +332,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		} else if( event.getSource() == publishAnchor ) {
 			publishAnchor.setEnabled( false );
 			PratilipiData pratilipiData = new PratilipiData( this.pratilipiData.getId() );
-			pratilipiData.setState( PratilipiState.PUBLISHED );
+			pratilipiData.setState( PratilipiState.SUBMITTED );
 			pratilipiService.savePratilipi(
 					new SavePratilipiRequest( pratilipiData ),
 					new AsyncCallback<SavePratilipiResponse>() {
