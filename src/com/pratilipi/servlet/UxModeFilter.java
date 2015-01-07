@@ -103,18 +103,21 @@ public class UxModeFilter implements Filter {
 			 *   "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0 (Chrome)"
 			 */
 			
-			String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Firefox" ) + 8 );
-			int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
+//			String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Firefox" ) + 8 );
+//			int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
+//			
+//			basicMode = version <= 30;
 			
-			basicMode = version <= 30;
-			
+			basicMode = true; // Writer is broken
 			
 		} else if( userAgent.contains( "Trident/7" ) && userAgent.contains( "rv:11" ) ) { // Microsoft Internet Explorer 11
 			/*
 			 * Microsoft Internet Explorer 11 on Microsoft Windows 8.1
 			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; LCJB; rv:11.0) like Gecko"
 			 */
-			basicMode = false;
+//			basicMode = false;
+
+			basicMode = true; // Writer is broken
 
 			
 		} else if ( userAgent.contains( "Safari" ) ) { // Apple Safari
