@@ -299,7 +299,8 @@
 
 	function initReader() {
 		try {
-			updateAndPrefetchContent();
+			updateContent();
+			prefetchContent();
 			recordPageChangeEvent( 'PageLoad' );
 		} catch( err ) {
 			console.log( 'Reader initialization failed with error - ' + '\"' + err.message + '\". Retrying in 100ms ...' );

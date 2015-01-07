@@ -150,17 +150,18 @@
 	];	
 	
 
-	scope.performExit = function( e ) {
-		window.location.href="${ exitUrl ! pratilipiData.getPageUrl() }";
+	scope.initLogin = function( e ) {
+		window.open( "/" );
 	};
 
 	scope.goToReader = function( e ) {
 		window.location.href="${ pratilipiData.getReaderPageUrl() }";
 	};
 
-	scope.initLogin = function( e ) {
-		window.open( "/" );
+	scope.performExit = function( e ) {
+		window.location.href="${ exitUrl ! pratilipiData.getPageUrl() }";
 	};
+
 
 	scope.displayOptions = function( e ) {
 		dialog.open();
@@ -170,6 +171,7 @@
 		transliterationDialog.open();
 	};
 	
+
 	scope.decTextSize = function( e ) {
 		var fontSize = parseInt( jQuery( '#PageContent-Writer-Content' ).css( 'font-size' ).replace( 'px', '' ) );
 		var newFontSize = fontSize - 2;
@@ -190,32 +192,46 @@
 		setCookie( '${ contentSizeCookieName }', newFontSize + 'px', 365, '${ pratilipiData.getWriterPageUrl() }' );
 	};
 
+
 	scope.displayPage = function( e ) {
-		checkDirtyAndUpdatePage( e.target.value );
+		if( e.target.value == scope.pageNo ) {
+			// Do Nothing
+		} else if( checkDirty() ) {
+			e.target.value = scope.pageNo;
+		} else {
+			scope.pageNo = e.target.value;
+			updateAndPrefetchContent();
+		}
 	};
 	
 	scope.displayPrevious = function( e ) {
-		checkDirtyAndUpdatePage( scope.pageNo - 1 );
+		if( !checkDirty() ) {
+			scope.pageNo--;
+			document.querySelector( 'paper-slider' ).value = scope.pageNo;
+			updateAndPrefetchContent();
+		}
 	};
 
 	scope.displayNext = function( e ) {
-		checkDirtyAndUpdatePage( scope.pageNo + 1 );
-	};
-	
-	function checkDirtyAndUpdatePage( pageNo ) {
-		if( CKEDITOR.instances[ 'PageContent-Writer-Content' ].checkDirty()
-				&& !confirm( "You haven't saved your changes yet ! Press 'Cancel' to go back and save your changes. Press 'Ok' to discard your changes and continue." ) ) {
+		if( !checkDirty() ) {
+			scope.pageNo++;
 			document.querySelector( 'paper-slider' ).value = scope.pageNo;
-
-		} else {
-			scope.pageNo = pageNo;
-			document.querySelector( 'paper-slider' ).value = pageNo;
-			document.querySelector( 'core-header-panel' ).scroller.scrollTop = 0;
-			updateContent();
-			prefetchContent();
-			setCookie( '${ pageNoCookieName }', scope.pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
-			setCookie( '${ pageNoCookieName }', scope.pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
+			updateAndPrefetchContent();
 		}
+	};
+
+	
+	function checkDirty() {
+		return CKEDITOR.instances[ 'PageContent-Writer-Content' ].checkDirty()
+				&& !confirm( "You haven't saved your changes yet ! Press 'Cancel' to go back and save your changes. Press 'Ok' to discard your changes and continue." );
+	}
+	
+	function updateAndPrefetchContent() {
+		document.querySelector( 'core-header-panel' ).scroller.scrollTop = 0;
+		updateContent();
+		prefetchContent();
+		setCookie( '${ pageNoCookieName }', scope.pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
+		setCookie( '${ pageNoCookieName }', scope.pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
 	}
 	
 	function updateContent() {
@@ -257,16 +273,20 @@
 	
 	scope.addPageAfter = function( e ) {
 		dialog.close();
-		setReadOnly( true );
-		ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
-		ajaxPut.go();
+		if( !checkDirty() ) {
+			setReadOnly( true );
+			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
+			ajaxPut.go();
+		}
 	};
 	
 	scope.addPageBefore = function( e ) {
 		dialog.close();
-		setReadOnly( true );
-		ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
-		ajaxPut.go();
+		if( !checkDirty() ) {
+			setReadOnly( true );
+			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
+			ajaxPut.go();
+		}
 	};
 	
 	scope.deletePage = function( e ) {
@@ -277,6 +297,7 @@
 			ajaxPut.go();
 		}
 	};
+	
 
 	scope.handleAjaxGetResponse = function( event, response ) {
 		if( contentArray[response.response['pageNo']] == null ) {
@@ -289,6 +310,7 @@
 		updateContent();
 	};
 
+
 	scope.handleAjaxPutResponse = function( event, response ) {
 		setReadOnly( false );
 		scope.pageNo = response.response['pageNo'];
@@ -298,7 +320,7 @@
 			scope.pageCount = response.response['pageCount'];
 			if( scope.pageNo > scope.pageCount )
 				scope.pageNo = scope.pageCount;
-			checkDirtyAndUpdatePage( scope.pageNo );
+			updateAndPrefetchContent();
 		} else {
 			contentArray[scope.pageNo] = ckEditor.getData();
 			pageNoDisplayed = 0;
@@ -338,6 +360,7 @@
 		s.setAttribute( 'type', 'text/javascript' );
 		document.getElementsByTagName( 'head' )[0].appendChild( s ); 
 	}
+	
 
 	function setReadOnly( bool ) {
 		scope.disabled = bool;
