@@ -9,6 +9,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -67,6 +68,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	
 	private final Anchor editSummaryAnchor = new Anchor( "Edit Summary" );
 	private final Button saveSummaryButton = new Button( "Save" );
+	private final Button cancelSummaryButton = new Button( "Cancel" );
 	private final RichTextInputFormField summaryInput = new RichTextInputFormField();
 
 	
@@ -103,6 +105,9 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		editSummaryAnchor.addClickHandler( this );
 		saveSummaryButton.addClickHandler( this );
 		saveSummaryButton.setVisible( false );
+		cancelSummaryButton.addClickHandler( this );
+		cancelSummaryButton.setVisible( false );
+		cancelSummaryButton.getElement().getStyle().setPaddingLeft( 5, Unit.PX );
 		
 		dropdown.add( editPratilipiDataAnchor );
 		pratilipiDataInputView.add( savePratilipiDataButton );
@@ -110,9 +115,11 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		
 		dropdown.add( editSummaryAnchor );
 		summaryEditOptionsPanel.add( saveSummaryButton );
+		summaryEditOptionsPanel.add( cancelSummaryButton );
 		
 		savePratilipiDataButton.setStyleName( "btn btn-success" );
 		saveSummaryButton.setStyleName( "btn btn-success" );
+		cancelSummaryButton.setStyleName( "btn btn-danger" );
 		
 		
 		// Genre list and edit options
@@ -292,11 +299,13 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			summaryPanel.getElement().setInnerHTML( "" );
 			summaryPanel.add( summaryInput );
 			saveSummaryButton.setVisible( true );
+			cancelSummaryButton.setVisible( true );
 		
 			
 		} else if( event.getSource() == saveSummaryButton ) {
 			summaryInput.setEnabled( false );
 			saveSummaryButton.setEnabled( false );
+			cancelSummaryButton.setEnabled( false );
 			
 			PratilipiData pratilipiData = new PratilipiData();
 			pratilipiData.setId( this.pratilipiData.getId() );
@@ -310,21 +319,29 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 						public void onSuccess( SavePratilipiResponse response ) {
 							summaryPanel.remove( summaryInput );
 							saveSummaryButton.setVisible( false );
+							cancelSummaryButton.setVisible( false );
 							setPratilipiData( response.getPratilipiData() );
 
 							summaryInput.setEnabled( true );
 							saveSummaryButton.setEnabled( true );
+							cancelSummaryButton.setEnabled( true );
 						}
 						
 						@Override
 						public void onFailure( Throwable caught ) {
 							summaryInput.setEnabled( true );
 							saveSummaryButton.setEnabled( true );
+							cancelSummaryButton.setEnabled( true );
 						}
 						
 					});
 		
 			
+		}else if( event.getSource() == cancelSummaryButton ) {
+			summaryPanel.remove( summaryInput );
+			saveSummaryButton.setVisible( false );
+			cancelSummaryButton.setVisible( false );
+		
 		} else if( event.getSource() == genreAnchor ) {
 			addRemoveGenre.setVisible( true );
 
