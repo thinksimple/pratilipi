@@ -17,10 +17,13 @@ import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.transfer.AccessToken;
+import com.claymus.data.transfer.AuditLog;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.pagecontent.PageContentHelper;
 import com.claymus.taskqueue.Task;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiAccessTokenType;
 import com.pratilipi.commons.shared.PratilipiContentType;
@@ -45,6 +48,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 	
 	private static final Logger logger =
 			Logger.getLogger( PratilipiContentHelper.class.getName() );
+
+	private static final Gson gson = new GsonBuilder().create();
 
 	public static final Access ACCESS_TO_ADD_PRATILIPI_DATA =
 			new Access( "pratilipi_data_add", false, "Add Pratilipi Data" );
@@ -276,7 +281,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		if( pratilipi.getState() == PratilipiState.DELETED )
 			return false;
 		
-		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); ;
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
 		
 		if( pratilipi.getState() == PratilipiState.DRAFTED
 				|| pratilipi.getState() == PratilipiState.SUBMITTED
@@ -327,11 +332,17 @@ public class PratilipiContentHelper extends PageContentHelper<
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Pratilipi pratilipi = null;
-		
+
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); 
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( accessToken.getId() );
 		
 		if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
 
 			pratilipi = dataAccessor.newPratilipi();
+			auditLog.setEventId( ACCESS_TO_ADD_PRATILIPI_DATA.getId() );
+			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+			
 			if( pratilipiData.hasAuthorId() )
 				pratilipi.setAuthorId( pratilipiData.getAuthorId() );
 			if( pratilipiData.hasPublisherId() )
@@ -342,6 +353,9 @@ public class PratilipiContentHelper extends PageContentHelper<
 		} else { // Update Pratilipi usecase
 		
 			pratilipi =  dataAccessor.getPratilipi( pratilipiData.getId() );
+			auditLog.setEventId( ACCESS_TO_UPDATE_PRATILIPI_DATA.getId() );
+			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+
 			// Do NOT update Author/Publisher
 			pratilipi.setLastUpdated( new Date() );
 		}
@@ -406,7 +420,11 @@ public class PratilipiContentHelper extends PageContentHelper<
 			
 			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 		}
-			
+		
+		
+		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+		auditLog = dataAccessor.createAuditLog( auditLog );
+		
 		
 		// Updating Pratilipi page uri
 		if( pratilipiData.hasTitleEn() ) {
