@@ -1,5 +1,9 @@
 <!-- PageContent :: Reader :: Start -->
 
+<div id="PageContent-Reader-LoadingGif" style="width:100%; height: 100%; text-align: center; zindex: 1;">
+	<img src="/theme.pratilipi/ajax-loader.gif"/>
+</div>
+
 <div class="bg-green">
 	<table style="width: 100%;color: white; height: 64px;">
 		<tr>
@@ -345,6 +349,7 @@ function recordPageChangeEvent( eventAction ) {
 if( window.attachEvent) //for IE8 and below
 	window.attachEvent( 'onload', function( event ){
 		recordPageChangeEvent( 'PageLoad' );
+		document.getElementById( 'PageContent-Reader-LoadingGif' ).style.display = 'none';
 		var isCtrl = false;
 		document.onkeyup=function(e)
 		{
@@ -372,6 +377,7 @@ if( window.attachEvent) //for IE8 and below
 else 
 	window.addEventListener( 'load', function( event ){
 		recordPageChangeEvent( 'PageLoad' );
+		document.getElementById( 'PageContent-Reader-LoadingGif' ).style.display = 'none';
 		var isCtrl = false;
 		document.onkeyup=function(e)
 		{

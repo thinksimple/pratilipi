@@ -1,6 +1,8 @@
 <!-- PageContent :: Reader :: Start -->
 
-
+<div id="PageContent-Reader-LoadingGif" style="width:100%; height: 100%; text-align: center; zindex: 1;">
+	<img src="/theme.pratilipi/ajax-loader.gif"/>
+</div>
 <template is="auto-binding" id="PageContent-Reader">
 
 	<core-scroll-header-panel flex on-scroll={{performScrollActions}}>
@@ -302,6 +304,7 @@
 			updateContent();
 			prefetchContent();
 			recordPageChangeEvent( 'PageLoad' );
+			jQuery( "#PageContent-Reader-LoadingGif" ).hide();
 		} catch( err ) {
 			console.log( 'Reader initialization failed with error - ' + '\"' + err.message + '\". Retrying in 100ms ...' );
 			window.setTimeout( initReader, 100 );
