@@ -74,7 +74,8 @@
 				contentType="application/json"
 				method="GET"
 				handleAs="json"
-				on-core-response="{{handleAjaxResponse}}" ></core-ajax>
+				on-core-response="{{handleAjaxResponse}}"
+				on-core-error="{{handleAjaxError}}" ></core-ajax>
 	</#if>
 
 </template>
@@ -86,12 +87,13 @@
 	
 	scope.pageCount = ${ pageCount };
 	scope.pageNo = ${ pageNo };
+	var pageNoDisplayed = 0;
 	
 	var contentArray = [];
 	var isCtrl = false;
 	
 	
-	jQuery( 'body' ).bind( 'contextmenu', function( event ){
+	jQuery( 'body' ).bind( 'contextmenu', function( event ) {
 		event.preventDefault();
 	});
 	
@@ -101,14 +103,10 @@
 	});
 	
 	jQuery( 'body' ).keydown( function( event ) {
-		if( event.which == 37 && scope.pageNo > 1 ) {
-			scope.pageNo--;
-			scope.displayPage();
-			scope.recordPageChangeEvent( 'PreviousPage' );
-		} else if( event.which == 39 && scope.pageNo < scope.pageCount ) {
-			scope.pageNo++;
-			scope.displayPage();
-			scope.recordPageChangeEvent( 'NextPage' );
+		if( event.which == 37 ) {
+			scope.displayPrevious();
+		} else if( event.which == 39 ) {
+			scope.displayNext();
 		} else if( event.which == 17 ) {
 			isCtrl = true;
 		} else if( event.which == 67 || event.which == 80 ) {
@@ -116,6 +114,7 @@
 				return false; // Disabled Ctrl + C/P
 		}
 	});
+	
 	
 	scope.performScrollActions = function( e ) {
 		var bottom = jQuery( '.paper' ).position().top
@@ -127,6 +126,13 @@
 			jQuery( '#PageContent-Reader-Navigation' ).fadeIn( 'fast' );
 	}
 	
+	scope.displayOptions = function( e ) {
+		var dialog = document.querySelector( '#PageContent-Reader-Options' );
+		if( dialog ) {
+			dialog.open();
+		}
+	};
+
 	scope.goToWriter = function( e ) {
 		window.location.href="${ pratilipiData.getWriterPageUrl() }";
 	};
@@ -135,41 +141,36 @@
 		window.location.href="${ exitUrl ! pratilipiData.getPageUrl() }";
 	};
 
-	scope.displayOptions = function( e ) {
-		var dialog = document.querySelector( '#PageContent-Reader-Options' );
-		if( dialog ) {
-			dialog.toggle();
-		}
-	};
 
 	scope.displayPage = function( e ) {
-		updateContent();
-		document.querySelector( 'core-scroll-header-panel' ).scroller.scrollTop = 0;
-		prefetchContent();
-		setCookie( '${ pageNoCookieName }', scope.pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
-		setCookie( '${ pageNoCookieName }', scope.pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
+		updateAndPrefetchContent();
+		recordPageChangeEvent( 'SetPage' );
 	};
 	
 	scope.displayPrevious = function( e ) {
 		if( scope.pageNo > 1 ) {
 			scope.pageNo--;
-			scope.displayPage();
-			scope.recordPageChangeEvent( 'PreviousPage' );
+			updateAndPrefetchContent();
+			recordPageChangeEvent( 'PreviousPage' );
 		}
 	};
 
 	scope.displayNext = function( e ) {
 		if( scope.pageNo < scope.pageCount ) {
 			scope.pageNo++;
-			scope.displayPage();
-			scope.recordPageChangeEvent( 'NextPage' );
+			updateAndPrefetchContent();
+			recordPageChangeEvent( 'NextPage' );
 		}
 	};
     
-    scope.recordPageChangeEvent = function( eventAction ){
-    	var pageNumber = 'Page ' + scope.pageNo;
-    	ga( 'send', 'event', ${ pratilipiData.getId()?c }, eventAction, pageNumber );
-    };
+	function updateAndPrefetchContent() {
+		updateContent();
+		document.querySelector( 'core-scroll-header-panel' ).scroller.scrollTop = 0;
+		prefetchContent();
+		setCookie( '${ pageNoCookieName }', scope.pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
+		setCookie( '${ pageNoCookieName }', scope.pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
+    }
+    
     
 	<#if pratilipiData.getContentType() == "PRATILIPI" >
     
@@ -180,14 +181,24 @@
 			updateContent();
 	    };
 	    
+	    scope.handleAjaxError = function( event, response ) {
+			updateContent();
+		};
+	    
+	    
 		function updateContent() {
-			if( contentArray[scope.pageNo] == null ) {
+			if( pageNoDisplayed == scope.pageNo ) {
+				return;
+			
+			} else if( contentArray[scope.pageNo] == null ) {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
 				var ajax = document.querySelector( '#PageContent-Reader-Ajax' );
 				ajax.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI' } );
 				ajax.go();
+			
 			} else {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
+				pageNoDisplayed = scope.pageNo;
 			}
 		}
 		
@@ -228,18 +239,26 @@
 		
 		function loadImage( pageNo ) {
 			var img = "<img src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=" + pageNo + "&contentType=IMAGE' />";
-			$(img).on( 'load', function() {
+			$( img ).on( 'load', function() {
 				contentArray[pageNo] = img;
+				updateContent();
+			});
+			$( img ).on( 'error', function() {
 				updateContent();
 			});
 		}
 		
 		function updateContent() {
-			if( contentArray[scope.pageNo] == null ){
+			if( pageNoDisplayed == scope.pageNo ) {
+				return;
+			
+			} else if( contentArray[scope.pageNo] == null ){
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
 				loadImage( scope.pageNo );
+			
 			} else {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
+				pageNoDisplayed = scope.pageNo;
 			}
 		}
 
@@ -273,11 +292,15 @@
 		
 	</#if>
 	
+	
+	recordPageChangeEvent = function( eventAction ){
+		ga( 'send', 'event', ${ pratilipiData.getId()?c }, eventAction, 'Page ' + scope.pageNo );
+	};
 
 	function initReader() {
 		try {
-			scope.displayPage();
-			scope.recordPageChangeEvent( 'PageLoad' );
+			updateAndPrefetchContent();
+			recordPageChangeEvent( 'PageLoad' );
 		} catch( err ) {
 			console.log( 'Reader initialization failed with error - ' + '\"' + err.message + '\". Retrying in 100ms ...' );
 			window.setTimeout( initReader, 100 );
