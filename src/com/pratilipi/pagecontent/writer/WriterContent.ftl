@@ -159,7 +159,8 @@
 	};
 
 	scope.performExit = function( e ) {
-		window.location.href="${ exitUrl ! pratilipiData.getPageUrl() }";
+		if( !checkDirty() )
+			window.location.href="${ exitUrl ! pratilipiData.getPageUrl() }";
 	};
 
 
