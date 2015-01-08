@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,6 +28,8 @@ import com.pratilipi.service.shared.data.PratilipiData;
 
 public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> {
 
+	private Logger logger = Logger.getLogger( AuthorContentProcessor.class.getName() );
+	
 	@Override
 	public String generateTitle( AuthorContent authorContent, HttpServletRequest request ) {
 		AuthorData authorData = PratilipiHelper.get( request ).createAuthorData( authorContent.getId() );
@@ -54,6 +58,11 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 				? (DataListCursorTuple<Pratilipi>) dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 )
 				: new DataListCursorTuple<Pratilipi>( new ArrayList<Pratilipi>(0), null );
 
+		pratilipiFilter.setState( PratilipiState.SUBMITTED );
+		DataListCursorTuple<Pratilipi> submittedPratilipiListCursorTuple = showEditOption
+				? (DataListCursorTuple<Pratilipi>) dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 )
+				: new DataListCursorTuple<Pratilipi>( new ArrayList<Pratilipi>(0), null );
+				
 		pratilipiFilter.setState( PratilipiState.PUBLISHED );
 
 		pratilipiFilter.setType( PratilipiType.BOOK );
@@ -78,6 +87,12 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		List<PratilipiData> draftedPratilipiDataList =
 				pratilipiHelper.createPratilipiDataList(
 						draftedPratilipiListCursorTuple.getDataList(), false, false, false );
+		logger.log( Level.INFO, draftedPratilipiDataList.size() + "" );
+		
+		List<PratilipiData> submittedPratilipiDataList =
+				pratilipiHelper.createPratilipiDataList(
+						submittedPratilipiListCursorTuple.getDataList(), false, false, false );
+		logger.log( Level.INFO, submittedPratilipiDataList.size() + "" );
 		
 		List<PratilipiData> bookDataList =
 				pratilipiHelper.createPratilipiDataList(
@@ -102,6 +117,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		dataModel.put( "authorData", authorData );
 		dataModel.put( "authorDataEncodedStr", SerializationUtil.encode( authorData ) );
 		dataModel.put( "draftedPratilipiDataList", draftedPratilipiDataList );
+		dataModel.put( "submittedPratilipiDataList", submittedPratilipiDataList );
 		dataModel.put( "bookDataList", bookDataList );
 		dataModel.put( "poemDataList", poemDataList );
 		dataModel.put( "storyDataList", storyDataList );

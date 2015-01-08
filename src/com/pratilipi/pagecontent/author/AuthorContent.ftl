@@ -75,6 +75,16 @@
 	</div>
 </#if>
 
+<#if submittedPratilipiDataList?has_content>
+	<div class="container">
+		<h3 class="hr-below">Under Moderation</h3>
+		<div class="row">
+			<#list submittedPratilipiDataList as pratilipiData>
+				<@pratilipiView.thumbnail pratilipiData=pratilipiData />
+			</#list>
+		</div>
+	</div>
+</#if>
 
 <#if bookDataList?has_content>
 	<div class="container">
