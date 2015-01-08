@@ -1,8 +1,8 @@
 <!-- PageContent :: Reader :: Start -->
-
-<div id="PageContent-Reader-LoadingGif" style="width:100%; height: 100%; text-align: center; zindex: 1;">
-	<img src="/theme.pratilipi/ajax-loader.gif"/>
+<div style="width: 100%; height: 100%;" id="PageContent-Reader-LoadingGif">
+	<span style="top: 45%; left: 45%; position: absolute;"><img src="/theme.pratilipi/ajax-loader.gif"></span>
 </div>
+
 <template is="auto-binding" id="PageContent-Reader">
 
 	<core-scroll-header-panel flex on-scroll={{performScrollActions}}>
