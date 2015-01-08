@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,8 +26,6 @@ import com.pratilipi.service.shared.data.PratilipiData;
 
 public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> {
 
-	private Logger logger = Logger.getLogger( AuthorContentProcessor.class.getName() );
-	
 	@Override
 	public String generateTitle( AuthorContent authorContent, HttpServletRequest request ) {
 		AuthorData authorData = PratilipiHelper.get( request ).createAuthorData( authorContent.getId() );
@@ -87,12 +83,10 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		List<PratilipiData> draftedPratilipiDataList =
 				pratilipiHelper.createPratilipiDataList(
 						draftedPratilipiListCursorTuple.getDataList(), false, false, false );
-		logger.log( Level.INFO, draftedPratilipiDataList.size() + "" );
 		
 		List<PratilipiData> submittedPratilipiDataList =
 				pratilipiHelper.createPratilipiDataList(
 						submittedPratilipiListCursorTuple.getDataList(), false, false, false );
-		logger.log( Level.INFO, submittedPratilipiDataList.size() + "" );
 		
 		List<PratilipiData> bookDataList =
 				pratilipiHelper.createPratilipiDataList(
