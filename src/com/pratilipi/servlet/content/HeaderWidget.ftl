@@ -21,7 +21,10 @@ function validateForm() {
 																									${ user.getEmail() }
 																								</#if><span class="caret"></span></a>
 			                <ul class="dropdown-menu" role="menu">
-			                  <li style="width: 170px;"><a href="#signout">Logout</a></li>
+			                	<#if authorPageUrl?? >
+			                		<li style="width: 170px;"><a href='${ authorPageUrl }'>My Profile</a></li>
+			                	</#if>
+		                		<li style="width: 170px;"><a href="#signout">Logout</a></li>
 			                </ul>
 			          	</li>
 			          	</ul>
