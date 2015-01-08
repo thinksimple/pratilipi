@@ -107,7 +107,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		saveSummaryButton.setVisible( false );
 		cancelSummaryButton.addClickHandler( this );
 		cancelSummaryButton.setVisible( false );
-		cancelSummaryButton.getElement().getStyle().setPaddingLeft( 5, Unit.PX );
+		cancelSummaryButton.getElement().getStyle().setMarginLeft( 5, Unit.PX );
 		
 		dropdown.add( editPratilipiDataAnchor );
 		pratilipiDataInputView.add( savePratilipiDataButton );
@@ -338,9 +338,10 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		
 			
 		}else if( event.getSource() == cancelSummaryButton ) {
-			summaryPanel.remove( summaryInput );
 			saveSummaryButton.setVisible( false );
 			cancelSummaryButton.setVisible( false );
+			summaryPanel.remove( summaryInput );
+			summaryPanel.getElement().setInnerHTML( pratilipiData.getSummary() );
 		
 		} else if( event.getSource() == genreAnchor ) {
 			addRemoveGenre.setVisible( true );
