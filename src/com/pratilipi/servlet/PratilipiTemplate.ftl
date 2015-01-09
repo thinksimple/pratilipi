@@ -13,7 +13,7 @@
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 
 		<#if basicMode>
-			<script src="//cdn-asia.pratilipi.com/third-party/jquery-1.11.1/jquery-1.11.1.min.js" defer></script>
+			<script src="//cdn-asia.pratilipi.com/third-party/jquery-1.11.1/jquery-1.11.1.min.js"></script>
 			<script src="//cdn-asia.pratilipi.com/third-party/bootstrap-3.2.0/js/bootstrap.min.js" defer></script>
 			<link rel="stylesheet" href="//cdn-asia.pratilipi.com/third-party/bootstrap-3.2.0/css/bootstrap.min.css">
 			<script src="//cdn-asia.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/vendor/jquery.ui.widget.js" defer></script>
@@ -68,7 +68,7 @@
 		<!-- Claymus Resources -->
 		<#if basicMode>
 			<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
-			<script type="text/javascript" language="javascript" src="/theme.default/script.js" async></script>
+			<script type="text/javascript" language="javascript" src="/theme.default/script.js" defer></script>
 			<script type="text/javascript" language="javascript" src="/theme.default/script.basicmode.js" defer></script>
 		<#else>
 			<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
@@ -80,7 +80,7 @@
 		<#if basicMode>
 			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
 			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.basicmode.css">
-			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" async></script>
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" defer></script>
 			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicmode.js" defer></script>
 		<#else>
 			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
@@ -94,8 +94,10 @@
 		<title>${ (page.getTitle() + " | Pratilipi") ! "Pratilipi" }</title>		
 		
 	</head>
-	<body>
+	<body <#if !basicMode>fullbleed layout vertical</#if>>
 		
+		<span id="Claymus-Loading">Loading ...</span>
+
 		<#if websiteWidgetHtmlListMap["HEADER"] ??>
 			<#list websiteWidgetHtmlListMap["HEADER"] as websiteWidgetHtml>
 				${ websiteWidgetHtml }

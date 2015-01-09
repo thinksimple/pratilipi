@@ -1,9 +1,5 @@
 <!-- PageContent :: Reader :: Start -->
-<div style="width: 100%; height: 100%;" id="PageContent-Reader-LoadingGif">
-	<span style="top: 50%; left: 50%; position: absolute; transform: translate(-50%, -50%);box-shadow: 5px 5px 15px #888888;">
-		<img src="/theme.pratilipi/ajax-loader.gif">
-	</span>
-</div>
+
 
 <template is="auto-binding" id="PageContent-Reader">
 
@@ -306,7 +302,6 @@
 			updateContent();
 			prefetchContent();
 			recordPageChangeEvent( 'PageLoad' );
-			jQuery( "#PageContent-Reader-LoadingGif" ).hide();
 		} catch( err ) {
 			console.log( 'Reader initialization failed with error - ' + '\"' + err.message + '\". Retrying in 100ms ...' );
 			window.setTimeout( initReader, 100 );
@@ -322,7 +317,7 @@
 	#PageContent-Reader-Content img {
 		width:100%;
 	}
-	
+
 	#PageContent-Reader-Overlay {
 		position: absolute;
 		top: 0px;
