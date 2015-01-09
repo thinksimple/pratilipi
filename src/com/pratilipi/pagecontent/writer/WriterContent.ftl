@@ -155,7 +155,8 @@
 	};
 
 	scope.goToReader = function( e ) {
-		window.location.href="${ pratilipiData.getReaderPageUrl() }";
+		if( !checkDirty() )
+			window.location.href="${ pratilipiData.getReaderPageUrl() }";
 	};
 
 	scope.performExit = function( e ) {

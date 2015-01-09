@@ -41,27 +41,28 @@
 		<#else>
 			<!-- jQuery 2.1.1 -->
 			<script src="//cdn-asia.pratilipi.com/third-party/jquery-2.1.1/jquery-2.1.1.min.js"></script>
-			<!-- Polymer 0.5.1 -->
-			<script src="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/webcomponentsjs/webcomponents.js"></script>
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-ajax/core-ajax.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-collapse/core-collapse.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-icon-button/core-icon-button.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-icons/core-icons.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-item/core-item.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-menu/core-menu.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-header-panel/core-header-panel.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-scroll-header-panel/core-scroll-header-panel.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/core-toolbar/core-toolbar.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/font-roboto/roboto.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-button/paper-button.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-dialog/paper-action-dialog.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-dialog/paper-dialog.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-fab/paper-fab.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-icon-button/paper-icon-button.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-item/paper-item.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-menu-button/paper-menu-button.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/paper-slider/paper-slider.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.1/polymer/polymer.html">
+			<!-- Polymer 0.5.2 -->
+			<script src="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/webcomponentsjs/webcomponents.js"></script>
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/polymer/polymer.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-ajax/core-ajax.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-collapse/core-collapse.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-header-panel/core-header-panel.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-icon-button/core-icon-button.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-icons/core-icons.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-item/core-item.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-menu/core-menu.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-scroll-header-panel/core-scroll-header-panel.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-scroll-threshold/core-scroll-threshold.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-toolbar/core-toolbar.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-button/paper-button.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-dialog/paper-action-dialog.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-dialog/paper-dialog.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-fab/paper-fab.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-icon-button/paper-icon-button.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-item/paper-item.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-menu-button/paper-menu-button.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-slider/paper-slider.html">
+			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-spinner/paper-spinner.html">
 		</#if>
 
 		<!-- Claymus Resources -->
@@ -93,7 +94,7 @@
 		<title>${ (page.getTitle() + " | Pratilipi") ! "Pratilipi" }</title>		
 		
 	</head>
-	<body <#if !basicMode>fullbleed layout vertical</#if>>
+	<body>
 		
 		<#if websiteWidgetHtmlListMap["HEADER"] ??>
 			<#list websiteWidgetHtmlListMap["HEADER"] as websiteWidgetHtml>
