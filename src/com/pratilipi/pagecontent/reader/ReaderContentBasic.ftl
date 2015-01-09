@@ -1,7 +1,9 @@
 <!-- PageContent :: Reader :: Start -->
 
 <div style="width: 100%; height: 100%;" id="PageContent-Reader-LoadingGif">
-	<span style="top: 45%; left: 45%; position: absolute;"><img src="/theme.pratilipi/ajax-loader.gif"></span>
+	<span style="top: 50%; left: 50%; position: absolute; transform: translate(-50%, -50%);box-shadow: 5px 5px 15px #888888;">
+		<img src="/theme.pratilipi/ajax-loader.gif">
+	</span>
 </div>
 
 <div class="bg-green">
