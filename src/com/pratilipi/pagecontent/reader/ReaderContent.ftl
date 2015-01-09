@@ -197,8 +197,12 @@
 				ajax.go();
 			
 			} else {
-				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
-				loading( false );
+				jQuery( '#PageContent-Reader-Content' ).fadeOut( 'fast', function() {
+						jQuery( '#PageContent-Reader-Content' ).html( contentArray[scope.pageNo] );
+						jQuery( '#PageContent-Reader-Content' ).fadeIn( 'fast', function() {
+								loading( false );
+						});
+				});
 				pageNoDisplayed = scope.pageNo;
 			}
 		}
@@ -258,8 +262,12 @@
 				loadImage( scope.pageNo );
 			
 			} else {
-				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
-				loading( false );
+				jQuery( '#PageContent-Reader-Content' ).fadeOut( 'fast', function() {
+						jQuery( '#PageContent-Reader-Content' ).html( contentArray[scope.pageNo] );
+						jQuery( '#PageContent-Reader-Content' ).fadeIn( 'fast', function() {
+								loading( false );
+						});
+				});
 				pageNoDisplayed = scope.pageNo;
 			}
 		}
@@ -299,17 +307,14 @@
 		ga( 'send', 'event', ${ pratilipiData.getId()?c }, eventAction, 'Page ' + scope.pageNo );
 	};
 
-	function initReader() {
-		try {
-			updateContent();
-			prefetchContent();
-			recordPageChangeEvent( 'PageLoad' );
-		} catch( err ) {
-			console.log( 'Reader initialization failed with error - ' + '\"' + err.message + '\". Retrying in 100ms ...' );
-			window.setTimeout( initReader, 100 );
-		}
-	}
-	initReader();
+
+	addEventListener( 'template-bound', function( e ) {
+		if( e.target != scope )
+			return;
+		updateContent();
+		prefetchContent();
+		recordPageChangeEvent( 'PageLoad' );
+	});
 	
 </script>
 

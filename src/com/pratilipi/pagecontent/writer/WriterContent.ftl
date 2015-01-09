@@ -371,28 +371,24 @@
 	}
 	
 	
-	function initWriter() {
-		try {
-			dialog = document.querySelector( '#PageContent-Writer-Options' );
-			transliterationDialog = document.querySelector( '#PageContent-Writer-TransliterationOptions' );
-			ajaxGet = document.querySelector( '#PageContent-Writer-Ajax-Get' );
-			ajaxPut = document.querySelector( '#PageContent-Writer-Ajax-Put' );
-			ckEditor = CKEDITOR.inline( 'PageContent-Writer-Content', {
-				on:{
-					'instanceReady': function() {
-						updateContent();
-						prefetchContent();
-					}, 'change': function() {
-						scope.isEditorDirty = ckEditor.checkDirty();
-					},
-				}
-			});
-		} catch( err ) {
-			console.log( 'Writer initialization failed with error - ' + '\"' + err.message + '\". Retrying in 100ms ...' );
-			window.setTimeout( initWriter, 100 );
-		}
-	}
-	initWriter();
+	addEventListener( 'template-bound', function( e ) {
+		if( e.target != scope )
+			return;
+		dialog = document.querySelector( '#PageContent-Writer-Options' );
+		transliterationDialog = document.querySelector( '#PageContent-Writer-TransliterationOptions' );
+		ajaxGet = document.querySelector( '#PageContent-Writer-Ajax-Get' );
+		ajaxPut = document.querySelector( '#PageContent-Writer-Ajax-Put' );
+		ckEditor = CKEDITOR.inline( 'PageContent-Writer-Content', {
+			on:{
+				'instanceReady': function() {
+					updateContent();
+					prefetchContent();
+				}, 'change': function() {
+					scope.isEditorDirty = ckEditor.checkDirty();
+				},
+			}
+		});
+	});
 	
 </script>
 

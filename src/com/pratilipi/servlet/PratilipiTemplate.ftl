@@ -96,7 +96,7 @@
 	</head>
 	<body <#if !basicMode>fullbleed layout vertical</#if>>
 		
-		<span id="Claymus-Loading">Loading ...</span>
+		<span id="Claymus-Loading">Loading...</span>
 
 		<#if websiteWidgetHtmlListMap["HEADER"] ??>
 			<#list websiteWidgetHtmlListMap["HEADER"] as websiteWidgetHtml>
