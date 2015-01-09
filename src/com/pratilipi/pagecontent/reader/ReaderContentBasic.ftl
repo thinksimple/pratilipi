@@ -140,11 +140,12 @@ function updateDisplay() {
 			return;
 		
 		if( contentArray[ pageNo ] == null){
-			jQuery( '#PratilipiContent-Reader-Content' ).html( "<div style='text-align:center'>Loading ...</div>" );
+			loading( true );
 			getPage( pageNo );
 		}
 		else {
 			jQuery( '#PratilipiContent-Reader-Content' ).html( contentArray[ pageNo ] );
+			loading( false );
 			pageNoDisplayed = pageNo;
 		}
 	}
@@ -241,11 +242,12 @@ function updateDisplay() {
 			return;
 		
 		if( contentArray[ pageNo ] == null){
-			jQuery( '#PratilipiContent-Reader-Content' ).html( "<div style='text-align:center'>Loading ...</div>" );
+			loading( true );
 			loadImage( pageNo );
 		}
 		else {
 			jQuery( '#PratilipiContent-Reader-Content' ).html( contentArray[ pageNo ] );
+			loading( false );
 			pageNoDisplayed = pageNo;
 		}
 	}

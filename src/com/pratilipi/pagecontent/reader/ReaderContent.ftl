@@ -191,13 +191,14 @@
 				return;
 			
 			} else if( contentArray[scope.pageNo] == null ) {
-				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
+				loading( true );
 				var ajax = document.querySelector( '#PageContent-Reader-Ajax' );
 				ajax.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI' } );
 				ajax.go();
 			
 			} else {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
+				loading( false );
 				pageNoDisplayed = scope.pageNo;
 			}
 		}
@@ -253,11 +254,12 @@
 				return;
 			
 			} else if( contentArray[scope.pageNo] == null ){
-				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
+				loading( true );
 				loadImage( scope.pageNo );
 			
 			} else {
 				document.querySelector( '#PageContent-Reader-Content' ).innerHTML = contentArray[scope.pageNo];
+				loading( false );
 				pageNoDisplayed = scope.pageNo;
 			}
 		}

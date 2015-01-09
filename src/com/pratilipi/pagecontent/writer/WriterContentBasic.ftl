@@ -210,11 +210,12 @@ function updateContent(){
 		return;
 	
 	if( contentArray[ pageNo ] == null){
-		jQuery( '#PratilipiContent-Writer-Content' ).html( "<div style='text-align:center'>Loading ...</div>" );
+		loading( true );
 		getPage( pageNo );
 	}
 	else {
 		jQuery( '#PratilipiContent-Writer-Content' ).html( contentArray[ pageNo ] );
+		loading( false );
 		pageNoDisplayed = pageNo;
 	}
 	

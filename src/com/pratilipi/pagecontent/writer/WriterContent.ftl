@@ -241,11 +241,12 @@
 			return;
 			
 		if( contentArray[scope.pageNo] == null ) {
-			document.querySelector( '#PageContent-Writer-Content' ).innerHTML = "<div style='text-align:center'>Loading ...</div>";
+			loading( true );
 			ajaxGet.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI' } );
 			ajaxGet.go();
 		} else {
 			document.querySelector( '#PageContent-Writer-Content' ).innerHTML = contentArray[scope.pageNo];
+			loading( false );
 			pageNoDisplayed = scope.pageNo;
 		}
 		
