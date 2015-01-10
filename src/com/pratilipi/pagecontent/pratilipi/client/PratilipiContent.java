@@ -72,7 +72,6 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 			UserPratilipiData userPratilipiData = new UserPratilipiData();
 			userPratilipiData.setPratilipiId( pratilipiData.getId() );
 			userPratilipiData.setReview( getHtmlFromEditor( "PageContent-Pratilipi-Review" ) );
-			Window.alert( "Pratilipi ID : " + userPratilipiData.getPratilipiId() );
 			
 			pratilipiService.addUserPratilipi(
 					new AddUserPratilipiRequest( userPratilipiData ),
