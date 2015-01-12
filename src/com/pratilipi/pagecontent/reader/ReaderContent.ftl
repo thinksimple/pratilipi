@@ -92,6 +92,13 @@
 	var contentArray = [];
 	var isCtrl = false;
 	
+	var pageStartTime;
+	var campaign = '${ pratilipiData.getType() }' + ":" + '${ pratilipiData.getId()?c }';
+	
+	
+	jQuery( window ).unload( function(){
+		recordPageTime( 'PageDurationInSec' );
+	} ); 
 	
 	jQuery( 'body' ).bind( 'contextmenu', function( event ) {
 		event.preventDefault();
@@ -143,12 +150,14 @@
 
 
 	scope.displayPage = function( e ) {
+		recordPageTime( 'PageDurationInSec' );
 		updateAndPrefetchContent();
 		recordPageChangeEvent( 'SetPage' );
 	};
 	
 	scope.displayPrevious = function( e ) {
 		if( scope.pageNo > 1 ) {
+			recordPageTime( 'PageDurationInSec' );
 			scope.pageNo--;
 			updateAndPrefetchContent();
 			recordPageChangeEvent( 'PreviousPage' );
@@ -157,6 +166,7 @@
 
 	scope.displayNext = function( e ) {
 		if( scope.pageNo < scope.pageCount ) {
+			recordPageTime( 'PageDurationInSec' );
 			scope.pageNo++;
 			updateAndPrefetchContent();
 			recordPageChangeEvent( 'NextPage' );
@@ -304,8 +314,21 @@
 	
 	
 	recordPageChangeEvent = function( eventAction ){
-		ga( 'send', 'event', ${ pratilipiData.getId()?c }, eventAction, 'Page ' + scope.pageNo );
+		pageStartTime = jQuery.now()
+		ga( 'send', 'event', campaign, eventAction, 'Page ' + scope.pageNo );
 	};
+	
+	recordPageTime = function( eventAction ){
+		var currentTime = jQuery.now();
+		var timeDiff = currentTime - pageStartTime;
+		var pageNumber = 'Page ' + scope.pageNo;
+		if( timeDiff > 100 )
+			timeDiff = 0;
+		
+		if( timeDiff < 900000 )
+			timeDiff = 900000;
+		ga( 'send', 'event', campaign, eventAction, pageNumber, parseInt( timeDiff/1000 ));
+	}
 
 
 	addEventListener( 'template-bound', function( e ) {

@@ -118,6 +118,8 @@ var pageNo = ${ pageNo };
 var pageCount = ${ pageCount };
 var pageNoDisplayed;
 var contentArray = [];
+var pageStartTime;		//Initialized in recordPageChangeEvent
+var campaign = '${ pratilipiData.getType() }' + ":" + '${ pratilipiData.getId()?c }';
 
 function setPageNo(){
 	jQuery( "#PratilipiContent-Reader-PageNumber" ).html( pageNo );
@@ -305,6 +307,7 @@ function updateDisplay() {
 
 function displayNextPage() {
 	if( pageNo < pageCount ){
+		recordPageTime( 'PageDurationInSec' );
 		pageNo = pageNo + 1;
 		pageNoDisplayed = 0;
 		updateDisplay();
@@ -316,6 +319,7 @@ function displayNextPage() {
 
 function displayPreviousPage() {
 	if( pageNo > 1 ){
+		recordPageTime( 'PageDurationInSec' );
 		pageNo = pageNo - 1;
 		pageNoDisplayed = 0;
 		updateDisplay();
@@ -338,13 +342,27 @@ function goToWriter(){
 
 
 function recordPageChangeEvent( eventAction ) {
+	pageStartTime = new Date();
 	var pageNumber = 'Page ' + pageNo;
-	ga( 'send', 'event', ${ pratilipiData.getId()?c }, eventAction, pageNumber );
+	ga( 'send', 'event', campaign, eventAction, pageNumber );
+}
+
+function recordPageTime( eventAction ){
+	var currentTime = new Date();
+	var timeDiff = currentTime.getTime() - pageStartTime.getTime();
+	var pageNumber = 'Page ' + pageNo;
+	if( timeDiff > 100 )
+		timeDiff = 0;
+	
+	if( timeDiff < 900000 )
+		timeDiff = 900000;
+	
+	ga( 'send', 'event', campaign, eventAction, pageNumber, parseInt( timeDiff/1000 ));
 }
 
 
 
-if( window.attachEvent) //for IE8 and below
+if( window.attachEvent) {//for IE8 and below
 	window.attachEvent( 'onload', function( event ){
 		recordPageChangeEvent( 'PageLoad' );
 		var isCtrl = false;
@@ -371,7 +389,12 @@ if( window.attachEvent) //for IE8 and below
 		setMinReaderWidth();
 		saveAutoBookmark();
 	});
-else 
+	
+	window.attachEvent( 'onunload', function( event ){
+		recordPageTime( 'PageDurationInSec' );
+	});
+}
+else {
 	window.addEventListener( 'load', function( event ){
 		recordPageChangeEvent( 'PageLoad' );
 		var isCtrl = false;
@@ -397,7 +420,11 @@ else
 		setMinReaderWidth();
 		saveAutoBookmark();
 	});
-
+	
+	window.addEventListener( 'unload', function( event ) {
+		recordPageTime( 'PageDurationInSec' );
+	});
+}
 </script>
 
 <!-- JAVASCRIPT END -->
