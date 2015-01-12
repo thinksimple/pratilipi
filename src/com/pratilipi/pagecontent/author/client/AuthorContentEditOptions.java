@@ -275,7 +275,7 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 						
 						@Override
 						public void onSuccess( SavePratilipiResponse response ) {
-							Window.Location.assign( response.getPratilipiData().getPageUrlAlias() );
+							Window.Location.assign( response.getPratilipiData().getWriterPageUrl() );
 						}
 						
 						@Override
