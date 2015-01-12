@@ -15,6 +15,7 @@ import com.claymus.data.transfer.User;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.claymus.service.shared.data.UserData;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
@@ -78,6 +79,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "userIdNameMap", userIdNameMap );
 		dataModel.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
 		dataModel.put( "showEditOptions", showEditOption );
+		dataModel.put( "showWriterOption", showEditOption && pratilipiData.getContentType() != PratilipiContentType.IMAGE );
 		dataModel.put( "showReviewedMessage",
 				userPratilipi != null
 				&& userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED );

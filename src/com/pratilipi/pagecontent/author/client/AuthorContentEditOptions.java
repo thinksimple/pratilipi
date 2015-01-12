@@ -19,6 +19,7 @@ import com.google.gwt.user.client.rpc.SerializationStreamFactory;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pratilipi.commons.client.AuthorDataInputView;
 import com.pratilipi.commons.client.AuthorDataInputViewModalImpl;
@@ -80,7 +81,7 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 
 	
 	// New Pratilipi option widgets
-	private final Anchor newPratilipiAnchor = new Anchor( "Add New Content" );
+	private final Label newPratilipiAnchor = new Label( "Add New Content" );
 	private final Button savePratilipiDataButton = new Button( "Save" );
 	private final PratilipiDataInputView pratilipiDataInputView =
 			new PratilipiDataInputViewModalImpl();
@@ -150,6 +151,7 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 		// New Pratilipi option widgets
 		if( addNewContentPanel != null ){
 			newPratilipiAnchor.addClickHandler( this );
+			newPratilipiAnchor.removeStyleName( "gwt-Label" );
 			savePratilipiDataButton.addClickHandler( this );
 	
 			addNewContentPanel.add( newPratilipiAnchor );

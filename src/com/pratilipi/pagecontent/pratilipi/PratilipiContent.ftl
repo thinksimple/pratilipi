@@ -47,11 +47,11 @@
 			</#if>
 				
 			<button type="button" class="btn btn-success" onclick="window.location.href='${ pratilipiData.getReaderPageUrl() }'">Read For Free</button>
-			<#if showEditOptions>
-				<button type="button" class="btn btn-info" onclick="window.location.href='${ pratilipiData.getWriterPageUrl() }'">Edit This ${ pratilipiData.getType().getName() }</button>
+			<#if showWriterOption>
+				<button type="button" class="btn btn-primary" onclick="window.location.href='${ pratilipiData.getWriterPageUrl() }'">Edit This ${ pratilipiData.getType().getName() }</button>
 			</#if>
 			<#if showReviewedMessage>
-				<button type="button" class="btn btn-info" onclick="window.location.href='#Reviews'">
+				<button type="button" class="btn btn-primary" onclick="window.location.href='#Reviews'">
 					<span class="glyphicon glyphicon-ok"></span> Reviewed
 				</button>
 			</#if>

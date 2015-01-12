@@ -59,7 +59,7 @@
 				</tr>
 			</table>
 			<#if showEditOption>
-				<div id="PageContent-Author-NewContent" style="width: 100%; text-align:center;font-weight: bold;"></div>
+				<div id="PageContent-Author-NewContent" class="btn btn-info" style="width: 100%;  color: black; text-align:center;font-weight: bold; cursor: pointer;"></div>
 			</#if>
 		</div>
 		
