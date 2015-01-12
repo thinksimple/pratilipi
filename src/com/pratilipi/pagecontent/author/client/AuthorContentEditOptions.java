@@ -55,6 +55,8 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 			RootPanel.get( "PageContent-Author-Image" );
 	private final RootPanel authorImageEditOptionsPanel =
 			RootPanel.get( "PageContent-Author-Image-EditOptions" );
+	private final RootPanel addNewContentPanel = 
+			RootPanel.get( "PageContent-Author-NewContent" );
 	
 	
 	private final Dropdown dropdown = new Dropdown();
@@ -78,7 +80,7 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 
 	
 	// New Pratilipi option widgets
-	private final Anchor newPratilipiAnchor = new Anchor( "New Pratilipi" );
+	private final Anchor newPratilipiAnchor = new Anchor( "Add New Content" );
 	private final Button savePratilipiDataButton = new Button( "Save" );
 	private final PratilipiDataInputView pratilipiDataInputView =
 			new PratilipiDataInputViewModalImpl();
@@ -146,15 +148,16 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 
 		
 		// New Pratilipi option widgets
-		newPratilipiAnchor.addClickHandler( this );
-		savePratilipiDataButton.addClickHandler( this );
-
-		dropdown.add( newPratilipiAnchor );
-		pratilipiDataInputView.add( savePratilipiDataButton );
-		RootPanel.get().add( pratilipiDataInputView );
-		
-		savePratilipiDataButton.setStyleName( "btn btn-success" );
-
+		if( addNewContentPanel != null ){
+			newPratilipiAnchor.addClickHandler( this );
+			savePratilipiDataButton.addClickHandler( this );
+	
+			addNewContentPanel.add( newPratilipiAnchor );
+			pratilipiDataInputView.add( savePratilipiDataButton );
+			RootPanel.get().add( pratilipiDataInputView );
+			
+			savePratilipiDataButton.setStyleName( "btn btn-success" );
+		}
 		
 		authorNamePanel.getElement().setInnerHTML( "" );
 		authorNamePanel.add( dropdown );

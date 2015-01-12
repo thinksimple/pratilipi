@@ -58,6 +58,9 @@
 					<td style="text-align:center;">${ articleDataList?size }</td>
 				</tr>
 			</table>
+			<#if showEditOption>
+				<div id="PageContent-Author-NewContent" style="width: 100%; text-align:center;font-weight: bold;"></div>
+			</#if>
 		</div>
 		
 	</div>
