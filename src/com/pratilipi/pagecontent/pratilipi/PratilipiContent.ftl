@@ -39,6 +39,11 @@
 				</#list>
 			</h5>
 			
+			<h6>
+				<span>Listed On : ${ pratilipiData.getListingDate()?date } / </span>
+				<span>Last Updated On : ${ pratilipiData.getLastUpdated()?date }</span>
+			</h6>
+			
 			<div id="PageContent-Pratilipi-Summary" style="margin-top:20px; margin-bottom:10px;" itemprop="description">
 				${ pratilipiData.getSummary()! }
 			</div>

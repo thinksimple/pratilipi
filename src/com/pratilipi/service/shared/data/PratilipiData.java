@@ -60,6 +60,7 @@ public class PratilipiData implements IsSerializable {
 	private boolean hasPublicationYear;
 	
 	private Date listingDate;
+	private Date LastUpdated;
 
 	
 	private String summary;
@@ -349,10 +350,19 @@ public class PratilipiData implements IsSerializable {
 		this.listingDate = listingDate;
 	}
 
+	public Date getLastUpdated(){
+		return this.LastUpdated;
+	}
+	
+	public void setLastUpdated( Date lastUpdated ){
+		this.LastUpdated = lastUpdated;
+	}
+
 	public String getSummary() {
 		return summary;
 	}
-
+	
+	
 	public void setSummary( String summary ) {
 		this.summary = summary;
 		this.hasSummary = true;
