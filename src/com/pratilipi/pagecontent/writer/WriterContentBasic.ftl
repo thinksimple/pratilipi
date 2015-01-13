@@ -7,8 +7,8 @@
 		<tr>
 			<td style="width: 90%;">
 				<div style="margin-left: 5px; margin-right:5px;">
-					<div id="PratilipiContent-WriterBasic-ExitButton" class="writer-Button" onclick="window.location.href='${ exitUrl ! pratilipiData.getPageUrl() }'" style="float: left; margin-right: 10px; padding-top: 19px;" >
-						<img src="/theme.pratilipi/images/left.png" / title="Exit">
+					<div id="PratilipiContent-WriterBasic-ExitButton" class="writer-Button" onclick="exitReader();" style="float: left; margin-right: 10px; padding-top: 19px;" >
+						<img src="/theme.pratilipi/images/left.png" title="Exit" />
 					</div>
 					<p style="margin : 0px; font-color: white;font-size: 1.3em; line-height: 64px;">
 						${ pratilipiData.getTitle() }
@@ -17,7 +17,7 @@
 			</td>
 			<td valign="middle" style="margin: 0px; position:relative;">
 				<div style="float: right; margin-right: 10px; position:relative;text-align: right; width: 200px;">
-					<a href='#' id="PratilipiContent-writer-dropdown" style="color: white; position:relative; text-decoration: none;">
+					<a href='#' id="PratilipiContent-writer-dropdown" onclick="dropDown( event, this );" style="color: white; position:relative; text-decoration: none;">
 						<img src="/theme.pratilipi/images/buttons/menu-white.png" title="Options" />
 					</a>
 					<ul id="PratilipiContent-writer-menu" style="padding-left: 0px; position:absolute; width:100%; z-index:1; ">
@@ -26,7 +26,7 @@
 						<li class="menuItem" onclick="addPageBefore();">Add Page Before This Page</li>
 						<li class="menuItem" onclick="addPageAfter();">Add Page  After This Page</li>
 						<li class="menuItem" onclick="deletePage();">Delete Page</li>
-						<div id="PratilipiContent-writer-Languages" style="position: relative;">
+						<div id="PratilipiContent-writer-Languages"  onclick="subMenu( event, this );" style="position: relative;">
 							<li id="PratilipiContent-writer-Languages-Text" class="menuItem">Typing Language</li>
 							<ul id="PratilipiContent-writer-Languages-SubMenu" style="position: absolute; width: 60%; top: 0px; right: 100%;">
 								<li class="subMenuItem" onclick="enableTransliteration( this );">Gujarati</li>
@@ -141,11 +141,10 @@ var contentArray = [];
 
 var ckEditor; // Initialized in initWriter()
 var isEditorDirty;
-CKEDITOR.disableAutoInline = true;
 
 function initWriter() {
 	try {
-		ckEditor = CKEDITOR.inline( document.getElementById( 'PratilipiContent-Writer-Content' ) ); 
+		ckEditor = CKEDITOR.replace( document.getElementById( 'PratilipiContent-Writer-Content' ), { height: 450 } ); 
 		CKEDITOR.config.toolbar = [
 				['Source','Format','Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],
 				['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Outdent','Indent'],
@@ -171,21 +170,21 @@ function initWriter() {
 }
 initWriter();
 
-var dropDown = document.getElementById( "PratilipiContent-writer-dropdown" );
-var subMenu = document.getElementById( "PratilipiContent-writer-Languages" );
-dropDown.addEventListener('click', function( event ) {
+
+
+function dropDown( event, object ){
 	var event = event || window.event;
     event.stopPropagation();
-    jQuery( this ).parent().find( ".menuItem" ).slideToggle();
+    jQuery( object ).parent().find( ".menuItem" ).slideToggle();
     if( jQuery( "#PratilipiContent-writer-Languages-SubMenu" ).find( ".subMenuItem" ).is( ":visible" ))
     	jQuery( "#PratilipiContent-writer-Languages-SubMenu" ).find( ".subMenuItem" ).slideToggle();
-});
-subMenu.addEventListener( 'click', function( event ){
+}
+
+function subMenu( event, object ){
 	var event = event || window.event;
 	event.stopPropagation();
-	jQuery( this ).find( ".subMenuItem" ).slideToggle();
-});
-
+	jQuery( object ).find( ".subMenuItem" ).slideToggle();
+}
 
 /* AJAX FUNCTIONS START */ 
 
@@ -235,7 +234,6 @@ function getPage( pageNumber ){
 		handleAs: "json",
 		data: 'pratilipiId=${ pratilipiData.getId()?c }&pageNo=' + pageNumber + '&contentType=PRATILIPI',
 		beforeSend: function( data, object ){
-			setDisabled( true );
 		},
 		success: function( response, status, xhr ) {
 			handleAjaxGetResponse( response );
@@ -255,7 +253,6 @@ function updateDisplay(){
 	updateContent();
 	setPageNo();
 	setPageCount();
-	setDisabled( false );
 	jQuery( "#PratilipiContent-WriterBasic-SaveButton" ).removeClass( "bg-red" );
 	jQuery( "#PratilipiContent-WriterBasic-SaveButton" ).removeClass( "bg-green" );
 	prefetchContent();
@@ -278,7 +275,7 @@ function savePage(){
 				pageContent:ckEditor.getData() 
 			}),
 		beforeSend: function( data, object ){
-			setDisabled( true );
+			setReadOnly( true );
 		},
 		success: function( response, status, xhr ) {
 			jQuery( "#PratilipiContent-WriterBasic-SaveButton" ).removeClass( "bg-red" );
@@ -292,6 +289,7 @@ function savePage(){
 			alert( status + " : " + error );
 		},
 		complete: function( event, response ){
+			setReadOnly( false );
 			console.log( response );
 		}
 	});
@@ -317,7 +315,7 @@ function addPageBefore(){
 					insertNew: true 
 				}),
 			beforeSend: function( data, object ){
-				setDisabled( true );
+				setReadOnly( true );
 			},
 			success: function( response, status, xhr ) {
 				handleAjaxPutResponse( response );
@@ -326,6 +324,7 @@ function addPageBefore(){
 				alert( status + " : " + error );
 			},
 			complete: function( event, response ){
+				setReadOnly( false );
 				console.log( response );
 			}
 		});
@@ -352,7 +351,7 @@ function addPageAfter(){
 					insertNew: true
 				}),
 			beforeSend: function( data, object ){
-				setDisabled( true );
+				setReadOnly( true );
 			},
 			success: function( response, status, xhr ) {
 				handleAjaxPutResponse( response );
@@ -361,6 +360,7 @@ function addPageAfter(){
 				alert( status + " : " + error );
 			},
 			complete: function( event, response ){
+				setReadOnly( false );
 				console.log( response );
 			}
 		});
@@ -392,6 +392,7 @@ function deletePage(){
 				alert( status + " : " + error );
 			},
 			complete: function( event, response ){
+				setReadOnly( false );
 				console.log( response );
 			}
 		});
@@ -455,18 +456,23 @@ function displayPreviousPage(){
 /* AJAX FUNCTIONS END */
 
 
+function exitReader(){
+	if( isEditorDirty && 
+			!confirm( "You haven't saved your changes yet ! Press 'Cancel' to go back and save your changes. Press 'Ok' to discard your changes and continue." )) {
+		return;
+	} else {
+		window.location.href="${ exitUrl ! pratilipiData.getPageUrl() }";
+	} 
+}
+
 /* SAVES PRATILIPI ID AND PAGE NUMBER IN COOKIE */
 function saveAutoBookmark(){
 	setCookie( '${ pageNoCookieName }', ${ pageNo }, 365 );
 }
 
-function setDisabled( enabled ){
-	jQuery( "#PratilipiContent-WriterBasic-ExitButton").attr('disabled',enabled);
-	jQuery( "#PratilipiContent-writer-dropdown").attr('disabled', enabled);
-	jQuery( "#Pratilipi-Write-Basic").attr('disabled',enabled);
-	jQuery( "#PratilipiContent-WriterBasic-NextPageButton").attr('disabled',enabled);
-	jQuery( "#PratilipiContent-WriterBasic-PreviousPageButton").attr('disabled',enabled);
-	jQuery( "#PratilipiContent-WriterBasic-SaveButton").attr('disabled',enabled);
+function setReadOnly( bool ){
+	loading( bool );
+	ckEditor.setReadOnly( bool );
 }
 
 function goToReader(){
@@ -559,5 +565,5 @@ if( window.attachEvent){ //for IE8 and below
 }
 </script>
 
-<!-- JAVASCRIPT END ->
+<!-- JAVASCRIPT END -->
 <!-- PageContent :: Writer :: End -->
