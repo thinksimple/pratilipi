@@ -350,7 +350,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 		} else if( event.getSource() == publishAnchor ) {
 			publishAnchor.setEnabled( false );
 			PratilipiData pratilipiData = new PratilipiData( this.pratilipiData.getId() );
-			pratilipiData.setState( PratilipiState.SUBMITTED );
+			pratilipiData.setState( PratilipiState.PUBLISHED );
 			pratilipiService.savePratilipi(
 					new SavePratilipiRequest( pratilipiData ),
 					new AsyncCallback<SavePratilipiResponse>() {
