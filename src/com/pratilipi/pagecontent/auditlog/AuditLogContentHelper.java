@@ -34,8 +34,7 @@ public class AuditLogContentHelper extends PageContentHelper<
 		};
 	}
 	
-	
-	public static AuditLogContent newAuthorContent( Long auditLogId ) {
+	public static AuditLogContent newAuditLogContent( Long auditLogId ) {
 		return new AuditLogContentEntity( auditLogId );
 	}
 	
