@@ -38,6 +38,7 @@ import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
+import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -383,12 +384,16 @@ public class PratilipiContentHelper extends PageContentHelper<
 		if( pratilipiData.hasState() )
 			pratilipi.setState( pratilipiData.getState() );
 
+		//TODO : CHANGE THIS ASAP
+		Long currentUserId = pratilipiHelper.getCurrentUserId();
+		AuthorData authorData = pratilipiHelper.createAuthorData( pratilipi.getAuthorId() );
 		
 		if( pratilipiData.hasState()
 				&& pratilipiData.getState() != PratilipiState.DRAFTED
 				&& pratilipiData.getState() != PratilipiState.SUBMITTED
 				&& pratilipiData.getState() != PratilipiState.DELETED
-				&& !hasRequestAccessToPublishPratilipiData( request, pratilipi ) )
+				&& !hasRequestAccessToPublishPratilipiData( request, pratilipi ) 
+				&& !currentUserId.equals( authorData.getUserId() ) )	//TO GIVE PUBLISH ACCESS TO AUTHORS
 			throw new InsufficientAccessException();
 		
 		
