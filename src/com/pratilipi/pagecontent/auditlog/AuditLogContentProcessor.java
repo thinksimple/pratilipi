@@ -19,6 +19,7 @@ import com.claymus.pagecontent.PageContentProcessor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.data.access.gae.PratilipiEntity;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
@@ -45,32 +46,32 @@ public class AuditLogContentProcessor extends PageContentProcessor<AuditLogConte
 		com.pratilipi.data.access.DataAccessor pratilipiDataAccessor = com.pratilipi.data.access.DataAccessorFactory.getDataAccessor( request );
 		
 		DataListCursorTuple<AuditLog> auditLogListCursorTuple = 
-				dataAccessor.getAuditLogList( null, 20 );
+				dataAccessor.getAuditLogList( null, 100 );
 		List<AuditLog> auditLogList = auditLogListCursorTuple.getDataList();
 		
-		 Map<Long, PratilipiData> newEventData = new HashMap<>();
-		 Map<Long, PratilipiData> oldEventData = new HashMap<>();
-		 Map<Long, User> userList = new HashMap<>();
+		 Map<String, PratilipiData> newEventData = new HashMap<>();
+		 Map<String, PratilipiData> oldEventData = new HashMap<>();
+		 Map<String, User> userList = new HashMap<>();
 		 for( AuditLog auditLog : auditLogList ){
-			 AccessToken accessToken = dataAccessor.getAccessToken( auditLog.getAccessId() );
+			 AccessToken accessToken = dataAccessor.getAccessTokenById( auditLog.getAccessId() );
 			 User user = dataAccessor.getUser( accessToken.getUserId() );
-			 userList.put( auditLog.getId(), user );
+			 userList.put( auditLog.getId().toString(), user );
 			 
-			 Pratilipi newPratilipi = gson.fromJson( auditLog.getEventDataNew(), Pratilipi.class );
-			 Pratilipi oldPratilipi = gson.fromJson( auditLog.getEventDataOld(), Pratilipi.class );
+			 Pratilipi newPratilipi = gson.fromJson( auditLog.getEventDataNew(), PratilipiEntity.class );
+			 Pratilipi oldPratilipi = gson.fromJson( auditLog.getEventDataOld(), PratilipiEntity.class );
 			 
 			 Author newAuthor = pratilipiDataAccessor.getAuthor( newPratilipi.getAuthorId() );
 			 Author oldAuthor = null;
-			 if( newPratilipi.getAuthorId().equals( oldPratilipi.getAuthorId() ))
+			 if( oldPratilipi != null && newPratilipi.getAuthorId().equals( oldPratilipi.getAuthorId() ))
 				 oldAuthor = newAuthor;
-			 else
+			 else if( auditLog.getEventDataOld().length() > 2 )
 				 oldAuthor = pratilipiDataAccessor.getAuthor( oldPratilipi.getAuthorId() );
 			 
 			 Language newLanguage = pratilipiDataAccessor.getLanguage( newPratilipi.getLanguageId() );
 			 Language oldLanguage = null;
-			 if( newPratilipi.getLanguageId().equals( oldPratilipi.getLanguageId() ))
+			 if( oldPratilipi != null && newPratilipi.getLanguageId().equals( oldPratilipi.getLanguageId() ))
 				 oldLanguage = newLanguage;
-			 else
+			 else if( auditLog.getEventDataOld().length() > 2 )
 				 oldLanguage = pratilipiDataAccessor.getLanguage( oldPratilipi.getLanguageId() );
 			 
 			 List<PratilipiGenre> newnPratilipiGenreList = pratilipiDataAccessor.getPratilipiGenreList( newPratilipi.getId() );
@@ -78,21 +79,26 @@ public class AuditLogContentProcessor extends PageContentProcessor<AuditLogConte
 			 for( PratilipiGenre pratilipiGenre : newnPratilipiGenreList )
 				 newGenreList.add( pratilipiDataAccessor.getGenre( pratilipiGenre.getGenreId() ));
 			 
-			 List<PratilipiGenre> oldPratilipiGenreList = pratilipiDataAccessor.getPratilipiGenreList( oldPratilipi.getId() );
-			 List<Genre> oldGenreList = new ArrayList<>( oldPratilipiGenreList.size() );
-			 for( PratilipiGenre pratilipiGenre : oldPratilipiGenreList )
-				 oldGenreList.add( pratilipiDataAccessor.getGenre( pratilipiGenre.getGenreId() ));
-			 
 			 PratilipiData newPratilipiData = pratilipiHelper.createPratilipiData( newPratilipi, newLanguage, newAuthor, newGenreList );
-			 newEventData.put( auditLog.getId(), newPratilipiData );
+			 newEventData.put( auditLog.getId().toString(), newPratilipiData );
 			 
-			 PratilipiData oldPratilipiData = pratilipiHelper.createPratilipiData( oldPratilipi, oldLanguage, oldAuthor, oldGenreList );
-			 oldEventData.put( auditLog.getId(), oldPratilipiData );
+			 if( auditLog.getEventDataOld().length() > 2 ){
+				 List<Genre> oldGenreList = null;
+				 List<PratilipiGenre> oldPratilipiGenreList = pratilipiDataAccessor.getPratilipiGenreList( oldPratilipi.getId() );
+				 oldGenreList = new ArrayList<>( oldPratilipiGenreList.size() );
+				 for( PratilipiGenre pratilipiGenre : oldPratilipiGenreList )
+					 oldGenreList.add( pratilipiDataAccessor.getGenre( pratilipiGenre.getGenreId() ));
+
+				 PratilipiData oldPratilipiData = pratilipiHelper.createPratilipiData( oldPratilipi, oldLanguage, oldAuthor, oldGenreList );
+				 oldEventData.put( auditLog.getId().toString(), oldPratilipiData );
+			 }
+			 
 			 
 		 }
 		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
+		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		dataModel.put( "auditLogList", auditLogList );
 		dataModel.put( "userList", userList );
 		dataModel.put( "newEventData", newEventData );
