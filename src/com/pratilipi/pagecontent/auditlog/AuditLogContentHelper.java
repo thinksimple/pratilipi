@@ -34,8 +34,8 @@ public class AuditLogContentHelper extends PageContentHelper<
 		};
 	}
 	
-	public static AuditLogContent newAuditLogContent( Long auditLogId ) {
-		return new AuditLogContentEntity( auditLogId );
+	public static AuditLogContent newAuditLogContent() {
+		return new AuditLogContentEntity();
 	}
 	
 	public static boolean hasRequestAccessToReadAuditLogContent( HttpServletRequest request, AuditLog auditLog ) {

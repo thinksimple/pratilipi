@@ -35,6 +35,7 @@ import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.pagecontent.auditlog.AuditLogContentHelper;
 import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.genres.GenresContentHelper;
@@ -48,7 +49,6 @@ import com.pratilipi.pagecontent.reader.ReaderContentHelper;
 import com.pratilipi.pagecontent.search.SearchContentHelper;
 import com.pratilipi.pagecontent.uploadcontent.UploadContentFactory;
 import com.pratilipi.pagecontent.writer.WriterContentHelper;
-import com.pratilipi.service.shared.data.AuthorData;
 
 
 @SuppressWarnings("serial")
@@ -70,6 +70,7 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( GenresContentHelper.class );
 		PageContentRegistry.register( SearchContentHelper.class );
 		PageContentRegistry.register( UploadContentFactory.class );
+		PageContentRegistry.register( AuditLogContentHelper.class );
 	}
 
 
