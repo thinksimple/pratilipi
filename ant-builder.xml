@@ -3,12 +3,12 @@
 
   <target name="all">
 
-  	<delete dir="war/theme.default"/>
+    <delete dir="war/theme.default"/>
     <copy todir="war/theme.default">
       <fileset dir="claymus/war/theme.default"/>
     </copy>
 
-  	<delete dir="war/polymer"/>
+    <delete dir="war/polymer"/>
     <copy todir="war/polymer" flatten="true">
       <fileset dir="claymus/src/com/claymus/pagecontent" includes="**/*.html"/>
       <fileset dir="src/com/pratilipi/pagecontent" includes="**/*.html"/>
