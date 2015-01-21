@@ -1,7 +1,5 @@
 <!-- PageContent :: Writer :: Start -->
 
-<script src="//cdn-asia.pratilipi.com/third-party/ckeditor-4.4.5-full/ckeditor.js" charset="utf-8"></script>
-
 <div class="bg-green">	
 	<table style="width: 100%;color: white; height: 64px;">
 		<tr>

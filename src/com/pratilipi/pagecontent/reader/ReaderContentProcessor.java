@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.FreeMarkerUtil;
+import com.claymus.commons.shared.ClaymusResource;
+import com.claymus.commons.shared.Resource;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
@@ -39,6 +41,27 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 	private static final String COOKIE_CONTENT_SIZE_IMAGE = "reader_size_image";
 	
 	
+	@Override
+	public Resource[] getDependencies( ReaderContent readerContent, HttpServletRequest request ) {
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		if( pratilipiHelper.isModeBasic() )
+			return new Resource[]{
+					ClaymusResource.JQUERY_1,
+		};
+		else
+			return new Resource[] {
+					ClaymusResource.JQUERY_2,
+					ClaymusResource.POLYMER,
+					ClaymusResource.POLYMER_CORE_AJAX,
+					ClaymusResource.POLYMER_CORE_ICON_BUTTON,
+					ClaymusResource.POLYMER_CORE_TOOLBAR,
+					ClaymusResource.POLYMER_PAPER_DIALOG,
+					ClaymusResource.POLYMER_PAPER_FAB,
+					ClaymusResource.POLYMER_PAPER_ICON_BUTTON,
+					ClaymusResource.POLYMER_PAPER_SLIDER,
+		};
+	}
+
 	@Override
 	public String generateTitle( ReaderContent readerContent, HttpServletRequest request ) {
 		String pratilipiIdStr = request.getParameter( "id" );

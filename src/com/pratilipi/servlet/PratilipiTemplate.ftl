@@ -41,39 +41,23 @@
 		<#else>
 			<!-- jQuery 2.1.1 -->
 			<script src="//cdn-asia.pratilipi.com/third-party/jquery-2.1.1/jquery-2.1.1.min.js"></script>
-			<!-- Polymer 0.5.2 -->
-			<script src="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/webcomponentsjs/webcomponents.js"></script>
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/polymer/polymer.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-ajax/core-ajax.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-collapse/core-collapse.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-header-panel/core-header-panel.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-icon-button/core-icon-button.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-icons/core-icons.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-item/core-item.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-menu/core-menu.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-scroll-header-panel/core-scroll-header-panel.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-scroll-threshold/core-scroll-threshold.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/core-toolbar/core-toolbar.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-button/paper-button.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-dialog/paper-action-dialog.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-dialog/paper-dialog.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-fab/paper-fab.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-icon-button/paper-icon-button.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-item/paper-item.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-menu-button/paper-menu-button.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-slider/paper-slider.html">
-			<link rel="import" href="//cdn-asia.pratilipi.com/third-party/polymer-0.5.2/paper-spinner/paper-spinner.html">
 		</#if>
+
+
+		<#list resourceTagList as resourceTag>
+			${ resourceTag }
+		</#list>
+		
 
 		<!-- Claymus Resources -->
 		<#if basicMode>
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
-			<script type="text/javascript" language="javascript" src="/theme.default/script.js" defer></script>
-			<script type="text/javascript" language="javascript" src="/theme.default/script.basicmode.js" defer></script>
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?09012015">
+			<script type="text/javascript" language="javascript" src="/theme.default/script.js?09012015" defer></script>
+			<script type="text/javascript" language="javascript" src="/theme.default/script.basicmode.js?09012015" defer></script>
 		<#else>
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.css">
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.polymer.css">
-			<script type="text/javascript" language="javascript" src="/theme.default/script.js" defer></script>
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?09012015">
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.polymer.css?09012015">
+			<script type="text/javascript" language="javascript" src="/theme.default/script.js?09012015" defer></script>
 		</#if>
 
 		<!-- Pratilipi Resources -->
@@ -91,7 +75,7 @@
 			<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
 		</#if>
 
-		<title>${ (page.getTitle() + " | Pratilipi") ! "Pratilipi" }</title>
+		<title>${ (page.getTitle() + " | Pratilipi") ! "Pratilipi" }</title>		
 		
 		<!-- For Google Analytics tracking -->
 		<script language="javascript">
@@ -111,26 +95,44 @@
 				ga('send', 'pageview');
 			</#if>
 		</script>		
-		
-	</head>
-	<body <#if !basicMode>fullbleed layout vertical</#if>>
-		
-		<span id="Claymus-Loading">Loading...</span>
 
-		<#if websiteWidgetHtmlListMap["HEADER"] ??>
-			<#list websiteWidgetHtmlListMap["HEADER"] as websiteWidgetHtml>
-				${ websiteWidgetHtml }
-			</#list>
-		</#if>
+	</head>
+	<#if basicMode>
+		<body>
+			<span id="Claymus-Loading">Loading...</span>
+			<#if websiteWidgetHtmlListMap["HEADER"] ??>
+				<#list websiteWidgetHtmlListMap["HEADER"] as websiteWidgetHtml>
+					${ websiteWidgetHtml }
+				</#list>
+			</#if>
+	<#else>
+		<body fullbleed layout vertical>
+			<span id="Claymus-Loading">Loading...</span>
+			<template unresolved is="auto-binding" id="Polymer">
+				<core-scroll-header-panel flex id="Polymer-Window">
+					<#if websiteWidgetHtmlListMap["HEADER"] ??>
+						<core-toolbar>
+							<div flex>
+								Header
+							</div>
+						</core-toolbar>
+					</#if>
+	</#if>
 		
+
 		<#list pageContentHtmlList as pageContentHtml>
 			${ pageContentHtml }
 		</#list>
-		
+	
 		<#if websiteWidgetHtmlListMap["FOOTER"] ??>
 			<#list websiteWidgetHtmlListMap["FOOTER"] as websiteWidgetHtml>
 				${ websiteWidgetHtml }
 			</#list>
+		</#if>
+			
+		<#if !basicMode>
+				</core-scroll-header-panel>
+			</template>
 		</#if>
 
 	</body>

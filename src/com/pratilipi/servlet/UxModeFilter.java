@@ -130,7 +130,7 @@ public class UxModeFilter implements Filter {
 		}
 		
 		
-		if( !basicMode ) {
+		if( !basicMode && !request.getRequestURI().equals( "/pages" ) ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 			Page page = dataAccessor.getPage( request.getRequestURI() );
 			basicMode = page == null

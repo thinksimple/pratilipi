@@ -1,3 +1,4 @@
+
 package com.pratilipi.pagecontent.writer;
 
 import java.io.IOException;
@@ -10,6 +11,8 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.FreeMarkerUtil;
+import com.claymus.commons.shared.ClaymusResource;
+import com.claymus.commons.shared.Resource;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
@@ -40,7 +43,32 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 	
 	
 	@Override
-	public String generateTitle( WriterContent readerContent, HttpServletRequest request ) {
+	public Resource[] getDependencies( WriterContent writerContent, HttpServletRequest request ) {
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		if( pratilipiHelper.isModeBasic() )
+			return new Resource[]{
+					ClaymusResource.JQUERY_1,
+					ClaymusResource.CKEDITOR,
+			};
+		else
+			return new Resource[] {
+					ClaymusResource.JQUERY_2,
+					ClaymusResource.CKEDITOR,
+					ClaymusResource.POLYMER,
+					ClaymusResource.POLYMER_CORE_AJAX,
+					ClaymusResource.POLYMER_CORE_ICON_BUTTON,
+					ClaymusResource.POLYMER_CORE_TOOLBAR,
+					ClaymusResource.POLYMER_PAPER_ACTION_DIALOG,
+					ClaymusResource.POLYMER_PAPER_BUTTON,
+					ClaymusResource.POLYMER_PAPER_DIALOG,
+					ClaymusResource.POLYMER_PAPER_FAB,
+					ClaymusResource.POLYMER_PAPER_ICON_BUTTON,
+					ClaymusResource.POLYMER_PAPER_SLIDER,
+			};
+	}
+
+	@Override
+	public String generateTitle( WriterContent writerContent, HttpServletRequest request ) {
 		String pratilipiIdStr = request.getParameter( "id" );
 		Long pratilipiId = Long.parseLong( pratilipiIdStr );
 
@@ -53,7 +81,7 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 	}
 	
 	@Override
-	public String generateHtml( WriterContent readerContent, HttpServletRequest request )
+	public String generateHtml( WriterContent writerContent, HttpServletRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		String pratilipiIdStr = request.getParameter( "id" );
