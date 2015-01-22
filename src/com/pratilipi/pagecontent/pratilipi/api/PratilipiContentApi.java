@@ -1,4 +1,4 @@
-package com.pratilipi.pagecontent.pratilipi;
+package com.pratilipi.pagecontent.pratilipi.api;
 
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Bind;
@@ -8,10 +8,11 @@ import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.pratilipi.commons.shared.PratilipiContentType;
-import com.pratilipi.pagecontent.pratilipi.shared.GetPratilipiContentRequest;
-import com.pratilipi.pagecontent.pratilipi.shared.GetPratilipiContentResponse;
-import com.pratilipi.pagecontent.pratilipi.shared.PutPratilipiContentRequest;
-import com.pratilipi.pagecontent.pratilipi.shared.PutPratilipiContentResponse;
+import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
+import com.pratilipi.pagecontent.pratilipi.api.shared.GetPratilipiContentRequest;
+import com.pratilipi.pagecontent.pratilipi.api.shared.GetPratilipiContentResponse;
+import com.pratilipi.pagecontent.pratilipi.api.shared.PutPratilipiContentRequest;
+import com.pratilipi.pagecontent.pratilipi.api.shared.PutPratilipiContentResponse;
 
 
 @SuppressWarnings("serial")

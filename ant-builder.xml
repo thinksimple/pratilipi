@@ -10,6 +10,7 @@
 
     <delete dir="war/polymer"/>
     <copy todir="war/polymer" flatten="true">
+      <fileset dir="claymus/src/com/claymus/commons" includes="**/*.html"/>
       <fileset dir="claymus/src/com/claymus/pagecontent" includes="**/*.html"/>
       <fileset dir="src/com/pratilipi/pagecontent" includes="**/*.html"/>
     </copy>
