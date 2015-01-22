@@ -1,11 +1,18 @@
 package com.pratilipi.pagecontent.auditlog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
+import com.claymus.data.access.DataAccessor;
+import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.AuditLog;
 import com.claymus.pagecontent.PageContentHelper;
+import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.pagecontent.auditlog.gae.AuditLogContentEntity;
+import com.pratilipi.pagecontent.auditlog.shared.AuditLogData;
 import com.pratilipi.pagecontent.author.shared.AuthorContentData;
 
 public class AuditLogContentHelper extends PageContentHelper<
@@ -41,5 +48,29 @@ public class AuditLogContentHelper extends PageContentHelper<
 	public static boolean hasRequestAccessToReadAuditLogContent( HttpServletRequest request, AuditLog auditLog ) {
 		return false;
 	}	
+	
+	private static AuditLogData createAuditLogData( AuditLog auditLog ) {
+		AuditLogData auditLogData = new AuditLogData();
+		
+		auditLogData.setId( auditLog.getId() );
+		auditLogData.setCreationDate( auditLog.getCreationDate() );
+		auditLogData.setAccessId( auditLog.getAccessId() );
+		auditLogData.setEventDataNew( auditLog.getEventDataNew() );
+		auditLogData.setEventDataOld( auditLog.getEventDataOld() );
+		auditLogData.setEventId( auditLog.getEventId() );
+		
+		return auditLogData;
+	}
 
+	public static DataListCursorTuple<AuditLogData> getAuditLog( String cursor, int resultCount, HttpServletRequest request ){
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		DataListCursorTuple<AuditLog> auditLogListCursorTuple = 
+				dataAccessor.getAuditLogList( cursor, resultCount );
+		List<AuditLogData> auditLogData = new ArrayList<AuditLogData>();
+		for( AuditLog auditLog : auditLogListCursorTuple.getDataList() )
+			auditLogData.add( createAuditLogData( auditLog ));
+		
+		return new DataListCursorTuple<AuditLogData>( auditLogData, auditLogListCursorTuple.getCursor() );
+	}
 }
