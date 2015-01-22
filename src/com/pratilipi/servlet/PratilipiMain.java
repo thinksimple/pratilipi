@@ -194,6 +194,9 @@ public class PratilipiMain extends ClaymusMain {
 			} else if( page.getType().equals( PratilipiPageType.PUBLISHER.toString() ) ) {
 				pageContentList.add( PublisherContentHelper.newPublisherContent( page.getPrimaryContentId() ) );
 		
+			} else if( page.getType().equals( PratilipiPageType.EVENT.toString() ) ) {
+				pageContentList.add( EventContentHelper.newEventContent( page.getPrimaryContentId() ) );
+		
 			}
 			
 		}

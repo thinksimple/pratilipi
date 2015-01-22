@@ -13,6 +13,7 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.access.gae.AuthorEntity;
+import com.pratilipi.data.access.gae.EventEntity;
 import com.pratilipi.data.access.gae.GenreEntity;
 import com.pratilipi.data.access.gae.LanguageEntity;
 import com.pratilipi.data.access.gae.PratilipiAuthorEntity;
@@ -23,6 +24,7 @@ import com.pratilipi.data.access.gae.PublisherEntity;
 import com.pratilipi.data.access.gae.TagEntity;
 import com.pratilipi.data.access.gae.UserPratilipiEntity;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Event;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -228,6 +230,26 @@ public class DataAccessorGaeImpl
 	@Override
 	public Publisher createOrUpdatePublisher( Publisher publisher ) {
 		return createOrUpdateEntity( publisher );
+	}
+
+	
+	@Override
+	public Event newEvent() {
+		return new EventEntity();
+	}
+
+	@Override
+	public Event getEvent( Long id ) {
+		try {
+			return id == null ? null : getEntity( EventEntity.class, id );
+		} catch( JDOObjectNotFoundException e ) {
+			return null;
+		}
+	}
+	
+	@Override
+	public Event createOrUpdateEvent( Event event ) {
+		return createOrUpdateEntity( event );
 	}
 
 	

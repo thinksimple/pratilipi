@@ -27,10 +27,6 @@ public interface Event extends Serializable {
 	
 	void setEmail( String email );
 	
-	Date getCreationDate();
-	
-	void setCreationDate( Date creationDate );
-	
 	Date getStartDate();
 	
 	void setStartDate( Date startDate );
@@ -39,4 +35,12 @@ public interface Event extends Serializable {
 	
 	void setEndDate( Date endDate );
 	
+	Date getCreationDate();
+	
+	void setCreationDate( Date creationDate );
+	
+	String getDescription();
+
+	void setDescription( String description );
+
 }

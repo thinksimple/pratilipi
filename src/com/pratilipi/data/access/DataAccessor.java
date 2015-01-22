@@ -5,6 +5,7 @@ import java.util.List;
 import com.claymus.data.access.DataListCursorTuple;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Event;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -57,6 +58,13 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	List<Publisher> getPublisherList();
 
 	Publisher createOrUpdatePublisher( Publisher publisher );
+
+	
+	Event newEvent();
+
+	Event getEvent( Long id );
+	
+	Event createOrUpdateEvent( Event event );
 
 	
 	Genre newGenre();

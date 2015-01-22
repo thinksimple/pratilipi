@@ -7,6 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Text;
 import com.pratilipi.data.transfer.Event;
 
 @SuppressWarnings("serial")
@@ -32,15 +33,18 @@ public class EventEntity implements Event {
 	@Persistent( column = "EMAIL" )
 	private String email;
 	
-	@Persistent( column = "CREATION_DATE" )
-	private Date creationDate;
-
 	@Persistent( column = "START_DATE" )
 	private Date startDate;
 
 	@Persistent( column = "END_DATE" )
 	private Date endDate;
 
+	@Persistent( column = "CREATION_DATE" )
+	private Date creationDate;
+
+	@Persistent( column = "DESCRIPTION" )
+	private Text description;
+	
 
 	@Override
 	public Long getId() {
@@ -98,16 +102,6 @@ public class EventEntity implements Event {
 	}
 
 	@Override
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	@Override
-	public void setCreationDate( Date creationDate ) {
-		this.creationDate = creationDate;
-	}
-
-	@Override
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -125,6 +119,26 @@ public class EventEntity implements Event {
 	@Override
 	public void setEndDate( Date endDate ) {
 		this.endDate = endDate;
+	}
+	
+	@Override
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	
+	@Override
+	public void setCreationDate( Date creationDate ) {
+		this.creationDate = creationDate;
+	}
+	
+	@Override
+	public String getDescription() {
+		return description == null ? null : description.getValue();
+	}
+
+	@Override
+	public void setDescription( String description ) {
+		this.description = description == null ? null : new Text( description );
 	}
 	
 }

@@ -147,6 +147,20 @@
   </servlet-mapping>
    
   <servlet>
+    <servlet-name>ResourceEventBannerServlet</servlet-name>
+    <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
+    <init-param>
+      <param-name>ResourceServletType</param-name>
+      <param-value>DOWNLOAD_ONLY</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResourceEventBannerServlet</servlet-name>
+    <url-pattern>/resource.event-banner/original/*</url-pattern>
+  </servlet-mapping>
+   
+  <servlet>
     <servlet-name>ResourceImageContentServlet</servlet-name>
     <servlet-class>com.pratilipi.servlet.ResourceImageContentServlet</servlet-class>
     <init-param>

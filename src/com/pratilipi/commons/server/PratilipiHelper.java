@@ -17,12 +17,14 @@ import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Event;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.service.shared.data.AuthorData;
+import com.pratilipi.service.shared.data.EventData;
 import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.service.shared.data.PublisherData;
@@ -363,6 +365,26 @@ public class PratilipiHelper extends ClaymusHelper {
 		publisherData.setRegistrationDate( new Date() );
 		
 		return publisherData;
+	}
+	
+	public EventData createEventData( Event event ) {
+		if( event == null )
+			return null;
+		
+		EventData eventData = new EventData();
+		
+		eventData.setId( event.getId() );
+		eventData.setEventBannerUrl( URL_RESOURCE + "event-banner/original/" + event.getId() );
+		eventData.setEventBannerUploadUrl( URL_RESOURCE + "event-banner/original/" + event.getId() );
+
+		eventData.setName( event.getName() );
+		eventData.setNameEn( event.getNameEn() );
+
+		eventData.setStartDate( event.getStartDate() );
+		eventData.setEndDate( event.getEndDate() );
+		eventData.setCreationDate( event.getCreationDate() );
+		
+		return eventData;
 	}
 
 }
