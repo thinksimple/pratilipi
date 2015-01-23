@@ -9,42 +9,63 @@
 				margin: 10px;
 				border-radius: 10px;
 			}
+			
+			.deleted {
+				background-color: #FF9494;
+				display: block;
+			}
+			
+			.added {
+				background-color : #85E085;
+				display: block;
+			}
 		
 		</style>
-	
-		<p> THIS IS NOT WORKING</p>
 		<template repeat="{{ auditLog in auditLogDataList }}">
-			<div id="PageContent-AuditLog-Header-{{ auditLog[ 'id' ] }}" onclick="toggleDetail( this );" style="cursor: pointer; background-color: #FAFAFA;">
-				<span id="PageContent-AuditLog-Header-Collapse-{{ auditLog[ 'id' ] }}">[&#43;]</span>
-				<span>{{ auditLog[ 'creationDate' ] }}</span>
-				<span>{{ userList[ auditLog[ 'id' ]] }}</span>
-				<span>{{ auditLog[ 'eventId' ] }}</span>
-			</div>
-			<div id="PageContent-AuditLog-Detail-${ auditLog.getId()?c }" style="display: none;" >
-				<template repeat="{{ key in keys }}">
-					<template if="{{ key != 'id' && eventDataNew [ key ] == null && eventDataOld [ key ] == null && eventDataNew [ key ] == eventDataOld[ key ] }}">
+				<div style="background-color: #FAFAFA;">
+					<span style="font-weight: bold;">{{ auditLog[ 'creationDate' ] }}</span>
+					<span style="font-weight: bold;">{{ userList[ auditLog[ 'id' ]] }}</span>
+					<span style="font-weight: bold;">{{ auditLog[ 'eventId' ] }}</span>
+					<div id="Detail{{ auditLog[ 'id' ] }}" style="background-color: white;">
 						<table>
-							<tr>
-								<td>{{ key }}</td>
-								<td>
-									<span>{{ eventDataNew [ key ] }}</span>
-								</td>
-							</tr>
+							<template repeat="{{ key in keys }}">
+								<template if="{{ eventDataNew[ auditLog[ 'id' ]][ key ] != null && eventDataOld[ auditLog[ 'id' ]][ key ] != null && eventDataNew[ auditLog[ 'id' ]][ key ] == eventDataOld[ auditLog[ 'id' ]][ key ] }}">
+									<tr>
+										<td>{{ key }}</td>
+										<td>
+											<span>{{ key == 'summary'? eventDataNew[ auditLog[ 'id' ]][ key ][ 'value' ] : eventDataNew[ auditLog[ 'id' ]][ key ] }}</span>
+										</td>
+									</tr>
+								</template>
+								<template if="{{ eventDataNew[ auditLog[ 'id' ]][ key ] != null && eventDataOld[ auditLog[ 'id' ]][ key ] != null && eventDataNew[ auditLog[ 'id' ]][ key ] != eventDataOld[ auditLog[ 'id' ]][ key ] }}">
+									<tr>
+										<td>{{ key }}</td>
+										<td>
+											<span class="deleted"> &#8211; {{ key == 'summary'? eventDataOld[ auditLog[ 'id' ]][ key ][ 'value' ] : eventDataOld[ auditLog[ 'id' ]][ key ] }}</span>
+											<span class="added"> &#43; {{ key == 'summary'? eventDataNew[ auditLog[ 'id' ]][ key ][ 'value' ] : eventDataNew[ auditLog[ 'id' ]][ key ] }}</span>
+										</td>
+									</tr>
+								</template>
+								<template if="{{ eventDataOld[ auditLog[ 'id' ]][ key ] == null && eventDataNew[ auditLog[ 'id' ]][ key ] != null }}">
+									<tr>
+										<td>{{ key }}</td>
+										<td>
+											<span class="added"> &#43; {{ eventDataNew[ auditLog[ 'id' ]][ key ] }}</span>
+										</td>
+									</tr>
+								</template>
+								<template if="{{ eventDataNew[ auditLog[ 'id' ]][ key ] == null && eventDataOld[ auditLog[ 'id' ]][ key ] != null }}">
+									<tr>
+										<td>{{ key }}</td>
+										<td>
+											<span class="deleted"> &#8211; {{ eventDataOld[ auditLog[ 'id' ]][ key ] }}</span>
+										</td>
+									</tr>
+								</template>
+							</template>
 						</table>
-					</template>
-					<template if="{{ key != 'id' && eventDataNew [ key ] != eventDataOld[ key ] }}">
-						<table>
-							<tr>
-								<td>{{ key }}</td>
-								<td>
-									<span class="deleted"> &#8211; {{ eventDataOld[ key ] }}</span>
-									<span class="added"> &#43; {{ eventDataNew[ key ] }}</span>
-								</td>
-							</tr>
-						</table>
-					</template>
-				</template>
-			</div>
+					</div>
+				</div>
 		</template>
 		<div hidden?="{{ !isLoading }}">
 			<paper-spinner active class="red"></paper-spinner>
@@ -75,8 +96,6 @@
 
 				this.isLoading = true;
 				
-				console.log( this.isLoading + "/" + this.isFinished + "/" + this.pageSize );
-				
 				var ajaxGet = this.$.AjaxGet;
 				ajaxGet.params = JSON.stringify( { cursor:this.cursor, resultCount:this.pageSize } );
 				ajaxGet.go();
@@ -94,7 +113,6 @@
 					this.keys = Object.keys( eventDataNew );
 					this.eventDataOld[ auditLogDataList[i][ 'id' ] ] = eventDataOld;
 					this.eventDataNew[ auditLogDataList[i][ 'id' ] ] = eventDataNew;
-					console.log( this.eventDataNew[ auditLogDataList[i][ 'id' ] ][ 'id' ] );
 				}
 				
 				this.isFinished = auditLogDataList.length < this.pageSize;
@@ -113,7 +131,7 @@
 				this.eventDataNew = {};
 				this.eventDataOld = {};
 				this.keys = [];
-			},
+			}
 		});
 		
 	</script>

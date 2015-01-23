@@ -10,6 +10,7 @@ import com.claymus.commons.shared.ClaymusResource;
 import com.claymus.commons.shared.Resource;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.pagecontent.PageContentProcessor;
+import com.pratilipi.commons.server.PratilipiHelper;
 
 public class AuditLogContentProcessor extends PageContentProcessor<AuditLogContent> {
 
@@ -41,9 +42,11 @@ public class AuditLogContentProcessor extends PageContentProcessor<AuditLogConte
 			AuditLogContent auditLogContent,
 			HttpServletRequest request ) throws UnexpectedServerException {
 		
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
-		
+		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
 		// Processing template
 		return FreeMarkerUtil.processTemplate( dataModel, getTemplateName() );
 	}
