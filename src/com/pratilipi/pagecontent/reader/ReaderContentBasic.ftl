@@ -66,14 +66,14 @@
 		<tr>
 			<td>
 				<div class="green" style="margin: 5px; text-align: center;">
-					<span id="PratilipiContent-Reader-PageNumber" style="display: inline; line-height: 28px; ">${ pageNo }</span> /
+					<span id="PratilipiContent-Reader-PageNumber" contenteditable="true" style="display: inline; line-height: 28px; border: 1px solid gray; padding: 0px 5px; background-color: white; ">${ pageNo }</span> /
 					<span id="PratilipiContent-Reader-PageCount" style="display: inline; line-height: 28px; ">${ pageCount }</span>
 				</div>
 			</td>
 		</tr>
 	</table>
 </div>
-<div style="width: 100%; position: fixed; bottom: 0px; right: 0px;padding-right: 1.5%; padding-bottom: 10px; padding-top: 10px; ">
+<div style="float: right; position: fixed; bottom: 0px; right: 0px;padding-right: 1.5%; padding-bottom: 10px; padding-top: 10px; ">
 	<#if showEditOption && pratilipiData.getContentType() == 'PRATILIPI'>
 		<div class="bg-green PratilipiContent-ReaderBasic-button" onclick="goToWriter();" style="margin-left:10px;">
 			<img src="/theme.pratilipi/images/buttons/edit-white.png" title="Edit" />
@@ -360,6 +360,25 @@ function recordPageTime( eventAction ){
 	ga( 'send', 'event', campaign, eventAction, pageNumber, parseInt( timeDiff/1000 ));
 }
 
+var goTo = document.getElementById( "PratilipiContent-Reader-PageNumber" );
+goTo.onkeydown = function( e ){
+	if( !( e.keyCode == 8 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 46 || ( e.keyCode >= 48 && e.keyCode <= 57 ) ) )
+		return false;
+};
+goTo.onkeyup = function( e ){
+	if( e.keyCode >= 48 && e.keyCode <= 57 ){
+		var pageNumber = this.innerHTML;
+		if( pageNumber > 0 && pageNumber <= pageCount ){
+			pageNo = pageNumber;
+			updateDisplay();
+			recordPageChangeEvent( 'GOTO Page' );
+		}
+		else {
+			alert( "Invalid Page Number!" );
+			this.innerHTML = pageNo;
+		}
+	}
+};
 
 
 if( window.attachEvent) {//for IE8 and below
