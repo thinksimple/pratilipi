@@ -362,21 +362,25 @@ function recordPageTime( eventAction ){
 
 var goTo = document.getElementById( "PratilipiContent-Reader-PageNumber" );
 goTo.onkeydown = function( e ){
-	if( !( e.keyCode == 8 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 46 || ( e.keyCode >= 48 && e.keyCode <= 57 ) ) )
+	if( !( e.keyCode == 8 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 46 || ( e.keyCode >= 48 && e.keyCode <= 57 ) || ( e.keyCode >= 96 && e.keyCode <= 105 ) ) )
 		return false;
 };
 goTo.onkeyup = function( e ){
-	if( e.keyCode >= 48 && e.keyCode <= 57 ){
+	if( ( e.keyCode >= 48 && e.keyCode <= 57 ) || ( e.keyCode >= 96 && e.keyCode <= 105 )){
 		var pageNumber = this.innerHTML;
 		if( pageNumber > 0 && pageNumber <= pageCount ){
 			pageNo = pageNumber;
-			updateDisplay();
-			recordPageChangeEvent( 'GOTO Page' );
 		}
 		else {
 			alert( "Invalid Page Number!" );
 			this.innerHTML = pageNo;
 		}
+	}
+	
+	if( e.keyCode == 13 ){
+		e.preventDefault();
+		updateDisplay();
+		recordPageChangeEvent( 'GOTO Page' );
 	}
 };
 
