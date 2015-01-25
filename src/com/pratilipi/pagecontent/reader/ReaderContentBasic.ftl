@@ -308,7 +308,7 @@ function updateDisplay() {
 function displayNextPage() {
 	if( pageNo < pageCount ){
 		recordPageTime( 'PageDurationInSec' );
-		pageNo = pageNo + 1;
+		pageNo = parseInt( pageNo ) + 1;
 		pageNoDisplayed = 0;
 		updateDisplay();
 		recordPageChangeEvent( 'NextPage' );
@@ -320,7 +320,7 @@ function displayNextPage() {
 function displayPreviousPage() {
 	if( pageNo > 1 ){
 		recordPageTime( 'PageDurationInSec' );
-		pageNo = pageNo - 1;
+		pageNo = parseInt( pageNo ) - 1;
 		pageNoDisplayed = 0;
 		updateDisplay();
 		recordPageChangeEvent( 'PreviousPage' );
@@ -368,20 +368,22 @@ goTo.onkeydown = function( e ){
 goTo.onkeyup = function( e ){
 	if( ( e.keyCode >= 48 && e.keyCode <= 57 ) || ( e.keyCode >= 96 && e.keyCode <= 105 )){
 		var pageNumber = this.innerHTML;
-		if( pageNumber > 0 && pageNumber <= pageCount ){
-			pageNo = pageNumber;
-		}
-		else {
-			alert( "Invalid Page Number!" );
+		if( pageNumber < 1 && pageNumber > pageCount ){
 			this.innerHTML = pageNo;
 		}
 	}
-	
 	if( e.keyCode == 13 ){
 		e.preventDefault();
+		pageNo = this.innerHTML;
 		updateDisplay();
 		recordPageChangeEvent( 'GOTO Page' );
 	}
+};
+goTo.onfocus = function( e ) {
+	this.innerHTML = "";
+};
+goTo.onblur = function( e ) {
+	this.innerHTML = pageNo;
 };
 
 
