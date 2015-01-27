@@ -366,24 +366,46 @@ goTo.onkeydown = function( e ){
 		return false;
 };
 goTo.onkeyup = function( e ){
+	var temp = pageNo;
 	if( ( e.keyCode >= 48 && e.keyCode <= 57 ) || ( e.keyCode >= 96 && e.keyCode <= 105 )){
-		var pageNumber = this.innerHTML;
-		if( pageNumber < 1 && pageNumber > pageCount ){
-			this.innerHTML = pageNo;
+		var pageNumber = parseInt( this.innerHTML );
+		if( pageNumber < 1 || pageNumber > pageCount ){
+			this.innerHTML = temp;
+		} else{
+			pageNo = parseInt( this.innerHTML );
+			updateContent();
 		}
 	}
 	if( e.keyCode == 13 ){
 		e.preventDefault();
-		pageNo = this.innerHTML;
-		updateDisplay();
-		recordPageChangeEvent( 'GOTO Page' );
+		if( this.innerHTML == null ){
+			this.innerHTML = pageNo;
+		} else if( this.innerHTML != pageNo ){
+		 	this.innerHTML = pageNo;
+		} else{
+			prefetchContent();
+			jQuery('html, body').animate({scrollTop: '0px'}, 300);
+			setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
+			setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
+			recordPageChangeEvent( 'GOTO Page' );
+		}
 	}
 };
 goTo.onfocus = function( e ) {
 	this.innerHTML = "";
 };
 goTo.onblur = function( e ) {
-	this.innerHTML = pageNo;
+	if( this.innerHTML == null ){
+			this.innerHTML = pageNo;
+	} else if( this.innerHTML != pageNo ){
+	 	this.innerHTML = pageNo;
+	} else{
+		prefetchContent();
+		jQuery('html, body').animate({scrollTop: '0px'}, 300);
+		setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
+		setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
+		recordPageChangeEvent( 'GOTO Page' );
+	}
 };
 
 
