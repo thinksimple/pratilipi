@@ -3,10 +3,9 @@
 
 <!-- PageContent :: Publisher :: Start -->
 
-<div style="margin-bottom:20px;">
-	<img src="${ publisherData.getPublisherBannerUrl() }" style="width:100%">
-</div>
-	
+<div style="padding-top: 10px; margin-bottom:20px; background-image : url( '${ publisherData.getPublisherBannerUrl() }'); text-align : center;">
+	<h3>HARI UVACH</h3>
+	<h4><a href="#">Back to My Order Page</a><h4>
 <#if pratilipiDataList?has_content>
 	<div class="container">
 		<div class="row">
@@ -16,6 +15,6 @@
 		</div>
 	</div>
 </#if>
-
+</div>
 
 <!-- PageContent :: Publisher :: End -->
