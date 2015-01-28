@@ -3,9 +3,9 @@
 
 <!-- PageContent :: Publisher :: Start -->
 
-<div style="padding-top: 10px; margin-bottom:20px; background-image : url( '${ publisherData.getPublisherBannerUrl() }'); text-align : center;">
+<div style="padding-top: 50px; margin-bottom:20px; background-image : url( '${ publisherData.getPublisherBannerUrl() }'); text-align : center;">
 	<img src="/resource.publisher-banner/original/SHA-logo.png" style="height:68px;"/>
-	<h2 style="color: #8B4513 !important; margin-top: 10px;">HARI UVACH</h2>
+	<h2 style="color: #8B4513 !important; margin-top: 0px;">HARI UVACH</h2>
 	<h4><a href="http://shaharidham.org/en/epublication/individual-publication/my-orders">Back to My Order Page</a><h4>
 <#if pratilipiDataList?has_content>
 	<div class="container">
