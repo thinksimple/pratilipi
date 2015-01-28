@@ -361,19 +361,39 @@ function recordPageTime( eventAction ){
 }
 
 var goTo = document.getElementById( "PratilipiContent-Reader-PageNumber" );
+var timeInterval = 0;
+
+function cancelDelay( interval ) {
+	clearTimeout( interval );
+	timeInterval = 0;
+}
+
+function delay( pageNumber ){
+	pageNo = parseInt( pageNumber );
+	updateContent();
+}
+
 goTo.onkeydown = function( e ){
 	if( !( e.keyCode == 8 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 46 || ( e.keyCode >= 48 && e.keyCode <= 57 ) || ( e.keyCode >= 96 && e.keyCode <= 105 ) ) )
 		return false;
 };
 goTo.onkeyup = function( e ){
 	var temp = pageNo;
+	if( timeInterval > 0 ) {
+		console.log( "Delay before clear = " + timeInterval );
+		cancelDelay ( timeInterval );
+		console.log( "Delay after clear =" + timeInterval );
+	}
 	if( ( e.keyCode >= 48 && e.keyCode <= 57 ) || ( e.keyCode >= 96 && e.keyCode <= 105 )){
 		var pageNumber = parseInt( this.innerHTML );
 		if( pageNumber < 1 || pageNumber > pageCount ){
 			this.innerHTML = temp;
 		} else{
-			pageNo = parseInt( this.innerHTML );
-			updateContent();
+			timeInterval = setTimeout( function(){
+						console.log( "Delay = " + timeInterval );
+						delay( pageNumber );
+					}, 2000);
+			console.log( "Delay After Time Out = " + timeInterval );
 		}
 	}
 	if( e.keyCode == 13 ){
