@@ -40,7 +40,13 @@ public class EventContentProcessor extends PageContentProcessor<EventContent> {
 		
 
 		List<Long> pratilipiIdList = new LinkedList<>();
-		if( event.getId() == 5641434644348928L ) {
+		if( event.getId() == 5724293958729728L ) {
+			pratilipiIdList.add( 5714860599934976L );
+			pratilipiIdList.add( 5188359081164800L );
+			pratilipiIdList.add( 5748975256731648L );
+			pratilipiIdList.add( 5142066044600320L );
+			pratilipiIdList.add( 5645869466517504L );
+		} else if( event.getId() == 5641434644348928L ) {
 			pratilipiIdList.add( 5705015998021632L );
 		}
 		List<PratilipiData> pratilipiDataList =
