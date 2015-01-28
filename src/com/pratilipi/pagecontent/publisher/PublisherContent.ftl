@@ -26,7 +26,7 @@
 	<p>2. Move slider for go to any page number, push button ">" for next and "<" for previous page</p>
 	<img src="/resource.publisher-banner/original/Slider.jpg" style="margin-bottom: 10px;height:68px" />
 	<img src="/resource.publisher-banner/original/ReaderChangePageIcons.jpg" style="margin-left: 10px; margin-bottom: 10px;height:68px;" />
-	<p>or click to type page number  to go to</p>
+	<p>or Click to type page number and press set or Enter/return</p>
 	<img src="/resource.publisher-banner/original/BasicReaderPageNumber.jpg " style="margin-bottom: 10px;height:68px;" />
 	
 </div>
