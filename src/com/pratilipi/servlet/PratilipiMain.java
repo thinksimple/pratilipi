@@ -394,35 +394,35 @@ public class PratilipiMain extends ClaymusMain {
 	private PageContent generateHomePageContent( HttpServletRequest request ) {
 		
 		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 6328816980983808L );
-		bookIdList.add( 5123639896702976L );
-		bookIdList.add( 5670976570261504L );
-		bookIdList.add( 6116163083829248L );
-		bookIdList.add( 5970118223855616L );
 		bookIdList.add( 5699942098141184L );
+		bookIdList.add( 5397577474244608L );
+		bookIdList.add( 5766251360026624L );
+		bookIdList.add( 4843865324388352L );
+		bookIdList.add( 5703274724327424L );
+		bookIdList.add( 4910999823974400L );
 
-		List<Long> poemIdList = new LinkedList<>();
-		poemIdList.add( 5973353810624512L );
-		poemIdList.add( 5764263595474944L );
-		poemIdList.add( 5687181548978176L );
-		poemIdList.add( 5737643253956608L );
-		poemIdList.add( 5751646390845440L );
-		poemIdList.add( 5726041607766016L );
-		
 		List<Long> storyIdList = new LinkedList<>();
-		storyIdList.add( 6315157374369792L );
-		storyIdList.add( 4914755504439296L );
-		storyIdList.add( 5091881566339072L );
-		storyIdList.add( 5683164412379136L );
-		storyIdList.add( 5691533961461760L );
-		storyIdList.add( 5707532110659584L );
+		storyIdList.add( 5640928240861184L );
+		storyIdList.add( 5097490726518784L );
+		storyIdList.add( 5653369754484736L );
+		storyIdList.add( 5082834486165504L );
+		storyIdList.add( 5632965908365312L );
+		storyIdList.add( 5093063152107520L );
+		
+		List<Long> poemIdList = new LinkedList<>();
+		poemIdList.add( 5674053578784768L );
+		poemIdList.add( 5166492060483584L );
+		poemIdList.add( 6201495494066176L );
+		poemIdList.add( 5765563091517440L );
+		poemIdList.add( 5678788914446336L );
+		poemIdList.add( 5752814017970176L );
 
 		
 		HomeContent homeContent = HomeContentFactory.newHomeContent();
 		homeContent.setBookIdList( bookIdList );
 		homeContent.setPoemIdList( poemIdList );
 		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 102 ) );
+		homeContent.setLastUpdated( new Date( 103 ) );
 		return homeContent;
 	}
 

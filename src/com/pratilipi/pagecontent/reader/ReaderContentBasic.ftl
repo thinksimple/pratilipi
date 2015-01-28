@@ -65,12 +65,19 @@
 		</tr>
 		<tr>
 			<td>
-				<div class="green" style="margin: 5px; text-align: center;">
-					<span id="PratilipiContent-Reader-PageNumber" contenteditable="true" style="display: inline; line-height: 28px; border: 1px solid gray; padding: 0px 5px; background-color: white; ">${ pageNo }</span> /
-					<span id="PratilipiContent-Reader-PageCount" style="display: inline; line-height: 28px; ">${ pageCount }</span>
+				<div id="PratilipiContent-Reader-PageNumber-Div" class="green" style="margin: 5px; text-align: center;">
+					<div id="PratilipiContent-Reader-PageNumber-Display" style="width:70px; margin-left: auto; margin-right: auto; border: 1px solid gray; padding: 0px 5px; background-color: white; cursor:pointer;" title="Click To Set Page Number">
+						<span id="PratilipiContent-Reader-PageNumber" style="display: inline; line-height: 28px;">${ pageNo }</span> /
+						<span id="PratilipiContent-Reader-PageCount" style="display: inline; line-height: 28px; ">${ pageCount }</span>
+					</div>
+					<div id="PratilipiContent-Reader-PageNumber-Edit" style="display: none; margin-left: auto; margin-right: auto;">
+						<span style="margin-right: 10px;">Go To Page Number </span>
+						<input id="PratilipiContent-Reader-PageNumber-Edit-InputBox" tabindex=0 type="text" style="width: 40px; text-align: center;">
+						<div id="PratilipiContent-Reader-PageNumber-Edit-Button" type="submit" style="background-color: #259b24; color: white; display:inline;padding: 2px 5px;">Set</div>
+					</div>
 				</div>
 			</td>
-		</tr>
+		</tr>	
 	</table>
 </div>
 <div style="float: right; position: fixed; bottom: 0px; right: 0px;padding-right: 1.5%; padding-bottom: 10px; padding-top: 10px; ">
@@ -360,70 +367,53 @@ function recordPageTime( eventAction ){
 	ga( 'send', 'event', campaign, eventAction, pageNumber, parseInt( timeDiff/1000 ));
 }
 
-var goTo = document.getElementById( "PratilipiContent-Reader-PageNumber" );
-var timeInterval = 0;
+var pageNumberDiv = document.getElementById( "PratilipiContent-Reader-PageNumber-Div" );
+var displayPageNumberDiv = document.getElementById( "PratilipiContent-Reader-PageNumber-Display" );
+var editPageNumberDiv = document.getElementById( "PratilipiContent-Reader-PageNumber-Edit" );
+var pageNoInputBox = document.getElementById( "PratilipiContent-Reader-PageNumber-Edit-InputBox" );
+var pageNoSubmitButton = document.getElementById( "PratilipiContent-Reader-PageNumber-Edit-Button" );
 
-function cancelDelay( interval ) {
-	clearTimeout( interval );
-	timeInterval = 0;
-}
-
-function delay( pageNumber ){
-	pageNo = parseInt( pageNumber );
-	updateContent();
-}
-
-goTo.onkeydown = function( e ){
-	if( !( e.keyCode == 8 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 46 || ( e.keyCode >= 48 && e.keyCode <= 57 ) || ( e.keyCode >= 96 && e.keyCode <= 105 ) ) )
-		return false;
+displayPageNumberDiv.onclick = function( e ){
+	pageNoInputBox.value = "";
+	pageNoInputBox.focus();
+	displayPageNumberDiv.style.display = 'none';
+	editPageNumberDiv.style.display = 'block';
+	e.stopPropagation();
 };
-goTo.onkeyup = function( e ){
-	var temp = pageNo;
-	if( timeInterval > 0 ) {
-		console.log( "Delay before clear = " + timeInterval );
-		cancelDelay ( timeInterval );
-		console.log( "Delay after clear =" + timeInterval );
-	}
-	if( ( e.keyCode >= 48 && e.keyCode <= 57 ) || ( e.keyCode >= 96 && e.keyCode <= 105 )){
-		var pageNumber = parseInt( this.innerHTML );
-		if( pageNumber < 1 || pageNumber > pageCount ){
-			this.innerHTML = temp;
-		} else{
-			timeInterval = setTimeout( function(){
-						console.log( "Delay = " + timeInterval );
-						delay( pageNumber );
-					}, 2000);
-			console.log( "Delay After Time Out = " + timeInterval );
-		}
-	}
+
+pageNoInputBox.onclick = function( e ){
+	e.stopPropagation();
+};
+pageNoInputBox.onkeydown = function( e ){
+	console.log( e.keyCode );
 	if( e.keyCode == 13 ){
 		e.preventDefault();
-		if( this.innerHTML == null ){
-			this.innerHTML = pageNo;
-		} else if( this.innerHTML != pageNo ){
-		 	this.innerHTML = pageNo;
-		} else{
-			prefetchContent();
-			jQuery('html, body').animate({scrollTop: '0px'}, 300);
-			setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
-			setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
+		var pageNumber = this.value;
+		displayPageNumberDiv.style.display = 'block';
+		editPageNumberDiv.style.display = 'none';
+		if( !isNaN( pageNumber ) && pageNumber >= 1 && pageNumber <= pageCount ){
+			pageNo = parseInt( this.value );
+			updateDisplay();
 			recordPageChangeEvent( 'GOTO Page' );
 		}
 	}
+	
+	if( e.keyCode == 27 ){
+		displayPageNumberDiv.style.display = 'block';
+		editPageNumberDiv.style.display = 'none';
+	}
 };
-goTo.onfocus = function( e ) {
-	this.innerHTML = "";
+
+document.onclick = function( e ) {
+	editPageNumberDiv.style.display = 'none';
+	displayPageNumberDiv.style.display = 'block';
 };
-goTo.onblur = function( e ) {
-	if( this.innerHTML == null ){
-			this.innerHTML = pageNo;
-	} else if( this.innerHTML != pageNo ){
-	 	this.innerHTML = pageNo;
-	} else{
-		prefetchContent();
-		jQuery('html, body').animate({scrollTop: '0px'}, 300);
-		setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getReaderPageUrl() }' );
-		setCookie( '${ pageNoCookieName }', pageNo, 365, '${ pratilipiData.getWriterPageUrl() }' );
+
+pageNoSubmitButton.onclick = function( e ){
+	var pageNumber  = pageNoInputBox.value;
+	if( !isNaN( pageNumber ) && pageNumber >= 1 && pageNumber <= pageCount ){
+		pageNo = parseInt( pageNumber );
+		updateDisplay();
 		recordPageChangeEvent( 'GOTO Page' );
 	}
 };
