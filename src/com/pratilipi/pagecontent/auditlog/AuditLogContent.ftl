@@ -1,7 +1,8 @@
+<!-- PageContent :: Pages :: Audit -->
+
 <#setting time_zone="${ timeZone }">
 
-<!-- PageContent :: Audit Log :: Start -->
-<div id="PageContent-AuditLogs">
+<div id="PageContent-AuditLogs" class="container">
 	<pagecontent-auditlog apiUrl="/api.pratilipi/auditlog" pageSize=20></pagecontent-auditlog>
 </div>
 

@@ -20,6 +20,7 @@ public class AuditLogContentProcessor extends PageContentProcessor<AuditLogConte
 				ClaymusResource.JQUERY_2,
 				ClaymusResource.POLYMER,
 				ClaymusResource.POLYMER_CORE_AJAX,
+				ClaymusResource.POLYMER_CORE_COLLAPSE,
 				ClaymusResource.POLYMER_PAPER_SPINNER,
 				new Resource() {
 					
