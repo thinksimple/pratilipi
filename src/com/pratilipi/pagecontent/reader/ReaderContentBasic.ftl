@@ -65,15 +65,15 @@
 		</tr>
 		<tr>
 			<td>
-				<div id="PratilipiContent-Reader-PageNumber-Div" class="green" style="margin: 5px; text-align: center;">
-					<div id="PratilipiContent-Reader-PageNumber-Display" style="width:70px; margin-left: auto; margin-right: auto; border: 1px solid gray; padding: 0px 5px; background-color: white; cursor:pointer;" title="Click To Set Page Number">
+				<div id="PratilipiContent-Reader-PageNumber-Div" class="green" style="margin: 5px;">
+					<div id="PratilipiContent-Reader-PageNumber-Display" style="text-align: center; width:70px; border: 1px solid gray; padding: 0px 5px; background-color: white; cursor:pointer;" title="Click To Set Page Number">
 						<span id="PratilipiContent-Reader-PageNumber" style="display: inline; line-height: 28px;">${ pageNo }</span> /
 						<span id="PratilipiContent-Reader-PageCount" style="display: inline; line-height: 28px; ">${ pageCount }</span>
 					</div>
-					<div id="PratilipiContent-Reader-PageNumber-Edit" style="display: none; margin-left: auto; margin-right: auto;">
-						<span style="margin-right: 10px;">Go To Page Number </span>
+					<div id="PratilipiContent-Reader-PageNumber-Edit" style="display: none;">
+						<span style="margin-right: 10px;">Page Number </span>
 						<input id="PratilipiContent-Reader-PageNumber-Edit-InputBox" tabindex=0 type="text" style="width: 40px; text-align: center;">
-						<div id="PratilipiContent-Reader-PageNumber-Edit-Button" type="submit" style="background-color: #259b24; color: white; display:inline;padding: 2px 5px;">Set</div>
+						<div id="PratilipiContent-Reader-PageNumber-Edit-Button" type="submit" style="background-color: #259b24; color: white; display:inline;padding: 2px 5px; cursor: pointer;">Set</div>
 					</div>
 				</div>
 			</td>
@@ -230,8 +230,14 @@ function updateDisplay() {
 	
 	function setMinReaderWidth(){
 		var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-		if( windowsize > 800 )
+		var displayPageNumberDiv = document.getElementById( "PratilipiContent-Reader-PageNumber-Display" );
+		var editPageNumberDiv = document.getElementById( "PratilipiContent-Reader-PageNumber-Edit" )
+		if( windowsize > 800 ){
 			jQuery( ".paper" ).width( "1000px" );
+			displayPageNumberDiv.style.marginLeft = "auto";
+			displayPageNumberDiv.style.marginRight = "auto";
+			editPageNumberDiv.style.textAlign = "center";
+		}
 		else
 			jQuery( ".paper" ).width( ( windowsize - 10 ) + "px" );
 	}
