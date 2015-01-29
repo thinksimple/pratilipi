@@ -71,7 +71,7 @@
 						<span id="PratilipiContent-Reader-PageCount" style="display: inline; line-height: 28px; ">${ pageCount }</span>
 					</div>
 					<div id="PratilipiContent-Reader-PageNumber-Edit" style="display: none;">
-						<span style="margin-right: 10px;">Page Number </span>
+						<span style="margin-right: 10px;">Page No. </span>
 						<input id="PratilipiContent-Reader-PageNumber-Edit-InputBox" tabindex=0 type="text" style="width: 40px; text-align: center;">
 						<div id="PratilipiContent-Reader-PageNumber-Edit-Button" type="submit" style="background-color: #259b24; color: white; display:inline;padding: 2px 5px; cursor: pointer;">Set</div>
 					</div>
