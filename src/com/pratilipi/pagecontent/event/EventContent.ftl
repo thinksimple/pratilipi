@@ -77,19 +77,16 @@
 		<p style="text-align: right;"><strong>-- &#2728;&#2752;&#2741;&#2750;&#2736;&#2763;&#2717;&#2752;&#2728; &#2736;&#2750;&#2716;&#2709;&#2753;&#2734;&#2750;&#2736;</strong></p>
 
 	</#if>
-
-
-	<#if pratilipiDataList?has_content>
-		<div class="container">
-			<h3 class="hr-below">${ eventData.getName() }</h3>
-			<div class="row">
-				<#list pratilipiDataList as pratilipiData>
-					<@pratilipiView.thumbnail pratilipiData=pratilipiData />
-				</#list>
-			</div>
-		</div>
-	</#if>
-
 </div>
 
+<#if pratilipiDataList?has_content>
+	<div class="container">
+		<h3 class="hr-below">${ eventData.getName() }</h3>
+		<div class="row">
+			<#list pratilipiDataList as pratilipiData>
+				<@pratilipiView.thumbnail pratilipiData=pratilipiData />
+			</#list>
+		</div>
+	</div>
+</#if>
 <!-- PageContent :: Event :: End -->
