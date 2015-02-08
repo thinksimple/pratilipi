@@ -277,6 +277,10 @@ public class PratilipiHelper extends ClaymusHelper {
 	public AuthorData createAuthorData( Long authorId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Author author = dataAccessor.getAuthor( authorId );
+		
+		if( author == null )
+			return null;
+		
 		Language language = dataAccessor.getLanguage( author.getLanguageId() );
 		return createAuthorData( author, language );
 	}
