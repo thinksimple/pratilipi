@@ -144,6 +144,7 @@ public class UploadContent implements EntryPoint {
 		var newPagesCount = 0;
 		var failedUpload = "";
 		var uploadFailed = 0;
+		var newFilename = "";
 		
 		$wnd.jQuery( fileUpload ).fileupload({
 			dataType: 'html',
@@ -156,11 +157,12 @@ public class UploadContent implements EntryPoint {
 				
 				var filename =  data.files[0].name;
 				
-				if( filename.split('.')[1] === "pdf"){
-					data.url = url;
-				}
+				if( filename.indexOf( "e" ) != -1 || filename.indexOf( "o" ) != -1 )
+					newFilename = filename.substring( filename.indexOf( "e" ) + 1, filename.indexOf( "o" ));
 				else
-					data.url = url + "/" + filename.split('.')[0];
+					newFilename = filename.split('.')[0];
+				
+				data.url = url + "/" + newFilename;
 					
 				$wnd.$( statusDiv ).append('<div class="col-sm-6" ><i>' + filename + '</i></div>' +
 							'<div class="progress col-sm-2" style="padding-left: 0px; padding-right: 0px;">' + 
@@ -181,8 +183,9 @@ public class UploadContent implements EntryPoint {
 		    },
 		    done: function( e, data ) {
 		    	var filename = data.files[0].name.split('.')[0];
-		    	if( pageCount < parseFloat( filename ) )
+		    	if( pageCount < parseFloat( newFilename ) ){
 		    		newPagesCount = newPagesCount + 1;
+		    	}
 				$wnd.$( "#" + filename + "Div" ).css( 'color', 'Green' );
 				$wnd.$( "#" + filename + "Div" ).html( 'Done' );
 		    },
@@ -190,7 +193,7 @@ public class UploadContent implements EntryPoint {
 				uploadFailed = uploadFailed + 1;
 		    	var filename = data.files[0].name.split('.')[0];
 		    	failedUpload = failedUpload + data.files[0].name + " " ;
-		    	if( pageCount < parseFloat( filename ) )
+		    	if( pageCount < parseFloat( newFilename ) )
 		    		newPagesCount = newPagesCount + 1;
 		    	$wnd.$( "#" + filename ).css( 'width', '0%'  );
 				$wnd.$( "#" + filename + "Div" ).css( 'color', 'red' );
