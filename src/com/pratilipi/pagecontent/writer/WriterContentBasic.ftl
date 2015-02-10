@@ -142,12 +142,17 @@ var isEditorDirty;
 
 function initWriter() {
 	try {
-		ckEditor = CKEDITOR.replace( document.getElementById( 'PratilipiContent-Writer-Content' ), { height: 450 } ); 
+		ckEditor = CKEDITOR.replace( document.getElementById( 'PratilipiContent-Writer-Content' ), { 
+				filebrowserImageBrowseUrl : '/filebrowser/image?id=${ pratilipiData.getId()?c }',
+				filebrowserImageUploadUrl: '/resource.pratilipi-content/image-upload/testing/${ pratilipiData.getId()?c }',
+				height: 450
+				} ); 
 		CKEDITOR.config.toolbar = [
 				['Source','Format','Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],
 				['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Outdent','Indent'],
 				['NumberedList','BulletedList'],
 				['Blockquote','Smiley','HorizontalRule'],
+				['Image'],
 				['Link','Unlink'],
 				['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'],
 				['ShowBlocks','Maximize']
@@ -155,6 +160,15 @@ function initWriter() {
 		ckEditor.on('instanceReady', function(){ 
 			updateContent();
 			prefetchContent();
+		});
+		CKEDITOR.on( 'dialogDefinition', function( ev ){
+			var dialogName = ev.data.name;
+			var dialogDefinition = ev.data.definition;
+			if ( dialogName == 'image' )
+			{
+				dialogDefinition.removeContents( 'advanced' );
+				dialogDefinition.removeContents( 'Link' );
+			}
 		});
 		ckEditor.on('change', function(){
 			isEditorDirty = ckEditor.checkDirty();
