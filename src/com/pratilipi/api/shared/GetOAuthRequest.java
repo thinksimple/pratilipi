@@ -14,11 +14,6 @@ public class GetOAuthRequest extends GenericRequest {
 	private String publisherSecret;
 	
 
-	private GetOAuthRequest() {
-		super( null );
-	}
-
-	
 	public String getUserId() {
 		return userId;
 	}

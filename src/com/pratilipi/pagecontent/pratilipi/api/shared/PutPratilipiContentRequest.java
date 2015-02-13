@@ -2,7 +2,6 @@ package com.pratilipi.pagecontent.pratilipi.api.shared;
 
 import com.claymus.api.annotation.Validate;
 import com.claymus.api.shared.GenericRequest;
-import com.pratilipi.commons.shared.PratilipiContentType;
 
 @SuppressWarnings("serial")
 public class PutPratilipiContentRequest extends GenericRequest {
@@ -14,17 +13,9 @@ public class PutPratilipiContentRequest extends GenericRequest {
 	private Integer pageNo;
 	
 	@Validate( required = true )
-	private PratilipiContentType contentType;
-	
-	@Validate( required = true )
 	private String pageContent;
 
 	private Boolean insertNew;
-	
-
-	private PutPratilipiContentRequest() {
-		super( null );
-	}
 	
 
 	public Long getPratilipiId() {
@@ -33,10 +24,6 @@ public class PutPratilipiContentRequest extends GenericRequest {
 
 	public Integer getPageNumber() {
 		return pageNo;
-	}
-	
-	public PratilipiContentType getContentType() {
-		return contentType;
 	}
 	
 	public Object getPageContent() {

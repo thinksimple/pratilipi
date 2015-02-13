@@ -52,6 +52,12 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 	private static final Gson gson = new GsonBuilder().create();
 
+	
+	private static final String CONTENT_FOLDER 		 = "pratilipi-content/pratilipi";
+	private static final String IMAGE_CONTENT_FOLDER = "pratilipi-content/image";
+	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
+	
+	
 	public static final Access ACCESS_TO_ADD_PRATILIPI_DATA =
 			new Access( "pratilipi_data_add", false, "Add Pratilipi Data" );
 	public static final Access ACCESS_TO_UPDATE_PRATILIPI_DATA =
@@ -469,15 +475,12 @@ public class PratilipiContentHelper extends PageContentHelper<
 			throw new InsufficientAccessException();
 
 		
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 
-		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, null, null, null, true );
-		
 		if( contentType == PratilipiContentType.PRATILIPI ) {
 			BlobEntry blobEntry = null;
 			try {
-				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
+				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
 			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
 				throw new UnexpectedServerException();
@@ -491,7 +494,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 			
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			try {
-				return blobAccessor.getBlob( pratilipiData.getPratilipiContentImageName( pageNo ) );
+				return blobAccessor.getBlob( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
 			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
 				throw new UnexpectedServerException();
@@ -520,17 +523,14 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 
 		
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		
-		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData( pratilipi, null, null, null, true );
 		
 		if( contentType == PratilipiContentType.PRATILIPI ) {
 			BlobEntry blobEntry = null;
 			try {
-				blobEntry = blobAccessor.getBlob( pratilipiData.getPratilipiContentName() );
+				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
 				if( blobEntry == null ) {
-					blobEntry = blobAccessor.newBlob( pratilipiData.getPratilipiContentName() );
+					blobEntry = blobAccessor.newBlob( CONTENT_FOLDER + "/" + pratilipiId );
 					blobEntry.setData( "&nbsp".getBytes( Charset.forName( "UTF-8" ) ) );
 					blobEntry.setMimeType( "text/html" );
 				}
@@ -551,14 +551,22 @@ public class PratilipiContentHelper extends PageContentHelper<
 			try {
 				blobAccessor.createOrUpdateBlob( blobEntry );
 			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to update pratilipi content.", e );
+				logger.log( Level.SEVERE, "Failed to create/update pratilipi content.", e );
 				throw new UnexpectedServerException();
 			}
 			return pageCount;
 			
 		} else if( contentType == PratilipiContentType.IMAGE ) {
-			// TODO: implementation
-			return -1;
+			
+			try {
+				BlobEntry blobEntry = (BlobEntry) pageContent;
+				blobEntry.setName( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
+				blobAccessor.createOrUpdateBlob( blobEntry );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to create/update pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			return (int) (long) pratilipi.getPageCount();
 		
 		} else {
 			throw new InvalidArgumentException( contentType + " content type is not yet supported." );
@@ -566,4 +574,44 @@ public class PratilipiContentHelper extends PageContentHelper<
 		
 	}
 	
+	public static BlobEntry getPratilipiResource(
+			long pratilipiId, String fileName, HttpServletRequest request )
+			throws UnexpectedServerException {
+
+		try {
+			return DataAccessorFactory.getBlobAccessor().getBlob( RESOURCE_FOLDER + "/" + pratilipiId + "/" + fileName );
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch pratilipi resource.", e );
+			throw new UnexpectedServerException();
+		}
+		
+	}
+	
+	public static boolean savePratilipiResource(
+			long pratilipiId, BlobEntry blobEntry, boolean overwrite, HttpServletRequest request )
+			throws InsufficientAccessException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( !PratilipiContentHelper.hasRequestAccessToUpdatePratilipiContent( request, pratilipi ) )
+			throw new InsufficientAccessException();
+
+		String fileName = RESOURCE_FOLDER + "/" + pratilipiId + "/" + blobEntry.getName().replaceAll( "/", "-" );
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		try {
+			if( !overwrite &&  blobAccessor.getBlob( fileName ) != null ) {
+				return false;
+			} else {
+				blobEntry.setName( fileName );
+				blobAccessor.createOrUpdateBlob( blobEntry );
+				return true;
+			}
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to create/update pratilipi resource.", e );
+			throw new UnexpectedServerException();
+		}
+		
+	}
+
 }

@@ -232,7 +232,7 @@
 			
 		if( contentArray[scope.pageNo] == null ) {
 			loading( true );
-			ajaxGet.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI' } );
+			ajaxGet.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo } );
 			ajaxGet.go();
 		} else {
 			document.querySelector( '#PageContent-Writer-Content' ).innerHTML = contentArray[scope.pageNo];
@@ -247,11 +247,11 @@
 	
 	function prefetchContent() {
 		if( scope.pageNo > 1 && contentArray[scope.pageNo - 1] == null ) {
-			ajaxGet.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo - 1, contentType:'PRATILIPI' } );
+			ajaxGet.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo - 1 } );
 			ajaxGet.go();
 		}
 		if( scope.pageNo < scope.pageCount && contentArray[scope.pageNo + 1] == null ) {
-			ajaxGet.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1, contentType:'PRATILIPI' } );
+			ajaxGet.params = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1 } );
 			ajaxGet.go();
 		}
 	}
@@ -259,7 +259,7 @@
 	scope.savePage = function( e ) {
 		if( scope.isEditorDirty ) {
 			setReadOnly( true );
-			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:ckEditor.getData() } );
+			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, pageContent:ckEditor.getData() } );
 			ajaxPut.go();
 		}
 	};
@@ -268,7 +268,7 @@
 		dialog.close();
 		if( !checkDirty() ) {
 			setReadOnly( true );
-			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
+			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo + 1, pageContent:'', insertNew:true } );
 			ajaxPut.go();
 		}
 	};
@@ -277,7 +277,7 @@
 		dialog.close();
 		if( !checkDirty() ) {
 			setReadOnly( true );
-			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:'', insertNew:true } );
+			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, pageContent:'', insertNew:true } );
 			ajaxPut.go();
 		}
 	};
@@ -286,7 +286,7 @@
 		dialog.close();
 		if( confirm( "Are you sure you want to delete this page ?" ) ) {
 			setReadOnly( true );
-			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, contentType:'PRATILIPI', pageContent:'' } );
+			ajaxPut.body = JSON.stringify( { pratilipiId:${ pratilipiData.getId()?c }, pageNo:scope.pageNo, pageContent:'' } );
 			ajaxPut.go();
 		}
 	};

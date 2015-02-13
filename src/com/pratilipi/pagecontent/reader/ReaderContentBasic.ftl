@@ -48,12 +48,12 @@
 						<div style="position:relative">
 							<#if contentSize??>
 								<div id="PratilipiContent-Reader-Content" style="width: ${ contentSize };">
-									<img id="imageContent" src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }&contentType=IMAGE' style="width:100%"/>
+									<img id="imageContent" src='/api.pratilipi/pratilipi/content/image?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }' style="width:100%"/>
 								</div>
 								<div id="PratilipiContent-Reader-Overlay" style="width: ${ contentSize };"></div>
 							<#else>
 								<div id="PratilipiContent-Reader-Content">
-									<img id="imageContent" src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }&contentType=IMAGE' style="width:100%"/>
+									<img id="imageContent" src='/api.pratilipi/pratilipi/content/image?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }' style="width:100%"/>
 								</div>
 								<div id="PratilipiContent-Reader-Overlay"></div>
 							</#if>
@@ -173,7 +173,7 @@ function updateDisplay() {
 			contentType: "application/json",
 			dataType: "json",
 			handleAs: "json",
-			data: 'pratilipiId=${ pratilipiData.getId()?c }&pageNo=' + pageNumber + '&contentType=PRATILIPI',
+			data: 'pratilipiId=${ pratilipiData.getId()?c }&pageNo=' + pageNumber,
 			beforeSend: function( data, object ){
 			},
 			success: function( response, status, xhr ) {
@@ -245,7 +245,7 @@ function updateDisplay() {
 <#elseif pratilipiData.getContentType() == 'IMAGE'>
 
 	function loadImage( pageNumber ){
-		var img = "<img id='imageContent' src='/api.pratilipi/pratilipi/content?pratilipiId=${ pratilipiData.getId()?c }&pageNo=" + pageNo + "&contentType=IMAGE' style='width:100%' />";
+		var img = "<img id='imageContent' src='/api.pratilipi/pratilipi/content/image?pratilipiId=${ pratilipiData.getId()?c }&pageNo=" + pageNo + "' style='width:100%' />";
 		jQuery(img).on( 'load', function() {
 			contentArray[pageNo] = img;
 			updateContent();

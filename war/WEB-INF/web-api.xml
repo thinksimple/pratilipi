@@ -6,6 +6,16 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
 
+  <filter>
+    <filter-name>ClaymusServiceFilter</filter-name>
+    <filter-class>com.claymus.servlet.ClaymusServiceFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ClaymusServiceFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
   <servlet>
     <servlet-name>RemoteApiServlet</servlet-name>
     <servlet-class>com.google.apphosting.utils.remoteapi.RemoteApiServlet</servlet-class>

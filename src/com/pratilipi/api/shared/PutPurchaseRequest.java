@@ -13,11 +13,6 @@ public class PutPurchaseRequest extends GenericRequest {
 	private String userId;
 
 	
-	private PutPurchaseRequest() {
-		super( null );
-	}
-
-	
 	public Long getPratilipiId() {
 		return pratilipiId;
 	}

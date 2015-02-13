@@ -5,6 +5,7 @@ import java.util.Date;
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Put;
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
@@ -19,7 +20,6 @@ import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.UserPratilipi;
 
-
 @SuppressWarnings("serial")
 @Bind( uri = "/purchase" )
 public class PurchaseApi extends GenericApi {
@@ -30,16 +30,7 @@ public class PurchaseApi extends GenericApi {
 			UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-		
-
-		if( apiRequest.getAccessToken() == null )
-			throw new InvalidArgumentException( "Access Token is missing." );
-
-		
-		AccessToken accessToken = dataAccessor.getAccessToken( apiRequest.getAccessToken() );
-		if( accessToken == null )
-			throw new InsufficientAccessException( "Access token is invalid or expired." );
-		
+		AccessToken accessToken = (AccessToken) this.getThreadLocalRequest().getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
 		
 		if( !accessToken.getType().equals( PratilipiAccessTokenType.PUBLISHER.toString() ) )
 			throw new InsufficientAccessException();

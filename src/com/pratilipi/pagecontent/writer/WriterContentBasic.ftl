@@ -244,7 +244,7 @@ function getPage( pageNumber ){
 		contentType: "application/json",
 		dataType: "json",
 		handleAs: "json",
-		data: 'pratilipiId=${ pratilipiData.getId()?c }&pageNo=' + pageNumber + '&contentType=PRATILIPI',
+		data: 'pratilipiId=${ pratilipiData.getId()?c }&pageNo=' + pageNumber,
 		beforeSend: function( data, object ){
 		},
 		success: function( response, status, xhr ) {
@@ -283,7 +283,6 @@ function savePage(){
 			JSON.stringify({
 				pratilipiId: ${ pratilipiData.getId()?c }, 
 				pageNo: pageNo, 
-				contentType:'PRATILIPI', 
 				pageContent:ckEditor.getData() 
 			}),
 		beforeSend: function( data, object ){
@@ -321,8 +320,7 @@ function addPageBefore(){
 			data: 
 				JSON.stringify({
 					pratilipiId: ${ pratilipiData.getId()?c }, 
-					pageNo: pageNo, 
-					contentType:'PRATILIPI', 
+					pageNo: pageNo,
 					pageContent:'',
 					insertNew: true 
 				}),
@@ -358,7 +356,6 @@ function addPageAfter(){
 				JSON.stringify({
 					pratilipiId: ${ pratilipiData.getId()?c }, 
 					pageNo: pageNo + 1, 
-					contentType:'PRATILIPI', 
 					pageContent:'',
 					insertNew: true
 				}),
@@ -391,7 +388,6 @@ function deletePage(){
 				JSON.stringify({
 					pratilipiId: ${ pratilipiData.getId()?c }, 
 					pageNo: pageNo, 
-					contentType:'PRATILIPI', 
 					pageContent:''
 				}),
 			beforeSend: function( data, object ){
