@@ -336,10 +336,12 @@
 
 <style>
 
-	#PageContent-Reader-Content img {
-		width:100%;
-	}
-
+	<#if pratilipiData.getContentType() == "IMAGE" >
+		#PageContent-Reader-Content img {
+			width:100%;
+		}
+	</#if>
+	
 	#PageContent-Reader-Overlay {
 		position: absolute;
 		top: 0px;
