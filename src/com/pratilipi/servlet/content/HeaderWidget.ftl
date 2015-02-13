@@ -75,6 +75,7 @@ function validateForm() {
                   <li><a href="/poems">All</a></li>
                   <li><a href="/poems/hindi">Hindi</a></li>
                   <li><a href="/poems/gujarati">Gujarati</a></li>
+                  <li><a href="/poems/tamil">Tamil</a></li>
                 </ul>
           	</li>
             <li class="dropdown">
