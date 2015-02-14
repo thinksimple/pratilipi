@@ -143,9 +143,9 @@ var isEditorDirty;
 function initWriter() {
 	try {
 		ckEditor = CKEDITOR.replace( document.getElementById( 'PratilipiContent-Writer-Content' ), { 
-				filebrowserImageBrowseUrl : '/filebrowser/image?id=${ pratilipiData.getId()?c }',
-				filebrowserImageUploadUrl: '/resource.pratilipi-content/image-upload/testing/${ pratilipiData.getId()?c }',
 				height: 450
+				filebrowserImageBrowseUrl: '/filebrowser?folder=${ resourceFolder }&urlPrefix=/api.pratilipi/pratilipi/resource?pratilipiId=${ pratilipiData.getId()?c }&name=',
+				filebrowserImageUploadUrl: '/api.pratilipi/pratilipi/resource?pratilipiId=${ pratilipiData.getId()?c }',
 				} ); 
 		CKEDITOR.config.toolbar = [
 				['Source','Format','Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],

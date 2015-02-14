@@ -71,7 +71,7 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( GenresContentHelper.class );
 		PageContentRegistry.register( SearchContentHelper.class );
 		PageContentRegistry.register( UploadContentFactory.class );
-		PageContentRegistry.register( FileBrowserHelper.class );
+		PageContentRegistry.register( FileBrowserHelper.class );		// 5.0
 	}
 
 

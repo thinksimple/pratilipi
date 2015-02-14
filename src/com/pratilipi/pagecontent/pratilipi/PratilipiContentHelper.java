@@ -574,12 +574,16 @@ public class PratilipiContentHelper extends PageContentHelper<
 		
 	}
 	
+	public static String getPratilipiResourceFolder( Long pratilipiId ) {
+		return RESOURCE_FOLDER + "/" + pratilipiId;
+	}
+	
 	public static BlobEntry getPratilipiResource(
 			long pratilipiId, String fileName, HttpServletRequest request )
 			throws UnexpectedServerException {
 
 		try {
-			return DataAccessorFactory.getBlobAccessor().getBlob( RESOURCE_FOLDER + "/" + pratilipiId + "/" + fileName );
+			return DataAccessorFactory.getBlobAccessor().getBlob( getPratilipiResourceFolder( pratilipiId ) + "/" + fileName );
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to fetch pratilipi resource.", e );
 			throw new UnexpectedServerException();
@@ -597,7 +601,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		if( !PratilipiContentHelper.hasRequestAccessToUpdatePratilipiContent( request, pratilipi ) )
 			throw new InsufficientAccessException();
 
-		String fileName = RESOURCE_FOLDER + "/" + pratilipiId + "/" + blobEntry.getName().replaceAll( "/", "-" );
+		String fileName = getPratilipiResourceFolder( pratilipiId ) + "/" + blobEntry.getName().replaceAll( "/", "-" );
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		try {
 			if( !overwrite &&  blobAccessor.getBlob( fileName ) != null ) {

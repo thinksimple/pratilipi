@@ -152,6 +152,8 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 		if( request.getParameter( "ret" ) != null && !request.getParameter( "ret" ).trim().isEmpty()  )
 			dataModel.put( "exitUrl", request.getParameter( "ret" ) );
 
+		dataModel.put( "resourceFolder", PratilipiContentHelper.getPratilipiResourceFolder( pratilipiId ) );
+		
 		
 		String templateName = pratilipiHelper.isModeBasic()
 				? getTemplateName().replace( ".ftl", "Basic.ftl" )

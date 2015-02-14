@@ -134,6 +134,7 @@
 			['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Outdent','Indent'],
 			['NumberedList','BulletedList'],
 			['Blockquote','Smiley','HorizontalRule'],
+			['Image'],
 			['Link','Unlink'],
 			['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'],
 			['ShowBlocks','Maximize']
@@ -376,7 +377,9 @@
 				}, 'change': function() {
 					scope.isEditorDirty = ckEditor.checkDirty();
 				},
-			}
+			},
+			filebrowserImageBrowseUrl: '/filebrowser?folder=${ resourceFolder }&urlPrefix=/api.pratilipi/pratilipi/resource?pratilipiId=${ pratilipiData.getId()?c }%26name=&embedMode=true',
+			filebrowserImageUploadUrl: '/api.pratilipi/pratilipi/resource?pratilipiId=${ pratilipiData.getId()?c }',
 		});
 	});
 	
