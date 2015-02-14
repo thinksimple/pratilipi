@@ -22,7 +22,6 @@ import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.User;
 import com.claymus.data.transfer.WebsiteWidget;
 import com.claymus.pagecontent.PageContentRegistry;
-import com.claymus.pagecontent.filebrowser.FileBrowserHelper;
 import com.claymus.pagecontent.html.HtmlContent;
 import com.claymus.pagecontent.html.HtmlContentHelper;
 import com.claymus.servlet.ClaymusMain;
@@ -71,7 +70,6 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( GenresContentHelper.class );
 		PageContentRegistry.register( SearchContentHelper.class );
 		PageContentRegistry.register( UploadContentFactory.class );
-		PageContentRegistry.register( FileBrowserHelper.class );		// 5.0
 	}
 
 
@@ -270,9 +268,6 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/genres" ) )
 			pageContentList.add( GenresContentHelper.newGenresContent() );
 
-		else if( requestUri.equals( "/filebrowser" ))
-			pageContentList.add( FileBrowserHelper.newFileBrowser() );
-		
 		else if( requestUri.equals( "/upload" ) )
 			pageContentList.add( UploadContentFactory.newUploadContent() );
 
