@@ -143,12 +143,12 @@ var isEditorDirty;
 function initWriter() {
 	try {
 		ckEditor = CKEDITOR.replace( document.getElementById( 'PratilipiContent-Writer-Content' ), { 
-				height: 450
-				filebrowserImageBrowseUrl: '/filebrowser?folder=${ resourceFolder }&urlPrefix=/api.pratilipi/pratilipi/resource?pratilipiId=${ pratilipiData.getId()?c }&name=',
-				filebrowserImageUploadUrl: '/api.pratilipi/pratilipi/resource?pratilipiId=${ pratilipiData.getId()?c }',
+				height: 450,
+				filebrowserImageBrowseUrl: '/filebrowser?folder=${ resourceFolder }&urlPrefix=/api.pratilipi/pratilipi/resource?pratilipiId=${ pratilipiData.getId()?c }%26name=&embedMode=true',
+				filebrowserImageUploadUrl: '/api.pratilipi/pratilipi/resource?pratilipiId=${ pratilipiData.getId()?c }'
 				} ); 
 		CKEDITOR.config.toolbar = [
-				['Source','Format','Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],
+				['Format','Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],
 				['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Outdent','Indent'],
 				['NumberedList','BulletedList'],
 				['Blockquote','Smiley','HorizontalRule'],
@@ -164,6 +164,11 @@ function initWriter() {
 		CKEDITOR.on( 'dialogDefinition', function( ev ){
 			var dialogName = ev.data.name;
 			var dialogDefinition = ev.data.definition;
+			
+			dialogDefinition.onShow = function () {
+	            this.selectPage('Upload');
+	        };
+			
 			if ( dialogName == 'image' )
 			{
 				dialogDefinition.removeContents( 'advanced' );
@@ -225,14 +230,17 @@ function updateContent(){
 		getPage( pageNo );
 	}
 	else {
-		jQuery( '#PratilipiContent-Writer-Content' ).html( contentArray[ pageNo ] );
+		ckEditor.setData( contentArray[ pageNo ], function(){
+			ckEditor.updateElement();
+			ckEditor.resetDirty();	
+			jQuery( "#PratilipiContent-WriterBasic-SaveButton" ).removeClass( "bg-red" );
+			isEditorDirty = false;
+			ckEditor.resetUndo();
+		} );
+
 		loading( false );
 		pageNoDisplayed = pageNo;
 	}
-	
-	ckEditor.resetDirty();
-	ckEditor.resetUndo();
-	isEditorDirty = false; 
 }
 
 
