@@ -138,7 +138,16 @@
 			['Link','Unlink'],
 			['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'],
 			['ShowBlocks','Maximize']
-	];	
+	];
+	CKEDITOR.on( 'dialogDefinition', function( event ) {
+			var dialogName = event.data.name;
+			var dialogDefinition = event.data.definition;
+			if ( dialogName == 'image' )
+			{
+				dialogDefinition.removeContents( 'advanced' );
+				dialogDefinition.removeContents( 'Link' );
+			}
+	});
 	
 
 	scope.initLogin = function( e ) {
