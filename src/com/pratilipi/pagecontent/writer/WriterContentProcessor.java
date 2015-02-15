@@ -44,13 +44,44 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 	
 	@Override
 	public Resource[] getDependencies( WriterContent writerContent, HttpServletRequest request ) {
+		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-		if( pratilipiHelper.isModeBasic() )
+
+		String pratilipiIdStr = request.getParameter( "id" );
+		Long pratilipiId = Long.parseLong( pratilipiIdStr );
+		Pratilipi pratilipi = DataAccessorFactory
+				.getDataAccessor( request )
+				.getPratilipi( pratilipiId );
+
+
+		if( pratilipiHelper.isModeBasic() && pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
+			return new Resource[] {};
+
+		} else if( pratilipiHelper.isModeBasic() ) { // && pratilipi.getContentType() == PratilipiContentType.PRATILIPI
 			return new Resource[]{
 					ClaymusResource.JQUERY_1,
 					ClaymusResource.CKEDITOR,
 			};
-		else
+		
+
+		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE && ! pratilipiHelper.isModeBasic() ) {
+			return new Resource[] {
+					ClaymusResource.JQUERY_2,
+					ClaymusResource.POLYMER,
+					ClaymusResource.POLYMER_CORE_AJAX,
+					ClaymusResource.POLYMER_PAPER_INPUT,
+					ClaymusResource.POLYMER_PAPER_TOAST,
+					new Resource() {
+						
+						@Override
+						public String getTag() {
+							return "<link rel='import' href='/polymer/pagecontent-writer-image.html'>";
+						}
+						
+					},
+			};
+			
+		} else if( ! pratilipiHelper.isModeBasic() ) { // &&  pratilipi.getContentType() == PratilipiContentType.PRATILIPI
 			return new Resource[] {
 					ClaymusResource.JQUERY_2,
 					ClaymusResource.CKEDITOR,
@@ -65,6 +96,11 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 					ClaymusResource.POLYMER_PAPER_ICON_BUTTON,
 					ClaymusResource.POLYMER_PAPER_SLIDER,
 			};
+		
+		} else {
+			return new Resource[] {};
+		}
+		
 	}
 
 	@Override
@@ -155,9 +191,9 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 		dataModel.put( "resourceFolder", PratilipiContentHelper.getPratilipiResourceFolder( pratilipiId ) );
 		
 		
-		String templateName = pratilipiHelper.isModeBasic()
-				? getTemplateName().replace( ".ftl", "Basic.ftl" )
-				: getTemplateName();
+		String templateName = pratilipiData.getContentType() == PratilipiContentType.IMAGE
+				? getTemplateName( request ).replace( "WriterContent", "WriterContentImage" )
+				: getTemplateName( request );
 		
 		return FreeMarkerUtil.processTemplate( dataModel, templateName );
 	}
