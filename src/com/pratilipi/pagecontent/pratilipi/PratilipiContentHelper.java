@@ -354,6 +354,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 				pratilipi.setAuthorId( pratilipiData.getAuthorId() );
 			if( pratilipiData.hasPublisherId() )
 				pratilipi.setAuthorId( pratilipiData.getPublisherId() );
+			pratilipi.setContentType( PratilipiContentType.PRATILIPI );
 			pratilipi.setListingDate( new Date() );
 			pratilipi.setLastUpdated( new Date() );
 
@@ -389,11 +390,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 			pratilipi.setPageCount( pratilipiData.getPageCount() );
 		if( pratilipiData.hasState() )
 			pratilipi.setState( pratilipiData.getState() );
-		
-		if( pratilipiData.hasContentType() )
+		if( pratilipiData.hasContentType() && pratilipiData.getContentType() != null  )
 			pratilipi.setContentType( pratilipiData.getContentType() );
-		else if( pratilipiData.getContentType() == null )
-			pratilipi.setContentType( PratilipiContentType.PRATILIPI );
 
 		//TODO : CHANGE THIS ASAP
 		Long currentUserId = pratilipiHelper.getCurrentUserId();
