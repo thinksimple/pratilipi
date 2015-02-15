@@ -44,22 +44,42 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 	@Override
 	public Resource[] getDependencies( ReaderContent readerContent, HttpServletRequest request ) {
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-		if( pratilipiHelper.isModeBasic() )
+		
+		if( pratilipiHelper.isModeBasic() ) {
 			return new Resource[]{
 					ClaymusResource.JQUERY_1,
-		};
-		else
+			};
+		
+		} else {
 			return new Resource[] {
 					ClaymusResource.JQUERY_2,
 					ClaymusResource.POLYMER,
 					ClaymusResource.POLYMER_CORE_AJAX,
+					ClaymusResource.POLYMER_CORE_DRAWER_PANEL,
 					ClaymusResource.POLYMER_CORE_ICON_BUTTON,
 					ClaymusResource.POLYMER_CORE_TOOLBAR,
 					ClaymusResource.POLYMER_PAPER_DIALOG,
 					ClaymusResource.POLYMER_PAPER_FAB,
 					ClaymusResource.POLYMER_PAPER_ICON_BUTTON,
 					ClaymusResource.POLYMER_PAPER_SLIDER,
-		};
+					new Resource() {
+						
+						@Override
+						public String getTag() {
+							return "<link rel='import' href='/polymer/pagecontent-reader-menu.html'>";
+						}
+						
+					},
+					new Resource() {
+						
+						@Override
+						public String getTag() {
+							return "<link rel='import' href='/polymer/pagecontent-reader-navigation.html'>";
+						}
+						
+					},
+			};
+		}
 	}
 
 	@Override

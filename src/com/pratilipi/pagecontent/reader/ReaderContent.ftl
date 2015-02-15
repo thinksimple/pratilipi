@@ -1,76 +1,94 @@
 <!-- PageContent :: Reader :: Start -->
 
 
-<core-toolbar class="bg-green">
-	<paper-icon-button icon="arrow-back" title="Exit Reader" on-tap="{{performExit}}"></paper-icon-button>
-	<div flex>
-		${ pratilipiData.getTitle() }
+<core-drawer-panel rightDrawer>
+
+	<pagecontent-reader-menu
+			drawer style="background-color:white; overflow-y:auto"
+			pageNo="{{ pageNo }}"
+			pageCount="{{ pageCount }}"
+			on-change="{{ displayPage }}"
+			on-dec-text-size="{{ decTextSize }}"
+			on-inc-text-size="{{ incTextSize }}"></pagecontent-reader-menu>
+	
+	
+	<div main vertical layout>
+		<core-scroll-header-panel flex id="Polymer-Window">
+
+
+			<core-toolbar class="bg-green">
+				<paper-icon-button icon="arrow-back" title="Exit Reader" on-tap="{{performExit}}"></paper-icon-button>
+				<div flex>
+					${ pratilipiData.getTitle() }
+				</div>
+				<paper-icon-button core-drawer-toggle icon="reorder" title="Display Options"></paper-icon-button>
+			</core-toolbar>
+
+
+			<div horizontal center-justified layout class="bg-gray">
+				<#if pratilipiData.getContentType() == "PRATILIPI" >
+			
+					<div class="paper">
+						<div style="position:relative">
+							<#if contentSize??>
+								<div id="PageContent-Reader-Content" style="font-size:${ contentSize }"></div>
+							<#else>
+								<div id="PageContent-Reader-Content" ></div>
+							</#if>
+							<div id="PageContent-Reader-Overlay"></div>
+						</div>
+					</div>
+			
+				<#elseif pratilipiData.getContentType() == "IMAGE" >			
+			
+					<div class="paper" style="width:inherit; max-width:none; min-height:inherit; overflow-x:auto;">
+						<div style="position:relative">
+							<#if contentSize??>
+								<div id="PageContent-Reader-Content" style="width:${ contentSize }"></div>
+								<div id="PageContent-Reader-Overlay" style="width:${ contentSize }"></div>
+							<#else>
+								<div id="PageContent-Reader-Content"></div>
+								<div id="PageContent-Reader-Overlay"></div>
+							</#if>
+						</div>
+					</div>
+			
+				</#if>
+			</div>
+			
+			
+			<div class="bg-gray green" style="text-align:center;padding-bottom:16px;margin-bottom:65px;">
+				<b>{{ pageNo }} / ${ pageCount }</b>
+			</div>
+		
+		
+		</core-scroll-header-panel>
+		
+		
+		<div style="position:relative; margin-right:15px">
+			<pagecontent-reader-navigation
+					style="position:absolute; bottom:10px; width:100%"
+					pageNo="{{ pageNo }}"
+					pageCount="{{ pageCount }}"
+					on-change="{{ displayPage }}"></pagecontent-reader-navigation>
+		</div>
+		
+		
+		<#if pratilipiData.getContentType() == "PRATILIPI" >
+			<core-ajax
+					id="PageContent-Reader-Ajax"
+					url="/api.pratilipi/pratilipi/content"
+					contentType="application/json"
+					method="GET"
+					handleAs="json"
+					on-core-response="{{handleAjaxResponse}}"
+					on-core-error="{{handleAjaxError}}" ></core-ajax>
+		</#if>
+	
 	</div>
-	<paper-icon-button icon="reorder" title="Display Options" on-tap="{{displayOptions}}"></paper-icon-button>
-</core-toolbar>
-
-<div horizontal center-justified layout class="bg-gray">
-	<#if pratilipiData.getContentType() == "PRATILIPI" >
-
-		<div class="paper">
-			<div style="position:relative">
-				<#if contentSize??>
-					<div id="PageContent-Reader-Content" style="font-size:${ contentSize }"></div>
-				<#else>
-					<div id="PageContent-Reader-Content" ></div>
-				</#if>
-				<div id="PageContent-Reader-Overlay"></div>
-			</div>
-		</div>
-
-	<#elseif pratilipiData.getContentType() == "IMAGE" >			
-
-		<div class="paper" style="width:inherit; max-width:none; min-height:inherit; overflow-x:auto;">
-			<div style="position:relative">
-				<#if contentSize??>
-					<div id="PageContent-Reader-Content" style="width:${ contentSize }"></div>
-					<div id="PageContent-Reader-Overlay" style="width:${ contentSize }"></div>
-				<#else>
-					<div id="PageContent-Reader-Content"></div>
-					<div id="PageContent-Reader-Overlay"></div>
-				</#if>
-			</div>
-		</div>
-
-	</#if>
-</div>
-
-<div class="bg-gray green" style="text-align:center;padding-bottom:16px;margin-bottom:65px;">
-	<b>{{ pageNo }} / ${ pageCount }</b>
-</div>
 
 
-<div center horizontal layout id="PageContent-Reader-Navigation" style="position:fixed; bottom:10px; width:100%;">
-	<paper-slider flex pin="true" snaps="false" min="1" max="{{ pageCount > 1 ? pageCount : 2 }}" value="{{ pageNo }}" class="bg-green" style="width:100%" disabled="{{ pageCount == 1 }}" on-change="{{displayPage}}"></paper-slider>
-	<#if showEditOption>
-		<paper-fab mini icon="create" title="Edit" class="bg-green" style="margin-right:10px;" on-tap="{{goToWriter}}"></paper-fab>
-	</#if>
-	<paper-fab mini icon="chevron-left" title="Previous Page" class="bg-green" style="margin-right:10px;" disabled="{{ pageNo == 1 }}" on-tap="{{displayPrevious}}"></paper-fab>
-	<paper-fab mini icon="chevron-right" title="Next Page" class="bg-green" style="margin-right:25px;" disabled="{{ pageNo == pageCount }}" on-tap="{{displayNext}}"></paper-fab>
-</div>
-
-<paper-dialog id="PageContent-Reader-Options">
-	<div><b>Text Size</b></div>
-	<core-icon-button icon="remove" title="Decrease Text Size" on-tap="{{decTextSize}}"></core-icon-button>
-	<core-icon-button icon="add" title="Increase Text Size" on-tap="{{incTextSize}}"></core-icon-button>
-</paper-dialog>
-
-
-<#if pratilipiData.getContentType() == "PRATILIPI" >
-	<core-ajax
-			id="PageContent-Reader-Ajax"
-			url="/api.pratilipi/pratilipi/content"
-			contentType="application/json"
-			method="GET"
-			handleAs="json"
-			on-core-response="{{handleAjaxResponse}}"
-			on-core-error="{{handleAjaxError}}" ></core-ajax>
-</#if>
+</core-drawer-panel>
 
 
 <script>
@@ -116,13 +134,14 @@
 	
 	
 	jQuery( '#Polymer-Window' ).bind( 'scroll', function( e ) {
+		var navigation = jQuery( document.querySelector( 'pagecontent-reader-navigation' ) );
 		var bottom = jQuery( '.paper' ).position().top
 				+ jQuery( '.paper' ).outerHeight( true )
 				+ 66;
-		if( e.target.y > 60 && bottom > e.target.scrollHeight && jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
-			jQuery( '#PageContent-Reader-Navigation' ).fadeOut( 'fast' );
-		else if( ( e.target.y <= 60 || bottom <= e.target.scrollHeight ) && !jQuery( '#PageContent-Reader-Navigation' ).is( ':visible' ) )
-			jQuery( '#PageContent-Reader-Navigation' ).fadeIn( 'fast' );
+		if( e.target.y > 60 && bottom > e.target.scrollHeight && navigation.is( ':visible' ) )
+			navigation.fadeOut( 'fast' );
+		else if( ( e.target.y <= 60 || bottom <= e.target.scrollHeight ) && !navigation.is( ':visible' ) )
+			navigation.fadeIn( 'fast' );
 	});
 	
 	scope.displayOptions = function( e ) {
@@ -222,7 +241,7 @@
 		}
 		
 		
-		scope.decTextSize = function( e ) {
+		scope.decTextSize = function() {
 			var fontSize = parseInt( jQuery( '#PageContent-Reader-Content' ).css( 'font-size' ).replace( 'px', '' ) );
 			var newFontSize = fontSize - 2;
 			if( newFontSize < 10 )
@@ -232,7 +251,7 @@
 			setCookie( '${ contentSizeCookieName }', newFontSize + 'px', 365, '${ pratilipiData.getWriterPageUrl() }' );
 		};
 
-		scope.incTextSize = function( e ) {
+		scope.incTextSize = function() {
 			var fontSize = parseInt( jQuery( '#PageContent-Reader-Content' ).css( 'font-size' ).replace( 'px', '' ) );
 			var newFontSize = fontSize + 2;
 			if( newFontSize > 30 )
@@ -329,6 +348,7 @@
 		updateContent();
 		prefetchContent();
 		recordPageChangeEvent( 'PageLoad' );
+		document.querySelector( 'pagecontent-reader-menu' ).setIndex( JSON.parse( '${ pratilipiData.getIndex() ! '[]' }' ) );
 	});
 	
 </script>

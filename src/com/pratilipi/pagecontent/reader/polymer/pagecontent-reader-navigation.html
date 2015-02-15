@@ -1,0 +1,72 @@
+<polymer-element name="pagecontent-reader-navigation" attributes="pageNo pageCount">
+
+	<template>
+
+		<style>
+		
+			.indexItem {
+				padding: 10px;
+				cursor: pointer;
+			}
+			
+			.indexItem:hover {
+				background-color: #EEE;
+			}
+			
+			.selectedItem {
+				background-color: #DDD;
+			}
+		
+		</style>
+	
+	
+		<div center horizontal layout>
+			<paper-slider
+					flex class="bg-green"
+					pin="true" snaps="false"
+					min="1" max="{{ pageCount > 1 ? pageCount : 2 }}" value="{{ pageNo }}"
+					disabled="{{ pageCount == 1 }}"
+					on-change="{{ setPage }}"></paper-slider>
+			<paper-fab
+					mini class="bg-green" style="margin-right:10px"
+					icon="chevron-left" title="Previous Page"
+					disabled="{{ pageNo == 1 }}"
+					on-tap="{{ setPrevious }}"></paper-fab>
+			<paper-fab
+					mini class="bg-green" style="margin-right:10px"
+					icon="chevron-right" title="Next Page"
+					disabled="{{ pageNo == pageCount }}"
+					on-tap="{{ setNext }}"></paper-fab>
+		</div>
+
+
+	</template>
+
+
+	<script>
+
+		Polymer( 'pagecontent-reader-navigation', {
+		
+			setPage: function( e ) {
+				this.fire( 'change' );
+			},
+			
+			setPrevious: function( e ) {
+				if( this.pageNo > 1 ) {
+					this.pageNo--;
+					this.fire( 'change' );
+				}
+			},
+
+			setNext: function( e ) {
+				if( this.pageNo < this.pageCount ) {
+					this.pageNo++;
+					this.fire( 'change' );
+				}
+			},
+
+		});
+		
+	</script>
+	
+</polymer-element>

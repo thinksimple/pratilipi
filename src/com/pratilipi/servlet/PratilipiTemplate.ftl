@@ -109,14 +109,14 @@
 		<body fullbleed layout vertical>
 			<span id="Claymus-Loading">Loading...</span>
 			<template unresolved is="auto-binding" id="Polymer">
-				<core-scroll-header-panel flex id="Polymer-Window">
-					<#if websiteWidgetHtmlListMap["HEADER"] ??>
+				<#if websiteWidgetHtmlListMap["HEADER"] ??>
+					<core-scroll-header-panel flex id="Polymer-Window">
 						<core-toolbar>
 							<div flex>
 								Header
 							</div>
 						</core-toolbar>
-					</#if>
+				</#if>
 	</#if>
 		
 
@@ -131,7 +131,9 @@
 		</#if>
 			
 		<#if !basicMode>
-				</core-scroll-header-panel>
+				<#if websiteWidgetHtmlListMap["HEADER"] ??>
+					</core-scroll-header-panel>
+				</#if>
 			</template>
 		</#if>
 

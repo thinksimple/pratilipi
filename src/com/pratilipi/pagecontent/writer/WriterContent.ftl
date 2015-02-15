@@ -1,6 +1,9 @@
 <!-- PageContent :: Writer :: Start -->
 
 
+<core-scroll-header-panel flex id="Polymer-Window">
+
+
 <core-toolbar class="bg-green">
 	<paper-icon-button icon="arrow-back" title="Exit Writer" disabled="{{ disabled }}" on-tap="{{performExit}}"></paper-icon-button>
 	<div flex>${ pratilipiData.getTitle() }</div>
@@ -106,6 +109,9 @@
 		handleAs="json"
 		on-core-response="{{handleAjaxPutResponse}}"
 		on-core-error="{{handleAjaxPutError}}" ></core-ajax>
+
+
+</core-scroll-header-panel>
 
 
 <script>

@@ -1,0 +1,79 @@
+<polymer-element name="pagecontent-reader-menu" attributes="pageNo pageCount">
+
+	<template>
+
+		<style>
+		
+			.indexItem {
+				padding: 10px;
+				cursor: pointer;
+			}
+			
+			.indexItem:hover {
+				background-color: #EEE;
+			}
+			
+			.selectedItem {
+				background-color: #DDD;
+			}
+		
+		</style>
+	
+	
+		<div>
+			<h3>Text Size</h3>
+			<core-icon-button
+					style="margin-left:10px"
+					icon="remove"
+					title="Decrease Text Size"
+					on-tap="{{ decTextSize }}"></core-icon-button>
+			<core-icon-button
+					style="margin-right:10px"
+					icon="add"
+					title="Increase Text Size"
+					on-tap="{{ incTextSize }}"></core-icon-button>
+		</div>
+
+		<div>
+			<h3>Index</h3>
+			<template repeat="{{ item in index }}">
+				<template if="{{ item.title != '' && item.pageNo != '' }}">
+					<div class="{{ item.pageNo == pageNo ? 'indexItem selectedItem' : 'indexItem' }}" on-tap="{{ setPage }}">
+						{{ item.title }}
+					</div>
+				</template>
+			</template>
+		</div>
+
+	</template>
+
+
+	<script>
+
+		Polymer( 'pagecontent-reader-menu', {
+		
+			setIndex: function( index ) {
+				this.index = index;
+			},
+			
+			decTextSize: function( e ) {
+				this.fire( 'dec-text-size' );
+			},
+			
+			incTextSize: function( e ) {
+				this.fire( 'inc-text-size' );
+			},
+			
+			setPage: function( e ) {
+				pageNo = parseInt( e.target.templateInstance.model.item.pageNo );
+				if( pageNo != this.pageNo && pageNo >= 0 && pageNo <= this.pageCount ) {
+					this.pageNo = pageNo;
+					this.fire( 'change' );
+				}
+			},
+
+		});
+		
+	</script>
+	
+</polymer-element>
