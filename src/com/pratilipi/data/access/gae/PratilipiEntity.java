@@ -54,6 +54,9 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "SUMMARY" )
 	private Text summary;
 
+	@Persistent( column = "INDEX" )
+	private Text index;
+
 	@Persistent( column = "WORD_COUNT" )
 	private Long wordCount;
 
@@ -183,6 +186,16 @@ public class PratilipiEntity implements Pratilipi {
 	@Override
 	public void setSummary( String summary ) {
 		this.summary = summary == null ? null : new Text( summary );
+	}
+	
+	@Override
+	public String getIndex() {
+		return index == null ? null : index.getValue();
+	}
+
+	@Override
+	public void setIndex( String index ) {
+		this.index = index == null ? null : new Text( index );
 	}
 	
 	@Override

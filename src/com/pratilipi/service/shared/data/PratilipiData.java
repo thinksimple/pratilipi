@@ -64,6 +64,9 @@ public class PratilipiData implements IsSerializable {
 	private String summary;
 	private boolean hasSummary;
 	
+	private String index;
+	private boolean hasIndex;
+
 	private Long wordCount;
 	private boolean hasWordCount;
 	
@@ -345,7 +348,6 @@ public class PratilipiData implements IsSerializable {
 		return summary;
 	}
 	
-	
 	public void setSummary( String summary ) {
 		this.summary = summary;
 		this.hasSummary = true;
@@ -355,6 +357,19 @@ public class PratilipiData implements IsSerializable {
 		return hasSummary;
 	}
 	
+	public String getIndex() {
+		return index;
+	}
+	
+	public void setIndex( String index ) {
+		this.index = index;
+		this.hasIndex = true;
+	}
+
+	public boolean hasIndex() {
+		return hasIndex;
+	}
+
 	public Long getWordCount() {
 		return wordCount;
 	}

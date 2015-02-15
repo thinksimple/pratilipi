@@ -381,6 +381,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 			pratilipi.setPublicationYear( pratilipiData.getPublicationYear() );
 		if( pratilipiData.hasSummary() )
 			pratilipi.setSummary( pratilipiData.getSummary() );
+		if( pratilipiData.hasIndex() )
+			pratilipi.setIndex( pratilipiData.getIndex() );
 		if( pratilipiData.hasWordCount() )
 			pratilipi.setWordCount( pratilipiData.getWordCount() );
 		if( pratilipiData.hasPageCount() && hasRequestAccessToUpdatePratilipiMetaData( request ) )

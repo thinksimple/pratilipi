@@ -51,6 +51,10 @@ public interface Pratilipi extends Serializable {
 	
 	void setSummary( String summary );
 	
+	String getIndex();
+	
+	void setIndex( String index );
+	
 	Long getWordCount();
 	
 	void setWordCount( Long wordCount );

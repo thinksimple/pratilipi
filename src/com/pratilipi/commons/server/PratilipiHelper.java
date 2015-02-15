@@ -250,6 +250,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
 		
 		pratilipiData.setSummary( pratilipi.getSummary() );
+		pratilipiData.setIndex( pratilipi.getIndex() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		if( pratilipi.getContentType() != null )
 			pratilipiData.setContentType( pratilipi.getContentType() );
@@ -271,12 +272,10 @@ public class PratilipiHelper extends ClaymusHelper {
 
 	
 	public AuthorData createAuthorData( Long authorId ) {
+		if( authorId == null )
+			return null;
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Author author = dataAccessor.getAuthor( authorId );
-		
-		if( author == null )
-			return null;
-		
 		Language language = dataAccessor.getLanguage( author.getLanguageId() );
 		return createAuthorData( author, language );
 	}
