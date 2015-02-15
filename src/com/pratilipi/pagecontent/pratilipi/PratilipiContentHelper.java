@@ -387,10 +387,13 @@ public class PratilipiContentHelper extends PageContentHelper<
 			pratilipi.setWordCount( pratilipiData.getWordCount() );
 		if( pratilipiData.hasPageCount() && hasRequestAccessToUpdatePratilipiMetaData( request ) )
 			pratilipi.setPageCount( pratilipiData.getPageCount() );
-		if( pratilipiData.hasContentType() )
-			pratilipi.setContentType( pratilipiData.getContentType() );
 		if( pratilipiData.hasState() )
 			pratilipi.setState( pratilipiData.getState() );
+		
+		if( pratilipiData.hasContentType() )
+			pratilipi.setContentType( pratilipiData.getContentType() );
+		else if( pratilipiData.getContentType() == null )
+			pratilipi.setContentType( PratilipiContentType.PRATILIPI );
 
 		//TODO : CHANGE THIS ASAP
 		Long currentUserId = pratilipiHelper.getCurrentUserId();
