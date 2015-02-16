@@ -22,7 +22,7 @@
 			
 		<#-- Author data and edit options -->
 		<div class="col-lg-7 col-md-6 col-sm-9 col-xs-12" style="margin-bottom:15px;">
-			<h1 id="PageContent-Author-Name" style="text-align:center;" itemprop="name">${ authorData.getFullName() }</h1>
+			<h1 id="PageContent-Author-Name" style="text-align:center;" itemprop="name">${ authorData.getFullName() ! authorData.getFullNameEn() }</h1>
 			<h3 id="PageContent-Author-NameEn" style="text-align:center; margin-top:10px;" itemprop="alternateName">${ authorData.getFullNameEn() }</h3>
 			
 			<div id="PageContent-Author-Summary" style="margin-top:20px; margin-bottom:10px;" itemprop="description">

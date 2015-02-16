@@ -189,13 +189,16 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 	
 	private void setAuthorData( AuthorData authorData ) {
 		this.authorData = authorData;
-		dropdown.setTitle( authorData.getFullName() );
+		if( authorData.getFirstName() != null )
+			dropdown.setTitle( authorData.getFullName() );
+		else
+			dropdown.setTitle( authorData.getFullNameEn() );
 		authorNameEnPanel.getElement().setInnerText( authorData.getFullNameEn() );
 		authorSummaryPanel.getElement().setInnerHTML( authorData.getSummary() );
 		authorSummaryInput.setHtml( authorData.getSummary() );
 		authorDataInputView.setAuthorData( authorData );
 		authorImageUpload.setUploadUrl( authorData.getAuthorImageUrl() );
-		if( ! authorData.getPageUrlAlias().equals( Window.Location.getPath() ) )
+		if( authorData.getPageUrlAlias() != null && ! authorData.getPageUrlAlias().equals( Window.Location.getPath() ) )
 			Window.Location.assign( authorData.getPageUrlAlias() );
 	}
 
