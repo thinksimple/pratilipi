@@ -73,8 +73,6 @@ public class AuthorContentHelper extends PageContentHelper<
 	
 	public static boolean hasAuthorProfile( HttpServletRequest request, Long userId ){
 		
-		boolean hasAuthor = DataAccessorFactory.getDataAccessor( request ).getAuthorByUserId( userId ) == null ? false : true;
-		
 		return DataAccessorFactory.getDataAccessor( request ).getAuthorByUserId( userId ) == null ? false : true;
 	}
 	
@@ -89,7 +87,7 @@ public class AuthorContentHelper extends PageContentHelper<
 			author.setLastNameEn( user.getLastName() );
 			author.setUserId( user.getId() );
 			author.setRegistrationDate( new Date() );
-			author.setLanguageId( 5750790484393984L );
+			author.setLanguageId( 5130467284090880L );
 			
 			logger.log( Level.INFO, "Created Author Id : " + author.getId() );
 			author = dataAccessor.createOrUpdateAuthor( author );
