@@ -54,17 +54,32 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 				.getPratilipi( pratilipiId );
 
 
-		if( pratilipiHelper.isModeBasic() && pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
-			return new Resource[] {};
-
-		} else if( pratilipiHelper.isModeBasic() ) { // && pratilipi.getContentType() == PratilipiContentType.PRATILIPI
+		if( pratilipiHelper.isModeBasic() && pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 			return new Resource[]{
 					ClaymusResource.JQUERY_1,
 					ClaymusResource.CKEDITOR,
 			};
 		
+		} else if( pratilipiHelper.isModeBasic() && pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
+			return new Resource[] {};
 
-		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE && ! pratilipiHelper.isModeBasic() ) {
+		} else if( ! pratilipiHelper.isModeBasic() && pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
+			return new Resource[] {
+					ClaymusResource.JQUERY_2,
+					ClaymusResource.CKEDITOR,
+					ClaymusResource.POLYMER,
+					ClaymusResource.POLYMER_CORE_AJAX,
+					ClaymusResource.POLYMER_CORE_ICON_BUTTON,
+					ClaymusResource.POLYMER_CORE_TOOLBAR,
+					ClaymusResource.POLYMER_PAPER_ACTION_DIALOG,
+					ClaymusResource.POLYMER_PAPER_BUTTON,
+					ClaymusResource.POLYMER_PAPER_DIALOG,
+					ClaymusResource.POLYMER_PAPER_FAB,
+					ClaymusResource.POLYMER_PAPER_ICON_BUTTON,
+					ClaymusResource.POLYMER_PAPER_SLIDER,
+			};
+		
+		} else if( ! pratilipiHelper.isModeBasic() && pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
 			return new Resource[] {
 					ClaymusResource.JQUERY_2,
 					ClaymusResource.POLYMER,
@@ -81,22 +96,6 @@ public class WriterContentProcessor extends PageContentProcessor<WriterContent> 
 					},
 			};
 			
-		} else if( ! pratilipiHelper.isModeBasic() ) { // &&  pratilipi.getContentType() == PratilipiContentType.PRATILIPI
-			return new Resource[] {
-					ClaymusResource.JQUERY_2,
-					ClaymusResource.CKEDITOR,
-					ClaymusResource.POLYMER,
-					ClaymusResource.POLYMER_CORE_AJAX,
-					ClaymusResource.POLYMER_CORE_ICON_BUTTON,
-					ClaymusResource.POLYMER_CORE_TOOLBAR,
-					ClaymusResource.POLYMER_PAPER_ACTION_DIALOG,
-					ClaymusResource.POLYMER_PAPER_BUTTON,
-					ClaymusResource.POLYMER_PAPER_DIALOG,
-					ClaymusResource.POLYMER_PAPER_FAB,
-					ClaymusResource.POLYMER_PAPER_ICON_BUTTON,
-					ClaymusResource.POLYMER_PAPER_SLIDER,
-			};
-		
 		} else {
 			return new Resource[] {};
 		}

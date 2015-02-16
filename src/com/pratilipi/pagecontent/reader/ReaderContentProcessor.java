@@ -172,7 +172,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		if( request.getParameter( "ret" ) != null && !request.getParameter( "ret" ).trim().isEmpty()  )
 			dataModel.put( "exitUrl", request.getParameter( "ret" ) );
 
-		dataModel.put( "showEditOption", showEditOption && pratilipiData.getContentType() == PratilipiContentType.PRATILIPI );
+		dataModel.put( "showEditOption", showEditOption );
 
 		
 		String templateName = pratilipiHelper.isModeBasic()

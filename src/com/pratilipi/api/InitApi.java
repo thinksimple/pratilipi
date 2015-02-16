@@ -88,7 +88,7 @@ public class InitApi extends GenericApi {
 		Memcache memcache = new MemcacheGaeImpl();
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		String cursor = memcache.get( "InitApi" );
-		int pageSize = 200;
+		int pageSize = 100;
 		int count = 0;
 		int updateCount = 0;
 		while( true ) {
@@ -110,7 +110,7 @@ public class InitApi extends GenericApi {
 				}
 			}
 
-			if( pratilipiList.size() < pageSize || cursor == null || count > 100 )
+			if( pratilipiList.size() < pageSize || cursor == null || updateCount > 100 )
 				break;
 		}
 		memcache.put( "InitApi", cursor );

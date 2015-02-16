@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.data.access.Memcache;
 import com.claymus.data.transfer.Page;
-import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -252,10 +251,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setIndex( pratilipi.getIndex() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
-		if( pratilipi.getContentType() != null )
-			pratilipiData.setContentType( pratilipi.getContentType() );
-		else
-			pratilipiData.setContentType( pratilipi.getPageCount() == null || pratilipi.getPageCount() == 0L ? PratilipiContentType.PRATILIPI : PratilipiContentType.IMAGE );
+		pratilipiData.setContentType( pratilipi.getContentType() );
 		pratilipiData.setState( pratilipi.getState() );
 
 		List<Long> genreIdList = new ArrayList<>( genreList.size() );
