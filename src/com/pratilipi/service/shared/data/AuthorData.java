@@ -117,11 +117,26 @@ public class AuthorData implements IsSerializable {
 	}
 
 	public String getName() {
-		return firstName + ( lastName == null ? "" : " " + lastName );
+		if( firstName != null && lastName == null )
+			return firstName;
+		else if( firstName == null && lastName != null )
+			return lastName;
+		else if( firstName != null && lastName != null )
+			return firstName + " " + lastName;
+		else
+			return null;
 	}
 
 	public String getFullName() {
-		return penName == null ? getName() : getName() + " '" + penName + "'";
+		String name = getName();
+		if( name != null && penName == null )
+			return name;
+		else if( name == null && penName != null )
+			return penName;
+		else if( name != null && penName != null )
+			return name + " '" + penName + "'";
+		else
+			return null;
 	}
 
 	public String getFirstName() {

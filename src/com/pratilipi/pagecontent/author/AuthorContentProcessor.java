@@ -29,7 +29,10 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 	@Override
 	public String generateTitle( AuthorContent authorContent, HttpServletRequest request ) {
 		AuthorData authorData = PratilipiHelper.get( request ).createAuthorData( authorContent.getId() );
-		return authorData.getFullName() + " (" + authorData.getFullNameEn() + ")";
+		if( authorData.getFullName() != null )
+			return authorData.getFullName() + " (" + authorData.getFullNameEn() + ")";
+		else
+			return authorData.getFullNameEn();
 	}
 	
 	@Override
