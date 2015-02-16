@@ -51,13 +51,13 @@
 
 		<!-- Claymus Resources -->
 		<#if basicMode>
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?15022015">
-			<script type="text/javascript" language="javascript" src="/theme.default/script.js?15022015" defer></script>
-			<script type="text/javascript" language="javascript" src="/theme.default/script.basicmode.js?15022015" defer></script>
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?16022015">
+			<script type="text/javascript" language="javascript" src="/theme.default/script.js?16022015" defer></script>
+			<script type="text/javascript" language="javascript" src="/theme.default/script.basicmode.js?16022015" defer></script>
 		<#else>
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?15022015">
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.polymer.css?15022015">
-			<script type="text/javascript" language="javascript" src="/theme.default/script.js?15022015" defer></script>
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?16022015">
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.polymer.css?16022015">
+			<script type="text/javascript" language="javascript" src="/theme.default/script.js?16022015" defer></script>
 		</#if>
 
 		<!-- Pratilipi Resources -->

@@ -350,11 +350,11 @@ public class PratilipiContentHelper extends PageContentHelper<
 			auditLog.setEventId( ACCESS_TO_ADD_PRATILIPI_DATA.getId() );
 			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
 			
+			pratilipi.setContentType( PratilipiContentType.PRATILIPI );
 			if( pratilipiData.hasAuthorId() )
 				pratilipi.setAuthorId( pratilipiData.getAuthorId() );
 			if( pratilipiData.hasPublisherId() )
 				pratilipi.setAuthorId( pratilipiData.getPublisherId() );
-			pratilipi.setContentType( PratilipiContentType.PRATILIPI );
 			pratilipi.setListingDate( new Date() );
 			pratilipi.setLastUpdated( new Date() );
 

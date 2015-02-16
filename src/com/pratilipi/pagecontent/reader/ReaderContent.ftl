@@ -1,15 +1,17 @@
 <!-- PageContent :: Reader :: Start -->
 
 
-<core-drawer-panel rightDrawer>
+<core-drawer-panel rightDrawer responsiveWidth="1100px">
 
 	<pagecontent-reader-menu
-			drawer style="background-color:white; overflow-y:auto"
+			drawer class="bg-gray" style="overflow-y:auto"
 			pageNo="{{ pageNo }}"
 			pageCount="{{ pageCount }}"
-			on-change="{{ displayPage }}"
+			showEditOption="${ showEditOption?c }"
+			on-edit="{{ goToWriter }}"
 			on-dec-text-size="{{ decTextSize }}"
-			on-inc-text-size="{{ incTextSize }}"></pagecontent-reader-menu>
+			on-inc-text-size="{{ incTextSize }}"
+			on-change="{{ displayPage }}"></pagecontent-reader-menu>
 	
 	
 	<div main vertical layout>

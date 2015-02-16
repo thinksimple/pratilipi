@@ -1,49 +1,60 @@
-<polymer-element name="pagecontent-reader-menu" attributes="pageNo pageCount">
+<polymer-element name="pagecontent-reader-menu" attributes="pageNo pageCount showEditOption">
 
 	<template>
 
 		<style>
 		
-			.indexItem {
-				padding: 10px;
+			.menuItem {
+				padding-left: 10px;
 				cursor: pointer;
 			}
 			
-			.indexItem:hover {
-				background-color: #EEE;
+			.menuItem:hover {
+				background-color: #CCC;
 			}
 			
-			.selectedItem {
+			.indexItem {
+				padding: 10px;
+				padding-left: 20px;
+			}
+			
+			.selectedIndex {
 				background-color: #DDD;
 			}
 		
 		</style>
 	
 	
-		<div>
+		<div center horizontal layout hidden?="{{ showEditOption != 'true' }}" class="menuItem" on-tap="{{ editPratilipi }}">
+			<core-icon icon="create"></core-icon>
+			<h3>Edit</h3>
+		</div>
+
+		<div center horizontal layout class="menuItem">
+			<core-icon icon="settings"></core-icon>
 			<h3>Text Size</h3>
 			<core-icon-button
-					style="margin-left:10px"
 					icon="remove"
 					title="Decrease Text Size"
 					on-tap="{{ decTextSize }}"></core-icon-button>
 			<core-icon-button
-					style="margin-right:10px"
 					icon="add"
 					title="Increase Text Size"
 					on-tap="{{ incTextSize }}"></core-icon-button>
 		</div>
 
-		<div>
+		<div center horizontal layout hidden?="{{ index.length <= 0 }}" class="menuItem" on-tap="{{ toggleIndex }}">
+			<core-icon icon="toc"></core-icon>
 			<h3>Index</h3>
-			<template repeat="{{ item in index }}">
-				<template if="{{ item.title != '' && item.pageNo != '' }}">
-					<div class="{{ item.pageNo == pageNo ? 'indexItem selectedItem' : 'indexItem' }}" on-tap="{{ setPage }}">
-						{{ item.title }}
-					</div>
-				</template>
-			</template>
 		</div>
+
+		<core-collapse opened="true" hidden?="{{ index.length <= 0 }}" id="Index">
+			<template repeat="{{ item in index }}">
+				<div class="{{ item.pageNo == pageNo ? 'menuItem indexItem selectedIndex' : 'menuItem indexItem' }}" on-tap="{{ setPage }}">
+					{{ item.title }}
+				</div>
+			</template>
+		</core-collapse>
 
 	</template>
 
@@ -52,10 +63,10 @@
 
 		Polymer( 'pagecontent-reader-menu', {
 		
-			setIndex: function( index ) {
-				this.index = index;
+			editPratilipi: function( e ) {
+				this.fire( 'edit' );
 			},
-			
+
 			decTextSize: function( e ) {
 				this.fire( 'dec-text-size' );
 			},
@@ -64,6 +75,16 @@
 				this.fire( 'inc-text-size' );
 			},
 			
+			setIndex: function( index ) {
+				for( var i = 0; i < index.length; i++ )
+					if( index[i].title != '' && index[i].pageNo != '' )
+						this.index.push( index[i] );
+			},
+			
+			toggleIndex: function( e ) {
+				this.$.Index.toggle();
+			},
+
 			setPage: function( e ) {
 				pageNo = parseInt( e.target.templateInstance.model.item.pageNo );
 				if( pageNo != this.pageNo && pageNo >= 0 && pageNo <= this.pageCount ) {
@@ -71,7 +92,11 @@
 					this.fire( 'change' );
 				}
 			},
-
+			
+			ready: function() {
+				this.index = [];
+			},
+			
 		});
 		
 	</script>

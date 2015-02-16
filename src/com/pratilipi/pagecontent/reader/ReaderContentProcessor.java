@@ -55,6 +55,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 					ClaymusResource.JQUERY_2,
 					ClaymusResource.POLYMER,
 					ClaymusResource.POLYMER_CORE_AJAX,
+					ClaymusResource.POLYMER_CORE_COLLAPSE,
 					ClaymusResource.POLYMER_CORE_DRAWER_PANEL,
 					ClaymusResource.POLYMER_CORE_ICON_BUTTON,
 					ClaymusResource.POLYMER_CORE_TOOLBAR,
