@@ -167,6 +167,18 @@ public class DataAccessorGaeImpl
 		
 		return authorList.size() == 0 ? null : pm.detachCopy( authorList.get( 0 ) );
 	}
+	
+	@Override
+	public Author getAuthorByEmailId(String email) {
+		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
+		.addFilter( "email", email )
+		.build();
+
+		@SuppressWarnings("unchecked")
+		List<Author> authorList = (List<Author>) query.execute( email );
+		
+		return authorList.size() == 0 ? null : pm.detachCopy( authorList.get( 0 ) );
+	}
 
 	@Override
 	public DataListCursorTuple<Author> getAuthorList( String cursorStr, int resultCount ) {
@@ -406,5 +418,5 @@ public class DataAccessorGaeImpl
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
 		return createOrUpdateEntity( userPratilipi );
 	}
-	
+
 }

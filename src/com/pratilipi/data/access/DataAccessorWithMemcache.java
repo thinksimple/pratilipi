@@ -148,6 +148,12 @@ public class DataAccessorWithMemcache
 	}
 	
 	@Override
+	public Author getAuthorByEmailId(String email) {
+		//TODO : enable caching
+		return dataAccessor.getAuthorByEmailId( email );
+	}
+	
+	@Override
 	public DataListCursorTuple<Author> getAuthorList( String cursor, int resultCount ) {
 		// TODO: enable caching
 		return dataAccessor.getAuthorList( cursor, resultCount );
@@ -403,5 +409,6 @@ public class DataAccessorWithMemcache
 				PREFIX_USER_PRATILIPI_PURCHASE_LIST + userPratilipi.getUserId() );
 		return userPratilipi;
 	}
-	
+
+
 }
