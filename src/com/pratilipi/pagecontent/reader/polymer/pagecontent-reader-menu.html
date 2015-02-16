@@ -86,7 +86,7 @@
 			},
 
 			setPage: function( e ) {
-				pageNo = parseInt( e.target.templateInstance.model.item.pageNo );
+				pageNo = e.target.templateInstance.model.item.pageNo;
 				if( pageNo != this.pageNo && pageNo >= 0 && pageNo <= this.pageCount ) {
 					this.pageNo = pageNo;
 					this.fire( 'change' );

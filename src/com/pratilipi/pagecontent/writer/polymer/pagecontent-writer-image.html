@@ -63,7 +63,7 @@
 			setIndex: function( index ) {
 				var indexLength = index.length;
 				if( indexLength == 0 || index[ indexLength - 1 ].title != '' || index[ indexLength - 1 ].pageNo != '' )
-					index.push( { 'title':'', 'pageNo':'' } );
+					index.push( { title:'', pageNo:'' } );
 				this.index = index;
 			},
 
@@ -79,14 +79,28 @@
 			},
 
 			saveChanges: function( event ) {
+				var index = [];
+				for( var i = 0; i < this.index.length; i++ ) {
+					if( this.index[i].title != '' && this.index[i].pageNo == '' )
+						index.push( { title:this.index[i].title } );
+					else if( this.index[i].title == '' && this.index[i].pageNo != '' )
+						index.push( { pageNo:parseInt( this.index[i].pageNo ) } );
+					else if( this.index[i].title != '' && this.index[i].pageNo != '' )
+						index.push( { title:this.index[i].title, pageNo:parseInt( this.index[i].pageNo ) } );
+				}
+			
 				var ajaxPut = this.$.AjaxPut;
-				ajaxPut.body = JSON.stringify( { pratilipiId:this.pratilipiId, index:JSON.stringify( this.index ) } );
+				ajaxPut.body = JSON.stringify( { pratilipiId:this.pratilipiId, index:JSON.stringify( index ) } );
 				ajaxPut.go();
 				
 				var indexLength = this.index.length;
 				if( indexLength == 0 || this.index[ indexLength - 1 ].title != '' || this.index[ indexLength - 1 ].pageNo != '' )
-					this.index.push( { 'title':'', 'pageNo':'' } );
+					this.index.push( { title:'', pageNo:'' } );
 			},
+			
+			ready: function( event ) {
+				this.index = [];
+			}
 
 		});
 		
