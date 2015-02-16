@@ -466,6 +466,37 @@ public class PratilipiContentHelper extends PageContentHelper<
 				PratilipiContentHelper.hasRequestAccessToReadPratilipiMetaData( request ) );
 	}
 	
+	public static void updatePratilipiIndex( Long pratilipiId, HttpServletRequest request )
+			throws InvalidArgumentException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+
+		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
+			BlobEntry blobEntry = null;
+			try {
+				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+			if( blobEntry == null )
+				return;
+			
+			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+			pratilipi.setIndex( pratilipiContentUtil.generateIndex() );
+			dataAccessor.createOrUpdatePratilipi( pratilipi );
+
+		} else {
+			throw new InvalidArgumentException( "Index generation for " + pratilipi.getContentType() + " content type is not yet supported." );
+		}
+	}
+	
 	public static Object getPratilipiContent(
 			long pratilipiId, int pageNo, PratilipiContentType contentType,
 			HttpServletRequest request ) throws InvalidArgumentException,
