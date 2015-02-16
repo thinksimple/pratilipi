@@ -1,26 +1,19 @@
 package com.pratilipi.api;
 
-import java.util.Date;
-
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Get;
-import com.claymus.commons.shared.ClaymusPageType;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
-import com.claymus.data.transfer.Page;
-import com.claymus.data.transfer.PageContent;
-import com.claymus.pagecontent.pages.PagesContentHelper;
 import com.pratilipi.api.shared.GetInitRequest;
 import com.pratilipi.api.shared.GetInitResponse;
-import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
-import com.pratilipi.data.transfer.Event;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/init" )
 public class InitApi extends GenericApi {
+	
 
 	@Get
 	public GetInitResponse getInit( GetInitRequest request )
@@ -72,10 +65,46 @@ public class InitApi extends GenericApi {
 		}
 		return new GetInitResponse( page.getId().toString() );
 		
-		// END :: CREATE NEW PAGECONTENT :: END									*/
+		// END :: CREATE NEW PAGECONTENT :: END	*/
 
+		// Upadte ContentType function call
+//		String pratilipiList = updatePratilipi( this.getThreadLocalRequest(), null );
 		
-		return new GetInitResponse( "Nothing to initialize !" );
+		return new GetInitResponse( "No String passed" );
 	}
+	
+/*	// START :: UPDATE PRATILIPI CONTENTTYPE :: START	
+	private String updatePratilipi( HttpServletRequest request, String cursorStr ) 
+			throws InvalidArgumentException, InsufficientAccessException{
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		
+		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple =
+				dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, 200 );
+		
+		String cursorString = pratilipiListCursorTuple.getCursor();
+		
+		List<Pratilipi> pratilipiList =	pratilipiListCursorTuple.getDataList();
+		
+		for( Pratilipi pratilipi : pratilipiList ){
+			if( pratilipi.getContentType() == null || pratilipi.getContentType().name().isEmpty() ){
+				pratilipi.setContentType( 
+						pratilipi.getPageCount() == null || pratilipi.getPageCount() == 0L ? 
+								PratilipiContentType.PRATILIPI : PratilipiContentType.IMAGE );
+				PratilipiData pratilipiData = new PratilipiData();
+				pratilipiData.setId( pratilipi.getId() );
+				pratilipiData.setContentType( pratilipi.getContentType() );
+				PratilipiContentHelper.savePratilipi( pratilipiData, request );
+			}
+		}
+		
+		String pratilipiListString = updatePratilipi( request, cursorString );
+		
+		return pratilipiListString;
+	}
+	
+	// END :: UPDATE PRATILIPI CONTENTTYPE :: END
+	*/
 	
 }
