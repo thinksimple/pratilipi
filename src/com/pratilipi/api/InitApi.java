@@ -1,14 +1,26 @@
 package com.pratilipi.api;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Get;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
+import com.claymus.data.access.DataListCursorTuple;
+import com.claymus.data.access.Memcache;
+import com.claymus.data.access.MemcacheGaeImpl;
 import com.pratilipi.api.shared.GetInitRequest;
 import com.pratilipi.api.shared.GetInitResponse;
+import com.pratilipi.commons.shared.PratilipiContentType;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/init" )
@@ -21,6 +33,7 @@ public class InitApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 
+		
 		
 /*		// START :: CREATE NEW EVENT :: START
 		
@@ -43,6 +56,7 @@ public class InitApi extends GenericApi {
 
 		// END :: CREATE NEW EVENT :: END									*/
 
+		
 
 /*		// START :: CREATE NEW PAGECONTENT :: START
 
@@ -65,46 +79,48 @@ public class InitApi extends GenericApi {
 		}
 		return new GetInitResponse( page.getId().toString() );
 		
-		// END :: CREATE NEW PAGECONTENT :: END	*/
+		// END :: CREATE NEW PAGECONTENT :: END								*/
 
-		// Upadte ContentType function call
-//		String pratilipiList = updatePratilipi( this.getThreadLocalRequest(), null );
+		
+		
+/*		// START :: PRATILIPI TABLE BACKFILL :: START
+		
+		Memcache memcache = new MemcacheGaeImpl();
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		String cursor = memcache.get( "InitApi" );
+		int pageSize = 200;
+		int count = 0;
+		int updateCount = 0;
+		while( true ) {
+			DataListCursorTuple<Pratilipi> pratilipiListCursorTuple
+					= dataAccessor.getPratilipiList( pratilipiFilter, cursor, pageSize );
+
+			List<Pratilipi> pratilipiList =	pratilipiListCursorTuple.getDataList();
+			cursor = pratilipiListCursorTuple.getCursor();
+			
+			for( Pratilipi pratilipi : pratilipiList ) {
+				count++;
+				if( pratilipi.getContentType() == null ) {
+					pratilipi.setContentType( 
+							pratilipi.getPageCount() == null || pratilipi.getPageCount() == 0L
+									? PratilipiContentType.PRATILIPI
+									: PratilipiContentType.IMAGE );
+					dataAccessor.createOrUpdatePratilipi( pratilipi );
+					updateCount++;
+				}
+			}
+
+			if( pratilipiList.size() < pageSize || cursor == null || count > 100 )
+				break;
+		}
+		memcache.put( "InitApi", cursor );
+		return new GetInitResponse( "Entities Checked: " + count + ". Entities Updated: " + updateCount );
+		
+		// END :: PRATILIPI TABLE BACKFILL :: END							*/
+
+		
 		
 		return new GetInitResponse( "No String passed" );
 	}
-	
-/*	// START :: UPDATE PRATILIPI CONTENTTYPE :: START	
-	private String updatePratilipi( HttpServletRequest request, String cursorStr ) 
-			throws InvalidArgumentException, InsufficientAccessException{
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		
-		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple =
-				dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, 200 );
-		
-		String cursorString = pratilipiListCursorTuple.getCursor();
-		
-		List<Pratilipi> pratilipiList =	pratilipiListCursorTuple.getDataList();
-		
-		for( Pratilipi pratilipi : pratilipiList ){
-			if( pratilipi.getContentType() == null || pratilipi.getContentType().name().isEmpty() ){
-				pratilipi.setContentType( 
-						pratilipi.getPageCount() == null || pratilipi.getPageCount() == 0L ? 
-								PratilipiContentType.PRATILIPI : PratilipiContentType.IMAGE );
-				PratilipiData pratilipiData = new PratilipiData();
-				pratilipiData.setId( pratilipi.getId() );
-				pratilipiData.setContentType( pratilipi.getContentType() );
-				PratilipiContentHelper.savePratilipi( pratilipiData, request );
-			}
-		}
-		
-		String pratilipiListString = updatePratilipi( request, cursorString );
-		
-		return pratilipiListString;
-	}
-	
-	// END :: UPDATE PRATILIPI CONTENTTYPE :: END
-	*/
 	
 }
