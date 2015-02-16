@@ -222,7 +222,7 @@ public class PratilipiContentUtil {
 					index.add( indexItem );
 					
 				} else if( subTitle != null && !( subTitle = subTitle.trim() ).isEmpty() ) {
-					logger.log( Level.INFO, "Sub-Title Found: " + title );
+					logger.log( Level.INFO, "Sub-Title Found: " + subTitle );
 					JsonObject indexItem = new JsonObject();
 					indexItem.addProperty( "title", subTitle );
 					indexItem.addProperty( "pageNo", pageCount );
@@ -232,8 +232,6 @@ public class PratilipiContentUtil {
 			}
 			
 		}
-		
-		System.out.println(index);
 		
 		return gson.toJson( index );
 	}

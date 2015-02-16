@@ -18,6 +18,10 @@
 				padding-left: 20px;
 			}
 			
+			.indexSubItem {
+				padding-left: 30px;
+			}
+
 			.selectedIndex {
 				background-color: #DDD;
 			}
@@ -50,7 +54,7 @@
 
 		<core-collapse opened="true" hidden?="{{ index.length <= 0 }}" id="Index">
 			<template repeat="{{ item in index }}">
-				<div class="{{ item.pageNo == pageNo ? 'menuItem indexItem selectedIndex' : 'menuItem indexItem' }}" on-tap="{{ setPage }}">
+				<div class="menuItem indexItem {{ item.pageNo == pageNo ? 'selectedIndex' : '' }} {{ item.level == 1 ? 'indexSubItem' : '' }}" on-tap="{{ setPage }}">
 					{{ item.title }}
 				</div>
 			</template>
