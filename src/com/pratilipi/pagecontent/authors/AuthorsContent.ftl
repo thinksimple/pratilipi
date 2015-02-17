@@ -23,8 +23,8 @@
 		<tbody>
 			<#list authorList as author >
 				<#assign _authorName>
-					${ author.getFirstName() }<#if author.getLastName()??> ${ author.getLastName() }</#if>
-					(${ author.getFirstNameEn() }<#if author.getLastNameEn()??> ${ author.getLastNameEn() }</#if>)
+					<#if author.getFirstName()??> ${ author.getFirstName() }</#if><#if author.getLastName()??> ${ author.getLastName() }</#if>
+					(<#if author.getFirstNameEn()??> ${ author.getFirstNameEn() }</#if><#if author.getLastNameEn()??> ${ author.getLastNameEn() }</#if>)
 				</#assign>
 				<#assign _authorPenName>
 					<#if author.getPenName()??>${ author.getPenName() } </#if>
