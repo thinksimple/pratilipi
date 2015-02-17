@@ -261,7 +261,7 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 			unpublishAnchor.setVisible( false );
 		}
 		coverImageUpload.setUploadUrl( pratilipiData.getCoverImageUploadUrl() );
-		if( ! pratilipiData.getPageUrlAlias().equals( Window.Location.getPath() ) )
+		if( pratilipiData.getPageUrlAlias() != null && ! pratilipiData.getPageUrlAlias().equals( Window.Location.getPath() ) )
 			Window.Location.assign( pratilipiData.getPageUrlAlias() );
 	}
 

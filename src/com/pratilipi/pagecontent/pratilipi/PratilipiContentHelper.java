@@ -444,11 +444,13 @@ public class PratilipiContentHelper extends PageContentHelper<
 		if( pratilipiData.hasTitleEn() ) {
 			Page page = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipi.getId() );
 			Page authorPage = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), pratilipi.getAuthorId() );
-			String uriAlias = pratilipiHelper.generateUriAlias(
-					page.getUriAlias(), authorPage.getUriAlias() + "/", pratilipi.getTitleEn() );
-			if( ! uriAlias.equals( page.getUriAlias() ) ) {
-				page.setUriAlias( uriAlias );
-				page = dataAccessor.createOrUpdatePage( page );
+			if( authorPage.getUriAlias() != null ) {
+				String uriAlias = pratilipiHelper.generateUriAlias(
+						page.getUriAlias(), authorPage.getUriAlias() + "/", pratilipi.getTitleEn() );
+				if( ! uriAlias.equals( page.getUriAlias() ) ) {
+					page.setUriAlias( uriAlias );
+					page = dataAccessor.createOrUpdatePage( page );
+				}
 			}
 		}
 		
