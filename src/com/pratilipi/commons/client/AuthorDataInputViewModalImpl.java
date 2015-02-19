@@ -66,4 +66,12 @@ public class AuthorDataInputViewModalImpl extends AuthorDataInputView {
 		modal.setTitle( "Edit Author Info" );
 	}
 
+
+	@Override
+	public void setServerError(String error) { }
+
+
+	@Override
+	public void setVisibleServerError(boolean visible) { }
+
 }

@@ -69,6 +69,7 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 	
 	@Override
 	public void onClick( ClickEvent event ) {
+		authorsDataInputView.setVisibleServerError( false );
 		if( ! authorsDataInputView.validateInputs() )
 			return;
 		
@@ -80,6 +81,8 @@ public class AuthorsContent implements EntryPoint, ClickHandler {
 
 			@Override
 			public void onFailure( Throwable caught ) {
+				authorsDataInputView.setServerError( caught.getMessage() );
+				authorsDataInputView.setVisibleServerError( true );
 				authorsDataInputView.setEnabled( true );
 				addButton.setEnabled( true );
 			}

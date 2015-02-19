@@ -4,6 +4,8 @@ import com.claymus.commons.client.ui.formfield.ListBoxFormField;
 import com.claymus.commons.client.ui.formfield.TextInputFormField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.pratilipi.service.shared.data.AuthorData;
@@ -13,6 +15,7 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 	
 	private Panel panel = new FlowPanel();
 	
+	private Panel serverErrorRow = new FlowPanel();
 	private Panel firstNameRow = new FlowPanel();
 	private Panel lastNameRow = new FlowPanel();
 	private Panel penNameRow = new FlowPanel();
@@ -38,6 +41,8 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 	
 	private AuthorData authorData = null;
 	
+	//Server Error Msg
+	private Label serverError = new Label();
 	
 	public AuthorDataInputViewImpl(){
 		firstNameInput.setPlaceholder( "First Name" );
@@ -58,8 +63,13 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 		languageList.setPlaceholder( "Primary Language" );
 		emailInput.setPlaceholder( "Email" );
 
+		//Error Message styling
+		serverError.addStyleName( "alert alert-danger" );
+		serverError.getElement().setAttribute( "role", "alert") ;
+		serverError.setVisible( false );
 		
 		// Composing the widget
+		panel.add( serverErrorRow );
 		panel.add( firstNameRow );
 		panel.add( lastNameRow );
 		panel.add( penNameRow);
@@ -89,6 +99,8 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 		languageCol.add( languageList );
 		emailCol.add( emailInput );
 		
+		serverErrorRow.add( serverError );
+		
 		
 		// Setting required style classes
 		panel.addStyleName( "container-fluid" );
@@ -97,6 +109,7 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 		lastNameRow.addStyleName( "row" );
 		penNameRow.addStyleName( "row" );
 		languageEmailRow.addStyleName( "row" );
+		serverErrorRow.addStyleName( "row" );
 		
 		firstNameCol.addStyleName( "col-sm-4" );
 		firstNameEnCol.addStyleName( "col-sm-4" );
@@ -184,5 +197,17 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 		penNameEnInput.setText( authorData.getPenNameEn() );
 		emailInput.setText( authorData.getEmail() );
 	}
+	
+	@Override
+	public void setServerError( String error ){
+		this.serverError.getElement().removeAllChildren();
+		HTML msg = new HTML();
+		msg.setHTML( error );
+		this.serverError.getElement().appendChild( msg.getElement() );
+	}
 
+	@Override
+	public void setVisibleServerError( boolean visible ){
+		this.serverError.setVisible( visible );
+	}
 }

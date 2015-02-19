@@ -62,7 +62,7 @@ public interface PratilipiService extends RemoteService {
 
 	// API Version: 4.0; Owner Module: AuthorContent;
 	SaveAuthorResponse saveAuthor( SaveAuthorRequest request )
-			throws InsufficientAccessException;
+			throws InsufficientAccessException, InvalidArgumentException;
 
 	GetAuthorListResponse getAuthorList( GetAuthorListRequest request )
 			throws InsufficientAccessException;

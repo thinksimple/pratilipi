@@ -19,5 +19,8 @@ public abstract class AuthorDataInputView extends Composite {
 	public abstract AuthorData getAuthorData();
 
 	public abstract void setAuthorData( AuthorData authorData );
+	
+	public abstract void setServerError( String error );
 
+	public abstract void setVisibleServerError( boolean visible );
 }
