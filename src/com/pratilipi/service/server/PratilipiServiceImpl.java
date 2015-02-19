@@ -172,7 +172,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 	@Override
 	public SaveAuthorResponse saveAuthor( SaveAuthorRequest request )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, InvalidArgumentException {
 		
 		AuthorData authorData = request.getAuthor();
 		
@@ -184,6 +184,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 			if( ! AuthorContentHelper.hasRequestAccessToAddAuthorData( this.getThreadLocalRequest() ) )
 				throw new InsufficientAccessException();
+			
+			boolean isAuthorExist = dataAccessor.getAuthorByEmailId( authorData.getEmail() ) != null ?
+						true : false;
+			if( isAuthorExist )
+				throw new InvalidArgumentException( "This author is already registered !" );
 			
 			author = dataAccessor.newAuthor();
 			author.setRegistrationDate( new Date() );
