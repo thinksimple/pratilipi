@@ -242,7 +242,13 @@ public class RegistrationForm extends Composite {
 	
 	//Form validation functions
 	public boolean validateFirstName(){
-		if( validateForm.ValidateFirstName( getFirstName() ) ){
+		if( getFirstName().isEmpty() ){
+			setFirstNameErrorStyle();
+			setNameInputError("Please Enter Your Name");
+			showNameInputError();
+			return false;
+		}
+		else if( validateForm.ValidateFirstName( getFirstName() ) ){
 			setFirstNameErrorStyle();
 			setNameInputError("First Name cannot contain special characters and integers");
 			showNameInputError();
