@@ -218,8 +218,12 @@ public class PratilipiContentEditOptions implements EntryPoint, ClickHandler {
 	private void setPratilipiData( PratilipiData pratilipiData ) {
 		this.pratilipiData = pratilipiData;
 		dropdown.setTitle( pratilipiData.getTitle() );
-		if( authorNamePanel != null )
-			authorNamePanel.getElement().setInnerText( pratilipiData.getAuthorData().getFullName() );
+		if( authorNamePanel != null ){
+			if( pratilipiData.getAuthorData().getFullName() != null )
+				authorNamePanel.getElement().setInnerText( pratilipiData.getAuthorData().getFullName() );
+			else
+				authorNamePanel.getElement().setInnerText( pratilipiData.getAuthorData().getFullNameEn() );
+		}
 		pratilipiDataInputView.setPratilipiData( pratilipiData );
 		summaryPanel.getElement().setInnerHTML( pratilipiData.getSummary() );
 		summaryInput.setHtml( pratilipiData.getSummary() );

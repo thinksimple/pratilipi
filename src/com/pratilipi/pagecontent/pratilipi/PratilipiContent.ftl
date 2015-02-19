@@ -30,7 +30,7 @@
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-8" style="padding-bottom:15px;">
 			<h1 id="PageContent-Pratilipi-Title" itemprop="name">${ pratilipiData.getTitle() }</h1>
 			<#if pratilipiData.getAuthorData()??>
-				<h4><a href="${ pratilipiData.getAuthorData().getPageUrlAlias() }" id="PageContent-Pratilipi-AuthorName">${ pratilipiData.getAuthorData().getFullName() }</a></h4>
+				<h4><a href="${ pratilipiData.getAuthorData().getPageUrlAlias() ! pratilipiData.getAuthorData().getPageUrl() }" id="PageContent-Pratilipi-AuthorName">${ pratilipiData.getAuthorData().getFullName() ! pratilipiData.getAuthorData().getFullNameEn() }</a></h4>
 			</#if>
 			
 			<h5 id="PageContent-Pratilipi-GenreList">
