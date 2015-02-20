@@ -61,7 +61,9 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 
 		languageList.setRequired( true );
 		languageList.setPlaceholder( "Primary Language" );
+		
 		emailInput.setPlaceholder( "Email" );
+		emailInput.setRequired( true );
 
 		//Error Message styling
 		serverError.addStyleName( "alert alert-danger" );
