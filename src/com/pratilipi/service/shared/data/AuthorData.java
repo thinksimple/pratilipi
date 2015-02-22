@@ -136,7 +136,7 @@ public class AuthorData implements IsSerializable {
 		else if( name != null && penName != null )
 			return name + " '" + penName + "'";
 		else
-			return null;
+			return getFullNameEn() != null ? getFullNameEn() : email;
 	}
 
 	public String getFirstName() {
