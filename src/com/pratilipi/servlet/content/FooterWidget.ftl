@@ -1,11 +1,14 @@
 <div class="footer row clearfix">
 	<div class="container" style="padding-top:100px;">
 		<hr>
-		<ul class="col-md-3">
+		<ul class="col-md-2">
 			<li><a href="/faq">FAQ</a></li>
 		</ul>
-		<ul class="col-md-3">
+		<ul class="col-md-2">
 			<li><a href="/contact">Contact Us</a></li>
+		</ul>
+		<ul class="col-md-2" style="margin-left: 50px;">
+			<li><a href="/career">Join Us</a></li>
 		</ul>
 		<ul class="col-md-3">
 		</ul>
