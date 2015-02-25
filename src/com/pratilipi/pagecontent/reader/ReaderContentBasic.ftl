@@ -16,9 +16,11 @@
 			</td>
 			<td valign="middle" style="margin: 0px;">
 				<div style="float: right; margin-right: 10px; width: 100%">
-					<div id="Pratilipi-Reader-Basic-ContentTable-Button" class="PratilipiContent-ReaderBasic-button" onclick="showIndexDiv( event )">
-						<img src="/theme.pratilipi/images/buttons/menu-white.png" title="Table of Content">
-					</div>
+					<#if pratilipiData.getIndex()??>
+						<div id="Pratilipi-Reader-Basic-ContentTable-Button" class="PratilipiContent-ReaderBasic-button" onclick="showIndexDiv( event )">
+							<img src="/theme.pratilipi/images/buttons/menu-white.png" title="Table of Content">
+						</div>
+					</#if>
 					<div class="PratilipiContent-ReaderBasic-button" onclick="increaseSize()">
 						<img src="/theme.pratilipi/images/plus.png" title="Increase size">
 					</div>
@@ -31,7 +33,7 @@
 	</table>
 </div>
 <div id="Pratilipi-Reader-Basic-ContentTable">
-		<h3><img src='/theme.pratilipi/images/index.png' style="margin-bottom: 4px; margin-right: 5px;" title="Table of Content" />Index</h3>
+		<h3><img src='/theme.pratilipi/images/index.png' style="margin-bottom: 4px; margin-right: 5px;"/>Index</h3>
 </div>
 <div id="Pratilipi-Reader-Basic" class="bg-gray">
 	<table style="margin-left: auto; margin-right: auto;">
@@ -126,7 +128,7 @@
 		#Pratilipi-Reader-Basic-ContentTable{
 			display: none;
 			width:250px;
-			height: 100%;
+			height: 90%;
 		    z-index:2;
 		    float: right;
 		    position:absolute;
