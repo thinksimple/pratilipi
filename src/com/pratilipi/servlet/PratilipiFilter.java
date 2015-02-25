@@ -51,6 +51,7 @@ public class PratilipiFilter implements Filter {
 		redirections.put( "/give-away/Chandrakanta.pdf", "/book/5673309542809600" );
 
 		redirections.put( "/about", "/about/pratilipi" );
+		redirections.put( "/career", "/JoinTheGang" );
 
 		nonExistents.add( "/pagecontent.userforms/undefined.cache.js" );
 		nonExistents.add( "/pagecontent.pratilipi/undefined.cache.js" );

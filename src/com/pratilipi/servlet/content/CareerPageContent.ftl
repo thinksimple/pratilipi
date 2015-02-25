@@ -14,8 +14,12 @@
 				<b>Current Profiles:</b> Graphic Designer, Android Developer, Full Stack Engineer, Front end developer, Experiment Engineer, Marketing Head.
 			</P></br>
 			<p>
+				<b>What we offer:</b> Above market salary + way above market ESOPS + an opportunity to work on making India well read again.
+			</p></br>
+			<p>
 				<b>Referral Bonus:</b> Lifetime free books on Pratilpi. A phone to read these books on. Endless gratitude.
-			</p>
+			</p></br></br>
+			<i>If you are interested, drop a line to <a href="mailto:founders@pratilipi.com" target="_top">founders@pratilipi.com</a></i>
 		</div>
 	</div>
 	

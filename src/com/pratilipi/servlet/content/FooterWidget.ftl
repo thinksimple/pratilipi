@@ -8,7 +8,7 @@
 			<li><a href="/contact">Contact Us</a></li>
 		</ul>
 		<ul class="col-md-2" style="margin-left: 50px;">
-			<li><a href="/career">Join Us</a></li>
+			<li><a href="/JoinTheGang">Join The Gang</a></li>
 		</ul>
 		<ul class="col-md-3">
 		</ul>
