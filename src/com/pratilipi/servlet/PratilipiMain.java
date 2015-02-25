@@ -289,7 +289,7 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/about/the-founding-readers" ) )
 			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/AboutFoundingReadersPageContent.ftl" ) );
 		
-		else if( requestUri.equals( "/career" ) )
+		else if( requestUri.equals( "/JoinTheGang" ) )
 			pageContentList.add( generateHtmlContentFromFile( "WEB-INF/classes/com/pratilipi/servlet/content/CareerPageContent.ftl" ) );
 			
 		return pageContentList;
@@ -393,35 +393,35 @@ public class PratilipiMain extends ClaymusMain {
 	private PageContent generateHomePageContent( HttpServletRequest request ) {
 		
 		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 4803010119073792L );
-		bookIdList.add( 4815090553454592L );
-		bookIdList.add( 5097281816625152L );
-		bookIdList.add( 5688643247144960L );
-		bookIdList.add( 5483102621138944L );
-		bookIdList.add( 5152283100708864L );
+		bookIdList.add( 4840632421974016L );
+		bookIdList.add( 5170178417491968L );
+		bookIdList.add( 4855594745856000L );
+		bookIdList.add( 5704980631650304L );
+		bookIdList.add( 5091659838652416L );
+		bookIdList.add( 5761003044208640L );
 
 		List<Long> storyIdList = new LinkedList<>();
-		storyIdList.add( 5724332043010048L );
-		storyIdList.add( 5178669869826048L );
-		storyIdList.add( 5124898120794112L );
-		storyIdList.add( 6233002837278720L );
-		storyIdList.add( 5137614982086656L );
-		storyIdList.add( 5653852602761216L );
+		storyIdList.add( 5709300865433600L );
+		storyIdList.add( 5753416454242304L );
+		storyIdList.add( 4884967356104704L );
+		storyIdList.add( 5661232933634048L );
+		storyIdList.add( 5755489849704448L );
+		storyIdList.add( 5699802444595200L );
 		
 		List<Long> poemIdList = new LinkedList<>();
-		poemIdList.add( 5738221061275648L );
-		poemIdList.add( 5170582211526656L );
-		poemIdList.add( 6236920988303360L );
-		poemIdList.add( 5668955553267712L );
+		poemIdList.add( 5650323079168000L );
+		poemIdList.add( 5715088602300416L );
 		poemIdList.add( 5642720550846464L );
-		poemIdList.add( 5151617884094464L );
+		poemIdList.add( 5634110483595264L );
+		poemIdList.add( 5185244089024512L );
+		poemIdList.add( 5746386733629440L );
 
 		
 		HomeContent homeContent = HomeContentFactory.newHomeContent();
 		homeContent.setBookIdList( bookIdList );
 		homeContent.setPoemIdList( poemIdList );
 		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 123 ) );
+		homeContent.setLastUpdated( new Date( 126 ) );
 		return homeContent;
 	}
 
