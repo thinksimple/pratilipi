@@ -9,15 +9,27 @@
 		<div class="container">
 			<p>
 				Pratilipi is possibly India's fastest growing self-publishing and reading platform.
+				<br/><br/>
+				<div style="width:100%; text-align: center;">
+					<iframe width="500" height="315" align="middle"
+							src="http://www.youtube.com/embed/vr1mPXeSTQQ?modestbranding=1&autohide=1" frameborder="0">
+					</iframe>
+				</div>
 			</p>
 			<p>
-				<br/><br/><br/>
+				<br/><br/>
 				<b>For writers:</b> 
 				<br/><br/>
 				We provide a self publishing platform in various Indian languages, and provide you a bigger reach than almost any other player.
 				<br/><br/>
 				If you are a Hindi / Gujarati writer and if you want to become a part of Pratilipi family drop us a mail at shally@pratilipi.com and  If you are a Tamil writer drop us a mail at sankar@pratilipi.com
 				<br/><br/>
+				<div style="width:100%; text-align: center;">
+					<iframe width="500" height="315" align="middle"
+							src="http://www.youtube.com/embed/KLfAOuvEHhU?modestbranding=1&autohide=1" frameborder="0">
+					</iframe>
+				</div>
+				<br/><br/> 
 				<b>Copyright Declaration:</b>
 				<br/><br/>
 				All writers are mandatorily required to confirm that any content piece published by them is their own original writing and/or they own the copyright and the right for digital distribution for it.
