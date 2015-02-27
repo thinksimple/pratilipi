@@ -236,6 +236,9 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/stories/gujarati" ) )
 			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.STORY, 5965057007550464L, PratilipiState.PUBLISHED ) );
 		
+		else if( requestUri.equals( "/stories/tamil" ) )
+			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.STORY, 6319546696728576L, PratilipiState.PUBLISHED ) );
+		
 		else if( requestUri.equals( "/articles" ) )
 			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.ARTICLE, PratilipiState.PUBLISHED ) );
 		

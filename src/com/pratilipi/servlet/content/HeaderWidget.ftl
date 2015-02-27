@@ -84,6 +84,7 @@ function validateForm() {
                   <li><a href="/stories">All</a></li>
                   <li><a href="/stories/hindi">Hindi</a></li>
                   <li><a href="/stories/gujarati">Gujarati</a></li>
+                  <li><a href="/stories/tamil">Tamil</a></li>
                 </ul>
           	</li>
             <li class="dropdown">
