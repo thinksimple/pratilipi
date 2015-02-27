@@ -393,35 +393,35 @@ public class PratilipiMain extends ClaymusMain {
 	private PageContent generateHomePageContent( HttpServletRequest request ) {
 		
 		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 4840632421974016L );
-		bookIdList.add( 5170178417491968L );
-		bookIdList.add( 4855594745856000L );
-		bookIdList.add( 5704980631650304L );
-		bookIdList.add( 5091659838652416L );
-		bookIdList.add( 5761003044208640L );
+		bookIdList.add( 6026535974731776L );
+		bookIdList.add( 5710758973276160L );
+		bookIdList.add( 4803319927144448L );
+		bookIdList.add( 5726624213368832L );
+		bookIdList.add( 5693774122450944L );
+		bookIdList.add( 4815090553454592L );
 
 		List<Long> storyIdList = new LinkedList<>();
-		storyIdList.add( 5709300865433600L );
-		storyIdList.add( 5753416454242304L );
-		storyIdList.add( 4884967356104704L );
-		storyIdList.add( 5661232933634048L );
-		storyIdList.add( 5755489849704448L );
-		storyIdList.add( 5699802444595200L );
+		storyIdList.add( 5631703288643584L );
+		storyIdList.add( 5734385621925888L );
+		storyIdList.add( 5087344503816192L );
+		storyIdList.add( 5149226929487872L );
+		storyIdList.add( 5093206228205568L );
+		storyIdList.add( 6201027778838528L );
 		
 		List<Long> poemIdList = new LinkedList<>();
-		poemIdList.add( 5650323079168000L );
-		poemIdList.add( 5715088602300416L );
-		poemIdList.add( 5642720550846464L );
-		poemIdList.add( 5634110483595264L );
-		poemIdList.add( 5185244089024512L );
-		poemIdList.add( 5746386733629440L );
+		poemIdList.add( 5644045279821824L );
+		poemIdList.add( 5743861393522688L );
+		poemIdList.add( 5713476110516224L );
+		poemIdList.add( 4881972589494272L );
+		poemIdList.add( 4856752575086592L );
+		poemIdList.add( 5135695064596480L );
 
 		
 		HomeContent homeContent = HomeContentFactory.newHomeContent();
 		homeContent.setBookIdList( bookIdList );
 		homeContent.setPoemIdList( poemIdList );
 		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 126 ) );
+		homeContent.setLastUpdated( new Date( 127 ) );
 		return homeContent;
 	}
 
