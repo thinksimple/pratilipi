@@ -114,11 +114,20 @@ function validateForm() {
                   <li><a href="/about/the-founding-readers">The Founding Readers</a></li>
                 </ul>
             </li>
-            <li>
-              <a href="/author-interviews">Author Interviews</a>
-            </li>
-            <li>
-              <a href="/blog">Blog</a>
+            <li id="Header-Navigation-Menu" class="dropdown" onclick="menu( event, this );">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">More<span class="caret"></span></a>
+                <ul class="dropdown-custom" role="menu" aria-labelledby="dLabel">
+                  <li><a href="/author-interviews">Author Interviews</a></li>
+                  <li><a href="/blog">Blog</a></li>
+                  <li onclick="subMenu( event, this );" style="position:relative">
+		                <a>Events<span id="Header-Navigation-Submenu-Caret" class="caret-right"></span></a>
+		                <ul class="dropdown-subMenu">
+			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5724293958729728">Upado tamari kalam - Varta spardha</a></li>
+			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5641434644348928">Katha kadi</a></li>
+			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5085337277693952">Varta re varta </a></li>
+		                </ul>
+		          </li>
+                </ul>
             </li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -143,3 +152,127 @@ function validateForm() {
 		<div id="forgotPassword" class="modal-content" style="padding: 15px;"></div>
 	</div>
 </div>
+<style>
+	.caret-right {
+	    border-bottom: 4px solid transparent;
+	    border-top: 4px solid transparent;
+	    border-left: 4px solid;
+	    margin-left: 2px;
+	    display: inline-block;
+	    height: 0;
+	    opacity: 1;
+	    vertical-align: middle;
+	    width: 0;
+	}
+	
+	.dropdown-custom{
+		top: 100%;
+		left: 0px;
+		white-space: nowrap;
+	}
+	
+	.dropdown-subMenu {
+		top: 0px;
+	}
+	
+	.dropdown-subMenu, .dropdown-custom {
+		position: absolute;
+		display: none;
+		float: left;
+		z-index: 1000;
+		padding: 5px 0px;
+		margin: 2px 0px 0px;
+		font-size: 14px;
+		text-align: left;
+		list-style: outside none none;
+		background-color: white;
+		background-clip: padding-box;
+		border: 1px solid rgba(0, 0, 0, 0.15);
+		box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.176);
+	}
+	
+	.subMenuItem:hover, .subMenuItem:focus, .dropdown-custom li:hover, .dropdown-custom li:focus{
+		background-color: #F5F5F5;
+	}
+	
+	.subMenuItem a:hover, .subMenuItem a:focus, .dropdown-custom a:hover, .dropdown-custom a:focus{
+		text-decoration: none;
+	}
+	
+	.subMenuItem, .dropdown-custom li {
+		width: 100%;
+		text-align: left;
+		cursor: pointer; 
+		padding: 3px 20px;
+		clear: both;
+		font-weight: 400;
+		line-height: 1.42857;
+		white-space: nowrap;
+	}
+</style>
+
+<script language="javascript">
+	function menu( event, object ){
+		var event = event || window.event;
+		event.stopPropagation();
+		var offset = jQuery( object ).offset();
+		var right = offset.left + jQuery( object ).width();
+		var subMenuWidth = jQuery( object ).find( ".dropdown-subMenu" ).width();
+		
+		console.log( "Right : " + right );
+		console.log( "Left : " + offset.left );
+		console.log( "width : " + jQuery( object ).width() );
+		console.log( jQuery( window ).width() );
+		
+		if( jQuery( window ).width() > 760 && right + 200 >= jQuery( window ).width() ){
+			jQuery( object ).find( ".dropdown-subMenu" ).css( "right", "100%" );
+			jQuery( object ).find( ".dropdown-subMenu" ).css( "left", "" );
+			console.log( "This is working" );
+		}
+		else{
+			jQuery( object ).find( ".dropdown-subMenu" ).css( "right", "" );
+			jQuery( object ).find( ".dropdown-subMenu" ).css( "left", "100%" );
+			console.log( "This is not working" );
+		}
+		
+		if( jQuery( ".dropdown-custom" ).is( ":visible" ) ){
+			jQuery( "#Header-Navigation-Menu" ).removeClass( "open" );
+			jQuery( object ).find( ".dropdown-custom" ).hide();
+		}else{
+			jQuery( ".dropdown" ).removeClass( "open" );
+			jQuery( "#Header-Navigation-Menu" ).addClass( "open" );
+			jQuery( object ).find( ".dropdown-custom" ).show();
+		} 
+	}
+	
+	function subMenu( event, object ){
+		var event = event || window.event;
+		event.stopPropagation();
+		if( jQuery( ".dropdown-subMenu" ).is( ":visible" ) ){
+			jQuery( "#Header-Navigation-Submenu-Caret" ).removeClass( "caret" );
+			jQuery( "#Header-Navigation-Submenu-Caret" ).addClass( "caret-right" );
+			jQuery( object ).find( ".dropdown-subMenu" ).hide();
+		} else {
+			jQuery( "#Header-Navigation-Submenu-Caret" ).removeClass( "caret-right" );
+			jQuery( "#Header-Navigation-Submenu-Caret" ).addClass( "caret" );
+			jQuery( object ).find( ".dropdown-subMenu" ).show();
+		}
+	}
+	
+	function subMenuItemClick( event ){
+		var event = event || window.event;
+		event.stopPropagation();
+		jQuery( "#Header-Navigation-Menu" ).removeClass( "open" );
+		jQuery( ".dropdown-custom" ).hide();
+		jQuery( "#Header-Navigation-Submenu-Caret" ).removeClass( "caret" );
+		jQuery( "#Header-Navigation-Submenu-Caret" ).addClass( "caret-right" );
+		jQuery( ".dropdown-subMenu" ).hide();
+	}
+	
+	document.onclick = function(){
+		jQuery( ".dropdown-subMenu" ).hide();
+		jQuery( ".dropdown-custom" ).hide();
+		jQuery( "#Header-Navigation-Submenu-Caret" ).removeClass( "caret" );
+		jQuery( "#Header-Navigation-Submenu-Caret" ).addClass( "caret-right" );
+	};
+</script>
