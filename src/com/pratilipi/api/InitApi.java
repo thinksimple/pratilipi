@@ -1,26 +1,19 @@
 package com.pratilipi.api;
 
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Get;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
-import com.claymus.data.access.DataListCursorTuple;
-import com.claymus.data.access.Memcache;
-import com.claymus.data.access.MemcacheGaeImpl;
 import com.pratilipi.api.shared.GetInitRequest;
 import com.pratilipi.api.shared.GetInitResponse;
-import com.pratilipi.commons.shared.PratilipiContentType;
-import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
-import com.pratilipi.data.transfer.Pratilipi;
-import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
-import com.pratilipi.service.shared.data.PratilipiData;
+import com.pratilipi.data.transfer.EventPratilipi;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/init" )
@@ -117,7 +110,35 @@ public class InitApi extends GenericApi {
 		return new GetInitResponse( "Entities Checked: " + count + ". Entities Updated: " + updateCount );
 		
 		// END :: PRATILIPI TABLE BACKFILL :: END							*/
-
+		
+		
+/*		//START :: EVENT_PRATILIPI TABLE BACKFILL :: START
+		
+		List<Long> pratilipiIdList = new LinkedList<>();
+		pratilipiIdList.add( 5705015998021632L );
+		pratilipiIdList.add( 5653401597640704L );
+		pratilipiIdList.add( 5688274483937280L );
+		pratilipiIdList.add( 5717073850269696L );
+		pratilipiIdList.add( 5651817190916096L );
+		pratilipiIdList.add( 5723456272334848L );
+		pratilipiIdList.add( 5695064290361344L );
+		pratilipiIdList.add( 5647744857276416L );
+		pratilipiIdList.add( 5722400918339584L );
+		
+		int counter = 0;
+		
+		for( Long pratilipiId : pratilipiIdList ){
+			EventPratilipi eventPratilipi = dataAccessor.newEventPratilipi();
+			eventPratilipi.setEventId( 5641434644348928L );
+			eventPratilipi.setPratilipiId( pratilipiId );
+			eventPratilipi.setPraticipationDate( new Date() );
+			
+			dataAccessor.createOrUpdateEventPratilipi( eventPratilipi );
+			counter++;
+		}
+		
+		//END :: EVENT_PRATILIPI TABLE BACKFILL :: END
+*/
 		
 		
 		return new GetInitResponse( "No String passed" );
