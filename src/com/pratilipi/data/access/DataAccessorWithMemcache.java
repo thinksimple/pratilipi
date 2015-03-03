@@ -8,6 +8,7 @@ import com.claymus.data.access.Memcache;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Event;
+import com.pratilipi.data.transfer.EventPratilipi;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -28,6 +29,8 @@ public class DataAccessorWithMemcache
 	private static final String PREFIX_LANGUAGE_LIST = "LanguageList-";
 	private static final String PREFIX_AUTHOR = "Author-";
 	private static final String PREFIX_EVENT = "Event-";
+	private static final String PREFIX_EVENT_PRATILIPI = "EventPratilipi-";
+	private static final String PREFIX_EVENT_PRATILIPI_LIST = "EventPratilipiList-";
 	private static final String PREFIX_GENRE = "Genre-";
 	private static final String PREFIX_GENRE_LIST = "GenreList-";
 	private static final String PREFIX_PRATILIPI_GENRE = "PratilipiGenre-";
@@ -212,6 +215,49 @@ public class DataAccessorWithMemcache
 		event = dataAccessor.createOrUpdateEvent( event );
 		memcache.put( PREFIX_EVENT + event.getId(), event );
 		return event;
+	}
+	
+	
+	@Override
+	public EventPratilipi newEventPratilipi() {
+		return dataAccessor.newEventPratilipi();
+	}
+
+
+	@Override
+	public EventPratilipi createOrUpdateEventPratilipi(
+			EventPratilipi eventPratilipi) {
+		eventPratilipi = dataAccessor.createOrUpdateEventPratilipi( eventPratilipi );
+		memcache.put( PREFIX_EVENT_PRATILIPI + eventPratilipi.getId(), eventPratilipi );
+		memcache.remove( PREFIX_EVENT_PRATILIPI_LIST + eventPratilipi.getEventId() );
+		return eventPratilipi;
+	}
+
+
+	@Override
+	public List<EventPratilipi> getEventPratilipiListByEventId(Long eventId) {
+		List<EventPratilipi> eventPratilipiList =
+				memcache.get( PREFIX_EVENT_PRATILIPI_LIST + eventId );
+		if( eventPratilipiList == null ) {
+			eventPratilipiList =
+					dataAccessor.getEventPratilipiListByEventId( eventId );
+			memcache.put(
+					PREFIX_EVENT_PRATILIPI_LIST + eventId,
+					new ArrayList<>( eventPratilipiList ) );
+		}
+		return eventPratilipiList;
+	}
+	
+	@Override
+	public EventPratilipi getEventPratilipiByPratilipiId( Long pratilipiId ){
+		EventPratilipi eventPratilipi = memcache.get( PREFIX_EVENT_PRATILIPI + pratilipiId );
+		if( eventPratilipi == null ){
+			eventPratilipi = dataAccessor.getEventPratilipiByPratilipiId( pratilipiId );
+			memcache.put( PREFIX_EVENT_PRATILIPI + pratilipiId, eventPratilipi );
+		}
+		
+		return eventPratilipi;
+			
 	}
 
 	

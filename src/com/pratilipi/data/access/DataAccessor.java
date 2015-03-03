@@ -6,6 +6,7 @@ import com.claymus.data.access.DataListCursorTuple;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Event;
+import com.pratilipi.data.transfer.EventPratilipi;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -67,6 +68,15 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	Event getEvent( Long id );
 	
 	Event createOrUpdateEvent( Event event );
+	
+	
+	EventPratilipi newEventPratilipi();
+	
+	EventPratilipi createOrUpdateEventPratilipi( EventPratilipi eventPratilipi );
+	
+	List<EventPratilipi> getEventPratilipiListByEventId( Long eventId );
+	
+	EventPratilipi getEventPratilipiByPratilipiId( Long pratilipiId );
 
 	
 	Genre newGenre();

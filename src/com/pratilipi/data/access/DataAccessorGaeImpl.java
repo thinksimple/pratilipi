@@ -14,6 +14,7 @@ import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.access.gae.AuthorEntity;
 import com.pratilipi.data.access.gae.EventEntity;
+import com.pratilipi.data.access.gae.EventPratilipiEntity;
 import com.pratilipi.data.access.gae.GenreEntity;
 import com.pratilipi.data.access.gae.LanguageEntity;
 import com.pratilipi.data.access.gae.PratilipiAuthorEntity;
@@ -25,6 +26,7 @@ import com.pratilipi.data.access.gae.TagEntity;
 import com.pratilipi.data.access.gae.UserPratilipiEntity;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Event;
+import com.pratilipi.data.transfer.EventPratilipi;
 import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
@@ -263,6 +265,42 @@ public class DataAccessorGaeImpl
 	public Event createOrUpdateEvent( Event event ) {
 		return createOrUpdateEntity( event );
 	}
+	
+	
+	@Override
+	public EventPratilipi newEventPratilipi() {
+		return new EventPratilipiEntity();
+	}
+
+	@Override
+	public EventPratilipi createOrUpdateEventPratilipi( EventPratilipi eventPratilipi ) {
+		return createOrUpdateEntity( eventPratilipi );
+	}
+
+	@Override
+	public List<EventPratilipi> getEventPratilipiListByEventId( Long eventId ) {
+		Query query = new GaeQueryBuilder( pm.newQuery( EventPratilipiEntity.class ) )
+				.addFilter( "eventId", eventId )
+				.addOrdering( "praticipationDate", false )
+				.build();
+		
+		@SuppressWarnings("unchecked")
+		List<EventPratilipi> eventPratilipiList = (List<EventPratilipi>) query.execute( eventId );
+		
+		return ( List<EventPratilipi> ) pm.detachCopy( eventPratilipiList );
+	}
+	
+	@Override
+	public EventPratilipi getEventPratilipiByPratilipiId( Long pratilipiId ){
+		Query query = new GaeQueryBuilder( pm.newQuery( EventPratilipiEntity.class ) )
+				.addFilter( "pratilipiId", pratilipiId )
+				.build();
+		
+		@SuppressWarnings("unchecked")
+		List<EventPratilipi> eventPratilipiList = ( List<EventPratilipi> ) query.execute( pratilipiId );
+		
+		return eventPratilipiList.size() == 0 ? null : pm.detachCopy( eventPratilipiList.get(0));
+	}
 
 	
 	@Override
@@ -418,5 +456,6 @@ public class DataAccessorGaeImpl
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
 		return createOrUpdateEntity( userPratilipi );
 	}
+
 
 }
