@@ -33,6 +33,8 @@ import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Event;
+import com.pratilipi.data.transfer.EventPratilipi;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
@@ -155,8 +157,17 @@ public class PratilipiContentHelper extends PageContentHelper<
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 			
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			if( author != null && author.getUserId() != null )
-				return accessToken.getUserId().equals( author.getUserId() );
+			EventPratilipi eventPratilipi = dataAccessor.getEventPratilipiByPratilipiId( pratilipi.getId() );
+			Event event = null;
+			if( eventPratilipi != null )
+				event = dataAccessor.getEvent( eventPratilipi.getEventId() );
+			if( author != null && author.getUserId() != null ){
+				boolean isAuthor = accessToken.getUserId().equals( author.getUserId() );
+				boolean isEventOrganizer = false;
+				if( event != null && event.getUserId() != null )
+					isEventOrganizer = accessToken.getUserId().equals( event.getUserId() );
+				return isAuthor || isEventOrganizer;
+			}
 			
 			// Grant access to Publisher iff Author is not on-boarded.
 			Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
