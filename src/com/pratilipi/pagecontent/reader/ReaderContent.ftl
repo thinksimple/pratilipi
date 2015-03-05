@@ -104,12 +104,12 @@
 	var contentArray = [];
 	var isCtrl = false;
 	
-	var pageStartTime;
-	var campaign = '${ pratilipiData.getType() }' + ":" + '${ pratilipiData.getId()?c }';
+	var currentPage = ${ pageNo };
+	var pageStartTime = jQuery.now();
 	
 	
 	jQuery( window ).unload( function() {
-		recordPageTime( 'PageDurationInSec' );
+		recordPageTime();
 	} ); 
 	
 	jQuery( 'body' ).bind( 'contextmenu', function( event ) {
@@ -163,26 +163,26 @@
 
 
 	scope.displayPage = function( e ) {
-		recordPageTime( 'PageDurationInSec' );
 		updateAndPrefetchContent();
-		recordPageChangeEvent( 'SetPage' );
+		recordPageTime();
+		currentPage = scope.pageNo;
 	};
 	
 	scope.displayPrevious = function( e ) {
 		if( scope.pageNo > 1 ) {
-			recordPageTime( 'PageDurationInSec' );
 			scope.pageNo--;
 			updateAndPrefetchContent();
-			recordPageChangeEvent( 'PreviousPage' );
+			recordPageTime();
+			currentPage = scope.pageNo;
 		}
 	};
 
 	scope.displayNext = function( e ) {
 		if( scope.pageNo < scope.pageCount ) {
-			recordPageTime( 'PageDurationInSec' );
 			scope.pageNo++;
 			updateAndPrefetchContent();
-			recordPageChangeEvent( 'NextPage' );
+			recordPageTime();
+			currentPage = scope.pageNo;
 		}
 	};
     
@@ -326,21 +326,21 @@
 	</#if>
 	
 	
-	recordPageChangeEvent = function( eventAction ){
-		pageStartTime = jQuery.now()
-		ga( 'send', 'event', campaign, eventAction, 'Page ' + scope.pageNo );
-	};
-	
-	recordPageTime = function( eventAction ){
-		var currentTime = jQuery.now();
-		var timeDiff = currentTime - pageStartTime;
-		var pageNumber = 'Page ' + scope.pageNo;
-		if( timeDiff > 100 )
-			timeDiff = 0;
+	recordPageTime = function() {
+		var readTimeSec = parseInt( ( jQuery.now() - pageStartTime ) / 1000 );
+		pageStartTime = jQuery.now();
 		
-		if( timeDiff < 900000 )
-			timeDiff = 900000;
-		ga( 'send', 'event', campaign, eventAction, pageNumber, parseInt( timeDiff/1000 ));
+		if( readTimeSec < 2 )
+			return;
+
+		if( readTimeSec > 900 ) // 15 Min
+			readTimeSec = 900;
+
+		ga( 'send', 'event',
+			'Pratilipi:' + '${ pratilipiData.getId()?c }',	// Event Category
+			'ReadTimeSec:Page ' + currentPage,				// Event Action
+			'${ pratilipiData.getType() }',					// Event Label
+			readTimeSec );									// Event Value
 	}
 
 
@@ -349,7 +349,6 @@
 			return;
 		updateContent();
 		prefetchContent();
-		recordPageChangeEvent( 'PageLoad' );
 		document.querySelector( 'pagecontent-reader-menu' ).setIndex( JSON.parse( '${ pratilipiData.getIndex() ! '[]' }' ) );
 	});
 	
