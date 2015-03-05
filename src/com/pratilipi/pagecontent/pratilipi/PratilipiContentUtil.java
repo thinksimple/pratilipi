@@ -27,9 +27,9 @@ public class PratilipiContentUtil {
 			+ "<hr\\s+style=\"page-break-(before|after).+?>" // MS Word
 			);
 	private static final Pattern titlePattern = Pattern.compile(
-			"<h1.*?>(<.+?>)*(?<title>.+?)(<.+?>)*</h1>"
+			"<h1.*?>(<.+?>)*(?<title>.+?)(</.+?>)*</h1>"
 			+ "|"
-			+ "<h2.*?>(<.+?>)*(?<subTitle>.+?)(<.+?>)*</h2>" );
+			+ "<h2.*?>(<.+?>)*(?<subTitle>.+?)(</.+?>)*</h2>" );
 
 	
 	private String content;

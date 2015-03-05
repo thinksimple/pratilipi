@@ -29,7 +29,7 @@ public class PratilipiProcessApi extends GenericApi {
 		}
 		
 		if( request.processContent() ) {
-			if( pratilipi.getType() == PratilipiType.BOOK )
+			if( pratilipi.getType() == PratilipiType.BOOK || pratilipi.getType() == PratilipiType.MAGAZINE )
 				PratilipiContentHelper.updatePratilipiIndex( request.getPratilipiId(), this.getThreadLocalRequest() );
 		}
 		
