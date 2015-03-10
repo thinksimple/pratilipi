@@ -1,5 +1,7 @@
 package com.pratilipi.commons.shared;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class PratilipiFilter implements IsSerializable {
@@ -16,7 +18,9 @@ public class PratilipiFilter implements IsSerializable {
 
 	private PratilipiState state;
 	
+	private Date nextUpdateEnd;
 
+	
 	public PratilipiType getType() {
 		return type;
 	}
@@ -63,6 +67,14 @@ public class PratilipiFilter implements IsSerializable {
 
 	public void setState( PratilipiState state ) {
 		this.state = state;
+	}
+	
+	public Date getNextUpdateEnd() {
+		return nextUpdateEnd;
+	}
+
+	public void setNextUpdateEnd( Date nextUpdateEnd ) {
+		this.nextUpdateEnd = nextUpdateEnd;
 	}
 	
 }

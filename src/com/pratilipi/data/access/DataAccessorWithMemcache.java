@@ -71,14 +71,14 @@ public class DataAccessorWithMemcache
 
 	@Override
 	public DataListCursorTuple<Long> getPratilipiIdList(
-			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount ) {
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 		
 		return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, resultCount );
 	}
 	
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount ) {
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 
 		return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
 	}

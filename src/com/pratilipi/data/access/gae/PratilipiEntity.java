@@ -63,6 +63,9 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "PAGE_COUNT" )
 	private Long pageCount;
 	
+	@Persistent( column = "READ_COUNT" )
+	private Long readCount;
+	
 	@Persistent( column = "REVIEW_COUNT" )
 	private Long reviewCount;
 	
@@ -81,6 +84,9 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Persistent( column = "LAST_UPDATED" )
 	private Date lastUpdated;
+
+	@Persistent( column = "NEXT_UPDATE" )
+	private Date nextUpdate;
 
 	
 	@Override
@@ -219,6 +225,16 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
+	public Long getReadCount() {
+		return readCount == null ? 0L : readCount;
+	}
+
+	@Override
+	public void setReadCount( Long readCount ) {
+		this.readCount = readCount;
+	}
+	
+	@Override
 	public Long getReviewCount() {
 		return reviewCount;
 	}
@@ -276,6 +292,16 @@ public class PratilipiEntity implements Pratilipi {
 	@Override
 	public void setLastUpdated( Date lastUpdated ) {
 		this.lastUpdated = lastUpdated;
+	}
+
+	@Override
+	public Date getNextUpdate() {
+		return nextUpdate;
+	}
+
+	@Override
+	public void setNextUpdate( Date nextUpdate ) {
+		this.nextUpdate = nextUpdate;
 	}
 
 }

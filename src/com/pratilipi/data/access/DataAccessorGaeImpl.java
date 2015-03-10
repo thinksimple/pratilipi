@@ -9,6 +9,7 @@ import javax.jdo.Query;
 
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.access.GaeQueryBuilder;
+import com.claymus.data.access.GaeQueryBuilder.Operator;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.commons.shared.PratilipiFilter;
@@ -59,14 +60,14 @@ public class DataAccessorGaeImpl
 
 	@Override
 	public DataListCursorTuple<Long> getPratilipiIdList(
-			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount ) {
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 		
 		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, true );
 	}
 	
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiFilter pratilipiFilter, String cursorStr, int resultCount ) {
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 		
 		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, false );
 	}
@@ -74,12 +75,10 @@ public class DataAccessorGaeImpl
 	@SuppressWarnings("unchecked")
 	private <T> DataListCursorTuple<T> getPratilipiList(
 			PratilipiFilter pratilipiFilter, String cursorStr,
-			int resultCount, boolean idOnly ) {
+			Integer resultCount, boolean idOnly ) {
 		
 		GaeQueryBuilder gaeQueryBuilder =
-				new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) )
-						.addOrdering( "title", true )
-						.setRange( 0, resultCount );
+				new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
 
 		if( pratilipiFilter.getType() != null )
 			gaeQueryBuilder.addFilter( "type", pratilipiFilter.getType() );
@@ -93,6 +92,14 @@ public class DataAccessorGaeImpl
 			gaeQueryBuilder.addFilter( "publisherId", pratilipiFilter.getPublisherId() );
 		if( pratilipiFilter.getState() != null )
 			gaeQueryBuilder.addFilter( "state", pratilipiFilter.getState() );
+		if( pratilipiFilter.getNextUpdateEnd() != null ) {
+			gaeQueryBuilder.addFilter( "nextUpdate", pratilipiFilter.getNextUpdateEnd(), Operator.LESS_THAN_OR_EQUAL );
+			gaeQueryBuilder.addOrdering( "nextUpdate", true );
+		}
+		
+		gaeQueryBuilder.addOrdering( "readCount", false );
+		if( resultCount != null )
+			gaeQueryBuilder.setRange( 0, resultCount );
 		
 		Query query = gaeQueryBuilder.build();
 		if( cursorStr != null ) {

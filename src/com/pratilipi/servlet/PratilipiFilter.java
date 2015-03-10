@@ -81,7 +81,11 @@ public class PratilipiFilter implements Filter {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
 		
-		if( nonExistents.contains( requestUri ) ) {
+		if( requestUri.startsWith( "/api." ) ) {
+			chain.doFilter( request, response );
+		
+			
+		} else if( nonExistents.contains( requestUri ) ) {
 			response.setStatus( HttpServletResponse.SC_NOT_FOUND );
 
 		
