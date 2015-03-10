@@ -11,6 +11,7 @@ public class PratilipiProcessPostRequest extends GenericRequest {
 
 	private Boolean processData;
 	private Boolean processContent;
+	private Boolean updateStats;
 	
 
 	public Long getPratilipiId() {
@@ -23,6 +24,10 @@ public class PratilipiProcessPostRequest extends GenericRequest {
 	
 	public boolean processContent() {
 		return processContent == null ? false : processContent;
+	}
+
+	public boolean updateStats() {
+		return updateStats == null ? false : updateStats;
 	}
 
 }

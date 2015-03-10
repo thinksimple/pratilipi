@@ -19,11 +19,14 @@
 		</attributes>
 	</classpathentry>
 
-	<!-- Google Cloud Storage integration -->
+	<!-- Google Cloud Storage API -->
 	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/storage-v1r22lv1.18.0-rc"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-gcs-client-0.4.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-17.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-2.4.jar"/>
+
+	<!-- Google Analytics API -->
+	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/analytics-v3r112lv1.18.0-rc"/>
 
 	<!-- Google Drive SDK -->
 	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/drive-v2r154lv1.18.0-rc"/>
