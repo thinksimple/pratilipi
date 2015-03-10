@@ -70,6 +70,7 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		if( request.updateStats() ) {
 			PratilipiContentHelper.updatePratilipiStats( request.getPratilipiId(), this.getThreadLocalRequest() );
+			PratilipiContentHelper.updatePratilipiSearchIndex( request.getPratilipiId(), null, this.getThreadLocalRequest() );
 		}
 		
 		return new GenericResponse();

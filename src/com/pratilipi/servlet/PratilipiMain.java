@@ -417,7 +417,7 @@ public class PratilipiMain extends ClaymusMain {
 		poemIdList.add( 6227279692693504L );
 		poemIdList.add( 5185244089024512L );
 		poemIdList.add( 5728306397708288L );
-		poemIdList.add( 5657184826294272L );
+		poemIdList.add( 6203856820109312L );
 
 		
 		HomeContent homeContent = HomeContentFactory.newHomeContent();
