@@ -84,6 +84,14 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	
 		PratilipiData pratilipiData = request.getPratilipiData();
 		pratilipiData = PratilipiContentHelper.savePratilipi( pratilipiData, this.getThreadLocalRequest() );
+		
+		Task task = TaskQueueFactory.newTask()
+				.addParam( "pratilipiId", pratilipiData.getId().toString() )
+				.addParam( "processData", "true" )
+				.setUrl( "/api.pratilipi/pratilipi/process" );
+		TaskQueueFactory.getPratilipiTaskQueue().add( task );
+
+		
 		return new SavePratilipiResponse( pratilipiData );
 	}
 	

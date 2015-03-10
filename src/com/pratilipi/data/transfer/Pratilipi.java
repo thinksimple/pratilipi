@@ -79,6 +79,10 @@ public interface Pratilipi extends Serializable {
 	
 	void setStarCount( Long starCount );
 	
+	Long getRelevanceOffset();
+
+	void setRelevanceOffset( Long relevanceOffset );
+	
 	PratilipiContentType getContentType();
 	
 	void setContentType( PratilipiContentType contentType );

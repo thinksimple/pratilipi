@@ -91,19 +91,6 @@
     </retry-parameters>
   </queue>
   
-  <!-- Updates search index for PratilipiData. -->
-  <queue>
-    <name>update-index-pratilipi</name>
-    <rate>1/s</rate>
-    <bucket-size>1</bucket-size>
-    <max-concurrent-requests>1</max-concurrent-requests>
-    <retry-parameters>
-      <task-age-limit>90d</task-age-limit>
-      <min-backoff-seconds>300</min-backoff-seconds>
-      <max-backoff-seconds>300</max-backoff-seconds>
-    </retry-parameters>
-  </queue>
-  
   <!-- Updates search index for AuthorData. -->
   <queue>
     <name>update-index-author</name>

@@ -494,8 +494,6 @@ public class PratilipiContentHelper extends PageContentHelper<
 		task.addParam( "pratilipiId", pratilipi.getId().toString() );
 		// Creating/Updating default cover image
 		TaskQueueFactory.getCreateOrUpdateDefaultCoverTaskQueue().add( task );
-		// Creating/Updating search index
-		TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
 
 		
 		return pratilipiHelper.createPratilipiData(

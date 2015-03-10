@@ -73,12 +73,18 @@ public class PratilipiData implements IsSerializable {
 	private Long pageCount;
 	private boolean hasPageCount;
 	
+	private Long readCount;
+	
 	private Long reviewCount;
 	
 	private Long ratingCount;
 	
 	private Long starCount;
 	
+	private Long relevanceOffset;
+	
+	private Long relevance;
+
 	private PratilipiContentType contentType;
 	private boolean hasContentType;
 	
@@ -396,6 +402,14 @@ public class PratilipiData implements IsSerializable {
 		return hasPageCount;
 	}
 	
+	public Long getReadCount() {
+		return readCount;
+	}
+
+	public void setReadCount( Long readCount ) {
+		this.readCount = readCount;
+	}
+	
 	public Long getReviewCount() {
 		return reviewCount;
 	}
@@ -418,6 +432,22 @@ public class PratilipiData implements IsSerializable {
 
 	public void setStarCount(Long starCount) {
 		//this.starCount = starCount;
+	}
+	
+	public Long getRelevanceOffset() {
+		return relevanceOffset;
+	}
+
+	public void setRelevanceOffset( Long relevanceOffset ) {
+		this.relevanceOffset = relevanceOffset;
+	}
+	
+	public Long getRelevance() {
+		return relevance;
+	}
+
+	public void setRelevance( Long relevance ) {
+		this.relevance = relevance;
 	}
 	
 	public PratilipiContentType getContentType() {

@@ -251,15 +251,6 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>QueueUpdatePratilipiIndexServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.QueueUpdatePratilipiIndexServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>QueueUpdatePratilipiIndexServlet</servlet-name>
-    <url-pattern>/_ah/queue/update-index-pratilipi</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
     <servlet-name>QueueUpdateAuthorIndexServlet</servlet-name>
     <servlet-class>com.pratilipi.servlet.QueueUpdateAuthorIndexServlet</servlet-class>
   </servlet>

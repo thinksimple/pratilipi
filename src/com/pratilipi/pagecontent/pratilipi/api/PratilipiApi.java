@@ -6,10 +6,12 @@ import com.claymus.api.annotation.Put;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
+import com.claymus.taskqueue.Task;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipi.api.shared.PutPratilipiRequest;
 import com.pratilipi.pagecontent.pratilipi.api.shared.PutPratilipiResponse;
 import com.pratilipi.service.shared.data.PratilipiData;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi" )
@@ -29,7 +31,15 @@ public class PratilipiApi extends GenericApi {
 		pratilipiData = PratilipiContentHelper.savePratilipi(
 				pratilipiData,
 				this.getThreadLocalRequest() );
-			
+		
+		
+		Task task = TaskQueueFactory.newTask()
+				.addParam( "pratilipiId", pratilipiData.getId().toString() )
+				.addParam( "processData", "true" )
+				.setUrl( "/api.pratilipi/pratilipi/process" );
+		TaskQueueFactory.getPratilipiTaskQueue().add( task );
+		
+		
 		return new PutPratilipiResponse();
 	}		
 

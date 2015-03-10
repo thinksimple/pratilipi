@@ -75,6 +75,9 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "STAR_COUNT" )
 	private Long starCount;
 
+	@Persistent( column = "RELEVANCE_OFFSET" )
+	private Long relevanceOffset;
+	
 
 	@Persistent( column = "CONTENT_TYPE" )
 	private PratilipiContentType contentType;
@@ -262,6 +265,16 @@ public class PratilipiEntity implements Pratilipi {
 	@Override
 	public void setStarCount( Long starCount ) {
 		this.starCount = starCount;
+	}
+	
+	@Override
+	public Long getRelevanceOffset() {
+		return relevanceOffset == null ? 0L : relevanceOffset;
+	}
+
+	@Override
+	public void setRelevanceOffset( Long relevanceOffset ) {
+		this.relevanceOffset = relevanceOffset;
 	}
 	
 	@Override
