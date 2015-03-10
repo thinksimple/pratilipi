@@ -2,6 +2,7 @@ package com.pratilipi.pagecontent.pratilipi;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,11 +30,20 @@ import com.google.api.services.analytics.Analytics;
 import com.google.api.services.analytics.Analytics.Data.Ga.Get;
 import com.google.api.services.analytics.AnalyticsScopes;
 import com.google.api.services.analytics.model.GaData;
+import com.google.appengine.api.search.Document;
+import com.google.appengine.api.search.Document.Builder;
+import com.google.appengine.api.search.Field;
+import com.google.appengine.api.search.Index;
+import com.google.appengine.api.search.IndexSpec;
+import com.google.appengine.api.search.PutException;
+import com.google.appengine.api.search.SearchServiceFactory;
+import com.google.appengine.api.search.StatusCode;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiAccessTokenType;
 import com.pratilipi.commons.shared.PratilipiContentType;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
@@ -42,7 +52,10 @@ import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Event;
 import com.pratilipi.data.transfer.EventPratilipi;
+import com.pratilipi.data.transfer.Genre;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
@@ -61,6 +74,10 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 	private static final Gson gson = new GsonBuilder().create();
 
+	private static final Index searchIndex = SearchServiceFactory
+			.getSearchService()
+			.getIndex( IndexSpec.newBuilder().setName( ClaymusHelper.SEARCH_INDEX_NAME ) );
+	
 	
 	private static final String CONTENT_FOLDER 		 = "pratilipi-content/pratilipi";
 	private static final String IMAGE_CONTENT_FOLDER = "pratilipi-content/image";
@@ -562,6 +579,107 @@ public class PratilipiContentHelper extends PageContentHelper<
 			pratilipi.setNextUpdate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
 		}
 		dataAccessor.createOrUpdatePratilipi( pratilipi );
+	}
+	
+	public static void updatePratilipiSearchIndex( Long pratilipiId, Long authorId, HttpServletRequest request )
+			throws InvalidArgumentException, UnexpectedServerException {
+		
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		
+		List<Pratilipi> pratilipiList = null;
+		
+		if( authorId != null ) {
+			PratilipiFilter pratilipiFilter = new PratilipiFilter();
+			pratilipiFilter.setAuthorId( authorId );
+			pratilipiFilter.setState( PratilipiState.PUBLISHED );
+			pratilipiList = dataAccessor
+					.getPratilipiList( pratilipiFilter, null, null )
+					.getDataList();
+			
+		} else if( pratilipiId != null ) {
+			pratilipiList = new ArrayList<>( 1 );
+			pratilipiList.add( dataAccessor.getPratilipi( pratilipiId ) );
+			
+		} else {
+			logger.log( Level.SEVERE, "Neither AuthorId, nor PratilipiId is provided !" );
+			throw new InvalidArgumentException( "Neither AuthorId, nor PratilipiId is provided !" );
+		}
+		
+		List<Document> documentList = new ArrayList<>( pratilipiList.size() );
+		for( Pratilipi pratilipi : pratilipiList ) {
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
+			List<PratilipiGenre> pratilipiGenreList = dataAccessor.getPratilipiGenreList( pratilipi.getId() );
+			
+			List<Genre> genreList = new ArrayList<>( pratilipiGenreList.size() );
+			for( PratilipiGenre pratilipiGenre : pratilipiGenreList )
+				genreList.add( dataAccessor.getGenre( pratilipiGenre.getGenreId() ) );
+			
+			PratilipiData pratilipiData =
+					pratilipiHelper.createPratilipiData( pratilipi, language, author, genreList );
+			String docId = "PratilipiData:" + pratilipiData.getId().toString();
+			
+			if( pratilipiData.getState() == PratilipiState.PUBLISHED ) {
+			
+				Builder docBuilder = Document.newBuilder()
+						.setId( docId )
+						.addField( Field.newBuilder().setName( "docId" ).setAtom( pratilipiData.getId().toString() ) )
+						
+						.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi" ) )
+						.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi-" + pratilipiData.getType().getName() ) )
+
+						.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitle() ) )
+						.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitleEn() ) )
+	
+						.addField( Field.newBuilder().setName( "language" ).setAtom( pratilipiData.getLanguageId().toString() ) )
+						.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getName() ) )
+						.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getNameEn() ) )
+						
+						.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) )
+						
+						.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+						.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
+						
+						.addField( Field.newBuilder().setName( "relevance" ).setAtom( pratilipiData.getRelevance().toString() ) )
+						;
+				
+				if( author != null )
+					docBuilder.addField( Field.newBuilder().setName( "author" ).setAtom( pratilipiData.getAuthorId().toString() ) )
+							.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullName() ) )
+							.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) )
+							;
+
+				for( Genre genre : genreList )
+					docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genre.getId().toString() ) )
+							.addField( Field.newBuilder().setName( "genre" ).setText( genre.getName() ) )
+							;
+				
+				Document document = docBuilder.build();
+				
+				documentList.add( document );
+				
+			} else {
+				searchIndex.delete( docId );
+			}
+			
+		}
+		
+		
+		for( int i = 0; i < documentList.size(); i = i + 200 ) {
+			try {
+				searchIndex.put( documentList.subList( i, i + 200 > documentList.size() ? documentList.size() : i + 200 ) );
+
+			} catch( PutException e ) {
+				if( StatusCode.TRANSIENT_ERROR.equals( e.getOperationResult().getCode() ) ) {
+					i = i - 200;
+				} else {
+					logger.log( Level.SEVERE, "Exception while updating search index.", e );
+					throw new UnexpectedServerException();
+				}
+			}
+		}
+
 	}
 	
 	public static Object getPratilipiContent(
