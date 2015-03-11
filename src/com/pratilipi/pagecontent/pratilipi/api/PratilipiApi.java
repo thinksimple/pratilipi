@@ -36,7 +36,7 @@ public class PratilipiApi extends GenericApi {
 		Task task = TaskQueueFactory.newTask()
 				.addParam( "pratilipiId", pratilipiData.getId().toString() )
 				.addParam( "processData", "true" )
-				.setUrl( "/api.pratilipi/pratilipi/process" );
+				.setUrl( "/pratilipi/process" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 		
 		
