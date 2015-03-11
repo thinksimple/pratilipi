@@ -4,9 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.claymus.commons.shared.exception.UnexpectedServerException;
+import com.claymus.data.access.DataListCursorTuple;
+import com.google.appengine.api.search.Cursor;
 import com.google.appengine.api.search.Document;
 import com.google.appengine.api.search.Document.Builder;
 import com.google.appengine.api.search.Field;
+import com.google.appengine.api.search.Results;
+import com.google.appengine.api.search.ScoredDocument;
+import com.google.appengine.api.search.SortExpression;
+import com.google.appengine.api.search.SortOptions;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class SearchAccessorGaeImpl
@@ -19,6 +26,39 @@ public class SearchAccessorGaeImpl
 	}
 
 	
+	@Override
+	public DataListCursorTuple<Long> searchPratilipi( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
+		SortOptions sortOptions = SortOptions.newBuilder()
+				.addSortExpression( SortExpression.newBuilder()
+						.setExpression( "relevance" )
+						.setDirection( SortExpression.SortDirection.DESCENDING )
+						.setDefaultValueNumeric( -999999999 ) )
+				.setLimit( 10000 )
+				.build();
+
+		
+		String searchQuery = pratilipiFilter.getType() == null
+				? "docType:Pratilipi"
+				: "docType:Pratilipi-" + pratilipiFilter.getType();
+
+		if( pratilipiFilter.getLanguageId() != null )
+			searchQuery = searchQuery + " AND language:" + pratilipiFilter.getLanguageId();
+
+		if( pratilipiFilter.getAuthorId() != null )
+			searchQuery = searchQuery + " AND author:" + pratilipiFilter.getAuthorId();
+
+		
+		Results<ScoredDocument> result = search( searchQuery, sortOptions, cursorStr, resultCount, "docId" );
+		
+		List<Long> pratilipiIdList = new ArrayList<>( result.getNumberReturned() ); 
+		for( ScoredDocument document : result )
+			pratilipiIdList.add( Long.parseLong( document.getFields( "docId" ).iterator().next().getAtom() ) );
+		
+		Cursor cursor = result.getCursor();
+		
+		return new DataListCursorTuple<Long>( pratilipiIdList, cursor == null ? null : cursor.toWebSafeString() );
+	}
+
 	@Override
 	public void indexPratilipiData( PratilipiData pratilipiData ) throws UnexpectedServerException {
 		indexDocument( createDocument( pratilipiData ) );
@@ -61,7 +101,7 @@ public class SearchAccessorGaeImpl
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
 				
-				.addField( Field.newBuilder().setName( "relevance" ).setAtom( pratilipiData.getRelevance().toString() ) );
+				.addField( Field.newBuilder().setName( "relevance" ).setNumber( pratilipiData.getRelevance() ) );
 		
 		if( pratilipiData.getAuthorId() != null )
 			docBuilder.addField( Field.newBuilder().setName( "author" ).setAtom( pratilipiData.getAuthorId().toString() ) )

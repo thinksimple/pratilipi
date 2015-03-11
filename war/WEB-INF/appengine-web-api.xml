@@ -41,6 +41,10 @@
 	<!-- Configure Blob Storage -->
     <property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
     <property name="prod-pratilipi.blobservice.gcs.bucket" value="static.pratilipi.com"/>
+
+	<!-- Configure Search Index -->
+    <property name="devo-pratilipi.searchservice.gae.index" value="GLOBAL_INDEX"/>
+    <property name="prod-pratilipi.searchservice.gae.index" value="GLOBAL_INDEX"/>
   </system-properties>
 
 </appengine-web-app>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 
-  <application>devo-pratilipi</application>
+  <application>prod-pratilipi</application>
   <module>default</module>
-  <version>mark-4p151</version>
+  <version>mark-4p152</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>
@@ -49,6 +49,10 @@
 	<!-- Configure Blob Storage -->
     <property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
     <property name="prod-pratilipi.blobservice.gcs.bucket" value="static.pratilipi.com"/>
+
+	<!-- Configure Search Index -->
+    <property name="devo-pratilipi.searchservice.gae.index" value="GLOBAL_INDEX"/>
+    <property name="prod-pratilipi.searchservice.gae.index" value="GLOBAL_INDEX"/>
   </system-properties>
 
 </appengine-web-app>
