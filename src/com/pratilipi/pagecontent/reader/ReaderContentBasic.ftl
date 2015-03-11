@@ -167,9 +167,9 @@
 
 var pageNo = ${ pageNo };
 var pageCount = ${ pageCount };
-var pageNoDisplayed;
+var pageNoDisplayed = ${ pageNo };
 var contentArray = [];
-var pageStartTime;		//Initialized in recordPageChangeEvent
+var pageStartTime = new Date();
 var campaign = '${ pratilipiData.getType() }' + ":" + '${ pratilipiData.getId()?c }';
 
 function setPageNo(){
@@ -409,11 +409,10 @@ function markSelectedIndex(){
 
 function indexClicked( pageNumber ){
 	if( pageNumber != pageNo && pageNumber <= pageCount ){
-		recordPageTime( 'PageDurationInSec' );
+		recordPageTime();
 		pageNo = parseInt( pageNumber );
 		pageNoDisplayed = 0;
 		updateDisplay();
-		recordPageChangeEvent( 'IndexClicked' );
 	}
 }
 
@@ -421,11 +420,10 @@ function indexClicked( pageNumber ){
 
 function displayNextPage() {
 	if( pageNo < pageCount ){
-		recordPageTime( 'PageDurationInSec' );
+		recordPageTime();
 		pageNo = parseInt( pageNo ) + 1;
 		pageNoDisplayed = 0;
 		updateDisplay();
-		recordPageChangeEvent( 'NextPage' );
 	}
 	else
 		alert( "You have reached last page" );
@@ -433,11 +431,10 @@ function displayNextPage() {
 
 function displayPreviousPage() {
 	if( pageNo > 1 ){
-		recordPageTime( 'PageDurationInSec' );
+		recordPageTime();
 		pageNo = parseInt( pageNo ) - 1;
 		pageNoDisplayed = 0;
 		updateDisplay();
-		recordPageChangeEvent( 'PreviousPage' );
 	}
 	else
 		alert( "This is first page" );
@@ -454,24 +451,23 @@ function goToWriter(){
 	window.location.href="${ pratilipiData.getWriterPageUrl() }";
 }
 
-
-function recordPageChangeEvent( eventAction ) {
+function recordPageTime(){
+	var currentTime = new Date();
+	var readTimeSec = parseInt( ( currentTime.getTime() - pageStartTime.getTime() )/1000 );
 	pageStartTime = new Date();
 	var pageNumber = 'Page ' + pageNo;
-	ga( 'send', 'event', campaign, eventAction, pageNumber );
-}
-
-function recordPageTime( eventAction ){
-	var currentTime = new Date();
-	var timeDiff = currentTime.getTime() - pageStartTime.getTime();
-	var pageNumber = 'Page ' + pageNo;
-	if( timeDiff > 100 )
-		timeDiff = 0;
+	console.log( "Record Page Time : " + readTimeSec );
+	if( readTimeSec < 2 )
+		return;
 	
-	if( timeDiff < 900000 )
-		timeDiff = 900000;
+	if( readTimeSec > 900 ) // 15 Min
+		readTimeSec = 900;
 	
-	ga( 'send', 'event', campaign, eventAction, pageNumber, parseInt( timeDiff/1000 ));
+	var eventCategory = 'Pratilipi:' + '${ pratilipiData.getId()?c }';
+	var eventAction = 'ReadTimeSec:Page ' + pageNoDisplayed;
+	var eventLabel = '${ pratilipiData.getType() }';
+	
+	ga( 'send', 'event', eventCategory, eventAction, eventLabel, readTimeSec );
 }
 
 var pageNumberDiv = document.getElementById( "PratilipiContent-Reader-PageNumber-Div" );
@@ -492,16 +488,15 @@ pageNoInputBox.onclick = function( e ){
 	e.stopPropagation();
 };
 pageNoInputBox.onkeydown = function( e ){
-	console.log( e.keyCode );
 	if( e.keyCode == 13 ){
 		e.preventDefault();
 		var pageNumber = this.value;
 		displayPageNumberDiv.style.display = 'block';
 		editPageNumberDiv.style.display = 'none';
 		if( !isNaN( pageNumber ) && pageNumber >= 1 && pageNumber <= pageCount ){
+			recordPageTime();
 			pageNo = parseInt( this.value );
 			updateDisplay();
-			recordPageChangeEvent( 'GOTO Page' );
 		}
 	}
 	
@@ -522,16 +517,15 @@ document.onclick = function( e ) {
 pageNoSubmitButton.onclick = function( e ){
 	var pageNumber  = pageNoInputBox.value;
 	if( !isNaN( pageNumber ) && pageNumber >= 1 && pageNumber <= pageCount ){
+		recordPageTime();
 		pageNo = parseInt( pageNumber );
 		updateDisplay();
-		recordPageChangeEvent( 'GOTO Page' );
 	}
 };
 
 
 if( window.attachEvent) {//for IE8 and below
 	window.attachEvent( 'onload', function( event ){
-		recordPageChangeEvent( 'PageLoad' );
 		var isCtrl = false;
 		document.onkeyup=function(e)
 		{
@@ -559,12 +553,11 @@ if( window.attachEvent) {//for IE8 and below
 	});
 	
 	window.attachEvent( 'onunload', function( event ){
-		recordPageTime( 'PageDurationInSec' );
+		recordPageTime();
 	});
 }
 else {
 	window.addEventListener( 'load', function( event ){
-		recordPageChangeEvent( 'PageLoad' );
 		var isCtrl = false;
 		document.onkeyup=function(e)
 		{
@@ -591,7 +584,7 @@ else {
 	});
 	
 	window.addEventListener( 'unload', function( event ) {
-		recordPageTime( 'PageDurationInSec' );
+		recordPageTime();
 	});
 }
 
