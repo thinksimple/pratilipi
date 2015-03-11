@@ -3,9 +3,7 @@ package com.pratilipi.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -38,7 +36,6 @@ import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.event.EventContentHelper;
 import com.pratilipi.pagecontent.genres.GenresContentHelper;
-import com.pratilipi.pagecontent.home.HomeContent;
 import com.pratilipi.pagecontent.home.HomeContentFactory;
 import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
@@ -48,7 +45,6 @@ import com.pratilipi.pagecontent.reader.ReaderContentHelper;
 import com.pratilipi.pagecontent.search.SearchContentHelper;
 import com.pratilipi.pagecontent.uploadcontent.UploadContentFactory;
 import com.pratilipi.pagecontent.writer.WriterContentHelper;
-
 
 @SuppressWarnings("serial")
 public class PratilipiMain extends ClaymusMain {
@@ -81,10 +77,7 @@ public class PratilipiMain extends ClaymusMain {
 		// Home pages
 		String requestUri = request.getRequestURI();
 		
-		if( requestUri.equals( "/" ) )
-			page.setTitle( "Read Hindi and Gujarati Stories, Poems and Books" );
-		
-		else if( requestUri.equals( "/books" ) )
+		if( requestUri.equals( "/books" ) )
 			page.setTitle( "Books" );
 		
 		else if( requestUri.equals( "/books/hindi" ) )
@@ -200,9 +193,6 @@ public class PratilipiMain extends ClaymusMain {
 		
 		
 		// Home pages
-		else if( requestUri.equals( "/" ) )
-			pageContentList.add( generateHomePageContent( request ) );
-
 		else if( requestUri.equals( "/books" ) )
 			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.BOOK, PratilipiState.PUBLISHED ) );
 		
@@ -391,41 +381,6 @@ public class PratilipiMain extends ClaymusMain {
 		HtmlWidget htmlWidget = HtmlWidgetHelper.newHtmlWidget();
 		htmlWidget.setHtml( html );
 		return htmlWidget;
-	}
-
-	private PageContent generateHomePageContent( HttpServletRequest request ) {
-		
-		List<Long> bookIdList = new LinkedList<>();
-		bookIdList.add( 5206507264147456L );
-		bookIdList.add( 4843865324388352L );
-		bookIdList.add( 5716279616864256L );
-		bookIdList.add( 4920152667717632L );
-		bookIdList.add( 5345197126844416L );
-		bookIdList.add( 4685596450619392L );
-
-		List<Long> storyIdList = new LinkedList<>();
-		storyIdList.add( 5641478634209280L );
-		storyIdList.add( 4919719815544832L );
-		storyIdList.add( 5630387149602816L );
-		storyIdList.add( 5192595495976960L );
-		storyIdList.add( 5658023921975296L );
-		storyIdList.add( 5921446345834496L );
-		
-		List<Long> poemIdList = new LinkedList<>();
-		poemIdList.add( 5710246563545088L );
-		poemIdList.add( 5767896298946560L );
-		poemIdList.add( 6227279692693504L );
-		poemIdList.add( 5185244089024512L );
-		poemIdList.add( 5728306397708288L );
-		poemIdList.add( 6203856820109312L );
-
-		
-		HomeContent homeContent = HomeContentFactory.newHomeContent();
-		homeContent.setBookIdList( bookIdList );
-		homeContent.setPoemIdList( poemIdList );
-		homeContent.setStoryIdList( storyIdList );
-		homeContent.setLastUpdated( new Date( 131 ) );
-		return homeContent;
 	}
 
 }

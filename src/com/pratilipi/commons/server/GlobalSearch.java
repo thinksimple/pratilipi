@@ -22,6 +22,7 @@ import com.google.appengine.api.search.SortOptions;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.pratilipi.service.server.PratilipiServiceImpl;
 
+@Deprecated
 public class GlobalSearch {
 
 	private static final Logger logger =
@@ -96,7 +97,7 @@ public class GlobalSearch {
 				dataList.add( pratilipiHelper.createAuthorData( authorId ) );
 				
 			} else {
-				logger.log( Level.SEVERE, "\"" + docType + "\" docType is not handled !");
+				logger.log( Level.SEVERE, "\"" + docType + "\" docType is not yet supported !");
 			}
 		}
 
