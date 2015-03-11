@@ -28,6 +28,10 @@ public class PratilipisContentHelper extends PageContentHelper<
 	}
 	
 	
+	public static PratilipisContent newPratilipisContent() {
+		return new PratilipisContentEntity();
+	}
+	
 	public static PratilipisContent newPratilipisContent(
 			PratilipiType type, PratilipiState state ) {
 		

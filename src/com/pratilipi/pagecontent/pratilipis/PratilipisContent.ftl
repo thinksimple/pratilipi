@@ -3,7 +3,9 @@
 <!-- PageContent :: Pratilipis :: Start -->
 
 <div class="container">
-	<h1 class="hr-below">${ pratilipisType }</h1>
+	<#if title??>
+		<h1 class="hr-below">${ title }</h1>
+	</#if>
 	<div class="row" id="PageContent-Pratilipis-Preloaded">
 		<#list pratilipiDataList as pratilipiData >
 			<@pratilipiView.thumbnail pratilipiData=pratilipiData />
@@ -12,7 +14,9 @@
 	<div id="PageContent-Pratilipis" ></div>
 </div>
 
-<div id="PageContent-Pratilipis-EncodedData" style="display:none;">${ pratilipiFilterEncodedStr }</div>
-<script type="text/javascript" language="javascript" src="/pagecontent.pratilipis/pagecontent.pratilipis.nocache.js" async></script>
+<#if pratilipiFilterEncodedStr?? >
+	<div id="PageContent-Pratilipis-EncodedData" style="display:none;">${ pratilipiFilterEncodedStr }</div>
+	<script type="text/javascript" language="javascript" src="/pagecontent.pratilipis/pagecontent.pratilipis.nocache.js" async></script>
+</#if>
 
 <!-- PageContent :: Pratilipis :: End -->

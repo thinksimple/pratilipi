@@ -1,5 +1,8 @@
 package com.pratilipi.pagecontent.pratilipis.gae;
 
+import java.util.List;
+
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -15,17 +18,43 @@ public class PratilipisContentEntity extends PageContentEntity
 		implements PratilipisContent {
 	
 	@Persistent( column = "X_COL_0" )
+	private String title;
+	
+	@Persistent( column = "X_COL_1" )
+	private List<Long> pratilipiIdList;
+	
+	@NotPersistent
 	private PratilipiType pratilipiType;
 
-	@Persistent( column = "X_COL_1" )
+	@NotPersistent
 	private Boolean publicDomain;
 	
-	@Persistent( column = "X_COL_2" )
+	@NotPersistent
 	private Long languageId;
-
-	@Persistent( column = "X_COL_3" )
+	
+	@NotPersistent
 	private PratilipiState pratilipiState;
 
+	
+	@Override
+	public String getTitle() {
+		return title;
+	}
+
+	@Override
+	public void setTitle( String title ) {
+		this.title = title;
+	}
+	
+	@Override
+	public List<Long> getPratilipiIdList() {
+		return pratilipiIdList;
+	}
+
+	@Override
+	public void setPratilipiIdList( List<Long> pratilipiIdList ) {
+		this.pratilipiIdList = pratilipiIdList;
+	}
 	
 	@Override
 	public PratilipiType getPratilipiType() {
