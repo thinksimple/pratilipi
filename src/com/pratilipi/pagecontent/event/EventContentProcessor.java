@@ -138,6 +138,17 @@ public class EventContentProcessor extends PageContentProcessor<EventContent> {
 			pratilipiIdList.add( 5188186644938752L );
 			pratilipiIdList.add( 5651396451893248L );
 			pratilipiIdList.add( 5149188945870848L );
+			pratilipiIdList.add( 5723885634846720L );
+			pratilipiIdList.add( 5668122396721152L );
+			pratilipiIdList.add( 5693617926569984L );
+			pratilipiIdList.add( 5753434137427968L );
+			pratilipiIdList.add( 5069181959536640L );
+			pratilipiIdList.add( 5724919044243456L );
+			pratilipiIdList.add( 5074346993254400L );
+			pratilipiIdList.add( 6296120871354368L );
+			pratilipiIdList.add( 5101789351247872L );
+			pratilipiIdList.add( 5661878118252544L );
+			pratilipiIdList.add( 5088114175377408L );
 		}
 		List<PratilipiData> pratilipiDataList =
 				pratilipiHelper.createPratilipiDataListFromIdList(
