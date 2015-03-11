@@ -42,6 +42,7 @@
   <!-- Pratilipi Data/Content offline processing. -->
   <queue>
     <name>pratilipi</name>
+    <target>api</target>
     <rate>1/s</rate>
     <bucket-size>1</bucket-size>
     <max-concurrent-requests>1</max-concurrent-requests>

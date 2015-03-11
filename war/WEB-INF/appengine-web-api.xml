@@ -3,7 +3,7 @@
 
   <application>devo-pratilipi</application>
   <module>api</module>
-  <version>mark-4p5</version>
+  <version>mark-4p150</version>
 
   <threadsafe>true</threadsafe>
 
@@ -31,7 +31,7 @@
     <property name="devo-pratilipi.resource.static" value="/resource."/>
     <property name="prod-pratilipi.resource.static" value="//static.pratilipi.com/"/>
 
-	<!-- Configure emails -->
+	<!-- Configure Emails -->
     <property name="devo-pratilipi.email.contact" value="dev-team@pratilipi.com"/>
     <property name="prod-pratilipi.email.contact" value="contact@pratilipi.com"/>
 
