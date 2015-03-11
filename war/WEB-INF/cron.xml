@@ -1,6 +1,6 @@
 <cronentries>
   <cron>
-    <url>/api.pratilipi/pratilipi/process?cron</url>
+    <url>/pratilipi/process?cron</url>
     <target>api</target>
     <schedule>every 15 minutes</schedule>
   </cron>
