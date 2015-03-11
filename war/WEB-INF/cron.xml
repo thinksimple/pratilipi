@@ -4,9 +4,7 @@
     <target>api</target>
     <schedule>every 6 hours</schedule>
   </cron>
-</cronentries>
 
-<cronentries>
   <cron>
     <url>/pratilipi/process?cron</url>
     <target>api</target>

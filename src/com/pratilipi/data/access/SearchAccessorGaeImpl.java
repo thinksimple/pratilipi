@@ -32,7 +32,7 @@ public class SearchAccessorGaeImpl
 				.addSortExpression( SortExpression.newBuilder()
 						.setExpression( "relevance" )
 						.setDirection( SortExpression.SortDirection.DESCENDING )
-						.setDefaultValueNumeric( -999999999 ) )
+						.setDefaultValueNumeric( 0 ) )
 				.setLimit( 10000 )
 				.build();
 
