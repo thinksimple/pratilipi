@@ -1,4 +1,5 @@
 <cronentries>
+
   <cron>
     <url>/init?cron</url>
     <target>api</target>
@@ -10,4 +11,11 @@
     <target>api</target>
     <schedule>every 15 minutes</schedule>
   </cron>
+
+  <cron>
+    <url>/author/process?cron</url>
+    <target>api</target>
+    <schedule>every 15 minutes</schedule>
+  </cron>
+
 </cronentries>

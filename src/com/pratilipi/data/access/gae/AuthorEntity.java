@@ -51,6 +51,12 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "REGISTRATION_DATE" )
 	private Date registrationDate;
 
+	@Persistent( column = "CONTENT_PUBLISHED" )
+	private Long contentPublished;
+
+	@Persistent( column = "TOTAL_READ_COUNT" )
+	private Long totalReadCount;
+	
 	@Persistent( column = "LAST_PROCESS_DATE" )
 	private Date lastProcessDate;
 
@@ -173,6 +179,26 @@ public class AuthorEntity implements Author {
 		this.registrationDate = registrationDate;
 	}
 
+	@Override
+	public Long getContentPublished() {
+		return contentPublished;
+	}
+	
+	@Override
+	public void setContentPublished( Long contentPublished ) {
+		this.contentPublished = contentPublished;
+	}
+	
+	@Override
+	public Long getTotalReadCount() {
+		return totalReadCount;
+	}
+	
+	@Override
+	public void setTotalReadCount( Long totalReadCount ) {
+		this.totalReadCount = totalReadCount;
+	}
+	
 	@Override
 	public Date getLastProcessDate() {
 		return lastProcessDate;

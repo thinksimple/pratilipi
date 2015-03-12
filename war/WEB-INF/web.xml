@@ -250,15 +250,6 @@
     <url-pattern>/_ah/queue/word-to-pratilipi</url-pattern>
   </servlet-mapping>
 
-  <servlet>
-    <servlet-name>QueueUpdateAuthorIndexServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.QueueUpdateAuthorIndexServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>QueueUpdateAuthorIndexServlet</servlet-name>
-    <url-pattern>/_ah/queue/update-index-author</url-pattern>
-  </servlet-mapping>
-
   <!-- Main Claymus Handler -->
 
   <servlet>

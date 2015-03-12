@@ -53,6 +53,20 @@
     </retry-parameters>
   </queue>
   
+  <!-- Author Data offline processing. -->
+  <queue>
+    <name>author</name>
+    <target>api</target>
+    <rate>1/s</rate>
+    <bucket-size>1</bucket-size>
+    <max-concurrent-requests>1</max-concurrent-requests>
+    <retry-parameters>
+      <task-age-limit>90d</task-age-limit>
+      <min-backoff-seconds>300</min-backoff-seconds>
+      <max-backoff-seconds>300</max-backoff-seconds>
+    </retry-parameters>
+  </queue>
+  
   <!-- Creates or updates default cover image. -->
   <queue>
     <name>create-or-update-default-cover</name>
@@ -92,17 +106,4 @@
     </retry-parameters>
   </queue>
   
-  <!-- Updates search index for AuthorData. -->
-  <queue>
-    <name>update-index-author</name>
-    <rate>1/s</rate>
-    <bucket-size>1</bucket-size>
-    <max-concurrent-requests>1</max-concurrent-requests>
-    <retry-parameters>
-      <task-age-limit>90d</task-age-limit>
-      <min-backoff-seconds>300</min-backoff-seconds>
-      <max-backoff-seconds>300</max-backoff-seconds>
-    </retry-parameters>
-  </queue>
-
 </queue-entries>

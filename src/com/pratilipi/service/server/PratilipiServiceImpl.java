@@ -91,7 +91,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				.setUrl( "/pratilipi/process" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 
-		
 		return new SavePratilipiResponse( pratilipiData );
 	}
 	
@@ -256,19 +255,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 
 		// Creating/Updating search index
-		Task task = TaskQueueFactory.newTask();
-		task.addParam( "authorId", author.getId().toString() );
-		TaskQueueFactory.getUpdateAuthorIndexQueue().add( task );
-		if( authorData.getId() != null
-				&& ( authorData.hasFirstName()
-						|| authorData.hasLastName()
-						|| authorData.hasPenName()
-						|| authorData.hasFirstNameEn()
-						|| authorData.hasLastNameEn()
-						|| authorData.hasPenNameEn() ) ) {
-			
-			TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
-		}
+		Task task = TaskQueueFactory.newTask()
+				.addParam( "authorId", author.getId().toString() )
+				.addParam( "processData", "true" )
+				.setUrl( "/author/process" );
+		TaskQueueFactory.getAuthorTaskQueue().add( task );
 
 		
 		return new SaveAuthorResponse( pratilipiHelper.createAuthorData( author.getId() ) );
@@ -448,10 +439,12 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 		
 		// Updating search index
-		Task task = TaskQueueFactory.newTask();
-		task.addParam( "pratilipiId", request.getPratilipiId().toString() );
-		TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
-
+		Task task = TaskQueueFactory.newTask()
+				.addParam( "pratilipiId", request.getPratilipiId().toString() )
+				.addParam( "processData", "true" )
+				.setUrl( "/pratilipi/process" );
+		TaskQueueFactory.getPratilipiTaskQueue().add( task );
+		
 		
 		return new AddPratilipiGenreResponse();
 	}
@@ -471,9 +464,11 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		
 		// Updating search index
-		Task task = TaskQueueFactory.newTask();
-		task.addParam( "pratilipiId", request.getPratilipiId().toString() );
-		TaskQueueFactory.getUpdatePratilipiIndexQueue().add( task );
+		Task task = TaskQueueFactory.newTask()
+				.addParam( "pratilipiId", request.getPratilipiId().toString() )
+				.addParam( "processData", "true" )
+				.setUrl( "/pratilipi/process" );
+		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 
 		
 		return new DeletePratilipiGenreResponse();

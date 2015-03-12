@@ -1,23 +1,26 @@
 package com.pratilipi.pagecontent.author;
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
-import com.claymus.commons.shared.ClaymusPageType;
+import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.Page;
-import com.claymus.data.transfer.PageContent;
 import com.claymus.data.transfer.User;
 import com.claymus.pagecontent.PageContentHelper;
-import com.claymus.pagecontent.pages.PagesContentHelper;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiPageType;
+import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.access.SearchAccessor;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.author.gae.AuthorContentEntity;
 import com.pratilipi.pagecontent.author.shared.AuthorContentData;
 
@@ -107,5 +110,44 @@ public class AuthorContentHelper extends PageContentHelper<
 		
 		return author;
 	}
+	
+	
+	public static boolean updateAuthorStats( Long authorId, HttpServletRequest request ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setAuthorId( authorId );
+		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiFilter, null, null ).getDataList();
 		
+		if( pratilipiList.size() == 0 )
+			return false;
+		
+		long contentPublished = 0;
+		long totalReadCount = 0;
+		for( Pratilipi pratilipi : pratilipiList ) {
+			if( pratilipi.getState() == PratilipiState.PUBLISHED || pratilipi.getState() == PratilipiState.PUBLISHED_PAID )
+				contentPublished++;
+			totalReadCount = totalReadCount + pratilipi.getReadCount();
+		}
+		
+		Author author = dataAccessor.getAuthor( authorId );
+		if( (long) author.getContentPublished() != contentPublished || (long) author.getTotalReadCount() != totalReadCount ) {
+			author.setContentPublished( contentPublished );
+			author.setTotalReadCount( totalReadCount );
+			author = dataAccessor.createOrUpdateAuthor( author );
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+	
+	public static void updateAuthorSearchIndex( Long authorId, HttpServletRequest request )
+			throws UnexpectedServerException {
+		
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
+		searchAccessor.indexAuthorData( pratilipiHelper.createAuthorData( authorId ) );
+	}
+	
 }

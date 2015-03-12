@@ -3,6 +3,7 @@ package com.pratilipi.data.access;
 import java.util.List;
 
 import com.claymus.data.access.DataListCursorTuple;
+import com.pratilipi.commons.shared.AuthorFilter;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Event;
@@ -49,7 +50,12 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
 	Author getAuthorByEmailId( String email );
 
+	@Deprecated
 	DataListCursorTuple<Author> getAuthorList( String cursor, int resultCount );
+
+	DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount );
+
+	DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount );
 
 	Author createOrUpdateAuthor( Author author );
 

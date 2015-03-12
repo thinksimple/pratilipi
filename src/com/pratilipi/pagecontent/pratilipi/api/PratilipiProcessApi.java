@@ -56,14 +56,14 @@ public class PratilipiProcessApi extends GenericApi {
 	public GenericResponse postPratilipiProcess( PratilipiProcessPostRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
-		
 		if( request.processData() ) {
 			PratilipiContentHelper.updatePratilipiSearchIndex( request.getPratilipiId(), null, this.getThreadLocalRequest() );
 		}
 		
 		if( request.processContent() ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+			Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
+			
 			if( pratilipi.getType() == PratilipiType.BOOK || pratilipi.getType() == PratilipiType.MAGAZINE )
 				PratilipiContentHelper.updatePratilipiIndex( request.getPratilipiId(), this.getThreadLocalRequest() );
 		}

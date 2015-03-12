@@ -12,6 +12,7 @@ import com.claymus.data.access.GaeQueryBuilder;
 import com.claymus.data.access.GaeQueryBuilder.Operator;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
+import com.pratilipi.commons.shared.AuthorFilter;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.access.gae.AuthorEntity;
 import com.pratilipi.data.access.gae.EventEntity;
@@ -215,6 +216,55 @@ public class DataAccessorGaeImpl
 				(List<Author>) pm.detachCopyAll( authorEntityList ),
 				cursor.toWebSafeString() );
 	
+	}
+	
+	@Override
+	public DataListCursorTuple<Long> getAuthorIdList(
+			AuthorFilter authorFilter, String cursorStr, Integer resultCount ) {
+		
+		return getAuthorList( authorFilter, cursorStr, resultCount, true );
+	}
+	
+	@Override
+	public DataListCursorTuple<Author> getAuthorList(
+			AuthorFilter authorFilter, String cursorStr, Integer resultCount ) {
+		
+		return getAuthorList( authorFilter, cursorStr, resultCount, false );
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> DataListCursorTuple<T> getAuthorList( AuthorFilter authorFilter, String cursorStr, Integer resultCount, boolean idOnly ) {
+
+		GaeQueryBuilder gaeQueryBuilder =
+				new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
+		
+		if( authorFilter.getNextProcessDateEnd() != null ) {
+			gaeQueryBuilder.addFilter( "nextProcessDate", authorFilter.getNextProcessDateEnd(), Operator.LESS_THAN_OR_EQUAL );
+			gaeQueryBuilder.addOrdering( "nextProcessDate", true );
+		}
+	
+		gaeQueryBuilder.addOrdering( "totalReadCount", false );
+	
+		if( resultCount != null )
+			gaeQueryBuilder.setRange( 0, resultCount );
+	
+		Query query = gaeQueryBuilder.build();
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions( extensionMap );
+		}
+
+		if( idOnly )
+			query.setResult( "id" );
+		
+		List<T> authorEntityList = (List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
+		Cursor cursor = JDOCursorHelper.getCursor( authorEntityList );
+		
+		return new DataListCursorTuple<T>(
+				idOnly ? authorEntityList : (List<T>) pm.detachCopyAll( authorEntityList ),
+				cursor == null ? null : cursor.toWebSafeString() );
 	}
 	
 	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.access.Memcache;
+import com.pratilipi.commons.shared.AuthorFilter;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Event;
@@ -160,6 +161,16 @@ public class DataAccessorWithMemcache
 	public DataListCursorTuple<Author> getAuthorList( String cursor, int resultCount ) {
 		// TODO: enable caching
 		return dataAccessor.getAuthorList( cursor, resultCount );
+	}
+	
+	@Override
+	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount ) {
+		return dataAccessor.getAuthorIdList( authorFilter, cursor, resultCount );
+	}
+
+	@Override
+	public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount ) {
+		return dataAccessor.getAuthorList( authorFilter, cursor, resultCount );
 	}
 	
 	@Override

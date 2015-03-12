@@ -3,7 +3,7 @@
 
   <application>devo-pratilipi</application>
   <module>api</module>
-  <version>mark-4p154</version>
+  <version>mark-4p156</version>
 
   <threadsafe>true</threadsafe>
 
