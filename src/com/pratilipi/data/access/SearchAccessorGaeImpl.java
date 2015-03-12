@@ -85,35 +85,61 @@ public class SearchAccessorGaeImpl
 		Builder docBuilder = Document.newBuilder()
 				.setId( docId )
 				.addField( Field.newBuilder().setName( "docId" ).setAtom( pratilipiData.getId().toString() ) )
-				
 				.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi" ) )
 				.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi-" + pratilipiData.getType().getName() ) )
 
+				// 2x weightage to Title
+				.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitle() ) )
 				.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitle() ) )
 				.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitleEn() ) )
+				.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitleEn() ) )
 
+				 // 4x weightage to Language
 				.addField( Field.newBuilder().setName( "language" ).setAtom( pratilipiData.getLanguageId().toString() ) )
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getNameEn() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getNameEn() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getNameEn() ) )
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguageData().getNameEn() ) )
 				
 				.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) )
 				
+				// 4x weightage to PratilipiType
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
+				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
+				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
 				
 				.addField( Field.newBuilder().setName( "relevance" ).setNumber( pratilipiData.getRelevance() ) );
 		
 		if( pratilipiData.getAuthorId() != null )
 			docBuilder.addField( Field.newBuilder().setName( "author" ).setAtom( pratilipiData.getAuthorId().toString() ) )
+					// 3x weightage to Author
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullName() ) )
+					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullName() ) )
+					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullName() ) )
+					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) )
+					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) )
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) );
 
 		for( Long genreId : pratilipiData.getGenreIdList() )
 			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreId.toString() ) );
 
-		for( String genreName : pratilipiData.getGenreNameList() )
+		for( String genreName : pratilipiData.getGenreNameList() ) {
+			// 4x weightage to Genre
 			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreName ) );
-
+			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreName ) );
+			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreName ) );
+			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreName ) );
+		}
+		
 		return docBuilder.build();
 	}
 	
