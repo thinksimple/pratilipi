@@ -20,6 +20,8 @@ public class PratilipiFilter implements IsSerializable {
 	
 	private Date nextUpdateEnd;
 
+	private Boolean orderByReadCount;
+	
 	
 	public PratilipiType getType() {
 		return type;
@@ -75,6 +77,14 @@ public class PratilipiFilter implements IsSerializable {
 
 	public void setNextUpdateEnd( Date nextUpdateEnd ) {
 		this.nextUpdateEnd = nextUpdateEnd;
+	}
+	
+	public Boolean getOrderByReadCount() {
+		return orderByReadCount;
+	}
+
+	public void setOrderByReadCount( Boolean orderByReadCount ) {
+		this.orderByReadCount = orderByReadCount;
 	}
 	
 }

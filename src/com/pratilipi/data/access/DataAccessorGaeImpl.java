@@ -98,7 +98,9 @@ public class DataAccessorGaeImpl
 			gaeQueryBuilder.addOrdering( "nextUpdate", true );
 		}
 		
-		gaeQueryBuilder.addOrdering( "readCount", false );
+		if( pratilipiFilter.getOrderByReadCount() != null )
+			gaeQueryBuilder.addOrdering( "readCount", pratilipiFilter.getOrderByReadCount() );
+
 		if( resultCount != null )
 			gaeQueryBuilder.setRange( 0, resultCount );
 		
@@ -243,7 +245,8 @@ public class DataAccessorGaeImpl
 			gaeQueryBuilder.addOrdering( "nextProcessDate", true );
 		}
 	
-		gaeQueryBuilder.addOrdering( "totalReadCount", false );
+		if( authorFilter.getOrderByReadCount() != null )
+			gaeQueryBuilder.addOrdering( "readCount", authorFilter.getOrderByReadCount() );
 	
 		if( resultCount != null )
 			gaeQueryBuilder.setRange( 0, resultCount );

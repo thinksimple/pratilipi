@@ -251,7 +251,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setIndex( pratilipi.getIndex() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
-		pratilipiData.setRelevance( pratilipi.getReadCount() + pratilipi.getRelevanceOffset() );
+		pratilipiData.setRelevance( ( author == null ? 0 : author.getContentPublished() ) + pratilipi.getReadCount() + pratilipi.getRelevanceOffset() );
 		pratilipiData.setContentType( pratilipi.getContentType() );
 		pratilipiData.setState( pratilipi.getState() );
 

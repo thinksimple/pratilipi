@@ -60,26 +60,14 @@
     <property name="READ_COUNT" direction="desc"/>
   </datastore-index>
   
-  <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
-    <property name="NEXT_UPDATE" direction="asc"/>
-    <property name="READ_COUNT" direction="desc"/>
-  </datastore-index>
-
     
-  <!-- Required by PratilipiService.getAuthorList -->
-  <datastore-index kind="AUTHOR" ancestor="false" source="manual">
-    <property name="FIRST_NAME_EN" direction="asc"/>
-    <property name="LAST_NAME_EN" direction="asc"/>
-    <property name="PEN_NAME_EN" direction="asc"/>
-  </datastore-index>
-
-
   <!-- Required by Publisher PageContent Module -->
   <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
     <property name="PUBLISHER_ID" direction="asc"/>
     <property name="STATE" direction="asc"/>
     <property name="READ_COUNT" direction="desc"/>
   </datastore-index>
+
 
   <datastore-index kind="USER_PRATILIPI" ancestor="false" source="manual">
     <property name="USER_ID" direction="asc"/>

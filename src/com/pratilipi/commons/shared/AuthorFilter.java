@@ -2,14 +2,14 @@ package com.pratilipi.commons.shared;
 
 import java.util.Date;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
-public class AuthorFilter implements IsSerializable {
+public class AuthorFilter {
 	
 	private Long languageId;
 	
 	private Date nextProcessDateEnd;
 
+	private Boolean orderByReadCount;
+	
 	
 	public Long getLanguageId() {
 		return languageId;
@@ -27,4 +27,12 @@ public class AuthorFilter implements IsSerializable {
 		this.nextProcessDateEnd = nextProcessDateEnd;
 	}
 	
+	public Boolean getOrderByReadCount() {
+		return orderByReadCount;
+	}
+
+	public void setOrderByReadCount( Boolean orderByReadCount ) {
+		this.orderByReadCount = orderByReadCount;
+	}
+
 }

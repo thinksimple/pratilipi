@@ -2,10 +2,11 @@ package com.pratilipi.servlet;
 
 import com.claymus.api.ApiRegistry;
 import com.claymus.servlet.ClaymusService;
-import com.pratilipi.api.InitApi;
 import com.pratilipi.api.DebugApi;
+import com.pratilipi.api.InitApi;
 import com.pratilipi.api.OAuthApi;
 import com.pratilipi.api.PurchaseApi;
+import com.pratilipi.pagecontent.author.api.AuthorProcessApi;
 import com.pratilipi.pagecontent.pratilipi.api.PratilipiApi;
 import com.pratilipi.pagecontent.pratilipi.api.PratilipiContentApi;
 import com.pratilipi.pagecontent.pratilipi.api.PratilipiContentImageApi;
@@ -26,6 +27,8 @@ public class PratilipiService extends ClaymusService {
 		ApiRegistry.register( PratilipiContentImageApi.class );
 		ApiRegistry.register( PratilipiResourceApi.class );
 		ApiRegistry.register( PratilipiProcessApi.class );
+
+		ApiRegistry.register( AuthorProcessApi.class );
 	}
 
 }

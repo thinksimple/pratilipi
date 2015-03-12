@@ -181,7 +181,7 @@ public class AuthorEntity implements Author {
 
 	@Override
 	public Long getContentPublished() {
-		return contentPublished;
+		return contentPublished == null ? 0L : contentPublished;
 	}
 	
 	@Override
@@ -191,7 +191,7 @@ public class AuthorEntity implements Author {
 	
 	@Override
 	public Long getTotalReadCount() {
-		return totalReadCount;
+		return totalReadCount == null ? 0L : totalReadCount;
 	}
 	
 	@Override
@@ -201,7 +201,7 @@ public class AuthorEntity implements Author {
 	
 	@Override
 	public Date getLastProcessDate() {
-		return lastProcessDate;
+		return lastProcessDate == null ? registrationDate : lastProcessDate;
 	}
 
 	@Override

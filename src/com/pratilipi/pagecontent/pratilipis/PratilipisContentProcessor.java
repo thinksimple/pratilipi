@@ -12,6 +12,7 @@ import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
@@ -62,12 +63,15 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 
 		} else {
 
+			PratilipiFilter pratilipiFilter = pratilipisContent.toFilter();
+			pratilipiFilter.setOrderByReadCount( false );
+			
 			DataListCursorTuple<Pratilipi> pratilipiListCursorTuple =
-					dataAccessor.getPratilipiList( pratilipisContent.toFilter(), null, 20 );
+					dataAccessor.getPratilipiList( pratilipiFilter, null, 20 );
 			pratilipiDataList = pratilipiHelper.createPratilipiDataList(
 					pratilipiListCursorTuple.getDataList(), false, true, false );
 		
-			dataModel.put( "pratilipiFilterEncodedStr", SerializationUtil.encode( pratilipisContent.toFilter() ) );
+			dataModel.put( "pratilipiFilterEncodedStr", SerializationUtil.encode( pratilipiFilter ) );
 		
 		}
 		

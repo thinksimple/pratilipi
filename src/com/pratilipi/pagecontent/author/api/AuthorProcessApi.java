@@ -44,7 +44,7 @@ public class AuthorProcessApi extends GenericApi {
 					.addParam( "authorId", authorId.toString() )
 					.addParam( "updateStats", "true" )
 					.setUrl( "/author/process" );
-			TaskQueueFactory.getPratilipiTaskQueue().add( task );
+			TaskQueueFactory.getAuthorTaskQueue().add( task );
 		}
 		
 		logger.log( Level.INFO, "Added " + authorIdList.size() + " tasks." );
