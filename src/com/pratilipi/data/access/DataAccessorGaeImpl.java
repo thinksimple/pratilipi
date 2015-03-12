@@ -245,8 +245,8 @@ public class DataAccessorGaeImpl
 			gaeQueryBuilder.addOrdering( "nextProcessDate", true );
 		}
 	
-		if( authorFilter.getOrderByReadCount() != null )
-			gaeQueryBuilder.addOrdering( "readCount", authorFilter.getOrderByReadCount() );
+		if( authorFilter.getOrderByContentPublished() != null )
+			gaeQueryBuilder.addOrdering( "contentPublished", authorFilter.getOrderByContentPublished() );
 	
 		if( resultCount != null )
 			gaeQueryBuilder.setRange( 0, resultCount );

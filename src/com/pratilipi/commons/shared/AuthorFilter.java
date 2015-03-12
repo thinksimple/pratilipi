@@ -8,7 +8,7 @@ public class AuthorFilter {
 	
 	private Date nextProcessDateEnd;
 
-	private Boolean orderByReadCount;
+	private Boolean orderByContentPublished;
 	
 	
 	public Long getLanguageId() {
@@ -27,12 +27,12 @@ public class AuthorFilter {
 		this.nextProcessDateEnd = nextProcessDateEnd;
 	}
 	
-	public Boolean getOrderByReadCount() {
-		return orderByReadCount;
+	public Boolean getOrderByContentPublished() {
+		return orderByContentPublished;
 	}
 
-	public void setOrderByReadCount( Boolean orderByReadCount ) {
-		this.orderByReadCount = orderByReadCount;
+	public void setOrderByContentPublished( Boolean orderByContentPublished ) {
+		this.orderByContentPublished = orderByContentPublished;
 	}
 
 }
