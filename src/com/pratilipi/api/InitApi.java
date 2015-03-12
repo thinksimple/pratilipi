@@ -81,21 +81,21 @@ public class InitApi extends GenericApi {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 			pratilipi.setRelevanceOffset( pratilipi.getRelevanceOffset() - 1 );
 			dataAccessor.createOrUpdatePratilipi( pratilipi );
-			PratilipiContentHelper.updatePratilipiIndex( pratilipi.getId(), this.getThreadLocalRequest() );
+			PratilipiContentHelper.updatePratilipiSearchIndex( pratilipi.getId(), null, this.getThreadLocalRequest() );
 		}
 		
 		for( Long pratilipiId : storyIdList ) {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 			pratilipi.setRelevanceOffset( pratilipi.getRelevanceOffset() - 1 );
 			dataAccessor.createOrUpdatePratilipi( pratilipi );
-			PratilipiContentHelper.updatePratilipiIndex( pratilipi.getId(), this.getThreadLocalRequest() );
+			PratilipiContentHelper.updatePratilipiSearchIndex( pratilipi.getId(), null, this.getThreadLocalRequest() );
 		}
 
 		for( Long pratilipiId : poemIdList ) {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 			pratilipi.setRelevanceOffset( pratilipi.getRelevanceOffset() - 1 );
 			dataAccessor.createOrUpdatePratilipi( pratilipi );
-			PratilipiContentHelper.updatePratilipiIndex( pratilipi.getId(), this.getThreadLocalRequest() );
+			PratilipiContentHelper.updatePratilipiSearchIndex( pratilipi.getId(), null, this.getThreadLocalRequest() );
 		}
 		
 		
