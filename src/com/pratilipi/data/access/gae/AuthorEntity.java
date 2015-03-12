@@ -51,6 +51,12 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "REGISTRATION_DATE" )
 	private Date registrationDate;
 
+	@Persistent( column = "LAST_PROCESS_DATE" )
+	private Date lastProcessDate;
+
+	@Persistent( column = "NEXT_PROCESS_DATE" )
+	private Date nextProcessDate;
+	
 	
 	@Override
 	public Long getId() {
@@ -165,6 +171,26 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setRegistrationDate( Date registrationDate ) {
 		this.registrationDate = registrationDate;
+	}
+
+	@Override
+	public Date getLastProcessDate() {
+		return lastProcessDate;
+	}
+
+	@Override
+	public void setLastProcessDate( Date lastProcessDate ) {
+		this.lastProcessDate = lastProcessDate;
+	}
+
+	@Override
+	public Date getNextProcessDate() {
+		return nextProcessDate;
+	}
+
+	@Override
+	public void setNextProcessDate( Date nextProcessDate ) {
+		this.nextProcessDate = nextProcessDate;
 	}
 
 }

@@ -51,4 +51,12 @@ public interface Author extends Serializable {
 	
 	void setRegistrationDate( Date registrationDate );
 
+	Date getLastProcessDate();
+
+	void setLastProcessDate( Date lastProcessDate );
+
+	Date getNextProcessDate();
+
+	void setNextProcessDate( Date nextProcessDate );
+
 }
