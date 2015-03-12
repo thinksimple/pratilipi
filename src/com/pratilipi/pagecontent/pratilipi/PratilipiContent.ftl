@@ -63,6 +63,9 @@
 			<#if showReviewOption>
 				<button type="button" class="btn btn-primary" onclick="window.location.href='#Review'">Review This ${ pratilipiData.getType().getName() }</button>
 			</#if>
+			<#if !userData.getEmail()??>
+				<button type="button" class="btn btn-primary" data-toggle='modal' data-target="#loginModal" onclick="window.location.href='#Review'">Review This ${ pratilipiData.getType().getName() }</button>
+			</#if>
 		</div>
 
 	</div> <#-- END of row -->

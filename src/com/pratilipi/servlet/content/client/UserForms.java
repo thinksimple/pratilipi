@@ -446,10 +446,15 @@ public class UserForms implements EntryPoint {
 				public void onSuccess( LoginUserResponse response ) {
 					hideLoginModal();
 					String currentUrl = Window.Location.getHref();
-					if( currentUrl.indexOf( "?" ) == -1 )
-						Window.Location.assign( currentUrl + "?action=login" );
+					String review = currentUrl.substring( currentUrl.indexOf( "#" ) + 1 );
+					if( !review.isEmpty() &&  review.toLowerCase().equals( "review" ) )
+						// Not redirected to profile page after login.
+						Window.Location.reload();
 					else
-						Window.Location.assign( currentUrl + "&action=login" );
+						if( currentUrl.indexOf( "?" ) == -1 )
+							Window.Location.assign( currentUrl + "?action=login" );
+						else
+							Window.Location.assign( currentUrl + "&action=login" );
 				}
 				
 				@Override
