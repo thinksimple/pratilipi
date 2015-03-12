@@ -456,7 +456,6 @@ function recordPageTime(){
 	var readTimeSec = parseInt( ( currentTime.getTime() - pageStartTime.getTime() )/1000 );
 	pageStartTime = new Date();
 	var pageNumber = 'Page ' + pageNo;
-	console.log( "Record Page Time : " + readTimeSec );
 	if( readTimeSec < 2 )
 		return;
 	
