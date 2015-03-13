@@ -522,7 +522,16 @@ public class UserForms implements EntryPoint {
 					public void onSuccess(
 							FacebookLoginUserResponse result) {
 						hideLoginModal();
-						Window.Location.assign( Window.Location.getHref() + "?action=login" );
+						String currentUrl = Window.Location.getHref();
+						String review = currentUrl.substring( currentUrl.indexOf( "#" ) + 1 );
+						if( !review.isEmpty() &&  review.toLowerCase().equals( "review" ) )
+							// Not redirected to profile page after login.
+							Window.Location.reload();
+						else
+							if( currentUrl.indexOf( "?" ) == -1 )
+								Window.Location.assign( currentUrl + "?action=login" );
+							else
+								Window.Location.assign( currentUrl + "&action=login" );
 					}});
 		
 	}
