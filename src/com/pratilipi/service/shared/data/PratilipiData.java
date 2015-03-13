@@ -83,7 +83,7 @@ public class PratilipiData implements IsSerializable {
 	
 	private Long relevanceOffset;
 	
-	private Long relevance;
+	private Double relevance;
 
 	private PratilipiContentType contentType;
 	private boolean hasContentType;
@@ -442,11 +442,11 @@ public class PratilipiData implements IsSerializable {
 		this.relevanceOffset = relevanceOffset;
 	}
 	
-	public Long getRelevance() {
+	public Double getRelevance() {
 		return relevance;
 	}
 
-	public void setRelevance( Long relevance ) {
+	public void setRelevance( Double relevance ) {
 		this.relevance = relevance;
 	}
 	

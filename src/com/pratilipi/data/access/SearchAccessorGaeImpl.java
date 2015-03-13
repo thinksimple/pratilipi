@@ -2,6 +2,8 @@ package com.pratilipi.data.access;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
@@ -22,6 +24,10 @@ public class SearchAccessorGaeImpl
 		implements SearchAccessor {
 
 	
+	private static final Logger logger =
+			Logger.getLogger( SearchAccessorGaeImpl.class.getName() );
+
+	
 	public SearchAccessorGaeImpl( String indexName ) {
 		super( indexName );
 	}
@@ -40,13 +46,16 @@ public class SearchAccessorGaeImpl
 		
 		String searchQuery = pratilipiFilter.getType() == null
 				? "docType:Pratilipi"
-				: "docType:Pratilipi-" + pratilipiFilter.getType();
+				: "docType:Pratilipi-" + pratilipiFilter.getType().getName();
 
 		if( pratilipiFilter.getLanguageId() != null )
 			searchQuery = searchQuery + " AND language:" + pratilipiFilter.getLanguageId();
 
 		if( pratilipiFilter.getAuthorId() != null )
 			searchQuery = searchQuery + " AND author:" + pratilipiFilter.getAuthorId();
+
+
+		logger.log( Level.INFO, searchQuery );
 
 		
 		Results<ScoredDocument> result = search( searchQuery, sortOptions, cursorStr, resultCount, "docId" );
