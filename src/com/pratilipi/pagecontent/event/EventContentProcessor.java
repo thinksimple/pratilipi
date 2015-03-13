@@ -115,6 +115,9 @@ public class EventContentProcessor extends PageContentProcessor<EventContent> {
 			pratilipiIdList.add( 5664266656940032L );
 			pratilipiIdList.add( 5079493639143424L );
 			pratilipiIdList.add( 5194758548881408L );
+			pratilipiIdList.add( 5644807166754816L );
+			pratilipiIdList.add( 5637257553772544L );
+			pratilipiIdList.add( 5748696788500480L );
 		} else if( event.getId() == 5085337277693952L ) {
 			pratilipiIdList.add( 4816254556700672L );
 			pratilipiIdList.add( 4878783374950400L );
@@ -167,9 +170,13 @@ public class EventContentProcessor extends PageContentProcessor<EventContent> {
 			pratilipiIdList.add( 5753938796085248L );
 			pratilipiIdList.add( 6212424139014144L );
 			pratilipiIdList.add( 5099266863267840L );
-			pratilipiIdList.add( 5186886612025344L );
 			pratilipiIdList.add( 5697030479413248L );
 			pratilipiIdList.add( 5766140261302272L );
+			pratilipiIdList.add( 5650472497053696L );
+			pratilipiIdList.add( 5653514407641088L );
+			pratilipiIdList.add( 5763040100220928L );
+			pratilipiIdList.add( 5760251861139456L );
+			pratilipiIdList.add( 5699320770723840L );
 		}
 		List<PratilipiData> pratilipiDataList =
 				pratilipiHelper.createPratilipiDataListFromIdList(
