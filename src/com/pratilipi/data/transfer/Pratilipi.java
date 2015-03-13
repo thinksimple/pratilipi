@@ -95,8 +95,12 @@ public interface Pratilipi extends Serializable {
 	
 	void setLastUpdated( Date lastUpdated );
 
-	Date getNextUpdate();
+	Date getLastProcessDate();
 
-	void setNextUpdate( Date nextUpdate );
+	void setLastProcessDate( Date lastProcessDate );
+
+	Date getNextProcessDate();
+
+	void setNextProcessDate( Date nextProcessDate );
 
 }

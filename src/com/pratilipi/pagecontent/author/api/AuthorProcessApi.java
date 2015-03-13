@@ -11,6 +11,7 @@ import com.claymus.api.annotation.Get;
 import com.claymus.api.annotation.Post;
 import com.claymus.api.shared.GenericRequest;
 import com.claymus.api.shared.GenericResponse;
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.taskqueue.Task;
@@ -33,6 +34,10 @@ public class AuthorProcessApi extends GenericApi {
 	
 	@Get
 	public GenericResponse getAuthorProcess( GenericRequest request ) {
+		
+		if( ! ClaymusHelper.getSystemProperty( "domain" ).equals( "www.pratilipi.com" ) )
+			return new GenericResponse();
+
 		AuthorFilter authorFilter = new AuthorFilter();
 		authorFilter.setNextProcessDateEnd( new Date() );
 

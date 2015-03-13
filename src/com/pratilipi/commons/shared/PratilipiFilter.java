@@ -18,7 +18,7 @@ public class PratilipiFilter implements IsSerializable {
 
 	private PratilipiState state;
 	
-	private Date nextUpdateEnd;
+	private Date nextProcessDateEnd;
 
 	private Boolean orderByReadCount;
 	
@@ -71,12 +71,12 @@ public class PratilipiFilter implements IsSerializable {
 		this.state = state;
 	}
 	
-	public Date getNextUpdateEnd() {
-		return nextUpdateEnd;
+	public Date getNextProcessDateEnd() {
+		return nextProcessDateEnd;
 	}
 
-	public void setNextUpdateEnd( Date nextUpdateEnd ) {
-		this.nextUpdateEnd = nextUpdateEnd;
+	public void setNextProcessDateEnd( Date nextProcessDateEnd ) {
+		this.nextProcessDateEnd = nextProcessDateEnd;
 	}
 	
 	public Boolean getOrderByReadCount() {

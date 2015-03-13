@@ -521,7 +521,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		}
 	}
 	
-	public static void updatePratilipiStats( Long pratilipiId, HttpServletRequest request )
+	public static boolean updatePratilipiStats( Long pratilipiId, HttpServletRequest request )
 			throws UnexpectedServerException {
 		
 		List<String> scopes = new LinkedList<>();
@@ -555,17 +555,12 @@ public class PratilipiContentHelper extends PageContentHelper<
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		if( (long) pratilipi.getReadCount() != pratilipiReadCount ) {
 			pratilipi.setReadCount( pratilipiReadCount );
-			pratilipi.setLastUpdated( new Date() );
-			pratilipi.setNextUpdate( new Date( new Date().getTime() + 3600000 ) ); // Now + 1 Hr
+			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+			return true;
 		} else {
-			Long nextUpdateAfterMillis = 2 * ( new Date().getTime() - pratilipi.getLastUpdated().getTime() );
-			if( nextUpdateAfterMillis < 3600000L ) // 1 Hr
-				nextUpdateAfterMillis = 3600000L;
-			else if( nextUpdateAfterMillis > 604800000L ) // 1 Wk
-				nextUpdateAfterMillis = 604800000L;
-			pratilipi.setNextUpdate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
+			return false;
 		}
-		dataAccessor.createOrUpdatePratilipi( pratilipi );
+
 	}
 	
 	public static void updatePratilipiSearchIndex( Long pratilipiId, Long authorId, HttpServletRequest request )

@@ -39,7 +39,7 @@ public class PratilipiProcessApi extends GenericApi {
 			return new GenericResponse();
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setNextUpdateEnd( new Date() );
+		pratilipiFilter.setNextProcessDateEnd( new Date() );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
@@ -74,8 +74,25 @@ public class PratilipiProcessApi extends GenericApi {
 		}
 		
 		if( request.updateStats() ) {
-			PratilipiContentHelper.updatePratilipiStats( request.getPratilipiId(), this.getThreadLocalRequest() );
-			PratilipiContentHelper.updatePratilipiSearchIndex( request.getPratilipiId(), null, this.getThreadLocalRequest() );
+			boolean changed = PratilipiContentHelper.updatePratilipiStats( request.getPratilipiId(), this.getThreadLocalRequest() );
+
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+			Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
+			if( changed ) {
+				pratilipi.setLastProcessDate( new Date() );
+				pratilipi.setNextProcessDate( new Date( new Date().getTime() + 3600000 ) ); // Now + 1 Hr
+			} else {
+				Long nextUpdateAfterMillis = 2 * ( new Date().getTime() - pratilipi.getLastProcessDate().getTime() );
+				if( nextUpdateAfterMillis < 3600000L ) // 1 Hr
+					nextUpdateAfterMillis = 3600000L;
+				else if( nextUpdateAfterMillis > 604800000L ) // 1 Wk
+					nextUpdateAfterMillis = 604800000L;
+				pratilipi.setNextProcessDate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
+			}
+			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+
+			if( changed )
+				PratilipiContentHelper.updatePratilipiSearchIndex( request.getPratilipiId(), null, this.getThreadLocalRequest() );
 		}
 		
 		return new GenericResponse();

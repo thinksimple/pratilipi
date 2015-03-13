@@ -93,9 +93,9 @@ public class DataAccessorGaeImpl
 			gaeQueryBuilder.addFilter( "publisherId", pratilipiFilter.getPublisherId() );
 		if( pratilipiFilter.getState() != null )
 			gaeQueryBuilder.addFilter( "state", pratilipiFilter.getState() );
-		if( pratilipiFilter.getNextUpdateEnd() != null ) {
-			gaeQueryBuilder.addFilter( "nextUpdate", pratilipiFilter.getNextUpdateEnd(), Operator.LESS_THAN_OR_EQUAL );
-			gaeQueryBuilder.addOrdering( "nextUpdate", true );
+		if( pratilipiFilter.getNextProcessDateEnd() != null ) {
+			gaeQueryBuilder.addFilter( "nextProcessDate", pratilipiFilter.getNextProcessDateEnd(), Operator.LESS_THAN_OR_EQUAL );
+			gaeQueryBuilder.addOrdering( "nextProcessDate", true );
 		}
 		
 		if( pratilipiFilter.getOrderByReadCount() != null )

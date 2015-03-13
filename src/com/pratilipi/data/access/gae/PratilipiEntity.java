@@ -88,8 +88,11 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "LAST_UPDATED" )
 	private Date lastUpdated;
 
-	@Persistent( column = "NEXT_UPDATE" )
-	private Date nextUpdate;
+	@Persistent( column = "LAST_PROCESS_DATE" )
+	private Date lastProcessDate;
+
+	@Persistent( column = "NEXT_PROCESS_DATE" )
+	private Date nextProcessDate;
 
 	
 	@Override
@@ -308,13 +311,23 @@ public class PratilipiEntity implements Pratilipi {
 	}
 
 	@Override
-	public Date getNextUpdate() {
-		return nextUpdate;
+	public Date getLastProcessDate() {
+		return lastProcessDate == null ? lastUpdated : lastProcessDate;
 	}
 
 	@Override
-	public void setNextUpdate( Date nextUpdate ) {
-		this.nextUpdate = nextUpdate;
+	public void setLastProcessDate( Date lastProcessDate ) {
+		this.lastProcessDate = lastProcessDate;
+	}
+
+	@Override
+	public Date getNextProcessDate() {
+		return nextProcessDate;
+	}
+
+	@Override
+	public void setNextProcessDate( Date nextProcessDate ) {
+		this.nextProcessDate = nextProcessDate;
 	}
 
 }
