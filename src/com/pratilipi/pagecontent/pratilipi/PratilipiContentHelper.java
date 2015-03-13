@@ -374,6 +374,13 @@ public class PratilipiContentHelper extends PageContentHelper<
 	}
 	
 
+	public static double calculateRelevance( Pratilipi pratilipi, Author author ) {
+		double relevance = pratilipi.getReadCount() + pratilipi.getRelevanceOffset();
+		if( author != null && author.getContentPublished() > 1L )
+			relevance = relevance + (double) author.getTotalReadCount() / (double) author.getContentPublished();
+		return relevance;
+	}
+	
 	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeLanguageData, boolean includeAuthorData, HttpServletRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
@@ -407,6 +414,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 				pratilipiData.setAuthorData( authorData );
 			}
 			
+			pratilipiData.setRelevance( calculateRelevance( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) ) );
+
 			pratilipiDataList.add( pratilipiData );
 		}
 		
@@ -418,10 +427,6 @@ public class PratilipiContentHelper extends PageContentHelper<
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Page pratilipiPage = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipi.getId() );
-		
-		double relevance = pratilipi.getReadCount() + pratilipi.getRelevanceOffset();
-		if( author != null && author.getContentPublished() > 1L )
-			relevance = relevance + (double) author.getTotalReadCount() / (double) author.getContentPublished();
 		
 		
 		PratilipiData pratilipiData = new PratilipiData();
@@ -449,7 +454,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipiData.setIndex( pratilipi.getIndex() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		
-		pratilipiData.setRelevance( relevance );
+		pratilipiData.setRelevance( calculateRelevance( pratilipi, author ) );
 		
 		pratilipiData.setContentType( pratilipi.getContentType() );
 		pratilipiData.setState( pratilipi.getState() );
