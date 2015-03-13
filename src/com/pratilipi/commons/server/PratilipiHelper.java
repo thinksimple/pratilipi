@@ -31,11 +31,14 @@ import com.pratilipi.service.shared.data.PublisherData;
 @SuppressWarnings("serial")
 public class PratilipiHelper extends ClaymusHelper {
 
+	@Deprecated
 	public static final Pattern REGEX_HTML_BODY = Pattern.compile(
 			"(.*?<body\\s.*?>)(.*?)(</body>.*?)" );
 
 	
+	@Deprecated
 	public static final String URL_RESOURCE = ClaymusHelper.URL_RESOURCE;
+	@Deprecated
 	private static final String URL_RESOURCE_STATIC = ClaymusHelper.URL_RESOURCE_STATIC;
 
 	
@@ -55,45 +58,55 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 	
 
+	@Deprecated
 	public static String getContent( Long pratilipiId ) {
 		return "pratilipi-content/pratilipi/" + ( pratilipiId == null ? "" : pratilipiId );
 	}
 	
+	@Deprecated
 	public static String getContentHtml( Long pratilipiId ) {
 		return "pratilipi-content/html/" + ( pratilipiId == null ? "" : pratilipiId );
 	}
 	
+	@Deprecated
 	public static String getContentWord( Long pratilipiId ) {
 		return "pratilipi-content/word/" + ( pratilipiId == null ? "" : pratilipiId );
 	}
 	
 
+	@Deprecated
 	public static String getContentUrl( Long pratilipiId ) {
 		return getContentUrl( pratilipiId, true );
 	}
 	
+	@Deprecated
 	public static String getContentUrl( Long pratilipiId, boolean dynamic ) {
 		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) + getContent( pratilipiId );
 	}
 	
+	@Deprecated
 	public static String getContentHtmlUrl( Long pratilipiId ) {
 		return getContentHtmlUrl( pratilipiId, true );
 	}
 	
+	@Deprecated
 	public static String getContentHtmlUrl( Long pratilipiId, boolean dynamic ) {
 		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) + getContentHtml( pratilipiId );
 	}
 	
+	@Deprecated
 	public static String getContentWordUrl( Long pratilipiId ) {
 		return getContentWordUrl( pratilipiId, true );
 	}
 	
+	@Deprecated
 	public static String getContentWordUrl( Long pratilipiId, boolean dynamic ) {
 		return ( dynamic ? URL_RESOURCE : URL_RESOURCE_STATIC ) + getContentWord( pratilipiId );
 	}
 
 
 
+	@Deprecated
 	public List<PratilipiData> createPratilipiDataListFromIdList(
 			List<Long> pratilipiIdList,
 			boolean includeLanguageData, boolean includeAuthorData,
@@ -110,12 +123,14 @@ public class PratilipiHelper extends ClaymusHelper {
 				includeAuthorData, includeGenreData, false );
 	}
 	
+	@Deprecated
 	public List<PratilipiData> createPratilipiDataList(
 			List<Pratilipi> pratilipiList ) {
 
 		return createPratilipiDataList( pratilipiList, true, true, true );
 	}
 	
+	@Deprecated
 	public List<PratilipiData> createPratilipiDataList(
 			List<Pratilipi> pratilipiList,
 			boolean includeLanguageData, boolean includeAuthorData,
@@ -126,6 +141,7 @@ public class PratilipiHelper extends ClaymusHelper {
 				includeAuthorData, includeGenreData, false );
 	}
 	
+	@Deprecated
 	public List<PratilipiData> createPratilipiDataList(
 			List<Pratilipi> pratilipiList,
 			boolean includeLanguageData, boolean includeAuthorData,
@@ -180,10 +196,12 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 	
 	
+	@Deprecated
 	public PratilipiData createPratilipiData( Long pratilipiId ) {
 		return createPratilipiData( pratilipiId, false );
 	}
 	
+	@Deprecated
 	public PratilipiData createPratilipiData(
 			Long pratilipiId, boolean includeMetaData ) {
 		
@@ -203,6 +221,7 @@ public class PratilipiHelper extends ClaymusHelper {
 	}
 
 		
+	@Deprecated
 	public PratilipiData createPratilipiData(
 			Pratilipi pratilipi, Language language,
 			Author author, List<Genre> genreList ) {
@@ -210,6 +229,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		return createPratilipiData( pratilipi, language, author, genreList, false );
 	}
 	
+	@Deprecated
 	public PratilipiData createPratilipiData(
 			Pratilipi pratilipi, Language language,
 			Author author, List<Genre> genreList, boolean includeMetaData ) {

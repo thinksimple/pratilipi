@@ -21,7 +21,7 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
-import com.pratilipi.pagecontent.pratilipi.api.shared.PratilipiProcessPostRequest;
+import com.pratilipi.pagecontent.pratilipi.api.shared.PostPratilipiProcessRequest;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
@@ -58,7 +58,7 @@ public class PratilipiProcessApi extends GenericApi {
 	}
 	
 	@Post
-	public GenericResponse postPratilipiProcess( PratilipiProcessPostRequest request )
+	public GenericResponse postPratilipiProcess( PostPratilipiProcessRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 
 		if( request.processData() ) {

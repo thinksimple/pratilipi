@@ -4,7 +4,7 @@ import com.claymus.api.annotation.Validate;
 import com.claymus.api.shared.GenericRequest;
 
 @SuppressWarnings("serial")
-public class PratilipiProcessPostRequest extends GenericRequest {
+public class PostPratilipiProcessRequest extends GenericRequest {
 
 	@Validate( required = true )
 	private Long pratilipiId;

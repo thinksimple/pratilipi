@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +22,7 @@ import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
+import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.AuditLog;
 import com.claymus.data.transfer.BlobEntry;
@@ -51,10 +54,11 @@ import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
+import com.pratilipi.data.transfer.shared.PratilipiData;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
 import com.pratilipi.service.shared.data.AuthorData;
-import com.pratilipi.service.shared.data.PratilipiData;
+import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class PratilipiContentHelper extends PageContentHelper<
@@ -73,6 +77,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
 	
 	
+	private static final Access ACCESS_TO_LIST_PRATILIPI_DATA =
+			new Access( "pratilipi_data_list", false, "View Pratilipi Data" );
 	public static final Access ACCESS_TO_ADD_PRATILIPI_DATA =
 			new Access( "pratilipi_data_add", false, "Add Pratilipi Data" );
 	public static final Access ACCESS_TO_UPDATE_PRATILIPI_DATA =
@@ -120,6 +126,17 @@ public class PratilipiContentHelper extends PageContentHelper<
 		return new PratilipiContentEntity( pratilipiId );
 	}
 
+
+	public static boolean hasRequestAccessToListPratilipiData( HttpServletRequest request, PratilipiFilter pratilipiFilter ) {
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); 
+		if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() )
+				&& UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_LIST_PRATILIPI_DATA, request ) )
+			return true;
+		
+		return pratilipiFilter.getState() != null
+				&& pratilipiFilter.getState() != PratilipiState.PUBLISHED_DISCONTINUED
+				&& pratilipiFilter.getState() != PratilipiState.DELETED;
+	}
 	
 	public static boolean hasRequestAccessToAddPratilipiData( HttpServletRequest request, Pratilipi pratilipi ) {
 		
@@ -357,7 +374,111 @@ public class PratilipiContentHelper extends PageContentHelper<
 	}
 	
 
-	public static PratilipiData savePratilipi( PratilipiData pratilipiData, HttpServletRequest request )
+	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeLanguageData, boolean includeAuthorData, HttpServletRequest request ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+
+		Map<Long, LanguageData> languageIdToDataMap = includeLanguageData ? new HashMap<Long, LanguageData>() : null;
+		Map<Long, AuthorData> authorIdToDataMap = includeAuthorData ? new HashMap<Long, AuthorData>() : null;
+		
+		List<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiIdList.size() );
+
+		for( Long pratilipiId : pratilipiIdList ) {
+			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+			PratilipiData pratilipiData = createPratilipiData( pratilipi, null, null, request );
+
+			if( includeLanguageData ) {
+				LanguageData languageData = languageIdToDataMap.get( pratilipi.getLanguageId() );
+				if( languageData == null ) {
+					Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
+					languageData = PratilipiHelper.get( request ).createLanguageData( language );
+					languageIdToDataMap.put( languageData.getId(), languageData );
+				}
+				pratilipiData.setLanguageData( languageData );
+			}
+
+			if( includeAuthorData && pratilipi.getAuthorId() != null ) {
+				AuthorData authorData = authorIdToDataMap.get( pratilipi.getAuthorId() );
+				if( authorData == null ) {
+					Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+					authorData = PratilipiHelper.get( request ).createAuthorData( author, null );
+					authorIdToDataMap.put( authorData.getId(), authorData );
+				}
+				pratilipiData.setAuthorData( authorData );
+			}
+			
+			pratilipiDataList.add( pratilipiData );
+		}
+		
+		return pratilipiDataList;
+		
+	}
+	
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Language language, Author author, HttpServletRequest request ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Page pratilipiPage = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipi.getId() );
+		
+		double relevance = pratilipi.getReadCount() + pratilipi.getRelevanceOffset();
+		if( author != null && author.getContentPublished() > 1L )
+			relevance = relevance + (double) author.getTotalReadCount() / (double) author.getContentPublished();
+		
+		
+		PratilipiData pratilipiData = new PratilipiData();
+
+		pratilipiData.setId( pratilipi.getId() );
+		pratilipiData.setType( pratilipi.getType() );
+		pratilipiData.setPageUrl( pratilipiPage.getUri() );
+		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
+		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
+		pratilipiData.setWriterPageUrl( PratilipiPageType.WRITE.getUrlPrefix() + pratilipi.getId() );
+		
+		pratilipiData.setTitle( pratilipi.getTitle() );
+		pratilipiData.setTitleEn( pratilipi.getTitleEn() );
+		pratilipiData.setLanguageId( pratilipi.getLanguageId() );
+		pratilipiData.setLanguageData( PratilipiHelper.get( request ).createLanguageData( language ) );
+
+		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
+		pratilipiData.setAuthorData( PratilipiHelper.get( request ).createAuthorData( author, null ) );
+		
+		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
+		pratilipiData.setListingDate( pratilipi.getListingDate() );
+		pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
+		
+		pratilipiData.setSummary( pratilipi.getSummary() );
+		pratilipiData.setIndex( pratilipi.getIndex() );
+		pratilipiData.setPageCount( pratilipi.getPageCount() );
+		
+		pratilipiData.setRelevance( relevance );
+		
+		pratilipiData.setContentType( pratilipi.getContentType() );
+		pratilipiData.setState( pratilipi.getState() );
+
+		return pratilipiData;
+		
+	}
+
+	
+	public static DataListCursorTuple<PratilipiData> getPratilipiList( PratilipiFilter pratilipiFilter, String cursor, Integer resultCount, HttpServletRequest request )
+			throws InsufficientAccessException {
+		
+		if( ! hasRequestAccessToListPratilipiData( request, pratilipiFilter ) )
+			throw new InsufficientAccessException();
+		
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple = DataAccessorFactory
+				.getSearchAccessor()
+				.searchPratilipi( pratilipiFilter, cursor, resultCount );
+		
+		List<PratilipiData> pratilipiDataList = createPratilipiDataList(
+				pratilipiIdListCursorTuple.getDataList(),
+				pratilipiFilter.getLanguageId() == null,
+				pratilipiFilter.getAuthorId() == null,
+				request );
+		
+		return new DataListCursorTuple<PratilipiData>( pratilipiDataList, pratilipiIdListCursorTuple.getCursor() );
+	}
+	
+	public static com.pratilipi.service.shared.data.PratilipiData savePratilipi( com.pratilipi.service.shared.data.PratilipiData pratilipiData, HttpServletRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 	
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
@@ -590,7 +711,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		}
 		
 		
-		List<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
+		List<com.pratilipi.service.shared.data.PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
 		for( Pratilipi pratilipi : pratilipiList ) {
 			
 			if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
@@ -614,6 +735,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		if( pratilipiDataList.size() > 0 )
 			searchAccessor.indexPratilipiDataList( pratilipiDataList );
 	}
+
 	
 	public static Object getPratilipiContent(
 			long pratilipiId, int pageNo, PratilipiContentType contentType,
@@ -725,6 +847,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		}
 		
 	}
+	
 	
 	public static String getPratilipiResourceFolder( Long pratilipiId ) {
 		return RESOURCE_FOLDER + "/" + pratilipiId;
