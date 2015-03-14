@@ -64,9 +64,9 @@ public interface Pratilipi extends Serializable {
 	
 	void setWordCount( Long wordCount );
 
-	Long getPageCount();
+	Integer getPageCount();
 	
-	void setPageCount( Long pageCount );
+	void setPageCount( Integer pageCount );
 	
 	Long getReadCount();
 	

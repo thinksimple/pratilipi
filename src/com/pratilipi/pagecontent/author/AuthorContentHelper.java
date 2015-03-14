@@ -65,6 +65,7 @@ public class AuthorContentHelper extends PageContentHelper<
 	@Override
 	public Access[] getAccessList() {
 		return new Access[] {
+				ACCESS_TO_LIST_AUTHOR_DATA,
 				ACCESS_TO_ADD_AUTHOR_DATA,
 				ACCESS_TO_UPDATE_AUTHOR_DATA
 		};
@@ -272,9 +273,12 @@ public class AuthorContentHelper extends PageContentHelper<
 	public static void updateAuthorSearchIndex( Long authorId, HttpServletRequest request )
 			throws UnexpectedServerException {
 		
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
-		searchAccessor.indexAuthorData( pratilipiHelper.createAuthorData( authorId ) );
+
+		Author author = dataAccessor.getAuthor( authorId );
+		Language language = dataAccessor.getLanguage( author.getLanguageId() );
+		searchAccessor.indexAuthorData( createAuthorData( author, language, request ) );
 	}
 	
 }

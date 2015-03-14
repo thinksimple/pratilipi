@@ -16,8 +16,8 @@ import com.google.appengine.api.search.ScoredDocument;
 import com.google.appengine.api.search.SortExpression;
 import com.google.appengine.api.search.SortOptions;
 import com.pratilipi.commons.shared.PratilipiFilter;
-import com.pratilipi.service.shared.data.AuthorData;
-import com.pratilipi.service.shared.data.PratilipiData;
+import com.pratilipi.data.transfer.shared.AuthorData;
+import com.pratilipi.data.transfer.shared.PratilipiData;
 
 public class SearchAccessorGaeImpl
 		extends com.claymus.data.access.SearchAccessorGaeImpl
@@ -143,7 +143,7 @@ public class SearchAccessorGaeImpl
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) )
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) )
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthorData().getFullNameEn() ) );
-
+/* TODO: Index Pratilipi genres
 		for( Long genreId : pratilipiData.getGenreIdList() )
 			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreId.toString() ) );
 
@@ -154,7 +154,7 @@ public class SearchAccessorGaeImpl
 			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreName ) );
 			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreName ) );
 		}
-		
+*/		
 		return docBuilder.build();
 	}
 	

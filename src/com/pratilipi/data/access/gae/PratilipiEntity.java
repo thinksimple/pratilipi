@@ -64,7 +64,7 @@ public class PratilipiEntity implements Pratilipi {
 	private Long wordCount;
 
 	@Persistent( column = "PAGE_COUNT" )
-	private Long pageCount;
+	private Integer pageCount;
 	
 	@Persistent( column = "READ_COUNT" )
 	private Long readCount;
@@ -235,12 +235,12 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
-	public Long getPageCount() {
+	public Integer getPageCount() {
 		return pageCount;
 	}
 
 	@Override
-	public void setPageCount( Long pageCount ) {
+	public void setPageCount( Integer pageCount ) {
 		this.pageCount = pageCount;
 	}
 	

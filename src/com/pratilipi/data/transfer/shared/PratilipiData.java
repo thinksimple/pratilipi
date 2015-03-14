@@ -55,7 +55,7 @@ public class PratilipiData implements Serializable {
 	private Long wordCount;
 	private boolean hasWordCount;
 	
-	private Long pageCount;
+	private Integer pageCount;
 	private boolean hasPageCount;
 
 	private PratilipiContentType contentType;
@@ -266,11 +266,11 @@ public class PratilipiData implements Serializable {
 		return hasWordCount;
 	}
 	
-	public Long getPageCount() {
+	public Integer getPageCount() {
 		return pageCount;
 	}
 
-	public void setPageCount( Long pageCount ) {
+	public void setPageCount( Integer pageCount ) {
 		this.pageCount = pageCount;
 		this.hasPageCount = true;
 	}

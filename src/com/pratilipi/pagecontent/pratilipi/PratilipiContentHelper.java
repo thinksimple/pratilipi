@@ -46,12 +46,8 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.access.SearchAccessor;
 import com.pratilipi.data.transfer.Author;
-import com.pratilipi.data.transfer.Event;
-import com.pratilipi.data.transfer.EventPratilipi;
-import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
-import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.data.transfer.shared.AuthorData;
@@ -107,14 +103,16 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 	@Override
 	public Double getModuleVersion() {
-		return 4.0;
+		return 5.0;
 	}
 
 	@Override
 	public Access[] getAccessList() {
 		return new Access[] {
+				ACCESS_TO_LIST_PRATILIPI_DATA,
 				ACCESS_TO_ADD_PRATILIPI_DATA,
 				ACCESS_TO_UPDATE_PRATILIPI_DATA,
+				ACCESS_TO_PUBLISH_PRATILIPI_DATA,
 				ACCESS_TO_READ_PRATILIPI_DATA_META,
 				ACCESS_TO_UPDATE_PRATILIPI_DATA_META,
 				ACCESS_TO_ADD_PRATILIPI_REVIEW,
@@ -188,17 +186,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 			
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			EventPratilipi eventPratilipi = dataAccessor.getEventPratilipiByPratilipiId( pratilipi.getId() );
-			Event event = null;
-			if( eventPratilipi != null )
-				event = dataAccessor.getEvent( eventPratilipi.getEventId() );
-			if( author != null && author.getUserId() != null ){
-				boolean isAuthor = accessToken.getUserId().equals( author.getUserId() );
-				boolean isEventOrganizer = false;
-				if( event != null && event.getUserId() != null )
-					isEventOrganizer = accessToken.getUserId().equals( event.getUserId() );
-				return isAuthor || isEventOrganizer;
-			}
+			if( author != null && author.getUserId() != null )
+				return accessToken.getUserId().equals( author.getUserId() );
 			
 			// Grant access to Publisher iff Author is not on-boarded.
 			Publisher publisher = dataAccessor.getPublisher( pratilipi.getPublisherId() );
@@ -538,7 +527,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		if( pratilipiData.hasWordCount() )
 			pratilipi.setWordCount( pratilipiData.getWordCount() );
 		if( pratilipiData.hasPageCount() && hasRequestAccessToUpdatePratilipiMetaData( request ) )
-			pratilipi.setPageCount( pratilipiData.getPageCount() );
+			pratilipi.setPageCount( (int) (long) pratilipiData.getPageCount() );
 		if( pratilipiData.hasState() )
 			pratilipi.setState( pratilipiData.getState() );
 		if( pratilipiData.hasContentType() && pratilipiData.getContentType() != null  )
@@ -726,7 +715,6 @@ public class PratilipiContentHelper extends PageContentHelper<
 	public static void updatePratilipiSearchIndex( Long pratilipiId, Long authorId, HttpServletRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
 
@@ -750,19 +738,19 @@ public class PratilipiContentHelper extends PageContentHelper<
 		}
 		
 		
-		List<com.pratilipi.service.shared.data.PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
+		List<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
 		for( Pratilipi pratilipi : pratilipiList ) {
 			
 			if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
 				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 				Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
-				List<PratilipiGenre> pratilipiGenreList = dataAccessor.getPratilipiGenreList( pratilipi.getId() );
+/*				List<PratilipiGenre> pratilipiGenreList = dataAccessor.getPratilipiGenreList( pratilipi.getId() );
 				
 				List<Genre> genreList = new ArrayList<>( pratilipiGenreList.size() );
 				for( PratilipiGenre pratilipiGenre : pratilipiGenreList )
 					genreList.add( dataAccessor.getGenre( pratilipiGenre.getGenreId() ) );
-				
-				pratilipiDataList.add( pratilipiHelper.createPratilipiData( pratilipi, language, author, genreList ) );
+TODO: Add Genres in PratilipiData */
+				pratilipiDataList.add( createPratilipiData( pratilipi, language, author, request ) );
 				
 			} else {
 				searchAccessor.deletePratilipiDataIndex( pratilipi.getId() );
@@ -832,8 +820,11 @@ public class PratilipiContentHelper extends PageContentHelper<
 			throw new InsufficientAccessException();
 
 		
-		pratilipi.setLastUpdated( new Date() );
-		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setEventId( ACCESS_TO_UPDATE_PRATILIPI_DATA.getId() );
+		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
 
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
@@ -867,7 +858,14 @@ public class PratilipiContentHelper extends PageContentHelper<
 				logger.log( Level.SEVERE, "Failed to create/update pratilipi content.", e );
 				throw new UnexpectedServerException();
 			}
-			return pageCount;
+			
+			pratilipi.setPageCount( pageCount );
+			if( insertNew )
+				auditLog.setEventComment( "Added new page " + pageNo + " in Pratilpi content." );
+			else if( ! ( (String) pageContent ).isEmpty() )
+				auditLog.setEventComment( "Updated page " + pageNo + " in Pratilpi content." );
+			else
+				auditLog.setEventComment( "Deleted page " + pageNo + " in Pratilpi content." );
 			
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			
@@ -879,12 +877,20 @@ public class PratilipiContentHelper extends PageContentHelper<
 				logger.log( Level.SEVERE, "Failed to create/update pratilipi content.", e );
 				throw new UnexpectedServerException();
 			}
-			return (int) (long) pratilipi.getPageCount();
+			
+			auditLog.setEventComment( "Uploaded page " + pageNo + " in Image content." );
 		
 		} else {
 			throw new InvalidArgumentException( contentType + " content type is not yet supported." );
 		}
 		
+		pratilipi.setLastUpdated( new Date() );
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+
+		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+		auditLog = dataAccessor.createAuditLog( auditLog );
+		
+		return pratilipi.getPageCount();
 	}
 	
 	
@@ -923,6 +929,16 @@ public class PratilipiContentHelper extends PageContentHelper<
 			} else {
 				blobEntry.setName( fileName );
 				blobAccessor.createOrUpdateBlob( blobEntry );
+				
+				AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
+				AuditLog auditLog = dataAccessor.newAuditLog();
+				auditLog.setAccessId( accessToken.getId() );
+				auditLog.setEventId( ACCESS_TO_UPDATE_PRATILIPI_DATA.getId() );
+				auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+				auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+				auditLog.setEventComment( "Uploaded content image." );
+				auditLog = dataAccessor.createAuditLog( auditLog );
+				
 				return true;
 			}
 		} catch( IOException e ) {

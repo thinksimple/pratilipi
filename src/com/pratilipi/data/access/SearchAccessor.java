@@ -5,8 +5,8 @@ import java.util.List;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.pratilipi.commons.shared.PratilipiFilter;
-import com.pratilipi.service.shared.data.AuthorData;
-import com.pratilipi.service.shared.data.PratilipiData;
+import com.pratilipi.data.transfer.shared.AuthorData;
+import com.pratilipi.data.transfer.shared.PratilipiData;
 
 public interface SearchAccessor extends com.claymus.data.access.SearchAccessor {
 	
