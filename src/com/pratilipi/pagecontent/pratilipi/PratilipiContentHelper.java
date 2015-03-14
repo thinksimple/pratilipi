@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.server.Access;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.GoogleApi;
+import com.claymus.commons.server.ImageUtil;
 import com.claymus.commons.server.UserAccessHelper;
 import com.claymus.commons.shared.ClaymusAccessTokenType;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
@@ -74,6 +75,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 	
 	private static final String CONTENT_FOLDER 		 = "pratilipi-content/pratilipi";
 	private static final String IMAGE_CONTENT_FOLDER = "pratilipi-content/image";
+	private static final String COVER_FOLDER 		 = "pratilipi-cover";
 	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
 	
 	
@@ -616,6 +618,51 @@ public class PratilipiContentHelper extends PageContentHelper<
 				PratilipiContentHelper.hasRequestAccessToReadPratilipiMetaData( request ) );
 	}
 	
+	public static void savePratilipiCover( Long pratilipiId, BlobEntry blobEntry, HttpServletRequest request )
+			throws InsufficientAccessException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( !PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( request, pratilipi ) )
+			throw new InsufficientAccessException();
+
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		try {
+			blobEntry.setName( COVER_FOLDER + "/original/" + pratilipiId );
+			blobAccessor.createOrUpdateBlob( blobEntry );
+			
+			byte[] imageData = blobEntry.getData();
+			
+			blobEntry.setName( COVER_FOLDER + "/300/" + pratilipiId );
+			blobEntry.setData( ImageUtil.resize( imageData, 300, 3000 ) );
+			blobAccessor.createOrUpdateBlob( blobEntry );
+			
+			blobEntry.setName( COVER_FOLDER + "/150/" + pratilipiId );
+			blobEntry.setData( ImageUtil.resize( imageData, 150, 1500 ) );
+			DataAccessorFactory.getBlobAccessorAsia().createOrUpdateBlob( blobEntry );
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to create/update pratilipi cover.", e );
+			throw new UnexpectedServerException();
+		}
+		
+
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setEventId( ACCESS_TO_UPDATE_PRATILIPI_DATA.getId() );
+		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+
+		pratilipi.setCustomCover( true );
+		pratilipi.setLastUpdated( new Date() );
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+
+		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+		auditLog.setEventComment( "Uploaded cover image." );
+		auditLog = dataAccessor.createAuditLog( auditLog );
+	}
+	
 	public static void updatePratilipiIndex( Long pratilipiId, HttpServletRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
@@ -872,7 +919,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 	}
 	
 	public static boolean savePratilipiResource(
-			long pratilipiId, BlobEntry blobEntry, boolean overwrite, HttpServletRequest request )
+			Long pratilipiId, BlobEntry blobEntry, boolean overwrite, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );

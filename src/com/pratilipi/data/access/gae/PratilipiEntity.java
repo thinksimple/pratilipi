@@ -51,6 +51,9 @@ public class PratilipiEntity implements Pratilipi {
 	private Date listingDate;
 
 	
+	@Persistent( column = "CUSTOM_COVER" )
+	private Boolean customCover;
+
 	@Persistent( column = "SUMMARY" )
 	private Text summary;
 
@@ -190,6 +193,17 @@ public class PratilipiEntity implements Pratilipi {
 		this.listingDate = listingDate;
 	}
 
+
+	@Override
+	public Boolean getCustomCover() {
+		return customCover == null ? false : customCover;
+	}
+
+	@Override
+	public void setCustomCover( Boolean customCover ) {
+		this.customCover = customCover;
+	}
+	
 	@Override
 	public String getSummary() {
 		return summary == null ? null : summary.getValue();
