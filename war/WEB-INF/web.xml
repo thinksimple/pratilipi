@@ -232,24 +232,6 @@
     <url-pattern>/_ah/queue/create-or-update-default-cover</url-pattern>
   </servlet-mapping>
 
-  <servlet>
-    <servlet-name>QueueHtmlToPratilipiServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.QueueHtmlToPratilipiServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>QueueHtmlToPratilipiServlet</servlet-name>
-    <url-pattern>/_ah/queue/html-to-pratilipi</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>QueueWordToPratilipiServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.QueueWordToPratilipiServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>QueueWordToPratilipiServlet</servlet-name>
-    <url-pattern>/_ah/queue/word-to-pratilipi</url-pattern>
-  </servlet-mapping>
-
   <!-- Main Claymus Handler -->
 
   <servlet>
