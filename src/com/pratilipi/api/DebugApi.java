@@ -1,5 +1,6 @@
 package com.pratilipi.api;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,13 +8,19 @@ import java.util.List;
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Get;
+import com.claymus.commons.server.ImageUtil;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
+import com.claymus.data.access.BlobAccessor;
+import com.claymus.data.transfer.BlobEntry;
+import com.claymus.taskqueue.Task;
 import com.pratilipi.api.shared.GetInitRequest;
 import com.pratilipi.api.shared.GetInitResponse;
+import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.EventPratilipi;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/debug" )
@@ -22,7 +29,7 @@ public class DebugApi extends GenericApi {
 
 	@Get
 	public GetInitResponse getInit( GetInitRequest request )
-			throws InvalidArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException, IOException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 
@@ -110,6 +117,46 @@ public class DebugApi extends GenericApi {
 		return new GetInitResponse( "Entities Checked: " + count + ". Entities Updated: " + updateCount );
 		
 		// END :: PRATILIPI TABLE BACKFILL :: END							*/
+		
+		
+		
+/*		// START :: PRATILIPI TABLE BATCH PROCESSING :: START
+
+		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( new PratilipiFilter(), null, null ).getDataList();
+		for( Long pratilipiId : pratilipiIdList ) {
+			Task task = TaskQueueFactory.newTask()
+					.addParam( "pratilipiId", pratilipiId.toString() )
+					.addParam( "processData", "true" )
+					.setUrl( "/pratilipi/process" );
+			TaskQueueFactory.getPratilipiTaskQueue().add( task );
+		}
+		return new GetInitResponse( "Created tasks for " + pratilipiIdList.size() + " Pratilipi entities." );
+
+		// END :: PRATILIPI TABLE BATCH PROCESSING :: END							*/
+
+		
+		
+/*		// START :: RESIZING PRATILIPI COVER IMAGES :: START
+
+		String[] coverImages = new String[] {
+				"pratilipi-cover/original/pratilipi",
+				"pratilipi-cover/original/pratilipi-classic-5130467284090880",
+				"pratilipi-cover/original/pratilipi-classic-5965057007550464",
+				"pratilipi-cover/original/pratilipi-classic-6213615354904576",
+				"pratilipi-cover/original/pratilipi-classic-6319546696728576",
+		};
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		BlobAccessor blobAccessorAsia = DataAccessorFactory.getBlobAccessorAsia();
+		for( String coverImage : coverImages ) {
+			BlobEntry blobEntry = blobAccessor.getBlob( coverImage );
+			blobEntry.setName( coverImage.replace( "/original/", "/150/" ) );
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), 150, 1500 ) );
+			blobAccessorAsia.createOrUpdateBlob( blobEntry );
+		}
+
+		// END :: RESIZING PRATILIPI COVER IMAGES :: END							*/
+
 		
 		
 /*		//START :: EVENT_PRATILIPI TABLE BACKFILL :: START

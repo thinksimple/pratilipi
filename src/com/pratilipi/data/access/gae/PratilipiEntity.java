@@ -195,7 +195,7 @@ public class PratilipiEntity implements Pratilipi {
 
 
 	@Override
-	public Boolean getCustomCover() {
+	public Boolean hasCustomCover() {
 		return customCover == null ? false : customCover;
 	}
 

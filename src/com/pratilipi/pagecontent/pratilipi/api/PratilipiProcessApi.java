@@ -61,23 +61,20 @@ public class PratilipiProcessApi extends GenericApi {
 	public GenericResponse postPratilipiProcess( PostPratilipiProcessRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
+		
 		if( request.processData() ) {
 			PratilipiContentHelper.updatePratilipiSearchIndex( request.getPratilipiId(), null, this.getThreadLocalRequest() );
 		}
 		
 		if( request.processContent() ) {
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-			Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
-			
 			if( pratilipi.getType() == PratilipiType.BOOK || pratilipi.getType() == PratilipiType.MAGAZINE )
 				PratilipiContentHelper.updatePratilipiIndex( request.getPratilipiId(), this.getThreadLocalRequest() );
 		}
 		
 		if( request.updateStats() ) {
 			boolean changed = PratilipiContentHelper.updatePratilipiStats( request.getPratilipiId(), this.getThreadLocalRequest() );
-
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-			Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 			if( changed ) {
 				pratilipi.setLastProcessDate( new Date() );
 				pratilipi.setNextProcessDate( new Date( new Date().getTime() + 3600000 ) ); // Now + 1 Hr

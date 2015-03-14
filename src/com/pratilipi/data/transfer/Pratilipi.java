@@ -48,7 +48,7 @@ public interface Pratilipi extends Serializable {
 	void setListingDate( Date listingDate );
 	
 	
-	Boolean getCustomCover();
+	Boolean hasCustomCover();
 
 	void setCustomCover( Boolean customCover );
 
