@@ -223,15 +223,6 @@
     <url-pattern>/_ah/queue/reset-password</url-pattern>
   </servlet-mapping>
 
-  <servlet>
-    <servlet-name>QueueCreateOrUpdateDefaultCoverServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.QueueCreateOrUpdateDefaultCoverServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>QueueCreateOrUpdateDefaultCoverServlet</servlet-name>
-    <url-pattern>/_ah/queue/create-or-update-default-cover</url-pattern>
-  </servlet-mapping>
-
   <!-- Main Claymus Handler -->
 
   <servlet>

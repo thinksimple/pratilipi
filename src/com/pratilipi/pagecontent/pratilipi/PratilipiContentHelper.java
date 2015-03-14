@@ -607,12 +607,6 @@ public class PratilipiContentHelper extends PageContentHelper<
 		}
 		
 		
-		Task task = TaskQueueFactory.newTask();
-		task.addParam( "pratilipiId", pratilipi.getId().toString() );
-		// Creating/Updating default cover image
-		TaskQueueFactory.getCreateOrUpdateDefaultCoverTaskQueue().add( task );
-
-		
 		return pratilipiHelper.createPratilipiData(
 				pratilipi.getId(),
 				PratilipiContentHelper.hasRequestAccessToReadPratilipiMetaData( request ) );
