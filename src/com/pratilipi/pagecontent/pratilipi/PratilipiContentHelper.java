@@ -936,7 +936,7 @@ TODO: Add Genres in PratilipiData */
 				auditLog.setEventId( ACCESS_TO_UPDATE_PRATILIPI_DATA.getId() );
 				auditLog.setEventDataOld( gson.toJson( pratilipi ) );
 				auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-				auditLog.setEventComment( "Uploaded content image." );
+				auditLog.setEventComment( "Uploaded content image (resource)." );
 				auditLog = dataAccessor.createAuditLog( auditLog );
 				
 				return true;
