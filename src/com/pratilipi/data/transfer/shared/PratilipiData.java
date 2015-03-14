@@ -6,7 +6,6 @@ import java.util.Date;
 import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiState;
 import com.pratilipi.commons.shared.PratilipiType;
-import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.LanguageData;
 
 @SuppressWarnings("serial")

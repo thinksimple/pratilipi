@@ -29,7 +29,6 @@ import com.claymus.data.transfer.AuditLog;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.pagecontent.PageContentHelper;
-import com.claymus.taskqueue.Task;
 import com.google.api.services.analytics.Analytics;
 import com.google.api.services.analytics.Analytics.Data.Ga.Get;
 import com.google.api.services.analytics.AnalyticsScopes;
@@ -55,12 +54,12 @@ import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiGenre;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
+import com.pratilipi.data.transfer.shared.AuthorData;
 import com.pratilipi.data.transfer.shared.PratilipiData;
+import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
-import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.LanguageData;
-import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class PratilipiContentHelper extends PageContentHelper<
 		PratilipiContent,
@@ -410,7 +409,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 				AuthorData authorData = authorIdToDataMap.get( pratilipi.getAuthorId() );
 				if( authorData == null ) {
 					Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-					authorData = PratilipiHelper.get( request ).createAuthorData( author, null );
+					authorData = AuthorContentHelper.createAuthorData( author, null, request );
 					authorIdToDataMap.put( authorData.getId(), authorData );
 				}
 				pratilipiData.setAuthorData( authorData );
@@ -446,7 +445,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipiData.setLanguageData( PratilipiHelper.get( request ).createLanguageData( language ) );
 
 		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
-		pratilipiData.setAuthorData( PratilipiHelper.get( request ).createAuthorData( author, null ) );
+		pratilipiData.setAuthorData( AuthorContentHelper.createAuthorData( author, null, request ) );
 		
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
@@ -547,7 +546,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 		//TODO : CHANGE THIS ASAP
 		Long currentUserId = pratilipiHelper.getCurrentUserId();
-		AuthorData authorData = pratilipiHelper.createAuthorData( pratilipi.getAuthorId() );
+		com.pratilipi.service.shared.data.AuthorData authorData = pratilipiHelper.createAuthorData( pratilipi.getAuthorId() );
 		
 		if( pratilipiData.hasState()
 				&& pratilipiData.getState() != PratilipiState.DRAFTED
