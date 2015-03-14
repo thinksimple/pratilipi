@@ -3,7 +3,7 @@ package com.pratilipi.pagecontent.author.api.shared;
 import java.util.List;
 
 import com.claymus.api.shared.GenericResponse;
-import com.pratilipi.service.shared.data.AuthorData;
+import com.pratilipi.data.transfer.shared.AuthorData;
 
 @SuppressWarnings("serial")
 public class GetAuthorListResponse extends GenericResponse {

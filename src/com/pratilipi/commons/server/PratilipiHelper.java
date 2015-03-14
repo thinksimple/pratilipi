@@ -301,7 +301,8 @@ public class PratilipiHelper extends ClaymusHelper {
 		return pratilipiData;
 	}
 
-	
+
+	@Deprecated
 	public AuthorData createAuthorData( Long authorId ) {
 		if( authorId == null )
 			return null;
@@ -311,6 +312,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		return createAuthorData( author, language );
 	}
 	
+	@Deprecated
 	public AuthorData createAuthorData( Author author, Language language ) {
 		if( author == null )
 			return null;
