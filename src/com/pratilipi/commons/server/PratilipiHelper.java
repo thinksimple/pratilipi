@@ -245,8 +245,8 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setType( pratilipi.getType() );
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
-		pratilipiData.setCoverImageUrl( URL_RESOURCE_STATIC + "pratilipi-cover/300/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime() );
-		pratilipiData.setCoverImageUploadUrl( URL_RESOURCE + "pratilipi-cover/original/" + pratilipi.getId() );
+		pratilipiData.setCoverImageUrl( ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/pratilipi-cover/150/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime() );
+		pratilipiData.setCoverImageUploadUrl( "/api.pratilipi/pratilipi/cover?pratilipiId=" + pratilipi.getId() );
 		pratilipiData.setCoverImage300UploadUrl( URL_RESOURCE + "pratilipi-cover/300/" + pratilipi.getId() );
 		pratilipiData.setImageContentUploadUrl( URL_RESOURCE + "pratilipi-content/image/" + pratilipi.getId() );
 		pratilipiData.setWordContentUplaodUrl( URL_RESOURCE + "pratilipi-content/word/" + pratilipi.getId() );

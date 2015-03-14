@@ -32,6 +32,9 @@
     <property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>
     <property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
 
+    <property name="devo-pratilipi.cdn.asia" value="//devo-pratilipi.pratilipi.com"/>
+    <property name="prod-pratilipi.cdn.asia" value="//cdn-asia.pratilipi.com"/>
+
 	<!-- Configure resource path -->
     <property name="devo-pratilipi.resource" value="/resource."/>
     <property name="prod-pratilipi.resource" value="/resource."/>
@@ -49,6 +52,9 @@
 	<!-- Configure Blob Storage -->
     <property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
     <property name="prod-pratilipi.blobservice.gcs.bucket" value="static.pratilipi.com"/>
+
+    <property name="devo-pratilipi.blobservice.gcs.bucket.asia" value="devo-pratilipi.appspot.com"/>
+    <property name="prod-pratilipi.blobservice.gcs.bucket.asia" value="cdn-asia.pratilipi.com"/>
 
 	<!-- Configure Search Index -->
     <property name="devo-pratilipi.searchservice.gae.index" value="GLOBAL_INDEX"/>

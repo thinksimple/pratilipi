@@ -633,14 +633,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 			blobEntry.setName( COVER_FOLDER + "/original/" + pratilipiId );
 			blobAccessor.createOrUpdateBlob( blobEntry );
 			
-			byte[] imageData = blobEntry.getData();
-			
-			blobEntry.setName( COVER_FOLDER + "/300/" + pratilipiId );
-			blobEntry.setData( ImageUtil.resize( imageData, 300, 3000 ) );
-			blobAccessor.createOrUpdateBlob( blobEntry );
-			
 			blobEntry.setName( COVER_FOLDER + "/150/" + pratilipiId );
-			blobEntry.setData( ImageUtil.resize( imageData, 150, 1500 ) );
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), 150, 1500 ) );
 			DataAccessorFactory.getBlobAccessorAsia().createOrUpdateBlob( blobEntry );
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to create/update pratilipi cover.", e );
