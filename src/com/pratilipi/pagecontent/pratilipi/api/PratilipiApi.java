@@ -7,10 +7,10 @@ import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.taskqueue.Task;
+import com.pratilipi.data.transfer.shared.PratilipiData;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipi.api.shared.PutPratilipiRequest;
 import com.pratilipi.pagecontent.pratilipi.api.shared.PutPratilipiResponse;
-import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
