@@ -54,6 +54,8 @@ public class AuthorData implements IsSerializable {
 
 	private Date registrationDate;
 	
+	private Long contentPublished;
+	
 	
 	public Long getId() {
 		return id;
@@ -252,6 +254,14 @@ public class AuthorData implements IsSerializable {
 
 	public void setRegistrationDate( Date registrationDate ) {
 		this.registrationDate = registrationDate;
+	}
+	
+	public Long getContentPublished() {
+		return contentPublished;
+	}
+
+	public void setContentPublished(Long contentPublished) {
+		this.contentPublished = contentPublished;
 	}
 
 }

@@ -142,10 +142,10 @@ public class AuthorContentHelper extends PageContentHelper<
 
 		Map<Long, LanguageData> languageIdToDataMap = includeLanguageData ? new HashMap<Long, LanguageData>() : null;
 		
-		List<AuthorData> pratilipiDataList = new ArrayList<>( authorList.size() );
+		List<AuthorData> authorDataList = new ArrayList<>( authorList.size() );
 
 		for( Author author : authorList ) {
-			AuthorData pratilipiData = createAuthorData( author, null, request );
+			AuthorData authorData = createAuthorData( author, null, request );
 
 			if( includeLanguageData ) {
 				LanguageData languageData = languageIdToDataMap.get( author.getLanguageId() );
@@ -154,13 +154,13 @@ public class AuthorContentHelper extends PageContentHelper<
 					languageData = PratilipiHelper.get( request ).createLanguageData( language );
 					languageIdToDataMap.put( languageData.getId(), languageData );
 				}
-				pratilipiData.setLanguageData( languageData );
+				authorData.setLanguageData( languageData );
 			}
 
-			pratilipiDataList.add( pratilipiData );
+			authorDataList.add( authorData );
 		}
 		
-		return pratilipiDataList;
+		return authorDataList;
 		
 	}
 	
@@ -217,6 +217,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		authorData.setSummary( author.getSummary() );
 		authorData.setEmail( author.getEmail() );
 		authorData.setRegistrationDate( new Date() );
+		authorData.setContentPublished( author.getContentPublished() );
 		
 		return authorData;
 	}
