@@ -16,6 +16,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.pagecontent.blogpost.BlogPostContent;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiPageType;
@@ -28,7 +29,7 @@ public class PratilipiFilter implements Filter {
 	private final Map<String, String> redirections = new HashMap<>();
 	private final List<String> nonExistents = new LinkedList<>();
 	
-	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile( "/resource\\.(book|poem|story|article)-cover/.*" );
+	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile( "/resource\\.(book|poem|story|article|pratilipi)-cover/.*" );
 	private final Pattern validHostRegEx = Pattern.compile(
 			"(www|embed|devo|alpha)\\.pratilipi\\.com"
 			+ "|"
@@ -101,7 +102,10 @@ public class PratilipiFilter implements Filter {
 			
 		} else if( oldPratilipiCoverUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi cover url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", requestUri.replaceFirst( "book|poem|story|article", "pratilipi" ) );
+			response.setHeader( "Location", requestUri
+					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/" )
+					.replaceFirst( "book|poem|story|article", "pratilipi" )
+					.replaceFirst( "original|300", "150" ) );
 
 			
 		} else if( requestUri.startsWith( "/cdn-asia.pratilipi.com/" )
