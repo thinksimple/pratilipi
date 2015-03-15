@@ -1,5 +1,6 @@
 package com.pratilipi.pagecontent.pratilipi.api;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -44,15 +45,17 @@ public class PratilipiProcessApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
 		
+		List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
 		for( Long pratilipiId : pratilipiIdList ) {
 			Task task = TaskQueueFactory.newTask()
 					.addParam( "pratilipiId", pratilipiId.toString() )
 					.addParam( "updateStats", "true" )
 					.setUrl( "/pratilipi/process" );
-			TaskQueueFactory.getPratilipiTaskQueue().add( task );
+			taskList.add( task );
 		}
+		TaskQueueFactory.getPratilipiTaskQueue().add( taskList );
 		
-		logger.log( Level.INFO, "Added " + pratilipiIdList.size() + " tasks." );
+		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
 		
 		return new GenericResponse();
 	}

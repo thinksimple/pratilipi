@@ -1,5 +1,6 @@
 package com.pratilipi.pagecontent.author.api;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -44,15 +45,17 @@ public class AuthorProcessApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		List<Long> authorIdList = dataAccessor.getAuthorIdList( authorFilter, null, null ).getDataList();
 		
+		List<Task> taskList = new ArrayList<>( authorIdList.size() );
 		for( Long authorId : authorIdList ) {
 			Task task = TaskQueueFactory.newTask()
 					.addParam( "authorId", authorId.toString() )
 					.addParam( "updateStats", "true" )
 					.setUrl( "/author/process" );
-			TaskQueueFactory.getAuthorTaskQueue().add( task );
+			taskList.add( task );
 		}
+		TaskQueueFactory.getAuthorTaskQueue().add( taskList );
 		
-		logger.log( Level.INFO, "Added " + authorIdList.size() + " tasks." );
+		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
 		
 		return new GenericResponse();
 	}
