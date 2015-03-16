@@ -3,7 +3,7 @@
   <cron>
     <url>/init?cron</url>
     <target>api</target>
-    <schedule>every 6 hours</schedule>
+    <schedule>every 1 hours from 8:00 to 20:00</schedule>
   </cron>
 
   <cron>
