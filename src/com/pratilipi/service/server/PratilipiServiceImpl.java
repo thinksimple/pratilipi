@@ -30,11 +30,8 @@ import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
 import com.pratilipi.pagecontent.genres.GenresContentProcessor;
-import com.pratilipi.pagecontent.languages.LanguagesContentProcessor;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.service.client.PratilipiService;
-import com.pratilipi.service.shared.AddLanguageRequest;
-import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPratilipiGenreRequest;
 import com.pratilipi.service.shared.AddPratilipiGenreResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
@@ -115,46 +112,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 
 	@Override
-	public AddLanguageResponse addLanguage( AddLanguageRequest request )
-			throws InvalidArgumentException, InsufficientAccessException {
-		
-		LanguageData languageData = request.getLanguage();
-		if( languageData.getId() != null )
-			throw new InvalidArgumentException(
-					"LanguageId exist already. Did you mean to call updateLanguage ?" );
-
-		
-		PratilipiHelper pratilipiHelper =
-				PratilipiHelper.get( this.getThreadLocalRequest() );
-		
-		if( ! pratilipiHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_ADD, false ) )
-			throw new InsufficientAccessException();
-		
-		
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-		Language language = dataAccessor.newLanguage();
-		language.setName( languageData.getName() );
-		language.setNameEn( languageData.getNameEn() );
-		language.setCreationDate( new Date() );
-		language = dataAccessor.createOrUpdateLanguage( language );
-		
-		return new AddLanguageResponse( language.getId() );
-	}
-
-	@Override
-	public GetLanguageListResponse getLanguageList(
-			GetLanguageListRequest request ) throws InsufficientAccessException {
-		
-		PratilipiHelper pratilipiHelper =
-				PratilipiHelper.get( this.getThreadLocalRequest() );
-		
-		if( ! pratilipiHelper.hasUserAccess( LanguagesContentProcessor.ACCESS_ID_LANGUAGE_LIST, false ) )
-			throw new InsufficientAccessException();
-
-		boolean sendMetaData = pratilipiHelper.hasUserAccess(
-				LanguagesContentProcessor.ACCESS_ID_LANGUAGE_READ_META_DATA, false );
-		
+	public GetLanguageListResponse getLanguageList( GetLanguageListRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		List<Language> languageList = dataAccessor.getLanguageList();
@@ -166,8 +124,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			languageData.setId( language.getId() );
 			languageData.setName( language.getName() );
 			languageData.setNameEn( language.getNameEn() );
-			if( sendMetaData )
-				languageData.setCreationDate( language.getCreationDate() );
+			languageData.setCreationDate( language.getCreationDate() );
 			
 			languageDataList.add( languageData );
 		}

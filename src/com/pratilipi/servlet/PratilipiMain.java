@@ -36,7 +36,6 @@ import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
 import com.pratilipi.pagecontent.event.EventContentHelper;
 import com.pratilipi.pagecontent.genres.GenresContentHelper;
-import com.pratilipi.pagecontent.languages.LanguagesContentFactory;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentHelper;
 import com.pratilipi.pagecontent.publisher.PublisherContentHelper;
@@ -59,7 +58,6 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( PratilipisContentHelper.class );
 		PageContentRegistry.register( ReaderContentHelper.class );		// 5.0
 		PageContentRegistry.register( WriterContentHelper.class );		// 5.0
-		PageContentRegistry.register( LanguagesContentFactory.class );
 		PageContentRegistry.register( AuthorsContentFactory.class );
 		PageContentRegistry.register( GenresContentHelper.class );
 		PageContentRegistry.register( SearchContentHelper.class );
@@ -250,9 +248,6 @@ public class PratilipiMain extends ClaymusMain {
 			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.MAGAZINE, PratilipiState.PUBLISHED ) );
 
 		
-		else if( requestUri.equals( "/languages" ) )
-			pageContentList.add( LanguagesContentFactory.newLanguagesContent() );
-
 		else if( requestUri.equals( "/authors" ) )
 			pageContentList.add( AuthorsContentFactory.newAuthorsContent() );
 

@@ -6,8 +6,6 @@ import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.pratilipi.service.shared.AddLanguageRequest;
-import com.pratilipi.service.shared.AddLanguageResponse;
 import com.pratilipi.service.shared.AddPratilipiGenreRequest;
 import com.pratilipi.service.shared.AddPratilipiGenreResponse;
 import com.pratilipi.service.shared.AddPublisherRequest;
@@ -53,11 +51,7 @@ public interface PratilipiService extends RemoteService {
 			GetPratilipiListRequest request );
 	
 
-	AddLanguageResponse addLanguage( AddLanguageRequest request )
-			throws InvalidArgumentException, InsufficientAccessException;
-
-	GetLanguageListResponse getLanguageList( GetLanguageListRequest request )
-			throws InsufficientAccessException;
+	GetLanguageListResponse getLanguageList( GetLanguageListRequest request );
 
 
 	// API Version: 4.0; Owner Module: AuthorContent;
