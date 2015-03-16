@@ -1,7 +1,6 @@
 package com.pratilipi.pagecontent.pratilipis;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +17,15 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
-import com.pratilipi.service.shared.data.PratilipiData;
+import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 
 public class PratilipisContentProcessor extends PageContentProcessor<PratilipisContent> {
 
+	@Override
+	protected CacheLevel getCacheLevel( PratilipisContent pratilipisContent, HttpServletRequest request ) {
+		return pratilipisContent.getPratilipiIdList() != null  ? CacheLevel.GLOBAL : CacheLevel.NONE;
+	}
+	
 	@Override
 	public String generateTitle( PratilipisContent pratilipisContent, HttpServletRequest request ) {
 		if( pratilipisContent.getTitle() != null )
@@ -54,12 +58,12 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 		
 		Map<String, Object> dataModel = new HashMap<>();
 
-		List<PratilipiData> pratilipiDataList;
+		Object pratilipiDataList; // TODO
 		if( pratilipisContent.getPratilipiIdList() != null ) {
 
-			pratilipiDataList = pratilipiHelper.createPratilipiDataListFromIdList(
+			pratilipiDataList = PratilipiContentHelper.createPratilipiDataList(
 					pratilipisContent.getPratilipiIdList(),
-					false, true, false );
+					false, true, request );
 
 		} else {
 
