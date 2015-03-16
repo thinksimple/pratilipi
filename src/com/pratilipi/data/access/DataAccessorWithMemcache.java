@@ -138,6 +138,16 @@ public class DataAccessorWithMemcache
 	}
 
 	@Override
+	public List<Language> getLanguageList() {
+		List<Language> languageList = memcache.get( PREFIX_LANGUAGE_LIST );
+		if( languageList == null ) {
+			languageList = dataAccessor.getLanguageList();
+			memcache.put( PREFIX_LANGUAGE_LIST, new ArrayList<>( languageList ) );
+		}
+		return languageList;
+	}
+	
+	@Override
 	public List<Language> getLanguageList( List<Long> idList ) {
 		List<String> memcacheKeyList = new ArrayList<>( idList.size() );
 		for( Long id : idList )
@@ -161,16 +171,6 @@ public class DataAccessorWithMemcache
 			languageList.add( language );
 		}
 		
-		return languageList;
-	}
-	
-	@Override
-	public List<Language> getLanguageList() {
-		List<Language> languageList = memcache.get( PREFIX_LANGUAGE_LIST );
-		if( languageList == null ) {
-			languageList = dataAccessor.getLanguageList();
-			memcache.put( PREFIX_LANGUAGE_LIST, new ArrayList<>( languageList ) );
-		}
 		return languageList;
 	}
 	
@@ -220,6 +220,16 @@ public class DataAccessorWithMemcache
 	}
 	
 	@Override
+	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount ) {
+		return dataAccessor.getAuthorIdList( authorFilter, cursor, resultCount );
+	}
+
+	@Override
+	public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount ) {
+		return dataAccessor.getAuthorList( authorFilter, cursor, resultCount );
+	}
+
+	@Override
 	public List<Author> getAuthorList( List<Long> idList ) {
 		List<String> memcacheKeyList = new ArrayList<>( idList.size() );
 		for( Long id : idList )
@@ -244,16 +254,6 @@ public class DataAccessorWithMemcache
 		}
 		
 		return authorList;
-	}
-	
-	@Override
-	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount ) {
-		return dataAccessor.getAuthorIdList( authorFilter, cursor, resultCount );
-	}
-
-	@Override
-	public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount ) {
-		return dataAccessor.getAuthorList( authorFilter, cursor, resultCount );
 	}
 	
 	@Override

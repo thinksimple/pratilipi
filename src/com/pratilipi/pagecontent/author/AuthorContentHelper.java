@@ -3,6 +3,7 @@ package com.pratilipi.pagecontent.author;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -140,23 +141,27 @@ public class AuthorContentHelper extends PageContentHelper<
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
-		Map<Long, LanguageData> languageIdToDataMap = includeLanguageData ? new HashMap<Long, LanguageData>() : null;
+		
+		Map<Long, LanguageData> languageIdToDataMap = null;
+		if( includeLanguageData ) {
+			List<Long> languageIdList = new LinkedList<>();
+			for( Author author : authorList )
+				if( ! languageIdList.contains( author.getLanguageId() ) )
+					languageIdList.add( author.getLanguageId() );
+			List<Language> languageList = dataAccessor.getLanguageList( languageIdList );
+		
+			languageIdToDataMap = new HashMap<>( languageList.size() );
+			for( Language language : languageList )
+				languageIdToDataMap.put( language.getId(), PratilipiHelper.get( request ).createLanguageData( language ) );
+		}
+		
 		
 		List<AuthorData> authorDataList = new ArrayList<>( authorList.size() );
 
 		for( Author author : authorList ) {
 			AuthorData authorData = createAuthorData( author, null, request );
-
-			if( includeLanguageData ) {
-				LanguageData languageData = languageIdToDataMap.get( author.getLanguageId() );
-				if( languageData == null ) {
-					Language language = dataAccessor.getLanguage( author.getLanguageId() );
-					languageData = PratilipiHelper.get( request ).createLanguageData( language );
-					languageIdToDataMap.put( languageData.getId(), languageData );
-				}
-				authorData.setLanguageData( languageData );
-			}
-
+			if( includeLanguageData )
+				authorData.setLanguageData( languageIdToDataMap.get( author.getLanguageId() ) );
 			authorDataList.add( authorData );
 		}
 		

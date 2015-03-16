@@ -348,37 +348,45 @@ public class PratilipiContentHelper extends PageContentHelper<
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
-		Map<Long, LanguageData> languageIdToDataMap = includeLanguageData ? new HashMap<Long, LanguageData>() : null;
-		Map<Long, AuthorData> authorIdToDataMap = includeAuthorData ? new HashMap<Long, AuthorData>() : null;
+		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
 		
-		List<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiIdList.size() );
 
-		for( Long pratilipiId : pratilipiIdList ) {
-			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			PratilipiData pratilipiData = createPratilipiData( pratilipi, null, null, request );
-
-			if( includeLanguageData ) {
-				LanguageData languageData = languageIdToDataMap.get( pratilipi.getLanguageId() );
-				if( languageData == null ) {
-					Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
-					languageData = PratilipiHelper.get( request ).createLanguageData( language );
-					languageIdToDataMap.put( languageData.getId(), languageData );
-				}
-				pratilipiData.setLanguageData( languageData );
-			}
-
-			if( includeAuthorData && pratilipi.getAuthorId() != null ) {
-				AuthorData authorData = authorIdToDataMap.get( pratilipi.getAuthorId() );
-				if( authorData == null ) {
-					Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-					authorData = AuthorContentHelper.createAuthorData( author, null, request );
-					authorIdToDataMap.put( authorData.getId(), authorData );
-				}
-				pratilipiData.setAuthorData( authorData );
-			}
+		Map<Long, LanguageData> languageIdToDataMap = null;
+		if( includeLanguageData ) {
+			List<Long> languageIdList = new LinkedList<>();
+			for( Pratilipi pratilipi : pratilipiList )
+				if( ! languageIdList.contains( pratilipi.getLanguageId() ) )
+					languageIdList.add( pratilipi.getLanguageId() );
 			
-			pratilipiData.setRelevance( calculateRelevance( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) ) );
+			List<Language> languageList = dataAccessor.getLanguageList( languageIdList );
+			languageIdToDataMap = new HashMap<>( languageList.size() );
+			for( Language language : languageList )
+				languageIdToDataMap.put( language.getId(), PratilipiHelper.get( request ).createLanguageData( language ) );
+		}
+			
+		
+		Map<Long, AuthorData> authorIdToDataMap = null;
+		if( includeAuthorData ) {
+			List<Long> authorIdList = new LinkedList<>();
+			for( Pratilipi pratilipi : pratilipiList )
+				if( ! authorIdList.contains( pratilipi.getAuthorId() ) )
+					authorIdList.add( pratilipi.getAuthorId() );
+			
+			List<Author> authorList = dataAccessor.getAuthorList( authorIdList );
+			authorIdToDataMap = new HashMap<>( authorList.size() );
+			for( Author author : authorList )
+				authorIdToDataMap.put( author.getId(), AuthorContentHelper.createAuthorData( author, null, request ) );	
+		}
 
+		
+		List<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
+		for( Pratilipi pratilipi : pratilipiList ) {
+			PratilipiData pratilipiData = createPratilipiData( pratilipi, null, null, request );
+			if( includeLanguageData )
+				pratilipiData.setLanguageData( languageIdToDataMap.get( pratilipi.getLanguageId() ) );
+			if( includeAuthorData && pratilipi.getAuthorId() != null )
+				pratilipiData.setAuthorData( authorIdToDataMap.get( pratilipi.getAuthorId() ) );
+			pratilipiData.setRelevance( calculateRelevance( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) ) );
 			pratilipiDataList.add( pratilipiData );
 		}
 		

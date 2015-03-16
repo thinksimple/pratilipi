@@ -68,6 +68,13 @@ public class DataAccessorGaeImpl
 	}
 	
 	@Override
+	public DataListCursorTuple<Pratilipi> getPratilipiList(
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
+		
+		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, false );
+	}
+
+	@Override
 	public List<Pratilipi> getPratilipiList( List<Long> idList ) {
 		List<Pratilipi> pratilipiList = new ArrayList<>( idList.size() );
 		for( Long id : idList )
@@ -75,13 +82,6 @@ public class DataAccessorGaeImpl
 		return pratilipiList;
 	}
 	
-	@Override
-	public DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
-		
-		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, false );
-	}
-
 	@SuppressWarnings("unchecked")
 	private <T> DataListCursorTuple<T> getPratilipiList(
 			PratilipiFilter pratilipiFilter, String cursorStr,
@@ -150,14 +150,6 @@ public class DataAccessorGaeImpl
 	}
 
 	@Override
-	public List<Language> getLanguageList( List<Long> idList ) {
-		List<Language> languageList = new ArrayList<>( idList.size() );
-		for( Long id : idList )
-			languageList.add( getLanguage( id ) );
-		return languageList;
-	}
-	
-	@Override
 	public List<Language> getLanguageList() {
 		Query query =
 				new GaeQueryBuilder( pm.newQuery( LanguageEntity.class ) )
@@ -167,6 +159,14 @@ public class DataAccessorGaeImpl
 		@SuppressWarnings("unchecked")
 		List<Language> languageEntityList = (List<Language>) query.execute();
 		return (List<Language>) pm.detachCopyAll( languageEntityList );
+	}
+	
+	@Override
+	public List<Language> getLanguageList( List<Long> idList ) {
+		List<Language> languageList = new ArrayList<>( idList.size() );
+		for( Long id : idList )
+			languageList.add( getLanguage( id ) );
+		return languageList;
 	}
 	
 	@Override
@@ -245,6 +245,13 @@ public class DataAccessorGaeImpl
 	}
 	
 	@Override
+	public DataListCursorTuple<Author> getAuthorList(
+			AuthorFilter authorFilter, String cursorStr, Integer resultCount ) {
+		
+		return getAuthorList( authorFilter, cursorStr, resultCount, false );
+	}
+
+	@Override
 	public List<Author> getAuthorList( List<Long> idList ) {
 		List<Author> authorList = new ArrayList<>( idList.size() );
 		for( Long id : idList )
@@ -252,13 +259,6 @@ public class DataAccessorGaeImpl
 		return authorList;
 	}
 	
-	@Override
-	public DataListCursorTuple<Author> getAuthorList(
-			AuthorFilter authorFilter, String cursorStr, Integer resultCount ) {
-		
-		return getAuthorList( authorFilter, cursorStr, resultCount, false );
-	}
-
 	@SuppressWarnings("unchecked")
 	private <T> DataListCursorTuple<T> getAuthorList( AuthorFilter authorFilter, String cursorStr, Integer resultCount, boolean idOnly ) {
 
