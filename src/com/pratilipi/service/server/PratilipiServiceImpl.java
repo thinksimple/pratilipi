@@ -268,48 +268,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 
 	
 	@Override
-	public AddPublisherResponse addPublisher(AddPublisherRequest request)
-			throws InsufficientAccessException {
-		
-		PublisherData publisherData = request.getPublisher();
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-		
-		Publisher publisher = dataAccessor.newPublisher();
-		publisher.setName( publisherData.getName() );
-		publisher.setEmail( publisherData.getEmail() );
-		publisher.setSecret( publisherData.getSecret() );
-		publisher.setRegistrationDate( new Date() );
-		
-		publisher = dataAccessor.createOrUpdatePublisher( publisher );
-		
-		return new AddPublisherResponse( publisher.getId() );
-	}
-
-	@Override
-	public GetPublisherListResponse getPublisherList(
-			GetPublisherListRequest request) {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-		List<Publisher> publisherList = dataAccessor.getPublisherList();
-		
-		ArrayList<PublisherData> publisherDataList = new ArrayList<>( publisherList.size() );
-		for( Publisher publisher : publisherList ) {
-			PublisherData publisherData = new PublisherData();
-			publisherData.setId( publisher.getId() );
-			publisherData.setName( publisher.getName() );
-			publisherData.setEmail( publisher.getEmail() );
-			publisherData.setSecret( publisherData.getSecret() );
-			publisherData.setRegistrationDate( publisher.getRegistrationDate() );
-			
-			publisherDataList.add( publisherData );
-		}
-
-		return new GetPublisherListResponse( publisherDataList );
-	}
-
-	
-	@Override
 	public SaveGenreResponse saveGenre( SaveGenreRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		

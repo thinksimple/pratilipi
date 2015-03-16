@@ -3,8 +3,6 @@ package com.pratilipi.service.client;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.pratilipi.service.shared.AddPratilipiGenreRequest;
 import com.pratilipi.service.shared.AddPratilipiGenreResponse;
-import com.pratilipi.service.shared.AddPublisherRequest;
-import com.pratilipi.service.shared.AddPublisherResponse;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
 import com.pratilipi.service.shared.AddUserPratilipiResponse;
 import com.pratilipi.service.shared.ConvertPratilipiWordToHtmlRequest;
@@ -18,8 +16,6 @@ import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
 import com.pratilipi.service.shared.GetPratilipiListResponse;
-import com.pratilipi.service.shared.GetPublisherListRequest;
-import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -56,15 +52,6 @@ public interface PratilipiServiceAsync {
 	void getAuthorList(
 			GetAuthorListRequest request,
 			AsyncCallback<GetAuthorListResponse> callback );
-
-	
-	void addPublisher(
-			AddPublisherRequest request,
-			AsyncCallback<AddPublisherResponse> callback );
-
-	void getPublisherList(
-			GetPublisherListRequest request,
-			AsyncCallback<GetPublisherListResponse> callback );
 
 	
 	void saveGenre(

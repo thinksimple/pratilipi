@@ -8,8 +8,6 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.pratilipi.service.shared.AddPratilipiGenreRequest;
 import com.pratilipi.service.shared.AddPratilipiGenreResponse;
-import com.pratilipi.service.shared.AddPublisherRequest;
-import com.pratilipi.service.shared.AddPublisherResponse;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
 import com.pratilipi.service.shared.AddUserPratilipiResponse;
 import com.pratilipi.service.shared.ConvertPratilipiWordToHtmlRequest;
@@ -23,8 +21,6 @@ import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
 import com.pratilipi.service.shared.GetPratilipiListResponse;
-import com.pratilipi.service.shared.GetPublisherListRequest;
-import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -62,12 +58,6 @@ public interface PratilipiService extends RemoteService {
 			throws InsufficientAccessException;
 	
 	
-	AddPublisherResponse addPublisher( AddPublisherRequest request )
-			throws InsufficientAccessException;
-
-	GetPublisherListResponse getPublisherList( GetPublisherListRequest request );
-	
-
 	SaveGenreResponse saveGenre( SaveGenreRequest request )
 			throws InvalidArgumentException, InsufficientAccessException;
 
