@@ -30,6 +30,7 @@ public class PratilipiFilter implements Filter {
 	private final List<String> nonExistents = new LinkedList<>();
 	
 	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile( "/resource\\.(book|poem|story|article|pratilipi)-cover/.*" );
+	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
 	private final Pattern validHostRegEx = Pattern.compile(
 			"(www|embed|devo|alpha)\\.pratilipi\\.com"
 			+ "|"
@@ -106,6 +107,11 @@ public class PratilipiFilter implements Filter {
 					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/" )
 					.replaceFirst( "book|poem|story|article", "pratilipi" )
 					.replaceFirst( "original|300", "150" ) );
+
+			
+		} else if( oldPratilipiReaderUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi reader url
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", requestUri.replaceFirst( "/(book|poem|story|article|pratilipi)/", "?id=" ) );
 
 			
 		} else if( requestUri.startsWith( "/cdn-asia.pratilipi.com/" )
