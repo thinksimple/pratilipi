@@ -1,5 +1,6 @@
 package com.pratilipi.data.access;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,14 @@ public class DataAccessorGaeImpl
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 		
 		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, true );
+	}
+	
+	@Override
+	public List<Pratilipi> getPratilipiList( List<Long> idList ) {
+		List<Pratilipi> pratilipiList = new ArrayList<>( idList.size() );
+		for( Long id : idList )
+			pratilipiList.add( getPratilipi( id ) );
+		return pratilipiList;
 	}
 	
 	@Override
@@ -140,6 +149,14 @@ public class DataAccessorGaeImpl
 		return getEntity( LanguageEntity.class, id );
 	}
 
+	@Override
+	public List<Language> getLanguageList( List<Long> idList ) {
+		List<Language> languageList = new ArrayList<>( idList.size() );
+		for( Long id : idList )
+			languageList.add( getLanguage( id ) );
+		return languageList;
+	}
+	
 	@Override
 	public List<Language> getLanguageList() {
 		Query query =
@@ -225,6 +242,14 @@ public class DataAccessorGaeImpl
 			AuthorFilter authorFilter, String cursorStr, Integer resultCount ) {
 		
 		return getAuthorList( authorFilter, cursorStr, resultCount, true );
+	}
+	
+	@Override
+	public List<Author> getAuthorList( List<Long> idList ) {
+		List<Author> authorList = new ArrayList<>( idList.size() );
+		for( Long id : idList )
+			authorList.add( getAuthor( id ) );
+		return authorList;
 	}
 	
 	@Override

@@ -30,6 +30,8 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 	
+	List<Pratilipi> getPratilipiList( List<Long> idList );
+	
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
 	
 
@@ -39,6 +41,8 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	List<Language> getLanguageList();
 
+	List<Language> getLanguageList( List<Long> idList );
+	
 	Language createOrUpdateLanguage( Language language );
 
 	
@@ -57,6 +61,8 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount );
 
+	List<Author> getAuthorList( List<Long> idList );
+	
 	Author createOrUpdateAuthor( Author author );
 
 	

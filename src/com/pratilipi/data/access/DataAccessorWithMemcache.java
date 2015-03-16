@@ -1,7 +1,9 @@
 package com.pratilipi.data.access;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.access.Memcache;
@@ -85,6 +87,33 @@ public class DataAccessorWithMemcache
 	}
 
 	@Override
+	public List<Pratilipi> getPratilipiList( List<Long> idList ) {
+		List<String> memcacheKeyList = new ArrayList<>( idList.size() );
+		for( Long id : idList )
+			memcacheKeyList.add( PREFIX_PRATILIPI + id );
+		Map<String, Pratilipi> memcacheKeyEntityMap = memcache.getAll( memcacheKeyList );
+
+		List<Long> missingIdList = new LinkedList<>();
+		for( Long id : idList )
+			if( memcacheKeyEntityMap.get( PREFIX_PRATILIPI + id ) == null ) 
+				missingIdList.add( id );
+		List<Pratilipi> missingPratilipiList = dataAccessor.getPratilipiList( missingIdList );
+
+		List<Pratilipi> pratilipiList = new ArrayList<>( idList.size() );
+		for( Long id : idList ) {
+			Pratilipi pratilipi = memcacheKeyEntityMap.get( id );
+			if( pratilipi == null ) {
+				pratilipi = missingPratilipiList.remove( 0 );
+				if( pratilipi != null )
+					memcache.put( PREFIX_PRATILIPI + id, pratilipi );
+			}
+			pratilipiList.add( pratilipi );
+		}
+		
+		return pratilipiList;
+	}
+	
+	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 		memcache.put( PREFIX_PRATILIPI + pratilipi.getId(), pratilipi );
@@ -108,6 +137,33 @@ public class DataAccessorWithMemcache
 		return language;
 	}
 
+	@Override
+	public List<Language> getLanguageList( List<Long> idList ) {
+		List<String> memcacheKeyList = new ArrayList<>( idList.size() );
+		for( Long id : idList )
+			memcacheKeyList.add( PREFIX_LANGUAGE + id );
+		Map<String, Language> memcacheKeyEntityMap = memcache.getAll( memcacheKeyList );
+
+		List<Long> missingIdList = new LinkedList<>();
+		for( Long id : idList )
+			if( memcacheKeyEntityMap.get( PREFIX_LANGUAGE + id ) == null ) 
+				missingIdList.add( id );
+		List<Language> missingLanguageList = dataAccessor.getLanguageList( missingIdList );
+
+		List<Language> languageList = new ArrayList<>( idList.size() );
+		for( Long id : idList ) {
+			Language language = memcacheKeyEntityMap.get( id );
+			if( language == null ) {
+				language = missingLanguageList.remove( 0 );
+				if( language != null )
+					memcache.put( PREFIX_LANGUAGE + id, language );
+			}
+			languageList.add( language );
+		}
+		
+		return languageList;
+	}
+	
 	@Override
 	public List<Language> getLanguageList() {
 		List<Language> languageList = memcache.get( PREFIX_LANGUAGE_LIST );
@@ -161,6 +217,33 @@ public class DataAccessorWithMemcache
 	public DataListCursorTuple<Author> getAuthorList( String cursor, int resultCount ) {
 		// TODO: enable caching
 		return dataAccessor.getAuthorList( cursor, resultCount );
+	}
+	
+	@Override
+	public List<Author> getAuthorList( List<Long> idList ) {
+		List<String> memcacheKeyList = new ArrayList<>( idList.size() );
+		for( Long id : idList )
+			memcacheKeyList.add( PREFIX_AUTHOR + id );
+		Map<String, Author> memcacheKeyEntityMap = memcache.getAll( memcacheKeyList );
+
+		List<Long> missingIdList = new LinkedList<>();
+		for( Long id : idList )
+			if( memcacheKeyEntityMap.get( PREFIX_AUTHOR + id ) == null ) 
+				missingIdList.add( id );
+		List<Author> missingAuthorList = dataAccessor.getAuthorList( missingIdList );
+
+		List<Author> authorList = new ArrayList<>( idList.size() );
+		for( Long id : idList ) {
+			Author author = memcacheKeyEntityMap.get( id );
+			if( author == null ) {
+				author = missingAuthorList.remove( 0 );
+				if( author != null )
+					memcache.put( PREFIX_AUTHOR + id, author );
+			}
+			authorList.add( author );
+		}
+		
+		return authorList;
 	}
 	
 	@Override
