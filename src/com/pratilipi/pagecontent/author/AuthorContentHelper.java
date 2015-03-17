@@ -137,6 +137,30 @@ public class AuthorContentHelper extends PageContentHelper<
 	}
 	
 	
+	public static AuthorData saveAuthor( HttpServletRequest request, AuthorData authorData )
+			throws InsufficientAccessException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		
+		Author author = dataAccessor.newAuthor();
+		author.setFirstNameEn( authorData.getFirstNameEn() );
+		author.setLastNameEn( authorData.getLastNameEn() );
+		author.setEmail( authorData.getEmail() );
+		
+		if( !hasRequestAccessToUpdateAuthorData( request, author ))
+			throw new InsufficientAccessException();
+		
+		author = dataAccessor.createOrUpdateAuthor( author );
+		
+		AuthorData newAuthorData = new AuthorData();
+		newAuthorData.setId( author.getId() );
+		newAuthorData.setFirstNameEn( author.getFirstNameEn() );
+		newAuthorData.setLastNameEn( author.getLastNameEn() );
+		newAuthorData.setEmail( author.getEmail() );
+		
+		return newAuthorData;
+	}
+	
 	public static List<AuthorData> createAuthorDataList( List<Author> authorList, boolean includeLanguageData, HttpServletRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
