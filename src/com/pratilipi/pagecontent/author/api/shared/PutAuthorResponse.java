@@ -8,11 +8,16 @@ public class PutAuthorResponse extends GenericResponse {
 
 	private AuthorData authorData;
 	
-	public PutAuthorResponse( AuthorData authorData ){
+	
+	@SuppressWarnings("unused")
+	private PutAuthorResponse() {}
+	
+	public PutAuthorResponse( AuthorData authorData ) {
 		this.authorData = authorData;
 	}
 	
-	public AuthorData getAuthorData(){
+	public AuthorData getAuthorData() {
 		return this.authorData;
 	}
+
 }

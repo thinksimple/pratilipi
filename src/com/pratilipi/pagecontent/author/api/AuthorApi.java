@@ -5,21 +5,22 @@ import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Put;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
+import com.claymus.taskqueue.Task;
 import com.pratilipi.data.transfer.shared.AuthorData;
 import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.author.api.shared.PutAuthorRequest;
 import com.pratilipi.pagecontent.author.api.shared.PutAuthorResponse;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings( "serial" )
 @Bind( uri = "/author" )
 public class AuthorApi extends GenericApi {
 
 	@Put
-	public PutAuthorResponse saveAuthor( PutAuthorRequest request ) 
-			throws InsufficientAccessException, InvalidArgumentException {
+	public PutAuthorResponse putAuthor( PutAuthorRequest request ) 
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		AuthorData authorData = new AuthorData();
-		
 		authorData.setId( request.getId() );
 		
 		if( request.hasLanguageId() )
@@ -39,7 +40,17 @@ public class AuthorApi extends GenericApi {
 		if( request.hasEmail() )
 			authorData.setEmail( request.getEmail() == null ? null : request.getEmail().toLowerCase() );
 		
-		authorData = AuthorContentHelper.saveAuthor( this.getThreadLocalRequest(), authorData );
+		authorData = AuthorContentHelper.saveAuthor(
+				authorData,
+				this.getThreadLocalRequest() );
+		
+		
+		Task task = TaskQueueFactory.newTask()
+				.addParam( "authorId", authorData.getId().toString() )
+				.addParam( "processData", "true" )
+				.setUrl( "/author/process" );
+		TaskQueueFactory.getAuthorTaskQueue().add( task );
+
 		
 		return new PutAuthorResponse( authorData );
 	}

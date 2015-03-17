@@ -30,74 +30,78 @@ public class PutAuthorRequest extends GenericRequest {
 	private String penNameEn;
 	private boolean hasPenNameEn;
 	
+	@Validate( regEx = REGEX_EMAIL )
 	private String email;
 	private boolean hasEmail;
+
 	
-	public Long getId(){
-		return this.id;
+	public Long getId() {
+		return id;
 	}
 	
-	public Long getLanguageId(){
-		return this.languageId;
+
+	public Long getLanguageId() {
+		return languageId;
 	}
 	
-	public boolean hasLanguageId(){
-		return this.hasLanguageId;
+	public boolean hasLanguageId() {
+		return hasLanguageId;
 	}
 	
-	public String getFirstName(){
-		return this.firstName;
+	public String getFirstName() {
+		return firstName;
 	}
 	
-	public boolean hasFirstName(){
-		return this.hasFirstName;
+	public boolean hasFirstName() {
+		return hasFirstName;
 	}
 	
-	public String getLastName(){
-		return this.lastName;
+	public String getLastName() {
+		return lastName;
 	}
 	
-	public boolean hasLastName(){
-		return this.hasLastName;
+	public boolean hasLastName() {
+		return hasLastName;
 	}
 	
-	public String getPenName(){
-		return this.penName;
+	public String getPenName() {
+		return penName;
 	}
 	
-	public boolean hasPenName(){
-		return this.hasPenName;
+	public boolean hasPenName() {
+		return hasPenName;
 	}
 	
-	public String getFirstNameEn(){
-		return this.firstNameEn;
+	public String getFirstNameEn() {
+		return firstNameEn;
 	}
 	
-	public boolean hasFirstNameEn(){
-		return this.hasFirstNameEn;
+	public boolean hasFirstNameEn() {
+		return hasFirstNameEn;
 	}
 	
-	public String getLastNameEn(){
-		return this.lastNameEn;
+	public String getLastNameEn() {
+		return lastNameEn;
 	}
 	
-	public boolean hasLastNameEn(){
-		return this.hasLastNameEn;
+	public boolean hasLastNameEn() {
+		return hasLastNameEn;
 	}
 	
-	public String getPenNameEn(){
-		return this.penNameEn;
+	public String getPenNameEn() {
+		return penNameEn;
 	}
 	
-	public boolean hasPenNameEn(){
-		return this.hasPenNameEn;
+	public boolean hasPenNameEn() {
+		return hasPenNameEn;
 	}
 	
-	public String getEmail(){
-		return this.email;
+	public String getEmail() {
+		return email;
 	}
 	
-	public boolean hasEmail(){
-		return this.hasEmail;
+	public boolean hasEmail() {
+		return hasEmail;
 	}
+
 }
