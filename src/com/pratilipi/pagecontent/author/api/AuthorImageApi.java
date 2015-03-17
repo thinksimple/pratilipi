@@ -16,7 +16,7 @@ import com.pratilipi.pagecontent.author.api.shared.PostAuthorImageRequest;
 public class AuthorImageApi extends GenericApi {
 
 	@Post
-	public GenericResponse postPratilipiResource( PostAuthorImageRequest request )
+	public GenericResponse postAuthorImage( PostAuthorImageRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );

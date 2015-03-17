@@ -16,7 +16,7 @@
 
 <#if pratilipiFilterEncodedStr?? >
 	<div id="PageContent-Pratilipis-EncodedData" style="display:none;">${ pratilipiFilterEncodedStr }</div>
-	<script type="text/javascript" language="javascript" src="/pagecontent.pratilipis/pagecontent.pratilipis.nocache.js" async></script>
+	<script type="text/javascript" language="javascript" src="/pagecontent.pratilipis/pagecontent.pratilipis.nocache.js?17032015" async></script>
 </#if>
 
 <!-- PageContent :: Pratilipis :: End -->

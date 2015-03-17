@@ -57,7 +57,7 @@ public class AuthorContentHelper extends PageContentHelper<
 	private static final Gson gson = new GsonBuilder().create();
 
 	
-	private static final String IMAGE_FOLDER 	   = "author-cover";
+	private static final String IMAGE_FOLDER 	   = "author-image";
 	
 	private static final String IMAGE_ORIGINAL_URL = "/resource.author-image/original/";
 	private static final String IMAGE_150_URL	   = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/author-cover/150/";

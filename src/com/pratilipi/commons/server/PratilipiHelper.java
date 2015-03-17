@@ -326,7 +326,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		authorData.setPageUrl( authorPage.getUri() );
 		authorData.setPageUrlAlias( authorPage.getUriAlias() );
 		if( author.hasCustomCover() )
-			authorData.setAuthorImageUrl( ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/author-cover/150/" + author.getId() );
+			authorData.setAuthorImageUrl( ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/author-image/150/" + author.getId() );
 		else
 			authorData.setAuthorImageUrl( URL_RESOURCE + "author-image/original/" + author.getId() );
 		authorData.setAuthorImageUploadUrl( "/api/author/image?authorId=" + author.getId() );

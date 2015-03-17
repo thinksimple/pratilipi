@@ -197,7 +197,7 @@ public class AuthorContentEditOptions implements EntryPoint, ClickHandler {
 		authorSummaryPanel.getElement().setInnerHTML( authorData.getSummary() );
 		authorSummaryInput.setHtml( authorData.getSummary() );
 		authorDataInputView.setAuthorData( authorData );
-		authorImageUpload.setUploadUrl( authorData.getAuthorImageUrl() );
+		authorImageUpload.setUploadUrl( authorData.getAuthorImageUploadUrl() );
 		if( authorData.getPageUrlAlias() != null && ! authorData.getPageUrlAlias().equals( Window.Location.getPath() ) )
 			Window.Location.assign( authorData.getPageUrlAlias() );
 	}

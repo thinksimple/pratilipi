@@ -25,7 +25,6 @@ import com.pratilipi.data.transfer.Genre;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.PratilipiGenre;
-import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.authors.AuthorsContentProcessor;
@@ -34,8 +33,6 @@ import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.shared.AddPratilipiGenreRequest;
 import com.pratilipi.service.shared.AddPratilipiGenreResponse;
-import com.pratilipi.service.shared.AddPublisherRequest;
-import com.pratilipi.service.shared.AddPublisherResponse;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
 import com.pratilipi.service.shared.AddUserPratilipiResponse;
 import com.pratilipi.service.shared.ConvertPratilipiWordToHtmlRequest;
@@ -49,8 +46,6 @@ import com.pratilipi.service.shared.GetLanguageListRequest;
 import com.pratilipi.service.shared.GetLanguageListResponse;
 import com.pratilipi.service.shared.GetPratilipiListRequest;
 import com.pratilipi.service.shared.GetPratilipiListResponse;
-import com.pratilipi.service.shared.GetPublisherListRequest;
-import com.pratilipi.service.shared.GetPublisherListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiListRequest;
 import com.pratilipi.service.shared.GetUserPratilipiListResponse;
 import com.pratilipi.service.shared.GetUserPratilipiRequest;
@@ -67,7 +62,6 @@ import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.GenreData;
 import com.pratilipi.service.shared.data.LanguageData;
 import com.pratilipi.service.shared.data.PratilipiData;
-import com.pratilipi.service.shared.data.PublisherData;
 import com.pratilipi.service.shared.data.UserPratilipiData;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -198,19 +192,6 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		author = dataAccessor.createOrUpdateAuthor( author );
 
 		
-		// Updating Author page uri
-		if( authorData.hasFirstNameEn() || authorData.hasLastNameEn() || authorData.hasPenNameEn() ) {
-			Page page = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), author.getId() );
-			String uriAlias = pratilipiHelper.generateUriAlias(
-					page.getUriAlias(), "/",
-					author.getFirstNameEn(), author.getLastNameEn(), author.getPenNameEn() );
-			if( ! uriAlias.equals( page.getUriAlias() ) ) {
-				page.setUriAlias( uriAlias );
-				page = dataAccessor.createOrUpdatePage( page );
-			}
-		}
-
-
 		// Creating/Updating search index
 		Task task = TaskQueueFactory.newTask()
 				.addParam( "authorId", author.getId().toString() )
