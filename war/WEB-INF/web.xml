@@ -182,7 +182,7 @@
   <!-- Main Claymus Handler -->
 
   <servlet>
-    <servlet-name>PratilipiService</servlet-name>
+    <servlet-name>DeprecatedPratilipiService</servlet-name>
     <servlet-class>com.pratilipi.servlet.PratilipiService</servlet-class>
     <load-on-startup>1</load-on-startup>
     <init-param>
@@ -191,8 +191,22 @@
     </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>PratilipiService</servlet-name>
+    <servlet-name>DeprecatedPratilipiService</servlet-name>
     <url-pattern>/api.pratilipi/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PratilipiService</servlet-name>
+    <servlet-class>com.pratilipi.servlet.PratilipiService</servlet-class>
+    <load-on-startup>1</load-on-startup>
+    <init-param>
+      <param-name>Prefix</param-name>
+      <param-value>/api</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PratilipiService</servlet-name>
+    <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
 
   <servlet>

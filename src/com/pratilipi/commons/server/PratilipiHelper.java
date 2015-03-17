@@ -325,8 +325,11 @@ public class PratilipiHelper extends ClaymusHelper {
 		authorData.setId( author.getId() );
 		authorData.setPageUrl( authorPage.getUri() );
 		authorData.setPageUrlAlias( authorPage.getUriAlias() );
-		authorData.setAuthorImageUrl( URL_RESOURCE + "author-image/original/" + author.getId() );
-		authorData.setAuthorImageUploadUrl( URL_RESOURCE + "author-image/original/" + author.getId() );
+		if( author.hasCustomCover() )
+			authorData.setAuthorImageUrl( ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/author-cover/150/" + author.getId() );
+		else
+			authorData.setAuthorImageUrl( URL_RESOURCE + "author-image/original/" + author.getId() );
+		authorData.setAuthorImageUploadUrl( "/api/author/image?authorId=" + author.getId() );
 		authorData.setUserId( author.getUserId() );
 
 		authorData.setLanguageId( author.getLanguageId() );
