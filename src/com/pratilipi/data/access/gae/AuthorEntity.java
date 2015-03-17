@@ -42,6 +42,9 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "PEN_NAME_EN" )
 	private String penNameEn;
 	
+	@Persistent( column = "CUSTOM_COVER" )
+	private Boolean customCover;
+
 	@Persistent( column = "SUMMARY" )
 	private Text summary;
 	
@@ -149,6 +152,17 @@ public class AuthorEntity implements Author {
 		this.penNameEn = penNameEn;
 	}
 
+
+	@Override
+	public Boolean hasCustomCover() {
+		return customCover == null ? false : customCover;
+	}
+
+	@Override
+	public void setCustomCover( Boolean customCover ) {
+		this.customCover = customCover;
+	}
+	
 	@Override
 	public String getSummary() {
 		return summary == null ? null : summary.getValue();

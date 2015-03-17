@@ -39,6 +39,10 @@ public interface Author extends Serializable {
 	
 	void setPenNameEn( String penNameEn );
 	
+	Boolean hasCustomCover();
+
+	void setCustomCover( Boolean customCover );
+
 	String getSummary();
 	
 	void setSummary( String summary );
