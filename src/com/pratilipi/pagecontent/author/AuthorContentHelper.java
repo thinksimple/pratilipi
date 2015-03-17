@@ -1,5 +1,6 @@
 package com.pratilipi.pagecontent.author;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,14 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.server.ImageUtil;
 import com.claymus.commons.server.UserAccessHelper;
 import com.claymus.commons.shared.ClaymusAccessTokenType;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
+import com.claymus.data.access.BlobAccessor;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.AuditLog;
+import com.claymus.data.transfer.BlobEntry;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.pagecontent.PageContentHelper;
@@ -51,9 +55,12 @@ public class AuthorContentHelper extends PageContentHelper<
 			Logger.getLogger( AuthorContentHelper.class.getName() );
 	
 	private static final Gson gson = new GsonBuilder().create();
+
 	
+	private static final String IMAGE_FOLDER 	   = "author-cover";
 	
 	private static final String IMAGE_ORIGINAL_URL = "/resource.author-image/original/";
+	private static final String IMAGE_150_URL	   = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/author-cover/150/";
 
 	
 	private static final Access ACCESS_TO_LIST_AUTHOR_DATA =
@@ -155,7 +162,10 @@ public class AuthorContentHelper extends PageContentHelper<
 	
 	
 	public static String creatAuthorImageUrl( Author author ) {
-		return IMAGE_ORIGINAL_URL + author.getId();
+		if( author.hasCustomCover() )
+			return IMAGE_150_URL + author.getId();
+		else
+			return IMAGE_ORIGINAL_URL + author.getId();
 	}
 	
 	public static AuthorData createAuthorData( Author author, Language language, HttpServletRequest request ) {
@@ -252,6 +262,24 @@ public class AuthorContentHelper extends PageContentHelper<
 	}
 	
 
+	public static DataListCursorTuple<AuthorData> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount, HttpServletRequest request )
+			throws InsufficientAccessException {
+		
+		if( ! hasRequestAccessToListAuthorData( request ) )
+			throw new InsufficientAccessException();
+		
+		DataListCursorTuple<Author> authorListCursorTuple = DataAccessorFactory
+				.getDataAccessor( request )
+				.getAuthorList( authorFilter, cursor, resultCount );
+		
+		List<AuthorData> authorDataList = createAuthorDataList(
+				authorListCursorTuple.getDataList(),
+				authorFilter.getLanguageId() == null,
+				request );
+		
+		return new DataListCursorTuple<AuthorData>( authorDataList, authorListCursorTuple.getCursor() );
+	}
+	
 	public static AuthorData saveAuthor( AuthorData authorData, HttpServletRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
@@ -264,7 +292,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		
 		if( authorData.getId() == null ) { // Add Author usecase
 			
-			if( ! AuthorContentHelper.hasRequestAccessToAddAuthorData( request ) )
+			if( ! hasRequestAccessToAddAuthorData( request ) )
 				throw new InsufficientAccessException();
 			
 			if( ! authorData.hasLanguageId() )
@@ -283,7 +311,7 @@ public class AuthorContentHelper extends PageContentHelper<
 
 			author = dataAccessor.getAuthor( authorData.getId() );
 
-			if( ! AuthorContentHelper.hasRequestAccessToUpdateAuthorData( request, author ) )
+			if( ! hasRequestAccessToUpdateAuthorData( request, author ) )
 				throw new InsufficientAccessException();
 			
 			auditLog.setEventId( ACCESS_TO_UPDATE_AUTHOR_DATA.getId());
@@ -320,22 +348,42 @@ public class AuthorContentHelper extends PageContentHelper<
 		return createAuthorData( author, dataAccessor.getLanguage( author.getId() ), request );
 	}
 	
-	public static DataListCursorTuple<AuthorData> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount, HttpServletRequest request )
-			throws InsufficientAccessException {
+	public static void saveAuthorImage( Long authorId, BlobEntry blobEntry, HttpServletRequest request )
+			throws InsufficientAccessException, UnexpectedServerException {
 		
-		if( ! hasRequestAccessToListAuthorData( request ) )
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Author author = dataAccessor.getAuthor( authorId );
+
+		if( ! hasRequestAccessToUpdateAuthorData( request, author ) )
 			throw new InsufficientAccessException();
+
 		
-		DataListCursorTuple<Author> authorListCursorTuple = DataAccessorFactory
-				.getDataAccessor( request )
-				.getAuthorList( authorFilter, cursor, resultCount );
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		try {
+			blobEntry.setName( IMAGE_FOLDER + "/original/" + authorId );
+			blobAccessor.createOrUpdateBlob( blobEntry );
+			
+			blobEntry.setName( IMAGE_FOLDER + "/150/" + authorId );
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), 150, 1500 ) );
+			DataAccessorFactory.getBlobAccessorAsia().createOrUpdateBlob( blobEntry );
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to create/update author image.", e );
+			throw new UnexpectedServerException();
+		}
 		
-		List<AuthorData> authorDataList = createAuthorDataList(
-				authorListCursorTuple.getDataList(),
-				authorFilter.getLanguageId() == null,
-				request );
-		
-		return new DataListCursorTuple<AuthorData>( authorDataList, authorListCursorTuple.getCursor() );
+
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setEventId( ACCESS_TO_UPDATE_AUTHOR_DATA.getId() );
+		auditLog.setEventDataOld( gson.toJson( author ) );
+
+		author.setCustomCover( true );
+		author = dataAccessor.createOrUpdateAuthor( author );
+
+		auditLog.setEventDataNew( gson.toJson( author ) );
+		auditLog.setEventComment( "Uploaded profile image." );
+		auditLog = dataAccessor.createAuditLog( auditLog );
 	}
 	
 	public static boolean createUpdateAuthorPageUrl( Long authorId, HttpServletRequest request ) {
