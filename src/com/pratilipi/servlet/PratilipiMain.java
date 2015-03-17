@@ -52,7 +52,7 @@ public class PratilipiMain extends ClaymusMain {
 
 	static {
 		PageContentRegistry.register( PratilipiContentHelper.class );
-		PageContentRegistry.register( AuthorContentHelper.class );
+		PageContentRegistry.register( AuthorContentHelper.class );		// 5.3
 		PageContentRegistry.register( PublisherContentHelper.class );
 		PageContentRegistry.register( EventContentHelper.class );		// 5.0
 		PageContentRegistry.register( PratilipisContentHelper.class );

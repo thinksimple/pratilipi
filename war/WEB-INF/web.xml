@@ -101,13 +101,17 @@
       <param-name>ResizeImage</param-name>
       <param-value>300</param-value>
     </init-param>
+    <init-param>
+      <param-name>ResourceServletType</param-name>
+      <param-value>DOWNLOAD_ONLY</param-value>
+    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>ResourceAuthorImageServlet</servlet-name>
     <url-pattern>/resource.author-image/original/*</url-pattern>
   </servlet-mapping>
-   
+
   <servlet>
     <servlet-name>ResourcePublisherBannerServlet</servlet-name>
     <servlet-class>com.claymus.servlet.ResourceServlet</servlet-class>
@@ -136,20 +140,6 @@
     <url-pattern>/resource.event-banner/original/*</url-pattern>
   </servlet-mapping>
    
-  <servlet>
-    <servlet-name>ResourceImageContentServlet</servlet-name>
-    <servlet-class>com.pratilipi.servlet.ResourceImageContentServlet</servlet-class>
-    <init-param>
-      <param-name>ResourceServletType</param-name>
-      <param-value>UPLOAD_ONLY</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ResourceImageContentServlet</servlet-name>
-    <url-pattern>/resource.pratilipi-content/image/*</url-pattern>
-  </servlet-mapping>
-    
   <!-- Handlers for Task Queues -->
   
   <servlet>

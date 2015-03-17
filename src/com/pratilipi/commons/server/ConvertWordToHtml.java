@@ -103,9 +103,11 @@ public class ConvertWordToHtml {
 				  
 
 		// Saving Pratilipi content to blob store
-		blobAccessor.createBlob(
+		blobEntry = blobAccessor.newBlob(
 				PratilipiHelper.getContent( pratilipiId ),
-				"text/html", html, Charset.forName( "UTF-8" ) );
+				html.getBytes( Charset.forName( "UTF-8" ) ),
+				"text/html" );
+		blobAccessor.createOrUpdateBlob( blobEntry );
 	}
 	
 	private Drive getDriveService() throws IOException {
