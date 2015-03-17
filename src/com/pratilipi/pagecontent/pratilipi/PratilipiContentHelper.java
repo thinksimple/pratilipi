@@ -489,7 +489,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 			if( pratilipiData.hasAuthorId() )
 				pratilipi.setAuthorId( pratilipiData.getAuthorId() );
 			if( pratilipiData.hasPublisherId() )
-				pratilipi.setAuthorId( pratilipiData.getPublisherId() );
+				pratilipi.setPublisherId( pratilipiData.getPublisherId() );
 			pratilipi.setListingDate( new Date() );
 			pratilipi.setLastUpdated( new Date() );
 
