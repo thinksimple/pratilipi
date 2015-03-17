@@ -154,104 +154,6 @@ public class AuthorContentHelper extends PageContentHelper<
 	}
 	
 	
-	public static AuthorData saveAuthor( AuthorData authorData, HttpServletRequest request )
-			throws InvalidArgumentException, InsufficientAccessException {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		Author author = null;
-		
-		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); 
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		
-		if( authorData.getId() == null ) { // Add Author usecase
-			
-			if( ! AuthorContentHelper.hasRequestAccessToAddAuthorData( request ) )
-				throw new InsufficientAccessException();
-			
-			if( authorData.hasEmail() && dataAccessor.getAuthorByEmailId( authorData.getEmail().toLowerCase() ) != null )
-				throw new InvalidArgumentException( "Email is already linked with an exiting Author !" );
-			
-			author = dataAccessor.newAuthor();
-			auditLog.setEventId( ACCESS_TO_ADD_AUTHOR_DATA.getId() );
-			auditLog.setEventDataOld( gson.toJson( author ) );
-			
-			author.setRegistrationDate( new Date() );
-
-		} else { // Update Author usecase
-
-			author = dataAccessor.getAuthor( authorData.getId() );
-
-			if( ! AuthorContentHelper.hasRequestAccessToUpdateAuthorData( request, author ) )
-				throw new InsufficientAccessException();
-			
-			auditLog.setEventId( ACCESS_TO_UPDATE_AUTHOR_DATA.getId());
-			auditLog.setEventDataOld( gson.toJson( author ) );
-		}
-		
-		if( authorData.hasLanguageId() )
-			author.setLanguageId( authorData.getLanguageId() );
-		if( authorData.hasFirstName() )
-			author.setFirstName( authorData.getFirstName() );
-		if( authorData.hasLastName() )
-			author.setLastName( authorData.getLastName() );
-		if( authorData.hasPenName() )
-			author.setPenName( authorData.getPenName() );
-		if( authorData.hasFirstNameEn() )
-			author.setFirstNameEn( authorData.getFirstNameEn() );
-		if( authorData.hasLastNameEn() )
-			author.setLastNameEn( authorData.getLastNameEn() );
-		if( authorData.hasPenNameEn() )
-			author.setPenNameEn( authorData.getPenNameEn() );
-		if( authorData.hasSummary() )
-			author.setSummary( authorData.getSummary() );
-		if( authorData.hasEmail() )
-			author.setEmail( authorData.getEmail() == null ? null : authorData.getEmail().toLowerCase() );
-		
-		
-		author = dataAccessor.createOrUpdateAuthor( author );
-
-
-		auditLog.setEventDataNew( gson.toJson( author ) );
-		auditLog = dataAccessor.createAuditLog( auditLog );
-		
-		
-		return createAuthorData( author, null, request );
-	}
-	
-	
-	public static List<AuthorData> createAuthorDataList( List<Author> authorList, boolean includeLanguageData, HttpServletRequest request ) {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-
-		
-		Map<Long, LanguageData> languageIdToDataMap = null;
-		if( includeLanguageData ) {
-			List<Long> languageIdList = new LinkedList<>();
-			for( Author author : authorList )
-				if( ! languageIdList.contains( author.getLanguageId() ) )
-					languageIdList.add( author.getLanguageId() );
-			List<Language> languageList = dataAccessor.getLanguageList( languageIdList );
-		
-			languageIdToDataMap = new HashMap<>( languageList.size() );
-			for( Language language : languageList )
-				languageIdToDataMap.put( language.getId(), PratilipiHelper.get( request ).createLanguageData( language ) );
-		}
-		
-		
-		List<AuthorData> authorDataList = new ArrayList<>( authorList.size() );
-
-		for( Author author : authorList ) {
-			AuthorData authorData = createAuthorData( author, null, request );
-			if( includeLanguageData )
-				authorData.setLanguageData( languageIdToDataMap.get( author.getLanguageId() ) );
-			authorDataList.add( authorData );
-		}
-		
-		return authorDataList;
-		
-	}
-	
 	public static String creatAuthorImageUrl( Author author ) {
 		return IMAGE_ORIGINAL_URL + author.getId();
 	}
@@ -317,6 +219,106 @@ public class AuthorContentHelper extends PageContentHelper<
 		return authorData;
 	}
 	
+	public static List<AuthorData> createAuthorDataList( List<Author> authorList, boolean includeLanguageData, HttpServletRequest request ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+
+		
+		Map<Long, LanguageData> languageIdToDataMap = null;
+		if( includeLanguageData ) {
+			List<Long> languageIdList = new LinkedList<>();
+			for( Author author : authorList )
+				if( ! languageIdList.contains( author.getLanguageId() ) )
+					languageIdList.add( author.getLanguageId() );
+			List<Language> languageList = dataAccessor.getLanguageList( languageIdList );
+		
+			languageIdToDataMap = new HashMap<>( languageList.size() );
+			for( Language language : languageList )
+				languageIdToDataMap.put( language.getId(), PratilipiHelper.get( request ).createLanguageData( language ) );
+		}
+		
+		
+		List<AuthorData> authorDataList = new ArrayList<>( authorList.size() );
+
+		for( Author author : authorList ) {
+			AuthorData authorData = createAuthorData( author, null, request );
+			if( includeLanguageData )
+				authorData.setLanguageData( languageIdToDataMap.get( author.getLanguageId() ) );
+			authorDataList.add( authorData );
+		}
+		
+		return authorDataList;
+		
+	}
+	
+
+	public static AuthorData saveAuthor( AuthorData authorData, HttpServletRequest request )
+			throws InvalidArgumentException, InsufficientAccessException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Author author = null;
+		
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); 
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( accessToken.getId() );
+		
+		if( authorData.getId() == null ) { // Add Author usecase
+			
+			if( ! AuthorContentHelper.hasRequestAccessToAddAuthorData( request ) )
+				throw new InsufficientAccessException();
+			
+			if( ! authorData.hasLanguageId() )
+				throw new InvalidArgumentException( "'languageId' is missing !" );
+
+			if( authorData.hasEmail() && dataAccessor.getAuthorByEmailId( authorData.getEmail().toLowerCase() ) != null )
+				throw new InvalidArgumentException( "Email is already linked with an exiting Author !" );
+			
+			author = dataAccessor.newAuthor();
+			auditLog.setEventId( ACCESS_TO_ADD_AUTHOR_DATA.getId() );
+			auditLog.setEventDataOld( gson.toJson( author ) );
+			
+			author.setRegistrationDate( new Date() );
+
+		} else { // Update Author usecase
+
+			author = dataAccessor.getAuthor( authorData.getId() );
+
+			if( ! AuthorContentHelper.hasRequestAccessToUpdateAuthorData( request, author ) )
+				throw new InsufficientAccessException();
+			
+			auditLog.setEventId( ACCESS_TO_UPDATE_AUTHOR_DATA.getId());
+			auditLog.setEventDataOld( gson.toJson( author ) );
+		}
+		
+		if( authorData.hasLanguageId() )
+			author.setLanguageId( authorData.getLanguageId() );
+		if( authorData.hasFirstName() )
+			author.setFirstName( authorData.getFirstName() );
+		if( authorData.hasLastName() )
+			author.setLastName( authorData.getLastName() );
+		if( authorData.hasPenName() )
+			author.setPenName( authorData.getPenName() );
+		if( authorData.hasFirstNameEn() )
+			author.setFirstNameEn( authorData.getFirstNameEn() );
+		if( authorData.hasLastNameEn() )
+			author.setLastNameEn( authorData.getLastNameEn() );
+		if( authorData.hasPenNameEn() )
+			author.setPenNameEn( authorData.getPenNameEn() );
+		if( authorData.hasSummary() )
+			author.setSummary( authorData.getSummary() );
+		if( authorData.hasEmail() )
+			author.setEmail( authorData.getEmail() == null ? null : authorData.getEmail().toLowerCase() );
+		
+		
+		author = dataAccessor.createOrUpdateAuthor( author );
+
+
+		auditLog.setEventDataNew( gson.toJson( author ) );
+		auditLog = dataAccessor.createAuditLog( auditLog );
+		
+		
+		return createAuthorData( author, dataAccessor.getLanguage( author.getId() ), request );
+	}
 	
 	public static DataListCursorTuple<AuthorData> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount, HttpServletRequest request )
 			throws InsufficientAccessException {
