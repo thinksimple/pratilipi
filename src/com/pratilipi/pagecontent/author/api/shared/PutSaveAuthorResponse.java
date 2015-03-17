@@ -1,17 +1,18 @@
 package com.pratilipi.pagecontent.author.api.shared;
 
 import com.claymus.api.shared.GenericResponse;
+import com.pratilipi.data.transfer.shared.AuthorData;
 
 @SuppressWarnings("serial")
 public class PutSaveAuthorResponse extends GenericResponse {
 
-private String authorPageUrl;
+	private AuthorData authorData;
 	
-	public PutSaveAuthorResponse( String authorPageUrl ){
-		this.authorPageUrl = authorPageUrl;
+	public PutSaveAuthorResponse( AuthorData authorData ){
+		this.authorData = authorData;
 	}
 	
-	public String getAuthorPageUrl(){
-		return this.authorPageUrl;
+	public AuthorData getAuthorData(){
+		return this.authorData;
 	}
 }

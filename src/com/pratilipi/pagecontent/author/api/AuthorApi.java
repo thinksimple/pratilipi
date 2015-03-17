@@ -19,13 +19,29 @@ public class AuthorApi extends GenericApi {
 			throws InsufficientAccessException, InvalidArgumentException {
 		
 		AuthorData authorData = new AuthorData();
-		authorData.setFirstNameEn( request.getFirstNameEn() );
-		authorData.setLastNameEn( request.getLastNameEn() );
-		authorData.setEmail( request.getEmail() );
+		
+		authorData.setId( request.getId() );
+		
+		if( request.hasLanguageId() )
+			authorData.setLanguageId( request.getLanguageId() );
+		if( request.hasFirstName() )
+			authorData.setFirstName( request.getFirstName() );
+		if( request.hasLastName() )
+			authorData.setLastName( request.getLastName() );
+		if( request.hasPenName() )
+			authorData.setPenName( request.getPenName() );
+		if( request.hasFirstNameEn() )
+			authorData.setFirstNameEn( request.getFirstNameEn() );
+		if( request.hasLastNameEn() )
+			authorData.setLastNameEn( request.getLastNameEn() );
+		if( request.hasPenNameEn() )
+			authorData.setPenNameEn( request.getPenNameEn() );
+		if( request.hasEmail() )
+			authorData.setEmail( request.getEmail() == null ? null : request.getEmail().toLowerCase() );
 		
 		authorData = AuthorContentHelper.saveAuthor( this.getThreadLocalRequest(), authorData );
 		
-		return new PutSaveAuthorResponse( authorData.getPageUrl() );
+		return new PutSaveAuthorResponse( authorData );
 	}
 	
 }
