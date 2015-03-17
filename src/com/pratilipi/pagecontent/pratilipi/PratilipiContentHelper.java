@@ -339,7 +339,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 	}
 	
 
-	public static String createCoverUrl( Pratilipi pratilipi ) {
+	public static String createCoverImageUrl( Pratilipi pratilipi ) {
 		if( pratilipi.hasCustomCover() )
 			return COVER_150_URL + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
 		else if( pratilipi.isPublicDomain() )
@@ -380,7 +380,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		if( includeAuthorData ) {
 			List<Long> authorIdList = new LinkedList<>();
 			for( Pratilipi pratilipi : pratilipiList )
-				if( ! authorIdList.contains( pratilipi.getAuthorId() ) )
+				if( pratilipi.getAuthorId() != null && ! authorIdList.contains( pratilipi.getAuthorId() ) )
 					authorIdList.add( pratilipi.getAuthorId() );
 			
 			List<Author> authorList = dataAccessor.getAuthorList( authorIdList );
@@ -417,7 +417,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipiData.setType( pratilipi.getType() );
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
-		pratilipiData.setCoverImageUrl( createCoverUrl( pratilipi ) );
+		pratilipiData.setCoverImageUrl( createCoverImageUrl( pratilipi ) );
 		
 		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
 		pratilipiData.setWriterPageUrl( PratilipiPageType.WRITE.getUrlPrefix() + pratilipi.getId() );

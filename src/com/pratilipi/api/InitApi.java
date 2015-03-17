@@ -1,6 +1,7 @@
 package com.pratilipi.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.claymus.api.GenericApi;
@@ -66,14 +67,17 @@ public class InitApi extends GenericApi {
 		
 		PratilipisContent pratilipisContent = (PratilipisContent) dataAccessor.getPageContent( 5197655504322560L );
 		pratilipisContent.setPratilipiIdList( bookIdList );
+		pratilipisContent.setLastUpdated( new Date() );
 		dataAccessor.createOrUpdatePageContent( pratilipisContent );
 
 		pratilipisContent = (PratilipisContent) dataAccessor.getPageContent( 5742692155785216L );
 		pratilipisContent.setPratilipiIdList( storyIdList );
+		pratilipisContent.setLastUpdated( new Date() );
 		dataAccessor.createOrUpdatePageContent( pratilipisContent );
 
 		pratilipisContent = (PratilipisContent) dataAccessor.getPageContent( 5747690960846848L );
 		pratilipisContent.setPratilipiIdList( poemIdList );
+		pratilipisContent.setLastUpdated( new Date() );
 		dataAccessor.createOrUpdatePageContent( pratilipisContent );
 		
 		
