@@ -60,7 +60,7 @@ public class AuthorContentHelper extends PageContentHelper<
 	private static final String IMAGE_FOLDER 	   = "author-image";
 	
 	private static final String IMAGE_ORIGINAL_URL = "/resource.author-image/original/";
-	private static final String IMAGE_150_URL	   = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/author-cover/150/";
+	private static final String IMAGE_150_URL	   = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/author-image/150/";
 
 	
 	private static final Access ACCESS_TO_LIST_AUTHOR_DATA =

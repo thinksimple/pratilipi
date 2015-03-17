@@ -102,7 +102,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 	@Override
 	public Double getModuleVersion() {
-		return 5.0;
+		return 5.4;
 	}
 
 	@Override
@@ -765,6 +765,11 @@ public class PratilipiContentHelper extends PageContentHelper<
 		} else {
 			throw new InvalidArgumentException( "Index generation for " + pratilipi.getContentType() + " content type is not yet supported." );
 		}
+	}
+	
+	public static boolean createUpdatePratilipiPageUrl( Long pratilipiId, Long authorId, HttpServletRequest request ) {
+		// TODO: implementation
+		return false;
 	}
 	
 	public static boolean updatePratilipiStats( Long pratilipiId, HttpServletRequest request )

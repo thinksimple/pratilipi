@@ -53,7 +53,7 @@ public class PratilipiProcessApi extends GenericApi {
 					.setUrl( "/pratilipi/process" );
 			taskList.add( task );
 		}
-		TaskQueueFactory.getPratilipiTaskQueue().add( taskList );
+		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
 		
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
 		
