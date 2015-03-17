@@ -24,7 +24,6 @@ import com.claymus.data.transfer.AuditLog;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.pagecontent.PageContentHelper;
-import com.claymus.taskqueue.Task;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pratilipi.commons.server.PratilipiHelper;
@@ -42,22 +41,27 @@ import com.pratilipi.data.transfer.shared.AuthorData;
 import com.pratilipi.pagecontent.author.gae.AuthorContentEntity;
 import com.pratilipi.pagecontent.author.shared.AuthorContentData;
 import com.pratilipi.service.shared.data.LanguageData;
-import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class AuthorContentHelper extends PageContentHelper<
 		AuthorContent,
 		AuthorContentData,
 		AuthorContentProcessor> {
 	
+	private static final Logger logger =
+			Logger.getLogger( AuthorContentHelper.class.getName() );
+	
 	private static final Gson gson = new GsonBuilder().create();
 	
-	public static final Access ACCESS_TO_LIST_AUTHOR_DATA =
+	
+	private static final String IMAGE_ORIGINAL_URL = "/resource.author-image/original/";
+
+	
+	private static final Access ACCESS_TO_LIST_AUTHOR_DATA =
 			new Access( "author_data_list", false, "View Author Data" );
-	public static final Access ACCESS_TO_ADD_AUTHOR_DATA =
+	private static final Access ACCESS_TO_ADD_AUTHOR_DATA =
 			new Access( "author_data_add", false, "Add Author Data" );
-	public static final Access ACCESS_TO_UPDATE_AUTHOR_DATA =
+	private static final Access ACCESS_TO_UPDATE_AUTHOR_DATA =
 			new Access( "author_data_update", false, "Update Author Data" );
-	private static Logger logger = Logger.getLogger( AuthorContentHelper.class.getName() );
 	
 	
 	@Override
@@ -67,7 +71,7 @@ public class AuthorContentHelper extends PageContentHelper<
 
 	@Override
 	public Double getModuleVersion() {
-		return 4.0;
+		return 5.4;
 	}
 
 	@Override
@@ -92,25 +96,31 @@ public class AuthorContentHelper extends PageContentHelper<
 	}
 	
 	public static boolean hasRequestAccessToAddAuthorData( HttpServletRequest request ) {
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_ADD_AUTHOR_DATA );
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); 
+		return accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() )
+				&& UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_ADD_AUTHOR_DATA, request );
 	}
 	
-	public static boolean hasRequestAccessToUpdateAuthorData(
-			HttpServletRequest request, Author author ) {
-		
-		return PratilipiHelper.get( request ).hasUserAccess( ACCESS_TO_UPDATE_AUTHOR_DATA ) ||
-				(
-					author.getUserId() != null &&
-					author.getUserId().equals( PratilipiHelper.get( request ).getCurrentUserId() )
-				);
+	public static boolean hasRequestAccessToUpdateAuthorData( HttpServletRequest request, Author author ) {
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); 
+
+		if( accessToken.getType().equals( ClaymusAccessTokenType.USER.toString() ) ) {
+			return UserAccessHelper.hasUserAccess( accessToken.getUserId(), ACCESS_TO_UPDATE_AUTHOR_DATA, request )
+					|| ( author.getUserId() != null && author.getUserId().equals( accessToken.getUserId() ) );
+	
+		} else {
+			return false;
+		}
 	}
 	
 	
+	@Deprecated
 	public static boolean hasAuthorProfile( HttpServletRequest request, Long userId ){
 		
 		return DataAccessorFactory.getDataAccessor( request ).getAuthorByUserId( userId ) == null ? false : true;
 	}
 	
+	@Deprecated
 	public static Author createAuthorProfile( HttpServletRequest request, User user ){
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Author author = dataAccessor.getAuthorByEmailId( user.getEmail() );
@@ -144,49 +154,39 @@ public class AuthorContentHelper extends PageContentHelper<
 	}
 	
 	
-	public static AuthorData saveAuthor( HttpServletRequest request, AuthorData authorData )
-			throws InsufficientAccessException, InvalidArgumentException {
+	public static AuthorData saveAuthor( AuthorData authorData, HttpServletRequest request )
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		Author author = null;
 		
 		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); 
 		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		
-		if( authorData.getId() == null ){
+		if( authorData.getId() == null ) { // Add Author usecase
 			
 			if( ! AuthorContentHelper.hasRequestAccessToAddAuthorData( request ) )
 				throw new InsufficientAccessException();
 			
-			boolean isAuthorExist = dataAccessor.getAuthorByEmailId( authorData.getEmail() ) != null ?
-						true : false;
-			if( isAuthorExist )
-				throw new InvalidArgumentException( "This author is already registered !" );
+			if( authorData.hasEmail() && dataAccessor.getAuthorByEmailId( authorData.getEmail().toLowerCase() ) != null )
+				throw new InvalidArgumentException( "Email is already linked with an exiting Author !" );
 			
 			author = dataAccessor.newAuthor();
 			auditLog.setEventId( ACCESS_TO_ADD_AUTHOR_DATA.getId() );
-			author.setFirstNameEn( authorData.getFirstNameEn() );
-			
-			author.setRegistrationDate( new Date() );
-			
-			author = dataAccessor.createOrUpdateAuthor( author );
-			
-			Page page = dataAccessor.newPage();
-			page.setType( PratilipiPageType.AUTHOR.toString() );
-			page.setUri( PratilipiPageType.AUTHOR.getUrlPrefix() + author.getId() );
-			page.setPrimaryContentId( author.getId() );
-			page.setCreationDate( new Date() );
-			page = dataAccessor.createOrUpdatePage( page );
-		} else {
-			author = dataAccessor.getAuthor( authorData.getId() );
-			auditLog.setEventId( ACCESS_TO_UPDATE_AUTHOR_DATA.getId());
 			auditLog.setEventDataOld( gson.toJson( author ) );
 			
+			author.setRegistrationDate( new Date() );
+
+		} else { // Update Author usecase
+
+			author = dataAccessor.getAuthor( authorData.getId() );
+
 			if( ! AuthorContentHelper.hasRequestAccessToUpdateAuthorData( request, author ) )
 				throw new InsufficientAccessException();
 			
+			auditLog.setEventId( ACCESS_TO_UPDATE_AUTHOR_DATA.getId());
+			auditLog.setEventDataOld( gson.toJson( author ) );
 		}
 		
 		if( authorData.hasLanguageId() )
@@ -211,31 +211,14 @@ public class AuthorContentHelper extends PageContentHelper<
 		
 		author = dataAccessor.createOrUpdateAuthor( author );
 
-		
-		// Updating Author page uri
-		if( authorData.hasFirstNameEn() || authorData.hasLastNameEn() || authorData.hasPenNameEn() ) {
-			Page page = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), author.getId() );
-			String uriAlias = pratilipiHelper.generateUriAlias(
-					page.getUriAlias(), "/",
-					author.getFirstNameEn(), author.getLastNameEn(), author.getPenNameEn() );
-			if( ! uriAlias.equals( page.getUriAlias() ) ) {
-				page.setUriAlias( uriAlias );
-				page = dataAccessor.createOrUpdatePage( page );
-			}
-		}
 
-
-		// Creating/Updating search index
-		Task task = TaskQueueFactory.newTask()
-				.addParam( "authorId", author.getId().toString() )
-				.addParam( "processData", "true" )
-				.setUrl( "/author/process" );
-		TaskQueueFactory.getAuthorTaskQueue().add( task );
+		auditLog.setEventDataNew( gson.toJson( author ) );
+		auditLog = dataAccessor.createAuditLog( auditLog );
 		
-		AuthorData newAuthorData = createAuthorData( author, null, request );
 		
-		return newAuthorData;
+		return createAuthorData( author, null, request );
 	}
+	
 	
 	public static List<AuthorData> createAuthorDataList( List<Author> authorList, boolean includeLanguageData, HttpServletRequest request ) {
 		
@@ -269,6 +252,10 @@ public class AuthorContentHelper extends PageContentHelper<
 		
 	}
 	
+	public static String creatAuthorImageUrl( Author author ) {
+		return IMAGE_ORIGINAL_URL + author.getId();
+	}
+	
 	public static AuthorData createAuthorData( Author author, Language language, HttpServletRequest request ) {
 		if( author == null )
 			return null;
@@ -281,7 +268,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		authorData.setId( author.getId() );
 		authorData.setPageUrl( authorPage.getUri() );
 		authorData.setPageUrlAlias( authorPage.getUriAlias() );
-		authorData.setAuthorImageUrl( "/resource.author-image/original/" + author.getId() );
+		authorData.setAuthorImageUrl( creatAuthorImageUrl( author ) );
 
 		authorData.setLanguageId( author.getLanguageId() );
 		authorData.setLanguageData( PratilipiHelper.get( request ).createLanguageData( language ) );
@@ -330,6 +317,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		return authorData;
 	}
 	
+	
 	public static DataListCursorTuple<AuthorData> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount, HttpServletRequest request )
 			throws InsufficientAccessException {
 		
@@ -347,7 +335,31 @@ public class AuthorContentHelper extends PageContentHelper<
 		
 		return new DataListCursorTuple<AuthorData>( authorDataList, authorListCursorTuple.getCursor() );
 	}
+	
+	public static boolean createUpdateAuthorPageUrl( Long authorId, HttpServletRequest request ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Author author = dataAccessor.getAuthor( authorId );
+		Page page = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), authorId );
+		
+		if( page == null ) {
+			page = dataAccessor.newPage();
+			page.setType( PratilipiPageType.AUTHOR.toString() );
+			page.setUri( PratilipiPageType.AUTHOR.getUrlPrefix() + authorId );
+			page.setPrimaryContentId( authorId );
+			page.setCreationDate( new Date() );
+		}
+		
+		String uriAlias = PratilipiHelper.get( request ).generateUriAlias(
+				page.getUriAlias(),
+				"/", author.getFirstNameEn(), author.getLastNameEn(), author.getPenNameEn() );
 
+		if( uriAlias.equals( page.getUriAlias() ) )
+			return false;
+		
+		page.setUriAlias( uriAlias );
+		page = dataAccessor.createOrUpdatePage( page );
+		return true;
+	}
 	
 	public static boolean updateAuthorStats( Long authorId, HttpServletRequest request ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
