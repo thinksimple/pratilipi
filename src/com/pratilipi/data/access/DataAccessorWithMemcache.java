@@ -206,6 +206,7 @@ public class DataAccessorWithMemcache
 	public Author getAuthor( Long id ) {
 		if( id == null )
 			return null;
+		
 		Author author = memcache.get( PREFIX_AUTHOR + id );
 		if( author == null ) {
 			author = dataAccessor.getAuthor( id );
@@ -216,30 +217,43 @@ public class DataAccessorWithMemcache
 	}
 
 	@Override
-	public Author getAuthorByUserId(Long userId) {
-		//TODO : enable caching
-		return dataAccessor.getAuthorByUserId( userId );
+	public Author getAuthorByEmailId( String email ) {
+		Author author = memcache.get( PREFIX_AUTHOR + email );
+		if( author == null ) {
+			author = dataAccessor.getAuthorByEmailId( email );
+			if( author != null )
+				memcache.put( PREFIX_AUTHOR + email, author );
+		}
+		return author;
 	}
 	
 	@Override
-	public Author getAuthorByEmailId(String email) {
-		//TODO : enable caching
-		return dataAccessor.getAuthorByEmailId( email );
+	public Author getAuthorByUserId( Long userId ) {
+		Author author = memcache.get( PREFIX_AUTHOR + "User-" + userId );
+		if( author == null ) {
+			author = dataAccessor.getAuthorByUserId( userId );
+			if( author != null )
+				memcache.put( PREFIX_AUTHOR + "User-" + userId, author );
+		}
+		return author;
 	}
 	
 	@Override
 	public DataListCursorTuple<Author> getAuthorList( String cursor, int resultCount ) {
-		// TODO: enable caching
 		return dataAccessor.getAuthorList( cursor, resultCount );
 	}
 	
 	@Override
-	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount ) {
+	public DataListCursorTuple<Long> getAuthorIdList(
+			AuthorFilter authorFilter, String cursor, Integer resultCount ) {
+		
 		return dataAccessor.getAuthorIdList( authorFilter, cursor, resultCount );
 	}
 
 	@Override
-	public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount ) {
+	public DataListCursorTuple<Author> getAuthorList(
+			AuthorFilter authorFilter, String cursor, Integer resultCount ) {
+		
 		return dataAccessor.getAuthorList( authorFilter, cursor, resultCount );
 	}
 

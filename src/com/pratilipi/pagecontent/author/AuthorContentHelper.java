@@ -78,7 +78,7 @@ public class AuthorContentHelper extends PageContentHelper<
 
 	@Override
 	public Double getModuleVersion() {
-		return 5.4;
+		return 5.3;
 	}
 
 	@Override

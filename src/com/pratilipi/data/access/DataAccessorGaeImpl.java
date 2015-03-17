@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.Query;
@@ -44,6 +46,9 @@ import com.pratilipi.data.transfer.UserPratilipi;
 public class DataAccessorGaeImpl
 		extends com.claymus.data.access.DataAccessorGaeImpl
 		implements DataAccessor {
+
+	private static final Logger logger = 
+			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
 
 	
 	@Override
@@ -186,29 +191,35 @@ public class DataAccessorGaeImpl
 	}
 	
 	@Override
+	public Author getAuthorByEmailId( String email ) {
+		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
+				.addFilter( "email", email )
+				.build();
+
+		@SuppressWarnings("unchecked")
+		List<Author> authorList = (List<Author>) query.execute( email );
+
+		if( authorList.size() > 1 )
+			logger.log( Level.SEVERE, authorList.size() + " Authors found with Email Id " + email   + " ." );
+
+		return authorList.size() == 0 ? null : pm.detachCopy( authorList.get( 0 ) );
+	}
+
+	@Override
 	public Author getAuthorByUserId( Long userId ) {
 		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
-							.addFilter( "userId", userId )
-							.build();
+				.addFilter( "userId", userId )
+				.build();
 		
 		@SuppressWarnings("unchecked")
 		List<Author> authorList = (List<Author>) query.execute( userId );
 		
-		return authorList.size() == 0 ? null : pm.detachCopy( authorList.get( 0 ) );
-	}
-	
-	@Override
-	public Author getAuthorByEmailId(String email) {
-		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
-		.addFilter( "email", email )
-		.build();
-
-		@SuppressWarnings("unchecked")
-		List<Author> authorList = (List<Author>) query.execute( email );
+		if( authorList.size() > 1 )
+			logger.log( Level.SEVERE, authorList.size() + " Authors found with User Id " + userId + " ." );
 		
 		return authorList.size() == 0 ? null : pm.detachCopy( authorList.get( 0 ) );
 	}
-
+	
 	@Override
 	public DataListCursorTuple<Author> getAuthorList( String cursorStr, int resultCount ) {
 

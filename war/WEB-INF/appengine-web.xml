@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 
-  <application>prod-pratilipi</application>
+  <application>devo-pratilipi</application>
   <module>default</module>
-  <version>mark-4p170</version>
+  <version>mark-4p171</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>

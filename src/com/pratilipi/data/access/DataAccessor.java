@@ -50,10 +50,10 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	Author getAuthor( Long id );
 	
-	Author getAuthorByUserId( Long userId );
-	
 	Author getAuthorByEmailId( String email );
 
+	Author getAuthorByUserId( Long userId );
+	
 	@Deprecated
 	DataListCursorTuple<Author> getAuthorList( String cursor, int resultCount );
 
