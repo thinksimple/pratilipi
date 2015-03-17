@@ -16,12 +16,17 @@ import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.UserAccessHelper;
 import com.claymus.commons.shared.ClaymusAccessTokenType;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.AccessToken;
+import com.claymus.data.transfer.AuditLog;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.pagecontent.PageContentHelper;
+import com.claymus.taskqueue.Task;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.AuthorFilter;
 import com.pratilipi.commons.shared.PratilipiFilter;
@@ -37,12 +42,14 @@ import com.pratilipi.data.transfer.shared.AuthorData;
 import com.pratilipi.pagecontent.author.gae.AuthorContentEntity;
 import com.pratilipi.pagecontent.author.shared.AuthorContentData;
 import com.pratilipi.service.shared.data.LanguageData;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class AuthorContentHelper extends PageContentHelper<
 		AuthorContent,
 		AuthorContentData,
 		AuthorContentProcessor> {
 	
+	private static final Gson gson = new GsonBuilder().create();
 	
 	public static final Access ACCESS_TO_LIST_AUTHOR_DATA =
 			new Access( "author_data_list", false, "View Author Data" );
@@ -138,25 +145,94 @@ public class AuthorContentHelper extends PageContentHelper<
 	
 	
 	public static AuthorData saveAuthor( HttpServletRequest request, AuthorData authorData )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
+		Author author = null;
 		
-		Author author = dataAccessor.newAuthor();
-		author.setFirstNameEn( authorData.getFirstNameEn() );
-		author.setLastNameEn( authorData.getLastNameEn() );
-		author.setEmail( authorData.getEmail() );
+		AccessToken accessToken = (AccessToken) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN ); 
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( accessToken.getId() );
 		
-		if( !hasRequestAccessToUpdateAuthorData( request, author ))
-			throw new InsufficientAccessException();
+		if( authorData.getId() == null ){
+			
+			if( ! AuthorContentHelper.hasRequestAccessToAddAuthorData( request ) )
+				throw new InsufficientAccessException();
+			
+			boolean isAuthorExist = dataAccessor.getAuthorByEmailId( authorData.getEmail() ) != null ?
+						true : false;
+			if( isAuthorExist )
+				throw new InvalidArgumentException( "This author is already registered !" );
+			
+			author = dataAccessor.newAuthor();
+			auditLog.setEventId( ACCESS_TO_ADD_AUTHOR_DATA.getId() );
+			author.setFirstNameEn( authorData.getFirstNameEn() );
+			
+			author.setRegistrationDate( new Date() );
+			
+			author = dataAccessor.createOrUpdateAuthor( author );
+			
+			Page page = dataAccessor.newPage();
+			page.setType( PratilipiPageType.AUTHOR.toString() );
+			page.setUri( PratilipiPageType.AUTHOR.getUrlPrefix() + author.getId() );
+			page.setPrimaryContentId( author.getId() );
+			page.setCreationDate( new Date() );
+			page = dataAccessor.createOrUpdatePage( page );
+		} else {
+			author = dataAccessor.getAuthor( authorData.getId() );
+			auditLog.setEventId( ACCESS_TO_UPDATE_AUTHOR_DATA.getId());
+			auditLog.setEventDataOld( gson.toJson( author ) );
+			
+			if( ! AuthorContentHelper.hasRequestAccessToUpdateAuthorData( request, author ) )
+				throw new InsufficientAccessException();
+			
+		}
+		
+		if( authorData.hasLanguageId() )
+			author.setLanguageId( authorData.getLanguageId() );
+		if( authorData.hasFirstName() )
+			author.setFirstName( authorData.getFirstName() );
+		if( authorData.hasLastName() )
+			author.setLastName( authorData.getLastName() );
+		if( authorData.hasPenName() )
+			author.setPenName( authorData.getPenName() );
+		if( authorData.hasFirstNameEn() )
+			author.setFirstNameEn( authorData.getFirstNameEn() );
+		if( authorData.hasLastNameEn() )
+			author.setLastNameEn( authorData.getLastNameEn() );
+		if( authorData.hasPenNameEn() )
+			author.setPenNameEn( authorData.getPenNameEn() );
+		if( authorData.hasSummary() )
+			author.setSummary( authorData.getSummary() );
+		if( authorData.hasEmail() )
+			author.setEmail( authorData.getEmail() == null ? null : authorData.getEmail().toLowerCase() );
+		
 		
 		author = dataAccessor.createOrUpdateAuthor( author );
+
 		
-		AuthorData newAuthorData = new AuthorData();
-		newAuthorData.setId( author.getId() );
-		newAuthorData.setFirstNameEn( author.getFirstNameEn() );
-		newAuthorData.setLastNameEn( author.getLastNameEn() );
-		newAuthorData.setEmail( author.getEmail() );
+		// Updating Author page uri
+		if( authorData.hasFirstNameEn() || authorData.hasLastNameEn() || authorData.hasPenNameEn() ) {
+			Page page = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), author.getId() );
+			String uriAlias = pratilipiHelper.generateUriAlias(
+					page.getUriAlias(), "/",
+					author.getFirstNameEn(), author.getLastNameEn(), author.getPenNameEn() );
+			if( ! uriAlias.equals( page.getUriAlias() ) ) {
+				page.setUriAlias( uriAlias );
+				page = dataAccessor.createOrUpdatePage( page );
+			}
+		}
+
+
+		// Creating/Updating search index
+		Task task = TaskQueueFactory.newTask()
+				.addParam( "authorId", author.getId().toString() )
+				.addParam( "processData", "true" )
+				.setUrl( "/author/process" );
+		TaskQueueFactory.getAuthorTaskQueue().add( task );
+		
+		AuthorData newAuthorData = createAuthorData( author, null, request );
 		
 		return newAuthorData;
 	}
