@@ -7,15 +7,15 @@ import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.pratilipi.data.transfer.shared.AuthorData;
 import com.pratilipi.pagecontent.author.AuthorContentHelper;
-import com.pratilipi.pagecontent.author.api.shared.PutSaveAuthorRequest;
-import com.pratilipi.pagecontent.author.api.shared.PutSaveAuthorResponse;
+import com.pratilipi.pagecontent.author.api.shared.PutAuthorRequest;
+import com.pratilipi.pagecontent.author.api.shared.PutAuthorResponse;
 
 @SuppressWarnings( "serial" )
 @Bind( uri = "/author" )
 public class AuthorApi extends GenericApi {
 
 	@Put
-	public PutSaveAuthorResponse saveAuthor( PutSaveAuthorRequest request ) 
+	public PutAuthorResponse saveAuthor( PutAuthorRequest request ) 
 			throws InsufficientAccessException, InvalidArgumentException {
 		
 		AuthorData authorData = new AuthorData();
@@ -41,7 +41,7 @@ public class AuthorApi extends GenericApi {
 		
 		authorData = AuthorContentHelper.saveAuthor( this.getThreadLocalRequest(), authorData );
 		
-		return new PutSaveAuthorResponse( authorData );
+		return new PutAuthorResponse( authorData );
 	}
 	
 }

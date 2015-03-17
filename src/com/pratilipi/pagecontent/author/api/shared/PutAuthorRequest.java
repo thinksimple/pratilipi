@@ -4,7 +4,7 @@ import com.claymus.api.annotation.Validate;
 import com.claymus.api.shared.GenericRequest;
 
 @SuppressWarnings( "serial" )
-public class PutSaveAuthorRequest extends GenericRequest {
+public class PutAuthorRequest extends GenericRequest {
 	
 	private Long id;
 	
