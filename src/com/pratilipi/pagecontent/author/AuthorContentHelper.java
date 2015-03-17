@@ -194,6 +194,9 @@ public class AuthorContentHelper extends PageContentHelper<
 	}
 	
 	public static AuthorData createAuthorData( Author author, Language language, HttpServletRequest request ) {
+		if( author == null )
+			return null;
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Page authorPage = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), author.getId() );
 		

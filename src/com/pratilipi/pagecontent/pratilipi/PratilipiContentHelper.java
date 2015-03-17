@@ -72,7 +72,9 @@ public class PratilipiContentHelper extends PageContentHelper<
 	private static final String IMAGE_CONTENT_FOLDER = "pratilipi-content/image";
 	private static final String COVER_FOLDER 		 = "pratilipi-cover";
 	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
-	
+
+	private static final String COVER_150_URL		 = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/pratilipi-cover/150/";
+
 	
 	private static final Access ACCESS_TO_LIST_PRATILIPI_DATA =
 			new Access( "pratilipi_data_list", false, "View Pratilipi Data" );
@@ -337,6 +339,15 @@ public class PratilipiContentHelper extends PageContentHelper<
 	}
 	
 
+	public static String createCoverUrl( Pratilipi pratilipi ) {
+		if( pratilipi.hasCustomCover() )
+			return COVER_150_URL + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
+		else if( pratilipi.isPublicDomain() )
+			return COVER_150_URL + "pratilipi-classic-" + pratilipi.getLanguageId();
+		else
+			return COVER_150_URL + "pratilipi";
+	}
+	
 	public static double calculateRelevance( Pratilipi pratilipi, Author author ) {
 		double relevance = pratilipi.getReadCount() + pratilipi.getRelevanceOffset();
 		if( author != null && author.getContentPublished() > 1L )
@@ -406,6 +417,8 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipiData.setType( pratilipi.getType() );
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
+		pratilipiData.setCoverImageUrl( createCoverUrl( pratilipi ) );
+		
 		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
 		pratilipiData.setWriterPageUrl( PratilipiPageType.WRITE.getUrlPrefix() + pratilipi.getId() );
 		

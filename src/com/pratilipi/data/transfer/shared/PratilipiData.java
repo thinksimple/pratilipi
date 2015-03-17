@@ -18,6 +18,7 @@ public class PratilipiData implements Serializable {
 
 	private String pageUrl;
 	private String pageUrlAlias;
+	private String coverImageUrl;
 	private String readerPageUrl;
 	private String writerPageUrl;
 	
@@ -109,6 +110,14 @@ public class PratilipiData implements Serializable {
 
 	public void setPageUrlAlias( String pageUrlAlias ) {
 		this.pageUrlAlias = pageUrlAlias;
+	}
+
+	public String getCoverImageUrl() {
+		return coverImageUrl;
+	}
+
+	public void setCoverImageUrl( String coverImageUrl ) {
+		this.coverImageUrl = coverImageUrl;
 	}
 
 	public String getReaderPageUrl() {
