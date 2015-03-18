@@ -6,7 +6,6 @@
   <version>mark-4p171</version>
 
   <threadsafe>true</threadsafe>
-  <sessions-enabled>true</sessions-enabled>
 
   <instance-class>F2</instance-class>
 
