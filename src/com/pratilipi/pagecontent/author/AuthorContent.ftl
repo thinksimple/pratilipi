@@ -54,7 +54,7 @@
 					<td style="text-align:center;">${ storyDataList?size }</td>
 				</tr>
 				<tr>
-					<td style="text-align:center;">Article</td>
+					<td style="text-align:center;">Articles</td>
 					<td style="text-align:center;">${ articleDataList?size }</td>
 				</tr>
 			</table>
