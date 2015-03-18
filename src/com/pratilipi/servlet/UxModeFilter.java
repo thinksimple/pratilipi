@@ -19,8 +19,8 @@ import com.pratilipi.data.access.DataAccessorFactory;
 public class UxModeFilter implements Filter {
 	
 	@Override
-	public void doFilter(ServletRequest req, ServletResponse resp,
-			FilterChain chain) throws IOException, ServletException {
+	public void doFilter( ServletRequest req, ServletResponse resp, FilterChain chain )
+			throws IOException, ServletException {
 		
 		HttpServletRequest request = ( HttpServletRequest ) req;
 		String userAgent = request.getHeader( "user-agent" );
@@ -130,12 +130,23 @@ public class UxModeFilter implements Filter {
 		}
 		
 		
-		if( !basicMode && !request.getRequestURI().equals( "/filebrowser" ) && !request.getRequestURI().equals( "/pages" ) && !request.getRequestURI().equals( "/audit" ) ) {
+		String requestUri = request.getRequestURI();
+		if( !basicMode
+				&& !requestUri.equals( "/filebrowser" )
+				&& !requestUri.equals( "/pages" )
+				&& !requestUri.equals( "/audit" )
+				&& !requestUri.startsWith( "/api/" )
+				&& !requestUri.startsWith( "/api." )
+				&& !requestUri.startsWith( "/service." )
+				&& !requestUri.startsWith( "/resource." )
+				&& !requestUri.startsWith( "/_ah/queue/" ) ) {
+			
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 			Page page = dataAccessor.getPage( request.getRequestURI() );
 			basicMode = page == null
 					|| !( page.getType().equals( PratilipiPageType.READ.toString() )
 							|| page.getType().equals( PratilipiPageType.WRITE.toString() ) );
+		
 		}
 		
 		
@@ -154,6 +165,6 @@ public class UxModeFilter implements Filter {
 	public void destroy() { }
 
 	@Override
-	public void init(FilterConfig arg0) throws ServletException { }
+	public void init( FilterConfig arg0 ) throws ServletException { }
 
 }

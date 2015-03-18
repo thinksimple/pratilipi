@@ -51,7 +51,6 @@ public class PratilipiHelper extends ClaymusHelper {
 		PratilipiHelper pratilipiHelper = memcache.get( "PratilipiHelper-" + request.hashCode() );
 		if( pratilipiHelper == null ) {
 			pratilipiHelper = new PratilipiHelper( request );
-			memcache.put( "ClaymusHelper-" + request.hashCode(), pratilipiHelper );
 			memcache.put( "PratilipiHelper-" + request.hashCode(), pratilipiHelper );
 		}
 		return pratilipiHelper;
