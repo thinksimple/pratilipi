@@ -1,0 +1,77 @@
+<polymer-element name="pagecontent-author-form" attributes="apiUrl authorData">
+	
+	<template>
+		<style>
+		
+		</style>
+		
+		<div center horizontal layout class="formRow">
+			<paper-input id="firstName" label="First Name" value="{{ authorData.firstName }}"></paper-input>
+			<paper-input id="firstNameEn" label="First Name ( Eng )*" value="{{ authorData.firstNameEn }}"></paper-input>
+		</div>
+		<div center horizontal layout class="formRow">
+			<paper-input id="lastName" label="Last Name" value="{{ authorData.lastName }}"></paper-input>
+			<paper-input label="Last Name ( Eng )" value="{{ authorData.lastNameEn }}"></paper-input>
+		</div>
+		<div center horizontal layout class="formRow">
+			<paper-input label="Pen Name" value="{{ authorData.penName }}"></paper-input>
+			<paper-input label="Pen Name ( Eng )" value="{{ authorData.penNameEn }}"></paper-input>
+		</div>
+		<div center horizontal layout class="formRow">
+			<paper-input label="Select Language" value="{{ authorData.languageId }}"></paper-input>
+			<paper-input label="Email" value="{{ authorData.email }}"></paper-input>
+		</div>
+	 	<paper-button affirmative on-tap="{{ saveChanges }}">Submit</paper-button>
+		<paper-button affirmative autofocus>Close</paper-button>
+	
+		<core-ajax
+				id="AjaxPut"
+				url="{{ apiUrl }}"
+				contentType="application/json"
+				method="PUT"
+				handleAs="json"
+				on-core-response="{{ handleAjaxPutResponse }}"
+				on-core-error="{{ handleAjaxPutError }}" ></core-ajax>
+	</template>
+	
+	<script>
+	
+		Polymer( 'pagecontent-author-form', {
+		
+			handleAjaxPutResponse: function( event, response ) {
+				
+			},
+
+			handleAjaxPutError: function( event, response ) {
+				
+			},
+
+			setIndex: function( index ) {
+				
+			},
+
+			validatePageNoAndSaveChanges: function( event ) {
+				
+			},
+
+			saveChanges: function( event ) {
+				var firstName = this.$.firstName;
+				console.log( firstName.value );
+				this.$.firstName.disabled;
+				var ajaxPut = this.$.AjaxPut;
+				ajaxPut.body = JSON.stringify( this.authorData );
+			},
+			
+			validate : function( event ) {
+			    
+			},
+			
+			ready: function( event ) {
+				this.authorData = {  firstName:'', lastName:'', firstNameEn:'', lastNameEn:'', penName:'', penNameEn:'', languageId:'', email:''  }
+			}
+
+		});
+		
+	</script>
+
+</polymer-element>
