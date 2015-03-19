@@ -135,6 +135,7 @@ public class UxModeFilter implements Filter {
 				&& !requestUri.equals( "/filebrowser" )
 				&& !requestUri.equals( "/pages" )
 				&& !requestUri.equals( "/audit" )
+				&& !requestUri.startsWith( "/authors" )
 				&& !requestUri.startsWith( "/api/" )
 				&& !requestUri.startsWith( "/api." )
 				&& !requestUri.startsWith( "/service." )
