@@ -67,7 +67,7 @@ public class LanguageEntity implements Language {
 
 	@Override
 	public Boolean getHidden() {
-		return hidden;
+		return hidden == null ? false : hidden;
 	}
 
 	@Override
