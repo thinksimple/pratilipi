@@ -2,7 +2,9 @@ package com.pratilipi.api;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Bind;
@@ -11,6 +13,7 @@ import com.claymus.api.shared.GenericRequest;
 import com.claymus.api.shared.GenericResponse;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
+import com.claymus.data.transfer.AppProperty;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
@@ -26,7 +29,16 @@ public class InitApi extends GenericApi {
 	
 	@Get
 	public GenericResponse getInit( GenericRequest request ) throws InvalidArgumentException, UnexpectedServerException {
-		
+
+		updateHomePageContent( request );
+
+		return new GenericResponse();
+
+	}
+
+	
+	private void updateHomePageContent( GenericRequest request ) throws InvalidArgumentException, UnexpectedServerException {
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
 		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
@@ -102,8 +114,18 @@ public class InitApi extends GenericApi {
 			PratilipiContentHelper.updatePratilipiSearchIndex( pratilipi.getId(), null, this.getThreadLocalRequest() );
 		}
 		
+	}
+	
+	@SuppressWarnings("unused")
+	private void createOrUpdateFacebookCredentials( String appId, String appSecret ) {
+		Map<String, String> map = new HashMap<>();
+		map.put( "appId", appId );
+		map.put( "appSecret", appSecret );
 		
-		return new GenericResponse();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		AppProperty appProperty = dataAccessor.newAppProperty( "Facebook.Credentials" );
+		appProperty.setValue( map );
+		dataAccessor.createOrUpdateAppProperty( appProperty );
 	}
 	
 }
