@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.Access;
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.server.FacebookApi;
 import com.claymus.commons.server.GoogleApi;
 import com.claymus.commons.server.ImageUtil;
 import com.claymus.commons.server.UserAccessHelper;
@@ -802,10 +803,19 @@ public class PratilipiContentHelper extends PageContentHelper<
 			throw new UnexpectedServerException();
 		}
 	
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Page pratilipiPage = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipiId );
+		
+		String fbLikeShareUrl = "http://" + ClaymusHelper.getSystemProperty( "domain" ) + pratilipiPage.getUri();
+		long fbLikeShareCount = FacebookApi.getUrlShareCount( fbLikeShareUrl, request );
+		
+		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		if( (long) pratilipi.getReadCount() != pratilipiReadCount ) {
+		if( (long) pratilipi.getReadCount() != pratilipiReadCount 
+				|| (long) pratilipi.getFbLikeShareCount() != fbLikeShareCount ) {
 			pratilipi.setReadCount( pratilipiReadCount );
+			pratilipi.setFbLikeShareCount( fbLikeShareCount );
 			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 			return true;
 		} else {

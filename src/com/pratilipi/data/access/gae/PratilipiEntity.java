@@ -66,9 +66,6 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "PAGE_COUNT" )
 	private Integer pageCount;
 	
-	@Persistent( column = "READ_COUNT" )
-	private Long readCount;
-	
 	@Persistent( column = "REVIEW_COUNT" )
 	private Long reviewCount;
 	
@@ -91,6 +88,13 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "LAST_UPDATED" )
 	private Date lastUpdated;
 
+	
+	@Persistent( column = "READ_COUNT" )
+	private Long readCount;
+	
+	@Persistent( column = "FB_LIKE_SHARE_COUNT" )
+	private Long fbLikeShareCount;
+	
 	@Persistent( column = "LAST_PROCESS_DATE" )
 	private Date lastProcessDate;
 
@@ -245,16 +249,6 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
-	public Long getReadCount() {
-		return readCount == null ? 0L : readCount;
-	}
-
-	@Override
-	public void setReadCount( Long readCount ) {
-		this.readCount = readCount;
-	}
-	
-	@Override
 	public Long getReviewCount() {
 		return reviewCount;
 	}
@@ -324,6 +318,27 @@ public class PratilipiEntity implements Pratilipi {
 		this.lastUpdated = lastUpdated;
 	}
 
+
+	@Override
+	public Long getReadCount() {
+		return readCount == null ? 0L : readCount;
+	}
+
+	@Override
+	public void setReadCount( Long readCount ) {
+		this.readCount = readCount;
+	}
+	
+	@Override
+	public Long getFbLikeShareCount() {
+		return fbLikeShareCount == null ? 0L : fbLikeShareCount;
+	}
+
+	@Override
+	public void setFbLikeShareCount( Long fbLikeShareCount ) {
+		this.fbLikeShareCount = fbLikeShareCount;
+	}
+	
 	@Override
 	public Date getLastProcessDate() {
 		return lastProcessDate == null ? lastUpdated : lastProcessDate;

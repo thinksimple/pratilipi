@@ -57,6 +57,7 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "CONTENT_PUBLISHED" )
 	private Long contentPublished;
 
+	
 	@Persistent( column = "TOTAL_READ_COUNT" )
 	private Long totalReadCount;
 	

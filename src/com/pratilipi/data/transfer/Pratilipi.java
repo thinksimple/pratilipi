@@ -68,10 +68,6 @@ public interface Pratilipi extends Serializable {
 	
 	void setPageCount( Integer pageCount );
 	
-	Long getReadCount();
-	
-	void setReadCount( Long readCount );
-	
 	Long getReviewCount();
 	
 	void setReviewCount( Long reviewCount );
@@ -100,6 +96,15 @@ public interface Pratilipi extends Serializable {
 	
 	void setLastUpdated( Date lastUpdated );
 
+
+	Long getReadCount();
+	
+	void setReadCount( Long readCount );
+	
+	Long getFbLikeShareCount();
+
+	void setFbLikeShareCount( Long fbLikeShareCount );
+	
 	Date getLastProcessDate();
 
 	void setLastProcessDate( Date lastProcessDate );
