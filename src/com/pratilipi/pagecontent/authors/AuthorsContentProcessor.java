@@ -9,9 +9,11 @@ import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.shared.ClaymusResource;
 import com.claymus.commons.shared.Resource;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
+import com.pratilipi.pagecontent.author.AuthorContentHelper;
 
 public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent> {
 
@@ -41,6 +43,9 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 					ClaymusResource.POLYMER_PAPER_ACTION_DIALOG,
 					ClaymusResource.POLYMER_PAPER_INPUT_DECORATOR,
 					ClaymusResource.POLYMER_PAPER_INPUT,
+					ClaymusResource.POLYMER_PAPER_TOAST,
+					ClaymusResource.POLYMER_CORE_MENU,
+					ClaymusResource.POLYMER_PAPER_DROPDOWN_MENU,
 					new Resource() {
 						
 						@Override
@@ -64,7 +69,10 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 	
 	@Override
 	public String generateHtml( AuthorsContent authorsContent, HttpServletRequest request )
-			throws UnexpectedServerException {
+			throws UnexpectedServerException, InsufficientAccessException {
+		
+		if( !AuthorContentHelper.hasRequestAccessToListAuthorData( request ) )
+			throw new InsufficientAccessException();
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		boolean showMetaData =
