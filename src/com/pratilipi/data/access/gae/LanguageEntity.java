@@ -25,6 +25,9 @@ public class LanguageEntity implements Language {
 	
 	@Persistent( column = "CREATION_DATE" )
 	private Date creationDate;
+	
+	@Persistent( column = "HIDDEN" )
+	private Boolean hidden;
 
 	
 	@Override
@@ -60,6 +63,16 @@ public class LanguageEntity implements Language {
 	@Override
 	public void setCreationDate( Date creationDate ) {
 		this.creationDate = creationDate;
+	}
+
+	@Override
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	@Override
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
 	}
 
 }

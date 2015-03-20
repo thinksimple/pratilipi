@@ -14,6 +14,8 @@ public class LanguageData implements IsSerializable {
 	
 	private Date creationDate;
 	
+	private Boolean hidden;
+	
 	
 	public Long getId() {
 		return id;
@@ -45,6 +47,14 @@ public class LanguageData implements IsSerializable {
 
 	public void setCreationDate( Date creationDate ) {
 		this.creationDate = creationDate;
+	}
+	
+	public Boolean getHidden(){
+		return hidden;
+	}
+	
+	public void setHidden( Boolean hidden ){
+		this.hidden = hidden;
 	}
 	
 }

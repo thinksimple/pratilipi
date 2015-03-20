@@ -19,4 +19,8 @@ public interface Language extends Serializable {
 	
 	void setCreationDate( Date creationDate );
 	
+	Boolean getHidden();
+	
+	void setHidden( Boolean hidden );
+	
 }

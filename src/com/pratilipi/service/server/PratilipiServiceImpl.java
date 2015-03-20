@@ -119,6 +119,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			languageData.setName( language.getName() );
 			languageData.setNameEn( language.getNameEn() );
 			languageData.setCreationDate( language.getCreationDate() );
+			languageData.setHidden( language.getHidden() );
 			
 			languageDataList.add( languageData );
 		}

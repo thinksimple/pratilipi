@@ -363,6 +363,7 @@ public class PratilipiHelper extends ClaymusHelper {
 		languageData.setName( language.getName() );
 		languageData.setNameEn( language.getNameEn() );
 		languageData.setCreationDate( language.getCreationDate() );
+		languageData.setHidden( language.getHidden() );
 		return languageData;
 	}
 
