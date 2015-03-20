@@ -28,11 +28,11 @@
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
 
 	<!-- Configure web domain -->
-    <property name="dev-pratilipi.domain" value="devo.pratilipi.com"/>
+    <property name="dev-pratilipi.domain" value="dev.pratilipi.com"/>
     <property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>
     <property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
 
-    <property name="dev-pratilipi.cdn.asia" value="//devo-pratilipi.pratilipi.com"/>
+    <property name="dev-pratilipi.cdn.asia" value="//dev-pratilipi.pratilipi.com"/>
     <property name="devo-pratilipi.cdn.asia" value="//devo-pratilipi.pratilipi.com"/>
     <property name="prod-pratilipi.cdn.asia" value="//cdn-asia.pratilipi.com"/>
 
