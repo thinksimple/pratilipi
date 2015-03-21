@@ -3,7 +3,7 @@
 
   <application>dev-pratilipi</application>
   <module>api</module>
-  <version>mark-4p174</version>
+  <version>mark-4p175</version>
 
   <threadsafe>true</threadsafe>
 
@@ -42,14 +42,6 @@
     <property name="dev-pratilipi.email" value="dev-team@pratilipi.com"/>
     <property name="devo-pratilipi.email" value="dev-team@pratilipi.com"/>
     <property name="prod-pratilipi.email" value="contact@pratilipi.com"/>
-
-    <property name="dev-pratilipi.email.contact" value="dev-team@pratilipi.com"/>
-    <property name="devo-pratilipi.email.contact" value="dev-team@pratilipi.com"/>
-    <property name="prod-pratilipi.email.contact" value="contact@pratilipi.com"/>
-
-    <property name="dev-pratilipi.email.noreply" value="no-reply@pratilipi.com"/>
-    <property name="devo-pratilipi.email.noreply" value="no-reply@pratilipi.com"/>
-    <property name="prod-pratilipi.email.noreply" value="no-reply@pratilipi.com"/>
 
 	<!-- Configure Blob Storage -->
     <property name="dev-pratilipi.blobservice.gcs.bucket" value="dev-pratilipi.appspot.com"/>
