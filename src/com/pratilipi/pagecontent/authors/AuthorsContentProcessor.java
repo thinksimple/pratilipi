@@ -44,8 +44,10 @@ public class AuthorsContentProcessor extends PageContentProcessor<AuthorsContent
 					ClaymusResource.POLYMER_PAPER_INPUT_DECORATOR,
 					ClaymusResource.POLYMER_PAPER_INPUT,
 					ClaymusResource.POLYMER_PAPER_TOAST,
-					ClaymusResource.POLYMER_CORE_MENU,
+					ClaymusResource.POLYMER_PAPER_DROPDOWN,
 					ClaymusResource.POLYMER_PAPER_DROPDOWN_MENU,
+					ClaymusResource.POLYMER_PAPER_ITEM,
+					ClaymusResource.POLYMER_CORE_MENU,
 					new Resource() {
 						
 						@Override

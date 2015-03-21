@@ -2,24 +2,50 @@
 	
 	<template>
 		<style>
-		
+			paper-toast .Error{
+				background-color: red;
+			}
+			
+			paper-toast .Success{
+				background-color: green;
+			}
+			
+			paper-dropdown-menu{
+				width : 50%;
+				padding-top: 12px;
+				padding-bottom: 6px;
+				margin-top: 0px;
+				margin-bottom: 10px;
+			}
 		</style>
 		
 		<div center horizontal layout class="formRow">
-			<paper-input id="firstName" label="First Name" value="{{ authorData.firstName }}"></paper-input>
-			<paper-input id="firstNameEn" label="First Name ( Eng )*" value="{{ authorData.firstNameEn }}"></paper-input>
+			<paper-input id="FirstName" label="First Name" value="{{ authorData.firstName }}"></paper-input>
+			<paper-input id="FirstNameEn" label="First Name ( Eng )*" value="{{ authorData.firstNameEn }}"></paper-input>
 		</div>
 		<div center horizontal layout class="formRow">
-			<paper-input id="lastName" label="Last Name" value="{{ authorData.lastName }}"></paper-input>
-			<paper-input label="Last Name ( Eng )" value="{{ authorData.lastNameEn }}"></paper-input>
+			<paper-input id="LastName" label="Last Name" value="{{ authorData.lastName }}"></paper-input>
+			<paper-input id="LastNameEn" label="Last Name ( Eng )" value="{{ authorData.lastNameEn }}"></paper-input>
 		</div>
 		<div center horizontal layout class="formRow">
-			<paper-input label="Pen Name" value="{{ authorData.penName }}"></paper-input>
-			<paper-input label="Pen Name ( Eng )" value="{{ authorData.penNameEn }}"></paper-input>
+			<paper-input id="PenName" label="Pen Name" value="{{ authorData.penName }}"></paper-input>
+			<paper-input id="PenNameEn" label="Pen Name ( Eng )" value="{{ authorData.penNameEn }}"></paper-input>
 		</div>
 		<div center horizontal layout class="formRow">
-			<paper-input label="Select Language" value="{{ authorData.languageId }}"></paper-input>
-			<paper-input label="Email" value="{{ authorData.email }}"></paper-input>
+			<paper-dropdown-menu label="Select Language" tabindex="0">
+		        <paper-dropdown class="dropdown core-transition core-closed" tabindex="-1" style="outline: none; display: none;">
+					<core-menu id="LanguageId" class="menu" selected="{{ authorData.languageId }}"   valueattr="value">
+						<template repeat="{{ languageData in languageDataList }}">
+							<paper-item value="{{ languageData.id }}">{{ languageData.nameEn }}</paper-item>
+						</template>
+					</core-menu>
+				</paper-dropdown>
+			</paper-dropdown-menu>
+			<paper-input id="Email" label="Email" value="{{ authorData.email }}"></paper-input>
+		</div>
+		<div center horizontal layout class="formRow">
+			<paper-toast id="Error" text=""></paper-toast>
+			<paper-toast id="Success" text=""></paper-toast>
 		</div>
 	 	<paper-button affirmative on-tap="{{ saveChanges }}">Submit</paper-button>
 		<paper-button affirmative autofocus>Close</paper-button>
@@ -32,6 +58,15 @@
 				handleAs="json"
 				on-core-response="{{ handleAjaxPutResponse }}"
 				on-core-error="{{ handleAjaxPutError }}" ></core-ajax>
+				
+		<core-ajax
+				id="AjaxGet"
+				url="/api.pratilipi/language/list"
+				contentType="application/json"
+				method="GET"
+				handleAs="json"
+				on-core-response="{{ handleAjaxGetResponse }}"
+				on-core-error="{{ handleAjaxGetError }}" ></core-ajax>
 	</template>
 	
 	<script>
@@ -39,35 +74,73 @@
 		Polymer( 'pagecontent-author-form', {
 		
 			handleAjaxPutResponse: function( event, response ) {
-				
+				if( response.response == '' ) {
+					this.$.Error.text = 'Could Not Save Author. Please Try Again.';
+					this.$.Error.show();
+				} else {
+					this.$.Success.text = 'New Author Created';
+					this.$.Success.show();
+					window.location = response.response.authorData.pageUrl;
+				}
 			},
 
 			handleAjaxPutError: function( event, response ) {
-				
+				this.$.Error.text = 'Some error occured at server while saving changes. Retrying ...';
+				this.$.Error.show();
 			},
-
-			setIndex: function( index ) {
-				
-			},
-
-			validatePageNoAndSaveChanges: function( event ) {
-				
+			
+			handleAjaxGetResponse: function( event, response ){
+				if( response.response == '' ){
+					this.$.Error.text = "Error In loading language list. Retrying...";
+					this.$.Error.show();
+				} else {
+					this.languageDataList = response.response.languageDataList;
+				}
 			},
 
 			saveChanges: function( event ) {
-				var firstName = this.$.firstName;
-				console.log( firstName.value );
-				this.$.firstName.disabled;
-				var ajaxPut = this.$.AjaxPut;
-				ajaxPut.body = JSON.stringify( this.authorData );
+				this.validate();
+				if( this.isValid ){
+					this.authorData.languageId = parseInt( this.authorData.languageId );
+					var ajaxPut = this.$.AjaxPut;
+					ajaxPut.body = JSON.stringify( this.authorData );
+					ajaxPut.go();
+				}
 			},
 			
 			validate : function( event ) {
-			    
+				this.isValid = true;
+			    var firstNameEn = this.$.FirstNameEn;
+			    var email = this.$.Email;
+			    if( !firstNameEn.value ){
+			    	console.log( "FIRST NAME EMPTY" );
+			    	this.isValid = false;
+			    	this.$.Error.text = 'Please Enter First Name';
+					this.$.Error.show();
+			    } else if( !this.authorData.languageId.trim() ){
+			    	console.log( "SELECT LANGUAGE" );
+			    	this.isValid = false;
+			    	this.$.Error.text = 'Please Select Language';
+					this.$.Error.show();
+			    } else if( !email.value.match( '^[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.-][A-Za-z0-9]+)*\\.[A-Za-z]{2,4}$' ) ){
+			    	console.log( "INVALID EMAIL ADDRESS" );
+			    	this.isValid = false;
+			    	this.$.Error.text = 'Please Enter Valid Email';
+					this.$.Error.show();
+			    }
+			    	
+			},
+			
+			onfocus : function( event ){
+				
 			},
 			
 			ready: function( event ) {
-				this.authorData = {  firstName:'', lastName:'', firstNameEn:'', lastNameEn:'', penName:'', penNameEn:'', languageId:'', email:''  }
+				this.authorData = {  firstName:'', lastName:'', firstNameEn:'', lastNameEn:'', penName:'', penNameEn:'', languageId:'', email:''  };
+				this.isValid = 'false';
+				this.languageDataList;
+				var ajaxGet = this.$.AjaxGet;
+				ajaxGet.go();
 			}
 
 		});
