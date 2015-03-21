@@ -16,6 +16,7 @@
   <!-- Sends welcome email newly registered users. -->
   <queue>
     <name>welcome-user</name>
+    <target>default</target>
     <rate>1/s</rate>
     <bucket-size>1</bucket-size>
     <max-concurrent-requests>1</max-concurrent-requests>
@@ -29,6 +30,7 @@
   <!-- Re-set user password and send an email regarding the same. -->
   <queue>
     <name>reset-password</name>
+    <target>default</target>
     <rate>1/s</rate>
     <bucket-size>1</bucket-size>
     <max-concurrent-requests>1</max-concurrent-requests>
