@@ -44,6 +44,7 @@ import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.shared.AuthorData;
 import com.pratilipi.pagecontent.author.gae.AuthorContentEntity;
 import com.pratilipi.pagecontent.author.shared.AuthorContentData;
+import com.pratilipi.pagecontent.language.LanguageContentHelper;
 import com.pratilipi.service.shared.data.LanguageData;
 
 public class AuthorContentHelper extends PageContentHelper<
@@ -183,7 +184,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		authorData.setAuthorImageUrl( creatAuthorImageUrl( author ) );
 
 		authorData.setLanguageId( author.getLanguageId() );
-		authorData.setLanguageData( PratilipiHelper.get( request ).createLanguageData( language ) );
+		authorData.setLanguageData( LanguageContentHelper.createLanguageData( language ) );
 
 		authorData.setFirstName( author.getFirstName() );
 		authorData.setLastName( author.getLastName() );
@@ -340,12 +341,13 @@ public class AuthorContentHelper extends PageContentHelper<
 		
 		author = dataAccessor.createOrUpdateAuthor( author );
 
+		if( authorData.getId() == null )
+			AuthorContentHelper.createUpdateAuthorPageUrl( author.getId(), request );
 
 		auditLog.setEventDataNew( gson.toJson( author ) );
 		auditLog = dataAccessor.createAuditLog( auditLog );
 		
-		
-		return createAuthorData( author, dataAccessor.getLanguage( author.getId() ), request );
+		return createAuthorData( author, dataAccessor.getLanguage( author.getLanguageId() ), request );
 	}
 	
 	public static void saveAuthorImage( Long authorId, BlobEntry blobEntry, HttpServletRequest request )
