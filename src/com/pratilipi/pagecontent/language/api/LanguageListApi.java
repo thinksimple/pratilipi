@@ -26,24 +26,21 @@ public class LanguageListApi extends GenericApi {
 		List<Long> languageIdList = request.getLanguageIdList();
 		
 		List<LanguageData> languageDataList = new ArrayList<>();
+		List<Language> modifiedLanguageList = new ArrayList<Language>();
 		
 		if( languageIdList == null || languageIdList.size() == 0 ) {
 			List<Language> languageList = dataAccessor.getLanguageList();
-			for( Language language : languageList ){
-				if( language.getHidden() )
-					languageList.remove( language );
-			}
-			
-			languageDataList = LanguageContentHelper.createLanguageDataList( languageList );
+			for( Language language : languageList )
+				if( !language.getHidden() )
+					modifiedLanguageList.add( language );
 		} else {
 			List<Language> languageList = dataAccessor.getLanguageList( languageIdList );
-			for( Language language : languageList ){
-				if( language.getHidden() )
-					languageList.remove( language );
-			}
-			
-			languageDataList = LanguageContentHelper.createLanguageDataList( languageList );
+			for( Language language : languageList )
+				if( !language.getHidden() )
+					modifiedLanguageList.add( language );
 		}
+
+		languageDataList = LanguageContentHelper.createLanguageDataList( modifiedLanguageList );
 		
 		return new GetLanguageListResponse( languageDataList );
 	}
