@@ -43,7 +43,7 @@ public class PratilipiProcessApi extends GenericApi {
 		pratilipiFilter.setNextProcessDateEnd( new Date() );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
+		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, 100 ).getDataList();
 		
 		List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
 		for( Long pratilipiId : pratilipiIdList ) {
