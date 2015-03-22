@@ -75,6 +75,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
 
 	private static final String COVER_150_URL		 = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/pratilipi-cover/150/";
+	private static final String COVER_ORIGINAL_URL	 = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/pratilipi-cover/original/";
 
 	
 	private static final Access ACCESS_TO_LIST_PRATILIPI_DATA =
@@ -348,7 +349,16 @@ public class PratilipiContentHelper extends PageContentHelper<
 		else
 			return COVER_150_URL + "pratilipi";
 	}
-	
+
+	public static String createCoverImageOriginalUrl( Pratilipi pratilipi ) {
+		if( pratilipi.hasCustomCover() )
+			return COVER_ORIGINAL_URL + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
+		else if( pratilipi.isPublicDomain() )
+			return COVER_ORIGINAL_URL + "pratilipi-classic-" + pratilipi.getLanguageId();
+		else
+			return COVER_ORIGINAL_URL + "pratilipi";
+	}
+
 	public static double calculateRelevance( Pratilipi pratilipi, Author author ) {
 		double relevance = pratilipi.getReadCount() + pratilipi.getRelevanceOffset();
 		if( author != null && author.getContentPublished() > 1L )
@@ -419,6 +429,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
 		pratilipiData.setCoverImageUrl( createCoverImageUrl( pratilipi ) );
+		pratilipiData.setCoverImageOriginalUrl( createCoverImageOriginalUrl( pratilipi ) );
 		
 		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
 		pratilipiData.setWriterPageUrl( PratilipiPageType.WRITE.getUrlPrefix() + pratilipi.getId() );
@@ -709,13 +720,16 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		BlobAccessor blobAccessorAsia = DataAccessorFactory.getBlobAccessorAsia();
 		try {
 			blobEntry.setName( COVER_FOLDER + "/original/" + pratilipiId );
 			blobAccessor.createOrUpdateBlob( blobEntry );
 			
+			blobAccessorAsia.createOrUpdateBlob( blobEntry );
+			
 			blobEntry.setName( COVER_FOLDER + "/150/" + pratilipiId );
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), 150, 1500 ) );
-			DataAccessorFactory.getBlobAccessorAsia().createOrUpdateBlob( blobEntry );
+			blobAccessorAsia.createOrUpdateBlob( blobEntry );
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to create/update pratilipi cover.", e );
 			throw new UnexpectedServerException();

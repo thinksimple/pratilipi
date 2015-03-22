@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.server.SerializationUtil;
+import com.claymus.commons.shared.Resource;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.User;
@@ -25,6 +26,41 @@ import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiContentProcessor extends PageContentProcessor<PratilipiContent> {
+
+	@Override
+	public Resource[] getDependencies( PratilipiContent pratilipiContent, HttpServletRequest request ) {
+		
+		Pratilipi pratilipi = DataAccessorFactory
+				.getDataAccessor( request )
+				.getPratilipi( pratilipiContent.getId() );
+		
+		final String ogTitle = generateTitle( pratilipiContent, request );
+		final String ogImage = PratilipiContentHelper
+				.createPratilipiData( pratilipi, null, null, request )
+				.getCoverImageOriginalUrl();
+		
+		return new Resource[] {
+		
+			new Resource() {
+				@Override
+				public String getTag() {
+					return "<meta property='og:title' content='" + ogTitle + "' />";
+				}
+			},
+
+			new Resource() {
+				@Override
+				public String getTag() {
+					if( ogImage.startsWith( "http:" ) )
+						return "<meta property='og:image' content='" + ogImage + "' />";
+					else
+						return "<meta property='og:image' content='http:" + ogImage + "' />";
+				}
+			},
+			
+		};
+		
+	}
 
 	@Override
 	public String generateTitle( PratilipiContent pratilipiContent, HttpServletRequest request ) {
