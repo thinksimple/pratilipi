@@ -52,7 +52,7 @@ public class AuthorData implements IsSerializable {
 	private String email;
 	private boolean hasEmail;
 
-	private Date registrationDate;
+	private Long registrationDate;
 	
 	private Long contentPublished;
 	
@@ -248,11 +248,11 @@ public class AuthorData implements IsSerializable {
 		return hasEmail;
 	}
 
-	public Date getRegistrationDate() {
+	public Long getRegistrationDate() {
 		return registrationDate;
 	}
 
-	public void setRegistrationDate( Date registrationDate ) {
+	public void setRegistrationDate( Long registrationDate ) {
 		this.registrationDate = registrationDate;
 	}
 	

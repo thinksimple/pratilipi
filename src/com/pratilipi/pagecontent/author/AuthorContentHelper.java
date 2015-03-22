@@ -224,7 +224,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		
 		authorData.setSummary( author.getSummary() );
 		authorData.setEmail( author.getEmail() );
-		authorData.setRegistrationDate( new Date() );
+		authorData.setRegistrationDate( author.getRegistrationDate().getTime() );
 		authorData.setContentPublished( author.getContentPublished() );
 		
 		return authorData;

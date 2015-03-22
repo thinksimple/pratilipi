@@ -102,7 +102,7 @@
 				this.isLoading = true;
 				
 				var ajaxGet = this.$.AjaxGet;
-				ajaxGet.params = JSON.stringify( { cursor:this.cursor, resultCount:this.pageSize } );
+				ajaxGet.params = JSON.stringify( { cursor:this.cursor, resultCount:this.pageSize, orderByContentPublished:Boolean( null ) } );
 				ajaxGet.go();
 			},
 
@@ -114,8 +114,11 @@
 				} else {
 					this.cursor = response.response[ 'cursor' ];
 					var authorList = response.response[ 'authorList' ];
-					for( var i = 0; i < authorList.length; i++ )
+					for( var i = 0; i < authorList.length; i++ ){
+						var date = new Date( authorList[i].registrationDate ).toDateString();
+						authorList[i].registrationDate = date.substring( date.indexOf( " " ) + 1 );
 						this.authorList.push( authorList[i] );
+					}
 					
 					this.isFinished = authorList.length < this.pageSize;
 					this.isLoading = false;
