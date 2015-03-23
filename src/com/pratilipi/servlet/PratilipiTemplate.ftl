@@ -94,7 +94,48 @@
 				ga('set', 'dimension1', ${ userId?c });
 				ga('send', 'pageview');
 			</#if>
-		</script>		
+		</script>	
+		
+		<!-- Facebook Conversion-Tracking Pixel Code -->
+		<script>
+			(function() {
+				var _fbq = window._fbq || (window._fbq = []);
+				if (!_fbq.loaded) {
+					var fbds = document.createElement('script');
+					fbds.async = true;
+					fbds.src = '//connect.facebook.net/en_US/fbds.js';
+					var s = document.getElementsByTagName('script')[0];
+					s.parentNode.insertBefore(fbds, s);
+					_fbq.loaded = true;
+				}
+			})();
+			window._fbq = window._fbq || [];
+			window._fbq.push(['track', '6017683737248', {'value':'0.01','currency':'INR'}]);
+		</script>
+		<noscript>
+			<img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6017683737248&amp;cd[value]=0.01&amp;cd[currency]=INR&amp;noscript=1" />
+		</noscript>
+		
+		<!-- Facebook Custom Audience Pixel -->
+		<script>
+			(function() {
+				var _fbq = window._fbq || (window._fbq = []);
+				if (!_fbq.loaded) {
+					var fbds = document.createElement('script');
+					fbds.async = true;
+					fbds.src = '//connect.facebook.net/en_US/fbds.js';
+					var s = document.getElementsByTagName('script')[0];
+					s.parentNode.insertBefore(fbds, s);
+					_fbq.loaded = true;
+				}
+				_fbq.push(['addPixelId', '1569748966613739']);
+			})();
+			window._fbq = window._fbq || [];
+			window._fbq.push(['track', 'PixelInitialized', {}]);
+		</script>
+		<noscript>
+			<img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=1569748966613739&amp;ev=PixelInitialized" />
+		</noscript>
 
 	</head>
 	<#if basicMode>
