@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.server.FacebookApi;
 import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.server.SerializationUtil;
 import com.claymus.commons.shared.Resource;
@@ -18,11 +19,15 @@ import com.claymus.service.shared.data.UserData;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.commons.shared.PratilipiState;
+import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.UserPratilipi;
+import com.pratilipi.data.transfer.shared.AuthorData;
+import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiContentProcessor extends PageContentProcessor<PratilipiContent> {
@@ -33,43 +38,56 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		Pratilipi pratilipi = DataAccessorFactory
 				.getDataAccessor( request )
 				.getPratilipi( pratilipiContent.getId() );
+		com.pratilipi.data.transfer.shared.PratilipiData pratilipiData =
+				PratilipiContentHelper.createPratilipiData( pratilipi, null, null, request );
 		
-		final String ogTitle = generateTitle( pratilipiContent, request );
-		final String ogImage = PratilipiContentHelper
-				.createPratilipiData( pratilipi, null, null, request )
-				.getCoverImageOriginalUrl();
+		
+		String ogFbAppId = FacebookApi.getAppId( request );
+		String ogType = pratilipi.getType() == PratilipiType.ARTICLE ? "article" : "books.book";
+		String ogBooksIsbn = pratilipi.getType() == PratilipiType.ARTICLE ? "" : pratilipi.getId() + "";
+		String ogUrl = "http://" + ClaymusHelper.getSystemProperty( "domain" ) + pratilipiData.getPageUrl();
+		String ogTitle = pratilipi.getTitle() + ( pratilipi.getTitleEn() == null ? "" : " / " + pratilipi.getTitleEn() );
+		String ogImage = pratilipiData.getCoverImageOriginalUrl();
+		if( ! ogImage.startsWith( "http:" ) )
+			ogImage = "http:" + ogImage;
+//		String ogDescription = pratilipi.getSummary();
+		
+		final String fbOgTags = "<meta property='fb:app_id' content='" + ogFbAppId + "' />"
+				+ "<meta property='og:type' content='" + ogType + "' />"
+				+ "<meta property='books:isbn' content='" + ogBooksIsbn + "' />"
+				+ "<meta property='og:url' content='" + ogUrl + "' />"
+				+ "<meta property='og:title' content='" + ogTitle + "' />"
+				+ "<meta property='og:image' content='" + ogImage + "' />";
+//				+ "<meta property='og:description' content='" + ogDescription + "' />";
+		
 		
 		return new Resource[] {
-		
-			new Resource() {
-				@Override
-				public String getTag() {
-					return "<meta property='og:title' content='" + ogTitle + "' />";
-				}
-			},
 
 			new Resource() {
 				@Override
 				public String getTag() {
-					if( ogImage.startsWith( "http:" ) )
-						return "<meta property='og:image' content='" + ogImage + "' />";
-					else
-						return "<meta property='og:image' content='http:" + ogImage + "' />";
+					return fbOgTags;
 				}
 			},
-			
+
 		};
 		
 	}
 
 	@Override
 	public String generateTitle( PratilipiContent pratilipiContent, HttpServletRequest request ) {
-		Pratilipi pratilipi = DataAccessorFactory
-				.getDataAccessor( request )
-				.getPratilipi( pratilipiContent.getId() );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiContent.getId() );
 		
-		return pratilipi.getTitle()
-				+ ( pratilipi.getTitleEn() == null ? "" : " (" + pratilipi.getTitleEn() + ")" );
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		AuthorData authorData = AuthorContentHelper.createAuthorData( author, null, request );
+		
+		String authorName = authorData.getName()
+				+ ( authorData.getNameEn() == null ? "" : " / " + authorData.getNameEn() );
+		String pratilipiTitle = pratilipi.getTitle()
+				+ ( pratilipi.getTitleEn() == null ? "" : " / " + pratilipi.getTitleEn() );
+
+		return authorName + " » " + pratilipiTitle;
 	}
 	
 	@Override

@@ -342,7 +342,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		author = dataAccessor.createOrUpdateAuthor( author );
 
 		if( authorData.getId() == null )
-			AuthorContentHelper.createUpdateAuthorPageUrl( author.getId(), request );
+			AuthorContentHelper.createOrUpdateAuthorPageUrl( author.getId(), request );
 
 		auditLog.setEventDataNew( gson.toJson( author ) );
 		auditLog = dataAccessor.createAuditLog( auditLog );
@@ -388,7 +388,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		auditLog = dataAccessor.createAuditLog( auditLog );
 	}
 	
-	public static boolean createUpdateAuthorPageUrl( Long authorId, HttpServletRequest request ) {
+	public static boolean createOrUpdateAuthorPageUrl( Long authorId, HttpServletRequest request ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		Author author = dataAccessor.getAuthor( authorId );
 		Page page = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), authorId );

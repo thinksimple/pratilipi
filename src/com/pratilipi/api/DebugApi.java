@@ -83,59 +83,6 @@ public class DebugApi extends GenericApi {
 
 		
 		
-/*		// START :: PRATILIPI TABLE BACKFILL :: START
-		
-		Memcache memcache = new MemcacheGaeImpl();
-		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		String cursor = memcache.get( "InitApi" );
-		int pageSize = 100;
-		int count = 0;
-		int updateCount = 0;
-		while( true ) {
-			DataListCursorTuple<Pratilipi> pratilipiListCursorTuple
-					= dataAccessor.getPratilipiList( pratilipiFilter, cursor, pageSize );
-
-			List<Pratilipi> pratilipiList =	pratilipiListCursorTuple.getDataList();
-			cursor = pratilipiListCursorTuple.getCursor();
-			
-			for( Pratilipi pratilipi : pratilipiList ) {
-				count++;
-				if( pratilipi.getContentType() == null ) {
-					pratilipi.setContentType( 
-							pratilipi.getPageCount() == null || pratilipi.getPageCount() == 0L
-									? PratilipiContentType.PRATILIPI
-									: PratilipiContentType.IMAGE );
-					dataAccessor.createOrUpdatePratilipi( pratilipi );
-					updateCount++;
-				}
-			}
-
-			if( pratilipiList.size() < pageSize || cursor == null || updateCount > 100 )
-				break;
-		}
-		memcache.put( "InitApi", cursor );
-		return new GetInitResponse( "Entities Checked: " + count + ". Entities Updated: " + updateCount );
-		
-		// END :: PRATILIPI TABLE BACKFILL :: END							*/
-		
-		
-		
-/*		// START :: PRATILIPI TABLE BATCH PROCESSING :: START
-
-		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( new PratilipiFilter(), null, null ).getDataList();
-		for( Long pratilipiId : pratilipiIdList ) {
-			Task task = TaskQueueFactory.newTask()
-					.addParam( "pratilipiId", pratilipiId.toString() )
-					.addParam( "processData", "true" )
-					.setUrl( "/pratilipi/process" );
-			TaskQueueFactory.getPratilipiTaskQueue().add( task );
-		}
-		return new GetInitResponse( "Created tasks for " + pratilipiIdList.size() + " Pratilipi entities." );
-
-		// END :: PRATILIPI TABLE BATCH PROCESSING :: END							*/
-
-		
-		
 /*		// START :: RESIZING PRATILIPI COVER IMAGES :: START
 
 		String[] coverImages = new String[] {

@@ -16,7 +16,7 @@ import com.pratilipi.pagecontent.pratilipi.api.shared.PostPratilipiCoverRequest;
 public class PratilipiCoverApi extends GenericApi {
 
 	@Post
-	public GenericResponse postPratilipiResource( PostPratilipiCoverRequest request )
+	public GenericResponse postPratilipiCover( PostPratilipiCoverRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );

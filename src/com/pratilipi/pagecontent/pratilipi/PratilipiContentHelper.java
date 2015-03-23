@@ -365,7 +365,51 @@ public class PratilipiContentHelper extends PageContentHelper<
 			relevance = relevance + (double) author.getTotalReadCount() / (double) author.getContentPublished();
 		return relevance;
 	}
+
 	
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Language language, Author author, HttpServletRequest request ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Page pratilipiPage = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipi.getId() );
+		
+		
+		PratilipiData pratilipiData = new PratilipiData();
+
+		pratilipiData.setId( pratilipi.getId() );
+		pratilipiData.setType( pratilipi.getType() );
+		pratilipiData.setPageUrl( pratilipiPage.getUri() );
+		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
+		pratilipiData.setCoverImageUrl( createCoverImageUrl( pratilipi ) );
+		pratilipiData.setCoverImageOriginalUrl( createCoverImageOriginalUrl( pratilipi ) );
+		
+		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
+		pratilipiData.setWriterPageUrl( PratilipiPageType.WRITE.getUrlPrefix() + pratilipi.getId() );
+		
+		pratilipiData.setTitle( pratilipi.getTitle() );
+		pratilipiData.setTitleEn( pratilipi.getTitleEn() );
+		pratilipiData.setLanguageId( pratilipi.getLanguageId() );
+		pratilipiData.setLanguageData( PratilipiHelper.get( request ).createLanguageData( language ) );
+
+		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
+		pratilipiData.setAuthorData( AuthorContentHelper.createAuthorData( author, null, request ) );
+		
+		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
+		pratilipiData.setListingDate( pratilipi.getListingDate() );
+		pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
+		
+		pratilipiData.setSummary( pratilipi.getSummary() );
+		pratilipiData.setIndex( pratilipi.getIndex() );
+		pratilipiData.setPageCount( pratilipi.getPageCount() );
+		
+		pratilipiData.setRelevance( calculateRelevance( pratilipi, author ) );
+		
+		pratilipiData.setContentType( pratilipi.getContentType() );
+		pratilipiData.setState( pratilipi.getState() );
+
+		return pratilipiData;
+		
+	}
+
 	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeLanguageData, boolean includeAuthorData, HttpServletRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
@@ -416,49 +460,6 @@ public class PratilipiContentHelper extends PageContentHelper<
 		
 	}
 	
-	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Language language, Author author, HttpServletRequest request ) {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		Page pratilipiPage = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipi.getId() );
-		
-		
-		PratilipiData pratilipiData = new PratilipiData();
-
-		pratilipiData.setId( pratilipi.getId() );
-		pratilipiData.setType( pratilipi.getType() );
-		pratilipiData.setPageUrl( pratilipiPage.getUri() );
-		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
-		pratilipiData.setCoverImageUrl( createCoverImageUrl( pratilipi ) );
-		pratilipiData.setCoverImageOriginalUrl( createCoverImageOriginalUrl( pratilipi ) );
-		
-		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
-		pratilipiData.setWriterPageUrl( PratilipiPageType.WRITE.getUrlPrefix() + pratilipi.getId() );
-		
-		pratilipiData.setTitle( pratilipi.getTitle() );
-		pratilipiData.setTitleEn( pratilipi.getTitleEn() );
-		pratilipiData.setLanguageId( pratilipi.getLanguageId() );
-		pratilipiData.setLanguageData( PratilipiHelper.get( request ).createLanguageData( language ) );
-
-		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
-		pratilipiData.setAuthorData( AuthorContentHelper.createAuthorData( author, null, request ) );
-		
-		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
-		pratilipiData.setListingDate( pratilipi.getListingDate() );
-		pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
-		
-		pratilipiData.setSummary( pratilipi.getSummary() );
-		pratilipiData.setIndex( pratilipi.getIndex() );
-		pratilipiData.setPageCount( pratilipi.getPageCount() );
-		
-		pratilipiData.setRelevance( calculateRelevance( pratilipi, author ) );
-		
-		pratilipiData.setContentType( pratilipi.getContentType() );
-		pratilipiData.setState( pratilipi.getState() );
-
-		return pratilipiData;
-		
-	}
-
 	
 	public static DataListCursorTuple<PratilipiData> getPratilipiList( PratilipiFilter pratilipiFilter, String cursor, Integer resultCount, HttpServletRequest request )
 			throws InsufficientAccessException {
@@ -782,7 +783,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		}
 	}
 	
-	public static boolean createUpdatePratilipiPageUrl( Long pratilipiId, Long authorId, HttpServletRequest request ) {
+	public static boolean createOrUpdatePratilipiPageUrl( Long pratilipiId, Long authorId, HttpServletRequest request ) {
 		// TODO: implementation
 		return false;
 	}

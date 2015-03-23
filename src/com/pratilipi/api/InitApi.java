@@ -14,6 +14,7 @@ import com.claymus.api.shared.GenericResponse;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.AppProperty;
+import com.claymus.taskqueue.Task;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
@@ -22,11 +23,12 @@ import com.pratilipi.data.access.SearchAccessor;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContent;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/init" )
 public class InitApi extends GenericApi {
-	
+
 	@Get
 	public GenericResponse getInit( GenericRequest request ) throws InvalidArgumentException, UnexpectedServerException {
 
@@ -36,7 +38,7 @@ public class InitApi extends GenericApi {
 
 	}
 
-	
+
 	private void updateHomePageContent( GenericRequest request ) throws InvalidArgumentException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
@@ -115,7 +117,7 @@ public class InitApi extends GenericApi {
 		}
 		
 	}
-	
+
 	@SuppressWarnings("unused")
 	private void createOrUpdateFacebookCredentials( String appId, String appSecret ) {
 		Map<String, String> map = new HashMap<>();
@@ -127,5 +129,20 @@ public class InitApi extends GenericApi {
 		appProperty.setValue( map );
 		dataAccessor.createOrUpdateAppProperty( appProperty );
 	}
-	
+
+	@SuppressWarnings("unused")
+	private void batchProcessPratilipi( String processType ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( new PratilipiFilter(), null, null ).getDataList();
+		List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
+		for( Long pratilipiId : pratilipiIdList ) {
+			Task task = TaskQueueFactory.newTask()
+					.addParam( "pratilipiId", pratilipiId.toString() )
+					.addParam( processType, "true" )
+					.setUrl( "/pratilipi/process" );
+			taskList.add( task );
+		}
+		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
+	}
+
 }

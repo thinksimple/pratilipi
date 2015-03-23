@@ -67,9 +67,9 @@ public class AuthorProcessApi extends GenericApi {
 		if( request.processData() ) {
 			AuthorContentHelper.updateAuthorSearchIndex( request.getAuthorId(), this.getThreadLocalRequest() );
 			PratilipiContentHelper.updatePratilipiSearchIndex( null, request.getAuthorId(), this.getThreadLocalRequest() );
-			boolean changed = AuthorContentHelper.createUpdateAuthorPageUrl( request.getAuthorId(), this.getThreadLocalRequest() );
+			boolean changed = AuthorContentHelper.createOrUpdateAuthorPageUrl( request.getAuthorId(), this.getThreadLocalRequest() );
 			if( changed )
-				PratilipiContentHelper.createUpdatePratilipiPageUrl( null, request.getAuthorId(), this.getThreadLocalRequest() );
+				PratilipiContentHelper.createOrUpdatePratilipiPageUrl( null, request.getAuthorId(), this.getThreadLocalRequest() );
 		}
 		
 		if( request.updateStats() ) {
