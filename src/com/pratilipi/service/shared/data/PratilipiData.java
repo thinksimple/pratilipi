@@ -415,7 +415,7 @@ public class PratilipiData implements IsSerializable {
 	}
 
 	public void setReviewCount(Long reviewCount) {
-		//this.reviewCount = reviewCount;
+		this.reviewCount = reviewCount;
 	}
 
 	public Long getRatingCount() {
@@ -423,7 +423,7 @@ public class PratilipiData implements IsSerializable {
 	}
 
 	public void setRatingCount(Long ratingCount) {
-		//this.ratingCount = ratingCount;
+		this.ratingCount = ratingCount;
 	}
 
 	public Long getStarCount() {
@@ -431,7 +431,7 @@ public class PratilipiData implements IsSerializable {
 	}
 
 	public void setStarCount(Long starCount) {
-		//this.starCount = starCount;
+		this.starCount = starCount;
 	}
 	
 	public Long getRelevanceOffset() {

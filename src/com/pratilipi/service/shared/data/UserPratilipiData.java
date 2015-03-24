@@ -21,8 +21,10 @@ public class UserPratilipiData implements IsSerializable {
 	private Date purchaseDate;
 	
 	private Integer rating;
+	private Boolean hasRating = false;
 	
 	private String review;
+	private Boolean hasReview = false;
 	
 	private UserReviewState reviewState;
 	
@@ -83,6 +85,11 @@ public class UserPratilipiData implements IsSerializable {
 
 	public void setRating( Integer rating ) {
 		this.rating = rating;
+		this.hasRating = true;
+	}
+	
+	public Boolean hasRating(){
+		return hasRating;
 	}
 
 	public String getReview() {
@@ -91,6 +98,11 @@ public class UserPratilipiData implements IsSerializable {
 
 	public void setReview( String review ) {
 		this.review = review;
+		this.hasReview = true;
+	}
+	
+	public Boolean hasReview(){
+		return hasReview;
 	}
 
 	public UserReviewState getReviewState() {
