@@ -57,28 +57,31 @@ public class UploadContent implements EntryPoint {
 		imageContentUpload.getElement().setPropertyString( "multiple", "multiple" );
 		
 		//Setting upload url and pratilipi's Content type if it is null.
-		if( pratilipiData.getContentType() != null ){
-			if( pratilipiData.getContentType().equals( PratilipiContentType.IMAGE ))
-				uploadUrl = pratilipiData.getImageContentUploadUrl();
-			else if( pratilipiData.getContentType().equals( PratilipiContentType.PRATILIPI ))
-				uploadUrl = pratilipiData.getWordContentUploadUrl();
-			else if( pratilipiData.getContentType().equals( PratilipiContentType.PDF ))
-				uploadUrl = pratilipiData.getPdfContentUploadUrl();
-		}
-		else{
-			if( Window.Location.getParameter( "type" ).equals( "image" ) ){
-				uploadUrl = pratilipiData.getImageContentUploadUrl();
-				pratilipiData.setContentType( PratilipiContentType.IMAGE );
-			}
-			else if( Window.Location.getParameter( "type" ).equals( "pratilipi" ) ){
-				uploadUrl = pratilipiData.getWordContentUploadUrl();
-				pratilipiData.setContentType( PratilipiContentType.PRATILIPI );
-			}
-			else if( Window.Location.getParameter( "type" ).equals( "pdf" )){
-				uploadUrl = pratilipiData.getPdfContentUploadUrl();
-				pratilipiData.setContentType( PratilipiContentType.PDF );
-			}
-		}
+//		if( pratilipiData.getContentType() != null ){
+//			if( pratilipiData.getContentType().equals( PratilipiContentType.IMAGE ))
+//				uploadUrl = pratilipiData.getImageContentUploadUrl();
+//			else if( pratilipiData.getContentType().equals( PratilipiContentType.PRATILIPI ))
+//				uploadUrl = pratilipiData.getWordContentUploadUrl();
+//			else if( pratilipiData.getContentType().equals( PratilipiContentType.PDF ))
+//				uploadUrl = pratilipiData.getPdfContentUploadUrl();
+//		}
+//		else{
+//			if( Window.Location.getParameter( "type" ).equals( "image" ) ){
+//				uploadUrl = pratilipiData.getImageContentUploadUrl();
+//				pratilipiData.setContentType( PratilipiContentType.IMAGE );
+//			}
+//			else if( Window.Location.getParameter( "type" ).equals( "pratilipi" ) ){
+//				uploadUrl = pratilipiData.getWordContentUploadUrl();
+//				pratilipiData.setContentType( PratilipiContentType.PRATILIPI );
+//			}
+//			else if( Window.Location.getParameter( "type" ).equals( "pdf" )){
+//				uploadUrl = pratilipiData.getPdfContentUploadUrl();
+//				pratilipiData.setContentType( PratilipiContentType.PDF );
+//			}
+//		}
+		
+		pratilipiData.setContentType( PratilipiContentType.IMAGE );
+		uploadUrl = pratilipiData.getImageContentUploadUrl();
 		
 		//Image Content upload panel
 		RootPanel imageUpload = RootPanel.get( "PageContent-UploadContent-Image" );
@@ -162,7 +165,7 @@ public class UploadContent implements EntryPoint {
 				else
 					newFilename = filename.split('.')[0];
 				
-				data.url = url + "/" + newFilename;
+				data.url = url + "&pageNo=" + newFilename;
 					
 				$wnd.$( statusDiv ).append('<div class="col-sm-6" ><i>' + filename + '</i></div>' +
 							'<div class="progress col-sm-2" style="padding-left: 0px; padding-right: 0px;">' + 
