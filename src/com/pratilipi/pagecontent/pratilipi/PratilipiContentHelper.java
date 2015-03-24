@@ -74,8 +74,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 	private static final String COVER_FOLDER 		 = "pratilipi-cover";
 	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
 
-	private static final String COVER_150_URL		 = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/pratilipi-cover/150/";
-	private static final String COVER_ORIGINAL_URL	 = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/pratilipi-cover/original/";
+	private static final String COVER_URL = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/pratilipi-cover/150/";
 
 	
 	private static final Access ACCESS_TO_LIST_PRATILIPI_DATA =
@@ -343,20 +342,11 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 	public static String createCoverImageUrl( Pratilipi pratilipi ) {
 		if( pratilipi.hasCustomCover() )
-			return COVER_150_URL + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
+			return COVER_URL + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
 		else if( pratilipi.isPublicDomain() )
-			return COVER_150_URL + "pratilipi-classic-" + pratilipi.getLanguageId();
+			return COVER_URL + "pratilipi-classic-" + pratilipi.getLanguageId();
 		else
-			return COVER_150_URL + "pratilipi";
-	}
-
-	public static String createCoverImageOriginalUrl( Pratilipi pratilipi ) {
-		if( pratilipi.hasCustomCover() )
-			return COVER_ORIGINAL_URL + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
-		else if( pratilipi.isPublicDomain() )
-			return COVER_ORIGINAL_URL + "pratilipi-classic-" + pratilipi.getLanguageId();
-		else
-			return COVER_ORIGINAL_URL + "pratilipi";
+			return COVER_URL + "pratilipi";
 	}
 
 	public static double calculateRelevance( Pratilipi pratilipi, Author author ) {
@@ -380,7 +370,6 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
 		pratilipiData.setCoverImageUrl( createCoverImageUrl( pratilipi ) );
-		pratilipiData.setCoverImageOriginalUrl( createCoverImageOriginalUrl( pratilipi ) );
 		
 		pratilipiData.setReaderPageUrl( PratilipiPageType.READ.getUrlPrefix() + pratilipi.getId() );
 		pratilipiData.setWriterPageUrl( PratilipiPageType.WRITE.getUrlPrefix() + pratilipi.getId() );
@@ -710,6 +699,32 @@ public class PratilipiContentHelper extends PageContentHelper<
 				request );
 	}
 	
+	public static BlobEntry getPratilipiCover(
+			Long pratilipiId, Integer width, HttpServletRequest request )
+			throws UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		
+		String fileName = "";
+		if( pratilipi.hasCustomCover() )
+			fileName = COVER_FOLDER + "/original/" + pratilipi.getId();
+		else if( pratilipi.isPublicDomain() )
+			fileName = COVER_FOLDER + "/original/" + "pratilipi-classic-" + pratilipi.getLanguageId();
+		else
+			fileName = COVER_FOLDER + "/original/" + "pratilipi";
+
+		try {
+			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
+			if( width != null )
+				blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, 10 * width ) );
+			return blobEntry;
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch pratilipi resource.", e );
+			throw new UnexpectedServerException();
+		}
+	}
+
 	public static void savePratilipiCover( Long pratilipiId, BlobEntry blobEntry, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
@@ -725,8 +740,6 @@ public class PratilipiContentHelper extends PageContentHelper<
 		try {
 			blobEntry.setName( COVER_FOLDER + "/original/" + pratilipiId );
 			blobAccessor.createOrUpdateBlob( blobEntry );
-			
-			blobAccessorAsia.createOrUpdateBlob( blobEntry );
 			
 			blobEntry.setName( COVER_FOLDER + "/150/" + pratilipiId );
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), 150, 1500 ) );

@@ -32,6 +32,10 @@ import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipiContentProcessor extends PageContentProcessor<PratilipiContent> {
 
+	
+	private static final String DOMAIN = ClaymusHelper.getSystemProperty( "domain" );
+	
+	
 	@Override
 	public Resource[] getDependencies( PratilipiContent pratilipiContent, HttpServletRequest request ) {
 		
@@ -40,14 +44,14 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 				.getPratilipi( pratilipiContent.getId() );
 		com.pratilipi.data.transfer.shared.PratilipiData pratilipiData =
 				PratilipiContentHelper.createPratilipiData( pratilipi, null, null, request );
-		
+
 		
 		String ogFbAppId = FacebookApi.getAppId( request );
 		String ogType = pratilipi.getType() == PratilipiType.ARTICLE ? "article" : "books.book";
 		String ogBooksIsbn = pratilipi.getType() == PratilipiType.ARTICLE ? "" : pratilipi.getId() + "";
-		String ogUrl = "http://" + ClaymusHelper.getSystemProperty( "domain" ) + pratilipiData.getPageUrl();
+		String ogUrl = "http://" + DOMAIN + pratilipiData.getPageUrl();
 		String ogTitle = pratilipi.getTitle() + ( pratilipi.getTitleEn() == null ? "" : " / " + pratilipi.getTitleEn() );
-		String ogImage = pratilipiData.getCoverImageOriginalUrl();
+		String ogImage = "http://" + DOMAIN + "/api/pratilipi/cover?pratilipiId=" + pratilipi.getId();
 		if( ! ogImage.startsWith( "http:" ) )
 			ogImage = "http:" + ogImage;
 //		String ogDescription = pratilipi.getSummary();
