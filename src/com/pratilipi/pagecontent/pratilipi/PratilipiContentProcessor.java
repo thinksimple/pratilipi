@@ -139,11 +139,13 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "showEditOptions", showEditOption );
 		dataModel.put( "showWriterOption", showEditOption && pratilipiData.getContentType() != PratilipiContentType.IMAGE );
 		dataModel.put( "showReviewedMessage",
-				userPratilipi != null
+				userPratilipi != null 
+				&& userPratilipi.getReview() != null
 				&& userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED );
 		dataModel.put( "showReviewOption",
-				( userPratilipi == null || userPratilipi.getReviewState() == UserReviewState.NOT_SUBMITTED )
+				( userPratilipi == null || userPratilipi.getReview() == null || userPratilipi.getReviewState() == UserReviewState.NOT_SUBMITTED )
 				&& PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( request, pratilipi ) );
+		dataModel.put( "showRatingOption", PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( request, pratilipi ) );
 
 
 		return FreeMarkerUtil.processTemplate( dataModel, getTemplateName() );

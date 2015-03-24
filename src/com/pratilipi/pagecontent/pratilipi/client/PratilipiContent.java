@@ -12,6 +12,7 @@ import com.google.gwt.user.client.rpc.SerializationStreamFactory;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.pratilipi.commons.client.RatingPanel;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
@@ -29,6 +30,8 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 	private final RootPanel encodedPratilipiDataPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
 	
 	private PratilipiData pratilipiData;
+	
+	private RatingPanel ratingPanel;
 	
 	private String url = Window.Location.getPath();
 
@@ -54,6 +57,17 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 			
 			loadBasicEditor( RootPanel.get( "PageContent-Pratilipi-Review" ).getElement() );
 			submitButtonPanel.add( saveReviewButton );
+		}
+		
+		RootPanel rootRatingPanel = RootPanel.get( "PageContent-Pratilipi-Rating" );
+		if( rootRatingPanel != null ){
+			int rating = 0;
+			if( pratilipiData.getRatingCount() > 0L ){
+				rating = ( int ) ( (double) pratilipiData.getStarCount()/pratilipiData.getRatingCount() );
+			}
+
+			ratingPanel = new RatingPanel( pratilipiData.getId(), rating, false );
+			rootRatingPanel.add( ratingPanel );
 		}
 	}
 

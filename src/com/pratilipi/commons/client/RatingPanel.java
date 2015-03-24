@@ -3,17 +3,18 @@ package com.pratilipi.commons.client;
 
 import com.claymus.commons.client.ui.StarRating;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
@@ -26,30 +27,25 @@ public class RatingPanel extends Composite {
 	private static final PratilipiServiceAsync pratilipiService =
 			GWT.create( PratilipiService.class );
 	
-	private String bookId;
+	private Long bookId;
 	private UserPratilipiData userPratilipi = new UserPratilipiData();
+	private Boolean resetRating = false;
 	
-	public RatingPanel(){
-		stars  = new StarRating();
+	private InlineLabel saveRatingError = new InlineLabel( "Error Occured While Saving. Please Try Again Later" );
+	
+	public RatingPanel( Long pratilipiId, Integer rating, boolean isReadOnly ){
+		stars  = new StarRating( rating, isReadOnly );
 		FlowPanel flowPanel = new FlowPanel();
 		
-		bookId = Window.Location.getHref()
-					.substring( Window.Location.getHref().lastIndexOf( "/" )+1);
+		bookId = pratilipiId;
+		
+
+		saveRatingError.getElement().getStyle().setColor( "red" );
+		saveRatingError.getElement().getStyle().setDisplay( Display.NONE );
 		
 		eventHandler();
 		flowPanel.add( stars );
-		initWidget( flowPanel );	
-	}
-	
-	public RatingPanel( Integer rating, boolean isReadOnly ){
-		stars  = new StarRating( rating, isReadOnly);
-		FlowPanel flowPanel = new FlowPanel();
-		
-		bookId = Window.Location.getHref()
-					.substring( Window.Location.getHref().lastIndexOf( "/" )+1);
-		
-		eventHandler();
-		flowPanel.add( stars );
+		flowPanel.add( saveRatingError );
 		initWidget( flowPanel );
 	}
 	
@@ -66,25 +62,26 @@ public class RatingPanel extends Composite {
 			public void onClick(ClickEvent event) {
 				if (!stars.isReadOnly()) {
 		            final Image image = (Image)event.getSource();
-		            if( stars.getHoverIndex() == stars.getRating() ){
+		            if( resetRating && stars.getHoverIndex() == stars.getRating() ){
 		            	stars.setValue(0, true);
 		            }
 		            else {
-		                userPratilipi.setPratilipiId( Long.valueOf( bookId ) );
-		        		userPratilipi.setRating( stars.getRating() );
-		                pratilipiService.addUserPratilipi(new AddUserPratilipiRequest( userPratilipi ), new AsyncCallback<AddUserPratilipiResponse>(){
-
-							@Override
-							public void onFailure(Throwable caught) {
-								Window.alert( caught.getMessage() );
-							}
-
-							@Override
-							public void onSuccess(AddUserPratilipiResponse result) {
-								stars.setValue(Integer.parseInt(image.getTitle()), true);
-								Window.alert( "Rated Successfully!" );
-							}});
+		            	stars.setValue( Integer.parseInt( image.getTitle() ), true);
+		            	resetRating = true;
 		            }
+	                userPratilipi.setPratilipiId( bookId );
+	        		userPratilipi.setRating( stars.getRating() );
+	                pratilipiService.addUserPratilipi(new AddUserPratilipiRequest( userPratilipi ), new AsyncCallback<AddUserPratilipiResponse>(){
+
+						@Override
+						public void onFailure(Throwable caught) {
+							saveRatingError.getElement().getStyle().setDisplay( Display.BLOCK );
+						}
+
+						@Override
+						public void onSuccess(AddUserPratilipiResponse result) {
+							
+						}});
 		        }
 			}
 		};

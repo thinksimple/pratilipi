@@ -387,19 +387,46 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(
 				pratilipiHelper.getCurrentUserId(), pratilipi.getId() );
 		
-		if( ( userPratilipi != null && userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED )
-				|| !PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( this.getThreadLocalRequest(), pratilipi ) )
-			throw new InsufficientAccessException();
-
-		userPratilipi = dataAccessor.newUserPratilipi();
-		userPratilipi.setUserId( pratilipiHelper.getCurrentUserId() );
-		userPratilipi.setPratilipiId( pratilipi.getId() );
-		userPratilipi.setRating( userPratilipiData.getRating() );
-		userPratilipi.setReview( userPratilipiData.getReview() );
-		userPratilipi.setReviewState( UserReviewState.PENDING_APPROVAL );
-		userPratilipi.setReviewDate( new Date() );
-
-		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+		if( userPratilipiData.hasRating() ){
+			
+			if( !PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( this.getThreadLocalRequest(), pratilipi ) )
+				throw new InsufficientAccessException();
+			
+			if( userPratilipi == null ){
+				userPratilipi = dataAccessor.newUserPratilipi();
+				userPratilipi.setUserId( pratilipiHelper.getCurrentUserId() );
+				userPratilipi.setPratilipiId( pratilipi.getId() );
+				userPratilipi.setRating( userPratilipiData.getRating() );
+				
+				pratilipi.setRatingCount( ( pratilipi.getRatingCount() == null ? 0 : pratilipi.getRatingCount() ) + 1 );
+				pratilipi.setStarCount( ( pratilipi.getStarCount() == null ? 0 : pratilipi.getStarCount() ) + userPratilipiData.getRating() );
+			} else {
+				int earlierRating = userPratilipi.getRating() == null ? 0 : userPratilipi.getRating();
+				userPratilipi.setRating( userPratilipiData.getRating() );
+				
+				pratilipi.setStarCount( ( pratilipi.getStarCount() == null ? 0 : pratilipi.getStarCount() ) - earlierRating + userPratilipiData.getRating() );
+			}
+			
+			
+			userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+			dataAccessor.createOrUpdatePratilipi( pratilipi );
+		}
+		
+		if( userPratilipiData.hasReview() ){
+			
+			if( ( userPratilipi != null && userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED )
+					|| !PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( this.getThreadLocalRequest(), pratilipi ) )
+				throw new InsufficientAccessException();
+	
+			userPratilipi = dataAccessor.newUserPratilipi();
+			userPratilipi.setUserId( pratilipiHelper.getCurrentUserId() );
+			userPratilipi.setPratilipiId( pratilipi.getId() );
+			userPratilipi.setReview( userPratilipiData.getReview() );
+			userPratilipi.setReviewState( UserReviewState.PENDING_APPROVAL );
+			userPratilipi.setReviewDate( new Date() );
+	
+			userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+		}
 		
 		return new AddUserPratilipiResponse( userPratilipi.getId() );
 	}
