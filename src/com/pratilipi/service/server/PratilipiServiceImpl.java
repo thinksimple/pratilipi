@@ -435,9 +435,16 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 	public GetUserPratilipiResponse getUserPratilipi( GetUserPratilipiRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		Long userId = request.getUserId();
+		Long pratilipiId = request.getPratilipiId();
+		if( userId == null ){
+			PratilipiHelper pratilipiHelper = PratilipiHelper.get( this.getThreadLocalRequest() );
+			userId = pratilipiHelper.getCurrentUserId();
+		}
+
 		UserPratilipi userBook = dataAccessor.getUserPratilipi(
-				request.getUserId(),
-				request.getPratilipiId());
+				userId,
+				pratilipiId );
 		
 		User user = dataAccessor.getUser( userBook.getUserId() );
 		

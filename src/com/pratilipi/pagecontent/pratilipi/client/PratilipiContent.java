@@ -17,6 +17,8 @@ import com.pratilipi.service.client.PratilipiService;
 import com.pratilipi.service.client.PratilipiServiceAsync;
 import com.pratilipi.service.shared.AddUserPratilipiRequest;
 import com.pratilipi.service.shared.AddUserPratilipiResponse;
+import com.pratilipi.service.shared.GetUserPratilipiRequest;
+import com.pratilipi.service.shared.GetUserPratilipiResponse;
 import com.pratilipi.service.shared.data.PratilipiData;
 import com.pratilipi.service.shared.data.UserPratilipiData;
 
@@ -30,6 +32,7 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 	private final RootPanel encodedPratilipiDataPanel = RootPanel.get( "PageContent-Pratilipi-EncodedData" );
 	
 	private PratilipiData pratilipiData;
+	private UserPratilipiData userPratilipiData;
 	
 	private RatingPanel ratingPanel;
 	
@@ -59,15 +62,35 @@ public class PratilipiContent implements EntryPoint, ClickHandler {
 			submitButtonPanel.add( saveReviewButton );
 		}
 		
-		RootPanel rootRatingPanel = RootPanel.get( "PageContent-Pratilipi-Rating" );
+		final RootPanel rootRatingPanel = RootPanel.get( "PageContent-Pratilipi-Rating" );
 		if( rootRatingPanel != null ){
-			int rating = 0;
+			final int rating;
 			if( pratilipiData.getRatingCount() > 0L ){
 				rating = ( int ) ( (double) pratilipiData.getStarCount()/pratilipiData.getRatingCount() );
 			}
+			else
+				rating = 0;
+			
+			pratilipiService.getUserPratilipi( 
+						new GetUserPratilipiRequest( null, pratilipiData.getId() ),
+						new AsyncCallback<GetUserPratilipiResponse>() {
+							
+							@Override
+							public void onSuccess( GetUserPratilipiResponse result ){
+								userPratilipiData = result.getUserPratilipi();
+								int userRating = userPratilipiData.getRating() == null ? 0 : userPratilipiData.getRating();
+								ratingPanel = new RatingPanel( pratilipiData.getId(), userRating, false );
+								rootRatingPanel.add( ratingPanel );
+							}
+							
+							@Override
+							public void onFailure( Throwable caught ){
+								ratingPanel = new RatingPanel( pratilipiData.getId(), null, false );
+								rootRatingPanel.add( ratingPanel );
+							}
+						});
 
-			ratingPanel = new RatingPanel( pratilipiData.getId(), rating, false );
-			rootRatingPanel.add( ratingPanel );
+			
 		}
 	}
 
