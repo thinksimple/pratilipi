@@ -23,8 +23,8 @@
 			</#if>
 			<div style="margin-top:10px; margin-bottom:10px;">
 				<@social.vToolbar shareUrl=shareUrl/>
-				<#if pratilipiData.getStarCount()??>
-					<label style="font-size: 14px;">Rating: ${ pratilipiData.getStarCount()/ pratilipiData.getRatingCount() ! 1 }/5</label>
+				<#if pratilipiData.getStarCount() != 0>
+					<label style="font-size: 14px;">Rating: ${ pratilipiData.getStarCount()/ pratilipiData.getRatingCount() }/5</label>
 				<#else>
 					<label style="font-size: 14px;">Rating: -/5</label>
 				</#if>

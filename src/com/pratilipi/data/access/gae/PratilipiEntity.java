@@ -240,7 +240,7 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public Integer getPageCount() {
-		return pageCount;
+		return pageCount == null ? 0 : pageCount;
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public class PratilipiEntity implements Pratilipi {
 
 	@Override
 	public Long getRatingCount() {
-		return ratingCount;
+		return ratingCount == null  || ratingCount == 0 ? 1 : ratingCount;
 	}
 
 	@Override
@@ -270,7 +270,7 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public Long getStarCount() {
-		return starCount;
+		return starCount == null ? 0 : starCount;
 	}
 
 	@Override
