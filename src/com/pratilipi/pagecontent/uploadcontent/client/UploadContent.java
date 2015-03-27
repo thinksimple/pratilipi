@@ -266,30 +266,14 @@ public class UploadContent implements EntryPoint {
 	
 	//Update pageCount and contentType in pratilipiData.
 	private void updatePratilipi( String pageCount, final String failedUpload ){
-		Long pageUploaded = Long.parseLong( String.valueOf( pageCount ));
-		if( pratilipiData.getContentType() == PratilipiContentType.IMAGE )
-			pratilipiData.setPageCount(( pratilipiData.getPageCount() == null ? 0 : pratilipiData.getPageCount() )
-										+ pageUploaded );
-	
-		pratilipiService.savePratilipi( new SavePratilipiRequest( pratilipiData ), new AsyncCallback<SavePratilipiResponse> (){
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert( caught.getMessage() );
-				
-			}
-
-			@Override
-			public void onSuccess(SavePratilipiResponse result) {
-				if( failedUpload.length() > 0 ){
-					loadingMsg.setText( "Upload failed for " + failedUpload + ". Please try again." );
-				}
-				else{
-					loadingMsg.setVisible( false );
-					doneButton.setVisible( true );
-				}
-				pratilipiData = result.getPratilipiData();
-			}} );
+		
+		if( failedUpload.length() > 0 ){
+			loadingMsg.setText( "Upload failed for " + failedUpload + ". Please try again." );
+		}
+		else{
+			loadingMsg.setVisible( false );
+			doneButton.setVisible( true );
+		}
 	}
 	
 	//Convert word to html

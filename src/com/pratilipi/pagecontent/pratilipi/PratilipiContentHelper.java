@@ -1018,6 +1018,12 @@ TODO: Add Genres in PratilipiData */
 				throw new UnexpectedServerException();
 			}
 			
+			int pageCount = pratilipi.getPageCount();
+			
+			if( pageNo > pageCount )
+				pratilipi.setPageCount( pageNo );
+			pratilipi.setContentType( PratilipiContentType.IMAGE );
+			
 			auditLog.setEventComment( "Uploaded page " + pageNo + " in Image content." );
 		
 		} else {
