@@ -91,7 +91,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		String pratilipiTitle = pratilipi.getTitle()
 				+ ( pratilipi.getTitleEn() == null ? "" : " / " + pratilipi.getTitleEn() );
 
-		return authorName + " » " + pratilipiTitle;
+		return authorName == null ? pratilipiTitle : authorName + " » " + pratilipiTitle; 
 	}
 	
 	@Override
