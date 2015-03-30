@@ -1,6 +1,5 @@
 package com.pratilipi.pagecontent.pratilipi.api;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,8 +15,6 @@ import com.claymus.api.shared.GenericResponse;
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
-import com.claymus.data.access.BlobAccessor;
-import com.claymus.data.transfer.BlobEntry;
 import com.claymus.taskqueue.Task;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
@@ -74,18 +71,7 @@ public class PratilipiProcessApi extends GenericApi {
 			PratilipiContentHelper.updatePratilipiSearchIndex( request.getPratilipiId(), null, this.getThreadLocalRequest() );
 		}
 		
-		if( request.processCover() ) {
-			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-			BlobAccessor blobAccessorAsia = DataAccessorFactory.getBlobAccessorAsia();
-			try {
-				BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-cover/original/" + request.getPratilipiId() );
-				if( blobEntry != null )
-					blobAccessorAsia.createOrUpdateBlob( blobEntry );
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to create/update pratilipi cover.", e );
-				throw new UnexpectedServerException();
-			}
-		}
+		if( request.processCover() ) { }
 		
 		if( request.processContent() ) {
 			if( pratilipi.getType() == PratilipiType.BOOK || pratilipi.getType() == PratilipiType.MAGAZINE )

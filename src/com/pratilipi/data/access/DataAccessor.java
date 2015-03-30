@@ -24,11 +24,9 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 
 	Pratilipi getPratilipi( Long id );
 
-	DataListCursorTuple<Long> getPratilipiIdList(
-			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
+	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 
-	DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
+	DataListCursorTuple<Pratilipi> getPratilipiList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 	
 	List<Pratilipi> getPratilipiList( List<Long> idList );
 	
