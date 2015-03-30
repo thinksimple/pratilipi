@@ -7,15 +7,16 @@ import com.pratilipi.data.transfer.shared.LanguageData;
 
 @SuppressWarnings( "serial" )
 public class GetLanguageListResponse extends GenericResponse {
-	private List<LanguageData> languageDataList;
+
+	@SuppressWarnings("unused")
+	private List<LanguageData> languageList;
 	
-	protected GetLanguageListResponse(){};
+
+	@SuppressWarnings("unused")
+	private GetLanguageListResponse(){};
 	
-	public GetLanguageListResponse( List<LanguageData> languageDataList ){
-		this.languageDataList = languageDataList;
+	public GetLanguageListResponse( List<LanguageData> languageDataList ) {
+		this.languageList = languageDataList;
 	}
-	
-	public List<LanguageData> getLanguageDataList(){
-		return this.languageDataList;
-	}
+
 }
