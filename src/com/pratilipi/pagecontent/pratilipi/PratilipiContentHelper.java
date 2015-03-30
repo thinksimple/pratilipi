@@ -540,41 +540,16 @@ public class PratilipiContentHelper extends PageContentHelper<
 		if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
 			if ( ! PratilipiContentHelper.hasRequestAccessToAddPratilipiData( request, pratilipi ) )
 				throw new InsufficientAccessException();
-
-			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-			
-			Page page = dataAccessor.newPage();
-			page.setType( PratilipiPageType.PRATILIPI.toString() );
-			page.setUri( PratilipiPageType.PRATILIPI.getUrlPrefix() + pratilipi.getId() );
-			page.setPrimaryContentId( pratilipi.getId() );
-			page.setCreationDate( new Date() );
-			page = dataAccessor.createOrUpdatePage( page );
-
 		} else { // Update Pratilipi usecase
 			if( ! PratilipiContentHelper.hasRequestAccessToUpdatePratilipiData( request, pratilipi ) )
 				throw new InsufficientAccessException();
-			
-			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 		}
+
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 		
 		
 		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 		auditLog = dataAccessor.createAuditLog( auditLog );
-		
-		
-		// Updating Pratilipi page uri
-		if( pratilipiData.hasTitleEn() ) {
-			Page page = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipi.getId() );
-			Page authorPage = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), pratilipi.getAuthorId() );
-			if( authorPage.getUriAlias() != null ) {
-				String uriAlias = pratilipiHelper.generateUriAlias(
-						page.getUriAlias(), authorPage.getUriAlias() + "/", pratilipi.getTitleEn() );
-				if( ! uriAlias.equals( page.getUriAlias() ) ) {
-					page.setUriAlias( uriAlias );
-					page = dataAccessor.createOrUpdatePage( page );
-				}
-			}
-		}
 		
 		
 		return pratilipiHelper.createPratilipiData(
