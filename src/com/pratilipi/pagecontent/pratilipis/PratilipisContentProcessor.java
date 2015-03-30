@@ -1,6 +1,7 @@
 package com.pratilipi.pagecontent.pratilipis;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
-import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
+import com.pratilipi.service.shared.data.PratilipiData;
 
 public class PratilipisContentProcessor extends PageContentProcessor<PratilipisContent> {
 
@@ -58,12 +59,12 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 		
 		Map<String, Object> dataModel = new HashMap<>();
 
-		Object pratilipiDataList; // TODO
+		List<PratilipiData> pratilipiDataList; // TODO
 		if( pratilipisContent.getPratilipiIdList() != null ) {
 
-			pratilipiDataList = PratilipiContentHelper.createPratilipiDataList(
-					pratilipisContent.getPratilipiIdList(),
-					false, true, request );
+			pratilipiDataList = pratilipiHelper.createPratilipiDataList(
+					dataAccessor.getPratilipiList( pratilipisContent.getPratilipiIdList() ),
+					false, true, false );
 
 		} else {
 
