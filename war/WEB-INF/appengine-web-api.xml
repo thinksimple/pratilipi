@@ -6,6 +6,7 @@
   <version>mark-4p184</version>
 
   <threadsafe>true</threadsafe>
+  <sessions-enabled>false</sessions-enabled>
 
   <instance-class>F1</instance-class>
 
@@ -20,7 +21,7 @@
     <!-- Configure java.util.logging -->
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
 
-	<!-- Configure web domain -->
+	<!-- Configure Web Domain -->
     <property name="dev-pratilipi.domain" value="dev.pratilipi.com"/>
     <property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>
     <property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
@@ -28,15 +29,6 @@
     <property name="dev-pratilipi.cdn.asia" value="//dev-pratilipi.pratilipi.com"/>
     <property name="devo-pratilipi.cdn.asia" value="//devo-pratilipi.pratilipi.com"/>
     <property name="prod-pratilipi.cdn.asia" value="//cdn-asia.pratilipi.com"/>
-
-	<!-- Configure resource path -->
-    <property name="dev-pratilipi.resource" value="/resource."/>
-    <property name="devo-pratilipi.resource" value="/resource."/>
-    <property name="prod-pratilipi.resource" value="/resource."/>
-
-    <property name="dev-pratilipi.resource.static" value="/resource."/>
-    <property name="devo-pratilipi.resource.static" value="/resource."/>
-    <property name="prod-pratilipi.resource.static" value="//static.pratilipi.com/"/>
 
 	<!-- Configure Emails -->
     <property name="dev-pratilipi.email" value="dev-team@pratilipi.com"/>

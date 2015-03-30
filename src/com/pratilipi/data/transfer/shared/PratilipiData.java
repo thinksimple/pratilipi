@@ -31,13 +31,13 @@ public class PratilipiData implements Serializable {
 	private Long languageId;
 	private boolean hasLanguageId;
 
-	private LanguageData languageData;
+	private LanguageData language;
 
 	
 	private Long authorId;
 	private boolean hasAuthorId;
 	
-	private AuthorData authorData;
+	private AuthorData author;
 
 	
 	private Long publicationYear;
@@ -176,12 +176,12 @@ public class PratilipiData implements Serializable {
 		return hasLanguageId;
 	}
 	
-	public LanguageData getLanguageData() {
-		return languageData;
+	public LanguageData getLanguage() {
+		return language;
 	}
 
-	public void setLanguageData( LanguageData languageData ) {
-		this.languageData = languageData;
+	public void setLanguage( LanguageData language ) {
+		this.language = language;
 	}
 	
 
@@ -198,12 +198,12 @@ public class PratilipiData implements Serializable {
 		return hasAuthorId;
 	}
 	
-	public AuthorData getAuthorData() {
-		return authorData;
+	public AuthorData getAuthor() {
+		return author;
 	}
 
-	public void setAuthorData( AuthorData authorData ) {
-		this.authorData = authorData;
+	public void setAuthor( AuthorData author ) {
+		this.author = author;
 	}
 	
 	

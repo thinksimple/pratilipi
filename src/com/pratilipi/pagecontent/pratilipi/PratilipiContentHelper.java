@@ -377,10 +377,10 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipiData.setTitle( pratilipi.getTitle() );
 		pratilipiData.setTitleEn( pratilipi.getTitleEn() );
 		pratilipiData.setLanguageId( pratilipi.getLanguageId() );
-		pratilipiData.setLanguageData( PratilipiHelper.get( request ).createLanguageData( language ) );
+		pratilipiData.setLanguage( PratilipiHelper.get( request ).createLanguageData( language ) );
 
 		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
-		pratilipiData.setAuthorData( AuthorContentHelper.createAuthorData( author, null, request ) );
+		pratilipiData.setAuthor( AuthorContentHelper.createAuthorData( author, null, request ) );
 		
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
@@ -438,9 +438,9 @@ public class PratilipiContentHelper extends PageContentHelper<
 		for( Pratilipi pratilipi : pratilipiList ) {
 			PratilipiData pratilipiData = createPratilipiData( pratilipi, null, null, request );
 			if( includeLanguageData )
-				pratilipiData.setLanguageData( languageIdToDataMap.get( pratilipi.getLanguageId() ) );
+				pratilipiData.setLanguage( languageIdToDataMap.get( pratilipi.getLanguageId() ) );
 			if( includeAuthorData && pratilipi.getAuthorId() != null )
-				pratilipiData.setAuthorData( authorIdToDataMap.get( pratilipi.getAuthorId() ) );
+				pratilipiData.setAuthor( authorIdToDataMap.get( pratilipi.getAuthorId() ) );
 			pratilipiData.setRelevance( calculateRelevance( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) ) );
 			pratilipiDataList.add( pratilipiData );
 		}
@@ -1018,11 +1018,8 @@ TODO: Add Genres in PratilipiData */
 				throw new UnexpectedServerException();
 			}
 			
-			int pageCount = pratilipi.getPageCount();
-			
-			if( pageNo > pageCount )
+			if( pageNo > (int) pratilipi.getPageCount() )
 				pratilipi.setPageCount( pageNo );
-			pratilipi.setContentType( PratilipiContentType.IMAGE );
 			
 			auditLog.setEventComment( "Uploaded page " + pageNo + " in Image content." );
 		

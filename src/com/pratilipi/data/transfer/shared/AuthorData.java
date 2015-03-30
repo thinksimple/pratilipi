@@ -1,11 +1,11 @@
 package com.pratilipi.data.transfer.shared;
 
-import java.util.Date;
+import java.io.Serializable;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
 import com.pratilipi.service.shared.data.LanguageData;
 
-public class AuthorData implements IsSerializable {
+@SuppressWarnings("serial")
+public class AuthorData implements Serializable {
 
 	private Long id;
 
