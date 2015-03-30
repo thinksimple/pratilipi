@@ -2,8 +2,6 @@ package com.pratilipi.data.transfer.shared;
 
 import java.io.Serializable;
 
-import com.pratilipi.service.shared.data.LanguageData;
-
 @SuppressWarnings("serial")
 public class AuthorData implements Serializable {
 
@@ -16,7 +14,7 @@ public class AuthorData implements Serializable {
 	private Long languageId;
 	private boolean hasLanguageId;
 
-	private LanguageData languageData;
+	private LanguageData language;
 
 	
 	private String firstName;
@@ -102,12 +100,12 @@ public class AuthorData implements Serializable {
 		return hasLanguageId;
 	}
 
-	public LanguageData getLanguageData() {
-		return languageData;
+	public LanguageData getLanguage() {
+		return language;
 	}
 
-	public void setLanguageData( LanguageData languageData ) {
-		this.languageData = languageData;
+	public void setLanguage( LanguageData language ) {
+		this.language = language;
 	}
 
 

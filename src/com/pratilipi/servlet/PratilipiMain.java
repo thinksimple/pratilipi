@@ -36,6 +36,7 @@ import com.pratilipi.pagecontent.author.AuthorContentHelper;
 import com.pratilipi.pagecontent.authors.AuthorsContentHelper;
 import com.pratilipi.pagecontent.event.EventContentHelper;
 import com.pratilipi.pagecontent.genres.GenresContentHelper;
+import com.pratilipi.pagecontent.language.LanguageContentHelper;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContentHelper;
 import com.pratilipi.pagecontent.publisher.PublisherContentHelper;
@@ -52,6 +53,7 @@ public class PratilipiMain extends ClaymusMain {
 
 	static {
 		PageContentRegistry.register( PratilipiContentHelper.class );	// 5.3
+		PageContentRegistry.register( LanguageContentHelper.class );	// 5.3
 		PageContentRegistry.register( AuthorContentHelper.class );		// 5.3
 		PageContentRegistry.register( PublisherContentHelper.class );
 		PageContentRegistry.register( EventContentHelper.class );		// 5.0

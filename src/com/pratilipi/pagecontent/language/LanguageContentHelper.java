@@ -5,22 +5,30 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Language;
-import com.pratilipi.service.shared.data.LanguageData;
+import com.pratilipi.data.transfer.shared.LanguageData;
+import com.pratilipi.pagecontent.language.shared.LanguageContentData;
 
-public class LanguageContentHelper {
+public class LanguageContentHelper extends PageContentHelper<
+		LanguageContent,
+		LanguageContentData,
+		LanguageContentProcessor>{
 
-	public static LanguageData createLanguageData( Long languageId, HttpServletRequest request ){
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		
-		Language language = dataAccessor.getLanguage( languageId );
-		
-		return createLanguageData( language );
+	@Override
+	public String getModuleName() {
+		return "Language";
+	}
+
+	@Override
+	public Double getModuleVersion() {
+		return 5.3;
 	}
 	
-	public static LanguageData createLanguageData( Language language ){
+
+	public static LanguageData createLanguageData( Language language ) {
 		if( language == null )
 			return null;
 		
@@ -32,12 +40,17 @@ public class LanguageContentHelper {
 		return languageData;
 	}
 	
-	public static List<LanguageData> createLanguageDataList( List<Language> languageList ){
-		
+
+	public static List<LanguageData> getLanguageList( boolean includeHidden, HttpServletRequest request ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		List<Language> languageList = dataAccessor.getLanguageList();
+
 		List<LanguageData> languageDataList = new ArrayList<>( languageList.size() );
 		for( Language language : languageList )
-			languageDataList.add( createLanguageData( language ) );
-		
+			if( !language.getHidden() || includeHidden )
+				languageDataList.add( createLanguageData( language ) );
+
 		return languageDataList;
 	}
+	
 }

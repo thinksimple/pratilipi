@@ -1,5 +1,5 @@
 package com.pratilipi.pagecontent.language;
 
-public class LanguageContent {
+import com.claymus.data.transfer.PageContent;
 
-}
+public interface LanguageContent extends PageContent { }

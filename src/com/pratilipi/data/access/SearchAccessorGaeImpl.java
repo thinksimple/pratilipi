@@ -169,14 +169,14 @@ public class SearchAccessorGaeImpl
 
 				 // 4x weightage to Language
 				.addField( Field.newBuilder().setName( "language" ).setAtom( authorData.getLanguageId().toString() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguageData().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguageData().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguageData().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguageData().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguageData().getNameEn() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguageData().getNameEn() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguageData().getNameEn() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguageData().getNameEn() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
 				
 				// 3x weightage to Author Name
 				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )

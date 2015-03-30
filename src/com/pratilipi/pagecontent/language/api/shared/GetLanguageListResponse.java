@@ -3,7 +3,7 @@ package com.pratilipi.pagecontent.language.api.shared;
 import java.util.List;
 
 import com.claymus.api.shared.GenericResponse;
-import com.pratilipi.service.shared.data.LanguageData;
+import com.pratilipi.data.transfer.shared.LanguageData;
 
 @SuppressWarnings( "serial" )
 public class GetLanguageListResponse extends GenericResponse {

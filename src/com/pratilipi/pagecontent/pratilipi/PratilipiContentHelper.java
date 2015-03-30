@@ -52,11 +52,12 @@ import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.Publisher;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.data.transfer.shared.AuthorData;
+import com.pratilipi.data.transfer.shared.LanguageData;
 import com.pratilipi.data.transfer.shared.PratilipiData;
 import com.pratilipi.pagecontent.author.AuthorContentHelper;
+import com.pratilipi.pagecontent.language.LanguageContentHelper;
 import com.pratilipi.pagecontent.pratilipi.gae.PratilipiContentEntity;
 import com.pratilipi.pagecontent.pratilipi.shared.PratilipiContentData;
-import com.pratilipi.service.shared.data.LanguageData;
 
 public class PratilipiContentHelper extends PageContentHelper<
 		PratilipiContent,
@@ -374,7 +375,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipiData.setTitle( pratilipi.getTitle() );
 		pratilipiData.setTitleEn( pratilipi.getTitleEn() );
 		pratilipiData.setLanguageId( pratilipi.getLanguageId() );
-		pratilipiData.setLanguage( PratilipiHelper.get( request ).createLanguageData( language ) );
+		pratilipiData.setLanguage( LanguageContentHelper.createLanguageData( language ) );
 
 		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
 		pratilipiData.setAuthor( AuthorContentHelper.createAuthorData( author, null, request ) );
@@ -413,7 +414,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 			List<Language> languageList = dataAccessor.getLanguageList( languageIdList );
 			languageIdToDataMap = new HashMap<>( languageList.size() );
 			for( Language language : languageList )
-				languageIdToDataMap.put( language.getId(), PratilipiHelper.get( request ).createLanguageData( language ) );
+				languageIdToDataMap.put( language.getId(), LanguageContentHelper.createLanguageData( language ) );
 		}
 			
 		

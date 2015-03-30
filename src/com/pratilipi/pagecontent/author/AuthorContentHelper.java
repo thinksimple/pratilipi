@@ -42,10 +42,10 @@ import com.pratilipi.data.transfer.Author;
 import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.shared.AuthorData;
+import com.pratilipi.data.transfer.shared.LanguageData;
 import com.pratilipi.pagecontent.author.gae.AuthorContentEntity;
 import com.pratilipi.pagecontent.author.shared.AuthorContentData;
 import com.pratilipi.pagecontent.language.LanguageContentHelper;
-import com.pratilipi.service.shared.data.LanguageData;
 
 public class AuthorContentHelper extends PageContentHelper<
 		AuthorContent,
@@ -184,7 +184,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		authorData.setAuthorImageUrl( creatAuthorImageUrl( author ) );
 
 		authorData.setLanguageId( author.getLanguageId() );
-		authorData.setLanguageData( LanguageContentHelper.createLanguageData( language ) );
+		authorData.setLanguage( LanguageContentHelper.createLanguageData( language ) );
 
 		authorData.setFirstName( author.getFirstName() );
 		authorData.setLastName( author.getLastName() );
@@ -245,7 +245,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		
 			languageIdToDataMap = new HashMap<>( languageList.size() );
 			for( Language language : languageList )
-				languageIdToDataMap.put( language.getId(), PratilipiHelper.get( request ).createLanguageData( language ) );
+				languageIdToDataMap.put( language.getId(), LanguageContentHelper.createLanguageData( language ) );
 		}
 		
 		
@@ -254,7 +254,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		for( Author author : authorList ) {
 			AuthorData authorData = createAuthorData( author, null, request );
 			if( includeLanguageData )
-				authorData.setLanguageData( languageIdToDataMap.get( author.getLanguageId() ) );
+				authorData.setLanguage( languageIdToDataMap.get( author.getLanguageId() ) );
 			authorDataList.add( authorData );
 		}
 		
