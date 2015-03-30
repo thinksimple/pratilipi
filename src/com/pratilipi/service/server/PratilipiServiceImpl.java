@@ -405,6 +405,12 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				userPratilipi.setRating( userPratilipiData.getRating() );
 				
 				pratilipi.setStarCount( ( pratilipi.getStarCount() == null ? 0 : pratilipi.getStarCount() ) - earlierRating + userPratilipiData.getRating() );
+				
+				if( userPratilipiData.getRating() == 0 )
+					pratilipi.setRatingCount( pratilipi.getRatingCount() - 1 );
+				
+				if( earlierRating == 0 )
+					pratilipi.setRatingCount( pratilipi.getRatingCount() + 1 );
 			}
 			
 			
@@ -442,23 +448,25 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			userId = pratilipiHelper.getCurrentUserId();
 		}
 
-		UserPratilipi userBook = dataAccessor.getUserPratilipi(
+		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(
 				userId,
 				pratilipiId );
 		
-		User user = dataAccessor.getUser( userBook.getUserId() );
+		UserPratilipiData userPratilipiData = new UserPratilipiData();
 		
-		UserPratilipiData userBookData = new UserPratilipiData();
-		userBookData.setId( userBook.getId() );
-		userBookData.setUserId( user.getId() );
-		userBookData.setUserName( user.getFirstName() + " " + user.getLastName() );
-		userBookData.setPratilipiId( userBook.getPratilipiId() );
-		userBookData.setRating( userBook.getRating() );
-		userBookData.setReview( userBook.getReview() );
-		userBookData.setReviewState( userBook.getReviewState() );
-		userBookData.setReviewDate( userBook.getReviewDate() );
+		if( userPratilipi != null ){
+			User user = dataAccessor.getUser( userPratilipi.getUserId() );
+			userPratilipiData.setId( userPratilipi.getId() );
+			userPratilipiData.setUserId( user.getId() );
+			userPratilipiData.setUserName( user.getFirstName() + " " + user.getLastName() );
+			userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
+			userPratilipiData.setRating( userPratilipi.getRating() );
+			userPratilipiData.setReview( userPratilipi.getReview() );
+			userPratilipiData.setReviewState( userPratilipi.getReviewState() );
+			userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
+		}
 		
-		return new GetUserPratilipiResponse( userBookData );
+		return new GetUserPratilipiResponse( userPratilipiData );
 	}
 
 	@Override
