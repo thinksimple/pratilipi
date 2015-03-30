@@ -33,7 +33,7 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.pagecontent.author.AuthorContentHelper;
-import com.pratilipi.pagecontent.authors.AuthorsContentFactory;
+import com.pratilipi.pagecontent.authors.AuthorsContentHelper;
 import com.pratilipi.pagecontent.event.EventContentHelper;
 import com.pratilipi.pagecontent.genres.GenresContentHelper;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
@@ -58,7 +58,7 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( PratilipisContentHelper.class );
 		PageContentRegistry.register( ReaderContentHelper.class );		// 5.0
 		PageContentRegistry.register( WriterContentHelper.class );		// 5.0
-		PageContentRegistry.register( AuthorsContentFactory.class );
+		PageContentRegistry.register( AuthorsContentHelper.class );		// 5.3
 		PageContentRegistry.register( GenresContentHelper.class );
 		PageContentRegistry.register( SearchContentHelper.class );
 		PageContentRegistry.register( UploadContentFactory.class );
@@ -249,7 +249,7 @@ public class PratilipiMain extends ClaymusMain {
 
 		
 		else if( requestUri.equals( "/authors" ) )
-			pageContentList.add( AuthorsContentFactory.newAuthorsContent() );
+			pageContentList.add( AuthorsContentHelper.newAuthorsContent() );
 
 		else if( requestUri.equals( "/genres" ) )
 			pageContentList.add( GenresContentHelper.newGenresContent() );

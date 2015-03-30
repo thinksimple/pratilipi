@@ -5,19 +5,19 @@ import com.claymus.pagecontent.PageContentHelper;
 import com.pratilipi.pagecontent.author.shared.AuthorContentData;
 import com.pratilipi.pagecontent.authors.gae.AuthorsContentEntity;
 
-public class AuthorsContentFactory extends PageContentHelper<
+public class AuthorsContentHelper extends PageContentHelper<
 		AuthorsContent,
 		AuthorContentData,
 		AuthorsContentProcessor> {
 	
 	@Override
 	public String getModuleName() {
-		return "Author List Content";
+		return "Author List";
 	}
 
 	@Override
 	public Double getModuleVersion() {
-		return 2.0;
+		return 5.3;
 	}
 
 	@Override
@@ -27,9 +27,7 @@ public class AuthorsContentFactory extends PageContentHelper<
 	
 	
 	public static AuthorsContent newAuthorsContent() {
-		
 		return new AuthorsContentEntity();
-		
 	}
 	
 }
