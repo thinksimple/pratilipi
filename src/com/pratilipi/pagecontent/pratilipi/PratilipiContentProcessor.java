@@ -84,14 +84,18 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiContent.getId() );
 		
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		AuthorData authorData = AuthorContentHelper.createAuthorData( author, null, request );
 		
-		String authorName = authorData.getName()
-				+ ( authorData.getNameEn() == null ? "" : " / " + authorData.getNameEn() );
 		String pratilipiTitle = pratilipi.getTitle()
 				+ ( pratilipi.getTitleEn() == null ? "" : " / " + pratilipi.getTitleEn() );
-
-		return authorName == null ? pratilipiTitle : authorName + " » " + pratilipiTitle; 
+		if( author != null ){
+			AuthorData authorData = AuthorContentHelper.createAuthorData( author, null, request );
+			String authorName = authorData.getName()
+					+ ( authorData.getNameEn() == null ? "" : " / " + authorData.getNameEn() );
+			
+			return authorName + " » " + pratilipiTitle;
+		} else {
+			return pratilipiTitle;
+		}
 	}
 	
 	@Override

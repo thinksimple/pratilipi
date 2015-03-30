@@ -50,13 +50,13 @@
 			</h6>
 			
 			<#if !userData.getEmail()??>
-				<div id="PageContent-Pratilipi-RatingReadOnly" title="Click to Rate" data-toggle='modal' data-target="#loginModal" onclick="window.location.href='#Rate'">
+				<div id="PageContent-Pratilipi-RatingReadOnly" title="Click to Rate" data-toggle='modal' data-target="#loginModal" onclick="window.location.href='#Rate'" style="width:120px;">
 					<img class="star" title="1" onmouseover="onMouseOver( this );" onmouseout="onMouseOut();" src="/theme.pratilipi/images/unselected.png" style="cursor: pointer;">
 					<img class="star" title="2" onmouseover="onMouseOver( this );" onmouseout="onMouseOut();" src="/theme.pratilipi/images/unselected.png" style="cursor: pointer;">
 					<img class="star" title="3" onmouseover="onMouseOver( this );" onmouseout="onMouseOut();" src="/theme.pratilipi/images/unselected.png" style="cursor: pointer;">
 					<img class="star" title="4" onmouseover="onMouseOver( this );" onmouseout="onMouseOut();" src="/theme.pratilipi/images/unselected.png" style="cursor: pointer;">
 					<img class="star" title="5" onmouseover="onMouseOver( this );" onmouseout="onMouseOut();" src="/theme.pratilipi/images/unselected.png" style="cursor: pointer;">
-					<span class="gwt-InlineLabel" style="font-size: 12px; width: 100px; display: block;">Your Rating: -/5</span>
+					<span id="PageContent-Pratilipi-RatingReadOnly-Label" class="gwt-InlineLabel" style="font-size: 12px; width: 100px; display: block;">Your Rating: -/5</span>
 				</div>
 			</#if>
 			<#if showRatingOption>
@@ -156,13 +156,15 @@
 		}
 		
 		function onMouseOver( object ){
-			console.log( "Mouse Hover" + object.title );
+			var ratingLabel = document.getElementById( "PageContent-Pratilipi-RatingReadOnly-Label" );
 			var title = object.title;
+			ratingLabel.innerHTML = "Your Rating: " + title + "/5";
 			setRatingImage( parseInt( title ));
 		}
 		
 		function onMouseOut(){
-			console.log( "Mouse Hover" );
+			var ratingLabel = document.getElementById( "PageContent-Pratilipi-RatingReadOnly-Label" );
+			ratingLabel.innerHTML = "Your Rating: -/5";
 			setRatingImage( 0 );
 		}
 		
