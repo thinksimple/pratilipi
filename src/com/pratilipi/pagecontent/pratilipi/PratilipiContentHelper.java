@@ -548,7 +548,9 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 		
-		
+		if( pratilipiData.getId() == null )
+			createOrUpdatePratilipiPageUrl( pratilipi.getId(), request );
+
 		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 		auditLog = dataAccessor.createAuditLog( auditLog );
 		
