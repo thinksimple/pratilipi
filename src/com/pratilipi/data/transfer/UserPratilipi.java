@@ -50,4 +50,8 @@ public interface UserPratilipi extends Serializable {
 	
 	void setReviewDate( Date reviewDate );
 	
+	String getBookmarks();
+	
+	void setBookmarks( String bookmarks );
+	
 }

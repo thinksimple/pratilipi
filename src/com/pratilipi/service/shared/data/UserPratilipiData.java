@@ -30,6 +30,9 @@ public class UserPratilipiData implements IsSerializable {
 	
 	private Date reviewDate;
 	
+	private String bookmarks;
+	private Boolean hasBookmarks = false;
+	
 	
 	public String getId() {
 		return id;
@@ -119,6 +122,19 @@ public class UserPratilipiData implements IsSerializable {
 
 	public void setReviewDate( Date reviewDate ) {
 		this.reviewDate = reviewDate;
+	}
+	
+	public String getBookmarks(){
+		return bookmarks;
+	}
+	
+	public void setBookmarks( String bookmarks ){
+		this.bookmarks = bookmarks;
+		this.hasBookmarks = true;
+	}
+	
+	public Boolean hasBookmarks(){
+		return hasBookmarks;
 	}
 	
 }

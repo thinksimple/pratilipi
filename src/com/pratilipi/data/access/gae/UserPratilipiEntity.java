@@ -48,6 +48,9 @@ public class UserPratilipiEntity implements UserPratilipi {
 	
 	@Persistent( column = "REVIEW_DATE" )
 	private Date reviewDate;
+	
+	@Persistent( column = "BOOKMARKS" )
+	private Text bookmarks; 
 
 	
 	public void setId( String id ) {
@@ -157,6 +160,16 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Override
 	public void setReviewDate( Date reviewDate ) {
 		this.reviewDate = reviewDate;
+	}
+
+	@Override
+	public String getBookmarks() {
+		return bookmarks == null ? null :  bookmarks.getValue();
+	}
+
+	@Override
+	public void setBookmarks( String bookmarks) {
+		this.bookmarks = new Text( bookmarks );
 	}
 
 }
