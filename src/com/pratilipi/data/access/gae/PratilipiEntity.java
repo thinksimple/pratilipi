@@ -260,7 +260,7 @@ public class PratilipiEntity implements Pratilipi {
 
 	@Override
 	public Long getRatingCount() {
-		return ratingCount == null  || ratingCount == 0 ? 1 : ratingCount;
+		return ratingCount == null ? 0 : ratingCount;
 	}
 
 	@Override

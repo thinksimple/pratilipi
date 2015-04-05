@@ -31,7 +31,6 @@ public class RatingPanel extends Composite {
 	private Long bookId;
 	private Integer userRating;
 	private UserPratilipiData userPratilipi = new UserPratilipiData();
-	private Boolean resetRating = false;
 	
 	private InlineLabel userRatingLabel = new InlineLabel();
 	private InlineLabel saveRatingError = new InlineLabel( "Error Occured While Saving. Please Try Again Later" );
@@ -72,14 +71,13 @@ public class RatingPanel extends Composite {
 			public void onClick(ClickEvent event) {
 				if (!stars.isReadOnly()) {
 		            final Image image = (Image)event.getSource();
-		            if( resetRating && stars.getHoverIndex() == stars.getRating() ){
+		            if( stars.getHoverIndex() == stars.getRating() ){
 		            	stars.setValue(0, true);
 		            	userRating = 0;
 		            }
 		            else {
 		            	userRating = Integer.parseInt( image.getTitle() );
 		            	stars.setValue( Integer.parseInt( image.getTitle() ), true);
-		            	resetRating = true;
 		            }
 	                userPratilipi.setPratilipiId( bookId );
 	        		userPratilipi.setRating( stars.getRating() );
