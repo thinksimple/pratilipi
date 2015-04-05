@@ -1004,6 +1004,9 @@ TODO: Add Genres in PratilipiData */
 			if( pageNo > (int) pratilipi.getPageCount() )
 				pratilipi.setPageCount( pageNo );
 			
+			if( pratilipi.getContentType() != PratilipiContentType.IMAGE )
+				pratilipi.setContentType( PratilipiContentType.IMAGE );
+			
 			auditLog.setEventComment( "Uploaded page " + pageNo + " in Image content." );
 		
 		} else {
