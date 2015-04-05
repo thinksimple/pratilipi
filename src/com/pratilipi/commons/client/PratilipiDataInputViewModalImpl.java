@@ -17,7 +17,7 @@ public class PratilipiDataInputViewModalImpl extends PratilipiDataInputView {
 	
 	public PratilipiDataInputViewModalImpl() {
 		
-		modal.setTitle( "New Pratilipi" );
+		modal.setTitle( "New Content" );
 		modal.add( pratilipiDataInputView );
 		
 		initWidget( modal );
