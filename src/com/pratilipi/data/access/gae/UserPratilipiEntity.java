@@ -164,7 +164,7 @@ public class UserPratilipiEntity implements UserPratilipi {
 
 	@Override
 	public String getBookmarks() {
-		return bookmarks == null ? null :  bookmarks.getValue();
+		return bookmarks == null ? null : bookmarks.getValue();
 	}
 
 	@Override

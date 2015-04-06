@@ -4,14 +4,23 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.pratilipi.commons.shared.BookmarkRequestType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.service.shared.data.UserPratilipiData;
 
 public class UserPratilipiContentHelper {
+	
+	protected static final Gson gson = new GsonBuilder().create();
 	
 	public static Boolean hasRequestAccessToAddBookmarks( HttpServletRequest request ){
 		AccessToken accessToken = ( AccessToken ) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
@@ -46,19 +55,21 @@ public class UserPratilipiContentHelper {
 		userPratilipiData.setReview( userPratilipi.getReview() );
 		userPratilipiData.setReviewState( userPratilipi.getReviewState() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
+		userPratilipiData.setBookmarks( userPratilipi.getBookmarks() );
 		
 		return userPratilipiData;
 	}
 	
 	public static UserPratilipiData saveUserPratilipi( UserPratilipiData userPratilipiData, HttpServletRequest request )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( userPratilipiData.getUserId(), userPratilipiData.getPratilipiId() );
+		AccessToken accessToken = ( AccessToken ) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
+		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( accessToken.getUserId(), userPratilipiData.getPratilipiId() );
 		
 		if( userPratilipi == null ){	//new record
 			userPratilipi = dataAccessor.newUserPratilipi();
-			userPratilipi.setUserId( userPratilipiData.getUserId() );
+			userPratilipi.setUserId( accessToken.getUserId() );
 			userPratilipi.setPratilipiId( userPratilipiData.getPratilipiId() );
 		}
 		
@@ -66,7 +77,36 @@ public class UserPratilipiContentHelper {
 			if( !hasRequestAccessToAddBookmarks( request ))
 				throw new InsufficientAccessException();
 			
-			userPratilipi.setBookmarks( userPratilipiData.getBookmarks() );
+			if( userPratilipiData.getBookmarkRequestType() == null )
+				throw new InvalidArgumentException( "Bookmark request type is not specified" );
+			
+			String bookmarkString = userPratilipi.getBookmarks();
+			JsonArray bookmarkGson = userPratilipi.getBookmarks() != null
+					? gson.fromJson( bookmarkString, JsonElement.class ).getAsJsonArray()
+					: new JsonArray();
+			
+			if( userPratilipiData.getBookmarkRequestType() == BookmarkRequestType.ADD ){
+				for( int i = 0; i < bookmarkGson.size(); i++ ){
+					String bookmark = bookmarkGson.get( i ).toString();
+					if( bookmark.contains( userPratilipiData.getBookmarks() ))
+							return createUserPratilipiData( userPratilipi, request );
+				}
+				
+				JsonObject newBookmark = new JsonObject();
+				newBookmark.addProperty( "title", "Page " + userPratilipiData.getBookmarks() );
+				newBookmark.addProperty( "pageNo", userPratilipiData.getBookmarks() );
+				bookmarkGson.add( newBookmark );
+			} else if( userPratilipiData.getBookmarkRequestType() == BookmarkRequestType.REMOVE ){
+				JsonArray newBookmarkArray = new JsonArray();
+				for( int i = 0; i < bookmarkGson.size(); i++ ){
+					String bookmark = bookmarkGson.get( i ).toString();
+					if( !bookmark.contains( userPratilipiData.getBookmarks() ))
+						newBookmarkArray.add( bookmarkGson.get( i ).getAsJsonObject() );
+				}
+				bookmarkGson = newBookmarkArray;
+			}
+			
+			userPratilipi.setBookmarks( bookmarkGson.toString() );
 		}
 		
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
