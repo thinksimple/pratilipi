@@ -1,18 +1,32 @@
 package com.pratilipi.pagecontent.userpratilipi.api.shared;
 
+import com.claymus.api.annotation.Validate;
 import com.claymus.api.shared.GenericRequest;
-import com.pratilipi.service.shared.data.UserPratilipiData;
 
 @SuppressWarnings( "serial" )
 public class PutUserPratilipiRequest extends GenericRequest {
 	
-	private UserPratilipiData userPratilipiData;
+	@Validate( required = true )
+	private Long pratilipiId;		
 	
-	public PutUserPratilipiRequest( UserPratilipiData userPratilipiData ){
-		this.userPratilipiData = userPratilipiData;
+	private Boolean hasBookmark;
+	private Integer bookmark;
+	private String requestType;
+	
+	
+	public Long getPratilipiId(){
+		return pratilipiId;
 	}
 	
-	public UserPratilipiData getUserPratilipiData(){
-		return userPratilipiData;
+	public Boolean hasBookmark(){
+		return hasBookmark;
+	}
+	
+	public Integer getBookmark(){
+		return bookmark;
+	}
+	
+	public String getRequestType(){
+		return requestType;
 	}
 }
