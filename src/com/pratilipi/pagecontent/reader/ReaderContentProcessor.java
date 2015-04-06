@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.shared.ClaymusResource;
 import com.claymus.commons.shared.Resource;
@@ -16,6 +17,7 @@ import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.BlobAccessor;
+import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.BlobEntry;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.google.gson.Gson;
@@ -25,6 +27,7 @@ import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentUtil;
 import com.pratilipi.service.shared.data.PratilipiData;
@@ -105,7 +108,9 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		AccessToken accessToken = ( AccessToken ) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( accessToken.getUserId(), pratilipiId );
 		
 		// AccessToReadPratilipiContent ?
 		if( !PratilipiContentHelper.hasRequestAccessToReadPratilipiContent( request, pratilipi ) )
@@ -173,6 +178,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 			dataModel.put( "exitUrl", request.getParameter( "ret" ) );
 
 		dataModel.put( "showEditOption", showEditOption );
+		dataModel.put( "bookmarks", userPratilipi == null ? null : userPratilipi.getBookmarks() );
 
 		
 		String templateName = pratilipiHelper.isModeBasic()
