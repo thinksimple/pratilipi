@@ -3,6 +3,7 @@ package com.pratilipi.service.shared.data;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.pratilipi.commons.shared.BookmarkRequestType;
 import com.pratilipi.commons.shared.SellerType;
 import com.pratilipi.commons.shared.UserReviewState;
 
@@ -32,6 +33,7 @@ public class UserPratilipiData implements IsSerializable {
 	
 	private String bookmarks;
 	private Boolean hasBookmarks = false;
+	private BookmarkRequestType bookmarkRequestType;
 	
 	
 	public String getId() {
@@ -135,6 +137,14 @@ public class UserPratilipiData implements IsSerializable {
 	
 	public Boolean hasBookmarks(){
 		return hasBookmarks;
+	}
+	
+	public void setBookmarkRequestType( BookmarkRequestType bookmarkRequestType ){
+		this.bookmarkRequestType = bookmarkRequestType;
+	}
+	
+	public BookmarkRequestType getBookmarkRequestType(){
+		return bookmarkRequestType;
 	}
 	
 }
