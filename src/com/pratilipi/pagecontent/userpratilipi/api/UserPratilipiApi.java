@@ -3,9 +3,10 @@ package com.pratilipi.pagecontent.userpratilipi.api;
 import com.claymus.api.GenericApi;
 import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Put;
-import com.claymus.data.transfer.AccessToken;
-import com.pratilipi.data.access.DataAccessor;
-import com.pratilipi.data.access.DataAccessorFactory;
+import com.claymus.commons.shared.exception.InsufficientAccessException;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
+import com.pratilipi.commons.shared.BookmarkRequestType;
+import com.pratilipi.pagecontent.userpratilipi.UserPratilipiContentHelper;
 import com.pratilipi.pagecontent.userpratilipi.api.shared.PutUserPratilipiRequest;
 import com.pratilipi.pagecontent.userpratilipi.api.shared.PutUserPratilipiResponse;
 import com.pratilipi.service.shared.data.UserPratilipiData;
@@ -15,11 +16,26 @@ import com.pratilipi.service.shared.data.UserPratilipiData;
 public class UserPratilipiApi extends GenericApi {
 	
 	@Put
-	public PutUserPratilipiResponse addUserPratilipi( PutUserPratilipiRequest request ){
-		UserPratilipiData userPratilipiData = request.getUserPratilipiData();
+	public PutUserPratilipiResponse addUserPratilipi( PutUserPratilipiRequest request )
+			throws InvalidArgumentException, InsufficientAccessException{
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
-		AccessToken accessToken = dataAccessor.getAccessToken( "" );
-		return null;
+		UserPratilipiData userPratilipiData = new UserPratilipiData();
+		userPratilipiData.setPratilipiId( request.getPratilipiId() );
+		
+		if( request.hasBookmark() ){
+			String bookmark = request.getBookmark().toString();
+			userPratilipiData.setBookmarks( bookmark );
+			if( request.getRequestType().equals( "add" ))
+				userPratilipiData.setBookmarkRequestType( BookmarkRequestType.ADD );
+			else if( request.getRequestType().equals( "remove" ))
+				userPratilipiData.setBookmarkRequestType( BookmarkRequestType.REMOVE );
+		}
+		
+		userPratilipiData = UserPratilipiContentHelper.saveUserPratilipi( userPratilipiData, this.getThreadLocalRequest() );
+		
+		PutUserPratilipiResponse putUserPratilipiResponse = new PutUserPratilipiResponse();
+		putUserPratilipiResponse.setBookmarks( userPratilipiData.getBookmarks() );
+		
+		return putUserPratilipiResponse;
 	}
 }
