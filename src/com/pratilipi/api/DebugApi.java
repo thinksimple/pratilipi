@@ -58,31 +58,6 @@ public class DebugApi extends GenericApi {
 
 		
 
-/*		// START :: CREATE NEW PAGECONTENT :: START
-
-		Page page = dataAccessor.getPage( "/pages" );
-		if( page == null ) {
-			PageContent pageContent = PagesContentHelper.newPagesContent();
-			pageContent.setCreationDate( new Date() );
-			pageContent.setLastUpdated( new Date() );
-			pageContent = dataAccessor.createOrUpdatePageContent( pageContent );
-			
-			page = dataAccessor.newPage();
-			page.setType( ClaymusPageType.GENERIC.toString() );
-			page.setUriAlias( "/pages" );
-			page.setPrimaryContentId( pageContent.getId() );
-			page.setCreationDate( new Date() );
-			page = dataAccessor.createOrUpdatePage( page );
-			
-			pageContent.setPageId( page.getId() );
-			pageContent = dataAccessor.createOrUpdatePageContent( pageContent );
-		}
-		return new GetInitResponse( page.getId().toString() );
-		
-		// END :: CREATE NEW PAGECONTENT :: END								*/
-
-		
-		
 /*		// START :: RESIZING PRATILIPI COVER IMAGES :: START
 
 		String[] coverImages = new String[] {

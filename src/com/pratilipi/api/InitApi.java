@@ -11,9 +11,12 @@ import com.claymus.api.annotation.Bind;
 import com.claymus.api.annotation.Get;
 import com.claymus.api.shared.GenericRequest;
 import com.claymus.api.shared.GenericResponse;
+import com.claymus.commons.shared.ClaymusPageType;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.AppProperty;
+import com.claymus.data.transfer.Page;
+import com.claymus.data.transfer.PageContent;
 import com.claymus.taskqueue.Task;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
@@ -143,6 +146,27 @@ public class InitApi extends GenericApi {
 			taskList.add( task );
 		}
 		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
+	}
+	
+	@SuppressWarnings("unused")
+	private void createPage( String pageUriAlias, PageContent pageContent ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		Page page = dataAccessor.getPage( pageUriAlias );
+		if( page == null ) {
+			page = dataAccessor.newPage();
+			page.setType( ClaymusPageType.GENERIC.toString() );
+			page.setUriAlias( pageUriAlias );
+			page.setCreationDate( new Date() );
+			page = dataAccessor.createOrUpdatePage( page );
+			
+			pageContent.setCreationDate( new Date() );
+			pageContent.setLastUpdated( new Date() );
+			pageContent.setPageId( page.getId() );
+			pageContent = dataAccessor.createOrUpdatePageContent( pageContent );
+			
+			page.setPrimaryContentId( pageContent.getId() );
+			page = dataAccessor.createOrUpdatePage( page );
+		}
 	}
 
 }
