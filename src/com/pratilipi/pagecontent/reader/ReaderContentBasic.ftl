@@ -1,6 +1,4 @@
 <!-- PageContent :: Reader :: Start -->
-<#import "../../../../com/pratilipi/pagecontent/reader/Bookmark.ftl" as bookmark>
-<#import "../../../../com/pratilipi/pagecontent/reader/ReaderMenu.ftl" as readerMenu>
 
 <div class="bg-green">
 	<table style="width: 100%;color: white; height: 64px;">
@@ -18,14 +16,10 @@
 			</td>
 			<td valign="middle" style="margin: 0px;">
 				<div style="float: right; margin-right: 10px; width: 100%">
-					<#if pratilipiData.getIndex()?? && bookmarks??>
-						<@readerMenu.menu indexList=JSON.parse( pratilipiData.getIndex() ) bookmarkList= bookmarks  />
-					<#elseif pratilipiData.getIndex()??>
-						<@readerMenu.menu indexList=JSON.parse( pratilipiData.getIndex() ) bookmarkList= '[]' />
-					<#elseif bookmarks??>
-						<@readerMenu.menu indexList='[]' bookmarkList= bookmarks />
-					<#else>
-						<@readerMenu.menu indexList='[]' bookmarkList= '[]' />
+					<#if pratilipiData.getIndex()??>
+						<div id="Pratilipi-Reader-Basic-ContentTable-Button" class="PratilipiContent-ReaderBasic-button" onclick="showIndexDiv( event )">
+							<img src="/theme.pratilipi/images/buttons/menu-white.png" title="Table of Content">
+						</div>
 					</#if>
 					<div class="PratilipiContent-ReaderBasic-button" onclick="increaseSize()">
 						<img src="/theme.pratilipi/images/plus.png" title="Increase size">
@@ -37,6 +31,9 @@
 			</td>
 		</tr>
 	</table>
+</div>
+<div id="Pratilipi-Reader-Basic-ContentTable">
+		<h3><img src='/theme.pratilipi/images/index.png' style="margin-bottom: 4px; margin-right: 5px;"/>Index</h3>
 </div>
 <div id="Pratilipi-Reader-Basic" class="bg-gray">
 	<table style="margin-left: auto; margin-right: auto;">
@@ -50,9 +47,7 @@
 							<#else>
 								<div id="PratilipiContent-Reader-Content"> ${ pageContent } </div>
 							</#if>
-							<div id="PratilipiContent-Reader-Overlay">
-								<@bookmark.bookmark pageNo=pageNo bookmarks= ( bookmarks ! '' ) />
-							</div>
+							<div id="PratilipiContent-Reader-Overlay"></div>
 						</div>
 					</div>
 				<#elseif pratilipiData.getContentType() == "IMAGE" >			
@@ -63,16 +58,12 @@
 								<div id="PratilipiContent-Reader-Content" style="width: ${ contentSize };">
 									<img id="imageContent" src='/api.pratilipi/pratilipi/content/image?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }' style="width:100%"/>
 								</div>
-								<div id="PratilipiContent-Reader-Overlay" style="width: ${ contentSize };">
-									<@bookmark.bookmark pageNo= pageNo bookmarks= ( bookmarks ! '' ) />
-								</div>
+								<div id="PratilipiContent-Reader-Overlay" style="width: ${ contentSize };"></div>
 							<#else>
 								<div id="PratilipiContent-Reader-Content">
 									<img id="imageContent" src='/api.pratilipi/pratilipi/content/image?pratilipiId=${ pratilipiData.getId()?c }&pageNo=${ pageNo }' style="width:100%"/>
 								</div>
-								<div id="PratilipiContent-Reader-Overlay">
-									<@bookmark.bookmark pageNo=pageNo bookmarks= ( bookmarks ! '' ) />
-								</div>
+								<div id="PratilipiContent-Reader-Overlay"></div>
 							</#if>
 						</div>
 					</div>
@@ -134,6 +125,41 @@
 			width: 100%;
 		}
 		
+		#Pratilipi-Reader-Basic-ContentTable{
+			display: none;
+			width:250px;
+			height: 90%;
+		    z-index:2;
+		    float: right;
+		    position:absolute;
+		    right:-250px;
+		    opacity: 1;
+		    background-color: #eeeeee;
+		    overflow-y: scroll;
+		    padding: 10px;
+		}
+		
+		.menuItem {
+			padding-left: 10px;
+			cursor: pointer;
+		}
+		
+		.menuItem:hover {
+			background-color: #CCC;
+		}
+		
+		.indexItem {
+			padding: 10px;
+			padding-left: 20px;
+		}
+		
+		.indexSubItem {
+			padding-left: 30px;
+		}
+
+		.selectedIndex {
+			background-color: #DDD;
+		}
 </style>
 
 
@@ -145,26 +171,11 @@ var pageNoDisplayed = ${ pageNo };
 var contentArray = [];
 var pageStartTime = new Date();
 var campaign = '${ pratilipiData.getType() }' + ":" + '${ pratilipiData.getId()?c }';
-var isBookmarkDirty = Boolean(0);	//This is set when bookmark image is clicked.
-<#if pratilipiData.getIndex()??>
-	var indexString = ${ pratilipiData.getIndex() };
-<#else>
-	var indexString = "";
-</#if>
-<#if bookmarks??>
-	var bookmarkString = ${ bookmarks };
-<#else>
-	var bookmarkString = "";
-</#if>
+
 function setPageNo(){
 	jQuery( "#PratilipiContent-Reader-PageNumber" ).html( pageNo );
 }
 
-function updateBookmarkDiv(){
-	//Declared in readerMenu.ftl
-	showMenuButton( indexString, bookmarkString );
-	setBookmarkDiv( bookmarkString );
-}
 
 function updateDisplay() {
 	jQuery('html, body').animate({scrollTop: '0px'}, 300);
@@ -191,8 +202,6 @@ function updateDisplay() {
 			jQuery( '#PratilipiContent-Reader-Content' ).html( contentArray[ pageNo ] );
 			loading( false );
 			pageNoDisplayed = pageNo;
-			//Declared in bookmark.ftl
-			setBookmark( pageNoDisplayed, bookmarkString );
 		}
 	}
 	
@@ -301,8 +310,6 @@ function updateDisplay() {
 			jQuery( '#PratilipiContent-Reader-Content' ).html( contentArray[ pageNo ] );
 			loading( false );
 			pageNoDisplayed = pageNo;
-			//Declared in bookmark.ftl
-			setBookmark( pageNoDisplayed, bookmarkString );
 		}
 	}
 	
@@ -355,6 +362,59 @@ function updateDisplay() {
 	
 	function setMinReaderWidth(){}
 </#if>
+
+/* CONTENT DIV FUNCTIONS */
+function showIndexDiv( event ){
+	var event = event || window.event;
+	event.stopPropagation();
+    var hidden = $('#Pratilipi-Reader-Basic-ContentTable');
+    if (hidden.hasClass('visible')){
+        hidden.animate({"right":"-250px"}, "slow", function(){ hidden.css( "display", "none" ); }).removeClass( 'visible' );
+    } else {
+    	hidden.css( "display", "block" );
+        hidden.animate({"right":"0px"}, "slow").addClass( 'visible' );
+    }
+}
+
+function setIndexDiv( index ){
+	var contentTableDiv = jQuery( "#Pratilipi-Reader-Basic-ContentTable" );
+	for( var i = 0; i < index.length; i++ ){
+		var div = document.createElement( "div" );
+		if( index[i].title != '' && index[i].pageNo != '' && index[i].level == 1 ){
+			var item = "<div class='menuItem indexItem indexSubItem' data-pageNo=" + index[i].pageNo + " onclick='indexClicked(" + index[i].pageNo + ");'>" + 
+							index[i].title + 
+							"</div>";
+			contentTableDiv.append( item ); 
+		}
+		
+		if( index[i].title != '' && index[i].pageNo != '' ){
+			var item = "<div class='menuItem indexItem' data-pageNo=" + index[i].pageNo + " onclick='indexClicked(" + index[i].pageNo + ");'>" + 
+							index[i].title + 
+							"</div>";
+			contentTableDiv.append( item ); 
+		}
+	}
+	
+	markSelectedIndex();
+}
+
+function markSelectedIndex(){
+	jQuery( "#Pratilipi-Reader-Basic-ContentTable .menuItem" ).each( function(){
+		if( jQuery( this ).attr( "data-pageNo" ) == pageNo ){
+			jQuery( this ).addClass( "selectedIndex" );
+		} else
+			jQuery( this ).removeClass( "selectedIndex" );
+	});
+}
+
+function indexClicked( pageNumber ){
+	if( pageNumber != pageNo && pageNumber <= pageCount ){
+		recordPageTime();
+		pageNo = parseInt( pageNumber );
+		pageNoDisplayed = 0;
+		updateDisplay();
+	}
+}
 
 
 
@@ -488,6 +548,7 @@ if( window.attachEvent) {//for IE8 and below
 		
 		setMinReaderWidth();
 		saveAutoBookmark();
+		setIndexDiv( JSON.parse( '${ pratilipiData.getIndex() ! '[]' }' ) );
 	});
 	
 	window.attachEvent( 'onunload', function( event ){
@@ -518,6 +579,7 @@ else {
 		
 		setMinReaderWidth();
 		saveAutoBookmark();
+		setIndexDiv( JSON.parse( '${ pratilipiData.getIndex() ! '[]' }' ) );
 	});
 	
 	window.addEventListener( 'unload', function( event ) {
