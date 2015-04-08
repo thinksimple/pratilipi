@@ -36,14 +36,15 @@ public class PratilipiService extends ClaymusService {
 		ApiRegistry.register( PratilipiContentImageApi.class );
 		ApiRegistry.register( PratilipiResourceApi.class );
 		ApiRegistry.register( PratilipiProcessApi.class );
-		ApiRegistry.register( UserPratilipiApi.class );
+
+		ApiRegistry.register( LanguageListApi.class );
 
 		ApiRegistry.register( AuthorApi.class );
 		ApiRegistry.register( AuthorListApi.class );
 		ApiRegistry.register( AuthorImageApi.class );
 		ApiRegistry.register( AuthorProcessApi.class );
-		
-		ApiRegistry.register( LanguageListApi.class );
+
+		ApiRegistry.register( UserPratilipiApi.class );
 	}
 
 }

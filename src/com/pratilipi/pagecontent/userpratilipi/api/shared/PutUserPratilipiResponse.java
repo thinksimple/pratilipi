@@ -7,11 +7,12 @@ public class PutUserPratilipiResponse extends GenericResponse {
 	
 	private String bookmarks;
 	
-	public void setBookmarks( String bookmarks ){
+	public void setBookmarks( String bookmarks ) {
 		this.bookmarks = bookmarks;
 	}
 	
 	public String getBookmark(){
 		return bookmarks;
 	}
+	
 }

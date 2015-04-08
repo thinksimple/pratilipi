@@ -6,27 +6,29 @@ import com.claymus.api.shared.GenericRequest;
 @SuppressWarnings( "serial" )
 public class PutUserPratilipiRequest extends GenericRequest {
 	
-	@Validate( required = true )
+	@Validate( required = true, minLong = 1 )
 	private Long pratilipiId;		
 	
-	private Boolean hasBookmark;
 	private Integer bookmark;
+	private boolean hasBookmark;
+
 	private String requestType;
 	
 	
-	public Long getPratilipiId(){
+	public Long getPratilipiId() {
 		return pratilipiId;
-	}
-	
-	public Boolean hasBookmark(){
-		return hasBookmark;
 	}
 	
 	public Integer getBookmark(){
 		return bookmark;
 	}
+
+	public Boolean hasBookmark() {
+		return hasBookmark;
+	}
 	
-	public String getRequestType(){
+	public String getRequestType() {
 		return requestType;
 	}
+	
 }

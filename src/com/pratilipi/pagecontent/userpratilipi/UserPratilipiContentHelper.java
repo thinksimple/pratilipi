@@ -7,6 +7,7 @@ import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.data.transfer.AccessToken;
 import com.claymus.data.transfer.User;
+import com.claymus.pagecontent.PageContentHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -16,12 +17,28 @@ import com.pratilipi.commons.shared.BookmarkRequestType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.UserPratilipi;
-import com.pratilipi.service.shared.data.UserPratilipiData;
+import com.pratilipi.data.transfer.shared.UserPratilipiData;
+import com.pratilipi.pagecontent.userpratilipi.shared.UserPratilipiContentData;
 
-public class UserPratilipiContentHelper {
+public class UserPratilipiContentHelper extends PageContentHelper<
+		UserPratilipiContent,
+		UserPratilipiContentData,
+		UserPratilipiContentProcessor>{
 	
-	protected static final Gson gson = new GsonBuilder().create();
+	private static final Gson gson = new GsonBuilder().create();
 	
+
+	@Override
+	public String getModuleName() {
+		return "User-Pratilipi";
+	}
+
+	@Override
+	public Double getModuleVersion() {
+		return 5.0;
+	}
+	
+
 	public static Boolean hasRequestAccessToAddBookmarks( HttpServletRequest request ){
 		AccessToken accessToken = ( AccessToken ) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
 		if( accessToken.getUserId() == 0L )
@@ -30,6 +47,7 @@ public class UserPratilipiContentHelper {
 			return true;
 	}
 
+	
 	public static UserPratilipiData createUserPratilipiData( Long pratilipiId, HttpServletRequest request ){
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
@@ -47,7 +65,6 @@ public class UserPratilipiContentHelper {
 		User user = dataAccessor.getUser( userPratilipi.getUserId() );
 		
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
-		userPratilipiData.setId( userPratilipi.getId() );
 		userPratilipiData.setUserId( user.getId() );
 		userPratilipiData.setUserName( user.getFirstName() + " " + user.getLastName() );
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
@@ -60,6 +77,7 @@ public class UserPratilipiContentHelper {
 		return userPratilipiData;
 	}
 	
+	
 	public static UserPratilipiData saveUserPratilipi( UserPratilipiData userPratilipiData, HttpServletRequest request )
 			throws InsufficientAccessException, InvalidArgumentException {
 		
@@ -67,13 +85,13 @@ public class UserPratilipiContentHelper {
 		AccessToken accessToken = ( AccessToken ) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
 		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( accessToken.getUserId(), userPratilipiData.getPratilipiId() );
 		
-		if( userPratilipi == null ){	//new record
+		if( userPratilipi == null ) {	//new record
 			userPratilipi = dataAccessor.newUserPratilipi();
 			userPratilipi.setUserId( accessToken.getUserId() );
 			userPratilipi.setPratilipiId( userPratilipiData.getPratilipiId() );
 		}
 		
-		if( userPratilipiData.hasBookmarks() ){
+		if( userPratilipiData.hasBookmarks() ) {
 			if( !hasRequestAccessToAddBookmarks( request ))
 				throw new InsufficientAccessException();
 			

@@ -6,10 +6,10 @@ import com.claymus.api.annotation.Put;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.pratilipi.commons.shared.BookmarkRequestType;
+import com.pratilipi.data.transfer.shared.UserPratilipiData;
 import com.pratilipi.pagecontent.userpratilipi.UserPratilipiContentHelper;
 import com.pratilipi.pagecontent.userpratilipi.api.shared.PutUserPratilipiRequest;
 import com.pratilipi.pagecontent.userpratilipi.api.shared.PutUserPratilipiResponse;
-import com.pratilipi.service.shared.data.UserPratilipiData;
 
 @SuppressWarnings( "serial" )
 @Bind( uri = "/userpratilipi" )
@@ -38,4 +38,5 @@ public class UserPratilipiApi extends GenericApi {
 		
 		return putUserPratilipiResponse;
 	}
+	
 }

@@ -38,9 +38,6 @@
 					
 				}				
 			</script>
-		<#else>
-			<!-- jQuery 2.1.1 -->
-			<script src="//cdn-asia.pratilipi.com/third-party/jquery-2.1.1/jquery-2.1.1.min.js"></script>
 		</#if>
 
 
