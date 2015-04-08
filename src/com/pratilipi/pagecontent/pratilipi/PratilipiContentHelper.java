@@ -753,15 +753,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Page page = dataAccessor.getPage( PratilipiPageType.PRATILIPI.toString(), pratilipiId );
 
-		if( page == null ) {
-			page = dataAccessor.newPage();
-			page.setType( PratilipiPageType.PRATILIPI.toString() );
-			page.setUri( PratilipiPageType.PRATILIPI.getUrlPrefix() + pratilipiId );
-			page.setPrimaryContentId( pratilipiId );
-			page.setCreationDate( new Date() );
-		}
-		
-		String uriPrifix = "/event/";
+		String uriPrifix = null;
 		if( pratilipi.getAuthorId() != null ) {
 			Page authorPage = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), pratilipi.getAuthorId() );
 			if( authorPage.getUriAlias() != null )
@@ -772,14 +764,37 @@ public class PratilipiContentHelper extends PageContentHelper<
 				uriPrifix = publisherPage.getUriAlias() + "/";
 		}
 
-		String uriAlias = PratilipiHelper.get( request ).generateUriAlias(
-				page.getUriAlias(),
-				uriPrifix, pratilipi.getTitleEn() );
+		if( page == null ) {
+			page = dataAccessor.newPage();
+			page.setType( PratilipiPageType.PRATILIPI.toString() );
+			page.setUri( PratilipiPageType.PRATILIPI.getUrlPrefix() + pratilipiId );
+			page.setPrimaryContentId( pratilipiId );
+			page.setCreationDate( new Date() );
+			if( uriPrifix == null )
+				page = dataAccessor.createOrUpdatePage( page );
+		}
 		
-		if( uriAlias.equals( page.getUriAlias() ) )
-			return false;
+		
+		if( uriPrifix == null ) {
+		
+			if( page.getUriAlias() == null )
+				return false;
+			
+			page.setUriAlias( null );
+		
+		} else {
+			
+			String uriAlias = PratilipiHelper.get( request ).generateUriAlias(
+					page.getUriAlias(),
+					uriPrifix, pratilipi.getTitleEn() );
+			
+			if( uriAlias.equals( page.getUriAlias() ) )
+				return false;
 
-		page.setUriAlias( uriAlias );
+			page.setUriAlias( uriAlias );
+		
+		}
+		
 		page = dataAccessor.createOrUpdatePage( page );
 		return true;
 	}

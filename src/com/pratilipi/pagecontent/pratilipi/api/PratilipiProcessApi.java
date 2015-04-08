@@ -80,6 +80,7 @@ public class PratilipiProcessApi extends GenericApi {
 		}
 		
 		if( request.updateStats() ) {
+			PratilipiContentHelper.createOrUpdatePratilipiPageUrl( request.getPratilipiId(), this.getThreadLocalRequest() );
 			boolean changed = PratilipiContentHelper.updatePratilipiStats( request.getPratilipiId(), this.getThreadLocalRequest() );
 			if( changed ) {
 				pratilipi.setLastProcessDate( new Date() );
