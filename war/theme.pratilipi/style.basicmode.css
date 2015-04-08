@@ -485,8 +485,6 @@ header {
 }
 
 .terms {
-	/* background: url(../theme.pratilipi/images/terms.jpg) no-repeat center center;
-	height: 300px; */
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -495,8 +493,6 @@ header {
 }
 
 .legal {
-	/* background: url(../theme.pratilipi/images/legal.jpg) no-repeat center center;
-	height: 300px; */
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -505,8 +501,6 @@ header {
 }
 
 .media-enq {
-	/* background: url(../theme.pratilipi/images/media.jpg) no-repeat center center;
-	height: 300px; */
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -515,8 +509,6 @@ header {
 }
 
 .career {
-	/* background: url(../theme.pratilipi/images/career.jpg) no-repeat center center;
-	height: 300px; */
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
