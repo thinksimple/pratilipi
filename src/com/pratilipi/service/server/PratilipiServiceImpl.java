@@ -114,14 +114,16 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		ArrayList<LanguageData> languageDataList = new ArrayList<>( languageList.size() );
 		for( Language language : languageList ) {
-			LanguageData languageData = new LanguageData();
-			languageData.setId( language.getId() );
-			languageData.setName( language.getName() );
-			languageData.setNameEn( language.getNameEn() );
-			languageData.setCreationDate( language.getCreationDate() );
-			languageData.setHidden( language.getHidden() );
-			
-			languageDataList.add( languageData );
+			if( !language.getHidden() ){
+				LanguageData languageData = new LanguageData();
+				languageData.setId( language.getId() );
+				languageData.setName( language.getName() );
+				languageData.setNameEn( language.getNameEn() );
+				languageData.setCreationDate( language.getCreationDate() );
+				languageData.setHidden( language.getHidden() );
+				
+				languageDataList.add( languageData );
+			}
 		}
 
 		
