@@ -2,11 +2,11 @@
 	
 	<template>
 		<style>
-			paper-toast .Error{
+			#Error{
 				background-color: red;
 			}
 			
-			paper-toast .Success{
+			#Success{
 				background-color: green;
 			}
 			
@@ -48,7 +48,7 @@
 			<paper-toast id="Success" text=""></paper-toast>
 		</div>
 	 	<paper-button affirmative on-tap="{{ saveChanges }}">Submit</paper-button>
-		<paper-button affirmative autofocus>Close</paper-button>
+		<paper-button affirmative on-tap="{{ closeDialog }}" autofocus>Close</paper-button>
 	
 		<core-ajax
 				id="AjaxPut"
@@ -85,7 +85,9 @@
 			},
 
 			handleAjaxPutError: function( event, response ) {
-				this.$.Error.text = 'Some error occured at server while saving changes. Retrying ...';
+				var jsonString = JSON.stringify( response );
+				console.log( jsonString );
+				this.$.Error.text = response.response.data;
 				this.$.Error.show();
 			},
 			
@@ -131,8 +133,9 @@
 			    	
 			},
 			
-			onfocus : function( event ){
-				
+			closeDialog : function( event ){
+				var newAuthorDialog = document.querySelector( '#PageContent-New-Author' );
+				newAuthorDialog.toggle();
 			},
 			
 			ready: function( event ) {
