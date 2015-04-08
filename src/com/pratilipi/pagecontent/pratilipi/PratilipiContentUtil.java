@@ -213,7 +213,7 @@ public class PratilipiContentUtil {
 				String title = titleMatcher.group( "title" );
 				String subTitle = titleMatcher.group( "subTitle" );
 				
-				if( title != null && !( title = title.trim() ).isEmpty() ) {
+				if( title != null && !( title = title.replaceAll( "&nbsp;", " " ).trim() ).isEmpty() ) {
 					logger.log( Level.INFO, "Title Found: " + title );
 					JsonObject indexItem = new JsonObject();
 					indexItem.addProperty( "title", title );
@@ -221,7 +221,7 @@ public class PratilipiContentUtil {
 					indexItem.addProperty( "level", 0 );
 					index.add( indexItem );
 					
-				} else if( subTitle != null && !( subTitle = subTitle.trim() ).isEmpty() ) {
+				} else if( subTitle != null && !( subTitle = subTitle.replaceAll( "&nbsp;", " " ).trim() ).isEmpty() ) {
 					logger.log( Level.INFO, "Sub-Title Found: " + subTitle );
 					JsonObject indexItem = new JsonObject();
 					indexItem.addProperty( "title", subTitle );
