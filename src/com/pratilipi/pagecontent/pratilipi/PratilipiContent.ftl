@@ -17,7 +17,11 @@
 
 		<#-- Cover Image -->
 		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4" style="margin-top:25px; margin-bottom:15px;">
-			<img id="PageContent-Pratilipi-CoverImage" class="img-responsive" src="${ pratilipiData.getCoverImageUrl() }" itemprop="image">
+			<#if pratilipiData.getTitleEn()??>
+				<img id="PageContent-Pratilipi-CoverImage" class="img-responsive" src="${ pratilipiData.getCoverImageUrl() }" title="${ pratilipiData.getTitleEn() }" alt="${ pratilipiData.getTitle() }" itemprop="image">
+			<#else>
+				<img id="PageContent-Pratilipi-CoverImage" class="img-responsive" src="${ pratilipiData.getCoverImageUrl() }" title="${ pratilipiData.getTitle() }" alt="${ pratilipiData.getTitle() }" itemprop="image">
+			</#if>
 			<#if showEditOptions>
 				<div id="PageContent-Pratilipi-CoverImage-EditOptions"></div>
 			</#if>

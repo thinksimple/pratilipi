@@ -4,7 +4,11 @@
 
 			<div class="bg-gray" style="width:150px; height:240px; overflow:hidden;">
 				<a href="${ pratilipiData.getPageUrlAlias() ! pratilipiData.getPageUrl() }">
-					<img src="${ pratilipiData.getCoverImageUrl() }" title="${ pratilipiData.getTitle() }" alt="${ pratilipiData.getTitle() }" class="img-responsive" />
+					<#if pratilipiData.getTitleEn()??>
+						<img src="${ pratilipiData.getCoverImageUrl() }" title="${ pratilipiData.getTitleEn() }" alt="${ pratilipiData.getTitle() }" class="img-responsive" />
+					<#else>
+						<img src="${ pratilipiData.getCoverImageUrl() }" title="${ pratilipiData.getTitle() }" alt="${ pratilipiData.getTitle() }" class="img-responsive" />
+					</#if>
 				</a>
 			</div>
 
