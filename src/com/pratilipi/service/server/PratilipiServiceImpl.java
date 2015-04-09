@@ -422,7 +422,7 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		if( userPratilipiData.hasReview() ){
 			
-			if( ( userPratilipi != null && userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED )
+			if( ( userPratilipi != null && userPratilipi.getReviewState() != null && userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED )
 					|| !PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( this.getThreadLocalRequest(), pratilipi ) )
 				throw new InsufficientAccessException();
 	
