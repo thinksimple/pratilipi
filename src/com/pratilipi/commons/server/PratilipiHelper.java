@@ -246,14 +246,28 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
 		
 		String coverImage;
-		if( pratilipi.hasCustomCover() )
-			coverImage = "/pratilipi-cover/150/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
-		else if( pratilipi.isPublicDomain() )
-			coverImage = "/pratilipi-cover/150/pratilipi-classic-" + pratilipi.getLanguageId();
-		else
-			coverImage = "/pratilipi-cover/150/pratilipi";
+		String environment = ClaymusHelper.getSystemProperty( "cdn.asia" );
+		if( pratilipi.hasCustomCover() ) {
+			if( environment.contains( "pratilipi.info" )){
+				String pratilipiIdLastDigit = pratilipi.getId().toString().substring( pratilipi.getId().toString().length() - 1 );
+				coverImage = "//" + pratilipiIdLastDigit + ".pratilipi.info/pratilipi-cover/150/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
+			} else
+				coverImage = environment + "/pratilipi-cover/150/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
+		} else if( pratilipi.isPublicDomain() ) {
+			if( environment.contains( "pratilipi.info" )){
+				String languageIdLastDigit = pratilipi.getLanguageId().toString().substring( 
+													pratilipi.getLanguageId().toString().length() - 1 );
+				coverImage = "//" + languageIdLastDigit + ".pratilipi.info/pratilipi-cover/150/" + "pratilipi-classic-" + pratilipi.getLanguageId();
+			} else
+				coverImage = environment + "/pratilipi-cover/150/pratilipi-classic-" + pratilipi.getLanguageId();
+		} else {
+			if( environment.contains( "pratilipi.info" ))
+				coverImage = "//1" + ".pratilipi.info/pratilipi-cover/150/" + "pratilipi";
+			else
+				coverImage = environment + "/pratilipi-cover/150/pratilipi";
+		}
 
-		pratilipiData.setCoverImageUrl( ClaymusHelper.getSystemProperty( "cdn.asia" ) + coverImage );
+		pratilipiData.setCoverImageUrl( coverImage );
 		pratilipiData.setCoverImageUploadUrl( "/api.pratilipi/pratilipi/cover?pratilipiId=" + pratilipi.getId() );
 		pratilipiData.setCoverImage300UploadUrl( URL_RESOURCE + "pratilipi-cover/300/" + pratilipi.getId() );
 		pratilipiData.setImageContentUploadUrl( "/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() );
