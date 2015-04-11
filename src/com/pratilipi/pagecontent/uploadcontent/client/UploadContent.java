@@ -80,7 +80,6 @@ public class UploadContent implements EntryPoint {
 //			}
 //		}
 		
-		pratilipiData.setContentType( PratilipiContentType.IMAGE );
 		uploadUrl = pratilipiData.getImageContentUploadUrl();
 		
 		//Image Content upload panel
@@ -266,11 +265,26 @@ public class UploadContent implements EntryPoint {
 	
 	//Update pageCount and contentType in pratilipiData.
 	private void updatePratilipi( String pageCount, final String failedUpload ){
-		
 		if( failedUpload.length() > 0 ){
 			loadingMsg.setText( "Upload failed for " + failedUpload + ". Please try again." );
-		}
-		else{
+			loadingMsg.setVisible( true );
+		} else if ( pratilipiData.getContentType().equals( PratilipiContentType.PRATILIPI )){
+			pratilipiData.setContentType( PratilipiContentType.IMAGE );
+			pratilipiService.savePratilipi( new SavePratilipiRequest( pratilipiData ), new AsyncCallback<SavePratilipiResponse>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					loadingMsg.setText( "Database update failed. Please try again after some time!" );
+					loadingMsg.setVisible( true );
+				}
+
+				@Override
+				public void onSuccess(SavePratilipiResponse result) {
+					loadingMsg.setVisible( false );
+					doneButton.setVisible( true );
+				}
+			});
+		} else {
 			loadingMsg.setVisible( false );
 			doneButton.setVisible( true );
 		}
