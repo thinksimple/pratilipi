@@ -83,7 +83,7 @@ public class PratilipiViewThumbnailImpl extends PratilipiView {
 		
 		coverImageAnchor.setHref( pratilipiData.getPageUrlAlias() == null ? pratilipiData.getPageUrl() : pratilipiData.getPageUrlAlias() );
 		coverImage.setUrl( pratilipiData.getCoverImageUrl() );
-		coverImage.setTitle( pratilipiData.getTitle() );
+		coverImage.setTitle( pratilipiData.getTitleEn() );
 		coverImage.setAltText( pratilipiData.getTitle() );
 		
 		titleAnchor.setHTML( "<strong style='color:black !important;'>" + pratilipiData.getTitle() + "</strong>" );

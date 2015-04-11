@@ -84,7 +84,7 @@ public class PratilipiFilter implements Filter {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
 		
-		if( blockedBot.matcher( userAgent ).matches() ){
+		if( userAgent != null && blockedBot.matcher( userAgent ).matches() ){
 			response.setStatus( HttpServletResponse.SC_FORBIDDEN );
 			
 			
