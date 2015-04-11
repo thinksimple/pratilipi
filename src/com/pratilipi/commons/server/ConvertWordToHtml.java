@@ -106,7 +106,7 @@ public class ConvertWordToHtml {
 		blobEntry = blobAccessor.newBlob(
 				PratilipiHelper.getContent( pratilipiId ),
 				html.getBytes( Charset.forName( "UTF-8" ) ),
-				"text/html" );
+				"text/html", "private" );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 	}
 	
