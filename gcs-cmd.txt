@@ -5,3 +5,6 @@ C:\Python27\python.exe gsutil cors set gcs-cors.json gs://cdn-asia.pratilipi.com
 C:\Python27\python.exe gsutil ls -L -b gs://cdn-asia.pratilipi.com
 C:\Python27\python.exe gsutil defacl get gs://cdn-asia.pratilipi.com
 C:\Python27\python.exe gsutil cors get gs://cdn-asia.pratilipi.com
+
+
+C:\Python27\python.exe gsutil -m setmeta -r -h "Cache-Control:public, max-age=315360000" gs://cdn-asia.pratilipi.com/third-party/*

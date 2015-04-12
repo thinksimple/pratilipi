@@ -43,6 +43,7 @@ import com.pratilipi.pagecontent.publisher.PublisherContentHelper;
 import com.pratilipi.pagecontent.reader.ReaderContentHelper;
 import com.pratilipi.pagecontent.search.SearchContentHelper;
 import com.pratilipi.pagecontent.uploadcontent.UploadContentFactory;
+import com.pratilipi.pagecontent.userpratilipi.UserPratilipiContentHelper;
 import com.pratilipi.pagecontent.writer.WriterContentHelper;
 
 @SuppressWarnings("serial")
@@ -52,19 +53,21 @@ public class PratilipiMain extends ClaymusMain {
 			Logger.getLogger( PratilipiMain.class.getName() );
 
 	static {
-		PageContentRegistry.register( PratilipiContentHelper.class );	// 5.3
-		PageContentRegistry.register( LanguageContentHelper.class );	// 5.3
-		PageContentRegistry.register( AuthorContentHelper.class );		// 5.3
+		PageContentRegistry.register( PratilipiContentHelper.class );		// 5.3
+		PageContentRegistry.register( LanguageContentHelper.class );		// 5.3
+		PageContentRegistry.register( AuthorContentHelper.class );			// 5.3
 
 		PageContentRegistry.register( PratilipisContentHelper.class );
-		PageContentRegistry.register( AuthorsContentHelper.class );		// 5.3
+		PageContentRegistry.register( AuthorsContentHelper.class );			// 5.3
 
-		PageContentRegistry.register( ReaderContentHelper.class );		// 5.0
-		PageContentRegistry.register( WriterContentHelper.class );		// 5.0
+		PageContentRegistry.register( ReaderContentHelper.class );			// 5.0
+		PageContentRegistry.register( WriterContentHelper.class );			// 5.0
 
 		PageContentRegistry.register( PublisherContentHelper.class );
-		PageContentRegistry.register( EventContentHelper.class );		// 5.0
+		PageContentRegistry.register( EventContentHelper.class );			// 5.0
 		
+		PageContentRegistry.register( UserPratilipiContentHelper.class );	// 5.0
+
 		PageContentRegistry.register( GenresContentHelper.class );
 		PageContentRegistry.register( SearchContentHelper.class );
 		PageContentRegistry.register( UploadContentFactory.class );

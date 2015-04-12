@@ -29,7 +29,6 @@ public class PratilipiFilter implements Filter {
 	private final Map<String, String> redirections = new HashMap<>();
 	private final List<String> nonExistents = new LinkedList<>();
 	
-	private final Pattern blockedBot = Pattern.compile( "libwww-perl.*" );
 	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile( "/resource\\.(book|poem|story|article|pratilipi)-cover/.*" );
 	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
 	private final Pattern validHostRegEx = Pattern.compile(
@@ -84,8 +83,8 @@ public class PratilipiFilter implements Filter {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
 		
-		if( userAgent != null && blockedBot.matcher( userAgent ).matches() ){
-			response.setStatus( HttpServletResponse.SC_FORBIDDEN );
+		if( userAgent != null && userAgent.startsWith( "libwww-perl" ) ) {
+			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
 			
 			
 		} else if( nonExistents.contains( requestUri ) ) {
