@@ -245,19 +245,22 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
 		
-		String coverImage;
-		String domainCdnUrl = ClaymusHelper.getSystemProperty( "domain.cdn" ) + "/pratilipi-cover/150/" ;
+		String coverImageUrl;
 		if( pratilipi.hasCustomCover() ) {
-			String urlPrefix = "//" + pratilipi.getId() % 10 + ".";
-			coverImage = urlPrefix + domainCdnUrl + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
+			String domain = "//" + pratilipi.getId() % 10 + "." + ClaymusHelper.getSystemProperty( "domain.cdn" );
+			String uri = "/pratilipi-cover/150/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
+			coverImageUrl = domain + uri;
 		} else if( pratilipi.isPublicDomain() ) {
-			String urlPrefix = "//" + pratilipi.getLanguageId() % 10 + ".";
-			coverImage = urlPrefix + domainCdnUrl + "pratilipi-classic-" + pratilipi.getLanguageId();
+			String domain = "//" + pratilipi.getLanguageId() % 10 + "." + ClaymusHelper.getSystemProperty( "domain.cdn" );
+			String uri = "/pratilipi-cover/150/pratilipi-classic-" + pratilipi.getLanguageId();
+			coverImageUrl = domain + uri;
 		} else {
-			coverImage = "//1." + domainCdnUrl + "pratilipi";
+			String domain = "//10." + ClaymusHelper.getSystemProperty( "domain.cdn" );
+			String uri = "/pratilipi-cover/150/pratilipi";
+			coverImageUrl = domain + uri;
 		}
 
-		pratilipiData.setCoverImageUrl( coverImage );
+		pratilipiData.setCoverImageUrl( coverImageUrl );
 		pratilipiData.setCoverImageUploadUrl( "/api.pratilipi/pratilipi/cover?pratilipiId=" + pratilipi.getId() );
 		pratilipiData.setCoverImage300UploadUrl( URL_RESOURCE + "pratilipi-cover/300/" + pratilipi.getId() );
 		pratilipiData.setImageContentUploadUrl( "/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() );
