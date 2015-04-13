@@ -108,7 +108,7 @@ public class PratilipiFilter implements Filter {
 		} else if( oldPratilipiCoverUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi cover url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", requestUri
-					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/" )
+					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + ClaymusHelper.getSystemProperty( "domain.cdn" ) + "/" )
 					.replaceFirst( "book|poem|story|article", "pratilipi" )
 					.replaceFirst( "original|300", "150" ) );
 
@@ -118,14 +118,6 @@ public class PratilipiFilter implements Filter {
 			response.setHeader( "Location", requestUri.replaceFirst( "/(book|poem|story|article|pratilipi)/", "?id=" ) );
 
 			
-		} else if( requestUri.startsWith( "/cdn-asia.pratilipi.com/" )
-				|| requestUri.startsWith( "/static.pratilipi.com/" )
-				|| requestUri.startsWith( "/cdn.ckeditor.com/" )
-				|| requestUri.startsWith( "/ajax.googleapis.com/" ) ) {
-			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", ( request.isSecure() ? "https:/" : "http:/" ) + requestUri );
-			
-
 		} else if( requestUri.equals( "/_ah/start" ) || requestUri.equals( "/_ah/stop" ) ) {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
 			
