@@ -413,6 +413,41 @@ public class AuthorContentHelper extends PageContentHelper<
 		return true;
 	}
 	
+	public static boolean createOrUpdateAuthorDashboardPageUrl( Long authorId, HttpServletRequest request ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Page page = dataAccessor.getPage( PratilipiPageType.AUTHOR.toString(), authorId );
+		
+		Page dashboardPage = dataAccessor.getPage( PratilipiPageType.AUTHOR_DASHBOARD.toString(), authorId );
+		if( dashboardPage == null ) {
+			dashboardPage = dataAccessor.newPage();
+			dashboardPage.setType( PratilipiPageType.AUTHOR_DASHBOARD.toString() );
+			dashboardPage.setUri( page.getUri() + "/dashboard" );
+			dashboardPage.setPrimaryContentId( authorId );
+			dashboardPage.setCreationDate( new Date() );
+		}
+		
+		if( page.getUriAlias() == null ) {
+		
+			if( dashboardPage.getUriAlias() == null )
+				return false;
+			
+			dashboardPage.setUriAlias( null );
+		
+		} else {
+			
+			String uriAlias = page.getUriAlias() + "/dashboard";
+			if( uriAlias.equals( dashboardPage.getUriAlias() ) )
+				return false;
+			
+			dashboardPage.setUriAlias( uriAlias );
+			
+		}
+
+		dashboardPage = dataAccessor.createOrUpdatePage( page );
+
+		return true;
+	}
+	
 	public static boolean updateAuthorStats( Long authorId, HttpServletRequest request ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
