@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 
-  <application>devo-pratilipi</application>
+  <application>dev-pratilipi</application>
   <module>default</module>
-  <version>mark-4p203</version>
+  <version>mark-4p204</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>false</sessions-enabled>
@@ -36,10 +36,6 @@
     <property name="dev-pratilipi.domain.cdn"  value="devo.pratilipi.info"/>
     <property name="devo-pratilipi.domain.cdn" value="devo.pratilipi.info"/>
     <property name="prod-pratilipi.domain.cdn" value="pratilipi.info"/>
-
-    <property name="dev-pratilipi.cdn.asia" value="//dev-pratilipi.pratilipi.com"/>
-    <property name="devo-pratilipi.cdn.asia" value="//devo-pratilipi.pratilipi.com"/>
-    <property name="prod-pratilipi.cdn.asia" value="//cdn-asia.pratilipi.com"/>
 
 	<!-- Configure Resource Path -->
     <property name="dev-pratilipi.resource" value="/resource."/>
