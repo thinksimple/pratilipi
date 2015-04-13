@@ -72,7 +72,7 @@
 			<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
 		</#if>
 
-		<title>${ (page.getTitle() + " | Pratilipi") ! "Pratilipi" }</title>		
+		<title>${ (page.getTitle() + " &#0187 Pratilipi") ! "Pratilipi" }</title>		
 		
 		<!-- For Google Analytics tracking -->
 		<script language="javascript">

@@ -48,9 +48,9 @@ public class SearchAccessorGaeImpl
 
 		} else {
 			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
-						.setExpression( "relevance" )
-						.setDirection( SortExpression.SortDirection.DESCENDING )
-						.setDefaultValueNumeric( 0 ) );
+					.setExpression( "relevance" )
+					.setDirection( SortExpression.SortDirection.DESCENDING )
+					.setDefaultValueNumeric( 0 ) );
 		}
 		
 		SortOptions sortOptions = sortOptionsBuilder.setLimit( 10000 ).build();

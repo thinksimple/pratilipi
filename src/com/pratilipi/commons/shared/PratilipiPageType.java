@@ -7,7 +7,10 @@ public enum PratilipiPageType implements PageType {
 	PRATILIPI( "/pratilipi/" ),
 	READ( "/read?id=" ),
 	WRITE( "/write?id=" ),
+
 	AUTHOR( "/author/" ),
+	AUTHOR_DASHBOARD( null ),
+	
 	PUBLISHER( "/publisher/" ),
 	EVENT( "/event/" ),
 	;

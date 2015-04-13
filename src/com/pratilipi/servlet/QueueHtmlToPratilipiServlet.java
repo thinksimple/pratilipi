@@ -56,7 +56,7 @@ public class QueueHtmlToPratilipiServlet extends HttpServlet {
 		// Saving Pratilipi content to blob store
 		blobEntry = blobAccessor.newBlob(
 				PratilipiHelper.getContent( pratilipiId ),
-				html.getBytes( Charset.forName( "UTF-8" ) ), "text/html", "private" );
+				html.getBytes( Charset.forName( "UTF-8" ) ), "text/html" );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 	}
 	
