@@ -246,25 +246,15 @@ public class PratilipiHelper extends ClaymusHelper {
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
 		
 		String coverImage;
-		String environment = ClaymusHelper.getSystemProperty( "cdn.asia" );
+		String domainCdnUrl = ClaymusHelper.getSystemProperty( "domain.cdn" ) + "/pratilipi-cover/150/" ;
 		if( pratilipi.hasCustomCover() ) {
-			if( environment.contains( "pratilipi.info" )){
-				String pratilipiIdLastDigit = pratilipi.getId().toString().substring( pratilipi.getId().toString().length() - 1 );
-				coverImage = "//" + pratilipiIdLastDigit + ".pratilipi.info/pratilipi-cover/150/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
-			} else
-				coverImage = environment + "/pratilipi-cover/150/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
+			String pratilipiIdLastDigit = pratilipi.getId() % 1 + ".";
+			coverImage = "//" + pratilipiIdLastDigit + domainCdnUrl + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
 		} else if( pratilipi.isPublicDomain() ) {
-			if( environment.contains( "pratilipi.info" )){
-				String languageIdLastDigit = pratilipi.getLanguageId().toString().substring( 
-													pratilipi.getLanguageId().toString().length() - 1 );
-				coverImage = "//" + languageIdLastDigit + ".pratilipi.info/pratilipi-cover/150/" + "pratilipi-classic-" + pratilipi.getLanguageId();
-			} else
-				coverImage = environment + "/pratilipi-cover/150/pratilipi-classic-" + pratilipi.getLanguageId();
+			String languageIdLastDigit = pratilipi.getLanguageId() % 1 + ".";
+			coverImage = "//" + languageIdLastDigit + domainCdnUrl + "pratilipi-classic-" + pratilipi.getLanguageId();
 		} else {
-			if( environment.contains( "pratilipi.info" ))
-				coverImage = "//1" + ".pratilipi.info/pratilipi-cover/150/" + "pratilipi";
-			else
-				coverImage = environment + "/pratilipi-cover/150/pratilipi";
+			coverImage = "//1." + domainCdnUrl + "pratilipi";
 		}
 
 		pratilipiData.setCoverImageUrl( coverImage );
