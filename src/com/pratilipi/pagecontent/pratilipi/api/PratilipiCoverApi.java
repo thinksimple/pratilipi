@@ -40,7 +40,6 @@ public class PratilipiCoverApi extends GenericApi {
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );
 		blobEntry.setData( request.getData() );
 		blobEntry.setMimeType( request.getMimeType() );
-		blobEntry.setCacheControl( "public, max-age=31536000" );
 		
 		PratilipiContentHelper.savePratilipiCover(
 				request.getPratilipiId(),

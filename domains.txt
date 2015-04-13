@@ -8,6 +8,8 @@ Website (Alpha)				   alpha.pratilipi.com
 Pratilipi API					 api.pratilipi.com | api.prod-pratilipi.appspot.com
 Pratilipi API (Devo)							   | api.devo-pratilipi.appspot.com
 
+CDN on Amazon CloudFront		  *.pratilipi.info
+CDN on GCS bucket (US) 		  public.pratilipi.com
 CDN on GCS bucket (US) 		  static.pratilipi.com
 CDN on GCS bucket (ASIA) 	cdn-asia.pratilipi.com
 

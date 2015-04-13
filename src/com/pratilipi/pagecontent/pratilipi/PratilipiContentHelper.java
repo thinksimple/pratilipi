@@ -691,14 +691,15 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		BlobAccessor blobAccessorAsia = DataAccessorFactory.getBlobAccessorAsia();
+		BlobAccessor blobAccessorPublic = DataAccessorFactory.getBlobAccessorPublic();
 		try {
 			blobEntry.setName( COVER_FOLDER + "/original/" + pratilipiId );
 			blobAccessor.createOrUpdateBlob( blobEntry );
 			
 			blobEntry.setName( COVER_FOLDER + "/150/" + pratilipiId );
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), 150, 1500 ) );
-			blobAccessorAsia.createOrUpdateBlob( blobEntry );
+			blobEntry.setCacheControl( "public, max-age=31536000" );
+			blobAccessorPublic.createOrUpdateBlob( blobEntry );
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to create/update pratilipi cover.", e );
 			throw new UnexpectedServerException();
