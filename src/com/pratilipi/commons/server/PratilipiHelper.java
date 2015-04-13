@@ -248,11 +248,11 @@ public class PratilipiHelper extends ClaymusHelper {
 		String coverImage;
 		String domainCdnUrl = ClaymusHelper.getSystemProperty( "domain.cdn" ) + "/pratilipi-cover/150/" ;
 		if( pratilipi.hasCustomCover() ) {
-			String pratilipiIdLastDigit = pratilipi.getId() % 1 + ".";
-			coverImage = "//" + pratilipiIdLastDigit + domainCdnUrl + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
+			String urlPrefix = "//" + pratilipi.getId() % 10 + ".";
+			coverImage = urlPrefix + domainCdnUrl + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
 		} else if( pratilipi.isPublicDomain() ) {
-			String languageIdLastDigit = pratilipi.getLanguageId() % 1 + ".";
-			coverImage = "//" + languageIdLastDigit + domainCdnUrl + "pratilipi-classic-" + pratilipi.getLanguageId();
+			String urlPrefix = "//" + pratilipi.getLanguageId() % 10 + ".";
+			coverImage = urlPrefix + domainCdnUrl + "pratilipi-classic-" + pratilipi.getLanguageId();
 		} else {
 			coverImage = "//1." + domainCdnUrl + "pratilipi";
 		}

@@ -340,10 +340,10 @@ public class PratilipiContentHelper extends PageContentHelper<
 
 	public static String createCoverImageUrl( Pratilipi pratilipi ) {
 		if( pratilipi.hasCustomCover() ) {
-			String urlPrefix = "//" + pratilipi.getId() % 1 + ".";
+			String urlPrefix = "//" + pratilipi.getId() % 10 + ".";
 			return urlPrefix + COVER_URL + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
 		} else if( pratilipi.isPublicDomain() ) {
-			String urlPrefix = "//" + pratilipi.getLanguageId() % 1 + ".";
+			String urlPrefix = "//" + pratilipi.getLanguageId() % 10 + ".";
 			return urlPrefix + COVER_URL + "pratilipi-classic-" + pratilipi.getLanguageId();
 		} else {
 			return "//1." + COVER_URL + "pratilipi";
