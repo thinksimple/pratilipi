@@ -97,8 +97,6 @@ public class DataAccessorGaeImpl
 
 		if( pratilipiFilter.getType() != null )
 			gaeQueryBuilder.addFilter( "type", pratilipiFilter.getType() );
-		if( pratilipiFilter.getPublicDomain() != null )
-			gaeQueryBuilder.addFilter( "publicDomain", pratilipiFilter.getPublicDomain() );
 		if( pratilipiFilter.getLanguageId() != null )
 			gaeQueryBuilder.addFilter( "languageId", pratilipiFilter.getLanguageId() );
 		if( pratilipiFilter.getAuthorId() != null )

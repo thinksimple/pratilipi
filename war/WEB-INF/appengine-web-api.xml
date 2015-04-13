@@ -3,7 +3,7 @@
 
   <application>dev-pratilipi</application>
   <module>api</module>
-  <version>mark-4p195</version>
+  <version>mark-4p199</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>false</sessions-enabled>
@@ -26,9 +26,22 @@
     <property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>
     <property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
 
+    <property name="dev-pratilipi.domain.cdn"  value="devo.pratilipi.info"/>
+    <property name="devo-pratilipi.domain.cdn" value="devo.pratilipi.info"/>
+    <property name="prod-pratilipi.domain.cdn" value="pratilipi.info"/>
+
     <property name="dev-pratilipi.cdn.asia" value="//dev-pratilipi.pratilipi.com"/>
     <property name="devo-pratilipi.cdn.asia" value="//devo-pratilipi.pratilipi.com"/>
     <property name="prod-pratilipi.cdn.asia" value="//cdn-asia.pratilipi.com"/>
+
+	<!-- Configure Resource Path -->
+    <property name="dev-pratilipi.resource" value="/resource."/>
+    <property name="devo-pratilipi.resource" value="/resource."/>
+    <property name="prod-pratilipi.resource" value="/resource."/>
+
+    <property name="dev-pratilipi.resource.static" value="/resource."/>
+    <property name="devo-pratilipi.resource.static" value="/resource."/>
+    <property name="prod-pratilipi.resource.static" value="//static.pratilipi.com/"/>
 
 	<!-- Configure Emails -->
     <property name="dev-pratilipi.email" value="dev-team@pratilipi.com"/>

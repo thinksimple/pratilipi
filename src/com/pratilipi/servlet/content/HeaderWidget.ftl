@@ -96,14 +96,6 @@ function validateForm() {
                   <li><a href="/articles/tamil">Tamil</a></li>
                 </ul>
           	</li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Classics<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="/classics/books">Classic Books</a></li>
-                  <li><a href="/classics/poems">Classic Poems</a></li>
-                  <li><a href="/classics/stories">Classic Stories</a></li>
-                </ul>
-          	</li>
             <li>
               <a href="/magazines">Magazines</a>
             </li>

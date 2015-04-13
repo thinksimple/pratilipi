@@ -22,13 +22,13 @@ public interface PratilipisContent extends PageContent {
 
 	void setPratilipiType( PratilipiType pratilipiType );
 
-	Boolean getPublicDomain();
-
-	void setPublicDomain( Boolean isPublicDomain );
-	
 	Long getLanguageId();
 
 	void setLanguageId( Long languageId );
+	
+	Long getAuthorId();
+
+	void setAuthorId( Long authorId );
 	
 	PratilipiState getPratilipiState();
 

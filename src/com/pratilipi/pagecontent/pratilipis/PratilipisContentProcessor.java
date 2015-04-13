@@ -33,10 +33,7 @@ public class PratilipisContentProcessor extends PageContentProcessor<PratilipisC
 			return pratilipisContent.getTitle();
 		
 		PratilipiType pratilipiType = pratilipisContent.getPratilipiType();
-		if( pratilipiType != null && pratilipisContent.getPublicDomain() != null && pratilipisContent.getPublicDomain() ) {
-			return "Classic " + pratilipiType.getNamePlural();
-			
-		} else if( pratilipiType != null && pratilipisContent.getLanguageId() != null ) {
+		if( pratilipiType != null && pratilipisContent.getLanguageId() != null ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 			Language language = dataAccessor.getLanguage( pratilipisContent.getLanguageId() );
 			return language.getNameEn() + " " + pratilipiType.getNamePlural();

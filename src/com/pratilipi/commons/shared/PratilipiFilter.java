@@ -8,8 +8,6 @@ public class PratilipiFilter implements IsSerializable {
 	
 	private PratilipiType type;
 
-	private Boolean publicDomain;
-	
 	private Long languageId;
 	
 	private Long authorId;
@@ -29,14 +27,6 @@ public class PratilipiFilter implements IsSerializable {
 
 	public void setType( PratilipiType pratilipiType ) {
 		this.type = pratilipiType;
-	}
-
-	public Boolean getPublicDomain() {
-		return publicDomain;
-	}
-
-	public void setPublicDomain( Boolean publicDomain ) {
-		this.publicDomain = publicDomain;
 	}
 
 	public Long getLanguageId() {

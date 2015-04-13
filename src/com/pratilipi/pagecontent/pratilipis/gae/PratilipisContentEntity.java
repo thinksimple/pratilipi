@@ -2,7 +2,6 @@ package com.pratilipi.pagecontent.pratilipis.gae;
 
 import java.util.List;
 
-import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -17,25 +16,25 @@ import com.pratilipi.pagecontent.pratilipis.PratilipisContent;
 public class PratilipisContentEntity extends PageContentEntity
 		implements PratilipisContent {
 	
-	@Persistent( column = "X_COL_0" )
+	@Persistent( column = "X_STR_0" )
 	private String title;
-	
-	@Persistent( column = "X_COL_1" )
+
+	@Persistent( column = "X_LIST_LONG_0" )
 	private List<Long> pratilipiIdList;
 	
-	@NotPersistent
+	@Persistent( column = "X_ENUM_0" )
 	private PratilipiType pratilipiType;
 
-	@NotPersistent
-	private Boolean publicDomain;
-	
-	@NotPersistent
+	@Persistent( column = "X_LONG_0" )
 	private Long languageId;
 	
-	@NotPersistent
+	@Persistent( column = "X_LONG_1" )
+	private Long authorId;
+	
+	@Persistent( column = "X_ENUM_1" )
 	private PratilipiState pratilipiState;
 
-	
+
 	@Override
 	public String getTitle() {
 		return title;
@@ -66,17 +65,6 @@ public class PratilipisContentEntity extends PageContentEntity
 		this.pratilipiType = pratilipiType;
 	}
 	
-	@Override
-	public Boolean getPublicDomain() {
-		return publicDomain;
-	}
-
-	@Override
-	public void setPublicDomain( Boolean publicDomain ) {
-		this.publicDomain = publicDomain;
-	}
-
-	@Override
 	public Long getLanguageId() {
 		return languageId;
 	}
@@ -84,6 +72,16 @@ public class PratilipisContentEntity extends PageContentEntity
 	@Override
 	public void setLanguageId( Long languageId ) {
 		this.languageId = languageId;
+	}
+
+	@Override
+	public Long getAuthorId() {
+		return authorId;
+	}
+
+	@Override
+	public void setAuthorId( Long authorId ) {
+		this.authorId = authorId;
 	}
 
 	@Override
@@ -96,11 +94,11 @@ public class PratilipisContentEntity extends PageContentEntity
 		this.pratilipiState = pratilipiState;
 	}
 
+	@Deprecated
 	@Override
 	public PratilipiFilter toFilter() {
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setType( pratilipiType );
-		pratilipiFilter.setPublicDomain( publicDomain );
 		pratilipiFilter.setLanguageId( languageId );
 		pratilipiFilter.setState( pratilipiState );
 		return pratilipiFilter;

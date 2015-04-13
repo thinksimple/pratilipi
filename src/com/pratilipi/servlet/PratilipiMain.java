@@ -33,6 +33,7 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
 import com.pratilipi.pagecontent.author.AuthorContentHelper;
+import com.pratilipi.pagecontent.authordashboard.AuthorDashboardContentHelper;
 import com.pratilipi.pagecontent.authors.AuthorsContentHelper;
 import com.pratilipi.pagecontent.event.EventContentHelper;
 import com.pratilipi.pagecontent.genres.GenresContentHelper;
@@ -56,6 +57,7 @@ public class PratilipiMain extends ClaymusMain {
 		PageContentRegistry.register( PratilipiContentHelper.class );		// 5.3
 		PageContentRegistry.register( LanguageContentHelper.class );		// 5.3
 		PageContentRegistry.register( AuthorContentHelper.class );			// 5.3
+		PageContentRegistry.register( AuthorDashboardContentHelper.class );	// 5.3
 
 		PageContentRegistry.register( PratilipisContentHelper.class );
 		PageContentRegistry.register( AuthorsContentHelper.class );			// 5.3
@@ -129,15 +131,6 @@ public class PratilipiMain extends ClaymusMain {
 		
 		else if( requestUri.equals( "/articles/tamil" ) )
 			page.setTitle( "Tamil Articles" );
-		
-		else if( requestUri.startsWith( "/classics/books" ) )
-			page.setTitle( "Classic Books" );
-
-		else if( requestUri.startsWith( "/classics/poems" ) )
-			page.setTitle( "Classic Poems" );
-
-		else if( requestUri.startsWith( "/classics/stories" ) )
-			page.setTitle( "Classic Stories" );
 
 		
 		else if( requestUri.startsWith( "/magazines" ) )
@@ -197,6 +190,9 @@ public class PratilipiMain extends ClaymusMain {
 
 			} else if( page.getType().equals( PratilipiPageType.AUTHOR.toString() ) ) {
 				pageContentList.add( AuthorContentHelper.newAuthorContent( page.getPrimaryContentId() ) );
+		
+			} else if( page.getType().equals( PratilipiPageType.AUTHOR_DASHBOARD.toString() ) ) {
+				pageContentList.add( AuthorDashboardContentHelper.newAuthorDashboardContent( page.getPrimaryContentId() ) );
 		
 			} else if( page.getType().equals( PratilipiPageType.PUBLISHER.toString() ) ) {
 				pageContentList.add( PublisherContentHelper.newPublisherContent( page.getPrimaryContentId() ) );
@@ -258,15 +254,6 @@ public class PratilipiMain extends ClaymusMain {
 		else if( requestUri.equals( "/articles/tamil" ) )
 			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.ARTICLE, 6319546696728576L, PratilipiState.PUBLISHED ) );
 		
-		else if( requestUri.startsWith( "/classics/books" ) )
-			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.BOOK, true, PratilipiState.PUBLISHED ) );
-
-		else if( requestUri.startsWith( "/classics/poems" ) )
-			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.POEM, true, PratilipiState.PUBLISHED ) );
-
-		else if( requestUri.startsWith( "/classics/stories" ) )
-			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.STORY, true, PratilipiState.PUBLISHED ) );
-
 		
 		else if( requestUri.startsWith( "/magazines" ) )
 			pageContentList.add( PratilipisContentHelper.newPratilipisContent( PratilipiType.MAGAZINE, PratilipiState.PUBLISHED ) );

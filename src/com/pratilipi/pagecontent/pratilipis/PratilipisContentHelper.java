@@ -35,19 +35,9 @@ public class PratilipisContentHelper extends PageContentHelper<
 	public static PratilipisContent newPratilipisContent(
 			PratilipiType type, PratilipiState state ) {
 		
-		return newPratilipisContent( type, (Boolean) null, state );
+		return newPratilipisContent( type, null, state );
 	}
 	
-	public static PratilipisContent newPratilipisContent(
-			PratilipiType type, Boolean publicDomain, PratilipiState state ) {
-		
-		PratilipisContent pratilipisContent = new PratilipisContentEntity();
-		pratilipisContent.setPratilipiType( type );
-		pratilipisContent.setPublicDomain( publicDomain );
-		pratilipisContent.setPratilipiState( state );
-		return pratilipisContent;
-	}
-
 	public static PratilipisContent newPratilipisContent(
 			PratilipiType type, Long languageId, PratilipiState state ) {
 		
