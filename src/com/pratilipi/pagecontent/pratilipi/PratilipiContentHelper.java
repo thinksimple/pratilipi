@@ -341,10 +341,6 @@ public class PratilipiContentHelper extends PageContentHelper<
 			String domain = "//" + pratilipi.getId() % 10 + "." + ClaymusHelper.getSystemProperty( "domain.cdn" );
 			String uri = "/pratilipi-cover/150/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
 			return domain + uri;
-		} else if( pratilipi.isPublicDomain() ) {
-			String domain = "//" + pratilipi.getLanguageId() % 10 + "." + ClaymusHelper.getSystemProperty( "domain.cdn" );
-			String uri = "/pratilipi-cover/150/pratilipi-classic-" + pratilipi.getLanguageId();
-			return domain + uri;
 		} else {
 			String domain = "//10." + ClaymusHelper.getSystemProperty( "domain.cdn" );
 			String uri = "/pratilipi-cover/150/pratilipi";

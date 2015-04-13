@@ -361,13 +361,15 @@ public class AuthorContentHelper extends PageContentHelper<
 
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		BlobAccessor blobAccessorPublic = DataAccessorFactory.getBlobAccessorPublic();
 		try {
 			blobEntry.setName( IMAGE_FOLDER + "/original/" + authorId );
 			blobAccessor.createOrUpdateBlob( blobEntry );
 			
 			blobEntry.setName( IMAGE_FOLDER + "/150/" + authorId );
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), 150, 1500 ) );
-			DataAccessorFactory.getBlobAccessorAsia().createOrUpdateBlob( blobEntry );
+			blobEntry.setCacheControl( "public, max-age=31536000" );
+			blobAccessorPublic.createOrUpdateBlob( blobEntry );
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to create/update author image.", e );
 			throw new UnexpectedServerException();
