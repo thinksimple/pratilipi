@@ -7,7 +7,7 @@
 <@pratilipiTable title="Books"    pratilipiDataList=bookDataList/>
 <@pratilipiTable title="Stories"  pratilipiDataList=storyDataList/>
 <@pratilipiTable title="Poems"    pratilipiDataList=poemDataList/>
-<@pratilipiTable title="articles" pratilipiDataList=articleDataList/>
+<@pratilipiTable title="Articles" pratilipiDataList=articleDataList/>
 
 
 <#macro pratilipiTable title pratilipiDataList>

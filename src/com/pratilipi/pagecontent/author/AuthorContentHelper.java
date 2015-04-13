@@ -443,7 +443,7 @@ public class AuthorContentHelper extends PageContentHelper<
 			
 		}
 
-		dashboardPage = dataAccessor.createOrUpdatePage( page );
+		dashboardPage = dataAccessor.createOrUpdatePage( dashboardPage );
 
 		return true;
 	}

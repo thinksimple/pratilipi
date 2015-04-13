@@ -89,6 +89,9 @@ public class PratilipiEntity implements Pratilipi {
 	private Date lastUpdated;
 
 	
+	@Persistent( column = "READ_COUNT_OFFSET" )
+	private Long readCountOffset;
+	
 	@Persistent( column = "READ_COUNT" )
 	private Long readCount;
 	
@@ -321,7 +324,9 @@ public class PratilipiEntity implements Pratilipi {
 
 	@Override
 	public Long getReadCount() {
-		return readCount == null ? 0L : readCount;
+		return readCount == null
+				? ( readCountOffset == null ? 0L : readCountOffset )
+				: ( readCountOffset == null ? readCount : readCount + readCountOffset );
 	}
 
 	@Override

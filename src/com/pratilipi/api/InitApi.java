@@ -18,6 +18,7 @@ import com.claymus.data.transfer.AppProperty;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
 import com.claymus.taskqueue.Task;
+import com.pratilipi.commons.shared.AuthorFilter;
 import com.pratilipi.commons.shared.PratilipiFilter;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
@@ -143,6 +144,21 @@ public class InitApi extends GenericApi {
 					.addParam( "pratilipiId", pratilipiId.toString() )
 					.addParam( processType, "true" )
 					.setUrl( "/pratilipi/process" );
+			taskList.add( task );
+		}
+		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
+	}
+	
+	@SuppressWarnings("unused")
+	private void batchProcessAuthor( String processType ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		List<Long> authorIdList = dataAccessor.getAuthorIdList( new AuthorFilter(), null, null ).getDataList();
+		List<Task> taskList = new ArrayList<>( authorIdList.size() );
+		for( Long authorId : authorIdList ) {
+			Task task = TaskQueueFactory.newTask()
+					.addParam( "authorId", authorId.toString() )
+					.addParam( processType, "true" )
+					.setUrl( "/author/process" );
 			taskList.add( task );
 		}
 		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
