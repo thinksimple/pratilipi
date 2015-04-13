@@ -3,7 +3,7 @@
 
   <application>dev-pratilipi</application>
   <module>api</module>
-  <version>mark-4p199</version>
+  <version>mark-4p204</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>false</sessions-enabled>
@@ -52,6 +52,10 @@
     <property name="dev-pratilipi.blobservice.gcs.bucket" value="dev-pratilipi.appspot.com"/>
     <property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
     <property name="prod-pratilipi.blobservice.gcs.bucket" value="static.pratilipi.com"/>
+
+    <property name="dev-pratilipi.blobservice.gcs.bucket.public"  value="dev-pratilipi.appspot.com"/>
+    <property name="devo-pratilipi.blobservice.gcs.bucket.public" value="devo-pratilipi.appspot.com"/>
+    <property name="prod-pratilipi.blobservice.gcs.bucket.public" value="public.pratilipi.com"/>
 
     <property name="dev-pratilipi.blobservice.gcs.bucket.asia" value="dev-pratilipi.appspot.com"/>
     <property name="devo-pratilipi.blobservice.gcs.bucket.asia" value="devo-pratilipi.appspot.com"/>

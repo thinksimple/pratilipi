@@ -10,6 +10,7 @@ public class AuthorProcessPostRequest extends GenericRequest {
 	private Long authorId;
 
 	private Boolean processData;
+	private Boolean processImage;
 	private Boolean updateStats;
 	
 
@@ -19,6 +20,10 @@ public class AuthorProcessPostRequest extends GenericRequest {
 
 	public boolean processData() {
 		return processData == null ? false : processData;
+	}
+	
+	public boolean processImage() {
+		return processImage == null ? false : processImage;
 	}
 	
 	public boolean updateStats() {

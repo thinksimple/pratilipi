@@ -74,6 +74,8 @@ public class AuthorProcessApi extends GenericApi {
 			}
 		}
 		
+		if( request.processImage() ) { }
+
 		if( request.updateStats() ) {
 			boolean changed = AuthorContentHelper.updateAuthorStats( request.getAuthorId(), this.getThreadLocalRequest() );
 			

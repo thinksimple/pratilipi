@@ -59,9 +59,6 @@ public class AuthorContentHelper extends PageContentHelper<
 
 	
 	private static final String IMAGE_FOLDER 	   = "author-image";
-	
-	private static final String IMAGE_ORIGINAL_URL = "/resource.author-image/original/";
-	private static final String IMAGE_150_URL	   = ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/author-image/150/";
 
 	
 	private static final Access ACCESS_TO_LIST_AUTHOR_DATA =
@@ -163,10 +160,15 @@ public class AuthorContentHelper extends PageContentHelper<
 	
 	
 	public static String creatAuthorImageUrl( Author author ) {
-		if( author.hasCustomCover() )
-			return IMAGE_150_URL + author.getId();
-		else
-			return IMAGE_ORIGINAL_URL + author.getId();
+		if( author.hasCustomCover() ) {
+			String domain = "//" + author.getId() % 10 + "." + ClaymusHelper.getSystemProperty( "domain.cdn" );
+			String uri = "/author-image/150/" + author.getId() + "?" + author.getLastUpdated().getTime();
+			return domain + uri;
+		} else {
+			String domain = "//10." + ClaymusHelper.getSystemProperty( "domain.cdn" );
+			String uri = "/author-image/150/author";
+			return domain + uri;
+		}
 	}
 	
 	public static AuthorData createAuthorData( Author author, Language language, HttpServletRequest request ) {

@@ -329,10 +329,16 @@ public class PratilipiHelper extends ClaymusHelper {
 		authorData.setId( author.getId() );
 		authorData.setPageUrl( authorPage.getUri() );
 		authorData.setPageUrlAlias( authorPage.getUriAlias() );
-		if( author.hasCustomCover() )
-			authorData.setAuthorImageUrl( ClaymusHelper.getSystemProperty( "cdn.asia" ) + "/author-image/150/" + author.getId() );
-		else
-			authorData.setAuthorImageUrl( URL_RESOURCE + "author-image/original/" + author.getId() );
+
+		if( author.hasCustomCover() ) {
+			String domain = "//" + author.getId() % 10 + "." + ClaymusHelper.getSystemProperty( "domain.cdn" );
+			String uri = "/author-image/150/" + author.getId() + "?" + author.getLastUpdated().getTime();
+			authorData.setAuthorImageUrl( domain + uri );
+		} else {
+			String domain = "//10." + ClaymusHelper.getSystemProperty( "domain.cdn" );
+			String uri = "/author-image/150/author";
+			authorData.setAuthorImageUrl( domain + uri );
+		}
 		authorData.setAuthorImageUploadUrl( "/api/author/image?authorId=" + author.getId() );
 		authorData.setUserId( author.getUserId() );
 

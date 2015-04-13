@@ -54,6 +54,10 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "REGISTRATION_DATE" )
 	private Date registrationDate;
 
+	@Persistent( column = "LAST_UPDATED" )
+	private Date lastUpdated;
+
+	
 	@Persistent( column = "CONTENT_PUBLISHED" )
 	private Long contentPublished;
 
@@ -194,6 +198,17 @@ public class AuthorEntity implements Author {
 		this.registrationDate = registrationDate;
 	}
 
+	@Override
+	public Date getLastUpdated() {
+		return lastUpdated == null ? registrationDate : lastUpdated;
+	}
+
+	@Override
+	public void setLastUpdated( Date lastUpdated ) {
+		this.lastUpdated = lastUpdated;
+	}
+	
+	
 	@Override
 	public Long getContentPublished() {
 		return contentPublished == null ? 0L : contentPublished;

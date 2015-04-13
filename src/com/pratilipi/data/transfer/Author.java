@@ -55,6 +55,11 @@ public interface Author extends Serializable {
 	
 	void setRegistrationDate( Date registrationDate );
 
+	Date getLastUpdated();
+	
+	void setLastUpdated( Date lastUpdated );
+
+	
 	Long getContentPublished();
 	
 	void setContentPublished( Long contentPublished );
