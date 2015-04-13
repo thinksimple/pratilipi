@@ -64,6 +64,7 @@ public class PratilipiData implements Serializable {
 	private PratilipiState state;
 	private boolean hasState;
 	
+	private Long readCount;
 	private Double relevance;
 
 	
@@ -319,6 +320,14 @@ public class PratilipiData implements Serializable {
 
 	public void setRelevance( Double relevance ) {
 		this.relevance = relevance;
+	}
+	
+	public Long getReadCount() {
+		return readCount;
+	}
+
+	public void setReadCount( Long readCount ) {
+		this.readCount = readCount;
 	}
 	
 }

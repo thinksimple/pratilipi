@@ -35,13 +35,25 @@ public class SearchAccessorGaeImpl
 	
 	@Override
 	public DataListCursorTuple<Long> searchPratilipi( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
-		SortOptions sortOptions = SortOptions.newBuilder()
-				.addSortExpression( SortExpression.newBuilder()
+		
+		SortOptions.Builder sortOptionsBuilder = SortOptions.newBuilder();
+
+		if( pratilipiFilter.getOrderByReadCount() != null ) {
+			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
+					.setExpression( "readCount" )
+					.setDirection( pratilipiFilter.getOrderByReadCount()
+							? SortExpression.SortDirection.ASCENDING
+							: SortExpression.SortDirection.DESCENDING )
+					.setDefaultValueNumeric( 0 ) );
+
+		} else {
+			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
 						.setExpression( "relevance" )
 						.setDirection( SortExpression.SortDirection.DESCENDING )
-						.setDefaultValueNumeric( 0 ) )
-				.setLimit( 10000 )
-				.build();
+						.setDefaultValueNumeric( 0 ) );
+		}
+		
+		SortOptions sortOptions = sortOptionsBuilder.setLimit( 10000 ).build();
 
 		
 		String searchQuery = pratilipiFilter.getType() == null
@@ -132,6 +144,7 @@ public class SearchAccessorGaeImpl
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
 				
+				.addField( Field.newBuilder().setName( "readCount" ).setNumber( pratilipiData.getReadCount() ) )
 				.addField( Field.newBuilder().setName( "relevance" ).setNumber( pratilipiData.getRelevance() ) );
 		
 		if( pratilipiData.getAuthorId() != null )

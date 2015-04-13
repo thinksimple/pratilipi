@@ -401,6 +401,7 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipiData.setIndex( pratilipi.getIndex() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		
+		pratilipiData.setReadCount( pratilipi.getReadCount() );
 		pratilipiData.setRelevance( calculateRelevance( pratilipi, author ) );
 		
 		pratilipiData.setContentType( pratilipi.getContentType() );
