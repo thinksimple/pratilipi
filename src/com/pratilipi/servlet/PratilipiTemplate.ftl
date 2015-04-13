@@ -13,13 +13,13 @@
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 
 		<#if basicMode>
-			<script src="//cdn-asia.pratilipi.com/third-party/jquery-1.11.1/jquery-1.11.1.min.js"></script>
-			<script src="//cdn-asia.pratilipi.com/third-party/bootstrap-3.2.0/js/bootstrap.min.js" defer></script>
-			<link rel="stylesheet" href="//cdn-asia.pratilipi.com/third-party/bootstrap-3.2.0/css/bootstrap.min.css">
-			<script src="//cdn-asia.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/vendor/jquery.ui.widget.js" defer></script>
-			<script src="//cdn-asia.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/jquery.iframe-transport.js" defer></script>
-			<script src="//cdn-asia.pratilipi.com/third-party/jquery-file-upload-9.7.0/js/jquery.fileupload.js" defer></script>
-			<script src="//cdn-asia.pratilipi.com/third-party/ckeditor-4.4.5-full/ckeditor.js" charset="utf-8" defer></script>
+			<script src="//j.pratilipi.info/third-party/jquery-1.11.1/jquery-1.11.1.min.js"></script>
+			<script src="//b.pratilipi.info/third-party/bootstrap-3.2.0/js/bootstrap.min.js" defer></script>
+			<link rel="stylesheet" href="//b.pratilipi.info/third-party/bootstrap-3.2.0/css/bootstrap.min.css">
+			<script src="//j.pratilipi.info/third-party/jquery-file-upload-9.7.0/js/vendor/jquery.ui.widget.js" defer></script>
+			<script src="//j.pratilipi.info/third-party/jquery-file-upload-9.7.0/js/jquery.iframe-transport.js" defer></script>
+			<script src="//j.pratilipi.info/third-party/jquery-file-upload-9.7.0/js/jquery.fileupload.js" defer></script>
+			<script src="//c.pratilipi.info/third-party/ckeditor-4.4.5-full/ckeditor.js" charset="utf-8" defer></script>
 			<script language="javascript" defer>
 				window.onload = function() {
 					CKEDITOR.config.toolbar = [
