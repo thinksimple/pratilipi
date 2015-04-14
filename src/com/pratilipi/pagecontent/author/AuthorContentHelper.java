@@ -58,7 +58,7 @@ public class AuthorContentHelper extends PageContentHelper<
 	private static final Gson gson = new GsonBuilder().create();
 
 	
-	private static final String IMAGE_FOLDER 	   = "author-image";
+	private static final String IMAGE_FOLDER = "author-image";
 
 	
 	private static final Access ACCESS_TO_LIST_AUTHOR_DATA =
@@ -309,6 +309,7 @@ public class AuthorContentHelper extends PageContentHelper<
 			auditLog.setEventDataOld( gson.toJson( author ) );
 			
 			author.setRegistrationDate( new Date() );
+			author.setLastUpdated( new Date() );
 
 		} else { // Update Author usecase
 
@@ -319,6 +320,8 @@ public class AuthorContentHelper extends PageContentHelper<
 			
 			auditLog.setEventId( ACCESS_TO_UPDATE_AUTHOR_DATA.getId());
 			auditLog.setEventDataOld( gson.toJson( author ) );
+
+			author.setLastUpdated( new Date() );
 		}
 		
 		if( authorData.hasLanguageId() )
@@ -385,6 +388,7 @@ public class AuthorContentHelper extends PageContentHelper<
 		auditLog.setEventDataOld( gson.toJson( author ) );
 
 		author.setCustomCover( true );
+		author.setLastUpdated( new Date() );
 		author = dataAccessor.createOrUpdateAuthor( author );
 
 		auditLog.setEventDataNew( gson.toJson( author ) );
@@ -428,6 +432,8 @@ public class AuthorContentHelper extends PageContentHelper<
 			dashboardPage.setUri( page.getUri() + "/dashboard" );
 			dashboardPage.setPrimaryContentId( authorId );
 			dashboardPage.setCreationDate( new Date() );
+			if( page.getUriAlias() == null )
+				dashboardPage = dataAccessor.createOrUpdatePage( dashboardPage );
 		}
 		
 		if( page.getUriAlias() == null ) {
