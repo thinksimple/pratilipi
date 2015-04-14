@@ -1,6 +1,8 @@
-C:\Python27\python.exe gsutil cors set gcs-cors.json gs://public.pratilipi.com
+gcloud auth login
+gcloud config set project prod-pratilipi
 
-C:\Python27\python.exe gsutil cors get gs://public.pratilipi.com
+gsutil cors get gs://public.pratilipi.com
+gsutil cors set gcs-cors.json gs://public.pratilipi.com
 
-
-C:\Python27\python.exe gsutil -m setmeta -r -h "Cache-Control:public, max-age=315360000" gs://public.pratilipi.com/third-party/*
+gsutil -m cp -r -z "js,css,html" third-party gs://public.pratilipi.com/
+gsutil -m setmeta -r -h "Cache-Control:public, max-age=31536000" gs://public.pratilipi.com/third-party/*

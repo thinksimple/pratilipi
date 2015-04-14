@@ -660,8 +660,6 @@ public class PratilipiContentHelper extends PageContentHelper<
 		String fileName = "";
 		if( pratilipi.hasCustomCover() )
 			fileName = COVER_FOLDER + "/original/" + pratilipi.getId();
-		else if( pratilipi.isPublicDomain() )
-			fileName = COVER_FOLDER + "/original/" + "pratilipi-classic-" + pratilipi.getLanguageId();
 		else
 			fileName = COVER_FOLDER + "/original/" + "pratilipi";
 

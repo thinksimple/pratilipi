@@ -3,7 +3,7 @@
 
   <application>dev-pratilipi</application>
   <module>default</module>
-  <version>mark-4p204</version>
+  <version>mark-4p205</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>false</sessions-enabled>
@@ -21,6 +21,11 @@
     <include path="**" />
     <include path="**.nocache.*" expiration="0s" />
     <include path="**.cache.*" expiration="365d" />
+
+    <include path="**.js" expiration="365d" />
+    <include path="**.css" expiration="365d" />
+    <include path="**.png" expiration="365d" />
+
     <exclude path="**.gwt.rpc" />
   </static-files>
 

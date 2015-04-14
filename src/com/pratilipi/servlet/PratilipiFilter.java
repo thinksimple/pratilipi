@@ -100,9 +100,9 @@ public class PratilipiFilter implements Filter {
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			String queryString = request.getQueryString();
 			if( queryString == null || queryString.isEmpty() )
-				response.setHeader( "Location", "http://www.pratilipi.com" + requestUri );
+				response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + "//www.pratilipi.com" + requestUri );
 			else
-				response.setHeader( "Location", "http://www.pratilipi.com" + requestUri + "?" + request.getQueryString() );
+				response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + "//www.pratilipi.com" + requestUri + "?" + request.getQueryString() );
 
 			
 		} else if( oldPratilipiCoverUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi cover url
@@ -117,6 +117,16 @@ public class PratilipiFilter implements Filter {
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", requestUri.replaceFirst( "/(book|poem|story|article|pratilipi)/", "?id=" ) );
 
+			
+		} else if( requestUri.equals( "/read" ) ) {
+			String pratilipiId = request.getParameter( "id" );
+			if( pratilipiId == null || pratilipiId.isEmpty() ) {
+				response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+				response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + "//www.pratilipi.com" );
+			} else {
+				chain.doFilter( request, response );
+			}
+		
 			
 		} else if( requestUri.equals( "/_ah/start" ) || requestUri.equals( "/_ah/stop" ) ) {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
