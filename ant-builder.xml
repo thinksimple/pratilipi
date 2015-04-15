@@ -6,7 +6,6 @@
 	    <!-- Combine CSS files -->
 		<concat destfile="war/theme.pratilipi.min/combined.css">
 	        <filelist dir="claymus/war/theme.default" files="style.css, style.polymer.css" />
-	        <filelist dir="war/theme.pratilipi" files="style.css" />
 	    </concat>
 		<!-- Minify combined file -->
 		<java jar="war/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
@@ -18,7 +17,7 @@
 		<!-- Combine basicmode CSS files -->
 		<concat destfile="war/theme.pratilipi.min/basicmode-combined.css">
 	        <filelist dir="claymus/war/theme.default" files="style.css" />
-	        <filelist dir="war/theme.pratilipi" files="style.css, style.basicmode.css" />
+	        <filelist dir="war/theme.pratilipi" files="style.basicmode.css" />
 	    </concat>
 		<!-- Minify combined file -->
 		<java jar="war/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
@@ -52,7 +51,7 @@
 		</java>
 	</target>
 	
-	<target name="all">
+	<target name="all" depends="css.minify">
 	
 		<copy todir="war/theme.pratilipi.min">
 			<fileset dir="war/theme.pratilipi/" excludes="*.css, *.js"/>
