@@ -112,6 +112,13 @@ public class PratilipiFilter implements Filter {
 					.replaceFirst( "book|poem|story|article", "pratilipi" )
 					.replaceFirst( "original|300", "150" ) );
 
+
+		} else if( requestUri.startsWith( "/resource.author-image/original/" ) ) { // Redirecting to new Author image url
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", requestUri
+					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + ClaymusHelper.getSystemProperty( "domain.cdn" ) + "/" )
+					.replaceFirst( "original", "150" ) );
+		
 			
 		} else if( oldPratilipiReaderUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi reader url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );

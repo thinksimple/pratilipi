@@ -48,23 +48,21 @@
 
 		<!-- Claymus Resources -->
 		<#if basicMode>
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?16022015">
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?15052015-4">
 			<script type="text/javascript" language="javascript" src="/theme.default/script.js?16022015" defer></script>
 			<script type="text/javascript" language="javascript" src="/theme.default/script.basicmode.js?16022015" defer></script>
 		<#else>
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?16022015">
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.polymer.css?16022015">
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?15052015">
+			<link type="text/css" rel="stylesheet" href="/theme.default/style.polymer.css?15052015">
 			<script type="text/javascript" language="javascript" src="/theme.default/script.js?16022015" defer></script>
 		</#if>
 
 		<!-- Pratilipi Resources -->
 		<#if basicMode>
-			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
-			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.basicmode.css">
+			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.basicmode.css?15052015-2">
 			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" defer></script>
 			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicmode.js" defer></script>
 		<#else>
-			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.css">
 			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" defer></script>
 		</#if>
 		
