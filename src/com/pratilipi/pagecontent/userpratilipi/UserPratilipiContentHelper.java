@@ -18,6 +18,7 @@ import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.data.transfer.shared.UserPratilipiData;
+import com.pratilipi.pagecontent.userpratilipi.gae.UserPratilipiContentEntity;
 import com.pratilipi.pagecontent.userpratilipi.shared.UserPratilipiContentData;
 
 public class UserPratilipiContentHelper extends PageContentHelper<
@@ -39,6 +40,11 @@ public class UserPratilipiContentHelper extends PageContentHelper<
 	}
 	
 
+	public static UserPratilipiContent newUserPratilipiContent() {
+		return new UserPratilipiContentEntity();
+	}
+
+	
 	public static Boolean hasRequestAccessToAddBookmarks( HttpServletRequest request ){
 		AccessToken accessToken = ( AccessToken ) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
 		if( accessToken.getUserId() == 0L )
