@@ -1,20 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="pratilipi" default='all' basedir="." >
 
-  <target name="all">
-
-    <delete dir="war/theme.default"/>
-    <copy todir="war/theme.default">
-      <fileset dir="claymus/war/theme.default"/>
-    </copy>
-
-    <delete dir="war/polymer"/>
-    <copy todir="war/polymer" flatten="true">
-      <fileset dir="claymus/src/com/claymus/commons" includes="**/*.html"/>
-      <fileset dir="claymus/src/com/claymus/pagecontent" includes="**/*.html"/>
-      <fileset dir="src/com/pratilipi/pagecontent" includes="**/*.html"/>
-    </copy>
-
-  </target>
+    <delete dir="war/theme.pratilipi.min"/>
+	<target name="css.minify">
+	    <!-- Combine CSS files -->
+		<concat destfile="war/theme.pratilipi.min/combined.css">
+	        <filelist dir="claymus/war/theme.default" files="style.css, style.polymer.css" />
+	        <filelist dir="war/theme.pratilipi" files="style.css" />
+	    </concat>
+		<!-- Minify combined file -->
+		<java jar="war/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
+			<arg value="war/theme.pratilipi.min/combined.css"/>
+			<arg value="-o"/>
+			<arg value="war/theme.pratilipi.min/combined.css"/>
+		</java>
+		
+		<!-- Combine basicmode CSS files -->
+		<concat destfile="war/theme.pratilipi.min/basicmode-combined.css">
+	        <filelist dir="claymus/war/theme.default" files="style.css" />
+	        <filelist dir="war/theme.pratilipi" files="style.css, style.basicmode.css" />
+	    </concat>
+		<!-- Minify combined file -->
+		<java jar="war/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
+			<arg value="war/theme.pratilipi.min/basicmode-combined.css"/>
+			<arg value="-o"/>
+			<arg value="war/theme.pratilipi.min/basicmode-combined.css"/>
+		</java>
+		
+		<!-- Combine JS files -->
+		<concat destfile="war/theme.pratilipi.min/combined.js">
+	        <filelist dir="claymus/war/theme.default" files="script.js" />
+	        <filelist dir="war/theme.pratilipi" files="script.js" />
+	    </concat>
+		<!-- Minify combined file -->
+		<java jar="war/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
+			<arg value="war/theme.pratilipi.min/combined.js"/>
+			<arg value="-o"/>
+			<arg value="war/theme.pratilipi.min/combined.js"/>
+		</java>
+		
+		<!-- Combine basicMode JS files -->
+		<concat destfile="war/theme.pratilipi.min/basicmode-combined.js">
+	        <filelist dir="claymus/war/theme.default" files="script.js, script.basicmode.js" />
+	        <filelist dir="war/theme.pratilipi" files="script.js, script.basicmode.js" />
+	    </concat>
+		<!-- Minify combined file -->
+		<java jar="war/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
+			<arg value="war/theme.pratilipi.min/basicmode-combined.js"/>
+			<arg value="-o"/>
+			<arg value="war/theme.pratilipi.min/basicmode-combined.js"/>
+		</java>
+	</target>
+	
+	<target name="all">
+	
+		<copy todir="war/theme.pratilipi.min">
+			<fileset dir="war/theme.pratilipi/" excludes="*.css, *.js"/>
+		</copy>
+		
+		<delete dir="war/polymer"/>
+		<copy todir="war/polymer" flatten="true">
+			<fileset dir="claymus/src/com/claymus/commons" includes="**/*.html"/>
+			<fileset dir="claymus/src/com/claymus/pagecontent" includes="**/*.html"/>
+			<fileset dir="src/com/pratilipi/pagecontent" includes="**/*.html"/>
+		</copy>
+	
+	</target>
 
 </project>

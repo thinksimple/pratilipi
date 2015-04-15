@@ -48,24 +48,13 @@
 
 		<!-- Claymus Resources -->
 		<#if basicMode>
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?15052015-4">
-			<script type="text/javascript" language="javascript" src="/theme.default/script.js?16022015" defer></script>
-			<script type="text/javascript" language="javascript" src="/theme.default/script.basicmode.js?16022015" defer></script>
+			<link type="text/css" rel="stylesheet" href="/theme.pratilipi.min/basicmode-combined.css?16022015">
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi.min/basicmode-combined.js?16022015" defer></script>
 		<#else>
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.css?15052015">
-			<link type="text/css" rel="stylesheet" href="/theme.default/style.polymer.css?15052015">
-			<script type="text/javascript" language="javascript" src="/theme.default/script.js?16022015" defer></script>
+			<link type="text/css" rel="stylesheet" href="/theme.pratilipi.min/combined.css?16022015">
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi.min/combined.js?16022015" defer></script>
 		</#if>
 
-		<!-- Pratilipi Resources -->
-		<#if basicMode>
-			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.basicmode.css?15052015-2">
-			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" defer></script>
-			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicmode.js" defer></script>
-		<#else>
-			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.js" defer></script>
-		</#if>
-		
 		<#if page.getType()! != "READ" && page.getType()! != "WRITE">
 			<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
 		</#if>
