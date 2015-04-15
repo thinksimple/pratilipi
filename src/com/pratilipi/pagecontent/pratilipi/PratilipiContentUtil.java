@@ -213,7 +213,7 @@ public class PratilipiContentUtil {
 				String title = titleMatcher.group( "title" );
 				String subTitle = titleMatcher.group( "subTitle" );
 				
-				if( title != null && !( title = title.replaceAll( "&nbsp;", " " ).trim() ).isEmpty() ) {
+				if( title != null && !( title = title.replaceAll( "&nbsp;|<[/]?strong>", " " ).trim() ).isEmpty() ) {
 					logger.log( Level.INFO, "Title Found: " + title );
 					JsonObject indexItem = new JsonObject();
 					indexItem.addProperty( "title", title );

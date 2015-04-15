@@ -1,8 +1,20 @@
 gcloud auth login
 gcloud config set project prod-pratilipi
 
+
 gsutil cors get gs://public.pratilipi.com
 gsutil cors set gcs-cors.json gs://public.pratilipi.com
 
+
 gsutil -m cp -r -z "js,css,html" third-party gs://public.pratilipi.com/
 gsutil -m setmeta -r -h "Cache-Control:public, max-age=31536000" gs://public.pratilipi.com/third-party/*
+
+
+gsutil -m rsync -r gs://static.pratilipi.com gs://backup.pratilipi.com/static.pratilipi.com-20150415
+gsutil -m rsync -r gs://public.pratilipi.com gs://backup.pratilipi.com/public.pratilipi.com-20150415
+
+gsutil -m du -s gs://static.pratilipi.com gs://backup.pratilipi.com/static.pratilipi.com-20150415/*
+gsutil -m du -s gs://public.pratilipi.com gs://backup.pratilipi.com/public.pratilipi.com-20150415/*
+
+
+gsutil du -sh gs://static.pratilipi.com gs://public.pratilipi.com gs://backup.pratilipi.com
