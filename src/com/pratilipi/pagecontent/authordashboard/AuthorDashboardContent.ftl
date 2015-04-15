@@ -27,7 +27,7 @@
 							<td><a href="${ pratilipiData.getPageUrlAlias() ! pratilipiData.getPageUrl() }">${ pratilipiData.getTitle() }</a></td>
 							<td>${ pratilipiData.getReadCount() }</td>
 							<td>
-								<@social.fb shareUrl="http://${ domain }${ pratilipiData.getPageUrl() }" />
+								<@social.facebook shareUrl="http://${ domain }${ pratilipiData.getPageUrl() }" />
 							</td>
 						</tr>
 					</#list>

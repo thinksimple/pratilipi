@@ -3,7 +3,7 @@
 
   <application>dev-pratilipi</application>
   <module>default</module>
-  <version>mark-4p205</version>
+  <version>mark-4p206</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>false</sessions-enabled>
