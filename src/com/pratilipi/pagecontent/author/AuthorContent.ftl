@@ -57,6 +57,10 @@
 					<td style="text-align:center;">Articles</td>
 					<td style="text-align:center;">${ articleDataList?size }</td>
 				</tr>
+				<tr>
+					<td style="text-align:center;">Magazines</td>
+					<td style="text-align:center;">${ magazineDataList?size }</td>
+				</tr>
 			</table>
 			<#if showEditOption>
 				<div id="PageContent-Author-NewContent" class="btn btn-info" style="width: 100%;  color: black; text-align:center;font-weight: bold; cursor: pointer;"></div>
@@ -136,6 +140,17 @@
 	</div>
 </#if>
 
+
+<#if magazineDataList?has_content>
+	<div class="container">
+		<h3 class="hr-below">Published Magazines</h3>
+		<div class="row">
+			<#list magazineDataList as magazineData>
+				<@pratilipiView.thumbnail pratilipiData=magazineData />
+			</#list>
+		</div>
+	</div>
+</#if>
 
 <#if showEditOption>
 	<div id="PageContent-Author-EncodedData" style="display:none;">${ authorDataEncodedStr }</div>

@@ -78,7 +78,11 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 
 		pratilipiFilter.setType( PratilipiType.ARTICLE );
 		DataListCursorTuple<Pratilipi> articleListCursorTuple =
-				dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 );  
+				dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 );
+		
+		pratilipiFilter.setType( PratilipiType.MAGAZINE );
+		DataListCursorTuple<Pratilipi> magazineListCursorTuple = 
+				dataAccessor.getPratilipiList( pratilipiFilter, null, 1000 );
 
 		
 		AuthorData authorData = pratilipiHelper.createAuthorData( author.getId() );
@@ -106,7 +110,10 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		List<PratilipiData> articleDataList =
 				pratilipiHelper.createPratilipiDataList(
 						articleListCursorTuple.getDataList(), false, false, false );
-
+		
+		List<PratilipiData> magazineDataList =
+				pratilipiHelper.createPratilipiDataList(
+						magazineListCursorTuple.getDataList(), false, false, false );
 		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
@@ -119,6 +126,7 @@ public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> 
 		dataModel.put( "poemDataList", poemDataList );
 		dataModel.put( "storyDataList", storyDataList );
 		dataModel.put( "articleDataList", articleDataList );
+		dataModel.put( "magazineDataList", magazineDataList );
 		dataModel.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
 		dataModel.put( "showEditOption", showEditOption );
 		
