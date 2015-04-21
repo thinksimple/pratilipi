@@ -13,7 +13,7 @@
 /war/pagecontent.roleaccess
 
 /war/polymer
-/war/theme.pratilipi.min
+/war/theme.pratilipi/*.min.*
 /war/WEB-INF/PratilipiDevo-a987225aa0b1.p12
 /war/pagecontent.pratilipi
 /war/pagecontent.pratilipi.witheditoptions

@@ -115,10 +115,11 @@ function validateForm() {
                   <li onclick="subMenu( event, this );" style="position:relative">
 		                <a>Events<span id="Header-Navigation-Submenu-Caret" class="caret-right"></span></a>
 		                <ul class="dropdown-subMenu">
-			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5724293958729728">Upado tamari kalam - Varta spardha</a></li>
-			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5641434644348928">Katha kadi</a></li>
-			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5085337277693952">Varta re varta </a></li>
+			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/kavya-spardha-2015">Kavya Spardha 2015</a></li>
 			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5133264616423424">Samarthini</a></li>
+			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5085337277693952">Varta re varta </a></li>
+			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5641434644348928">Katha kadi</a></li>
+			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5724293958729728">Upado tamari kalam - Varta spardha</a></li>
 		                </ul>
 		          </li>
                 </ul>
