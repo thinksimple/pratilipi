@@ -20,10 +20,12 @@ import com.claymus.data.transfer.PageContent;
 import com.claymus.taskqueue.Task;
 import com.pratilipi.commons.shared.AuthorFilter;
 import com.pratilipi.commons.shared.PratilipiFilter;
+import com.pratilipi.commons.shared.PratilipiPageType;
 import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.access.SearchAccessor;
+import com.pratilipi.data.transfer.Event;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
 import com.pratilipi.pagecontent.pratilipis.PratilipisContent;
@@ -185,4 +187,22 @@ public class InitApi extends GenericApi {
 		}
 	}
 
+	@SuppressWarnings("unused")
+	private void createEvent( String nameEn ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		Event event = dataAccessor.newEvent();
+		event.setNameEn( nameEn );
+		event.setStartDate( new Date() );
+		event.setEndDate( new Date() );
+		event.setCreationDate( new Date() );
+		event = dataAccessor.createOrUpdateEvent( event );
+		
+		Page page = dataAccessor.newPage();
+		page.setType( PratilipiPageType.EVENT.toString() );
+		page.setUri( PratilipiPageType.EVENT.getUrlPrefix() + event.getId() );
+		page.setPrimaryContentId( event.getId() );
+		page.setCreationDate( new Date() );
+		page = dataAccessor.createOrUpdatePage( page );
+	}
+	
 }

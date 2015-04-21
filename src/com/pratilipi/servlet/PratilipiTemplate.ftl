@@ -56,7 +56,7 @@
 		</#if>
 
 		<#if page.getType()! != "READ" && page.getType()! != "WRITE">
-			<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js" async></script>
+			<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js?20150421" async></script>
 		</#if>
 
 		<title>${ (page.getTitle() + " &#0187 Pratilipi") ! "Pratilipi" }</title>		

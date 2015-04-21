@@ -34,7 +34,7 @@ public class PratilipiFilter implements Filter {
 	private final Pattern validHostRegEx = Pattern.compile(
 			"(www|embed|devo|alpha)\\.pratilipi\\.com"
 			+ "|"
-			+ "((mark-4p20\\d|default)\\.prod-pratilipi|.+\\.(dev|devo)-pratilipi)\\.appspot\\.com"
+			+ "((mark-4p21\\d|default)\\.prod-pratilipi|.+\\.(dev|devo)-pratilipi)\\.appspot\\.com"
 			+ "|"
 			+ "localhost|127.0.0.1" );
 	
