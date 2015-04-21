@@ -1,7 +1,6 @@
 Website 						 www.pratilipi.com | prod-pratilipi.appspot.com
 Website (Embed Mode)		   embed.pratilipi.com
 
-Website (Dev)					 dev.pratilipi.com | dev-pratilipi.appspot.com
 Website (Devo)					devo.pratilipi.com | devo-pratilipi.appspot.com
 Website (Alpha)				   alpha.pratilipi.com
 
@@ -11,6 +10,5 @@ Pratilipi API (Devo)							   | api.devo-pratilipi.appspot.com
 CDN on Amazon CloudFront		  *.pratilipi.info
 CDN on GCS bucket (US) 		  public.pratilipi.com
 CDN on GCS bucket (US) 		  static.pratilipi.com
-CDN on GCS bucket (ASIA) 	cdn-asia.pratilipi.com
 
 Workstation						  ws.pratilipi.com

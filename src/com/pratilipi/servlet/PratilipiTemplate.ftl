@@ -45,14 +45,14 @@
 			${ resourceTag }
 		</#list>
 		
+		<meta property="og:image" content="http://www.pratilipi.com/theme.pratilipi/logo-200x200.png">
 
-		<!-- Claymus Resources -->
 		<#if basicMode>
-			<link type="text/css" rel="stylesheet" href="/theme.pratilipi.min/basicmode-combined.css?16022015">
-			<script type="text/javascript" language="javascript" src="/theme.pratilipi.min/basicmode-combined.js?16022015" defer></script>
+			<link type="text/css" rel="stylesheet" href="/theme.pratilipi.min/style.basicmode.min.css">
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi.min/script.basicmode.js" defer></script>
 		<#else>
-			<link type="text/css" rel="stylesheet" href="/theme.pratilipi.min/combined.css?16022015">
-			<script type="text/javascript" language="javascript" src="/theme.pratilipi.min/combined.js?16022015" defer></script>
+			<link type="text/css" rel="stylesheet" href="/theme.pratilipi.min/style.css">
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi.min/script.js" defer></script>
 		</#if>
 
 		<#if page.getType()! != "READ" && page.getType()! != "WRITE">

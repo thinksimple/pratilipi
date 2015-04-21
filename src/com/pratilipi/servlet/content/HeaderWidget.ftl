@@ -56,7 +56,7 @@ function validateForm() {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/" style="width:100px;"><img src="/theme.pratilipi/logo.png" alt="Pratilipi" width="60px;" style="position:absolute; bottom:15px;"/></a>
+            <a class="navbar-brand" href="/" style="width:100px;"><img src="/theme.pratilipi/logo-100x100.png" alt="Pratilipi" style="position:absolute; left:-20px; bottom:15px;"/></a>
           </div>
           <div class="navbar-collapse collapse" style="height: 1px;">
             <ul class="nav navbar-nav">
