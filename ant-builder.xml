@@ -19,8 +19,8 @@
 
 		<!-- Combine CSS files -->
 		<concat destfile="war/theme.pratilipi/style.min.css">
-	        <filelist dir="claymus/war/theme.default" files="style.css, style.polymer.css" />
-	    </concat>
+			<filelist dir="claymus/war/theme.default" files="style.css, style.polymer.css" />
+		</concat>
 		
 		<!-- Minify CSS -->
 		<java jar="war/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
@@ -31,9 +31,9 @@
 		
 		<!-- Combine Basicmode CSS files -->
 		<concat destfile="war/theme.pratilipi/style.basicmode.min.css">
-	        <filelist dir="claymus/war/theme.default" files="style.css" />
-	        <filelist dir="war/theme.pratilipi" files="style.basicmode.css" />
-	    </concat>
+			<filelist dir="claymus/war/theme.default" files="style.css" />
+			<filelist dir="war/theme.pratilipi" files="style.basicmode.css" />
+		</concat>
 		
 		<!-- Minify Basicmode CSS -->
 		<java jar="war/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
@@ -44,9 +44,9 @@
 		
 		<!-- Combine JS files -->
 		<concat destfile="war/theme.pratilipi/script.min.js">
-	        <filelist dir="claymus/war/theme.default" files="script.js" />
-	        <filelist dir="war/theme.pratilipi" files="script.js" />
-	    </concat>
+			<filelist dir="claymus/war/theme.default" files="script.js" />
+			<filelist dir="war/theme.pratilipi" files="script.js" />
+		</concat>
 		
 		<!-- Minify JS -->
 		<java jar="war/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
@@ -57,9 +57,9 @@
 		
 		<!-- Combine BasicMode JS files -->
 		<concat destfile="war/theme.pratilipi/script.basicmode.min.js">
-	        <filelist dir="claymus/war/theme.default" files="script.js, script.basicmode.js" />
-	        <filelist dir="war/theme.pratilipi" files="script.js, script.basicmode.js" />
-	    </concat>
+			<filelist dir="claymus/war/theme.default" files="script.js, script.basicmode.js" />
+			<filelist dir="war/theme.pratilipi" files="script.js, script.basicmode.js" />
+		</concat>
 		
 		<!-- Minify BasicMode JS -->
 		<java jar="war/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">

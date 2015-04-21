@@ -48,11 +48,11 @@
 		<meta property="og:image" content="http://www.pratilipi.com/theme.pratilipi/logo-200x200.png">
 
 		<#if basicMode>
-			<link type="text/css" rel="stylesheet" href="/theme.pratilipi.min/style.basicmode.min.css">
-			<script type="text/javascript" language="javascript" src="/theme.pratilipi.min/script.basicmode.js" defer></script>
+			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.basicmode.min.css">
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicmode.min.js" defer></script>
 		<#else>
-			<link type="text/css" rel="stylesheet" href="/theme.pratilipi.min/style.css">
-			<script type="text/javascript" language="javascript" src="/theme.pratilipi.min/script.js" defer></script>
+			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.min.css">
+			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.min.js" defer></script>
 		</#if>
 
 		<#if page.getType()! != "READ" && page.getType()! != "WRITE">
