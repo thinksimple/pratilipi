@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.FreeMarkerUtil;
+import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.pagecontent.PageContentProcessor;
 import com.pratilipi.commons.server.PratilipiHelper;
@@ -30,14 +31,17 @@ public class EventContentProcessor extends PageContentProcessor<EventContent> {
 	@Override
 	public String generateHtml(
 			EventContent eventContent,
-			HttpServletRequest request ) throws UnexpectedServerException {
+			HttpServletRequest request ) throws InvalidArgumentException, UnexpectedServerException {
 		
 		PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		
 		Event event = dataAccessor.getEvent( eventContent.getId() );
-		EventData eventData = pratilipiHelper.createEventData( event );
+
+		if( event == null )
+			throw new InvalidArgumentException( "Invalid Event Id" );
 		
+		EventData eventData = pratilipiHelper.createEventData( event );
 
 		List<Long> pratilipiIdList = new LinkedList<>();
 		if( event.getId() == 5724293958729728L ) {
