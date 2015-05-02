@@ -283,8 +283,12 @@ public class PratilipiContentHelper extends PageContentHelper<
 		return false;
 	}
 	
-	public static boolean hasRequestAccessToReadPratilipiContent( HttpServletRequest request, Pratilipi pratilipi ) {
+	public static boolean hasRequestAccessToReadPratilipiContent( HttpServletRequest request, Pratilipi pratilipi ) 
+			throws InvalidArgumentException {
 		
+		if( pratilipi == null )
+			throw new InvalidArgumentException( "Invalid Id" );
+		      
 		if( pratilipi.getState() == PratilipiState.PUBLISHED )
 			return true;
 		
