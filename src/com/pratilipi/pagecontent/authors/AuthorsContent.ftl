@@ -2,10 +2,23 @@
 
 <#setting time_zone="${ timeZone }">
 
+<style>
+	#PageContent-Author-Add {
+		margin: 20px 0px;
+		position: fixed;
+		top: 70px;
+		left: 10px;
+		opacity: 0.6;
+	}
+	
+	#PageContent-Author-Add:hover{
+		opacity: 1;
+	}
+</Style>
 
 <div id="PageContent-Author-List" class="container">
 	<#if showAddOption>
-		<div style="margin: 20px 0px;">
+		<div id="PageContent-Author-Add">
 			<paper-fab
 					mini class="bg-green" style="margin-right:10px"
 					icon="add" title="Add Author"
@@ -58,7 +71,6 @@
 	}
 	
 	scope.newAuthor = function( e ){
-		console.log( "New Author function called" );
 		newAuthorDialog.open();
 	}
 
