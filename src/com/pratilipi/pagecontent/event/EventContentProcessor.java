@@ -258,6 +258,42 @@ public class EventContentProcessor extends PageContentProcessor<EventContent> {
 			pratilipiIdList.add( 5728633066881024L );
 			pratilipiIdList.add( 5707098268631040L );
 			pratilipiIdList.add( 5089650112724992L );
+			pratilipiIdList.add( 5669228568903680L );
+			pratilipiIdList.add( 4858857931145216L );
+			pratilipiIdList.add( 5695308147195904L );
+			pratilipiIdList.add( 5168442898382848L );
+			pratilipiIdList.add( 5636860353183744L );
+			pratilipiIdList.add( 5670086220185600L );
+			pratilipiIdList.add( 5638054622527488L );
+			pratilipiIdList.add( 5667340125470720L );
+			pratilipiIdList.add( 6236747964874752L );
+			pratilipiIdList.add( 5707975213711360L );
+			pratilipiIdList.add( 5754800155131904L );
+			pratilipiIdList.add( 5692884846116864L );
+			pratilipiIdList.add( 5678418456739840L );
+			pratilipiIdList.add( 5163118564999168L );
+			pratilipiIdList.add( 5168830116528128L );
+			pratilipiIdList.add( 4800534389194752L );
+			pratilipiIdList.add( 6289471909658624L );
+			pratilipiIdList.add( 6298760447524864L );
+			pratilipiIdList.add( 6208039463944192L );
+			pratilipiIdList.add( 4910375224999936L );
+			pratilipiIdList.add( 6269577084272640L );
+			pratilipiIdList.add( 5101612938821632L );
+			pratilipiIdList.add( 5172644047486976L );
+			pratilipiIdList.add( 6220897790722048L );
+			pratilipiIdList.add( 4891169070776320L );
+			pratilipiIdList.add( 5639243523162112L );
+			pratilipiIdList.add( 6017068977618944L );
+			pratilipiIdList.add( 5975435041046528L );
+			pratilipiIdList.add( 5766184234385408L );
+			pratilipiIdList.add( 5154496334266368L );
+			pratilipiIdList.add( 6305192429486080L );
+			pratilipiIdList.add( 5756336679682048L );
+			pratilipiIdList.add( 4815506645188608L );
+			pratilipiIdList.add( 5672485227855872L );
+			pratilipiIdList.add( 5122889535717376L );
+			pratilipiIdList.add( 5131461350916096L );
 		}
 		
 		List<PratilipiData> pratilipiDataList =
