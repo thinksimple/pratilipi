@@ -28,9 +28,7 @@
 			<div style="margin-top:10px; margin-bottom:10px;">
 				<@social.vToolbar shareUrl=shareUrl/>
 				<#if pratilipiData.getStarCount() gt 0 && pratilipiData.getRatingCount() gt 0>
-					<label style="font-size: 14px;">Rating: ${ pratilipiData.getStarCount()/ pratilipiData.getRatingCount() }/5</label>
-				<#elseif pratilipiData.getStarCount() gt 0 && pratilipiData.getRatingCount() == 0>
-					<label style="font-size: 14px;">Rating: ${ pratilipiData.getStarCount()/ 1 }/5</label>
+					<label style="font-size: 14px;">Rating: ${ ( pratilipiData.getStarCount()/ pratilipiData.getRatingCount() )?string["0.#"] }/5</label>
 				<#else>
 					<label style="font-size: 14px;">Rating: -/5</label>
 				</#if>
