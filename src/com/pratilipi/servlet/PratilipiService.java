@@ -18,6 +18,7 @@ import com.pratilipi.pagecontent.pratilipi.api.PratilipiCoverApi;
 import com.pratilipi.pagecontent.pratilipi.api.PratilipiListApi;
 import com.pratilipi.pagecontent.pratilipi.api.PratilipiProcessApi;
 import com.pratilipi.pagecontent.pratilipi.api.PratilipiResourceApi;
+import com.pratilipi.pagecontent.search.api.SearchApi;
 import com.pratilipi.pagecontent.userpratilipi.api.UserPratilipiApi;
 
 @SuppressWarnings("serial")
@@ -43,6 +44,8 @@ public class PratilipiService extends ClaymusService {
 		ApiRegistry.register( AuthorListApi.class );
 		ApiRegistry.register( AuthorImageApi.class );
 		ApiRegistry.register( AuthorProcessApi.class );
+		
+		ApiRegistry.register( SearchApi.class );
 
 		ApiRegistry.register( UserPratilipiApi.class );
 	}
