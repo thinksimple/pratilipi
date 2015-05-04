@@ -3,6 +3,7 @@ package com.pratilipi.servlet;
 import com.claymus.api.ApiRegistry;
 import com.claymus.servlet.ClaymusService;
 import com.pratilipi.api.InitApi;
+import com.pratilipi.api.MobileInitApi;
 import com.pratilipi.api.OAuthApi;
 import com.pratilipi.api.PurchaseApi;
 import com.pratilipi.pagecontent.author.api.AuthorApi;
@@ -26,6 +27,7 @@ public class PratilipiService extends ClaymusService {
 		ApiRegistry.register( InitApi.class );
 		ApiRegistry.register( OAuthApi.class );
 		ApiRegistry.register( PurchaseApi.class );
+		ApiRegistry.register( MobileInitApi.class );
 		
 		ApiRegistry.register( PratilipiApi.class );
 		ApiRegistry.register( PratilipiListApi.class );
