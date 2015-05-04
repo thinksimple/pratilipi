@@ -82,6 +82,62 @@ public class SearchAccessorGaeImpl
 	}
 
 	@Override
+	public DataListCursorTuple<Long> searchQuery(String query, String cursorStr, Integer resultCount) {
+		
+		SortOptions.Builder sortOptionsBuilder = SortOptions.newBuilder();
+		sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
+				.setExpression( "readCount" )
+				.setDirection( SortExpression.SortDirection.DESCENDING )
+				.setDefaultValueNumeric( 0 ) );
+		SortOptions sortOptions = sortOptionsBuilder.setLimit( 10000 ).build();
+		
+		String queryString = null;
+		String queryFilter = null;
+		
+		String[] queryWords = query.split( " " );
+		
+		for( String word : queryWords ){
+			if( word.toLowerCase().equals( "book" ) || word.toLowerCase().equals( "books" )
+					|| word.toLowerCase().equals( "poem" ) || word.toLowerCase().equals( "poems" )
+					|| word.toLowerCase().equals( "story" ) || word.toLowerCase().equals( "stories" ) ) {
+				if( queryFilter == null )
+					queryFilter = word;
+				else
+					queryFilter = queryFilter + " OR " + word;
+			} else if( !word.toLowerCase().equals( "and" ) && !word.toLowerCase().equals( "or" ) ){
+				if( queryString == null )
+					queryString = word;
+				else
+					queryString = queryString + " OR " + word;
+			}
+		}
+		
+		String finalSearchQuery = null;
+		if( queryString != null )
+			finalSearchQuery = queryString;
+		if( queryString != null && queryFilter != null )
+			finalSearchQuery = queryString + " AND " + queryFilter;
+		else if( queryString == null && queryFilter != null )
+			finalSearchQuery = queryFilter;
+		
+		logger.log( Level.INFO, finalSearchQuery );
+
+		
+		Results<ScoredDocument> result = search( finalSearchQuery, sortOptions, cursorStr, resultCount, "docType", "docId" );
+
+		List<Long> pratilipiIdList = new ArrayList<>( result.getNumberReturned() ); 
+		for( ScoredDocument document : result ) {
+			String docType = document.getFields( "docType" ).iterator().next().getAtom();
+			if( docType.equals( "Pratilipi" ))
+				pratilipiIdList.add( Long.parseLong( document.getFields( "docId" ).iterator().next().getAtom() ) );
+		}
+		
+		Cursor cursor = result.getCursor();
+		
+		return new DataListCursorTuple<Long>( pratilipiIdList, cursor == null ? null : cursor.toWebSafeString() );
+	}
+	
+	@Override
 	public void indexPratilipiData( PratilipiData pratilipiData ) throws UnexpectedServerException {
 		indexDocument( createDocument( pratilipiData ) );
 	}

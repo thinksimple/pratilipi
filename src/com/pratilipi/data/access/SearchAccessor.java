@@ -11,6 +11,8 @@ import com.pratilipi.data.transfer.shared.PratilipiData;
 public interface SearchAccessor extends com.claymus.data.access.SearchAccessor {
 	
 	DataListCursorTuple<Long> searchPratilipi( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
+	
+	DataListCursorTuple<Long> searchQuery( String query, String cursorStr, Integer resultCount );
 		
 	void indexPratilipiData( PratilipiData pratilipiData ) throws UnexpectedServerException;
 
