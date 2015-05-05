@@ -26,6 +26,7 @@ import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiContentType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
@@ -110,6 +111,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 		AccessToken accessToken = ( AccessToken ) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		Language language = dataAccessor.getLanguage( pratilipi.getLanguageId() );
 		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( accessToken.getUserId(), pratilipiId );
 		
 		// AccessToReadPratilipiContent ?
@@ -122,7 +124,7 @@ public class ReaderContentProcessor extends PageContentProcessor<ReaderContent> 
 
 		// Creating PratilipiData
 		PratilipiData pratilipiData =
-				pratilipiHelper.createPratilipiData( pratilipi, null, null, null );
+				pratilipiHelper.createPratilipiData( pratilipi, language, null, null );
 
 		// Page # to display
 		String pageNoStr = request.getParameter( "page" ) == null
