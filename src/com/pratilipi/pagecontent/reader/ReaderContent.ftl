@@ -339,7 +339,7 @@
 		ga( 'send', 'event',
 			'Pratilipi:' + '${ pratilipiData.getId()?c }',	// Event Category
 			'ReadTimeSec:Page ' + currentPage,				// Event Action
-			'${ pratilipiData.getLanguageData().getNameEn() } ${ pratilipiData.getType() }',					// Event Label
+			'${ pratilipiData.getLanguageData().getNameEn() } ${ pratilipiData.getType() }', // Event Label
 			readTimeSec );									// Event Value
 	}
 

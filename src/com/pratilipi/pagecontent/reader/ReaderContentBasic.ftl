@@ -464,7 +464,7 @@ function recordPageTime(){
 	
 	var eventCategory = 'Pratilipi:' + '${ pratilipiData.getId()?c }';
 	var eventAction = 'ReadTimeSec:Page ' + pageNoDisplayed;
-	var eventLabel = '${ pratilipiData.getType() }';
+	var eventLabel = '${ pratilipiData.getLanguageData().getNameEn() } ${ pratilipiData.getType() }';
 	
 	ga( 'send', 'event', eventCategory, eventAction, eventLabel, readTimeSec );
 }
