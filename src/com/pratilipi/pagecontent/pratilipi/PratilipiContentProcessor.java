@@ -54,9 +54,12 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		String ogImage = "http://" + DOMAIN + "/api/pratilipi/cover?pratilipiId=" + pratilipi.getId();
 		if( ! ogImage.startsWith( "http:" ) )
 			ogImage = "http:" + ogImage;
-		String summarySubstr = pratilipi.getSummary().substring( 
-							pratilipi.getSummary().indexOf( "<p>" ),
-							pratilipi.getSummary().indexOf( "</p>" )).replace( "<p>", "" );
+		String summarySubstr = null;
+		if( pratilipi.getSummary() != null ){
+			summarySubstr = pratilipi.getSummary().substring( 
+										pratilipi.getSummary().indexOf( "<p>" ),
+										pratilipi.getSummary().indexOf( "</p>" )).replace( "<p>", "" );
+		}
 		String ogDescription = pratilipi.getType() == PratilipiType.BOOK ? summarySubstr : pratilipi.getTitleEn();
 		
 		final String fbOgTags = "<meta property='fb:app_id' content='" + ogFbAppId + "' />"
