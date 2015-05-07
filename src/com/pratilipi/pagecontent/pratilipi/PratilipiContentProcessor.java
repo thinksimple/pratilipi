@@ -54,15 +54,18 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		String ogImage = "http://" + DOMAIN + "/api/pratilipi/cover?pratilipiId=" + pratilipi.getId();
 		if( ! ogImage.startsWith( "http:" ) )
 			ogImage = "http:" + ogImage;
-//		String ogDescription = pratilipi.getSummary();
+		String summarySubstr = pratilipi.getSummary().substring( 
+							pratilipi.getSummary().indexOf( "<p>" ),
+							pratilipi.getSummary().indexOf( "</p>" )).replace( "<p>", "" );
+		String ogDescription = pratilipi.getType() == PratilipiType.BOOK ? summarySubstr : pratilipi.getTitleEn();
 		
 		final String fbOgTags = "<meta property='fb:app_id' content='" + ogFbAppId + "' />"
 				+ "<meta property='og:type' content='" + ogType + "' />"
 				+ "<meta property='books:isbn' content='" + ogBooksIsbn + "' />"
 				+ "<meta property='og:url' content='" + ogUrl + "' />"
 				+ "<meta property='og:title' content='" + ogTitle + "' />"
-				+ "<meta property='og:image' content='" + ogImage + "' />";
-//				+ "<meta property='og:description' content='" + ogDescription + "' />";
+				+ "<meta property='og:image' content='" + ogImage + "' />"
+				+ "<meta property='og:description' content='" + ogDescription + "' />";
 		
 		
 		return new Resource[] {
@@ -90,7 +93,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 			AuthorData authorData = AuthorContentHelper.createAuthorData( author, null, request );
 			String authorName = authorData.getName()
 					+ ( authorData.getNameEn() == null ? "" : " / " + authorData.getNameEn() );
-			pratilipiTitle = authorName + " » " + pratilipiTitle;
+			pratilipiTitle = authorName + " Â» " + pratilipiTitle;
 		}
 
 		return pratilipiTitle;
