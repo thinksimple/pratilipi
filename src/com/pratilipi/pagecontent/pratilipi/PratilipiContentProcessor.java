@@ -3,6 +3,8 @@ package com.pratilipi.pagecontent.pratilipi;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +26,7 @@ import com.pratilipi.commons.shared.UserReviewState;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.data.transfer.UserPratilipi;
 import com.pratilipi.data.transfer.shared.AuthorData;
@@ -42,32 +45,58 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		Pratilipi pratilipi = DataAccessorFactory
 				.getDataAccessor( request )
 				.getPratilipi( pratilipiContent.getId() );
+		Author author = pratilipi.getAuthorId() == null ? 
+							null : 
+							DataAccessorFactory
+								.getDataAccessor( request )
+								.getAuthor( pratilipi.getAuthorId() );
+		Language language = DataAccessorFactory
+				.getDataAccessor( request )
+				.getLanguage( pratilipi.getLanguageId() );
 		com.pratilipi.data.transfer.shared.PratilipiData pratilipiData =
-				PratilipiContentHelper.createPratilipiData( pratilipi, null, null, request );
+				PratilipiContentHelper.createPratilipiData( pratilipi, language, author, request );
 
 		
 		String ogFbAppId = FacebookApi.getAppId( request );
-		String ogType = pratilipi.getType() == PratilipiType.ARTICLE ? "article" : "books.book";
-		String ogBooksIsbn = pratilipi.getType() == PratilipiType.ARTICLE ? "" : pratilipi.getId() + "";
+		String ogLocale = pratilipiData.getLanguage() == null ? 
+								"hi_IN" : 
+								pratilipiData.getLanguage().getNameEn().toLowerCase().substring( 0,2 ) + "_IN";
+		String ogType = "book";
+		String ogAuthor = author == null ? null : pratilipiData.getAuthor().getFullNameEn();
+		String ogBooksIsbn = pratilipi.getId() + "";
 		String ogUrl = "http://" + DOMAIN + pratilipiData.getPageUrl();
 		String ogTitle = pratilipi.getTitle() + ( pratilipi.getTitleEn() == null ? "" : " / " + pratilipi.getTitleEn() );
 		String ogImage = "http://" + DOMAIN + "/api/pratilipi/cover?pratilipiId=" + pratilipi.getId();
 		if( ! ogImage.startsWith( "http:" ) )
 			ogImage = "http:" + ogImage;
-		String summarySubstr = null;
-		if( pratilipi.getSummary() != null ){
-			summarySubstr = pratilipi.getSummary().substring( 
-										pratilipi.getSummary().indexOf( "<p>" ),
-										pratilipi.getSummary().indexOf( "</p>" )).replace( "<p>", "" );
+		String ogPublisher = null;
+		if( pratilipiData.getLanguage() != null && pratilipiData.getLanguage().getNameEn().equals( "Tamil" ))
+			ogPublisher = "https://www.facebook.com/pages/%E0%AE%AA%E0%AF%8D%E0%AE%B0%E0%AE%A4%E0%AE%BF%E0%AE%B2%E0%AE%BF%E0%AE%AA%E0%AE%BF/448203822022932";
+		else if( pratilipiData.getLanguage() != null && pratilipiData.getLanguage().getNameEn().equals( "Gujarati" ))
+			ogPublisher = "https://www.facebook.com/pratilipiGujarati";
+		else
+			ogPublisher = "https://www.facebook.com/Pratilipidotcom";
+		String summarySubstr = pratilipi.getSummary();
+		if( summarySubstr != null ){
+			Pattern htmlPattern = Pattern.compile( "<[^>]+>" );
+			Matcher matcher = htmlPattern.matcher( pratilipi.getSummary() );
+			while( matcher.find() ){
+				summarySubstr = summarySubstr.replace( matcher.group(), "" );
+			}
 		}
 		String ogDescription = pratilipi.getType() == PratilipiType.BOOK ? summarySubstr : pratilipi.getTitleEn();
 		
 		final String fbOgTags = "<meta property='fb:app_id' content='" + ogFbAppId + "' />"
+				+ "<meta property='og:locale' content='" + ogLocale + "' />"
 				+ "<meta property='og:type' content='" + ogType + "' />"
-				+ "<meta property='books:isbn' content='" + ogBooksIsbn + "' />"
+				+ "<meta property='book:author' content='" + ogAuthor + "' />"
+				+ "<meta property='book:isbn' content='" + ogBooksIsbn + "' />"
 				+ "<meta property='og:url' content='" + ogUrl + "' />"
 				+ "<meta property='og:title' content='" + ogTitle + "' />"
 				+ "<meta property='og:image' content='" + ogImage + "' />"
+				+ "<meta property='og:image:height' content='auto' />"
+				+ "<meta property='og:image:width' content='auto' />"
+				+ "<meta property='og:publisher' content='" + ogPublisher + "' />"
 				+ "<meta property='og:description' content='" + ogDescription + "' />";
 		
 		

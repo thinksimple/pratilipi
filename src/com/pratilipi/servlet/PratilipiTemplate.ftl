@@ -40,12 +40,16 @@
 			</script>
 		</#if>
 
-
+		<meta property="og:site_name" content="Pratilipi"/>
+		<meta property="fb:admins" content="526808250"/>
+		
 		<#list resourceTagList as resourceTag>
 			${ resourceTag }
 		</#list>
 		
 		<meta property="og:image" content="http://www.pratilipi.com/theme.pratilipi/logo-200x200.png">
+		<meta property="og:image:width" content="auto" />
+		<meta property="og:image:height" content="auto" />
 
 		<#if basicMode>
 			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.basicmode.min.css">

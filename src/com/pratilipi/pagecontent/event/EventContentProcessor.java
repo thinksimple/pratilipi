@@ -8,7 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.server.FacebookApi;
 import com.claymus.commons.server.FreeMarkerUtil;
+import com.claymus.commons.shared.Resource;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.pagecontent.PageContentProcessor;
@@ -16,11 +18,57 @@ import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Event;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.service.shared.data.EventData;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class EventContentProcessor extends PageContentProcessor<EventContent> {
 
+	@Override
+	public Resource[] getDependencies( EventContent eventContent, HttpServletRequest request){
+	
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
+		Event event = dataAccessor.getEvent( eventContent.getId() );
+		Language language = null;
+		if( event.getLanguageId() != null )
+			language = dataAccessor.getLanguage( event.getLanguageId() );
+		
+		String ogFbAppId = FacebookApi.getAppId( request );
+		String ogLocale = language == null ? 
+									"hi_IN" : 
+									language.getNameEn().toLowerCase().substring( 0,2 ) + "_IN";
+		String ogTitle = event.getNameEn();
+		String ogUrl = request.getRequestURI();
+		String ogPublisher = null;
+		if( language != null && language.getNameEn().equals( "Tamil" ))
+			ogPublisher = "https://www.facebook.com/pages/%E0%AE%AA%E0%AF%8D%E0%AE%B0%E0%AE%A4%E0%AE%BF%E0%AE%B2%E0%AE%BF%E0%AE%AA%E0%AE%BF/448203822022932";
+		else if( language != null && language.getNameEn().equals( "Gujarati" ))
+			ogPublisher = "https://www.facebook.com/pratilipiGujarati";
+		else
+			ogPublisher = "https://www.facebook.com/Pratilipidotcom";
+		String ogDescription = event.getDescription() == null ? "" : event.getDescription();
+		
+		final String fbOgTags = "<meta property='fb:app_id' content='" + ogFbAppId + "' />"
+				+ "<meta property='og:locale' content='" + ogLocale + "' />"
+				+ "<meta property='og:type' content='website' />"
+				+ "<meta property='og:title' content='" + ogTitle + "' />"
+				+ "<meta property='og:url' content='" + ogUrl + "' />"
+				+ "<meta property='og:publisher' content='" + ogPublisher + "' />"
+				+ "<meta property='og:description' content='" + ogDescription + "' />";
+		
+		
+		return new Resource[] {
+
+			new Resource() {
+				@Override
+				public String getTag() {
+					return fbOgTags;
+				}
+			},
+
+		};
+	}
+	
 	@Override
 	public String generateTitle( EventContent eventContent, HttpServletRequest request ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );

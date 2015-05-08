@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.claymus.commons.server.ClaymusHelper;
+import com.claymus.commons.server.FacebookApi;
 import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.server.SerializationUtil;
+import com.claymus.commons.shared.Resource;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.pagecontent.PageContentProcessor;
@@ -20,12 +24,88 @@ import com.pratilipi.commons.shared.PratilipiType;
 import com.pratilipi.data.access.DataAccessor;
 import com.pratilipi.data.access.DataAccessorFactory;
 import com.pratilipi.data.transfer.Author;
+import com.pratilipi.data.transfer.Language;
 import com.pratilipi.data.transfer.Pratilipi;
 import com.pratilipi.service.shared.data.AuthorData;
 import com.pratilipi.service.shared.data.PratilipiData;
 
 public class AuthorContentProcessor extends PageContentProcessor<AuthorContent> {
 
+	private static final String DOMAIN = ClaymusHelper.getSystemProperty( "domain" );
+	
+	@Override
+	public Resource[] getDependencies( AuthorContent authorContent, HttpServletRequest request ) {
+		
+		Author author = DataAccessorFactory
+								.getDataAccessor( request )
+								.getAuthor( authorContent.getId() );
+		Language language = author.getLanguageId() == null ? 
+								null :
+								DataAccessorFactory
+									.getDataAccessor( request )
+									.getLanguage( author.getLanguageId() );
+		com.pratilipi.data.transfer.shared.AuthorData authorData = 
+									AuthorContentHelper.createAuthorData( author, language, request );
+
+		
+		String ogFbAppId = FacebookApi.getAppId( request );
+		String ogLocale = authorData.getLanguage() == null ? 
+								"hi_IN" : 
+									authorData.getLanguage().getNameEn().toLowerCase().substring( 0,2 ) + "_IN";
+		String ogType = "profile";
+		String profileFirstName = authorData.getFirstNameEn() == null ? "" : authorData.getFirstNameEn();
+		String profileLastName = authorData.getLastNameEn() == null ? "" : authorData.getLastNameEn();
+		String ogUrl = "http://" + DOMAIN + authorData.getPageUrl();
+		String ogTitle = authorData.getFullNameEn();
+		String ogImage = authorData.getAuthorImageUrl();
+		if( ! ogImage.startsWith( "http:" ) )
+			ogImage = "http:" + ogImage;
+		String ogPublisher = null;
+		if( authorData.getLanguage() != null && authorData.getLanguage().getNameEn().equals( "Tamil" ))
+			ogPublisher = "https://www.facebook.com/pages/%E0%AE%AA%E0%AF%8D%E0%AE%B0%E0%AE%A4%E0%AE%BF%E0%AE%B2%E0%AE%BF%E0%AE%AA%E0%AE%BF/448203822022932";
+		else if( authorData.getLanguage() != null && authorData.getLanguage().getNameEn().equals( "Gujarati" ))
+			ogPublisher = "https://www.facebook.com/pratilipiGujarati";
+		else
+			ogPublisher = "https://www.facebook.com/Pratilipidotcom";
+		String summarySubstr = authorData.getSummary();
+		if( summarySubstr != null ){
+			Pattern htmlPattern = Pattern.compile( "<[^>]+>" );
+			Matcher matcher = htmlPattern.matcher( authorData.getSummary() );
+			while( matcher.find() ){
+				summarySubstr = summarySubstr.replace( matcher.group(), "" );
+			}
+			if( summarySubstr.length() > 150 )
+				summarySubstr = summarySubstr.substring( 0, 150 );
+		}
+		String ogDescription = summarySubstr;
+		
+		final String fbOgTags = "<meta property='fb:app_id' content='" + ogFbAppId + "' />"
+				+ "<meta property='og:locale' content='" + ogLocale + "' />"
+				+ "<meta property='og:type' content='" + ogType + "' />"
+				+ "<meta property='profile:first_name' content='" + profileFirstName + "' />"
+				+ "<meta property='profile:last_name' content='" + profileLastName + "' />"
+				+ "<meta property='og:url' content='" + ogUrl + "' />"
+				+ "<meta property='og:title' content='" + ogTitle + "' />"
+				+ "<meta property='og:image' content='" + ogImage + "' />"
+				+ "<meta property='og:image:height' content='auto' />"
+				+ "<meta property='og:image:width' content='auto' />"
+				+ "<meta property='og:publisher' content='" + ogPublisher + "' />"
+				+ "<meta property='og:description' content='" + ogDescription + "' />";
+		
+		
+		return new Resource[] {
+
+			new Resource() {
+				@Override
+				public String getTag() {
+					return fbOgTags;
+				}
+			},
+
+		};
+		
+	}
+	
 	@Override
 	public String generateTitle( AuthorContent authorContent, HttpServletRequest request ) {
 		AuthorData authorData = PratilipiHelper.get( request ).createAuthorData( authorContent.getId() );
