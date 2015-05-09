@@ -43,7 +43,7 @@ public class PratilipiData implements Serializable {
 	private boolean hasPublicationYear;
 	
 	private Date listingDate;
-	private Date LastUpdated;
+	private Date lastUpdated;
 
 	
 	private String summary;
@@ -229,11 +229,11 @@ public class PratilipiData implements Serializable {
 	}
 
 	public Date getLastUpdated(){
-		return this.LastUpdated;
+		return this.lastUpdated;
 	}
 	
 	public void setLastUpdated( Date lastUpdated ){
-		this.LastUpdated = lastUpdated;
+		this.lastUpdated = lastUpdated;
 	}
 
 	public String getSummary() {
