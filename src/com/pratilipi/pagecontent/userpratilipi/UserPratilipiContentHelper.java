@@ -46,14 +46,14 @@ public class UserPratilipiContentHelper extends PageContentHelper<
 
 	
 	public static Boolean hasRequestAccessToAddBookmarks( HttpServletRequest request ){
-		AccessToken accessToken = ( AccessToken ) request.getAttribute( ClaymusHelper.REQUEST_ATTRIB_ACCESS_TOKEN );
-		if( accessToken.getUserId() == 0L )
-			return false;
-		else
-			return true;
+		return ClaymusHelper.get( request ).isUserLoggedIn();
 	}
 
+	public static Boolean hasRequestAccessToAddToLibrary( HttpServletRequest request ){
+		return ClaymusHelper.get( request ).isUserLoggedIn();
+	}
 	
+
 	public static UserPratilipiData createUserPratilipiData( Long pratilipiId, HttpServletRequest request ){
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
@@ -79,6 +79,7 @@ public class UserPratilipiContentHelper extends PageContentHelper<
 		userPratilipiData.setReviewState( userPratilipi.getReviewState() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 		userPratilipiData.setBookmarks( userPratilipi.getBookmarks() );
+		userPratilipiData.setAddedToLib( userPratilipi.isAddedtoLib() );
 		
 		return userPratilipiData;
 	}
@@ -131,6 +132,14 @@ public class UserPratilipiContentHelper extends PageContentHelper<
 			}
 			
 			userPratilipi.setBookmarks( bookmarkGson.toString() );
+		}
+		
+		if( userPratilipiData.hasAddedToLib() ){
+			if( !hasRequestAccessToAddToLibrary( request ) )
+				throw new InsufficientAccessException();
+			
+			userPratilipi.setAddedToLib( userPratilipiData.isAddedToLib() );
+			
 		}
 		
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );

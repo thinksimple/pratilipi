@@ -52,6 +52,8 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Persistent( column = "BOOKMARKS" )
 	private Text bookmarks; 
 
+	@Persistent( column = "ADDED_TO_LIB" )
+	private Boolean addedToLib;
 	
 	public void setId( String id ) {
 		this.id = id;
@@ -170,6 +172,16 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Override
 	public void setBookmarks( String bookmarks) {
 		this.bookmarks = new Text( bookmarks );
+	}
+
+	@Override
+	public Boolean isAddedtoLib() {
+		return this.addedToLib;
+	}
+
+	@Override
+	public void setAddedToLib(Boolean addedToLib) {
+		this.addedToLib = addedToLib;
 	}
 
 }

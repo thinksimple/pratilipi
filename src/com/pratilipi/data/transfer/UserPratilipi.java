@@ -54,4 +54,8 @@ public interface UserPratilipi extends Serializable {
 	
 	void setBookmarks( String bookmarks );
 	
+	Boolean isAddedtoLib();
+	
+	void setAddedToLib( Boolean addedToLib );
+	
 }

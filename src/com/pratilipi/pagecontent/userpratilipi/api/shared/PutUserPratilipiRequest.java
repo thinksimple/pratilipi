@@ -11,8 +11,10 @@ public class PutUserPratilipiRequest extends GenericRequest {
 	
 	private Integer bookmark;
 	private boolean hasBookmark;
-
 	private String requestType;
+	
+	private boolean addedToLib;
+	private boolean hasAddedToLib;
 	
 	
 	public Long getPratilipiId() {
@@ -29,6 +31,14 @@ public class PutUserPratilipiRequest extends GenericRequest {
 	
 	public String getRequestType() {
 		return requestType;
+	}
+	
+	public Boolean isAddedToLib(){
+		return addedToLib;
+	}
+	
+	public Boolean hasAddedToLib(){
+		return hasAddedToLib;
 	}
 	
 }

@@ -31,6 +31,10 @@ public class UserPratilipiApi extends GenericApi {
 				userPratilipiData.setBookmarkRequestType( BookmarkRequestType.REMOVE );
 		}
 		
+		if( request.hasAddedToLib() ){
+			userPratilipiData.setAddedToLib( request.isAddedToLib() );
+		}
+		
 		userPratilipiData = UserPratilipiContentHelper.saveUserPratilipi( userPratilipiData, this.getThreadLocalRequest() );
 		
 		PutUserPratilipiResponse putUserPratilipiResponse = new PutUserPratilipiResponse();

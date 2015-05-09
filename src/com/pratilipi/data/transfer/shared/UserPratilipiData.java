@@ -29,6 +29,8 @@ public class UserPratilipiData implements IsSerializable {
 	private boolean hasBookmarks;
 	private BookmarkRequestType bookmarkRequestType;
 	
+	private boolean addedToLib;
+	private boolean hasAddedToLib;
 	
 	public Long getUserId() {
 		return userId;
@@ -115,6 +117,19 @@ public class UserPratilipiData implements IsSerializable {
 	
 	public void setBookmarkRequestType( BookmarkRequestType bookmarkRequestType ) {
 		this.bookmarkRequestType = bookmarkRequestType;
+	}
+	
+	public Boolean isAddedToLib(){
+		return addedToLib;
+	}
+	
+	public void setAddedToLib( Boolean addedToLib ){
+		this.addedToLib = addedToLib;
+		this.hasAddedToLib = true;
+	}
+	
+	public Boolean hasAddedToLib(){
+		return hasAddedToLib;
 	}
 	
 }
