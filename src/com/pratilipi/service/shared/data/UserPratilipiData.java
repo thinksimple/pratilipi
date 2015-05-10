@@ -30,6 +30,7 @@ public class UserPratilipiData implements IsSerializable {
 	private UserReviewState reviewState;
 	
 	private Date reviewDate;
+	private Date reviewLastUpdatedDate;
 	
 	private String bookmarks;
 	private Boolean hasBookmarks = false;
@@ -124,6 +125,14 @@ public class UserPratilipiData implements IsSerializable {
 
 	public void setReviewDate( Date reviewDate ) {
 		this.reviewDate = reviewDate;
+	}
+	
+	public void setReviewLastUpdatedDate( Date reviewLastUpdatedDate ){
+		this.reviewLastUpdatedDate = reviewLastUpdatedDate;
+	}
+	
+	public Date getReviewLastUpdateDate(){
+		return reviewLastUpdatedDate;
 	}
 	
 	public String getBookmarks(){

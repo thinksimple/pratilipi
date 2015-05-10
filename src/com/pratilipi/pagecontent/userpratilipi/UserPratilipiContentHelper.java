@@ -78,6 +78,7 @@ public class UserPratilipiContentHelper extends PageContentHelper<
 		userPratilipiData.setReview( userPratilipi.getReview() );
 		userPratilipiData.setReviewState( userPratilipi.getReviewState() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
+		userPratilipiData.setReviewLastUpdatedDate( userPratilipi.getReviewLastUpdateDate() );
 		userPratilipiData.setBookmarks( userPratilipi.getBookmarks() );
 		userPratilipiData.setAddedToLib( userPratilipi.isAddedtoLib() );
 		
