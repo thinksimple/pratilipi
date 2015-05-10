@@ -425,16 +425,19 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 		
 		if( userPratilipiData.hasReview() ){
 			
-			if( ( userPratilipi != null && userPratilipi.getReviewState() != null && userPratilipi.getReviewState() != UserReviewState.NOT_SUBMITTED )
-					|| !PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( this.getThreadLocalRequest(), pratilipi ) )
+			if( !PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( this.getThreadLocalRequest(), pratilipi ) )
 				throw new InsufficientAccessException();
 	
-			userPratilipi = dataAccessor.newUserPratilipi();
-			userPratilipi.setUserId( pratilipiHelper.getCurrentUserId() );
-			userPratilipi.setPratilipiId( pratilipi.getId() );
+			if( userPratilipi == null ){
+				userPratilipi = dataAccessor.newUserPratilipi();
+				userPratilipi.setUserId( pratilipiHelper.getCurrentUserId() );
+				userPratilipi.setPratilipiId( pratilipi.getId() );
+				userPratilipi.setReviewDate( new Date() );
+				userPratilipi.setReviewState( UserReviewState.PENDING_APPROVAL );
+			}
+			
 			userPratilipi.setReview( userPratilipiData.getReview() );
-			userPratilipi.setReviewState( UserReviewState.PENDING_APPROVAL );
-			userPratilipi.setReviewDate( new Date() );
+			userPratilipi.setReviewLastUpdatedDate( new Date() );
 	
 			userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		}

@@ -91,6 +91,16 @@
 
 </div> <#-- END of container -->
 
+<style>
+	.editAnchor{
+		color: #008cc9;
+		font-size: 13px;
+	}
+	
+	.editAnchor:hover {
+		text-decoration: underline;
+	}
+</style>
 
 
 <div class="container">
@@ -105,10 +115,16 @@
 			<#if review.getReview()??>
 				<div class="hr-below">
 					<h4 style="display:inline-block">${ userIdNameMap[ review.getUserId()?c ] } Says,</h4>
-					<span class="pull-right"> ${ review.getReviewDate()?date }</span>
+					<span class="pull-right"> ${ ( review.getReviewLastUpdateDate() ! review.getReviewDate() )?date }</span>
 					<p>
 						${ review.getReview() }
 					</p>
+					<#if review.getUserId() == userData.getId()>
+						<div id="PageContent-Pratilipi-ReviewEditAnchor"></div>
+						<div id="PageContent-Pratilipi-ReviewEdit" style="display:none;"></div>
+						<div id="PageContent-Pratilipi-Review-AddOptions" style="padding-top:15px; text-align:right; display:none;"></div>
+						<div id="PageContent-Pratilipi-Review-SaveErrorMessage" class="alert alert-danger" style="padding:15px; display:none;"></div>
+					</#if>
 				</div>
 			</#if>
 		</#list>
