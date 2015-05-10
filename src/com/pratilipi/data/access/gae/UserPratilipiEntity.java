@@ -49,6 +49,9 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Persistent( column = "REVIEW_DATE" )
 	private Date reviewDate;
 	
+	@Persistent( column = "REVIEW_LAST_UPDATED_DATE" )
+	private Date reviewLastUpdatedDate;
+	
 	@Persistent( column = "BOOKMARKS" )
 	private Text bookmarks; 
 
@@ -162,6 +165,16 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Override
 	public void setReviewDate( Date reviewDate ) {
 		this.reviewDate = reviewDate;
+	}
+	
+	@Override
+	public void setReviewLastUpdatedDate( Date reviewLastUpdatedDate ){
+		this.reviewLastUpdatedDate = reviewLastUpdatedDate;
+	}
+	
+	@Override
+	public Date getReviewLastUpdateDate(){
+		return reviewLastUpdatedDate;
 	}
 
 	@Override
