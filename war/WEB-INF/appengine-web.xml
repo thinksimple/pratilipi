@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 
-  <application>devo-pratilipi</application>
+  <application>prod-pratilipi</application>
   <module>default</module>
-  <version>mark-4p212</version>
+  <version>mark-4p225</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>false</sessions-enabled>
@@ -55,6 +55,7 @@
     <property name="dev-pratilipi.email" value="dev-team@pratilipi.com"/>
     <property name="devo-pratilipi.email" value="dev-team@pratilipi.com"/>
     <property name="prod-pratilipi.email" value="contact@pratilipi.com"/>
+    <property name="prod-pratilipi.email.noreply" value="noreply@pratilipi.com"/>
 
 	<!-- Configure Blob Storage -->
     <property name="dev-pratilipi.blobservice.gcs.bucket" value="dev-pratilipi.appspot.com"/>
