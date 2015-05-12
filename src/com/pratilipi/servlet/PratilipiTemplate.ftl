@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html itemscope="" itemtype="http://schema.org/WebPage" lang="en-IN">
 	<head>
-	
+		<meta content="/theme.pratilipi/logo-200x200.png" itemprop="image">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -165,6 +165,23 @@
 				</#if>
 			</template>
 		</#if>
+		
+		<script type="application/ld+json">
+			{
+			  "@context": "http://schema.org",
+			  "@type": "Organization",
+			  "url": "https://www.pratilipi.com/",
+			  "logo": "http://www.pratilipi.com/theme.pratilipi/logo-200x200.png",
+			  "sameAs" : [ "http://www.facebook.com/Pratilipidotcom",
+						    "http://www.twitter.com/TeamPratilipi",
+						    "https://plus.google.com/u/0/+PratilipiTeam" ],
+			  "potentialAction": {
+			    "@type": "SearchAction",
+			    "target": "https://www.pratilipi.com/search?q={search_term_string}",
+			    "query-input": "required name=search_term_string"
+              }
+			}
+		</script>
 
 	</body>
 </html>
