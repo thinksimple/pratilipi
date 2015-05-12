@@ -28,7 +28,12 @@
 			<div style="margin-top:10px; margin-bottom:10px;">
 				<@social.vToolbar shareUrl=shareUrl/>
 				<#if pratilipiData.getStarCount() gt 0 && pratilipiData.getRatingCount() gt 0>
-					<label style="font-size: 14px;">Rating: ${ ( pratilipiData.getStarCount()/ pratilipiData.getRatingCount() )?string["0.#"] }/5</label>
+					<label itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" style="font-size: 14px;">
+						Rating: 
+						<span itemProp="ratingValue">${ ( pratilipiData.getStarCount()/ pratilipiData.getRatingCount() )?string["0.#"] }</span>
+						/
+						<span itemProp="bestRating">5</span>
+					</label>
 				<#else>
 					<label style="font-size: 14px;">Rating: -/5</label>
 				</#if>
