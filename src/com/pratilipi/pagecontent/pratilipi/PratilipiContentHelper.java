@@ -394,6 +394,9 @@ public class PratilipiContentHelper extends PageContentHelper<
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		
 		pratilipiData.setReadCount( pratilipi.getReadCount() );
+		pratilipiData.setReviewCount( pratilipi.getReviewCount() );
+		pratilipiData.setStarCount( pratilipi.getStarCount() );
+		pratilipiData.setRatingCount( pratilipi.getRatingCount() );
 		pratilipiData.setRelevance( calculateRelevance( pratilipi, author ) );
 		
 		pratilipiData.setContentType( pratilipi.getContentType() );
@@ -908,7 +911,7 @@ TODO: Add Genres in PratilipiData */
 
 	
 	public static Object getPratilipiContent(
-			long pratilipiId, int pageNo, PratilipiContentType contentType,
+			long pratilipiId, Integer pageNo, PratilipiContentType contentType,
 			HttpServletRequest request ) throws InvalidArgumentException,
 			InsufficientAccessException, UnexpectedServerException {
 		
@@ -933,11 +936,16 @@ TODO: Add Genres in PratilipiData */
 			String content = blobEntry == null
 					? "&nbsp;"
 					: new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-			return pratilipiContentUtil.getContent( pageNo );
-			
+			if( pageNo != null ){
+				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+				return pratilipiContentUtil.getContent( pageNo );
+			} else
+				return content;
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			try {
+				if( pageNo == null )
+					throw new InvalidArgumentException( "Page number is missing" );
+				
 				return blobAccessor.getBlob( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
 			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );

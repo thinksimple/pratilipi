@@ -65,6 +65,13 @@ public class PratilipiData implements Serializable {
 	private boolean hasState;
 	
 	private Long readCount;
+	
+	private Long reviewCount;
+	
+	private Long ratingCount;
+	
+	private Long starCount;
+	
 	private Double relevance;
 
 	
@@ -314,13 +321,6 @@ public class PratilipiData implements Serializable {
 		return hasState;
 	}
 	
-	public Double getRelevance() {
-		return relevance;
-	}
-
-	public void setRelevance( Double relevance ) {
-		this.relevance = relevance;
-	}
 	
 	public Long getReadCount() {
 		return readCount;
@@ -330,4 +330,35 @@ public class PratilipiData implements Serializable {
 		this.readCount = readCount;
 	}
 	
+	public Long getReviewCount() {
+		return reviewCount;
+	}
+
+	public void setReviewCount(Long reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+
+	public Long getRatingCount() {
+		return ratingCount;
+	}
+
+	public void setRatingCount(Long ratingCount) {
+		this.ratingCount = ratingCount;
+	}
+
+	public Long getStarCount() {
+		return starCount;
+	}
+
+	public void setStarCount(Long starCount) {
+		this.starCount = starCount;
+	}
+	
+	public Double getRelevance() {
+		return relevance;
+	}
+	
+	public void setRelevance( Double relevance ) {
+		this.relevance = relevance;
+	}
 }

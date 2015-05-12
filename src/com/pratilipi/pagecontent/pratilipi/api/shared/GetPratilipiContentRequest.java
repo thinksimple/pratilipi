@@ -9,7 +9,7 @@ public class GetPratilipiContentRequest extends GenericRequest {
 	@Validate( required = true )
 	private Long pratilipiId;
 
-	@Validate( required = true )
+//	@Validate( required = true )
 	private Integer pageNo;
 	
 
