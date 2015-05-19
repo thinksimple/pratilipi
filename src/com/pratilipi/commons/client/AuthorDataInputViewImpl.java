@@ -2,6 +2,7 @@ package com.pratilipi.commons.client;
 
 import com.claymus.commons.client.ui.formfield.ListBoxFormField;
 import com.claymus.commons.client.ui.formfield.TextInputFormField;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -45,19 +46,24 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 	private Label serverError = new Label();
 	
 	public AuthorDataInputViewImpl(){
-		firstNameInput.setPlaceholder( "First Name" );
-		firstNameInput.setRequired( true );
+		firstNameInput.setPlaceholder( "First Name (Native Language)" );
+		firstNameInput.getElement().getStyle().setFontSize( 12, Unit.PX);
 		
-		lastNameInput.setPlaceholder( "Last Name" );
+		lastNameInput.setPlaceholder( "Last Name (Native Language)" );
+		lastNameInput.getElement().getStyle().setFontSize( 12, Unit.PX);
 		
-		penNameInput.setPlaceholder( "Pen Name" );
+		penNameInput.setPlaceholder( "Pen Name (Native Language)" );
+		penNameInput.getElement().getStyle().setFontSize( 12, Unit.PX);
 
 		firstNameEnInput.setPlaceholder( "First Name (English)" );
+		firstNameEnInput.getElement().getStyle().setFontSize( 12, Unit.PX);
 		firstNameEnInput.setRequired( true );
 		
 		lastNameEnInput.setPlaceholder( "Last Name (English)" );
+		lastNameEnInput.getElement().getStyle().setFontSize( 12, Unit.PX);
 		
 		penNameEnInput.setPlaceholder( "Pen Name (English)" );
+		penNameEnInput.getElement().getStyle().setFontSize( 12, Unit.PX);
 
 		languageList.setRequired( true );
 		languageList.setPlaceholder( "Primary Language" );
@@ -113,17 +119,17 @@ public class AuthorDataInputViewImpl extends AuthorDataInputView {
 		languageEmailRow.addStyleName( "row" );
 		serverErrorRow.addStyleName( "row" );
 		
-		firstNameCol.addStyleName( "col-sm-4" );
-		firstNameEnCol.addStyleName( "col-sm-4" );
+		firstNameCol.addStyleName( "col-sm-5" );
+		firstNameEnCol.addStyleName( "col-sm-5" );
 		
-		lastNameCol.addStyleName( "col-sm-4" );
-		lastNameEnCol.addStyleName( "col-sm-4" );
+		lastNameCol.addStyleName( "col-sm-5" );
+		lastNameEnCol.addStyleName( "col-sm-5" );
 		
-		penNameCol.addStyleName( "col-sm-4" );
-		penNameEnCol.addStyleName( "col-sm-4" );
+		penNameCol.addStyleName( "col-sm-5" );
+		penNameEnCol.addStyleName( "col-sm-5" );
 		
-		emailCol.addStyleName( "col-sm-4" );
-		languageCol.addStyleName( "col-sm-4" );
+		emailCol.addStyleName( "col-sm-5" );
+		languageCol.addStyleName( "col-sm-5" );
 		
 		initWidget( panel );
 	}
