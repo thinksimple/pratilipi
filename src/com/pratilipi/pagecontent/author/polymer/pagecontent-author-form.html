@@ -17,19 +17,23 @@
 				margin-top: 0px;
 				margin-bottom: 10px;
 			}
+			
+			paper-input{
+				font-size: 12px;
+			}
 		</style>
 		
 		<div center horizontal layout class="formRow">
-			<paper-input id="FirstName" label="First Name" value="{{ authorData.firstName }}"></paper-input>
-			<paper-input id="FirstNameEn" label="First Name ( Eng )*" value="{{ authorData.firstNameEn }}"></paper-input>
+			<paper-input id="FirstName" label="First Name (Native Language)" value="{{ authorData.firstName }}"></paper-input>
+			<paper-input id="FirstNameEn" label="First Name (English)*" value="{{ authorData.firstNameEn }}"></paper-input>
 		</div>
 		<div center horizontal layout class="formRow">
-			<paper-input id="LastName" label="Last Name" value="{{ authorData.lastName }}"></paper-input>
-			<paper-input id="LastNameEn" label="Last Name ( Eng )" value="{{ authorData.lastNameEn }}"></paper-input>
+			<paper-input id="LastName" label="Last Name (Native Language)" value="{{ authorData.lastName }}"></paper-input>
+			<paper-input id="LastNameEn" label="Last Name (English)" value="{{ authorData.lastNameEn }}"></paper-input>
 		</div>
 		<div center horizontal layout class="formRow">
-			<paper-input id="PenName" label="Pen Name" value="{{ authorData.penName }}"></paper-input>
-			<paper-input id="PenNameEn" label="Pen Name ( Eng )" value="{{ authorData.penNameEn }}"></paper-input>
+			<paper-input id="PenName" label="Pen Name (Native Language)" value="{{ authorData.penName }}"></paper-input>
+			<paper-input id="PenNameEn" label="Pen Name (English)" value="{{ authorData.penNameEn }}"></paper-input>
 		</div>
 		<div center horizontal layout class="formRow">
 			<paper-dropdown-menu label="Select Language" tabindex="0">
