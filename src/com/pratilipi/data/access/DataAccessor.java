@@ -128,6 +128,8 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
 	UserPratilipi newUserPratilipi();
 	
+	UserPratilipi getUserPratilipiById( String userPratilipiId );
+	
 	UserPratilipi getUserPratilipi( Long userId, Long pratilipiId );
 
 	List<UserPratilipi> getUserPratilipiList( Long pratilipiId );

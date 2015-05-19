@@ -511,7 +511,22 @@ public class DataAccessorGaeImpl
 	}
 	
 	@Override
+	public UserPratilipi getUserPratilipiById( String userPratilipiId ){
+		if( userPratilipiId == null )
+			return null;
+		
+		try {
+			return getEntity( UserPratilipiEntity.class, userPratilipiId );
+		} catch( JDOObjectNotFoundException e ) {
+			return null;
+		}
+	}
+	
+	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
+		if( userId == null || pratilipiId == null )
+			return null;
+		
 		try {
 			return getEntity( UserPratilipiEntity.class, userId + "-" + pratilipiId );
 		} catch( JDOObjectNotFoundException e ) {

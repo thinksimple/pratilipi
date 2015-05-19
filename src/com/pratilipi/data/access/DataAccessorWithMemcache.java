@@ -530,6 +530,20 @@ public class DataAccessorWithMemcache
 	}
 	
 	@Override
+	public UserPratilipi getUserPratilipiById( String userPratilipiId ){
+		UserPratilipi userPratilipi = memcache.get(
+				PREFIX_USER_PRATILIPI + userPratilipiId );
+		if( userPratilipi == null ){
+			userPratilipi = 
+					dataAccessor.getUserPratilipiById( userPratilipiId );
+			if( userPratilipi != null )
+				memcache.put( PREFIX_USER_PRATILIPI + userPratilipiId, userPratilipi );
+		}
+		
+		return userPratilipi;
+	}
+	
+	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
 		UserPratilipi userPratilipi = memcache.get(
 				PREFIX_USER_PRATILIPI + userId + "-" + pratilipiId );
