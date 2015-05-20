@@ -3,6 +3,7 @@
 
 <#setting time_zone="${ timeZone }">
 <#import "../../../../com/claymus/commons/client/ui/Social.ftl" as social>
+<#import "../../../../com/claymus/pagecontent/comments/PageContent-Comment.ftl" as comments>
 
 <#assign shareUrl="http://${ domain }${ pratilipiData.getPageUrl() }">
 	
@@ -130,6 +131,7 @@
 						<div id="PageContent-Pratilipi-Review-AddOptions" style="padding-top:15px; text-align:right; display:none;"></div>
 						<div id="PageContent-Pratilipi-Review-SaveErrorMessage" class="alert alert-danger" style="padding:15px; display:none;"></div>
 					</#if>
+					<@comments.comments review=review  commentDataList=reveiwCommentListMap[ review.getId() ]!'' userData=userData reviewLikesList=reviewLikesMap[ review.getId() ]!'' reviewDislikesList=reviewDislikesMap[ review.getId() ]!'' commentLikesMap=commentLikesMap![] commentDislikesMap=commentDislikesMap![]/>
 				</div>
 			</#if>
 		</#list>
@@ -157,7 +159,7 @@
 
 <#if !userData.getEmail()??>
 	<script language='javascript'>
-		
+			
 		var maxRating = 5;
 		
 		function setRatingImage( hoverIndex ){
@@ -191,6 +193,17 @@
 			var ratingLabel = document.getElementById( "PageContent-Pratilipi-RatingReadOnly-Label" );
 			ratingLabel.innerHTML = "Your Rating: -/5";
 			setRatingImage( 0 );
+		}
+		
+		if( window.attachEvent) {//for IE8 and below
+			window.attachEvent( 'onload', function( event ){
+				 setCookie( '${ languageCookieName }', '${ pratilipiData.getLanguageData().getNameEn() }', 365, 'www.pratilipi.com' );
+			});
+		}
+		else {
+			window.addEventListener( 'load', function( event ){
+				setCookie( '${ languageCookieName }', '${ pratilipiData.getLanguageData().getNameEn() }', 365, 'www.pratilipi.com' );
+			});
 		}
 		
 	</script>

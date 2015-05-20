@@ -1,8 +1,12 @@
 package com.pratilipi.pagecontent.pratilipi;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,11 +16,16 @@ import com.claymus.commons.server.ClaymusHelper;
 import com.claymus.commons.server.FacebookApi;
 import com.claymus.commons.server.FreeMarkerUtil;
 import com.claymus.commons.server.SerializationUtil;
+import com.claymus.commons.shared.CommentFilter;
+import com.claymus.commons.shared.CommentParentType;
 import com.claymus.commons.shared.Resource;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.UnexpectedServerException;
+import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.User;
+import com.claymus.data.transfer.shared.CommentData;
 import com.claymus.pagecontent.PageContentProcessor;
+import com.claymus.pagecontent.comments.CommentsContentHelper;
 import com.claymus.service.shared.data.UserData;
 import com.pratilipi.commons.server.PratilipiHelper;
 import com.pratilipi.commons.shared.PratilipiContentType;
@@ -37,7 +46,8 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 
 	
 	private static final String DOMAIN = ClaymusHelper.getSystemProperty( "domain" );
-	
+	private static final Logger logger = Logger.getLogger( PratilipiContentProcessor.class.getName() );
+	private static final String COOKIE_LANGUAGE = "user_language";
 	
 	@Override
 	public Resource[] getDependencies( PratilipiContent pratilipiContent, HttpServletRequest request ) {
@@ -153,18 +163,98 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 			userPratilipi = dataAccessor.getUserPratilipi( pratilipiHelper.getCurrentUserId(), pratilipiId );
 		List<UserPratilipi> reviewList = dataAccessor.getUserPratilipiList( pratilipiId );
 		
+		CommentFilter commentFilter = new CommentFilter();
+		
+		Map<String, String> reveiwCommentListMap = new HashMap<>();
+		Map<String, String> reviewLikesMap = new HashMap<>();
+		Map<String, String> reviewDislikesMap = new HashMap<>();
+		Map<String, String> commentLikesMap = new HashMap<>();
+		Map<String, String> commentDislikesMap = new HashMap<>();
+		
 		Map<String, String> userIdNameMap = new HashMap<>();
 		for( UserPratilipi review : reviewList ) {
+			String reviewCommentString = "";
+			String reviewLikesString = "";
+			String reviewDislikesString = "";
 			User user = dataAccessor.getUser( review.getUserId() );
 			UserData userData = pratilipiHelper.createUserData( user );
 			userIdNameMap.put( userData.getId().toString(), userData.getName() );
+			commentFilter.setParentId( review.getId() );
+			commentFilter.setParentType( CommentParentType.REVIEW );
+			DataListCursorTuple<CommentData>  commentDataListCursorTuple = 
+					CommentsContentHelper.getCommentList( commentFilter, null, null, request );
+			
+			for( CommentData commentData : commentDataListCursorTuple.getDataList() ){
+				String commentLikesString = "";
+				String commentDislikesString = "";
+				commentFilter.setParentId( commentData.getId().toString() );
+				commentFilter.setParentType( CommentParentType.COMMENT );
+				DataListCursorTuple<CommentData>  commentReplyDataListCursorTuple = 
+						CommentsContentHelper.getCommentList( commentFilter, null, null, request );
+				
+				for( CommentData commentReplyData : commentReplyDataListCursorTuple.getDataList() ){
+					if( commentReplyData.getUpvote() != null && commentReplyData.getUpvote() == 1 ){
+						if( commentLikesString.equals( "" ))
+							commentLikesString = commentReplyData.getUserId().toString();
+						else
+							commentLikesString = commentLikesString + "~" + commentReplyData.getUserId().toString();
+					}
+					else if( commentReplyData.getDownvote() != null && commentReplyData.getDownvote() == 1 ){
+						if( commentDislikesString.equals( "" ))
+							commentDislikesString = commentReplyData.getUserId().toString();
+						else
+							commentDislikesString = commentDislikesString + "~" + commentReplyData.getUserId().toString();
+					}
+				}
+				commentLikesMap.put( commentData.getId().toString(), commentLikesString );
+				commentDislikesMap.put( commentData.getId().toString(), commentDislikesString );
+				
+				//CONCATENATE COMMENTS IN A STRING
+				Date commentLastUpdatedDate = commentData.getCommentLastUpdatedDate();
+				SimpleDateFormat formater = new SimpleDateFormat("MMM dd, yyyy");
+				if( commentData.getContent() != null ){
+					if( reviewCommentString.equals( "" ))
+						reviewCommentString = commentData.getId() + "_" 
+													+ commentData.getUserId() + "_"
+													+ commentData.getUserData().getName() + "_" 
+													+ commentData.getContent() + "_" 
+													+ formater.format( commentLastUpdatedDate );
+					else
+						reviewCommentString = reviewCommentString + "~" 
+													+ commentData.getId() + "_"
+													+ commentData.getUserId() + "_"
+													+ commentData.getUserData().getName() + "_" 
+													+ commentData.getContent() + "_" 
+													+ formater.format( commentLastUpdatedDate );
+				}
+				
+				//CONCATINATE USERIDs WHO VOTED THIS REVIEW IN A STRING
+				if( commentData.getUpvote() != null && commentData.getUpvote() == 1 ){
+					if( reviewLikesString.equals( "" ))
+						reviewLikesString = commentData.getUserId().toString();
+					else
+						reviewLikesString = reviewLikesString + "~" + commentData.getUserId().toString();
+				}
+				//CONCATINATE USERIDs WHO DOWNVOTED THIS REVIEW IN A STRING
+				if( commentData.getDownvote() != null && commentData.getDownvote() == 1 ){
+					if( reviewLikesString.equals( "" ))
+						reviewDislikesString = commentData.getUserId().toString();
+					else
+						reviewDislikesString = reviewDislikesString + "," + commentData.getUserId().toString();
+				}
+			}
+			reviewLikesMap.put( review.getId().toString(), reviewLikesString );
+			reviewDislikesMap.put( review.getId().toString(), reviewDislikesString );
+			reveiwCommentListMap.put( review.getId(), reviewCommentString );
+			logger.log( Level.INFO, "REVIEW " + review.getId() + " : " + reviewCommentString );
+			logger.log( Level.INFO, "REVIEW LIKES STRING FOR " + review.getId() + " : " + reviewLikesString );
 		}
 		
 		PratilipiData pratilipiData = pratilipiHelper.createPratilipiData(
 				pratilipiId,
 				PratilipiContentHelper.hasRequestAccessToReadPratilipiMetaData( request ) );
 		
-
+		
 		// Creating data model required for template processing
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "timeZone", pratilipiHelper.getCurrentUserTimeZone() );
@@ -173,7 +263,13 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		dataModel.put( "pratilipiDataEncodedStr", SerializationUtil.encode( pratilipiData ) );
 		dataModel.put( "reviewList", reviewList );
 		dataModel.put( "userIdNameMap", userIdNameMap );
+		dataModel.put( "reveiwCommentListMap", reveiwCommentListMap );
+		dataModel.put( "reviewLikesMap", reviewLikesMap );
+		dataModel.put( "reviewDislikesMap", reviewDislikesMap);
+		dataModel.put( "commentLikesMap", commentLikesMap );
+		dataModel.put( "commentDislikesMap", commentDislikesMap );
 		dataModel.put( "domain", ClaymusHelper.getSystemProperty( "domain" ) );
+		dataModel.put( "languageCookieName", COOKIE_LANGUAGE );
 		dataModel.put( "showEditOptions", showEditOption );
 		dataModel.put( "showWriterOption", showEditOption && pratilipiData.getContentType() != PratilipiContentType.IMAGE );
 		dataModel.put( "showReviewedMessage",
