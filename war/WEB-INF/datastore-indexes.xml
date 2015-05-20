@@ -24,8 +24,21 @@
     <property name="_TYPE" direction="asc"/>
     <property name="CREATION_DATE" direction="desc"/>
   </datastore-index>
-    
-    
+   
+  <!-- Required by ClaymusService.getCommentList -->
+  <datastore-index kind="COMMENT" ancestor="false" source="manual">
+      <property name="PARENT_ID" direction="asc"/>
+      <property name="PARENT_TYPE" direction="asc"/>
+      <property name="COMMENT_LAST_UPDATED_DATE" direction="desc"/>
+  </datastore-index>
+  
+  <datastore-index kind="COMMENT" ancestor="false" source="manual">
+      <property name="PARENT_ID" direction="asc"/>
+      <property name="PARENT_TYPE" direction="asc"/>
+      <property name="USER_ID" direction="asc"/>
+      <property name="COMMENT_LAST_UPDATED_DATE" direction="desc"/>
+  </datastore-index>
+  
   <!-- Required by PratilipiService.getPratilipiList -->
   <datastore-index kind="PRATILIPI" ancestor="false" source="manual">
     <property name="PRATILIPI_TYPE" direction="asc"/>
