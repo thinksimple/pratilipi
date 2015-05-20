@@ -150,6 +150,15 @@
     <servlet-name>QueuePasswordResetServlet</servlet-name>
     <url-pattern>/_ah/queue/reset-password</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>QueueNotificationServlet</servlet-name>
+    <servlet-class>com.claymus.servlet.QueueNotificationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueueNotificationServlet</servlet-name>
+    <url-pattern>/_ah/queue/notification</url-pattern>
+  </servlet-mapping>
 
   <!-- Main Claymus Handler -->
 

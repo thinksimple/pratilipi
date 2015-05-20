@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.claymus.commons.shared.NotificationType;
 import com.claymus.commons.shared.exception.InsufficientAccessException;
 import com.claymus.commons.shared.exception.InvalidArgumentException;
 import com.claymus.data.access.DataListCursorTuple;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.User;
 import com.claymus.taskqueue.Task;
+import com.claymus.taskqueue.TaskQueue;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pratilipi.commons.server.ConvertWordToHtml;
@@ -423,10 +425,13 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 			dataAccessor.createOrUpdatePratilipi( pratilipi );
 		}
 		
+		
 		if( userPratilipiData.hasReview() ){
 			
 			if( !PratilipiContentHelper.hasRequestAccessToAddPratilipiReview( this.getThreadLocalRequest(), pratilipi ) )
 				throw new InsufficientAccessException();
+
+			String notificationType = null;
 	
 			if( userPratilipi == null ){
 				userPratilipi = dataAccessor.newUserPratilipi();
@@ -434,12 +439,25 @@ public class PratilipiServiceImpl extends RemoteServiceServlet
 				userPratilipi.setPratilipiId( pratilipi.getId() );
 				userPratilipi.setReviewDate( new Date() );
 				userPratilipi.setReviewState( UserReviewState.PENDING_APPROVAL );
-			}
+				
+				notificationType  = NotificationType.REVIEW_ADD.toString();
+			} else
+				notificationType = NotificationType.REVIEW_UPDATE.toString();
 			
 			userPratilipi.setReview( userPratilipiData.getReview() );
 			userPratilipi.setReviewLastUpdatedDate( new Date() );
 	
 			userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+			
+			Task task = TaskQueueFactory.newTask();
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			task.addParam( "userId", userPratilipi.getUserId().toString() );
+			task.addParam( "recipientId", author.getUserId().toString() );
+			task.addParam( "pratilipiId", pratilipi.getId().toString() );
+			task.addParam( "notificationType", notificationType );
+			
+			TaskQueue taskQueue = TaskQueueFactory.getNotificationTaskQueue();
+			taskQueue.add( task );
 		}
 		
 		return new AddUserPratilipiResponse( userPratilipi.getId() );
