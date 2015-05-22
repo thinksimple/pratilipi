@@ -197,12 +197,12 @@
 		
 		if( window.attachEvent) {//for IE8 and below
 			window.attachEvent( 'onload', function( event ){
-				 setCookie( '${ languageCookieName }', '${ pratilipiData.getLanguageData().getNameEn() }', 365, 'www.pratilipi.com' );
+				 setCookie( '${ languageCookieName }', '${ pratilipiData.getLanguageData().getNameEn() }', 365, '/' );
 			});
 		}
 		else {
 			window.addEventListener( 'load', function( event ){
-				setCookie( '${ languageCookieName }', '${ pratilipiData.getLanguageData().getNameEn() }', 365, 'www.pratilipi.com' );
+				setCookie( '${ languageCookieName }', '${ pratilipiData.getLanguageData().getNameEn() }', 365, '/' );
 			});
 		}
 		
