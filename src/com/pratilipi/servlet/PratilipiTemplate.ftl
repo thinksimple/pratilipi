@@ -56,8 +56,8 @@
 			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.basicmode.min.js" defer></script>
 		<#else>
 			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.min.css">
-			<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.min.js" defer></script>
 		</#if>
+		<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.min.js" defer></script>
 
 		<#if page.getType()! != "READ" && page.getType()! != "WRITE">
 			<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js?20150421" async></script>
@@ -73,11 +73,11 @@
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 			
 			<#if userId == 0>
-				ga('create', 'UA-53742841-2', 'auto' );
+				ga('create', 'UA-53742841-1', 'auto' );
 				ga('require', 'displayfeatures');
 				ga('send', 'pageview');
 			<#else>
-				ga('create', 'UA-53742841-2', { 'userId': ${ userId?c } });
+				ga('create', 'UA-53742841-1', { 'userId': ${ userId?c } });
 				ga('require', 'displayfeatures');
 				ga('set', 'dimension1', ${ userId?c });
 				ga('send', 'pageview');
@@ -182,6 +182,63 @@
               }
 			}
 		</script>
+		
+		<!-- pop-up for marketing -->
+		<div  id ="backdrop">
+			<div id="popup">
+				<p></p>
+				<button id="popupCloseButton" onclick="closePopup(event)">OK</button><br>
+			</div> 
+			<script>
+				function showPopup ( innerHtml ) {
+					jQuery( "#backdrop" ).addClass( "backDrop" );
+					var popup = jQuery( "#popup" );
+					popup.html( innerHtml );
+					popup.show();
+				}
+				function closePopup( event ) {
+					jQuery( "#popup" ).hide()
+					jQuery( "#backdrop" ).removeClass( "backDrop" );
+				}
+				
+				if( window.attachEvent) {//for IE8 and below
+					window.attachEvent( 'onload', function( event ){
+						var visitNumber = getVisitCount();
+						var language = getCookie( "user_language" );
+						var innerHtml = "Visit Number : " + visitNumber + '<br/> User Language = ' + language;
+						showPopup( innerHtml );
+					});
+					
+					window.attachEvent( 'onclick', function( event ){
+						closePopup( event );
+						console.log("mouse clicked to close the popup");	
+					});
+					
+					window.attachEvent( 'onkeyup', function( event ){
+						closePopup( event );
+						console.log("Pop up closed by escape");	
+					});
+				}
+				else {
+					window.addEventListener( 'load', function( event ){
+						var visitNumber = getVisitCount();
+						var language = getCookie( "user_language" );
+						var innerHtml = "Visit Number : " + visitNumber + '<br/> User Language = ' + language;
+						showPopup( innerHtml );
+					});
+					
+					window.addEventListener( 'click',function( event ){
+						closePopup( event );
+							
+					});
+					window.addEventListener( 'keyup', function ( event ) {
+						if (event.keyCode == 27) {
+							closePopup( event );
+						}
+					});
+				}
+			</script>
+		</div>
 
 	</body>
 </html>
