@@ -31,7 +31,9 @@ public class SearchApi extends GenericApi {
 		
 		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
 		DataListCursorTuple<Long> pratilipiIdListCursorTuple = 
-							searchAccessor.searchQuery( request.getQuery(), request.getCursor(), request.getResultCount() );
+							searchAccessor.searchQuery( request.getQuery(), 
+									request.getCursor(), 
+									request.getResultCount() == null ? 20 : request.getResultCount() );
 		List<PratilipiData> pratilipiDataList = PratilipiContentHelper.createPratilipiDataList( 
 															pratilipiIdListCursorTuple.getDataList(),
 															false,
