@@ -116,7 +116,6 @@ function validateForm() {
 		                <a>Events<span id="Header-Navigation-Submenu-Caret" class="caret-right"></span></a>
 		                <ul class="dropdown-subMenu">
 			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/vahali-ma-lekhan-spardha">Vahali Ma - lekhan spardha</a></li>
-			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/pyari-ma">Pyari ma</a></li>
 			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/kavya-spardha-2015">Kavya Spardha 2015</a></li>
 			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5133264616423424">Samarthini</a></li>
 			                <li class="subMenuItem" onclick="subMenuItemClick( event );" data-toggle="dropdown"><a href="/event/5085337277693952">Varta re varta </a></li>
