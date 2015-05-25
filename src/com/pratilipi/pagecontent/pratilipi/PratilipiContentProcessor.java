@@ -71,7 +71,7 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		String ogLocale = pratilipiData.getLanguage() == null ? 
 								"hi_IN" : 
 								pratilipiData.getLanguage().getNameEn().toLowerCase().substring( 0,2 ) + "_IN";
-		String ogType = "book";
+		String ogType = "books.book";
 		String ogAuthor = author == null ? null : pratilipiData.getAuthor().getFullNameEn();
 		String ogBooksIsbn = pratilipi.getId() + "";
 		String ogUrl = "http://" + DOMAIN + 
@@ -100,13 +100,13 @@ public class PratilipiContentProcessor extends PageContentProcessor<PratilipiCon
 		final String fbOgTags = "<meta property='fb:app_id' content='" + ogFbAppId + "' />"
 				+ "<meta property='og:locale' content='" + ogLocale + "' />"
 				+ "<meta property='og:type' content='" + ogType + "' />"
-				+ "<meta property='book:author' content='" + ogAuthor + "' />"
-				+ "<meta property='book:isbn' content='" + ogBooksIsbn + "' />"
+				+ "<meta property='books:author' content='" + ogAuthor + "' />"
+				+ "<meta property='books:isbn' content='" + ogBooksIsbn + "' />"
 				+ "<meta property='og:url' content='" + ogUrl + "' />"
 				+ "<meta property='og:title' content='" + ogTitle + "' />"
 				+ "<meta property='og:image' content='" + ogImage + "' />"
-				+ "<meta property='og:image:height' content='auto' />"
-				+ "<meta property='og:image:width' content='auto' />"
+//				+ "<meta property='og:image:width' content='1900' />"
+//				+ "<meta property='og:image:height' content='1000' />"
 				+ "<meta property='og:publisher' content='" + ogPublisher + "' />"
 				+ "<meta property='og:description' content='" + ogDescription + "' />";
 		
