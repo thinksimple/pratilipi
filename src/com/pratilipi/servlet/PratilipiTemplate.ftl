@@ -57,7 +57,7 @@
 		<#else>
 			<link type="text/css" rel="stylesheet" href="/theme.pratilipi/style.min.css">
 		</#if>
-		<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.min.js" defer></script>
+		<script type="text/javascript" language="javascript" src="/theme.pratilipi/script.min.js?24052015" defer></script>
 
 		<#if page.getType()! != "READ" && page.getType()! != "WRITE">
 			<script type="text/javascript" language="javascript" src="/pagecontent.userforms/pagecontent.userforms.nocache.js?20150421" async></script>
@@ -189,7 +189,7 @@
 				<p></p>
 				<button id="popupCloseButton" onclick="closePopup(event)">OK</button><br>
 			</div> 
-			<script>
+			<script defer>
 				function showPopup ( innerHtml ) {
 					jQuery( "#backdrop" ).addClass( "backDrop" );
 					var popup = jQuery( "#popup" );
@@ -206,17 +206,17 @@
 						var visitNumber = getVisitCount();
 						var language = getCookie( "user_language" );
 						var innerHtml = "Visit Number : " + visitNumber + '<br/> User Language = ' + language;
-						showPopup( innerHtml );
+						//showPopup( innerHtml );
 					});
 					
 					window.attachEvent( 'onclick', function( event ){
 						closePopup( event );
-						console.log("mouse clicked to close the popup");	
 					});
 					
 					window.attachEvent( 'onkeyup', function( event ){
-						closePopup( event );
-						console.log("Pop up closed by escape");	
+						if (event.keyCode == 27) {
+							closePopup( event );
+						}
 					});
 				}
 				else {
@@ -224,7 +224,7 @@
 						var visitNumber = getVisitCount();
 						var language = getCookie( "user_language" );
 						var innerHtml = "Visit Number : " + visitNumber + '<br/> User Language = ' + language;
-						showPopup( innerHtml );
+						//showPopup( innerHtml );
 					});
 					
 					window.addEventListener( 'click',function( event ){
