@@ -17,6 +17,7 @@ import com.claymus.commons.shared.exception.UnexpectedServerException;
 import com.claymus.data.transfer.AppProperty;
 import com.claymus.data.transfer.Page;
 import com.claymus.data.transfer.PageContent;
+import com.claymus.data.transfer.UserRole;
 import com.claymus.taskqueue.Task;
 import com.pratilipi.commons.shared.AuthorFilter;
 import com.pratilipi.commons.shared.PratilipiFilter;
@@ -205,4 +206,14 @@ public class InitApi extends GenericApi {
 		page = dataAccessor.createOrUpdatePage( page );
 	}
 	
+	@SuppressWarnings("unused")
+	private void createUserRole( Long userId ){
+		com.claymus.data.access.DataAccessor dataAccessor = 
+				com.claymus.data.access.DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		UserRole userRole = dataAccessor.newUserRole();
+		userRole.setUserId( userId );
+		userRole.setRoleId( "administrator" );
+		
+		userRole = dataAccessor.createOrUpdateUserRole( userRole );
+	}
 }
