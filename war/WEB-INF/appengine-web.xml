@@ -3,12 +3,12 @@
 
   <application>prod-pratilipi</application>
   <module>default</module>
-  <version>mark-4p225</version>
+  <version>mark-6p0</version>
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>false</sessions-enabled>
 
-  <instance-class>F2</instance-class>
+  <instance-class>F1</instance-class>
 
   <automatic-scaling>
     <min-idle-instances>1</min-idle-instances>
@@ -34,44 +34,24 @@
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
 
 	<!-- Configure Web Domain -->
-    <property name="dev-pratilipi.domain" value="dev.pratilipi.com"/>
     <property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>
     <property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
 
-    <property name="dev-pratilipi.domain.cdn"  value="devo.pratilipi.info"/>
     <property name="devo-pratilipi.domain.cdn" value="devo.pratilipi.info"/>
     <property name="prod-pratilipi.domain.cdn" value="pratilipi.info"/>
 
-	<!-- Configure Resource Path -->
-    <property name="dev-pratilipi.resource" value="/resource."/>
-    <property name="devo-pratilipi.resource" value="/resource."/>
-    <property name="prod-pratilipi.resource" value="/resource."/>
-
-    <property name="dev-pratilipi.resource.static" value="/resource."/>
-    <property name="devo-pratilipi.resource.static" value="/resource."/>
-    <property name="prod-pratilipi.resource.static" value="//static.pratilipi.com/"/>
-
 	<!-- Configure Emails -->
-    <property name="dev-pratilipi.email" value="dev-team@pratilipi.com"/>
     <property name="devo-pratilipi.email" value="dev-team@pratilipi.com"/>
     <property name="prod-pratilipi.email" value="contact@pratilipi.com"/>
-    <property name="prod-pratilipi.email.noreply" value="noreply@pratilipi.com"/>
 
 	<!-- Configure Blob Storage -->
-    <property name="dev-pratilipi.blobservice.gcs.bucket" value="dev-pratilipi.appspot.com"/>
     <property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
     <property name="prod-pratilipi.blobservice.gcs.bucket" value="static.pratilipi.com"/>
 
-    <property name="dev-pratilipi.blobservice.gcs.bucket.public"  value="dev-pratilipi.appspot.com"/>
     <property name="devo-pratilipi.blobservice.gcs.bucket.public" value="devo-pratilipi.appspot.com"/>
     <property name="prod-pratilipi.blobservice.gcs.bucket.public" value="public.pratilipi.com"/>
 
-    <property name="dev-pratilipi.blobservice.gcs.bucket.asia" value="dev-pratilipi.appspot.com"/>
-    <property name="devo-pratilipi.blobservice.gcs.bucket.asia" value="devo-pratilipi.appspot.com"/>
-    <property name="prod-pratilipi.blobservice.gcs.bucket.asia" value="cdn-asia.pratilipi.com"/>
-
 	<!-- Configure Search Index -->
-    <property name="dev-pratilipi.searchservice.gae.index" value="GLOBAL_INDEX"/>
     <property name="devo-pratilipi.searchservice.gae.index" value="GLOBAL_INDEX"/>
     <property name="prod-pratilipi.searchservice.gae.index" value="GLOBAL_INDEX"/>
   </system-properties>
