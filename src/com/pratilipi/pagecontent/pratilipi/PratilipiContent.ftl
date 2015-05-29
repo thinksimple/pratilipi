@@ -79,7 +79,7 @@
 				<div id="PageContent-Pratilipi-Summary-EditOptions" style="text-align:right;"></div>
 			</#if>
 				
-			<button type="button" class="btn btn-success" onclick="window.location.href='${ pratilipiData.getReaderPageUrl() }'">Read For Free</button>
+			<button type="button" class="btn btn-success" onclick="readForFreeOnClick()">Read For Free</button>
 			<#if showWriterOption>
 				<button type="button" class="btn btn-primary" onclick="window.location.href='${ pratilipiData.getWriterPageUrl() }'">Edit This ${ pratilipiData.getType().getName() }</button>
 			</#if>
@@ -194,19 +194,63 @@
 			ratingLabel.innerHTML = "Your Rating: -/5";
 			setRatingImage( 0 );
 		}
-		
-		if( window.attachEvent) {//for IE8 and below
-			window.attachEvent( 'onload', function( event ){
-				 setCookie( '${ languageCookieName }', '${ pratilipiData.getLanguageData().getNameEn() }', 365, '/' );
-			});
-		}
-		else {
-			window.addEventListener( 'load', function( event ){
-				setCookie( '${ languageCookieName }', '${ pratilipiData.getLanguageData().getNameEn() }', 365, '/' );
-			});
-		}
-		
 	</script>
 </#if>
+
+
+<script>
+
+	var pageStartTime;	//Initialized in window onload function
+	
+	function readForFreeOnClick(){
+	
+		ga( 'send', 'event',
+			'Pratilipi:' + '${ pratilipiData.getId()?c }',	// Event Category
+			'ABTesting : Old Read For Free Click',				// Event Action
+			'${ pratilipiData.getLanguageData().getNameEn() } ${ pratilipiData.getType() }', // Event Label
+			1 );									// Event Value
+			
+		window.location.replace( '${ pratilipiData.getReaderPageUrl() }' );
+			
+	}
+	
+	function recordPageTime(){
+		var readTimeSec = parseInt( ( jQuery.now() - pageStartTime ) / 1000 );
+		
+		if( readTimeSec < 2 )
+			return;
+
+		if( readTimeSec > 900 ) // 15 Min
+			readTimeSec = 900;
+			
+		ga( 'send', 'event',
+			'Pratilipi:' + '${ pratilipiData.getId()?c }',	// Event Category
+			'ReadTimeSec: Old Summary Page',						// Event Action
+			'${ pratilipiData.getLanguageData().getNameEn() } ${ pratilipiData.getType() }', // Event Label
+			readTimeSec );									// Event Value
+	}
+	
+	if( window.attachEvent) {//for IE8 and below
+		window.attachEvent( 'onload', function( event ){
+			pageStartTime = jQuery.now();
+			setCookie( '${ languageCookieName }', '${ pratilipiData.getLanguageData().getNameEn() }', 365, '/' );
+		});
+		
+		window.attachEvent( 'onunload', function( event ) {
+			recordPageTime();
+		});
+	}
+	else {
+		window.addEventListener( 'load', function( event ){
+			pageStartTime = jQuery.now();
+			setCookie( '${ languageCookieName }', '${ pratilipiData.getLanguageData().getNameEn() }', 365, '/' );
+		});
+		
+		window.addEventListener( 'unload', function( event ){
+			recordPageTime();
+		});
+	}
+
+</script>
 
 <!-- PageContent :: Pratilipi :: End -->
