@@ -45,7 +45,7 @@
   
   <filter>
     <filter-name>UxModeFilter</filter-name>
-    <filter-class>com.pratilipi.servlet.UxModeFilter</filter-class>
+    <filter-class>com.claymus.servlet.UxModeFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>UxModeFilter</filter-name>
