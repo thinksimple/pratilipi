@@ -10,14 +10,18 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import com.claymus.commons.server.ClaymusHelper;
-import com.claymus.data.transfer.Page;
-import com.pratilipi.commons.shared.PratilipiPageType;
-import com.pratilipi.data.access.DataAccessor;
-import com.pratilipi.data.access.DataAccessorFactory;
-
 public class UxModeFilter implements Filter {
 	
+	private static final ThreadLocal<Boolean> threadLocalBasicMode = new ThreadLocal<Boolean>();
+	private static final ThreadLocal<Boolean> threadLocalEmbedMode = new ThreadLocal<Boolean>();
+
+	
+	@Override
+	public void destroy() { }
+
+	@Override
+	public void init( FilterConfig arg0 ) throws ServletException { }
+
 	@Override
 	public void doFilter( ServletRequest req, ServletResponse resp, FilterChain chain )
 			throws IOException, ServletException {
@@ -25,8 +29,6 @@ public class UxModeFilter implements Filter {
 		HttpServletRequest request = ( HttpServletRequest ) req;
 		String userAgent = request.getHeader( "user-agent" );
 		
-		String host = request.getServerName();
-
 		String basicModeParam = request.getParameter( "basicMode" );
 		String embedModeParam = request.getParameter( "embedMode" );
 		
@@ -89,7 +91,6 @@ public class UxModeFilter implements Filter {
 			 * UCBrowser on Android 4.3
 			 *   "Mozilla/5.0 (Linux; U; Android 4.3; en-US; GT-I9300 Build/JSS15J) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 UCBrowser/10.0.1.512 U3/0.8.0 Mobile Safari/533.1"
 			 */
-			
 			basicMode = true; // Polymer 0.5.1 not supported !
 			
 			
@@ -102,22 +103,18 @@ public class UxModeFilter implements Filter {
 			 * Mozilla Firefox on Linux 
 			 *   "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0 (Chrome)"
 			 */
+			String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Firefox" ) + 8 );
+			int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
 			
-//			String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Firefox" ) + 8 );
-//			int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
-//			
-//			basicMode = version <= 30;
+			basicMode = version <= 30;
 			
-			basicMode = true; // Writer is broken
 			
 		} else if( userAgent.contains( "Trident/7" ) && userAgent.contains( "rv:11" ) ) { // Microsoft Internet Explorer 11
 			/*
 			 * Microsoft Internet Explorer 11 on Microsoft Windows 8.1
 			 *   "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; LCJB; rv:11.0) like Gecko"
 			 */
-//			basicMode = false;
-
-			basicMode = true; // Writer is broken
+			basicMode = true; // Polymer 0.5.1 not fully supported !
 
 			
 		} else if ( userAgent.contains( "Safari" ) ) { // Apple Safari
@@ -130,42 +127,22 @@ public class UxModeFilter implements Filter {
 		}
 		
 		
-		String requestUri = request.getRequestURI();
-		if( !basicMode
-				&& !requestUri.equals( "/filebrowser" )
-				&& !requestUri.equals( "/pages" )
-				&& !requestUri.equals( "/audit" )
-				&& !requestUri.startsWith( "/authors" )
-				&& !requestUri.startsWith( "/api/" )
-				&& !requestUri.startsWith( "/api." )
-				&& !requestUri.startsWith( "/service." )
-				&& !requestUri.startsWith( "/resource." )
-				&& !requestUri.startsWith( "/_ah/queue/" ) ) {
-			
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
-			Page page = dataAccessor.getPage( request.getRequestURI() );
-			basicMode = page == null
-					|| !( page.getType().equals( PratilipiPageType.READ.toString() )
-							|| page.getType().equals( PratilipiPageType.WRITE.toString() ) );
-		
-		}
-		
-		
-		boolean embedMode = host.equals( "embed.pratilipi.com" );
-		if( embedModeParam != null )
-			embedMode = Boolean.parseBoolean( embedModeParam );
-		
-		
-		request.setAttribute( ClaymusHelper.REQUEST_ATTRIB_MODE_BASIC, basicMode );
-		request.setAttribute( ClaymusHelper.REQUEST_ATTRIB_MODE_EMBED, embedMode );
-		
+		threadLocalBasicMode.set( basicMode );
+		threadLocalEmbedMode.set( embedModeParam != null && Boolean.parseBoolean( embedModeParam ) );
+
 		chain.doFilter( req, resp );
+
+		threadLocalBasicMode.remove();
+		threadLocalEmbedMode.remove();
+	}
+
+	
+	public static boolean isModeBasic() {
+		return threadLocalBasicMode.get();
 	}
 	
-	@Override
-	public void destroy() { }
-
-	@Override
-	public void init( FilterConfig arg0 ) throws ServletException { }
+	public static boolean isModeEmbed() {
+		return threadLocalEmbedMode.get();
+	}
 
 }
