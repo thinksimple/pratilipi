@@ -1,0 +1,26 @@
+<dom-module id="pagecontent-search-bar" attributes="pageUrl query">
+
+	<template>
+		<form method="get" action="{{ pageUrl }}">
+			<div class="input-group">
+				<input class="form-control" name="q" placeholder="${ search-bar-help }" value="{{ query }}" />
+				<span class="input-group-btn">
+					<button class="btn yellow" type="submit">
+						&nbsp;<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						&nbsp; ${ search } &nbsp;&nbsp;
+					</button>
+				</span>
+			</div>
+		</form>
+	</template>
+
+
+	<script>
+
+		Polymer({
+			is: 'pagecontent-search-bar',
+		});
+
+	</script>
+
+</dom-module>
