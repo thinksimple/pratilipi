@@ -43,6 +43,11 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker-gae</artifactId>
+            <version>2.3.22</version>
+        </dependency>
 <!-- [START Objectify_Dependencies] -->
         <dependency>
           <groupId>com.google.guava</groupId>
