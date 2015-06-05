@@ -27,7 +27,7 @@ public class FreeMarkerUtil {
 		if( cfg == null ) {
 			cfg = new Configuration( Configuration.VERSION_2_3_22 );
 			try {
-				String templateDir = System.getProperty("user.dir") + "/WEB-INF/classes/";
+				String templateDir = System.getProperty( "user.dir" ) + "/WEB-INF/classes/";
 				cfg.setDirectoryForTemplateLoading( new File( templateDir ) );
 			} catch ( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to set template directory.", e );

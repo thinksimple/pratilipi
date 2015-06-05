@@ -1,7 +1,7 @@
 package com.pratilipi.site;
 
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -22,9 +22,10 @@ public class PratilipiSite extends HttpServlet {
 			HttpServletResponse response ) throws IOException {
 		
 		Properties defaultProps = new Properties();
-		InputStream in = this.getClass().getResourceAsStream( "i18n/strings.en" );
-		defaultProps.load(in);
-		in.close();
+		String filePath = System.getProperty( "user.dir" ) + "/WEB-INF/classes/com/pratilipi/site/i18n/strings.en";
+		FileInputStream fin = new FileInputStream( filePath );
+		defaultProps.load( fin );
+		fin.close();
 	
 		Map<String, String> strMap = new HashMap<String, String>();
 		for( Entry<Object, Object> entry : defaultProps.entrySet() )
