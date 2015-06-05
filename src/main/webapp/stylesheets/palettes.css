@@ -1,0 +1,31 @@
+/* Color Palette :: Primary */
+
+.primary-500 {
+	color: white;
+	background: red;
+}
+
+.primary-500 a, a:hover, a:focus .a {
+	cursor: pointer;
+	color: white;
+	text-decoration: none;
+}
+
+.primary-500 ::selection { /* WebKit/Blink Browsers */
+	color: #ff0000;
+	background: #ffffff;
+}
+
+.primary-500 ::-moz-selection { /* Gecko Browsers */
+	color: #ff0000;
+	background: #ffffff;
+}
+
+
+
+/* Color Palette :: Secondary */
+
+.secondary-500 {
+	color: #333333;
+	background-color: white;
+}
