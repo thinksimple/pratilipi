@@ -4,13 +4,13 @@
 	<target name="all" depends="copy" />
 	
 	<target name="copy">
-		<copy todir="WEB-INF/classes" flatten="false">
-			<fileset dir="../java" includes="**/*.html" />
-			<fileset dir="../java" includes="**/*.ftl" />
-			<fileset dir="../java" includes="**/i18n/strings.*" />
+		<copy todir="src/main/webapp/WEB-INF/classes" flatten="false">
+			<fileset dir="src/main/java" includes="**/*.html" />
+			<fileset dir="src/main/java" includes="**/*.ftl" />
+			<fileset dir="src/main/java" includes="**/i18n/strings.*" />
 		</copy>
-		<copy todir="elements.en" flatten="true">
-			<fileset dir="../java/com/pratilipi/site/element" includes="*.html" />
+		<copy todir="src/main/webapp/elements.en" flatten="true">
+			<fileset dir="src/main/java/com/pratilipi/site/element" includes="*.html" />
 		</copy>
 	</target>
 
