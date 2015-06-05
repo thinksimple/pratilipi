@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="pratilipi" default='all' basedir="." >
 
-	<target name="all" depends="copy"/>
+	<target name="all" depends="copy" />
 	
 	<target name="copy">
+		<copy todir="WEB-INF/classes" flatten="false">
+			<fileset dir="../java" includes="**/*.html" />
+			<fileset dir="../java" includes="**/*.ftl" />
+			<fileset dir="../java" includes="**/i18n/strings.*" />
+		</copy>
 		<copy todir="elements.en" flatten="true">
-			<fileset dir="../java/com/pratilipi/site/element" includes="*.html"/>
+			<fileset dir="../java/com/pratilipi/site/element" includes="*.html" />
 		</copy>
 	</target>
 
