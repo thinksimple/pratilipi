@@ -5,7 +5,7 @@ package com.pratilipi.common.exception;
 public class UnexpectedServerException extends Exception {
 
 	public UnexpectedServerException() {
-		super( "Some exception occured at server. Please try again." );
+		super( "Some exception occurred at server. Please try again." );
 	}
 
 	public UnexpectedServerException( String msg ) {
