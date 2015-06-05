@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pratilipi" default='all' basedir="." >
+
+	<target name="all" depends="copy"/>
+	
+	<target name="copy">
+		<copy todir="elements.en" flatten="true">
+			<fileset dir="../java/com/pratilipi/site/element" includes="*.html"/>
+		</copy>
+	</target>
+
+</project>
