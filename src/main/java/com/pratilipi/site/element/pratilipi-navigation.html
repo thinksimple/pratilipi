@@ -1,0 +1,25 @@
+<dom-module id="websitewidget-navigation" attributes="data">
+
+	<template>
+		<div>
+			<template is="dom-repeat" items="{{ data }}">
+				<h4>{{ item.title }}</h4>
+		        <template is="dom-repeat" items="{{ item.links }}">
+		        	<div>
+		        		<a href="{{ item.url }}">{{ item.text }}</a>
+		        	</div>
+			    </template>
+		    </template>
+		</div>
+	</template>
+
+
+	<script>
+
+		Polymer({
+			is: 'websitewidget-header',
+		});
+
+	</script>
+
+</dom-module>

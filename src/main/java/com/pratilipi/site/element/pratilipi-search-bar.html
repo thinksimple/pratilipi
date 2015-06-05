@@ -1,0 +1,26 @@
+<dom-module id="pratilipi-search-bar">
+
+	<template>
+		<form method="get" action="/search">
+			<div class="input-group">
+				<input class="form-control" name="q" placeholder="${ _strings.search_bar_help }" value="{{ query }}" />
+				<span class="input-group-btn">
+					<button class="btn yellow" type="submit">
+						&nbsp;<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						&nbsp; ${ _strings.search } &nbsp;&nbsp;
+					</button>
+				</span>
+			</div>
+		</form>
+	</template>
+
+
+	<script>
+
+		Polymer({
+			is: 'pratilipi-search-bar',
+		});
+
+	</script>
+
+</dom-module>
