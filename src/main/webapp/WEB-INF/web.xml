@@ -20,9 +20,6 @@
       <servlet-name>guestbook</servlet-name>
       <url-pattern>/guestbook</url-pattern>
     </servlet-mapping>
-    <welcome-file-list>
-        <welcome-file>guestbook.jsp</welcome-file>
-    </welcome-file-list>
 <!-- [START Objectify] -->
     <filter>
       <filter-name>ObjectifyFilter</filter-name>
@@ -36,4 +33,14 @@
       <listener-class>com.pratilipi.site.OfyHelper</listener-class>
     </listener>
 <!-- [END Objectify] -->
+	
+	<servlet>
+		<servlet-name>PratilipiSite</servlet-name>
+		<servlet-class>com.pratilipi.site.PratilipiSite</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PratilipiSite</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
 </web-app>
