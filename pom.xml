@@ -14,9 +14,6 @@
         <appengine.version>1.9.20</appengine.version>
         <gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>
 
-        <objectify.version>5.1.5</objectify.version>
-        <guava.version>18.0</guava.version>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
     </properties>
@@ -39,27 +36,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker-gae</artifactId>
             <version>2.3.22</version>
         </dependency>
-<!-- [START Objectify_Dependencies] -->
-        <dependency>
-          <groupId>com.google.guava</groupId>
-          <artifactId>guava</artifactId>
-          <version>${guava.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>com.googlecode.objectify</groupId>
-          <artifactId>objectify</artifactId>
-          <version>${objectify.version}</version>
-        </dependency>
-<!-- [END Objectify_Dependencies] -->
 
         <!-- Test Dependencies -->
         <dependency>
