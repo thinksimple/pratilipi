@@ -3,6 +3,7 @@
 	<template>
 		<div>
 			<#list data.sections as section>
+				<h4>${ section.title }</h4>
 				<#list section.items as item>
 		        	<div>
 		        		<a href="${ item.url }">${ item.text }</a>

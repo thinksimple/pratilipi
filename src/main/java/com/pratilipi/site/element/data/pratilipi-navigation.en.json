@@ -5,11 +5,11 @@
       "items" : [
         {
           "text" : "Link 1",
-          "url" : "link1"
+          "url" : "#link1"
         },
         {
-          "text" : "Link 1",
-          "url" : "link1"
+          "text" : "Link 2",
+          "url" : "#link2"
         }
       ]
     }

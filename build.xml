@@ -5,9 +5,10 @@
 	
 	<target name="copy">
 		<copy todir="src/main/webapp/WEB-INF/classes" flatten="false">
-			<fileset dir="src/main/java" includes="**/*.html" />
-			<fileset dir="src/main/java" includes="**/*.ftl" />
 			<fileset dir="src/main/java" includes="**/i18n/strings.*" />
+			<fileset dir="src/main/java" includes="**/*.ftl" />
+			<fileset dir="src/main/java" includes="**/*.html" />
+			<fileset dir="src/main/java" includes="**/*.json" />
 		</copy>
 		<copy todir="src/main/webapp/elements.en" flatten="true">
 			<fileset dir="src/main/java/com/pratilipi/site/element" includes="*.html" />
