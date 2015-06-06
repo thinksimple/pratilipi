@@ -1,15 +1,14 @@
-<dom-module id="websitewidget-navigation" attributes="data">
+<dom-module id="websitewidget-navigation">
 
 	<template>
 		<div>
-			<template is="dom-repeat" items="{{ data }}">
-				<h4>{{ item.title }}</h4>
-		        <template is="dom-repeat" items="{{ item.links }}">
+			<#list data.sections as section>
+				<#list section.items as item>
 		        	<div>
-		        		<a href="{{ item.url }}">{{ item.text }}</a>
+		        		<a href="${ item.url }">${ item.text }</a>
 		        	</div>
-			    </template>
-		    </template>
+				</#list>
+			</#list>
 		</div>
 	</template>
 
