@@ -151,7 +151,8 @@
 			  <artifactId>gcloud-maven-plugin</artifactId>
 			  <version>${gcloud.plugin.version}</version>
 			  <configuration>
-				<set_default>true</set_default>
+				<version>${app.version}</version>
+				<set_default>false</set_default>
 			  </configuration>
 			</plugin>
 		</plugins>

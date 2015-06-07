@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,9 +43,9 @@ public class SiteElementUtil {
 				if( element.isDirectory() )
 					continue;
 
-				File langFolder = new File( i18nElementFolderNamePrefix + lang );
-				langFolder.mkdir();
-				File i18nElement = new File( i18nElementFolderNamePrefix + lang + "/" + elementName );
+				File i18nElementFolder = new File( i18nElementFolderNamePrefix + lang );
+				i18nElementFolder.mkdir();
+				File i18nElement = new File( i18nElementFolder, elementName );
 				i18nElement.createNewFile();
 				FileWriter i18nElementFW = new FileWriter( i18nElement );
 				
