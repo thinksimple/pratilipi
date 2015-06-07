@@ -42,6 +42,8 @@ public class SiteElementUtil {
 				if( element.isDirectory() )
 					continue;
 
+				File langFolder = new File( i18nElementFolderNamePrefix + lang );
+				langFolder.mkdir();
 				File i18nElement = new File( i18nElementFolderNamePrefix + lang + "/" + elementName );
 				i18nElement.createNewFile();
 				FileWriter i18nElementFW = new FileWriter( i18nElement );
