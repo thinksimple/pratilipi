@@ -9,6 +9,10 @@ import java.util.logging.Logger;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.FileTemplateLoader;
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
@@ -25,14 +29,18 @@ public class FreeMarkerUtil {
 			throws UnexpectedServerException {
 		
 		if( cfg == null ) {
-			cfg = new Configuration( Configuration.VERSION_2_3_22 );
+			FileTemplateLoader ftl;
 			try {
-				String templateDir = System.getProperty( "user.dir" ) + "/WEB-INF/classes/";
-				cfg.setDirectoryForTemplateLoading( new File( templateDir ) );
-			} catch ( IOException e ) {
+				ftl = new FileTemplateLoader( new File( "." ) );
+			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to set template directory.", e );
 				throw new UnexpectedServerException();
 			}
+			ClassTemplateLoader ctl = new ClassTemplateLoader( FreeMarkerUtil.class.getClassLoader(), "" );
+			MultiTemplateLoader mtl = new MultiTemplateLoader( new TemplateLoader[] { ftl, ctl } );				
+
+			cfg = new Configuration( Configuration.VERSION_2_3_22 );
+			cfg.setTemplateLoader( mtl );
 			cfg.setDefaultEncoding( "UTF-8" );
 			cfg.setTemplateExceptionHandler( TemplateExceptionHandler.RETHROW_HANDLER );
 		}
