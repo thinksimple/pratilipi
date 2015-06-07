@@ -17,12 +17,14 @@ import com.pratilipi.common.util.FreeMarkerUtil;
 @SuppressWarnings("serial")
 public class PratilipiSite extends HttpServlet {
 	
+	private static final String lang = "hi";
+	
 	public void doGet(
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 		
 		Properties defaultProps = new Properties();
-		String filePath = System.getProperty( "user.dir" ) + "/WEB-INF/classes/com/pratilipi/site/i18n/strings.en";
+		String filePath = System.getProperty( "user.dir" ) + "/WEB-INF/classes/com/pratilipi/site/i18n/language." + lang;
 		FileInputStream fin = new FileInputStream( filePath );
 		defaultProps.load( fin );
 		fin.close();
@@ -32,7 +34,8 @@ public class PratilipiSite extends HttpServlet {
 			strMap.put( (String)entry.getKey(), (String)entry.getValue() );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put("_strings", strMap);
+		dataModel.put( "_strings", strMap );
+		dataModel.put( "lang", lang );
 		
 		String html = "";
 		try {

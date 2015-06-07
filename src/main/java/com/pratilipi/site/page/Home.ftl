@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${lang}">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,8 +22,8 @@
 		<link rel='import' href='//polymer.3p.pratilipi.net/polymer-1.0/polymer/polymer.html'>
 
 		<#-- Polymer 1.0 Custom Elements -->
-		<link rel='import' href='/elements.en/pratilipi-header.html'>
-		<link rel='import' href='/elements.en/pratilipi-search-bar.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
 		
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">

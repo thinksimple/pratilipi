@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="pratilipi" default='all' basedir="." >
 
-	<target name="all" depends="copy" />
+	<property name="lang.list" value="en,hi,gu,ta"/>
+	<property name="src.dir" value="src/main/java"/>
+	<property name="war.dir" value="src/main/webapp"/>
+	<property name="build.dir" value="target/site-6.0.0-SNAPSHOT"/>
 	
+	<target name="all" depends="copy,i18n"/>
+
+	<!-- Copy static resources (because maven doesn't) -->
 	<target name="copy">
-		<copy todir="src/main/webapp/WEB-INF/classes" flatten="false">
-			<fileset dir="src/main/java" includes="**/i18n/strings.*" />
-			<fileset dir="src/main/java" includes="**/*.ftl" />
-			<fileset dir="src/main/java" includes="**/*.html" />
-			<fileset dir="src/main/java" includes="**/*.json" />
+		<copy todir="${build.dir}/WEB-INF/classes" flatten="false">
+			<fileset dir="${src.dir}" includes="**/i18n/language.*"/>
+			<fileset dir="${src.dir}" includes="**/*.ftl"/>
+			<fileset dir="${src.dir}" includes="**/*.html"/>
+			<fileset dir="${src.dir}" includes="**/*.json"/>
 		</copy>
-		<copy todir="src/main/webapp/elements.en" flatten="true">
-			<fileset dir="src/main/java/com/pratilipi/site/element" includes="*.html" />
-		</copy>
+	</target>
+
+	<!-- Create language specific copies of Site Elements -->
+	<target name="i18n">
+		<java fork="true" failonerror="yes" classname="com.pratilipi.common.util.SiteElementUtil">
+			<arg line="${lang.list}"/>
+			<arg line="${src.dir}/com/pratilipi/site/i18n/language."/>
+			<arg line="${src.dir}/com/pratilipi/site/element"/>
+			<arg line="${src.dir}/com/pratilipi/site/element/data"/>
+			<arg line="com.pratilipi.site.element.data"/>
+			<arg line="${build.dir}/elements."/>
+			<classpath>
+				<path location="${build.dir}/WEB-INF/classes"/>
+				<path location="${build.dir}/WEB-INF/lib/*"/>
+			</classpath>
+		</java>
 	</target>
 
 </project>
