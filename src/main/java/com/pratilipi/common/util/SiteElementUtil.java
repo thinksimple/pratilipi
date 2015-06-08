@@ -1,8 +1,9 @@
 package com.pratilipi.common.util;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,71 +40,29 @@ public class SiteElementUtil {
 				if( element.isDirectory() )
 					continue;
 
+				// Data model required for i18n element generation
+				Map<String, Object> dataModel = new HashMap<>();
+				dataModel.put( "_strings", LanguageUtil.getStrings( languageFilePrefix + lang, languageFilePrefix + defaultLang ) );
+				dataModel.put( "data", getElementData( elementName, lang, elementDataFolder, elementDataModelPackage ) );
+
+				// I18n element file output stream
 				File i18nElementFolder = new File( i18nElementFolderNamePrefix + lang );
 				i18nElementFolder.mkdir();
 				File i18nElement = new File( i18nElementFolder, elementName );
 				i18nElement.createNewFile();
-				FileWriter i18nElementFW = new FileWriter( i18nElement );
+				OutputStreamWriter i18nElementOS = new OutputStreamWriter( new FileOutputStream( i18nElement ), "UTF-8" );
 				
-				Map<String, Object> dataModel = new HashMap<>();
-				dataModel.put( "_strings", getStrMap( languageFilePrefix + lang, languageFilePrefix + defaultLang ) );
-				dataModel.put( "data", getElementData( elementName, lang, elementDataFolder, elementDataModelPackage ) );
-				
+				// The magic
 				FreeMarkerUtil.processTemplate(
 						dataModel,
 						elementFolderName + "/" + elementName,
-						i18nElementFW );
+						i18nElementOS );
 
-				i18nElementFW.close();
+				// closing the output stream
+				i18nElementOS.close();
 			}
 			
 		}
-	}
-
-	
-	private static Map<String, String> getStrMap( String langFileName,
-			String fallbackLangFileName ) throws IOException {
-
-		Map<String, String> strMap = new HashMap<>();
-
-		// Loading strings for fallback langauge
-		if( fallbackLangFileName != null && !fallbackLangFileName.equals( langFileName ) ) {
-			File fallbackLangFile = new File( fallbackLangFileName );
-			if( fallbackLangFile.exists() ) {
-				LineIterator it = FileUtils.lineIterator( fallbackLangFile, "UTF-8" );
-				try {
-					while( it.hasNext() ) {
-						String line = it.nextLine();
-						if( line.indexOf( '=' ) != -1 )
-							strMap.put(
-									line.substring( 0, line.indexOf( '=' ) ).trim(),
-									line.substring( line.indexOf( '=' ) + 1 ).trim() );
-					}
-				} finally {
-					LineIterator.closeQuietly( it );
-				}
-			}
-		}
-		
-		// Loading strings for the langauge
-		File langFile = new File( langFileName );
-		if( langFile.exists() ) {
-			LineIterator it = FileUtils.lineIterator( langFile, "UTF-8" );
-			try {
-				while( it.hasNext() ) {
-					String line = it.nextLine();
-					if( line.indexOf( '=' ) != -1 )
-						strMap.put(
-								line.substring( 0, line.indexOf( '=' ) ).trim(),
-								line.substring( line.indexOf( '=' ) + 1 ).trim() );
-				}
-			} finally {
-				LineIterator.closeQuietly( it );
-			}
-		}
-
-		// return
-		return strMap;
 	}
 	
 	private static Object getElementData( String elementName, String lang,

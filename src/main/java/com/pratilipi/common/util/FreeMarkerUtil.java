@@ -17,7 +17,6 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
-
 public class FreeMarkerUtil {
 
 	private static final Logger logger = Logger.getGlobal();
