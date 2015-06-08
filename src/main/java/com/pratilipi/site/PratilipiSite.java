@@ -1,15 +1,16 @@
 package com.pratilipi.site;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.FreeMarkerUtil;
@@ -23,15 +24,21 @@ public class PratilipiSite extends HttpServlet {
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 		
-		Properties defaultProps = new Properties();
-		String filePath = System.getProperty( "user.dir" ) + "/WEB-INF/classes/com/pratilipi/site/i18n/language." + lang;
-		FileInputStream fin = new FileInputStream( filePath );
-		defaultProps.load( fin );
-		fin.close();
-	
 		Map<String, String> strMap = new HashMap<String, String>();
-		for( Entry<Object, Object> entry : defaultProps.entrySet() )
-			strMap.put( (String)entry.getKey(), (String)entry.getValue() );
+		String filePath = System.getProperty( "user.dir" ) + "/WEB-INF/classes/com/pratilipi/site/i18n/language." + lang;
+		LineIterator it = FileUtils.lineIterator( new File( filePath ), "UTF-8" );
+		try {
+			while( it.hasNext() ) {
+				String line = it.nextLine();
+				if( line.indexOf( '=' ) != -1 )
+					strMap.put(
+							line.substring( 0, line.indexOf( '=' ) ).trim(),
+							line.substring( line.indexOf( '=' ) + 1 ).trim() );
+			}
+		} finally {
+			LineIterator.closeQuietly( it );
+		}
+
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "_strings", strMap );
@@ -46,6 +53,7 @@ public class PratilipiSite extends HttpServlet {
 				html = FreeMarkerUtil.processTemplate( dataModel, "com/pratilipi/site/page/error/ServerError.ftl" );
 			} catch( UnexpectedServerException ex ) { }
 		}
+		response.setCharacterEncoding( "UTF-8" );
 		response.getWriter().write( html );
 		response.getWriter().close();
 	}
