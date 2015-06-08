@@ -1,15 +1,11 @@
 package com.pratilipi.common.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
@@ -68,31 +64,43 @@ public class SiteElementUtil {
 	private static Map<String, String> getStrMap( String langFileName,
 			String fallbackLangFileName ) throws IOException {
 
-		Properties strings = new Properties();
-		
+		Map<String, String> strMap = new HashMap<>();
+
 		// Loading strings for fallback langauge
 		if( fallbackLangFileName != null && !fallbackLangFileName.equals( langFileName ) ) {
 			File fallbackLangFile = new File( fallbackLangFileName );
 			if( fallbackLangFile.exists() ) {
-				FileInputStream in = new FileInputStream( fallbackLangFile );
-				strings.load( in );
-				in.close();
+				LineIterator it = FileUtils.lineIterator( fallbackLangFile, "UTF-8" );
+				try {
+					while( it.hasNext() ) {
+						String line = it.nextLine();
+						if( line.indexOf( '=' ) != -1 )
+							strMap.put(
+									line.substring( 0, line.indexOf( '=' ) ).trim(),
+									line.substring( line.indexOf( '=' ) + 1 ).trim() );
+					}
+				} finally {
+					LineIterator.closeQuietly( it );
+				}
 			}
 		}
 		
 		// Loading strings for the langauge
 		File langFile = new File( langFileName );
 		if( langFile.exists() ) {
-			strings = new Properties( strings );
-			FileInputStream in = new FileInputStream( langFile );
-			strings.load( in );
-			in.close();
+			LineIterator it = FileUtils.lineIterator( langFile, "UTF-8" );
+			try {
+				while( it.hasNext() ) {
+					String line = it.nextLine();
+					if( line.indexOf( '=' ) != -1 )
+						strMap.put(
+								line.substring( 0, line.indexOf( '=' ) ).trim(),
+								line.substring( line.indexOf( '=' ) + 1 ).trim() );
+				}
+			} finally {
+				LineIterator.closeQuietly( it );
+			}
 		}
-		
-		// Putting strings in a Map
-		Map<String, String> strMap = new HashMap<>();
-		for( Entry<Object, Object> entry : strings.entrySet() )
-			strMap.put( (String)entry.getKey(), (String)entry.getValue() );
 
 		// return
 		return strMap;
