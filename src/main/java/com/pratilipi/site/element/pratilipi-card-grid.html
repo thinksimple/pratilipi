@@ -1,0 +1,56 @@
+<dom-module id="pratilipi-card-grid">
+
+	<style>
+
+		h3 {
+			margin: 0px;
+			padding: 10px;
+			padding-left: 20px;
+			background-color: darkgrey;
+		}
+		
+		div {
+			padding: 10px;
+		}
+
+	</style>
+
+	
+	<template>
+		<h3>{{ gridTitle }}</h3>
+		<div class="one-col">
+			<div>
+				<content></content>
+			</div>
+		</div>
+	</template>
+
+
+	<script>
+
+		Polymer({
+			
+			is: 'pratilipi-card-grid',
+
+			ready: function() {
+				var grid = this.querySelector( 'div' );
+				function setColCount( e ) {
+					var jGrid = jQuery( grid );
+					var width = jGrid.width();
+					if( width >= 750 )
+						jGrid.attr( "class", "three-col" );
+					else if( width >= 500 )
+						jGrid.attr( "class", "two-col" );
+					else
+						jGrid.attr( "class", "one-col" );
+				};
+				jQuery( document ).ready( setColCount );
+				jQuery( window ).load( setColCount );
+				jQuery( window ).resize( setColCount );
+			}
+		
+		});
+
+	</script>
+
+</dom-module>

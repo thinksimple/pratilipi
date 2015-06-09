@@ -24,19 +24,39 @@
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
-		
+		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
+
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
+		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
 
 	</head>
 	<body>
 
 		<div class="primary-500">
-			<pratilipi-header>
-				<pratilipi-search-bar/>
-			</pratilipi-header>
+			<div class="container">
+				<pratilipi-header>
+					<pratilipi-search-bar/>
+				</pratilipi-header>
+			</div>
 		</div>
-
+		
+		<div class="container" style="margin-top:20px">
+			<div class="secondary-500" style="margin-left:270px">
+				<div>
+					<pratilipi-card-grid grid-title="${ _strings.featured }">
+						<pratilipi-card></pratilipi-card>
+						<pratilipi-card></pratilipi-card>
+						<pratilipi-card></pratilipi-card>
+						<pratilipi-card></pratilipi-card>
+						<pratilipi-card></pratilipi-card>
+						<pratilipi-card></pratilipi-card>
+					</pratilipi-card-grid>
+				</div>
+			</div>
+		</div>
+		
 	</body>
 </html>

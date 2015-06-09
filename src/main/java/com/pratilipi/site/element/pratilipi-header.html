@@ -1,33 +1,29 @@
 <dom-module id="pratilipi-header">
 
 	<template>
-		<div class="container">
-	
-			<a href="/">
-				<img class="pull-left" title="${ _strings.pratilipi_logo }" alt="${ _strings.pratilipi_logo }" src="/theme.pratilipi/logo.png" />
-			</a>
-			
-			<div style="margin-top:51px; margin-bottom:45px; text-align:right;">
-				<a href="#">${ _strings.sign_in_with_facebook }</a>
-				|
-				<a href="#">${ _strings.sign_in }</a>
-				|
-				<span class="dropdown">
-					<a class="dropdown-toggle" id="LanguageMenu" data-toggle="dropdown" aria-expanded="true">
-						${ _strings.choose_language } <span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu">
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="//wwww.pratilipi.com">${ _strings.language_all }</a></li>
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="//hindi.pratilipi.com">${ _strings.language_hi }</a></li>
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="//gujarati.pratilipi.com">${ _strings.language_gu }</a></li>
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="//tamil.pratilipi.com">${ _strings.language_ta }</a></li>
-					</ul>
-				</span>
-			</div>
-	
-			<content></content>
-
+		<a href="/">
+			<img class="pull-left" title="${ _strings.pratilipi_logo }" alt="${ _strings.pratilipi_logo }" src="/theme.pratilipi/logo.png" />
+		</a>
+		
+		<div style="margin-top:51px; margin-bottom:45px; text-align:right;">
+			<a href="#">${ _strings.sign_in_with_facebook }</a>
+			|
+			<a href="#">${ _strings.sign_in }</a>
+			|
+			<span class="dropdown">
+				<a class="dropdown-toggle" id="LanguageMenu" data-toggle="dropdown" aria-expanded="true">
+					${ _strings.choose_language } <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="//wwww.pratilipi.com">${ _strings.language_all }</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="//hindi.pratilipi.com">${ _strings.language_hi }</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="//gujarati.pratilipi.com">${ _strings.language_gu }</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="//tamil.pratilipi.com">${ _strings.language_ta }</a></li>
+				</ul>
+			</span>
 		</div>
+
+		<content></content>
 	</template>
 
 
