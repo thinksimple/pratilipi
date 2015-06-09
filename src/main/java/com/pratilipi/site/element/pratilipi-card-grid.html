@@ -18,7 +18,7 @@
 	
 	<template>
 		<h3>{{ gridTitle }}</h3>
-		<div class="one-col">
+		<div class="one-col-grid">
 			<div>
 				<content></content>
 			</div>
@@ -38,11 +38,11 @@
 					var jGrid = jQuery( grid );
 					var width = jGrid.width();
 					if( width >= 750 )
-						jGrid.attr( "class", "three-col" );
+						jGrid.attr( "class", "three-col-grid" );
 					else if( width >= 500 )
-						jGrid.attr( "class", "two-col" );
+						jGrid.attr( "class", "two-col-grid" );
 					else
-						jGrid.attr( "class", "one-col" );
+						jGrid.attr( "class", "one-col-grid" );
 				};
 				jQuery( document ).ready( setColCount );
 				jQuery( window ).load( setColCount );

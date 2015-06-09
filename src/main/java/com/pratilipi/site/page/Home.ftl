@@ -24,6 +24,7 @@
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
 
@@ -44,6 +45,9 @@
 		</div>
 		
 		<div class="container" style="margin-top:20px">
+			<div class="secondary-500 pull-left" style="width:250px">
+				<pratilipi-navigation/>
+			</div>
 			<div class="secondary-500" style="margin-left:270px">
 				<div>
 					<pratilipi-card-grid grid-title="${ _strings.featured }">

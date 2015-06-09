@@ -1,17 +1,17 @@
-.one-col .col {
+.one-col-grid .grid-col {
 	width: 100%;
 	display: inline-block;
 	padding: 10px;
 }
 
-.two-col .col {
+.two-col-grid .grid-col {
 	width: 50%;
 	display: inline-block;
 	margin-right: -4px;
 	padding: 10px;
 }
 
-.three-col .col {
+.three-col-grid .grid-col {
 	width: 33.33%;
 	display: inline-block;
 	margin-right: -4px;
