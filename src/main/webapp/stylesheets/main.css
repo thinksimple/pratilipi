@@ -50,9 +50,8 @@ a, a:hover, a:focus .a {
   min-height: 800px;
 }
 
-
-
 button.yellow {
-	color: black;
-	background: yellow;
+			color: black;
+			background: yellow;
 }
+

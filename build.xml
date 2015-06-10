@@ -6,7 +6,7 @@
 	<property name="war.dir" value="src/main/webapp"/>
 	<property name="build.dir" value="target/site-6.0.0-SNAPSHOT"/>
 	
-	<target name="all" depends="copy,i18n"/>
+	<target name="all" depends="copy"/>
 
 	<!-- Copy static resources (because maven doesn't) -->
 	<target name="copy">
