@@ -32,6 +32,7 @@
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
+		<link type="text/css" rel="stylesheet" href="/stylesheets/font-awesome.min.css">
 
 	</head>
 	<body>
@@ -61,6 +62,6 @@
 				</div>
 			</div>
 		</div>
-		
+		<script src="/javascript/home.js"></script>
 	</body>
 </html>
