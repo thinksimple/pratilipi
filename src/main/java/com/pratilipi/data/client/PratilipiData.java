@@ -1,14 +1,11 @@
-package com.pratilipi.data.transfer.shared;
+package com.pratilipi.data.client;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import com.pratilipi.commons.shared.PratilipiContentType;
-import com.pratilipi.commons.shared.PratilipiState;
-import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.PratilipiType;
 
-@SuppressWarnings("serial")
-public class PratilipiData implements Serializable {
+public class PratilipiData {
 
 	private Long id;
 	
@@ -27,12 +24,10 @@ public class PratilipiData implements Serializable {
 	private String titleEn;
 	private boolean hasTitleEn;
 	
-	private Long languageId;
-	private boolean hasLanguageId;
+	private String langCode;
+	private boolean hasLangCode;
 
-	private LanguageData language;
 
-	
 	private Long authorId;
 	private boolean hasAuthorId;
 	
@@ -58,9 +53,6 @@ public class PratilipiData implements Serializable {
 	private Integer pageCount;
 	private boolean hasPageCount;
 
-	private PratilipiContentType contentType;
-	private boolean hasContentType;
-	
 	private PratilipiState state;
 	private boolean hasState;
 	
@@ -70,7 +62,7 @@ public class PratilipiData implements Serializable {
 	
 	private Long ratingCount;
 	
-	private Long starCount;
+	private Float averageRating;
 	
 	private Double relevance;
 
@@ -169,29 +161,19 @@ public class PratilipiData implements Serializable {
 		return hasTitleEn;
 	}
 
-	
-	public Long getLanguageId() {
-		return languageId;
+	public String getLanguageCode() {
+		return langCode;
 	}
 
-	public void setLanguageId( Long languageId ) {
-		this.languageId = languageId;
-		this.hasLanguageId = true;
+	public void setLanguageCode( String langCode ) {
+		this.langCode = langCode;
+		this.hasLangCode = true;
 	}
 
-	public boolean hasLanguageId() {
-		return hasLanguageId;
-	}
-	
-	public LanguageData getLanguage() {
-		return language;
-	}
-
-	public void setLanguage( LanguageData language ) {
-		this.language = language;
+	public boolean hasLanguageCode() {
+		return hasLangCode;
 	}
 	
-
 	public Long getAuthorId() {
 		return authorId;
 	}
@@ -212,7 +194,6 @@ public class PratilipiData implements Serializable {
 	public void setAuthor( AuthorData author ) {
 		this.author = author;
 	}
-	
 	
 	public Long getPublicationYear() {
 		return publicationYear;
@@ -295,19 +276,6 @@ public class PratilipiData implements Serializable {
 		return hasPageCount;
 	}
 	
-	public PratilipiContentType getContentType() {
-		return contentType;
-	}
-	
-	public void setContentType( PratilipiContentType contentType ){
-		this.contentType = contentType;
-		this.hasContentType = true;
-	}
-	
-	public boolean hasContentType() {
-		return hasContentType;
-	}
-
 	public PratilipiState getState() {
 		return state;
 	}
@@ -320,7 +288,6 @@ public class PratilipiData implements Serializable {
 	public boolean hasState() {
 		return hasState;
 	}
-	
 	
 	public Long getReadCount() {
 		return readCount;
@@ -346,12 +313,12 @@ public class PratilipiData implements Serializable {
 		this.ratingCount = ratingCount;
 	}
 
-	public Long getStarCount() {
-		return starCount;
+	public Float getAverageRating() {
+		return averageRating;
 	}
 
-	public void setStarCount(Long starCount) {
-		this.starCount = starCount;
+	public void setAverageRating( Float averageRating ) {
+		this.averageRating = averageRating;
 	}
 	
 	public Double getRelevance() {
@@ -361,4 +328,5 @@ public class PratilipiData implements Serializable {
 	public void setRelevance( Double relevance ) {
 		this.relevance = relevance;
 	}
+
 }

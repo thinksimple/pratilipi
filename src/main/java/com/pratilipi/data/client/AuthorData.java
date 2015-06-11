@@ -1,20 +1,15 @@
-package com.pratilipi.data.transfer.shared;
+package com.pratilipi.data.client;
 
-import java.io.Serializable;
-
-@SuppressWarnings("serial")
-public class AuthorData implements Serializable {
+public class AuthorData {
 
 	private Long id;
 
 	private String pageUrl;
 	private String pageUrlAlias;
-	private String authorImageUrl;
+	private String imageUrl;
 	
-	private Long languageId;
-	private boolean hasLanguageId;
-
-	private LanguageData language;
+	private String langCode;
+	private boolean hasLangCode;
 
 	
 	private String firstName;
@@ -30,6 +25,7 @@ public class AuthorData implements Serializable {
 
 	private String fullName;
 
+	
 	private String firstNameEn;
 	private boolean hasFirstNameEn;
 	
@@ -79,35 +75,26 @@ public class AuthorData implements Serializable {
 		this.pageUrlAlias = pageUrlAlias;
 	}
 
-	public String getAuthorImageUrl() {
-		return authorImageUrl;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setAuthorImageUrl( String authorImageUrl ) {
-		this.authorImageUrl = authorImageUrl;
+	public void setImageUrl( String imageUrl ) {
+		this.imageUrl = imageUrl;
 	}
 
-	public Long getLanguageId() {
-		return languageId;
+	public String getLanguageCode() {
+		return langCode;
 	}
 
-	public void setLanguageId( Long languageId ) {
-		this.languageId = languageId;
-		this.hasLanguageId = true;
+	public void setLanguageCode( String langCode ) {
+		this.langCode = langCode;
+		this.hasLangCode = true;
 	}
 	
-	public boolean hasLanguageId() {
-		return hasLanguageId;
+	public boolean hasLanguageCode() {
+		return hasLangCode;
 	}
-
-	public LanguageData getLanguage() {
-		return language;
-	}
-
-	public void setLanguage( LanguageData language ) {
-		this.language = language;
-	}
-
 
 	public String getFirstName() {
 		return firstName;
@@ -218,7 +205,6 @@ public class AuthorData implements Serializable {
 	public void setFullNameEn( String fullNameEn ) {
 		this.fullNameEn = fullNameEn;
 	}
-
 
 	public String getSummary() {
 		return summary;
