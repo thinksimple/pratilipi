@@ -1,0 +1,83 @@
+<dom-module id="pratilipi-rating">
+
+	<style>
+
+		.glyphicon {
+			color: #bdc3c7;
+		}
+
+		.full {
+			color: #e67e22;
+		}
+		
+		.half:after, .one-third:after, .two-third:after {
+			content: '\e006';
+			color: #e67e22;
+			position: absolute;
+			top: 0;
+			z-index: 1;
+
+			width: 47%;
+			display: block;
+			overflow: hidden;
+		}
+
+		.one-third:after {
+			width: 34%;
+		}
+		
+		.two-third:after {
+			width: 60%;
+		}
+		
+	</style>
+
+
+	<template>
+		<div>
+			<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+		</div>
+	</template>
+
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-rating',
+
+			properties: {
+				value: { type: Number }
+			},
+
+			ready: function() {
+				var stars = this.querySelectorAll( 'span' );
+
+				if( this.value >= 1.0 )
+					jQuery( stars[0] ).addClass( 'full' );
+				if( this.value >= 2.0 )
+					jQuery( stars[1] ).addClass( 'full' );
+				if( this.value >= 3.0 )
+					jQuery( stars[2] ).addClass( 'full' );
+				if( this.value >= 4.0 )
+					jQuery( stars[3] ).addClass( 'full' );
+				if( this.value == 5.0 )
+					jQuery( stars[4] ).addClass( 'full' );
+
+				if( this.value % 1 > 0.66 )
+					jQuery( stars[Math.floor( this.value)] ).addClass( 'two-third' );
+				else if( this.value % 1 >= 0.5 )
+					jQuery( stars[Math.floor( this.value)] ).addClass( 'half' );
+				else if( this.value % 1 >= 0.33 )
+					jQuery( stars[Math.floor( this.value)] ).addClass( 'one-third' );
+			}
+
+		});
+
+	</script>
+
+</dom-module>
