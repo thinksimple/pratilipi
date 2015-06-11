@@ -1,13 +1,11 @@
-package com.pratilipi.commons.shared;
+package com.pratilipi.common.type;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+public enum PratilipiType {
 
-public enum PratilipiType implements IsSerializable {
-
-	BOOK( "Book", "Books" ),
-	POEM( "Poem", "Poems" ),
-	STORY( "Story", "Stories" ),
-	ARTICLE( "Article", "Articles" ),
+	BOOK	( "Book", "Books" ),
+	POEM	( "Poem", "Poems" ),
+	STORY	( "Story", "Stories" ),
+	ARTICLE	( "Article", "Articles" ),
 	MAGAZINE( "Magazine", "Magazines" ),
 	;
 	
