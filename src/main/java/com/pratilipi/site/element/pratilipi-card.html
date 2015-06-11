@@ -2,76 +2,83 @@
 
 	<style>
 	
-		.textcontainer{
-			margin-left: 110px;
-			height:150px;
-			
-			
+		img {
+			width: 100px;
+			height: 150px;
 		}
 
-		.glyphicon-star {
-   			 
-   			 color: #e67e22;
-   		}
+		h4 {
+			margin-bottom: 0px;
+		}
+
+		h6 {
+			margin-top: 0px;
+			margin-bottom: 5px;
+		}
+
+		.badge {
+			margin-top: 15px;
+			margin-bottom: 10px;
+		}
 		
-		.glyphicon-star.half {
-     		position: relative;
+		.btn {
+			border-radius: 0px;
+			padding: 3px 30px;
 		}
-	
-		.glyphicon-star.half:before {
-    		 position: relative;
-    		 z-index: 9;
-    		 width: 47%;
-    		 display: block;
-     		 overflow: hidden;
-		}
-	
-		.glyphicon-star.half:after {
-    		content: '\e006';
-    		position: absolute;
-    		z-index: 8;
-    		color: #bdc3c7;
-   			top: 0;
-   		    left: 150;
-		}
-
+		
 	</style>
+
 
 	<template>
 		<div class="grid-col">
-			<div class="bookcontainer">
-	
-			<a href="/">
-				<img src="/stylesheets/bookimg.jpg" class="pull-left" width=100 height=150 alt="Book"  />
-			</a>
-			  
-			  	<div class="textcontainer"  >
-			
-					<a href="#">Book Name</a><br>
-				
-					<a href="#" style="font-size:12px;">Book Author</a><br>
-					<div class="ratings" style="font-size: 10px;">
-						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-						<span class="glyphicon glyphicon-star half" aria-hidden="true"></span>
-						<a href="#">($500 ratings)</a>
-					</div>
-					<button type="button" class="btn btn-default" style=" margin-bottom: 4px; border-radius: 24px; font-size: 12px; padding: 0px 8px;" onclick="readForFreeOnClick()">Classic</button>
-					<br>
-					<button type="button" class="btn btn-success" onclick="readForFreeOnClick()" style="padding: 0px 10px;">Free !</button>
-				</div>
-		</div>	
+			<div class="media">
 
-</div>
-</template>
+				<div class="media-left">
+					<a href="{{ pratilipi.pageUrlAlias }}">
+						<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+					</a>
+				</div>
+
+			  	<div class="media-body">
+			  		<h4 class="media-heading">
+						<a href="{{ pratilipi.pageUrlAlias }}">{{ pratilipi.title }}</a>
+					</h4>
+					<h6>
+						<a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
+					</h6>
+					<div>
+						<pratilipi-rating value="{{ pratilipi.averageRating }}" />
+					</div>
+					<div>
+						<small>{{ getRatingsStr( pratilipi.ratingCount ) }}</small>
+					</div>
+					<div>
+						<a href="#"><span class="badge">Classic</span></a>
+					</div>
+					<div>
+						<button type="button" class="btn green">Free !</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</template>
 
 
 	<script>
 
 		Polymer({
-			is: 'pratilipi-card'
+
+			is: 'pratilipi-card',
+			
+			properties: {
+				pratilipi: { type: Object }
+			},
+			
+			getRatingsStr: function( ratingCount ) {
+				return '(' + this.pratilipi.ratingCount + ' ' + ( this.pratilipi.ratingCount <= 1 ? '${ _strings.rating }' : '${ _strings.ratings }' ) + ')';
+			}
+			
 		});
 
 	</script>

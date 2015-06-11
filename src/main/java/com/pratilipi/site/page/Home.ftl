@@ -25,6 +25,7 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-rating.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
 
@@ -51,12 +52,9 @@
 			<div class="secondary-500" style="margin-left:270px">
 				<div>
 					<pratilipi-card-grid grid-title="${ _strings.featured }">
-						<pratilipi-card></pratilipi-card>
-						<pratilipi-card></pratilipi-card>
-						<pratilipi-card></pratilipi-card>
-						<pratilipi-card></pratilipi-card>
-						<pratilipi-card></pratilipi-card>
-						<pratilipi-card></pratilipi-card>
+						<#list featuredList as featured>
+							<pratilipi-card pratilipi='${ featured }'></pratilipi-card>
+						</#list>
 					</pratilipi-card-grid>
 				</div>
 			</div>
