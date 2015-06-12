@@ -56,3 +56,9 @@ button.yellow {
 	color: black;
 	background: yellow;
 }
+
+@media (min-width: 768px) {
+  .modal-login {
+     width: 400px;
+  }
+}

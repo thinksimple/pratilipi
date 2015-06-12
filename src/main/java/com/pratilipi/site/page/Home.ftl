@@ -17,6 +17,11 @@
 		<script src='//bootstrap.3p.pratilipi.net/bootstrap-3.3.4/js/bootstrap.min.js'></script>
 		<link rel='stylesheet' href='//bootstrap.3p.pratilipi.net/bootstrap-3.3.4/css/bootstrap.min.css'>
 		
+		<#-- Font Awesome 4.3.0 -->
+		<link type="text/css" rel="stylesheet" href="/stylesheets/font-awesome.min.css">
+		<#-- Bootstrap Social -->
+		<link type="text/css" rel="stylesheet" href="/stylesheets/bootstrap-social.css">
+		
 		<#-- Polymer 1.0 -->
 		<script src='//polymer.3p.pratilipi.net/polymer-1.0/webcomponentsjs/webcomponents-lite.js'></script>
 		<link rel='import' href='//polymer.3p.pratilipi.net/polymer-1.0/polymer/polymer.html'>
@@ -27,12 +32,12 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-login.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
-		<link type="text/css" rel="stylesheet" href="/stylesheets/font-awesome.min.css">
 
 	</head>
 	<body>
@@ -62,6 +67,7 @@
 				</div>
 			</div>
 		</div>
+		<pratilipi-login></pratilipi-login>
 		<script src="/javascript/home.js"></script>
 	</body>
 </html>
