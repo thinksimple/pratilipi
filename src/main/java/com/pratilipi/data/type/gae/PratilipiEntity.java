@@ -1,4 +1,4 @@
-package com.pratilipi.data.access.gae;
+package com.pratilipi.data.type.gae;
 
 import java.util.Date;
 
@@ -8,10 +8,11 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
-import com.pratilipi.commons.shared.PratilipiContentType;
-import com.pratilipi.commons.shared.PratilipiState;
-import com.pratilipi.commons.shared.PratilipiType;
-import com.pratilipi.data.transfer.Pratilipi;
+import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiContentType;
+import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.PratilipiType;
+import com.pratilipi.data.type.Pratilipi;
 
 @SuppressWarnings("serial")
 @PersistenceCapable( table = "PRATILIPI" )
@@ -21,42 +22,53 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "PRATILIPI_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
-	@Persistent( column = "PRATILIPI_TYPE" )
-	private PratilipiType type;
-	
-	@Persistent( column = "PUBLIC_DOMAIN" )
-	private Boolean publicDomain;
-	
 	@Persistent( column = "TITLE" )
 	private String title;
 	
 	@Persistent( column = "TITLE_EN" )
 	private String titleEn;
 	
-	
+	@Persistent( column = "LANGUAGE" )
+	private Language language;
+
 	@Persistent( column = "LANGUAGE_ID" )
 	private Long languageId;
 
-	
 	@Persistent( column = "AUTHOR_ID" )
 	private Long authorId;
 	
 	@Persistent( column = "PUBLISHER_ID" )
 	private Long publisherId;
 
+	@Persistent( column = "SUMMARY" )
+	private Text summary;
+
 	@Persistent( column = "PUBLICATION_YEAR" )
 	private Long publicationYear;
 
-	@Persistent( column = "LISTING_DATE" )
-	private Date listingDate;
-
+	
+	@Persistent( column = "PUBLIC_DOMAIN" )
+	private Boolean publicDomain;
+	
+	@Persistent( column = "PRATILIPI_TYPE" )
+	private PratilipiType type;
+	
+	@Persistent( column = "CONTENT_TYPE" )
+	private PratilipiContentType contentType;
+	
+	@Persistent( column = "STATE" )
+	private PratilipiState state;
 	
 	@Persistent( column = "CUSTOM_COVER" )
 	private Boolean customCover;
 
-	@Persistent( column = "SUMMARY" )
-	private Text summary;
+	@Persistent( column = "LISTING_DATE" )
+	private Date listingDate;
 
+	@Persistent( column = "LAST_UPDATED" )
+	private Date lastUpdated;
+
+	
 	@Persistent( column = "INDEX" )
 	private Text index;
 
@@ -65,6 +77,7 @@ public class PratilipiEntity implements Pratilipi {
 
 	@Persistent( column = "PAGE_COUNT" )
 	private Integer pageCount;
+	
 	
 	@Persistent( column = "REVIEW_COUNT" )
 	private Long reviewCount;
@@ -75,20 +88,13 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "STAR_COUNT" )
 	private Long starCount;
 
+	@Persistent( column = "TOTAL_RATING" )
+	private Long totalRating;
+
 	@Persistent( column = "RELEVANCE_OFFSET" )
 	private Long relevanceOffset;
 	
 
-	@Persistent( column = "CONTENT_TYPE" )
-	private PratilipiContentType contentType;
-	
-	@Persistent( column = "STATE" )
-	private PratilipiState state;
-	
-	@Persistent( column = "LAST_UPDATED" )
-	private Date lastUpdated;
-
-	
 	@Persistent( column = "READ_COUNT_OFFSET" )
 	private Long readCountOffset;
 	
@@ -97,6 +103,7 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Persistent( column = "FB_LIKE_SHARE_COUNT" )
 	private Long fbLikeShareCount;
+
 	
 	@Persistent( column = "LAST_PROCESS_DATE" )
 	private Date lastProcessDate;
@@ -105,31 +112,12 @@ public class PratilipiEntity implements Pratilipi {
 	private Date nextProcessDate;
 
 	
+	
 	@Override
 	public Long getId() {
 		return id;
 	}
 
-	@Override
-	public PratilipiType getType() {
-		return type;
-	}
-	
-	@Override
-	public void setType( PratilipiType pratilipiType ) {
-		this.type = pratilipiType;
-	}
-
-	@Override
-	public boolean isPublicDomain() {
-		return publicDomain == null ? false : publicDomain;
-	}
-	
-	@Override
-	public void setPublicDomain( boolean isPublicDomain ) {
-		this.publicDomain = isPublicDomain;
-	}
-	
 	@Override
 	public String getTitle() {
 		return title;
@@ -151,13 +139,13 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
-	public Long getLanguageId() {
-		return languageId;
+	public Language getLanguage() {
+		return language;
 	}
 
 	@Override
-	public void setLanguageId( Long languageId ) {
-		this.languageId = languageId;
+	public void setLanguage( Language language ) {
+		this.language = language;
 	}
 
 	@Override
@@ -171,13 +159,13 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
-	public Long getPublisherId() {
-		return publisherId;
+	public String getSummary() {
+		return summary == null ? null : summary.getValue();
 	}
 
 	@Override
-	public void setPublisherId( Long publisherId ) {
-		this.publisherId = publisherId;
+	public void setSummary( String summary ) {
+		this.summary = summary == null ? null : new Text( summary );
 	}
 	
 	@Override
@@ -190,17 +178,37 @@ public class PratilipiEntity implements Pratilipi {
 		this.publicationYear = publicationYear;
 	}
 
+	
 	@Override
-	public Date getListingDate() {
-		return listingDate;
+	public PratilipiType getType() {
+		return type;
+	}
+	
+	@Override
+	public void setType( PratilipiType pratilipiType ) {
+		this.type = pratilipiType;
 	}
 
 	@Override
-	public void setListingDate( Date listingDate ) {
-		this.listingDate = listingDate;
+	public PratilipiContentType getContentType() {
+		return contentType;
 	}
-
-
+	
+	@Override
+	public void setContentType( PratilipiContentType contentType ) {
+		this.contentType = contentType;
+	}
+	
+	@Override
+	public PratilipiState getState() {
+		return state;
+	}
+	
+	@Override
+	public void setState( PratilipiState state ) {
+		this.state = state;
+	}
+	
 	@Override
 	public Boolean hasCustomCover() {
 		return customCover == null ? false : customCover;
@@ -212,14 +220,25 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
-	public String getSummary() {
-		return summary == null ? null : summary.getValue();
+	public Date getListingDate() {
+		return listingDate;
 	}
 
 	@Override
-	public void setSummary( String summary ) {
-		this.summary = summary == null ? null : new Text( summary );
+	public void setListingDate( Date listingDate ) {
+		this.listingDate = listingDate;
 	}
+
+	@Override
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+	@Override
+	public void setLastUpdated( Date lastUpdated ) {
+		this.lastUpdated = lastUpdated;
+	}
+
 	
 	@Override
 	public String getIndex() {
@@ -251,6 +270,7 @@ public class PratilipiEntity implements Pratilipi {
 		this.pageCount = pageCount;
 	}
 	
+	
 	@Override
 	public Long getReviewCount() {
 		return reviewCount;
@@ -272,56 +292,16 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
-	public Long getStarCount() {
-		return starCount == null ? 0 : starCount;
+	public Long getTotalRating() {
+		return totalRating == null ? 0 : totalRating;
 	}
 
 	@Override
-	public void setStarCount( Long starCount ) {
-		this.starCount = starCount;
+	public void setTotalRating( Long totalRating ) {
+		this.totalRating = totalRating;
 	}
 	
-	@Override
-	public Long getRelevanceOffset() {
-		return relevanceOffset == null ? 0L : relevanceOffset;
-	}
-
-	@Override
-	public void setRelevanceOffset( Long relevanceOffset ) {
-		this.relevanceOffset = relevanceOffset;
-	}
 	
-	@Override
-	public PratilipiContentType getContentType() {
-		return contentType;
-	}
-	
-	@Override
-	public void setContentType( PratilipiContentType contentType ) {
-		this.contentType = contentType;
-	}
-	
-	@Override
-	public PratilipiState getState() {
-		return state;
-	}
-	
-	@Override
-	public void setState( PratilipiState state ) {
-		this.state = state;
-	}
-	
-	@Override
-	public Date getLastUpdated() {
-		return lastUpdated;
-	}
-
-	@Override
-	public void setLastUpdated( Date lastUpdated ) {
-		this.lastUpdated = lastUpdated;
-	}
-
-
 	@Override
 	public Long getReadCount() {
 		return readCount == null
@@ -343,6 +323,7 @@ public class PratilipiEntity implements Pratilipi {
 	public void setFbLikeShareCount( Long fbLikeShareCount ) {
 		this.fbLikeShareCount = fbLikeShareCount;
 	}
+
 	
 	@Override
 	public Date getLastProcessDate() {
