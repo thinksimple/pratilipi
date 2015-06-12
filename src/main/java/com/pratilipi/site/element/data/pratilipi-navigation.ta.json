@@ -1,17 +1,75 @@
 {
-  "sections" : [
-    {
-  	  "title" : "Navigation",
-      "items" : [
-        {
-          "text" : "Link 1",
-          "url" : "#link1"
-        },
-        {
-          "text" : "Link 2",
-          "url" : "#link2"
-        }
-      ]
-    }
-  ]
+	"sections" : [
+		{
+			"title" : "பிரபலமானவை",
+			"items" : [
+				{
+					"text" : "Top Sellers",
+					"url" : "#top-sellers"
+				},
+				{
+					"text" : "வாசகர் தேர்வு",
+					"url" : "#most-read"
+				},
+				{
+					"text" : "Most Read This Month",
+					"url" : "#most-read"
+				},
+				{
+					"text" : "2015இல் சிறந்தவை",
+					"url" : "#best-of-2015"
+				},
+				{
+					"text" : "Top Rated",
+					"url" : "#top-rated"
+				}
+			]
+		},
+		{
+			"title" : "Categories",
+			"items" : [
+				{
+					"text" : "புதினங்கள்",
+					"url" : "#fiction"
+				},
+				{
+					"text" : "Horror",
+					"url" : "#horror"
+				},
+				{
+					"text" : "காதல்",
+					"url" : "#romance"
+				},
+				{
+					"text" : "Crime",
+					"url" : "#crime"
+				},
+				{
+					"text" : "கட்டுரைகள்",
+					"url" : "#articles"
+				}
+			]
+		},
+		{
+			"title" : "பண்டைய நூல்கள்",
+			"items" : [
+				{
+					"text" : "கதைகள்",
+					"url" : "#stories"
+				},
+				{
+					"text" : "Ghazals",
+					"url" : "#horror"
+				},
+				{
+					"text" : "Nazm",
+					"url" : "#nazm"
+				},
+				{
+					"text" : "Novels",
+					"url" : "#novels"
+				}
+			]
+		}	
+	]
 }
