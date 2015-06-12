@@ -11,6 +11,7 @@
 	<properties>
 		<app.id>devo-pratilipi</app.id>
 		<app.version>mark-6</app.version>
+		<app.setDefault>false</app.setDefault>
 		<appengine.version>1.9.20</appengine.version>
 		<gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>
 
@@ -24,11 +25,13 @@
 
 	<dependencies>
 	<!-- Compile/runtime dependencies -->
+
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
 			<version>${appengine.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -59,36 +62,43 @@
 
 
 	<!-- Test Dependencies -->
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>2.0.2-beta</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-testing</artifactId>
 			<version>${appengine.version}</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-stubs</artifactId>
 			<version>${appengine.version}</version>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
 		<!-- for hot reload of the web application-->
 		<outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
+
 		<plugins>
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
@@ -103,6 +113,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -146,15 +157,19 @@
 					</jvmFlags -->
 				</configuration>
 			</plugin>
+			
 			<plugin>
-			  <groupId>com.google.appengine</groupId>
-			  <artifactId>gcloud-maven-plugin</artifactId>
-			  <version>${gcloud.plugin.version}</version>
-			  <configuration>
-				<version>${app.version}</version>
-				<set_default>false</set_default>
-			  </configuration>
+				<groupId>com.google.appengine</groupId>
+				<artifactId>gcloud-maven-plugin</artifactId>
+				<version>${gcloud.plugin.version}</version>
+				<configuration>
+					<version>${app.version}</version>
+					<set_default>${app.setDefault}</set_default>
+				</configuration>
 			</plugin>
+			
 		</plugins>
+		
 	</build>
+	
 </project>

@@ -1,8 +1,6 @@
-package com.pratilipi.commons.shared;
+package com.pratilipi.common.type;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
-public enum PratilipiState implements IsSerializable {
+public enum PratilipiState {
 
 	DRAFTED,				// Work in progress
 	SUBMITTED,				// Final work waiting for approval from Moderator

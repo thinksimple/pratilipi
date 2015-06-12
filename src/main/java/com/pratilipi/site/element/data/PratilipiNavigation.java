@@ -21,13 +21,13 @@ public class PratilipiNavigation {
 		}
 
 		private String title;
-		private List<Item> items;
+		private Item[] items;
 
 		public String getTitle() {
 			return title;
 		}
 
-		public List<Item> getItems() {
+		public Item[] getItems() {
 			return items;
 		}
 		

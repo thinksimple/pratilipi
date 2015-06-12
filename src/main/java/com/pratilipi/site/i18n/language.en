@@ -14,5 +14,8 @@ language_hi		= Hindi
 language_gu		= Gujarati
 language_ta		= Tamil
 
+rating  = rating
+ratings	= ratings
+
 search 			= Search
 search_bar_help	= Search for books, stories, poems and more ...
