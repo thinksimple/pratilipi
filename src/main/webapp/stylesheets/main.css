@@ -57,9 +57,9 @@ button.yellow {
 	background: yellow;
 }
 
-button.green {^M
-  color: white;^M
-  background: #5cb85c^M
+button.green {
+  color: white;
+  background: #5cb85c;
 }
 
 
@@ -67,4 +67,19 @@ button.green {^M
   .modal-login {
      width: 400px;
   }
+}
+
+.login-modal-body {
+	padding-left: 3em;
+	padding-right: 3em;
+}
+
+/* set max-width of login/signup modal*/
+.modal-login-pratilipi {
+	height: 500px;
+}
+
+button.login-submit-button {
+	padding-left: 4em;
+	padding-right: 4em;
 }
