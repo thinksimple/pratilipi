@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.LanguageUtil;
 import com.pratilipi.data.client.AuthorData;
@@ -18,17 +19,18 @@ import com.pratilipi.data.client.PratilipiData;
 @SuppressWarnings("serial")
 public class PratilipiSite extends HttpServlet {
 	
-	private static final String lang = "en";
-	private static final String defaulLang = "en";
+	private static final Language defaulLang = Language.ENGLISH;
 	private static final String languageFilePrefix = "WEB-INF/classes/com/pratilipi/site/i18n/language.";
 	
 	public void doGet(
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
+
+		Language lang = UxModeFilter.getUserLanguage();
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "_strings", LanguageUtil.getStrings( languageFilePrefix + lang, languageFilePrefix + defaulLang ) );
-		dataModel.put( "lang", lang );
+		dataModel.put( "_strings", LanguageUtil.getStrings( languageFilePrefix + lang.getCode(), languageFilePrefix + defaulLang.getCode() ) );
+		dataModel.put( "lang", lang.getCode() );
 		dataModel.put( "featuredList", getFeaturedListList() );
 		
 		String html = "";
