@@ -14,6 +14,7 @@ public interface DataAccessor {
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
 	
 	
+	// Destroy
 	void destroy();
 	
 }

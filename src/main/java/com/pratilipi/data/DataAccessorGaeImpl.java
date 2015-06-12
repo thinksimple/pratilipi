@@ -80,7 +80,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	
-	
+	// Destroy
+
 	@Override
 	public void destroy() {
 		pm.close();
