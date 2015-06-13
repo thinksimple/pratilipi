@@ -1,20 +1,18 @@
-package com.pratilipi.data.transfer;
+package com.pratilipi.data.type;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.pratilipi.common.type.Language;
 
 public interface Author extends Serializable {
 	
 	Long getId();
 
 	Long getUserId();
-	
+
 	void setUserId( Long userId );
-	
-	Long getLanguageId();
-	
-	void setLanguageId( Long languageId );
-	
+
 	String getFirstName();
 	
 	void setFirstName( String firstName );
@@ -39,18 +37,23 @@ public interface Author extends Serializable {
 	
 	void setPenNameEn( String penNameEn );
 	
-	Boolean hasCustomCover();
-
-	void setCustomCover( Boolean customCover );
-
-	String getSummary();
-	
-	void setSummary( String summary );
-	
 	String getEmail();
 	
 	void setEmail( String email );
 	
+	Language getLanguage();
+	
+	void setLanguage( Language language );
+	
+	String getSummary();
+	
+	void setSummary( String summary );
+	
+
+	Boolean hasCustomCover();
+
+	void setCustomCover( Boolean customCover );
+
 	Date getRegistrationDate();
 	
 	void setRegistrationDate( Date registrationDate );
@@ -67,6 +70,7 @@ public interface Author extends Serializable {
 	Long getTotalReadCount();
 	
 	void setTotalReadCount( Long totalReadCount );
+	
 	
 	Date getLastProcessDate();
 

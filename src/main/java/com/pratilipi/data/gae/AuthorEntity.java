@@ -1,4 +1,4 @@
-package com.pratilipi.data.access.gae;
+package com.pratilipi.data.gae;
 
 import java.util.Date;
 
@@ -8,7 +8,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
-import com.pratilipi.data.transfer.Author;
+import com.pratilipi.common.type.Language;
+import com.pratilipi.data.type.Author;
 
 @SuppressWarnings("serial")
 @PersistenceCapable( table = "AUTHOR" )
@@ -21,9 +22,6 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "USER_ID" )
 	private Long userId;
 	
-	@Persistent( column = "LANGUAGE_ID" )
-	private Long languageId;
-
 	@Persistent( column = "FIRST_NAME" )
 	private String firstName;
 	
@@ -42,14 +40,21 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "PEN_NAME_EN" )
 	private String penNameEn;
 	
-	@Persistent( column = "CUSTOM_COVER" )
-	private Boolean customCover;
+	@Persistent( column = "EMAIL" )
+	private String email;
+
+	@Persistent( column = "LANGUAGE" )
+	private Language language;
+
+	@Persistent( column = "LANGUAGE_ID" )
+	private Long languageId;
 
 	@Persistent( column = "SUMMARY" )
 	private Text summary;
 	
-	@Persistent( column = "EMAIL" )
-	private String email;
+
+	@Persistent( column = "CUSTOM_COVER" )
+	private Boolean customCover;
 
 	@Persistent( column = "REGISTRATION_DATE" )
 	private Date registrationDate;
@@ -60,11 +65,11 @@ public class AuthorEntity implements Author {
 	
 	@Persistent( column = "CONTENT_PUBLISHED" )
 	private Long contentPublished;
-
 	
 	@Persistent( column = "TOTAL_READ_COUNT" )
 	private Long totalReadCount;
-	
+
+
 	@Persistent( column = "LAST_PROCESS_DATE" )
 	private Date lastProcessDate;
 
@@ -85,16 +90,6 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setUserId( Long userId ) {
 		this.userId = userId;
-	}
-
-	@Override
-	public Long getLanguageId() {
-		return languageId;
-	}
-
-	@Override
-	public void setLanguageId( Long languageId ) {
-		this.languageId = languageId;
 	}
 
 	@Override
@@ -157,27 +152,6 @@ public class AuthorEntity implements Author {
 		this.penNameEn = penNameEn;
 	}
 
-
-	@Override
-	public Boolean hasCustomCover() {
-		return customCover == null ? false : customCover;
-	}
-
-	@Override
-	public void setCustomCover( Boolean customCover ) {
-		this.customCover = customCover;
-	}
-	
-	@Override
-	public String getSummary() {
-		return summary == null ? null : summary.getValue();
-	}
-
-	@Override
-	public void setSummary( String summary ) {
-		this.summary = summary == null ? null : new Text( summary );
-	}
-	
 	@Override
 	public String getEmail() {
 		return email;
@@ -188,6 +162,37 @@ public class AuthorEntity implements Author {
 		this.email = email;
 	}
 
+	@Override
+	public Language getLanguage() {
+		return language;
+	}
+
+	@Override
+	public void setLanguage( Language language ) {
+		this.language = language;
+	}
+
+	@Override
+	public String getSummary() {
+		return summary == null ? null : summary.getValue();
+	}
+
+	@Override
+	public void setSummary( String summary ) {
+		this.summary = summary == null ? null : new Text( summary );
+	}
+
+	
+	@Override
+	public Boolean hasCustomCover() {
+		return customCover == null ? false : customCover;
+	}
+
+	@Override
+	public void setCustomCover( Boolean customCover ) {
+		this.customCover = customCover;
+	}
+	
 	@Override
 	public Date getRegistrationDate() {
 		return registrationDate;
@@ -228,6 +233,7 @@ public class AuthorEntity implements Author {
 	public void setTotalReadCount( Long totalReadCount ) {
 		this.totalReadCount = totalReadCount;
 	}
+	
 	
 	@Override
 	public Date getLastProcessDate() {
