@@ -22,6 +22,7 @@ public class PratilipiSite extends HttpServlet {
 	private static final Language defaulLang = Language.ENGLISH;
 	private static final String languageFilePrefix = "WEB-INF/classes/com/pratilipi/site/i18n/language.";
 	
+	
 	public void doGet(
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {

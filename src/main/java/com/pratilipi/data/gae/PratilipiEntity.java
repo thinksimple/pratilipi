@@ -112,6 +112,12 @@ public class PratilipiEntity implements Pratilipi {
 	private Date nextProcessDate;
 
 	
+	public PratilipiEntity() {}
+	
+	public PratilipiEntity( Long id ) {
+		this.id = id;
+	}
+
 	
 	@Override
 	public Long getId() {

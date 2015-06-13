@@ -8,8 +8,8 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 
+import com.pratilipi.data.gae.PratilipiEntity;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.gae.PratilipiEntity;
 
 
 public class DataAccessorGaeImpl implements DataAccessor {

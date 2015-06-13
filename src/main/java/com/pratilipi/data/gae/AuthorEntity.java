@@ -77,6 +77,13 @@ public class AuthorEntity implements Author {
 	private Date nextProcessDate;
 	
 	
+	public AuthorEntity() {}
+	
+	public AuthorEntity( Long id ) {
+		this.id = id;
+	}
+
+	
 	@Override
 	public Long getId() {
 		return id;
