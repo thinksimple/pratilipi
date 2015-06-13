@@ -12,7 +12,7 @@
 		<app.id>devo-pratilipi</app.id>
 		<app.version>mark-6</app.version>
 		<app.setDefault>false</app.setDefault>
-		<appengine.version>1.9.20</appengine.version>
+		<appengine.version>1.9.22</appengine.version>
 		<gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,18 +27,45 @@
 	<!-- Compile/runtime dependencies -->
 
 		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>${appengine.version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>${appengine.version}</version>
+		</dependency>
 		
+		
+	   	<!-- DataNucleus for GAE -->
+		<dependency>
+			<groupId>javax.jdo</groupId>
+			<artifactId>jdo-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-core</artifactId>
+			<version>3.1.3</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-api-jdo</artifactId>
+			<version>3.1.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.appengine.orm</groupId>
+			<artifactId>datanucleus-appengine</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+
 	   	<!-- FreeMarker for GAE -->
 		<dependency>
 			<groupId>org.freemarker</groupId>
@@ -122,6 +149,33 @@
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>maven-datanucleus-plugin</artifactId>
+				<version>3.2.0-m1</version>
+				<configuration>
+					<api>JDO</api>
+					<props>${basedir}/datanucleus.properties</props>
+					<verbose>true</verbose>
+					<enhancerName>ASM</enhancerName>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.datanucleus</groupId>
+						<artifactId>datanucleus-core</artifactId>
+						<version>3.1.3</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 
 			<plugin>
