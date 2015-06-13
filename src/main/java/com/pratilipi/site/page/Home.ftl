@@ -33,6 +33,9 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-rating.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-login-main.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-login-password.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-login-signup.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-login.html'>
 
 		<#-- Custom Stylesheets -->
