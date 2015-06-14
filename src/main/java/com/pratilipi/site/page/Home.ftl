@@ -11,15 +11,15 @@
 		<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 
 		<#-- jQuery 2.1.3 -->
-		<script src='//jquery.3p.pratilipi.net/jquery-2.1.3/jquery-2.1.3.min.js'></script>
+		<script src='//jquery.lib.cdssolutions.in/jquery-2.1.3/jquery-2.1.3.min.js'></script>
 
 		<#-- Bootstrap 3.3.4 -->
-		<script src='//bootstrap.3p.pratilipi.net/bootstrap-3.3.4/js/bootstrap.min.js'></script>
-		<link rel='stylesheet' href='//bootstrap.3p.pratilipi.net/bootstrap-3.3.4/css/bootstrap.min.css'>
+		<script src='//bootstrap.lib.cdssolutions.in/bootstrap-3.3.4/js/bootstrap.min.js'></script>
+		<link rel='stylesheet' href='//bootstrap.lib.cdssolutions.in/bootstrap-3.3.4/css/bootstrap.min.css'>
 		
 		<#-- Polymer 1.0 -->
-		<script src='//polymer.3p.pratilipi.net/polymer-1.0/webcomponentsjs/webcomponents-lite.js'></script>
-		<link rel='import' href='//polymer.3p.pratilipi.net/polymer-1.0/polymer/polymer.html'>
+		<script src='//polymer.lib.cdssolutions.in/polymer-1.0/webcomponentsjs/webcomponents-lite.js'></script>
+		<link rel='import' href='//polymer.lib.cdssolutions.in/polymer-1.0/polymer/polymer.html'>
 
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
