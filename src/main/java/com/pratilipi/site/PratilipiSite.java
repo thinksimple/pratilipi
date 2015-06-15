@@ -2,6 +2,8 @@ package com.pratilipi.site;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.LanguageUtil;
+import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 
@@ -29,9 +32,15 @@ public class PratilipiSite extends HttpServlet {
 
 		Language lang = UxModeFilter.getUserLanguage();
 		
+		List<String> resourceList = new LinkedList<>();
+		resourceList.add( ThirdPartyResource.JQUERY.getTag() );
+		resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
+		resourceList.add( ThirdPartyResource.POLYMER.getTag() );
+		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "_strings", LanguageUtil.getStrings( languageFilePrefix + lang.getCode(), languageFilePrefix + defaulLang.getCode() ) );
 		dataModel.put( "lang", lang.getCode() );
+		dataModel.put( "resourceList", resourceList );
 		dataModel.put( "featuredList", getFeaturedListList() );
 		
 		String html = "";

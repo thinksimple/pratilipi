@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-    <application>${app.id}</application>
-    <version>${app.version}</version>
-    <threadsafe>true</threadsafe>
+	<application>${app.id}</application>
+	<version>${app.version}</version>
+	<threadsafe>true</threadsafe>
 
-    <system-properties>
-        <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
-    </system-properties>
+	<static-files>
+		<include path="/**" expiration="365d">
+			<http-header name="Access-Control-Allow-Origin" value="*" />
+		</include>
+	</static-files>
+
+	<system-properties>
+		<!-- Configure java.util.logging -->
+		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+
+		<!-- Configure Web Domain -->
+		<property name="localhost.cdn.3p" value="localhost:8080/third-party"/>
+		<property name="devo-pratilipi.cdn.3p" value="lib.cdssolutions.in"/>
+		<property name="prod-pratilipi.cdn.3p" value="lib.cdssolutions.in"/>
+	</system-properties>
+
 </appengine-web-app>

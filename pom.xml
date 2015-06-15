@@ -9,7 +9,7 @@
 	<artifactId>site</artifactId>
 
 	<properties>
-		<app.id>devo-pratilipi</app.id>
+		<app.id>localhost</app.id>
 		<app.version>mark-6</app.version>
 		<app.setDefault>false</app.setDefault>
 		<appengine.version>1.9.22</appengine.version>
