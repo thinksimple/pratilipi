@@ -7,7 +7,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.pratilipi.common.type.Page;
+import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.Page;
 
 @SuppressWarnings("serial")
 @PersistenceCapable( table = "PAGE" )
@@ -18,7 +19,7 @@ public class PageEntity implements Page {
 	private Long id;
 	
 	@Persistent( column = "PAGE_TYPE" )
-	private String type;
+	private PageType type;
 
 	@Persistent( column = "URI" )
 	private String uri;
@@ -33,18 +34,25 @@ public class PageEntity implements Page {
 	private Date creationDate;
 	
 	
+	public PageEntity() {}
+	
+	public PageEntity( Long id ) {
+		this.id = id;
+	}
+	
+	
 	@Override
 	public Long getId() {
 		return id;
 	}
 
 	@Override
-	public String getType() {
+	public PageType getType() {
 		return type;
 	}
 
 	@Override
-	public void setType( String type ) {
+	public void setType( PageType type ) {
 		this.type = type;
 	}
 

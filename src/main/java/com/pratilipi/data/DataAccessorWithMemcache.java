@@ -5,10 +5,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 
 public class DataAccessorWithMemcache implements DataAccessor {
 	
+	private final static String PREFIX_PAGE = "Page-";
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
 	
 	private final DataAccessor dataAccessor;
@@ -21,8 +24,62 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		this.dataAccessor = dataAccessor;
 		this.memcache = memcache;
 	}
-
 	
+	
+	// PAGE Table
+	
+	@Override
+	public Page newPage() {
+		return dataAccessor.newPage();
+	}
+	
+	@Override
+	public Page getPage( Long id ) {
+		Page page = memcache.get( PREFIX_PAGE + id );
+		if( page == null ) {
+			page = dataAccessor.getPage( id );
+			if( page != null )
+				memcache.put( PREFIX_PAGE + id, page );
+		}
+		return page;
+	}
+	
+	@Override
+	public Page getPage( String uri ) {
+		Page page = memcache.get( PREFIX_PAGE + uri );
+		if( page == null ) {
+			page = dataAccessor.getPage( uri );
+			if( page != null )
+				memcache.put( PREFIX_PAGE + uri, page );
+		}
+		return page;
+	}
+	
+	@Override
+	public Page getPage( PageType pageType, Long primaryContentId ) {
+		Page page = memcache.get( PREFIX_PAGE + pageType + "-" + primaryContentId );
+		if( page == null ) {
+			page = dataAccessor.getPage( pageType, primaryContentId );
+			if( page != null )
+				memcache.put( PREFIX_PAGE + pageType + "-" + primaryContentId, page );
+		}
+		return page;
+	}
+	
+	@Override
+	public Page createOrUpdatePage( Page page ) {
+		page = dataAccessor.createOrUpdatePage( page );
+		memcache.put( PREFIX_PAGE + page.getId(), page );
+		if( page.getUri() != null )
+			memcache.put( PREFIX_PAGE + page.getUri(), page );
+		if( page.getUriAlias() != null )
+			memcache.put( PREFIX_PAGE + page.getUriAlias(), page );
+		if( page.getPrimaryContentId() != null )
+			memcache.put( PREFIX_PAGE + page.getType() + "-" + page.getPrimaryContentId(), page );
+		return page;
+	}
+
+
 	// PRATILIPI Table
 
 	@Override

@@ -1,15 +1,17 @@
-package com.pratilipi.common.type;
+package com.pratilipi.data.type;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.pratilipi.common.type.PageType;
 
 public interface Page extends Serializable {
 
 	Long getId();
 
-	String getType();
+	PageType getType();
 
-	void setType( String type );
+	void setType( PageType type );
 
 	String getUri();
 
