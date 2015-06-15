@@ -1,4 +1,4 @@
-package com.pratilipi.data.gae;
+package com.pratilipi.data.type.gae;
 
 import java.util.Date;
 

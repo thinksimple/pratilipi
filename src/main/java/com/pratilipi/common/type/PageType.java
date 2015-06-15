@@ -1,8 +1,7 @@
-package com.pratilipi.commons.shared;
+package com.pratilipi.common.type;
 
-import com.claymus.commons.shared.PageType;
 
-public enum PratilipiPageType implements PageType {
+public enum PageType {
 	
 	PRATILIPI( "/pratilipi/" ),
 	READ( "/read?id=" ),
@@ -11,7 +10,6 @@ public enum PratilipiPageType implements PageType {
 	AUTHOR( "/author/" ),
 	AUTHOR_DASHBOARD( null ),
 	
-	PUBLISHER( "/publisher/" ),
 	EVENT( "/event/" ),
 	;
 	
@@ -19,11 +17,10 @@ public enum PratilipiPageType implements PageType {
 	private String urlPrefix;
 	
 	
-	private PratilipiPageType( String urlPrefix ) {
+	private PageType( String urlPrefix ) {
 		this.urlPrefix = urlPrefix;
 	}
 	
-	@Override
 	public String getUrlPrefix() {
 		return urlPrefix;
 	}
