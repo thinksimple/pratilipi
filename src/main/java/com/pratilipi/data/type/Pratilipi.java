@@ -32,9 +32,9 @@ public interface Pratilipi extends Serializable {
 	
 	void setSummary( String summary );
 
-	Long getPublicationYear();
+	Integer getPublicationYear();
 	
-	void setPublicationYear( Long publicationYear );
+	void setPublicationYear( Integer publicationYear );
 
 
 	PratilipiType getType();

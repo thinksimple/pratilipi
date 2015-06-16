@@ -9,15 +9,6 @@ public class PratilipiData {
 
 	private Long id;
 	
-	private PratilipiType type;
-	private boolean hasType;
-
-	private String pageUrl;
-	private String pageUrlAlias;
-	private String coverImageUrl;
-	private String readerPageUrl;
-	private String writerPageUrl;
-	
 	private String title;
 	private boolean hasTitle;
 	
@@ -26,23 +17,35 @@ public class PratilipiData {
 	
 	private String langCode;
 	private boolean hasLangCode;
-
-
+	
 	private Long authorId;
 	private boolean hasAuthorId;
 	
 	private AuthorData author;
 
+	private String summary;
+	private boolean hasSummary;
 	
-	private Long publicationYear;
+	private Integer publicationYear;
 	private boolean hasPublicationYear;
+	
+	
+	private String pageUrl;
+	private String pageUrlAlias;
+	private String coverImageUrl;
+	private String readerPageUrl;
+	private String writerPageUrl;
+
+	
+	private PratilipiType type;
+	private boolean hasType;
+
+	private PratilipiState state;
+	private boolean hasState;
 	
 	private Date listingDate;
 	private Date lastUpdated;
 
-	
-	private String summary;
-	private boolean hasSummary;
 	
 	private String index;
 	private boolean hasIndex;
@@ -53,11 +56,7 @@ public class PratilipiData {
 	private Integer pageCount;
 	private boolean hasPageCount;
 
-	private PratilipiState state;
-	private boolean hasState;
-	
-	private Long readCount;
-	
+
 	private Long reviewCount;
 	
 	private Long ratingCount;
@@ -65,6 +64,10 @@ public class PratilipiData {
 	private Float averageRating;
 	
 	private Double relevance;
+
+
+	private Long readCount;
+
 
 	
 	public PratilipiData() {}
@@ -80,59 +83,6 @@ public class PratilipiData {
 
 	public void setId( Long id ) {
 		this.id = id;
-	}
-
-	public PratilipiType getType(){
-		return this.type;
-	}
-	
-	public void setType( PratilipiType type ) {
-		this.type = type;
-		this.hasType = true;
-	}
-	
-	public boolean hasType() {
-		return hasType;
-	}
-	
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl( String pageUrl ) {
-		this.pageUrl = pageUrl;
-	}
-
-	public String getPageUrlAlias() {
-		return pageUrlAlias;
-	}
-
-	public void setPageUrlAlias( String pageUrlAlias ) {
-		this.pageUrlAlias = pageUrlAlias;
-	}
-
-	public String getCoverImageUrl() {
-		return coverImageUrl;
-	}
-
-	public void setCoverImageUrl( String coverImageUrl ) {
-		this.coverImageUrl = coverImageUrl;
-	}
-
-	public String getReaderPageUrl() {
-		return readerPageUrl;
-	}
-
-	public void setReaderPageUrl( String readerPageUrl ) {
-		this.readerPageUrl = readerPageUrl;
-	}
-	
-	public String getWriterPageUrl(){
-		return this.writerPageUrl;
-	}
-	
-	public void setWriterPageUrl( String writerPageUrl ){
-		this.writerPageUrl = writerPageUrl;
 	}
 
 	public String getTitle() {
@@ -195,17 +145,98 @@ public class PratilipiData {
 		this.author = author;
 	}
 	
-	public Long getPublicationYear() {
+	public String getSummary() {
+		return summary;
+	}
+	
+	public void setSummary( String summary ) {
+		this.summary = summary;
+		this.hasSummary = true;
+	}
+
+	public boolean hasSummary() {
+		return hasSummary;
+	}
+	
+	public Integer getPublicationYear() {
 		return publicationYear;
 	}
 
-	public void setPublicationYear( Long publicationYear ) {
+	public void setPublicationYear( Integer publicationYear ) {
 		this.publicationYear = publicationYear;
 		this.hasPublicationYear = true;
 	}
 
 	public boolean hasPublicationYear() {
 		return hasPublicationYear;
+	}
+	
+	
+	public String getPageUrl() {
+		return pageUrl;
+	}
+
+	public void setPageUrl( String pageUrl ) {
+		this.pageUrl = pageUrl;
+	}
+
+	public String getPageUrlAlias() {
+		return pageUrlAlias;
+	}
+
+	public void setPageUrlAlias( String pageUrlAlias ) {
+		this.pageUrlAlias = pageUrlAlias;
+	}
+
+	public String getCoverImageUrl() {
+		return coverImageUrl;
+	}
+
+	public void setCoverImageUrl( String coverImageUrl ) {
+		this.coverImageUrl = coverImageUrl;
+	}
+
+	public String getReaderPageUrl() {
+		return readerPageUrl;
+	}
+
+	public void setReaderPageUrl( String readerPageUrl ) {
+		this.readerPageUrl = readerPageUrl;
+	}
+	
+	public String getWriterPageUrl(){
+		return this.writerPageUrl;
+	}
+	
+	public void setWriterPageUrl( String writerPageUrl ){
+		this.writerPageUrl = writerPageUrl;
+	}
+
+
+	public PratilipiType getType(){
+		return this.type;
+	}
+	
+	public void setType( PratilipiType type ) {
+		this.type = type;
+		this.hasType = true;
+	}
+	
+	public boolean hasType() {
+		return hasType;
+	}
+	
+	public PratilipiState getState() {
+		return state;
+	}
+	
+	public void setState( PratilipiState state ) {
+		this.state = state;
+		this.hasState = true;
+	}
+	
+	public boolean hasState() {
+		return hasState;
 	}
 	
 	public Date getListingDate() {
@@ -224,19 +255,7 @@ public class PratilipiData {
 		this.lastUpdated = lastUpdated;
 	}
 
-	public String getSummary() {
-		return summary;
-	}
-	
-	public void setSummary( String summary ) {
-		this.summary = summary;
-		this.hasSummary = true;
-	}
 
-	public boolean hasSummary() {
-		return hasSummary;
-	}
-	
 	public String getIndex() {
 		return index;
 	}
@@ -276,27 +295,7 @@ public class PratilipiData {
 		return hasPageCount;
 	}
 	
-	public PratilipiState getState() {
-		return state;
-	}
-	
-	public void setState( PratilipiState state ) {
-		this.state = state;
-		this.hasState = true;
-	}
-	
-	public boolean hasState() {
-		return hasState;
-	}
-	
-	public Long getReadCount() {
-		return readCount;
-	}
 
-	public void setReadCount( Long readCount ) {
-		this.readCount = readCount;
-	}
-	
 	public Long getReviewCount() {
 		return reviewCount;
 	}
@@ -328,5 +327,14 @@ public class PratilipiData {
 	public void setRelevance( Double relevance ) {
 		this.relevance = relevance;
 	}
+	
+	
+	public Long getReadCount() {
+		return readCount;
+	}
 
+	public void setReadCount( Long readCount ) {
+		this.readCount = readCount;
+	}
+	
 }

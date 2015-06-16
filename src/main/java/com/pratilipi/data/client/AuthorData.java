@@ -1,17 +1,11 @@
 package com.pratilipi.data.client;
 
+import java.util.Date;
+
 public class AuthorData {
 
 	private Long id;
 
-	private String pageUrl;
-	private String pageUrlAlias;
-	private String imageUrl;
-	
-	private String langCode;
-	private boolean hasLangCode;
-
-	
 	private String firstName;
 	private boolean hasFirstName;
 	
@@ -40,12 +34,21 @@ public class AuthorData {
 	private String fullNameEn;
 
 
-	private String summary;
-	private boolean hasSummary;
-	
 	private String email;
 	private boolean hasEmail;
 
+	private String langCode;
+	private boolean hasLangCode;
+	
+	private String summary;
+	private boolean hasSummary;
+	
+
+	private String pageUrl;
+	private String pageUrlAlias;
+	private String imageUrl;
+
+	
 	private Long registrationDate;
 	
 	private Long contentPublished;
@@ -59,42 +62,6 @@ public class AuthorData {
 		this.id = id;
 	}
 
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl( String pageUrl ) {
-		this.pageUrl = pageUrl;
-	}
-
-	public String getPageUrlAlias() {
-		return pageUrlAlias;
-	}
-
-	public void setPageUrlAlias( String pageUrlAlias ) {
-		this.pageUrlAlias = pageUrlAlias;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl( String imageUrl ) {
-		this.imageUrl = imageUrl;
-	}
-
-	public String getLanguageCode() {
-		return langCode;
-	}
-
-	public void setLanguageCode( String langCode ) {
-		this.langCode = langCode;
-		this.hasLangCode = true;
-	}
-	
-	public boolean hasLanguageCode() {
-		return hasLangCode;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -206,18 +173,6 @@ public class AuthorData {
 		this.fullNameEn = fullNameEn;
 	}
 
-	public String getSummary() {
-		return summary;
-	}
-
-	public void setSummary( String summary ) {
-		this.summary = summary;
-		this.hasSummary = true;
-	}
-	
-	public boolean hasSummary() {
-		return this.hasSummary;
-	}
 
 	public String getEmail() {
 		return email;
@@ -232,12 +187,64 @@ public class AuthorData {
 		return hasEmail;
 	}
 
-	public Long getRegistrationDate() {
-		return registrationDate;
+	public String getLanguageCode() {
+		return langCode;
 	}
 
-	public void setRegistrationDate( Long registrationDate ) {
-		this.registrationDate = registrationDate;
+	public void setLanguageCode( String langCode ) {
+		this.langCode = langCode;
+		this.hasLangCode = true;
+	}
+	
+	public boolean hasLanguageCode() {
+		return hasLangCode;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary( String summary ) {
+		this.summary = summary;
+		this.hasSummary = true;
+	}
+	
+	public boolean hasSummary() {
+		return this.hasSummary;
+	}
+
+	
+	public String getPageUrl() {
+		return pageUrl;
+	}
+
+	public void setPageUrl( String pageUrl ) {
+		this.pageUrl = pageUrl;
+	}
+
+	public String getPageUrlAlias() {
+		return pageUrlAlias;
+	}
+
+	public void setPageUrlAlias( String pageUrlAlias ) {
+		this.pageUrlAlias = pageUrlAlias;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl( String imageUrl ) {
+		this.imageUrl = imageUrl;
+	}
+
+	
+	public Date getRegistrationDate() {
+		return registrationDate == null ? null : new Date( registrationDate );
+	}
+
+	public void setRegistrationDate( Date registrationDate ) {
+		this.registrationDate = registrationDate == null ? null : registrationDate.getTime();
 	}
 	
 	public Long getContentPublished() {

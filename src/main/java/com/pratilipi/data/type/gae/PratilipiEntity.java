@@ -44,7 +44,7 @@ public class PratilipiEntity implements Pratilipi {
 	private Text summary;
 
 	@Persistent( column = "PUBLICATION_YEAR" )
-	private Long publicationYear;
+	private Integer publicationYear;
 
 	
 	@Persistent( column = "PUBLIC_DOMAIN" )
@@ -175,12 +175,12 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
-	public Long getPublicationYear() {
+	public Integer getPublicationYear() {
 		return publicationYear;
 	}
 
 	@Override
-	public void setPublicationYear( Long publicationYear ) {
+	public void setPublicationYear( Integer publicationYear ) {
 		this.publicationYear = publicationYear;
 	}
 
