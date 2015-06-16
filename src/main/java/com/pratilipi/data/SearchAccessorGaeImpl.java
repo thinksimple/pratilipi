@@ -1,37 +1,108 @@
-package com.pratilipi.data.access;
+package com.pratilipi.data;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.claymus.commons.shared.exception.UnexpectedServerException;
-import com.claymus.data.access.DataListCursorTuple;
 import com.google.appengine.api.search.Cursor;
 import com.google.appengine.api.search.Document;
 import com.google.appengine.api.search.Document.Builder;
 import com.google.appengine.api.search.Field;
+import com.google.appengine.api.search.Index;
+import com.google.appengine.api.search.IndexSpec;
+import com.google.appengine.api.search.MatchScorer;
+import com.google.appengine.api.search.PutException;
+import com.google.appengine.api.search.Query;
+import com.google.appengine.api.search.QueryOptions;
 import com.google.appengine.api.search.Results;
 import com.google.appengine.api.search.ScoredDocument;
+import com.google.appengine.api.search.SearchService;
+import com.google.appengine.api.search.SearchServiceFactory;
 import com.google.appengine.api.search.SortExpression;
 import com.google.appengine.api.search.SortOptions;
-import com.pratilipi.commons.shared.PratilipiFilter;
-import com.pratilipi.data.transfer.shared.AuthorData;
-import com.pratilipi.data.transfer.shared.PratilipiData;
+import com.google.appengine.api.search.StatusCode;
+import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.data.client.PratilipiData;
 
-public class SearchAccessorGaeImpl
-		extends com.claymus.data.access.SearchAccessorGaeImpl
-		implements SearchAccessor {
+public class SearchAccessorGaeImpl implements SearchAccessor {
+
+	private static final Logger logger = Logger.getGlobal();
+
+	private static final SearchService searchService =
+			SearchServiceFactory.getSearchService();
+
+	private final Index searchIndex;
 
 	
-	private static final Logger logger =
-			Logger.getLogger( SearchAccessorGaeImpl.class.getName() );
-
+	// Constructor
 	
 	public SearchAccessorGaeImpl( String indexName ) {
-		super( indexName );
+		searchIndex = searchService.getIndex( IndexSpec.newBuilder().setName( indexName ) );
 	}
 
+
+	// Helper Methods
+	
+	public Results<ScoredDocument> search(
+			String searchQuery, SortOptions sortOptions, String cursorStr,
+			Integer resultCount, String... fieldsToReturn ) {
+		
+		if( sortOptions == null )
+			sortOptions = SortOptions.newBuilder()
+					.setMatchScorer( MatchScorer.newBuilder() )
+					.setLimit( 10000 )
+					.build();
+		
+		QueryOptions queryOptions = QueryOptions.newBuilder()
+				.setSortOptions( sortOptions )
+				.setCursor( cursorStr == null ? Cursor.newBuilder().build() : Cursor.newBuilder().build( cursorStr ) )
+				.setLimit( resultCount == null ? 10000 : resultCount )
+				.setFieldsToReturn( fieldsToReturn )
+				.build();
+		
+		Query query = Query.newBuilder()
+				.setOptions( queryOptions )
+				.build( searchQuery );
+
+	    return searchIndex.search( query );
+	}
+
+	protected void indexDocument( Document document ) throws UnexpectedServerException {
+		List<Document> documentList = new ArrayList<>( 1 );
+		documentList.add( document );
+		indexDocumentList( documentList );
+	}
+	
+	protected void indexDocumentList( List<Document> documentList ) throws UnexpectedServerException {
+		for( int i = 0; i < documentList.size(); i = i + 200 ) {
+			try {
+				searchIndex.put( documentList.subList( i, i + 200 > documentList.size() ? documentList.size() : i + 200 ) );
+			} catch( PutException e ) {
+				if( StatusCode.TRANSIENT_ERROR.equals( e.getOperationResult().getCode() ) ) {
+					logger.log( Level.WARNING, "Failed to update search index. Retrying ...", e );
+					try {
+						Thread.sleep( 100 );
+						i = i - 200;
+						continue;
+					} catch( InterruptedException ex ) {
+						// Do nothing
+					}
+				} else {
+					logger.log( Level.SEVERE, "Failed to update search index.", e );
+					throw new UnexpectedServerException();
+				}
+			}
+		}
+	}
+
+	protected void deleteIndex( String docId ) {
+		searchIndex.delete( docId );
+	}
+
+	
+	// PRATILIPI Table
 	
 	@Override
 	public DataListCursorTuple<Long> searchPratilipi( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
@@ -60,8 +131,8 @@ public class SearchAccessorGaeImpl
 				? "docType:Pratilipi"
 				: "docType:Pratilipi-" + pratilipiFilter.getType().getName();
 
-		if( pratilipiFilter.getLanguageId() != null )
-			searchQuery = searchQuery + " AND language:" + pratilipiFilter.getLanguageId();
+		if( pratilipiFilter.getLanguage() != null )
+			searchQuery = searchQuery + " AND language:" + pratilipiFilter.getLanguage().getCode();
 
 		if( pratilipiFilter.getAuthorId() != null )
 			searchQuery = searchQuery + " AND author:" + pratilipiFilter.getAuthorId();
@@ -82,62 +153,6 @@ public class SearchAccessorGaeImpl
 	}
 
 	@Override
-	public DataListCursorTuple<Long> searchQuery(String query, String cursorStr, Integer resultCount) {
-		
-		SortOptions.Builder sortOptionsBuilder = SortOptions.newBuilder();
-		sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
-				.setExpression( "readCount" )
-				.setDirection( SortExpression.SortDirection.DESCENDING )
-				.setDefaultValueNumeric( 0 ) );
-		SortOptions sortOptions = sortOptionsBuilder.setLimit( 10000 ).build();
-		
-		String queryString = null;
-		String queryFilter = null;
-		
-		String[] queryWords = query.split( " " );
-		
-		for( String word : queryWords ){
-			if( word.toLowerCase().equals( "book" ) || word.toLowerCase().equals( "books" )
-					|| word.toLowerCase().equals( "poem" ) || word.toLowerCase().equals( "poems" )
-					|| word.toLowerCase().equals( "story" ) || word.toLowerCase().equals( "stories" ) ) {
-				if( queryFilter == null )
-					queryFilter = word;
-				else
-					queryFilter = queryFilter + " OR " + word;
-			} else if( !word.toLowerCase().equals( "and" ) && !word.toLowerCase().equals( "or" ) ){
-				if( queryString == null )
-					queryString = word;
-				else
-					queryString = queryString + " OR " + word;
-			}
-		}
-		
-		String finalSearchQuery = null;
-		if( queryString != null )
-			finalSearchQuery = queryString;
-		if( queryString != null && queryFilter != null )
-			finalSearchQuery = queryString + " AND " + queryFilter;
-		else if( queryString == null && queryFilter != null )
-			finalSearchQuery = queryFilter;
-		
-		logger.log( Level.INFO, finalSearchQuery );
-
-		
-		Results<ScoredDocument> result = search( finalSearchQuery, sortOptions, cursorStr, resultCount, "docType", "docId" );
-
-		List<Long> pratilipiIdList = new ArrayList<>( result.getNumberReturned() ); 
-		for( ScoredDocument document : result ) {
-			String docType = document.getFields( "docType" ).iterator().next().getAtom();
-			if( docType.equals( "Pratilipi" ))
-				pratilipiIdList.add( Long.parseLong( document.getFields( "docId" ).iterator().next().getAtom() ) );
-		}
-		
-		Cursor cursor = result.getCursor();
-		
-		return new DataListCursorTuple<Long>( pratilipiIdList, cursor == null ? null : cursor.toWebSafeString() );
-	}
-	
-	@Override
 	public void indexPratilipiData( PratilipiData pratilipiData ) throws UnexpectedServerException {
 		indexDocument( createDocument( pratilipiData ) );
 	}
@@ -155,12 +170,6 @@ public class SearchAccessorGaeImpl
 		deleteIndex( "PratilipiData:" + pratilipiId );
 	}
 
-	@Override
-	public void indexAuthorData( AuthorData authorData ) throws UnexpectedServerException {
-		indexDocument( createDocument( authorData ) );
-	}
-
-	
 	private Document createDocument( PratilipiData pratilipiData ) {
 
 		String docId = "PratilipiData:" + pratilipiData.getId();
@@ -178,7 +187,7 @@ public class SearchAccessorGaeImpl
 				.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitleEn() ) )
 
 				 // 4x weightage to Language
-				.addField( Field.newBuilder().setName( "language" ).setAtom( pratilipiData.getLanguageId().toString() ) )
+				.addField( Field.newBuilder().setName( "language" ).setAtom( pratilipiData.getLanguage().getCode() ) )
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguage().getName() ) )
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguage().getName() ) )
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguage().getName() ) )
@@ -212,54 +221,8 @@ public class SearchAccessorGaeImpl
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthor().getFullNameEn() ) )
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthor().getFullNameEn() ) )
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthor().getFullNameEn() ) );
-/* TODO: Index Pratilipi genres
-		for( Long genreId : pratilipiData.getGenreIdList() )
-			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreId.toString() ) );
 
-		for( String genreName : pratilipiData.getGenreNameList() ) {
-			// 4x weightage to Genre
-			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreName ) );
-			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreName ) );
-			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreName ) );
-			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreName ) );
-		}
-*/		
 		return docBuilder.build();
 	}
 	
-	private Document createDocument( AuthorData authorData ) {
-		
-		String docId = "AuthorData:" + authorData.getId();
-		
-		return Document.newBuilder()
-				.setId( docId )
-				.addField( Field.newBuilder().setName( "docId" ).setAtom( authorData.getId().toString() ) )
-				.addField( Field.newBuilder().setName( "docType" ).setAtom( "Author" ) )
-
-				 // 4x weightage to Language
-				.addField( Field.newBuilder().setName( "language" ).setAtom( authorData.getLanguageId().toString() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
-				
-				// 3x weightage to Author Name
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
-
-				.addField( Field.newBuilder().setName( "email" ).setText( authorData.getEmail() ) )
-
-				.addField( Field.newBuilder().setName( "summary" ).setHTML( authorData.getSummary() ) )
-
-				.build();
-	}
-
 }

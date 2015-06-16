@@ -1,18 +1,18 @@
-package com.pratilipi.commons.shared;
+package com.pratilipi.common.util;
 
 import java.util.Date;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.PratilipiType;
 
-public class PratilipiFilter implements IsSerializable {
+public class PratilipiFilter {
 	
 	private PratilipiType type;
 
-	private Long languageId;
+	private Language language;
 	
 	private Long authorId;
-
-	private Long publisherId;
 
 	private PratilipiState state;
 	
@@ -29,12 +29,12 @@ public class PratilipiFilter implements IsSerializable {
 		this.type = pratilipiType;
 	}
 
-	public Long getLanguageId() {
-		return languageId;
+	public Language getLanguage() {
+		return language;
 	}
 
-	public void setLanguageId( Long languageId ) {
-		this.languageId = languageId;
+	public void setLanguage( Language language ) {
+		this.language = language;
 	}
 
 	public Long getAuthorId() {
@@ -43,14 +43,6 @@ public class PratilipiFilter implements IsSerializable {
 
 	public void setAuthorId( Long authorId ) {
 		this.authorId = authorId;
-	}
-	
-	public Long getPublisherId() {
-		return publisherId;
-	}
-
-	public void setPublisherId( Long publisherId ) {
-		this.publisherId = publisherId;
 	}
 	
 	public PratilipiState getState() {
