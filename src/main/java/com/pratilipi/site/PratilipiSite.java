@@ -1,14 +1,22 @@
 package com.pratilipi.site;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -16,13 +24,21 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.LanguageUtil;
 import com.pratilipi.common.util.ThirdPartyResource;
-import com.pratilipi.data.client.AuthorData;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Page;
+import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.site.page.data.Home;
 
 @SuppressWarnings("serial")
 public class PratilipiSite extends HttpServlet {
 	
+	private static final Logger logger = Logger.getGlobal();
 	private static final Language defaulLang = Language.ENGLISH;
+	private static final String dataFilePrefix = "page/data/";
 	private static final String languageFilePrefix = "WEB-INF/classes/com/pratilipi/site/i18n/language.";
 	
 	
@@ -36,15 +52,18 @@ public class PratilipiSite extends HttpServlet {
 		resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 		resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
 		resourceList.add( ThirdPartyResource.POLYMER.getTag() );
-		
-		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "_strings", LanguageUtil.getStrings( languageFilePrefix + lang.getCode(), languageFilePrefix + defaulLang.getCode() ) );
-		dataModel.put( "lang", lang.getCode() );
-		dataModel.put( "resourceList", resourceList );
-		dataModel.put( "featuredList", getFeaturedListList() );
-		
+
+		Map<String, Object> dataModel = null;
 		String html = "";
 		try {
+			dataModel = createDataModelForHomePage( lang );
+
+			dataModel.put( "lang", lang.getCode() );
+			dataModel.put( "_strings", LanguageUtil.getStrings(
+					languageFilePrefix + lang.getCode(),
+					languageFilePrefix + defaulLang.getCode() ) );
+			dataModel.put( "resourceList", resourceList );
+			
 			html = FreeMarkerUtil.processTemplate( dataModel, "com/pratilipi/site/page/Home.ftl" );
 		} catch( UnexpectedServerException e ) {
 			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
@@ -56,32 +75,48 @@ public class PratilipiSite extends HttpServlet {
 		response.getWriter().write( html );
 		response.getWriter().close();
 	}
+	
+	public Map<String, Object> createDataModelForHomePage( Language lang )
+			throws UnexpectedServerException {
 
-	public String[] getFeaturedListList() {
-		AuthorData authorData = new AuthorData();
-		authorData.setName( "Author Name" );
-		authorData.setPageUrlAlias( "/author-name" );
+		Home home = getData( "home." + lang.getCode() + ".json", Home.class );
 		
-		PratilipiData pratilipiData = new PratilipiData();
-		pratilipiData.setTitle( "Book Title" );
-		pratilipiData.setPageUrlAlias( "/author-name/book-name" );
-		pratilipiData.setAuthor( authorData );
-		pratilipiData.setRatingCount( 10L );
-		pratilipiData.setAverageRating( 3.5F );
-		pratilipiData.setCoverImageUrl( "//4.pratilipi.info/pratilipi-cover/150/4648777960914944?1433827138942" );
-		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Gson gson = new Gson();
+
+		List<String> featuredList = new ArrayList<>( home.getFeatured().length );
+		for( String uri : home.getFeatured() ) {
+			Page page = dataAccessor.getPage( uri );
+			Pratilipi pratilipi = dataAccessor.getPratilipi( page.getPrimaryContentId() );
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			PratilipiData pratilipiData = PratilipiDataUtil.createData( pratilipi, author );
+			featuredList.add( gson.toJson( pratilipiData ).toString() );
+		}
 		
-		String[] featuredList = new String[] {
-				gson.toJson( pratilipiData ).toString(),
-				gson.toJson( pratilipiData ).toString(),
-				gson.toJson( pratilipiData ).toString(),
-				gson.toJson( pratilipiData ).toString(),
-				gson.toJson( pratilipiData ).toString(),
-				gson.toJson( pratilipiData ).toString(),
-		};
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "featuredList", featuredList );
 		
-		return featuredList;
+		return dataModel;
+	}
+
+	public <T> T getData( String fileName, Class<T> clazz )
+			throws UnexpectedServerException {
+		
+		// Fetching content (json) from data file
+		String jsonStr = "";
+		try {
+			File file = new File( getClass().getResource( dataFilePrefix + fileName ).toURI() );
+			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+			while( it.hasNext() )
+				jsonStr += it.nextLine() + '\n';
+			LineIterator.closeQuietly( it );
+		} catch( URISyntaxException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception while reading from data file.", e );
+			throw new UnexpectedServerException();
+		}
+
+		// The magic
+		return new Gson().fromJson( jsonStr, clazz );
 	}
 
 }
