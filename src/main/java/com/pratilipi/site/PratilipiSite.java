@@ -27,10 +27,12 @@ import com.pratilipi.common.util.LanguageUtil;
 import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.site.page.data.Home;
 
@@ -82,7 +84,8 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "Pratilipi.ftl";
 				
 			} else if( page.getType() == PageType.AUTHOR ) {
-	
+				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
+				templateName = templateFilePrefix + "Author.ftl";
 			}
 
 			// Adding common data to the Data Model
@@ -147,6 +150,20 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 	
+	public Map<String, Object> createDataModelForAuthorPage( Long authorId ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor .getAuthor( authorId );
+		AuthorData authorData = AuthorDataUtil.createData( author );
+
+		Gson gson = new Gson();
+
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "author", authorData );
+		dataModel.put( "authorJson", gson.toJson( authorData ).toString() );
+
+		return dataModel;
+	}
+
 	public <T> T getData( String fileName, Class<T> clazz )
 			throws UnexpectedServerException {
 		
