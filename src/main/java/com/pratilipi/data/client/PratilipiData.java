@@ -2,6 +2,7 @@ package com.pratilipi.data.client;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
@@ -15,8 +16,8 @@ public class PratilipiData {
 	private String titleEn;
 	private boolean hasTitleEn;
 	
-	private String langCode;
-	private boolean hasLangCode;
+	private Language language;
+	private boolean hasLanguage;
 	
 	private Long authorId;
 	private boolean hasAuthorId;
@@ -111,17 +112,17 @@ public class PratilipiData {
 		return hasTitleEn;
 	}
 
-	public String getLanguageCode() {
-		return langCode;
+	public Language getLanguage() {
+		return language;
 	}
 
-	public void setLanguageCode( String langCode ) {
-		this.langCode = langCode;
-		this.hasLangCode = true;
+	public void setLanguage( Language language ) {
+		this.language = language;
+		this.hasLanguage = true;
 	}
 
-	public boolean hasLanguageCode() {
-		return hasLangCode;
+	public boolean hasLanguage() {
+		return hasLanguage;
 	}
 	
 	public Long getAuthorId() {

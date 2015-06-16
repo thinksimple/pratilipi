@@ -5,10 +5,14 @@ import com.pratilipi.common.util.AppProperty;
 public class DataAccessorFactory {
 
 	private static final String datasource = AppProperty.get( "datasource" );
+	private static final String indexName = "GLOBAL_INDEX";
 
 	private static final Memcache cacheL1 = new MemcacheClaymusImpl();
 	private static final Memcache cacheL2 = new MemcacheGaeImpl();
 	private static final ThreadLocal<DataAccessor> threadLocalDataAccessor = new ThreadLocal<>();
+	private static final SearchAccessor searchAccessor = datasource.equals( "gae" )
+			? new SearchAccessorGaeImpl( indexName )
+			: new SearchAccessorMockImpl( indexName );
 
 	
 	public static Memcache getL1CacheAccessor() {
@@ -28,6 +32,10 @@ public class DataAccessorFactory {
 			threadLocalDataAccessor.set( dataAccessor );
 		}
 		return dataAccessor;
+	}
+	
+	public static SearchAccessor getSearchAccessor() {
+		return searchAccessor;
 	}
 	
 }

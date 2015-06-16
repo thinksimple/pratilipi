@@ -2,7 +2,6 @@ package com.pratilipi.common.util;
 
 import java.util.Date;
 
-import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
@@ -10,7 +9,7 @@ public class PratilipiFilter {
 	
 	private PratilipiType type;
 
-	private Language language;
+	private String langCode;
 	
 	private Long authorId;
 
@@ -29,12 +28,12 @@ public class PratilipiFilter {
 		this.type = pratilipiType;
 	}
 
-	public Language getLanguage() {
-		return language;
+	public String getLanguageCode() {
+		return langCode;
 	}
 
-	public void setLanguage( Language language ) {
-		this.language = language;
+	public void setLanguageCode( String langCode ) {
+		this.langCode = langCode;
 	}
 
 	public Long getAuthorId() {

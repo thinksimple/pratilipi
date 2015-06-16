@@ -131,8 +131,8 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				? "docType:Pratilipi"
 				: "docType:Pratilipi-" + pratilipiFilter.getType().getName();
 
-		if( pratilipiFilter.getLanguage() != null )
-			searchQuery = searchQuery + " AND language:" + pratilipiFilter.getLanguage().getCode();
+		if( pratilipiFilter.getLanguageCode() != null )
+			searchQuery = searchQuery + " AND language:" + pratilipiFilter.getLanguageCode();
 
 		if( pratilipiFilter.getAuthorId() != null )
 			searchQuery = searchQuery + " AND author:" + pratilipiFilter.getAuthorId();

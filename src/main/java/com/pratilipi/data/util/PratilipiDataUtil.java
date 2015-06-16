@@ -42,7 +42,7 @@ public class PratilipiDataUtil {
 		pratilipiData.setId( pratilipi.getId() );
 		pratilipiData.setTitle( pratilipi.getTitle() );
 		pratilipiData.setTitleEn( pratilipi.getTitleEn() );
-		pratilipiData.setLanguageCode( pratilipi.getLanguage().getCode() );
+		pratilipiData.setLanguage( pratilipi.getLanguage() );
 		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
 		pratilipiData.setAuthor( AuthorDataUtil.createData( author ) );
 		pratilipiData.setSummary( pratilipi.getSummary() );

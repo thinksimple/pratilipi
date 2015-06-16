@@ -5,8 +5,6 @@ public enum PageType {
 	
 	GENERIC( "/page/" ),
 
-	LIST( "/list/" ),
-
 	PRATILIPI( "/pratilipi/" ),
 	READ( "/read?id=" ),
 	WRITE( "/write?id=" ),
