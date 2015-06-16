@@ -3,6 +3,7 @@ package com.pratilipi.data;
 import java.util.List;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 
@@ -22,6 +23,15 @@ public interface DataAccessor {
 	List<Pratilipi> getPratilipiList( List<Long> idList );
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
 	
+	
+	// DATA Table
+	Author newAuthor();
+	Author getAuthor( Long id );
+	Author getAuthorByEmailId( String email );
+	Author getAuthorByUserId( Long userId );
+	List<Author> getAuthorList( List<Long> idList );
+	Author createOrUpdateAuthor( Author author );
+
 	
 	// Destroy
 	void destroy();

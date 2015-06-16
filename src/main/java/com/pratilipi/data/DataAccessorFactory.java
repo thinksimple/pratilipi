@@ -18,7 +18,7 @@ public class DataAccessorFactory {
 	public static DataAccessor getDataAccessor() {
 		DataAccessor dataAccessor = threadLocalDataAccessor.get();
 		if( dataAccessor == null ) {
-			dataAccessor = new DataAccessorGaeImpl();
+			dataAccessor = new DataAccessorMockImpl();
 			dataAccessor = new DataAccessorWithMemcache( dataAccessor, cacheL2 );
 			dataAccessor = new DataAccessorWithMemcache( dataAccessor, new MemcacheClaymusImpl() );
 			threadLocalDataAccessor.set( dataAccessor );

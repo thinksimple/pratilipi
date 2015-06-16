@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 
@@ -13,6 +14,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	private final static String PREFIX_PAGE = "Page-";
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
+	private static final String PREFIX_AUTHOR = "Author-";
 	
 	private final DataAccessor dataAccessor;
 	private final Memcache memcache;
@@ -139,6 +141,91 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return pratilipi;
 	}
 	
+	
+	// AUTHOR Table
+	
+	@Override
+	public Author newAuthor() {
+		return dataAccessor.newAuthor();
+	}
+
+	@Override
+	public Author getAuthor( Long id ) {
+		if( id == null )
+			return null;
+		
+		Author author = memcache.get( PREFIX_AUTHOR + id );
+		if( author == null ) {
+			author = dataAccessor.getAuthor( id );
+			if( author != null )
+				memcache.put( PREFIX_AUTHOR + id, author );
+		}
+		return author;
+	}
+
+	@Override
+	public Author getAuthorByEmailId( String email ) {
+		Author author = memcache.get( PREFIX_AUTHOR + email );
+		if( author == null ) {
+			author = dataAccessor.getAuthorByEmailId( email );
+			if( author != null )
+				memcache.put( PREFIX_AUTHOR + email, author );
+		}
+		return author;
+	}
+	
+	@Override
+	public Author getAuthorByUserId( Long userId ) {
+		Author author = memcache.get( PREFIX_AUTHOR + "User-" + userId );
+		if( author == null ) {
+			author = dataAccessor.getAuthorByUserId( userId );
+			if( author != null )
+				memcache.put( PREFIX_AUTHOR + "User-" + userId, author );
+		}
+		return author;
+	}
+	
+	@Override
+	public List<Author> getAuthorList( List<Long> idList ) {
+		if( idList.size() == 0 )
+			return new ArrayList<>( 0 );
+
+		
+		List<String> memcacheKeyList = new ArrayList<>( idList.size() );
+		for( Long id : idList )
+			memcacheKeyList.add( PREFIX_AUTHOR + id );
+		Map<String, Author> memcacheKeyEntityMap = memcache.getAll( memcacheKeyList );
+
+		
+		List<Long> missingIdList = new LinkedList<>();
+		for( Long id : idList )
+			if( memcacheKeyEntityMap.get( PREFIX_AUTHOR + id ) == null ) 
+				missingIdList.add( id );
+		List<Author> missingAuthorList = dataAccessor.getAuthorList( missingIdList );
+
+		
+		List<Author> authorList = new ArrayList<>( idList.size() );
+		for( Long id : idList ) {
+			Author author = memcacheKeyEntityMap.get( PREFIX_AUTHOR + id );
+			if( author == null ) {
+				author = missingAuthorList.remove( 0 );
+				if( author != null )
+					memcache.put( PREFIX_AUTHOR + id, author );
+			}
+			authorList.add( author );
+		}
+		
+		
+		return authorList;
+	}
+	
+	@Override
+	public Author createOrUpdateAuthor( Author author ) {
+		author = dataAccessor.createOrUpdateAuthor( author );
+		memcache.put( PREFIX_AUTHOR + author.getId(), author );
+		return author;
+	}
+
 	
 	// Destroy
 	

@@ -12,11 +12,12 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
-
 
 public class DataAccessorGaeImpl implements DataAccessor {
 
@@ -47,11 +48,13 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return pm.detachCopy( entity );
 	}
 	
+	@SuppressWarnings("unused")
 	private <T> List<T> createOrUpdateEntityList( List<T> entityList ) {
 		entityList = (List<T>) pm.makePersistentAll( entityList );
 		return (List<T>) pm.detachCopyAll( entityList );
 	}
 	
+	@SuppressWarnings("unused")
 	private <T> void deleteEntity( Class<T> clazz, Object id ) {
 		T entity = (T) pm.getObjectById( clazz, id );
 		pm.deletePersistent( entity );
@@ -149,6 +152,64 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( pratilipi );
 	}
 	
+	
+	// AUTHOR Table
+	
+	@Override
+	public Author newAuthor() {
+		return new AuthorEntity();
+	}
+
+	@Override
+	public Author getAuthor( Long id ) {
+		return id == null ? null : getEntity( AuthorEntity.class, id );
+	}
+	
+	@Override
+	public Author getAuthorByEmailId( String email ) {
+		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
+				.addFilter( "email", email )
+				.addFilter( "registrationDate", true )
+				.build();
+
+		@SuppressWarnings("unchecked")
+		List<Author> authorList = (List<Author>) query.execute( email );
+
+		if( authorList.size() > 1 )
+			logger.log( Level.SEVERE, authorList.size() + " Authors found with Email Id " + email   + " ." );
+
+		return authorList.size() == 0 ? null : pm.detachCopy( authorList.get( 0 ) );
+	}
+
+	@Override
+	public Author getAuthorByUserId( Long userId ) {
+		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
+				.addFilter( "userId", userId )
+				.addFilter( "registrationDate", true )
+				.build();
+		
+		@SuppressWarnings("unchecked")
+		List<Author> authorList = (List<Author>) query.execute( userId );
+		
+		if( authorList.size() > 1 )
+			logger.log( Level.SEVERE, authorList.size() + " Authors found with User Id " + userId + " ." );
+		
+		return authorList.size() == 0 ? null : pm.detachCopy( authorList.get( 0 ) );
+	}
+	
+	@Override
+	public List<Author> getAuthorList( List<Long> idList ) {
+		List<Author> authorList = new ArrayList<>( idList.size() );
+		for( Long id : idList )
+			authorList.add( getAuthor( id ) );
+		return authorList;
+	}
+	
+	@Override
+	public Author createOrUpdateAuthor( Author author ) {
+		return createOrUpdateEntity( author );
+	}
+
 	
 	// Destroy
 
