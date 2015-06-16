@@ -1,0 +1,149 @@
+<dom-module id="pratilipi-pagecontent">
+
+	<style>
+	
+		img {
+			width: 150px;
+			height: 225px;
+		}
+
+		h1 {
+			margin-top: 0px;
+		}
+
+		h4 {
+			margin-top: 0px;
+			margin-bottom: 5px;
+		}
+
+		.badge {
+			margin-top: 0px;
+			margin-bottom: 0px;
+
+		}
+		
+		.btn {
+			border-radius: 0px;
+			padding: 3px 20px;
+			margin-bottom: 10px;
+		}
+		
+		body{
+			font-family: Calibri, Arial;
+			margin: 0px;
+			padding: 0px;
+		}
+		.more {
+			width: 400px;
+			background-color: #f0f0f0;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		.morecontent span {
+			display: none;
+		}
+		
+	</style>
+
+
+	<template>
+		<div class="grid-col">
+			<div class="media" style="padding:10px;">
+
+				<div class="media-left">
+					<a href="{{ pratilipi.pageUrlAlias }}">
+						<img class="media-object" src="/stylesheets/bookimg.jpg" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+					</a>
+				</div>
+
+			  	<div class="media-body" style="padding:10px;">
+
+					<div>
+						<h1>Book Title</h1>
+						<h4><a href=-"Book Author">Book Author</a></h4>
+						
+						<div>
+							<a href="#"><span class="badge">Classic</span></a>
+						</div>
+						<h6>
+							<span>Listed On : Jun 11, 2015 / </span>
+							<span>Last Updated On : Jun 11, 2015</span>
+						</h6>
+						<div>
+						<pratilipi-rating value="{{ pratilipi.averageRating }}" />
+						</div>
+						<div>
+						<small>{{ getRatingsStr( pratilipi.ratingCount ) }}</small>
+						</div>		
+						<div class="more">
+							<b>Welcome to Pratilipi.com. It's a two sided platform.On one side it's a self-publishing.</b>
+							 platform for writers and on the other side readers may come and read various stuffs 
+							in their own language.Currently we provide only three languages viz. Hindi,Tamil
+							<h3>This is testing</h3>
+							and Gujrati.Basically it's a two sided market place.
+							<i>This is just for testing purpose</i>
+							Writers cam publish their own content or else they can mail us their content and 
+							we publish it on their behalf.
+						</div>
+					</div>
+					<div>
+						<button type="button" class="btn btn-success">Read For Free</button>
+						<button type="button" class="btn btn-primary">Review This Book</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</template>
+	
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-pagecontent',
+			
+			properties: {
+				pratilipi: { type: Object }
+			},
+			
+			getRatingsStr: function( ratingCount ) {
+				return '(' + this.pratilipi.ratingCount + ' ' + ( this.pratilipi.ratingCount <= 1 ? 'rating' : 'ratings' ) + ')';
+			},
+			
+			
+			ready:function() {
+				
+				var showChar = 120, showtxt = "more", hidetxt = "less";
+				var originalContent = $('.more').html();
+				$('.more').each(function() {
+					var content = $(this).text();
+					if (content.length > showChar) {
+						var con = content.substr(0, showChar);
+						var hcon = content.substr(showChar, content.length - showChar);
+						var txt= con +  '<span class="dots">...</span><span class="morecontent">&nbsp;&nbsp;<a href="" class="moretxt">' + showtxt + '</a></span>';
+						$(this).html(txt);
+					}
+				});
+
+				$(".moretxt").click(function() {
+					if ($(this).hasClass("sample")) {					
+						$(this).removeClass("sample");
+						$(this).text(showtxt);
+					} else {
+						$(this).addClass("sample");
+						var txt = originalContent + '</span>&nbsp;&nbsp;<a href="" class="moretxt">' + hidetxt + '</a></span>';
+						$('.more').html(txt);
+					}
+					$(this).parent().prev().toggle();
+					$(this).prev().toggle();
+					return false;
+				});
+			}
+		});
+		
+		
+
+	</script>
+
+</dom-module>
