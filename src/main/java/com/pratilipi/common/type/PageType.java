@@ -3,6 +3,8 @@ package com.pratilipi.common.type;
 
 public enum PageType {
 	
+	GENERIC( "/page/" ),
+
 	PRATILIPI( "/pratilipi/" ),
 	READ( "/read?id=" ),
 	WRITE( "/write?id=" ),

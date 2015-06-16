@@ -21,6 +21,7 @@ import org.apache.commons.io.LineIterator;
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.LanguageUtil;
 import com.pratilipi.common.util.ThirdPartyResource;
@@ -38,6 +39,7 @@ public class PratilipiSite extends HttpServlet {
 	
 	private static final Logger logger = Logger.getGlobal();
 	private static final Language defaulLang = Language.ENGLISH;
+	private static final String templateFilePrefix = "com/pratilipi/site/page/";
 	private static final String dataFilePrefix = "page/data/";
 	private static final String languageFilePrefix = "WEB-INF/classes/com/pratilipi/site/i18n/language.";
 	
@@ -46,31 +48,62 @@ public class PratilipiSite extends HttpServlet {
 			HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// Page entity
+		String uri = request.getRequestURI();
+		Page page = dataAccessor.getPage( uri );
+
+		// Language
 		Language lang = UxModeFilter.getUserLanguage();
 		
+		// Common resource list
 		List<String> resourceList = new LinkedList<>();
 		resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 		resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
 		resourceList.add( ThirdPartyResource.POLYMER.getTag() );
 
+		
+		// Data Model for FreeMarker
 		Map<String, Object> dataModel = null;
 		String html = "";
+		
 		try {
-			dataModel = createDataModelForHomePage( lang );
+			String templateName = null;
+			
+			if( page == null ) {
 
+			} else if( page.getType() == PageType.GENERIC ) {
+				dataModel = createDataModelForHomePage( lang );
+				templateName = templateFilePrefix + "Home.ftl";
+				
+			} else if( page.getType() == PageType.PRATILIPI ) {
+				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId() );
+				templateName = templateFilePrefix + "Pratilipi.ftl";
+				
+			} else if( page.getType() == PageType.AUTHOR ) {
+	
+			}
+
+			// Adding common data to the Data Model
 			dataModel.put( "lang", lang.getCode() );
 			dataModel.put( "_strings", LanguageUtil.getStrings(
 					languageFilePrefix + lang.getCode(),
 					languageFilePrefix + defaulLang.getCode() ) );
 			dataModel.put( "resourceList", resourceList );
 			
-			html = FreeMarkerUtil.processTemplate( dataModel, "com/pratilipi/site/page/Home.ftl" );
+			// The magic
+			html = FreeMarkerUtil.processTemplate( dataModel, templateName );
+
 		} catch( UnexpectedServerException e ) {
 			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 			try {
 				html = FreeMarkerUtil.processTemplate( dataModel, "com/pratilipi/site/page/error/ServerError.ftl" );
 			} catch( UnexpectedServerException ex ) { }
 		}
+
+		
+		// Dispatching response
 		response.setCharacterEncoding( "UTF-8" );
 		response.getWriter().write( html );
 		response.getWriter().close();
@@ -99,6 +132,18 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
+	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		Author author = dataAccessor .getAuthor( pratilipi.getAuthorId() );
+		PratilipiData pratilipiData = PratilipiDataUtil.createData( pratilipi, author );
+
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "pratilipi", pratilipiData );
+
+		return dataModel;
+	}
+	
 	public <T> T getData( String fileName, Class<T> clazz )
 			throws UnexpectedServerException {
 		

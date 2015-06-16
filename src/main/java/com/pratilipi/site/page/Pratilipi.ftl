@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 		<#-- Page Title, Favicon & Description -->
-		<title>${ _strings.home_page_title } &#0171 ${ _strings.pratilipi }</title>		
+		<title>${ pratilipi.title } / ${ pratilipi.titleEn } &#0171 ${ pratilipi.author.name } / ${ pratilipi.author.nameEn } &#0171 ${ _strings.pratilipi }</title>		
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 		<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 
@@ -19,9 +19,8 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-rating.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
+
+		<link rel='import' href='/elements.${lang}/pratilipi-pagecontent.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
@@ -45,11 +44,7 @@
 			</div>
 			<div class="secondary-500" style="margin-left:270px">
 				<div>
-					<pratilipi-card-grid grid-title="${ _strings.featured }">
-						<#list featuredList as featured>
-							<pratilipi-card pratilipi='${ featured }'></pratilipi-card>
-						</#list>
-					</pratilipi-card-grid>
+					<pratilipi-pagecontent></pratilipi-pagecontent>
 				</div>
 			</div>
 		</div>
