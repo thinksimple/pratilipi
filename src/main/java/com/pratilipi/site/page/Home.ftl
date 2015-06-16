@@ -19,9 +19,10 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-rating.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
+
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-rating.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">

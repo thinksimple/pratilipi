@@ -138,8 +138,11 @@ public class PratilipiSite extends HttpServlet {
 		Author author = dataAccessor .getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createData( pratilipi, author );
 
+		Gson gson = new Gson();
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "pratilipi", pratilipiData );
+		dataModel.put( "pratilipiJson", gson.toJson( pratilipiData ).toString() );
 
 		return dataModel;
 	}
