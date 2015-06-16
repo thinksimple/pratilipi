@@ -1,6 +1,5 @@
 package com.pratilipi.site.element.data;
 
-import java.util.List;
 
 public class PratilipiNavigation {
 
@@ -33,9 +32,9 @@ public class PratilipiNavigation {
 		
 	}
 
-	private List<Section> sections;
+	private Section[] sections;
 
-	public List<Section> getSections() {
+	public Section[] getSections() {
 		return sections;
 	}
 
