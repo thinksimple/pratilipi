@@ -35,6 +35,10 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 					&& !pratilipiFilter.getAuthorId().equals( pratilipiData.getAuthorId() ) )
 				continue;
 			
+			if( pratilipiFilter.getType() != null
+					&& !pratilipiFilter.getType().equals( pratilipiData.getType() ) )
+				continue;
+			
 			pratilipiIdList.add( ( (PratilipiData) object ).getId() );
 		}
 		

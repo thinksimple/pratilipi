@@ -22,11 +22,15 @@ import com.google.gson.Gson;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.LanguageUtil;
+import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.Author;
@@ -73,11 +77,29 @@ public class PratilipiSite extends HttpServlet {
 		try {
 			String templateName = null;
 			
-			if( page == null ) {
-
-			} else if( page.getType() == PageType.GENERIC ) {
+			if( uri.equals( "/" ) ) {
 				dataModel = createDataModelForHomePage( lang );
 				templateName = templateFilePrefix + "Home.ftl";
+				
+			} else if( uri.equals( "/books" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.BOOK, lang == Language.ENGLISH ? null : lang );
+				templateName = templateFilePrefix + "List.ftl";
+				
+			} else if( uri.equals( "/stories" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.STORY, lang == Language.ENGLISH ? null : lang );
+				templateName = templateFilePrefix + "List.ftl";
+				
+			} else if( uri.equals( "/poems" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.POEM, lang == Language.ENGLISH ? null : lang );
+				templateName = templateFilePrefix + "List.ftl";
+				
+			} else if( uri.equals( "/articles" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, lang == Language.ENGLISH ? null : lang );
+				templateName = templateFilePrefix + "List.ftl";
+				
+			} else if( uri.equals( "/magazines" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, lang == Language.ENGLISH ? null : lang );
+				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( page.getType() == PageType.PRATILIPI ) {
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId() );
@@ -134,6 +156,38 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "featuredList", featuredList );
 		
+		return dataModel;
+	}
+
+	public Map<String, Object> createDataModelForListPage( PratilipiType type, Language lang )
+			throws UnexpectedServerException {
+
+		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Gson gson = new Gson();
+		
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setType( type );
+		pratilipiFilter.setLanguageCode( lang == null ? null : lang.getCode() );
+		
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
+				searchAccessor.searchPratilipi( pratilipiFilter, null, 20 );
+		List<Pratilipi> pratilipiList =
+				dataAccessor.getPratilipiList( pratilipiIdListCursorTuple.getDataList() );
+		String cursor = pratilipiIdListCursorTuple.getCursor();
+		
+		List<String> pratilipiJsonList = new ArrayList<>( pratilipiList.size() );
+		for( Pratilipi pratilipi : pratilipiList ) {
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			PratilipiData pratilipiData = PratilipiDataUtil.createData( pratilipi, author );
+			pratilipiJsonList.add( gson.toJson( pratilipiData ).toString() );
+		}
+
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "pratilipiJsonList", pratilipiJsonList );
+		dataModel.put( "pratilipiFilter", gson.toJson( pratilipiFilter ) );
+		dataModel.put( "pratilipiListCursor", cursor );
+
 		return dataModel;
 	}
 

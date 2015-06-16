@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-		<#-- Page Title, Favicon & Description -->
+		<#-- Page Title & Favicon -->
 		<title>${ author.name } / ${ author.nameEn } &#0171 ${ _strings.pratilipi }</title>		
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 

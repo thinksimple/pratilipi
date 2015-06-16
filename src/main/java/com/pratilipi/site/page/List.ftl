@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 		<#-- Page Title & Favicon -->
-		<title>${ pratilipi.title } / ${ pratilipi.titleEn } &#0171 ${ pratilipi.author.name } / ${ pratilipi.author.nameEn } &#0171 ${ _strings.pratilipi }</title>		
+		<title>${ _strings.pratilipi }</title>
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 
 		<#-- Third-Party Library -->
@@ -19,7 +19,8 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 
-		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-rating.html'>
 
 		<#-- Custom Stylesheets -->
@@ -40,7 +41,13 @@
 		
 		<div class="container" style="margin-top:20px">
 			<div class="secondary-500">
-				<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
+				<div>
+					<pratilipi-card-grid grid-title="${ _strings.featured }">
+						<#list pratilipiJsonList as pratilipiJson>
+							<pratilipi-card pratilipi='${ pratilipiJson }'></pratilipi-card>
+						</#list>
+					</pratilipi-card-grid>
+				</div>
 			</div>
 		</div>
 		

@@ -32,11 +32,13 @@ public class PratilipiDataUtil {
 	}
 
 	public static PratilipiData createData( Pratilipi pratilipi, Author author ) {
-		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipi.getId() );
-		
-		
+		return createData( pratilipi, author, pratilipiPage );
+	}
+
+	
+	public static PratilipiData createData( Pratilipi pratilipi, Author author, Page pratilipiPage ) {
 		PratilipiData pratilipiData = new PratilipiData();
 
 		pratilipiData.setId( pratilipi.getId() );
@@ -74,5 +76,6 @@ public class PratilipiDataUtil {
 
 		return pratilipiData;
 	}
+		
 
 }

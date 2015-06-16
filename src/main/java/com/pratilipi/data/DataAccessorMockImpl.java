@@ -68,7 +68,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	@Override
 	public Pratilipi getPratilipi( Long id ) {
 		for( Pratilipi pratilipi : MockData.PRATILIPI_TABLE )
-			if( pratilipi.getId().equals( id) )
+			if( pratilipi.getId().equals( id ) )
 				return pratilipi;
 		
 		return null;

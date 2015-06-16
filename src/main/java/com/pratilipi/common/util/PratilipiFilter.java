@@ -7,11 +7,11 @@ import com.pratilipi.common.type.PratilipiType;
 
 public class PratilipiFilter {
 	
-	private PratilipiType type;
-
 	private String langCode;
-	
+
 	private Long authorId;
+
+	private PratilipiType type;
 
 	private PratilipiState state;
 	
@@ -20,14 +20,6 @@ public class PratilipiFilter {
 	private Boolean orderByReadCount;
 	
 	
-	public PratilipiType getType() {
-		return type;
-	}
-
-	public void setType( PratilipiType pratilipiType ) {
-		this.type = pratilipiType;
-	}
-
 	public String getLanguageCode() {
 		return langCode;
 	}
@@ -44,6 +36,14 @@ public class PratilipiFilter {
 		this.authorId = authorId;
 	}
 	
+	public PratilipiType getType() {
+		return type;
+	}
+
+	public void setType( PratilipiType pratilipiType ) {
+		this.type = pratilipiType;
+	}
+
 	public PratilipiState getState() {
 		return state;
 	}
