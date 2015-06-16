@@ -14,6 +14,11 @@
 		<!-- Configure java.util.logging -->
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
 
+		<!-- Configure DataSource -->
+		<property name="localhost.datasource" value="mock"/>
+		<property name="devo-pratilipi.datasource" value="gae"/>
+		<property name="prod-pratilipi.datasource" value="gae"/>
+
 		<!-- Configure CDN -->
 		<property name="localhost.cdn" value="localhost:8080"/>
 		<property name="devo-pratilipi.cdn" value="devo.pratilipi.cdssolutions.in"/>

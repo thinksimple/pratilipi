@@ -123,6 +123,8 @@ public class PratilipiSite extends HttpServlet {
 		List<String> featuredList = new ArrayList<>( home.getFeatured().length );
 		for( String uri : home.getFeatured() ) {
 			Page page = dataAccessor.getPage( uri );
+			if( page == null )
+				continue;
 			Pratilipi pratilipi = dataAccessor.getPratilipi( page.getPrimaryContentId() );
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 			PratilipiData pratilipiData = PratilipiDataUtil.createData( pratilipi, author );
