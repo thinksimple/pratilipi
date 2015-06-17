@@ -101,13 +101,18 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
-			} else if( page.getType() == PageType.PRATILIPI ) {
+			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Pratilipi.ftl";
 				
-			} else if( page.getType() == PageType.AUTHOR ) {
+			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Author.ftl";
+			
+			} else {
+				dataModel = new HashMap<String, Object>();
+				templateName = templateFilePrefix + "error/PageNotFound.ftl";
+
 			}
 
 			// Adding common data to the Data Model
@@ -123,7 +128,7 @@ public class PratilipiSite extends HttpServlet {
 		} catch( UnexpectedServerException e ) {
 			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 			try {
-				html = FreeMarkerUtil.processTemplate( dataModel, "com/pratilipi/site/page/error/ServerError.ftl" );
+				html = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "error/ServerError.ftl" );
 			} catch( UnexpectedServerException ex ) { }
 		}
 

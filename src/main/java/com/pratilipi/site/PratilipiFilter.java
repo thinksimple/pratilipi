@@ -1,9 +1,7 @@
-package com.pratilipi.servlet;
+package com.pratilipi.site;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -16,34 +14,28 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.claymus.commons.server.ClaymusHelper;
-import com.claymus.pagecontent.blogpost.BlogPostContent;
-import com.pratilipi.commons.server.PratilipiHelper;
-import com.pratilipi.commons.shared.PratilipiPageType;
-import com.pratilipi.data.access.DataAccessor;
-import com.pratilipi.data.access.DataAccessorFactory;
-import com.pratilipi.data.transfer.Author;
+import com.pratilipi.common.util.AppProperty;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
 
 public class PratilipiFilter implements Filter {
 	
 	private final Map<String, String> redirections = new HashMap<>();
-	private final List<String> nonExistents = new LinkedList<>();
-	
 	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile( "/resource\\.(book|poem|story|article|pratilipi)-cover/.*" );
 	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
 	private final Pattern validHostRegEx = Pattern.compile(
-			"(www|embed|devo|alpha)\\.pratilipi\\.com"
+			"(www|hindi|tamil|gujarati)\\.pratilipi\\.com"
 			+ "|"
-			+ "((mark-4p23\\d|default)\\.prod-pratilipi|.+\\.(dev|devo)-pratilipi)\\.appspot\\.com"
+			+ "((mark-6|mark-6p\\d)\\.prod-pratilipi|.+\\.devo-pratilipi)\\.appspot\\.com"
 			+ "|"
 			+ "localhost|127.0.0.1" );
 	
 	{
-		redirections.put( "/favicon.ico", "/theme.pratilipi/favicon.png" );
-		redirections.put( "/apple-touch-icon.png", "/theme.pratilipi/favicon.png" );
-		redirections.put( "/apple-touch-icon-precomposed.png", "/theme.pratilipi/favicon.png" );
+//		redirections.put( "/favicon.ico", "/theme.pratilipi/favicon.png" );
+//		redirections.put( "/apple-touch-icon.png", "/theme.pratilipi/favicon.png" );
+//		redirections.put( "/apple-touch-icon-precomposed.png", "/theme.pratilipi/favicon.png" );
 
-		redirections.put( "/robots.txt", "/service.robots" );
+//		redirections.put( "/robots.txt", "/service.robots" );
 
 		redirections.put( "/give-away", "/" );
 		redirections.put( "/give-away/Gora.pdf", "/" );
@@ -54,11 +46,6 @@ public class PratilipiFilter implements Filter {
 
 		redirections.put( "/about", "/about/pratilipi" );
 		redirections.put( "/career", "/JoinTheGang" );
-
-		nonExistents.add( "/pagecontent.userforms/undefined.cache.js" );
-		nonExistents.add( "/pagecontent.pratilipi/undefined.cache.js" );
-		nonExistents.add( "/pagecontent.reader/undefined.cache.js" );
-		nonExistents.add( "/pagecontent.author/undefined.cache.js" );
 	}
 	
 
@@ -77,20 +64,18 @@ public class PratilipiFilter implements Filter {
 		
 		String host = request.getServerName();
 		String requestUri = request.getRequestURI();
-		String action = request.getParameter( "action" );
 		String userAgent = request.getHeader( "user-agent" );
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( request );
 
 		
 		if( userAgent != null && userAgent.startsWith( "libwww-perl" ) ) {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
-			
-			
-		} else if( nonExistents.contains( requestUri ) ) {
-			response.setStatus( HttpServletResponse.SC_NOT_FOUND );
 
 		
+		} else if( requestUri.length() > 1 && requestUri.endsWith( "/" ) ) { // Removing trailing "/"
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", requestUri.substring( 0, requestUri.length() -1 ) );
+
+			
 		} else if( redirections.get( requestUri ) != null ) {
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", redirections.get( requestUri ) );
@@ -108,7 +93,7 @@ public class PratilipiFilter implements Filter {
 		} else if( oldPratilipiCoverUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi cover url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", requestUri
-					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + ClaymusHelper.getSystemProperty( "domain.cdn" ) + "/" )
+					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + AppProperty.get( "cdn" ) + "/" )
 					.replaceFirst( "book|poem|story|article", "pratilipi" )
 					.replaceFirst( "original|300", "150" ) );
 
@@ -116,7 +101,7 @@ public class PratilipiFilter implements Filter {
 		} else if( requestUri.startsWith( "/resource.author-image/original/" ) ) { // Redirecting to new Author image url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", requestUri
-					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + ClaymusHelper.getSystemProperty( "domain.cdn" ) + "/" )
+					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + AppProperty.get( "cdn" ) + "/" )
 					.replaceFirst( "original", "150" ) );
 		
 			
@@ -139,40 +124,12 @@ public class PratilipiFilter implements Filter {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
 			
 			
-		} else if( action != null && action.equals( "login" ) ) { // Redirecting to profile page on login
-			
-			PratilipiHelper pratilipiHelper = PratilipiHelper.get( request );
-
-			Long currentUserId = pratilipiHelper.getCurrentUserId();
-			Author author = dataAccessor.getAuthorByUserId( currentUserId );
-			
-			if( author != null )
-				response.sendRedirect( PratilipiPageType.AUTHOR.getUrlPrefix() + author.getId() );
-			else
-				chain.doFilter( request, response );
-		
-			
-		} else if( requestUri.startsWith( "/blog/" ) ) { // Redirecting author interviews to /author-interview/*
-			String blogIdStr = requestUri.substring( 6 );
-			if( ! blogIdStr.equals( "new" ) ) {
-				BlogPostContent blogPostContent = (BlogPostContent) dataAccessor.getPageContent( Long.parseLong( blogIdStr ) );
-				if( blogPostContent.getBlogId() == 5197509039226880L ) {
-					response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-					response.setHeader( "Location", "/author-interview/" + blogIdStr );
-				} else {
-					chain.doFilter( request, response );
-				}
-			} else {
-				chain.doFilter( request, response );
-			}
-			
-			
 		} else {
 			chain.doFilter( request, response );
 		}
 
 		
-		dataAccessor.destroy();
+		DataAccessorFactory.destroyDataAccessor();
 	}
 
 }
