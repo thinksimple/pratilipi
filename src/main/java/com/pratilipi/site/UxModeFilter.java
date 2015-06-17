@@ -37,7 +37,7 @@ public class UxModeFilter implements Filter {
 		String embedModeParam = request.getParameter( "embedMode" );
 		
 		
-		Language lang = Language.ENGLISH;
+		Language lang = Language.TAMIL;
 		boolean basicMode = true;
 
 		
