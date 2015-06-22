@@ -5,22 +5,27 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.jdo.JDODataStoreException;
 import javax.jdo.JDOHelper;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
+import javax.jdo.Transaction;
 
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
@@ -42,7 +47,60 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		this.pm = pmfInstance.getPersistenceManager();
 	}
 
+	
+	// ACCESS_TOKEN Table
 
+	@Override
+	public AccessToken newAccessToken() {
+		return new AccessTokenEntity();
+	}
+
+	@Override
+	public AccessToken getAccessToken( String accessTokenId ) {
+		if( accessTokenId == null )
+			return null;
+		
+		try{
+			return getEntity( AccessTokenEntity.class, accessTokenId );
+		} catch( JDOObjectNotFoundException e ) {
+			return null;
+		}
+	}
+	
+	@Override
+	public AccessToken createAccessToken( AccessToken accessToken ) {
+		accessToken.setCreationDate( new Date() );
+		if( accessToken.getExpiry() == null )
+			accessToken.setExpiry( new Date( new Date().getTime() + 86400000 ) ); // 1 Day
+
+		Transaction tx = null;
+		while( true ) {
+			((AccessTokenEntity) accessToken).setId( UUID.randomUUID().toString() );
+			try {
+				tx = pm.currentTransaction();
+				tx.begin();
+				pm.getObjectById( AccessTokenEntity.class, accessToken.getId() );
+			} catch( JDOObjectNotFoundException e ) {
+				try{
+					AccessToken at = pm.makePersistent( accessToken );
+					tx.commit();
+					return pm.detachCopy( at );
+				} catch( JDODataStoreException ex ) {
+					logger.log( Level.INFO, "Transaction failed. Retrying ...", ex );
+				}
+			} finally {
+				if( tx.isActive() )
+					tx.rollback();
+			}
+		}
+	}
+	
+	@Override
+	public AccessToken updateAccessToken( AccessToken accessToken ) {
+		return createOrUpdateEntity( accessToken );
+	}
+	
+	
 	// Helper Methods
 	
 	private <T> T getEntity( Class<T> clazz, Object id ) {

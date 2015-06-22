@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
@@ -13,6 +14,7 @@ import com.pratilipi.data.type.Pratilipi;
 
 public class DataAccessorWithMemcache implements DataAccessor {
 	
+	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
 	private final static String PREFIX_PAGE = "Page-";
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
 	private static final String PREFIX_AUTHOR = "Author-";
@@ -28,6 +30,42 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		this.memcache = memcache;
 	}
 	
+	
+	// ACCESS_TOKEN Table
+	
+	@Override
+	public AccessToken newAccessToken() {
+		return dataAccessor.newAccessToken();
+	}
+
+	@Override
+	public AccessToken getAccessToken( String accessTokenId ) {
+		if( accessTokenId == null )
+			return null;
+		
+		AccessToken accessToken = memcache.get( PREFIX_ACCESS_TOKEN + accessTokenId );
+		if( accessToken == null ) {
+			accessToken = dataAccessor.getAccessToken( accessTokenId );
+			if( accessToken != null )
+				memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
+		}
+		return accessToken;
+	}
+	
+	@Override
+	public AccessToken createAccessToken( AccessToken accessToken ) {
+		accessToken = dataAccessor.createAccessToken( accessToken );
+		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
+		return accessToken;
+	}
+
+	@Override
+	public AccessToken updateAccessToken( AccessToken accessToken ) {
+		accessToken = dataAccessor.updateAccessToken( accessToken );
+		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
+		return accessToken;
+	}
+
 	
 	// PAGE Table
 	

@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
@@ -15,6 +17,32 @@ import com.pratilipi.data.type.gae.PratilipiEntity;
 
 public class DataAccessorMockImpl implements DataAccessor {
 
+	// ACCESS_TOKEN Table
+	
+	@Override
+	public AccessToken newAccessToken() {
+		return new AccessTokenEntity();
+	}
+
+	@Override
+	public AccessToken getAccessToken( String accessTokenId ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+	@Override
+	public AccessToken createAccessToken( AccessToken accessToken ) {
+		// TODO: Implementation
+		return accessToken;
+	}
+
+	@Override
+	public AccessToken updateAccessToken( AccessToken accessToken ) {
+		// TODO: Implementation
+		return accessToken;
+	}
+
+	
 	// PAGE Table
 	
 	@Override

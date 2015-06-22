@@ -3,12 +3,19 @@ package com.pratilipi.data;
 import java.util.List;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 
 public interface DataAccessor {
+
+	// ACCESS_TOKEN Table
+	AccessToken newAccessToken();
+	AccessToken getAccessToken( String accessTokenId );
+	AccessToken createAccessToken( AccessToken accessToken );
+	AccessToken updateAccessToken( AccessToken accessToken );
 
 	// PAGE Table
 	Page newPage();
@@ -17,13 +24,11 @@ public interface DataAccessor {
 	Page getPage( PageType pageType, Long primaryContentId );
 	Page createOrUpdatePage( Page page );
 
-	
 	// PRATILIPI Table
 	Pratilipi newPratilipi();
 	Pratilipi getPratilipi( Long id );
 	List<Pratilipi> getPratilipiList( List<Long> idList );
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
-	
 	
 	// AUTHOR Table
 	Author newAuthor();
@@ -33,13 +38,11 @@ public interface DataAccessor {
 	List<Author> getAuthorList( List<Long> idList );
 	Author createOrUpdateAuthor( Author author );
 
-	
 	// AUDIT_LOG Table
 	AuditLog newAuditLog();
 	AuditLog createAuditLog( AuditLog auditLog );
 	DataListCursorTuple<AuditLog> getAuditLogList( String cursor, Integer resultCount );
 
-	
 	// Destroy
 	void destroy();
 	
