@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
@@ -224,6 +225,25 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		author = dataAccessor.createOrUpdateAuthor( author );
 		memcache.put( PREFIX_AUTHOR + author.getId(), author );
 		return author;
+	}
+
+	
+	// AUDIT_LOG Table
+	
+	@Override
+	public AuditLog newAuditLog() {
+		return dataAccessor.newAuditLog();
+	}
+
+	@Override
+	public AuditLog createAuditLog( AuditLog auditLog ) {
+		return dataAccessor.createAuditLog( auditLog );
+	}
+	
+
+	@Override
+	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) {
+		return dataAccessor.getAuditLogList( cursorStr, resultCount );
 	}
 
 	

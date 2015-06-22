@@ -1,7 +1,10 @@
 package com.pratilipi.data;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,10 +14,14 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -210,6 +217,48 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( author );
 	}
 
+
+	// AUDIT_LOG Table
+	
+	@Override
+	public AuditLog newAuditLog() {
+		return new AuditLogEntity();
+	}
+
+	@Override
+	public AuditLog createAuditLog( AuditLog auditLog ) {
+		( (AuditLogEntity) auditLog ).setCreationDate( new Date() );
+		return createOrUpdateEntity( auditLog );
+	}
+
+	@Override
+	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount ) {
+		
+		GaeQueryBuilder gaeQueryBuilder =
+				new GaeQueryBuilder( pm.newQuery( AuditLogEntity.class ) )
+						.addOrdering( "creationDate", false );
+		
+		if( resultCount != null )
+			gaeQueryBuilder.setRange( 0, resultCount );
+		
+		Query query = gaeQueryBuilder.build();
+
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions( extensionMap );
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<AuditLog> audtiLogList = (List<AuditLog>) query.execute();
+		Cursor cursor = JDOCursorHelper.getCursor( audtiLogList );
+		
+		return new DataListCursorTuple<>( 
+				(List<AuditLog>) pm.detachCopyAll( audtiLogList ),
+				cursor == null ? null : cursor.toWebSafeString() );
+	}
+	
 	
 	// Destroy
 

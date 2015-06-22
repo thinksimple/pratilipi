@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -135,6 +137,27 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public Author createOrUpdateAuthor( Author author ) {
 		MockData.AUTHOR_TABLE.add( author );
 		return author;
+	}
+
+	
+	// AUDIT_LOG Table
+
+	@Override
+	public AuditLog newAuditLog() {
+		return new AuditLogEntity();
+	}
+
+	@Override
+	public AuditLog createAuditLog( AuditLog auditLog ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+
+	@Override
+	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) {
+		// TODO: Implementation
+		return null;
 	}
 
 	
