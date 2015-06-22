@@ -64,7 +64,7 @@ public class AuthorEntity implements Author {
 
 	
 	@Persistent( column = "CONTENT_PUBLISHED" )
-	private Long contentPublished;
+	private Integer contentPublished;
 	
 	@Persistent( column = "TOTAL_READ_COUNT" )
 	private Long totalReadCount;
@@ -232,12 +232,12 @@ public class AuthorEntity implements Author {
 	
 	
 	@Override
-	public Long getContentPublished() {
-		return contentPublished == null ? 0L : contentPublished;
+	public Integer getContentPublished() {
+		return contentPublished == null ? 0 : contentPublished;
 	}
 	
 	@Override
-	public void setContentPublished( Long contentPublished ) {
+	public void setContentPublished( Integer contentPublished ) {
 		this.contentPublished = contentPublished;
 	}
 	

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pratilipi.common.util.AppProperty;
-import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 
 public class PratilipiFilter implements Filter {

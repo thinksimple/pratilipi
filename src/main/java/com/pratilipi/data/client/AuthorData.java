@@ -51,7 +51,7 @@ public class AuthorData {
 	
 	private Long registrationDate;
 	
-	private Long contentPublished;
+	private Integer contentPublished;
 	
 	
 	public Long getId() {
@@ -247,11 +247,11 @@ public class AuthorData {
 		this.registrationDate = registrationDate == null ? null : registrationDate.getTime();
 	}
 	
-	public Long getContentPublished() {
+	public Integer getContentPublished() {
 		return contentPublished;
 	}
 
-	public void setContentPublished(Long contentPublished) {
+	public void setContentPublished( Integer contentPublished ) {
 		this.contentPublished = contentPublished;
 	}
 

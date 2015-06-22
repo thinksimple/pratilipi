@@ -23,6 +23,15 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<filter>
+		<filter-name>AccessTokenFilter</filter-name>
+		<filter-class>com.pratilipi.site.AccessTokenFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AccessTokenFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<servlet>
 		<servlet-name>PratilipiSite</servlet-name>
 		<servlet-class>com.pratilipi.site.PratilipiSite</servlet-class>
