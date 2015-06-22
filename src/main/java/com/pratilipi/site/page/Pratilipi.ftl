@@ -26,7 +26,11 @@
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
-
+		
+		<#-- Social media share Button -->
+		<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+		
+		
 	</head>
 	<body>
 

@@ -24,17 +24,78 @@
 			padding: 3px 20px;
 		}
 		
+		.rating {
+		  	 direction: rtl;
+		 	 text-align: center;
+		 	 cursor: pointer;
+		 	 cursor: hand;
+		}
+		.rating > span {
+		 	 display: inline-block;
+		     width: 1.1em;
+		}
+		.rating > span:hover,
+		.rating > span:hover ~ span {
+		     color: transparent;
+		}
+		.rating > span:hover:before,
+		.rating > span:hover ~ span:before {
+		     content: "\2605";
+		     color: gold;
+		}
+		hr { 
+			  display: block;
+			  margin-top: 0.5em;
+			  margin-bottom: 0.5em;
+	          margin-left: auto;
+			  margin-right: auto;
+			  border-style: inset;
+			  border-width: 1px;
+		} 
+		.carousel-control {
+			  padding-top:10%;
+			  width:5%;
+		}
+		.carousel-inner img {
+		      height: 100px;
+		      max-height: 100px;
+		      width: auto;
+		}
+		.carousel-inner {
+		      max-height: 110px;
+		      
+		}
+		
 	</style>
-
 
 	<template>
 		<div class="media">
 
 			<div class="media-left">
 				<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+			
+			
+			<div class="rating">
+           
+				<h5>{{ varx }}</h5>
+				<span class="glyphicon glyphicon-star-empty" aria-hidden="true" on-mouseover="fivestars" on-mouseout="onUnhovered"></span>
+				<span class="glyphicon glyphicon-star-empty" aria-hidden="true" on-mouseover="fourstars" on-mouseout="onUnhovered"></span>
+				<span class="glyphicon glyphicon-star-empty" aria-hidden="true" on-mouseover="threestars" on-mouseout="onUnhovered"></span>
+				<span class="glyphicon glyphicon-star-empty" aria-hidden="true" on-mouseover="twostars" on-mouseout="onUnhovered"></span>
+				<span class="glyphicon glyphicon-star-empty" aria-hidden="true" on-mouseover="onestar" on-mouseout="onUnhovered"></span>
+				<content></content>
+			
+				<div class="a2a_kit a2a_kit_size_0 a2a_default_style" style="padding: 10px;">
+	    			
+	    			<a class="a2a_button_facebook_like"></a>
+	    			<a class="a2a_dd" href="http://www.addtoany.com/share_save">Share</a>
+	    			
+	    		
+	    		</div>
+			</div>	
 			</div>
-
-		  	<div class="media-body">
+			
+			<div class="media-body">
 				<div>
 					<h1 class="media-heading">{{ pratilipi.title }}</h1>
 					<h4><a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a></h4>
@@ -46,16 +107,101 @@
 					<div>
 						<a href="{{__hack__}}#"><span class="badge">Classic</span></a>
 					</div>
+					<div>
+						<a href="{{ pratilipi.readerPageUrl }}" class="btn btn-success">Read For Free</a>
+						<a href="{{__hack__}}#" class="btn btn-primary">Review This Book</a>
+					</div>
+					<hr>
 					<div style="text-align: justify; padding:10px 0px;">
 						<span class="summary">{{ pratilipi.summary }}</span>
 						<a href="{{__hack__}}#" class="show-more" on-click="showCompleteSummary"><small>(show more)</small></a>
 						<a href="{{__hack__}}#" class="show-less" on-click="showSummarySnippet"><small>(show less)</small></a>
-					</div>		
+					</div>	
+					<hr>	
 				</div>
-				<div>
-					<a href="{{ pratilipi.readerPageUrl }}" class="btn btn-success">Read For Free</a>
-					<a href="{{__hack__}}#" class="btn btn-primary">Review This Book</a>
-				</div>
+				
+			</div>
+			<hr>
+			<h4 style="margin-left: 20px;">Recommended for you</h4>
+			
+			<div class="container">
+			    <div class="col-md-12">
+			        
+			        <div class="well">
+			            <div id="myCarousel" class="carousel slide">
+			                
+			                <!-- Carousel items -->
+			                <div class="carousel-inner">
+			                    <div class="item active">
+			                        <div class="row">
+			                            <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image"  class="img-responsive"></a>
+			                            </div>
+			                            <div class="col-sm-2"><a href="#x"><img src="/stylesheets/img.jpg" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                            <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                            <div class="col-sm-2"><a href="#x"><img src="/stylesheets/img2.jpg" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                             <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                             <div class="col-sm-2"><a href="#x"><img src="/stylesheets/bookimg.jpg" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                            
+			                        </div>
+			                        <!--/row-->
+			                    </div>
+			                    <!--/item-->
+			                    <div class="item">
+			                        <div class="row">
+			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="/stylesheets/img3.jpg" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="/stylesheets/img4.jpg" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="/stylesheets/img.jpg" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                        </div>
+			                        <!--/row-->
+			                    </div>
+			                    <!--/item-->
+			                    <div class="item">
+			                        <div class="row">
+			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
+			                            </div>
+			                        </div>
+			                        <!--/row-->
+			                    </div>
+			                    <!--/item-->
+			                </div>
+			                <!--/carousel-inner--> <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+			                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+
+			                </a>
+			
+			                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+			                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			      			
+			                </a>
+			            </div>
+			            <!--/myCarousel-->
+			        </div>
+			        <!--/well-->
+			    </div>
 			</div>
 			
 		</div>
@@ -69,7 +215,8 @@
 			is: 'pratilipi-pratilipi',
 			
 			properties: {
-				pratilipi: { type: Object }
+				pratilipi: { type: Object },
+				
 			},
 			
 			getRatingsStr: function( ratingCount ) {
@@ -88,13 +235,43 @@
 				jQuery( '.show-less' ).hide();
 			},
 			
+			
+			fivestars: function() {
+				this.varx = "Excellent";
+				
+			},
+			
+			fourstars: function() {
+				this.varx = "Very Good";
+				
+			},
+			
+			threestars: function() {
+				this.varx = "Good";
+				
+			},
+			
+			twostars: function() {
+				this.varx = "Fair";
+				
+			},
+			
+			onestar: function() {
+				this.varx = "Poor";
+				
+			},
+			 onUnhovered: function() {
+			        this.varx = "!Rate This";
+			},
+			
 			ready: function() {
 				jQuery( '.summary' ).html( this.pratilipi.summary );
 				this.showSummarySnippet();
 			}
 			
 		});
-
+		
+		
 	</script>
 
 </dom-module>
