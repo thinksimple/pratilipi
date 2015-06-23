@@ -20,6 +20,20 @@
 		<property name="devo-pratilipi.datasource" value="gae"/>
 		<property name="prod-pratilipi.datasource" value="gae"/>
 
+		<!-- Configure Blob Storage -->
+		<property name="localhost.blobservice.gcs.bucket" value="localhost"/>
+		<property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
+		<property name="prod-pratilipi.blobservice.gcs.bucket" value="static.pratilipi.com"/>
+
+		<property name="localhost.blobservice.gcs.bucket.public" value="localhost"/>
+		<property name="devo-pratilipi.blobservice.gcs.bucket.public" value="devo-pratilipi.appspot.com"/>
+		<property name="prod-pratilipi.blobservice.gcs.bucket.public" value="public.pratilipi.com"/>
+
+		<!-- Configure Cron -->
+		<property name="localhost.cron" value="stop"/>
+		<property name="devo-pratilipi.cron" value="stop"/>
+		<property name="prod-pratilipi.cron" value="run"/>
+
 		<!-- Configure CDN -->
 		<property name="localhost.cdn" value="localhost:8080"/>
 		<property name="devo-pratilipi.cdn" value="devo.pratilipi.cdssolutions.in"/>

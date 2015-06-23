@@ -66,6 +66,18 @@
 			<version>2.1.2</version>
 		</dependency>
 
+		<!-- Google Cloud Storage API -->
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-storage</artifactId>
+			<version>v1-rev35-1.19.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine.tools</groupId>
+			<artifactId>appengine-gcs-client</artifactId>
+			<version>0.4</version>
+		</dependency>
+
 	   	<!-- FreeMarker for GAE -->
 		<dependency>
 			<groupId>org.freemarker</groupId>
