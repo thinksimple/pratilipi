@@ -11,9 +11,11 @@ import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.User;
 
 public class DataAccessorWithMemcache implements DataAccessor {
 	
+	private final static String PREFIX_USER = "User-";
 	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
 	private final static String PREFIX_PAGE = "Page-";
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
@@ -31,6 +33,44 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	
+	// USER Table
+	
+	@Override
+	public User newUser() {
+		return dataAccessor.newUser();
+	}
+	
+	@Override
+	public User getUser( Long id ) {
+		User user = memcache.get( PREFIX_USER + id );
+		if( user == null ) {
+			user = dataAccessor.getUser( id );
+			if( user != null )
+				memcache.put( PREFIX_USER + id, user );
+		}
+		return user;
+	}
+	
+	@Override
+	public User getUserByEmail( String email ) {
+		User user = memcache.get( PREFIX_USER + email );
+		if( user == null ) {
+			user = dataAccessor.getUserByEmail( email );
+			if( user != null )
+				memcache.put( PREFIX_USER + email, user );
+		}
+		return user;
+	}
+	
+	@Override
+	public User createOrUpdateUser( User user ) {
+		user = dataAccessor.createOrUpdateUser( user );
+		memcache.put( PREFIX_USER + user.getId(), user );
+		memcache.put( PREFIX_USER + user.getEmail(), user );
+		return user;
+	}
+
+
 	// ACCESS_TOKEN Table
 	
 	@Override
@@ -64,6 +104,25 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		accessToken = dataAccessor.updateAccessToken( accessToken );
 		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
 		return accessToken;
+	}
+
+	
+	// AUDIT_LOG Table
+	
+	@Override
+	public AuditLog newAuditLog() {
+		return dataAccessor.newAuditLog();
+	}
+
+	@Override
+	public AuditLog createAuditLog( AuditLog auditLog ) {
+		return dataAccessor.createAuditLog( auditLog );
+	}
+	
+
+	@Override
+	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) {
+		return dataAccessor.getAuditLogList( cursorStr, resultCount );
 	}
 
 	
@@ -263,25 +322,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		author = dataAccessor.createOrUpdateAuthor( author );
 		memcache.put( PREFIX_AUTHOR + author.getId(), author );
 		return author;
-	}
-
-	
-	// AUDIT_LOG Table
-	
-	@Override
-	public AuditLog newAuditLog() {
-		return dataAccessor.newAuditLog();
-	}
-
-	@Override
-	public AuditLog createAuditLog( AuditLog auditLog ) {
-		return dataAccessor.createAuditLog( auditLog );
-	}
-	
-
-	@Override
-	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) {
-		return dataAccessor.getAuditLogList( cursorStr, resultCount );
 	}
 
 	

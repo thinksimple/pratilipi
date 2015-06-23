@@ -8,6 +8,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.data.type.AuditLog;
 
 @SuppressWarnings("serial")
@@ -21,6 +22,10 @@ public class AuditLogEntity implements AuditLog {
 	@Persistent( column = "ACCESS_ID" )
 	private String accessId;
 	
+	@Persistent( column = "ACCESS_TYPE" )
+	private AccessType accessType;
+
+	@Deprecated
 	@Persistent( column = "EVENT_ID" )
 	private String eventId;
 	
@@ -53,13 +58,13 @@ public class AuditLogEntity implements AuditLog {
 	}
 
 	@Override
-	public String getEventId() {
-		return eventId;
+	public AccessType getAccessType() {
+		return accessType == null ? AccessType.valueOf( eventId ) : accessType;
 	}
 
 	@Override
-	public void setEventId( String eventId ) {
-		this.eventId = eventId;
+	public void setAccessType( AccessType accessType ) {
+		this.accessType = accessType;
 	}
 
 	@Override

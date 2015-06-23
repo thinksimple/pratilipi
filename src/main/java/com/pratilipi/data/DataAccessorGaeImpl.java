@@ -25,11 +25,13 @@ import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
+import com.pratilipi.data.type.gae.UserEntity;
 
 public class DataAccessorGaeImpl implements DataAccessor {
 
@@ -45,6 +47,64 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	public DataAccessorGaeImpl() {
 		this.pm = pmfInstance.getPersistenceManager();
+	}
+
+	
+	// Helper Methods
+	
+	private <T> T getEntity( Class<T> clazz, Object id ) {
+		T entity = (T) pm.getObjectById( clazz, id );
+		return pm.detachCopy( entity );
+	}
+
+	private <T> T createOrUpdateEntity( T entity ) {
+		entity = pm.makePersistent( entity );
+		return pm.detachCopy( entity );
+	}
+	
+	@SuppressWarnings("unused")
+	private <T> List<T> createOrUpdateEntityList( List<T> entityList ) {
+		entityList = (List<T>) pm.makePersistentAll( entityList );
+		return (List<T>) pm.detachCopyAll( entityList );
+	}
+	
+	@SuppressWarnings("unused")
+	private <T> void deleteEntity( Class<T> clazz, Object id ) {
+		T entity = (T) pm.getObjectById( clazz, id );
+		pm.deletePersistent( entity );
+	}
+
+	
+	// USER Table
+	
+	@Override
+	public User newUser() {
+		return new UserEntity();
+	}
+	
+	@Override
+	public User getUser( Long id ) {
+		return id == null ? null : getEntity( UserEntity.class, id );
+	}
+	
+	@Override
+	public User getUserByEmail( String email ) {
+		Query query = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) )
+				.addFilter( "email", email )
+				.build();
+		
+		@SuppressWarnings("unchecked")
+		List<User> userList = (List<User>) query.execute( email );
+
+		if( userList.size() > 1 )
+			logger.log( Level.SEVERE, userList.size() + " Users found with Email Id " + email   + " ." );
+
+		return userList.size() == 0 ? null : pm.detachCopy( userList.get( 0 ) );
+	}
+	
+	@Override
+	public User createOrUpdateUser( User user ) {
+		return createOrUpdateEntity( user );
 	}
 
 	
@@ -101,30 +161,47 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	
-	// Helper Methods
+	// AUDIT_LOG Table
 	
-	private <T> T getEntity( Class<T> clazz, Object id ) {
-		T entity = (T) pm.getObjectById( clazz, id );
-		return pm.detachCopy( entity );
+	@Override
+	public AuditLog newAuditLog() {
+		return new AuditLogEntity();
 	}
 
-	private <T> T createOrUpdateEntity( T entity ) {
-		entity = pm.makePersistent( entity );
-		return pm.detachCopy( entity );
-	}
-	
-	@SuppressWarnings("unused")
-	private <T> List<T> createOrUpdateEntityList( List<T> entityList ) {
-		entityList = (List<T>) pm.makePersistentAll( entityList );
-		return (List<T>) pm.detachCopyAll( entityList );
-	}
-	
-	@SuppressWarnings("unused")
-	private <T> void deleteEntity( Class<T> clazz, Object id ) {
-		T entity = (T) pm.getObjectById( clazz, id );
-		pm.deletePersistent( entity );
+	@Override
+	public AuditLog createAuditLog( AuditLog auditLog ) {
+		( (AuditLogEntity) auditLog ).setCreationDate( new Date() );
+		return createOrUpdateEntity( auditLog );
 	}
 
+	@Override
+	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount ) {
+		
+		GaeQueryBuilder gaeQueryBuilder =
+				new GaeQueryBuilder( pm.newQuery( AuditLogEntity.class ) )
+						.addOrdering( "creationDate", false );
+		
+		if( resultCount != null )
+			gaeQueryBuilder.setRange( 0, resultCount );
+		
+		Query query = gaeQueryBuilder.build();
+
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions( extensionMap );
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<AuditLog> audtiLogList = (List<AuditLog>) query.execute();
+		Cursor cursor = JDOCursorHelper.getCursor( audtiLogList );
+		
+		return new DataListCursorTuple<>( 
+				(List<AuditLog>) pm.detachCopyAll( audtiLogList ),
+				cursor == null ? null : cursor.toWebSafeString() );
+	}
+	
 	
 	// PAGE Table
 	
@@ -276,48 +353,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 
-	// AUDIT_LOG Table
-	
-	@Override
-	public AuditLog newAuditLog() {
-		return new AuditLogEntity();
-	}
-
-	@Override
-	public AuditLog createAuditLog( AuditLog auditLog ) {
-		( (AuditLogEntity) auditLog ).setCreationDate( new Date() );
-		return createOrUpdateEntity( auditLog );
-	}
-
-	@Override
-	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount ) {
-		
-		GaeQueryBuilder gaeQueryBuilder =
-				new GaeQueryBuilder( pm.newQuery( AuditLogEntity.class ) )
-						.addOrdering( "creationDate", false );
-		
-		if( resultCount != null )
-			gaeQueryBuilder.setRange( 0, resultCount );
-		
-		Query query = gaeQueryBuilder.build();
-
-		if( cursorStr != null ) {
-			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-			Map<String, Object> extensionMap = new HashMap<String, Object>();
-			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions( extensionMap );
-		}
-		
-		@SuppressWarnings("unchecked")
-		List<AuditLog> audtiLogList = (List<AuditLog>) query.execute();
-		Cursor cursor = JDOCursorHelper.getCursor( audtiLogList );
-		
-		return new DataListCursorTuple<>( 
-				(List<AuditLog>) pm.detachCopyAll( audtiLogList ),
-				cursor == null ? null : cursor.toWebSafeString() );
-	}
-	
-	
 	// Destroy
 
 	@Override

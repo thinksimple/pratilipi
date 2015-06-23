@@ -9,13 +9,41 @@ import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
+import com.pratilipi.data.type.gae.UserEntity;
 
 public class DataAccessorMockImpl implements DataAccessor {
+
+	// USER Table
+	
+	@Override
+	public User newUser() {
+		return new UserEntity();
+	}
+	
+	@Override
+	public User getUser( Long id ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+	@Override
+	public User getUserByEmail( String email ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+	@Override
+	public User createOrUpdateUser( User user ) {
+		// TODO: Implementation
+		return user;
+	}
+
 
 	// ACCESS_TOKEN Table
 	
@@ -40,6 +68,27 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public AccessToken updateAccessToken( AccessToken accessToken ) {
 		// TODO: Implementation
 		return accessToken;
+	}
+
+	
+	// AUDIT_LOG Table
+
+	@Override
+	public AuditLog newAuditLog() {
+		return new AuditLogEntity();
+	}
+
+	@Override
+	public AuditLog createAuditLog( AuditLog auditLog ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+
+	@Override
+	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) {
+		// TODO: Implementation
+		return null;
 	}
 
 	
@@ -165,27 +214,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public Author createOrUpdateAuthor( Author author ) {
 		MockData.AUTHOR_TABLE.add( author );
 		return author;
-	}
-
-	
-	// AUDIT_LOG Table
-
-	@Override
-	public AuditLog newAuditLog() {
-		return new AuditLogEntity();
-	}
-
-	@Override
-	public AuditLog createAuditLog( AuditLog auditLog ) {
-		// TODO: Implementation
-		return null;
-	}
-	
-
-	@Override
-	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) {
-		// TODO: Implementation
-		return null;
 	}
 
 	

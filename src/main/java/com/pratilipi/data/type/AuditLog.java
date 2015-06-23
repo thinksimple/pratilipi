@@ -3,6 +3,8 @@ package com.pratilipi.data.type;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.pratilipi.common.type.AccessType;
+
 public interface AuditLog extends Serializable {
 	
 	Long getId();
@@ -11,9 +13,9 @@ public interface AuditLog extends Serializable {
 
 	void setAccessId( String accessId );
 	
-	String getEventId();
+	AccessType getAccessType();
 	
-	void setEventId( String eventId );
+	void setAccessType( AccessType accessType );
 
 	String getEventDataOld();
 	

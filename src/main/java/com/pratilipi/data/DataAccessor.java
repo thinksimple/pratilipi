@@ -8,15 +8,28 @@ import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.User;
 
 public interface DataAccessor {
 
+	// USER Table
+	User newUser();
+	User getUser( Long id );
+	User getUserByEmail( String email );
+	User createOrUpdateUser( User user );
+	
 	// ACCESS_TOKEN Table
 	AccessToken newAccessToken();
 	AccessToken getAccessToken( String accessTokenId );
 	AccessToken createAccessToken( AccessToken accessToken );
 	AccessToken updateAccessToken( AccessToken accessToken );
 
+	// AUDIT_LOG Table
+	AuditLog newAuditLog();
+	AuditLog createAuditLog( AuditLog auditLog );
+	DataListCursorTuple<AuditLog> getAuditLogList( String cursor, Integer resultCount );
+
+	
 	// PAGE Table
 	Page newPage();
 	Page getPage( Long id );
@@ -38,11 +51,7 @@ public interface DataAccessor {
 	List<Author> getAuthorList( List<Long> idList );
 	Author createOrUpdateAuthor( Author author );
 
-	// AUDIT_LOG Table
-	AuditLog newAuditLog();
-	AuditLog createAuditLog( AuditLog auditLog );
-	DataListCursorTuple<AuditLog> getAuditLogList( String cursor, Integer resultCount );
-
+	
 	// Destroy
 	void destroy();
 	
