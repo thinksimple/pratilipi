@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
-import com.google.appengine.repackaged.org.apache.commons.fileupload.FileItemIterator;
-import com.google.appengine.repackaged.org.apache.commons.fileupload.FileItemStream;
-import com.google.appengine.repackaged.org.apache.commons.fileupload.FileUploadException;
-import com.google.appengine.repackaged.org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
