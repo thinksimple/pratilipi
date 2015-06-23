@@ -131,9 +131,8 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				? "docType:Pratilipi"
 				: "docType:Pratilipi-" + pratilipiFilter.getType().getName();
 
-		if( pratilipiFilter.getLanguageCode() != null )
-			searchQuery = searchQuery + " AND language:Tamil"; // TODO: Remove this ASAP
-//			searchQuery = searchQuery + " AND language:" + pratilipiFilter.getLanguageCode();
+		if( pratilipiFilter.getLanguage() != null )
+			searchQuery = searchQuery + " AND language:" + pratilipiFilter.getLanguage().getNameEn();
 
 		if( pratilipiFilter.getAuthorId() != null )
 			searchQuery = searchQuery + " AND author:" + pratilipiFilter.getAuthorId();
@@ -188,7 +187,6 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitleEn() ) )
 
 				 // 4x weightage to Language
-				.addField( Field.newBuilder().setName( "language" ).setAtom( pratilipiData.getLanguage().getCode() ) )
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguage().getName() ) )
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguage().getName() ) )
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguage().getName() ) )

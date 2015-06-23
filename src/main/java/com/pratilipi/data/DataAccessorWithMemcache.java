@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
@@ -230,6 +231,20 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		
 		
 		return pratilipiList;
+	}
+	
+	@Override
+	public DataListCursorTuple<Long> getPratilipiIdList(
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
+		
+		return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, resultCount );
+	}
+	
+	@Override
+	public DataListCursorTuple<Pratilipi> getPratilipiList(
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
+
+		return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
 	}
 	
 	@Override

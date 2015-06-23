@@ -2,12 +2,13 @@ package com.pratilipi.common.util;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
 public class PratilipiFilter {
 	
-	private String langCode;
+	private Language language;
 
 	private Long authorId;
 
@@ -20,12 +21,12 @@ public class PratilipiFilter {
 	private Boolean orderByReadCount;
 	
 	
-	public String getLanguageCode() {
-		return langCode;
+	public Language getLanguage() {
+		return language;
 	}
 
-	public void setLanguageCode( String langCode ) {
-		this.langCode = langCode;
+	public void setLanguage( Language language ) {
+		this.language = language;
 	}
 
 	public Long getAuthorId() {

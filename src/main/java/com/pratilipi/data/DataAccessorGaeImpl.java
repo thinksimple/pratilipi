@@ -20,6 +20,8 @@ import javax.jdo.Transaction;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
@@ -287,6 +289,67 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		for( Long id : idList )
 			pratilipiList.add( getPratilipi( id ) );
 		return pratilipiList;
+	}
+	
+	@Override
+	public DataListCursorTuple<Long> getPratilipiIdList(
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
+		
+		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, true );
+	}
+	
+	@Override
+	public DataListCursorTuple<Pratilipi> getPratilipiList(
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
+		
+		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, false );
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> DataListCursorTuple<T> getPratilipiList(
+			PratilipiFilter pratilipiFilter, String cursorStr,
+			Integer resultCount, boolean idOnly ) {
+		
+		GaeQueryBuilder gaeQueryBuilder =
+				new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
+
+		if( pratilipiFilter.getType() != null )
+			gaeQueryBuilder.addFilter( "type", pratilipiFilter.getType() );
+		if( pratilipiFilter.getLanguage() != null )
+			gaeQueryBuilder.addFilter( "language", pratilipiFilter.getLanguage() );
+		if( pratilipiFilter.getAuthorId() != null )
+			gaeQueryBuilder.addFilter( "authorId", pratilipiFilter.getAuthorId() );
+		if( pratilipiFilter.getState() != null )
+			gaeQueryBuilder.addFilter( "state", pratilipiFilter.getState() );
+		if( pratilipiFilter.getNextProcessDateEnd() != null ) {
+			gaeQueryBuilder.addFilter( "nextProcessDate", pratilipiFilter.getNextProcessDateEnd(), Operator.LESS_THAN_OR_EQUAL );
+			gaeQueryBuilder.addOrdering( "nextProcessDate", true );
+		}
+		
+		if( pratilipiFilter.getOrderByReadCount() != null )
+			gaeQueryBuilder.addOrdering( "readCount", pratilipiFilter.getOrderByReadCount() );
+
+		if( resultCount != null )
+			gaeQueryBuilder.setRange( 0, resultCount );
+		
+		Query query = gaeQueryBuilder.build();
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions( extensionMap );
+		}
+
+		if( idOnly )
+			query.setResult( "id" );
+		
+		List<T> pratilipiEntityList =
+				(List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
+		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
+		
+		return new DataListCursorTuple<T>(
+				idOnly ? pratilipiEntityList : (List<T>) pm.detachCopyAll( pratilipiEntityList ),
+				cursor == null ? null : cursor.toWebSafeString() );
 	}
 	
 	@Override

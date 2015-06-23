@@ -31,12 +31,14 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "LANGUAGE" )
 	private Language language;
 
+	@Deprecated
 	@Persistent( column = "LANGUAGE_ID" )
 	private Long languageId;
 
 	@Persistent( column = "AUTHOR_ID" )
 	private Long authorId;
 	
+	@Deprecated
 	@Persistent( column = "PUBLISHER_ID" )
 	private Long publisherId;
 
@@ -85,6 +87,7 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "RATING_COUNT" )
 	private Long ratingCount;
 	
+	@Deprecated
 	@Persistent( column = "STAR_COUNT" )
 	private Long starCount;
 

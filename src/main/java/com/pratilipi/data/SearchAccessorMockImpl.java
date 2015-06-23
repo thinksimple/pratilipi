@@ -27,8 +27,8 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 
 			PratilipiData pratilipiData = (PratilipiData) object;
 			
-			if( pratilipiFilter.getLanguageCode() != null
-					&& !pratilipiFilter.getLanguageCode().equals( pratilipiData.getLanguage().getCode() ) )
+			if( pratilipiFilter.getLanguage() != null
+					&& !pratilipiFilter.getLanguage().equals( pratilipiData.getLanguage() ) )
 				continue;
 			
 			if( pratilipiFilter.getAuthorId() != null

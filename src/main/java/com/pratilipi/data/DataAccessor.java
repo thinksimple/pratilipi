@@ -3,6 +3,7 @@ package com.pratilipi.data;
 import java.util.List;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
@@ -41,6 +42,8 @@ public interface DataAccessor {
 	Pratilipi newPratilipi();
 	Pratilipi getPratilipi( Long id );
 	List<Pratilipi> getPratilipiList( List<Long> idList );
+	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
+	DataListCursorTuple<Pratilipi> getPratilipiList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
 	
 	// AUTHOR Table
