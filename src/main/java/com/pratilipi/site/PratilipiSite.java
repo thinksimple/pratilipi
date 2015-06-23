@@ -173,7 +173,7 @@ public class PratilipiSite extends HttpServlet {
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setType( type );
-		pratilipiFilter.setLanguageCode( lang == null ? null : lang.getCode() );
+		pratilipiFilter.setLanguage( lang );
 		
 		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
 				searchAccessor.searchPratilipi( pratilipiFilter, null, 20 );
