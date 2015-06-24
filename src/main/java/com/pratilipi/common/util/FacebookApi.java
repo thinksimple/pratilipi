@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
@@ -30,23 +28,23 @@ public class FacebookApi {
 	private static final String GRAPH_API_URL = "https://graph.facebook.com/v2.2";
 	
 	
-	public static String getAppId( HttpServletRequest request ) {
+	public static String getAppId() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Map<String, String> facebookCredentials = dataAccessor.getAppProperty( APP_PROPERTY_ID ).getValue();
 		return facebookCredentials.get( "appId" );
 	}
 	
-	public static String getAccessToken( HttpServletRequest request ) {
+	public static String getAccessToken() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Map<String, String> facebookCredentials = dataAccessor.getAppProperty( APP_PROPERTY_ID ).getValue();
 		return facebookCredentials.get( "appId" ) + "|" + facebookCredentials.get( "appSecret" );
 	}
 	
-	public static long getUrlShareCount( String url, HttpServletRequest request ) throws UnexpectedServerException {
+	public static long getUrlShareCount( String url ) throws UnexpectedServerException {
 		try {
 			String requestUrl = GRAPH_API_URL
 					+ "?id=" + URLEncoder.encode( url, "UTF-8" )
-					+ "&access_token=" + getAccessToken( request );
+					+ "&access_token=" + getAccessToken();
 
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
 			logger.log( Level.INFO, "Response Payload: " + responsePayload );
