@@ -53,15 +53,15 @@
 			  border-width: 1px;
 		} 
 		.carousel-control {
-			  padding-top:10%;
-			  width:5%;
+			  padding-top: 10%;
+			  width: 1%;
 		}
 		.carousel-inner img {
 		      height: 100px;
 		      max-height: 100px;
-		      width: auto;
+		      width: 70;
 		}
-		.carousel-inner {
+	   .carousel-inner {
 		      max-height: 110px;
 		      
 		}
@@ -135,7 +135,8 @@
 			                    <div class="item active">
 			                        <div class="row">
 			                            <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image"  class="img-responsive"></a>
-			                            </div>
+			                            <h3>Book Title</h3>
+			                           </div>
 			                            <div class="col-sm-2"><a href="#x"><img src="/stylesheets/img.jpg" alt="Image" class="img-responsive"></a>
 			                            </div>
 			                            <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
@@ -153,7 +154,7 @@
 			                    <!--/item-->
 			                    <div class="item">
 			                        <div class="row">
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="/stylesheets/img3.jpg" alt="Image" class="img-responsive"></a>
+			                            <div class="col-sm-2"><a href="#x"><img src="/stylesheets/img3.jpg" alt="Image" class="img-responsive"></a>
 			                            </div>
 			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
 			                            </div>
@@ -205,6 +206,43 @@
 			</div>
 			
 		</div>
+		
+			<div >
+						
+						<div class="bs-example">
+						    <div class="panel-group" id="accordion">
+						        <div class="panel panel-default">
+						            <div class="panel-heading">
+						                <h4 class="panel-title">
+						                	<a href="{{ pratilipi.readerPageUrl }}" class="btn btn-default">Reviews</a>
+						                    <button type="button" class="btn btn-info" data-toggle="collapse" data-parent="#accordion" data-target="#collapse" onclick="window.location.href='#scroll'">Write a Review</button>
+						                	
+						                </h4>
+						            </div>
+						            <div id="collapse" class="panel-collapse collapse">
+						                <div class="panel-body">
+											<h4>Review Title</h4>
+											 <textarea rows="1" cols="50" placeholder="e.g., Great Story!"></textarea>
+											<div>
+												<span><big>Your Review &nbsp; &nbsp; &nbsp; &emsp; </big></span>
+												<span id="mandatory">(at least 140 characters)</span>
+												</div>	
+											<textarea name="textarea" id="textarea" rows="10" cols="50" style="width: 600px;"placeholder="Share your thoughts!What made this work interesting?What made it inspiring?What did you lean from it?You are helping others make a better choice!"></textarea>
+											<div class="result">0 chars</div>
+											
+											<div style= "padding:10px;">
+												<button type="button" class="btn btn-success">Submit</button>
+												<button type="button" class="btn btn-default">Cancel</button>
+											</div>
+									   </div>
+						            </div>
+									
+						        </div>
+						       
+						    </div>
+						</div>						
+					</div>
+					
 	</template>
 	
 
@@ -264,9 +302,29 @@
 			        this.varx = "!Rate This";
 			},
 			
+			
+			
 			ready: function() {
 				jQuery( '.summary' ).html( this.pratilipi.summary );
 				this.showSummarySnippet();
+				
+				
+				$('textarea').on('keyup',function(){
+					 $(window).scrollTop($("#scroll").offset().top);
+					    var charCount = $(this).val().replace(/\s/g, '').length;
+						$(".result").text(charCount + " chars");
+							
+						// If the value is less than 140, add a white background
+						if ((charCount) < 140) {
+							$("#mandatory").css("background", "white");
+						}
+
+						// Else if the value is equal to 140, add a green background
+						else if ((charCount) >= 140) {
+							$("#mandatory").css("background", "green");
+						}
+						
+				});
 			}
 			
 		});
