@@ -36,7 +36,7 @@ public class PratilipiProcessApi extends GenericApi {
 	@Get
 	public GenericResponse getPratilipiProcess( GenericRequest request ) {
 
-		if( ! SystemProperty.get( "cron" ).equals( "stop" ) )
+		if( SystemProperty.get( "cron" ).equals( "stop" ) )
 			return new GenericResponse();
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
