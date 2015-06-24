@@ -1,4 +1,4 @@
-package com.pratilipi.pagecontent.pratilipi.api;
+package com.pratilipi.api.pratilipi;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,43 +6,42 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.claymus.api.GenericApi;
-import com.claymus.api.annotation.Bind;
-import com.claymus.api.annotation.Get;
-import com.claymus.api.annotation.Post;
-import com.claymus.api.shared.GenericRequest;
-import com.claymus.api.shared.GenericResponse;
-import com.claymus.commons.server.ClaymusHelper;
-import com.claymus.commons.shared.exception.InvalidArgumentException;
-import com.claymus.commons.shared.exception.UnexpectedServerException;
-import com.claymus.taskqueue.Task;
-import com.pratilipi.commons.shared.PratilipiFilter;
-import com.pratilipi.commons.shared.PratilipiType;
-import com.pratilipi.data.access.DataAccessor;
-import com.pratilipi.data.access.DataAccessorFactory;
-import com.pratilipi.data.transfer.Pratilipi;
-import com.pratilipi.pagecontent.pratilipi.PratilipiContentHelper;
-import com.pratilipi.pagecontent.pratilipi.api.shared.PostPratilipiProcessRequest;
+import com.pratilipi.api.GenericApi;
+import com.pratilipi.api.annotation.Bind;
+import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.pratilipi.shared.PostPratilipiProcessRequest;
+import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.PratilipiType;
+import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.common.util.SystemProperty;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/process" )
 public class PratilipiProcessApi extends GenericApi {
 
-	private static final Logger logger =
-			Logger.getLogger( PratilipiProcessApi.class.getName() );
+	private static final Logger logger = Logger.getGlobal();
 	
 	
 	@Get
 	public GenericResponse getPratilipiProcess( GenericRequest request ) {
 
-		if( ! ClaymusHelper.getSystemProperty( "domain" ).equals( "www.pratilipi.com" ) )
+		if( ! SystemProperty.get( "cron" ).equals( "stop" ) )
 			return new GenericResponse();
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setNextProcessDateEnd( new Date() );
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, 100 ).getDataList();
 		
 		List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
@@ -64,23 +63,23 @@ public class PratilipiProcessApi extends GenericApi {
 	public GenericResponse postPratilipiProcess( PostPratilipiProcessRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor( this.getThreadLocalRequest() );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 		
 		if( request.processData() ) {
-			PratilipiContentHelper.updatePratilipiSearchIndex( request.getPratilipiId(), null, this.getThreadLocalRequest() );
-			PratilipiContentHelper.createOrUpdatePratilipiPageUrl( request.getPratilipiId(), this.getThreadLocalRequest() );
+			PratilipiDataUtil.updatePratilipiSearchIndex( request.getPratilipiId(), null );
+			PratilipiDataUtil.createOrUpdatePratilipiPageUrl( request.getPratilipiId() );
 		}
 		
 		if( request.processCover() ) { }
 		
 		if( request.processContent() ) {
 			if( pratilipi.getType() == PratilipiType.BOOK || pratilipi.getType() == PratilipiType.MAGAZINE )
-				PratilipiContentHelper.updatePratilipiIndex( request.getPratilipiId(), this.getThreadLocalRequest() );
+				PratilipiDataUtil.updatePratilipiIndex( request.getPratilipiId() );
 		}
 		
 		if( request.updateStats() ) {
-			boolean changed = PratilipiContentHelper.updatePratilipiStats( request.getPratilipiId(), this.getThreadLocalRequest() );
+			boolean changed = PratilipiDataUtil.updatePratilipiStats( request.getPratilipiId() );
 			if( changed ) {
 				pratilipi.setLastProcessDate( new Date() );
 				pratilipi.setNextProcessDate( new Date( new Date().getTime() + 3600000 ) ); // Now + 1 Hr
@@ -95,7 +94,7 @@ public class PratilipiProcessApi extends GenericApi {
 			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 
 			if( changed )
-				PratilipiContentHelper.updatePratilipiSearchIndex( request.getPratilipiId(), null, this.getThreadLocalRequest() );
+				PratilipiDataUtil.updatePratilipiSearchIndex( request.getPratilipiId(), null );
 		}
 		
 		return new GenericResponse();

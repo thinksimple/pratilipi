@@ -2,7 +2,7 @@
 
   <cron>
     <url>/pratilipi/process?cron</url>
-    <target>api</target>
+    <target>worker</target>
     <schedule>every 5 minutes from 8:00 to 20:00</schedule>
     <timezone>Asia/Calcutta</timezone>
   </cron>
