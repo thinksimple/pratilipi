@@ -1,0 +1,24 @@
+<cronentries>
+
+  <cron>
+    <url>/init?cron</url>
+    <target>worker</target>
+    <schedule>every 1 hours from 8:00 to 20:00</schedule>
+    <timezone>Asia/Calcutta</timezone>
+  </cron>
+
+  <cron>
+    <url>/pratilipi/process?cron</url>
+    <target>api</target>
+    <schedule>every 15 minutes from 8:00 to 20:00</schedule>
+    <timezone>Asia/Calcutta</timezone>
+  </cron>
+
+  <cron>
+    <url>/author/process?cron</url>
+    <target>api</target>
+    <schedule>every 15 minutes from 8:00 to 20:00</schedule>
+    <timezone>Asia/Calcutta</timezone>
+  </cron>
+
+</cronentries>
