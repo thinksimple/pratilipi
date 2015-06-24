@@ -8,6 +8,7 @@ import java.util.Map;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
@@ -16,6 +17,7 @@ import com.pratilipi.data.type.User;
 
 public class DataAccessorWithMemcache implements DataAccessor {
 	
+	private final static String PREFIX_APP_PROPERTY = "AppProperty-";
 	private final static String PREFIX_USER = "User-";
 	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
 	private final static String PREFIX_PAGE = "Page-";
@@ -34,6 +36,32 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	
+	// APP_PROPERTY Table
+	
+	@Override
+	public AppProperty newAppProperty( String id ) {
+		return dataAccessor.newAppProperty( id );
+	}
+
+	@Override
+	public AppProperty getAppProperty( String id ) {
+		AppProperty appProperty = memcache.get( PREFIX_APP_PROPERTY + id );
+		if( appProperty == null ) {
+			appProperty = dataAccessor.getAppProperty( id );
+			if( appProperty != null )
+				memcache.put( PREFIX_APP_PROPERTY + id, appProperty );
+		}
+		return appProperty;
+	}
+
+	@Override
+	public AppProperty createOrUpdateAppProperty( AppProperty appProperty ) {
+		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
+		memcache.put( PREFIX_APP_PROPERTY + appProperty.getId(), appProperty );
+		return appProperty;
+	}
+
+
 	// USER Table
 	
 	@Override

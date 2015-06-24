@@ -23,12 +23,14 @@ import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
+import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
@@ -76,6 +78,33 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		pm.deletePersistent( entity );
 	}
 
+	
+	// APP_PROPERTY Table
+	
+	@Override
+	public AppProperty newAppProperty( String id ) {
+		AppPropertyEntity appProperty = new AppPropertyEntity();
+		appProperty.setId( id );
+		return appProperty;
+	}
+
+	@Override
+	public AppProperty getAppProperty( String id ) {
+		if( id == null )
+			return null;
+		
+		try{
+			return getEntity( AppPropertyEntity.class, id );
+		} catch( JDOObjectNotFoundException e ) {
+			return null;
+		}
+	}
+	
+	@Override
+	public AppProperty createOrUpdateAppProperty( AppProperty appProperty ) {
+		return createOrUpdateEntity( appProperty );
+	}
+	
 	
 	// USER Table
 	

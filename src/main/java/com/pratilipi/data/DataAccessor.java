@@ -5,6 +5,7 @@ import java.util.List;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
@@ -13,12 +14,17 @@ import com.pratilipi.data.type.User;
 
 public interface DataAccessor {
 
+	// APP_PROPERTY Table
+	AppProperty newAppProperty( String id );
+	AppProperty getAppProperty( String id );
+	AppProperty createOrUpdateAppProperty( AppProperty appProperty );
+
 	// USER Table
 	User newUser();
 	User getUser( Long id );
 	User getUserByEmail( String email );
 	User createOrUpdateUser( User user );
-	
+
 	// ACCESS_TOKEN Table
 	AccessToken newAccessToken();
 	AccessToken getAccessToken( String accessTokenId );

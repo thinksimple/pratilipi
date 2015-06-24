@@ -6,12 +6,14 @@ import java.util.List;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
+import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
@@ -19,6 +21,28 @@ import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 
 public class DataAccessorMockImpl implements DataAccessor {
+
+	// APP_PROPERTY Table
+	
+	@Override
+	public AppProperty newAppProperty( String id ) {
+		AppPropertyEntity appProperty = new AppPropertyEntity();
+		appProperty.setId( id );
+		return appProperty;
+	}
+
+	@Override
+	public AppProperty getAppProperty( String id ) {
+		// TODO: Implementation
+		return null;
+	}
+
+	@Override
+	public AppProperty createOrUpdateAppProperty( AppProperty appProperty ) {
+		// TODO: Implementation
+		return null;
+	}
+
 
 	// USER Table
 	
