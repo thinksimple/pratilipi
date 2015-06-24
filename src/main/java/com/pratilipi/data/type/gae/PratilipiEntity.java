@@ -159,6 +159,8 @@ public class PratilipiEntity implements Pratilipi {
 				language = Language.GUJARATI;
 			else if( languageId == 6319546696728576L || languageId == 5719238044024832L )
 				language = Language.TAMIL;
+			else if( languageId == 5173513199550464L )
+				return Language.MARATHI;
 		}
 		return language;
 	}
