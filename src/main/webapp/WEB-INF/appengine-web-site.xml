@@ -34,6 +34,11 @@
 		<property name="devo-pratilipi.cron" value="stop"/>
 		<property name="prod-pratilipi.cron" value="run"/>
 
+		<!-- Configure Web Domain -->
+		<property name="localhost.domain" value="localhost"/>
+		<property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>
+		<property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
+
 		<!-- Configure CDN -->
 		<property name="localhost.cdn" value="localhost:8080"/>
 		<property name="devo-pratilipi.cdn" value="devo.pratilipi.cdssolutions.in"/>
