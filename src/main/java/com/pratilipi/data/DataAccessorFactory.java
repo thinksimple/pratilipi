@@ -1,13 +1,13 @@
 package com.pratilipi.data;
 
-import com.pratilipi.common.util.AppProperty;
+import com.pratilipi.common.util.SystemProperty;
 
 public class DataAccessorFactory {
 
-	private static final String datasource = AppProperty.get( "datasource" );
+	private static final String datasource = SystemProperty.get( "datasource" );
 	private static final String indexName = "GLOBAL_INDEX";
-	private static final String gcsBucket = AppProperty.get( "blobservice.gcs.bucket" );
-	private static final String gcsBucketPublic = AppProperty.get( "blobservice.gcs.bucket.public" );
+	private static final String gcsBucket = SystemProperty.get( "blobservice.gcs.bucket" );
+	private static final String gcsBucketPublic = SystemProperty.get( "blobservice.gcs.bucket.public" );
 
 
 	private static final Memcache cacheL1 = new MemcacheClaymusImpl();

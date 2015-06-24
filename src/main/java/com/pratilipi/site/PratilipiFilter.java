@@ -14,7 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pratilipi.common.util.AppProperty;
+import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessorFactory;
 
 public class PratilipiFilter implements Filter {
@@ -92,7 +92,7 @@ public class PratilipiFilter implements Filter {
 		} else if( oldPratilipiCoverUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi cover url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", requestUri
-					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + AppProperty.get( "cdn" ) + "/" )
+					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + SystemProperty.get( "cdn" ) + "/" )
 					.replaceFirst( "book|poem|story|article", "pratilipi" )
 					.replaceFirst( "original|300", "150" ) );
 
@@ -100,7 +100,7 @@ public class PratilipiFilter implements Filter {
 		} else if( requestUri.startsWith( "/resource.author-image/original/" ) ) { // Redirecting to new Author image url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", requestUri
-					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + AppProperty.get( "cdn" ) + "/" )
+					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + SystemProperty.get( "cdn" ) + "/" )
 					.replaceFirst( "original", "150" ) );
 		
 			

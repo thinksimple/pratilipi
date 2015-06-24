@@ -1,7 +1,7 @@
 package com.pratilipi.data.util;
 
 import com.pratilipi.common.type.PageType;
-import com.pratilipi.common.util.AppProperty;
+import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.AuthorData;
@@ -12,11 +12,11 @@ public class AuthorDataUtil {
 	
 	public static String creatAuthorImageUrl( Author author ) {
 		if( author.hasCustomCover() ) {
-			String domain = "//" + author.getId() % 10 + "." + AppProperty.get( "cdn" );
+			String domain = "//" + author.getId() % 10 + "." + SystemProperty.get( "cdn" );
 			String uri = "/author-image/150/" + author.getId() + "?" + author.getLastUpdated().getTime();
 			return domain + uri;
 		} else {
-			String domain = "//10." + AppProperty.get( "cdn" );
+			String domain = "//10." + SystemProperty.get( "cdn" );
 			String uri = "/author-image/150/author";
 			return domain + uri;
 		}

@@ -2,7 +2,7 @@ package com.pratilipi.common.util;
 
 import com.google.apphosting.api.ApiProxy;
 
-public class AppProperty {
+public class SystemProperty {
 
 	public static final String get( String propertyName ) {
 		String appId = ApiProxy.getCurrentEnvironment().getAppId();

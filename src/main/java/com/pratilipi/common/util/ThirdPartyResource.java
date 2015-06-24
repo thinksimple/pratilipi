@@ -17,7 +17,7 @@ public enum ThirdPartyResource {
 	
 	
 	private ThirdPartyResource( String tag ) {
-		this.tag = tag.replace( "__DOMAIN__", AppProperty.get( "cdn.3p" ) );
+		this.tag = tag.replace( "__DOMAIN__", SystemProperty.get( "cdn.3p" ) );
 	}
 	
 	public String getTag() {
