@@ -43,7 +43,8 @@ import com.pratilipi.site.page.data.Home;
 @SuppressWarnings("serial")
 public class PratilipiSite extends HttpServlet {
 	
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( PratilipiSite.class.getName() );
 	private static final Language defaulLang = Language.ENGLISH;
 	private static final String templateFilePrefix = "com/pratilipi/site/page/";
 	private static final String dataFilePrefix = "page/data/";

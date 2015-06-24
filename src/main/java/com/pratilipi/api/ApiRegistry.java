@@ -11,7 +11,8 @@ import com.pratilipi.api.annotation.Bind;
 
 public final class ApiRegistry {
 
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( ApiRegistry.class.getName() );
 
 	private static final Map<String, GenericApi> uriServletMap = new HashMap<>();
 

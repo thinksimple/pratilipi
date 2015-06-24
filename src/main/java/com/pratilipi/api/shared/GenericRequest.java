@@ -13,7 +13,8 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 
 public class GenericRequest {
 
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( GenericRequest.class.getName() );
 
 	
 	protected static final String REGEX_NON_EMPTY_STRING = "^(\\s*\\S+\\s*)+$";

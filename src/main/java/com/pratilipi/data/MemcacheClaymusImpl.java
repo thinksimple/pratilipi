@@ -11,7 +11,8 @@ import java.util.logging.Logger;
 
 public class MemcacheClaymusImpl implements Memcache {
 
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( MemcacheClaymusImpl.class.getName() );
 
 	private final int cacheSize = 256;
 	@SuppressWarnings("serial")

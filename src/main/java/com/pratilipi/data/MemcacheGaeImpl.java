@@ -17,7 +17,8 @@ import com.google.appengine.api.memcache.stdimpl.GCacheFactory;
 
 public class MemcacheGaeImpl implements Memcache {
 
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( MemcacheGaeImpl.class.getName() );
 
 
 	@SuppressWarnings("unchecked")

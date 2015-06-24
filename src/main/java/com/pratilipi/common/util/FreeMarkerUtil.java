@@ -19,7 +19,8 @@ import freemarker.template.TemplateExceptionHandler;
 
 public class FreeMarkerUtil {
 
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( FreeMarkerUtil.class.getName() );
 
 	private static Configuration cfg;
 

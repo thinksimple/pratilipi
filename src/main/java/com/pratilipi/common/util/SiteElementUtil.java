@@ -14,7 +14,6 @@ import org.apache.commons.io.LineIterator;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.pratilipi.common.exception.UnexpectedServerException;
 
-
 public class SiteElementUtil {
 
 	public static final String defaultLang = "en";

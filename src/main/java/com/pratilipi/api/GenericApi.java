@@ -42,7 +42,8 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 @SuppressWarnings("serial")
 public abstract class GenericApi extends HttpServlet {
 
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( GenericApi.class.getName() );
 
 	protected static final Gson gson = new GsonBuilder().create();
 
@@ -185,7 +186,7 @@ public abstract class GenericApi extends HttpServlet {
 				return te;
 			
 			} else {
-				logger.log( Level.SEVERE, "Failed to execute API.", e );
+				logger.log( Level.SEVERE, "Failed to execute API.", te );
 				return new UnexpectedServerException();
 			}
 			
@@ -196,8 +197,8 @@ public abstract class GenericApi extends HttpServlet {
 		
 	}
 	
-	private void dispatchApiResponse( Object apiResponse,
-			HttpServletRequest request, HttpServletResponse response ) throws IOException {
+	private void dispatchApiResponse( Object apiResponse, HttpServletRequest request,
+			HttpServletResponse response ) throws IOException {
 		
 		if( apiResponse instanceof GenericFileDownloadResponse ) {
 			GenericFileDownloadResponse gfdResponse = (GenericFileDownloadResponse) apiResponse;

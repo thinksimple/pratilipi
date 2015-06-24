@@ -29,7 +29,8 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @Bind( uri = "/pratilipi/process" )
 public class PratilipiProcessApi extends GenericApi {
 
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( PratilipiProcessApi.class.getName() );
 	
 	
 	@Get

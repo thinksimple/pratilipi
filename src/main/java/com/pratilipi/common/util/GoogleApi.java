@@ -15,7 +15,8 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 
 public class GoogleApi {
 
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( GoogleApi.class.getName() );
 
 
 	private static HttpRequestInitializer getCredential( Collection<String> scopes ) {

@@ -28,7 +28,8 @@ import com.pratilipi.data.client.PratilipiData;
 
 public class SearchAccessorGaeImpl implements SearchAccessor {
 
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( SearchAccessorGaeImpl.class.getName() );
 
 	private static final SearchService searchService =
 			SearchServiceFactory.getSearchService();

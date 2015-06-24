@@ -18,7 +18,8 @@ import com.pratilipi.data.DataAccessorFactory;
 
 public class FacebookApi {
 
-	private static final Logger logger = Logger.getLogger( FacebookApi.class.getName() );
+	private static final Logger logger =
+			Logger.getLogger( FacebookApi.class.getName() );
 
 	
 	private static final Gson gson = new GsonBuilder().create();

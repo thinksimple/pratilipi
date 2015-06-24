@@ -39,7 +39,8 @@ import com.pratilipi.data.type.gae.UserEntity;
 
 public class DataAccessorGaeImpl implements DataAccessor {
 
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
 
 	private static final PersistenceManagerFactory pmfInstance =
 			JDOHelper.getPersistenceManagerFactory( "transactions-optional" );

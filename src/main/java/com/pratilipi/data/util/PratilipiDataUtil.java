@@ -46,7 +46,8 @@ import com.pratilipi.site.AccessTokenFilter;
 
 public class PratilipiDataUtil {
 	
-	private static final Logger logger = Logger.getGlobal();
+	private static final Logger logger =
+			Logger.getLogger( PratilipiDataUtil.class.getName() );
 	private static final Gson gson = new GsonBuilder().create();
 
 	
