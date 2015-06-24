@@ -19,7 +19,7 @@ public class GenericService extends HttpServlet {
 			HttpServletResponse response ) throws ServletException, IOException {
 
 		String requestUri = request.getRequestURI();
-				
+		
 		ServletConfig servletConfig = getServletConfig();
 		String prefix = servletConfig.getInitParameter( "Prefix" );
 		if( prefix != null && !prefix.isEmpty() )
