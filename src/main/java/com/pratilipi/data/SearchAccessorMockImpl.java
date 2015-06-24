@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 
 public class SearchAccessorMockImpl implements SearchAccessor {
@@ -14,7 +15,7 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 	public SearchAccessorMockImpl( String indexName ) {}
 
 
-	// PRATILIPI Table
+	// PRATILIPI Data
 	
 	@Override
 	public DataListCursorTuple<Long> searchPratilipi( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
@@ -65,6 +66,14 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 				}
 			}
 		}
+	}
+
+	
+	// AUTHOR Data
+	
+	@Override
+	public void indexAuthorData( AuthorData authorData ) throws UnexpectedServerException {
+		// TODO: Implementation
 	}
 
 }

@@ -24,6 +24,7 @@ import com.google.appengine.api.search.SortOptions;
 import com.google.appengine.api.search.StatusCode;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 
 public class SearchAccessorGaeImpl implements SearchAccessor {
@@ -103,7 +104,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	}
 
 	
-	// PRATILIPI Table
+	// PRATILIPI Data
 	
 	@Override
 	public DataListCursorTuple<Long> searchPratilipi( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
@@ -223,6 +224,48 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthor().getFullNameEn() ) );
 
 		return docBuilder.build();
+	}
+
+	
+	// AUTHOR Data
+	
+	@Override
+	public void indexAuthorData( AuthorData authorData ) throws UnexpectedServerException {
+		indexDocument( createDocument( authorData ) );
+	}
+
+	private Document createDocument( AuthorData authorData ) {
+		
+		String docId = "AuthorData:" + authorData.getId();
+		
+		return Document.newBuilder()
+				.setId( docId )
+				.addField( Field.newBuilder().setName( "docId" ).setAtom( authorData.getId().toString() ) )
+				.addField( Field.newBuilder().setName( "docType" ).setAtom( "Author" ) )
+
+				 // 4x weightage to Language
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+				
+				// 3x weightage to Author Name
+				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
+				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
+				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
+				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
+				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
+				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
+
+				.addField( Field.newBuilder().setName( "email" ).setText( authorData.getEmail() ) )
+
+				.addField( Field.newBuilder().setName( "summary" ).setHTML( authorData.getSummary() ) )
+
+				.build();
 	}
 	
 }

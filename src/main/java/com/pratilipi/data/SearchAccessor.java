@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 
 public interface SearchAccessor {
@@ -15,5 +16,7 @@ public interface SearchAccessor {
 	void indexPratilipiDataList( List<PratilipiData> pratilipiDataList ) throws UnexpectedServerException;
 
 	void deletePratilipiDataIndex( Long pratilipiId );
-
+	
+	void indexAuthorData( AuthorData authorData ) throws UnexpectedServerException;
+	
 }
