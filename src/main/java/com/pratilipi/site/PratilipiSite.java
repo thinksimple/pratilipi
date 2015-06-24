@@ -112,6 +112,7 @@ public class PratilipiSite extends HttpServlet {
 			} else {
 				dataModel = new HashMap<String, Object>();
 				templateName = templateFilePrefix + "error/PageNotFound.ftl";
+				response.setStatus( HttpServletResponse.SC_NOT_FOUND );
 
 			}
 
