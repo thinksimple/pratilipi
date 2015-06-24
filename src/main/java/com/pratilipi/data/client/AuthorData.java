@@ -7,13 +7,13 @@ public class AuthorData {
 	private Long id;
 
 	private String firstName;
-	private boolean hasFirstName;
+	private transient boolean hasFirstName;
 	
 	private String lastName;
-	private boolean hasLastName;
+	private transient boolean hasLastName;
 	
 	private String penName;
-	private boolean hasPenName;
+	private transient boolean hasPenName;
 
 	private String name;
 
@@ -21,13 +21,13 @@ public class AuthorData {
 
 	
 	private String firstNameEn;
-	private boolean hasFirstNameEn;
+	private transient boolean hasFirstNameEn;
 	
 	private String lastNameEn;
-	private boolean hasLastNameEn;
+	private transient boolean hasLastNameEn;
 	
 	private String penNameEn;
-	private boolean hasPenNameEn;
+	private transient boolean hasPenNameEn;
 	
 	private String nameEn;
 
@@ -35,13 +35,13 @@ public class AuthorData {
 
 
 	private String email;
-	private boolean hasEmail;
+	private transient boolean hasEmail;
 
 	private String langCode;
-	private boolean hasLangCode;
+	private transient boolean hasLangCode;
 	
 	private String summary;
-	private boolean hasSummary;
+	private transient boolean hasSummary;
 	
 
 	private String pageUrl;

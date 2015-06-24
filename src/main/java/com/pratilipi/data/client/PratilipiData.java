@@ -11,24 +11,24 @@ public class PratilipiData {
 	private Long id;
 	
 	private String title;
-	private boolean hasTitle;
+	private transient boolean hasTitle;
 	
 	private String titleEn;
-	private boolean hasTitleEn;
+	private transient boolean hasTitleEn;
 	
 	private Language language;
-	private boolean hasLanguage;
+	private transient boolean hasLanguage;
 	
 	private Long authorId;
-	private boolean hasAuthorId;
+	private transient boolean hasAuthorId;
 	
 	private AuthorData author;
 
 	private String summary;
-	private boolean hasSummary;
+	private transient boolean hasSummary;
 	
 	private Integer publicationYear;
-	private boolean hasPublicationYear;
+	private transient boolean hasPublicationYear;
 	
 	
 	private String pageUrl;
@@ -39,23 +39,23 @@ public class PratilipiData {
 
 	
 	private PratilipiType type;
-	private boolean hasType;
+	private transient boolean hasType;
 
 	private PratilipiState state;
-	private boolean hasState;
+	private transient boolean hasState;
 	
 	private Date listingDate;
 	private Date lastUpdated;
 
 	
 	private String index;
-	private boolean hasIndex;
+	private transient boolean hasIndex;
 
 	private Long wordCount;
-	private boolean hasWordCount;
+	private transient boolean hasWordCount;
 	
 	private Integer pageCount;
-	private boolean hasPageCount;
+	private transient boolean hasPageCount;
 
 
 	private Long reviewCount;
@@ -64,10 +64,10 @@ public class PratilipiData {
 	
 	private Float averageRating;
 	
-	private Double relevance;
+	private transient Double relevance;
 
 
-	private Long readCount;
+	private transient Long readCount;
 
 
 	
