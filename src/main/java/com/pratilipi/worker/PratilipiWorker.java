@@ -1,4 +1,4 @@
-package com.pratilipi.woker;
+package com.pratilipi.worker;
 
 import com.pratilipi.api.GenericService;
 

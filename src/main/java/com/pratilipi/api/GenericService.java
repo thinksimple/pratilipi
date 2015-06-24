@@ -8,14 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pratilipi.api.pratilipi.PratilipiApi;
-
 @SuppressWarnings("serial")
 public class GenericService extends HttpServlet {
 	
-	static {
-		ApiRegistry.register( PratilipiApi.class );
-	}
+	static { }
 	
 	@Override
 	protected final void service(
