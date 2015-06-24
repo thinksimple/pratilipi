@@ -83,13 +83,13 @@ public class PratilipiProcessApi extends GenericApi {
 			boolean changed = PratilipiDataUtil.updatePratilipiStats( request.getPratilipiId() );
 			if( changed ) {
 				pratilipi.setLastProcessDate( new Date() );
-				pratilipi.setNextProcessDate( new Date( new Date().getTime() + 3600000 ) ); // Now + 1 Hr
+				pratilipi.setNextProcessDate( new Date( new Date().getTime() + 900000L ) ); // Now + 15 Min
 			} else {
 				Long nextUpdateAfterMillis = 2 * ( new Date().getTime() - pratilipi.getLastProcessDate().getTime() );
-				if( nextUpdateAfterMillis < 3600000L ) // 1 Hr
-					nextUpdateAfterMillis = 3600000L;
-				else if( nextUpdateAfterMillis > 604800000L ) // 1 Wk
-					nextUpdateAfterMillis = 604800000L;
+				if( nextUpdateAfterMillis < 900000L ) // 15 Min
+					nextUpdateAfterMillis = 900000L;
+				else if( nextUpdateAfterMillis > 172800000L ) // 2 Days
+					nextUpdateAfterMillis = 172800000L;
 				pratilipi.setNextProcessDate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
 			}
 			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
