@@ -14,9 +14,11 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -33,35 +35,12 @@ public class PratilipiApi extends GenericApi {
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		
-		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
-		
-		GetPratilipiResponse response = new GetPratilipiResponse();
-		response.setPratilipiId( pratilipiData.getId( ) );
-		response.setTitle( pratilipiData.getTitle() );
-		response.setTitleEn( pratilipiData.getTitle() );
-		response.setLanguage( pratilipiData.getLanguage() );
-		response.setAuthorId( pratilipiData.getAuthorId() );
-		response.setAuthor( new GetAuthorResponse( pratilipiData.getAuthor() ) );
-		response.setSummary( pratilipiData.getSummary() );
-		response.setPublicationYear( pratilipiData.getPublicationYear() );
-		response.setPageUrl( pratilipiData.getPageUrl() );
-		response.setPageUrlAlias( pratilipiData.getPageUrlAlias() );
-		response.setCoverImageUrl( pratilipiData.getCoverImageUrl() );
-		response.setReaderPageUrl( pratilipiData.getReaderPageUrl() );
-		response.setWriterPageUrl( pratilipiData.getWriterPageUrl() );
-		response.setType( pratilipiData.getType() );
-		response.setState( pratilipiData.getState() );
-		response.setListingDate( pratilipiData.getListingDate() );
-		response.setLastUpdated( pratilipiData.getLastUpdated() );
-		response.setIndex( pratilipiData.getIndex() );
-		response.setWordCount( pratilipiData.getWordCount() );
-		response.setPageCount( pratilipiData.getPageCount() );
-		response.setReviewCount( pratilipiData.getReviewCount() );
-		response.setRatingCount( pratilipiData.getRatingCount() );
-		response.setAverageRating( pratilipiData.getAverageRating() );
-		response.setRelevance( pratilipiData.getRelevance() );
-		response.setReadCount( pratilipiData.getReadCount() );
-		
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, null );
+		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
+
+		GetPratilipiResponse response = gson.fromJson( gson.toJson( pratilipiData ), GetPratilipiResponse.class );
+		response.setAuthor( gson.fromJson( gson.toJson( authorData ), GetAuthorResponse.class ) );
+
 		return response;
 	}
 
@@ -69,15 +48,8 @@ public class PratilipiApi extends GenericApi {
 	public PutPratilipiResponse putPratilipi( PutPratilipiRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		PratilipiData pratilipiData = new PratilipiData();
-		pratilipiData.setId( request.getPratilipiId() );
-		if( request.hasSummary() )
-			pratilipiData.setSummary( request.getSummary() );
-		if( request.hasIndex() )
-			pratilipiData.setIndex( request.getIndex() );
-		
-		pratilipiData = PratilipiDataUtil.savePratilipiData( pratilipiData);
-		
+		PratilipiData pratilipiData = gson.fromJson( gson.toJson( request ), PratilipiData.class );
+		PratilipiDataUtil.savePratilipiData( pratilipiData);
 		
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/pratilipi/process" )

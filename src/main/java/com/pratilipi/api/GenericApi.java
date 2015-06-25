@@ -47,9 +47,6 @@ public abstract class GenericApi extends HttpServlet {
 
 	protected static final Gson gson = new GsonBuilder().create();
 
-	private static ThreadLocal<HttpServletRequest> threadLocalRequest;
-	private static ThreadLocal<HttpServletResponse> threadLocalResponse;
-	
 	private Method getMethod;
 	private Method putMethod;
 	private Method postMethod;
@@ -64,9 +61,6 @@ public abstract class GenericApi extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void init() throws ServletException {
-		threadLocalRequest = new ThreadLocal<HttpServletRequest>();
-		threadLocalResponse = new ThreadLocal<HttpServletResponse>();
-		
 		for( Method method : this.getClass().getMethods() ) {
 			if( method.getAnnotation( Get.class ) != null ) {
 				getMethod = method;
@@ -117,35 +111,27 @@ public abstract class GenericApi extends HttpServlet {
 			requestPayloadJson.addProperty( "has" + Character.toUpperCase( param.charAt( 0 ) ) + param.substring( 1 ), true );
 		
 		
-		threadLocalRequest.set( request );
-		threadLocalResponse.set( response );
-		
-		
 		// Invoking get/put method for API response
 		Object apiResponse = null;
 		if( method.equals( "GET" ) && getMethod != null )
-			apiResponse = executeApi( getMethod, requestPayloadJson, getMethodParameterType );
+			apiResponse = executeApi( getMethod, requestPayloadJson, getMethodParameterType, request );
 		else if( method.equals( "PUT" ) && putMethod != null )
-			apiResponse = executeApi( putMethod, requestPayloadJson, putMethodParameterType );
+			apiResponse = executeApi( putMethod, requestPayloadJson, putMethodParameterType, request );
 		else if( method.equals( "POST" ) && postMethod != null )
-			apiResponse = executeApi( postMethod, requestPayloadJson, postMethodParameterType );
+			apiResponse = executeApi( postMethod, requestPayloadJson, postMethodParameterType, request );
 		else if( method.equals( "DELETE" ) && deleteMethod != null )
-			apiResponse = executeApi( deleteMethod, requestPayloadJson, deleteMethodParameterType );
+			apiResponse = executeApi( deleteMethod, requestPayloadJson, deleteMethodParameterType, request );
 		else
 			apiResponse = new InvalidArgumentException( "Invalid resource or method." );
 
 		
 		// Dispatching API response
 		dispatchApiResponse( apiResponse, request, response );
-		
-		
-		threadLocalRequest.remove();
-		threadLocalResponse.remove();
 	}
 	
 	
 	private Object executeApi( Method apiMethod, JsonObject requestPayloadJson,
-			Class<? extends GenericRequest> apiMethodParameterType ) {
+			Class<? extends GenericRequest> apiMethodParameterType, HttpServletRequest request ) {
 		
 		try {
 			GenericRequest apiRequest = gson.fromJson( requestPayloadJson, apiMethodParameterType );
@@ -154,7 +140,7 @@ public abstract class GenericApi extends HttpServlet {
 				GenericFileUploadRequest gfuRequest = (GenericFileUploadRequest) apiRequest;
 				try {
 					ServletFileUpload upload = new ServletFileUpload();
-					FileItemIterator iterator = upload.getItemIterator( this.getThreadLocalRequest() );
+					FileItemIterator iterator = upload.getItemIterator( request );
 					while( iterator.hasNext() ) {
 						FileItemStream fileItemStream = iterator.next();
 						if( ! fileItemStream.isFormField() ) {
@@ -243,14 +229,6 @@ public abstract class GenericApi extends HttpServlet {
 
 		}
 		
-	}
-	
-	protected HttpServletRequest getThreadLocalRequest() {
-		return threadLocalRequest.get();
-	}
-	
-	protected HttpServletResponse getThreadLocalResponse() {
-		return threadLocalResponse.get();
 	}
 	
 }
