@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
@@ -360,6 +361,20 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return authorList;
 	}
 	
+	@Override
+	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter,
+			String cursor, Integer resultCount ) {
+		
+		return dataAccessor.getAuthorIdList( authorFilter, cursor, resultCount );
+	}
+
+	@Override
+	public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter,
+			String cursor, Integer resultCount ) {
+		
+		return dataAccessor.getAuthorList( authorFilter, cursor, resultCount );
+	}
+
 	@Override
 	public Author createOrUpdateAuthor( Author author ) {
 		author = dataAccessor.createOrUpdateAuthor( author );

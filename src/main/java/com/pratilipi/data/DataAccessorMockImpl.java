@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
@@ -243,6 +244,22 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return null;
 	}
 	
+	@Override
+	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter,
+			String cursor, Integer resultCount ) {
+		
+		// TODO: Implementation
+		return null;
+	}
+
+	@Override
+	public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter,
+			String cursor, Integer resultCount ) {
+		
+		// TODO: Implementation
+		return null;
+	}
+
 	@Override
 	public List<Author> getAuthorList( List<Long> idList ) {
 		List<Author> authorList = new ArrayList<>( idList.size() );

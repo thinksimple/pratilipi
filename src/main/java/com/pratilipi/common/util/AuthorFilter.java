@@ -1,22 +1,24 @@
-package com.pratilipi.commons.shared;
+package com.pratilipi.common.util;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.Language;
+
 public class AuthorFilter {
 	
-	private Long languageId;
+	private Language language;
 	
 	private Date nextProcessDateEnd;
 
 	private Boolean orderByContentPublished;
 	
 	
-	public Long getLanguageId() {
-		return languageId;
+	public Language getLanguage() {
+		return language;
 	}
 
-	public void setLanguageId( Long languageId ) {
-		this.languageId = languageId;
+	public void setLanguage( Language language ) {
+		this.language = language;
 	}
 
 	public Date getNextProcessDateEnd() {

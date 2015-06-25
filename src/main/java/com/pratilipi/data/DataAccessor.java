@@ -3,6 +3,7 @@ package com.pratilipi.data;
 import java.util.List;
 
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
@@ -58,6 +59,8 @@ public interface DataAccessor {
 	Author getAuthorByEmailId( String email );
 	Author getAuthorByUserId( Long userId );
 	List<Author> getAuthorList( List<Long> idList );
+	DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount );
+	DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount );
 	Author createOrUpdateAuthor( Author author );
 
 	
