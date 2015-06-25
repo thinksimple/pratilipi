@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +36,9 @@ import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.SearchAccessor;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
@@ -56,8 +60,18 @@ public class PratilipiDataUtil {
 	private static final String COVER_FOLDER 		 = "pratilipi-cover";
 	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
 
+
+	public static boolean hasAccessToListPratilipiData( PratilipiFilter pratilipiFilter ) {
+		AccessToken accessToken = AccessTokenFilter.getAccessToken(); 
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_LIST ) )
+			return true;
+		
+		return pratilipiFilter.getState() != null
+				&& pratilipiFilter.getState() != PratilipiState.PUBLISHED_DISCONTINUED
+				&& pratilipiFilter.getState() != PratilipiState.DELETED;
+	}
 	
-	public static boolean hasRequestAccessToAddPratilipiData( Pratilipi pratilipi ) {
+	public static boolean hasAccessToAddPratilipiData( Pratilipi pratilipi ) {
 		if( pratilipi.getState() == PratilipiState.DELETED )
 			return false;
 		
@@ -73,7 +87,7 @@ public class PratilipiDataUtil {
 		return false;
 	}
 
-	public static boolean hasRequestAccessToUpdatePratilipiData( Pratilipi pratilipi ) {
+	public static boolean hasAccessToUpdatePratilipiData( Pratilipi pratilipi ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_UPDATE ) )
 			return true;
@@ -86,8 +100,56 @@ public class PratilipiDataUtil {
 		return false;
 	}
 	
+	public static boolean hasAccessToReadPratilipiMetaData() {
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_READ_META );
+	}
+	
+	public static boolean hasAccessToUpdatePratilipiMetaData() {
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_UPDATE_META );
+	}
+	
+	public static boolean hasAccessToAddPratilipiReview( Pratilipi pratilipi ) {
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_ADD_REVIEW ) )
+			return false;
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		if( author != null && accessToken.getUserId().equals( author.getUserId() ) )
+			return false;
+		
+		return true;
+	}
+	
+	public static boolean hasAccessToReadPratilipiContent( Pratilipi pratilipi ) 
+			throws InvalidArgumentException {
+		
+		if( pratilipi.getState() == PratilipiState.PUBLISHED )
+			return true;
+		
+		if( pratilipi.getState() == PratilipiState.DELETED )
+			return false;
+		
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_READ_CONTENT ) )
+			return true;
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		if( author != null && accessToken.getUserId().equals( author.getUserId() ) )
+			return true;
+		
+		return false;
+	}
 
-	private static String createCoverImageUrl( Pratilipi pratilipi ) {
+	public static boolean hasAccessToUpdatePratilipiContent( Pratilipi pratilipi ) {
+		return hasAccessToUpdatePratilipiData( pratilipi );
+	}
+	
+
+	private static String createPratilipiCoverUrl( Pratilipi pratilipi ) {
 		if( pratilipi.hasCustomCover() ) {
 			String domain = "//" + pratilipi.getId() % 10 + "." + SystemProperty.get( "cdn" );
 			String uri = "/pratilipi-cover/150/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
@@ -107,13 +169,13 @@ public class PratilipiDataUtil {
 	}
 	
 
-	public static PratilipiData createData( Pratilipi pratilipi, Author author ) {
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipi.getId() );
-		return createData( pratilipi, author, pratilipiPage );
+		return createPratilipiData( pratilipi, author, pratilipiPage );
 	}
 	
-	public static PratilipiData createData( Pratilipi pratilipi, Author author, Page pratilipiPage ) {
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, Page pratilipiPage ) {
 		PratilipiData pratilipiData = new PratilipiData();
 
 		pratilipiData.setId( pratilipi.getId() );
@@ -121,13 +183,13 @@ public class PratilipiDataUtil {
 		pratilipiData.setTitleEn( pratilipi.getTitleEn() );
 		pratilipiData.setLanguage( pratilipi.getLanguage() );
 		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
-		pratilipiData.setAuthor( AuthorDataUtil.createData( author ) );
+		pratilipiData.setAuthor( AuthorDataUtil.createAuthorData( author ) );
 		pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
-		pratilipiData.setCoverImageUrl( createCoverImageUrl( pratilipi ) );
+		pratilipiData.setCoverImageUrl( createPratilipiCoverUrl( pratilipi ) );
 		pratilipiData.setReaderPageUrl( PageType.READ.getUrlPrefix() + pratilipi.getId() );
 		pratilipiData.setWriterPageUrl( PageType.WRITE.getUrlPrefix() + pratilipi.getId() );
 		
@@ -152,7 +214,57 @@ public class PratilipiDataUtil {
 		return pratilipiData;
 	}
 	
-	public static PratilipiData savePratilipi( PratilipiData pratilipiData )
+	public static List<PratilipiData> createPratilipiDataList(
+			List<Long> pratilipiIdList, boolean includeAuthorData ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
+		
+		Map<Long, AuthorData> authorIdToDataMap = null;
+		if( includeAuthorData ) {
+			List<Long> authorIdList = new LinkedList<>();
+			for( Pratilipi pratilipi : pratilipiList )
+				if( pratilipi.getAuthorId() != null && ! authorIdList.contains( pratilipi.getAuthorId() ) )
+					authorIdList.add( pratilipi.getAuthorId() );
+			
+			List<Author> authorList = dataAccessor.getAuthorList( authorIdList );
+			authorIdToDataMap = new HashMap<>( authorList.size() );
+			for( Author author : authorList )
+				authorIdToDataMap.put( author.getId(), AuthorDataUtil.createAuthorData( author ) );	
+		}
+
+		List<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
+		for( Pratilipi pratilipi : pratilipiList ) {
+			PratilipiData pratilipiData = createPratilipiData( pratilipi, null );
+			if( includeAuthorData && pratilipi.getAuthorId() != null )
+				pratilipiData.setAuthor( authorIdToDataMap.get( pratilipi.getAuthorId() ) );
+			pratilipiData.setRelevance( calculateRelevance( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) ) );
+			pratilipiDataList.add( pratilipiData );
+		}
+		
+		return pratilipiDataList;
+	}
+	
+
+	public static DataListCursorTuple<PratilipiData> getPratilipiList(
+			PratilipiFilter pratilipiFilter, String cursor, Integer resultCount )
+			throws InsufficientAccessException {
+		
+		if( ! hasAccessToListPratilipiData( pratilipiFilter ) )
+			throw new InsufficientAccessException();
+		
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple = DataAccessorFactory
+				.getSearchAccessor()
+				.searchPratilipi( pratilipiFilter, cursor, resultCount );
+		
+		List<PratilipiData> pratilipiDataList = createPratilipiDataList(
+				pratilipiIdListCursorTuple.getDataList(),
+				pratilipiFilter.getAuthorId() == null );
+		
+		return new DataListCursorTuple<PratilipiData>( pratilipiDataList, pratilipiIdListCursorTuple.getCursor() );
+	}
+	
+	public static PratilipiData savePratilipiData( PratilipiData pratilipiData )
 			throws InvalidArgumentException, InsufficientAccessException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -173,7 +285,7 @@ public class PratilipiDataUtil {
 			pratilipi.setListingDate( new Date() );
 			pratilipi.setLastUpdated( new Date() );
 
-			if ( ! hasRequestAccessToAddPratilipiData( pratilipi ) )
+			if ( ! hasAccessToAddPratilipiData( pratilipi ) )
 				throw new InsufficientAccessException();
 
 		} else { // Update Pratilipi usecase
@@ -185,7 +297,7 @@ public class PratilipiDataUtil {
 			// Do NOT update Author
 			pratilipi.setLastUpdated( new Date() );
 
-			if( ! hasRequestAccessToUpdatePratilipiData( pratilipi ) )
+			if( ! hasAccessToUpdatePratilipiData( pratilipi ) )
 				throw new InsufficientAccessException();
 
 		}
@@ -230,7 +342,7 @@ public class PratilipiDataUtil {
 		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 		auditLog = dataAccessor.createAuditLog( auditLog );
 		
-		return createData( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) );
+		return createPratilipiData( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) );
 	}
 
 	public static BlobEntry getPratilipiCover( Long pratilipiId, Integer width )
@@ -262,7 +374,7 @@ public class PratilipiDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 
-		if( !hasRequestAccessToUpdatePratilipiData( pratilipi ) )
+		if( !hasAccessToUpdatePratilipiData( pratilipi ) )
 			throw new InsufficientAccessException();
 
 		
@@ -459,7 +571,7 @@ public class PratilipiDataUtil {
 			
 			if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
 				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-				pratilipiDataList.add( createData( pratilipi, author ) );
+				pratilipiDataList.add( createPratilipiData( pratilipi, author ) );
 				
 			} else {
 				searchAccessor.deletePratilipiDataIndex( pratilipi.getId() );
@@ -470,6 +582,192 @@ public class PratilipiDataUtil {
 		
 		if( pratilipiDataList.size() > 0 )
 			searchAccessor.indexPratilipiDataList( pratilipiDataList );
+	}
+
+	
+	public static Object getPratilipiContent( long pratilipiId, int pageNo,
+			PratilipiContentType contentType ) throws InvalidArgumentException,
+			InsufficientAccessException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		
+		if( ! hasAccessToReadPratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
+
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+
+		if( contentType == PratilipiContentType.PRATILIPI ) {
+			BlobEntry blobEntry = null;
+			try {
+				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+			if( blobEntry == null )
+				return "";
+			
+			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+			return pratilipiContentUtil.getContent( pageNo );
+
+		} else if( contentType == PratilipiContentType.IMAGE ) {
+			try {
+				return blobAccessor.getBlob( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+		
+		} else {
+			throw new InvalidArgumentException( contentType + " content type is not yet supported." );
+		}
+		
+	}
+	
+	public static int updatePratilipiContent( long pratilipiId, int pageNo,
+			PratilipiContentType contentType, Object pageContent, boolean insertNew )
+			throws InvalidArgumentException, InsufficientAccessException,
+			UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( ! hasAccessToUpdatePratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
+
+		
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
+		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		
+		if( contentType == PratilipiContentType.PRATILIPI ) {
+			BlobEntry blobEntry = null;
+			try {
+				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
+				if( blobEntry == null ) {
+					blobEntry = blobAccessor.newBlob( CONTENT_FOLDER + "/" + pratilipiId );
+					blobEntry.setData( "&nbsp".getBytes( Charset.forName( "UTF-8" ) ) );
+					blobEntry.setMimeType( "text/html" );
+				}
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+			content = pratilipiContentUtil.updateContent( pageNo, (String) pageContent, insertNew );
+			int pageCount = pratilipiContentUtil.getPageCount();
+			if( content.isEmpty() ) {
+				content = "&nbsp";
+				pageCount = 1;
+			}
+			blobEntry.setData( content.getBytes( Charset.forName( "UTF-8" ) ) );
+			try {
+				blobAccessor.createOrUpdateBlob( blobEntry );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to create/update pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+			pratilipi.setPageCount( pageCount );
+			if( insertNew )
+				auditLog.setEventComment( "Added new page " + pageNo + " in Pratilpi content." );
+			else if( ! ( (String) pageContent ).isEmpty() )
+				auditLog.setEventComment( "Updated page " + pageNo + " in Pratilpi content." );
+			else
+				auditLog.setEventComment( "Deleted page " + pageNo + " in Pratilpi content." );
+			
+		} else if( contentType == PratilipiContentType.IMAGE ) {
+			
+			try {
+				BlobEntry blobEntry = (BlobEntry) pageContent;
+				blobEntry.setName( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
+				blobAccessor.createOrUpdateBlob( blobEntry );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to create/update pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+			if( pageNo > (int) pratilipi.getPageCount() )
+				pratilipi.setPageCount( pageNo );
+			
+			auditLog.setEventComment( "Uploaded page " + pageNo + " in Image content." );
+		
+		} else {
+			throw new InvalidArgumentException( contentType + " content type is not yet supported." );
+		}
+		
+		pratilipi.setLastUpdated( new Date() );
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+
+		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+		auditLog = dataAccessor.createAuditLog( auditLog );
+		
+		return pratilipi.getPageCount();
+	}
+	
+	
+	public static String getPratilipiResourceFolder( Long pratilipiId ) {
+		return RESOURCE_FOLDER + "/" + pratilipiId;
+	}
+	
+	public static BlobEntry getPratilipiResource( long pratilipiId, String fileName )
+			throws UnexpectedServerException {
+
+		try {
+			return DataAccessorFactory.getBlobAccessor().getBlob( getPratilipiResourceFolder( pratilipiId ) + "/" + fileName );
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch pratilipi resource.", e );
+			throw new UnexpectedServerException();
+		}
+		
+	}
+	
+	public static boolean savePratilipiResource(
+			Long pratilipiId, BlobEntry blobEntry, boolean overwrite )
+			throws InsufficientAccessException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( ! hasAccessToUpdatePratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
+
+		String fileName = getPratilipiResourceFolder( pratilipiId ) + "/" + blobEntry.getName().replaceAll( "/", "-" );
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		try {
+			if( !overwrite &&  blobAccessor.getBlob( fileName ) != null ) {
+				return false;
+			} else {
+				blobEntry.setName( fileName );
+				blobAccessor.createOrUpdateBlob( blobEntry );
+				
+				AccessToken accessToken = AccessTokenFilter.getAccessToken();
+				AuditLog auditLog = dataAccessor.newAuditLog();
+				auditLog.setAccessId( accessToken.getId() );
+				auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
+				auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+				auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+				auditLog.setEventComment( "Uploaded content image (resource)." );
+				auditLog = dataAccessor.createAuditLog( auditLog );
+				
+				return true;
+			}
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to create/update pratilipi resource.", e );
+			throw new UnexpectedServerException();
+		}
+		
 	}
 
 }

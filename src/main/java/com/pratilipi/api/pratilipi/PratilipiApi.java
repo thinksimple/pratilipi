@@ -33,7 +33,7 @@ public class PratilipiApi extends GenericApi {
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		
-		PratilipiData pratilipiData = PratilipiDataUtil.createData( pratilipi, author );
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
 		
 		GetPratilipiResponse response = new GetPratilipiResponse();
 		response.setPratilipiId( pratilipiData.getId( ) );
@@ -76,7 +76,7 @@ public class PratilipiApi extends GenericApi {
 		if( request.hasIndex() )
 			pratilipiData.setIndex( request.getIndex() );
 		
-		pratilipiData = PratilipiDataUtil.savePratilipi( pratilipiData);
+		pratilipiData = PratilipiDataUtil.savePratilipiData( pratilipiData);
 		
 		
 		Task task = TaskQueueFactory.newTask()

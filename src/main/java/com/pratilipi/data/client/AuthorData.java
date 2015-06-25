@@ -2,6 +2,8 @@ package com.pratilipi.data.client;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.Language;
+
 public class AuthorData {
 
 	private Long id;
@@ -37,8 +39,8 @@ public class AuthorData {
 	private String email;
 	private transient boolean hasEmail;
 
-	private String langCode;
-	private transient boolean hasLangCode;
+	private Language language;
+	private transient boolean hasLanguage;
 	
 	private String summary;
 	private transient boolean hasSummary;
@@ -187,17 +189,17 @@ public class AuthorData {
 		return hasEmail;
 	}
 
-	public String getLanguageCode() {
-		return langCode;
+	public Language getLanguage() {
+		return language;
 	}
 
-	public void setLanguageCode( String langCode ) {
-		this.langCode = langCode;
-		this.hasLangCode = true;
+	public void setLanguage( Language language ) {
+		this.language = language;
+		this.hasLanguage = true;
 	}
 	
-	public boolean hasLanguageCode() {
-		return hasLangCode;
+	public boolean hasLanguage() {
+		return hasLanguage;
 	}
 
 	public String getSummary() {

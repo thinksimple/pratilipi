@@ -277,17 +277,17 @@ public class MockData {
 		
 		// GLOBAL_INDEX
 
-		GLOBAL_INDEX.add( PratilipiDataUtil.createData( hiPratilipi_1, hiAuthor_1, hiPratilipi_1_Page ) );
-		GLOBAL_INDEX.add( PratilipiDataUtil.createData( hiPratilipi_2, hiAuthor_1, hiPratilipi_2_Page ) );
-		GLOBAL_INDEX.add( PratilipiDataUtil.createData( hiPratilipi_3, hiAuthor_1, hiPratilipi_3_Page ) );
+		GLOBAL_INDEX.add( PratilipiDataUtil.createPratilipiData( hiPratilipi_1, hiAuthor_1, hiPratilipi_1_Page ) );
+		GLOBAL_INDEX.add( PratilipiDataUtil.createPratilipiData( hiPratilipi_2, hiAuthor_1, hiPratilipi_2_Page ) );
+		GLOBAL_INDEX.add( PratilipiDataUtil.createPratilipiData( hiPratilipi_3, hiAuthor_1, hiPratilipi_3_Page ) );
 		
-		GLOBAL_INDEX.add( PratilipiDataUtil.createData( guPratilipi_1, guAuthor_1, guPratilipi_1_Page ) );
-		GLOBAL_INDEX.add( PratilipiDataUtil.createData( guPratilipi_2, guAuthor_1, guPratilipi_2_Page ) );
-		GLOBAL_INDEX.add( PratilipiDataUtil.createData( guPratilipi_3, guAuthor_1, guPratilipi_3_Page ) );
+		GLOBAL_INDEX.add( PratilipiDataUtil.createPratilipiData( guPratilipi_1, guAuthor_1, guPratilipi_1_Page ) );
+		GLOBAL_INDEX.add( PratilipiDataUtil.createPratilipiData( guPratilipi_2, guAuthor_1, guPratilipi_2_Page ) );
+		GLOBAL_INDEX.add( PratilipiDataUtil.createPratilipiData( guPratilipi_3, guAuthor_1, guPratilipi_3_Page ) );
 		
-		GLOBAL_INDEX.add( PratilipiDataUtil.createData( taPratilipi_1, taAuthor_1, taPratilipi_1_Page ) );
-		GLOBAL_INDEX.add( PratilipiDataUtil.createData( taPratilipi_2, taAuthor_1, taPratilipi_2_Page ) );
-		GLOBAL_INDEX.add( PratilipiDataUtil.createData( taPratilipi_3, taAuthor_1, taPratilipi_3_Page ) );
+		GLOBAL_INDEX.add( PratilipiDataUtil.createPratilipiData( taPratilipi_1, taAuthor_1, taPratilipi_1_Page ) );
+		GLOBAL_INDEX.add( PratilipiDataUtil.createPratilipiData( taPratilipi_2, taAuthor_1, taPratilipi_2_Page ) );
+		GLOBAL_INDEX.add( PratilipiDataUtil.createPratilipiData( taPratilipi_3, taAuthor_1, taPratilipi_3_Page ) );
 
 	}
 	

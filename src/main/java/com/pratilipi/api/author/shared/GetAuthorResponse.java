@@ -27,7 +27,7 @@ public class GetAuthorResponse extends GenericResponse {
 	private String fullNameEn;
 
 	private String email;
-	private String langCode;
+	private Language language;
 	private String summary;
 	
 	private String pageUrl;
@@ -55,7 +55,7 @@ public class GetAuthorResponse extends GenericResponse {
 		fullNameEn = author.getFullNameEn();
 		
 		email = author.getEmail();
-		langCode = author.getLanguageCode();
+		language = author.getLanguage();
 		summary = author.getSummary();
 		
 		pageUrl = author.getPageUrl();

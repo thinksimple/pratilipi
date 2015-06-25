@@ -1,6 +1,5 @@
 package com.pratilipi.common.exception;
 
-
 @SuppressWarnings("serial")
 public class InsufficientAccessException extends Exception {
 

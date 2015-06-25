@@ -131,7 +131,6 @@ public class PratilipiContentUtil {
 						"Page " + pageCount + " length: " + ( endIndex - startIndex )
 						+ " (" + startIndex + " - " + endIndex + ") " + pageBreak );
 			}
-			
 
 			if( pageCount == pageNo )
 				break;

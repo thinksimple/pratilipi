@@ -1,5 +1,6 @@
 package com.pratilipi.common.type;
 
+
 public enum AccessType {
 
 	PRATILIPI_LIST		  ( "List Pratilipi" ),
@@ -9,6 +10,10 @@ public enum AccessType {
 	PRATILIPI_UPDATE_META ( "Update Pratilipi Meta Data" ),
 	PRATILIPI_ADD_REVIEW  ( "Add Pratilipi Review" ),
 	PRATILIPI_READ_CONTENT( "View Pratilipi Content" ),
+
+	AUTHOR_LIST	 ( "List Author" ),
+	AUTHOR_ADD	 ( "Add Author" ),
+	AUTHOR_UPDATE( "Update Author" ),
 	;
 
 	

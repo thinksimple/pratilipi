@@ -156,7 +156,7 @@ public class PratilipiSite extends HttpServlet {
 				continue;
 			Pratilipi pratilipi = dataAccessor.getPratilipi( page.getPrimaryContentId() );
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			PratilipiData pratilipiData = PratilipiDataUtil.createData( pratilipi, author );
+			PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
 			featuredList.add( gson.toJson( pratilipiData ).toString() );
 		}
 		
@@ -186,7 +186,7 @@ public class PratilipiSite extends HttpServlet {
 		List<String> pratilipiJsonList = new ArrayList<>( pratilipiList.size() );
 		for( Pratilipi pratilipi : pratilipiList ) {
 			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			PratilipiData pratilipiData = PratilipiDataUtil.createData( pratilipi, author );
+			PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
 			pratilipiJsonList.add( gson.toJson( pratilipiData ).toString() );
 		}
 
@@ -202,7 +202,7 @@ public class PratilipiSite extends HttpServlet {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor .getAuthor( pratilipi.getAuthorId() );
-		PratilipiData pratilipiData = PratilipiDataUtil.createData( pratilipi, author );
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
 
 		Gson gson = new Gson();
 
@@ -216,7 +216,7 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForAuthorPage( Long authorId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor .getAuthor( authorId );
-		AuthorData authorData = AuthorDataUtil.createData( author );
+		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
 
 		Gson gson = new Gson();
 
