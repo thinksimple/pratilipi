@@ -50,8 +50,8 @@
     <max-concurrent-requests>10</max-concurrent-requests>
     <retry-parameters>
       <task-age-limit>90d</task-age-limit>
-      <min-backoff-seconds>300</min-backoff-seconds>
-      <max-backoff-seconds>300</max-backoff-seconds>
+      <min-backoff-seconds>60</min-backoff-seconds>
+      <max-backoff-seconds>60</max-backoff-seconds>
     </retry-parameters>
   </queue>
   
@@ -64,8 +64,8 @@
     <max-concurrent-requests>10</max-concurrent-requests>
     <retry-parameters>
       <task-age-limit>90d</task-age-limit>
-      <min-backoff-seconds>300</min-backoff-seconds>
-      <max-backoff-seconds>300</max-backoff-seconds>
+      <min-backoff-seconds>60</min-backoff-seconds>
+      <max-backoff-seconds>60</max-backoff-seconds>
     </retry-parameters>
   </queue>
   
