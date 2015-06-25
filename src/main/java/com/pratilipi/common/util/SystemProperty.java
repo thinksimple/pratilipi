@@ -18,9 +18,9 @@ public class SystemProperty {
 
 		String propertyValue = System.getProperty( appId + "." + propertyName );
 		if( propertyValue == null || propertyValue.isEmpty() )
-			logger.log( Level.WARNING, propertyName + "System property '" + propertyName + "' is missing." );
+			logger.log( Level.WARNING, "System property '" + propertyName + "' is missing." );
 		
-		return System.getProperty( propertyValue );
+		return propertyValue;
 	}
 
 }
