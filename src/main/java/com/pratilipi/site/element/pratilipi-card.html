@@ -6,20 +6,23 @@
 			width: 100px;
 			height: 150px;
 		}
+		
+		.media-body {
+			position: relative;
+			height: 150px;
+			padding-bottom: 32px;
+		}
 
 		h6 {
 			margin-top: 0px;
 			margin-bottom: 5px;
 		}
 
-		.badge {
-			margin-top: 15px;
-			margin-bottom: 10px;
-		}
-		
 		.btn {
-			border-radius: 0px;
+			position: absolute;
+			bottom: 0px;
 			padding: 3px 30px;
+			border-radius: 0px;
 		}
 		
 	</style>
@@ -46,9 +49,6 @@
 						<pratilipi-rating value="{{ pratilipi.averageRating }}" />
 					</div>
 					<div>
-						<small>{{ getRatingsStr( pratilipi.ratingCount ) }}</small>
-					</div>
-					<div>
 						<a href="{{__hack__}}#"><span class="badge">Classic</span></a>
 					</div>
 					<div>
@@ -71,8 +71,23 @@
 				pratilipi: { type: Object }
 			},
 			
-			getRatingsStr: function( ratingCount ) {
-				return '(' + this.pratilipi.ratingCount + ' ' + ( this.pratilipi.ratingCount <= 1 ? '${ _strings.rating }' : '${ _strings.ratings }' ) + ')';
+			ready: function() {
+				var gridCol = this.querySelector( '.media' );
+				var heading = this.querySelector( 'h4 a' );
+				var title = this.pratilipi.title;
+				function setColHeight( e ) {
+					var jGridCol = jQuery( gridCol );
+					var jHeading = jQuery( heading );
+					jHeading.text( title );
+					var len = title.length;
+					while( jGridCol.height() > 150 && len > 1 ) {
+						len = len - 1;
+						jHeading.text( title.substring( 0, len ).trim() + " ..." );
+					}
+				};
+				jQuery( document ).ready( setColHeight );
+				jQuery( window ).load( setColHeight );
+				jQuery( window ).resize( setColHeight );
 			}
 			
 		});
