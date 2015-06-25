@@ -4,36 +4,41 @@
         xmlns="http://java.sun.com/xml/ns/javaee"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
+	
 	<filter>
-		<filter-name>PratilipiWorkerFilter</filter-name>
-		<filter-class>com.pratilipi.worker.PratilipiWorkerFilter</filter-class>
+		<filter-name>PratilipiSiteFilter</filter-name>
+		<filter-class>com.pratilipi.site.PratilipiSiteFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>PratilipiWorkerFilter</filter-name>
+		<filter-name>PratilipiSiteFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<filter>
+		<filter-name>UxModeFilter</filter-name>
+		<filter-class>com.pratilipi.site.UxModeFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>UxModeFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>AccessTokenFilter</filter-name>
+		<filter-class>com.pratilipi.site.AccessTokenFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AccessTokenFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<servlet>
-		<servlet-name>PratilipiWorker</servlet-name>
-		<servlet-class>com.pratilipi.worker.PratilipiWorker</servlet-class>
-		<load-on-startup>1</load-on-startup>
+		<servlet-name>PratilipiSite</servlet-name>
+		<servlet-class>com.pratilipi.site.PratilipiSite</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>PratilipiWorker</servlet-name>
+		<servlet-name>PratilipiSite</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
-	<!-- Security Constraints -->
-	
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>admin</web-resource-name>
-			<url-pattern>/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>admin</role-name>
-		</auth-constraint>
-	</security-constraint>
-    
 </web-app>

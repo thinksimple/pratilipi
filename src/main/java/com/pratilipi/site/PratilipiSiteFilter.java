@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessorFactory;
 
-public class PratilipiFilter implements Filter {
+public class PratilipiSiteFilter implements Filter {
 	
 	private final Map<String, String> redirections = new HashMap<>();
 	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile( "/resource\\.(book|poem|story|article|pratilipi)-cover/.*" );
