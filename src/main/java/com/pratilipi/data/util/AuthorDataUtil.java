@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -301,7 +299,7 @@ public class AuthorDataUtil {
 		return true;
 	}
 	
-	public static boolean createOrUpdateAuthorDashboardPageUrl( Long authorId, HttpServletRequest request ) {
+	public static boolean createOrUpdateAuthorDashboardPageUrl( Long authorId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page page = dataAccessor.getPage( PageType.AUTHOR, authorId );
 		
@@ -338,7 +336,7 @@ public class AuthorDataUtil {
 		return true;
 	}
 	
-	public static boolean updateAuthorStats( Long authorId, HttpServletRequest request ) {
+	public static boolean updateAuthorStats( Long authorId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
@@ -368,7 +366,7 @@ public class AuthorDataUtil {
 
 	}
 	
-	public static void updateAuthorSearchIndex( Long authorId, HttpServletRequest request )
+	public static void updateAuthorSearchIndex( Long authorId )
 			throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

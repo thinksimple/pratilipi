@@ -1,9 +1,8 @@
-package com.pratilipi.pagecontent.author.api.shared;
+package com.pratilipi.api.author.shared;
 
-import com.claymus.api.annotation.Validate;
-import com.claymus.api.shared.GenericRequest;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.shared.GenericRequest;
 
-@SuppressWarnings("serial")
 public class AuthorProcessPostRequest extends GenericRequest {
 
 	@Validate( required = true )

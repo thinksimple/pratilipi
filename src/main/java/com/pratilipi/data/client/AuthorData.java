@@ -6,7 +6,7 @@ import com.pratilipi.common.type.Language;
 
 public class AuthorData {
 
-	private Long id;
+	private Long authorId;
 
 	private String firstName;
 	private transient boolean hasFirstName;
@@ -57,11 +57,11 @@ public class AuthorData {
 	
 	
 	public Long getId() {
-		return id;
+		return authorId;
 	}
 
 	public void setId( Long id ) {
-		this.id = id;
+		this.authorId = id;
 	}
 
 

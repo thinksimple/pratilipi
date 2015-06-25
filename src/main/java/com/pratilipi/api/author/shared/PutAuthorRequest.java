@@ -1,12 +1,11 @@
-package com.pratilipi.pagecontent.author.api.shared;
+package com.pratilipi.api.author.shared;
 
-import com.claymus.api.annotation.Validate;
-import com.claymus.api.shared.GenericRequest;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.shared.GenericRequest;
 
-@SuppressWarnings( "serial" )
 public class PutAuthorRequest extends GenericRequest {
 	
-	private Long id;
+	private Long authorId;
 	
 	private Long languageId;
 	private boolean hasLanguageId;
@@ -36,7 +35,7 @@ public class PutAuthorRequest extends GenericRequest {
 
 	
 	public Long getId() {
-		return id;
+		return authorId;
 	}
 	
 

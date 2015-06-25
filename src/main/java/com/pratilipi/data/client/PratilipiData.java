@@ -8,7 +8,7 @@ import com.pratilipi.common.type.PratilipiType;
 
 public class PratilipiData {
 
-	private Long id;
+	private Long pratilipiId;
 	
 	private String title;
 	private transient boolean hasTitle;
@@ -74,16 +74,16 @@ public class PratilipiData {
 	public PratilipiData() {}
 	
 	public PratilipiData( Long id ) {
-		this.id = id;
+		this.pratilipiId = id;
 	}
 	
 
 	public Long getId() {
-		return id;
+		return pratilipiId;
 	}
 
 	public void setId( Long id ) {
-		this.id = id;
+		this.pratilipiId = id;
 	}
 
 	public String getTitle() {
