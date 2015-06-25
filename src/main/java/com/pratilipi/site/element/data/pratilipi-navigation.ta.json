@@ -4,72 +4,66 @@
 			"title" : "பிரபலமானவை",
 			"items" : [
 				{
-					"text" : "Top Sellers",
-					"url" : "#top-sellers"
-				},
-				{
 					"text" : "வாசகர் தேர்வு",
-					"url" : "#most-read"
-				},
-				{
-					"text" : "Most Read This Month",
 					"url" : "#most-read"
 				},
 				{
 					"text" : "2015இல் சிறந்தவை",
 					"url" : "#best-of-2015"
 				},
+				,
 				{
-					"text" : "Top Rated",
-					"url" : "#top-rated"
+					"text" : "புத்தகங்கள்",
+					"url" : "#books"
+				},
+				{
+				
+					"text" : "கவிதைகள்",
+					"url" : "#poems"
+				},
+				{
+					"text" : "கதைகள்",
+					"url" : "#stories"
+				},
+				{
+					"text" : "கட்டுரைகள்",
+					"url" : "#articles"
+				},
+				{
+					"text" : "இதழ்கள்",
+					"url" : "#magazines"
 				}
 			]
 		},
 		{
-			"title" : "Categories",
+			"title" : "வகைகள்",
 			"items" : [
 				{
 					"text" : "புதினங்கள்",
 					"url" : "#fiction"
 				},
 				{
-					"text" : "Horror",
-					"url" : "#horror"
+					"text" : "காதல்",
+					"url" : "#romance"
 				},
 				{
 					"text" : "காதல்",
 					"url" : "#romance"
 				},
 				{
-					"text" : "Crime",
-					"url" : "#crime"
+					"text" : "ஆன்மிகம்",
+					"url" : "#spiritual"
 				},
 				{
-					"text" : "கட்டுரைகள்",
-					"url" : "#articles"
+					"text" : "வரலாறு",
+					"url" : "#history"
+				},
+				{
+					"text" : "மர்மம்",
+					"url" : "#mystery"
 				}
 			]
-		},
-		{
-			"title" : "பண்டைய நூல்கள்",
-			"items" : [
-				{
-					"text" : "கதைகள்",
-					"url" : "#stories"
-				},
-				{
-					"text" : "Ghazals",
-					"url" : "#horror"
-				},
-				{
-					"text" : "Nazm",
-					"url" : "#nazm"
-				},
-				{
-					"text" : "Novels",
-					"url" : "#novels"
-				}
-			]
-		}	
+		}
+	
 	]
 }
