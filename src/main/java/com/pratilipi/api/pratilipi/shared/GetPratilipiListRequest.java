@@ -1,16 +1,16 @@
-package com.pratilipi.pagecontent.pratilipi.api.shared;
+package com.pratilipi.api.pratilipi.shared;
 
-import com.claymus.api.annotation.Validate;
-import com.claymus.api.shared.GenericRequest;
-import com.pratilipi.commons.shared.PratilipiState;
-import com.pratilipi.commons.shared.PratilipiType;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.PratilipiType;
 
-@SuppressWarnings("serial")
 public class GetPratilipiListRequest extends GenericRequest {
 
 	private PratilipiType type;
 	
-	private Long languageId;
+	private Language language;
 	
 	private Long authorId;
 
@@ -26,8 +26,8 @@ public class GetPratilipiListRequest extends GenericRequest {
 		return type;
 	}
 
-	public Long getLanguageId() {
-		return languageId;
+	public Language getLanguage() {
+		return language;
 	}
 
 	public Long getAuthorId() {

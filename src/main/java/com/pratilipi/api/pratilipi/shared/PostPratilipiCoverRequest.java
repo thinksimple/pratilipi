@@ -1,9 +1,8 @@
-package com.pratilipi.pagecontent.pratilipi.api.shared;
+package com.pratilipi.api.pratilipi.shared;
 
-import com.claymus.api.annotation.Validate;
-import com.claymus.api.shared.GenericFileUploadRequest;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.shared.GenericFileUploadRequest;
 
-@SuppressWarnings("serial")
 public class PostPratilipiCoverRequest extends GenericFileUploadRequest {
 
 	@Validate( required = true )

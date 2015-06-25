@@ -8,6 +8,7 @@ public class GetPratilipiRequest extends GenericRequest {
 	@Validate( required = true )
 	private Long pratilipiId;
 	
+	
 	public Long getPratilipiId() {
 		return pratilipiId;
 	}

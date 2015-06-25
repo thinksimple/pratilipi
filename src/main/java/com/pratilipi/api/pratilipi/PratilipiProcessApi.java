@@ -48,9 +48,9 @@ public class PratilipiProcessApi extends GenericApi {
 		List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
 		for( Long pratilipiId : pratilipiIdList ) {
 			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/process" )
 					.addParam( "pratilipiId", pratilipiId.toString() )
-					.addParam( "updateStats", "true" )
-					.setUrl( "/pratilipi/process" );
+					.addParam( "updateStats", "true" );
 			taskList.add( task );
 		}
 		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );

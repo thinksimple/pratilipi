@@ -1,21 +1,17 @@
-package com.pratilipi.pagecontent.pratilipi.api.shared;
+package com.pratilipi.api.pratilipi.shared;
 
 import java.util.List;
 
-import com.claymus.api.shared.GenericResponse;
-import com.pratilipi.data.transfer.shared.PratilipiData;
+import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.data.client.PratilipiData;
 
-@SuppressWarnings("serial")
+@SuppressWarnings("unused")
 public class GetPratilipiListResponse extends GenericResponse { 
 	
-	@SuppressWarnings("unused")
 	private List<PratilipiData> pratilipiList;
-	
-	@SuppressWarnings("unused")
 	private String cursor;
 
 	
-	@SuppressWarnings("unused")
 	private GetPratilipiListResponse() {}
 	
 	public GetPratilipiListResponse( List<PratilipiData> pratilipiList, String cursor ) {
