@@ -43,7 +43,10 @@
 		</div>
 		
 		<div class="container" style="margin-top:20px">
-			<div class="secondary-500">
+			<div class="secondary-500 pull-left" style="width:250px">
+				<pratilipi-navigation/>
+			</div>
+			<div class="secondary-500" style="margin-left:270px">
 				<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
 			</div>
 		</div>
