@@ -11,7 +11,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
-import com.google.appengine.repackaged.com.google.gson.Gson;
+import com.google.gson.Gson;
 import com.pratilipi.common.exception.UnexpectedServerException;
 
 public class SiteElementUtil {

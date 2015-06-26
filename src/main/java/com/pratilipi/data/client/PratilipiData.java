@@ -64,10 +64,10 @@ public class PratilipiData {
 	
 	private Float averageRating;
 	
-	private transient Double relevance;
+	private Double relevance;
 
 
-	private transient Long readCount;
+	private Long readCount;
 
 
 	

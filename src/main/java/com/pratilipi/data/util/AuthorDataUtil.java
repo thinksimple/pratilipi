@@ -75,6 +75,10 @@ public class AuthorDataUtil {
 	
 	
 	public static AuthorData createAuthorData( Author author ) {
+		return createAuthorData(author, false, false );
+	}
+	
+	public static AuthorData createAuthorData( Author author, boolean includeAll, boolean includeMetaData ) {
 		if( author == null )
 			return null;
 		
@@ -121,10 +125,12 @@ public class AuthorDataUtil {
 			authorData.setFullNameEn( author.getPenNameEn() );
 		else if( authorData.getNameEn() != null && author.getPenNameEn() != null )
 			authorData.setFullNameEn( authorData.getNameEn() + " '" + author.getPenNameEn() + "'" );
-		
-		authorData.setEmail( author.getEmail() );
+
+		if( includeMetaData )
+			authorData.setEmail( author.getEmail() );
 		authorData.setLanguage( author.getLanguage() );
-		authorData.setSummary( author.getSummary() );
+		if( includeAll )
+			authorData.setSummary( author.getSummary() );
 		
 		authorData.setPageUrl( authorPage.getUri() );
 		authorData.setPageUrlAlias( authorPage.getUriAlias() );
@@ -373,7 +379,7 @@ public class AuthorDataUtil {
 		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
 
 		Author author = dataAccessor.getAuthor( authorId );
-		searchAccessor.indexAuthorData( createAuthorData( author ) );
+		searchAccessor.indexAuthorData( createAuthorData( author, true, true ) );
 	}
 	
 }

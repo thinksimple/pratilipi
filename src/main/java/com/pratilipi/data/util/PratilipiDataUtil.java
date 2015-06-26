@@ -170,12 +170,20 @@ public class PratilipiDataUtil {
 	
 
 	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author ) {
+		return createPratilipiData( pratilipi, author, false, false );
+	}
+	
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, boolean includeAll, boolean includeMetaData ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipi.getId() );
-		return createPratilipiData( pratilipi, author, pratilipiPage );
+		return createPratilipiData( pratilipi, author, pratilipiPage, includeAll, includeMetaData );
 	}
 	
 	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, Page pratilipiPage ) {
+		return createPratilipiData( pratilipi, author, pratilipiPage, false, false );
+	}
+
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, Page pratilipiPage, boolean includeAll, boolean includeMetaData ) {
 		PratilipiData pratilipiData = new PratilipiData();
 
 		pratilipiData.setId( pratilipi.getId() );
@@ -184,7 +192,8 @@ public class PratilipiDataUtil {
 		pratilipiData.setLanguage( pratilipi.getLanguage() );
 		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
 		pratilipiData.setAuthor( AuthorDataUtil.createAuthorData( author ) );
-		pratilipiData.setSummary( pratilipi.getSummary() );
+		if( includeAll )
+			pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
@@ -198,7 +207,8 @@ public class PratilipiDataUtil {
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
 		pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
 		
-		pratilipiData.setIndex( pratilipi.getIndex() );
+		if( includeAll )
+			pratilipiData.setIndex( pratilipi.getIndex() );
 		pratilipiData.setWordCount( pratilipi.getWordCount() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		
@@ -571,7 +581,7 @@ public class PratilipiDataUtil {
 			
 			if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
 				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-				pratilipiDataList.add( createPratilipiData( pratilipi, author ) );
+				pratilipiDataList.add( createPratilipiData( pratilipi, author, true, true ) );
 				
 			} else {
 				searchAccessor.deletePratilipiDataIndex( pratilipi.getId() );
