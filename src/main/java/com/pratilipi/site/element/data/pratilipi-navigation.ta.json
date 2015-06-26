@@ -13,24 +13,24 @@
 				},
 				{
 					"text" : "புத்தகங்கள்",
-					"url" : "#books"
+					"url" : "/books"
 				},
 				{
 				
 					"text" : "கவிதைகள்",
-					"url" : "#poems"
+					"url" : "/poems"
 				},
 				{
 					"text" : "கதைகள்",
-					"url" : "#stories"
+					"url" : "/stories"
 				},
 				{
 					"text" : "கட்டுரைகள்",
-					"url" : "#articles"
+					"url" : "/articles"
 				},
 				{
 					"text" : "இதழ்கள்",
-					"url" : "#magazines"
+					"url" : "/magazines"
 				}
 			]
 		},
