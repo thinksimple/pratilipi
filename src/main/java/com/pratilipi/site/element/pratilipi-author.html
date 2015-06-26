@@ -1,21 +1,136 @@
 <dom-module id="pratilipi-author">
-
 	<style>
+		img{
+			width: 200px;
+			height: 225px;
+			margin: 10px 10px 0px 10px;
+		}
 		
+		td,th{
+			width: 150px;
+			height: 25px;
+		}
+		
+		.works{
+		    margin: 0px 10px 0px 10px;
+		    width: 200px;
+		    height: 65px;
+		    background-color: red;
+		}
+		.share{
+		    margin: 10px 10px 0px 10px;
+		    width: 200px;
+		    height: 75px;
+		}
+		#white{
+			color: white;
+			font-size: 22px;
+			font-family: Arial;
+			text-align: center;
+		}
+		hr{
+			margin-right: 20px;
+			clear: both;
+		}
+		.app{
+			float: right;
+			margin: 25px 25px 0px 0px;
+			background-color: #d3d3d3;
+			border: 1px solid black;
+		}
 	</style>
-
-
+	
+	
 	<template>
+	<div class= "media">
+    <div class= "media-left">
+        <div class= "image"> 
+        	<img src= "http://d.gr-assets.com/authors/1210966565p5/1305302.jpg" />
+        </div>
+    </div>
+    <div class= "media-body">
+    	<div class="row" style= "height: 220px;">
+  			<div class="col-md-8">
+	  			<h3 style= "color: red; margin-top: 10px;">Manmohan Bhatia</h3>
+	    		<h5><em>"Jeevan ka Rahi"</em></h5>
+	    			<table style= "height: "225px;"> 
+	    			<tr>
+	    				<th>Location</th> <td>New Delhi</td>
+	    			</tr>
+	    			<tr>
+	    				<th>Language(s)</th> <td>Tamil, English</td>
+	    			</tr>
+	    			<tr>
+	    				<th>Website</th> <td><a style= "color: black;" href= "http://www.google.co.in">google.com</a></td>
+	    			</tr>
+	    			<tr>
+	    				<th>Member Since</th> <td>August 2007</td>
+	    			</tr>
+	    			</table>
+	    	</div>
+  			<div class="col-md-4">
+  			 <div class= "app">
+  			 	<p style= "color: grey; margin: 15px 15px 0px 15px; font-family: Arial; font-size: 20px;">Works of this author are available on your mobile device only on Pratilipi App. </p>
+  			 	<img src= "http://blogs-images.forbes.com/thomasbrewster/files/2014/09/Android1.png" style= "width: 40px; height: 40px; margin: 10px 20px 15px 15px;" />
+  			 	<a style= "font-size: 16px; color: black; margin-top: 10px;" href= "http://www.google.co.in"> Download Now! </a>
+  			 </div>
+  			 </div>
+  		</div>
+  		<hr/>
+	</div>
+	</div>
+	
+	<div class= "media">
+		<div class= "media-left">
+			<div class= "works"> 
+				<p id= "white"> 55 Works on Pratilipi <p>
+        	</div>
+        	<div class= "share"> 
+				
+				<div class="a2a_kit a2a_kit_size_0 a2a_default_style" style="padding: 10px;">
+	    			<a class="a2a_button_facebook_like"></a>
+	    			<a class="a2a_dd" href="http://www.addtoany.com/share_save">Share</a>
+	    		</div>
+	    		
+        	</div>
+		</div>
+		<div class="media-body">
+			<div class= "summary">
+	    	 <h4 style= "margin-top: 0px;"> About the Author </h4>
+	    	<p style= "text-align: justify; margin-right: 20px;"> R. K. Narayan (10 October 1906 – 13 May 2001), full name Rasipuram Krishnaswami Iyer Narayanaswami, was an Indian writer, best known for his works set in the fictional South Indian town of Malgudi. He is one of three leading figures of early Indian literature in English (alongside Mulk Raj Anand and Raja Rao), and is credited with bringing the genre to the rest of the world.
 
+Narayan broke through with the help of his mentor and friend, Graham Greene, who was instrumental in getting publishers for Narayan’s first four books, including the semi-autobiographical trilogy of Swami and Friends, The Bachelor of Arts and The English Teacher. Narayan’s works also include The Financial Expert, hailed as one of the most original works of 1951, and Sahitya Akademi Award winner The Guide, which was adapted for film and for Broadway.
+
+The setting for most of Narayan's stories is the fictional town of Malgudi, first introduced in Swami and Friends. His narratives highlight social context and provide a feel for his characters through everyday life. He has been compared to William Faulkner, who also created a fictional town that stood for reality, brought out the humour and energy of ordinary life, and displayed compassionate humanism in his writing. Narayan's short story writing style has been compared to that of Guy de Maupassant, as they both have an ability to compress the narrative without losing out on elements of the story. Narayan has also come in for criticism for being too simple in his prose and diction.
+
+In a writing career that spanned over sixty years, Narayan received many awards and honours. These include the AC Benson Medal from the Royal Society of Literature and the Padma Vibhushan, India's second-highest civilian award. He was also nominated to the Rajya Sabha, the upper house of India's parliament. 
+			</p><hr/>
+    		</div>
+		</div>
+	</div>
+	
+	
+    <br/>
+    <hr/>
+    
+    <div style="margin-left: 10px;">
+	<h3 style= "color: red; margin-top: 10px; font-size: 18px;">Published Works</h3>
+	</div>
+				
+	<hr/>
+	<br/>
 	</template>
 	
-
+	
+	
 	<script>
-
 		Polymer({
 
 			is: 'pratilipi-author',
 			
+			properties: {
+				pratilipi: { type: Object }
+			},
 		});
 
 	</script>
