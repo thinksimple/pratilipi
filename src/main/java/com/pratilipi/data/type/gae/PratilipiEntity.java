@@ -315,7 +315,7 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public Long getTotalRating() {
-		return totalRating == null ? 0 : totalRating;
+		return totalRating == null ? starCount : totalRating;
 	}
 
 	@Override
