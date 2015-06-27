@@ -7,16 +7,29 @@
 			height: 150px;
 		}
 		
+		.media, .media-body{
+			overflow: visible;
+		}
+		
 		.media-body {
 			position: relative;
 			height: 150px;
-			padding-bottom: 32px;
+			padding-bottom: 32px;	
 		}
 
 		h6 {
 			margin-top: 0px;
 			margin-bottom: 5px;
 		}
+		
+		#authorname {
+		    white-space: nowrap; 
+		    width: 3em; 
+		    overflow: hidden;
+		    text-overflow: ellipsis; 
+		   
+		}
+
 
 		.btn {
 			position: absolute;
@@ -40,10 +53,12 @@
 
 			  	<div class="media-body">
 			  		<h4 class="media-heading">
-						<a href="{{ pratilipi.pageUrlAlias }}">{{ pratilipi.title }}</a>
+					 	<a href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="PRATILIPI TITLE!">{{ pratilipi.title }}</a>
 					</h4>
 					<h6>
-						<a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
+						<a href="{{ pratilipi.author.pageUrlAlias }} "  data-toggle="tooltip" data-placement="top" title="Pratilipi Book Author!">
+							<div id="authorname" style="display: block;">{{ pratilipi.author.name }}</div>
+						 </a> 	
 					</h6>
 					<div>
 						<pratilipi-rating value="{{ pratilipi.averageRating }}" />
@@ -88,7 +103,10 @@
 				jQuery( document ).ready( setColHeight );
 				jQuery( window ).load( setColHeight );
 				jQuery( window ).resize( setColHeight );
-			}
+				$('[data-toggle="tooltip"]').tooltip();   
+							  
+			},
+
 			
 		});
 
