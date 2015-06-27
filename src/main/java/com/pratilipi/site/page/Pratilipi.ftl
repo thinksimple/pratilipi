@@ -21,16 +21,15 @@
 
 		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-rating.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-user-rating.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-social.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-carousel.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-review.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
-		
-		<#-- Social media share Button -->
-		<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-		
-		
 	</head>
 	<body>
 
@@ -48,6 +47,8 @@
 			</div>
 			<div class="secondary-500" style="margin-left:270px">
 				<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
+				<pratilipi-carousel></pratilipi-carousel>
+				<pratilipi-review></pratilipi-review>
 			</div>
 		</div>
 		

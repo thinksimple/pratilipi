@@ -23,49 +23,7 @@
 			border-radius: 0px;
 			padding: 3px 20px;
 		}
-		
-		.rating {
-		  	 direction: rtl;
-		 	 text-align: center;
-		 	 cursor: pointer;
-		 	 cursor: hand;
-		}
-		.rating > span {
-		 	 display: inline-block;
-		     width: 1.1em;
-		}
-		.rating > span:hover,
-		.rating > span:hover ~ span {
-		     color: transparent;
-		}
-		.rating > span:hover:before,
-		.rating > span:hover ~ span:before {
-		     content: "\2605";
-		     color: gold;
-		}
-		hr { 
-			  display: block;
-			  margin-top: 0.5em;
-			  margin-bottom: 0.5em;
-	          margin-left: auto;
-			  margin-right: auto;
-			  border-style: inset;
-			  border-width: 1px;
-		} 
-		.carousel-control {
-			  padding-top: 10%;
-			  width: 1%;
-		}
-		.carousel-inner img {
-		      height: 100px;
-		      max-height: 100px;
-		      width: 70;
-		}
-	   .carousel-inner {
-		      max-height: 110px;
-		      
-		}
-		
+
 	</style>
 
 	<template>
@@ -73,26 +31,10 @@
 
 			<div class="media-left">
 				<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
-			
-			
-			<div class="rating">
-           
-				<h5>{{ varx }}</h5>
-				<span class="glyphicon glyphicon-star-empty" aria-hidden="true" on-mouseover="fivestars" on-mouseout="onUnhovered"></span>
-				<span class="glyphicon glyphicon-star-empty" aria-hidden="true" on-mouseover="fourstars" on-mouseout="onUnhovered"></span>
-				<span class="glyphicon glyphicon-star-empty" aria-hidden="true" on-mouseover="threestars" on-mouseout="onUnhovered"></span>
-				<span class="glyphicon glyphicon-star-empty" aria-hidden="true" on-mouseover="twostars" on-mouseout="onUnhovered"></span>
-				<span class="glyphicon glyphicon-star-empty" aria-hidden="true" on-mouseover="onestar" on-mouseout="onUnhovered"></span>
-				<content></content>
-			
-				<div class="a2a_kit a2a_kit_size_0 a2a_default_style" style="padding: 10px;">
-	    			
-	    			<a class="a2a_button_facebook_like"></a>
-	    			<a class="a2a_dd" href="http://www.addtoany.com/share_save">Share</a>
-	    			
-	    		
-	    		</div>
-			</div>	
+				<div style="text-align:center">
+					<pratilipi-user-rating></pratilipi-user-rating>
+					<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
+				</div>
 			</div>
 			
 			<div class="media-body">
@@ -119,130 +61,9 @@
 					</div>	
 					<hr>	
 				</div>
-				
 			</div>
-			<hr>
-			<h4 style="margin-left: 20px;">Recommended for you</h4>
-			
-			<div class="container">
-			    <div class="col-md-12">
-			        
-			        <div class="well">
-			            <div id="myCarousel" class="carousel slide">
-			                
-			                <!-- Carousel items -->
-			                <div class="carousel-inner">
-			                    <div class="item active">
-			                        <div class="row">
-			                            <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image"  class="img-responsive"></a>
-			                            <h3>Book Title</h3>
-			                           </div>
-			                            <div class="col-sm-2"><a href="#x"><img src="/stylesheets/img.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x"><img src="/stylesheets/img2.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x"><img src="/stylesheets/bookimg.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            
-			                        </div>
-			                        <!--/row-->
-			                    </div>
-			                    <!--/item-->
-			                    <div class="item">
-			                        <div class="row">
-			                            <div class="col-sm-2"><a href="#x"><img src="/stylesheets/img3.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="/stylesheets/img4.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="/stylesheets/img.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                        </div>
-			                        <!--/row-->
-			                    </div>
-			                    <!--/item-->
-			                    <div class="item">
-			                        <div class="row">
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                        </div>
-			                        <!--/row-->
-			                    </div>
-			                    <!--/item-->
-			                </div>
-			                <!--/carousel-inner--> <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-			                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 
-			                </a>
-			
-			                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-			                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-			      			
-			                </a>
-			            </div>
-			            <!--/myCarousel-->
-			        </div>
-			        <!--/well-->
-			    </div>
-			</div>
-			
 		</div>
-		
-			<div >
-						
-						<div class="bs-example">
-						    <div class="panel-group" id="accordion">
-						        <div class="panel panel-default">
-						            <div class="panel-heading">
-						                <h4 class="panel-title">
-						                	<a href="{{ pratilipi.readerPageUrl }}" class="btn btn-default">Reviews</a>
-						                    <button type="button" class="btn btn-info" data-toggle="collapse" data-parent="#accordion" data-target="#collapse" onclick="window.location.href='#scroll'">Write a Review</button>
-						                	
-						                </h4>
-						            </div>
-						            <div id="collapse" class="panel-collapse collapse">
-						                <div class="panel-body">
-											<h4>Review Title</h4>
-											 <textarea rows="1" cols="50" placeholder="e.g., Great Story!"></textarea>
-											<div>
-												<span><big>Your Review &nbsp; &nbsp; &nbsp; &emsp; </big></span>
-												<span id="mandatory">(at least 140 characters)</span>
-												</div>	
-											<textarea name="textarea" id="textarea" rows="10" cols="50" style="width: 600px;"placeholder="Share your thoughts!What made this work interesting?What made it inspiring?What did you lean from it?You are helping others make a better choice!"></textarea>
-											<div class="result">0 chars</div>
-											
-											<div style= "padding:10px;">
-												<button type="button" class="btn btn-success">Submit</button>
-												<button type="button" class="btn btn-default">Cancel</button>
-											</div>
-									   </div>
-						            </div>
-									
-						        </div>
-						       
-						    </div>
-						</div>						
-					</div>
-					
 	</template>
 	
 
@@ -253,14 +74,17 @@
 			is: 'pratilipi-pratilipi',
 			
 			properties: {
-				pratilipi: { type: Object },
-				
+				pratilipi: { type: Object }
 			},
 			
 			getRatingsStr: function( ratingCount ) {
 				return '(' + this.pratilipi.ratingCount + ' ' + ( this.pratilipi.ratingCount <= 1 ? '${ _strings.rating }' : '${ _strings.ratings }' ) + ')';
 			},
 
+			getShareUrl: function() {
+				return 'http://www.pratilipi.com/' + pratilipi.pageUrl;
+			},
+			
 			showCompleteSummary: function() {
 				jQuery( '.summary' ).html( this.pratilipi.summary );
 				jQuery( '.show-more' ).hide();
@@ -273,58 +97,9 @@
 				jQuery( '.show-less' ).hide();
 			},
 			
-			
-			fivestars: function() {
-				this.varx = "Excellent";
-				
-			},
-			
-			fourstars: function() {
-				this.varx = "Very Good";
-				
-			},
-			
-			threestars: function() {
-				this.varx = "Good";
-				
-			},
-			
-			twostars: function() {
-				this.varx = "Fair";
-				
-			},
-			
-			onestar: function() {
-				this.varx = "Poor";
-				
-			},
-			 onUnhovered: function() {
-			        this.varx = "!Rate This";
-			},
-			
-			
-			
 			ready: function() {
 				jQuery( '.summary' ).html( this.pratilipi.summary );
 				this.showSummarySnippet();
-				
-				
-				$('textarea').on('keyup',function(){
-					 $(window).scrollTop($("#scroll").offset().top);
-					    var charCount = $(this).val().replace(/\s/g, '').length;
-						$(".result").text(charCount + " chars");
-							
-						// If the value is less than 140, add a white background
-						if ((charCount) < 140) {
-							$("#mandatory").css("background", "white");
-						}
-
-						// Else if the value is equal to 140, add a green background
-						else if ((charCount) >= 140) {
-							$("#mandatory").css("background", "green");
-						}
-						
-				});
 			}
 			
 		});

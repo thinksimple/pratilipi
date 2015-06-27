@@ -14,8 +14,17 @@ language_hi		= Hindi
 language_gu		= Gujarati
 language_ta		= Tamil
 
+saving = Saving ...
+
 rating  = rating
 ratings	= ratings
+rate_this = Rate This !
+your_rating = Your Rating
+rating_1_star = Poor
+rating_2_star = Fair
+rating_3_star = Good
+rating_4_star = Very Good
+rating_5_star = Excellent
 
 search 			= Search
 search_bar_help	= Search for books, stories, poems and more ...

@@ -1,0 +1,73 @@
+<dom-module id="pratilipi-review">
+
+	<template>
+		<div class="media">
+
+			<div >
+						<div class="bs-example">
+						    <div class="panel-group" id="accordion">
+						        <div class="panel panel-default">
+						            <div class="panel-heading">
+						                <h4 class="panel-title">
+						                	<a href="{{ pratilipi.readerPageUrl }}" class="btn btn-default">Reviews</a>
+						                    <button type="button" class="btn btn-info" data-toggle="collapse" data-parent="#accordion" data-target="#collapse" onclick="window.location.href='#scroll'">Write a Review</button>
+						                	
+						                </h4>
+						            </div>
+						            <div id="collapse" class="panel-collapse collapse">
+						                <div class="panel-body">
+											<h4>Review Title</h4>
+											 <textarea rows="1" cols="50" placeholder="e.g., Great Story!"></textarea>
+											<div>
+												<span><big>Your Review &nbsp; &nbsp; &nbsp; &emsp; </big></span>
+												<span id="mandatory">(at least 140 characters)</span>
+												</div>	
+											<textarea name="textarea" id="textarea" rows="10" cols="50" style="width: 600px;"placeholder="Share your thoughts!What made this work interesting?What made it inspiring?What did you lean from it?You are helping others make a better choice!"></textarea>
+											<div class="result">0 chars</div>
+											
+											<div style= "padding:10px;">
+												<button type="button" class="btn btn-success">Submit</button>
+												<button type="button" class="btn btn-default">Cancel</button>
+											</div>
+									   </div>
+						            </div>
+									
+						        </div>
+						       
+						    </div>
+						</div>						
+					</div>
+					
+	</template>
+	
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-review',
+			
+			ready: function() {
+				$('textarea').on('keyup',function(){
+					 $(window).scrollTop($("#scroll").offset().top);
+					    var charCount = $(this).val().replace(/\s/g, '').length;
+						$(".result").text(charCount + " chars");
+							
+						// If the value is less than 140, add a white background
+						if ((charCount) < 140) {
+							$("#mandatory").css("background", "white");
+						}
+
+						// Else if the value is equal to 140, add a green background
+						else if ((charCount) >= 140) {
+							$("#mandatory").css("background", "green");
+						}
+				});
+			}
+			
+		});
+		
+		
+	</script>
+
+</dom-module>

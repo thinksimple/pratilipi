@@ -1,0 +1,149 @@
+<dom-module id="pratilipi-user-rating">
+
+	<style>
+
+		h5 {
+			margin-bottom: 5px;
+		}
+		
+		div > div {
+			display: inline-block;
+			direction: rtl;
+			cursor: pointer;
+			cursor: hand;
+		}
+
+		.glyphicon {
+			color: #bdc3c7;
+		}
+
+		.glyphicon-selected {
+			color: #e67e22;
+		}
+
+		.glyphicon:hover ~ .glyphicon, .glyphicon:hover {
+			color: gold;
+		}
+
+	</style>
+
+
+	<template>
+		<div>
+			<h5>{{ title }}</h5>
+			<div>
+				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showFiveStars"  on-mouseout="init" on-click="rateFiveStars"></span>
+				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showFourStars"  on-mouseout="init" on-click="rateFourStars"></span>
+				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showThreeStars" on-mouseout="init" on-click="rateThreeStars"></span>
+				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showTwoStars"   on-mouseout="init" on-click="rateTwoStars"></span>
+				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showOneStar"    on-mouseout="init" on-click="rateOneStar"></span>
+			</div>
+		</div>
+	</template>
+
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-user-rating',
+
+			properties: {
+				value: { type: Number, value: 0 },
+				pendingUpdate: { type: Number, value: 0 }
+			},
+
+			init: function() {
+				if( this.pendingUpdate > 0 )
+					this.title = '${ _strings.saving }';
+				else if( this.value == undefined || this.value == 0 )
+					this.title = '${ _strings.rate_this }';
+				else
+					this.title = '${ _strings.your_rating }';
+
+				
+				var stars = this.querySelectorAll( 'span' );
+
+				if( this.value >= 1 )
+					jQuery( stars[4] ).addClass( 'glyphicon-selected' );
+				else
+					jQuery( stars[4] ).removeClass( 'glyphicon-selected' );
+
+				if( this.value >= 2 )
+					jQuery( stars[3] ).addClass( 'glyphicon-selected' );
+				else
+					jQuery( stars[3] ).removeClass( 'glyphicon-selected' );
+
+				if( this.value >= 3 )
+					jQuery( stars[2] ).addClass( 'glyphicon-selected' );
+				else
+					jQuery( stars[2] ).removeClass( 'glyphicon-selected' );
+
+				if( this.value >= 4 )
+					jQuery( stars[1] ).addClass( 'glyphicon-selected' );
+				else
+					jQuery( stars[1] ).removeClass( 'glyphicon-selected' );
+
+				if( this.value == 5 )
+					jQuery( stars[0] ).addClass( 'glyphicon-selected' );
+				else
+					jQuery( stars[0] ).removeClass( 'glyphicon-selected' );
+			},
+
+			
+			showOneStar: function() {
+				this.title = '${ _strings.rating_1_star }';
+			},
+
+			showTwoStars: function() {
+				this.title = '${ _strings.rating_2_star }';
+			},
+			
+			showThreeStars: function() {
+				this.title = '${ _strings.rating_3_star }';
+			},
+			
+			showFourStars: function() {
+				this.title = '${ _strings.rating_4_star }';
+			},
+			
+			showFiveStars: function() {
+				this.title = '${ _strings.rating_5_star }';
+			},
+			
+			
+			rateOneStar: function() {
+				this.pendingUpdate++;
+				this.value = 1;
+			},
+
+			rateTwoStars: function() {
+				this.pendingUpdate++;
+				this.value = 2;
+			},
+			
+			rateThreeStars: function() {
+				this.pendingUpdate++;
+				this.value = 3;
+			},
+			
+			rateFourStars: function() {
+				this.pendingUpdate++;
+				this.value = 4;
+			},
+			
+			rateFiveStars: function() {
+				this.pendingUpdate++;
+				this.value = 5;
+			},
+
+			
+			ready: function() {
+				this.init();
+			}
+
+		});
+
+	</script>
+
+</dom-module>

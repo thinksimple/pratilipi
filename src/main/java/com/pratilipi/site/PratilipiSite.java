@@ -202,7 +202,7 @@ public class PratilipiSite extends HttpServlet {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor .getAuthor( pratilipi.getAuthorId() );
-		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, true, false );
 
 		Gson gson = new Gson();
 
