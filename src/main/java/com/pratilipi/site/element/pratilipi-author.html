@@ -25,7 +25,7 @@
 		#white{
 			color: white;
 			font-size: 22px;
-			font-family: Arial;
+			font-family: Montserrat;
 			text-align: center;
 		}
 		hr{
@@ -38,11 +38,14 @@
 			background-color: #f0f0f0;
 			border: 1px solid black;
 		}
+		P{
+			font-family: Montserrat;
+		}
 	</style>
 	
 	
 	<template>
-	<!-- <div id="fb-root"></div>
+	<div id="fb-root"></div>
 	<script>(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];
 	  if (d.getElementById(id)) return;
@@ -50,7 +53,7 @@
 	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
- -->
+ 
 	<div class= "media">
     <div class= "media-left">
         <div class= "image"> 
@@ -60,11 +63,12 @@
 				<p id= "white"> 55 Works on Pratilipi <p>
         	</div>
         	<div class= "share"> 
-				<!-- <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div> -->
+				<div style= "margin-left: 3em;" class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+				<a href= "http://www.google.co.in"> Share </a>
         	</div>
     </div>
-    <div class= "media-body">
-    	<div class="row" style= "height: 220px;">
+    <div class= "media-body" style= "font-family: Montserrat;">
+    	<div class="row" style= "height: 215px;">
   			<div class="col-md-7">
 	  			<h3 style= "color: red; margin-top: 10px;">Manmohan Bhatia</h3>
 	    		<h5><em>"Jeevan ka Rahi"</em></h5>
@@ -87,21 +91,27 @@
   			 <div class= "app">
   			 	<p style= "color: grey; margin: 15px 10px 0px 15px; font-family: Montserrat; font-size: 14px;">Works of this author are available on your mobile device only on Pratilipi App. </p>
   			 	<img src= "http://auguxsys.com/data/uploads/imgs/icons/android-icon.png" style= "width: 40px; height: 40px; margin: 10px 10px 15px 15px;" />
-  			 	<a style= "font-size: 16px; color: black; margin-top: 10px;" href= "http://www.google.co.in"> Download Now! </a>
+  			 	<a style= "font-size: 16px; color: black; margin: 10px 20px 0px 0px;" href= "http://www.google.co.in"> Download Now! </a>
   			 </div>
   			 </div>
   		</div>
   		<hr/>
-  		<div class= "summary">
+  		<div>
 	    	 <h4 style= "margin-top: 0px;"> About the Author </h4>
-	    	<p style= "text-align: justify; margin-right: 120px;"> R. K. Narayan (10 October 1906 – 13 May 2001), full name Rasipuram Krishnaswami Iyer Narayanaswami, was an Indian writer, best known for his works set in the fictional South Indian town of Malgudi. He is one of three leading figures of early Indian literature in English (alongside Mulk Raj Anand and Raja Rao), and is credited with bringing the genre to the rest of the world.
+	    	 <div style= "text-align: justify; margin-right: 120px;">
+	    	 <span class="summary">
+	    	 R. K. Narayan (10 October 1906 – 13 May 2001), full name Rasipuram Krishnaswami Iyer Narayanaswami, was an Indian writer, best known for his works set in the fictional South Indian town of Malgudi. He is one of three leading figures of early Indian literature in English (alongside Mulk Raj Anand and Raja Rao), and is credited with bringing the genre to the rest of the world.
 
 Narayan broke through with the help of his mentor and friend, Graham Greene, who was instrumental in getting publishers for Narayan’s first four books, including the semi-autobiographical trilogy of Swami and Friends, The Bachelor of Arts and The English Teacher. Narayan’s works also include The Financial Expert, hailed as one of the most original works of 1951, and Sahitya Akademi Award winner The Guide, which was adapted for film and for Broadway.
 
 The setting for most of Narayan's stories is the fictional town of Malgudi, first introduced in Swami and Friends. His narratives highlight social context and provide a feel for his characters through everyday life. He has been compared to William Faulkner, who also created a fictional town that stood for reality, brought out the humour and energy of ordinary life, and displayed compassionate humanism in his writing. Narayan's short story writing style has been compared to that of Guy de Maupassant, as they both have an ability to compress the narrative without losing out on elements of the story. Narayan has also come in for criticism for being too simple in his prose and diction.
 
-In a writing career that spanned over sixty years, Narayan received many awards and honours. These include the AC Benson Medal from the Royal Society of Literature and the Padma Vibhushan, India's second-highest civilian award. He was also nominated to the Rajya Sabha, the upper house of India's parliament. 
-			</p><hr/>
+In a writing career that spanned over sixty years, Narayan received many awards and honours. These include the AC Benson Medal from the Royal Society of Literature and the Padma Vibhushan, India's second-highest civilian award. He was also nominated to the Rajya Sabha, the upper house of India's parliament.
+	    	 </span>
+			<a href="{{__hack__}}#" class="show-more" on-click="showCompleteSummary"><small>(show more)</small></a>
+			<a href="{{__hack__}}#" class="show-less" on-click="showSummarySnippet"><small>(show less)</small></a>
+			</div>
+	    	<hr/>
     		</div>
 	</div>
 	</div>
@@ -120,11 +130,34 @@ In a writing career that spanned over sixty years, Narayan received many awards 
 	
 	<script>
 		Polymer({
-
 			is: 'pratilipi-author',
 			
 			properties: {
 				pratilipi: { type: Object }
+			},
+			
+			showCompleteSummary: function() {
+				jQuery( '.summary' ).html( this.summaryString );
+				jQuery( '.show-more' ).hide();
+				jQuery( '.show-less' ).show();
+			},
+			
+			showSummarySnippet: function() {
+				jQuery( '.summary' ).text( this.summaryString.substr( 0, 300 ) + '...' );
+				jQuery( '.show-more' ).show();
+				jQuery( '.show-less' ).hide();
+			},
+			showNormal: function() {
+				jQuery( '.summary' ).html( this.summaryString );
+				jQuery( '.show-more' ).hide();
+				jQuery( '.show-less' ).hide();
+			},
+			ready: function() {
+				this.summaryString = jQuery( '.summary' ).text();
+				if(this.summaryString.length > 300)  
+					this.showSummarySnippet();
+				else
+					this.showNormal(); 
 			},
 		});
 
