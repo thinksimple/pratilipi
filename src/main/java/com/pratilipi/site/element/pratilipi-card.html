@@ -7,7 +7,7 @@
 			height: 150px;
 		}
 		
-		.media, .media-body{
+		.media, .media-body {
 			overflow: visible;
 		}
 		
@@ -29,7 +29,6 @@
 		    text-overflow: ellipsis; 
 		   
 		}
-
 
 		.btn {
 			position: absolute;
@@ -53,10 +52,10 @@
 
 			  	<div class="media-body">
 			  		<h4 class="media-heading">
-					 	<a href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="PRATILIPI TITLE!">{{ pratilipi.title }}</a>
+					 	<a href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
 					</h4>
 					<h6>
-						<a href="{{ pratilipi.author.pageUrlAlias }} "  data-toggle="tooltip" data-placement="top" title="Pratilipi Book Author!">
+						<a href="{{ pratilipi.author.pageUrlAlias }} "  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.author.name }}">
 							<div id="authorname" style="display: block;">{{ pratilipi.author.name }}</div>
 						 </a> 	
 					</h6>
@@ -87,6 +86,8 @@
 			},
 			
 			ready: function() {
+				$('[data-toggle="tooltip"]').tooltip();   
+
 				var gridCol = this.querySelector( '.media' );
 				var heading = this.querySelector( 'h4 a' );
 				var title = this.pratilipi.title;
@@ -103,10 +104,7 @@
 				jQuery( document ).ready( setColHeight );
 				jQuery( window ).load( setColHeight );
 				jQuery( window ).resize( setColHeight );
-				$('[data-toggle="tooltip"]').tooltip();   
-							  
 			},
-
 			
 		});
 
