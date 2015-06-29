@@ -43,11 +43,11 @@
 		<property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
 
 		<!-- Configure CDN -->
-		<property name="localhost.cdn" value="localhost:8081"/>
+		<property name="localhost.cdn" value="localhost:8080"/>
 		<property name="devo-pratilipi.cdn" value="devo.pratilipi.cdssolutions.in"/>
 		<property name="prod-pratilipi.cdn" value="prod.pratilipi.cdssolutions.in"/>
 
-		<property name="localhost.cdn.3p" value="localhost:8081/third-party"/>
+		<property name="localhost.cdn.3p" value="localhost:8080/third-party"/>
 		<property name="devo-pratilipi.cdn.3p" value="lib.cdssolutions.in"/>
 		<property name="prod-pratilipi.cdn.3p" value="lib.cdssolutions.in"/>
 	</system-properties>

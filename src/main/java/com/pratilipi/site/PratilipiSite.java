@@ -82,6 +82,14 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForHomePage( lang );
 				templateName = templateFilePrefix + "Home.ftl";
 				
+			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
+				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId() );
+				templateName = templateFilePrefix + "Pratilipi.ftl";
+				
+			} else if( page != null && page.getType() == PageType.AUTHOR ) {
+				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
+				templateName = templateFilePrefix + "Author.ftl";
+			
 			} else if( uri.equals( "/books" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.BOOK, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
@@ -101,15 +109,10 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.equals( "/magazines" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
-				
-			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
-				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId() );
-				templateName = templateFilePrefix + "Pratilipi.ftl";
-				
-			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
-				templateName = templateFilePrefix + "Author.ftl";
 			
+			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), lang ) ) != null ) {
+				templateName = templateFilePrefix + "List.ftl";
+				
 			} else {
 				dataModel = new HashMap<String, Object>();
 				templateName = templateFilePrefix + "error/PageNotFound.ftl";
@@ -166,38 +169,6 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
-	public Map<String, Object> createDataModelForListPage( PratilipiType type, Language lang )
-			throws UnexpectedServerException {
-
-		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Gson gson = new Gson();
-		
-		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setType( type );
-		pratilipiFilter.setLanguage( lang );
-		
-		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
-				searchAccessor.searchPratilipi( pratilipiFilter, null, 20 );
-		List<Pratilipi> pratilipiList =
-				dataAccessor.getPratilipiList( pratilipiIdListCursorTuple.getDataList() );
-		String cursor = pratilipiIdListCursorTuple.getCursor();
-		
-		List<String> pratilipiJsonList = new ArrayList<>( pratilipiList.size() );
-		for( Pratilipi pratilipi : pratilipiList ) {
-			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
-			pratilipiJsonList.add( gson.toJson( pratilipiData ).toString() );
-		}
-
-		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "pratilipiJsonList", pratilipiJsonList );
-		dataModel.put( "pratilipiFilter", gson.toJson( pratilipiFilter ) );
-		dataModel.put( "pratilipiListCursor", cursor );
-
-		return dataModel;
-	}
-
 	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -227,6 +198,86 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
+	public Map<String, Object> createDataModelForListPage( PratilipiType type, Language lang )
+			throws UnexpectedServerException {
+
+		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Gson gson = new Gson();
+		
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setType( type );
+		pratilipiFilter.setLanguage( lang );
+		
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
+				searchAccessor.searchPratilipi( pratilipiFilter, null, 20 );
+		List<Pratilipi> pratilipiList =
+				dataAccessor.getPratilipiList( pratilipiIdListCursorTuple.getDataList() );
+		String cursor = pratilipiIdListCursorTuple.getCursor();
+		
+		List<String> pratilipiJsonList = new ArrayList<>( pratilipiList.size() );
+		for( Pratilipi pratilipi : pratilipiList ) {
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
+			pratilipiJsonList.add( gson.toJson( pratilipiData ).toString() );
+		}
+
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", type.getNamePlural() );
+		dataModel.put( "pratilipiJsonList", pratilipiJsonList );
+		dataModel.put( "pratilipiFilter", gson.toJson( pratilipiFilter ) );
+		dataModel.put( "pratilipiListCursor", cursor );
+
+		return dataModel;
+	}
+
+	public Map<String, Object> createDataModelForListPage( String listName, Language lang )
+			throws UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Gson gson = new Gson();
+
+		String fileName = "list." + listName + "." + lang.getCode() + ".json";
+		
+		// Fetching Pratilipi List from data file
+		String listTitle = null;
+		List<Long> pratilipiIdList = new LinkedList<Long>();
+		try {
+			File file = new File( getClass().getResource( dataFilePrefix + fileName ).toURI() );
+			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+			if( it.hasNext() )
+				listTitle = it.nextLine().trim();
+			while( it.hasNext() ) {
+				String pageUrl = it.nextLine();
+				if( ! pageUrl.trim().isEmpty() ) {
+					Page page = dataAccessor.getPage( pageUrl );
+					if( page != null )
+						pratilipiIdList.add( page.getPrimaryContentId() );
+				}
+			}
+			LineIterator.closeQuietly( it );
+		} catch( NullPointerException e ) {
+			return null;
+		} catch( URISyntaxException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception while reading from data file.", e );
+			throw new UnexpectedServerException();
+		}
+
+		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
+
+		List<String> pratilipiJsonList = new ArrayList<>( pratilipiList.size() );
+		for( Pratilipi pratilipi : pratilipiList ) {
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
+			pratilipiJsonList.add( gson.toJson( pratilipiData ).toString() );
+		}
+
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", listTitle );
+		dataModel.put( "pratilipiJsonList", pratilipiJsonList );
+		return dataModel;
+	}
+
 	public <T> T getData( String fileName, Class<T> clazz )
 			throws UnexpectedServerException {
 		
@@ -246,5 +297,5 @@ public class PratilipiSite extends HttpServlet {
 		// The magic
 		return new Gson().fromJson( jsonStr, clazz );
 	}
-
+	
 }

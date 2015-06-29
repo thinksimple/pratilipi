@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 		<#-- Page Title & Favicon -->
-		<title>${ _strings.pratilipi }</title>
+		<title>${ title } &#0171 ${ _strings.pratilipi }</title>
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 
 		<#-- Third-Party Library -->
@@ -45,7 +45,7 @@
 			</div>
 			<div class="secondary-500" style="margin-left:270px">
 				<div>
-					<pratilipi-card-grid grid-title="${ _strings.featured }">
+					<pratilipi-card-grid grid-title="${ title }">
 						<div>
 							<#list pratilipiJsonList as pratilipiJson>
 								<pratilipi-card pratilipi='${ pratilipiJson }'></pratilipi-card>

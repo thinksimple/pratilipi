@@ -1,6 +1,5 @@
 package com.pratilipi.common.type;
 
-
 public enum AccessType {
 
 	PRATILIPI_LIST		  ( "List Pratilipi" ),

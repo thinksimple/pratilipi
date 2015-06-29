@@ -5,11 +5,11 @@
 			"items" : [
 				{
 					"text" : "வாசகர் தேர்வு",
-					"url" : "#most-read"
+					"url" : "/most-read"
 				},
 				{
 					"text" : "2015இல் சிறந்தவை",
-					"url" : "#best-of-2015"
+					"url" : "/best-of-2015"
 				},
 				{
 					"text" : "புத்தகங்கள்",
@@ -39,31 +39,27 @@
 			"items" : [
 				{
 					"text" : "புதினங்கள்",
-					"url" : "#fiction"
+					"url" : "/fiction"
 				},
 				{
 					"text" : "காதல்",
-					"url" : "#romance"
-				},
-				{
-					"text" : "காதல்",
-					"url" : "#romance"
+					"url" : "/romance"
 				},
 				{
 					"text" : "ஆன்மிகம்",
-					"url" : "#spiritual"
+					"url" : "/spiritual"
 				},
 				{
 					"text" : "வரலாறு",
-					"url" : "#history"
+					"url" : "/history"
 				},
 				{
 					"text" : "அறிவியல் ",
-					"url" : "#science"
+					"url" : "/science"
 				},
 				{
 					"text" : "பண்டைய நூல்கள்",
-					"url" : "#classiccontent"
+					"url" : "/classiccontent"
 					
 				}
 			]
