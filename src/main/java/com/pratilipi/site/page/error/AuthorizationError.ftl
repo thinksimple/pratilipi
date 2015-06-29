@@ -38,18 +38,19 @@
 		
 		<div class="container" style="margin-top: 20px; ">
 			<div class="secondary-500" style="margin-left: 150px;">
-				<div class="media" style="padding: 20px;">
+				<div class="media" >
 					<div class="media-left">
-						<i class="fa fa-map-marker fa-5x"></i>
+						<i class="fa fa-ban fa-5x"></i>
 					</div>
 		
 					<div class="media-body">
-						<h4><b>Error 404</b></h4>
-						<h1><strong>Page not found.</strong></h1>
-						<p><b>The page you are looking for isn't here.</b></p>
+						<h4><b>Error!</b></h4>
+						<h1><strong>Not authorized.</strong></h1>
+						<p><b>Sorry! We can't allow you to view this page.</b></p>
 						<p><b>You can still search for your favourite content in the search bar on top<br>
-						or head over to the homepage.</b></p> <br>
-						<a class="btn btn-success" href="http://tamil.pratilipi.com">Home</a>
+						or head over to teh home page</b></p> <br>
+						<a class="btn btn-success" href="http://tamil.pratilipi.com">Home
+			            </a>
 	    			</div>
 				</div>
 			</div>
