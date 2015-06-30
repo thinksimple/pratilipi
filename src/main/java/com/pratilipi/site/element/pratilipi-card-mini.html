@@ -1,0 +1,55 @@
+<dom-module id="pratilipi-card-mini">
+
+	<style>
+
+		:host {
+			display: inline-block;
+			width: 100px;
+			margin: auto 15px auto 15px;
+			text-align:center;
+		}
+
+		:host img {
+			width: 100px;
+			height: 150px;
+		}
+
+		:host h6 {
+			margin-top: 0px;
+			margin-bottom: 5px;
+		}
+		
+	</style>
+
+
+	<template>
+		<a href="{{ pratilipi.pageUrlAlias }}">
+			<img src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+		</a>
+  		<h5>
+		 	<a href="{{ pratilipi.pageUrlAlias }}">{{ pratilipi.title }}</a>
+		</h5>
+		<h6>
+			<a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
+		</h6>
+		<div>
+			<pratilipi-rating value="{{ pratilipi.averageRating }}" />
+		</div>
+	</template>
+
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-card-mini',
+
+			properties: {
+				pratilipi: { type: Object }
+			}
+		
+		});
+
+	</script>
+
+</dom-module>

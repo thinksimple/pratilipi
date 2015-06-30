@@ -1,107 +1,53 @@
 <dom-module id="pratilipi-carousel">
 
 	<style>
-
-		.carousel-control {
-			  padding-top: 10%;
-			  width: 1%;
+		
+		:host {
+			display: block;
 		}
-	
-		.carousel-inner img {
-		      height: 100px;
-		      max-height: 100px;
-		      width: 70;
+		
+		:host #Carousel {
+			padding: 0px 35px;
+		}
+		
+		:host .carousel-inner {
+			text-align: center;
 		}
 
-	   .carousel-inner {
-		      max-height: 110px;
+		:host .carousel-control {
+			width: 35px;
 		}
 
 	</style>
 
 	
 	<template>
-		<h4 style="margin-left: 20px;">Recommended for you</h4>
-			
-		<div class="container">
-		    <div class="col-md-12">
-		        <div class="well">
-		            <div id="myCarousel" class="carousel slide">
-			                
-			                <!-- Carousel items -->
-			                <div class="carousel-inner">
-			                    <div class="item active">
-			                        <div class="row">
-			                            <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image"  class="img-responsive"></a>
-			                            <h3>Book Title</h3>
-			                           </div>
-			                            <div class="col-sm-2"><a href="#x"><img src="/stylesheets/img.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x"><img src="/stylesheets/img2.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x"><img src="/stylesheets/bookimg.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                        </div>
-			                        <!--/row-->
-			                    </div>
-			                    <!--/item-->
-			                    <div class="item">
-			                        <div class="row">
-			                            <div class="col-sm-2"><a href="#x"><img src="/stylesheets/img3.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="/stylesheets/img4.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="/stylesheets/img.jpg" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                        </div>
-			                        <!--/row-->
-			                    </div>
-			                    <!--/item-->
-			                    <div class="item">
-			                        <div class="row">
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                            <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                             <div class="col-sm-2"><a href="#x" class="thumbnail"><img src="http://placehold.it/75x112" alt="Image" class="img-responsive"></a>
-			                            </div>
-			                        </div>
-			                        <!--/row-->
-			                    </div>
-			                    <!--/item-->
-			                </div>
-			                <!--/carousel-inner--> <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-			                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		<h4>Recommended for you</h4>
+		<div id="Carousel" class="carousel slide">
 
-			                </a>
-			
-			                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-			                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-			      			
-			                </a>
-			            </div>
-			            <!--/myCarousel-->
-			        </div>
-			        <!--/well-->
-			    </div>
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<template is="dom-repeat" items="{{ carouselItem }}" as="pratilipi" index-as="j">
+						<pratilipi-card-mini pratilipi="{{ getPratilipi( 0, j ) }}"></pratilipi-card-mini>
+					</template>
+				</div>
+				<template is="dom-repeat" items="{{ carouselItemList }}" index-as="i">
+					<div class="item">
+						<template is="dom-repeat" items="{{ carouselItem }}" as="pratilipi" index-as="j">
+							<pratilipi-card-mini pratilipi="{{ getPratilipi( i, j ) }}"></pratilipi-card-mini>
+						</template>
+					</div>
+				</template>
 			</div>
 			
+			<a class="left carousel-control" href="#Carousel" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			</a>
+
+			<a class="right carousel-control" href="#Carousel" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			</a>
+
 		</div>
 	</template>
 
@@ -111,24 +57,51 @@
 		Polymer({
 			
 			is: 'pratilipi-carousel',
+			
+			behaviors: [
+				Polymer.IronResizableBehavior
+			],
+          
+			properties: {
+				pratilipiList: { type: Object },
+				col: { type: Number, value: 0 }
+			},
 
-			ready: function() {
-				var grid = this.querySelector( 'div' );
-				function setColCount( e ) {
-					var jGrid = jQuery( grid );
-					var width = jGrid.width();
-					if( width >= 750 )
-						jGrid.attr( "class", "three-col-grid" );
-					else if( width >= 500 )
-						jGrid.attr( "class", "two-col-grid" );
-					else
-						jGrid.attr( "class", "one-col-grid" );
-				};
-				jQuery( document ).ready( setColCount );
-				jQuery( window ).load( setColCount );
-				jQuery( window ).resize( setColCount );
+			listeners: {
+				'iron-resize': '_onIronResize'
+			},
+			
+			attached: function() {
+				this.async( this.notifyResize, 1 );
+			},
+			
+			_onIronResize: function() {
+				var width = this.offsetWidth;
+				
+				var j = Math.floor( ( width - 90 ) / 130 );
+				if( j < 0 )
+					j = 1;
+				var i = Math.floor( this.pratilipiList.length / j );
+				
+				var x = 0;
+
+				// Carousel Items
+				this.carouselItemList = [];
+				for( x = 1; x < i; x++ )
+					this.carouselItemList.push( x );
+
+				// Carousel Item Columns
+				this.carouselItem = [];
+				for( x = 0; x < j; x++ )
+					this.carouselItem.push( x );
+
+				this.col = j;
+			},
+			
+			getPratilipi: function( i, j ) {
+				return this.pratilipiList[ this.col * i + j ];
 			}
-		
+			
 		});
 
 	</script>

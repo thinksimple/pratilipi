@@ -69,6 +69,7 @@ public class PratilipiSite extends HttpServlet {
 		resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 		resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
 		resourceList.add( ThirdPartyResource.POLYMER.getTag() );
+		resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 
 		
 		// Data Model for FreeMarker
@@ -177,9 +178,24 @@ public class PratilipiSite extends HttpServlet {
 
 		Gson gson = new Gson();
 
+		List<PratilipiData> pratilipiDataList = new ArrayList<>( 12 );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		pratilipiDataList.add( pratilipiData );
+		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "pratilipi", pratilipiData );
 		dataModel.put( "pratilipiJson", gson.toJson( pratilipiData ).toString() );
+		dataModel.put( "recommendedJsonList", gson.toJson( pratilipiDataList ).toString() );
 
 		return dataModel;
 	}
