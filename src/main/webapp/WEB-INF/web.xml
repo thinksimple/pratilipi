@@ -34,6 +34,20 @@
 	
 	
 	<servlet>
+		<servlet-name>PratilipiApi</servlet-name>
+		<servlet-class>com.pratilipi.site.PratilipiApi</servlet-class>
+		<load-on-startup>1</load-on-startup>
+		<init-param>
+			<param-name>Prefix</param-name>
+			<param-value>/api</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PratilipiApi</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>PratilipiSite</servlet-name>
 		<servlet-class>com.pratilipi.site.PratilipiSite</servlet-class>
 		<load-on-startup>1</load-on-startup>
