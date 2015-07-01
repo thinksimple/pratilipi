@@ -22,14 +22,6 @@
 			margin-bottom: 5px;
 		}
 		
-		#authorname {
-		    white-space: nowrap; 
-		    width: 3em; 
-		    overflow: hidden;
-		    text-overflow: ellipsis; 
-		   
-		}
-
 		.btn {
 			position: absolute;
 			bottom: 0px;
@@ -55,9 +47,7 @@
 					 	<a href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
 					</h4>
 					<h6>
-						<a href="{{ pratilipi.author.pageUrlAlias }} "  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.author.name }}">
-							<div id="authorname" style="display: block;">{{ pratilipi.author.name }}</div>
-						 </a> 	
+						<a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
 					</h6>
 					<div>
 						<pratilipi-rating value="{{ pratilipi.averageRating }}" />
