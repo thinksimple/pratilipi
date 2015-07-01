@@ -152,11 +152,11 @@ public class PratilipiDataUtil {
 	private static String createPratilipiCoverUrl( Pratilipi pratilipi ) {
 		if( pratilipi.hasCustomCover() ) {
 			String domain = "//" + pratilipi.getId() % 10 + "." + SystemProperty.get( "cdn" );
-			String uri = "/pratilipi-cover/150/" + pratilipi.getId() + "?" + pratilipi.getLastUpdated().getTime();
+			String uri = "/pratilipi/cover?pratilipiId=" + pratilipi.getId() + "&width=150&version=" + pratilipi.getLastUpdated().getTime();
 			return domain + uri;
 		} else {
 			String domain = "//10." + SystemProperty.get( "cdn" );
-			String uri = "/pratilipi-cover/150/pratilipi";
+			String uri = "/pratilipi/cover?width=150";
 			return domain + uri;
 		}
 	}
@@ -358,19 +358,16 @@ public class PratilipiDataUtil {
 	public static BlobEntry getPratilipiCover( Long pratilipiId, Integer width )
 			throws UnexpectedServerException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		
 		String fileName = "";
-		if( pratilipi.hasCustomCover() )
-			fileName = COVER_FOLDER + "/original/" + pratilipi.getId();
+		if( pratilipiId != null && DataAccessorFactory.getDataAccessor().getPratilipi( pratilipiId ).hasCustomCover() )
+			fileName = COVER_FOLDER + "/original/" + pratilipiId;
 		else
 			fileName = COVER_FOLDER + "/original/" + "pratilipi";
 
 		try {
 			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
 			if( width != null )
-				blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, 10 * width ) );
+				blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, (int) ( 1.5 * width ) ) );
 			return blobEntry;
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to fetch pratilipi resource.", e );

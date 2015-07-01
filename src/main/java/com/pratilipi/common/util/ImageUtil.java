@@ -14,7 +14,8 @@ public class ImageUtil {
 		Image image = ImagesServiceFactory.makeImage( imageData );
 		Transform resize = ImagesServiceFactory.makeResize(
 				width < 4000 ? width : 4000,
-				height < 4000 ? height : 4000 );
+				height < 4000 ? height : 4000,
+				true );
 		return imagesService.applyTransform( resize, image ).getImageData();
 	}
 	
