@@ -198,6 +198,7 @@ public abstract class GenericApi extends HttpServlet {
 			
 			} else {
 				response.setContentType( gfdResponse.getMimeType() );
+				response.setHeader( "Cache-Control", "max-age=315360000" );
 				response.setHeader( "ETag", gfdResponse.getETag() );
 
 				OutputStream out = response.getOutputStream();
