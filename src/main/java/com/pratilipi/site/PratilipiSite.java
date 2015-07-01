@@ -69,7 +69,6 @@ public class PratilipiSite extends HttpServlet {
 		resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 		resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
 		resourceList.add( ThirdPartyResource.POLYMER.getTag() );
-		resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 
 		
 		// Data Model for FreeMarker
@@ -84,6 +83,8 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "Home.ftl";
 				
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
+				resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Pratilipi.ftl";
 				

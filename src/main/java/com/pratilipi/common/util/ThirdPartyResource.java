@@ -7,6 +7,8 @@ public enum ThirdPartyResource {
 	BOOTSTRAP( "<script src='//bootstrap.__DOMAIN__/bootstrap-3.3.4/js/bootstrap.min.js'></script>"
 			 + "<link rel='stylesheet' href='//bootstrap.__DOMAIN__/bootstrap-3.3.4/css/bootstrap.min.css'>" ),
 
+	FONT_AWESOME( "<link rel='stylesheet' href='//fontawesome.__DOMAIN__/font-awesome-4.3.0/css/font-awesome.min.css'>" ),
+
 	POLYMER( "<script src='//polymer.__DOMAIN__/polymer-1.0/webcomponentsjs/webcomponents-lite.js'></script>"
 		   + "<link rel='import' href='//polymer.__DOMAIN__/polymer-1.0/polymer/polymer.html'>" ),
 
