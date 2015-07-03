@@ -1,73 +1,27 @@
 {
 	"sections" : [
 		{
-			"title" : "Popular Books",
+			"title" : "Navigation",
 			"items" : [
 				{
-					"text" : "Top Sellers",
-					"url" : "#top-sellers"
+					"text" : "Books",
+					"url" : "/books"
 				},
 				{
-					"text" : "Most Read This Month",
-					"url" : "#most-read"
+					"text" : "Stories",
+					"url" : "/stories"
 				},
 				{
-					"text" : "Most Read This Month",
-					"url" : "#most-read"
-				},
-				{
-					"text" : "Best of 2015",
-					"url" : "#best-of-2015"
-				},
-				{
-					"text" : "Top Rated",
-					"url" : "#top-rated"
-				}
-			]
-		},
-		{
-			"title" : "Categories",
-			"items" : [
-				{
-					"text" : "Fiction",
-					"url" : "#fiction"
-				},
-				{
-					"text" : "Horror",
-					"url" : "#horror"
-				},
-				{
-					"text" : "Romance",
-					"url" : "#romance"
-				},
-				{
-					"text" : "Crime",
-					"url" : "#crime"
+					"text" : "Poems",
+					"url" : "/poems"
 				},
 				{
 					"text" : "Articles",
-					"url" : "#articles"
-				}
-			]
-		},
-		{
-			"title" : "Classic Fiction",
-			"items" : [
-				{
-					"text" : "Stories",
-					"url" : "#stories"
+					"url" : "/articles"
 				},
 				{
-					"text" : "Ghazals",
-					"url" : "#horror"
-				},
-				{
-					"text" : "Nazm",
-					"url" : "#nazm"
-				},
-				{
-					"text" : "Novels",
-					"url" : "#novels"
+					"text" : "Magazines",
+					"url" : "/magazines"
 				}
 			]
 		}	
