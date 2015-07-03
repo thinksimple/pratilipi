@@ -89,6 +89,7 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "Pratilipi.ftl";
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
+				resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Author.ftl";
 			

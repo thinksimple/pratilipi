@@ -20,6 +20,7 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 
 		<link rel='import' href='/elements.${lang}/pratilipi-author.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-social.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">

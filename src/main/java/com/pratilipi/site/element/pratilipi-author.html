@@ -1,10 +1,21 @@
 <dom-module id="pratilipi-author">
+
 	<style>
-		img{
-			width: 200px;
+
+		.media {
+			padding:10px;
+		}
+		
+		.media-left {
+			width: 150px;
+		}
+
+		.media-left img {
+			width: 150px;
 			height: 225px;
-			margin: 10px 10px 0px 10px;
-		}td,th{
+		}
+		
+		td,th{
 			width: 150px;
 			height: 25px;
 		}	
@@ -12,15 +23,15 @@
 			color: #666666;
 		}
 		.works{
-		    margin: 5px 10px 0px 10px;
-		    width: 200px;
-		    height: 65px;
-		    background-color: red;
+			margin: 5px 10px 0px 10px;
+			width: 200px;
+			height: 65px;
+			background-color: red;
 		}
 		.share{
-		    margin: 10px 10px 0px 10px;
-		    max-width: 200px;
-		    height: 75px;
+			margin: 10px 10px 0px 10px;
+			max-width: 200px;
+			height: 75px;
 		}
 		#white{
 			color: white;
@@ -54,88 +65,75 @@
 	
 	
 	<template>
-	
-	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
- 
-	
-	
-	<div class= "media" style= "margin-top: 0px;">
-    <div class= "media-left">
-        <div class= "image"> 
-        	<img src= "http://www.mockingnow.com/wp-content/uploads/2012/12/chetan_bhagat_1.jpg" />
-        </div>
-        <div class= "works"> 
-				<a href= "/#publishedworks"><p id= "white" style= "font-weight: bold;"> 55 Works </p></a>
-				<p id= "white" style= "font-size: 14px;"> on Pratilipi </p>
-        	</div>
-        	<div class= "share"> 
-				<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
-				<a href= "http://www.google.co.in"> Share </a>
-        	</div>
-    </div>
-    <div class= "media-body">
-    	<div class="row" style= "height: 215px;">
-  			<div class="col-md-6">
-	  			<h3 style= "font-weight: bold; color: red; margin-top: 10px;">Manmohan Bhatia</h3>
-	    		<h5 style= "font-style: italic;">"Jeevan ka Rahi"</h5>
-	    			<table> 
-	    			<tr>
-	    				<th>Location</th> <td>New Delhi</td>
-	    			</tr>
-	    			<tr>
-	    				<th>Language(s)</th> <td>Tamil, English</td>
-	    			</tr>
-	    			<tr>
-	    				<th>Website</th> <td><a href= "http://www.google.co.in">google.com</a></td>
-	    			</tr>
-	    			<tr>
-	    				<th>Member Since</th> <td>August 2007</td>
-	    			</tr>
-	    			</table>
-	    	</div>
-	    	<div class="col-md-6">
-  			 <div class= "app">
-  			 	<p style= "color: grey; margin: 15px 10px 0px 15px; font-size: 14px;">Works of this author are available on your mobile device only on Pratilipi App. </p>
-  			 	<img src= "http://auguxsys.com/data/uploads/imgs/icons/android-icon.png" style= "width: 40px; height: 40px; margin: 10px 10px 15px 15px;" />
-  			 	<a style= "font-size: 16px; color: black; margin: 10px 20px 0px 0px;" href= "http://www.google.co.in"> Download Now! </a>
-  			 </div>
-  			 </div>
-  		</div>
-  		
-  		<div style= "margin-top: 25px;">
-  			 <hr/>
-	    	 <h4 style= "margin-top: 0px;"> About the Author </h4>
-	    	 <div style= "text-align: justify; margin-right: 120px;">
-	    	 <span class="summary">
-	    	 R. K. Narayan (10 October 1906 – 13 May 2001), full name Rasipuram Krishnaswami Iyer Narayanaswami, was an Indian writer, best known for his works set in the fictional South Indian town of Malgudi. He is one of three leading figures of early Indian literature in English (alongside Mulk Raj Anand and Raja Rao), and is credited with bringing the genre to the rest of the world.
+		<div class="media">
 
-Narayan broke through with the help of his mentor and friend, Graham Greene, who was instrumental in getting publishers for Narayan’s first four books, including the semi-autobiographical trilogy of Swami and Friends, The Bachelor of Arts and The English Teacher. Narayan’s works also include The Financial Expert, hailed as one of the most original works of 1951, and Sahitya Akademi Award winner The Guide, which was adapted for film and for Broadway.
-
-The setting for most of Narayan's stories is the fictional town of Malgudi, first introduced in Swami and Friends. His narratives highlight social context and provide a feel for his characters through everyday life. He has been compared to William Faulkner, who also created a fictional town that stood for reality, brought out the humour and energy of ordinary life, and displayed compassionate humanism in his writing. Narayan's short story writing style has been compared to that of Guy de Maupassant, as they both have an ability to compress the narrative without losing out on elements of the story. Narayan has also come in for criticism for being too simple in his prose and diction.
-
-In a writing career that spanned over sixty years, Narayan received many awards and honours. These include the AC Benson Medal from the Royal Society of Literature and the Padma Vibhushan, India's second-highest civilian award. He was also nominated to the Rajya Sabha, the upper house of India's parliament.
-	    	 </span>
-			<a href="{{__hack__}}#" class="show-more" on-click="showCompleteSummary"><small>(more)</small></a>
-			<a href="{{__hack__}}#" class="show-less" on-click="showSummarySnippet"><small>(less)</small></a>
+			<div class="media-left">
+				<img class="media-object" src="{{ author.imageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
+				<div class="primary-500" style="text-align:center"> 
+					<a href="#publishedworks">
+						<h2>55 Works</h2>
+						on Pratilipi
+					</a>
+				</div>
+				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
 			</div>
-	    	<hr/>
-    		</div>
-	</div>
-	</div>
+			
+			<div class= "media-body">
+				<div class="row" style= "height: 215px;">
+		  			<div class="col-md-6">
+			  			<h3 style= "font-weight: bold; color: red; margin-top: 10px;">{{ author.name }}</h3>
+						<h5 style= "font-style: italic;">"<span>{{ author.penName }}</span>"</h5>
+							<table> 
+							<tr>
+								<th>Location</th> <td>New Delhi</td>
+							</tr>
+							<tr>
+								<th>Language(s)</th> <td>Tamil, English</td>
+							</tr>
+							<tr>
+								<th>Website</th> <td><a href= "http://www.google.co.in">google.com</a></td>
+							</tr>
+							<tr>
+								<th>Member Since</th> <td>August 2007</td>
+							</tr>
+							</table>
+					</div>
+					<div class="col-md-6">
+		  			 <div class= "app">
+		  			 	<p style= "color: grey; margin: 15px 10px 0px 15px; font-size: 14px;">Works of this author are available on your mobile device only on Pratilipi App. </p>
+		  			 	<img src= "http://auguxsys.com/data/uploads/imgs/icons/android-icon.png" style= "width: 40px; height: 40px; margin: 10px 10px 15px 15px;" />
+		  			 	<a style= "font-size: 16px; color: black; margin: 10px 20px 0px 0px;" href= "http://www.google.co.in"> Download Now! </a>
+		  			 </div>
+		  			 </div>
+		  		</div>
+	  		
+	  		<div style= "margin-top: 25px;">
+	  			 <hr/>
+				 <h4 style= "margin-top: 0px;"> About the Author </h4>
+				 <div style= "text-align: justify; margin-right: 120px;">
+				 <span class="summary">
+				 R. K. Narayan (10 October 1906 – 13 May 2001), full name Rasipuram Krishnaswami Iyer Narayanaswami, was an Indian writer, best known for his works set in the fictional South Indian town of Malgudi. He is one of three leading figures of early Indian literature in English (alongside Mulk Raj Anand and Raja Rao), and is credited with bringing the genre to the rest of the world.
 	
-	<div style="margin-left: 10px;">
-    <h3 style= "color: red; margin-top: 10px; font-size: 18px;"><a name="publishedworks"></a>Published Works</h3>
-	</div>
-				
-	<hr/>
-	<br/>
+	Narayan broke through with the help of his mentor and friend, Graham Greene, who was instrumental in getting publishers for Narayan’s first four books, including the semi-autobiographical trilogy of Swami and Friends, The Bachelor of Arts and The English Teacher. Narayan’s works also include The Financial Expert, hailed as one of the most original works of 1951, and Sahitya Akademi Award winner The Guide, which was adapted for film and for Broadway.
+	
+	The setting for most of Narayan's stories is the fictional town of Malgudi, first introduced in Swami and Friends. His narratives highlight social context and provide a feel for his characters through everyday life. He has been compared to William Faulkner, who also created a fictional town that stood for reality, brought out the humour and energy of ordinary life, and displayed compassionate humanism in his writing. Narayan's short story writing style has been compared to that of Guy de Maupassant, as they both have an ability to compress the narrative without losing out on elements of the story. Narayan has also come in for criticism for being too simple in his prose and diction.
+	
+	In a writing career that spanned over sixty years, Narayan received many awards and honours. These include the AC Benson Medal from the Royal Society of Literature and the Padma Vibhushan, India's second-highest civilian award. He was also nominated to the Rajya Sabha, the upper house of India's parliament.
+				 </span>
+				<a href="{{__hack__}}#" class="show-more" on-click="showCompleteSummary"><small>(more)</small></a>
+				<a href="{{__hack__}}#" class="show-less" on-click="showSummarySnippet"><small>(less)</small></a>
+				</div>
+				<hr/>
+				</div>
+		</div>
+		</div>
+		
+		<div style="margin-left: 10px;">
+		<h3 style= "color: red; margin-top: 10px; font-size: 18px;"><a name="publishedworks"></a>Published Works</h3>
+		</div>
+					
+		<hr/>
+		<br/>
 	</template>
 	
 	
@@ -145,7 +143,11 @@ In a writing career that spanned over sixty years, Narayan received many awards 
 			is: 'pratilipi-author',
 			
 			properties: {
-				pratilipi: { type: Object }
+				author: { type: Object }
+			},
+			
+			getShareUrl: function() {
+				return 'http://www.pratilipi.com/' + author.pageUrl;
 			},
 			
 			showCompleteSummary: function() {
