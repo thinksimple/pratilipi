@@ -1,3 +1,5 @@
+<link rel="import" href="pratilipi-social.html" />
+
 <dom-module id="pratilipi-author">
 
 	<style>
@@ -8,6 +10,7 @@
 
 		.media {
 			padding: 10px;
+			padding-bottom: 0px;
 		}		
 
 		
@@ -27,7 +30,7 @@
 		}
 		
 		
-		h2, h4 {
+		.media-body h2, .media-body h4 {
 			margin: 5px 0px;
 		}
 		
@@ -58,13 +61,13 @@
 	
 	
 	<template>
-		<div class="secondary-500 media" on-click="ready">
+		<div class="secondary-500 media">
 
 			<div class="media-left">
 				<img class="media-object" src="{{ author.imageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
 				<div class="primary-500" style="text-align:center"> 
 					<a href="#PublishedWorks">
-						<h4><strong>55 Works</strong></h4>
+						<h4>55 Works</h4>
 						<span>on Pratilipi</span>
 					</a>
 				</div>
@@ -150,9 +153,7 @@
 					this.showSummarySnippet();
 				else
 					this.showNormal(); 
-				
-				console.log( this.offsetHeight );
-			},
+			}
 
 			
 			

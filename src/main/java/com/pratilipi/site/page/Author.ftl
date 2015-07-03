@@ -20,7 +20,7 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 
 		<link rel='import' href='/elements.${lang}/pratilipi-author.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-social.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
@@ -39,8 +39,15 @@
 		</div>
 		
 		<div class="container" style="margin-top:10px">
-			<pratilipi-navigation class="pull-left hidden-xs hidden-sm"></pratilipi-navigation>
-			<pratilipi-author author='${ authorJson }'></pratilipi-author>
+			<pratilipi-navigation
+					class="pull-left hidden-xs hidden-sm"></pratilipi-navigation>
+			<pratilipi-author
+					style="margin-bottom:10px"
+					author='${ authorJson }'></pratilipi-author>
+			<pratilipi-card-grid
+					id="PublishedWorks"
+					heading='${ _strings.author_published_works }'
+					pratilipi-list='${ publishedPratilipiListJson }'></pratilipi-card-grid>
 		</div>
 		
 	</body>

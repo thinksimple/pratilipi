@@ -89,6 +89,7 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "Pratilipi.ftl";
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Author.ftl";
@@ -207,12 +208,23 @@ public class PratilipiSite extends HttpServlet {
 		Author author = dataAccessor .getAuthor( authorId );
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author, true, false );
 
+		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setAuthorId( authorId );
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
+				searchAccessor.searchPratilipi( pratilipiFilter, null, 20 );
+		List<Long> pratilipiIdList = pratilipiIdListCursorTuple.getDataList();
+		List<PratilipiData> pratilipiDataList =
+				PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, false );
+		
 		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "author", authorData );
 		dataModel.put( "authorJson", gson.toJson( authorData ).toString() );
-
+		dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataList ).toString() );
+		dataModel.put( "pratilipiFilter", gson.toJson( pratilipiFilter ).toString() );
+		dataModel.put( "cursor", pratilipiIdListCursorTuple.getCursor() );
 		return dataModel;
 	}
 
