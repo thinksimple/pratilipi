@@ -37,16 +37,18 @@ public class UxModeFilter implements Filter {
 		String embedModeParam = request.getParameter( "embedMode" );
 		
 		
-		Language lang = Language.TAMIL;
+		Language lang = Language.ENGLISH;
 		boolean basicMode = true;
 
 		
-		if( hostName.equals( "devo-hi.pratilipi.com") )
+		if( hostName.equals( "hindi.pratilipi.com") )
 			lang = Language.HINDI;
-		else if( hostName.equals( "devo-gu.pratilipi.com") )
+		else if( hostName.equals( "gujarati.pratilipi.com") )
 			lang = Language.GUJARATI;
-		else if( hostName.equals( "devo-ta.pratilipi.com") )
+		else if( hostName.equals( "tamil.pratilipi.com") )
 			lang = Language.TAMIL;
+		else if( hostName.equals( "marathi.pratilipi.com") )
+			lang = Language.MARATHI;
 		
 		
 		if( basicModeParam != null ) {

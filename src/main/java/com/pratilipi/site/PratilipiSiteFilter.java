@@ -23,7 +23,7 @@ public class PratilipiSiteFilter implements Filter {
 	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile( "/resource\\.(book|poem|story|article|pratilipi)-cover/.*" );
 	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
 	private final Pattern validHostRegEx = Pattern.compile(
-			"(www|hindi|tamil|gujarati)\\.pratilipi\\.com"
+			"(www|wwww|hindi|tamil|gujarati|marathi)\\.pratilipi\\.com"
 			+ "|"
 			+ "((mark-6|mark-6p\\d)\\.prod-pratilipi|.+\\.devo-pratilipi)\\.appspot\\.com"
 			+ "|"
