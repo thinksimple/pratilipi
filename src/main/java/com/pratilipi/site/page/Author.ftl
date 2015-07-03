@@ -39,12 +39,8 @@
 		</div>
 		
 		<div class="container" style="margin-top:10px">
-			<div class="secondary-500 pull-left" style="width:200px">
-				<pratilipi-navigation/>
-			</div>
-			<div class="secondary-500" style="margin-left:210px">
-				<pratilipi-author author='${ authorJson }'></pratilipi-author>
-			</div>
+			<pratilipi-navigation class="pull-left hidden-xs hidden-sm"></pratilipi-navigation>
+			<pratilipi-author author='${ authorJson }'></pratilipi-author>
 		</div>
 		
 	</body>

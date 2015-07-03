@@ -1,6 +1,11 @@
 <dom-module id="pratilipi-navigation">
 
 	<style>
+		:host {
+			display: block;
+			min-width: 175px;
+			margin-right: 10px;
+		}
 	
 		div {
 			padding-bottom: 15px;
@@ -17,8 +22,9 @@
 		
 	</style>
 
+
 	<template>
-		<div>
+		<div class="secondary-500">
 			<#list data.sections as section>
 				<h4>${ section.title }</h4>
 				<#list section.items as item>

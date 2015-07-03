@@ -205,7 +205,7 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForAuthorPage( Long authorId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor .getAuthor( authorId );
-		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
+		AuthorData authorData = AuthorDataUtil.createAuthorData( author, true, false );
 
 		Gson gson = new Gson();
 

@@ -28,3 +28,5 @@ rating_5_star = Excellent
 
 search 			= Search
 search_bar_help	= Search for books, stories, poems and more ...
+
+author_about = About the Author
