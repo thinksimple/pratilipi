@@ -61,14 +61,14 @@ public class AuthorDataUtil {
 	}
 	
 	
-	private static String creatAuthorImageUrl( Author author ) {
+	public static String createAuthorImageUrl( Author author ) {
 		if( author.hasCustomCover() ) {
 			String domain = "//" + author.getId() % 10 + "." + SystemProperty.get( "cdn" );
-			String uri = "/author-image/150/" + author.getId() + "?" + author.getLastUpdated().getTime();
+			String uri = "/author/image?authorId=" + author.getId() + "&width=150&version=" + author.getLastUpdated().getTime();
 			return domain + uri;
 		} else {
 			String domain = "//10." + SystemProperty.get( "cdn" );
-			String uri = "/author-image/150/author";
+			String uri = "/author/image?width=150";
 			return domain + uri;
 		}
 	}
@@ -134,7 +134,7 @@ public class AuthorDataUtil {
 		
 		authorData.setPageUrl( authorPage.getUri() );
 		authorData.setPageUrlAlias( authorPage.getUriAlias() );
-		authorData.setImageUrl( creatAuthorImageUrl( author ) );
+		authorData.setImageUrl( createAuthorImageUrl( author ) );
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
 		authorData.setContentPublished( author.getContentPublished() );
@@ -239,6 +239,26 @@ public class AuthorDataUtil {
 		return createAuthorData( author );
 	}
 	
+	public static BlobEntry getAuthorImage( Long authorId, Integer width )
+			throws UnexpectedServerException {
+
+		String fileName = "";
+		if( authorId != null && DataAccessorFactory.getDataAccessor().getAuthor( authorId ).hasCustomCover() )
+			fileName = IMAGE_FOLDER + "/original/" + authorId;
+		else
+			fileName = IMAGE_FOLDER + "/original/" + "author";
+
+		try {
+			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
+			if( width != null )
+				blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, (int) ( 1.5 * width ) ) );
+			return blobEntry;
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch author image.", e );
+			throw new UnexpectedServerException();
+		}
+	}
+	
 	public static void saveAuthorImage( Long authorId, BlobEntry blobEntry )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
@@ -250,15 +270,9 @@ public class AuthorDataUtil {
 
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		BlobAccessor blobAccessorPublic = DataAccessorFactory.getBlobAccessorPublic();
 		try {
 			blobEntry.setName( IMAGE_FOLDER + "/original/" + authorId );
 			blobAccessor.createOrUpdateBlob( blobEntry );
-			
-			blobEntry.setName( IMAGE_FOLDER + "/150/" + authorId );
-			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), 150, 1500 ) );
-			blobEntry.setCacheControl( "public, max-age=31536000" );
-			blobAccessorPublic.createOrUpdateBlob( blobEntry );
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to create/update author image.", e );
 			throw new UnexpectedServerException();

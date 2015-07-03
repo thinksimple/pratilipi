@@ -14,9 +14,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 
 public class PratilipiSiteFilter implements Filter {
@@ -26,6 +27,10 @@ public class PratilipiSiteFilter implements Filter {
 			"/resource\\.(book|poem|story|article|pratilipi)-cover/.*"
 			+ "|"
 			+ "/pratilipi-cover/150/.*" );
+	private final Pattern oldAuthorImageUrlRegEx = Pattern.compile(
+			"/resource.author-image/.*"
+			+ "|"
+			+ "/author-image/150/.*" );
 	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
 	private final Pattern validHostRegEx = Pattern.compile(
 			// TODO: Remove cdn-asia as soon as wwww becomes www.
@@ -105,11 +110,14 @@ public class PratilipiSiteFilter implements Filter {
 			response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + PratilipiDataUtil.createPratilipiCoverUrl( pratilipi ) );
 
 
-		} else if( requestUri.startsWith( "/resource.author-image/original/" ) ) { // Redirecting to new Author image url
+		} else if( oldAuthorImageUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Author image url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", requestUri
-					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + SystemProperty.get( "cdn" ) + "/" )
-					.replaceFirst( "original", "150" ) );
+			String authorIdStr = requestUri.indexOf( '?' ) == -1
+					? requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 )
+					: requestUri.substring( requestUri.lastIndexOf( '/' ) + 1, requestUri.indexOf( '?' ) );
+			Long authorId = Long.parseLong( authorIdStr );
+			Author author = DataAccessorFactory.getDataAccessor().getAuthor( authorId );
+			response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + AuthorDataUtil.createAuthorImageUrl( author ) );
 		
 			
 		} else if( oldPratilipiReaderUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi reader url

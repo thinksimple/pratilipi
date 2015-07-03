@@ -28,7 +28,7 @@ public class PratilipiListApi extends GenericApi {
 		pratilipiFilter.setState( request.getState() );
 		
 		DataListCursorTuple<PratilipiData> pratilipiListCursorTuple =
-				PratilipiDataUtil.getPratilipiList(
+				PratilipiDataUtil.getPratilipiDataList(
 						pratilipiFilter,
 						request.getCursor(),
 						request.getResultCount() == null ? 20 : request.getResultCount() );
