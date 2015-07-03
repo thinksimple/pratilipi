@@ -1,0 +1,75 @@
+{
+	"sections" : [
+		{
+			"title" : "Popular Books",
+			"items" : [
+				{
+					"text" : "Top Sellers",
+					"url" : "#top-sellers"
+				},
+				{
+					"text" : "Most Read This Month",
+					"url" : "#most-read"
+				},
+				{
+					"text" : "Most Read This Month",
+					"url" : "#most-read"
+				},
+				{
+					"text" : "Best of 2015",
+					"url" : "#best-of-2015"
+				},
+				{
+					"text" : "Top Rated",
+					"url" : "#top-rated"
+				}
+			]
+		},
+		{
+			"title" : "Categories",
+			"items" : [
+				{
+					"text" : "Fiction",
+					"url" : "#fiction"
+				},
+				{
+					"text" : "Horror",
+					"url" : "#horror"
+				},
+				{
+					"text" : "Romance",
+					"url" : "#romance"
+				},
+				{
+					"text" : "Crime",
+					"url" : "#crime"
+				},
+				{
+					"text" : "Articles",
+					"url" : "#articles"
+				}
+			]
+		},
+		{
+			"title" : "Classic Fiction",
+			"items" : [
+				{
+					"text" : "Stories",
+					"url" : "#stories"
+				},
+				{
+					"text" : "Ghazals",
+					"url" : "#horror"
+				},
+				{
+					"text" : "Nazm",
+					"url" : "#nazm"
+				},
+				{
+					"text" : "Novels",
+					"url" : "#novels"
+				}
+			]
+		}	
+	]
+}
