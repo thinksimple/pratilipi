@@ -16,14 +16,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.util.PratilipiDataUtil;
 
 public class PratilipiSiteFilter implements Filter {
 	
 	private final Map<String, String> redirections = new HashMap<>();
-	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile( "/resource\\.(book|poem|story|article|pratilipi)-cover/.*" );
+	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile(
+			"/resource\\.(book|poem|story|article|pratilipi)-cover/.*"
+			+ "|"
+			+ "/pratilipi-cover/150/.*" );
 	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
 	private final Pattern validHostRegEx = Pattern.compile(
-			"(www|wwww|hindi|tamil|gujarati|marathi)\\.pratilipi\\.com"
+			// TODO: Remove cdn-asia as soon as wwww becomes www.
+			"(www|hindi|tamil|gujarati|marathi|wwww|cdn-asia)\\.pratilipi\\.com"
 			+ "|"
 			+ "((mark-6|mark-6p\\d)\\.prod-pratilipi|.+\\.devo-pratilipi)\\.appspot\\.com"
 			+ "|"
@@ -91,10 +97,12 @@ public class PratilipiSiteFilter implements Filter {
 			
 		} else if( oldPratilipiCoverUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi cover url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", requestUri
-					.replaceFirst( "/resource.", ( request.isSecure() ? "https:" : "http:" ) + "//10." + SystemProperty.get( "cdn" ) + "/" )
-					.replaceFirst( "book|poem|story|article", "pratilipi" )
-					.replaceFirst( "original|300", "150" ) );
+			String pratilipiIdStr = requestUri.indexOf( '?' ) == -1
+					? requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 )
+					: requestUri.substring( requestUri.lastIndexOf( '/' ) + 1, requestUri.indexOf( '?' ) );
+			Long pratilipiId = Long.parseLong( pratilipiIdStr );
+			Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( pratilipiId );
+			response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + PratilipiDataUtil.createPratilipiCoverUrl( pratilipi ) );
 
 
 		} else if( requestUri.startsWith( "/resource.author-image/original/" ) ) { // Redirecting to new Author image url

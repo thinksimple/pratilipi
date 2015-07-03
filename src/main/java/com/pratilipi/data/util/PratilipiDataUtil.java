@@ -149,7 +149,7 @@ public class PratilipiDataUtil {
 	}
 	
 
-	private static String createPratilipiCoverUrl( Pratilipi pratilipi ) {
+	public static String createPratilipiCoverUrl( Pratilipi pratilipi ) {
 		if( pratilipi.hasCustomCover() ) {
 			String domain = "//" + pratilipi.getId() % 10 + "." + SystemProperty.get( "cdn" );
 			String uri = "/pratilipi/cover?pratilipiId=" + pratilipi.getId() + "&width=150&version=" + pratilipi.getLastUpdated().getTime();
