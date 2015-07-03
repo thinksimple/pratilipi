@@ -1,28 +1,36 @@
+<link rel="import" href="pratilipi-rating.html">
+
 <dom-module id="pratilipi-card">
 
 	<style>
 	
-		img {
+		:host {
+			display: inline-block;
+			margin-right: -4px;
+			padding: 10px;
+		}
+	
+		.media {
+			overflow: visible;
+		}
+		
+		.media-left img {
 			width: 100px;
 			height: 150px;
 		}
 		
-		.media, .media-body {
-			overflow: visible;
-		}
-		
 		.media-body {
 			position: relative;
-			height: 150px;
 			padding-bottom: 32px;	
+			overflow: visible;
 		}
 
-		h6 {
+		.media-body h6 {
 			margin-top: 0px;
 			margin-bottom: 5px;
 		}
 		
-		.btn {
+		.media-body .btn {
 			position: absolute;
 			bottom: 0px;
 			padding: 3px 30px;
@@ -33,34 +41,32 @@
 
 
 	<template>
-		<div class="grid-col">
-			<div class="media">
+		<div class="media">
 
-				<div class="media-left">
-					<a href="{{ pratilipi.pageUrlAlias }}">
-						<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
-					</a>
-				</div>
-
-			  	<div class="media-body">
-			  		<h4 class="media-heading">
-					 	<a href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
-					</h4>
-					<h6>
-						<a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
-					</h6>
-					<div>
-						<pratilipi-rating value="{{ pratilipi.averageRating }}" />
-					</div>
-					<div>
-						<a href="{{__hack__}}#"><span class="badge">{{ pratilipi.type }}</span></a>
-					</div>
-					<div>
-						<button type="button" class="btn green">Free !</button>
-					</div>
-				</div>
-				
+			<div class="media-left">
+				<a href="{{ pratilipi.pageUrlAlias }}">
+					<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+				</a>
 			</div>
+
+		  	<div class="media-body">
+		  		<h4 class="media-heading">
+				 	<a href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
+				</h4>
+				<h6>
+					<a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
+				</h6>
+				<div>
+					<pratilipi-rating value="{{ pratilipi.averageRating }}" />
+				</div>
+				<div>
+					<a href="#"><span class="badge">{{ pratilipi.type }}</span></a>
+				</div>
+				<div>
+					<button type="button" class="btn green">Free !</button>
+				</div>
+			</div>
+			
 		</div>
 	</template>
 
@@ -71,30 +77,45 @@
 
 			is: 'pratilipi-card',
 			
+			behaviors: [
+				Polymer.IronResizableBehavior
+			],
+          
 			properties: {
 				pratilipi: { type: Object }
 			},
 			
-			ready: function() {
-				$('[data-toggle="tooltip"]').tooltip();   
-
-				var gridCol = this.querySelector( '.media' );
-				var heading = this.querySelector( 'h4 a' );
-				var title = this.pratilipi.title;
-				function setColHeight( e ) {
-					var jGridCol = jQuery( gridCol );
-					var jHeading = jQuery( heading );
-					jHeading.text( title );
-					var len = title.length;
-					while( jGridCol.height() > 150 && len > 1 ) {
-						len = len - 1;
-						jHeading.text( title.substring( 0, len ).trim() + " ..." );
-					}
-				};
-				jQuery( document ).ready( setColHeight );
-				jQuery( window ).load( setColHeight );
-				jQuery( window ).resize( setColHeight );
+			listeners: {
+				'iron-resize': '_onIronResize'
 			},
+			
+			attached: function() {
+				$('[data-toggle="tooltip"]').tooltip();   
+				this.async( this.notifyResize, 1 );
+			},
+			
+			_onIronResize: function() {
+				// Adjusting card width
+				var width = jQuery( this.parentNode ).width();
+				if( width >= 1000 )
+					jQuery( this ).width( Math.floor( width / 4 ) - 20 );
+				else if( width >= 750 )
+					jQuery( this ).width( Math.floor( width / 3 ) - 20 );
+				else if( width >= 500 )
+					jQuery( this ).width( Math.floor( width / 2 ) - 20 );
+				else
+					jQuery( this ).width( width - 20 );
+
+				// Adjusting card heading length
+				var heading = jQuery( this.querySelector( 'h4 a' ) );
+				var title = this.pratilipi.title;
+				heading.text( title );
+				var len = title.length;
+				while( jQuery( this ).height() > 150 && len > 1 ) {
+					len = len - 1;
+					heading.text( title.substring( 0, len ).trim() + " ..." );
+				}
+			}
 			
 		});
 

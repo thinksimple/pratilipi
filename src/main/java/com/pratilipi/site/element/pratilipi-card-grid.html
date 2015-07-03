@@ -1,26 +1,31 @@
+<link rel="import" href="pratilipi-card.html" />
+
 <dom-module id="pratilipi-card-grid">
 
 	<style>
+		
+		:host {
+			display: block;
+		}
 
-		h3 {
+		:host h3 {
 			margin: 0px;
 			padding: 10px;
 			padding-left: 20px;
-			background-color: darkgrey;
-		}
-		
-		div {
-			padding: 10px;
 		}
 
 	</style>
 
 	
 	<template>
-		<h3>{{ gridTitle }}</h3>
-		<div class="one-col-grid">
-			<div>
-				<content></content>
+		<div class="secondary-500">
+			<template is="dom-if" if="{{ heading }}">
+				<h3>{{ heading }}</h3>
+			</template>
+			<div style="padding:10px">
+				<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
+					<pratilipi-card pratilipi="{{ pratilipi }}"></pratilipi-card>
+				</template>
 			</div>
 		</div>
 	</template>
@@ -32,23 +37,13 @@
 			
 			is: 'pratilipi-card-grid',
 
-			ready: function() {
-				var grid = this.querySelector( 'div' );
-				function setColCount( e ) {
-					var jGrid = jQuery( grid );
-					var width = jGrid.width();
-					if( width >= 750 )
-						jGrid.attr( "class", "three-col-grid" );
-					else if( width >= 500 )
-						jGrid.attr( "class", "two-col-grid" );
-					else
-						jGrid.attr( "class", "one-col-grid" );
-				};
-				jQuery( document ).ready( setColCount );
-				jQuery( window ).load( setColCount );
-				jQuery( window ).resize( setColCount );
+			properties: {
+				heading: { type: String },
+				pratilipiList: { type: Object },
+				pratilipiFilter: { type: Object },
+				cursor: { type: String }
 			}
-		
+
 		});
 
 	</script>
