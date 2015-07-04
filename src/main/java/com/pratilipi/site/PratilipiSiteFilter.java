@@ -26,7 +26,7 @@ public class PratilipiSiteFilter implements Filter {
 	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile(
 			"/resource\\.(book|poem|story|article|pratilipi)-cover/.*"
 			+ "|"
-			+ "/pratilipi-cover/150/.*" );
+			+ "/pratilipi-cover/(150|original)/.*" );
 	private final Pattern oldAuthorImageUrlRegEx = Pattern.compile(
 			"/resource.author-image/.*"
 			+ "|"
