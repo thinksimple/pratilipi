@@ -70,54 +70,54 @@
 	
 	
 	<template>
-		<div class="secondary-500 media">
-
-			<div class="media-left">
-				<img class="media-object" src="{{ author.imageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
-				<div class="primary-500">
-					<a href="#PublishedWorks">
-						<h4><span>{{ author.contentPublished }}</span> Works</h4>
-						<span>on Pratilipi</span>
-					</a>
+		<div class="secondary-500">
+			<div class="media">
+	
+				<div class="media-left">
+					<img class="media-object" src="{{ author.imageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
+					<div class="primary-500">
+						<a href="#PublishedWorks">
+							<h4><span>{{ author.contentPublished }}</span> Works</h4>
+							<span>on Pratilipi</span>
+						</a>
+					</div>
+					<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
 				</div>
-				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
+				
+				<div class="media-body">
+					<div style="height:190px">
+						<h2>{{ author.name }}</h2>
+						<h4>"<span>{{ author.penName }}</span>"</h4>
+						<table>
+							<tr>
+								<th>Location</th>
+								<td>New Delhi</td>
+							</tr>
+							<tr>
+								<th>Language(s)</th>
+								<td>Tamil, English</td>
+							</tr>
+							<tr>
+								<th>Website</th>
+								<td><a href= "http://www.google.co.in">google.com</a></td>
+							</tr>
+							<tr>
+								<th>Member Since</th>
+								<td>August 2007</td>
+							</tr>
+						</table>
+					</div>
+					<hr/>
+					<div>
+						<h4>${ _strings.author_about }</h4>
+						<span class="summary">{{ author.summary }}</span>
+						<a href="#" class="show-more" on-click="showCompleteSummary"><small>(more)</small></a>
+						<a href="#" class="show-less" on-click="showSummarySnippet"><small>(less)</small></a>
+					</div>
+				</div>
+				
 			</div>
-			
-			<div class="media-body">
-				<div style="height:190px">
-					<h2>{{ author.name }}</h2>
-					<h4>"<span>{{ author.penName }}</span>"</h4>
-					<table>
-						<tr>
-							<th>Location</th>
-							<td>New Delhi</td>
-						</tr>
-						<tr>
-							<th>Language(s)</th>
-							<td>Tamil, English</td>
-						</tr>
-						<tr>
-							<th>Website</th>
-							<td><a href= "http://www.google.co.in">google.com</a></td>
-						</tr>
-						<tr>
-							<th>Member Since</th>
-							<td>August 2007</td>
-						</tr>
-					</table>
-				</div>
-				<hr/>
-				<div>
-					<h4>${ _strings.author_about }</h4>
-					<span class="summary">{{ author.summary }}</span>
-					<a href="#" class="show-more" on-click="showCompleteSummary"><small>(more)</small></a>
-					<a href="#" class="show-less" on-click="showSummarySnippet"><small>(less)</small></a>
-				</div>
-			</div>
-			
 			<hr/>
-			
-			<content></content>
 		</div>
 	</template>
 	

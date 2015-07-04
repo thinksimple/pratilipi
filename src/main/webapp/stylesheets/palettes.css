@@ -41,6 +41,8 @@
 .secondary-500 hr {
 	border: 0;
 	height: 1px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.5), rgba(0,0,0,0));
 }
 

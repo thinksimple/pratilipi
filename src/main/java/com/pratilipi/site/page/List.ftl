@@ -16,12 +16,8 @@
 
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
-
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-rating.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
@@ -31,29 +27,15 @@
 	</head>
 	<body>
 
-		<div class="primary-500">
-			<div class="container">
-				<pratilipi-header>
-					<pratilipi-search-bar/>
-				</pratilipi-header>
-			</div>
-		</div>
+		<pratilipi-header></pratilipi-header>
 		
 		<div class="container" style="margin-top:10px">
-			<div class="secondary-500 pull-left" style="width:200px">
-				<pratilipi-navigation/>
-			</div>
-			<div class="secondary-500" style="margin-left:210px">
-				<div>
-					<pratilipi-card-grid grid-title="${ title }">
-						<div>
-							<#list pratilipiJsonList as pratilipiJson>
-								<pratilipi-card pratilipi='${ pratilipiJson }'></pratilipi-card>
-							</#list>
-						</div>
-					</pratilipi-card-grid>
-				</div>
-			</div>
+			<pratilipi-navigation
+					class='pull-left hidden-xs hidden-sm'></pratilipi-navigation>
+			<pratilipi-card-grid
+					style='overflow:hidden'
+					heading='${ title }'
+					pratilipi-list='${ pratilipiListJson }'></pratilipi-card-grid>
 		</div>
 		
 	</body>

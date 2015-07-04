@@ -16,9 +16,7 @@
 
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
-
 		<link rel='import' href='/elements.${lang}/pratilipi-author.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
 
@@ -30,23 +28,19 @@
 	</head>
 	<body>
 
-		<div class="primary-500">
-			<div class="container">
-				<pratilipi-header>
-					<pratilipi-search-bar/>
-				</pratilipi-header>
-			</div>
-		</div>
+		<pratilipi-header></pratilipi-header>
 		
 		<div class="container" style="margin-top:10px">
 			<pratilipi-navigation
-					class="pull-left hidden-xs hidden-sm"></pratilipi-navigation>
-			<pratilipi-author author='${ authorJson }'>
+					class='pull-left hidden-xs hidden-sm'></pratilipi-navigation>
+			<div style="overflow:hidden">
+				<pratilipi-author
+						author='${ authorJson }'></pratilipi-author>
 				<pratilipi-card-grid
-						id="PublishedWorks"
+						id='PublishedWorks'
 						heading='${ _strings.author_published_works }'
 						pratilipi-list='${ publishedPratilipiListJson }'></pratilipi-card-grid>
-			</pratilipi-author>
+			</div>
 		</div>
 		
 	</body>
