@@ -11,7 +11,6 @@
 		:host h3 {
 			margin: 0px;
 			padding: 10px;
-			padding-left: 20px;
 		}
 
 	</style>
@@ -22,7 +21,7 @@
 			<template is="dom-if" if="{{ heading }}">
 				<h3>{{ heading }}</h3>
 			</template>
-			<div style="padding:10px">
+			<div>
 				<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
 					<pratilipi-card pratilipi="{{ pratilipi }}"></pratilipi-card>
 				</template>
