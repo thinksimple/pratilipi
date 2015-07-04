@@ -41,13 +41,12 @@
 		<div class="container" style="margin-top:10px">
 			<pratilipi-navigation
 					class="pull-left hidden-xs hidden-sm"></pratilipi-navigation>
-			<pratilipi-author
-					style="margin-bottom:10px"
-					author='${ authorJson }'></pratilipi-author>
-			<pratilipi-card-grid
-					id="PublishedWorks"
-					heading='${ _strings.author_published_works }'
-					pratilipi-list='${ publishedPratilipiListJson }'></pratilipi-card-grid>
+			<pratilipi-author author='${ authorJson }'>
+				<pratilipi-card-grid
+						id="PublishedWorks"
+						heading='${ _strings.author_published_works }'
+						pratilipi-list='${ publishedPratilipiListJson }'></pratilipi-card-grid>
+			</pratilipi-author>
 		</div>
 		
 	</body>
