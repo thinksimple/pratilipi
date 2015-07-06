@@ -43,7 +43,7 @@
 					style='overflow:hidden'
 					heading='${ title }'
 					pratilipi-list='${ pratilipiListJson }'
-					filter='${ pratilipiListFilterJson }'
+					filter='${ pratilipiListFilterJson! }'
 					cursor='${ pratilipiListCursor! }'
 					></pratilipi-card-grid>
 		</div>
