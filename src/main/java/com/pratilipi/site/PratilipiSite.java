@@ -280,7 +280,7 @@ public class PratilipiSite extends HttpServlet {
 				String pageUrl = it.nextLine();
 				if( ! pageUrl.trim().isEmpty() ) {
 					Page page = dataAccessor.getPage( pageUrl );
-					if( page != null )
+					if( page != null && page.getPrimaryContentId() != null )
 						pratilipiIdList.add( page.getPrimaryContentId() );
 				}
 			}
@@ -292,18 +292,12 @@ public class PratilipiSite extends HttpServlet {
 			throw new UnexpectedServerException();
 		}
 
-		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
-
-		List<String> pratilipiJsonList = new ArrayList<>( pratilipiList.size() );
-		for( Pratilipi pratilipi : pratilipiList ) {
-			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
-			pratilipiJsonList.add( gson.toJson( pratilipiData ).toString() );
-		}
+		List<PratilipiData> pratilipiDataList =
+				PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", listTitle );
-		dataModel.put( "pratilipiJsonList", pratilipiJsonList );
+		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiDataList ).toString() );
 		return dataModel;
 	}
 
