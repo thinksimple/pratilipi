@@ -24,6 +24,12 @@
 		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
 
+
+		<script defer>
+			jQuery( window ).scroll( function() {
+				document.querySelector( 'pratilipi-card-grid' ).loadMore();
+			} );
+		</script>
 	</head>
 	<body>
 
@@ -31,11 +37,15 @@
 		
 		<div class="container" style="margin-top:10px">
 			<pratilipi-navigation
-					class='pull-left hidden-xs hidden-sm'></pratilipi-navigation>
+					class='pull-left hidden-xs hidden-sm'
+					></pratilipi-navigation>
 			<pratilipi-card-grid
 					style='overflow:hidden'
 					heading='${ title }'
-					pratilipi-list='${ pratilipiListJson }'></pratilipi-card-grid>
+					pratilipi-list='${ pratilipiListJson }'
+					filter='${ pratilipiListFilterJson }'
+					cursor='${ pratilipiListCursor! }'
+					></pratilipi-card-grid>
 		</div>
 		
 	</body>

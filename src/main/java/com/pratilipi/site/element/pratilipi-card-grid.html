@@ -21,6 +21,7 @@
 
 	
 	<template>
+
 		<div class="secondary-500">
 			<template is="dom-if" if="{{ heading }}">
 				<h3>{{ heading }}</h3>
@@ -31,6 +32,18 @@
 				</template>
 			</div>
 		</div>
+
+		<iron-ajax
+				url="/api/pratilipi/list"
+				method="GET"
+				params="{{ filter }}"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				on-error="_handleAjaxGetError"
+				verbose="true"
+				></iron-ajax>
+
 	</template>
 
 
@@ -42,9 +55,46 @@
 
 			properties: {
 				heading: { type: String },
-				pratilipiList: { type: Object },
+				pratilipiList: { type: Array },
 				filter: { type: Object },
-				cursor: { type: String }
+				cursor: { type: String },
+				isLoading: { type: Boolean, value: false }
+			},
+			
+			loadMore: function() {
+				if( this.isLoading || ! this.cursor || ! this.filter )
+					return;
+				
+				var reqHeight = jQuery( window ).scrollTop()
+						- jQuery( this ).position().top
+						+ jQuery( window ).height()
+						+ 3 * jQuery( window ).height();
+		
+				if( jQuery( this ).outerHeight( true ) >= reqHeight )
+					return;
+				
+				var ajaxGet = document.querySelector( 'iron-ajax' );
+				ajaxGet.params.cursor = this.cursor;
+				ajaxGet.generateRequest();
+
+				this.isLoading = true;
+			},
+			
+			_handleAjaxGetResponse: function(  request ) {
+				var pratilipiList = request.detail.response.pratilipiList;
+				for( var i = 0; i < pratilipiList.length; i++ )
+					this.push( 'pratilipiList', pratilipiList[ i ] );
+				this.cursor = request.detail.response.cursor;
+				this.isLoading = false;
+				this.loadMore();
+			},
+
+			_handleAjaxGetError: function() {
+				this.isLoading = false;
+			},
+			
+			ready: function() {
+				this.loadMore();
 			}
 
 		});

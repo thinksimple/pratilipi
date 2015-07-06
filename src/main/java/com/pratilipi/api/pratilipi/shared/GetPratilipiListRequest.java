@@ -1,6 +1,5 @@
 package com.pratilipi.api.pratilipi.shared;
 
-import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
@@ -14,7 +13,6 @@ public class GetPratilipiListRequest extends GenericRequest {
 	
 	private Long authorId;
 
-	@Validate( required = true )
 	private PratilipiState state;
 
 	private String cursor;

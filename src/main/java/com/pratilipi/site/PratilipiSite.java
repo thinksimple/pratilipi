@@ -95,26 +95,31 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "Author.ftl";
 			
 			} else if( uri.equals( "/books" ) ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.BOOK, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/stories" ) ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.STORY, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/poems" ) ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.POEM, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/articles" ) ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/magazines" ) ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";

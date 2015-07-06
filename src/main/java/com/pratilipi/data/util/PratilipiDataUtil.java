@@ -62,13 +62,7 @@ public class PratilipiDataUtil {
 
 
 	public static boolean hasAccessToListPratilipiData( PratilipiFilter pratilipiFilter ) {
-		AccessToken accessToken = AccessTokenFilter.getAccessToken(); 
-		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_LIST ) )
-			return true;
-		
-		return pratilipiFilter.getState() != null
-				&& pratilipiFilter.getState() != PratilipiState.PUBLISHED_DISCONTINUED
-				&& pratilipiFilter.getState() != PratilipiState.DELETED;
+		return true;
 	}
 	
 	public static boolean hasAccessToAddPratilipiData( Pratilipi pratilipi ) {
