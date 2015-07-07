@@ -23,6 +23,25 @@ import com.pratilipi.data.type.gae.UserEntity;
 
 public class DataAccessorMockImpl implements DataAccessor {
 
+	// Transaction Helpers
+
+	public void beginTx() {
+		// Do nothing
+	}
+
+	public void commitTx() {
+		// Do nothing
+	}
+	
+	public void rollbackTx() {
+		// Do nothing
+	}
+
+	public boolean isTxActive() {
+		return false;
+	}
+	
+	
 	// APP_PROPERTY Table
 	
 	@Override

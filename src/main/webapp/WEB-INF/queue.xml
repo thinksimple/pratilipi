@@ -42,7 +42,7 @@
     </retry-parameters>
   </queue>
 
-  <!-- Pratilipi Data/Content offline processing.
+  <!-- Pratilipi Data/Content offline processing. -->
   <queue>
     <name>pratilipi</name>
     <target>worker</target>
@@ -54,9 +54,9 @@
       <min-backoff-seconds>60</min-backoff-seconds>
       <max-backoff-seconds>60</max-backoff-seconds>
     </retry-parameters>
-  </queue -->
+  </queue>
   
-  <!-- Author Data offline processing.
+  <!-- Author Data offline processing. -->
   <queue>
     <name>author</name>
     <target>worker</target>
@@ -68,7 +68,7 @@
       <min-backoff-seconds>60</min-backoff-seconds>
       <max-backoff-seconds>60</max-backoff-seconds>
     </retry-parameters>
-  </queue -->
+  </queue>
   
   <!-- Notification -->
   <queue>

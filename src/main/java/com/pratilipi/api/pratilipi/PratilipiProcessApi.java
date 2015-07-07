@@ -65,7 +65,6 @@ public class PratilipiProcessApi extends GenericApi {
 			throws InvalidArgumentException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 		
 		if( request.processData() ) {
 			PratilipiDataUtil.updatePratilipiSearchIndex( request.getPratilipiId(), null );
@@ -75,12 +74,16 @@ public class PratilipiProcessApi extends GenericApi {
 		if( request.processCover() ) { }
 		
 		if( request.processContent() ) {
+			Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 			if( pratilipi.getType() == PratilipiType.BOOK || pratilipi.getType() == PratilipiType.MAGAZINE )
 				PratilipiDataUtil.updatePratilipiIndex( request.getPratilipiId() );
 		}
 		
 		if( request.updateStats() ) {
 			boolean changed = PratilipiDataUtil.updatePratilipiStats( request.getPratilipiId() );
+			
+			dataAccessor.beginTx();
+			Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 			if( changed ) {
 				pratilipi.setLastProcessDate( new Date() );
 				pratilipi.setNextProcessDate( new Date( new Date().getTime() + 900000L ) ); // Now + 15 Min
@@ -88,12 +91,13 @@ public class PratilipiProcessApi extends GenericApi {
 				Long nextUpdateAfterMillis = 2 * ( new Date().getTime() - pratilipi.getLastProcessDate().getTime() );
 				if( nextUpdateAfterMillis < 900000L ) // 15 Min
 					nextUpdateAfterMillis = 900000L;
-				else if( nextUpdateAfterMillis > 172800000L ) // 2 Days
-					nextUpdateAfterMillis = 172800000L;
+				else if( nextUpdateAfterMillis > 86400000L ) // 1 Day
+					nextUpdateAfterMillis = 86400000L;
 				pratilipi.setNextProcessDate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
 			}
 			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-
+			dataAccessor.commitTx();
+			
 			if( changed )
 				PratilipiDataUtil.updatePratilipiSearchIndex( request.getPratilipiId(), null );
 		}

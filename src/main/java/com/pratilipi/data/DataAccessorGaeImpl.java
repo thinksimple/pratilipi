@@ -47,12 +47,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			JDOHelper.getPersistenceManagerFactory( "transactions-optional" );
 
 	private final PersistenceManager pm;
+	private Transaction tx;
 	
 	
 	// Constructor
 
 	public DataAccessorGaeImpl() {
 		this.pm = pmfInstance.getPersistenceManager();
+		this.tx = pm.currentTransaction();
 	}
 
 	
@@ -80,6 +82,25 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		pm.deletePersistent( entity );
 	}
 
+	
+	// Transaction Helpers
+
+	public void beginTx() {
+		tx.begin();
+	}
+
+	public void commitTx() {
+		tx.commit();
+	}
+	
+	public void rollbackTx() {
+		tx.rollback();
+	}
+
+	public boolean isTxActive() {
+		return tx.isActive();
+	}
+	
 	
 	// APP_PROPERTY Table
 	

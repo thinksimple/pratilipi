@@ -37,6 +37,25 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	
+	// Transaction Helpers
+
+	public void beginTx() {
+		dataAccessor.beginTx();
+	}
+
+	public void commitTx() {
+		dataAccessor.commitTx();
+	}
+	
+	public void rollbackTx() {
+		dataAccessor.rollbackTx();
+	}
+
+	public boolean isTxActive() {
+		return dataAccessor.isTxActive();
+	}
+	
+	
 	// APP_PROPERTY Table
 	
 	@Override
@@ -219,6 +238,9 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	@Override
 	public Pratilipi getPratilipi( Long id ) {
+		if( dataAccessor.isTxActive() )
+			return dataAccessor.getPratilipi( id );
+		
 		Pratilipi pratilipi = memcache.get( PREFIX_PRATILIPI + id );
 		if( pratilipi == null ) {
 			pratilipi = dataAccessor.getPratilipi( id );

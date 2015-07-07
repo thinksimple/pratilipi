@@ -376,9 +376,12 @@ public class AuthorDataUtil {
 		
 		Author author = dataAccessor.getAuthor( authorId );
 		if( (int) author.getContentPublished() != contentPublished || (long) author.getTotalReadCount() != totalReadCount ) {
+			dataAccessor.beginTx();
+			author = dataAccessor.getAuthor( authorId );
 			author.setContentPublished( contentPublished );
 			author.setTotalReadCount( totalReadCount );
 			author = dataAccessor.createOrUpdateAuthor( author );
+			dataAccessor.commitTx();
 			return true;
 		} else {
 			return false;
