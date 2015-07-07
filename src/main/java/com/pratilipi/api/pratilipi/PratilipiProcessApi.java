@@ -82,21 +82,26 @@ public class PratilipiProcessApi extends GenericApi {
 		if( request.updateStats() ) {
 			boolean changed = PratilipiDataUtil.updatePratilipiStats( request.getPratilipiId() );
 			
-			dataAccessor.beginTx();
-			Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
-			if( changed ) {
-				pratilipi.setLastProcessDate( new Date() );
-				pratilipi.setNextProcessDate( new Date( new Date().getTime() + 900000L ) ); // Now + 15 Min
-			} else {
-				Long nextUpdateAfterMillis = 2 * ( new Date().getTime() - pratilipi.getLastProcessDate().getTime() );
-				if( nextUpdateAfterMillis < 900000L ) // 15 Min
-					nextUpdateAfterMillis = 900000L;
-				else if( nextUpdateAfterMillis > 86400000L ) // 1 Day
-					nextUpdateAfterMillis = 86400000L;
-				pratilipi.setNextProcessDate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
+			try {
+				dataAccessor.beginTx();
+				Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
+				if( changed ) {
+					pratilipi.setLastProcessDate( new Date() );
+					pratilipi.setNextProcessDate( new Date( new Date().getTime() + 900000L ) ); // Now + 15 Min
+				} else {
+					Long nextUpdateAfterMillis = 2 * ( new Date().getTime() - pratilipi.getLastProcessDate().getTime() );
+					if( nextUpdateAfterMillis < 900000L ) // 15 Min
+						nextUpdateAfterMillis = 900000L;
+					else if( nextUpdateAfterMillis > 86400000L ) // 1 Day
+						nextUpdateAfterMillis = 86400000L;
+					pratilipi.setNextProcessDate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
+				}
+				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+				dataAccessor.commitTx();
+			} finally {
+				if( dataAccessor.isTxActive() )
+					dataAccessor.rollbackTx();
 			}
-			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-			dataAccessor.commitTx();
 			
 			if( changed )
 				PratilipiDataUtil.updatePratilipiSearchIndex( request.getPratilipiId(), null );
