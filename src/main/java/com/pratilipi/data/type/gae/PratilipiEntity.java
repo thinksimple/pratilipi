@@ -14,9 +14,10 @@ import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.data.type.Pratilipi;
 
-@SuppressWarnings("serial")
 @PersistenceCapable( table = "PRATILIPI" )
 public class PratilipiEntity implements Pratilipi {
+
+	private static final long serialVersionUID = -3740558387788310210L;
 
 	@PrimaryKey
 	@Persistent( column = "PRATILIPI_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )

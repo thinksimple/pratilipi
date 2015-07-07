@@ -11,10 +11,11 @@ import com.google.appengine.api.datastore.Text;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.Author;
 
-@SuppressWarnings("serial")
 @PersistenceCapable( table = "AUTHOR" )
 public class AuthorEntity implements Author {
 	
+	private static final long serialVersionUID = -3668863380117991344L;
+
 	@PrimaryKey
 	@Persistent( column = "AUTHOR_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
