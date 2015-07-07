@@ -39,7 +39,10 @@
 				<pratilipi-card-grid
 						id='PublishedWorks'
 						heading='${ _strings.author_published_works }'
-						pratilipi-list='${ publishedPratilipiListJson }'></pratilipi-card-grid>
+						pratilipi-list='${ publishedPratilipiListJson }'
+						filter='${ publishedPratilipiListFilterJson! }'
+						cursor='${ publishedPratilipiListCursor! }'
+						></pratilipi-card-grid>
 			</div>
 		</div>
 		

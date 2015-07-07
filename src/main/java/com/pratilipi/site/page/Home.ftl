@@ -17,13 +17,9 @@
 
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
-
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-card.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-rating.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-marquee.html'>
+
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
@@ -45,13 +41,11 @@
 				<pratilipi-navigation/>
 			</div>
 			<div class="secondary-500" style="margin-left:210px">
-				<pratilipi-marquee></pratilipi-marquee>
 				<div>
-					<pratilipi-card-grid grid-title="${ _strings.featured }">
-						<#list featuredList as featured>
-							<pratilipi-card pratilipi='${ featured }'></pratilipi-card>
-						</#list>
-					</pratilipi-card-grid>
+					<pratilipi-card-grid
+						heading='${ _strings.featured }'
+						pratilipi-list='${ featuredListJson }'
+						></pratilipi-card-grid>
 				</div>
 			</div>
 		</div>

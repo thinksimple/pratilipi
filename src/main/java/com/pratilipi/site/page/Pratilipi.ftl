@@ -16,7 +16,6 @@
 
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-search-bar.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 
 		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi.html'>

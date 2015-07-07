@@ -79,6 +79,7 @@ public class PratilipiSite extends HttpServlet {
 			String templateName = null;
 			
 			if( uri.equals( "/" ) ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForHomePage( lang );
 				templateName = templateFilePrefix + "Home.ftl";
 				
@@ -167,20 +168,18 @@ public class PratilipiSite extends HttpServlet {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Gson gson = new Gson();
 
-		List<String> featuredList = new ArrayList<>( home.getFeatured().length );
+		List<Long> pratilipiIdList = new ArrayList<>( home.getFeatured().length );
 		for( String uri : home.getFeatured() ) {
 			Page page = dataAccessor.getPage( uri );
 			if( page == null )
 				continue;
-			Pratilipi pratilipi = dataAccessor.getPratilipi( page.getPrimaryContentId() );
-			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
-			featuredList.add( gson.toJson( pratilipiData ).toString() );
+			pratilipiIdList.add( page.getPrimaryContentId() );
 		}
+		List<PratilipiData> pratilipiDataList =
+				PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "featuredList", featuredList );
-		
+		dataModel.put( "featuredListJson", gson.toJson( pratilipiDataList ) );
 		return dataModel;
 	}
 
@@ -234,8 +233,8 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "author", authorData );
 		dataModel.put( "authorJson", gson.toJson( authorData ).toString() );
 		dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataList ).toString() );
-		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
-		dataModel.put( "pratilipiListCursor", pratilipiIdListCursorTuple.getCursor() );
+		dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
+		dataModel.put( "publishedPratilipiListCursor", pratilipiIdListCursorTuple.getCursor() );
 		return dataModel;
 	}
 
