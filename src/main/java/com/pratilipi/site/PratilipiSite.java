@@ -96,6 +96,12 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Author.ftl";
 			
+			} else if( uri.equals( "/search" ) ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
+				dataModel = createDataModelForSearchPage( lang == Language.ENGLISH ? null : lang );
+				templateName = templateFilePrefix + "Search.ftl";
+				
 			} else if( uri.equals( "/books" ) ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
@@ -236,6 +242,31 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataList ).toString() );
 		dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
 		dataModel.put( "publishedPratilipiListCursor", pratilipiIdListCursorTuple.getCursor() );
+		return dataModel;
+	}
+
+	public Map<String, Object> createDataModelForSearchPage( Language lang )
+			throws UnexpectedServerException {
+
+		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
+		Gson gson = new Gson();
+		
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setLanguage( lang );
+		
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
+				searchAccessor.searchPratilipi( pratilipiFilter, null, 20 );
+		List<Long> pratilipiIdList = pratilipiIdListCursorTuple.getDataList();
+		List<PratilipiData> pratilipiDataList =
+				PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
+		String cursor = pratilipiIdListCursorTuple.getCursor();
+
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", "Search" );
+		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiDataList ).toString() );
+		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
+		dataModel.put( "pratilipiListCursor", cursor );
+
 		return dataModel;
 	}
 
