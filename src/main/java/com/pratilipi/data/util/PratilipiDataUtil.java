@@ -251,11 +251,11 @@ public class PratilipiDataUtil {
 	
 
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
-			PratilipiFilter pratilipiFilter, String cursor, Integer resultCount )
-			throws InsufficientAccessException {
+			PratilipiFilter pratilipiFilter, String cursor, Integer resultCount ) {
 		
-		if( ! hasAccessToListPratilipiData( pratilipiFilter ) )
-			throw new InsufficientAccessException();
+		if( ! hasAccessToListPratilipiData( pratilipiFilter ) ) {
+			// TODO: Clear filters which are not allow to non-admin roles.
+		}
 		
 		if( pratilipiFilter.getSearchQuery() != null )
 			pratilipiFilter.setSearchQuery( pratilipiFilter.getSearchQuery().toLowerCase().trim().replaceAll( "[\\s]+", " OR " ) );
