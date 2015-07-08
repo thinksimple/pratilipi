@@ -18,9 +18,13 @@
 	</automatic-scaling>
 
 	<static-files>
-		<include path="/**" expiration="365d">
+		<include path="**" >
 			<http-header name="Access-Control-Allow-Origin" value="*" />
 		</include>
+		<include path="**.html" expiration="1d" />
+		<include path="**.js"   expiration="3650d" />
+		<include path="**.css"  expiration="3650d" />
+		<include path="**.png"  expiration="3650d" />
 	</static-files>
 
 	<system-properties>
