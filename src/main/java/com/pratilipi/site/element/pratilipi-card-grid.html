@@ -117,12 +117,13 @@
 			},
 			
 			ready: function() {
-				this.isFinished = ! this.cursor || ! this.filter;
-				if( ! this.isFinished ) {
+				if( this.cursor && this.filter ) {
 					var ajaxGet = document.querySelector( 'iron-ajax' );
 					ajaxGet.params.searchQuery = this.searchQuery;
 					ajaxGet.params.cursor = this.cursor;
 					this.loadMore();
+				} else {
+					this.isFinished = true;
 				}
 			}
 
