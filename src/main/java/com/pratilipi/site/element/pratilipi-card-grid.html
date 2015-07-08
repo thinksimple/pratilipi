@@ -41,7 +41,6 @@
 				handle-as="json"
 				on-response="_handleAjaxGetResponse"
 				on-error="_handleAjaxGetError"
-				verbose="true"
 				></iron-ajax>
 
 	</template>
@@ -69,16 +68,19 @@
 				
 				this.pratilipiList = [];
 				this.cursor = null;
+
+				document.querySelector( 'iron-ajax' ).lastRequest.abort();
+				
 				this.isLoading = false;
 				this.isFinished = false;
-				
+
 				this.loadMore();
 			},
 			
 			loadMore: function() {
 				if( this.isLoading || this.isFinished )
 					return;
-				
+
 				var reqHeight = jQuery( window ).scrollTop()
 						- jQuery( this ).position().top
 						+ jQuery( window ).height()
@@ -96,6 +98,11 @@
 			},
 			
 			_handleAjaxGetResponse: function(  request ) {
+				if( ! request.detail.response ) {
+					this.isLoading = false;
+					return;
+				}
+				
 				var pratilipiList = request.detail.response.pratilipiList;
 				for( var i = 0; i < pratilipiList.length; i++ )
 					this.push( 'pratilipiList', pratilipiList[ i ] );
