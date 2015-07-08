@@ -29,6 +29,7 @@
 				var searchResult = jQuery( '#SearchResult' )[0];
 				if( searchResult != undefined ) {
 					jQuery( searchResult ).attr( 'search-query', this.query.trim() );
+					searchResult.reset();
 					event.preventDefault();
 				} else if( this.query == undefined || this.query.trim() == '' ) {
 					event.preventDefault();
