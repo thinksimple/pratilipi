@@ -11,6 +11,8 @@ public interface SearchAccessor {
 	
 	DataListCursorTuple<Long> searchPratilipi( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 	
+	DataListCursorTuple<Long> searchPratilipi( String searchQuery, PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
+
 	void indexPratilipiData( PratilipiData pratilipiData ) throws UnexpectedServerException;
 
 	void indexPratilipiDataList( List<PratilipiData> pratilipiDataList ) throws UnexpectedServerException;

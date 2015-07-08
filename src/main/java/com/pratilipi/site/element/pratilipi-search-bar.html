@@ -28,7 +28,7 @@
 			onSubmit: function( event ) {
 				var searchResult = jQuery( '#SearchResult' )[0];
 				if( searchResult != undefined ) {
-					searchResult.search( this.query.trim() );
+					jQuery( searchResult ).attr( 'search-query', this.query.trim() );
 					event.preventDefault();
 				} else if( this.query == undefined || this.query.trim() == '' ) {
 					event.preventDefault();

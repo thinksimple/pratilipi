@@ -43,6 +43,7 @@
 					id='SearchResult'
 					style='overflow:hidden'
 					pratilipi-list='${ pratilipiListJson }'
+					search-query='${ pratilipiListSearchQuery! }'
 					filter='${ pratilipiListFilterJson }'
 					cursor='${ pratilipiListCursor! }'
 					></pratilipi-card-grid>

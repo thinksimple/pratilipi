@@ -22,7 +22,6 @@ public class PratilipiListApi extends GenericApi {
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setSearchQuery( request.getSearchQuery() );
 		pratilipiFilter.setType( request.getType() );
 		pratilipiFilter.setLanguage( request.getLanguage() );
 		pratilipiFilter.setAuthorId( request.getAuthorId() );
@@ -30,6 +29,7 @@ public class PratilipiListApi extends GenericApi {
 		
 		DataListCursorTuple<PratilipiData> pratilipiListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList(
+						request.getSearchQuery(),
 						pratilipiFilter,
 						request.getCursor(),
 						request.getResultCount() == null ? 20 : request.getResultCount() );

@@ -252,22 +252,29 @@ public class PratilipiDataUtil {
 
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			PratilipiFilter pratilipiFilter, String cursor, Integer resultCount ) {
+
+		return getPratilipiDataList( null, pratilipiFilter, cursor, resultCount);
+	}
+
+	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
+			String searchQuery, PratilipiFilter pratilipiFilter, String cursor,
+			Integer resultCount ) {
 		
 		if( ! hasAccessToListPratilipiData( pratilipiFilter ) ) {
 			// TODO: Clear filters which are not allow to non-admin roles.
 		}
-		
-		if( pratilipiFilter.getSearchQuery() != null )
-			pratilipiFilter.setSearchQuery( pratilipiFilter.getSearchQuery().toLowerCase().trim().replaceAll( "[\\s]+", " OR " ) );
-		
+
+		if( searchQuery != null )
+			searchQuery = searchQuery.toLowerCase().trim().replaceAll( "[\\s]+", " OR " );
+
 		DataListCursorTuple<Long> pratilipiIdListCursorTuple = DataAccessorFactory
 				.getSearchAccessor()
-				.searchPratilipi( pratilipiFilter, cursor, resultCount );
-		
+				.searchPratilipi( searchQuery, pratilipiFilter, cursor, resultCount );
+
 		List<PratilipiData> pratilipiDataList = createPratilipiDataList(
 				pratilipiIdListCursorTuple.getDataList(),
 				pratilipiFilter.getAuthorId() == null );
-		
+
 		return new DataListCursorTuple<PratilipiData>( pratilipiDataList, pratilipiIdListCursorTuple.getCursor() );
 	}
 	

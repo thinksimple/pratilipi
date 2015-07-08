@@ -8,8 +8,6 @@ import com.pratilipi.common.type.PratilipiType;
 
 public class PratilipiFilter {
 	
-	private String searchQuery;
-	
 	private Language language;
 
 	private Long authorId;
@@ -23,14 +21,6 @@ public class PratilipiFilter {
 	private Boolean orderByReadCount;
 	
 	
-	public String getSearchQuery() {
-		return searchQuery;
-	}
-
-	public void setSearchQuery( String searchQuery ) {
-		this.searchQuery = searchQuery;
-	}
-
 	public Language getLanguage() {
 		return language;
 	}

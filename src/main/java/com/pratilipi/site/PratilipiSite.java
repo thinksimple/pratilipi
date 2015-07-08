@@ -242,15 +242,13 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForSearchPage( Language lang, HttpServletRequest request ) {
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( lang );
-		String searchQuery = request.getParameter( "q" );
-		if( searchQuery != null && ! searchQuery.trim().isEmpty() )
-			pratilipiFilter.setSearchQuery( searchQuery.trim() );
 		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
+				PratilipiDataUtil.getPratilipiDataList( request.getParameter( "q" ), pratilipiFilter, null, 20 );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ).toString() );
+		dataModel.put( "pratilipiListSearchQuery", request.getParameter( "q" ) );
 		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
 		dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
 		return dataModel;

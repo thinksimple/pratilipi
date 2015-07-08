@@ -108,6 +108,11 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	
 	@Override
 	public DataListCursorTuple<Long> searchPratilipi( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
+		return searchPratilipi( null, pratilipiFilter, cursorStr, resultCount );
+	}
+	
+	@Override
+	public DataListCursorTuple<Long> searchPratilipi( String query, PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 		
 		SortOptions.Builder sortOptionsBuilder = SortOptions.newBuilder();
 
@@ -119,7 +124,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 							: SortExpression.SortDirection.DESCENDING )
 					.setDefaultValueNumeric( 0 ) );
 
-		} else if( pratilipiFilter.getSearchQuery() != null ) {
+		} else if( query != null && ! query.isEmpty() ) {
 			sortOptionsBuilder.setMatchScorer( MatchScorer.newBuilder() );
 			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
 					.setExpression( "relevance" )
@@ -146,8 +151,8 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 		if( pratilipiFilter.getAuthorId() != null )
 			searchQuery = searchQuery + " AND author:" + pratilipiFilter.getAuthorId();
 
-		if( pratilipiFilter.getSearchQuery() != null )
-			searchQuery = "( " + pratilipiFilter.getSearchQuery() + " ) AND " + searchQuery;
+		if( query != null && ! query.isEmpty() )
+			searchQuery = "( " + query + " ) AND " + searchQuery;
 		
 		logger.log( Level.INFO, "Search Query: " + searchQuery );
 

@@ -56,25 +56,27 @@
 			properties: {
 				heading: { type: String },
 				pratilipiList: { type: Array },
+				searchQuery: { type: String },
 				filter: { type: Object },
 				cursor: { type: String },
-				isLoading: { type: Boolean, value: false }
+
+				isLoading: { type: Boolean, value: false },
+				isFinished: { type: Boolean, value: false }
 			},
 			
-			search: function( searchQuery ) {
+			reset: function() {
 				// TODO: cancel previous request
-				this.pratilipiList = [];
 				
-				var ajaxGet = document.querySelector( 'iron-ajax' );
-				ajaxGet.params.searchQuery = searchQuery;
-				ajaxGet.params.cursor = null;
-				ajaxGet.generateRequest();
-
-				this.isLoading = true;
+				this.pratilipiList = [];
+				this.cursor = null;
+				this.isLoading = false;
+				this.isFinished = false;
+				
+				this.loadMore();
 			},
 			
 			loadMore: function() {
-				if( this.isLoading || ! this.cursor || ! this.filter )
+				if( this.isLoading || this.isFinished )
 					return;
 				
 				var reqHeight = jQuery( window ).scrollTop()
@@ -86,6 +88,7 @@
 					return;
 				
 				var ajaxGet = document.querySelector( 'iron-ajax' );
+				ajaxGet.params.searchQuery = this.searchQuery;
 				ajaxGet.params.cursor = this.cursor;
 				ajaxGet.generateRequest();
 
@@ -96,7 +99,11 @@
 				var pratilipiList = request.detail.response.pratilipiList;
 				for( var i = 0; i < pratilipiList.length; i++ )
 					this.push( 'pratilipiList', pratilipiList[ i ] );
+
 				this.cursor = request.detail.response.cursor;
+				if( ! this.cursor )
+					this.isFinished = true;
+				
 				this.isLoading = false;
 				this.loadMore();
 			},
@@ -106,6 +113,7 @@
 			},
 			
 			ready: function() {
+				this.isFinished = ! this.cursor || ! this.filter;
 				this.loadMore();
 			}
 
