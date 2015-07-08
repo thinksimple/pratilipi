@@ -119,6 +119,13 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 							: SortExpression.SortDirection.DESCENDING )
 					.setDefaultValueNumeric( 0 ) );
 
+		} else if( pratilipiFilter.getSearchQuery() != null ) {
+			sortOptionsBuilder.setMatchScorer( MatchScorer.newBuilder() );
+			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
+					.setExpression( "relevance" )
+					.setDirection( SortExpression.SortDirection.DESCENDING )
+					.setDefaultValueNumeric( 0 ) );
+			
 		} else {
 			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
 					.setExpression( "relevance" )
@@ -139,8 +146,10 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 		if( pratilipiFilter.getAuthorId() != null )
 			searchQuery = searchQuery + " AND author:" + pratilipiFilter.getAuthorId();
 
-
-		logger.log( Level.INFO, searchQuery );
+		if( pratilipiFilter.getSearchQuery() != null )
+			searchQuery = "( " + pratilipiFilter.getSearchQuery() + " ) AND " + searchQuery;
+		
+		logger.log( Level.INFO, "Search Query: " + searchQuery );
 
 		
 		Results<ScoredDocument> result = search( searchQuery, sortOptions, cursorStr, resultCount, "docId" );

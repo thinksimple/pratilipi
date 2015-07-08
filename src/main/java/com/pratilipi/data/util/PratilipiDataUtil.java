@@ -257,6 +257,9 @@ public class PratilipiDataUtil {
 		if( ! hasAccessToListPratilipiData( pratilipiFilter ) )
 			throw new InsufficientAccessException();
 		
+		if( pratilipiFilter.getSearchQuery() != null )
+			pratilipiFilter.setSearchQuery( pratilipiFilter.getSearchQuery().toLowerCase().trim().replaceAll( "[\\s]+", " OR " ) );
+		
 		DataListCursorTuple<Long> pratilipiIdListCursorTuple = DataAccessorFactory
 				.getSearchAccessor()
 				.searchPratilipi( pratilipiFilter, cursor, resultCount );

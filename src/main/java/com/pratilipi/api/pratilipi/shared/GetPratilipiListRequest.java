@@ -7,6 +7,8 @@ import com.pratilipi.common.type.PratilipiType;
 
 public class GetPratilipiListRequest extends GenericRequest {
 
+	private String searchQuery;
+	
 	private PratilipiType type;
 	
 	private Language language;
@@ -20,6 +22,14 @@ public class GetPratilipiListRequest extends GenericRequest {
 	private Integer resultCount;
 
 	
+	public String getSearchQuery() {
+		return searchQuery;
+	}
+
+	public void setSearchQuery( String searchQuery ) {
+		this.searchQuery = searchQuery;
+	}
+
 	public PratilipiType getType() {
 		return type;
 	}

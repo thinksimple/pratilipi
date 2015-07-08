@@ -41,7 +41,7 @@ public class InitApi extends GenericApi {
 
 		int cleared = 0;
 		try {
-			for( Entity entity : pq.asIterable( fo )) {				
+			for( Entity entity : pq.asIterable( fo ) ) {
 				datastore.delete( entity.getKey() );
 				cleared++;
 			}
