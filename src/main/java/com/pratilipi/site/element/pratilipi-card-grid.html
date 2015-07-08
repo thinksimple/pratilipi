@@ -61,6 +61,18 @@
 				isLoading: { type: Boolean, value: false }
 			},
 			
+			search: function( searchQuery ) {
+				// TODO: cancel previous request
+				this.pratilipiList = [];
+				
+				var ajaxGet = document.querySelector( 'iron-ajax' );
+				ajaxGet.params.searchQuery = searchQuery;
+				ajaxGet.params.cursor = null;
+				ajaxGet.generateRequest();
+
+				this.isLoading = true;
+			},
+			
 			loadMore: function() {
 				if( this.isLoading || ! this.cursor || ! this.filter )
 					return;

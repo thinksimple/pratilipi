@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 		<#-- Page Title & Favicon -->
-		<title>${ title } &#0171 ${ _strings.pratilipi }</title>
+		<title>${ _strings.search } &#0171 ${ _strings.pratilipi }</title>
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 
 		<#-- Third-Party Library -->
@@ -42,7 +42,6 @@
 			<pratilipi-card-grid
 					id='SearchResult'
 					style='overflow:hidden'
-					heading='${ title }'
 					pratilipi-list='${ pratilipiListJson }'
 					filter='${ pratilipiListFilterJson! }'
 					cursor='${ pratilipiListCursor! }'
