@@ -22,6 +22,7 @@ public class PratilipiListApi extends GenericApi {
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setSearchQuery( request.getSearchQuery() );
 		pratilipiFilter.setType( request.getType() );
 		pratilipiFilter.setLanguage( request.getLanguage() );
 		pratilipiFilter.setAuthorId( request.getAuthorId() );
