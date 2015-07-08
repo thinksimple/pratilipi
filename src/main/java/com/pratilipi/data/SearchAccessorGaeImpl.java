@@ -59,7 +59,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 		
 		QueryOptions queryOptions = QueryOptions.newBuilder()
 				.setSortOptions( sortOptions )
-				.setCursor( cursorStr == null ? Cursor.newBuilder().build() : Cursor.newBuilder().build( cursorStr ) )
+				.setCursor( cursorStr == null || cursorStr.isEmpty() ? Cursor.newBuilder().build() : Cursor.newBuilder().build( cursorStr ) )
 				.setLimit( resultCount == null ? 10000 : resultCount )
 				.setFieldsToReturn( fieldsToReturn )
 				.build();
