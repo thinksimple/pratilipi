@@ -68,6 +68,8 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.setOptions( queryOptions )
 				.build( searchQuery );
 
+		logger.log( Level.INFO, "Search Query: " + query );
+		
 	    return searchIndex.search( query );
 	}
 
