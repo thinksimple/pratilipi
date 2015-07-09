@@ -32,7 +32,8 @@
 		
 		<div class="container" style="margin-top:10px">
 			<pratilipi-navigation
-					class='pull-left hidden-xs hidden-sm'></pratilipi-navigation>
+					class='pull-left hidden-xs hidden-sm'
+					></pratilipi-navigation>
 			<div style="overflow:hidden">
 				<pratilipi-author
 						author='${ authorJson }'></pratilipi-author>

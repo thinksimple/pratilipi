@@ -33,19 +33,13 @@
 	</head>
 	<body>
 
-		<div class="primary-500">
-			<div class="container">
-				<pratilipi-header>
-					<pratilipi-search-bar/>
-				</pratilipi-header>
-			</div>
-		</div>
+		<pratilipi-header></pratilipi-header>
 		
 		<div class="container" style="margin-top:10px">
-			<div class="secondary-500 pull-left" style="width:200px">
-				<pratilipi-navigation/>
-			</div>
-			<div class="secondary-500" style="margin-left:210px">
+			<pratilipi-navigation
+					class='pull-left hidden-xs hidden-sm'
+					></pratilipi-navigation>
+			<div style="overflow:hidden">
 				<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
 				<pratilipi-carousel pratilipi-list='${ recommendedJsonList }'></pratilipi-carousel>
 				<pratilipi-review></pratilipi-review>
