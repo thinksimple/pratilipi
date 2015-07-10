@@ -40,7 +40,7 @@
 			<div class="secondary-500" style="margin-left: 150px;">
 				<div class="media" style="padding: 20px;">
 					<div class="media-left">
-						<i class="fa fa-map-marker fa-5x"></i>
+						<img src="/stylesheets/PageNotFound.png" alt="Img">
 					</div>
 		
 					<div class="media-body">

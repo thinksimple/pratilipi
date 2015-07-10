@@ -40,7 +40,7 @@
 			<div class="secondary-500" style="margin-left: 150px;">
 				<div class="media">
 					<div class="media-left">
-						<i class="icon-remove-sign"></i> icon-remove-sign
+						<img src="/stylesheets/Server.png" alt="Img">
 					</div>
 					
 					<div class="media-body">

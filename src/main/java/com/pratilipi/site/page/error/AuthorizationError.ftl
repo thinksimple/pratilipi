@@ -40,7 +40,7 @@
 			<div class="secondary-500" style="margin-left: 150px;">
 				<div class="media" >
 					<div class="media-left">
-						<i class="fa fa-ban fa-5x"></i>
+						<img src="/stylesheets/Authorization.png" alt="Img">
 					</div>
 		
 					<div class="media-body">
