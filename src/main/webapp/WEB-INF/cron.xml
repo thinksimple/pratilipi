@@ -3,7 +3,7 @@
   <cron>
     <url>/init?cron</url>
     <target>worker</target>
-    <schedule>every 5 minutes from 8:00 to 20:00</schedule>
+    <schedule>every 1 minutes synchronized</schedule>
     <timezone>Asia/Calcutta</timezone>
   </cron>
 
