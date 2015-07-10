@@ -233,7 +233,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public void deleteAccessToken( AccessToken accessToken ) {
-		deleteEntity( AccessToken.class, accessToken.getId() );
+		deleteEntity( AccessTokenEntity.class, accessToken.getId() );
 	}
 
 	@Override
