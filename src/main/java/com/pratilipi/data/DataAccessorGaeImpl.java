@@ -181,7 +181,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AccessToken.class ) );
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AccessTokenEntity.class ) );
 		gaeQueryBuilder.addOrdering( "creationDate", true );
 
 		if( resultCount != null )
