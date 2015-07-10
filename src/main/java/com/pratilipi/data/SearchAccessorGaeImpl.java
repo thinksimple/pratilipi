@@ -99,6 +99,10 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				}
 			}
 		}
+		
+		logger.log( Level.INFO, searchIndex.getName() + " Usage: "
+				+ ( searchIndex.getStorageUsage() / 1024 / 1024 ) + " GB of "
+				+ ( searchIndex.getStorageLimit() / 1024 / 1024 ) + " GB" ); 
 	}
 
 	protected void deleteIndex( String docId ) {
