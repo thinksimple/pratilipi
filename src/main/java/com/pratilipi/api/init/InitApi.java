@@ -31,7 +31,7 @@ public class InitApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse getAuthorProcess( GenericRequest request ) {
+	public GenericResponse getInit( GenericRequest request ) {
 		
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
@@ -75,7 +75,7 @@ public class InitApi extends GenericApi {
 			if( accessToken.getCreationDate().after( maxDate ) )
 				new GenericResponse();
 			
-			if( accessToken.getUserId() != null || accessToken.getUserId() != 0L )
+			if( accessToken.getUserId() != null && accessToken.getUserId() != 0L )
 				continue;
 			
 			if( dataAccessor.getAuditLogList( accessToken.getId(), null, 1 ).getDataList().size() != 0 )
