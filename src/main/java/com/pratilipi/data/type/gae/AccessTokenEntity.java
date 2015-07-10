@@ -19,6 +19,10 @@ public class AccessTokenEntity implements AccessToken {
 	
 	@Persistent( column = "USER_ID" )
 	private Long userId;
+	
+	@Deprecated
+	@Persistent( column = "PUBLISHER_ID" )
+	private Long publisherId;
 
 	@Persistent( column = "ACCESS_TOKEN_TYPE" )
 	private AccessTokenType type;
