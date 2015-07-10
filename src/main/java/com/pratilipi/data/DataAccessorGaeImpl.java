@@ -281,7 +281,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		}
 		
 		@SuppressWarnings("unchecked")
-		List<AuditLog> audtiLogList = (List<AuditLog>) query.execute();
+		List<AuditLog> audtiLogList = (List<AuditLog>) query.execute( gaeQueryBuilder.getParamNameValueMap() );
 		Cursor cursor = JDOCursorHelper.getCursor( audtiLogList );
 		
 		return new DataListCursorTuple<>( 
