@@ -104,6 +104,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+	@Override
 	public AccessToken createAccessToken( AccessToken accessToken ) {
 		// TODO: Implementation
 		return accessToken;
@@ -113,6 +119,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public AccessToken updateAccessToken( AccessToken accessToken ) {
 		// TODO: Implementation
 		return accessToken;
+	}
+
+	@Override
+	public void deleteAccessToken( AccessToken accessToken ) {
+		// TODO: Implementation
 	}
 
 	
@@ -132,6 +143,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) {
+		// TODO: Implementation
+		return null;
+	}
+
+	@Override
+	public DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursorStr, Integer resultCount) {
 		// TODO: Implementation
 		return null;
 	}

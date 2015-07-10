@@ -141,6 +141,10 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return accessToken;
 	}
 	
+	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
+		return dataAccessor.getAccessTokenList( cursorStr, resultCount );
+	}
+
 	@Override
 	public AccessToken createAccessToken( AccessToken accessToken ) {
 		accessToken = dataAccessor.createAccessToken( accessToken );
@@ -153,6 +157,12 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		accessToken = dataAccessor.updateAccessToken( accessToken );
 		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
 		return accessToken;
+	}
+
+	@Override
+	public void deleteAccessToken( AccessToken accessToken ) {
+		dataAccessor.deleteAccessToken( accessToken );
+		memcache.remove( PREFIX_ACCESS_TOKEN + accessToken.getId() );
 	}
 
 	
@@ -168,10 +178,14 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return dataAccessor.createAuditLog( auditLog );
 	}
 	
-
 	@Override
 	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) {
 		return dataAccessor.getAuditLogList( cursorStr, resultCount );
+	}
+
+	@Override
+	public DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursorStr, Integer resultCount) {
+		return dataAccessor.getAuditLogList( accessId, cursorStr, resultCount );
 	}
 
 	

@@ -76,7 +76,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return (List<T>) pm.detachCopyAll( entityList );
 	}
 	
-	@SuppressWarnings("unused")
 	private <T> void deleteEntity( Class<T> clazz, Object id ) {
 		T entity = (T) pm.getObjectById( clazz, id );
 		pm.deletePersistent( entity );
@@ -181,6 +180,29 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		}
 	}
 	
+	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AccessToken.class ) );
+		gaeQueryBuilder.addOrdering( "creationDate", true );
+
+		if( resultCount != null )
+			gaeQueryBuilder.setRange( 0, resultCount );
+		
+		Query query = gaeQueryBuilder.build();
+		if( cursorStr != null ) {
+			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+			Map<String, Object> extensionMap = new HashMap<String, Object>();
+			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+			query.setExtensions( extensionMap );
+		}
+
+		@SuppressWarnings("unchecked")
+		List<AccessToken> pratilipiEntityList =
+				(List<AccessToken>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
+		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
+		
+		return new DataListCursorTuple<AccessToken>( (List<AccessToken>) pm.detachCopyAll( pratilipiEntityList ), cursor.toWebSafeString() );
+	}
+	
 	@Override
 	public AccessToken createAccessToken( AccessToken accessToken ) {
 		accessToken.setCreationDate( new Date() );
@@ -210,6 +232,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public void deleteAccessToken( AccessToken accessToken ) {
+		deleteEntity( AccessToken.class, accessToken.getId() );
+	}
+
+	@Override
 	public AccessToken updateAccessToken( AccessToken accessToken ) {
 		return createOrUpdateEntity( accessToken );
 	}
@@ -230,11 +257,17 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount ) {
-		
-		GaeQueryBuilder gaeQueryBuilder =
-				new GaeQueryBuilder( pm.newQuery( AuditLogEntity.class ) )
-						.addOrdering( "creationDate", false );
-		
+		return getAuditLogList( null, cursorStr, resultCount );
+	}
+
+	@Override
+	public DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursorStr, Integer resultCount ) {
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuditLogEntity.class ) )
+				.addOrdering( "creationDate", false );
+
+		if( accessId != null )
+			gaeQueryBuilder.addFilter( "accessId", accessId );
+
 		if( resultCount != null )
 			gaeQueryBuilder.setRange( 0, resultCount );
 		

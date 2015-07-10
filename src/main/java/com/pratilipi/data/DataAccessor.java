@@ -36,13 +36,16 @@ public interface DataAccessor {
 	// ACCESS_TOKEN Table
 	AccessToken newAccessToken();
 	AccessToken getAccessToken( String accessTokenId );
+	DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount );
 	AccessToken createAccessToken( AccessToken accessToken );
 	AccessToken updateAccessToken( AccessToken accessToken );
+	void deleteAccessToken( AccessToken accessToken );
 
 	// AUDIT_LOG Table
 	AuditLog newAuditLog();
 	AuditLog createAuditLog( AuditLog auditLog );
 	DataListCursorTuple<AuditLog> getAuditLogList( String cursor, Integer resultCount );
+	DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursor, Integer resultCount );
 
 	
 	// PAGE Table
