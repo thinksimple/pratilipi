@@ -196,11 +196,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		}
 
 		@SuppressWarnings("unchecked")
-		List<AccessToken> pratilipiEntityList =
+		List<AccessToken> accessTokenEntityList =
 				(List<AccessToken>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
+		Cursor cursor = JDOCursorHelper.getCursor( accessTokenEntityList );
 		
-		return new DataListCursorTuple<AccessToken>( (List<AccessToken>) pm.detachCopyAll( pratilipiEntityList ), cursor.toWebSafeString() );
+		return new DataListCursorTuple<AccessToken>( (List<AccessToken>) pm.detachCopyAll( accessTokenEntityList ), cursor.toWebSafeString() );
 	}
 	
 	@Override
