@@ -2,17 +2,30 @@
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 
 	<application>${app.id}</application>
-	<module>worker</module>
+	<module>default</module>
 	<version>${app.version}</version>
 
 	<threadsafe>true</threadsafe>
 	<sessions-enabled>false</sessions-enabled>
 
-	<instance-class>B1</instance-class>
-	<basic-scaling>
-		<max-instances>1</max-instances>
-		<idle-timeout>5m</idle-timeout>
-	</basic-scaling>
+	<instance-class>F1</instance-class>
+	<automatic-scaling>
+		<min-idle-instances>1</min-idle-instances>
+		<max-idle-instances>2</max-idle-instances>
+		<min-pending-latency>automatic</min-pending-latency>
+		<max-pending-latency>10ms</max-pending-latency>
+		<max-concurrent-requests>10</max-concurrent-requests>
+	</automatic-scaling>
+
+	<static-files>
+		<include path="**" >
+			<http-header name="Access-Control-Allow-Origin" value="*" />
+		</include>
+		<include path="**.html" expiration="1d" />
+		<include path="**.js"   expiration="3650d" />
+		<include path="**.css"  expiration="3650d" />
+		<include path="**.png"  expiration="3650d" />
+	</static-files>
 
 	<system-properties>
 		<!-- Configure java.util.logging -->
