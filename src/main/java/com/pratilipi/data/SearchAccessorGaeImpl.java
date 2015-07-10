@@ -68,7 +68,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.setOptions( queryOptions )
 				.build( searchQuery );
 
-		logger.log( Level.INFO, "Search Query: " + query );
+		logger.log( Level.INFO, "Search Query: " + query.toString() );
 		
 	    return searchIndex.search( query );
 	}
@@ -129,6 +129,10 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 		} else if( query != null && ! query.isEmpty() ) {
 			sortOptionsBuilder.setMatchScorer( MatchScorer.newBuilder() );
 			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
+					.setExpression( "_score" )
+					.setDirection( SortExpression.SortDirection.DESCENDING )
+					.setDefaultValueNumeric( 0 ) );
+			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
 					.setExpression( "relevance" )
 					.setDirection( SortExpression.SortDirection.DESCENDING )
 					.setDefaultValueNumeric( 0 ) );
@@ -155,15 +159,13 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 
 		if( query != null && ! query.isEmpty() )
 			searchQuery = "( " + query + " ) AND " + searchQuery;
-		
-		logger.log( Level.INFO, "Search Query: " + searchQuery );
 
 		
 		Results<ScoredDocument> result = search( searchQuery, sortOptions, cursorStr, resultCount, "docId" );
 		
 		List<Long> pratilipiIdList = new ArrayList<>( result.getNumberReturned() ); 
 		for( ScoredDocument document : result )
-			pratilipiIdList.add( Long.parseLong( document.getFields( "docId" ).iterator().next().getAtom() ) );
+			pratilipiIdList.add( Long.parseLong( document.getOnlyField( "docId" ).getAtom() ) );
 		
 		Cursor cursor = result.getCursor();
 		
