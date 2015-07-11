@@ -137,6 +137,7 @@ public class InitApi extends GenericApi {
 			blobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 			blobAccessor.createOrUpdateBlob( blobEntry );
 			
+			appProperty.setValue( currDate );
 			dataAccessor.createOrUpdateAppProperty( appProperty );
 
 			logger.log( Level.INFO, "Backed up " + count + " Pratilipi Entities." );

@@ -51,16 +51,21 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 			String searchQuery, SortOptions sortOptions, String cursorStr,
 			Integer resultCount, String... fieldsToReturn ) {
 		
-		if( sortOptions == null )
-			sortOptions = SortOptions.newBuilder()
-					.setMatchScorer( MatchScorer.newBuilder() )
-					.setLimit( 10000 )
-					.build();
+		if( sortOptions == null ) {
+			SortOptions.Builder sortOptionsBuilder = SortOptions.newBuilder();
+			sortOptionsBuilder.setMatchScorer( MatchScorer.newBuilder() );
+			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
+					.setExpression( SortExpression.SCORE_FIELD_NAME )
+					.setDirection( SortExpression.SortDirection.DESCENDING )
+					.setDefaultValueNumeric( 0.0 ) );
+			sortOptions = sortOptionsBuilder.setLimit( 10000 ).build();
+		}
 		
 		QueryOptions queryOptions = QueryOptions.newBuilder()
 				.setSortOptions( sortOptions )
 				.setCursor( cursorStr == null || cursorStr.isEmpty() ? Cursor.newBuilder().build() : Cursor.newBuilder().build( cursorStr ) )
-				.setLimit( resultCount == null ? 10000 : resultCount )
+				.setLimit( resultCount == null ? 1000 : resultCount )
+				.setNumberFoundAccuracy( 10000 )
 				.setFieldsToReturn( fieldsToReturn )
 				.build();
 		
@@ -124,24 +129,24 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 					.setDirection( pratilipiFilter.getOrderByReadCount()
 							? SortExpression.SortDirection.ASCENDING
 							: SortExpression.SortDirection.DESCENDING )
-					.setDefaultValueNumeric( 0 ) );
+					.setDefaultValueNumeric( 0.0 ) );
 
 		} else if( query != null && ! query.isEmpty() ) {
 			sortOptionsBuilder.setMatchScorer( MatchScorer.newBuilder() );
 			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
-					.setExpression( "_score" )
+					.setExpression( SortExpression.SCORE_FIELD_NAME )
 					.setDirection( SortExpression.SortDirection.DESCENDING )
-					.setDefaultValueNumeric( 0 ) );
+					.setDefaultValueNumeric( 0.0 ) );
 			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
 					.setExpression( "relevance" )
 					.setDirection( SortExpression.SortDirection.DESCENDING )
-					.setDefaultValueNumeric( 0 ) );
+					.setDefaultValueNumeric( 0.0 ) );
 			
 		} else {
 			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
 					.setExpression( "relevance" )
 					.setDirection( SortExpression.SortDirection.DESCENDING )
-					.setDefaultValueNumeric( 0 ) );
+					.setDefaultValueNumeric( 0.0 ) );
 		}
 		
 		SortOptions sortOptions = sortOptionsBuilder.setLimit( 10000 ).build();
