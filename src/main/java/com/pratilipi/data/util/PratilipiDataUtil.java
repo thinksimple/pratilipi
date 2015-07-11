@@ -456,6 +456,67 @@ public class PratilipiDataUtil {
 		}
 	}
 	
+	public static boolean updatePratilipiKeywords( Long pratilipiId ) 
+			throws InvalidArgumentException, UnexpectedServerException {
+			
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		
+		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
+			BlobEntry blobEntry = null;
+			try {
+				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
+				throw new UnexpectedServerException();
+			}
+			
+			if( blobEntry == null ){
+				if( pratilipi.getKeywords() != null ){
+					try {
+						dataAccessor.beginTx();
+						pratilipi = dataAccessor.getPratilipi( pratilipiId );
+						pratilipi.setKeywords( null );
+						dataAccessor.createOrUpdatePratilipi( pratilipi );
+						dataAccessor.commitTx();
+					} finally {
+						if( dataAccessor.isTxActive() )
+							dataAccessor.rollbackTx();
+					}
+					return true; 
+				}
+				else 
+					return false; 
+			}
+				
+			
+			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+			String keywordsGenerated = pratilipiContentUtil.generateKeywords();
+			
+			if(! pratilipi.getKeywords().equals( keywordsGenerated ) ){
+				try {
+					dataAccessor.beginTx();
+					pratilipi = dataAccessor.getPratilipi( pratilipiId );
+					pratilipi.setKeywords( keywordsGenerated );
+					dataAccessor.createOrUpdatePratilipi( pratilipi );
+					dataAccessor.commitTx();
+				} finally {
+					if( dataAccessor.isTxActive() )
+						dataAccessor.rollbackTx();
+				}
+				return true; 
+			}
+		} else {
+			throw new InvalidArgumentException( "Keywords for " + pratilipi.getContentType() + " content type is not yet supported." );
+		}
+		
+		return false;
+	}
+	
 	public static boolean createOrUpdatePratilipiPageUrl( Long pratilipiId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
