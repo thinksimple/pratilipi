@@ -1,5 +1,8 @@
 package com.pratilipi.common.util;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -30,12 +33,15 @@ public class PratilipiContentUtil {
 			"<h1.*?>(<.+?>)*(?<title>.+?)(</.+?>)*</h1>"
 			+ "|"
 			+ "<h2.*?>(<.+?>)*(?<subTitle>.+?)(</.+?>)*</h2>" );
+	
+	private static final String keywordProcessPattern = "<[^>]*>|[!-/:-@\\[-`{-~]|।|&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;";
+	private static final String removeSingleCharacter = "\\b\\w\\b\\s?";
 
 	
 	private String content;
 	private Matcher matcher;
 	
-
+	
 	public PratilipiContentUtil( String content ) {
 		this.content = content;
 		matcher = pageBreakPattern.matcher( content );
@@ -67,6 +73,20 @@ public class PratilipiContentUtil {
 		}
 		
 		return pageCount;
+	}
+	
+	public String generateKeywords() {
+		
+		String processContent = this.content;
+		processContent = processContent.replaceAll ( keywordProcessPattern, " " );
+		processContent = processContent.replaceAll ( removeSingleCharacter, "" );
+		String[] contentWords = processContent.split ( "\\s+" );
+        
+		Set<String> wordSet = new HashSet<String> ( Arrays.asList( contentWords ) );
+        contentWords = wordSet.toArray (new String [ wordSet.size() ]);
+        
+        processContent = String.join ( " ", contentWords );
+        return processContent;
 	}
 
 	public String getContent( int pageNo ) {
