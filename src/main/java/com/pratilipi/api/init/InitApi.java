@@ -88,7 +88,6 @@ public class InitApi extends GenericApi {
 			if( dataAccessor.getAuditLogList( accessToken.getId(), null, 1 ).getDataList().size() != 0 )
 				continue;
 			
-			logger.log( Level.INFO, "Deleting: " + gson.toJson( accessToken ) );
 			dataAccessor.deleteAccessToken( accessToken );
 
 			cleared++;
