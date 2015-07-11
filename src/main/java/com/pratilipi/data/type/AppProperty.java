@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public interface AppProperty extends Serializable {
 	
+	String DATASTORE_PRATILIPI_LAST_BACKUP = "DataStore.Pratilipi.LastBackup";
+	
 	String getId();
 
 	<T> T getValue();
