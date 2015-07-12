@@ -14,6 +14,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -121,7 +122,7 @@ public class InitApi extends GenericApi {
 				List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 
 				for( Pratilipi pratilipi : pratilipiList )
-					backup.append( gson.toJson( pratilipi ) + '\n' );
+					backup.append( new Gson().toJson( pratilipi ) + '\n' );
 				
 				count = count + pratilipiList.size();
 

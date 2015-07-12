@@ -9,15 +9,15 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MemcacheClaymusImpl implements Memcache {
+public class MemcacheImpl implements Memcache {
 
 	private static final Logger logger =
-			Logger.getLogger( MemcacheClaymusImpl.class.getName() );
+			Logger.getLogger( MemcacheImpl.class.getName() );
 
 	private final int cacheSize = 256;
 	@SuppressWarnings("serial")
-	private final Map<Object, Object> cache
-			= new LinkedHashMap<Object, Object>( 16, 0.75f, true ) {
+	private final Map<Object, Object> cache =
+			new LinkedHashMap<Object, Object>( 16, 0.75f, true ) {
 	
 		@Override
 		protected boolean removeEldestEntry( Map.Entry<Object, Object> eldest ) {

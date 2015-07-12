@@ -9,7 +9,7 @@ public class DataAccessorFactory {
 	private static final String gcsBucket = SystemProperty.get( "blobservice.gcs.bucket" );
 
 
-	private static final Memcache cacheL1 = new MemcacheClaymusImpl();
+	private static final Memcache cacheL1 = new MemcacheImpl();
 	private static final Memcache cacheL2 = new MemcacheGaeImpl();
 	private static final ThreadLocal<DataAccessor> threadLocalDataAccessor = new ThreadLocal<>();
 	private static final SearchAccessor searchAccessor = datasource.equals( "gae" )
@@ -31,7 +31,7 @@ public class DataAccessorFactory {
 		if( dataAccessor == null ) {
 			dataAccessor = datasource.equals( "gae" ) ? new DataAccessorGaeImpl() : new DataAccessorMockImpl();
 			dataAccessor = new DataAccessorWithMemcache( dataAccessor, cacheL2 );
-			dataAccessor = new DataAccessorWithMemcache( dataAccessor, new MemcacheClaymusImpl() );
+			dataAccessor = new DataAccessorWithMemcache( dataAccessor, new MemcacheImpl() );
 			threadLocalDataAccessor.set( dataAccessor );
 		}
 		return dataAccessor;

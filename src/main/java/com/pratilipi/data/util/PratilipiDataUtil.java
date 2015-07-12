@@ -16,7 +16,6 @@ import com.google.api.services.analytics.Analytics.Data.Ga.Get;
 import com.google.api.services.analytics.AnalyticsScopes;
 import com.google.api.services.analytics.model.GaData;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -52,7 +51,6 @@ public class PratilipiDataUtil {
 	
 	private static final Logger logger =
 			Logger.getLogger( PratilipiDataUtil.class.getName() );
-	private static final Gson gson = new GsonBuilder().create();
 
 	
 	private static final String CONTENT_FOLDER 		 = "pratilipi-content/pratilipi";
@@ -284,6 +282,8 @@ public class PratilipiDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = null;
 
+		Gson gson = new Gson();
+		
 		AccessToken accessToken = (AccessToken) AccessTokenFilter.getAccessToken(); 
 		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
@@ -398,6 +398,7 @@ public class PratilipiDataUtil {
 			throw new UnexpectedServerException();
 		}
 		
+		Gson gson = new Gson();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		AuditLog auditLog = dataAccessor.newAuditLog();
@@ -721,6 +722,8 @@ public class PratilipiDataUtil {
 			throw new InsufficientAccessException();
 
 		
+		Gson gson = new Gson();
+
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
@@ -833,6 +836,8 @@ public class PratilipiDataUtil {
 				blobEntry.setName( fileName );
 				blobAccessor.createOrUpdateBlob( blobEntry );
 				
+				Gson gson = new Gson();
+
 				AccessToken accessToken = AccessTokenFilter.getAccessToken();
 				AuditLog auditLog = dataAccessor.newAuditLog();
 				auditLog.setAccessId( accessToken.getId() );

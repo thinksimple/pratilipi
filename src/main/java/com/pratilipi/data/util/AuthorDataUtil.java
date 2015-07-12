@@ -8,7 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -39,7 +38,6 @@ public class AuthorDataUtil {
 	
 	private static final Logger logger =
 			Logger.getLogger( AuthorDataUtil.class.getName() );
-	private static final Gson gson = new GsonBuilder().create();
 	
 	private static final String IMAGE_FOLDER = "author-image";
 
@@ -175,6 +173,8 @@ public class AuthorDataUtil {
 		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		
+		Gson gson = new Gson();
+		
 		if( authorData.getId() == null ) { // Add Author usecase
 			
 			if( ! hasAccessToAddAuthorData() )
@@ -279,6 +279,8 @@ public class AuthorDataUtil {
 		}
 		
 
+		Gson gson = new Gson();
+		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );

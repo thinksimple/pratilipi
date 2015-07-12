@@ -20,8 +20,6 @@ public class PratilipiContentUtil {
 	private static final Logger logger =
 			Logger.getLogger( PratilipiContentUtil.class.getName() );
 
-	private static final Gson gson = new GsonBuilder().create();
-
 	
 	private static final String pageBreak = "<div style=\"page-break-after:always\"></div>";
 	private static final Pattern pageBreakPattern = Pattern.compile(
@@ -254,7 +252,7 @@ public class PratilipiContentUtil {
 			
 		}
 		
-		return gson.toJson( index );
+		return new Gson().toJson( index );
 	}
 
 }

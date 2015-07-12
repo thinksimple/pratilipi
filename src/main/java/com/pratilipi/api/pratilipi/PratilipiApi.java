@@ -1,5 +1,6 @@
 package com.pratilipi.api.pratilipi;
 
+import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -38,6 +39,8 @@ public class PratilipiApi extends GenericApi {
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, null );
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
 
+		Gson gson = new Gson();
+
 		GetPratilipiResponse response = gson.fromJson( gson.toJson( pratilipiData ), GetPratilipiResponse.class );
 		response.setAuthor( gson.fromJson( gson.toJson( authorData ), GetAuthorResponse.class ) );
 
@@ -47,6 +50,8 @@ public class PratilipiApi extends GenericApi {
 	@Put
 	public PutPratilipiResponse putPratilipi( PutPratilipiRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+
+		Gson gson = new Gson();
 
 		PratilipiData pratilipiData = gson.fromJson( gson.toJson( request ), PratilipiData.class );
 		PratilipiDataUtil.savePratilipiData( pratilipiData);

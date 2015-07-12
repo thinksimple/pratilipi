@@ -23,7 +23,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -44,8 +43,6 @@ public abstract class GenericApi extends HttpServlet {
 
 	private static final Logger logger =
 			Logger.getLogger( GenericApi.class.getName() );
-
-	protected static final Gson gson = new GsonBuilder().create();
 
 	private Method getMethod;
 	private Method putMethod;
@@ -87,9 +84,10 @@ public abstract class GenericApi extends HttpServlet {
 		
 		String method = request.getMethod();
 
+
 		// Creating JsonObject from request body (JSON)
 		JsonObject requestPayloadJson = method.equals( "PUT" )
-				? gson.fromJson( IOUtils.toString( request.getInputStream(), "UTF-8" ), JsonElement.class ).getAsJsonObject()
+				? new Gson().fromJson( IOUtils.toString( request.getInputStream(), "UTF-8" ), JsonElement.class ).getAsJsonObject()
 				: new JsonObject();
 
 		// Adding query string data in JsonObject
@@ -134,7 +132,7 @@ public abstract class GenericApi extends HttpServlet {
 			Class<? extends GenericRequest> apiMethodParameterType, HttpServletRequest request ) {
 		
 		try {
-			GenericRequest apiRequest = gson.fromJson( requestPayloadJson, apiMethodParameterType );
+			GenericRequest apiRequest = new Gson().fromJson( requestPayloadJson, apiMethodParameterType );
 			
 			if( apiRequest instanceof GenericFileUploadRequest ) {
 				GenericFileUploadRequest gfuRequest = (GenericFileUploadRequest) apiRequest;
@@ -209,7 +207,7 @@ public abstract class GenericApi extends HttpServlet {
 		} else if( apiResponse instanceof GenericResponse ) {
 			response.setCharacterEncoding( "UTF-8" );
 			PrintWriter writer = response.getWriter();
-			writer.println( gson.toJson( apiResponse ) );
+			writer.println( new Gson().toJson( apiResponse ) );
 			writer.close();
 		
 		} else if( apiResponse instanceof Throwable ) {

@@ -19,7 +19,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
@@ -46,8 +45,6 @@ public class PratilipiSite extends HttpServlet {
 	private static final Logger logger =
 			Logger.getLogger( PratilipiSite.class.getName() );
 
-	private static final Gson gson = new GsonBuilder().create();
-	
 	private static final Language defaulLang = Language.ENGLISH;
 	private static final String templateFilePrefix = "com/pratilipi/site/page/";
 	private static final String dataFilePrefix = "page/data/";
@@ -213,6 +210,8 @@ public class PratilipiSite extends HttpServlet {
 		pratilipiDataList.add( pratilipiData );
 		pratilipiDataList.add( pratilipiData );
 		
+		Gson gson = new Gson();
+		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "pratilipi", pratilipiData );
 		dataModel.put( "pratilipiJson", gson.toJson( pratilipiData ).toString() );
@@ -230,6 +229,8 @@ public class PratilipiSite extends HttpServlet {
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
 		
+		Gson gson = new Gson();
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "author", authorData );
 		dataModel.put( "authorJson", gson.toJson( authorData ).toString() );
@@ -246,6 +247,8 @@ public class PratilipiSite extends HttpServlet {
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList( request.getParameter( "q" ), pratilipiFilter, null, 20 );
 
+		Gson gson = new Gson();
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ).toString() );
 		dataModel.put( "pratilipiListSearchQuery", request.getParameter( "q" ) );
@@ -261,6 +264,8 @@ public class PratilipiSite extends HttpServlet {
 		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
+
+		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", type.getNamePlural() );
@@ -303,6 +308,8 @@ public class PratilipiSite extends HttpServlet {
 
 		List<PratilipiData> pratilipiDataList =
 				PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
+
+		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", listTitle );

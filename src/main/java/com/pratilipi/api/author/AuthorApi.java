@@ -1,5 +1,6 @@
 package com.pratilipi.api.author;
 
+import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -30,6 +31,8 @@ public class AuthorApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( request.getAuthorId() );
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
+		
+		Gson gson = new Gson();
 		return gson.fromJson( gson.toJson( authorData ), GetAuthorResponse.class );
 	}
 	
@@ -37,6 +40,8 @@ public class AuthorApi extends GenericApi {
 	public PutAuthorResponse putAuthor( PutAuthorRequest request ) 
 			throws InvalidArgumentException, InsufficientAccessException {
 		
+		Gson gson = new Gson();
+
 		AuthorData authorData = gson.fromJson( gson.toJson( request ), AuthorData.class );
 		AuthorDataUtil.saveAuthorData( authorData );
 		

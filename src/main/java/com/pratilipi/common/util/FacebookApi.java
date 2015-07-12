@@ -10,11 +10,11 @@ import java.util.logging.Logger;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AppProperty;
 
 public class FacebookApi {
 
@@ -22,22 +22,18 @@ public class FacebookApi {
 			Logger.getLogger( FacebookApi.class.getName() );
 
 	
-	private static final Gson gson = new GsonBuilder().create();
-	
-	private static final String APP_PROPERTY_ID = "Facebook.Credentials";
-	
 	private static final String GRAPH_API_URL = "https://graph.facebook.com/v2.2";
 	
 	
 	public static String getAppId() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Map<String, String> facebookCredentials = dataAccessor.getAppProperty( APP_PROPERTY_ID ).getValue();
+		Map<String, String> facebookCredentials = dataAccessor.getAppProperty( AppProperty.FACEBOOK_CREDENTIALS ).getValue();
 		return facebookCredentials.get( "appId" );
 	}
 	
 	public static String getAccessToken() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Map<String, String> facebookCredentials = dataAccessor.getAppProperty( APP_PROPERTY_ID ).getValue();
+		Map<String, String> facebookCredentials = dataAccessor.getAppProperty( AppProperty.FACEBOOK_CREDENTIALS ).getValue();
 		return facebookCredentials.get( "appId" ) + "|" + facebookCredentials.get( "appSecret" );
 	}
 	
@@ -50,7 +46,7 @@ public class FacebookApi {
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
 			logger.log( Level.INFO, "Response Payload: " + responsePayload );
 			
-			JsonElement responseJson = gson.fromJson( responsePayload, JsonElement.class );
+			JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
 			JsonElement shareJson = responseJson.getAsJsonObject().get( "share" );
 			if( shareJson == null )
 				return 0L;
