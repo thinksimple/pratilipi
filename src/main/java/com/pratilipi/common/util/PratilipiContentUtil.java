@@ -1,7 +1,6 @@
 package com.pratilipi.common.util;
 
 import java.util.Arrays;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -13,7 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.common.base.Joiner;
+
 
 public class PratilipiContentUtil {
 	
@@ -85,7 +84,10 @@ public class PratilipiContentUtil {
 		Set<String> wordSet = new HashSet<String> ( Arrays.asList( contentWords ) );
         contentWords = wordSet.toArray (new String [ wordSet.size() ]);
         
-        processContent = Joiner.on(" ").join ( contentWords );
+        processContent = "";
+        for(int iterator = 0; iterator < contentWords.length; iterator ++)
+        	processContent = contentWords [ iterator ] + " ";
+        
         return processContent;
 	}
 
