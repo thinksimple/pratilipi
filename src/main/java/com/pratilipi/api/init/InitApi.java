@@ -8,12 +8,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
 import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -41,29 +35,6 @@ public class InitApi extends GenericApi {
 	@Get
 	public GenericResponse getInit( GenericRequest request ) throws IOException {
 		
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-
-		
-		// Cleaning up _ah_SESSION table
-		
-		Query query = new Query( "_ah_SESSION" ).setKeysOnly();
-		PreparedQuery pq = datastore.prepare( query );
-		FetchOptions fo = FetchOptions.Builder.withDefaults()
-				.chunkSize( 100 ).limit( 1000 );
-
-		int cleared = 0;
-		try {
-			for( Entity entity : pq.asIterable( fo ) ) {
-				datastore.delete( entity.getKey() );
-				cleared++;
-			}
-		} catch( Throwable e ) {
-			logger.log( Level.SEVERE, "Exception occured while clearing session entites.", e );
-		} finally {
-			logger.log( Level.INFO, "Cleared " + cleared + " session entities." );
-		}
-		
-
 		// Cleaning up ACCESS_TOKEN table
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -76,7 +47,7 @@ public class InitApi extends GenericApi {
 				dataAccessor.getAccessTokenList( (String) appProperty.getValue(), 1000 );
 
 		Date maxDate = new Date( new Date().getTime() - 30 * 24 * 60 * 60 * 1000 );
-		cleared = 0;
+		int cleared = 0;
 		
 		List<AccessToken> accessTokenList = accessTokenListCursorTuple.getDataList();
 		for( AccessToken accessToken : accessTokenList ) {
