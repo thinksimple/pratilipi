@@ -77,6 +77,10 @@ public class PratilipiProcessApi extends GenericApi {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
 			if( pratilipi.getType() == PratilipiType.BOOK || pratilipi.getType() == PratilipiType.MAGAZINE )
 				PratilipiDataUtil.updatePratilipiIndex( request.getPratilipiId() );
+			
+			boolean changed = PratilipiDataUtil.updatePratilipiKeywords( request.getPratilipiId() );
+			if( changed )
+				PratilipiDataUtil.updatePratilipiSearchIndex( request.getPratilipiId(), null );
 		}
 		
 		if( request.updateStats() ) {

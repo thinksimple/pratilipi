@@ -9,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -33,8 +32,7 @@ public class PratilipiContentUtil {
 			+ "|"
 			+ "<h2.*?>(<.+?>)*(?<subTitle>.+?)(</.+?>)*</h2>" );
 	
-	private static final String keywordProcessPattern = "<[^>]*>|[!-/:-@\\[-`{-~]|।|&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;";
-	private static final String removeSingleCharacter = "\\b\\w\\b\\s?";
+	private static final String nonKeywordsPattern = "<[^>]*>|[!-/:-@\\[-`{-~]|।|&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;";
 
 	
 	private String content;
@@ -74,23 +72,6 @@ public class PratilipiContentUtil {
 		return pageCount;
 	}
 	
-	public String generateKeywords() {
-		
-		String processContent = this.content;
-		processContent = processContent.replaceAll ( keywordProcessPattern, " " );
-		processContent = processContent.replaceAll ( removeSingleCharacter, "" );
-		String[] contentWords = processContent.split ( "\\s+" );
-        
-		Set<String> wordSet = new HashSet<String> ( Arrays.asList( contentWords ) );
-        contentWords = wordSet.toArray (new String [ wordSet.size() ]);
-        
-        processContent = "";
-        for(int iterator = 0; iterator < contentWords.length; iterator ++)
-        	processContent = contentWords [ iterator ] + " ";
-        
-        return processContent;
-	}
-
 	public String getContent( int pageNo ) {
 		logger.log( Level.INFO, "Content length: " + content.length() );
 
@@ -255,6 +236,21 @@ public class PratilipiContentUtil {
 		}
 		
 		return new Gson().toJson( index );
+	}
+
+	public String generateKeywords() {
+		String[] words = this.content
+				.replaceAll( nonKeywordsPattern, " " )
+				.split( "\\s+(\\w\\s+)*" );
+		
+		Set<String> wordSet = new HashSet<String>( Arrays.asList( words ) );
+		words = wordSet.toArray( new String[ wordSet.size() ] );
+		
+		String keywords = "";
+		for( String word : words  )
+			keywords = word + " ";
+		
+		return keywords.trim();
 	}
 
 }

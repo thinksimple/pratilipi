@@ -277,12 +277,12 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
-	public String getKeywords(){
+	public String getKeywords() {
 		return keywords == null ? null : keywords.getValue();
 	}
 	
 	@Override
-	public void setKeywords( String keywords ){
+	public void setKeywords( String keywords ) {
 		this.keywords = keywords == null ? null : new Text( keywords );
 	}
 	

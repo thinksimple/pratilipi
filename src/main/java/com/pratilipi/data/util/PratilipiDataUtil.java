@@ -424,6 +424,7 @@ public class PratilipiDataUtil {
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
+			
 			BlobEntry blobEntry = null;
 			try {
 				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
@@ -432,24 +433,29 @@ public class PratilipiDataUtil {
 				throw new UnexpectedServerException();
 			}
 			
-			if( blobEntry == null )
-				return;
+			String index = null;
+			if( blobEntry != null ) {
+				String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+				
+				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+				index = pratilipiContentUtil.generateIndex();
+			}
 			
-			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-			
-			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-			String index = pratilipiContentUtil.generateIndex();
-			if( ! index.equals( pratilipi.getIndex() ) ) {
+			if( ( pratilipi.getIndex() == null && index != null )
+					|| ( pratilipi.getIndex() != null && index == null )
+					|| ! pratilipi.getIndex().equals( index ) ) {
+				
 				try {
 					dataAccessor.beginTx();
 					pratilipi = dataAccessor.getPratilipi( pratilipiId );
-					pratilipi.setIndex( pratilipiContentUtil.generateIndex() );
+					pratilipi.setIndex( index );
 					dataAccessor.createOrUpdatePratilipi( pratilipi );
 					dataAccessor.commitTx();
 				} finally {
 					if( dataAccessor.isTxActive() )
 						dataAccessor.rollbackTx();
 				}
+				
 			}
 
 		} else {
@@ -462,10 +468,11 @@ public class PratilipiDataUtil {
 			
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		
+
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
+		
 			BlobEntry blobEntry = null;
 			try {
 				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
@@ -474,48 +481,40 @@ public class PratilipiDataUtil {
 				throw new UnexpectedServerException();
 			}
 			
-			if( blobEntry == null ){
-				if( pratilipi.getKeywords() != null ){
-					try {
-						dataAccessor.beginTx();
-						pratilipi = dataAccessor.getPratilipi( pratilipiId );
-						pratilipi.setKeywords( null );
-						dataAccessor.createOrUpdatePratilipi( pratilipi );
-						dataAccessor.commitTx();
-					} finally {
-						if( dataAccessor.isTxActive() )
-							dataAccessor.rollbackTx();
-					}
-					return true; 
-				}
-				else 
-					return false; 
-			}
+			String keywords = null;
+			if( blobEntry != null ){
+				String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 				
+				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
+				keywords = pratilipiContentUtil.generateKeywords();
+			}
 			
-			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-			
-			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-			String keywordsGenerated = pratilipiContentUtil.generateKeywords();
-			
-			if(! pratilipi.getKeywords().equals( keywordsGenerated ) ){
+			if( ( pratilipi.getKeywords() == null && keywords != null )
+					|| ( pratilipi.getKeywords() != null && keywords == null )
+					|| ! pratilipi.getKeywords().equals( keywords ) ) {
+
 				try {
 					dataAccessor.beginTx();
 					pratilipi = dataAccessor.getPratilipi( pratilipiId );
-					pratilipi.setKeywords( keywordsGenerated );
+					pratilipi.setKeywords( keywords );
 					dataAccessor.createOrUpdatePratilipi( pratilipi );
 					dataAccessor.commitTx();
 				} finally {
 					if( dataAccessor.isTxActive() )
 						dataAccessor.rollbackTx();
 				}
+				
 				return true; 
+			
+			} else {
+				return false;
 			}
+			
 		} else {
-			throw new InvalidArgumentException( "Keywords for " + pratilipi.getContentType() + " content type is not yet supported." );
-		}
+			
+			throw new InvalidArgumentException( "Keywords generation for " + pratilipi.getContentType() + " content type is not yet supported." );
 		
-		return false;
+		}
 	}
 	
 	public static boolean createOrUpdatePratilipiPageUrl( Long pratilipiId ) {
