@@ -201,6 +201,8 @@ public class PratilipiDataUtil {
 		
 		if( includeAll )
 			pratilipiData.setIndex( pratilipi.getIndex() );
+		if( includeMetaData )
+			pratilipi.setKeywords( pratilipi.getKeywords() );
 		pratilipiData.setWordCount( pratilipi.getWordCount() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		
@@ -482,7 +484,7 @@ public class PratilipiDataUtil {
 			}
 			
 			String keywords = null;
-			if( blobEntry != null ){
+			if( blobEntry != null ) {
 				String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 				
 				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );

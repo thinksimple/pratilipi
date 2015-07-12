@@ -222,6 +222,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguage().getNameEn() ) )
 				
 				.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) )
+				.addField( Field.newBuilder().setName( "keywords" ).setText( pratilipiData.getKeywords() ) )
 				
 				// 4x weightage to PratilipiType
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )

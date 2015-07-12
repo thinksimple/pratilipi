@@ -51,6 +51,8 @@ public class PratilipiData {
 	private String index;
 	private transient boolean hasIndex;
 
+	private String keywords;
+	
 	private Long wordCount;
 	private transient boolean hasWordCount;
 	
@@ -268,6 +270,14 @@ public class PratilipiData {
 
 	public boolean hasIndex() {
 		return hasIndex;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+	
+	public void setKeywords( String keywords ) {
+		this.keywords = keywords;
 	}
 
 	public Long getWordCount() {
