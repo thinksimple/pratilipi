@@ -38,7 +38,7 @@
 				<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
 				<pratilipi-carousel pratilipi-list='${ recommendedJsonList }'></pratilipi-carousel>
 				<pratilipi-review-list
-						review-list='${ reviewList }'
+						review-list='${ reviewListJson }'
 						></pratilipi-review-list>
 			</div>
 		</div>
