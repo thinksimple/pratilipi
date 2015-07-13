@@ -39,6 +39,8 @@
 				<pratilipi-carousel pratilipi-list='${ recommendedJsonList }'></pratilipi-carousel>
 				<pratilipi-review-list
 						review-list='${ reviewListJson }'
+						pratilipi-id='${ pratilipi.id }'
+						cursor='${ reviewListCursor! }'
 						></pratilipi-review-list>
 			</div>
 		</div>
