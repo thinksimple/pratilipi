@@ -19,7 +19,6 @@ import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Pratilipi;
@@ -35,44 +34,10 @@ public class InitApi extends GenericApi {
 	@Get
 	public GenericResponse getInit( GenericRequest request ) throws IOException {
 		
-		// Cleaning up ACCESS_TOKEN table
-
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		AppProperty appProperty = dataAccessor.getAppProperty( "Init.AccessToken.Cursor" );
-		if( appProperty == null )
-			appProperty = dataAccessor.newAppProperty( "Init.AccessToken.Cursor" );
-
-		DataListCursorTuple<AccessToken> accessTokenListCursorTuple =
-				dataAccessor.getAccessTokenList( (String) appProperty.getValue(), 1000 );
-
-		Date maxDate = new Date( new Date().getTime() - 30 * 24 * 60 * 60 * 1000 );
-		int cleared = 0;
-		
-		List<AccessToken> accessTokenList = accessTokenListCursorTuple.getDataList();
-		for( AccessToken accessToken : accessTokenList ) {
-			if( accessToken.getCreationDate().after( maxDate ) )
-				new GenericResponse();
-			
-			if( accessToken.getUserId() != null && accessToken.getUserId() != 0L )
-				continue;
-			
-			if( dataAccessor.getAuditLogList( accessToken.getId(), null, 1 ).getDataList().size() != 0 )
-				continue;
-			
-			dataAccessor.deleteAccessToken( accessToken );
-
-			cleared++;
-		}
-		
-		appProperty.setValue( accessTokenListCursorTuple.getCursor() );
-		dataAccessor.createOrUpdateAppProperty( appProperty );
-
-		logger.log( Level.INFO, "Cleared " + cleared + " access token entities." );
-		
-		
 		// Backing up PRATILIPI Table
-		appProperty = dataAccessor.getAppProperty( AppProperty.DATASTORE_PRATILIPI_LAST_BACKUP );
+		AppProperty appProperty = dataAccessor.getAppProperty( AppProperty.DATASTORE_PRATILIPI_LAST_BACKUP );
 		if( appProperty == null )
 			appProperty = dataAccessor.newAppProperty( AppProperty.DATASTORE_PRATILIPI_LAST_BACKUP );
 
