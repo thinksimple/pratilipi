@@ -202,7 +202,7 @@ public class PratilipiDataUtil {
 		if( includeAll )
 			pratilipiData.setIndex( pratilipi.getIndex() );
 		if( includeMetaData )
-			pratilipi.setKeywords( pratilipi.getKeywords() );
+			pratilipiData.setKeywords( pratilipi.getKeywords() );
 		pratilipiData.setWordCount( pratilipi.getWordCount() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		
