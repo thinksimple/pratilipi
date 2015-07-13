@@ -15,6 +15,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserPratilipi;
 
 public class DataAccessorWithMemcache implements DataAccessor {
 	
@@ -24,6 +25,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private final static String PREFIX_PAGE = "Page-";
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
 	private static final String PREFIX_AUTHOR = "Author-";
+	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
 	
 	private final DataAccessor dataAccessor;
 	private final Memcache memcache;
@@ -419,6 +421,39 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 
 	
+	// USER_PRATILIPI Table
+	
+	@Override
+	public UserPratilipi newUserPratilipi() {
+		return dataAccessor.newUserPratilipi();
+	}
+	
+	@Override
+	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
+		UserPratilipi userPratilipi = memcache.get( PREFIX_USER_PRATILIPI + userId + "-" + pratilipiId );
+		if( userPratilipi == null ) {
+			userPratilipi = dataAccessor.getUserPratilipi( userId, pratilipiId );
+			if( userPratilipi != null )
+				memcache.put( PREFIX_USER_PRATILIPI + userId + "-" + pratilipiId, userPratilipi );
+		}
+		return userPratilipi;
+	}
+
+	@Override
+	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
+			Long pratilipiId, String cursorStr, Integer resultCount ) {
+		
+		return dataAccessor.getUserPratilipiList( userId, pratilipiId, cursorStr, resultCount );
+	}
+
+	@Override
+	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
+		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+		memcache.put( PREFIX_USER_PRATILIPI + userPratilipi.getId(), userPratilipi );
+		return userPratilipi;
+	}
+	
+
 	// Destroy
 	
 	@Override

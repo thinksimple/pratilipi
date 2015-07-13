@@ -26,17 +26,4 @@ public interface DataAccessor extends com.claymus.data.access.DataAccessor {
 	
 	Event createOrUpdateEvent( Event event );
 	
-	
-	UserPratilipi newUserPratilipi();
-	
-	UserPratilipi getUserPratilipiById( String userPratilipiId );
-	
-	UserPratilipi getUserPratilipi( Long userId, Long pratilipiId );
-
-	List<UserPratilipi> getUserPratilipiList( Long pratilipiId );
-	
-	List<Long> getPurchaseList( Long userId );
-
-	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
-	
 }

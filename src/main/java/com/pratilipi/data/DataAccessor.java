@@ -12,6 +12,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserPratilipi;
 
 public interface DataAccessor {
 
@@ -72,6 +73,13 @@ public interface DataAccessor {
 	DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount );
 	DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount );
 	Author createOrUpdateAuthor( Author author );
+
+	
+	// USER_PRATILIPI Table
+	UserPratilipi newUserPratilipi();
+	UserPratilipi getUserPratilipi( Long userId, Long pratilipiId );
+	DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursor, Integer resultCount );
+	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
 
 	
 	// Destroy

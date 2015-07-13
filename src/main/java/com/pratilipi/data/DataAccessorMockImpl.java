@@ -13,6 +13,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
@@ -20,6 +21,7 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
+import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
 public class DataAccessorMockImpl implements DataAccessor {
 
@@ -310,6 +312,35 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return author;
 	}
 
+	
+	// USER_PRATILIPI Table
+	
+	@Override
+	public UserPratilipi newUserPratilipi() {
+		return new UserPratilipiEntity();
+	}
+	
+	@Override
+	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
+		// TODO: Implementation
+		return null;
+	}
+
+	@Override
+	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
+			Long pratilipiId, String cursorStr, Integer resultCount ) {
+		
+		// TODO: Implementation
+		return null;
+	}
+
+	@Override
+	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
+		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
+		// TODO: Implementation
+		return null;
+	}
+	
 	
 	// Destroy
 

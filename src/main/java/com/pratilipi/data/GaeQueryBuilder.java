@@ -8,6 +8,9 @@ import java.util.Map;
 
 import javax.jdo.Query;
 
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.datanucleus.query.JDOCursorHelper;
+
 public class GaeQueryBuilder {
 
 	public enum Operator {
@@ -98,6 +101,14 @@ public class GaeQueryBuilder {
 
 	public GaeQueryBuilder setRange( long start, long end ) {
 		query.setRange( start, end );
+		return this;
+	}
+
+	public GaeQueryBuilder setCursor( String cursorStr ) {
+		Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+		Map<String, Object> extensionMap = new HashMap<String, Object>();
+		extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+		query.setExtensions( extensionMap );
 		return this;
 	}
 

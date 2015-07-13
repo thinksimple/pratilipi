@@ -1,10 +1,9 @@
-package com.pratilipi.data.transfer;
+package com.pratilipi.data.type;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import com.pratilipi.commons.shared.SellerType;
-import com.pratilipi.commons.shared.UserReviewState;
+import com.pratilipi.common.type.UserReviewState;
 
 public interface UserPratilipi extends Serializable {
 
@@ -17,6 +16,7 @@ public interface UserPratilipi extends Serializable {
 	Long getPratilipiId();
 	
 	void setPratilipiId( Long pratilipiId );
+
 	
 	Integer getLastOpenedPage();
 	
@@ -25,14 +25,7 @@ public interface UserPratilipi extends Serializable {
 	Date getLastOpenedDate();
 	
 	void setLastOpenedDate( Date lastOpenedDate );
-	
-	SellerType getPurchasedFrom();
-	
-	void setPurchasedFrom( SellerType purchasedFrom );
-	
-	Date getPurchaseDate();
-	
-	void setPurchaseDate( Date purchaseDate );
+
 	
 	Integer getRating();
 	
@@ -45,18 +38,11 @@ public interface UserPratilipi extends Serializable {
 	UserReviewState getReviewState();
 	
 	void setReviewState( UserReviewState reviewState );
-	
+
 	Date getReviewDate();
 	
 	void setReviewDate( Date reviewDate );
-	
-	public void setReviewLastUpdatedDate( Date reviewLastUpdatedDate );
 
-	public Date getReviewLastUpdateDate();
-	
-	String getBookmarks();
-	
-	void setBookmarks( String bookmarks );
 	
 	Boolean isAddedtoLib();
 	

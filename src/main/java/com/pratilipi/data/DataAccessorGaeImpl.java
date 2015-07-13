@@ -30,6 +30,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
@@ -37,6 +38,7 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
+import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
 public class DataAccessorGaeImpl implements DataAccessor {
 
@@ -551,6 +553,60 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( author );
 	}
 
+	
+	// USER_PRATILIPI Table
+	
+	@Override
+	public UserPratilipi newUserPratilipi() {
+		return new UserPratilipiEntity();
+	}
+	
+	@Override
+	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
+		if( userId == null || pratilipiId == null )
+			return null;
+		
+		try {
+			return getEntity( UserPratilipiEntity.class, userId + "-" + pratilipiId );
+		} catch( JDOObjectNotFoundException e ) {
+			return null;
+		}
+	}
+
+	@Override
+	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
+			Long pratilipiId, String cursorStr, Integer resultCount ) {
+		
+		GaeQueryBuilder queryBuilder =
+				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
+		
+		if( userId != null )
+			queryBuilder.addFilter( "userId", userId );
+		if( pratilipiId != null )
+			queryBuilder.addFilter( "pratilipiId", pratilipiId );
+		if( cursorStr != null )
+			queryBuilder.setCursor( cursorStr );
+		if( resultCount != null )
+			queryBuilder.setRange( 0, resultCount );
+		
+		Query query = queryBuilder.build();
+		
+		@SuppressWarnings("unchecked")
+		List<UserPratilipi> userPratilipiList =
+				(List<UserPratilipi>) query.executeWithMap( queryBuilder.getParamNameValueMap() );
+		Cursor cursor = JDOCursorHelper.getCursor( userPratilipiList );
+		
+		return new DataListCursorTuple<UserPratilipi>(
+				(List<UserPratilipi>) pm.detachCopyAll( userPratilipiList ),
+				cursor == null ? null : cursor.toWebSafeString() );
+	}
+
+	@Override
+	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
+		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
+		return createOrUpdateEntity( userPratilipi );
+	}
+	
 
 	// Destroy
 

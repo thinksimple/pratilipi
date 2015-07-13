@@ -1,4 +1,4 @@
-package com.pratilipi.data.access.gae;
+package com.pratilipi.data.type.gae;
 
 import java.util.Date;
 
@@ -7,9 +7,9 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
-import com.pratilipi.commons.shared.SellerType;
-import com.pratilipi.commons.shared.UserReviewState;
-import com.pratilipi.data.transfer.UserPratilipi;
+import com.pratilipi.common.type.SellerType;
+import com.pratilipi.common.type.UserReviewState;
+import com.pratilipi.data.type.UserPratilipi;
 
 @SuppressWarnings("serial")
 @PersistenceCapable( table = "USER_PRATILIPI" )
@@ -24,6 +24,7 @@ public class UserPratilipiEntity implements UserPratilipi {
 	
 	@Persistent( column = "PRATILIPI_ID" )
 	private Long pratilipiId;
+
 	
 	@Persistent( column = "LAST_OPENED_PAGE" )
 	private Integer lastOpenedPage;
@@ -31,12 +32,16 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Persistent( column = "LAST_OPENED_DATE" )
 	private Date lastOpenedDate;
 
+	
+	@Deprecated
 	@Persistent( column = "PURCHASED_FROM" )
 	private SellerType purchasedFrom;
 	
+	@Deprecated
 	@Persistent( column = "PURCHASE_DATE" )
 	private Date purchaseDate;
 
+	
 	@Persistent( column = "RATING" )
 	private Integer rating;
 	
@@ -48,15 +53,11 @@ public class UserPratilipiEntity implements UserPratilipi {
 	
 	@Persistent( column = "REVIEW_DATE" )
 	private Date reviewDate;
-	
-	@Persistent( column = "REVIEW_LAST_UPDATED_DATE" )
-	private Date reviewLastUpdatedDate;
-	
-	@Persistent( column = "BOOKMARKS" )
-	private Text bookmarks; 
 
+	
 	@Persistent( column = "ADDED_TO_LIB" )
 	private Boolean addedToLib;
+	
 	
 	public void setId( String id ) {
 		this.id = id;
@@ -87,6 +88,7 @@ public class UserPratilipiEntity implements UserPratilipi {
 		this.pratilipiId = pratilipiId;
 	}
 	
+
 	@Override
 	public Integer getLastOpenedPage() {
 		return lastOpenedPage;
@@ -107,25 +109,6 @@ public class UserPratilipiEntity implements UserPratilipi {
 		this.lastOpenedDate = lastOpenedDate;
 	}
 
-	@Override
-	public SellerType getPurchasedFrom() {
-		return purchasedFrom;
-	}
-	
-	@Override
-	public void setPurchasedFrom( SellerType purchasedFrom ) {
-		this.purchasedFrom = purchasedFrom;
-	}
-
-	@Override
-	public Date getPurchaseDate() {
-		return this.purchaseDate;
-	}
-
-	@Override
-	public void setPurchaseDate(Date purchaseDate) {
-		this.purchaseDate = purchaseDate;
-	}
 
 	@Override
 	public Integer getRating() {
@@ -167,25 +150,6 @@ public class UserPratilipiEntity implements UserPratilipi {
 		this.reviewDate = reviewDate;
 	}
 	
-	@Override
-	public void setReviewLastUpdatedDate( Date reviewLastUpdatedDate ){
-		this.reviewLastUpdatedDate = reviewLastUpdatedDate;
-	}
-	
-	@Override
-	public Date getReviewLastUpdateDate(){
-		return reviewLastUpdatedDate;
-	}
-
-	@Override
-	public String getBookmarks() {
-		return bookmarks == null ? null : bookmarks.getValue();
-	}
-
-	@Override
-	public void setBookmarks( String bookmarks) {
-		this.bookmarks = new Text( bookmarks );
-	}
 
 	@Override
 	public Boolean isAddedtoLib() {
