@@ -17,14 +17,9 @@
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
-
 		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-rating.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-user-rating.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-social.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-carousel.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-card-mini.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-review.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-review-list.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
@@ -42,7 +37,9 @@
 			<div style="overflow:hidden">
 				<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
 				<pratilipi-carousel pratilipi-list='${ recommendedJsonList }'></pratilipi-carousel>
-				<pratilipi-review></pratilipi-review>
+				<pratilipi-review-list
+						review-list='${ reviewList }'
+						></pratilipi-review-list>
 			</div>
 		</div>
 		

@@ -32,11 +32,13 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.data.util.UserPratilipiDataUtil;
 import com.pratilipi.site.page.data.Home;
 
 @SuppressWarnings("serial")
@@ -209,6 +211,9 @@ public class PratilipiSite extends HttpServlet {
 		pratilipiDataList.add( pratilipiData );
 		pratilipiDataList.add( pratilipiData );
 		pratilipiDataList.add( pratilipiData );
+
+		DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
+				UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, 20 );
 		
 		Gson gson = new Gson();
 		
@@ -216,6 +221,9 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "pratilipi", pratilipiData );
 		dataModel.put( "pratilipiJson", gson.toJson( pratilipiData ).toString() );
 		dataModel.put( "recommendedJsonList", gson.toJson( pratilipiDataList ).toString() );
+		dataModel.put( "reviewListJson", gson.toJson( reviewListCursorTuple.getDataList() ).toString() );
+		if( reviewListCursorTuple.getDataList().size() == 20 )
+			dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
 		return dataModel;
 	}
 	

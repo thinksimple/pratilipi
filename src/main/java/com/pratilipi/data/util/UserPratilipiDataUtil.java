@@ -93,9 +93,9 @@ public class UserPratilipiDataUtil {
 		List<UserPratilipiData> userPratilipiDataList = new ArrayList<>( userPratilipiList.size() );
 		for( UserPratilipi userPratilipi : userPratilipiList ) {
 			UserPratilipiData userPratilipiData = new UserPratilipiData();
+			userPratilipiData.setRating( userPratilipi.getRating() );
 			userPratilipiData.setReview( userPratilipi.getReview() );
 			userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
-			userPratilipiData.setRating( userPratilipi.getRating() );
 			userPratilipiDataList.add( userPratilipiData );
 		}
 

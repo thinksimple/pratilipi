@@ -1,0 +1,111 @@
+<link rel="import" href="pratilipi-review.html" />
+
+<dom-module id="pratilipi-review-list">
+
+	<style>
+		
+		:host {
+			display: block;
+		}
+
+		.secondary-500 {
+			padding: 10px;
+		}
+		
+		.secondary-500 h3 {
+			margin: 0px;
+			padding: 10px;
+		}
+
+	</style>
+
+	
+	<template>
+
+		<div class="secondary-500">
+			<template is="dom-repeat" items="{{ reviewList }}" as="review">
+				<review-list review="{{ review }}"></review-list>
+			</template>
+		</div>
+
+		<iron-ajax
+				url="/api/pratilipi/review/list"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				on-error="_handleAjaxGetError"
+				></iron-ajax>
+
+	</template>
+
+
+	<script>
+
+		Polymer({
+			
+			is: 'pratilipi-review-list',
+
+			properties: {
+				reviewList: { type: Array },
+				pratilipiId: { type: Number },
+				cursor: { type: String },
+
+				isLoading: { type: Boolean, value: false },
+				isFinished: { type: Boolean, value: false }
+			},
+			
+			loadMore: function() {
+				if( this.isLoading || this.isFinished )
+					return;
+
+				var reqHeight = jQuery( window ).scrollTop()
+						- jQuery( this ).position().top
+						+ jQuery( window ).height()
+						+ 2 * jQuery( window ).height();
+		
+				if( jQuery( this ).outerHeight( true ) >= reqHeight )
+					return;
+				
+				document.querySelector( 'iron-ajax' ).generateRequest();
+				this.isLoading = true;
+			},
+			
+			_handleAjaxGetResponse: function(  request ) {
+				if( ! request.detail.response ) {
+					this.isLoading = false;
+					return;
+				}
+				
+				var reviewList = request.detail.response.reviewList;
+				for( var i = 0; i < reviewList.length; i++ )
+					this.push( 'reviewList', reviewList[ i ] );
+
+				if( request.detail.response.cursor ) {
+					document.querySelector( 'iron-ajax' ).params.cursor = request.detail.response.cursor;
+					this.isLoading = false;
+					this.loadMore();
+				} else {
+					this.isFinished = true;
+				}
+			},
+
+			_handleAjaxGetError: function() {
+				this.isLoading = false;
+			},
+			
+			ready: function() {
+				if( this.pratilipiId && this.cursor ) {
+					var ajaxGet = document.querySelector( 'iron-ajax' );
+					ajaxGet.params = { 'pratilipiId':this.pratilipiId, 'cursor':this.cursor };
+					this.loadMore();
+				} else {
+					this.isFinished = true;
+				}
+			}
+
+		});
+
+	</script>
+
+</dom-module>
