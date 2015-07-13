@@ -3,8 +3,12 @@ package com.pratilipi.api.init;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +33,10 @@ public class InitApi extends GenericApi {
 
 	private static final Logger logger =
 			Logger.getLogger( InitApi.class.getName() );
-	
+	private static final String COMMA_DELIMITER = ",";
+    private static final String NEW_LINE_SEPARATOR = "\n";
+    private static final String FILE_HEADER = "words,frequency";
+    static HashMap< String, Integer > keywordFrequency = new HashMap< String, Integer >();
 	
 	@Get
 	public GenericResponse getInit( GenericRequest request ) throws IOException {
@@ -79,7 +86,81 @@ public class InitApi extends GenericApi {
 			logger.log( Level.INFO, "Backed up " + count + " Pratilipi Entities." );
 		}
 		
+		// Added to get the Inverse frequency table.
+		currDate = new Date();
+		nextBackup = appProperty.getValue() == null
+				? new Date( currDate.getTime() - 1 )
+				: new Date( ( (Date) appProperty.getValue() ).getTime() + 60 * 60 * 1000 * 6 ); // Last backup time + 6 Hrs
+
+		if( currDate.after( nextBackup ) ) {
+			PratilipiFilter pratilipiFilter = new PratilipiFilter();
+			String cursor = null;
+			int count = 0;
+			StringBuilder backup = new StringBuilder();
+
+			while( true ) {
+				DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
+						dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
+				List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
+
+				for( Pratilipi pratilipi : pratilipiList ) {
+					String keywords = pratilipi.getKeywords();
+					String[] words = keywords.split( "\\s+" );
+			        
+					for( String currentWord : words ) {
+			            if( keywordFrequency.containsKey( currentWord ) )
+			            	keywordFrequency.put( currentWord, keywordFrequency.get( currentWord ) + 1 );
+			            else
+			            	keywordFrequency.put( currentWord, 1 );
+			        }
+				} //Map keywordFrequency is populated.
+				
+				// Sorting the map according to values in descending order
+				Comparator<String> vc =  new Comparator<String>() {
+			        @Override
+			        public int compare(String a, String b) {
+			    	        if ( keywordFrequency.get( a ) >= keywordFrequency.get( b ) ) 
+			    	            return -1;
+			    	        else 
+			    	            return 1;
+			        }
+			    };
+			    
+			    TreeMap<String,Integer> sortedMap = new TreeMap<String,Integer>(vc);
+				sortedMap.putAll( keywordFrequency ); 
+				
+				// Copying the map in csv format.
+				backup.setLength( 0 ); // clear the StringBuilder object. 
+				backup.append( FILE_HEADER );
+				backup.append( NEW_LINE_SEPARATOR );
+	            
+				for ( Map.Entry<String, Integer> entry : sortedMap.entrySet() ) {
+	                backup.append( entry.getKey() );
+	                backup.append( COMMA_DELIMITER );
+	                backup.append( entry.getValue().toString() );
+	                backup.append( COMMA_DELIMITER );
+	                backup.append( NEW_LINE_SEPARATOR );
+	            }
+						
+				count = count + pratilipiList.size();
+
+				if( pratilipiList.size() < 1000 )
+					break;
+				else
+					cursor = pratilipiListCursorTupe.getCursor();
+			}
+			
+			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+			BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi-keywords-" + new SimpleDateFormat( "yyyyMMddHHmm" ).format( currDate ) );
+			blobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
+			blobAccessor.createOrUpdateBlob( blobEntry );
+			
+			appProperty.setValue( currDate );
+			dataAccessor.createOrUpdateAppProperty( appProperty );
+
+			logger.log( Level.INFO, "Backed up " + count + " keyword list." );
+		}
+		
 		return new GenericResponse();
 	}
-	
 }
