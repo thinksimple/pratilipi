@@ -104,7 +104,7 @@ public class InitApi extends GenericApi {
 			}
 			
 			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-			BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi-" + new SimpleDateFormat( "yyyyMMddHHmm" ).format( currDate ) );
+			BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/pratilipi-" + new SimpleDateFormat( "yyyyMMddHHmm" ).format( currDate ) );
 			blobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 			blobAccessor.createOrUpdateBlob( blobEntry );
 			
