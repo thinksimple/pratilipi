@@ -19,7 +19,7 @@ public class PutAuthorRequest extends GenericRequest {
 	private String penName;
 	private boolean hasPenName;
 	
-	@Validate( required=true )
+	@Validate( required = true )
 	private String firstNameEn;
 	private boolean hasFirstNameEn;
 	

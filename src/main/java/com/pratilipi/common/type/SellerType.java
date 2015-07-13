@@ -1,9 +1,10 @@
 package com.pratilipi.common.type;
 
-@Deprecated
 public enum SellerType {
 
+	@Deprecated
 	PRATILIPI,
+	@Deprecated
 	PUBLISHER
 
 }

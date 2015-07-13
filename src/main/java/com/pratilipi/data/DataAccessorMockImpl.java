@@ -327,6 +327,14 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public DataListCursorTuple<UserPratilipi> getPratilipiReviewList(
+			Long pratilipiId, String cursor, Integer resultCount) {
+
+		// TODO: Implementation
+		return null;
+	}
+
+	@Override
 	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
 			Long pratilipiId, String cursorStr, Integer resultCount ) {
 		

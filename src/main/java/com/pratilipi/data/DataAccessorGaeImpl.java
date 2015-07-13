@@ -574,6 +574,32 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public DataListCursorTuple<UserPratilipi> getPratilipiReviewList(
+			Long pratilipiId, String cursorStr, Integer resultCount ) {
+		
+		GaeQueryBuilder queryBuilder =
+				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) )
+						.addFilter( "review", Operator.NOT_NULL )
+						.addFilter( "pratilipiId", pratilipiId );
+		
+		if( cursorStr != null )
+			queryBuilder.setCursor( cursorStr );
+		if( resultCount != null )
+			queryBuilder.setRange( 0, resultCount );
+		
+		Query query = queryBuilder.build();
+		
+		@SuppressWarnings("unchecked")
+		List<UserPratilipi> userPratilipiList =
+				(List<UserPratilipi>) query.executeWithMap( queryBuilder.getParamNameValueMap() );
+		Cursor cursor = JDOCursorHelper.getCursor( userPratilipiList );
+		
+		return new DataListCursorTuple<UserPratilipi>(
+				(List<UserPratilipi>) pm.detachCopyAll( userPratilipiList ),
+				cursor == null ? null : cursor.toWebSafeString() );
+	}
+
+	@Override
 	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
 			Long pratilipiId, String cursorStr, Integer resultCount ) {
 		

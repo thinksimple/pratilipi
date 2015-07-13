@@ -46,6 +46,9 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Persistent( column = "RATING" )
 	private Integer rating;
 	
+	@Persistent( column = "RATING_DATE" )
+	private Date ratingDate;
+
 	@Persistent( column = "REVIEW" )
 	private Text review;
 	
@@ -121,6 +124,17 @@ public class UserPratilipiEntity implements UserPratilipi {
 		this.rating = rating;
 	}
 	
+	@Override
+	public Date getRatingDate() {
+		return ratingDate;
+	}
+	
+	@Override
+	public void setRatingDate( Date ratingDate ) {
+		this.ratingDate = ratingDate;
+	}
+	
+
 	@Override
 	public String getReview() {
 		return review == null ? null : review.getValue();
