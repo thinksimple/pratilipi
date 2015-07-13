@@ -13,6 +13,7 @@ import javax.cache.CacheException;
 import javax.cache.CacheManager;
 
 import com.google.appengine.api.memcache.InvalidValueException;
+import com.google.appengine.api.memcache.stdimpl.GCacheException;
 import com.google.appengine.api.memcache.stdimpl.GCacheFactory;
 
 public class MemcacheGaeImpl implements Memcache {
@@ -66,7 +67,9 @@ public class MemcacheGaeImpl implements Memcache {
 			Cache cache = CacheManager.getInstance().getCacheFactory()
 					.createCache( props );
 			cache.put( key, value );
-		} catch (CacheException ex) {
+		} catch( GCacheException ex ) {
+			logger.log( Level.SEVERE, "Failed to update value.", ex);
+		} catch( CacheException ex ) {
 			logger.log( Level.SEVERE, "Failed to create cache instance.", ex);
 		}
 	}
@@ -85,6 +88,8 @@ public class MemcacheGaeImpl implements Memcache {
 			Cache cache = CacheManager.getInstance().getCacheFactory()
 					.createCache(props);
 			cache.put( key, value );
+		} catch( GCacheException ex ) {
+			logger.log( Level.SEVERE, "Failed to update value.", ex);
 		} catch( CacheException ex ) {
 			logger.log( Level.SEVERE, "Failed to create cache instance.", ex);
 		}
@@ -99,6 +104,8 @@ public class MemcacheGaeImpl implements Memcache {
 			Cache cache = CacheManager.getInstance().getCacheFactory()
 					.createCache( props );
 			cache.putAll( keyValueMap );
+		} catch( GCacheException ex ) {
+			logger.log( Level.SEVERE, "Failed to update one or more values.", ex);
 		} catch (CacheException ex) {
 			logger.log( Level.SEVERE, "Failed to create cache instance.", ex);
 		}
@@ -109,7 +116,7 @@ public class MemcacheGaeImpl implements Memcache {
 			Cache cache = CacheManager.getInstance().getCacheFactory()
 					.createCache( Collections.emptyMap() );
 			cache.remove( key );
-		} catch (CacheException ex) {
+		} catch( CacheException ex ) {
 			logger.log( Level.SEVERE, "Failed to create cache instance.", ex);
 		}
 	}
