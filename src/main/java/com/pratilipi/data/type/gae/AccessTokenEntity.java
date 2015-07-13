@@ -9,9 +9,10 @@ import javax.jdo.annotations.PrimaryKey;
 import com.pratilipi.common.type.AccessTokenType;
 import com.pratilipi.data.type.AccessToken;
 
-@SuppressWarnings("serial")
 @PersistenceCapable( table = "ACCESS_TOKEN" )
 public class AccessTokenEntity implements AccessToken {
+
+	private static final long serialVersionUID = 4669082442894372545L;
 
 	@PrimaryKey
 	@Persistent( column = "ACCESS_TOKEN_ID" )

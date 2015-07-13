@@ -11,9 +11,10 @@ import com.pratilipi.common.type.SellerType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.data.type.UserPratilipi;
 
-@SuppressWarnings("serial")
 @PersistenceCapable( table = "USER_PRATILIPI" )
 public class UserPratilipiEntity implements UserPratilipi {
+
+	private static final long serialVersionUID = 2207445050785647416L;
 
 	@PrimaryKey
 	@Persistent( column = "USER_PRATILIPI_ID" )

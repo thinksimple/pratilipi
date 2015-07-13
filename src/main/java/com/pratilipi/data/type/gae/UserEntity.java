@@ -10,10 +10,11 @@ import javax.jdo.annotations.PrimaryKey;
 import com.pratilipi.common.type.UserStatus;
 import com.pratilipi.data.type.User;
 
-@SuppressWarnings("serial")
 @PersistenceCapable( table = "USER" )
 public class UserEntity implements User {
 	
+	private static final long serialVersionUID = 5942981653445086715L;
+
 	@PrimaryKey
 	@Persistent( column = "USER_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
