@@ -1,25 +1,39 @@
+<link rel="import" href="pratilipi-rating.html" />
+<link rel="import" href="pratilipi-social.html" />
+<link rel="import" href="pratilipi-user-rating.html" />
+
 <dom-module id="pratilipi-pratilipi">
 
 	<style>
 	
+		:host {
+			display: block;
+		}
+
 		.media {
-			padding:10px;
+			padding: 10px;
 		}
 		
-		img {
+		
+		.media-left {
+			padding: 10px;
+		}
+		
+		.media-left img {
 			width: 150px;
 			height: 225px;
 		}
 
-		h1 {
-			margin-top: 0px;
+
+		.media-body {
+			padding: 10px;
+		}
+		
+		.media-body h1, .media-body h4 {
+			margin: 5px 0px;
 		}
 
-		h4 {
-			margin-bottom: 5px;
-		}
-
-		.btn {
+		.media-body .btn {
 			border-radius: 0px;
 			padding: 3px 20px;
 		}
@@ -27,42 +41,44 @@
 	</style>
 
 	<template>
-		<div class="media">
-
-			<div class="media-left">
-				<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
-				<div style="text-align:center">
-					<pratilipi-user-rating></pratilipi-user-rating>
-					<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
+		<div class="secondary-500">
+			<div class="media">
+	
+				<div class="media-left">
+					<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+					<div style="text-align:center">
+						<pratilipi-user-rating></pratilipi-user-rating>
+						<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
+					</div>
 				</div>
-			</div>
-			
-			<div class="media-body">
-				<div>
-					<h1 class="media-heading">{{ pratilipi.title }}</h1>
-					<h4><a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a></h4>
+				
+				<div class="media-body">
 					<div>
-						<pratilipi-rating value="{{ pratilipi.averageRating }}">
-							<small>{{ getRatingsStr( pratilipi.ratingCount ) }}</small>
-						</pratilipi-rating>
+						<h1 class="media-heading">{{ pratilipi.title }}</h1>
+						<h4><a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a></h4>
+						<div>
+							<pratilipi-rating value="{{ pratilipi.averageRating }}">
+								<small>{{ getRatingsStr( pratilipi.ratingCount ) }}</small>
+							</pratilipi-rating>
+						</div>
+						<div>
+							<a href="{{__hack__}}#"><span class="badge">Classic</span></a>
+						</div>
+						<div>
+							<a href="{{ pratilipi.readerPageUrl }}" class="btn btn-success">Read For Free</a>
+							<a href="{{__hack__}}#" class="btn btn-primary">Review This Book</a>
+						</div>
+						<hr>
+						<div style="text-align: justify; padding:10px 0px;">
+							<span class="summary">{{ pratilipi.summary }}</span>
+							<a href="{{__hack__}}#" class="show-more" on-click="showCompleteSummary"><small>(show more)</small></a>
+							<a href="{{__hack__}}#" class="show-less" on-click="showSummarySnippet"><small>(show less)</small></a>
+						</div>	
+						<hr>	
 					</div>
-					<div>
-						<a href="{{__hack__}}#"><span class="badge">Classic</span></a>
-					</div>
-					<div>
-						<a href="{{ pratilipi.readerPageUrl }}" class="btn btn-success">Read For Free</a>
-						<a href="{{__hack__}}#" class="btn btn-primary">Review This Book</a>
-					</div>
-					<hr>
-					<div style="text-align: justify; padding:10px 0px;">
-						<span class="summary">{{ pratilipi.summary }}</span>
-						<a href="{{__hack__}}#" class="show-more" on-click="showCompleteSummary"><small>(show more)</small></a>
-						<a href="{{__hack__}}#" class="show-less" on-click="showSummarySnippet"><small>(show less)</small></a>
-					</div>	
-					<hr>	
 				</div>
+	
 			</div>
-
 		</div>
 	</template>
 	
