@@ -248,7 +248,8 @@ public class PratilipiContentUtil {
 		
 		String keywords = "";
 		for( String word : words  )
-			keywords = keywords + word + " ";
+			if( word.length() > 1 )
+				keywords = keywords + word + " ";
 		
 		return keywords.trim();
 	}
