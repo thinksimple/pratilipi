@@ -36,7 +36,6 @@ public class InitApi extends GenericApi {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
 	private static final String FILE_HEADER = "words,frequency";
-	static HashMap< String, Integer > keywordFrequency = new HashMap< String, Integer >();
 	
 	@Get
 	public GenericResponse getInit( GenericRequest request ) throws IOException {
@@ -86,10 +85,11 @@ public class InitApi extends GenericApi {
 			logger.log( Level.INFO, "Backed up " + count + " Pratilipi Entities." );
 		}
 		
-		// Update theInverse frequency table.
-		appProperty = dataAccessor.getAppProperty( AppProperty.LAST_KEYWORD_UPDATE );
+		// Update the Inverse frequency table.
+		final HashMap< String, Integer > keywordFrequency = new HashMap< String, Integer >();
+		appProperty = dataAccessor.getAppProperty( AppProperty.DATASTORE_PRATILIPI_IDF_LAST_UPDATE );
 		if( appProperty == null )
-			appProperty = dataAccessor.newAppProperty( AppProperty.LAST_KEYWORD_UPDATE );
+			appProperty = dataAccessor.newAppProperty( AppProperty.DATASTORE_PRATILIPI_IDF_LAST_UPDATE );
 		
 		currDate = new Date();
 		nextBackup = appProperty.getValue() == null
@@ -107,7 +107,7 @@ public class InitApi extends GenericApi {
 						dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
 				List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 				
-				//Populating the Map keywordFrequency.
+				//Populate the keywordFrequency map.
 				for( Pratilipi pratilipi : pratilipiList ) {
 					String keywords = pratilipi.getKeywords();
 					String[] words = keywords.split( "\\s+" );
@@ -120,7 +120,7 @@ public class InitApi extends GenericApi {
 					}
 				} 
 				
-				// Sorting the map according to values in descending order
+				// Sort the map according to values in descending order
 				Comparator<String> vc =  new Comparator<String>() {
 					@Override
 					public int compare(String a, String b) {
@@ -134,7 +134,7 @@ public class InitApi extends GenericApi {
 				TreeMap<String,Integer> sortedMap = new TreeMap<String,Integer>(vc);
 				sortedMap.putAll( keywordFrequency ); 
 				
-				// Copying the map in csv format.
+				// Write the map to a file in .csv format.
 				updatedKeywords.append( FILE_HEADER );
 				updatedKeywords.append( NEW_LINE_SEPARATOR );
 			  

@@ -8,7 +8,7 @@ public interface AppProperty extends Serializable {
 	
 	String FACEBOOK_CREDENTIALS = "Facebook.Credentials";
 	
-	String LAST_KEYWORD_UPDATE = "DataStore.Pratilipi.KeywordUpdate";
+	String DATASTORE_PRATILIPI_IDF_LAST_UPDATE = "DataStore.Pratilipi.IDF.LastUpdate";
 	
 	String getId();
 
