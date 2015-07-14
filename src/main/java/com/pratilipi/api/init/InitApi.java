@@ -86,7 +86,6 @@ public class InitApi extends GenericApi {
 		}
 		
 		// Update the Inverse frequency table.
-		final HashMap< String, Integer > keywordFrequency = new HashMap< String, Integer >();
 		appProperty = dataAccessor.getAppProperty( AppProperty.DATASTORE_PRATILIPI_IDF_LAST_UPDATE );
 		if( appProperty == null )
 			appProperty = dataAccessor.newAppProperty( AppProperty.DATASTORE_PRATILIPI_IDF_LAST_UPDATE );
@@ -100,8 +99,10 @@ public class InitApi extends GenericApi {
 			PratilipiFilter pratilipiFilter = new PratilipiFilter();
 			String cursor = null;
 			int count = 0;
+			
+			final HashMap< String, Integer > keywordFrequency = new HashMap< String, Integer >();
 			StringBuilder updatedKeywords = new StringBuilder();
-
+			
 			while( true ) {
 				DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
 						dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
