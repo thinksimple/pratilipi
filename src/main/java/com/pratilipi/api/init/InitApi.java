@@ -85,6 +85,7 @@ public class InitApi extends GenericApi {
 
 			logger.log( Level.INFO, "Backed up " + count + " Pratilipi Entities." );
 		}
+
 		
 		// Update the Inverse frequency table.
 		appProperty = dataAccessor.getAppProperty( AppProperty.DATASTORE_PRATILIPI_IDF_LAST_UPDATE );
@@ -92,32 +93,32 @@ public class InitApi extends GenericApi {
 			appProperty = dataAccessor.newAppProperty( AppProperty.DATASTORE_PRATILIPI_IDF_LAST_UPDATE );
 		
 		currDate = new Date();
-		nextBackup = appProperty.getValue() == null
+		Date nextUpdate = appProperty.getValue() == null
 				? new Date( currDate.getTime() - 1 )
-				: new Date( ( (Date) appProperty.getValue() ).getTime() + 60 * 60 * 1000 * 6 ); // Last backup time + 6 Hrs
+				: new Date( ( (Date) appProperty.getValue() ).getTime() + 60 * 60 * 1000 * 6 ); // Last update time + 6 Hrs
 
-		if( currDate.after( nextBackup ) ) {
+		if( currDate.after( nextUpdate ) ) {
 			PratilipiFilter pratilipiFilter = new PratilipiFilter();
 			String cursor = null;
 			int count = 0;
 			
-			final HashMap< String, Integer > keywordFrequency = new HashMap< String, Integer >();
+			final HashMap< String, Integer > keywordFrequencyMap = new HashMap< String, Integer >();
 			
 			while( true ) {
 				DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
 						dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
 				List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 				
-				//Populate the keywordFrequency map.
+				// Populate Keyword-Frequency map.
 				for( Pratilipi pratilipi : pratilipiList ) {
 					String keywords = pratilipi.getKeywords();
 					String[] words = keywords.split( "\\s+" );
 					
-					for( String currentWord : words ) {
-						if( keywordFrequency.containsKey( currentWord ) )
-							keywordFrequency.put( currentWord, keywordFrequency.get( currentWord ) + 1 );
+					for( String word : words ) {
+						if( keywordFrequencyMap.containsKey( word ) )
+							keywordFrequencyMap.put( word, keywordFrequencyMap.get( word ) + 1 );
 						else
-							keywordFrequency.put( currentWord, 1 );
+							keywordFrequencyMap.put( word, 1 );
 					}
 				} 
 
@@ -129,41 +130,40 @@ public class InitApi extends GenericApi {
 					cursor = pratilipiListCursorTupe.getCursor();
 			}
 			
-			// Sort the populated map according to values in descending order
-			Comparator<String> vc =  new Comparator<String>() {
-				@Override
-				public int compare(String a, String b) {
-					if ( keywordFrequency.get( a ) >= keywordFrequency.get( b ) ) 
-						return -1;
-					else 
-						return 1;
-				}
-			};
-			
-			TreeMap<String,Integer> sortedMap = new TreeMap<String,Integer>(vc);
-			sortedMap.putAll( keywordFrequency ); 
+			// Sort Keyword-Frequency map in descending order of frequency
+			Comparator<String> comparator =  new Comparator<String>() {
 				
-			// Write the map to a file in .csv format.
+				@Override
+				public int compare( String a, String b ) {
+					return keywordFrequencyMap.get( a ) >= keywordFrequencyMap.get( b ) ? -1 : 1; 
+				}
+				
+			};
+			TreeMap<String,Integer> sortedMap = new TreeMap<>( comparator );
+			sortedMap.putAll( keywordFrequencyMap ); 
+				
+			// Transform sorted map to csv string
 			StringBuilder csv = new StringBuilder();
 			csv.append( FILE_HEADER );
 			csv.append( NEW_LINE_SEPARATOR );
-			for ( Map.Entry<String, Integer> entry : sortedMap.entrySet() ) {
+			for( Map.Entry<String, Integer> entry : sortedMap.entrySet() ) {
 				csv.append( entry.getKey() );
 				csv.append( COMMA_DELIMITER );
 				csv.append( entry.getValue().toString() );
 				csv.append( COMMA_DELIMITER );
 				csv.append( NEW_LINE_SEPARATOR );
 			}
+
+			// Persist csv string in BlobStore
 			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-			BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi-keywords/" + new SimpleDateFormat( "yyyyMMddHHmm" ).format( currDate ) + ".csv" ); 
+			BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi-keywords/" + new SimpleDateFormat( "yyyyMMddHHmm" ).format( currDate ) + ".csv" );
 			blobEntry.setData( csv.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 			blobAccessor.createOrUpdateBlob( blobEntry );
 			
 			appProperty.setValue( currDate );
 			dataAccessor.createOrUpdateAppProperty( appProperty );
 
-			logger.log( Level.INFO, "Backed up " + count + " keyword list." );
-		
+			logger.log( Level.INFO, "Generated IDF with " + count + " keywords." );
 		}
 
 		return new GenericResponse();
