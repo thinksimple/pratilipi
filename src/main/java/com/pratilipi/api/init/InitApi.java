@@ -27,6 +27,7 @@ import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Pratilipi;
 
+
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
 public class InitApi extends GenericApi {
@@ -101,7 +102,6 @@ public class InitApi extends GenericApi {
 			int count = 0;
 			
 			final HashMap< String, Integer > keywordFrequency = new HashMap< String, Integer >();
-			StringBuilder updatedKeywords = new StringBuilder();
 			
 			while( true ) {
 				DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
@@ -120,33 +120,7 @@ public class InitApi extends GenericApi {
 							keywordFrequency.put( currentWord, 1 );
 					}
 				} 
-				
-				// Sort the map according to values in descending order
-				Comparator<String> vc =  new Comparator<String>() {
-					@Override
-					public int compare(String a, String b) {
-						if ( keywordFrequency.get( a ) >= keywordFrequency.get( b ) ) 
-							return -1;
-						else 
-							return 1;
-					}
-				};
-				
-				TreeMap<String,Integer> sortedMap = new TreeMap<String,Integer>(vc);
-				sortedMap.putAll( keywordFrequency ); 
-				
-				// Write the map to a file in .csv format.
-				updatedKeywords.append( FILE_HEADER );
-				updatedKeywords.append( NEW_LINE_SEPARATOR );
-			  
-				for ( Map.Entry<String, Integer> entry : sortedMap.entrySet() ) {
-					updatedKeywords.append( entry.getKey() );
-					updatedKeywords.append( COMMA_DELIMITER );
-					updatedKeywords.append( entry.getValue().toString() );
-					updatedKeywords.append( COMMA_DELIMITER );
-					updatedKeywords.append( NEW_LINE_SEPARATOR );
-				}
-						
+
 				count = count + pratilipiList.size();
 
 				if( pratilipiList.size() < 1000 )
@@ -155,17 +129,43 @@ public class InitApi extends GenericApi {
 					cursor = pratilipiListCursorTupe.getCursor();
 			}
 			
+			// Sort the populated map according to values in descending order
+			Comparator<String> vc =  new Comparator<String>() {
+				@Override
+				public int compare(String a, String b) {
+					if ( keywordFrequency.get( a ) >= keywordFrequency.get( b ) ) 
+						return -1;
+					else 
+						return 1;
+				}
+			};
+			
+			TreeMap<String,Integer> sortedMap = new TreeMap<String,Integer>(vc);
+			sortedMap.putAll( keywordFrequency ); 
+				
+			// Write the map to a file in .csv format.
+			StringBuilder csv = new StringBuilder();
+			csv.append( FILE_HEADER );
+			csv.append( NEW_LINE_SEPARATOR );
+			for ( Map.Entry<String, Integer> entry : sortedMap.entrySet() ) {
+				csv.append( entry.getKey() );
+				csv.append( COMMA_DELIMITER );
+				csv.append( entry.getValue().toString() );
+				csv.append( COMMA_DELIMITER );
+				csv.append( NEW_LINE_SEPARATOR );
+			}
 			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 			BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi-keywords/" + new SimpleDateFormat( "yyyyMMddHHmm" ).format( currDate ) + ".csv" ); 
-			blobEntry.setData( updatedKeywords.toString().getBytes( Charset.forName( "UTF-8" ) ) );
+			blobEntry.setData( csv.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 			blobAccessor.createOrUpdateBlob( blobEntry );
 			
 			appProperty.setValue( currDate );
 			dataAccessor.createOrUpdateAppProperty( appProperty );
 
 			logger.log( Level.INFO, "Backed up " + count + " keyword list." );
-		}
 		
+		}
+
 		return new GenericResponse();
 	}
 }
