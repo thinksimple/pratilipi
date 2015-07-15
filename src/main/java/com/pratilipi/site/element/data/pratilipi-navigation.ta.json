@@ -8,6 +8,10 @@
 					"url" : "/most-read"
 				},
 				{
+					"text" : "புதியவை,
+					"url" : "/new"
+				},
+				{
 					"text" : "புத்தகங்கள்",
 					"url" : "/books"
 				},
