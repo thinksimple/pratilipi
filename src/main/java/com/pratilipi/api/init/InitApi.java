@@ -112,7 +112,8 @@ public class InitApi extends GenericApi {
 				// Populate Keyword-Frequency map.
 				for( Pratilipi pratilipi : pratilipiList ) {
 					String keywords = pratilipi.getKeywords();
-					if( keywords == null ) continue;
+					if( keywords == null ) 
+						continue;
 					
 					String[] words = keywords.split( "\\s+" );
 					for( String word : words ) {
