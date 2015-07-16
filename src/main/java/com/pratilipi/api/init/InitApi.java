@@ -112,8 +112,9 @@ public class InitApi extends GenericApi {
 				// Populate Keyword-Frequency map.
 				for( Pratilipi pratilipi : pratilipiList ) {
 					String keywords = pratilipi.getKeywords();
-					String[] words = keywords.split( "\\s+" );
+					if( keywords == null ) continue;
 					
+					String[] words = keywords.split( "\\s+" );
 					for( String word : words ) {
 						if( keywordFrequencyMap.containsKey( word ) )
 							keywordFrequencyMap.put( word, keywordFrequencyMap.get( word ) + 1 );
@@ -132,13 +133,13 @@ public class InitApi extends GenericApi {
 			
 			// Sort Keyword-Frequency map in descending order of frequency
 			Comparator<String> comparator =  new Comparator<String>() {
-				
 				@Override
 				public int compare( String a, String b ) {
 					return keywordFrequencyMap.get( a ) >= keywordFrequencyMap.get( b ) ? -1 : 1; 
 				}
 				
 			};
+			
 			TreeMap<String,Integer> sortedMap = new TreeMap<>( comparator );
 			sortedMap.putAll( keywordFrequencyMap );
 				
