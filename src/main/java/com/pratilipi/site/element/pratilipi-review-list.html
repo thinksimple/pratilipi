@@ -23,8 +23,9 @@
 	<template>
 
 		<div class="secondary-500">
+			<h1>${ _strings.reviews }</h1>
 			<template is="dom-repeat" items="{{ reviewList }}" as="review">
-				<review-list review="{{ review }}"></review-list>
+				<pratilipi-review review="{{ review }}"></pratilipi-review>
 			</template>
 		</div>
 

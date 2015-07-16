@@ -1,46 +1,45 @@
+<link rel="import" href="pratilipi-rating.html">
+
 <dom-module id="pratilipi-review">
+
 	<style>
-		textarea {
-	    resize: none;
-	    height: 200px;
-	    width: 90%;
-		}
 		
+		:host {
+			display: block;
+		}
+
+
+		.media-left {
+			padding: 10px;
+		}
+
+		.media-left img {
+			height: 111px;
+			width: 74px;
+		}
+
+		
+		.media-body {
+			padding: 10px;
+		}
+
 	</style>
+
 	
 	<template>
-		
-			<div class="panel-group" id="accordion">
-				<div class="panel panel-default">
-			    	<div class="panel-heading">
-						<h4 class="panel-title">
-						 	<a href="{{ pratilipi.readerPageUrl }}" class="btn btn-default">Reviews</a>
-						     <button type="button" class="btn btn-info" data-toggle="collapse" data-parent="#accordion" data-target="#collapse">Write a Review</button> 	
-						 </h4>
-					</div>
-					<div id="collapse" class="panel-collapse collapse">
-						<div class="panel-body">
-							<pratilipi-user-rating></pratilipi-user-rating>
-							<h4>Review Title</h4>
-							<input type="text" style="width: 90%" placeholder="e.g., Great Story!" /><br>
-							<div >
-								<div>
-									<span><big>Your Review</big></span>&nbsp;&nbsp;								
-									<span id="Review">(at least 140 characters)</span>
-								</div>
-							</div>
-							<textarea name="textarea" id="textarea" placeholder="Share your thoughts!What made this work interesting?What made it inspiring?What did you lean from it?You are helping others make a better choice!"></textarea>
-							<div class="result">0 chars</div>		
-							<div style= "padding:10px;">
-								<button type="button" class="btn btn-success">Submit</button>
-								<button type="button" class="btn btn-default" data-toggle="collapse" data-parent="#accordion" data-target="#collapse">Cancel</button>
-							</div>
-						 </div>
-					</div>		
-		  		</div>				   					
+		<div class="media">
+
+			<div class="media-left">
+				<small><pratilipi-rating value="{{ review.rating }}" /></small>
+				<img class="media-object" src="{{ user.imageUrl }}" alt="{{ user.fullName }}" title="{{ user.fullNameEn }}"/>
 			</div>
-		
-					
+			
+			<div class="media-body">
+				<div>{{ review.review }}</div>
+			</div>
+			
+		</div>
+		<hr/>
 	</template>
 	
 
@@ -49,39 +48,12 @@
 		Polymer({
 
 			is: 'pratilipi-review',
-			
-			ready: function() {
-				$('textarea').on('keyup',function(){
-					 
-					    var charCount = $(this).val().replace(/\s/g, '').length;
-						$(".result").text(charCount + " chars");
-							
-						// If the value is less than 140, text color remain same
-						if ((charCount) < 140) {
-							$("#Review").css("color", "black");
-						}
 
-						// Else if the value is equal to 140, text color changes to green
-						else if ((charCount) >= 140) {
-							$("#Review").css("color", "green");
-						}
-				});
-				
-				
-				
-				$('.panel-group').on('shown.bs.collapse', function (e) {
-				    var offset = $('.panel.panel-default > .panel-collapse.in').offset();
-				    if(offset) {
-				        $('html,body').animate({
-				         scrollTop: $('.panel-collapse.in').siblings('.panel-heading').offset().top
-				        }, 200); 
-				    }
-				});
-				
+			properties: {
+				review: { type: Object }
 			}
-			
+
 		});
-		
 		
 	</script>
 

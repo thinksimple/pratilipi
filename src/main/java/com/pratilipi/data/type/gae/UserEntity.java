@@ -53,6 +53,13 @@ public class UserEntity implements User {
 	private Date signUpDate;
 
 	
+	public UserEntity() {}
+
+	public UserEntity( Long id ) {
+		this.id = id;
+	}
+
+	
 	@Override
 	public Long getId() {
 		return id;

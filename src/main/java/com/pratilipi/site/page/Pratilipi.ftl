@@ -18,13 +18,19 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-carousel.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-review-list.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
+
+		<script defer>
+			jQuery( window ).scroll( function() {
+				document.querySelector( 'pratilipi-review-list' ).loadMore();
+			} );
+		</script>
+
 	</head>
 	<body>
 
@@ -36,7 +42,6 @@
 					></pratilipi-navigation>
 			<div style="overflow:hidden">
 				<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
-				<pratilipi-carousel pratilipi-list='${ recommendedJsonList }'></pratilipi-carousel>
 				<pratilipi-review-list
 						review-list='${ reviewListJson }'
 						pratilipi-id='${ pratilipi.id }'

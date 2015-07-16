@@ -63,6 +63,15 @@ public class UserPratilipiEntity implements UserPratilipi {
 	private Boolean addedToLib;
 	
 	
+	public UserPratilipiEntity() {}
+	
+	public UserPratilipiEntity( Long userId, Long pratilipiId ) {
+		this.id = userId + "-" + pratilipiId;
+		this.userId = userId;
+		this.pratilipiId = pratilipiId;
+	}
+
+	
 	public void setId( String id ) {
 		this.id = id;
 	}
