@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.jdo.Query;
 
@@ -12,6 +14,9 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 
 public class GaeQueryBuilder {
+
+	private static final Logger logger =
+			Logger.getLogger( GaeQueryBuilder.class.getName() );
 
 	public enum Operator {
 		NOT_NULL,
@@ -134,6 +139,8 @@ public class GaeQueryBuilder {
 			query.setOrdering( orderingStr );
 		}
 
+		logger.log( Level.INFO, query.toString() );
+		
 		return query;
 	}
 

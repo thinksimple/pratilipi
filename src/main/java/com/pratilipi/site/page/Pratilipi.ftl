@@ -44,7 +44,7 @@
 				<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
 				<pratilipi-review-list
 						review-list='${ reviewListJson }'
-						pratilipi-id='${ pratilipi.id }'
+						pratilipi-id='${ pratilipi.id?c }'
 						cursor='${ reviewListCursor! }'
 						></pratilipi-review-list>
 			</div>

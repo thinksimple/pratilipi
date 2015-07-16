@@ -579,8 +579,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		GaeQueryBuilder queryBuilder =
 				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) )
-						.addFilter( "reviewDate", Operator.NOT_NULL )
-						.addFilter( "pratilipiId", pratilipiId );
+						.addFilter( "pratilipiId", pratilipiId )
+						.addFilter( "reviewDate", null, Operator.NOT_NULL );
 		
 		if( cursorStr != null )
 			queryBuilder.setCursor( cursorStr );
