@@ -41,15 +41,19 @@ public class UxModeFilter implements Filter {
 		boolean basicMode = true;
 
 		
-		if( hostName.equals( "hindi.pratilipi.com") )
+		if( hostName.equals( "hindi.pratilipi.com" ) )
 			lang = Language.HINDI;
-		else if( hostName.equals( "gujarati.pratilipi.com") )
+		else if( hostName.equals( "gujarati.pratilipi.com" ) )
 			lang = Language.GUJARATI;
-		else if( hostName.equals( "tamil.pratilipi.com") )
+		else if( hostName.equals( "tamil.pratilipi.com" ) )
 			lang = Language.TAMIL;
-		else if( hostName.equals( "marathi.pratilipi.com") )
+		else if( hostName.equals( "marathi.pratilipi.com" ) )
 			lang = Language.MARATHI;
-		
+		else if( hostName.equals( "malayalam.pratilipi.com" ) )
+			lang = Language.MALAYALAM;
+		else if( hostName.equals( "gamma.pratilipi.com" ) )
+			lang = Language.TAMIL;
+				
 		
 		if( basicModeParam != null ) {
 			basicMode = Boolean.parseBoolean( basicModeParam );

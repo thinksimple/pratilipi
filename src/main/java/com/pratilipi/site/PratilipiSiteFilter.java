@@ -34,7 +34,7 @@ public class PratilipiSiteFilter implements Filter {
 	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
 	private final Pattern validHostRegEx = Pattern.compile(
 			// TODO: Remove cdn-asia as soon as wwww becomes www.
-			"(www|hindi|tamil|gujarati|marathi|static|gamma|wwww|cdn-asia)\\.pratilipi\\.com"
+			"(www|tamil|gamma|static|cdn-asia)\\.pratilipi\\.com"
 			+ "|"
 			+ "((mark-6|mark-6p\\d)\\.prod-pratilipi|.+\\.devo-pratilipi)\\.appspot\\.com"
 			+ "|"
