@@ -85,6 +85,7 @@ public class InitApi extends GenericApi {
 
 			logger.log( Level.INFO, "Backed up " + count + " Pratilipi Entities." );
 		}
+
 		
 		// Update the Inverse frequency table.
 		appProperty = dataAccessor.getAppProperty( AppProperty.DATASTORE_PRATILIPI_IDF_LAST_UPDATE );
@@ -120,6 +121,7 @@ public class InitApi extends GenericApi {
 							keywordFrequencyMap.put( word, 1 );
 					}
 				} 
+
 				count = count + pratilipiList.size();
 
 				if( pratilipiList.size() < 1000 )
@@ -130,14 +132,15 @@ public class InitApi extends GenericApi {
 			
 			// Sort Keyword-Frequency map in descending order of frequency
 			Comparator<String> comparator =  new Comparator<String>() {
+				
 				@Override
 				public int compare( String a, String b ) {
 					return keywordFrequencyMap.get( a ) >= keywordFrequencyMap.get( b ) ? -1 : 1; 
 				}
+				
 			};
-			
 			TreeMap<String,Integer> sortedMap = new TreeMap<>( comparator );
-			sortedMap.putAll( keywordFrequencyMap );  
+			sortedMap.putAll( keywordFrequencyMap );
 				
 			// Transform sorted map to csv string
 			StringBuilder csv = new StringBuilder();
@@ -150,9 +153,10 @@ public class InitApi extends GenericApi {
 				csv.append( COMMA_DELIMITER );
 				csv.append( NEW_LINE_SEPARATOR );
 			}
+
 			// Persist csv string in BlobStore
 			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-			BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi-keywords/" + new SimpleDateFormat( "yyyyMMddHHmm" ).format( currDate ) + ".csv" ); 
+			BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi-keywords/" + new SimpleDateFormat( "yyyyMMddHHmm" ).format( currDate ) + ".csv" );
 			blobEntry.setData( csv.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 			blobAccessor.createOrUpdateBlob( blobEntry );
 			
@@ -160,7 +164,6 @@ public class InitApi extends GenericApi {
 			dataAccessor.createOrUpdateAppProperty( appProperty );
 
 			logger.log( Level.INFO, "Generated IDF with " + count + " keywords." );
-		
 		}
 
 		return new GenericResponse();
