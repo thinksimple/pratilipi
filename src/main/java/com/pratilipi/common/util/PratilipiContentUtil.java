@@ -32,7 +32,7 @@ public class PratilipiContentUtil {
 			+ "|"
 			+ "<h2.*?>(<.+?>)*(?<subTitle>.+?)(</.+?>)*</h2>" );
 	
-	private static final String nonKeywordsPattern = "<[^>]*>|[!-/:-@\\[-`{-~]|।|&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;";
+	private static final String nonKeywordsPattern = "&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;|<[^>]*>|[!-/:-@\\[-`{-~]|।";
 
 	
 	private String content;
