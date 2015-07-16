@@ -1,6 +1,12 @@
 package com.pratilipi.data;
 
+import static com.pratilipi.data.mock.AuthorMock.AUTHOR_TABLE;
+import static com.pratilipi.data.mock.PageMock.PAGE_TABLE;
+import static com.pratilipi.data.mock.PratilipiMock.PRATILIPI_TABLE;
+import static com.pratilipi.data.mock.UserPratilipiMock.USER_PRATILIPI_TABLE;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.pratilipi.common.type.PageType;
@@ -165,7 +171,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Page getPage( Long id ) {
-		for( Page page : MockData.PAGE_TABLE )
+		for( Page page : PAGE_TABLE )
 			if( page.getId().equals( id ) )
 				return page;
 
@@ -174,11 +180,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Page getPage( String uri ) {
-		for( Page page : MockData.PAGE_TABLE )
+		for( Page page : PAGE_TABLE )
 			if( uri.equals( page.getUri() ) )
 				return page;
 
-		for( Page page : MockData.PAGE_TABLE )
+		for( Page page : PAGE_TABLE )
 			if( uri.equals( page.getUriAlias() ) )
 				return page;
 
@@ -187,7 +193,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Page getPage( PageType pageType, Long primaryContentId ) {
-		for( Page page : MockData.PAGE_TABLE )
+		for( Page page : PAGE_TABLE )
 			if( page.getType().equals( pageType ) && page.getPrimaryContentId().equals( primaryContentId ) )
 				return page;
 
@@ -196,7 +202,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Page createOrUpdatePage( Page page ) {
-		MockData.PAGE_TABLE.add( page );
+		PAGE_TABLE.add( page );
 		return page;
 	}
 	
@@ -210,7 +216,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public Pratilipi getPratilipi( Long id ) {
-		for( Pratilipi pratilipi : MockData.PRATILIPI_TABLE )
+		for( Pratilipi pratilipi : PRATILIPI_TABLE )
 			if( pratilipi.getId().equals( id ) )
 				return pratilipi;
 		
@@ -243,7 +249,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
-		MockData.PRATILIPI_TABLE.add( pratilipi );
+		PRATILIPI_TABLE.add( pratilipi );
 		return pratilipi;
 	}
 	
@@ -257,7 +263,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public Author getAuthor( Long id ) {
-		for( Author author : MockData.AUTHOR_TABLE )
+		for( Author author : AUTHOR_TABLE )
 			if( author.getId().equals( id ) )
 				return author;
 		
@@ -266,7 +272,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Author getAuthorByEmailId( String email ) {
-		for( Author author : MockData.AUTHOR_TABLE )
+		for( Author author : AUTHOR_TABLE )
 			if( author.getEmail().equals( email ) )
 				return author;
 		
@@ -275,7 +281,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public Author getAuthorByUserId( Long userId ) {
-		for( Author author : MockData.AUTHOR_TABLE )
+		for( Author author : AUTHOR_TABLE )
 			if( author.getUserId().equals( userId ) )
 				return author;
 		
@@ -308,7 +314,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Author createOrUpdateAuthor( Author author ) {
-		MockData.AUTHOR_TABLE.add( author );
+		AUTHOR_TABLE.add( author );
 		return author;
 	}
 
@@ -328,10 +334,15 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public DataListCursorTuple<UserPratilipi> getPratilipiReviewList(
-			Long pratilipiId, String cursor, Integer resultCount) {
+			Long pratilipiId, String cursor, Integer resultCount ) {
 
-		// TODO: Implementation
-		return null;
+		List<UserPratilipi> userPratilipiList = new LinkedList<>();
+
+		for( UserPratilipi userPratilipi : USER_PRATILIPI_TABLE )
+			if( userPratilipi.getPratilipiId().equals( pratilipiId ) && userPratilipi.getReviewDate() != null )
+				userPratilipiList.add( userPratilipi );
+
+		return new DataListCursorTuple<UserPratilipi>( userPratilipiList, "cursor" );
 	}
 
 	@Override

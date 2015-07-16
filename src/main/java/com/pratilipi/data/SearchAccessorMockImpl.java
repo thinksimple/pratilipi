@@ -1,5 +1,7 @@
 package com.pratilipi.data;
 
+import static com.pratilipi.data.mock.GlobalIndexMock.GLOBAL_INDEX;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 		
 		List<Long> pratilipiIdList = new LinkedList<>();
 		
-		for( Object object : MockData.GLOBAL_INDEX ) {
+		for( Object object : GLOBAL_INDEX ) {
 			if( object.getClass() != PratilipiData.class )
 				continue;
 
@@ -53,20 +55,20 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 
 	@Override
 	public void indexPratilipiData( PratilipiData pratilipiData ) throws UnexpectedServerException {
-		MockData.GLOBAL_INDEX.add( pratilipiData );
+		GLOBAL_INDEX.add( pratilipiData );
 	}
 
 	@Override
 	public void indexPratilipiDataList( List<PratilipiData> pratilipiDataList ) throws UnexpectedServerException {
-		MockData.GLOBAL_INDEX.addAll( pratilipiDataList );
+		GLOBAL_INDEX.addAll( pratilipiDataList );
 	}
 
 	@Override
 	public void deletePratilipiDataIndex( Long pratilipiId ) {
-		for( Object object : MockData.GLOBAL_INDEX ) {
+		for( Object object : GLOBAL_INDEX ) {
 			if( object.getClass() == PratilipiData.class ) {
 				if( ( (PratilipiData) object ).getId() == pratilipiId ) {
-					MockData.GLOBAL_INDEX.remove( object );
+					GLOBAL_INDEX.remove( object );
 					break;
 				}
 			}
