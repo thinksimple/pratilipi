@@ -1,21 +1,34 @@
-pratilipi		= Pratilipi
+pratilipi		= ப்ரதிலிபி
 pratilipi_logo	= Pratilipi Logo
 
-home_page_title = Read Hindi, Gujarati and Tamil Stories, Poems and Books
+home_page_title = தமிழ் கதைகள், புத்தகங்கள் , கவிதைகள், கட்டுரைகள், ஆகியவற்றை படிக்க 
 
 sign_in				  = உள்நுழைக
-sign_in_with_facebook = Sign In with Facebook
+sign_in_with_facebook = முகநூல்  மூலம் உள்நுழைய 
 
 featured		= பரிந்துரை
 
 choose_language = மொழித்தேர்வு
 language_all	= அனைத்தும்
-language_hi		= Hindi
+language_hi		= 
 language_gu		= Gujarati
-language_ta		= Tamil
+language_ta		= தமிழ் 
 
-rating  = rating
-ratings	= ratings
+saving = பதிவேற்றபடுகிறது ...
+
+
+rating  = மதிப்பீடு 
+ratings	= மதிப்பீடகள்
+rate_this = மதிப்பிடுக !
+your_rating = உங்கள் மதிப்பீடு
+rating_1_star = மோசம்
+rating_2_star = நிறைய  மேம்படுத்தலாம்
+rating_3_star = பரவாயில்லை 
+rating_4_star = நன்று
+rating_5_star = அற்புதம்
 
 search 			= தேடு
 search_bar_help	= தேட - கவிதை, கதை, புத்தகம், கட்டுரை மற்றும் பல  ...
+
+author_about = எழுத்தாளரைப் பற்றி
+author_published_works = பதிப்பித்துள்ள படைப்புகள்
