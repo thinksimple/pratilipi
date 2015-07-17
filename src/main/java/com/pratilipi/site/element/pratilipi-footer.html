@@ -1,0 +1,93 @@
+<dom-module id="pratilipi-footer">
+
+	<style>
+	
+			.secondary-500 {
+				background: #F0F0F0;
+				padding-top: 10px;
+			}
+			
+			.secondary-500 .row {
+				background: #CCCCCC; 
+				text-align: center; 
+				padding: 2px;
+			}
+			
+			ul {
+				overflow: auto;
+				text-align: right;
+			}
+ 
+			ul li {
+				list-style-type: none;
+				float: left;
+			}
+			 
+			ul li a i {
+				background: #000000;
+				color: #fff;
+				width: 30px;
+				height: 30px;
+				border-radius: 20px;
+				text-align: center;
+				padding-top: 7px;
+				margin-right: 5px;
+				
+			}
+			
+			ul li a i:hover {
+				opacity: .7;
+			}
+			
+			.row .col-sm-4 {
+				 color: #808080;
+			}
+
+	</style>
+	
+	<template>
+		
+		<div class="secondary-500">
+			<div class="container">
+				<ul class="col-md-2">
+					<li><a href="/wus"><b>Work With Us !</b></a></li>
+				</ul>
+				<ul class="col-md-1">
+					<li><a href="/blog"><b>Blog</b></a></li>
+				</ul>
+				<ul class="col-md-1">
+					<li><a href="/faq"><b>FAQ<b></a></li>
+				</ul>		
+				<ul class="col-md-1">
+					<li><a href="/contact"><strong>Contact<strong></a></li>
+				</ul>				
+				<ul class="pull-right">
+			
+					<span style="color: #4D4D4D;"><li style=" padding-right: 10px;"><small>Follow on Social Media</small></li>
+					<li><a href="http://facebook.com/Pratilipidotcom?fref=ts"><i class="fa fa-facebook"></i></a></li>
+					<li><a href="http://linkedin.com/"><i class="fa fa-linkedin"></i></a></li>
+					<li><a href="http://twitter.com/"><i class="fa fa-twitter"></i></a></li>
+					<li><a href="http://plus.google.com/"><i class="fa fa-google-plus"></i> </a></li>
+				</ul>
+			</div>
+			
+			<div class="row">
+				    <div class="col-sm-4"><small>(c) 2014-15 Nasadiya Technologies Pvt. Ltd.</small></div>
+				    <div class="col-sm-4"><small>Terms and Conditions</small></div>
+				    <div class="col-sm-4"><small>Privacy Policy</small></div>
+			</div>
+		</div>	
+	</template>
+	
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-footer',
+			
+			
+		});
+
+	</script>
+
+</dom-module>

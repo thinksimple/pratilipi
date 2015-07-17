@@ -18,6 +18,7 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
@@ -48,6 +49,9 @@
 					cursor='${ pratilipiListCursor! }'
 					></pratilipi-card-grid>
 		</div>
+		
+		
+		<pratilipi-footer></pratilipi-footer>
 		
 	</body>
 </html>
