@@ -130,6 +130,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
+		// TODO: Implementation
+		return accessToken;
+	}
+
+	@Override
 	public void deleteAccessToken( AccessToken accessToken ) {
 		// TODO: Implementation
 	}

@@ -134,6 +134,9 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		if( accessTokenId == null )
 			return null;
 		
+		if( dataAccessor.isTxActive() )
+			return dataAccessor.getAccessToken( accessTokenId );
+
 		AccessToken accessToken = memcache.get( PREFIX_ACCESS_TOKEN + accessTokenId );
 		if( accessToken == null ) {
 			accessToken = dataAccessor.getAccessToken( accessTokenId );
@@ -157,6 +160,13 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override
 	public AccessToken updateAccessToken( AccessToken accessToken ) {
 		accessToken = dataAccessor.updateAccessToken( accessToken );
+		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
+		return accessToken;
+	}
+
+	@Override
+	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
+		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
 		return accessToken;
 	}

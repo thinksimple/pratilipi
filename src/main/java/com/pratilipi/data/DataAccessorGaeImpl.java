@@ -182,6 +182,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		}
 	}
 	
+	@Override
 	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AccessTokenEntity.class ) );
 		gaeQueryBuilder.addOrdering( "creationDate", true );
@@ -234,15 +235,20 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public void deleteAccessToken( AccessToken accessToken ) {
-		deleteEntity( AccessTokenEntity.class, accessToken.getId() );
-	}
-
-	@Override
 	public AccessToken updateAccessToken( AccessToken accessToken ) {
 		return createOrUpdateEntity( accessToken );
 	}
 	
+	@Override
+	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
+		return createOrUpdateEntity( accessToken );
+	}
+	
+	@Override
+	public void deleteAccessToken( AccessToken accessToken ) {
+		deleteEntity( AccessTokenEntity.class, accessToken.getId() );
+	}
+
 	
 	// AUDIT_LOG Table
 	
