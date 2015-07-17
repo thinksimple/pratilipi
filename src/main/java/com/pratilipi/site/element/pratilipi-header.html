@@ -20,25 +20,32 @@
 				</a>
 				
 				<div style="margin-top:51px; margin-bottom:45px; text-align:right;">
-					<a href="#">${ _strings.sign_in_with_facebook }</a>
-					|
-					<a href="#">${ _strings.sign_in }</a>
-					|
-					<span class="dropdown">
-						<a class="dropdown-toggle" id="LanguageMenu" data-toggle="dropdown" aria-expanded="true">
-							${ _strings.choose_language } <span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu">
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="//wwww.pratilipi.com">${ _strings.language_all }</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="//hindi.pratilipi.com">${ _strings.language_hi }</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="//gujarati.pratilipi.com">${ _strings.language_gu }</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="//tamil.pratilipi.com">${ _strings.language_ta }</a></li>
-						</ul>
-					</span>
+				
+					<template is="dom-if" if="{{ user.isGuest }}">
+						<a href="#">${ _strings.sign_in_with_facebook }</a>
+						|
+						<a href="#" on-click="signIn">${ _strings.sign_in }</a>
+						|
+						<span class="dropdown">
+							<a class="dropdown-toggle" id="LanguageMenu" data-toggle="dropdown" aria-expanded="true">
+								${ _strings.choose_language } <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu">
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="//wwww.pratilipi.com">${ _strings.language_all }</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="//hindi.pratilipi.com">${ _strings.language_hi }</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="//gujarati.pratilipi.com">${ _strings.language_gu }</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="//tamil.pratilipi.com">${ _strings.language_ta }</a></li>
+							</ul>
+						</span>
+					</template>
+
+					<template is="dom-if" if="{{ !user.isGuest }}">
+						<a href="#" on-click="signOut">${ _strings.sign_out }</a>
+					</template>
+
 				</div>
 		
 				<pratilipi-search-bar></pratilipi-search-bar>
-
 			</div>
 		</div>
 	</template>
@@ -48,6 +55,19 @@
 
 		Polymer({
 			is: 'pratilipi-header',
+			
+			properties: {
+				user: { type: Object, notify: true },
+			},
+
+			signIn: function() {
+				document.querySelector( 'pratilipi-user' ).logIn();
+			},
+			
+			signOut: function() {
+				document.querySelector( 'pratilipi-user' ).logOut();
+			},
+
 		});
 
 	</script>

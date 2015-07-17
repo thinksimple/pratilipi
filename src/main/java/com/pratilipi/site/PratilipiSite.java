@@ -32,12 +32,14 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
 import com.pratilipi.site.page.data.Home;
 
@@ -70,7 +72,10 @@ public class PratilipiSite extends HttpServlet {
 		List<String> resourceList = new LinkedList<>();
 		resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 		resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
+		resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 		resourceList.add( ThirdPartyResource.POLYMER.getTag() );
+		resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
+		resourceList.add( ThirdPartyResource.POLYMER_IRON_OVERLAY_BEHAVIOR.getTag() );
 
 		
 		// Data Model for FreeMarker
@@ -86,51 +91,41 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "Home.ftl";
 				
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-				resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Pratilipi.ftl";
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-				resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Author.ftl";
 			
 			} else if( uri.equals( "/search" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForSearchPage( lang == Language.ENGLISH ? null : lang, request );
 				templateName = templateFilePrefix + "Search.ftl";
 				
 			} else if( uri.equals( "/books" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.BOOK, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/stories" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.STORY, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/poems" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.POEM, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/articles" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/magazines" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, lang == Language.ENGLISH ? null : lang );
 				templateName = templateFilePrefix + "List.ftl";
@@ -173,11 +168,11 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForHomePage( Language lang )
 			throws UnexpectedServerException {
 
-		Home home = getData( "home." + lang.getCode() + ".json", Home.class );
-		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Gson gson = new Gson();
+		
+		UserData userData = UserDataUtil.getCurrentUser();
 
+		Home home = getData( "home." + lang.getCode() + ".json", Home.class );
 		List<Long> pratilipiIdList = new ArrayList<>( home.getFeatured().length );
 		for( String uri : home.getFeatured() ) {
 			Page page = dataAccessor.getPage( uri );
@@ -187,8 +182,11 @@ public class PratilipiSite extends HttpServlet {
 		}
 		List<PratilipiData> pratilipiDataList =
 				PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
-		
+
+		Gson gson = new Gson();
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "userJson", gson.toJson( userData ) );
 		dataModel.put( "featuredListJson", gson.toJson( pratilipiDataList ) );
 		return dataModel;
 	}

@@ -47,7 +47,7 @@ public class UserDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		Long userId = accessToken.getUserId();
-		if( userId == 0L ) {
+		if( userId.equals( 0L ) ) {
 			User user = dataAccessor.newUser();
 			user.setId( 0L );
 			user.setFirstName( "Guest" );

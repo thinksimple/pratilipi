@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="${lang}">
+
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,6 +17,7 @@
 		</#list>
 
 		<#-- Polymer 1.0 Custom Elements -->
+		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
@@ -25,24 +27,35 @@
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
-
 	</head>
+
 	<body>
 
-		<pratilipi-header></pratilipi-header>
-		
-		<div class="container" style="margin-top:10px">
-			<pratilipi-navigation
-					class='pull-left hidden-xs hidden-sm'
-					></pratilipi-navigation>
-			<div style="overflow:hidden">
-				<pratilipi-card-grid
-						heading='${ _strings.featured }'
-						pratilipi-list='${ featuredListJson }'
-						></pratilipi-card-grid>
+		<template is="dom-bind">
+			<pratilipi-user
+				user={{ user }}
+				user-data='${ userJson }'
+				></pratilipi-user>
+
+			<pratilipi-header
+				user={{ user }}
+				></pratilipi-header>
+			
+			<div class="container" style="margin-top:10px">
+				<pratilipi-navigation
+						class='pull-left hidden-xs hidden-sm'
+						></pratilipi-navigation>
+				<div style="overflow:hidden">
+					<pratilipi-card-grid
+							heading='${ _strings.featured }'
+							pratilipi-list='${ featuredListJson }'
+							></pratilipi-card-grid>
+				</div>
 			</div>
-		</div>
+		</template>
 		
 		<pratilipi-footer></pratilipi-footer>
+		
 	</body>
+
 </html>

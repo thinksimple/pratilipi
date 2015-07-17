@@ -13,6 +13,7 @@ public enum ThirdPartyResource {
 		   + "<link rel='import' href='//polymer.__DOMAIN__/polymer-1.0/polymer/polymer.html'>" ),
 
 	POLYMER_IRON_AJAX( "<link rel='import' href='//polymer.__DOMAIN__/polymer-1.0/iron-ajax/iron-ajax.html'>" ),
+	POLYMER_IRON_OVERLAY_BEHAVIOR( "<link rel='import' href='//polymer.__DOMAIN__/polymer-1.0/iron-overlay-behavior/iron-overlay-behavior.html'>" ),
 	POLYMER_IRON_RESIZABLE_BEHAVIOR( "<link rel='import' href='//polymer.__DOMAIN__/polymer-1.0/iron-resizable-behavior/iron-resizable-behavior.html'>" ),
 	;
 	

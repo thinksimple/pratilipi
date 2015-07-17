@@ -1,0 +1,50 @@
+<dom-module id="pratilipi-user-login">
+
+	<template>
+		<div class="popup">
+
+			<h5 class="popup-heading">${ _strings.sign_in_to_pratilipi }</h5>
+	
+			<div class="popup-body">
+				<div class="form-group">
+					<label for="FormInput-UserEmail">${ _strings.email }</label>
+					<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="name@example.com">
+				</div>
+				<div class="form-group">
+					<label for="FormInput-Password">${ _strings.password }</label>
+					<input type="password" class="form-control" id="FormInput-Password" placeholder="********">
+				</div>
+				<br/>
+				<div class="text-center">
+					<button type="button" class="btn">${ _strings.sign_in }</button>
+				</div>
+				<br/>
+				<br/>
+				<br/>
+				<div class="small">
+					<div class="pull-right">
+						Not a member ? <a class="text-muted" href="#">Sign up !</a>
+					</div>
+					<a class="text-danger" href="#">Forgot Password ?</a>
+				</div>
+			</div>
+
+		</div>
+	</template>
+	
+	
+	<script>
+
+		Polymer({
+
+ 			is: 'pratilipi-user-login',
+
+			behaviors: [
+				Polymer.IronOverlayBehavior
+			],
+
+		});
+
+	</script>
+	
+</dom-module>

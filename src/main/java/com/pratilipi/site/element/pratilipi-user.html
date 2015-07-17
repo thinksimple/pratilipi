@@ -1,0 +1,54 @@
+<link rel="import" href="pratilipi-user-login.html" />
+<link rel="import" href="pratilipi-user-register.html" />
+<link rel="import" href="pratilipi-user-password-reset.html" />
+
+<dom-module id="pratilipi-user">
+
+	<template>
+		<pratilipi-user-login with-backdrop></pratilipi-user-login>
+		<pratilipi-user-register with-backdrop></pratilipi-user-register>
+		<pratilipi-user-password-reset with-backdrop></pratilipi-user-password-reset>
+	</template>
+	
+	<script>
+	
+		Polymer({
+			
+	 		is: 'pratilipi-user',
+
+	 		properties: {
+				user: { type: Object, notify: true },
+				userData: { type: Object }
+			},
+
+			logIn: function() {
+				this.querySelector( 'pratilipi-user-login' ).open();
+				this.querySelector( 'pratilipi-user-register' ).close();
+				this.querySelector( 'pratilipi-user-password-reset' ).close();
+			},
+			
+			logOut: function() {
+				
+			},
+			
+			register: function() {
+				this.querySelector( 'pratilipi-user-login' ).close();
+				this.querySelector( 'pratilipi-user-register' ).open();
+				this.querySelector( 'pratilipi-user-password-reset' ).close();
+			},
+			
+			resetPassword: function() {
+				this.querySelector( 'pratilipi-user-login' ).close();
+				this.querySelector( 'pratilipi-user-register' ).close();
+				this.querySelector( 'pratilipi-user-password-reset' ).open();
+			},
+			
+			ready: function() {
+				this.set( 'user', this.userData );
+			}
+			
+		});
+
+	</script>
+	
+</dom-module>

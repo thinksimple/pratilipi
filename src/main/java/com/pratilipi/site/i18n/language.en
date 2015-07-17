@@ -3,8 +3,13 @@ pratilipi_logo	= Pratilipi Logo
 
 home_page_title = Read Hindi, Gujarati and Tamil Stories, Poems and Books
 
+email    = Email
+password = Password
+
 sign_in				  = Sign In
 sign_in_with_facebook = Sign In with Facebook
+sign_in_to_pratilipi  = Sign in to Pratilipi
+sign_out			  = Sign Out
 
 featured		= Featured
 

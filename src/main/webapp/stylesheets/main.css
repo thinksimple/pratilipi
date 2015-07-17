@@ -51,6 +51,30 @@ a, a:hover, a:focus .a {
 }
 
 
+.popup {
+	width: 325px;
+	background: white;
+}
+
+.popup .popup-heading {
+	margin: 0px;
+	padding: 15px 20px;
+	color: #777;
+	background: #eee;
+}
+
+.popup .popup-body {
+	padding: 20px;
+}
+
+.popup .btn {
+	padding: 5px 30px;
+	border-radius: 0px;
+	color: white;
+	background: rgb(0,146,69);
+}
+
+
 
 button.yellow {
   color: black;
