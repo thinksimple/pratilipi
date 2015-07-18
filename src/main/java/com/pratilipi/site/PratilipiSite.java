@@ -32,7 +32,6 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
-import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
@@ -142,6 +141,7 @@ public class PratilipiSite extends HttpServlet {
 			}
 
 			// Adding common data to the Data Model
+			dataModel.put( "userJson", new Gson().toJson( UserDataUtil.getCurrentUser() ) );
 			dataModel.put( "lang", lang.getCode() );
 			dataModel.put( "_strings", LanguageUtil.getStrings(
 					languageFilePrefix + lang.getCode(),
@@ -170,8 +170,6 @@ public class PratilipiSite extends HttpServlet {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		UserData userData = UserDataUtil.getCurrentUser();
-
 		Home home = getData( "home." + lang.getCode() + ".json", Home.class );
 		List<Long> pratilipiIdList = new ArrayList<>( home.getFeatured().length );
 		for( String uri : home.getFeatured() ) {
@@ -186,7 +184,6 @@ public class PratilipiSite extends HttpServlet {
 		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "userJson", gson.toJson( userData ) );
 		dataModel.put( "featuredListJson", gson.toJson( pratilipiDataList ) );
 		return dataModel;
 	}
