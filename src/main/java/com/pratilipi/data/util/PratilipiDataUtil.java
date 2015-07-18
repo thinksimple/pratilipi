@@ -571,12 +571,11 @@ public class PratilipiDataUtil {
 		
 		// String processing for filters. 
 		String filter = "";
-		String footer = ";ga:eventAction=~^ReadTimeSec:.*";
 		for( long element : pratilipiId ) 
 			filter = filter + "ga:eventCategory==Pratilipi:" + element + ",";
 		
 		filter = filter.substring( 0, filter.length() - 1 );
-		filter = filter.concat( footer );
+		filter = filter.concat( ";ga:eventAction=~^ReadTimeSec:.*" );
 		
 		// Get data from analytics.
 		HashMap <Long, Long> readCount = new HashMap<Long, Long>();
@@ -617,13 +616,18 @@ public class PratilipiDataUtil {
 		
 		// Removing unwanted elements from map.
 		for(Long id : pratilipiId ) {
-			Pratilipi pratilipi = dataAccessor.getPratilipi( id );
-			if( ! readCount.containsKey( id )) 
+			if( ! readCount.containsKey( id )) {
+				logger.log( Level.SEVERE, "Failed to fetch data of id=" + id + " from Google Analytics.");
 				continue;
-			if( ( long ) pratilipi.getReadCount() == readCount.get( id ) )
-				readCount.remove( id );
+			}
+				
+			Pratilipi pratilipi = dataAccessor.getPratilipi( id );
+			if( ( long ) pratilipi.getReadCount() != readCount.get( id ) ){
+				logger.log( Level.SEVERE, "Read Count mismatch for pratilipi Id=" + id + " from Google Analytics.");
+			}	
 		}
 		
+		/*
 		// Writing the new values in Database.
 		try {
 			dataAccessor.beginTx();
@@ -638,7 +642,7 @@ public class PratilipiDataUtil {
 		} finally {
 			if( dataAccessor.isTxActive() )
 				dataAccessor.rollbackTx();
-		}
+		} */
 	}
 	
 	public static boolean updatePratilipiStats( Long pratilipiId ) throws UnexpectedServerException {
