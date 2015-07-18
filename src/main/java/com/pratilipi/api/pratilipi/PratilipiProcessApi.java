@@ -34,7 +34,7 @@ public class PratilipiProcessApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse getPratilipiProcess( GenericRequest request ) {
+	public GenericResponse getPratilipiProcess( GenericRequest request ) throws UnexpectedServerException {
 
 		if( SystemProperty.get( "cron" ).equals( "stop" ) )
 			return new GenericResponse();
@@ -57,6 +57,14 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
 		
+		
+		pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, 90 ).getDataList();
+		long[] pratilipiIdListArray = new long[ pratilipiIdList.size() ];
+		for( int iterator = 0; iterator < pratilipiIdList.size(); iterator ++ ) {
+			pratilipiIdListArray [iterator] = pratilipiIdList.get( iterator );
+		}
+		PratilipiDataUtil.updatePratilipiStats( pratilipiIdListArray );
+		logger.log( Level.INFO, "Added " + pratilipiIdList.size() + " id's for read count updation." );
 		return new GenericResponse();
 	}
 	
