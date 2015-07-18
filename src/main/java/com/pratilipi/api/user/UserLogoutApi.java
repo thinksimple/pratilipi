@@ -15,7 +15,7 @@ import com.pratilipi.data.util.UserDataUtil;
 public class UserLogoutApi extends GenericApi {
 
 	@Get
-	public UserResponse postUserLogin( GenericRequest request )
+	public UserResponse logout( GenericRequest request )
 			throws InvalidArgumentException {
 		
 		Gson gson = new Gson();

@@ -29,13 +29,13 @@
 		</div>
 		
 		<iron-ajax
-				id="UserLoginPostAjax"
+				id="UserLoginPutAjax"
 				url="/api/user/login"
-				method="POST"
+				method="PUT"
 				content-type="application/json"
 				handle-as="json"
-				on-response="_handleAjaxPostResponse"
-				on-error="_handleAjaxPostError"
+				on-response="_handleAjaxPutResponse"
+				on-error="_handleAjaxPutError"
 				></iron-ajax>
 		
 	</template>
@@ -65,12 +65,12 @@
 			},
 
 			onSubmit: function() {
-				var ajaxPost = this.$.UserLoginPostAjax;
-				ajaxPost.params = { email:this.email, password:this.password };
-				ajaxPost.generateRequest();
+				var ajaxPut = this.$.UserLoginPutAjax;
+				ajaxPut.body = JSON.stringify( { email:this.email, password:this.password } );
+				ajaxPut.generateRequest();
 			},
 			
-			_handleAjaxPostResponse: function(  request ) {
+			_handleAjaxPutResponse: function(  request ) {
 				if( ! request.detail.response ) {
 					// TODO: show error
 					return;
@@ -80,7 +80,7 @@
 				document.querySelector( 'pratilipi-user' ).updateUser( request.detail.response );
 			},
 
-			_handleAjaxPostError: function() {
+			_handleAjaxPutError: function() {
 				// TODO: show error
 			},
 			
