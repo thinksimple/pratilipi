@@ -1,0 +1,57 @@
+<dom-module id="pratilipi-user-register">
+
+	<template>
+		<div class="popup">
+
+			<h5 class="popup-heading">${ _strings.sign_up_for_pratilipi }</h5>
+	
+			<div class="popup-body">
+				<div class="form-group">
+					<label for="FormInput-FullName">${ _strings.full_name }</label>
+					<input type="text" class="form-control" id="FormInput-FullName" placeholder="First Middle Last">
+				</div>
+				<div class="form-group">
+					<label for="FormInput-UserEmail">${ _strings.email }</label>
+					<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="name@example.com">
+				</div>
+				<div class="form-group">
+					<label for="FormInput-Password">${ _strings.password }</label>
+					<input type="password" class="form-control" id="FormInput-Password" placeholder="********">
+				</div>
+				<div class="form-group">
+					<label for="FormInput-Password2">${ _strings.confirm_password }</label>
+					<input type="password" class="form-control" id="FormInput-Password2" placeholder="********">
+				</div>
+				<br/>
+				<div class="text-center">
+					<button type="button" class="btn">${ _strings.sign_up }</button>
+				</div>
+				<br/>
+				<div class="small">
+					<a class="text-muted" href="#" on-click="logIn">Back</a>
+				</div>
+			</div>
+			
+		</div>
+	</template>
+	
+	
+	<script>
+	
+		Polymer({
+
+			is: 'pratilipi-user-register',
+
+			behaviors: [
+				Polymer.IronOverlayBehavior
+			],
+			
+			logIn: function() {
+				document.querySelector( 'pratilipi-user' ).logIn();
+			},
+
+		});
+		
+	</script>
+	
+</dom-module>

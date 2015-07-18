@@ -22,9 +22,11 @@
 			},
 
 			logIn: function() {
-				this.querySelector( 'pratilipi-user-login' ).open();
 				this.querySelector( 'pratilipi-user-register' ).close();
 				this.querySelector( 'pratilipi-user-password-reset' ).close();
+				this.async( function() {
+					this.querySelector( 'pratilipi-user-login' ).open();
+				});
 			},
 			
 			logOut: function() {
@@ -33,14 +35,18 @@
 			
 			register: function() {
 				this.querySelector( 'pratilipi-user-login' ).close();
-				this.querySelector( 'pratilipi-user-register' ).open();
 				this.querySelector( 'pratilipi-user-password-reset' ).close();
+				this.async( function() {
+					document.querySelector( 'pratilipi-user-register' ).open();
+				});
 			},
 			
 			resetPassword: function() {
 				this.querySelector( 'pratilipi-user-login' ).close();
 				this.querySelector( 'pratilipi-user-register' ).close();
-				this.querySelector( 'pratilipi-user-password-reset' ).open();
+				this.async( function() {
+					this.querySelector( 'pratilipi-user-password-reset' ).open();
+				});
 			},
 			
 			ready: function() {
