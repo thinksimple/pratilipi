@@ -566,6 +566,79 @@ public class PratilipiDataUtil {
 		return true;
 	}
 	
+	
+	public static void updatePratilipiStats( long[] pratilipiId ) throws UnexpectedServerException {
+		
+		// String processing for filters. 
+		String filter = "";
+        String footer = ";ga:eventAction=~^ReadTimeSec:.*";
+        for( long element : pratilipiId ) 
+            filter = filter + "ga:eventCategory==Pratilipi:" + element + ",";
+        
+        filter = filter.substring( 0, filter.length() - 1 );
+        filter = filter.concat(footer);
+        
+        // Get data from analytics.
+        HashMap <Long, Long> readCount = new HashMap<Long, Long>();
+		
+        List<String> scopes = new LinkedList<>();
+		scopes.add( AnalyticsScopes.ANALYTICS_READONLY );
+		Analytics analytics = GoogleApi.getAnalytics( scopes );
+		
+		try {
+			Get apiQuery = analytics.data().ga()
+					.get( "ga:89762686",		// Table Id.
+							"2015-01-01",		// Start Date.
+							"today",			// End Date.
+							"ga:uniqueEvents" )	// Metrics.
+					.setDimensions( "ga:eventCategory,ga:eventAction" )
+					.setFilters( filter );
+
+			GaData gaData = apiQuery.execute();
+			if( gaData.getRows() != null ) {
+				for( List<String> row : gaData.getRows() ) {
+					// Converting pratilipiId from string to long.
+					String stringKey = row.get( 0 );
+					stringKey = stringKey.substring( 10, stringKey.length() );
+					Long key = Long.parseLong( stringKey );
+					long value = Long.parseLong( row.get( 2 ));
+					if( readCount.containsKey( key ) )
+						readCount.put( key , Math.max( value, readCount.get( key )));
+					else
+						readCount.put( key , value );
+				}
+			}
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch data from Google Analytics.", e );
+			throw new UnexpectedServerException();
+		}
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		// Removing unwanted elements from map.
+		for(Long id : pratilipiId ) {
+			Pratilipi pratilipi = dataAccessor.getPratilipi( id );
+			if( ! readCount.containsKey( id )) 
+				continue;
+			if( ( long ) pratilipi.getReadCount() == readCount.get( id ) )
+				readCount.remove( id );
+		}
+		
+		// Writing the new values in Database.
+		try {
+			dataAccessor.beginTx();
+			for(Long id : pratilipiId ) {
+				Pratilipi pratilipi = dataAccessor.getPratilipi( id );
+				pratilipi.setReadCount( Math.max(pratilipi.getReadCount(), readCount.get( id )) );
+				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+			}
+			dataAccessor.commitTx();
+		} finally {
+			if( dataAccessor.isTxActive() )
+				dataAccessor.rollbackTx();
+		}
+	}
+	
 	public static boolean updatePratilipiStats( Long pratilipiId ) throws UnexpectedServerException {
 		
 		List<String> scopes = new LinkedList<>();
