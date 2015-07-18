@@ -2,21 +2,19 @@
 
 	<template>
 		<div class="popup">
-
 			<h5 class="popup-heading">${ _strings.sign_in_to_pratilipi }</h5>
-	
 			<div class="popup-body">
 				<div class="form-group">
 					<label for="FormInput-UserEmail">${ _strings.email }</label>
-					<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="name@example.com">
+					<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="name@example.com" value="{{ email::input }}">
 				</div>
 				<div class="form-group">
 					<label for="FormInput-Password">${ _strings.password }</label>
-					<input type="password" class="form-control" id="FormInput-Password" placeholder="********">
+					<input type="password" class="form-control" id="FormInput-Password" placeholder="********" value="{{ password::input }}">
 				</div>
 				<br/>
 				<div class="text-center">
-					<button type="button" class="btn">${ _strings.sign_in }</button>
+					<button type="button" class="btn" on-click="onSubmit">${ _strings.sign_in }</button>
 				</div>
 				<br/>
 				<br/>
@@ -28,8 +26,17 @@
 					<a class="text-danger" href="#" on-click="resetPassword">Forgot Password ?</a>
 				</div>
 			</div>
-
 		</div>
+		
+		<iron-ajax
+				url="/api/user/login"
+				method="POST"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
+		
 	</template>
 	
 	
@@ -39,6 +46,12 @@
 
  			is: 'pratilipi-user-login',
 
+			properties: {
+				email: { type: String },
+				password: { type: String },
+				user: { type: Object, notify: true }
+			},
+			
 			behaviors: [
 				Polymer.IronOverlayBehavior
 			],
@@ -51,6 +64,26 @@
 				document.querySelector( 'pratilipi-user' ).resetPassword();
 			},
 
+			onSubmit: function() {
+				var ajaxPost = document.querySelector( 'iron-ajax' );
+				ajaxPost.params = { email:this.email, password:this.password };
+				ajaxPost.generateRequest();
+			},
+			
+			_handleAjaxPostResponse: function(  request ) {
+				if( ! request.detail.response ) {
+					// TODO: show error
+					return;
+				}
+				
+				this.close();
+				this.set( 'user', request.detail.response );
+			},
+
+			_handleAjaxPostError: function() {
+				// TODO: show error
+			},
+			
 		});
 
 	</script>

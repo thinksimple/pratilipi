@@ -5,7 +5,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -17,10 +16,11 @@ public class GenericRequest {
 			Logger.getLogger( GenericRequest.class.getName() );
 
 	
-	protected static final String REGEX_NON_EMPTY_STRING = "^(\\s*\\S+\\s*)+$";
-	protected static final String REGEX_NUMBER = "^[0-9]+$";
-	protected static final String REGEX_URI = "^(/[A-Za-z0-9-]+)+$";
-	protected static final String REGEX_EMAIL = "^[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.-][A-Za-z0-9]+)*\\.[A-Za-z]{2,4}$";
+	protected static final String REGEX_NON_EMPTY_STRING = "(\\s*\\S+\\s*)+";
+	protected static final String REGEX_NUMBER = "[0-9]+";
+	protected static final String REGEX_PASSWORD = "\\S+{6,128}";
+	protected static final String REGEX_URI = "(/[A-Za-z0-9-]+)+";
+	protected static final String REGEX_EMAIL = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.-][A-Za-z0-9]+)*\\.[A-Za-z]{2,4}";
 
 	
 	public GenericRequest() {}
@@ -42,7 +42,7 @@ public class GenericRequest {
 					} else if( value != null ) {
 						
 						if( field.getType() == String.class ) {
-							if( !validate.regEx().isEmpty() && Pattern.compile( validate.regEx() ).matcher( (String) value ).matches() )
+							if( !validate.regEx().isEmpty() && !( (String) value ).matches( validate.regEx() ) )
 								throw new InvalidArgumentException( "'" + field.getName() + "' value is invalid." );
 	
 						} else if( field.getType() == Long.class ) {

@@ -37,7 +37,7 @@ public class UserDataUtil {
 		else if( user.getFirstName() != null || user.getLastName() != null )
 			userData.setName( user.getFirstName() + " " + user.getLastName() );
 
-		userData.setIsGuest( user.getId().equals( 0L ) );
+		userData.setIsGuest( user.getId() == null || user.getId().equals( 0L ) );
 		
 		return userData;
 	}
@@ -49,7 +49,6 @@ public class UserDataUtil {
 		Long userId = accessToken.getUserId();
 		if( userId.equals( 0L ) ) {
 			User user = dataAccessor.newUser();
-			user.setId( 0L );
 			user.setFirstName( "Guest" );
 			user.setLastName( "User" );
 			return createUserData( user );

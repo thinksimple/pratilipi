@@ -5,9 +5,9 @@
 <dom-module id="pratilipi-user">
 
 	<template>
-		<pratilipi-user-login with-backdrop></pratilipi-user-login>
-		<pratilipi-user-register with-backdrop></pratilipi-user-register>
-		<pratilipi-user-password-reset with-backdrop></pratilipi-user-password-reset>
+		<pratilipi-user-login with-backdrop user="{{ user }}"></pratilipi-user-login>
+		<pratilipi-user-register with-backdrop user="{{ user }}"></pratilipi-user-register>
+		<pratilipi-user-password-reset with-backdrop user="{{ user }}"></pratilipi-user-password-reset>
 	</template>
 	
 	<script>

@@ -5,6 +5,7 @@ import com.pratilipi.api.GenericService;
 import com.pratilipi.api.author.AuthorImageApi;
 import com.pratilipi.api.pratilipi.PratilipiCoverApi;
 import com.pratilipi.api.pratilipi.PratilipiListApi;
+import com.pratilipi.api.user.UserLoginApi;
 import com.pratilipi.api.userpratilipi.PratilipiReviewApi;
 import com.pratilipi.api.userpratilipi.PratilipiReviewListApi;
 
@@ -17,6 +18,7 @@ public class PratilipiApi extends GenericService {
 		ApiRegistry.register( AuthorImageApi.class );
 		ApiRegistry.register( PratilipiReviewApi.class );
 		ApiRegistry.register( PratilipiReviewListApi.class );
+		ApiRegistry.register( UserLoginApi.class );
 	}
 	
 }

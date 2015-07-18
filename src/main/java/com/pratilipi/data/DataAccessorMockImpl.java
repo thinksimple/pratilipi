@@ -8,10 +8,13 @@ import static com.pratilipi.data.mock.UserPratilipiMock.USER_PRATILIPI_TABLE;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.data.mock.AccessTokenMock;
+import com.pratilipi.data.mock.UserMock;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
@@ -81,19 +84,37 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public User getUser( Long id ) {
-		// TODO: Implementation
+		if( id == null )
+			return null;
+		
+		for( User user : UserMock.USER_TABLE )
+			if( user.getId().equals( id ) )
+				return user;
+				
 		return null;
 	}
 	
 	@Override
 	public User getUserByEmail( String email ) {
-		// TODO: Implementation
+		if( email == null )
+			return null;
+		
+		for( User user : UserMock.USER_TABLE )
+			if( user.getEmail() != null && user.getEmail().equals( email ) )
+				return user;
+				
 		return null;
 	}
 	
 	@Override
 	public User createOrUpdateUser( User user ) {
-		// TODO: Implementation
+		Long id = 0L;
+		for( User aUser : UserMock.USER_TABLE )
+			if( aUser.getId() >= id )
+				id = aUser.getId() + 1;
+		
+		( (UserEntity) user ).setId( id );
+		UserMock.USER_TABLE.add( user );
 		return user;
 	}
 
@@ -107,7 +128,10 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public AccessToken getAccessToken( String accessTokenId ) {
-		// TODO: Implementation
+		for( AccessToken accessToken : AccessTokenMock.ACCESS_TOKEN_TABLE )
+			if( accessToken.getId().equals( accessTokenId ) )
+				return accessToken;
+		
 		return null;
 	}
 	
@@ -119,19 +143,19 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public AccessToken createAccessToken( AccessToken accessToken ) {
-		// TODO: Implementation
+		((AccessTokenEntity) accessToken).setId( UUID.randomUUID().toString() );
+		AccessTokenMock.ACCESS_TOKEN_TABLE.add( accessToken );
 		return accessToken;
 	}
 
 	@Override
 	public AccessToken updateAccessToken( AccessToken accessToken ) {
-		// TODO: Implementation
 		return accessToken;
 	}
 
 	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
-		// TODO: Implementation
+		AccessTokenMock.ACCESS_TOKEN_TABLE.add( accessToken );
 		return accessToken;
 	}
 

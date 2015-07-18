@@ -9,8 +9,6 @@ public interface User extends Serializable {
 
 	Long getId();
 
-	void setId( Long id );
-	
 	String getPassword();
 
 	void setPassword( String password );

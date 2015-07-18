@@ -5,10 +5,10 @@ import com.pratilipi.api.shared.GenericRequest;
 
 public class UserLoginRequest extends GenericRequest {
 
-	@Validate( regEx = REGEX_EMAIL )
+	@Validate( required = true, regEx = REGEX_EMAIL )
 	private String email;
 
-	@Validate( regEx = REGEX_NON_EMPTY_STRING )
+	@Validate( required = true, regEx = REGEX_NON_EMPTY_STRING )
 	private String password;
 
 	
