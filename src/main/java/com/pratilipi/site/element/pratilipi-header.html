@@ -24,7 +24,7 @@
 					<template is="dom-if" if="{{ user.isGuest }}">
 						<a href="#">${ _strings.sign_in_with_facebook }</a>
 						|
-						<a href="#" on-click="signIn">${ _strings.sign_in }</a>
+						<a href="#" on-click="logIn">${ _strings.sign_in }</a>
 						|
 						<span class="dropdown">
 							<a class="dropdown-toggle" id="LanguageMenu" data-toggle="dropdown" aria-expanded="true">
@@ -40,7 +40,7 @@
 					</template>
 
 					<template is="dom-if" if="{{ !user.isGuest }}">
-						<a href="#" on-click="signOut">${ _strings.sign_out }</a>
+						<a href="#" on-click="logOut">${ _strings.sign_out }</a>
 					</template>
 
 				</div>
@@ -60,11 +60,11 @@
 				user: { type: Object, notify: true },
 			},
 
-			signIn: function() {
+			logIn: function() {
 				document.querySelector( 'pratilipi-user' ).logIn();
 			},
 			
-			signOut: function() {
+			logOut: function() {
 				document.querySelector( 'pratilipi-user' ).logOut();
 			},
 

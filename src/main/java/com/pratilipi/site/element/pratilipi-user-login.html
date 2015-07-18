@@ -64,7 +64,7 @@
 			},
 
 			onSubmit: function() {
-				var ajaxPost = document.querySelector( 'iron-ajax' );
+				var ajaxPost = this.querySelector( 'iron-ajax' );
 				ajaxPost.params = { email:this.email, password:this.password };
 				ajaxPost.generateRequest();
 			},

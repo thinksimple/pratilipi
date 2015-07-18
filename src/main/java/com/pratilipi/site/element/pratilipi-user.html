@@ -43,7 +43,7 @@
 			},
 			
 			logOut: function() {
-				document.querySelector( 'iron-ajax' ).generateRequest();
+				this.querySelector( 'iron-ajax' ).generateRequest();
 			},
 			
 			register: function() {
@@ -71,7 +71,7 @@
 				this.updateUser( request.detail.response );
 			},
 
-			_handleAjaxPostError: function() {
+			_handleAjaxGetError: function() {
 				// TODO: show error
 			},
 
