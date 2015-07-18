@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="${lang}">
+
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,24 +33,29 @@
 			} );
 		</script>
 	</head>
+	
 	<body>
+		<template is="dom-bind">
 
-		<pratilipi-header></pratilipi-header>
-		
-		<div class="container" style="margin-top:10px">
-			<pratilipi-navigation
-					class='pull-left hidden-xs hidden-sm'
-					></pratilipi-navigation>
-			<pratilipi-card-grid
-					style='overflow:hidden'
-					heading='${ title }'
-					pratilipi-list='${ pratilipiListJson }'
-					filter='${ pratilipiListFilterJson! }'
-					cursor='${ pratilipiListCursor! }'
-					></pratilipi-card-grid>
-		</div>
-		
-		
-		<pratilipi-footer></pratilipi-footer>
+			<pratilipi-user user={{ user }} user-data='${ userJson }'></pratilipi-user>
+			<pratilipi-header user={{ user }}></pratilipi-header>
+
+			<div class="container" style="margin-top:10px">
+				<pratilipi-navigation
+						class='pull-left hidden-xs hidden-sm'
+						></pratilipi-navigation>
+				<pratilipi-card-grid
+						style='overflow:hidden'
+						heading='${ title }'
+						pratilipi-list='${ pratilipiListJson }'
+						filter='${ pratilipiListFilterJson! }'
+						cursor='${ pratilipiListCursor! }'
+						></pratilipi-card-grid>
+			</div>
+			
+			<pratilipi-footer></pratilipi-footer>
+
+		</template>
 	</body>
+
 </html>

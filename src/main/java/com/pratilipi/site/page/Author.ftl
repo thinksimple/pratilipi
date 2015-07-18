@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="${lang}">
+
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,30 +26,34 @@
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
 		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
-
 	</head>
-	<body>
 
-		<pratilipi-header></pratilipi-header>
+	<body>
+		<template is="dom-bind">
+
+			<pratilipi-user user={{ user }} user-data='${ userJson }'></pratilipi-user>
+			<pratilipi-header user={{ user }}></pratilipi-header>
 		
-		<div class="container" style="margin-top:10px">
-			<pratilipi-navigation
-					class='pull-left hidden-xs hidden-sm'
-					></pratilipi-navigation>
-			<div style="overflow:hidden">
-				<pratilipi-author
-						author='${ authorJson }'></pratilipi-author>
-				<pratilipi-card-grid
-						id='PublishedWorks'
-						heading='${ _strings.author_published_works }'
-						pratilipi-list='${ publishedPratilipiListJson }'
-						filter='${ publishedPratilipiListFilterJson! }'
-						cursor='${ publishedPratilipiListCursor! }'
-						></pratilipi-card-grid>
+			<div class="container" style="margin-top:10px">
+				<pratilipi-navigation
+						class='pull-left hidden-xs hidden-sm'
+						></pratilipi-navigation>
+				<div style="overflow:hidden">
+					<pratilipi-author
+							author='${ authorJson }'></pratilipi-author>
+					<pratilipi-card-grid
+							id='PublishedWorks'
+							heading='${ _strings.author_published_works }'
+							pratilipi-list='${ publishedPratilipiListJson }'
+							filter='${ publishedPratilipiListFilterJson! }'
+							cursor='${ publishedPratilipiListCursor! }'
+							></pratilipi-card-grid>
+				</div>
 			</div>
-		</div>
 		
-		<pratilipi-footer></pratilipi-footer>
+			<pratilipi-footer></pratilipi-footer>
 		
+		</template>
 	</body>
+	
 </html>

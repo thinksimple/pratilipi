@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="${lang}">
+
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,25 +33,31 @@
 				document.querySelector( 'pratilipi-review-list' ).loadMore();
 			} );
 		</script>
-
 	</head>
+	
 	<body>
+		<template is="dom-bind">
 
-		<pratilipi-header></pratilipi-header>
+			<pratilipi-user user={{ user }} user-data='${ userJson }'></pratilipi-user>
+			<pratilipi-header user={{ user }}></pratilipi-header>
 		
-		<div class="container" style="margin-top:10px">
-			<pratilipi-navigation
-					class='pull-left hidden-xs hidden-sm'
-					></pratilipi-navigation>
-			<div style="overflow:hidden">
-				<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
-				<pratilipi-review-list
-						review-list='${ reviewListJson }'
-						pratilipi-id='${ pratilipi.id?c }'
-						cursor='${ reviewListCursor! }'
-						></pratilipi-review-list>
+			<div class="container" style="margin-top:10px">
+				<pratilipi-navigation
+						class='pull-left hidden-xs hidden-sm'
+						></pratilipi-navigation>
+				<div style="overflow:hidden">
+					<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
+					<pratilipi-review-list
+							review-list='${ reviewListJson }'
+							pratilipi-id='${ pratilipi.id?c }'
+							cursor='${ reviewListCursor! }'
+							></pratilipi-review-list>
+				</div>
 			</div>
-		</div>
 		
+			<pratilipi-footer></pratilipi-footer>
+
+		</template>
 	</body>
+	
 </html>
