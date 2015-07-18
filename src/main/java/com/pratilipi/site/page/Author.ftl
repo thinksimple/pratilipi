@@ -16,6 +16,7 @@
 		</#list>
 
 		<#-- Polymer 1.0 Custom Elements -->
+		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-author.html'>
@@ -31,8 +32,8 @@
 	<body>
 		<template is="dom-bind">
 
-			<pratilipi-user user={{ user }} user-data='${ userJson }'></pratilipi-user>
-			<pratilipi-header user={{ user }}></pratilipi-header>
+			<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
+			<pratilipi-header user='{{ user }}'></pratilipi-header>
 		
 			<div class="container" style="margin-top:10px">
 				<pratilipi-navigation
