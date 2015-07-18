@@ -23,9 +23,9 @@
 				<br/>
 				<div class="small">
 					<div class="pull-right">
-						Not a member ? <a class="text-muted" href="#">Sign up !</a>
+						Not a member ? <a class="text-muted" href="#" on-click="register">Sign up !</a>
 					</div>
-					<a class="text-danger" href="#">Forgot Password ?</a>
+					<a class="text-danger" href="#" on-click="resetPassword">Forgot Password ?</a>
 				</div>
 			</div>
 
@@ -42,6 +42,14 @@
 			behaviors: [
 				Polymer.IronOverlayBehavior
 			],
+
+			register: function() {
+				document.querySelector( 'pratilipi-user' ).register();
+			},
+			
+			resetPassword: function() {
+				document.querySelector( 'pratilipi-user' ).resetPassword();
+			},
 
 		});
 
