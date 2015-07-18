@@ -628,6 +628,8 @@ public class PratilipiDataUtil {
 		try {
 			dataAccessor.beginTx();
 			for(Long id : pratilipiId ) {
+				if( ! readCount.containsKey( id )) 
+					continue;
 				Pratilipi pratilipi = dataAccessor.getPratilipi( id );
 				pratilipi.setReadCount( Math.max(pratilipi.getReadCount(), readCount.get( id )) );
 				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
