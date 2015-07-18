@@ -10,6 +10,7 @@
 		<pratilipi-user-password-reset with-backdrop></pratilipi-user-password-reset>
 
 		<iron-ajax
+				id="UserLogoutGetAjax"
 				url="/api/user/logout"
 				method="GET"
 				content-type="application/json"
@@ -43,14 +44,14 @@
 			},
 			
 			logOut: function() {
-				this.querySelector( 'iron-ajax' ).generateRequest();
+				this.$.UserLogoutGetAjax.generateRequest();
 			},
 			
 			register: function() {
 				this.querySelector( 'pratilipi-user-login' ).close();
 				this.querySelector( 'pratilipi-user-password-reset' ).close();
 				this.async( function() {
-					document.querySelector( 'pratilipi-user-register' ).open();
+					this.querySelector( 'pratilipi-user-register' ).open();
 				});
 			},
 			

@@ -29,6 +29,7 @@
 		</div>
 		
 		<iron-ajax
+				id="UserLoginPostAjax"
 				url="/api/user/login"
 				method="POST"
 				content-type="application/json"
@@ -64,7 +65,7 @@
 			},
 
 			onSubmit: function() {
-				var ajaxPost = this.querySelector( 'iron-ajax' );
+				var ajaxPost = this.$.UserLoginPostAjax;
 				ajaxPost.params = { email:this.email, password:this.password };
 				ajaxPost.generateRequest();
 			},
