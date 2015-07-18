@@ -571,17 +571,17 @@ public class PratilipiDataUtil {
 		
 		// String processing for filters. 
 		String filter = "";
-        String footer = ";ga:eventAction=~^ReadTimeSec:.*";
-        for( long element : pratilipiId ) 
-            filter = filter + "ga:eventCategory==Pratilipi:" + element + ",";
-        
-        filter = filter.substring( 0, filter.length() - 1 );
-        filter = filter.concat(footer);
-        
-        // Get data from analytics.
-        HashMap <Long, Long> readCount = new HashMap<Long, Long>();
+		String footer = ";ga:eventAction=~^ReadTimeSec:.*";
+		for( long element : pratilipiId ) 
+			filter = filter + "ga:eventCategory==Pratilipi:" + element + ",";
 		
-        List<String> scopes = new LinkedList<>();
+		filter = filter.substring( 0, filter.length() - 1 );
+		filter = filter.concat( footer );
+		
+		// Get data from analytics.
+		HashMap <Long, Long> readCount = new HashMap<Long, Long>();
+		
+		List<String> scopes = new LinkedList<>();
 		scopes.add( AnalyticsScopes.ANALYTICS_READONLY );
 		Analytics analytics = GoogleApi.getAnalytics( scopes );
 		
@@ -603,7 +603,7 @@ public class PratilipiDataUtil {
 					Long key = Long.parseLong( stringKey );
 					long value = Long.parseLong( row.get( 2 ));
 					if( readCount.containsKey( key ) )
-						readCount.put( key , Math.max( value, readCount.get( key )));
+						readCount.put( key , Math.max( value, readCount.get( key ) ));
 					else
 						readCount.put( key , value );
 				}
