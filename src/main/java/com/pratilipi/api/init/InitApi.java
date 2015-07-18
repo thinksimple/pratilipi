@@ -64,8 +64,11 @@ public class InitApi extends GenericApi {
 						dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
 				List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 
-				for( Pratilipi pratilipi : pratilipiList )
+				for( Pratilipi pratilipi : pratilipiList ) {
+					pratilipi.setKeywords( new String( "" + pratilipi.getKeywords().split( "\\s+" ).length ) );
 					backup.append( new Gson().toJson( pratilipi ) + '\n' );
+				}
+					
 				
 				count = count + pratilipiList.size();
 
