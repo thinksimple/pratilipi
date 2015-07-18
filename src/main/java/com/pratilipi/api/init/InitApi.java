@@ -65,7 +65,7 @@ public class InitApi extends GenericApi {
 				List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 
 				for( Pratilipi pratilipi : pratilipiList ) {
-					pratilipi.setKeywords( new String( "" + pratilipi.getKeywords().split( "\\s+" ).length ) );
+					pratilipi.setKeywords( pratilipi.getKeywords().split( "\\s+" ).length + "" );
 					backup.append( new Gson().toJson( pratilipi ) + '\n' );
 				}
 					
