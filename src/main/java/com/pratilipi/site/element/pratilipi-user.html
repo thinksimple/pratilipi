@@ -5,9 +5,18 @@
 <dom-module id="pratilipi-user">
 
 	<template>
-		<pratilipi-user-login with-backdrop user="{{ user }}"></pratilipi-user-login>
-		<pratilipi-user-register with-backdrop user="{{ user }}"></pratilipi-user-register>
-		<pratilipi-user-password-reset with-backdrop user="{{ user }}"></pratilipi-user-password-reset>
+		<pratilipi-user-login with-backdrop></pratilipi-user-login>
+		<pratilipi-user-register with-backdrop></pratilipi-user-register>
+		<pratilipi-user-password-reset with-backdrop></pratilipi-user-password-reset>
+
+		<iron-ajax
+				url="/api/user/logout"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				on-error="_handleAjaxGetError"
+				></iron-ajax>
 	</template>
 	
 	<script>
@@ -20,6 +29,10 @@
 				user: { type: Object, notify: true },
 				userData: { type: Object }
 			},
+			
+			updateUser: function( user ) {
+				this.set( 'user', user );
+			},
 
 			logIn: function() {
 				this.querySelector( 'pratilipi-user-register' ).close();
@@ -30,7 +43,7 @@
 			},
 			
 			logOut: function() {
-				
+				document.querySelector( 'iron-ajax' ).generateRequest();
 			},
 			
 			register: function() {
@@ -49,8 +62,21 @@
 				});
 			},
 			
+			_handleAjaxGetResponse: function(  request ) {
+				if( ! request.detail.response ) {
+					// TODO: show error
+					return;
+				}
+				
+				this.updateUser( request.detail.response );
+			},
+
+			_handleAjaxPostError: function() {
+				// TODO: show error
+			},
+
 			ready: function() {
-				this.set( 'user', this.userData );
+				this.updateUser( this.userData );
 			}
 			
 		});

@@ -42,20 +42,21 @@ public class UserDataUtil {
 		return userData;
 	}
 
+	public static UserData getGuestUser() {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.newUser();
+		user.setFirstName( "Guest" );
+		user.setLastName( "User" );
+		return createUserData( user );
+	}
 	
 	public static UserData getCurrentUser() {
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		Long userId = accessToken.getUserId();
-		if( userId.equals( 0L ) ) {
-			User user = dataAccessor.newUser();
-			user.setFirstName( "Guest" );
-			user.setLastName( "User" );
-			return createUserData( user );
-		} else {
-			User user = dataAccessor.getUser( accessToken.getUserId() );
-			return createUserData( user );
-		}
+		if( userId.equals( 0L ) )
+			return getGuestUser();
+		else
+			return createUserData( DataAccessorFactory.getDataAccessor().getUser( accessToken.getUserId() ) );
 	}
 	
 	public static UserData loginUser( String email, String password )
@@ -67,7 +68,7 @@ public class UserDataUtil {
 		User user = dataAccessor.getUserByEmail( email );
 
 		if( user == null )
-			throw new InvalidArgumentException( "Invalid user id." );
+			throw new InvalidArgumentException( "Invalid user id !" );
 		
 		if( ! PasswordUtil.check( password, user.getPassword() ) )
 			throw new InvalidArgumentException( "Wrong password !" );
@@ -77,8 +78,9 @@ public class UserDataUtil {
 				dataAccessor.beginTx();
 				accessToken = dataAccessor.getAccessToken( accessToken.getId() );
 				if( ! accessToken.getUserId().equals( 0L ) )
-					throw new InvalidArgumentException( "Invalid token !" );
+					return createUserData( user );
 				accessToken.setUserId( user.getId() );
+				accessToken.setLogInDate( new Date() );
 				accessToken.setExpiry( new Date( new Date().getTime() + ACCESS_TOKEN_EXPIRY ) );
 				accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 				dataAccessor.commitTx();
@@ -92,9 +94,36 @@ public class UserDataUtil {
 			
 			try {
 				Thread.sleep( 1000 );
-			} catch( InterruptedException e ) {
-				// Do nothing
+			} catch( InterruptedException e ) { } // Do nothing
+		}
+		
+	}
+	
+	public static UserData logoutUser() throws InvalidArgumentException {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+
+		while( true ) {
+			try {
+				dataAccessor.beginTx();
+				accessToken = dataAccessor.getAccessToken( accessToken.getId() );
+				if( accessToken.getUserId().equals( 0L ) )
+					return getGuestUser();
+				accessToken.setLogOutDate( new Date() );
+				accessToken.setExpiry( new Date() );
+				accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
+				dataAccessor.commitTx();
+				return getGuestUser();
+			} catch( JDODataStoreException ex ) {
+				logger.log( Level.INFO, "Transaction failed. Retrying in 100 ms...", ex );
+			} finally {
+				if( dataAccessor.isTxActive() )
+					dataAccessor.rollbackTx();
 			}
+			
+			try {
+				Thread.sleep( 1000 );
+			} catch( InterruptedException e ) { } // Do nothing
 		}
 		
 	}

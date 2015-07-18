@@ -3,7 +3,7 @@ package com.pratilipi.api.user.shared;
 import com.pratilipi.api.shared.GenericResponse;
 
 @SuppressWarnings("unused")
-public class UserLoginResponse extends GenericResponse {
+public class UserResponse extends GenericResponse {
 	
 	private String firstName;
 	private String lastName;
