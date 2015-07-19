@@ -49,6 +49,8 @@
 				<div style="overflow:hidden">
 					<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
 					<pratilipi-review-list
+							id="ReviewSection"
+							user="{{ user }}"
 							review-list='${ reviewListJson }'
 							pratilipi-id='${ pratilipi.id?c }'
 							cursor='${ reviewListCursor! }'

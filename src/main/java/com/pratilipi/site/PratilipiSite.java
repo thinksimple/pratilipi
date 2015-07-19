@@ -90,6 +90,7 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "Home.ftl";
 				
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Pratilipi.ftl";

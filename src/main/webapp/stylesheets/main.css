@@ -81,6 +81,11 @@ button.yellow {
   background: yellow;
 }
 
+button.blue, button.blue:hover, button.blue:focus {
+	color: white;
+	background: #0071BC;
+}
+
 button.green {
   color: white;
   background: #5cb85c

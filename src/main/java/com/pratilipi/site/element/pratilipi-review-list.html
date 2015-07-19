@@ -15,6 +15,11 @@
 		.secondary-500 h3 {
 			margin: 0px;
 			padding: 10px;
+			display: inline-block;
+		}
+
+		.secondary-500 button {
+			margin-bottom: 6px;
 		}
 
 	</style>
@@ -23,7 +28,13 @@
 	<template>
 
 		<div class="secondary-500">
-			<h1>${ _strings.reviews }</h1>
+			<div>
+				<h3>${ _strings.reviews }</h3>
+				<button class="btn blue" type="button" on-click="showReviewInput">Write a review</button>
+			</div>
+			<iron-collapse id="ReviewInput">
+				<div>Content goes here...</div>
+			</iron-collapse>
 			<template is="dom-repeat" items="{{ reviewList }}" as="review">
 				<pratilipi-review review="{{ review }}"></pratilipi-review>
 			</template>
@@ -49,12 +60,22 @@
 			is: 'pratilipi-review-list',
 
 			properties: {
+				user: { type: Object, notify: true },
+				
 				reviewList: { type: Array },
 				pratilipiId: { type: Number },
 				cursor: { type: String },
 
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false }
+			},
+			
+			showReviewInput: function() {
+				if( this.user.isGuest ) {
+					document.querySelector( 'pratilipi-user' ).logIn();
+				} else {
+					this.$.ReviewInput.toggle();
+				}
 			},
 			
 			loadMore: function() {
