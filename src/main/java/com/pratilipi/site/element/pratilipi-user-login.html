@@ -29,7 +29,7 @@
 		</div>
 		
 		<iron-ajax
-				id="UserLoginPutAjax"
+				id="AjaxPut"
 				url="/api/user/login"
 				method="PUT"
 				content-type="application/json"
@@ -65,7 +65,7 @@
 			},
 
 			onSubmit: function() {
-				var ajaxPut = this.$.UserLoginPutAjax;
+				var ajaxPut = this.$.AjaxPut;
 				ajaxPut.body = JSON.stringify( { email:this.email, password:this.password } );
 				ajaxPut.generateRequest();
 			},

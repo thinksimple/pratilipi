@@ -34,6 +34,7 @@
 		</div>
 
 		<iron-ajax
+				id="AjaxGet"
 				url="/api/pratilipi/list"
 				method="GET"
 				params="{{ filter }}"
@@ -64,7 +65,7 @@
 			},
 			
 			reset: function() {
-				var ajaxGet = document.querySelector( 'iron-ajax' );
+				var ajaxGet = this.$.AjaxGet;
 
 				if( ajaxGet.lastRequest )
 					ajaxGet.lastRequest.abort();
@@ -90,7 +91,7 @@
 				if( jQuery( this ).outerHeight( true ) >= reqHeight )
 					return;
 				
-				document.querySelector( 'iron-ajax' ).generateRequest();
+				this.$.AjaxGet.generateRequest();
 				this.isLoading = true;
 			},
 			
@@ -105,7 +106,7 @@
 					this.push( 'pratilipiList', pratilipiList[ i ] );
 
 				if( request.detail.response.cursor ) {
-					document.querySelector( 'iron-ajax' ).params.cursor = request.detail.response.cursor;
+					this.$.AjaxGet.params.cursor = request.detail.response.cursor;
 					this.isLoading = false;
 					this.loadMore();
 				} else {
@@ -119,7 +120,7 @@
 			
 			ready: function() {
 				if( this.cursor && this.filter ) {
-					var ajaxGet = document.querySelector( 'iron-ajax' );
+					var ajaxGet = this.$.AjaxGet;
 					if( this.searchQuery )
 						ajaxGet.params.searchQuery = this.searchQuery;
 					ajaxGet.params.cursor = this.cursor;

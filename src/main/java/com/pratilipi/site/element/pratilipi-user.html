@@ -10,7 +10,7 @@
 		<pratilipi-user-password-reset with-backdrop></pratilipi-user-password-reset>
 
 		<iron-ajax
-				id="UserLogoutGetAjax"
+				id="AjaxGet"
 				url="/api/user/logout"
 				method="GET"
 				content-type="application/json"
@@ -44,7 +44,7 @@
 			},
 			
 			logOut: function() {
-				this.$.UserLogoutGetAjax.generateRequest();
+				this.$.AjaxGet.generateRequest();
 			},
 			
 			register: function() {

@@ -30,6 +30,7 @@
 		</div>
 
 		<iron-ajax
+				id="AjaxGet"
 				url="/api/pratilipi/review/list"
 				method="GET"
 				content-type="application/json"
@@ -68,7 +69,7 @@
 				if( jQuery( this ).outerHeight( true ) >= reqHeight )
 					return;
 				
-				document.querySelector( 'iron-ajax' ).generateRequest();
+				this.$.AjaxGet.generateRequest();
 				this.isLoading = true;
 			},
 			
@@ -83,7 +84,7 @@
 					this.push( 'reviewList', reviewList[ i ] );
 
 				if( request.detail.response.cursor ) {
-					document.querySelector( 'iron-ajax' ).params.cursor = request.detail.response.cursor;
+					this.$.AjaxGet.params.cursor = request.detail.response.cursor;
 					this.isLoading = false;
 					this.loadMore();
 				} else {
@@ -97,7 +98,7 @@
 			
 			ready: function() {
 				if( this.pratilipiId && this.cursor ) {
-					var ajaxGet = document.querySelector( 'iron-ajax' );
+					var ajaxGet = this.$.AjaxGet;
 					ajaxGet.params = { 'pratilipiId':this.pratilipiId, 'cursor':this.cursor };
 					this.loadMore();
 				} else {
