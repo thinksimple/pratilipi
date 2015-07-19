@@ -4,7 +4,7 @@
 	<property name="lang.list" value="en,hi,gu,ta,mr"/>
 	<property name="src.dir" value="src/main/java"/>
 	<property name="war.dir" value="src/main/webapp"/>
-	<property name="build.dir" value="target/site-6.0.0-SNAPSHOT"/>
+	<property name="build.dir" value="target/mark-6"/>
 	
 	<target name="all" depends="copy,i18n"/>
 

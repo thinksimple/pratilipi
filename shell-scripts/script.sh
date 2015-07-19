@@ -10,4 +10,16 @@ git reset --hard origin/master
 
 mvn install
 ant
+
+# Update gamma
+mvn appengine:update -Dapp.id=prod-pratilipi
+
+# Update prod
+cp src/main/webapp/WEB-INF/web-default.xml src/main/webapp/WEB-INF/web.xml
+cp src/main/webapp/WEB-INF/appengine-web-default.xml src/main/webapp/WEB-INF/appengine-web.xml
+mvn appengine:update -Dapp.id=prod-pratilipi
+
+# Update worker
+cp src/main/webapp/WEB-INF/web-worker.xml src/main/webapp/WEB-INF/web.xml
+cp src/main/webapp/WEB-INF/appengine-web-worker.xml src/main/webapp/WEB-INF/appengine-web.xml
 mvn appengine:update -Dapp.id=prod-pratilipi
