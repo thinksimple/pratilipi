@@ -12,7 +12,7 @@
 		<app.id>localhost</app.id>
 		<app.version>mark-6</app.version>
 		<app.setDefault>false</app.setDefault>
-		<appengine.version>1.9.23</appengine.version>
+		<gae.version>1.9.23</gae.version>
 		<gcloud.plugin.version>1.9.17</gcloud.plugin.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>${appengine.version}</version>
+			<version>${gae.version}</version>
 		</dependency>
 		
 		
@@ -141,14 +141,14 @@
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-testing</artifactId>
-			<version>${appengine.version}</version>
+			<version>${gae.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-stubs</artifactId>
-			<version>${appengine.version}</version>
+			<version>${gae.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -234,7 +234,7 @@
 			<plugin>
 				<groupId>com.google.appengine</groupId>
 				<artifactId>appengine-maven-plugin</artifactId>
-				<version>${appengine.version}</version>
+				<version>${gae.version}</version>
 				<configuration>
 					<enableJarClasses>false</enableJarClasses>
 					<!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
