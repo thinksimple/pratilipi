@@ -12,8 +12,8 @@
 		<app.id>localhost</app.id>
 		<app.version>mark-6</app.version>
 		<app.setDefault>false</app.setDefault>
-		<appengine.version>1.9.22</appengine.version>
-		<gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>
+		<appengine.version>1.9.23</appengine.version>
+		<gcloud.plugin.version>1.9.17</gcloud.plugin.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
