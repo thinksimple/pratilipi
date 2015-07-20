@@ -3,6 +3,7 @@ package com.pratilipi.common.util;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,7 @@ public class FacebookApi {
 
 	
 	private static final String GRAPH_API_URL = "https://graph.facebook.com/v2.2";
+	private static final String GRAPH_API_MULTIPLE_URL = "http://graph.facebook.com/";
 	
 	
 	public static String getAppId() {
@@ -58,4 +60,34 @@ public class FacebookApi {
 		}
 	}
 	
+	public static Map<String, Long> getUrlShareCount( String[] url ) throws UnexpectedServerException {
+		// Formation of string
+		String finalUrl = "";
+        for( String element : url )
+        	finalUrl = finalUrl + element + ",";
+        finalUrl = finalUrl.substring( 0, finalUrl.length() - 1 );
+        
+		try{
+			String requestUrl = GRAPH_API_MULTIPLE_URL
+					+ "?ids=" + URLEncoder.encode( finalUrl, "UTF-8" );
+			
+			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
+			JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
+			Map <String, Long> facebookShareCount = new HashMap <String, Long> ();
+			
+			for( String element : url ) {
+				JsonElement jsonElement = responseJson.getAsJsonObject().get( element );
+				JsonElement shareCountJson = jsonElement.getAsJsonObject().get( "shares" );
+				if ( shareCountJson == null )
+					facebookShareCount.put( element, 0L );
+				else
+					facebookShareCount.put( element, shareCountJson.getAsLong() );
+			}
+			
+			return facebookShareCount;
+			
+		} catch( IOException e ) {
+			throw new UnexpectedServerException();
+		}
+	} 
 }
