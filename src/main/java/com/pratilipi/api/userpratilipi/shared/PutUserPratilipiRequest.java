@@ -3,7 +3,7 @@ package com.pratilipi.api.userpratilipi.shared;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 
-public class PutPratilipiReviewRequest extends GenericRequest {
+public class PutUserPratilipiRequest extends GenericRequest {
 
 	@Validate( required = true )
 	private Long pratilipiId;

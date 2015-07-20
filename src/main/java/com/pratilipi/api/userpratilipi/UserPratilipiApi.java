@@ -7,8 +7,8 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Put;
 import com.pratilipi.api.userpratilipi.shared.GetUserPratilipiRequest;
 import com.pratilipi.api.userpratilipi.shared.GetUserPratilipiResponse;
-import com.pratilipi.api.userpratilipi.shared.PutPratilipiReviewRequest;
-import com.pratilipi.api.userpratilipi.shared.PutPratilipiReviewResponse;
+import com.pratilipi.api.userpratilipi.shared.PutUserPratilipiRequest;
+import com.pratilipi.api.userpratilipi.shared.PutUserPratilipiResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
@@ -30,15 +30,15 @@ public class UserPratilipiApi extends GenericApi {
 	}		
 
 	@Put
-	public PutPratilipiReviewResponse putPratilipiReview( PutPratilipiReviewRequest request )
+	public PutUserPratilipiResponse putUserPratilipi( PutUserPratilipiRequest request )
 			throws InsufficientAccessException {
 
 		Gson gson = new Gson();
 
 		UserPratilipiData userPratilipiData = gson.fromJson( gson.toJson( request ), UserPratilipiData.class );
-		UserPratilipiDataUtil.savePratilipiReview( userPratilipiData );
+		UserPratilipiDataUtil.saveUserPratilipi( userPratilipiData );
 		
-		return new PutPratilipiReviewResponse();
+		return new PutUserPratilipiResponse();
 	}		
 
 }

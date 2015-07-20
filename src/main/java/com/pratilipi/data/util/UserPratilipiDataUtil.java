@@ -24,7 +24,7 @@ public class UserPratilipiDataUtil {
 			Logger.getLogger( UserPratilipiDataUtil.class.getName() );
 
 	
-	public static boolean hasAccessToAddPratilipiReview( Long pratilipiId ) {
+	public static boolean hasAccessToAddUserPratilipiData( Long pratilipiId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
@@ -65,10 +65,10 @@ public class UserPratilipiDataUtil {
 		return createUserPratilipiData( userPratilipi );
 	}
 	
-	public static void savePratilipiReview( UserPratilipiData userPratilipiData )
+	public static void saveUserPratilipi( UserPratilipiData userPratilipiData )
 			throws InsufficientAccessException {
 
-		if( ! hasAccessToAddPratilipiReview( userPratilipiData.getPratilipiId() ) )
+		if( ! hasAccessToAddUserPratilipiData( userPratilipiData.getPratilipiId() ) )
 			throw new InsufficientAccessException();
 
 		if( userPratilipiData.getRating() == null && userPratilipiData.getReview() == null )
@@ -108,12 +108,7 @@ public class UserPratilipiDataUtil {
 		}
 	}
 	
-	public static UserPratilipiData getPratilipiReview( Long userId, Long pratilipiId ) {
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( userId, pratilipiId );
-		return createUserPratilipiData( userPratilipi );
-	}
-	
+	@Deprecated
 	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList(
 			Long pratilipiId, String cursor, Integer resultCount ) {
 		
