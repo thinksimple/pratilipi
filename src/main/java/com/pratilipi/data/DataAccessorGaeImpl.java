@@ -569,7 +569,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
-		if( userId == null || pratilipiId == null )
+		if( userId == null || userId.equals( 0L ) || pratilipiId == null || pratilipiId.equals( 0L ) )
 			return null;
 		
 		try {

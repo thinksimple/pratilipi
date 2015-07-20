@@ -40,6 +40,17 @@ public class UserPratilipiDataUtil {
 	}
 	
 
+	public static UserPratilipiData createUserPratilipiData( UserPratilipi userPratilipi ) {
+		if( userPratilipi == null )
+			return null;
+		UserPratilipiData userPratilipiData = new UserPratilipiData();
+		userPratilipiData.setRating( userPratilipi.getRating() );
+		userPratilipiData.setReview( userPratilipi.getReview() );
+		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
+		return userPratilipiData;
+	}
+	
+	
 	public static void savePratilipiReview( UserPratilipiData userPratilipiData )
 			throws InsufficientAccessException {
 
@@ -74,11 +85,19 @@ public class UserPratilipiDataUtil {
 				userPratilipi.setReviewDate( new Date() );
 			}
 			
+			userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+			
 			dataAccessor.commitTx();
 		} finally {
 			if( dataAccessor.isTxActive() )
 				dataAccessor.rollbackTx();
 		}
+	}
+	
+	public static UserPratilipiData getPratilipiReview( Long userId, Long pratilipiId ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( userId, pratilipiId );
+		return createUserPratilipiData( userPratilipi );
 	}
 	
 	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList(

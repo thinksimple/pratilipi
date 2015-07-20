@@ -30,11 +30,8 @@
 	background-color: white;
 }
 
-.secondary-500 h2, .secondary-500 h3 {
-	color: #4D4D4D;
-}
-
 .secondary-500 h1, .secondary-500 h2, .secondary-500 h3, .secondary-500 h4 {
+	color: #4D4D4D;
 	font-weight: 700;
 }
 

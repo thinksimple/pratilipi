@@ -1,6 +1,6 @@
 <link rel="import" href="pratilipi-rating.html" />
 <link rel="import" href="pratilipi-social.html" />
-<link rel="import" href="pratilipi-user-rating.html" />
+<link rel="import" href="pratilipi-rating-input.html" />
 
 <dom-module id="pratilipi-pratilipi">
 
@@ -47,7 +47,10 @@
 				<div class="media-left">
 					<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
 					<div style="text-align:center">
-						<pratilipi-user-rating></pratilipi-user-rating>
+						<pratilipi-rating-input
+								user="{{ user }}"
+								pratilipi-id="{{ pratilipi.pratilipiId }}"
+								value="{{ review.rating }}"></pratilipi-rating-input>
 						<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
 					</div>
 				</div>
@@ -62,17 +65,14 @@
 							</pratilipi-rating>
 						</div>
 						<div>
-							<a href="{{__hack__}}#"><span class="badge">Classic</span></a>
-						</div>
-						<div>
 							<a href="{{ pratilipi.readerPageUrl }}" class="btn btn-success">Read For Free</a>
-							<a href="{{__hack__}}#" class="btn btn-primary">Review This Book</a>
+							<a href="#ReviewSection" class="btn btn-primary">Review This Book</a>
 						</div>
 						<hr>
 						<div style="text-align: justify; padding:10px 0px;">
 							<span class="summary">{{ pratilipi.summary }}</span>
-							<a href="{{__hack__}}#" class="show-more" on-click="showCompleteSummary"><small>(show more)</small></a>
-							<a href="{{__hack__}}#" class="show-less" on-click="showSummarySnippet"><small>(show less)</small></a>
+							<a href="#" class="show-more" on-click="showCompleteSummary"><small>(show more)</small></a>
+							<a href="#" class="show-less" on-click="showSummarySnippet"><small>(show less)</small></a>
 						</div>	
 						<hr>	
 					</div>
@@ -91,7 +91,9 @@
 			is: 'pratilipi-pratilipi',
 			
 			properties: {
-				pratilipi: { type: Object }
+				user: { type: Object },
+				pratilipi: { type: Object },
+				review: { type: Object }
 			},
 			
 			getRatingsStr: function( ratingCount ) {

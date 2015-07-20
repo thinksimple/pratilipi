@@ -47,10 +47,15 @@
 						class='pull-left hidden-xs hidden-sm'
 						></pratilipi-navigation>
 				<div style="overflow:hidden">
-					<pratilipi-pratilipi pratilipi='${ pratilipiJson }'></pratilipi-pratilipi>
+					<pratilipi-pratilipi
+							user="{{ user }}"
+							pratilipi='${ pratilipiJson }'
+							review='${ reviewJson! }'
+							></pratilipi-pratilipi>
 					<pratilipi-review-list
 							id="ReviewSection"
 							user="{{ user }}"
+							review='${ reviewJson! }'
 							review-list='${ reviewListJson }'
 							pratilipi-id='${ pratilipi.id?c }'
 							cursor='${ reviewListCursor! }'

@@ -1,4 +1,4 @@
-<dom-module id="pratilipi-user-rating">
+<dom-module id="pratilipi-rating-input">
 
 	<style>
 
@@ -39,6 +39,15 @@
 				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showOneStar"    on-mouseout="init" on-click="rateOneStar"></span>
 			</div>
 		</div>
+		<iron-ajax
+				id="AjaxPut"
+				url="/api/pratilipi/review"
+				method="PUT"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxPutResponse"
+				on-error="_handleAjaxPutError"
+				></iron-ajax>
 	</template>
 
 
@@ -46,15 +55,18 @@
 
 		Polymer({
 
-			is: 'pratilipi-user-rating',
+			is: 'pratilipi-rating-input',
 
 			properties: {
+				user: { type: Object },
+				pratilipiId: { type: String },
 				value: { type: Number, value: 0 },
-				pendingUpdate: { type: Number, value: 0 }
+				rating: { type: Number, value: 0, notify: true },
+				isSaving: { type: Number, value: 0 }
 			},
 
 			init: function() {
-				if( this.pendingUpdate > 0 )
+				if( this.isSaving )
 					this.title = '${ _strings.saving }';
 				else if( this.value == undefined || this.value == 0 )
 					this.title = '${ _strings.rate_this }';
@@ -113,28 +125,57 @@
 			
 			
 			rateOneStar: function() {
-				this.pendingUpdate++;
-				this.value = 1;
+				this.submitRating( 1 );
 			},
 
 			rateTwoStars: function() {
-				this.pendingUpdate++;
-				this.value = 2;
+				this.submitRating( 2 );
 			},
 			
 			rateThreeStars: function() {
-				this.pendingUpdate++;
-				this.value = 3;
+				this.submitRating( 3 );
 			},
 			
 			rateFourStars: function() {
-				this.pendingUpdate++;
-				this.value = 4;
+				this.submitRating( 4 );
 			},
 			
 			rateFiveStars: function() {
-				this.pendingUpdate++;
-				this.value = 5;
+				this.submitRating( 5 );
+			},
+
+			
+			submitRating: function( rating ) {
+				if( this.user.isGuest ) {
+					document.querySelector( 'pratilipi-user' ).logIn();
+					return;
+				}
+				
+				if( this.isSaving )
+					return;
+				
+				this.isSaving = true;
+				this.rating = this.value;
+				this.set( 'value', rating );
+				
+				var ajaxPut = this.$.AjaxPut;
+				ajaxPut.body = JSON.stringify( { pratilipiId:this.pratilipiId, rating:rating } );
+				ajaxPut.generateRequest();
+			},
+			
+			_handleAjaxPutResponse: function( event ) {
+				if( event.detail.xhr.status == 0 )
+					this.set( 'value', this.rating );
+				this.isSaving = false;
+				this.init();
+			},
+
+			_handleAjaxPutError: function( event ) {
+				if( event.detail.request.xhr.status == 401 )
+					document.querySelector( 'pratilipi-user' ).logIn();
+				this.isSaving = false;
+				this.set( 'value', this.rating );
+				this.init();
 			},
 
 			

@@ -15,6 +15,7 @@ import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.mock.AccessTokenMock;
 import com.pratilipi.data.mock.UserMock;
+import com.pratilipi.data.mock.UserPratilipiMock;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
@@ -386,8 +387,8 @@ public class DataAccessorMockImpl implements DataAccessor {
 	@Override
 	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
-		// TODO: Implementation
-		return null;
+		UserPratilipiMock.USER_PRATILIPI_TABLE.add( userPratilipi );
+		return userPratilipi;
 	}
 	
 	

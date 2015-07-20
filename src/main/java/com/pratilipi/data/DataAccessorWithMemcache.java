@@ -131,12 +131,12 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	@Override
 	public AccessToken getAccessToken( String accessTokenId ) {
-		if( accessTokenId == null )
-			return null;
-		
 		if( dataAccessor.isTxActive() )
 			return dataAccessor.getAccessToken( accessTokenId );
 
+		if( accessTokenId == null )
+			return null;
+		
 		AccessToken accessToken = memcache.get( PREFIX_ACCESS_TOKEN + accessTokenId );
 		if( accessToken == null ) {
 			accessToken = dataAccessor.getAccessToken( accessTokenId );
@@ -440,6 +440,12 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
+		if( dataAccessor.isTxActive() )
+			return dataAccessor.getUserPratilipi( userId, pratilipiId );
+			
+		if( userId == null || userId.equals( 0L ) || pratilipiId == null || pratilipiId.equals( 0L ) )
+			return null;
+		
 		UserPratilipi userPratilipi = memcache.get( PREFIX_USER_PRATILIPI + userId + "-" + pratilipiId );
 		if( userPratilipi == null ) {
 			userPratilipi = dataAccessor.getUserPratilipi( userId, pratilipiId );

@@ -17,7 +17,7 @@ public class UserPratilipiData {
 	private String review;
 	private boolean hasReview;
 	
-	private Date reviewDate;
+	private Long reviewDate;
 	
 	
 	public Long getUserId() {
@@ -72,11 +72,11 @@ public class UserPratilipiData {
 	}
 
 	public Date getReviewDate() {
-		return reviewDate;
+		return reviewDate == null ? null : new Date( reviewDate );
 	}
 
 	public void setReviewDate( Date reviewDate ) {
-		this.reviewDate = reviewDate;
+		this.reviewDate = reviewDate == null ? null : reviewDate.getTime();
 	}
 	
 }
