@@ -30,11 +30,11 @@ public class UserDataUtil {
 		userData.setFirstName( user.getFirstName() );
 		userData.setLastName( user.getLastName() );
 		
-		if( user.getFirstName() != null || user.getLastName() == null )
+		if( user.getFirstName() != null && user.getLastName() == null )
 			userData.setName( user.getFirstName() );
-		else if( user.getFirstName() == null || user.getLastName() != null )
+		else if( user.getFirstName() == null && user.getLastName() != null )
 			userData.setName( user.getLastName() );
-		else if( user.getFirstName() != null || user.getLastName() != null )
+		else if( user.getFirstName() != null && user.getLastName() != null )
 			userData.setName( user.getFirstName() + " " + user.getLastName() );
 
 		userData.setIsGuest( user.getId() == null || user.getId().equals( 0L ) );

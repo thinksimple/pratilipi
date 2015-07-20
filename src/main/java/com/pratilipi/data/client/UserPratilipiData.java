@@ -12,10 +12,10 @@ public class UserPratilipiData {
 	
 	
 	private Integer rating;
-	private boolean hasRating;
+	private transient boolean hasRating;
 	
 	private String review;
-	private boolean hasReview;
+	private transient boolean hasReview;
 	
 	private Long reviewDate;
 	

@@ -43,13 +43,27 @@ public class UserPratilipiDataUtil {
 	public static UserPratilipiData createUserPratilipiData( UserPratilipi userPratilipi ) {
 		if( userPratilipi == null )
 			return null;
+		
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
+		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 		userPratilipiData.setRating( userPratilipi.getRating() );
 		userPratilipiData.setReview( userPratilipi.getReview() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 		return userPratilipiData;
 	}
 	
+	
+	public static UserPratilipiData getUserPratilipi( Long pratilipiId ) {
+		Long userId = AccessTokenFilter.getAccessToken().getUserId();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( userId, pratilipiId );
+		if( userPratilipi == null && ! userId.equals( 0L ) ) {
+			userPratilipi = dataAccessor.newUserPratilipi();
+			userPratilipi.setUserId( userId );
+			userPratilipi.setPratilipiId( pratilipiId );
+		}
+		return createUserPratilipiData( userPratilipi );
+	}
 	
 	public static void savePratilipiReview( UserPratilipiData userPratilipiData )
 			throws InsufficientAccessException {
