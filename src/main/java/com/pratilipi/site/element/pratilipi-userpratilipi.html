@@ -1,0 +1,66 @@
+<dom-module id="pratilipi-userpratilipi">
+
+	<template>
+		<iron-ajax
+				id="AjaxGet"
+				url="/api/userpratilipi"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				on-error="_handleAjaxGetError"
+				></iron-ajax>
+	</template>
+	
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-userpratilipi',
+			
+			properties: {
+				user: { type: Object, observer: '_userChangeObserver' },
+				pratilipi: { type: Object },
+				userpratilipi: { type: Object, notify: true },
+				userpratilipiData: { type: Object }
+			},
+			
+			_userChangeObserver: function() {
+				if( this.user.isGuest ) {
+					this.set( 'userpratilipi', {} );
+				} else if( ! this.userpratilipi.pratilipiId ) {
+					var ajaxGet = this.$.AjaxGet;
+					ajaxGet.params = { pratilipiId:this.pratilipi.pratilipiId };
+					ajaxGet.generateRequest();
+				}
+			},
+			
+			_handleAjaxGetResponse: function( event ) {
+				if( event.detail.xhr.status != 200 ) {
+					this.async( function() {
+						this._userChangeObserver();
+					}, 10000 );
+				} else {
+					this.set( 'userpratilipi', event.detail.response );
+				}
+			},
+
+			_handleAjaxGetError: function( event ) {
+				this.async( function() {
+					this._userChangeObserver();
+				}, 10000 );
+			},
+			
+			ready: function() {
+				if( this.userpratilipiData )
+					this.set( 'userpratilipi', this.userpratilipiData );
+				else
+					this.set( 'userpratilipi', {} );
+			}
+
+		});
+		
+	</script>
+
+</dom-module>
