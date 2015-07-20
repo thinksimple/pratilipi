@@ -623,10 +623,32 @@ public class PratilipiDataUtil {
 				
 			Pratilipi pratilipi = dataAccessor.getPratilipi( id );
 			if( ( long ) pratilipi.getReadCount() != readCount.get( id ) ){
-				logger.log( Level.SEVERE, "Read Count mismatch for pratilipi Id=" + id + " from Google Analytics.");
+				logger.log( Level.INFO, "Read Count mismatch for pratilipi Id=" + id + " from Google Analytics.");
 			}	
 		}
 		
+		// Get facebook share count.
+		String[] url = new String [ pratilipiId.length ];
+		for( int iterator = 0; iterator < pratilipiId.length; iterator ++ ) {
+			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId[ iterator ] );
+			url[ iterator ] = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
+		}
+		
+		Map<String, Long> facebookShareCount = FacebookApi.getUrlShareCount( url );
+		
+		// Removing unwanted elements from map.
+			for(Long id : pratilipiId ) {
+				if( ! facebookShareCount.containsKey( id )) {
+					logger.log( Level.SEVERE, "Failed to fetch data of id=" + id + " from Facebook Api.");
+					continue;
+				}
+					
+				Pratilipi pratilipi = dataAccessor.getPratilipi( id );
+				if( ( long ) pratilipi.getFbLikeShareCount() != facebookShareCount.get( id ) ){
+					logger.log( Level.INFO, "Facebook share count mismatch for pratilipi Id=" + id + " from Facebook Api.");
+				}	
+			}
+				
 		/*
 		// Writing the new values in Database.
 		try {
