@@ -50,7 +50,8 @@
 						<pratilipi-rating-input
 								user="{{ user }}"
 								pratilipi-id="{{ pratilipi.pratilipiId }}"
-								value="{{ review.rating }}"></pratilipi-rating-input>
+								value="{{ userpratilipi.rating }}"
+								></pratilipi-rating-input>
 						<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
 					</div>
 				</div>
@@ -92,8 +93,8 @@
 			
 			properties: {
 				user: { type: Object },
-				pratilipi: { type: Object },
-				review: { type: Object }
+				pratilipi: { type:Object },
+				userpratilipi: { type:Object, notify:true }
 			},
 			
 			getRatingsStr: function( ratingCount ) {

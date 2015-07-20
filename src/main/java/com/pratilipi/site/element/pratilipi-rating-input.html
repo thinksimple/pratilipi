@@ -41,7 +41,7 @@
 		</div>
 		<iron-ajax
 				id="AjaxPut"
-				url="/api/pratilipi/review"
+				url="/api/userpratilipi"
 				method="PUT"
 				content-type="application/json"
 				handle-as="json"
@@ -60,8 +60,8 @@
 			properties: {
 				user: { type: Object },
 				pratilipiId: { type: String },
-				value: { type: Number, value: 0 },
-				rating: { type: Number, value: 0, notify: true },
+				value: { type: Number, value: 0, notify: true, observer: 'init' },
+				rating: { type: Number, value: 0 },
 				isSaving: { type: Number, value: 0 }
 			},
 

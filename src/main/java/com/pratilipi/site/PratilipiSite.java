@@ -195,10 +195,8 @@ public class PratilipiSite extends HttpServlet {
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor .getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, true, false );
+		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
 		
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		UserPratilipiData review = UserPratilipiDataUtil.getPratilipiReview( accessToken.getUserId(), pratilipiId );
-				
 		List<PratilipiData> pratilipiDataList = new ArrayList<>( 12 );
 		pratilipiDataList.add( pratilipiData );
 		pratilipiDataList.add( pratilipiData );
@@ -221,7 +219,7 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "pratilipi", pratilipiData );
 		dataModel.put( "pratilipiJson", gson.toJson( pratilipiData ).toString() );
-		dataModel.put( "reviewJson", gson.toJson( review ).toString() );
+		dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiData ).toString() );
 		dataModel.put( "recommendedJsonList", gson.toJson( pratilipiDataList ).toString() );
 		dataModel.put( "reviewListJson", gson.toJson( reviewListCursorTuple.getDataList() ).toString() );
 		dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );

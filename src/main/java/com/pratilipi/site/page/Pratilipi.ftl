@@ -18,6 +18,7 @@
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-userpratilipi.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-review-list.html'>
@@ -41,6 +42,13 @@
 
 			<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
 			<pratilipi-header user='{{ user }}'></pratilipi-header>
+
+			<pratilipi-userpratilipi
+					user='{{ user }}'
+					pratilipi='${ pratilipiJson }'
+					userpratilipi='{{ userpratilipi }}'
+					userpratilipi-data='${ userpratilipiJson! }'
+					></pratilipi-userpratilipi>
 		
 			<div class="container" style="margin-top:10px">
 				<pratilipi-navigation
@@ -50,12 +58,12 @@
 					<pratilipi-pratilipi
 							user="{{ user }}"
 							pratilipi='${ pratilipiJson }'
-							review='${ reviewJson! }'
+							userpratilipi='{{ userpratilipi }}'
 							></pratilipi-pratilipi>
 					<pratilipi-review-list
 							id="ReviewSection"
 							user="{{ user }}"
-							review='${ reviewJson! }'
+							userpratilipi='{{ userpratilipi }}'
 							review-list='${ reviewListJson }'
 							pratilipi-id='${ pratilipi.id?c }'
 							cursor='${ reviewListCursor! }'
