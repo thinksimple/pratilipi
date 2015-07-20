@@ -24,6 +24,9 @@ public class UserAccessUtil {
 			case ADMINISTRATOR:
 				return AccessType.values();
 			case MEMBER:
+				return new AccessType[] {
+						AccessType.PRATILIPI_ADD_REVIEW,
+				};
 			case GUEST:
 			default:
 				return new AccessType[] { };
