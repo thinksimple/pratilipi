@@ -68,10 +68,10 @@ public class UserDataUtil {
 		User user = dataAccessor.getUserByEmail( email );
 
 		if( user == null )
-			throw new InvalidArgumentException( "Invalid user id !" );
+			throw new InvalidArgumentException( "Email is not registered !" );
 		
 		if( ! PasswordUtil.check( password, user.getPassword() ) )
-			throw new InvalidArgumentException( "Wrong password !" );
+			throw new InvalidArgumentException( "Incorrect password !" );
 
 		while( true ) {
 			try {

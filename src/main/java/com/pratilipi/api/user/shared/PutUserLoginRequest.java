@@ -5,9 +5,9 @@ import com.pratilipi.api.shared.GenericRequest;
 
 public class PutUserLoginRequest extends GenericRequest {
 
-	private static final String EMAIL_REQUIRED_ERR_MSG = "Enter email.";
-	private static final String EMAIL_INVALID_ERR_MSG = "Invalid email id.";
-	private static final String PASSWORD_REQUIRED_ERR_MSG = "Enter password.";
+	private static final String EMAIL_REQUIRED_ERR_MSG = "Please provide your email !";
+	private static final String EMAIL_INVALID_ERR_MSG = "Invalid email !";
+	private static final String PASSWORD_REQUIRED_ERR_MSG = "Enter password !";
 
 	
 	@Validate( required = true, requiredErrMsg = EMAIL_REQUIRED_ERR_MSG, regEx = REGEX_EMAIL, regExErrMsg = EMAIL_INVALID_ERR_MSG )
