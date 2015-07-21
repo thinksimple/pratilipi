@@ -620,8 +620,8 @@ public class PratilipiDataUtil {
 /*				try {
 					dataAccessor.beginTx();
 					pratilipi = dataAccessor.getPratilipi( pratilipiId );
-					pratilipi.setReadCount( idReadCountMap.get( pratilipiId ) );
-					pratilipi.setFbLikeShareCount( urlShareCountMap.get( pratilipiPage.getUri() ) );
+					pratilipi.setReadCount( Math.max( pratilipi.getReadCount(), readCount ) );
+					pratilipi.setFbLikeShareCount( Math.max( pratilipi.getFbLikeShareCount(), fbLikeShareCount ) );
 					pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 					dataAccessor.commitTx();
 				} finally {
