@@ -22,6 +22,7 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-marquee.html'>
 
 		<#-- Custom Stylesheets -->
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
@@ -35,11 +36,13 @@
 			<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
 			<pratilipi-header user='{{ user }}'></pratilipi-header>
 			
+			
 			<div class="container" style="margin-top:10px">
 				<pratilipi-navigation
 						class='pull-left hidden-xs hidden-sm'
 						></pratilipi-navigation>
 				<div style="overflow:hidden">
+				<pratilipi-marquee></pratilipi-marquee>
 					<pratilipi-card-grid
 							heading='${ _strings.featured }'
 							pratilipi-list='${ featuredListJson }'
