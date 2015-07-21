@@ -23,26 +23,43 @@
 				
 					<template is="dom-if" if="{{ user.isGuest }}">
 						<a href="#">${ _strings.sign_in_with_facebook }</a>
-						|
+						&nbsp;
 						<a href="#" on-click="logIn">${ _strings.sign_in }</a>
-						|
+						&nbsp;
 						<span class="dropdown">
-							<a class="dropdown-toggle" id="LanguageMenu" data-toggle="dropdown" aria-expanded="true">
+							<a class="dropdown-toggle" id="LanguageMenu1" data-toggle="dropdown" aria-expanded="true">
 								${ _strings.choose_language } <span class="caret"></span>
 							</a>
-							<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu">
+							<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu1">
 								<li role="presentation"><a role="menuitem" tabindex="-1" href="//wwww.pratilipi.com">${ _strings.language_all }</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="//hindi.pratilipi.com">${ _strings.language_hi }</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="//gujarati.pratilipi.com">${ _strings.language_gu }</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1" href="//tamil.pratilipi.com">${ _strings.language_ta }</a></li>
 							</ul>
 						</span>
+						&nbsp;
 					</template>
 
 					<template is="dom-if" if="{{ !user.isGuest }}">
-						<a href="#" on-click="logOut">${ _strings.sign_out }</a>
+						<span class="dropdown">
+							<a class="dropdown-toggle" id="ProfileMenu" data-toggle="dropdown" aria-expanded="true">
+								<span>{{ user.name }}</span><span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="ProfileMenu">
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="#" on-click="logOut">${ _strings.sign_out }</a></li>
+							</ul>
+						</span>
+						&nbsp;
+						<span class="dropdown">
+							<a class="dropdown-toggle" id="LanguageMenu2" data-toggle="dropdown" aria-expanded="true">
+								${ _strings.choose_language } <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu2">
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="//wwww.pratilipi.com">${ _strings.language_all }</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="//tamil.pratilipi.com">${ _strings.language_ta }</a></li>
+							</ul>
+						</span>
+						&nbsp;
 					</template>
-
+					
 				</div>
 		
 				<pratilipi-search-bar></pratilipi-search-bar>
