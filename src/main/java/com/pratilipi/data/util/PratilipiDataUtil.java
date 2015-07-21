@@ -575,7 +575,8 @@ public class PratilipiDataUtil {
 		long fbLikeShareCount = FacebookApi.getUrlShareCount( fbLikeShareUrl );
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		if( pratilipi.getReadCount() != pratilipiReadCount || pratilipi.getFbLikeShareCount() != fbLikeShareCount ) {
+		if( ! pratilipi.getReadCount().equals( pratilipiReadCount )
+				|| ! pratilipi.getFbLikeShareCount().equals( fbLikeShareCount ) ) {
 			try {
 				dataAccessor.beginTx();
 				pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -594,20 +595,18 @@ public class PratilipiDataUtil {
 
 	}
 
-	public static Set<Long> updatePratilipiStats( long[] pratilipiIds ) throws UnexpectedServerException {
+	public static Set<Long> updatePratilipiStats( List<Long> pratilipiIdList ) throws UnexpectedServerException {
 		
-		Map<Long, Long> idReadCountMap = GoogleAnalyticsApi.getPratilipiReadCount( pratilipiIds );		
+		Map<Long, Long> idReadCountMap = GoogleAnalyticsApi.getPratilipiReadCount( pratilipiIdList );		
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		String[] urls = new String[ pratilipiIds.length ];
-		for( int i = 0; i < pratilipiIds.length; i ++ ) {
-			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiIds[ i ] );
-			urls[ i ] = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
-		}
-		Map<String, Long> urlShareCountMap = FacebookApi.getUrlShareCount( urls );
+		List<String> urlList = new ArrayList<>( pratilipiIdList.size() );
+		for( Long pratilipiId : pratilipiIdList )
+			urlList.add( "http://" + SystemProperty.get( "domain" ) + dataAccessor.getPage( PageType.PRATILIPI, pratilipiId ).getUri() );
+		Map<String, Long> urlShareCountMap = FacebookApi.getUrlShareCount( urlList );
 
 		Set<Long> ids = new HashSet<Long>();
-		for( Long id : pratilipiIds ) {
+		for( Long id : pratilipiIdList ) {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( id );
 			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, id );
 			if( ! pratilipi.getReadCount().equals( idReadCountMap.get( id ) )

@@ -58,13 +58,13 @@ public class PratilipiProcessApi extends GenericApi {
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
 		
 		
-		pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, 90 ).getDataList();
-		long[] pratilipiIdListArray = new long[ pratilipiIdList.size() ];
-		for( int iterator = 0; iterator < pratilipiIdList.size(); iterator ++ ) {
-			pratilipiIdListArray [iterator] = pratilipiIdList.get( iterator );
-		}
-		PratilipiDataUtil.updatePratilipiStats( pratilipiIdListArray );
-		logger.log( Level.INFO, "Added " + pratilipiIdList.size() + " id's for read count updation." );
+		try {
+			Thread.sleep( 10 * 60 * 1000 );
+		} catch (InterruptedException e) { }
+		
+		PratilipiDataUtil.updatePratilipiStats( pratilipiIdList );
+
+		
 		return new GenericResponse();
 	}
 	

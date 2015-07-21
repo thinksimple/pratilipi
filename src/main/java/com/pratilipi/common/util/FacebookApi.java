@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,16 +61,16 @@ public class FacebookApi {
 		}
 	}
 	
-	public static Map<String, Long> getUrlShareCount( String[] urls ) throws UnexpectedServerException {
+	public static Map<String, Long> getUrlShareCount( List<String> urlList ) throws UnexpectedServerException {
 		Gson gson = new Gson();
 		int urlsPerRequest = 20;
 		
 		Map<String, Long> urlCountMap = new HashMap<>();
 
-		for( int i = 0; i < urls.length; i = i + urlsPerRequest ) {
+		for( int i = 0; i < urlList.size(); i = i + urlsPerRequest ) {
 			String ids = "";
-			for( int j = 0; i + j < urls.length && j < urlsPerRequest; j++ )
-				ids = ids + urls[ i + j ] + ",";
+			for( int j = 0; i + j < urlList.size() && j < urlsPerRequest; j++ )
+				ids = ids + urlList.get( i + j ) + ",";
 			ids = ids.substring( 0, ids.length() - 1 );
 
 			try{
@@ -80,13 +81,13 @@ public class FacebookApi {
 				String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
 				JsonElement responseJson = gson.fromJson( responsePayload, JsonElement.class );
 				
-				for( int j = 0; i + j < urls.length && j < urlsPerRequest; j++ ) {
-					JsonElement jsonElement = responseJson.getAsJsonObject().get( urls [ i + j ] );
+				for( int j = 0; i + j < urlList.size() && j < urlsPerRequest; j++ ) {
+					JsonElement jsonElement = responseJson.getAsJsonObject().get( urlList.get( i + j ) );
 					JsonElement shareCountJson = jsonElement.getAsJsonObject().get( "shares" );
 					if( shareCountJson == null )
-						urlCountMap.put( urls [ i + j ], 0L );
+						urlCountMap.put( urlList.get( i + j ), 0L );
 					else
-						urlCountMap.put( urls [ i + j ], shareCountJson.getAsLong() );
+						urlCountMap.put( urlList.get( i + j ), shareCountJson.getAsLong() );
 				}
 			} catch( IOException e ) {
 				throw new UnexpectedServerException();

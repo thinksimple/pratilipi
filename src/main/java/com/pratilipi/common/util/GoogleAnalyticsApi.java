@@ -55,14 +55,14 @@ public class GoogleAnalyticsApi {
 		return pratilipiReadCount;
 	}
 	
-	public static Map<Long, Long> getPratilipiReadCount( long[] pratilipiIds ) throws UnexpectedServerException {
+	public static Map<Long, Long> getPratilipiReadCount( List<Long> pratilipiList ) throws UnexpectedServerException {
 		int idsPerRequest = 80;
 		Map <Long, Long> idCountMap = new HashMap<Long, Long>();
 		
-		for( int i = 0; i < pratilipiIds.length; i++ ) {
+		for( int i = 0; i < pratilipiList.size(); i = i + idsPerRequest ) {
 			String filters = "";
-			for( int j = 0; i + j < pratilipiIds.length && j < idsPerRequest; j++ )
-				filters = filters + "ga:eventCategory==Pratilipi:" + pratilipiIds[ i + j ] + ",";
+			for( int j = 0; i + j < pratilipiList.size() && j < idsPerRequest; j++ )
+				filters = filters + "ga:eventCategory==Pratilipi:" + pratilipiList.get( i + j ) + ",";
 			filters = filters.substring( 0, filters.length() - 1 );
 			filters = filters + ";ga:eventAction=~^ReadTimeSec:.*";
 			
