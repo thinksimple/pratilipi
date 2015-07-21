@@ -61,33 +61,39 @@ public class FacebookApi {
 	}
 	
 	public static Map<String, Long> getUrlShareCount( String[] url ) throws UnexpectedServerException {
-		// Formation of string
-		String finalUrl = "";
-        for( String element : url )
-        	finalUrl = finalUrl + element + ",";
-        finalUrl = finalUrl.substring( 0, finalUrl.length() - 1 );
-        
-		try{
-			String requestUrl = GRAPH_API_MULTIPLE_URL
-					+ "?ids=" + URLEncoder.encode( finalUrl, "UTF-8" );
-			
-			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
-			JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
-			Map <String, Long> facebookShareCount = new HashMap <String, Long> ();
-			
-			for( String element : url ) {
-				JsonElement jsonElement = responseJson.getAsJsonObject().get( element );
-				JsonElement shareCountJson = jsonElement.getAsJsonObject().get( "shares" );
-				if ( shareCountJson == null )
-					facebookShareCount.put( element, 0L );
-				else
-					facebookShareCount.put( element, shareCountJson.getAsLong() );
+		
+		int max_limit = 20;
+		Map <String, Long> facebookShareCount = new HashMap <String, Long> ();
+		int batches_count = (url.length % max_limit == 0) ? url.length / max_limit : url.length / max_limit + 1;
+		
+		for( int limit = 0; limit < batches_count ; limit ++ ) {
+			// Formation of string
+			String finalUrl = "";
+			int start_index = limit * max_limit; 
+			for( int temp =  0; temp < Math.min ( max_limit, url.length - (limit * max_limit) ); temp ++ ) {
+				finalUrl = finalUrl + url[ temp + start_index ] + ",";
+			}	
+			finalUrl = finalUrl.substring( 0, finalUrl.length() - 1 );
+			try{
+				String requestUrl = GRAPH_API_MULTIPLE_URL
+						+ "?ids=" + URLEncoder.encode( finalUrl, "UTF-8" );
+				
+				String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
+				JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
+				
+				for( int temp =  0; temp < Math.min ( max_limit, url.length - (limit * max_limit) ); temp ++ ) {
+					JsonElement jsonElement = responseJson.getAsJsonObject().get( url [ temp + start_index ] );
+					JsonElement shareCountJson = jsonElement.getAsJsonObject().get( "shares" );
+					if ( shareCountJson == null )
+						facebookShareCount.put( url [ temp + start_index ], 0L );
+					else
+						facebookShareCount.put( url [ temp + start_index ], shareCountJson.getAsLong() );
+				}
+			} catch( IOException e ) {
+				throw new UnexpectedServerException();
 			}
-			
-			return facebookShareCount;
-			
-		} catch( IOException e ) {
-			throw new UnexpectedServerException();
 		}
+		
+			return facebookShareCount;
 	} 
 }
