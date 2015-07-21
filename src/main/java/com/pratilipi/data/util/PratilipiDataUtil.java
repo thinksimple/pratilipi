@@ -565,65 +565,17 @@ public class PratilipiDataUtil {
 	}
 	
 	
-	public static Set<Long> updatePratilipiStats( long[] pratilipiId ) throws UnexpectedServerException {
-		
-		// Getting read count.
-		Map<Long, Long> readCount = GoogleAnalyticsApi.getReadCount( pratilipiId );		
-		
-		// Get facebook share count.
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		String[] url = new String [ pratilipiId.length ];
-		for( int iterator = 0; iterator < pratilipiId.length; iterator ++ ) {
-			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId[ iterator ] );
-			url[ iterator ] = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
-		}
-		
-		Map<String, Long> ShareCount = FacebookApi.getUrlShareCount( url );
-		
-		Map<Long, Long> facebookShareCount = new HashMap<Long, Long>();
-		
-		for( Long id : pratilipiId ) {
-			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, id );
-			facebookShareCount.put( id , ShareCount.get( "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri() ));
-		}
-		
-		// Writing the new values in Database.
-		Set<Long> ids = new HashSet<Long>();
-		for( Long id : pratilipiId ) {
-			Pratilipi pratilipi = dataAccessor.getPratilipi( id );
-			if( (long) pratilipi.getReadCount() != readCount.get( id ) 
-					|| (long) pratilipi.getFbLikeShareCount() != facebookShareCount.get( id ) ) {
-				ids.add( id );
-				try {
-					dataAccessor.beginTx();
-					pratilipi = dataAccessor.getPratilipi( id );
-					pratilipi.setReadCount( readCount.get( id ) );
-					pratilipi.setFbLikeShareCount( facebookShareCount.get( id ) );
-					pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-					dataAccessor.commitTx();
-				} finally {
-					if( dataAccessor.isTxActive() )
-						dataAccessor.rollbackTx();
-				}
-			} 
-		}
-		
-		return ids;
-	}
-	
 	public static boolean updatePratilipiStats( Long pratilipiId ) throws UnexpectedServerException {
 		
-		long pratilipiReadCount = GoogleAnalyticsApi.getReadCount( pratilipiId );
+		long pratilipiReadCount = GoogleAnalyticsApi.getPratilipiReadCount( pratilipiId );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
 		String fbLikeShareUrl = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
 		long fbLikeShareCount = FacebookApi.getUrlShareCount( fbLikeShareUrl );
 		
-		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		if( (long) pratilipi.getReadCount() != pratilipiReadCount 
-				|| (long) pratilipi.getFbLikeShareCount() != fbLikeShareCount ) {
+		if( pratilipi.getReadCount() != pratilipiReadCount || pratilipi.getFbLikeShareCount() != fbLikeShareCount ) {
 			try {
 				dataAccessor.beginTx();
 				pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -641,6 +593,42 @@ public class PratilipiDataUtil {
 		}
 
 	}
+
+	public static Set<Long> updatePratilipiStats( long[] pratilipiIds ) throws UnexpectedServerException {
+		
+		Map<Long, Long> idReadCountMap = GoogleAnalyticsApi.getPratilipiReadCount( pratilipiIds );		
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		String[] urls = new String[ pratilipiIds.length ];
+		for( int i = 0; i < pratilipiIds.length; i ++ ) {
+			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiIds[ i ] );
+			urls[ i ] = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
+		}
+		Map<String, Long> urlShareCountMap = FacebookApi.getUrlShareCount( urls );
+
+		Set<Long> ids = new HashSet<Long>();
+		for( Long id : pratilipiIds ) {
+			Pratilipi pratilipi = dataAccessor.getPratilipi( id );
+			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, id );
+			if( ! pratilipi.getReadCount().equals( idReadCountMap.get( id ) )
+					|| ! pratilipi.getFbLikeShareCount().equals( urlShareCountMap.get( pratilipiPage.getUri() ) ) ) {
+				try {
+					dataAccessor.beginTx();
+					pratilipi = dataAccessor.getPratilipi( id );
+					pratilipi.setReadCount( idReadCountMap.get( id ) );
+					pratilipi.setFbLikeShareCount( urlShareCountMap.get( pratilipiPage.getUri() ) );
+					pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+					dataAccessor.commitTx();
+				} finally {
+					if( dataAccessor.isTxActive() )
+						dataAccessor.rollbackTx();
+				}
+				ids.add( id );
+			} 
+		}
+		
+		return ids;
+	}	
 	
 	public static void updatePratilipiSearchIndex( Long pratilipiId, Long authorId )
 			throws InvalidArgumentException, UnexpectedServerException {
