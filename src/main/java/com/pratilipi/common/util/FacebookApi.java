@@ -57,6 +57,7 @@ public class FacebookApi {
 
 			return shareCountJson != null ? shareCountJson.getAsLong() : 0L; 
 		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch data from Facebook.", e );
 			throw new UnexpectedServerException();
 		}
 	}
@@ -90,6 +91,7 @@ public class FacebookApi {
 						urlCountMap.put( urlList.get( i + j ), shareCountJson.getAsLong() );
 				}
 			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch data from Facebook.", e );
 				throw new UnexpectedServerException();
 			}
 		}

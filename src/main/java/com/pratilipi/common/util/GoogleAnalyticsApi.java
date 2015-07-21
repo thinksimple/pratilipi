@@ -27,7 +27,7 @@ public class GoogleAnalyticsApi {
 	}
 	
 	
-	public static long getPratilipiReadCount( long pratilipiId ) throws UnexpectedServerException {
+	public static long getPratilipiReadCount( Long pratilipiId ) throws UnexpectedServerException {
 		long pratilipiReadCount = 0;
 		
 		try {
