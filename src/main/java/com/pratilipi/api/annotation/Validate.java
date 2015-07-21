@@ -10,8 +10,10 @@ import java.lang.annotation.Target;
 public @interface Validate {
 	
 	public boolean required() default false;
+	public String requiredErrMsg() default "";
 	
 	public String regEx() default "";
+	public String regExErrMsg() default "";
 
 	public long minLong() default Long.MIN_VALUE;
 

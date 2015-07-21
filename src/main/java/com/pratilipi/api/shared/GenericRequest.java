@@ -33,17 +33,26 @@ public class GenericRequest {
 			if( validate != null ) {
 				field.setAccessible( true );
 				try {
+
 					Object value = field.get( this );
 					if( value == null ) {
 
-						if( validate.required() )
-							throw new InvalidArgumentException( "'" + field.getName() + "' is missing." );
+						if( validate.required() ) {
+							if( ! validate.requiredErrMsg().isEmpty() )
+								throw new InvalidArgumentException( validate.requiredErrMsg() );
+							else
+								throw new InvalidArgumentException( "'" + field.getName() + "' is missing." );
+						}
 					
 					} else if( value != null ) {
 						
 						if( field.getType() == String.class ) {
-							if( !validate.regEx().isEmpty() && !( (String) value ).matches( validate.regEx() ) )
-								throw new InvalidArgumentException( "'" + field.getName() + "' value is invalid." );
+							if( ! validate.regEx().isEmpty() && ! ( (String) value ).matches( validate.regEx() ) ) {
+								if( ! validate.regExErrMsg().isEmpty() )
+									throw new InvalidArgumentException( validate.regExErrMsg() );
+								else
+									throw new InvalidArgumentException( "'" + field.getName() + "' value is invalid." );
+							}
 	
 						} else if( field.getType() == Long.class ) {
 							if( (Long) value < validate.minLong() )
@@ -54,6 +63,7 @@ public class GenericRequest {
 								request.validate();
 						}
 					}
+					
 				} catch( IllegalAccessException e ) {
 					logger.log( Level.SEVERE, "Unexpected exception occured !", e );
 					throw new UnexpectedServerException();

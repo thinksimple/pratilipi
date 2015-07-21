@@ -1,3 +1,5 @@
+<!-- Version:6.0 -->
+
 <dom-module id="pratilipi-user-login">
 
 	<template>
@@ -12,14 +14,17 @@
 					<label for="FormInput-Password">${ _strings.password }</label>
 					<input type="password" class="form-control" id="FormInput-Password" placeholder="********" value="{{ password::input }}">
 				</div>
-				<br/>
 				<div class="text-center">
+					<span class="text-center text-success">{{ message }}</span>
+					<span class="text-center text-danger">{{ errMessage }}</span>
+					<br/>
+					<br/>
 					<button type="button" class="btn" on-click="onSubmit">${ _strings.sign_in }</button>
 				</div>
-				<br/>
-				<br/>
-				<br/>
 				<div class="small">
+					<br/>
+					<br/>
+					<br/>
 					<div class="pull-right">
 						Not a member ? <a class="text-muted" href="#" on-click="register">Sign up !</a>
 					</div>
@@ -50,6 +55,8 @@
 			properties: {
 				email: { type: String },
 				password: { type: String },
+				message: { type: String },
+				errMessage: { type: String },
 			},
 			
 			behaviors: [
@@ -65,23 +72,31 @@
 			},
 
 			onSubmit: function() {
+				this.errMessage = null;
+				this.message = "Working ...";
+				
 				var ajaxPut = this.$.AjaxPut;
 				ajaxPut.body = JSON.stringify( { email:this.email, password:this.password } );
 				ajaxPut.generateRequest();
 			},
 			
-			_handleAjaxPutResponse: function(  request ) {
-				if( ! request.detail.response ) {
-					// TODO: show error
-					return;
+			_handleAjaxPutResponse: function( request ) {
+				if( event.detail.xhr.status == 0 ) {
+					this.message = null;
+					this.errMessage = "Could not connect to server !";
+				} else {
+					this.message = "Success !";
+					this.async( function() {
+ 						this.message = null;				
+						this.close();
+					}, 1000 );
+					document.querySelector( 'pratilipi-user' ).updateUser( request.detail.response );
 				}
-				
-				this.close();
-				document.querySelector( 'pratilipi-user' ).updateUser( request.detail.response );
 			},
 
-			_handleAjaxPutError: function() {
-				// TODO: show error
+			_handleAjaxPutError: function( event ) {
+				this.message = null;
+				this.errMessage = event.detail.request.xhr.response.message;
 			},
 			
 		});
