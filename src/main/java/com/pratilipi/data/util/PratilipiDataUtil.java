@@ -608,14 +608,16 @@ public class PratilipiDataUtil {
 		Map<String, Long> urlShareCountMap = FacebookApi.getUrlShareCount( urlList );
 
 		Set<Long> updatedPratilipiIds = new HashSet<Long>();
+		int matchCount = 0;
 		for( Long pratilipiId : pratilipiIdList ) {
 			long readCount = idReadCountMap.get( pratilipiId ) == null ? 0L : idReadCountMap.get( pratilipiId );
 			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
 			String fbLikeShareUrl = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
-			long fbLikeShareCount = urlShareCountMap.get( fbLikeShareUrl );
+			long fbLikeShareCount = urlShareCountMap.get( fbLikeShareUrl ) == null ? 0L : urlShareCountMap.get( fbLikeShareUrl );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+			
 			if( pratilipi.getReadCount() != readCount || pratilipi.getFbLikeShareCount() != fbLikeShareCount ) {
-				try {
+/*				try {
 					dataAccessor.beginTx();
 					pratilipi = dataAccessor.getPratilipi( pratilipiId );
 					pratilipi.setReadCount( idReadCountMap.get( pratilipiId ) );
@@ -626,9 +628,13 @@ public class PratilipiDataUtil {
 					if( dataAccessor.isTxActive() )
 						dataAccessor.rollbackTx();
 				}
-				updatedPratilipiIds.add( pratilipiId );
-			} 
+				updatedPratilipiIds.add( pratilipiId ); */
+				logger.log( Level.WARNING, pratilipiId + ": " + pratilipi.getReadCount() + "->" + readCount + ", " + pratilipi.getFbLikeShareCount() + "->" + fbLikeShareCount );
+			} else {
+				matchCount++;
+			}
 		}
+		logger.log( Level.INFO, "Match count: " + matchCount + "/" + pratilipiIdList.size() );
 		
 		return updatedPratilipiIds;
 	}	
