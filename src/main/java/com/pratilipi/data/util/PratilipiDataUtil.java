@@ -5,16 +5,14 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.api.services.analytics.Analytics;
-import com.google.api.services.analytics.Analytics.Data.Ga.Get;
-import com.google.api.services.analytics.AnalyticsScopes;
-import com.google.api.services.analytics.model.GaData;
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -25,7 +23,7 @@ import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.util.FacebookApi;
-import com.pratilipi.common.util.GoogleApi;
+import com.pratilipi.common.util.GoogleAnalyticsApi;
 import com.pratilipi.common.util.ImageUtil;
 import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -567,139 +565,58 @@ public class PratilipiDataUtil {
 	}
 	
 	
-	public static void updatePratilipiStats( long[] pratilipiId ) throws UnexpectedServerException {
+	public static Set<Long> updatePratilipiStats( long[] pratilipiId ) throws UnexpectedServerException {
 		
-		// String processing for filters. 
-		String filter = "";
-		for( long element : pratilipiId ) 
-			filter = filter + "ga:eventCategory==Pratilipi:" + element + ",";
-		
-		filter = filter.substring( 0, filter.length() - 1 );
-		filter = filter.concat( ";ga:eventAction=~^ReadTimeSec:.*" );
-		
-		// Get data from analytics.
-		HashMap <Long, Long> readCount = new HashMap<Long, Long>();
-		
-		List<String> scopes = new LinkedList<>();
-		scopes.add( AnalyticsScopes.ANALYTICS_READONLY );
-		Analytics analytics = GoogleApi.getAnalytics( scopes );
-		
-		try {
-			Get apiQuery = analytics.data().ga()
-					.get( "ga:89762686",		// Table Id.
-							"2015-01-01",		// Start Date.
-							"today",			// End Date.
-							"ga:uniqueEvents" )	// Metrics.
-					.setDimensions( "ga:eventCategory,ga:eventAction" )
-					.setFilters( filter );
-
-			GaData gaData = apiQuery.execute();
-			if( gaData.getRows() != null ) {
-				for( List<String> row : gaData.getRows() ) {
-					// Converting pratilipiId from string to long.
-					String stringKey = row.get( 0 );
-					stringKey = stringKey.substring( 10, stringKey.length() );
-					Long key = Long.parseLong( stringKey );
-					long value = Long.parseLong( row.get( 2 ));
-					if( readCount.containsKey( key ) )
-						readCount.put( key , Math.max( value, readCount.get( key ) ));
-					else
-						readCount.put( key , value );
-				}
-			}
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch data from Google Analytics.", e );
-			throw new UnexpectedServerException();
-		}
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		// Removing unwanted elements from map.
-		for(Long id : pratilipiId ) {
-			if( ! readCount.containsKey( id )) {
-				logger.log( Level.SEVERE, "Failed to fetch data of id=" + id + " from Google Analytics.");
-				continue;
-			}
-				
-			Pratilipi pratilipi = dataAccessor.getPratilipi( id );
-			if( ( long ) pratilipi.getReadCount() != readCount.get( id ) ){
-				logger.log( Level.INFO, "Read Count mismatch for pratilipi Id=" + id + " from Google Analytics.");
-			}	
-		}
+		// Getting read count.
+		Map<Long, Long> readCount = GoogleAnalyticsApi.getReadCount( pratilipiId );		
 		
 		// Get facebook share count.
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		String[] url = new String [ pratilipiId.length ];
 		for( int iterator = 0; iterator < pratilipiId.length; iterator ++ ) {
 			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId[ iterator ] );
 			url[ iterator ] = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
 		}
 		
-		Map<String, Long> facebookShareCount = FacebookApi.getUrlShareCount( url );
+		Map<String, Long> ShareCount = FacebookApi.getUrlShareCount( url );
 		
-		// Removing unwanted elements from map.
-			for(Long id : pratilipiId ) {
-				if( ! facebookShareCount.containsKey( id )) {
-					logger.log( Level.SEVERE, "Failed to fetch data of id=" + id + " from Facebook Api.");
-					continue;
-				}
-					
-				Pratilipi pratilipi = dataAccessor.getPratilipi( id );
-				if( ( long ) pratilipi.getFbLikeShareCount() != facebookShareCount.get( id ) ){
-					logger.log( Level.INFO, "Facebook share count mismatch for pratilipi Id=" + id + " from Facebook Api.");
-				}	
-			}
-				
-		/*
+		Map<Long, Long> facebookShareCount = new HashMap<Long, Long>();
+		
+		for( Long id : pratilipiId ) {
+			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, id );
+			facebookShareCount.put( id , ShareCount.get( "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri() ));
+		}
+		
 		// Writing the new values in Database.
-		try {
-			dataAccessor.beginTx();
-			for(Long id : pratilipiId ) {
-				if( ! readCount.containsKey( id )) 
-					continue;
-				Pratilipi pratilipi = dataAccessor.getPratilipi( id );
-				pratilipi.setReadCount( Math.max(pratilipi.getReadCount(), readCount.get( id )) );
-				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-			}
-			dataAccessor.commitTx();
-		} finally {
-			if( dataAccessor.isTxActive() )
-				dataAccessor.rollbackTx();
-		} */
+		Set<Long> ids = new HashSet<Long>();
+		for( Long id : pratilipiId ) {
+			Pratilipi pratilipi = dataAccessor.getPratilipi( id );
+			if( (long) pratilipi.getReadCount() != readCount.get( id ) 
+					|| (long) pratilipi.getFbLikeShareCount() != facebookShareCount.get( id ) ) {
+				ids.add( id );
+				try {
+					dataAccessor.beginTx();
+					pratilipi = dataAccessor.getPratilipi( id );
+					pratilipi.setReadCount( readCount.get( id ) );
+					pratilipi.setFbLikeShareCount( facebookShareCount.get( id ) );
+					pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+					dataAccessor.commitTx();
+				} finally {
+					if( dataAccessor.isTxActive() )
+						dataAccessor.rollbackTx();
+				}
+			} 
+		}
+		
+		return ids;
 	}
 	
 	public static boolean updatePratilipiStats( Long pratilipiId ) throws UnexpectedServerException {
 		
-		List<String> scopes = new LinkedList<>();
-		scopes.add( AnalyticsScopes.ANALYTICS_READONLY );
-		Analytics analytics = GoogleApi.getAnalytics( scopes );
-
-		long pratilipiReadCount = 0;
-		try {
-			Get apiQuery = analytics.data().ga()
-					.get( "ga:89762686",		// Table Id.
-							"2015-01-01",		// Start Date.
-							"today",			// End Date.
-							"ga:uniqueEvents" )	// Metrics.
-					.setDimensions( "ga:eventCategory,ga:eventAction" )
-					.setFilters( "ga:eventCategory==Pratilipi:" + pratilipiId + ";ga:eventAction=~^ReadTimeSec:.*" );
-
-			GaData gaData = apiQuery.execute();
-			if( gaData.getRows() != null ) {
-				for( List<String> row : gaData.getRows() ) {
-					long readCount = Long.parseLong( row.get( 2 ) );
-					if( readCount > pratilipiReadCount )
-						pratilipiReadCount = readCount;
-				}
-			}
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch data from Google Analytics.", e );
-			throw new UnexpectedServerException();
-		}
-	
+		long pratilipiReadCount = GoogleAnalyticsApi.getReadCount( pratilipiId );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-		
 		String fbLikeShareUrl = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
 		long fbLikeShareCount = FacebookApi.getUrlShareCount( fbLikeShareUrl );
 		
