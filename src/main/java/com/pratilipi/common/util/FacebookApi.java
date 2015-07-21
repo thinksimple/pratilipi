@@ -23,8 +23,8 @@ public class FacebookApi {
 			Logger.getLogger( FacebookApi.class.getName() );
 
 	
-	private static final String GRAPH_API_URL = "https://graph.facebook.com/v2.2";
-	private static final String GRAPH_API_MULTIPLE_URL = "http://graph.facebook.com/";
+	private static final String GRAPH_API_2p2_URL = "https://graph.facebook.com/v2.2";
+	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
 	
 	
 	public static String getAppId() {
@@ -41,7 +41,7 @@ public class FacebookApi {
 	
 	public static long getUrlShareCount( String url ) throws UnexpectedServerException {
 		try {
-			String requestUrl = GRAPH_API_URL
+			String requestUrl = GRAPH_API_2p2_URL
 					+ "?id=" + URLEncoder.encode( url, "UTF-8" )
 					+ "&access_token=" + getAccessToken();
 
@@ -60,40 +60,39 @@ public class FacebookApi {
 		}
 	}
 	
-	public static Map<String, Long> getUrlShareCount( String[] url ) throws UnexpectedServerException {
+	public static Map<String, Long> getUrlShareCount( String[] urls ) throws UnexpectedServerException {
+		Gson gson = new Gson();
+		int urlsPerRequest = 20;
 		
-		int max_limit = 20;
-		Map <String, Long> facebookShareCount = new HashMap <String, Long> ();
-		int batches_count = (url.length % max_limit == 0) ? url.length / max_limit : url.length / max_limit + 1;
-		
-		for( int limit = 0; limit < batches_count ; limit ++ ) {
-			// Formation of string
-			String finalUrl = "";
-			int start_index = limit * max_limit; 
-			for( int temp =  0; temp < Math.min ( max_limit, url.length - (limit * max_limit) ); temp ++ ) {
-				finalUrl = finalUrl + url[ temp + start_index ] + ",";
-			}	
-			finalUrl = finalUrl.substring( 0, finalUrl.length() - 1 );
+		Map<String, Long> urlCountMap = new HashMap<>();
+
+		for( int i = 0; i < urls.length; i = i + urlsPerRequest ) {
+			String ids = "";
+			for( int j = 0; i + j < urls.length && j < urlsPerRequest; j++ )
+				ids = ids + urls[ i + j ] + ",";
+			ids = ids.substring( 0, ids.length() - 1 );
+
 			try{
-				String requestUrl = GRAPH_API_MULTIPLE_URL
-						+ "?ids=" + URLEncoder.encode( finalUrl, "UTF-8" );
+				String requestUrl = GRAPH_API_2p4_URL
+						+ "?ids=" + URLEncoder.encode( ids, "UTF-8" )
+						+ "&access_token=" + getAccessToken();
 				
 				String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
-				JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
+				JsonElement responseJson = gson.fromJson( responsePayload, JsonElement.class );
 				
-				for( int temp =  0; temp < Math.min ( max_limit, url.length - (limit * max_limit) ); temp ++ ) {
-					JsonElement jsonElement = responseJson.getAsJsonObject().get( url [ temp + start_index ] );
+				for( int j = 0; i + j < urls.length && j < urlsPerRequest; j++ ) {
+					JsonElement jsonElement = responseJson.getAsJsonObject().get( urls [ i + j ] );
 					JsonElement shareCountJson = jsonElement.getAsJsonObject().get( "shares" );
-					if ( shareCountJson == null )
-						facebookShareCount.put( url [ temp + start_index ], 0L );
+					if( shareCountJson == null )
+						urlCountMap.put( urls [ i + j ], 0L );
 					else
-						facebookShareCount.put( url [ temp + start_index ], shareCountJson.getAsLong() );
+						urlCountMap.put( urls [ i + j ], shareCountJson.getAsLong() );
 				}
 			} catch( IOException e ) {
 				throw new UnexpectedServerException();
 			}
 		}
 		
-			return facebookShareCount;
+		return urlCountMap;
 	} 
 }

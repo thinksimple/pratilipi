@@ -37,6 +37,7 @@ public class GoogleApi {
 			logger.log( Level.SEVERE, "Failed to create Analytics Service Object.", e );
 			throw new UnexpectedServerException();
 		}
+		
 	}
 	
 }
