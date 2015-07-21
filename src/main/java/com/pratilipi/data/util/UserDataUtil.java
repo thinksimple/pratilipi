@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.jdo.JDODataStoreException;
 
+import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.data.DataAccessor;
@@ -67,11 +68,16 @@ public class UserDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email );
 
-		if( user == null )
-			throw new InvalidArgumentException( "Email is not registered !" );
+		JsonObject errorMessages = new JsonObject();
+		if( user == null ) {
+			errorMessages.addProperty( "email", "Email is not registered !" );
+			throw new InvalidArgumentException( errorMessages );
+		}
 		
-		if( ! PasswordUtil.check( password, user.getPassword() ) )
-			throw new InvalidArgumentException( "Incorrect password !" );
+		if( ! PasswordUtil.check( password, user.getPassword() ) ) {
+			errorMessages.addProperty( "password", "Incorrect password !" );
+			throw new InvalidArgumentException( errorMessages );
+		}
 
 		while( true ) {
 			try {
@@ -99,7 +105,7 @@ public class UserDataUtil {
 		
 	}
 	
-	public static UserData logoutUser() throws InvalidArgumentException {
+	public static UserData logoutUser() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 

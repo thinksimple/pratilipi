@@ -4,11 +4,11 @@ package com.pratilipi.common.exception;
 public class InsufficientAccessException extends Exception {
 
 	public InsufficientAccessException() {
-		super( "Insufficient privilege for this action." );
+		this( "Insufficient privilege for this action." );
 	}
 
 	public InsufficientAccessException( String msg ) {
-		super( msg );
+		super( "{\"message\":\"" + msg + "\"}" );
 	}
 
 }

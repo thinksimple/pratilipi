@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 
 public class GenericRequest {
@@ -27,49 +28,57 @@ public class GenericRequest {
 
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public final void validate() throws InvalidArgumentException, UnexpectedServerException {
+	public final JsonObject validate() throws UnexpectedServerException {
+		JsonObject errorMessages = new JsonObject();
 		for( Field field : this.getClass().getDeclaredFields() ) {
 			Validate validate = field.getAnnotation( Validate.class );
 			if( validate != null ) {
+				
 				field.setAccessible( true );
 				try {
 
 					Object value = field.get( this );
-					if( value == null ) {
+					if( value == null || ( field.getType() == String.class && ( (String) value ).trim().isEmpty() ) ) {
 
 						if( validate.required() ) {
-							if( ! validate.requiredErrMsg().isEmpty() )
-								throw new InvalidArgumentException( validate.requiredErrMsg() );
-							else
-								throw new InvalidArgumentException( "'" + field.getName() + "' is missing." );
+							errorMessages.addProperty( field.getName(), validate.requiredErrMsg().isEmpty()
+									? "'" + field.getName() + "' is missing."
+									: validate.requiredErrMsg() );
 						}
 					
 					} else if( value != null ) {
 						
 						if( field.getType() == String.class ) {
-							if( ! validate.regEx().isEmpty() && ! ( (String) value ).matches( validate.regEx() ) ) {
-								if( ! validate.regExErrMsg().isEmpty() )
-									throw new InvalidArgumentException( validate.regExErrMsg() );
-								else
-									throw new InvalidArgumentException( "'" + field.getName() + "' value is invalid." );
-							}
+							if( ! validate.regEx().isEmpty() && ! ( (String) value ).matches( validate.regEx() ) )
+								errorMessages.addProperty( field.getName(), validate.regExErrMsg().isEmpty()
+										? "'" + field.getName() + "' value is invalid."
+										: validate.regExErrMsg() );
 	
 						} else if( field.getType() == Long.class ) {
 							if( (Long) value < validate.minLong() )
-								throw new InvalidArgumentException( "'" + field.getName() + "' must be greater than or equal to " + validate.minLong() );
+								errorMessages.addProperty( field.getName(), "'" + field.getName() + "' must be greater than or equal to " + validate.minLong() );
 						
 						} else if( field.getType() == List.class && GenericRequest.class.isAssignableFrom( (Class) ( (ParameterizedType) field.getGenericType() ).getActualTypeArguments()[0] ) ) {
-							for( GenericRequest request : (List<GenericRequest>) value )
-								request.validate();
+							JsonArray errorMessagesArray = new JsonArray();
+							for( GenericRequest request : (List<GenericRequest>) value ) {
+								JsonObject nestedErrorMessages = request.validate();
+								if( nestedErrorMessages.entrySet().size() > 0 )
+									errorMessagesArray.add( nestedErrorMessages );
+							}
+							if( errorMessagesArray.size() > 0 )
+								errorMessages.add( field.getName(), errorMessagesArray );
 						}
+						
 					}
 					
 				} catch( IllegalAccessException e ) {
 					logger.log( Level.SEVERE, "Unexpected exception occured !", e );
 					throw new UnexpectedServerException();
 				}
+				
 			}
 		}
+		return errorMessages;
 	}
 
 }

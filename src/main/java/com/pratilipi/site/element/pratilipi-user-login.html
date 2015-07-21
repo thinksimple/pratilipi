@@ -9,10 +9,12 @@
 				<div class="form-group">
 					<label for="FormInput-UserEmail">${ _strings.email }</label>
 					<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="name@example.com" value="{{ email::input }}">
+					<span class="text-danger">{{ errEmail }}</span>
 				</div>
 				<div class="form-group">
 					<label for="FormInput-Password">${ _strings.password }</label>
 					<input type="password" class="form-control" id="FormInput-Password" placeholder="********" value="{{ password::input }}">
+					<span class="text-danger">{{ errPassword }}</span>
 				</div>
 				<div class="text-center">
 					<span class="text-center text-success">{{ message }}</span>
@@ -72,7 +74,7 @@
 			},
 
 			onSubmit: function() {
-				this.errMessage = null;
+				this.clearMessages();
 				this.message = "Working ...";
 				
 				var ajaxPut = this.$.AjaxPut;
@@ -80,9 +82,16 @@
 				ajaxPut.generateRequest();
 			},
 			
+			clearMessages: function() {
+				this.errEmail = null;
+				this.errPassword = null;
+				this.errMessage = null;
+				this.message = null;
+			},
+			
 			_handleAjaxPutResponse: function( request ) {
+				this.clearMessages();
 				if( event.detail.xhr.status == 0 ) {
-					this.message = null;
 					this.errMessage = "Could not connect to server !";
 				} else {
 					this.message = "Success !";
@@ -95,8 +104,13 @@
 			},
 
 			_handleAjaxPutError: function( event ) {
-				this.message = null;
-				this.errMessage = event.detail.request.xhr.response.message;
+				this.clearMessages();
+				if( event.detail.request.xhr.status == 400 ) {
+					this.errEmail = event.detail.request.xhr.response.email;
+					this.errPassword = event.detail.request.xhr.response.password;
+				} else {
+					this.errMessage = event.detail.request.xhr.response.message;
+				}
 			},
 			
 		});

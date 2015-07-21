@@ -7,6 +7,7 @@ import com.pratilipi.api.annotation.Put;
 import com.pratilipi.api.user.shared.PutUserLoginRequest;
 import com.pratilipi.api.user.shared.UserResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 
@@ -16,7 +17,7 @@ public class UserLoginApi extends GenericApi {
 
 	@Put
 	public UserResponse login( PutUserLoginRequest request )
-			throws InvalidArgumentException {
+			throws InvalidArgumentException, UnexpectedServerException {
 		
 		Gson gson = new Gson();
 		UserData userData = UserDataUtil.loginUser(

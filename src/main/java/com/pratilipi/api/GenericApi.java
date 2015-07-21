@@ -153,13 +153,16 @@ public abstract class GenericApi extends HttpServlet {
 				}
 			}
 
-			apiRequest.validate();
-			return apiMethod.invoke( this, apiRequest );
+			JsonObject errorMessages = apiRequest.validate();
+			if( errorMessages.entrySet().size() > 0 )
+				return new InvalidArgumentException( errorMessages );
+			else
+				return apiMethod.invoke( this, apiRequest );
 
 		} catch( JsonSyntaxException e ) {
 			return new InvalidArgumentException( "Invalid JSON in request body." );
 		
-		} catch( InvalidArgumentException | UnexpectedServerException e) {
+		} catch( UnexpectedServerException e) {
 			return e;
 		
 		} catch( InvocationTargetException e ) {
@@ -223,7 +226,7 @@ public abstract class GenericApi extends HttpServlet {
 			else
 				response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 			
-			writer.println( "{\"message\":\"" + ((Throwable) apiResponse ).getMessage() + "\"}" );
+			writer.println( ((Throwable) apiResponse ).getMessage() );
 			writer.close();
 
 		}
