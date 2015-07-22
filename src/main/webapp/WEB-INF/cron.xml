@@ -7,6 +7,14 @@
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
 
+
+	<cron>
+		<url>/pratilipi/process?cron</url>
+		<target>worker</target>
+		<schedule>every 5 minutes from 8:00 to 20:00</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+
 	<cron>
 		<url>/pratilipi/backup?cron</url>
 		<target>worker</target>
@@ -15,11 +23,12 @@
 	</cron>
 
 	<cron>
-		<url>/pratilipi/process?cron</url>
+		<url>/pratilipi/idf?cron</url>
 		<target>worker</target>
-		<schedule>every 5 minutes from 8:00 to 20:00</schedule>
+		<schedule>every 6 hours from 8:00 to 20:00</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
+
 
 	<cron>
 		<url>/author/process?cron</url>

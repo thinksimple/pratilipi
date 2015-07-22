@@ -39,6 +39,7 @@ public class PratilipiBackupApi extends GenericApi {
 		int count = 0;
 		StringBuilder backup = new StringBuilder();
 
+		Date backupDate = new Date();
 		while( true ) {
 			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
 					dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
@@ -61,7 +62,7 @@ public class PratilipiBackupApi extends GenericApi {
 		}
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/pratilipi-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm" ).format( new Date() ) );
+		BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/pratilipi-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm" ).format( backupDate ) );
 		blobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		
