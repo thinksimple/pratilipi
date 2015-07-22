@@ -9,7 +9,8 @@ public class TaskQueueFactory {
 	
 	private static final String QUEUE_PRATILIPI = "pratilipi";
 	private static final String QUEUE_AUTHOR = "author";
-
+	private static final String QUEUE_TEST = "updateBackEnd";
+	
 	
 	public static TaskQueue getPratilipiTaskQueue() {
 		return getTaskQueue( QUEUE_PRATILIPI );
@@ -19,6 +20,9 @@ public class TaskQueueFactory {
 		return getTaskQueue( QUEUE_AUTHOR );
 	}
 	
+	public static TaskQueue getTestTaskQueue() {
+		return getTaskQueue( QUEUE_TEST );
+	}
 	
 	protected static TaskQueue getTaskQueue( String taskQueueName ) {
 		TaskQueue taskQueue = taskQueueMap.get( taskQueueName );
