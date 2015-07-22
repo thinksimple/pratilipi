@@ -12,7 +12,6 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -26,7 +25,6 @@ import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Pratilipi;
-
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -43,62 +41,12 @@ public class InitApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		// Backing up PRATILIPI Table
-		AppProperty appProperty = dataAccessor.getAppProperty( AppProperty.DATASTORE_PRATILIPI_LAST_BACKUP );
-		if( appProperty == null )
-			appProperty = dataAccessor.newAppProperty( AppProperty.DATASTORE_PRATILIPI_LAST_BACKUP );
-
-		Date currDate = new Date();
-		Date nextBackup = appProperty.getValue() == null
-				? new Date( currDate.getTime() - 1 )
-				: new Date( ( (Date) appProperty.getValue() ).getTime() + 60 * 60 * 1000 ); // Last backup time + 1Hr
-
-		if( currDate.after( nextBackup ) ) {
-			PratilipiFilter pratilipiFilter = new PratilipiFilter();
-			String cursor = null;
-			int count = 0;
-			StringBuilder backup = new StringBuilder();
-
-			while( true ) {
-				DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
-						dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
-				List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
-
-				for( Pratilipi pratilipi : pratilipiList ) {
-					if( pratilipi.getKeywords() != null )
-						pratilipi.setKeywords( pratilipi.getKeywords().split( "\\s+" ).length + "" );
-					else
-						pratilipi.setKeywords( "0" );
-					backup.append( new Gson().toJson( pratilipi ) + '\n' );
-				}
-					
-				
-				count = count + pratilipiList.size();
-
-				if( pratilipiList.size() < 1000 )
-					break;
-				else
-					cursor = pratilipiListCursorTupe.getCursor();
-			}
-			
-			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-			BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/pratilipi-" + new SimpleDateFormat( "yyyyMMddHHmm" ).format( currDate ) );
-			blobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
-			blobAccessor.createOrUpdateBlob( blobEntry );
-			
-			appProperty.setValue( currDate );
-			dataAccessor.createOrUpdateAppProperty( appProperty );
-
-			logger.log( Level.INFO, "Backed up " + count + " Pratilipi Entities." );
-		}
-
-		
 		// Update the Inverse frequency table.
-		appProperty = dataAccessor.getAppProperty( AppProperty.DATASTORE_PRATILIPI_IDF_LAST_UPDATE );
+		AppProperty appProperty = dataAccessor.getAppProperty( AppProperty.DATASTORE_PRATILIPI_IDF_LAST_UPDATE );
 		if( appProperty == null )
 			appProperty = dataAccessor.newAppProperty( AppProperty.DATASTORE_PRATILIPI_IDF_LAST_UPDATE );
 		
-		currDate = new Date();
+		Date currDate = new Date();
 		Date nextUpdate = appProperty.getValue() == null
 				? new Date( currDate.getTime() - 1 )
 				: new Date( ( (Date) appProperty.getValue() ).getTime() + 60 * 60 * 1000 * 6 ); // Last update time + 6 Hrs
