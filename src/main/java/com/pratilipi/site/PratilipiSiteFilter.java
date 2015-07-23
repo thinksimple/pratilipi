@@ -36,7 +36,7 @@ public class PratilipiSiteFilter implements Filter {
 			// TODO: Remove cdn-asia as soon as wwww becomes www.
 			"(www|tamil|gamma|static|cdn-asia)\\.pratilipi\\.com"
 			+ "|"
-			+ "((mark-6|mark-6p\\d)\\.prod-pratilipi|.+\\.devo-pratilipi)\\.appspot\\.com"
+			+ "mark-6\\.(prod|devo)-pratilipi\\.appspot\\.com"
 			+ "|"
 			+ "localhost|127.0.0.1" );
 	
