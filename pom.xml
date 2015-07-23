@@ -10,6 +10,7 @@
 
 	<properties>
 		<app.id>localhost</app.id>
+		<app.module>gamma</app.module>
 		<app.version>mark-6</app.version>
 		<app.setDefault>false</app.setDefault>
 		<gae.version>1.9.23</gae.version>
