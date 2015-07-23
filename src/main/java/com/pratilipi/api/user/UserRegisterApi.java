@@ -41,6 +41,7 @@ public class UserRegisterApi extends GenericApi {
 		
 		UserData userData = UserDataUtil.registerUser( firstName, lastName,
 				email, request.getPassword(), request.getSignUpSource() );
+		userData = UserDataUtil.loginUser( email, request.getPassword() );
 
 		
 		Task task1 = TaskQueueFactory.newTask()
