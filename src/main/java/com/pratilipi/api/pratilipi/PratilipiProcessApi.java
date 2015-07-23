@@ -17,7 +17,6 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.util.PratilipiFilter;
-import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Pratilipi;
@@ -35,9 +34,6 @@ public class PratilipiProcessApi extends GenericApi {
 	
 	@Get
 	public GenericResponse getPratilipiProcess( GenericRequest request ) throws UnexpectedServerException {
-
-		if( SystemProperty.get( "cron" ).equals( "stop" ) )
-			return new GenericResponse();
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setNextProcessDateEnd( new Date() );

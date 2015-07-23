@@ -12,7 +12,6 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.init.shared.GetInitRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorGaeImpl;
 import com.pratilipi.data.type.AppProperty;
@@ -28,9 +27,6 @@ public class InitApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetInitRequest request ) throws IOException {
 		
-		if( SystemProperty.get( "cron" ).equals( "stop" ) )
-			return new GenericResponse();
-
 		DataAccessor dataAccessor = new DataAccessorGaeImpl();
 
 		AppProperty sharedProperty = dataAccessor.getAppProperty( "Test.Key.Shared" );

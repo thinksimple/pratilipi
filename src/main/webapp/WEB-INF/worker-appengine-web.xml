@@ -32,11 +32,6 @@
 		<property name="devo-pratilipi.blobservice.gcs.bucket.public" value="devo-pratilipi.appspot.com"/>
 		<property name="prod-pratilipi.blobservice.gcs.bucket.public" value="public.pratilipi.com"/>
 
-		<!-- Configure Cron -->
-		<property name="localhost.cron" value="stop"/>
-		<property name="devo-pratilipi.cron" value="stop"/>
-		<property name="prod-pratilipi.cron" value="run"/>
-
 		<!-- Configure Web Domain -->
 		<property name="localhost.domain" value="localhost"/>
 		<property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>

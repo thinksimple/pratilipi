@@ -16,7 +16,6 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.AuthorFilter;
-import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Author;
@@ -36,9 +35,6 @@ public class AuthorProcessApi extends GenericApi {
 	@Get
 	public GenericResponse getAuthorProcess( GenericRequest request ) {
 		
-		if( SystemProperty.get( "cron" ).equals( "stop" ) )
-			return new GenericResponse();
-
 		AuthorFilter authorFilter = new AuthorFilter();
 		authorFilter.setNextProcessDateEnd( new Date() );
 
