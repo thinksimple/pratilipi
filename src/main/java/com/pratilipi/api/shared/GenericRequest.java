@@ -17,9 +17,8 @@ public class GenericRequest {
 			Logger.getLogger( GenericRequest.class.getName() );
 
 	
-	protected static final String REGEX_NON_EMPTY_STRING = "(\\s*\\S+\\s*)+";
 	protected static final String REGEX_NUMBER = "[0-9]+";
-	protected static final String REGEX_PASSWORD = "\\S+{6,128}";
+	protected static final String REGEX_PASSWORD = "\\S{6,128}";
 	protected static final String REGEX_URI = "(/[A-Za-z0-9-]+)+";
 	protected static final String REGEX_EMAIL = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.-][A-Za-z0-9]+)*\\.[A-Za-z]{2,4}";
 

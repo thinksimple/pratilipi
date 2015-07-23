@@ -22,6 +22,13 @@ public class TaskQueueGaeImpl implements TaskQueue {
 		queue.add( ( (TaskGaeImpl) task ).getTaskOptions() );
 	}
 	
+	public void addAll( Task... tasks ) {
+		List<TaskOptions> taskOptionsList = new ArrayList<TaskOptions>( tasks.length );
+		for( Task task : tasks )
+			taskOptionsList.add( ( (TaskGaeImpl) task ).getTaskOptions() );
+		queue.add( taskOptionsList );
+	}
+	
 	@Override
 	public void addAll( List<Task> taskList ) {
 		if( taskList.size() > 100 ) {

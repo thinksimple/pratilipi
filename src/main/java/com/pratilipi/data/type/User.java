@@ -3,7 +3,8 @@ package com.pratilipi.data.type;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.pratilipi.common.type.UserStatus;
+import com.pratilipi.common.type.UserSignUpSource;
+import com.pratilipi.common.type.UserState;
 
 public interface User extends Serializable {
 
@@ -13,6 +14,7 @@ public interface User extends Serializable {
 
 	void setPassword( String password );
 
+	
 	String getFirstName();
 
 	void setFirstName( String firstName );
@@ -25,6 +27,7 @@ public interface User extends Serializable {
 
 	void setNickName( String nickName );
 
+	
 	String getEmail();
 
 	void setEmail( String email );
@@ -33,20 +36,18 @@ public interface User extends Serializable {
 
 	void setPhone( String phone );
 
-	String getCampaign();
-
-	void setCampaign( String campaign );
 	
-	String getReferer();
+	UserState getState();
 
-	String setReferer( String referer );
+	void setState( UserState userState );
+
 	
 	Date getSignUpDate();
 	
 	void setSignUpDate( Date date );
 
-	UserStatus getStatus();
-	
-	void setStatus( UserStatus userStatus );
-	
+	UserSignUpSource getSignUpSource();
+
+	void setSignUpSource( UserSignUpSource signUpSource );
+
 }

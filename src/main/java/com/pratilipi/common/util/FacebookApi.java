@@ -45,9 +45,8 @@ public class FacebookApi {
 			String requestUrl = GRAPH_API_2p2_URL
 					+ "?id=" + URLEncoder.encode( url, "UTF-8" )
 					+ "&access_token=" + getAccessToken();
+			logger.log( Level.INFO, "Request URL: " + requestUrl );
 
-			logger.log( Level.INFO, "Facebook graph request URL = " + requestUrl );
-			
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
 			logger.log( Level.INFO, "Response Payload: " + responsePayload );
 			

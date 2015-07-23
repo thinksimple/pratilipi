@@ -7,6 +7,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.pratilipi.common.type.UserSignUpSource;
+import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.type.UserStatus;
 import com.pratilipi.data.type.User;
 
@@ -40,17 +42,27 @@ public class UserEntity implements User {
 	private String phone;
 	
 	
+	@Deprecated
 	@Persistent( column = "CAMPAIGN" )
 	private String campaign;
 	
+	@Deprecated
 	@Persistent( column = "REFERER" )
 	private String referer;
 	
+	@Deprecated
 	@Persistent( column = "STATUS" )
 	private UserStatus status;
+
+	@Persistent( column = "STATE" )
+	private UserState state;
+
 	
 	@Persistent( column = "SIGN_UP_DATE" )
 	private Date signUpDate;
+
+	@Persistent( column = "SIGN_UP_SOURCE" )
+	private UserSignUpSource signUpSource;
 
 	
 	public UserEntity() {}
@@ -131,26 +143,34 @@ public class UserEntity implements User {
 		this.phone = phone;
 	}
 
-	
+
+	@SuppressWarnings("deprecation")
 	@Override
-	public String getCampaign() {
-		return campaign;
+	public UserState getState() {
+		if( state != null )
+			return state;
+		
+		switch( status ) {
+			case PRELAUNCH_REFERRAL:
+			case POSTLAUNCH_REFERRAL:
+				return UserState.REFERRAL;
+			case PRELAUNCH_SIGNUP:
+			case POSTLAUNCH_SIGNUP:
+			case POSTLAUNCH_SIGNUP_SOCIALLOGIN:
+			case ANDROID_SIGNUP:
+			case ANDROID_SIGNUP_FACEBOOK:
+			case ANDROID_SIGNUP_GOOGLE:
+				return UserState.REGISTERED;
+		}
+		
+		return UserState.REGISTERED;
 	}
 
 	@Override
-	public void setCampaign( String campaign ) {
-		this.campaign = campaign;
+	public void setState( UserState state ) {
+		this.state = state;
 	}
 
-	@Override
-	public String getReferer() {
-		return referer;
-	}
-
-	@Override
-	public String setReferer( String referer ) {
-		return this.referer = referer;
-	}
 
 	@Override
 	public Date getSignUpDate() {
@@ -161,14 +181,35 @@ public class UserEntity implements User {
 		this.signUpDate = signUpDate;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public UserStatus getStatus() {
-		return status;
+	public UserSignUpSource getSignUpSource() {
+		if( signUpSource != null )
+			return signUpSource;
+		
+		switch( status ) {
+			case PRELAUNCH_REFERRAL:
+			case PRELAUNCH_SIGNUP:
+				return UserSignUpSource.PRE_LAUNCH_WEBSITE;
+			case POSTLAUNCH_REFERRAL:
+			case POSTLAUNCH_SIGNUP:
+				return UserSignUpSource.WEBSITE;
+			case POSTLAUNCH_SIGNUP_SOCIALLOGIN:
+				return UserSignUpSource.WEBSITE_FACEBOOK;
+			case ANDROID_SIGNUP:
+				return UserSignUpSource.ANDROID_APP;
+			case ANDROID_SIGNUP_FACEBOOK:
+				return UserSignUpSource.ANDROID_APP_FACEBOOK;
+			case ANDROID_SIGNUP_GOOGLE:
+				return UserSignUpSource.ANDROID_APP_GOOGLE;
+		}
+		
+		return null;
 	}
 
 	@Override
-	public void setStatus( UserStatus status ) {
-		this.status = status;
+	public void setSignUpSource( UserSignUpSource signUpSource ) {
+		this.signUpSource = signUpSource;
 	}
 
 }

@@ -2,7 +2,7 @@ package com.pratilipi.data.client;
 
 public class UserData {
 
-	private Long userId;
+	private transient Long userId;
 
 	private String firstName;
 	private transient boolean hasFirstName;
@@ -23,12 +23,13 @@ public class UserData {
 	private boolean isGuest;
 	
 	
-	public Long getId() {
-		return userId;
+	public UserData( Long userId ) {
+		this.userId = userId;
 	}
 
-	public void setId( Long id ) {
-		this.userId = id;
+	
+	public Long getId() {
+		return userId;
 	}
 
 	public String getFirstName() {

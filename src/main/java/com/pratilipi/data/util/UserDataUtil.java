@@ -8,6 +8,9 @@ import javax.jdo.JDODataStoreException;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.UserSignUpSource;
+import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -26,7 +29,7 @@ public class UserDataUtil {
 
 	
 	public static UserData createUserData( User user ) {
-		UserData userData = new UserData();
+		UserData userData = new UserData( user.getId() );
 
 		userData.setFirstName( user.getFirstName() );
 		userData.setLastName( user.getLastName() );
@@ -50,7 +53,7 @@ public class UserDataUtil {
 		user.setLastName( "User" );
 		return createUserData( user );
 	}
-	
+
 	public static UserData getCurrentUser() {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		Long userId = accessToken.getUserId();
@@ -58,6 +61,44 @@ public class UserDataUtil {
 			return getGuestUser();
 		else
 			return createUserData( DataAccessorFactory.getDataAccessor().getUser( accessToken.getUserId() ) );
+	}
+
+	public static UserData registerUser( String firstName, String lastName,
+			String email, String password, UserSignUpSource signUpSource )
+			throws InvalidArgumentException, UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		User user = dataAccessor.getUserByEmail( email );
+		if( user != null ) {
+			switch( user.getState() ) {
+				case REFERRAL:
+					break;
+				case REGISTERED:
+				case ACTIVE:
+				case BLOCKED:
+					JsonObject errorMessages = new JsonObject();
+					errorMessages.addProperty( "email", "Email is already registered." );
+					throw new InvalidArgumentException( errorMessages );
+				default:
+					logger.log( Level.SEVERE, "User state " + user.getState() + " is not handeled !"  );
+					throw new UnexpectedServerException();
+			}
+		} else {
+			user = dataAccessor.newUser();
+			user.setEmail( email );
+		}
+
+		user.setFirstName( firstName );
+		user.setLastName( lastName );
+		user.setPassword( PasswordUtil.getSaltedHash( password ) );
+		user.setState( UserState.REGISTERED );
+		user.setSignUpDate( new Date() );
+		user.setSignUpSource( signUpSource );
+
+		user = dataAccessor.createOrUpdateUser( user );
+
+		return createUserData( user );
 	}
 	
 	public static UserData loginUser( String email, String password )
