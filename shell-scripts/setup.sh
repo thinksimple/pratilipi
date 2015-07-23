@@ -7,6 +7,7 @@ sudo apt-get update
 sudo apt-get install vim
 sudo apt-get install git
 sudo apt-get install oracle-java7-installer
+sudo apt-get install screen
 # sudo apt-get install maven
 sudo apt-get install ant
 
