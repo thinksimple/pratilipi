@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -32,7 +34,7 @@ public class InitApi extends GenericApi {
 			sharedObject.addProperty( "Test.Key.1", 0 );
 			sharedObject.addProperty( "Test.Key.2", 0 );
 			sharedProperty = dataAccessor.newAppProperty( "Test.Key.Shared" );
-			sharedProperty.setValue( sharedObject );
+			sharedProperty.setValue( sharedObject.toString() );
 			dataAccessor.createOrUpdateAppProperty( sharedProperty );
 		}
 
@@ -44,7 +46,8 @@ public class InitApi extends GenericApi {
 		}
 		
 		
-		JsonObject sharedObject = sharedProperty.getValue();
+		String sharedJson = sharedProperty.getValue();
+		JsonObject sharedObject = new Gson().fromJson( sharedJson, JsonElement.class ).getAsJsonObject();
 		int value = sharedObject.get( request.getPropertyName() ).getAsInt();
 		int expectedValue = property.getValue();
 		if( value != expectedValue )
@@ -56,7 +59,7 @@ public class InitApi extends GenericApi {
 		int newValue = expectedValue + 1;
 
 		sharedObject.addProperty( request.getPropertyName(), newValue );
-		sharedProperty.setValue( sharedObject );
+		sharedProperty.setValue( sharedObject.toString() );
 		logger.log( Level.INFO, sharedObject.toString() );
 		dataAccessor.createOrUpdateAppProperty( sharedProperty );
 
