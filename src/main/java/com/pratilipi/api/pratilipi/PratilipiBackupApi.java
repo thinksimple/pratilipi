@@ -30,7 +30,7 @@ public class PratilipiBackupApi extends GenericApi {
 			Logger.getLogger( PratilipiBackupApi.class.getName() );
 	
 	@Get
-	public GenericResponse getBackup( GenericRequest request ) throws IOException {
+	public GenericResponse get( GenericRequest request ) throws IOException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
@@ -62,7 +62,7 @@ public class PratilipiBackupApi extends GenericApi {
 		}
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/pratilipi-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm" ).format( backupDate ) );
+		BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/backup-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm" ).format( backupDate ) );
 		blobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		

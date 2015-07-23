@@ -33,7 +33,7 @@ public class PratilipiIdfApi extends GenericApi {
 			Logger.getLogger( PratilipiIdfApi.class.getName() );
 	
 	@Get
-	public GenericResponse getInit( GenericRequest request ) throws IOException {
+	public GenericResponse get( GenericRequest request ) throws IOException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
@@ -88,7 +88,7 @@ public class PratilipiIdfApi extends GenericApi {
 
 		// Persist csv string in BlobStore
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi-keywords/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm" ).format( idfGenerationDate ) + ".csv" );
+		BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/idf-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm" ).format( idfGenerationDate ) + ".csv" );
 		blobEntry.setData( csv.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		
