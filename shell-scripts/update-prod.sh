@@ -11,8 +11,8 @@ git reset --hard origin/master
 mvn install
 ant
 
-cp src/main/webapp/WEB-INF/default-web.xml src/main/webapp/WEB-INF/web.xml
-cp src/main/webapp/WEB-INF/default-appengine-web.xml src/main/webapp/WEB-INF/appengine-web.xml
+cp src/main/webapp/WEB-INF/prod-web.xml src/main/webapp/WEB-INF/web.xml
+cp src/main/webapp/WEB-INF/prod-appengine-web.xml src/main/webapp/WEB-INF/appengine-web.xml
 
 # Update prod
 mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=default
