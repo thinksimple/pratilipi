@@ -14,6 +14,7 @@ import com.pratilipi.api.init.shared.GetInitRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataAccessorGaeImpl;
 import com.pratilipi.data.type.AppProperty;
 
 @SuppressWarnings("serial")
@@ -26,7 +27,7 @@ public class InitApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetInitRequest request ) throws IOException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataAccessor dataAccessor = new DataAccessorGaeImpl();
 
 		AppProperty sharedProperty = dataAccessor.getAppProperty( "Test.Key.Shared" );
 		if( sharedProperty == null ) {
@@ -65,6 +66,8 @@ public class InitApi extends GenericApi {
 
 		property.setValue( newValue );
 		dataAccessor.createOrUpdateAppProperty( property );
+		
+		dataAccessor.destroy();
 		
 		return new GenericResponse();
 	}
