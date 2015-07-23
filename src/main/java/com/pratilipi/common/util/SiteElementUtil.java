@@ -13,6 +13,7 @@ import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Language;
 
 public class SiteElementUtil {
 
@@ -23,15 +24,14 @@ public class SiteElementUtil {
 			UnexpectedServerException, URISyntaxException,
 			ClassNotFoundException {
 
-		String langCodes[] = args[0].split( "," );
-		String languageFilePrefix = args[1];
-		String elementFolderName = args[2];
-		String elementDataFolder = args[3];
-		String elementDataModelPackage = args[4];
-		String i18nElementFolderNamePrefix = args[5];
+		String languageFilePrefix = args[0];
+		String elementFolderName = args[1];
+		String elementDataFolder = args[2];
+		String elementDataModelPackage = args[3];
+		String i18nElementFolderNamePrefix = args[4];
 		
 		
-		for( String lang : langCodes ) {
+		for( Language language : Language.values() ) {
 
 			File elementFolder = new File( elementFolderName );
 			for( String elementName : elementFolder.list() ) {
@@ -41,11 +41,13 @@ public class SiteElementUtil {
 
 				// Data model required for i18n element generation
 				Map<String, Object> dataModel = new HashMap<>();
-				dataModel.put( "_strings", LanguageUtil.getStrings( languageFilePrefix + lang, languageFilePrefix + defaultLang ) );
-				dataModel.put( "data", getElementData( elementName, lang, elementDataFolder, elementDataModelPackage ) );
+				if( language != Language.ENGLISH )
+					dataModel.put( "language", language );
+				dataModel.put( "_strings", LanguageUtil.getStrings( languageFilePrefix + language.getCode(), languageFilePrefix + defaultLang ) );
+				dataModel.put( "data", getElementData( elementName, language.getCode(), elementDataFolder, elementDataModelPackage ) );
 
 				// I18n element file output stream
-				File i18nElementFolder = new File( i18nElementFolderNamePrefix + lang );
+				File i18nElementFolder = new File( i18nElementFolderNamePrefix + language.getCode() );
 				i18nElementFolder.mkdir();
 				File i18nElement = new File( i18nElementFolder, elementName );
 				i18nElement.createNewFile();
@@ -69,7 +71,9 @@ public class SiteElementUtil {
 			throws IOException, ClassNotFoundException {
 
 		File file = new File( elementDataFolder + "/" + elementName.replaceFirst( "\\.html$", "." + lang + ".json" ) );
-		if( !file.exists() )
+		if( ! file.exists() )
+			file = new File( elementDataFolder + "/" + elementName.replaceFirst( "\\.html$", "." + Language.ENGLISH.getCode() + ".json" ) );
+		if( ! file.exists() )
 			return null;
 
 		// Fetching content (json) from data file

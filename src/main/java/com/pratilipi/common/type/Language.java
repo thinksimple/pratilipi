@@ -8,7 +8,7 @@ public enum Language {
 	GUJARATI ( "gu", "ગુજરાતી",   "Gujarati" ),
 	TAMIL	 ( "ta", "தமிழ்",   "Tamil" ),
 	MARATHI	 ( "mr", "मराठी",     "Marathi" ),
-	MALAYALAM( "mL", "മലയാളം", "Malayalam" ),
+	MALAYALAM( "ml", "മലയാളം", "Malayalam" ),
 	;
 	
 	

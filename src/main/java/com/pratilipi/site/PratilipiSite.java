@@ -33,7 +33,6 @@ import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserPratilipiData;
-import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;

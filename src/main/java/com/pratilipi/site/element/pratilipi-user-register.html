@@ -1,38 +1,56 @@
+<!-- Version:6.0 -->
+
+
 <dom-module id="pratilipi-user-register">
 
 	<template>
 		<div class="popup">
-
 			<h5 class="popup-heading">${ _strings.sign_up_for_pratilipi }</h5>
-	
 			<div class="popup-body">
 				<div class="form-group">
 					<label for="FormInput-FullName">${ _strings.full_name }</label>
-					<input type="text" class="form-control" id="FormInput-FullName" placeholder="First Middle Last">
+					<input type="text" class="form-control" id="FormInput-FullName" placeholder="First Middle Last" value="{{ params.name::input }}">
+					<span class="text-danger">{{ paramsErr.name }}</span>
 				</div>
 				<div class="form-group">
 					<label for="FormInput-UserEmail">${ _strings.email }</label>
-					<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="name@example.com">
+					<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="name@example.com" value="{{ params.email::input }}">
+					<span class="text-danger">{{ paramsErr.email }}</span>
 				</div>
 				<div class="form-group">
 					<label for="FormInput-Password">${ _strings.password }</label>
-					<input type="password" class="form-control" id="FormInput-Password" placeholder="********">
+					<input type="password" class="form-control" id="FormInput-Password" placeholder="********" value="{{ params.password::input }}">
+					<span class="text-danger">{{ paramsErr.password }}</span>
 				</div>
 				<div class="form-group">
 					<label for="FormInput-Password2">${ _strings.confirm_password }</label>
-					<input type="password" class="form-control" id="FormInput-Password2" placeholder="********">
+					<input type="password" class="form-control" id="FormInput-Password2" placeholder="********" value="{{ params.password2::input }}">
+					<span class="text-danger">{{ paramsErr.password2 }}</span>
 				</div>
-				<br/>
 				<div class="text-center">
-					<button type="button" class="btn">${ _strings.sign_up }</button>
+					<span class="text-center text-success">{{ message }}</span>
+					<span class="text-center text-danger">{{ errMessage }}</span>
+					<br/>
+					<br/>
+					<button type="button" class="btn" on-click="onSubmit">${ _strings.sign_up }</button>
 				</div>
-				<br/>
 				<div class="small">
+					<br/>
 					<a class="text-muted" href="#" on-click="logIn">Back</a>
 				</div>
 			</div>
-			
 		</div>
+
+		<iron-ajax
+				id="AjaxPut"
+				url="/api/user/register"
+				method="PUT"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxPutResponse"
+				on-error="_handleAjaxPutError"
+				></iron-ajax>
+		
 	</template>
 	
 	
@@ -42,12 +60,50 @@
 
 			is: 'pratilipi-user-register',
 
+			properties: {
+				params: { type:Object, value:{"source":"WEBSITE_M6<#if language??>_${ language }</#if>"} },
+				paramsErr: { type:Object },
+				message: { type:String },
+				errMessage: { type:String },
+			},
+			
 			behaviors: [
 				Polymer.IronOverlayBehavior
 			],
 			
 			logIn: function() {
 				document.querySelector( 'pratilipi-user' ).logIn();
+			},
+			
+			onSubmit: function() {
+				this.paramsErr = {};
+				this.errMessage = null;
+				this.message = "Working ...";
+				
+				this.$.AjaxPut.body = JSON.stringify( this.params );
+				this.$.AjaxPut.generateRequest();
+			},
+			
+			_handleAjaxPutResponse: function( request ) {
+				if( event.detail.xhr.status == 0 ) {
+					this.message = null;
+					this.errMessage = "Could not connect to server !";
+				} else {
+					this.message = "Success !";
+					this.async( function() {
+ 						this.message = null;
+						this.close();
+					}, 1000 );
+					document.querySelector( 'pratilipi-user' ).updateUser( request.detail.response );
+				}
+			},
+
+			_handleAjaxPutError: function( event ) {
+				this.message = null;
+				if( event.detail.request.xhr.status == 400 )
+					this.paramsErr = event.detail.request.xhr.response;
+				else
+					this.errMessage = event.detail.request.xhr.response.message;
 			},
 
 		});

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="pratilipi" default='all' basedir="." >
 
-	<property name="lang.list" value="en,hi,gu,ta,mr"/>
 	<property name="src.dir" value="src/main/java"/>
 	<property name="war.dir" value="src/main/webapp"/>
 	<property name="build.dir" value="target/mark-6"/>
@@ -22,7 +21,6 @@
 	<!-- Create language specific copies of Site Elements -->
 	<target name="i18n">
 		<java fork="true" failonerror="yes" classname="com.pratilipi.common.util.SiteElementUtil">
-			<arg line="${lang.list}"/>
 			<arg line="${src.dir}/com/pratilipi/site/i18n/language."/>
 			<arg line="${src.dir}/com/pratilipi/site/element"/>
 			<arg line="${src.dir}/com/pratilipi/site/element/data"/>
