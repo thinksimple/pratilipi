@@ -42,34 +42,48 @@
     </retry-parameters>
   </queue>
 
-  <!-- Pratilipi Data/Content offline processing. -->
-  <queue>
-    <name>pratilipi</name>
-    <target>worker</target>
-    <rate>100/s</rate>
-    <bucket-size>10</bucket-size>
-    <max-concurrent-requests>10</max-concurrent-requests>
-    <retry-parameters>
-      <task-age-limit>90d</task-age-limit>
-      <min-backoff-seconds>60</min-backoff-seconds>
-      <max-backoff-seconds>60</max-backoff-seconds>
-    </retry-parameters>
-  </queue>
-  
-  <!-- Author Data offline processing. -->
-  <queue>
-    <name>author</name>
-    <target>worker</target>
-    <rate>100/s</rate>
-    <bucket-size>10</bucket-size>
-    <max-concurrent-requests>10</max-concurrent-requests>
-    <retry-parameters>
-      <task-age-limit>90d</task-age-limit>
-      <min-backoff-seconds>60</min-backoff-seconds>
-      <max-backoff-seconds>60</max-backoff-seconds>
-    </retry-parameters>
-  </queue>
-  
+	<!-- User Data offline processing. -->
+	<queue>
+		<name>user</name>
+		<target>worker</target>
+		<rate>100/s</rate>
+		<bucket-size>10</bucket-size>
+		<max-concurrent-requests>10</max-concurrent-requests>
+		<retry-parameters>
+			<task-age-limit>90d</task-age-limit>
+			<min-backoff-seconds>60</min-backoff-seconds>
+			<max-backoff-seconds>60</max-backoff-seconds>
+		</retry-parameters>
+	</queue>
+
+	<!-- Pratilipi Data/Content offline processing. -->
+	<queue>
+		<name>pratilipi</name>
+		<target>worker</target>
+		<rate>100/s</rate>
+		<bucket-size>10</bucket-size>
+		<max-concurrent-requests>10</max-concurrent-requests>
+		<retry-parameters>
+			<task-age-limit>90d</task-age-limit>
+			<min-backoff-seconds>60</min-backoff-seconds>
+			<max-backoff-seconds>60</max-backoff-seconds>
+		</retry-parameters>
+	</queue>
+
+	<!-- Author Data offline processing. -->
+	<queue>
+		<name>author</name>
+		<target>worker</target>
+		<rate>100/s</rate>
+		<bucket-size>10</bucket-size>
+		<max-concurrent-requests>10</max-concurrent-requests>
+		<retry-parameters>
+			<task-age-limit>90d</task-age-limit>
+			<min-backoff-seconds>60</min-backoff-seconds>
+			<max-backoff-seconds>60</max-backoff-seconds>
+		</retry-parameters>
+	</queue>
+
   <!-- Notification -->
   <queue>
     <name>notification</name>

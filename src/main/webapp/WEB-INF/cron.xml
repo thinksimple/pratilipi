@@ -10,7 +10,7 @@
 	<cron>
 		<url>/init?propertyName=Test.Key.2</url>
 		<target>worker-test-2</target>
-		<schedule>every 7 minutes from 8:00 to 20:00</schedule>
+		<schedule>every 5 minutes from 8:00 to 20:00</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
 
