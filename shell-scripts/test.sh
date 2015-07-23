@@ -1,10 +1,10 @@
-$SayHello()
+SayHello()
 {
-    while true
-    do
-        date
-        sleep 5
-    done
+while true
+do
+date
+sleep 5
+done
 }
 
-$screen SayHello
+screen SayHello
