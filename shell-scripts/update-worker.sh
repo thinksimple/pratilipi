@@ -8,6 +8,7 @@ cd ~/pratilipi
 git fetch
 git reset --hard origin/master
 
+mvn clean
 mvn install
 ant
 
