@@ -1,9 +1,11 @@
 package com.pratilipi.api.userpratilipi.shared;
 
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 
-public class GetPratilipiReviewListRequest extends GenericRequest {
+public class GetUserPratilipiReviewListRequest extends GenericRequest {
 
+	@Validate( required = true )
 	private Long pratilipiId;
 	
 	private String cursor;

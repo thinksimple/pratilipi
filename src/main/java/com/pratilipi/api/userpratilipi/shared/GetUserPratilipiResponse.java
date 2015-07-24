@@ -4,7 +4,8 @@ import com.pratilipi.api.shared.GenericResponse;
 
 @SuppressWarnings("unused")
 public class GetUserPratilipiResponse extends GenericResponse {
-	
+
+	private String userName;
 	private Long pratilipiId;
 	private Integer rating;
 	private String review;

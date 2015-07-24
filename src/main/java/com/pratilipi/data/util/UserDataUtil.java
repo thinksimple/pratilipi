@@ -28,21 +28,23 @@ public class UserDataUtil {
 	private static final long ACCESS_TOKEN_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 1 Wk
 
 	
+	public static String createUserName( User user ) {
+		if( user.getFirstName() != null && user.getLastName() == null )
+			return user.getFirstName();
+		else if( user.getFirstName() == null && user.getLastName() != null )
+			return user.getLastName();
+		else if( user.getFirstName() != null && user.getLastName() != null )
+			return user.getFirstName() + " " + user.getLastName();
+		else
+			return null;
+	}
+	
 	public static UserData createUserData( User user ) {
 		UserData userData = new UserData( user.getId() );
-
 		userData.setFirstName( user.getFirstName() );
 		userData.setLastName( user.getLastName() );
-		
-		if( user.getFirstName() != null && user.getLastName() == null )
-			userData.setName( user.getFirstName() );
-		else if( user.getFirstName() == null && user.getLastName() != null )
-			userData.setName( user.getLastName() );
-		else if( user.getFirstName() != null && user.getLastName() != null )
-			userData.setName( user.getFirstName() + " " + user.getLastName() );
-
+		userData.setName( createUserName( user ) );
 		userData.setIsGuest( user.getId() == null || user.getId().equals( 0L ) );
-		
 		return userData;
 	}
 

@@ -8,7 +8,7 @@ import com.pratilipi.api.pratilipi.PratilipiListApi;
 import com.pratilipi.api.user.UserLoginApi;
 import com.pratilipi.api.user.UserLogoutApi;
 import com.pratilipi.api.user.UserRegisterApi;
-import com.pratilipi.api.userpratilipi.PratilipiReviewListApi;
+import com.pratilipi.api.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.api.userpratilipi.UserPratilipiApi;
 
 @SuppressWarnings("serial")
@@ -25,7 +25,7 @@ public class PratilipiApi extends GenericService {
 		ApiRegistry.register( UserRegisterApi.class );
 
 		ApiRegistry.register( UserPratilipiApi.class );
-		ApiRegistry.register( PratilipiReviewListApi.class );
+		ApiRegistry.register( UserPratilipiReviewListApi.class );
 	}
 	
 }

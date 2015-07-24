@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class UserPratilipiData {
 
-	private Long userId;
+	private transient Long userId;
 	
 	private String userName;
 	
