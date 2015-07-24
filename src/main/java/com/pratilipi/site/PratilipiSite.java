@@ -133,6 +133,9 @@ public class PratilipiSite extends HttpServlet {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				templateName = templateFilePrefix + "List.ftl";
 				
+			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), lang ) ) != null ) {
+				templateName = templateFilePrefix + "Static.ftl";
+				
 			} else {
 				dataModel = new HashMap<String, Object>();
 				templateName = templateFilePrefix + "error/PageNotFound.ftl";
@@ -320,6 +323,33 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", listTitle );
 		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiDataList ).toString() );
+		return dataModel;
+	}
+	
+	public Map<String, Object> createDataModelForStaticPage( String pageName, Language lang )
+			throws UnexpectedServerException {
+
+		String title = null;
+		StringBuilder content = new StringBuilder();
+		try {
+			String fileName = "static." + lang.getCode() + "." + pageName;
+			File file = new File( getClass().getResource( dataFilePrefix + fileName ).toURI() );
+			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+			if( it.hasNext() )
+				title = it.nextLine().trim();
+			while( it.hasNext() )
+				content.append( it.nextLine() + "<br/>" );
+			LineIterator.closeQuietly( it );
+		} catch( NullPointerException e ) {
+			return null;
+		} catch( URISyntaxException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception while reading from data file.", e );
+			throw new UnexpectedServerException();
+		}
+
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", title );
+		dataModel.put( "content", content.toString() );
 		return dataModel;
 	}
 

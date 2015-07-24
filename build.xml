@@ -16,6 +16,7 @@
 			<fileset dir="${src.dir}" includes="**/*.html"/>
 			<fileset dir="${src.dir}" includes="**/*.json"/>
 			<fileset dir="${src.dir}" includes="**/list.*"/>
+			<fileset dir="${src.dir}" includes="**/static.*"/>
 		</copy>
 	</target>
 
