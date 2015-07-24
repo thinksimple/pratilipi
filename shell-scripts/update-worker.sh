@@ -23,3 +23,5 @@ cp src/main/webapp/WEB-INF/worker-cron.xml src/main/webapp/WEB-INF/cron.xml
 
 # Update prod-pratilipi/worker
 mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=worker
+
+rm src/main/webapp/WEB-INF/cron.xml
