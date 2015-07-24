@@ -38,7 +38,7 @@
 						class='pull-left hidden-xs hidden-sm'
 						></pratilipi-navigation>
 				<div class='secondary-500' style='padding:20px; overflow:hidden'>
-					<h1>${ title }</h1>
+					<h3>${ title }</h3>
 					<div>${ content }</div>
 				</div>
 			</div>
