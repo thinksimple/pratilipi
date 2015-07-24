@@ -19,6 +19,10 @@ cp src/main/webapp/WEB-INF/worker-queue.xml src/main/webapp/WEB-INF/queue.xml
 # Update devo-pratilipi/worker
 mvn appengine:update -Dapp.id=devo-pratilipi -Dapp.module=worker
 
+# Update prod-pratilipi/worker-test-*
+mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=worker-test-3
+mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=worker-test-4
+
 cp src/main/webapp/WEB-INF/worker-cron.xml src/main/webapp/WEB-INF/cron.xml
 
 # Update prod-pratilipi/worker

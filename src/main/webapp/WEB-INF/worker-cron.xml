@@ -2,14 +2,14 @@
 
 	<cron>
 		<url>/init?propertyName=Test.Key.1</url>
-		<target>worker-test-1</target>
+		<target>worker-test-3</target>
 		<schedule>every 3 minutes from 0:00 to 23:59</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
 
 	<cron>
 		<url>/init?propertyName=Test.Key.2</url>
-		<target>worker-test-2</target>
+		<target>worker-test-4</target>
 		<schedule>every 5 minutes from 0:00 to 23:59</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
