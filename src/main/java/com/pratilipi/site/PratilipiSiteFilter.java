@@ -125,16 +125,6 @@ public class PratilipiSiteFilter implements Filter {
 			response.setHeader( "Location", requestUri.replaceFirst( "/(book|poem|story|article|pratilipi)/", "?id=" ) );
 
 			
-		} else if( requestUri.equals( "/read" ) ) {
-			String pratilipiId = request.getParameter( "id" );
-			if( pratilipiId == null || pratilipiId.isEmpty() ) {
-				response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-				response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + "//www.pratilipi.com" );
-			} else {
-				chain.doFilter( request, response );
-			}
-		
-			
 		} else if( requestUri.equals( "/_ah/start" ) || requestUri.equals( "/_ah/stop" ) ) {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
 			

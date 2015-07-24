@@ -3,24 +3,26 @@ package com.pratilipi.common.type;
 public enum Language {
 
 	// en.wikipedia.org/wiki/List_of_ISO_639-2_codes
-	HINDI	 ( "hi", "हिंदी",      "Hindi" ),
-	GUJARATI ( "gu", "ગુજરાતી",   "Gujarati" ),
-	TAMIL	 ( "ta", "தமிழ்",   "Tamil" ),
-	MARATHI	 ( "mr", "मराठी",     "Marathi" ),
-	MALAYALAM( "ml", "മലയാളം", "Malayalam" ),
-	ENGLISH  ( "en", "English", "English" ),
+	HINDI	 ( "hi", "हिंदी",		"Hindi",	     "hindi.pratilipi.com" ),
+	GUJARATI ( "gu", "ગુજરાતી",	"Gujarati",	  "gujarati.pratilipi.com" ),
+	TAMIL	 ( "ta", "தமிழ்",	"Tamil",	     "tamil.pratilipi.com" ),
+	MARATHI	 ( "mr", "मराठी",		"Marathi",	   "marathi.pratilipi.com" ),
+	MALAYALAM( "ml", "മലയാളം",	"Malayalam", "malayalam.pratilipi.com" ),
+	ENGLISH  ( "en", "English",	"English",	   "english.pratilipi.com" ),
 	;
 	
 	
 	private final String code;
 	private final String name;
 	private final String nameEn;
+	private final String hostName;
 	
 	
-	private Language( String code, String name, String nameEn ) {
+	private Language( String code, String name, String nameEn, String hostName ) {
 		this.code = code;
 		this.name = name;
 		this.nameEn = nameEn;
+		this.hostName = hostName;
 	}
 	
 	
@@ -36,4 +38,8 @@ public enum Language {
 		return nameEn;
 	}
 	
+	public String getHostName() {
+		return hostName;
+	}
+
 }
