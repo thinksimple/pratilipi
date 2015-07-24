@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 		<#-- Page Title & Favicon -->
-		<title>${ _strings.search } &#0171 ${ _strings.pratilipi }</title>
+		<title>${ _strings.search } &#0171; ${ _strings.pratilipi }</title>
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 
 		<#-- Third-Party Library -->
@@ -22,10 +22,8 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 
-		<#-- Custom Stylesheets -->
-		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
-		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
-		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
+		<#-- Custom Stylesheet -->
+		<link type="text/css" rel="stylesheet" href="/resources/style.css">
 
 
 		<script defer>

@@ -21,10 +21,8 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 
-		<#-- Custom Stylesheets -->
-		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
-		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
-		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
+		<#-- Custom Stylesheet -->
+		<link type="text/css" rel="stylesheet" href="/resources/style.css">
 	</head>
 	
 	<body>

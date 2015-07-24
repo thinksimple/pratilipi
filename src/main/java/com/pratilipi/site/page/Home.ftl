@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 		<#-- Page Title, Favicon & Description -->
-		<title>${ _strings.home_page_title } &#0171 ${ _strings.pratilipi }</title>		
+		<title>${ _strings.home_page_title } &#0171; ${ _strings.pratilipi }</title>		
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 		<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 
@@ -24,10 +24,8 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-marquee.html'>
 
-		<#-- Custom Stylesheets -->
-		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
-		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
-		<link type="text/css" rel="stylesheet" href="/stylesheets/pratilipi.css">
+		<#-- Custom Stylesheet -->
+		<link type="text/css" rel="stylesheet" href="/resources/style.css">
 	</head>
 
 	<body>
