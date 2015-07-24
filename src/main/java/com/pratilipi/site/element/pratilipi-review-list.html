@@ -117,7 +117,7 @@
 			},
 			
 			_handleAjaxGetResponse: function( event ) {
-				if( event.detail.xhr.status == 0 )
+				if( event.detail.xhr.status == 0 ) {
 					this.isLoading = false;
 					return;
 				}

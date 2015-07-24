@@ -64,7 +64,6 @@
 							pratilipi='${ pratilipiJson }'
 							userpratilipi='{{ userpratilipi }}'
 							review-list='${ reviewListJson }'
-							pratilipi-id='${ pratilipi.id?c }'
 							cursor='${ reviewListCursor! }'
 							></pratilipi-review-list>
 				</div>
