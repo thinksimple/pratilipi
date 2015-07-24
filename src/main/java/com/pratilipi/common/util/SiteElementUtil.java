@@ -41,8 +41,7 @@ public class SiteElementUtil {
 
 				// Data model required for i18n element generation
 				Map<String, Object> dataModel = new HashMap<>();
-				if( language != Language.ENGLISH )
-					dataModel.put( "language", language );
+				dataModel.put( "language", language );
 				dataModel.put( "_strings", LanguageUtil.getStrings( languageFilePrefix + language.getCode(), languageFilePrefix + defaultLang ) );
 				dataModel.put( "data", getElementData( elementName, language.getCode(), elementDataFolder, elementDataModelPackage ) );
 

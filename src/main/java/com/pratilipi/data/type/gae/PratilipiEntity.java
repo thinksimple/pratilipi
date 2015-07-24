@@ -155,18 +155,18 @@ public class PratilipiEntity implements Pratilipi {
 	@Override
 	public Language getLanguage() {
 		if( language == null ) {
-			if( languageId == 6213615354904576L || languageId == 5688424874901504L )
-				language = Language.ENGLISH;
-			else if( languageId == 5130467284090880L || languageId == 5750790484393984L )
-				language = Language.HINDI;
+			if( languageId == 5130467284090880L || languageId == 5750790484393984L )
+				return Language.HINDI;
 			else if( languageId == 5965057007550464L || languageId == 5746055551385600L )
-				language = Language.GUJARATI;
+				return Language.GUJARATI;
 			else if( languageId == 6319546696728576L || languageId == 5719238044024832L )
-				language = Language.TAMIL;
+				return Language.TAMIL;
 			else if( languageId == 5173513199550464L )
 				return Language.MARATHI;
 			else if( languageId == 5752669171875840L )
 				return Language.MALAYALAM;
+			else if( languageId == 6213615354904576L || languageId == 5688424874901504L )
+				return Language.ENGLISH;
 		}
 		return language;
 	}

@@ -174,9 +174,7 @@ public class AuthorEntity implements Author {
 	@Override
 	public Language getLanguage() {
 		if( language == null ) {
-			if( languageId == 6213615354904576L || languageId == 5688424874901504L )
-				return Language.ENGLISH;
-			else if( languageId == 5130467284090880L || languageId == 5750790484393984L )
+			if( languageId == 5130467284090880L || languageId == 5750790484393984L )
 				return Language.HINDI;
 			else if( languageId == 5965057007550464L || languageId == 5746055551385600L )
 				return Language.GUJARATI;
@@ -186,6 +184,8 @@ public class AuthorEntity implements Author {
 				return Language.MARATHI;
 			else if( languageId == 5752669171875840L )
 				return Language.MALAYALAM;
+			else if( languageId == 6213615354904576L || languageId == 5688424874901504L )
+				return Language.ENGLISH;
 		}
 		return language;
 	}

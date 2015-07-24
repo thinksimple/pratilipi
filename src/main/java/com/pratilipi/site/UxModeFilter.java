@@ -37,7 +37,7 @@ public class UxModeFilter implements Filter {
 		String embedModeParam = request.getParameter( "embedMode" );
 		
 		
-		Language lang = Language.ENGLISH;
+		Language lang = null;
 		boolean basicMode = true;
 
 		
@@ -53,7 +53,7 @@ public class UxModeFilter implements Filter {
 			lang = Language.MALAYALAM;
 		else if( hostName.equals( "gamma.pratilipi.com" ) )
 			lang = Language.TAMIL;
-				
+			
 		
 		if( basicModeParam != null ) {
 			basicMode = Boolean.parseBoolean( basicModeParam );

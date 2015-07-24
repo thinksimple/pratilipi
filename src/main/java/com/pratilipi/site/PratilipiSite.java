@@ -48,7 +48,6 @@ public class PratilipiSite extends HttpServlet {
 	private static final Logger logger =
 			Logger.getLogger( PratilipiSite.class.getName() );
 
-	private static final Language defaulLang = Language.ENGLISH;
 	private static final String templateFilePrefix = "com/pratilipi/site/page/";
 	private static final String dataFilePrefix = "page/data/";
 	private static final String languageFilePrefix = "WEB-INF/classes/com/pratilipi/site/i18n/language.";
@@ -102,32 +101,32 @@ public class PratilipiSite extends HttpServlet {
 			
 			} else if( uri.equals( "/search" ) ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-				dataModel = createDataModelForSearchPage( lang == Language.ENGLISH ? null : lang, request );
+				dataModel = createDataModelForSearchPage( lang, request );
 				templateName = templateFilePrefix + "Search.ftl";
 				
 			} else if( uri.equals( "/books" ) ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-				dataModel = createDataModelForListPage( PratilipiType.BOOK, lang == Language.ENGLISH ? null : lang );
+				dataModel = createDataModelForListPage( PratilipiType.BOOK, lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/stories" ) ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-				dataModel = createDataModelForListPage( PratilipiType.STORY, lang == Language.ENGLISH ? null : lang );
+				dataModel = createDataModelForListPage( PratilipiType.STORY, lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/poems" ) ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-				dataModel = createDataModelForListPage( PratilipiType.POEM, lang == Language.ENGLISH ? null : lang );
+				dataModel = createDataModelForListPage( PratilipiType.POEM, lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/articles" ) ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, lang == Language.ENGLISH ? null : lang );
+				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/magazines" ) ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, lang == Language.ENGLISH ? null : lang );
+				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, lang );
 				templateName = templateFilePrefix + "List.ftl";
 			
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), lang ) ) != null ) {
@@ -146,7 +145,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "lang", lang.getCode() );
 			dataModel.put( "_strings", LanguageUtil.getStrings(
 					languageFilePrefix + lang.getCode(),
-					languageFilePrefix + defaulLang.getCode() ) );
+					languageFilePrefix + Language.ENGLISH.getCode() ) );
 			dataModel.put( "resourceList", resourceList );
 			
 			// The magic
