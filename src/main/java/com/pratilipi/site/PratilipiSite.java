@@ -170,7 +170,8 @@ public class PratilipiSite extends HttpServlet {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		Home home = getData( "home." + lang.getCode() + ".json", Home.class );
+		String langCode = lang != null ? lang.getCode() : Language.ENGLISH.getCode();
+		Home home = getData( "home." + langCode + ".json", Home.class );
 		List<Long> pratilipiIdList = new ArrayList<>( home.getFeatured().length );
 		for( String uri : home.getFeatured() ) {
 			Page page = dataAccessor.getPage( uri );
