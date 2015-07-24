@@ -1,4 +1,7 @@
+<!-- Version:6.0 -->
+
 <link rel="import" href="pratilipi-review.html" />
+<link rel="import" href="pratilipi-review-input.html" />
 
 <dom-module id="pratilipi-review-list">
 
@@ -18,10 +21,15 @@
 			display: inline-block;
 		}
 
-		.secondary-500 button {
+		.secondary-500 a {
 			margin-bottom: 6px;
 		}
 
+		.secondary-500 .media .media-left img {
+			width: 100px;
+			height: 150px;
+		}
+		
 	</style>
 
 	
@@ -30,10 +38,25 @@
 		<div class="secondary-500">
 			<div>
 				<h3>${ _strings.reviews }</h3>
-				<a class="btn blue" role="button" href="#ReviewSection" on-click="showReviewInput">Write a review</a>
+				<a class="btn blue" role="button" href="#ReviewSection" on-click="showReviewInput">${ _strings.write_a_review }</a>
 			</div>
-			<iron-collapse id="ReviewInput">
-				<div>Content goes here...</div>
+			<iron-collapse id="ReviewInput" style="padding:10px">
+				<div class="media">
+					<div class="media-left">
+						<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+						<pratilipi-rating-input
+								user="{{ user }}"
+								pratilipi-id="{{ pratilipi.pratilipiId }}"
+								value="{{ userpratilipi.rating }}"
+								></pratilipi-rating-input>
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading">{{ pratilipi.title }}</h4>
+						<h5>{{ pratilipi.author.name }}</h5>
+					</div>
+				</div>
+				<br/>
+				<pratilipi-review-input></pratilipi-review-input>
 			</iron-collapse>
 			<template is="dom-repeat" items="{{ reviewList }}" as="review">
 				<pratilipi-review review="{{ review }}"></pratilipi-review>
@@ -42,7 +65,7 @@
 
 		<iron-ajax
 				id="AjaxGet"
-				url="/api/pratilipi/review/list"
+				url="/api/userpratilipi/review/list"
 				method="GET"
 				content-type="application/json"
 				handle-as="json"
@@ -60,10 +83,11 @@
 			is: 'pratilipi-review-list',
 
 			properties: {
-				user: { type: Object, notify: true },
+				user: { type: Object },
+				pratilipi: { type:Object },
+				userpratilipi: { type:Object },
 				
 				reviewList: { type: Array },
-				pratilipiId: { type: Number },
 				cursor: { type: String },
 
 				isLoading: { type: Boolean, value: false },
@@ -71,11 +95,9 @@
 			},
 			
 			showReviewInput: function() {
-				if( this.user.isGuest ) {
+				if( this.user.isGuest )
 					document.querySelector( 'pratilipi-user' ).logIn();
-				} else {
-					this.$.ReviewInput.toggle();
-				}
+				this.$.ReviewInput.toggle();
 			},
 			
 			loadMore: function() {
@@ -90,22 +112,22 @@
 				if( jQuery( this ).outerHeight( true ) >= reqHeight )
 					return;
 				
-				this.$.AjaxGet.generateRequest();
 				this.isLoading = true;
+				this.$.AjaxGet.generateRequest();
 			},
 			
-			_handleAjaxGetResponse: function(  request ) {
-				if( ! request.detail.response ) {
+			_handleAjaxGetResponse: function( event ) {
+				if( event.detail.xhr.status == 0 )
 					this.isLoading = false;
 					return;
 				}
 				
-				var reviewList = request.detail.response.reviewList;
+				var reviewList = event.detail.response.reviewList;
 				for( var i = 0; i < reviewList.length; i++ )
 					this.push( 'reviewList', reviewList[ i ] );
 
-				if( request.detail.response.cursor ) {
-					this.$.AjaxGet.params.cursor = request.detail.response.cursor;
+				if( event.detail.response.cursor ) {
+					this.$.AjaxGet.params.cursor = event.detail.response.cursor;
 					this.isLoading = false;
 					this.loadMore();
 				} else {
@@ -118,9 +140,9 @@
 			},
 			
 			ready: function() {
-				if( this.pratilipiId && this.cursor ) {
+				if( this.cursor ) {
 					var ajaxGet = this.$.AjaxGet;
-					ajaxGet.params = { 'pratilipiId':this.pratilipiId, 'cursor':this.cursor };
+					ajaxGet.params = { 'pratilipiId':this.pratilipi.pratilipiId, 'cursor':this.cursor };
 					this.loadMore();
 				} else {
 					this.isFinished = true;
