@@ -142,9 +142,9 @@ public class PratilipiSite extends HttpServlet {
 
 			// Adding common data to the Data Model
 			dataModel.put( "userJson", new Gson().toJson( UserDataUtil.getCurrentUser() ) );
-			dataModel.put( "lang", lang.getCode() );
+			dataModel.put( "lang", lang != null ? lang.getCode() : Language.ENGLISH.getCode() );
 			dataModel.put( "_strings", LanguageUtil.getStrings(
-					languageFilePrefix + lang.getCode(),
+					languageFilePrefix + (lang != null ? lang.getCode() : Language.ENGLISH.getCode()),
 					languageFilePrefix + Language.ENGLISH.getCode() ) );
 			dataModel.put( "resourceList", resourceList );
 			
@@ -286,7 +286,7 @@ public class PratilipiSite extends HttpServlet {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		String fileName = "list." + listName + "." + lang.getCode() + ".json";
+		String fileName = "list." + lang.getCode() + "." + listName;
 		
 		// Fetching Pratilipi List from data file
 		String listTitle = null;
