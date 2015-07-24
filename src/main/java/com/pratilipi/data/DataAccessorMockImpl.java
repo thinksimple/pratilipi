@@ -373,7 +373,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 			if( userPratilipi.getPratilipiId().equals( pratilipiId ) && userPratilipi.getReviewDate() != null )
 				userPratilipiList.add( userPratilipi );
 
-		return new DataListCursorTuple<UserPratilipi>( userPratilipiList, "cursor" );
+		return new DataListCursorTuple<UserPratilipi>( userPratilipiList, userPratilipiList.size() > 0 ? "cursor" : null );
 	}
 
 	@Override

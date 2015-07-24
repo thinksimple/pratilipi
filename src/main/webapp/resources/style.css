@@ -109,8 +109,7 @@ body {
 	background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.5), rgba(0,0,0,0));
 }
 
-.secondary-500 button {
-	border-radius: 0px;
+.secondary-500 button, .secondary-500 button:hover, .secondary-500 button:focus {
 	color: white;
 	background: #009245;
 }

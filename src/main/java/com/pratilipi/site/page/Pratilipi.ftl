@@ -61,6 +61,7 @@
 					<pratilipi-review-list
 							id="ReviewSection"
 							user="{{ user }}"
+							pratilipi='${ pratilipiJson }'
 							userpratilipi='{{ userpratilipi }}'
 							review-list='${ reviewListJson }'
 							pratilipi-id='${ pratilipi.id?c }'

@@ -1,0 +1,52 @@
+<!-- Version:6.0 -->
+
+<link rel="import" href="pratilipi-rating-input.html">
+
+<dom-module id="pratilipi-review-input">
+
+	<style>
+		
+		:host {
+			display: block;
+		}
+
+	</style>
+
+	
+	<template>
+		<div class="secondary-500">
+			<div class="form-group">
+				<label for="FormInput-Title">${ _strings.review_title }</label>
+				<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="${ _strings.review_title_help }" value="{{ review.title::input }}">
+				<span class="text-danger">{{ errTitle }}</span>
+			</div>
+			<div class="form-group">
+				<label for="FormInput-Content">${ _strings.review_content }</label>
+				<textarea class="form-control" rows="5" id="FormInput-Content" placeholder="${ _strings.review_content_help }" value="{{ review.content::input }}"></textarea>
+				<span class="text-danger">{{ errContent }}</span>
+			</div>
+			<div>
+				<button type="button" class="btn" on-click="onSubmit">${ _strings.submit_review }</button>
+				<span class="text-center text-success">{{ message }}</span>
+				<span class="text-center text-danger">{{ errMessage }}</span>
+			</div>
+		</div>
+		<hr/>
+	</template>
+	
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-review-input',
+
+			properties: {
+				review: { type: Object }
+			}
+
+		});
+		
+	</script>
+
+</dom-module>

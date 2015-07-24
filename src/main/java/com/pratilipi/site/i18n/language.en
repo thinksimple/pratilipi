@@ -1,8 +1,39 @@
-pratilipi		= Pratilipi
-pratilipi_logo	= Pratilipi Logo
+# Home Page related
 
 home_page_title = Read Hindi, Gujarati and Tamil Stories, Poems and Books
 
+featured		= Featured
+
+
+
+# Generic
+
+pratilipi		= Pratilipi
+pratilipi_logo	= Pratilipi Logo
+
+saving  = Saving ...
+working = Working ...
+
+
+
+# Language Selection only
+
+choose_language = Choose Language
+language_all	= All Languages
+language_hi		= Hindi
+language_gu		= Gujarati
+language_ta		= Tamil
+
+
+
+# Search bar & results
+
+search 			= Search
+search_bar_help	= Search for books, stories, poems and more ...
+
+
+
+# 'Sign In' / 'Sign Out' / Register / 'Forgot Password' links & forms
 
 full_name        = Full Name
 email            = Email
@@ -21,15 +52,8 @@ reset_password      = Reset Password
 reset_password_help = Please enter the email address you signed up with. We will send you a link to reset your password.
 
 
-featured		= Featured
 
-choose_language = Choose Language
-language_all	= All Languages
-language_hi		= Hindi
-language_gu		= Gujarati
-language_ta		= Tamil
-
-saving = Saving ...
+# Rating / Review related
 
 rating  = rating
 ratings	= ratings
@@ -41,10 +65,17 @@ rating_3_star = Good
 rating_4_star = Very Good
 rating_5_star = Excellent
 
-reviews = Reviews
+reviews				= Reviews
+write_a_review		= Write a Review
+review_title		= Review Title
+review_title_help	= e.g., Great Story !
+review_content		= Your Review
+review_content_help	= Share your thoughts ! What made this work interesting ? What made it inspiring ? What did you learn from it ? You are helping others make a better choice !
+submit_review		= SUBMIT
 
-search 			= Search
-search_bar_help	= Search for books, stories, poems and more ...
+
+
+# Author related
 
 author_about = About the Author
 author_published_works = Published Works
