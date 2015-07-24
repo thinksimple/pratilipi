@@ -15,6 +15,7 @@
 			<fileset dir="${src.dir}" includes="**/*.ftl"/>
 			<fileset dir="${src.dir}" includes="**/*.html"/>
 			<fileset dir="${src.dir}" includes="**/*.json"/>
+			<fileset dir="${src.dir}" includes="**/list.*"/>
 		</copy>
 	</target>
 
