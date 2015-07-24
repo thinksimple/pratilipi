@@ -25,5 +25,5 @@ do
 		mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=gamma
 	fi
 
-	sleep 300
+	sleep 60
 done

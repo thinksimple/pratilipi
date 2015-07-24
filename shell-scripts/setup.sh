@@ -11,17 +11,18 @@ sudo apt-get install screen
 # sudo apt-get install maven
 sudo apt-get install ant
 
-# Installing the logging agent
-curl -sSO https://storage.googleapis.com/signals-agents/logging/google-fluentd-install.sh
-sha256sum google-fluentd-install.sh
-48a50746b23c1deb7ec4b5e377631e2c77b95ecada5eda2bc8986a1e04359141  google-fluentd-install.sh
-sudo bash google-fluentd-install.sh
-
 # Manually install maven. Apt-get installs older version of maven.
 sudo mkdir -p /usr/local/apache-maven
 cd /usr/local/apache-maven
 sudo wget http://apache.go-parts.com/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
 sudo tar -xzvf apache-maven-3.3.3-bin.tar.gz
+rm apache-maven-3.3.3-bin.tar.gz
 cd ~
+
+# Installing Google Cloud Logging agent
+sudo wget https://storage.googleapis.com/signals-agents/logging/google-fluentd-install.sh
+sha256sum google-fluentd-install.sh
+sudo bash google-fluentd-install.sh
+rm google-fluentd-install.sh
 
 git clone -b master https://github.com/Pratilipi/pratilipi.git
