@@ -1,16 +1,21 @@
+<!-- Version:6.0 -->
+
 <dom-module id="pratilipi-rating-input">
 
 	<style>
 
-		h5 {
-			margin-bottom: 5px;
+		:host {
+			display: inline-block;
+		}
+		
+		label {
+			margin-top: 5px;
+			margin-bottom: 0px;
 		}
 		
 		div > div {
-			display: inline-block;
 			direction: rtl;
 			cursor: pointer;
-			cursor: hand;
 		}
 
 		.glyphicon {
@@ -30,7 +35,7 @@
 
 	<template>
 		<div>
-			<h5>{{ title }}</h5>
+			<label>{{ title }}</label>
 			<div>
 				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showFiveStars"  on-mouseout="init" on-click="rateFiveStars"></span>
 				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showFourStars"  on-mouseout="init" on-click="rateFourStars"></span>
@@ -164,18 +169,18 @@
 			},
 			
 			_handleAjaxPutResponse: function( event ) {
+				this.isSaving = false;
 				if( event.detail.xhr.status == 0 )
 					this.set( 'value', this.rating );
-				this.isSaving = false;
-				this.init();
+				else
+					this.init();
 			},
 
 			_handleAjaxPutError: function( event ) {
+				this.isSaving = false;
 				if( event.detail.request.xhr.status == 401 )
 					document.querySelector( 'pratilipi-user' ).logIn();
-				this.isSaving = false;
 				this.set( 'value', this.rating );
-				this.init();
 			},
 
 			
