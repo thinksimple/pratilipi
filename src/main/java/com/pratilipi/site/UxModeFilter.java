@@ -36,6 +36,9 @@ public class UxModeFilter implements Filter {
 				break;
 			}
 		}
+		
+		if( threadLocalLanguage.get() == null && ! hostName.equals( "www.pratilipi.com" ) )
+			threadLocalLanguage.set( Language.TAMIL );
 			
 		chain.doFilter( req, resp );
 
