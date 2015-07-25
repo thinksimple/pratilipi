@@ -56,7 +56,7 @@ public class GoogleAnalyticsApi {
 	}
 	
 	public static Map<Long, Long> getPratilipiReadCount( List<Long> pratilipiList ) throws UnexpectedServerException {
-		int idsPerRequest = 80;
+		int idsPerRequest = 50;
 		Map <Long, Long> idCountMap = new HashMap<Long, Long>();
 		
 		for( int i = 0; i < pratilipiList.size(); i = i + idsPerRequest ) {
