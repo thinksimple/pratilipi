@@ -3,6 +3,7 @@ package com.pratilipi.api.userpratilipi.shared;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 
+@SuppressWarnings("unused")
 public class PutUserPratilipiRequest extends GenericRequest {
 
 	@Validate( required = true )
@@ -11,28 +12,10 @@ public class PutUserPratilipiRequest extends GenericRequest {
 	private Integer rating;
 	private boolean hasRating;
 	
+	private String reviewTitle;
+	private boolean hasReviewTitle;
+
 	private String review;
 	private boolean hasReview;
-
-	
-	public Long getPratilipiId() {
-		return pratilipiId;
-	}
-
-	public Integer getRating() {
-		return rating;
-	}
-
-	public boolean hasRating() {
-		return hasRating;
-	}
-
-	public String getReview() {
-		return review;
-	}
-
-	public boolean hasReview() {
-		return hasReview;
-	}
 
 }

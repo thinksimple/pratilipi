@@ -48,6 +48,7 @@ public class UserPratilipiDataUtil {
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 		userPratilipiData.setRating( userPratilipi.getRating() );
+		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
 		userPratilipiData.setReview( userPratilipi.getReview() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 		return userPratilipiData;
@@ -64,6 +65,7 @@ public class UserPratilipiDataUtil {
 			userPratilipiData.setUserName( UserDataUtil.createUserName( user ) );
 			userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 			userPratilipiData.setRating( userPratilipi.getRating() );
+			userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
 			userPratilipiData.setReview( userPratilipi.getReview() );
 			userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 			
@@ -129,6 +131,9 @@ public class UserPratilipiDataUtil {
 				userPratilipi.setRatingDate( new Date() );
 			}
 			
+			if( userPratilipiData.getReviewTitle() != null )
+				userPratilipi.setReviewTitle( userPratilipiData.getReviewTitle() );
+
 			if( userPratilipiData.getReview() != null ) {
 				userPratilipi.setReview( userPratilipiData.getReview() );
 				userPratilipi.setReviewDate( new Date() );

@@ -359,7 +359,9 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
-		// TODO: Implementation
+		for( UserPratilipi userPratilipi : UserPratilipiMock.USER_PRATILIPI_TABLE )
+			if( userPratilipi.getUserId().equals( userId ) && userPratilipi.getPratilipiId().equals( pratilipiId ) )
+				return userPratilipi;
 		return null;
 	}
 
@@ -386,6 +388,14 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
+		for( int i = 0; i < UserPratilipiMock.USER_PRATILIPI_TABLE.size(); i++ ) {
+			if( UserPratilipiMock.USER_PRATILIPI_TABLE.get( i ).getUserId().equals( userPratilipi.getUserId() )
+					&& UserPratilipiMock.USER_PRATILIPI_TABLE.get( i ).getPratilipiId().equals( userPratilipi.getPratilipiId() ) ) {
+				UserPratilipiMock.USER_PRATILIPI_TABLE.remove( i );
+				break;
+			}
+		}
+
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
 		UserPratilipiMock.USER_PRATILIPI_TABLE.add( userPratilipi );
 		return userPratilipi;

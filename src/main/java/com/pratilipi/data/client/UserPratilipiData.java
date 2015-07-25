@@ -14,6 +14,9 @@ public class UserPratilipiData {
 	private Integer rating;
 	private transient boolean hasRating;
 	
+	private String reviewTitle;
+	private transient boolean hasReviewTitle;
+	
 	private String review;
 	private transient boolean hasReview;
 	
@@ -56,6 +59,19 @@ public class UserPratilipiData {
 	
 	public boolean hasRating() {
 		return hasRating;
+	}
+
+	public String getReviewTitle() {
+		return reviewTitle;
+	}
+
+	public void setReviewTitle( String reviewTitle ) {
+		this.reviewTitle = reviewTitle;
+		this.hasReviewTitle = true;
+	}
+	
+	public boolean hasReviewTitle() {
+		return hasReviewTitle;
 	}
 
 	public String getReview() {
