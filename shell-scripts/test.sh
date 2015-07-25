@@ -1,3 +1,6 @@
+##################################################################################################################
+
+#GAMMA - UPDATE EVERYTHING EVERY ONE MINUTE
 while true
 do
 git remote update
@@ -7,15 +10,43 @@ git fetch
 git reset --hard origin/master
 echo Yes
 fi
-sleep 5
+sleep 60
 done
 
+##################################################################################################################
 
-# original - do not disturb
+# PROD MODULE - UPDATE ACCORDING TO TAGS - EVERY 5 MINUTES
+# Setting the tag name. Change here only if you wanted to change the tag name
+TAG="release-prod"
+
+while true
+do
+git remote update
+
+#Setting the local head
+LOCAL_HEAD="$(git rev-parse HEAD)"
+
+#Setting the remote tag
+REMOTE_TAG="$(git ls-remote https://github.com/Pratilipi/pratilipi.git rev-parse refs/tags/$TAG^{})"
+REMOTE_TAG="${REMOTE_TAG:0:40}"
+
+#Check whether local head and remote tag are not same.
+if [ $LOCAL_HEAD != $REMOTE_TAG ]
+then
+git fetch
+git reset --hard $REMOTE_TAG
+date +"Last Updated on - %m-%d-%Y %r"
+fi
+sleep 300
+done
+
+##################################################################################################################
+
+
+# original - do not disturb - for testing purpose
 var="$(git show-ref refs/tags/release-prod)"
 echo $var
 echo ${var:0:40}
-
 
 #working
 var="$(git show-ref refs/tags/release-prod)"
@@ -29,53 +60,37 @@ var="${var:0:40}"
 echo $var
 
 
+##################################################################################################################
 
-#program
+#Some useful commands
 
-# Setting the tag name. Change only here if you wanted to change the tag name
-TAG="release-prod"
-SIZE=${#TAG}
+#LIST OF TAGE IN LOCAL
+git tag --list
 
-while true
-do
-# Setting the Local head to the head
+#LIST OF TAGS IN REMOTE
+git ls-remote -t
+
+#SETTING THE LOCAL HEAD
 LOCAL_HEAD="$(git rev-parse HEAD)"
-git remote update
-REMOTE_TAG="$(git show-ref refs/tags/$TAG -d)"
-REMOTE_TAG="${REMOTE_TAG:52+$SIZE:40}"
-if [ $LOCAL_HEAD != $REMOTE_TAG ]
-then
-git fetch
-git reset --hard $REMOTE_TAG
-echo Updated
-fi
-echo $LOCAL_HEAD
-echo $REMOTE_TAG
-sleep 5
-done
 
+#SETTING THE REMOTE HEAD
+REMOTE_HEAD="$(git rev-parse origin)"
 
-
-
-#test - WORKED YAAY! :-D
+#SETTING THE LOCAL TAG.
 TAG="release-prod"
-SIZE=${#TAG}
-REMOTE_TAG="$(git show-ref refs/tags/$TAG -d)"
-REMOTE_TAG="${REMOTE_TAG:52+$SIZE:40}"
+# Getting the commit ID of the tag
+#SIZE=${#TAG}
+#LOCAL_TAG="$(git show-ref refs/tags/$TAG^{})"
+#LOCAL_TAG="${LOCAL_TAG:52+$SIZE:40}"
+#The same can be done in one step :-)
+LOCAL_TAG="$(git rev-parse refs/tags/$TAG^{})"
+echo $LOCAL_TAG
+
+#SETTING THE REMOTE TAG
+TAG="release-prod"
+REMOTE_TAG="$(git ls-remote https://github.com/Pratilipi/pratilipi.git rev-parse refs/tags/$TAG^{})"
+REMOTE_TAG="${REMOTE_TAG:0:40}"
 echo $REMOTE_TAG
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##################################################################################################################
