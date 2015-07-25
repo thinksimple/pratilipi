@@ -1,92 +1,102 @@
+<!-- Version:6.0 -->
+
 <dom-module id="pratilipi-footer">
 
 	<style>
-	
-			.secondary-500 {
-				background: #F0F0F0;
-				padding-top: 10px;
-			}
 			
-			.secondary-500 .row {
-				background: #CCCCCC; 
-				text-align: center; 
-				padding: 2px;
-				width: 100%;
-				margin: auto;
-			}
-			
-			ul {
-				overflow: auto;
-				text-align: right;
-			}
- 
-			ul li {
-				list-style-type: none;
-				float: left;
-			}
-			 
-			ul li a i {
-				background: #000000;
-				color: #fff;
-				width: 30px;
-				height: 30px;
-				border-radius: 20px;
-				text-align: center;
-				padding-top: 7px;
-				margin-right: 5px;
-				
-			}
-			
-			ul li a i:hover {
-				opacity: .7;
-			}
-			
-			.row .col-sm-4 {
-				 color: #808080;
-			}
+		:host {
+			display: block;
+		}
+
+		
+		.footer-links {
+			background: #F0F0F0;
+		}
+
+		.footer-links .container {
+			padding: 10px 0px;
+		}
+		
+		.footer-links .container span {
+			padding: 2px 10px;
+		}
+
+		.footer-links .container span,
+		.footer-links .container a {
+			color: #4D4D4D;
+			font-weight: bold;
+		}
+
+		.footer-links .container a:hover, .footer-links .container a:focus {
+			color: #333;
+			text-decoration: none;
+		}
+		
+		
+		.footer-legal {
+			background: #CCC;
+		}
+
+		.footer-legal .container {
+			padding: 3px 0px;
+		}
+		
+		.footer-legal .container span {
+			padding: 2px 10px;
+		}
+		
+		.footer-legal .container * {
+			color: #808080;
+		}
 
 	</style>
-	
+
+
 	<template>
-		
-		<div class="secondary-500">
+		<div class="footer-links">
 			<div class="container">
-				<ul class="col-md-2">
-					<li><a href="/wus"><b>Work With Us !</b></a></li>
-				</ul>
-				<ul class="col-md-1">
-					<li><a href="/blog"><b>Blog</b></a></li>
-				</ul>
-				<ul class="col-md-1">
-					<li><a href="/faq"><b>FAQ<b></a></li>
-				</ul>		
-				<ul class="col-md-1">
-					<li><a href="/contact"><strong>Contact<strong></a></li>
-				</ul>				
-				<ul class="pull-right">
-			
-					<span style="color: #4D4D4D;"><li style=" padding-right: 10px;"><small>Follow on Social Media</small></li>
-					<li><a href="http://facebook.com/Pratilipidotcom?fref=ts"><i class="fa fa-facebook"></i></a></li>
-					<li><a href="http://linkedin.com/"><i class="fa fa-linkedin"></i></a></li>
-					<li><a href="http://twitter.com/"><i class="fa fa-twitter"></i></a></li>
-					<li><a href="http://plus.google.com/"><i class="fa fa-google-plus"></i> </a></li>
-				</ul>
+				<div class="pull-right">
+					<span class="visible-lg-inline-block visible-md-inline-block visible-sm-inline-block visible-xs-block">Follow on Social Media</span>
+					<div class="pull-right" style="padding-right:5px">
+						<a class="fa-stack fa-lg" href="${ _strings.facebook_page }">
+							<i class="fa fa-circle fa-stack-2x"></i>
+							<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+						</a>
+						<a class="fa-stack fa-lg" href="${ _strings.twitter_page }">
+							<i class="fa fa-circle fa-stack-2x"></i>
+							<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+						</a>
+						<a class="fa-stack fa-lg" href="${ _strings.googleplus_page }">
+							<i class="fa fa-circle fa-stack-2x"></i>
+							<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+						</a>
+						<a class="fa-stack fa-lg" href="${ _strings.linkedin_page }">
+							<i class="fa fa-circle fa-stack-2x"></i>
+							<i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+						</a>
+					</div>
+				</div>
+				<span class="visible-lg-inline-block visible-md-inline-block visible-sm-inline-block visible-xs-block"><a href="/work-with-us">Work With Us !</a></span>
+				<span class="visible-lg-inline-block visible-md-inline-block visible-sm-inline-block visible-xs-block"><a href="/faq">FAQ</a></span>
+				<span class="visible-lg-inline-block visible-md-inline-block visible-sm-inline-block visible-xs-block"><a href="/contact">Contact</a></span>
 			</div>
-			
-			<div class="row">
-				    <div class="col-sm-4"><small>&copy 2014-15 Nasadiya Technologies Pvt. Ltd.</small></div>
-				    <div class="col-sm-4"><small>Terms and Conditions</small></div>
-				    <div class="col-sm-4"><small>Privacy Policy</small></div>
+		</div>
+		
+		<div class="footer-legal">
+			<div class="container text-center">
+			    <span class="visible-lg-inline-block visible-md-inline-block visible-sm-inline-block visible-xs-block">&copy 2014-15 Nasadiya Technologies Pvt. Ltd.</span>
+			    <span class="visible-lg-inline-block visible-md-inline-block visible-sm-inline-block visible-xs-block"><a href="/privacy-policy">Privacy Policy</a></span>
 			</div>
-		</div>	
+		</div>
+		
 	</template>
+	
 	
 	<script>
 
 		Polymer({
 
 			is: 'pratilipi-footer',
-			
 			
 		});
 
