@@ -25,11 +25,6 @@
 			margin-bottom: 6px;
 		}
 
-		.secondary-500 .media .media-left img {
-			width: 100px;
-			height: 150px;
-		}
-		
 	</style>
 
 	
@@ -38,26 +33,14 @@
 		<div class="secondary-500">
 			<div>
 				<h3>${ _strings.reviews }</h3>
-				<a class="btn blue" role="button" href="#ReviewSection" on-click="showReviewInput">${ _strings.write_a_review }</a>
+				<a class="btn blue" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.write_a_review }</a>
 			</div>
-			<iron-collapse id="ReviewInput" style="padding:10px">
-				<div class="media">
-					<div class="media-left">
-						<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
-						<pratilipi-rating-input
-								user="{{ user }}"
-								pratilipi-id="{{ pratilipi.pratilipiId }}"
-								value="{{ userpratilipi.rating }}"
-								></pratilipi-rating-input>
-					</div>
-					<div class="media-body">
-						<h4 class="media-heading">{{ pratilipi.title }}</h4>
-						<h5>{{ pratilipi.author.name }}</h5>
-					</div>
-				</div>
-				<br/>
-				<pratilipi-review-input></pratilipi-review-input>
-			</iron-collapse>
+			<pratilipi-review-input
+					id="ReviewInput"
+					user="{{ user }}"
+					pratilipi="{{ pratilipi }}"
+					userpratilipi="{{ userpratilipi }}"
+					></pratilipi-review-input>
 			<template is="dom-repeat" items="{{ reviewList }}" as="review">
 				<pratilipi-review review="{{ review }}"></pratilipi-review>
 			</template>
@@ -97,7 +80,8 @@
 			showReviewInput: function() {
 				if( this.user.isGuest )
 					document.querySelector( 'pratilipi-user' ).logIn();
-				this.$.ReviewInput.toggle();
+				else
+					this.$.ReviewInput.open();
 			},
 			
 			loadMore: function() {
