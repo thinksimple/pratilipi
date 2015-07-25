@@ -27,17 +27,20 @@ public class UserPratilipiMock {
 		
 		user_pratilipi_1.setRating( 3 );
 		user_pratilipi_1.setRatingDate( new Date() );
-		user_pratilipi_1.setReview( "Awesome" );
+		user_pratilipi_1.setReviewTitle( "Review 1" );
+		user_pratilipi_1.setReview( "Just love it !!!" );
 		user_pratilipi_1.setReviewDate( new Date() );
 
 		user_pratilipi_2.setRating( 3 );
 		user_pratilipi_2.setRatingDate( new Date() );
-		user_pratilipi_2.setReview( "Awesome" );
+		user_pratilipi_2.setReviewTitle( "Review 2" );
+		user_pratilipi_2.setReview( "Just love it !!!" );
 		user_pratilipi_2.setReviewDate( new Date() );
 
 		user_pratilipi_3.setRating( 3 );
 		user_pratilipi_3.setRatingDate( new Date() );
-		user_pratilipi_3.setReview( "Awesome" );
+		user_pratilipi_3.setReviewTitle( "Review 3" );
+		user_pratilipi_3.setReview( "Just love it !!!" );
 		user_pratilipi_3.setReviewDate( new Date() );
 	}
 	

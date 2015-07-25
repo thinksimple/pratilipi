@@ -49,7 +49,7 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 		userPratilipiData.setRating( userPratilipi.getRating() );
 		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
-		userPratilipiData.setReview( userPratilipi.getReview() );
+		userPratilipiData.setReview( userPratilipi.getReview() == null ? null : userPratilipi.getReview().replaceAll( "<[^>]*>", "" ) );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 		return userPratilipiData;
 	}
@@ -66,7 +66,7 @@ public class UserPratilipiDataUtil {
 			userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 			userPratilipiData.setRating( userPratilipi.getRating() );
 			userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
-			userPratilipiData.setReview( userPratilipi.getReview() );
+			userPratilipiData.setReview( userPratilipi.getReview() == null ? null : userPratilipi.getReview().replaceAll( "<[^>]*>", "" ) );
 			userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 			
 			userPratilipiDataList.add( userPratilipiData );
