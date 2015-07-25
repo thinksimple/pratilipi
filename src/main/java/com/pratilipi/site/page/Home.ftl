@@ -35,7 +35,7 @@
 			<pratilipi-header user='{{ user }}'></pratilipi-header>
 			
 			
-			<div class="container" style="margin-top:10px">
+			<div class="container" style="margin-top:10px; margin-bottom:10px">
 				<pratilipi-navigation
 						class='pull-left hidden-xs hidden-sm'
 						></pratilipi-navigation>

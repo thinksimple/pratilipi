@@ -136,6 +136,9 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), lang ) ) != null ) {
 				templateName = templateFilePrefix + "Static.ftl";
 				
+			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), null ) ) != null ) {
+				templateName = templateFilePrefix + "Static.ftl";
+				
 			} else {
 				dataModel = new HashMap<String, Object>();
 				templateName = templateFilePrefix + "error/PageNotFound.ftl";
@@ -332,7 +335,7 @@ public class PratilipiSite extends HttpServlet {
 		String title = null;
 		StringBuilder content = new StringBuilder();
 		try {
-			String fileName = "static." + lang.getCode() + "." + pageName;
+			String fileName = "static." + ( lang == null ? "" : lang.getCode() + "." ) + pageName;
 			File file = new File( getClass().getResource( dataFilePrefix + fileName ).toURI() );
 			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
 			if( it.hasNext() )
