@@ -89,7 +89,7 @@
 				this.message = null;
 			},
 			
-			_handleAjaxPutResponse: function( request ) {
+			_handleAjaxPutResponse: function( event ) {
 				this.clearMessages();
 				if( event.detail.xhr.status == 0 ) {
 					this.errMessage = "Could not connect to server !";
@@ -99,7 +99,7 @@
  						this.message = null;				
 						this.close();
 					}, 1000 );
-					document.querySelector( 'pratilipi-user' ).updateUser( request.detail.response );
+					document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
 				}
 			},
 
