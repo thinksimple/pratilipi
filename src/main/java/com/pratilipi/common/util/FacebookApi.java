@@ -84,12 +84,11 @@ public class FacebookApi {
 				JsonElement responseJson = gson.fromJson( responsePayload, JsonElement.class );
 				
 				for( int j = 0; i + j < urlList.size() && j < urlsPerRequest; j++ ) {
-					JsonElement jsonElement = responseJson.getAsJsonObject().get( urlList.get( i + j ) );
-					JsonElement shareCountJson = jsonElement.getAsJsonObject().get( "share" );
-					if( shareCountJson == null )
-						urlCountMap.put( urlList.get( i + j ), 0L );
-					else
-						urlCountMap.put( urlList.get( i + j ), shareCountJson.getAsJsonObject().get( "share_count" ).getAsLong() );
+					String searchUrl = URLEncoder.encode( urlList.get( i + j ), "UTF-8" );
+					JsonElement jsonElement = responseJson.getAsJsonObject().get( searchUrl );
+					if( jsonElement.getAsJsonObject().get( "share" ) != null )
+						if( jsonElement.getAsJsonObject().get( "share" ).getAsJsonObject().get( "share_count" ) != null )
+							urlCountMap.put( urlList.get( i + j ), jsonElement.getAsJsonObject().get( "share" ).getAsJsonObject().get( "share_count" ).getAsLong() );
 				}
 			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch data from Facebook.", e );
