@@ -54,7 +54,19 @@
 			is: 'pratilipi-rating',
 
 			properties: {
-				value: { type: Number, observer:"ready" }
+				value: { type: Number, observer:"_valueChangeObserver" }
+			},
+			
+			_valueChangeObserver: function() {
+				var stars = this.querySelectorAll( 'span' );
+				for( i = 4; i >= 0; i-- ) {
+					var star = jQuery( stars[i] );
+					star.removeClass( 'full' );
+					star.removeClass( 'two-third' );
+					star.removeClass( 'half' );
+					star.removeClass( 'one-third' );
+				}
+				this.ready();
 			},
 
 			ready: function() {
