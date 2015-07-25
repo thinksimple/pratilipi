@@ -94,6 +94,7 @@
 			properties: {
 				user: { type: Object },
 				pratilipi: { type:Object },
+				pratilipiData: { type:Object },
 				userpratilipi: { type:Object, notify:true }
 			},
 			
@@ -118,6 +119,7 @@
 			},
 			
 			ready: function() {
+				this.set( 'pratilipi', this.pratilipiData );
 				jQuery( '.summary' ).html( this.pratilipi.summary );
 				this.showSummarySnippet();
 			}

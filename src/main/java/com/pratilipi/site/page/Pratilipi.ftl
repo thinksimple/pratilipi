@@ -43,7 +43,7 @@
 
 			<pratilipi-userpratilipi
 					user='{{ user }}'
-					pratilipi='${ pratilipiJson }'
+					pratilipi='{{ pratilipi }}'
 					userpratilipi='{{ userpratilipi }}'
 					userpratilipi-data='${ userpratilipiJson! }'
 					></pratilipi-userpratilipi>
@@ -55,13 +55,14 @@
 				<div style="overflow:hidden">
 					<pratilipi-pratilipi
 							user="{{ user }}"
-							pratilipi='${ pratilipiJson }'
+							pratilipi='{{ pratilipi }}'
+							pratilipi-data='${ pratilipiJson }'
 							userpratilipi='{{ userpratilipi }}'
 							></pratilipi-pratilipi>
 					<pratilipi-review-list
 							id="ReviewSection"
 							user="{{ user }}"
-							pratilipi='${ pratilipiJson }'
+							pratilipi='{{ pratilipi }}'
 							userpratilipi='{{ userpratilipi }}'
 							review-list='${ reviewListJson }'
 							cursor='${ reviewListCursor! }'
