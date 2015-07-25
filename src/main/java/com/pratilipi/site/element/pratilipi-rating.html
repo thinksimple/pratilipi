@@ -1,3 +1,5 @@
+<!-- Version:6.0 -->
+
 <dom-module id="pratilipi-rating">
 
 	<style>
@@ -52,7 +54,7 @@
 			is: 'pratilipi-rating',
 
 			properties: {
-				value: { type: Number }
+				value: { type: Number, observer:"ready" }
 			},
 
 			ready: function() {
