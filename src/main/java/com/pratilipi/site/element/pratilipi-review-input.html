@@ -135,10 +135,10 @@
 					this.message = null;
 					this.errMessage = "Could not connect to server !";
 				} else {
-					this.close();
 					this.message = null;
 					this.set( 'userpratilipi.reviewTitle', this.params.reviewTitle );
 					this.set( 'userpratilipi.review', this.params.review );
+					this.close();
 				}
 			},
 
