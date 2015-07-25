@@ -6,7 +6,7 @@ import com.pratilipi.api.shared.GenericRequest;
 public class PostPratilipiProcessRequest extends GenericRequest {
 
 	@Validate( required = true )
-	private Long pratilipiId;
+	private Long[] pratilipiIds;
 
 	private Boolean processData;
 	private Boolean processCover;
@@ -14,8 +14,8 @@ public class PostPratilipiProcessRequest extends GenericRequest {
 	private Boolean updateStats;
 	
 
-	public Long getPratilipiId() {
-		return pratilipiId;
+	public Long[] getPratilipiIds() {
+		return pratilipiIds;
 	}
 
 	public boolean processData() {

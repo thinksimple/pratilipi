@@ -84,8 +84,7 @@ public class FacebookApi {
 				JsonElement responseJson = gson.fromJson( responsePayload, JsonElement.class );
 				
 				for( int j = 0; i + j < urlList.size() && j < urlsPerRequest; j++ ) {
-					String searchUrl = URLEncoder.encode( urlList.get( i + j ), "UTF-8" );
-					JsonElement jsonElement = responseJson.getAsJsonObject().get( searchUrl );
+					JsonElement jsonElement = responseJson.getAsJsonObject().get( urlList.get( i + j ) );
 					if( jsonElement.getAsJsonObject().get( "share" ) != null )
 						if( jsonElement.getAsJsonObject().get( "share" ).getAsJsonObject().get( "share_count" ) != null )
 							urlCountMap.put( urlList.get( i + j ), jsonElement.getAsJsonObject().get( "share" ).getAsJsonObject().get( "share_count" ).getAsLong() );
