@@ -76,18 +76,11 @@ public class AuthorProcessApi extends GenericApi {
 			boolean changed = AuthorDataUtil.updateAuthorStats( request.getAuthorId() );
 			
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			try {
-				dataAccessor.beginTx();
-				Author author = dataAccessor.getAuthor( request.getAuthorId() );
-				if( changed )
-					author.setLastProcessDate( new Date() );
-				author.setNextProcessDate( new Date( new Date().getTime() + 3600000L ) ); // Now + 1 Hr
-				author = dataAccessor.createOrUpdateAuthor( author );
-				dataAccessor.commitTx();
-			} finally {
-				if( dataAccessor.isTxActive() )
-					dataAccessor.rollbackTx();
-			}
+			Author author = dataAccessor.getAuthor( request.getAuthorId() );
+			if( changed )
+				author.setLastProcessDate( new Date() );
+			author.setNextProcessDate( new Date( new Date().getTime() + 3600000L ) ); // Now + 1 Hr
+			author = dataAccessor.createOrUpdateAuthor( author );
 			
 			if( changed )
 				AuthorDataUtil.updateAuthorSearchIndex( request.getAuthorId() );

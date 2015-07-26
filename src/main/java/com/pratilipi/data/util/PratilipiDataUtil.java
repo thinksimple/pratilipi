@@ -446,7 +446,7 @@ public class PratilipiDataUtil {
 					|| ( pratilipi.getIndex() != null && index != null && ! pratilipi.getIndex().equals( index ) ) ) {
 				
 				pratilipi.setIndex( index );
-				dataAccessor.createOrUpdatePratilipi( pratilipi );
+				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 			}
 
 		} else {
@@ -485,7 +485,7 @@ public class PratilipiDataUtil {
 					|| ( pratilipi.getKeywords() != null && keywords != null && ! pratilipi.getKeywords().equals( keywords ) ) ) {
 
 				pratilipi.setKeywords( keywords );
-				dataAccessor.createOrUpdatePratilipi( pratilipi );
+				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 				return true; 
 			
 			} else {

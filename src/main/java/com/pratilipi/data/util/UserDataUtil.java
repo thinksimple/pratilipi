@@ -129,7 +129,7 @@ public class UserDataUtil {
 		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 		return createUserData( user );
 
-		/* TODO : Use Transaction
+		/*
 		while( true ) { 
 			try {
 				dataAccessor.beginTx();
@@ -168,7 +168,7 @@ public class UserDataUtil {
 		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 		return getGuestUser();
 
-		/* TODO: Use Transaction
+		/*
 		while( true ) {
 			try {
 				dataAccessor.beginTx();
