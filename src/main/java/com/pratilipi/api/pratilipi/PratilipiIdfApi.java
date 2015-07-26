@@ -1,6 +1,5 @@
 package com.pratilipi.api.pratilipi;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
@@ -17,13 +16,14 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.type.BlobEntry;
-import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.util.PratilipiDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/idf" )
@@ -33,39 +33,30 @@ public class PratilipiIdfApi extends GenericApi {
 			Logger.getLogger( PratilipiIdfApi.class.getName() );
 	
 	@Get
-	public GenericResponse get( GenericRequest request ) throws IOException {
+	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
+		
+		Date idfGenerationDate = new Date();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		String cursor = null;
-		final HashMap<String, Integer> keywordFrequencyMap = new HashMap<>();
+		DataListCursorTuple<Long> pratilipiIdListCursorTupe =
+				dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, null );
+		List<Long> pratilipiIdList = pratilipiIdListCursorTupe.getDataList();
 		
-		Date idfGenerationDate = new Date();
-		while( true ) {
-			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
-					dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
-			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
-			
-			// Populate Keyword-Frequency map.
-			for( Pratilipi pratilipi : pratilipiList ) {
-				String keywords = pratilipi.getKeywords();
-				if( keywords == null )
-					continue;
-				
-				String[] words = keywords.split( "\\s+" );
-				for( String word : words ) {
-					if( keywordFrequencyMap.containsKey( word ) )
-						keywordFrequencyMap.put( word, keywordFrequencyMap.get( word ) + 1 );
-					else
-						keywordFrequencyMap.put( word, 1 );
-				}
+		// Populate Keyword-Frequency map.
+		final HashMap<String, Integer> keywordFrequencyMap = new HashMap<>();
+		for( Long pratilipiId : pratilipiIdList ) {
+			String[] keywords = PratilipiDataUtil.getPratilipiKeywords( pratilipiId );
+			if( keywords == null )
+				continue;
+			for( String keyword : keywords ) {
+				if( keywordFrequencyMap.containsKey( keyword ) )
+					keywordFrequencyMap.put( keyword, keywordFrequencyMap.get( keyword ) + 1 );
+				else
+					keywordFrequencyMap.put( keyword, 1 );
 			}
-
-			if( pratilipiList.size() < 1000 )
-				break;
-			else
-				cursor = pratilipiListCursorTupe.getCursor();
 		}
 		
 		// Sort Keyword-Frequency map in descending order of frequency

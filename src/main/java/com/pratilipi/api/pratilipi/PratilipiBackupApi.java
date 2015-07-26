@@ -1,6 +1,5 @@
 package com.pratilipi.api.pratilipi;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +13,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
@@ -30,7 +30,7 @@ public class PratilipiBackupApi extends GenericApi {
 			Logger.getLogger( PratilipiBackupApi.class.getName() );
 	
 	@Get
-	public GenericResponse get( GenericRequest request ) throws IOException {
+	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
@@ -45,13 +45,8 @@ public class PratilipiBackupApi extends GenericApi {
 					dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
 			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 
-			for( Pratilipi pratilipi : pratilipiList ) {
-				if( pratilipi.getKeywords() != null )
-					pratilipi.setKeywords( pratilipi.getKeywords().split( "\\s+" ).length + "" );
-				else
-					pratilipi.setKeywords( "0" );
+			for( Pratilipi pratilipi : pratilipiList ) 
 				backup.append( new Gson().toJson( pratilipi ) + '\n' );
-			}
 				
 			count = count + pratilipiList.size();
 

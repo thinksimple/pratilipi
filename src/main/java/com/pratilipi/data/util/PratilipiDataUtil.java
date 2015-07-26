@@ -196,8 +196,6 @@ public class PratilipiDataUtil {
 		
 		if( includeAll )
 			pratilipiData.setIndex( pratilipi.getIndex() );
-		if( includeMetaData )
-			pratilipiData.setKeywords( pratilipi.getKeywords() );
 		pratilipiData.setWordCount( pratilipi.getWordCount() );
 		pratilipiData.setPageCount( pratilipi.getPageCount() );
 		
@@ -765,6 +763,17 @@ public class PratilipiDataUtil {
 		auditLog = dataAccessor.createAuditLog( auditLog );
 		
 		return pratilipi.getPageCount();
+	}
+	
+	
+	public static String[] getPratilipiKeywords( long pratilipiId )
+			throws UnexpectedServerException {
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId  + "-keywords");
+		if( blobEntry == null )
+			return null;
+		return new String( blobEntry.getData(), Charset.forName( "UTF-8" ) ).split( "\\s+" );
 	}
 	
 	
