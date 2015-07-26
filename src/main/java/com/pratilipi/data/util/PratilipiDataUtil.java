@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.search.query.ExpressionParser.condExpr_return;
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -581,26 +582,36 @@ public class PratilipiDataUtil {
 		}
 		Map<String, Long> urlShareCountMap = FacebookApi.getUrlShareCount( urlList );
 
+		
 		Set<Long> updatedPratilipiIds = new HashSet<Long>();
-		int matchCount = 0;
 		for( Long pratilipiId : pratilipiIdList ) {
+
 			long readCount = idReadCountMap.get( pratilipiId ) == null ? 0L : idReadCountMap.get( pratilipiId );
+			
 			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
 			String fbLikeShareUrl = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
 			long fbLikeShareCount = urlShareCountMap.get( fbLikeShareUrl ) == null ? 0L : urlShareCountMap.get( fbLikeShareUrl );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 			
-			if( pratilipi.getReadCount() != readCount || pratilipi.getFbLikeShareCount() != fbLikeShareCount ) {
-				pratilipi.setReadCount( readCount );
-				pratilipi.setFbLikeShareCount( fbLikeShareCount );
-				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-				updatedPratilipiIds.add( pratilipiId ); 
-				logger.log( Level.WARNING, pratilipiId + ": " + pratilipi.getReadCount() + "->" + readCount + ", " + pratilipi.getFbLikeShareCount() + "->" + fbLikeShareCount );
-			} else {
-				matchCount++;
+			if( pratilipi.getReadCount() > readCount ) {
+				logger.log( Level.SEVERE, "Read count for " + pratilipiId + " decreased from " + pratilipi.getReadCount() + " to " + readCount + ". Skipping Update." );
+				continue;
 			}
+
+			if( pratilipi.getFbLikeShareCount() > fbLikeShareCount ) {
+				logger.log( Level.SEVERE, "Facebook LikeShare count for " + pratilipiId + " decreased from " + pratilipi.getFbLikeShareCount() + " to " + fbLikeShareCount + ". Skipping Update." );
+				continue;
+			}
+
+			if( pratilipi.getReadCount() == readCount && pratilipi.getFbLikeShareCount() == fbLikeShareCount )
+				continue;
+			
+			pratilipi.setReadCount( readCount );
+			pratilipi.setFbLikeShareCount( fbLikeShareCount );
+			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+	
+			updatedPratilipiIds.add( pratilipiId ); 
 		}
-		logger.log( Level.INFO, "Match count: " + matchCount + "/" + pratilipiIdList.size() );
 		
 		return updatedPratilipiIds;
 	}	

@@ -70,14 +70,14 @@ public class FacebookApi {
 		Map<String, Long> urlCountMap = new HashMap<>();
 
 		for( int i = 0; i < urlList.size(); i = i + urlsPerRequest ) {
-			String ids = "";
+			String urls = "";
 			for( int j = 0; i + j < urlList.size() && j < urlsPerRequest; j++ )
-				ids = ids + urlList.get( i + j ) + ",";
-			ids = ids.substring( 0, ids.length() - 1 );
+				urls = urls + urlList.get( i + j ) + ",";
+			urls = urls.substring( 0, urls.length() - 1 );
 
 			try{
 				String requestUrl = GRAPH_API_2p4_URL
-						+ "?ids=" + URLEncoder.encode( ids, "UTF-8" )
+						+ "?ids=" + URLEncoder.encode( urls, "UTF-8" )
 						+ "&access_token=" + getAccessToken();
 				
 				String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
@@ -85,9 +85,12 @@ public class FacebookApi {
 				
 				for( int j = 0; i + j < urlList.size() && j < urlsPerRequest; j++ ) {
 					JsonElement jsonElement = responseJson.getAsJsonObject().get( urlList.get( i + j ) );
-					if( jsonElement.getAsJsonObject().get( "share" ) != null )
-						if( jsonElement.getAsJsonObject().get( "share" ).getAsJsonObject().get( "share_count" ) != null )
-							urlCountMap.put( urlList.get( i + j ), jsonElement.getAsJsonObject().get( "share" ).getAsJsonObject().get( "share_count" ).getAsLong() );
+					JsonElement shareJson = jsonElement.getAsJsonObject().get( "share" );
+					if( shareJson != null ) {
+						JsonElement shareCountJson = shareJson.getAsJsonObject().get( "share_count" );
+						if( shareCountJson != null )
+							urlCountMap.put( urlList.get( i + j ), shareCountJson.getAsLong() );
+					}
 				}
 			} catch( IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch data from Facebook.", e );
