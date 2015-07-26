@@ -39,25 +39,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	
-	// Transaction Helpers
-
-	public void beginTx() {
-		dataAccessor.beginTx();
-	}
-
-	public void commitTx() {
-		dataAccessor.commitTx();
-	}
-	
-	public void rollbackTx() {
-		dataAccessor.rollbackTx();
-	}
-
-	public boolean isTxActive() {
-		return dataAccessor.isTxActive();
-	}
-	
-	
 	// APP_PROPERTY Table
 	
 	@Override
@@ -131,9 +112,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	@Override
 	public AccessToken getAccessToken( String accessTokenId ) {
-		if( dataAccessor.isTxActive() )
-			return dataAccessor.getAccessToken( accessTokenId );
-
 		if( accessTokenId == null )
 			return null;
 		
@@ -264,9 +242,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	@Override
 	public Pratilipi getPratilipi( Long id ) {
-		if( dataAccessor.isTxActive() )
-			return dataAccessor.getPratilipi( id );
-		
 		Pratilipi pratilipi = memcache.get( PREFIX_PRATILIPI + id );
 		if( pratilipi == null ) {
 			pratilipi = dataAccessor.getPratilipi( id );
@@ -440,9 +415,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
-		if( dataAccessor.isTxActive() )
-			return dataAccessor.getUserPratilipi( userId, pratilipiId );
-			
 		if( userId == null || userId.equals( 0L ) || pratilipiId == null || pratilipiId.equals( 0L ) )
 			return null;
 		

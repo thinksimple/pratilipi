@@ -16,13 +16,6 @@ import com.pratilipi.data.type.UserPratilipi;
 
 public interface DataAccessor {
 
-	// Transaction Helpers
-	void beginTx();
-	void commitTx();
-	void rollbackTx();
-	boolean isTxActive();
-	
-	
 	// APP_PROPERTY Table
 	AppProperty newAppProperty( String id );
 	AppProperty getAppProperty( String id );
