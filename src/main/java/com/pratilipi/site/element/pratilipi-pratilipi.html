@@ -1,4 +1,4 @@
-<!-- TODO:Refactor -->
+<!-- Version:6.0 -->
 
 <link rel="import" href="pratilipi-rating.html" />
 <link rel="import" href="pratilipi-social.html" />
@@ -55,21 +55,22 @@
 						<h4><a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a></h4>
 						<div>
 							<pratilipi-rating value="{{ pratilipi.averageRating }}">
-								<small>{{ getRatingsStr( pratilipi.ratingCount ) }}</small>
+								<strong><strong>&nbsp;&bull;&nbsp;</strong></strong>
+								<strong>{{ getRatingsStr( pratilipi.ratingCount ) }}</strong>
 							</pratilipi-rating>
-							<br/>
 						</div>
+						<br/>
 						<div>
 							<a href="{{ pratilipi.readerPageUrl }}" target="_blank" class="btn">${ _strings.pratilipi_read }</a>
 							<span class="text-success">${ _strings.pratilipi_free }</span>
 						</div>
-						<hr>
-						<div style="text-align: justify; padding:10px 0px;">
-							<span class="summary">{{ pratilipi.summary }}</span>
+						<div id="PratilipiSummary">
+							<br/>
+							<span class="summary" style="text-align:justify;">{{ pratilipi.summary }}</span>
 							<a href="#" class="show-more" on-click="showCompleteSummary"><small>(show more)</small></a>
 							<a href="#" class="show-less" on-click="showSummarySnippet"><small>(show less)</small></a>
-						</div>	
-						<hr>	
+							<br/>
+						</div>
 					</div>
 				</div>
 	
@@ -93,29 +94,41 @@
 			},
 			
 			getRatingsStr: function( ratingCount ) {
-				return '(' + this.pratilipi.ratingCount + ' ' + ( this.pratilipi.ratingCount <= 1 ? '${ _strings.rating }' : '${ _strings.ratings }' ) + ')';
+				return this.pratilipi.ratingCount + ' ' + ( this.pratilipi.ratingCount <= 1 ? '${ _strings.rating }' : '${ _strings.ratings }' );
 			},
 
 			getShareUrl: function() {
-				return 'http://www.pratilipi.com/' + pratilipi.pageUrl;
+				return 'http://' + ${ domain } + pratilipi.pageUrl;
 			},
 			
 			showCompleteSummary: function() {
-				jQuery( '.summary' ).html( this.pratilipi.summary );
-				jQuery( '.show-more' ).hide();
-				jQuery( '.show-less' ).show();
+				var jSummary = jQuery( this.querySelector( '.summary' ) );
+				jSummary.html( this.pratilipi.summary );
+				if( jSummary.text().length > 200 ) {
+					jQuery( this.querySelector( '.show-more' ) ).hide();
+					jQuery( this.querySelector( '.show-less' ) ).show();
+				} else {
+					jQuery( this.querySelector( '.show-more' ) ).hide();
+					jQuery( this.querySelector( '.show-less' ) ).hide();
+				}
 			},
 			
 			showSummarySnippet: function() {
-				jQuery( '.summary' ).text( jQuery( '.summary' ).text().substr( 0, 200 ) + '...' );
-				jQuery( '.show-more' ).show();
-				jQuery( '.show-less' ).hide();
+				var jSummary = jQuery( this.querySelector( '.summary' ) );
+				jSummary.html( this.pratilipi.summary );
+				if( jSummary.text().length > 200 ) {
+					jSummary.text( jSummary.text().substr( 0, 200 ) + '...' );
+					jQuery( this.querySelector( '.show-more' ) ).show();
+					jQuery( this.querySelector( '.show-less' ) ).hide();
+				} else {
+					jQuery( this.querySelector( '.show-more' ) ).hide();
+					jQuery( this.querySelector( '.show-less' ) ).hide();
+				}
 			},
 			
 			ready: function() {
 				this.pratilipiData.readerPageUrl = "http://www.pratilipi.com" + this.pratilipiData.readerPageUrl;
 				this.set( 'pratilipi', this.pratilipiData );
-				jQuery( '.summary' ).html( this.pratilipi.summary );
 				this.showSummarySnippet();
 			}
 			
