@@ -1,6 +1,7 @@
 package com.pratilipi.data.client;
 
 import java.util.Date;
+import java.util.List;
 
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
@@ -58,6 +59,10 @@ public class PratilipiData {
 	
 	private Integer pageCount;
 	private transient boolean hasPageCount;
+	
+	
+	private List<Long> categoryIdList;
+	private List<String> categoryNameList;
 
 
 	private Long reviewCount;
@@ -304,6 +309,23 @@ public class PratilipiData {
 	
 	public boolean hasPageCount() {
 		return hasPageCount;
+	}
+	
+	
+	public List<Long> getCategoryIdList() {
+		return categoryIdList;
+	}
+
+	public void setCategoryIdList( List<Long> categoryIdList ) {
+		this.categoryIdList = categoryIdList;
+	}
+	
+	public List<String> getCategoryNameList() {
+		return categoryNameList;
+	}
+
+	public void setCategoryNameList( List<String> categoryNameList ) {
+		this.categoryNameList = categoryNameList;
 	}
 	
 

@@ -15,6 +15,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.CategoryType;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
@@ -38,8 +39,10 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
+import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.site.AccessTokenFilter;
 
 public class PratilipiDataUtil {
@@ -193,6 +196,18 @@ public class PratilipiDataUtil {
 		pratilipiData.setState( pratilipi.getState() );
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
 		pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
+		
+		List<Category> categoryList = getCategoryList( pratilipi.getId() );
+		if( categoryList != null && categoryList.size() > 0 ) {
+			List<Long> categoryIdList = new ArrayList<Long>( categoryList.size() );
+			List<String> categoryNameList = new ArrayList<String>( categoryList.size() );
+			for( Category category : categoryList ) {
+				categoryIdList.add( category.getId() );
+				categoryNameList.add( category.getName() );
+			}
+			pratilipiData.setCategoryIdList( categoryIdList );
+			pratilipiData.setCategoryNameList( categoryNameList );
+		}
 		
 		if( includeAll )
 			pratilipiData.setIndex( pratilipi.getIndex() );
@@ -827,4 +842,21 @@ public class PratilipiDataUtil {
 		
 	}
 
+	
+	public static List<Category> getCategoryList( Long pratilipiId ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<PratilipiCategory> pratilipiCategoryList = dataAccessor.getPratilipiCategoryList( pratilipiId );
+		if( pratilipiCategoryList == null )
+			pratilipiCategoryList = new ArrayList<PratilipiCategory>( 0 );
+		List<Category> categoryList = new ArrayList<Category>( pratilipiCategoryList.size() );
+		for( PratilipiCategory pratilipiCategory : pratilipiCategoryList ){
+			Category category = dataAccessor.getCategory( pratilipiCategory.getCategoryId() );
+			if( category.getType() == CategoryType.GENRE )
+				categoryList.add( category );
+		}
+		
+		return categoryList;
+	}
+	
 }

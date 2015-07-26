@@ -247,6 +247,17 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthor().getFullNameEn() ) )
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthor().getFullNameEn() ) )
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthor().getFullNameEn() ) );
+		
+		for( Long genreId : pratilipiData.getCategoryIdList() )
+			docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreId.toString() ) );
+
+		for( String genreName : pratilipiData.getCategoryNameList() ) {
+			// 4x weightage to Genre
+			docBuilder.addField( Field.newBuilder().setName( "genre" ).setText( genreName ) );
+			docBuilder.addField( Field.newBuilder().setName( "genre" ).setText( genreName ) );
+			docBuilder.addField( Field.newBuilder().setName( "genre" ).setText( genreName ) );
+			docBuilder.addField( Field.newBuilder().setName( "genre" ).setText( genreName ) );
+		}
 
 		return docBuilder.build();
 	}
