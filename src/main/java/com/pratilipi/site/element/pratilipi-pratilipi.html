@@ -50,27 +50,25 @@
 				</div>
 				
 				<div class="media-body">
+					<h1 class="media-heading">{{ pratilipi.title }}</h1>
+					<h4><a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a></h4>
 					<div>
-						<h1 class="media-heading">{{ pratilipi.title }}</h1>
-						<h4><a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a></h4>
-						<div>
-							<pratilipi-rating value="{{ pratilipi.averageRating }}">
-								<strong><strong>&nbsp;&bull;&nbsp;</strong></strong>
-								<strong>{{ getRatingsStr( pratilipi.ratingCount ) }}</strong>
-							</pratilipi-rating>
-						</div>
+						<pratilipi-rating value="{{ pratilipi.averageRating }}">
+							<strong><strong>&nbsp;&bull;&nbsp;</strong></strong>
+							<strong>{{ getRatingsStr( pratilipi.ratingCount ) }}</strong>
+						</pratilipi-rating>
+					</div>
+					<br/>
+					<div>
+						<a href="{{ pratilipi.readerPageUrl }}" target="_blank" class="btn">${ _strings.pratilipi_read }</a>
+						<span class="text-success">${ _strings.pratilipi_free }</span>
+					</div>
+					<div id="PratilipiSummary">
 						<br/>
-						<div>
-							<a href="{{ pratilipi.readerPageUrl }}" target="_blank" class="btn">${ _strings.pratilipi_read }</a>
-							<span class="text-success">${ _strings.pratilipi_free }</span>
-						</div>
-						<div id="PratilipiSummary">
-							<br/>
-							<span class="summary" style="text-align:justify;">{{ pratilipi.summary }}</span>
-							<a href="#" class="show-more" on-click="showCompleteSummary"><small>(show more)</small></a>
-							<a href="#" class="show-less" on-click="showSummarySnippet"><small>(show less)</small></a>
-							<br/>
-						</div>
+						<span class="summary" style="text-align:justify;">{{ pratilipi.summary }}</span>
+						<a href="#" class="show-more" on-click="showCompleteSummary"><small>(show more)</small></a>
+						<a href="#" class="show-less" on-click="showSummarySnippet"><small>(show less)</small></a>
+						<br/>
 					</div>
 				</div>
 	
@@ -88,7 +86,7 @@
 			
 			properties: {
 				user: { type: Object },
-				pratilipi: { type:Object },
+				pratilipi: { type:Object, notify:true },
 				pratilipiData: { type:Object },
 				userpratilipi: { type:Object, notify:true }
 			},
