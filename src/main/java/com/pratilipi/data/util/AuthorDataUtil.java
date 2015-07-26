@@ -378,18 +378,10 @@ public class AuthorDataUtil {
 		
 		Author author = dataAccessor.getAuthor( authorId );
 		if( (int) author.getContentPublished() != contentPublished || (long) author.getTotalReadCount() != totalReadCount ) {
-			try {
-				dataAccessor.beginTx();
-				author = dataAccessor.getAuthor( authorId );
-				author.setContentPublished( contentPublished );
-				author.setTotalReadCount( totalReadCount );
-				author = dataAccessor.createOrUpdateAuthor( author );
-				dataAccessor.commitTx();
-				return true;
-			} finally {
-				if( dataAccessor.isTxActive() )
-					dataAccessor.rollbackTx();
-			}
+			author.setContentPublished( contentPublished );
+			author.setTotalReadCount( totalReadCount );
+			author = dataAccessor.createOrUpdateAuthor( author );
+			return true;
 		} else {
 			return false;
 		}

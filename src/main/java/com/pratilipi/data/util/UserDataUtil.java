@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.jdo.JDODataStoreException;
-
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -122,7 +120,17 @@ public class UserDataUtil {
 			throw new InvalidArgumentException( errorMessages );
 		}
 
-		while( true ) {
+		if( ! accessToken.getUserId().equals( 0L ) )
+			return createUserData( user );
+		
+		accessToken.setUserId( user.getId() );
+		accessToken.setLogInDate( new Date() );
+		accessToken.setExpiry( new Date( new Date().getTime() + ACCESS_TOKEN_EXPIRY ) );
+		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
+		return createUserData( user );
+
+		/* TODO : Use Transaction
+		while( true ) { 
 			try {
 				dataAccessor.beginTx();
 				accessToken = dataAccessor.getAccessToken( accessToken.getId() );
@@ -145,13 +153,22 @@ public class UserDataUtil {
 				Thread.sleep( 1000 );
 			} catch( InterruptedException e ) { } // Do nothing
 		}
-		
+		*/
 	}
 	
 	public static UserData logoutUser() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 
+		if( accessToken.getUserId().equals( 0L ) )
+			return getGuestUser();
+
+		accessToken.setLogOutDate( new Date() );
+		accessToken.setExpiry( accessToken.getLogOutDate() );
+		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
+		return getGuestUser();
+
+		/* TODO: Use Transaction
 		while( true ) {
 			try {
 				dataAccessor.beginTx();
@@ -174,7 +191,7 @@ public class UserDataUtil {
 				Thread.sleep( 1000 );
 			} catch( InterruptedException e ) { } // Do nothing
 		}
-		
+ 		*/
 	}
 	
 }

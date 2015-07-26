@@ -110,42 +110,32 @@ public class UserPratilipiDataUtil {
 
 		if( userPratilipiData.getRating() == null && userPratilipiData.getReview() == null )
 			return;
-		
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		try {
-			dataAccessor.beginTx();
+		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(
+				AccessTokenFilter.getAccessToken().getUserId(),
+				userPratilipiData.getPratilipiId() );
 
-			UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(
-					AccessTokenFilter.getAccessToken().getUserId(),
-					userPratilipiData.getPratilipiId() );
-
-			if( userPratilipi == null ) {
-				userPratilipi = dataAccessor.newUserPratilipi();
-				userPratilipi.setUserId( AccessTokenFilter.getAccessToken().getUserId() );
-				userPratilipi.setPratilipiId( userPratilipiData.getPratilipiId() );
-			}
-			
-			if( userPratilipiData.getRating() != null ) {
-				userPratilipi.setRating( userPratilipiData.getRating() );
-				userPratilipi.setRatingDate( new Date() );
-			}
-			
-			if( userPratilipiData.getReviewTitle() != null )
-				userPratilipi.setReviewTitle( userPratilipiData.getReviewTitle() );
-
-			if( userPratilipiData.getReview() != null ) {
-				userPratilipi.setReview( userPratilipiData.getReview() );
-				userPratilipi.setReviewDate( new Date() );
-			}
-			
-			userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
-			
-			dataAccessor.commitTx();
-		} finally {
-			if( dataAccessor.isTxActive() )
-				dataAccessor.rollbackTx();
+		if( userPratilipi == null ) {
+			userPratilipi = dataAccessor.newUserPratilipi();
+			userPratilipi.setUserId( AccessTokenFilter.getAccessToken().getUserId() );
+			userPratilipi.setPratilipiId( userPratilipiData.getPratilipiId() );
 		}
+		
+		if( userPratilipiData.getRating() != null ) {
+			userPratilipi.setRating( userPratilipiData.getRating() );
+			userPratilipi.setRatingDate( new Date() );
+		}
+		
+		if( userPratilipiData.getReviewTitle() != null )
+			userPratilipi.setReviewTitle( userPratilipiData.getReviewTitle() );
+
+		if( userPratilipiData.getReview() != null ) {
+			userPratilipi.setReview( userPratilipiData.getReview() );
+			userPratilipi.setReviewDate( new Date() );
+		}
+		
+		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 	}
 	
 }

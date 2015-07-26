@@ -445,17 +445,8 @@ public class PratilipiDataUtil {
 					|| ( pratilipi.getIndex() != null && index == null )
 					|| ( pratilipi.getIndex() != null && index != null && ! pratilipi.getIndex().equals( index ) ) ) {
 				
-				try {
-					dataAccessor.beginTx();
-					pratilipi = dataAccessor.getPratilipi( pratilipiId );
-					pratilipi.setIndex( index );
-					dataAccessor.createOrUpdatePratilipi( pratilipi );
-					dataAccessor.commitTx();
-				} finally {
-					if( dataAccessor.isTxActive() )
-						dataAccessor.rollbackTx();
-				}
-				
+				pratilipi.setIndex( index );
+				dataAccessor.createOrUpdatePratilipi( pratilipi );
 			}
 
 		} else {
@@ -493,17 +484,8 @@ public class PratilipiDataUtil {
 					|| ( pratilipi.getKeywords() != null && keywords == null )
 					|| ( pratilipi.getKeywords() != null && keywords != null && ! pratilipi.getKeywords().equals( keywords ) ) ) {
 
-				try {
-					dataAccessor.beginTx();
-					pratilipi = dataAccessor.getPratilipi( pratilipiId );
-					pratilipi.setKeywords( keywords );
-					dataAccessor.createOrUpdatePratilipi( pratilipi );
-					dataAccessor.commitTx();
-				} finally {
-					if( dataAccessor.isTxActive() )
-						dataAccessor.rollbackTx();
-				}
-				
+				pratilipi.setKeywords( keywords );
+				dataAccessor.createOrUpdatePratilipi( pratilipi );
 				return true; 
 			
 			} else {
@@ -576,18 +558,10 @@ public class PratilipiDataUtil {
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		if( pratilipi.getReadCount() != readCount || pratilipi.getFbLikeShareCount() != fbLikeShareCount ) {
-			try {
-				dataAccessor.beginTx();
-				pratilipi = dataAccessor.getPratilipi( pratilipiId );
-				pratilipi.setReadCount( readCount );
-				pratilipi.setFbLikeShareCount( fbLikeShareCount );
-				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-				dataAccessor.commitTx();
-				return true;
-			} finally {
-				if( dataAccessor.isTxActive() )
-					dataAccessor.rollbackTx();
-			}
+			pratilipi.setReadCount( readCount );
+			pratilipi.setFbLikeShareCount( fbLikeShareCount );
+			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+			return true;
 		} else {
 			return false;
 		}
@@ -617,17 +591,9 @@ public class PratilipiDataUtil {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 			
 			if( pratilipi.getReadCount() != readCount || pratilipi.getFbLikeShareCount() != fbLikeShareCount ) {
-				try {
-					dataAccessor.beginTx();
-					pratilipi = dataAccessor.getPratilipi( pratilipiId );
-					pratilipi.setReadCount( readCount );
-					pratilipi.setFbLikeShareCount( fbLikeShareCount );
-					pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-					dataAccessor.commitTx();
-				} finally {
-					if( dataAccessor.isTxActive() )
-						dataAccessor.rollbackTx();
-				}
+				pratilipi.setReadCount( readCount );
+				pratilipi.setFbLikeShareCount( fbLikeShareCount );
+				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 				updatedPratilipiIds.add( pratilipiId ); 
 				logger.log( Level.WARNING, pratilipiId + ": " + pratilipi.getReadCount() + "->" + readCount + ", " + pratilipi.getFbLikeShareCount() + "->" + fbLikeShareCount );
 			} else {
