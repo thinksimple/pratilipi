@@ -1,3 +1,5 @@
+<!-- TODO:Refactor -->
+
 <link rel="import" href="pratilipi-rating.html" />
 <link rel="import" href="pratilipi-social.html" />
 <link rel="import" href="pratilipi-rating-input.html" />
@@ -29,15 +31,6 @@
 			padding: 10px;
 		}
 		
-		.media-body h1, .media-body h4 {
-			margin: 5px 0px;
-		}
-
-		.media-body .btn {
-			border-radius: 0px;
-			padding: 3px 20px;
-		}
-
 	</style>
 
 	<template>
@@ -64,10 +57,11 @@
 							<pratilipi-rating value="{{ pratilipi.averageRating }}">
 								<small>{{ getRatingsStr( pratilipi.ratingCount ) }}</small>
 							</pratilipi-rating>
+							<br/>
 						</div>
 						<div>
-							<a href="{{ pratilipi.readerPageUrl }}" class="btn btn-success">Read For Free</a>
-							<a href="#ReviewSection" class="btn btn-primary">Review This Book</a>
+							<a href="{{ pratilipi.readerPageUrl }}" target="_blank" class="btn">${ _strings.pratilipi_read }</a>
+							<span class="text-success">${ _strings.pratilipi_free }</span>
 						</div>
 						<hr>
 						<div style="text-align: justify; padding:10px 0px;">
@@ -119,6 +113,7 @@
 			},
 			
 			ready: function() {
+				this.pratilipiData.readerPageUrl = "http://www.pratilipi.com" + this.pratilipiData.readerPageUrl;
 				this.set( 'pratilipi', this.pratilipiData );
 				jQuery( '.summary' ).html( this.pratilipi.summary );
 				this.showSummarySnippet();
