@@ -470,25 +470,42 @@ public class PratilipiDataUtil {
 				throw new UnexpectedServerException();
 			}
 			
-			String keywords = null;
+			String generatedKeywords = null;
 			if( blobEntry != null ) {
 				String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 				
 				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-				keywords = pratilipiContentUtil.generateKeywords();
+				generatedKeywords = pratilipiContentUtil.generateKeywords();
 			}
 			
-			if( ( pratilipi.getKeywords() == null && keywords != null )
-					|| ( pratilipi.getKeywords() != null && keywords == null )
-					|| ( pratilipi.getKeywords() != null && keywords != null && ! pratilipi.getKeywords().equals( keywords ) ) ) {
-
-				pratilipi.setKeywords( keywords );
-				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-				return true; 
-			
-			} else {
-				return false;
+			try {
+				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId + "-keywords" );
+				// If file doesn't exist, create a new file. Return True.
+				if( blobEntry == null ) {
+					blobEntry = blobAccessor.newBlob( CONTENT_FOLDER + "/" + pratilipiId + "-keywords" );
+					blobEntry.setData( generatedKeywords.getBytes( Charset.forName( "UTF-8" ) ) );
+					blobAccessor.createOrUpdateBlob( blobEntry );
+					logger.log( Level.INFO, "Keyword List set for id:" + pratilipiId );
+					return true;
+				}
+				// Else if the file already exists, get the keywords from the blob. If same, return false, else update the keywords and return true.
+				else {
+					String blobKeywords = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+					if( blobKeywords.equals( generatedKeywords ) ) 
+						return false;
+					else {
+						blobEntry.setData( generatedKeywords.getBytes( Charset.forName( "UTF-8" ) ) );
+						blobAccessor.createOrUpdateBlob( blobEntry );
+						logger.log( Level.INFO, "Keyword List updated for id:" + pratilipiId );
+						return true;
+					}
+				}
+					
+			} catch (IOException e) {
+				logger.log( Level.WARNING, "Cannot fetch keywords for id " + pratilipiId + " from blobstore." );
 			}
+			
+			return false;
 			
 		} else {
 			
