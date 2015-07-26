@@ -15,6 +15,8 @@ public class InitApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetInitRequest request ) throws IOException {
 
+		System.gc();
+		
 		return new GenericResponse();
 		
 	}
