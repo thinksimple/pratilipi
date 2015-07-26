@@ -27,15 +27,19 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
+import com.pratilipi.data.type.gae.CategoryEntity;
 import com.pratilipi.data.type.gae.PageEntity;
+import com.pratilipi.data.type.gae.PratilipiCategoryEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
@@ -620,6 +624,44 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 
+	//CATEGORY Table
+	
+	@Override
+	public Category getCategory( Long id ) {
+		if( id == null )
+			return null;
+		
+		try {
+			return getEntity( CategoryEntity.class, id );
+		} catch ( JDOObjectNotFoundException e ) {
+			logger.log( Level.SEVERE, "Category Id " + id + " is not found!" );
+		}
+		return null;
+	}
+	
+	
+	//PRATILIPI_CATEGORY Table
+	
+	@Override
+	public List<PratilipiCategory> getPratilipiCategoryList( Long pratilipiId ){
+		if( pratilipiId == null )
+			return null;
+		
+		try {
+			Query query = 
+					new GaeQueryBuilder( pm.newQuery( PratilipiCategoryEntity.class ))
+			.addFilter( "pratilipiId", pratilipiId )
+			.build();
+			
+			@SuppressWarnings( "unchecked" )
+			List<PratilipiCategory> pratilipiCategoryEntityList = ( List<PratilipiCategory> ) query.execute( pratilipiId );
+			return (List<PratilipiCategory>) pm.detachCopyAll( pratilipiCategoryEntityList );
+		} catch( JDOObjectNotFoundException e ) {
+			logger.log( Level.INFO, "No Category is present for pratilipi id " + pratilipiId );
+		}
+		return null;
+	}
+	
 	// Destroy
 
 	@Override

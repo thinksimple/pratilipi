@@ -20,8 +20,10 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
@@ -399,6 +401,24 @@ public class DataAccessorMockImpl implements DataAccessor {
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
 		UserPratilipiMock.USER_PRATILIPI_TABLE.add( userPratilipi );
 		return userPratilipi;
+	}
+	
+	
+	//CATEGORY Table
+	
+	@Override
+	public Category getCategory(Long categoryId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	//PRATILIPI_CATEGORY Table
+	
+	@Override
+	public List<PratilipiCategory> getPratilipiCategoryList(Long pratilipiId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

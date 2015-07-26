@@ -9,8 +9,10 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserPratilipi;
 
@@ -77,6 +79,14 @@ public interface DataAccessor {
 	DataListCursorTuple<UserPratilipi> getPratilipiReviewList( Long pratilipiId, String cursor, Integer resultCount );
 	DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursor, Integer resultCount );
 	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
+	
+	
+	//CATEGORY Table
+	Category getCategory( Long categoryId );
+	
+	
+	//PRATILIPI_CATEGORY Table
+	List<PratilipiCategory> getPratilipiCategoryList( Long pratilipiId );
 
 	
 	// Destroy

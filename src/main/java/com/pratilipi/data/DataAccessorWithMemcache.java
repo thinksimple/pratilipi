@@ -12,8 +12,10 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserPratilipi;
 
@@ -26,6 +28,8 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
 	private static final String PREFIX_AUTHOR = "Author-";
 	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
+	private static final String PREFIX_CATEGORY = "Category-";
+	private static final String PREFIX_PRATILIPI_CATEGORY_LIST = "PratilipiCategoryList-";
 	
 	private final DataAccessor dataAccessor;
 	private final Memcache memcache;
@@ -449,6 +453,37 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 
+	// CATEGORY Table
+	
+	@Override
+	public Category getCategory( Long id ) {
+		Category category = memcache.get( PREFIX_CATEGORY + id );
+		if( category == null ){
+			category = dataAccessor.getCategory( id );
+			if( category != null )
+				memcache.put( PREFIX_CATEGORY + id, category );
+		}
+		return category;
+	}
+	
+	
+	// PRATILIPI_CATEGORY Table
+	
+	@Override
+	public List<PratilipiCategory> getPratilipiCategoryList( Long pratilipiId ){
+		List<PratilipiCategory> pratilipiCategoryList =
+				memcache.get( PREFIX_PRATILIPI_CATEGORY_LIST + pratilipiId );
+		if( pratilipiCategoryList == null ) {
+			pratilipiCategoryList =
+					dataAccessor.getPratilipiCategoryList( pratilipiId );
+			memcache.put(
+					PREFIX_PRATILIPI_CATEGORY_LIST + pratilipiId,
+					new ArrayList<>( pratilipiCategoryList ) );
+		}
+		return pratilipiCategoryList;
+	}
+	
+	
 	// Destroy
 	
 	@Override
