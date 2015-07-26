@@ -1,9 +1,8 @@
 package com.pratilipi.api.pratilipi;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,22 +39,15 @@ public class PratilipiProcessApi extends GenericApi {
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setNextProcessDateEnd( new Date() );
 		
-		Gson gson = new Gson();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, 100 ).getDataList();
 		
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/pratilipi/process" )
-				.addParam( "pratilipiIds", gson.toJson( pratilipiIdList ) )
+				.addParam( "pratilipiIdList", new Gson().toJson( pratilipiIdList ) )
 				.addParam( "updateStats", "true" );
-		
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
-		
-		logger.log( Level.INFO, "Added " + pratilipiIdList.size() + " operations to one task." );
-		
-		try {
-			Thread.sleep( 10 * 60 * 1000 );
-		} catch (InterruptedException e) { }
+		logger.log( Level.INFO, "Created task with " + pratilipiIdList.size() + " Pratilipi ids." );
 		
 		return new GenericResponse();
 	}
@@ -64,19 +56,29 @@ public class PratilipiProcessApi extends GenericApi {
 	public GenericResponse postPratilipiProcess( PostPratilipiProcessRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 
+		List<Long> pratilipiIdList = request.getPratilipiIdList() != null ? request.getPratilipiIdList() : new ArrayList<Long>( 1 );
+		if( request.getPratilipiId() != null )
+			pratilipiIdList.add( request.getPratilipiId() );
+		
+		if( pratilipiIdList.size() == 0 ) {
+			logger.log( Level.SEVERE, "0 pratilipiId found." );
+			throw new InvalidArgumentException( "'pratilipiId' or 'pratilipiIdList' must be set/non-empty." );
+		}
+		
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
+		
 		if( request.processData() ) {
-			for( Long pratilipiId : request.getPratilipiIds() ) {
-				PratilipiDataUtil.updatePratilipiSearchIndex( pratilipiId, null );
+			PratilipiDataUtil.updatePratilipiSearchIndex( pratilipiIdList );
+			for( Long pratilipiId : pratilipiIdList )
 				PratilipiDataUtil.createOrUpdatePratilipiPageUrl( pratilipiId );
-			}
 		}
 		
 		if( request.processCover() ) { }
 		
 		if( request.processContent() ) {
-			for( Long pratilipiId : request.getPratilipiIds() ) {
+			for( Long pratilipiId : pratilipiIdList ) {
 				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 				if( pratilipi.getType() == PratilipiType.BOOK || pratilipi.getType() == PratilipiType.MAGAZINE )
 					PratilipiDataUtil.updatePratilipiIndex( pratilipiId );
@@ -88,34 +90,25 @@ public class PratilipiProcessApi extends GenericApi {
 		}
 		
 		if( request.updateStats() ) {
-			Set<Long> updatedIds = PratilipiDataUtil.updatePratilipiStats( Arrays.asList( request.getPratilipiIds() ) );
+			List<Long> updatedIds = PratilipiDataUtil.updatePratilipiStats( pratilipiIdList );
 			
-			for( Long pratilipiId : request.getPratilipiIds() ) {
-				Boolean changed = updatedIds.contains( pratilipiId ) ? true : false ;
-				try {
-					dataAccessor.beginTx();
-					Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-					if( changed ) {
-						pratilipi.setLastProcessDate( new Date() );
-						pratilipi.setNextProcessDate( new Date( new Date().getTime() + 900000L ) ); // Now + 15 Min
-					} else {
-						Long nextUpdateAfterMillis = 2 * ( new Date().getTime() - pratilipi.getLastProcessDate().getTime() );
-						if( nextUpdateAfterMillis < 900000L ) // 15 Min
-							nextUpdateAfterMillis = 900000L;
-						else if( nextUpdateAfterMillis > 86400000L ) // 1 Day
-							nextUpdateAfterMillis = 86400000L;
-						pratilipi.setNextProcessDate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
-					}
-					pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-					dataAccessor.commitTx();
-				} finally {
-					if( dataAccessor.isTxActive() )
-						dataAccessor.rollbackTx();
+			for( Long pratilipiId : pratilipiIdList ) {
+				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+				if( updatedIds.contains( pratilipiId ) ) {
+					pratilipi.setLastProcessDate( new Date() );
+					pratilipi.setNextProcessDate( new Date( new Date().getTime() + 900000L ) ); // Now + 15 Min
+				} else {
+					Long nextUpdateAfterMillis = 2 * ( new Date().getTime() - pratilipi.getLastProcessDate().getTime() );
+					if( nextUpdateAfterMillis < 900000L ) // 15 Min
+						nextUpdateAfterMillis = 900000L;
+					else if( nextUpdateAfterMillis > 86400000L ) // 1 Day
+						nextUpdateAfterMillis = 86400000L;
+					pratilipi.setNextProcessDate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
 				}
-				
-				if( changed )
-					PratilipiDataUtil.updatePratilipiSearchIndex( pratilipiId, null );
+				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 			}
+			
+			PratilipiDataUtil.updatePratilipiSearchIndex( updatedIds );
 		}
 		
 		return new GenericResponse();

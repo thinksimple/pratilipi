@@ -5,15 +5,12 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.search.query.ExpressionParser.condExpr_return;
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -569,7 +566,7 @@ public class PratilipiDataUtil {
 
 	}
 
-	public static Set<Long> updatePratilipiStats( List<Long> pratilipiIdList ) throws UnexpectedServerException {
+	public static List<Long> updatePratilipiStats( List<Long> pratilipiIdList ) throws UnexpectedServerException {
 		
 		Map<Long, Long> idReadCountMap = GoogleAnalyticsApi.getPratilipiReadCount( pratilipiIdList );		
 		
@@ -583,7 +580,7 @@ public class PratilipiDataUtil {
 		Map<String, Long> urlShareCountMap = FacebookApi.getUrlShareCount( urlList );
 
 		
-		Set<Long> updatedPratilipiIds = new HashSet<Long>();
+		List<Long> updatedPratilipiIds = new ArrayList<>( pratilipiIdList.size() );
 		for( Long pratilipiId : pratilipiIdList ) {
 
 			long readCount = idReadCountMap.get( pratilipiId ) == null ? 0L : idReadCountMap.get( pratilipiId );
@@ -620,8 +617,6 @@ public class PratilipiDataUtil {
 			throws InvalidArgumentException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
-
 		
 		List<Pratilipi> pratilipiList = null;
 		if( authorId != null ) {
@@ -640,7 +635,23 @@ public class PratilipiDataUtil {
 			throw new InvalidArgumentException( "Neither AuthorId, nor PratilipiId is provided !" );
 		}
 		
+		_updatePratilipiSearchIndex( pratilipiList );
+	}
+
+	public static void updatePratilipiSearchIndex( List<Long> pratilipiIdList )
+			throws InvalidArgumentException, UnexpectedServerException {
 		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		_updatePratilipiSearchIndex( dataAccessor.getPratilipiList( pratilipiIdList ) );
+	}
+	
+	private static void _updatePratilipiSearchIndex( List<Pratilipi> pratilipiList )
+			throws InvalidArgumentException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
+
 		List<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
 		for( Pratilipi pratilipi : pratilipiList ) {
 			
@@ -658,7 +669,7 @@ public class PratilipiDataUtil {
 		if( pratilipiDataList.size() > 0 )
 			searchAccessor.indexPratilipiDataList( pratilipiDataList );
 	}
-
+	
 	
 	public static Object getPratilipiContent( long pratilipiId, int pageNo,
 			PratilipiContentType contentType ) throws InvalidArgumentException,
