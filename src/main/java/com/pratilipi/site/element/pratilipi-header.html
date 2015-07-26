@@ -1,3 +1,5 @@
+<!-- Version:6.0 -->
+
 <link rel="import" href="pratilipi-search-bar.html" />
 
 <dom-module id="pratilipi-header">
@@ -8,6 +10,11 @@
 			display: block;
 		}
 		
+		img {
+			height: 150px;
+			width: 150px;
+		}
+		
 	</style>
 
 
@@ -16,7 +23,7 @@
 			<div class="container">
 			
 				<a href="/">
-					<img class="pull-left" title="${ _strings.pratilipi_logo }" alt="${ _strings.pratilipi_logo }" src="/theme.pratilipi/logo.png" />
+					<img class="pull-left" title="${ _strings.pratilipi_logo }" alt="${ _strings.pratilipi_logo }" src="${ _strings.pratilipi_logo_url }" />
 				</a>
 				
 				<div style="margin-top:51px; margin-bottom:45px; text-align:right;">
@@ -26,39 +33,30 @@
 						&nbsp;
 						<a href="#" on-click="logIn">${ _strings.sign_in }</a>
 						&nbsp;
-						<span class="dropdown">
-							<a class="dropdown-toggle" id="LanguageMenu1" data-toggle="dropdown" aria-expanded="true">
-								${ _strings.choose_language } <span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu1">
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="//wwww.pratilipi.com">${ _strings.language_all }</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="//tamil.pratilipi.com">${ _strings.language_ta }</a></li>
-							</ul>
-						</span>
-						&nbsp;
 					</template>
 
 					<template is="dom-if" if="{{ !user.isGuest }}">
 						<span class="dropdown">
 							<a class="dropdown-toggle" id="ProfileMenu" data-toggle="dropdown" aria-expanded="true">
-								<span>{{ user.name }}</span><span class="caret"></span>
+								<span>{{ user.name }}</span>&nbsp;<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="ProfileMenu">
 								<li role="presentation"><a role="menuitem" tabindex="-1" href="#" on-click="logOut">${ _strings.sign_out }</a></li>
 							</ul>
 						</span>
 						&nbsp;
-						<span class="dropdown">
-							<a class="dropdown-toggle" id="LanguageMenu2" data-toggle="dropdown" aria-expanded="true">
-								${ _strings.choose_language } <span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu2">
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="//wwww.pratilipi.com">${ _strings.language_all }</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="//tamil.pratilipi.com">${ _strings.language_ta }</a></li>
-							</ul>
-						</span>
-						&nbsp;
 					</template>
+					
+					<span class="dropdown">
+						<a class="dropdown-toggle" id="LanguageMenu" data-toggle="dropdown" aria-expanded="true">
+							${ _strings.choose_language } &nbsp; <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu">
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="//www.pratilipi.com">${ _strings.language_all }</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="//tamil.pratilipi.com">${ _strings.language_ta }</a></li>
+						</ul>
+					</span>
+					&nbsp;
 					
 				</div>
 		
@@ -71,6 +69,7 @@
 	<script>
 
 		Polymer({
+			
 			is: 'pratilipi-header',
 			
 			properties: {

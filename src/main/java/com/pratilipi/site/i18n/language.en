@@ -8,8 +8,9 @@ featured		= Featured
 
 # Generic
 
-pratilipi		= Pratilipi
-pratilipi_logo	= Pratilipi Logo
+pratilipi			= Pratilipi
+pratilipi_logo		= Pratilipi Logo
+pratilipi_logo_url	= /resources/en/pratilipi-logo.png
 
 facebook_page	= https://www.facebook.com/Pratilipidotcom
 twitter_page	= https://twitter.com/TeamPratilipi
