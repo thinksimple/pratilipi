@@ -71,6 +71,7 @@
 				userpratilipi: { type:Object },
 				
 				reviewList: { type: Array },
+				pratilipiId: { type:Number },
 				cursor: { type: String },
 
 				isLoading: { type: Boolean, value: false },
@@ -124,9 +125,9 @@
 			},
 			
 			ready: function() {
-				if( this.cursor ) {
+				if( this.pratilipiId && this.cursor ) {
 					var ajaxGet = this.$.AjaxGet;
-					ajaxGet.params = { 'pratilipiId':this.pratilipi.pratilipiId, 'cursor':this.cursor };
+					ajaxGet.params = { 'pratilipiId':this.pratilipiId, 'cursor':this.cursor };
 					this.loadMore();
 				} else {
 					this.isFinished = true;

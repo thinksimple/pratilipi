@@ -43,7 +43,7 @@
 
 			<pratilipi-userpratilipi
 					user='{{ user }}'
-					pratilipi='{{ pratilipi }}'
+					pratilipi-id='${ pratilipi.getId()?c }'
 					userpratilipi='{{ userpratilipi }}'
 					userpratilipi-data='${ userpratilipiJson! }'
 					></pratilipi-userpratilipi>
@@ -65,6 +65,7 @@
 							pratilipi='{{ pratilipi }}'
 							userpratilipi='{{ userpratilipi }}'
 							review-list='${ reviewListJson }'
+							pratilipi-id='${ pratilipi.getId()?c }'
 							cursor='${ reviewListCursor! }'
 							></pratilipi-review-list>
 				</div>

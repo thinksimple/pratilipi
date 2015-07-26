@@ -89,6 +89,8 @@
 			is: 'pratilipi-review-input',
 
 			properties: {
+				user: { type: Object },
+				pratilipi: { type:Object },
 				userpratilipi: { type:Object, notify:true, observer:"_userpratilipiChangeObserver" },
 				
 				params: { type:Object, value:{} },

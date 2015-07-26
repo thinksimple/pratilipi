@@ -23,7 +23,7 @@
 			
 			properties: {
 				user: { type: Object, observer: '_userChangeObserver' },
-				pratilipi: { type: Object },
+				pratilipiId: { type: Number },
 				userpratilipi: { type: Object, notify: true },
 				userpratilipiData: { type: Object }
 			},
@@ -33,7 +33,7 @@
 					this.set( 'userpratilipi', {} );
 				} else if( ! this.userpratilipi.pratilipiId ) {
 					var ajaxGet = this.$.AjaxGet;
-					ajaxGet.params = { pratilipiId:this.pratilipi.pratilipiId };
+					ajaxGet.params = { pratilipiId:this.pratilipiId };
 					ajaxGet.generateRequest();
 				}
 			},
