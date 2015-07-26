@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.type.BlobEntry;
 
 public class BlobAccessorWithMemcache implements BlobAccessor {
@@ -31,6 +32,84 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 	public BlobAccessorWithMemcache( BlobAccessor blobAccessor, Memcache memcache ) {
 		this.blobAccessor = blobAccessor;
 		this.memcache = memcache;
+	}
+	
+	
+	private BlobEntry memcacheGet( String fileName ) {
+		BlobEntry blobEntry = memcache.get( PREFIX + fileName );
+
+		if( blobEntry == null )
+			return null;
+		
+		if( blobEntry.getData().length == blobEntry.getDataLength() )
+			return blobEntry;
+
+		
+		int dataLength = (int) blobEntry.getDataLength();
+		
+		List<String> keyList = new ArrayList<String>( (int) Math.ceil( (double) dataLength / SEGMENT_SIZE ) );
+		for( int i = 1; i < (int) Math.ceil( (double) dataLength / SEGMENT_SIZE ); i++ )
+			keyList.add( PREFIX + fileName + "?" + i );
+		
+		Map<String, Serializable> keySegmentMap = memcache.getAll( keyList );
+
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			baos.write( blobEntry.getData() );
+			for( String key : keyList ) {
+				byte[] dataSegment = (byte[]) keySegmentMap.get( key );
+				if( dataSegment == null )
+					return null;
+				baos.write( dataSegment );
+			}
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to load and stitch blob data.", e );
+			return null;
+		}
+		
+		
+		byte[] blobData = baos.toByteArray();
+		if( blobData.length != dataLength ) {
+			logger.log( Level.SEVERE, "Blob size (" + blobData.length + ") did not match expected size (" + dataLength + ")" );
+			return null;
+		}
+		blobEntry.setData( blobData );
+		
+		
+		return blobEntry;
+	}
+	
+	private void memcachePut( BlobEntry blobEntry ) {
+		
+		if( blobEntry == null )
+			return;
+		
+		
+		if( blobEntry.getDataLength() <= 1000 * 1024 ) {
+			memcache.put( PREFIX + blobEntry.getName(), blobEntry );
+			return;
+		}
+
+		
+		// blobEntry.getData().length > 1000 * 1024
+		byte[] blobData = blobEntry.getData();
+		int dataLength = (int) blobEntry.getDataLength();
+
+		blobEntry.setData( Arrays.copyOfRange( blobData, 0, SEGMENT_SIZE ) );
+		
+		Map<String, Serializable> keySegmentMap = new HashMap<>();
+		keySegmentMap.put( PREFIX + blobEntry.getName(), blobEntry );
+		for( int i = 1; i < (int) Math.ceil( (double) dataLength / SEGMENT_SIZE ); i++ ) {
+			int fromIndex = i * SEGMENT_SIZE;
+			int toIndex = (i + 1) * SEGMENT_SIZE;
+			toIndex = toIndex > dataLength ? dataLength : toIndex;
+			keySegmentMap.put( PREFIX + blobEntry.getName() + "?" + i, Arrays.copyOfRange( blobData, fromIndex, toIndex ) );
+		}
+		
+		memcache.putAll( keySegmentMap );
+
+		blobEntry.setData( blobData );
 	}
 	
 	
@@ -56,69 +135,29 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 	}
 
 	@Override
-	public BlobEntry getBlob( String fileName ) throws IOException {
-		
-		BlobEntry blobEntry = memcache.get( PREFIX + fileName );
-		
-		
+	public BlobEntry getBlob( String fileName ) throws UnexpectedServerException {
+		BlobEntry blobEntry = memcacheGet( PREFIX + fileName );
 		if( blobEntry == null ) {
 			blobEntry = blobAccessor.getBlob( fileName );
-
-			if( blobEntry != null && blobEntry.getDataLength() <= 1000 * 1024 ) {
-				memcache.put( PREFIX + fileName, blobEntry );
-			
-			} else if( blobEntry != null ) { // && blobEntry.getData().length > 1000 * 1024
-				byte[] blobData = blobEntry.getData();
-				int dataLength = (int) blobEntry.getDataLength();
-				blobEntry.setData( Arrays.copyOfRange( blobData, 0, SEGMENT_SIZE ) );
-				Map<String, Serializable> keySegmentMap = new HashMap<>();
-				keySegmentMap.put( PREFIX + fileName, blobEntry );
-				for( int i = 1; i < (int) Math.ceil( (double) dataLength / SEGMENT_SIZE ); i++ ) {
-					int fromIndex = i * SEGMENT_SIZE;
-					int toIndex = (i + 1) * SEGMENT_SIZE;
-					toIndex = toIndex > dataLength ? dataLength : toIndex;
-					keySegmentMap.put( PREFIX + fileName + "?" + i, Arrays.copyOfRange( blobData, fromIndex, toIndex ) );
-				}
-				memcache.putAll( keySegmentMap );
-				blobEntry.setData( blobData );
-			}
-		
-			
-		} else if( blobEntry.getData().length < blobEntry.getDataLength() ) {
-			int dataLength = (int) blobEntry.getDataLength();
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			baos.write( blobEntry.getData() );
-
-			List<String> keyList = new ArrayList<String>( (int) Math.ceil( (double) dataLength / SEGMENT_SIZE ) );
-			for( int i = 1; i < (int) Math.ceil( (double) dataLength / SEGMENT_SIZE ); i++ )
-				keyList.add( PREFIX + fileName + "?" + i );
-
-			Map<String, Serializable> keySegmentMap = memcache.getAll( keyList );
-			for( String key : keyList ) {
-				byte[] dataSegment = (byte[]) keySegmentMap.get( key );
-				if( dataSegment == null )
-					break;
-				baos.write( dataSegment );
-			}
-			
-			byte[] blobData = baos.toByteArray();
-			if( blobData.length != dataLength ) {
-				logger.log( Level.SEVERE, "Blob size (" + blobData.length + ") did not match expected size (" + dataLength + ")" );
-				blobEntry = blobAccessor.getBlob( fileName );
-			} else {
-				blobEntry.setData( blobData );
-			}
+			memcachePut( blobEntry );
 		}
-		
-		
 		return blobEntry;
 	}
 	
 	@Override
-	public void createOrUpdateBlob( BlobEntry blobEntry )
-			throws IOException {
+	public void createOrUpdateBlob( BlobEntry blobEntry ) throws UnexpectedServerException {
 
 		blobAccessor.createOrUpdateBlob( blobEntry );
+		
+		String fileName = blobEntry.getName();
+		memcache.remove( PREFIX + fileName );
+		memcache.remove( PREFIX_LIST + fileName.substring( 0, fileName.lastIndexOf( '/' ) + 1 ) );
+	}
+
+	@Override
+	public void deleteBlob( BlobEntry blobEntry ) throws UnexpectedServerException {
+
+		blobAccessor.deleteBlob( blobEntry );
 		
 		String fileName = blobEntry.getName();
 		memcache.remove( PREFIX + fileName );

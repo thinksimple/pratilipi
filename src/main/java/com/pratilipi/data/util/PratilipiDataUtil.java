@@ -1,6 +1,5 @@
 package com.pratilipi.data.util;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
@@ -366,15 +365,10 @@ public class PratilipiDataUtil {
 		else
 			fileName = COVER_FOLDER + "/original/" + "pratilipi";
 
-		try {
-			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
-			if( width != null )
-				blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, (int) ( 1.5 * width ) ) );
-			return blobEntry;
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch pratilipi cover.", e );
-			throw new UnexpectedServerException();
-		}
+		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
+		if( width != null )
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, (int) ( 1.5 * width ) ) );
+		return blobEntry;
 	}
 
 	public static void savePratilipiCover( Long pratilipiId, BlobEntry blobEntry )
@@ -388,13 +382,8 @@ public class PratilipiDataUtil {
 
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		try {
-			blobEntry.setName( COVER_FOLDER + "/original/" + pratilipiId );
-			blobAccessor.createOrUpdateBlob( blobEntry );
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to create/update pratilipi cover.", e );
-			throw new UnexpectedServerException();
-		}
+		blobEntry.setName( COVER_FOLDER + "/original/" + pratilipiId );
+		blobAccessor.createOrUpdateBlob( blobEntry );
 		
 		Gson gson = new Gson();
 
@@ -423,13 +412,7 @@ public class PratilipiDataUtil {
 
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 			
-			BlobEntry blobEntry = null;
-			try {
-				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
-				throw new UnexpectedServerException();
-			}
+			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
 			
 			String index = null;
 			if( blobEntry != null ) {
@@ -462,56 +445,44 @@ public class PratilipiDataUtil {
 		
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 		
-			BlobEntry blobEntry = null;
-			try {
-				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
-				throw new UnexpectedServerException();
-			}
+			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
+			BlobEntry keywordsBlobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId + "-keywords" );
 			
 			String generatedKeywords = null;
 			if( blobEntry != null ) {
 				String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-				
 				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
 				generatedKeywords = pratilipiContentUtil.generateKeywords();
 			}
 			
-			try {
-				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId + "-keywords" );
-				// If file doesn't exist, create a new file. Return True.
-				if( blobEntry == null ) {
-					blobEntry = blobAccessor.newBlob( CONTENT_FOLDER + "/" + pratilipiId + "-keywords" );
-					blobEntry.setData( generatedKeywords.getBytes( Charset.forName( "UTF-8" ) ) );
-					blobAccessor.createOrUpdateBlob( blobEntry );
-					logger.log( Level.INFO, "Keyword List set for id:" + pratilipiId );
+			if( generatedKeywords == null || generatedKeywords.isEmpty() ) {
+
+				if( keywordsBlobEntry == null ) {
+					return false;
+				} else {
+					blobAccessor.deleteBlob( keywordsBlobEntry );
 					return true;
 				}
-				// Else if the file already exists, get the keywords from the blob. If same, return false, else update the keywords and return true.
-				else {
-					String blobKeywords = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-					if( blobKeywords.equals( generatedKeywords ) ) 
-						return false;
-					else {
-						blobEntry.setData( generatedKeywords.getBytes( Charset.forName( "UTF-8" ) ) );
-						blobAccessor.createOrUpdateBlob( blobEntry );
-						logger.log( Level.INFO, "Keyword List updated for id:" + pratilipiId );
-						return true;
-					}
-				}
-					
-			} catch (IOException e) {
-				logger.log( Level.WARNING, "Cannot fetch keywords for id " + pratilipiId + " from blobstore." );
+				
+			} else {
+				
+				if( keywordsBlobEntry == null )
+					keywordsBlobEntry = blobAccessor.newBlob( CONTENT_FOLDER + "/" + pratilipiId + "-keywords" );
+				else if( generatedKeywords.equals( new String( keywordsBlobEntry.getData(), Charset.forName( "UTF-8" ) ) ) )
+					return false;
+
+				keywordsBlobEntry.setData( generatedKeywords.getBytes( Charset.forName( "UTF-8" ) ) );
+				blobAccessor.createOrUpdateBlob( keywordsBlobEntry );
+				return true;
+				
 			}
-			
-			return false;
 			
 		} else {
 			
 			throw new InvalidArgumentException( "Keywords generation for " + pratilipi.getContentType() + " content type is not yet supported." );
 		
 		}
+		
 	}
 	
 	public static boolean createOrUpdatePratilipiPageUrl( Long pratilipiId ) {
@@ -702,13 +673,8 @@ public class PratilipiDataUtil {
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 
 		if( contentType == PratilipiContentType.PRATILIPI ) {
-			BlobEntry blobEntry = null;
-			try {
-				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
-				throw new UnexpectedServerException();
-			}
+
+			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
 			
 			if( blobEntry == null )
 				return "";
@@ -718,12 +684,8 @@ public class PratilipiDataUtil {
 			return pratilipiContentUtil.getContent( pageNo );
 
 		} else if( contentType == PratilipiContentType.IMAGE ) {
-			try {
-				return blobAccessor.getBlob( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
-				throw new UnexpectedServerException();
-			}
+			
+			return blobAccessor.getBlob( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
 		
 		} else {
 			throw new InvalidArgumentException( contentType + " content type is not yet supported." );
@@ -755,17 +717,11 @@ public class PratilipiDataUtil {
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		
 		if( contentType == PratilipiContentType.PRATILIPI ) {
-			BlobEntry blobEntry = null;
-			try {
-				blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
-				if( blobEntry == null ) {
-					blobEntry = blobAccessor.newBlob( CONTENT_FOLDER + "/" + pratilipiId );
-					blobEntry.setData( "&nbsp".getBytes( Charset.forName( "UTF-8" ) ) );
-					blobEntry.setMimeType( "text/html" );
-				}
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to fetch pratilipi content.", e );
-				throw new UnexpectedServerException();
+			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
+			if( blobEntry == null ) {
+				blobEntry = blobAccessor.newBlob( CONTENT_FOLDER + "/" + pratilipiId );
+				blobEntry.setData( "&nbsp".getBytes( Charset.forName( "UTF-8" ) ) );
+				blobEntry.setMimeType( "text/html" );
 			}
 			
 			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
@@ -777,12 +733,7 @@ public class PratilipiDataUtil {
 				pageCount = 1;
 			}
 			blobEntry.setData( content.getBytes( Charset.forName( "UTF-8" ) ) );
-			try {
-				blobAccessor.createOrUpdateBlob( blobEntry );
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to create/update pratilipi content.", e );
-				throw new UnexpectedServerException();
-			}
+			blobAccessor.createOrUpdateBlob( blobEntry );
 			
 			pratilipi.setPageCount( pageCount );
 			if( insertNew )
@@ -794,14 +745,9 @@ public class PratilipiDataUtil {
 			
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			
-			try {
-				BlobEntry blobEntry = (BlobEntry) pageContent;
-				blobEntry.setName( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
-				blobAccessor.createOrUpdateBlob( blobEntry );
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to create/update pratilipi content.", e );
-				throw new UnexpectedServerException();
-			}
+			BlobEntry blobEntry = (BlobEntry) pageContent;
+			blobEntry.setName( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
+			blobAccessor.createOrUpdateBlob( blobEntry );
 			
 			if( pageNo > (int) pratilipi.getPageCount() )
 				pratilipi.setPageCount( pageNo );
@@ -829,12 +775,7 @@ public class PratilipiDataUtil {
 	public static BlobEntry getPratilipiResource( long pratilipiId, String fileName )
 			throws UnexpectedServerException {
 
-		try {
-			return DataAccessorFactory.getBlobAccessor().getBlob( getPratilipiResourceFolder( pratilipiId ) + "/" + fileName );
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch pratilipi resource.", e );
-			throw new UnexpectedServerException();
-		}
+		return DataAccessorFactory.getBlobAccessor().getBlob( getPratilipiResourceFolder( pratilipiId ) + "/" + fileName );
 		
 	}
 	
@@ -850,29 +791,29 @@ public class PratilipiDataUtil {
 
 		String fileName = getPratilipiResourceFolder( pratilipiId ) + "/" + blobEntry.getName().replaceAll( "/", "-" );
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		try {
-			if( !overwrite &&  blobAccessor.getBlob( fileName ) != null ) {
-				return false;
-			} else {
-				blobEntry.setName( fileName );
-				blobAccessor.createOrUpdateBlob( blobEntry );
-				
-				Gson gson = new Gson();
+		
+		if( !overwrite &&  blobAccessor.getBlob( fileName ) != null ) {
+		
+			return false;
 
-				AccessToken accessToken = AccessTokenFilter.getAccessToken();
-				AuditLog auditLog = dataAccessor.newAuditLog();
-				auditLog.setAccessId( accessToken.getId() );
-				auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-				auditLog.setEventDataOld( gson.toJson( pratilipi ) );
-				auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-				auditLog.setEventComment( "Uploaded content image (resource)." );
-				auditLog = dataAccessor.createAuditLog( auditLog );
-				
-				return true;
-			}
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to create/update pratilipi resource.", e );
-			throw new UnexpectedServerException();
+		} else {
+
+			blobEntry.setName( fileName );
+			blobAccessor.createOrUpdateBlob( blobEntry );
+			
+			Gson gson = new Gson();
+
+			AccessToken accessToken = AccessTokenFilter.getAccessToken();
+			AuditLog auditLog = dataAccessor.newAuditLog();
+			auditLog.setAccessId( accessToken.getId() );
+			auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
+			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+			auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+			auditLog.setEventComment( "Uploaded content image (resource)." );
+			auditLog = dataAccessor.createAuditLog( auditLog );
+			
+			return true;
+			
 		}
 		
 	}

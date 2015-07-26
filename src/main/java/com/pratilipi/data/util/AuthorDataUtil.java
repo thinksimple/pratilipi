@@ -1,10 +1,8 @@
 package com.pratilipi.data.util;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
@@ -248,15 +246,10 @@ public class AuthorDataUtil {
 		else
 			fileName = IMAGE_FOLDER + "/original/" + "author";
 
-		try {
-			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
-			if( width != null )
-				blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, (int) ( 1.5 * width ) ) );
-			return blobEntry;
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch author image.", e );
-			throw new UnexpectedServerException();
-		}
+		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
+		if( width != null )
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, (int) ( 1.5 * width ) ) );
+		return blobEntry;
 	}
 	
 	public static void saveAuthorImage( Long authorId, BlobEntry blobEntry )
@@ -270,13 +263,8 @@ public class AuthorDataUtil {
 
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		try {
-			blobEntry.setName( IMAGE_FOLDER + "/original/" + authorId );
-			blobAccessor.createOrUpdateBlob( blobEntry );
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to create/update author image.", e );
-			throw new UnexpectedServerException();
-		}
+		blobEntry.setName( IMAGE_FOLDER + "/original/" + authorId );
+		blobAccessor.createOrUpdateBlob( blobEntry );
 		
 
 		Gson gson = new Gson();
