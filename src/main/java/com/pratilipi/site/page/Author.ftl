@@ -39,7 +39,9 @@
 						></pratilipi-navigation>
 				<div style="overflow:hidden">
 					<pratilipi-author
-							author='${ authorJson }'></pratilipi-author>
+							author='{{ author }}'
+							author-data='${ authorJson }'
+							></pratilipi-author>
 					<pratilipi-card-grid
 							id='PublishedWorks'
 							heading='${ _strings.author_published_works }'

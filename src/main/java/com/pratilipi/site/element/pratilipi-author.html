@@ -1,3 +1,5 @@
+<!-- Version:6.0 -->
+
 <link rel="import" href="pratilipi-social.html" />
 
 <dom-module id="pratilipi-author">
@@ -38,10 +40,6 @@
 		
 		.media-body {
 			padding: 10px;
-		}
-		
-		.media-body h1, .media-body h4 {
-			margin: 5px 0px;
 		}
 		
 		
@@ -86,35 +84,17 @@
 				</div>
 				
 				<div class="media-body">
-					<div style="height:190px">
-						<h1>{{ author.name }}</h1>
+					<h1 class="media-heading">{{ author.name }}</h1>
+					<template is="dom-if" if="{{ author.penName }}">
 						<h4>"<span>{{ author.penName }}</span>"</h4>
-						<table>
-							<tr>
-								<th>Location</th>
-								<td>New Delhi</td>
-							</tr>
-							<tr>
-								<th>Language(s)</th>
-								<td>Tamil, English</td>
-							</tr>
-							<tr>
-								<th>Website</th>
-								<td><a href= "http://www.google.co.in">google.com</a></td>
-							</tr>
-							<tr>
-								<th>Member Since</th>
-								<td>August 2007</td>
-							</tr>
-						</table>
-					</div>
-					<hr/>
+					</template>
+					<br/>
 					<div>
-						<h4>${ _strings.author_about }</h4>
-						<span class="summary">{{ author.summary }}</span>
-						<a href="#" class="show-more" on-click="showCompleteSummary"><small>(more)</small></a>
-						<a href="#" class="show-less" on-click="showSummarySnippet"><small>(less)</small></a>
+						<span class="summary" style="text-align:justify;">{{ pratilipi.summary }}</span>
+						<a href="#" class="show-more" on-click="showCompleteSummary"><small>(show more)</small></a>
+						<a href="#" class="show-less" on-click="showSummarySnippet"><small>(show less)</small></a>
 					</div>
+					<br/>
 				</div>
 				
 			</div>
@@ -125,51 +105,48 @@
 	
 	<script>
 		Polymer({
+			
 			is: 'pratilipi-author',
 			
 			properties: {
-				author: { type: Object }
+				user: { type:Object },
+				author: { type:Object, notify:true },
+				authorData: { type:Object },
 			},
 			
 			getShareUrl: function() {
-				return 'http://www.pratilipi.com/' + author.pageUrl;
+				return 'http://' + ${ domain } + pratilipi.pageUrl;
 			},
 			
-			
-			
-			
-			
-			
 			showCompleteSummary: function() {
-				jQuery( '.summary' ).html( this.summaryString );
-				jQuery( '.show-more' ).hide();
-				jQuery( '.show-less' ).show();
+				var jSummary = jQuery( this.querySelector( '.summary' ) );
+				jSummary.html( this.author.summary );
+				if( jSummary.text().length > 200 ) {
+					jQuery( this.querySelector( '.show-more' ) ).hide();
+					jQuery( this.querySelector( '.show-less' ) ).show();
+				} else {
+					jQuery( this.querySelector( '.show-more' ) ).hide();
+					jQuery( this.querySelector( '.show-less' ) ).hide();
+				}
 			},
 			
 			showSummarySnippet: function() {
-				jQuery( '.summary' ).text( this.summaryString.substr( 0, 320 ) + '...' );
-				jQuery( '.show-more' ).show();
-				jQuery( '.show-less' ).hide();
-			},
-			
-			showNormal: function() {
-				jQuery( '.summary' ).html( this.summaryString );
-				jQuery( '.show-more' ).hide();
-				jQuery( '.show-less' ).hide();
+				var jSummary = jQuery( this.querySelector( '.summary' ) );
+				jSummary.html( this.author.summary );
+				if( jSummary.text().length > 200 ) {
+					jSummary.text( jSummary.text().substr( 0, 200 ) + '...' );
+					jQuery( this.querySelector( '.show-more' ) ).show();
+					jQuery( this.querySelector( '.show-less' ) ).hide();
+				} else {
+					jQuery( this.querySelector( '.show-more' ) ).hide();
+					jQuery( this.querySelector( '.show-less' ) ).hide();
+				}
 			},
 			
 			ready: function() {
-				this.summaryString = jQuery( '.summary' ).text();
-				if(this.summaryString.length > 320)
-					this.showSummarySnippet();
-				else
-					this.showNormal(); 
+				this.set( 'author', this.authorData );
+				this.showSummarySnippet();
 			}
-
-			
-			
-			
-			
 			
 		});
 
