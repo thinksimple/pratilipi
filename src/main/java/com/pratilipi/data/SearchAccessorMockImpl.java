@@ -4,6 +4,7 @@ import static com.pratilipi.data.mock.GlobalIndexMock.GLOBAL_INDEX;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -54,13 +55,13 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 	}
 
 	@Override
-	public void indexPratilipiData( PratilipiData pratilipiData ) throws UnexpectedServerException {
+	public void indexPratilipiData( PratilipiData pratilipiData, String keywords ) throws UnexpectedServerException {
 		GLOBAL_INDEX.add( pratilipiData );
 	}
 
 	@Override
-	public void indexPratilipiDataList( List<PratilipiData> pratilipiDataList ) throws UnexpectedServerException {
-		GLOBAL_INDEX.addAll( pratilipiDataList );
+	public void indexPratilipiDataList( Map<PratilipiData, String> pratilipiDataList ) throws UnexpectedServerException {
+		GLOBAL_INDEX.addAll( pratilipiDataList.keySet() );
 	}
 
 	@Override
