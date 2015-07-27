@@ -25,6 +25,7 @@
 		<include path="**.js"   expiration="3650d" />
 		<include path="**.css"  expiration="3650d" />
 		<include path="**.png"  expiration="3650d" />
+		<include path="**.jpg"  expiration="3650d" />
 	</static-files>
 
 	<system-properties>
