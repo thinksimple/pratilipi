@@ -90,20 +90,27 @@
 
 			properties: {
 				user: { type: Object },
-				pratilipi: { type:Object },
+				pratilipi: { type:Object, observer:"_pratilipiChangeObserver" },
 				userpratilipi: { type:Object, notify:true, observer:"_userpratilipiChangeObserver" },
 				
 				params: { type:Object, value:{} },
 				paramsErr: { type:Object },
 			},
 			
+			_pratilipiChangeObserver: function() {
+				this.params.pratilipiId = this.pratilipi.pratilipiId;
+			},
+			
 			_userpratilipiChangeObserver: function() {
-				this.params.pratilipiId = this.userpratilipi.pratilipiId;
+				if( ! this.userpratilipi.pratilipiId )
+					this.close();
 				this.set( 'params.reviewTitle', this.userpratilipi.reviewTitle );
 				if( this.userpratilipi.review ) {
 					this.querySelector( 'textarea' ).value = this.userpratilipi.review;
 					if( ! this.$.ReviewInputCollapse.opened && ! this.$.ReviewCollapse.opened )
 						this.$.ReviewCollapse.toggle();
+				} else {
+					this.querySelector( 'textarea' ).value = "";
 				}
 			},
 			
