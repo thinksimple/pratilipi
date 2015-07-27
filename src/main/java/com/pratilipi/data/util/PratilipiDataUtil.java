@@ -187,6 +187,13 @@ public class PratilipiDataUtil {
 			pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		
+		if( includeMetaData ) {
+			try {
+				pratilipiData.setKeywords( getPratilipiKeywords( pratilipi.getId() ) );
+			} catch (UnexpectedServerException e) {
+				e.printStackTrace();
+			}
+		}
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
 		pratilipiData.setCoverImageUrl( createPratilipiCoverUrl( pratilipi ) );
@@ -732,7 +739,7 @@ public class PratilipiDataUtil {
 	}
 	
 	
-	public static String[] getPratilipiKeywords( Long pratilipiId )
+	public static String getPratilipiKeywords( Long pratilipiId )
 			throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -745,7 +752,7 @@ public class PratilipiDataUtil {
 			BlobEntry blobEntry = blobAccessor.getBlob( KEYWORDS_FOLDER + "/" + pratilipiId );
 			if( blobEntry == null )
 				return null;
-			return new String( blobEntry.getData(), Charset.forName( "UTF-8" ) ).split( "\\s+" );
+			return new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 
 		} else {
 

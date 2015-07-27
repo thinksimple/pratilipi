@@ -48,7 +48,7 @@ public class PratilipiIdfApi extends GenericApi {
 		// Populate Keyword-Frequency map.
 		final HashMap<String, Integer> keywordFrequencyMap = new HashMap<>();
 		for( Long pratilipiId : pratilipiIdList ) {
-			String[] keywords = PratilipiDataUtil.getPratilipiKeywords( pratilipiId );
+			String[] keywords = PratilipiDataUtil.getPratilipiKeywords( pratilipiId ).split( "\\s+" );
 			if( keywords == null )
 				continue;
 			for( String keyword : keywords ) {
