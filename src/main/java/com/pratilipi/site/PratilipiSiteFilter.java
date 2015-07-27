@@ -93,7 +93,7 @@ public class PratilipiSiteFilter implements Filter {
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
 			
-		} else if( !validHostSubdomainRegEx.matcher( host ).matches() ) { // Redirecting to <lang>.pratilipi.com
+		} else if( validHostSubdomainRegEx.matcher( host ).matches() ) { // Redirecting to <lang>.pratilipi.com
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			String queryString = request.getQueryString();
 			if( queryString == null || queryString.isEmpty() )
