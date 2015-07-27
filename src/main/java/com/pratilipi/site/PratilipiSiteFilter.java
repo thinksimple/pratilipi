@@ -32,6 +32,8 @@ public class PratilipiSiteFilter implements Filter {
 			+ "|"
 			+ "/author-image/150/.*" );
 	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
+	private final Pattern validHostSubdomainRegEx = Pattern.compile(
+			"www\\.(tamil)\\.pratilipi\\.com" );
 	private final Pattern validHostRegEx = Pattern.compile(
 			// TODO: Remove cdn-asia as soon as wwww becomes www.
 			"(www|tamil|gamma|static|cdn-asia)\\.pratilipi\\.com"
@@ -91,6 +93,15 @@ public class PratilipiSiteFilter implements Filter {
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
 			
+		} else if( !validHostSubdomainRegEx.matcher( host ).matches() ) { // Redirecting to <lang>.pratilipi.com
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			String queryString = request.getQueryString();
+			if( queryString == null || queryString.isEmpty() )
+				response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + "//" + host.substring( 4 ) + requestUri );
+			else
+				response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + "//" + host.substring( 4 ) + requestUri + "?" + request.getQueryString() );
+			
+		
 		} else if( !validHostRegEx.matcher( host ).matches() ) { // Redirecting to www.pratilipi.com
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			String queryString = request.getQueryString();
