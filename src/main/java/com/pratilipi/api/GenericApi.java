@@ -94,7 +94,7 @@ public abstract class GenericApi extends HttpServlet {
 		Enumeration<String> queryParams = request.getParameterNames();
 		while( queryParams.hasMoreElements() ) {
 			String param = queryParams.nextElement();
-			requestPayloadJson.add( param, gson.fromJson( request.getParameter( param ), JsonElement.class ) );
+			requestPayloadJson.addProperty( param, request.getParameter( param ) );
 		}
 		
 		
