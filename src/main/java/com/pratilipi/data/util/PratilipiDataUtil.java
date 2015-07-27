@@ -618,11 +618,11 @@ public class PratilipiDataUtil {
 		}
 		
 		if( pratilipiDataList.size() > 0 ) {
-			Map < PratilipiData, String > pratilipiDataMap = new HashMap<>();
+			Map<PratilipiData, String> pratilipiDataKeywordsMap = new HashMap<>();
 			for( PratilipiData pratilipiData : pratilipiDataList )
-				pratilipiDataMap.put( pratilipiData, getPratilipiKeywords( pratilipiData.getId() ) );
+				pratilipiDataKeywordsMap.put( pratilipiData, getPratilipiKeywords( pratilipiData.getId() ) );
 			
-			searchAccessor.indexPratilipiDataList( pratilipiDataMap );
+			searchAccessor.indexPratilipiDataList( pratilipiDataKeywordsMap );
 		}
 	}
 	

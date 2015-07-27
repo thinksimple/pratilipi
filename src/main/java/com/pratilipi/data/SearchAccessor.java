@@ -15,7 +15,7 @@ public interface SearchAccessor {
 
 	void indexPratilipiData( PratilipiData pratilipiData, String keywords ) throws UnexpectedServerException;
 
-	void indexPratilipiDataList( Map< PratilipiData, String > pratilipiDataList ) throws UnexpectedServerException;
+	void indexPratilipiDataList( Map<PratilipiData, String> pratilipiDataListKeywordsMap ) throws UnexpectedServerException;
 
 	void deletePratilipiDataIndex( Long pratilipiId );
 	

@@ -184,9 +184,9 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	}
 
 	@Override
-	public void indexPratilipiDataList( Map< PratilipiData, String > pratilipiDataList ) throws UnexpectedServerException {
-		List<Document> documentList = new ArrayList<>( pratilipiDataList.size() );
-		for ( Map.Entry< PratilipiData, String > dataEntry : pratilipiDataList.entrySet() )
+	public void indexPratilipiDataList( Map<PratilipiData, String> pratilipiDataKeywordsMap ) throws UnexpectedServerException {
+		List<Document> documentList = new ArrayList<>( pratilipiDataKeywordsMap.size() );
+		for( Map.Entry<PratilipiData, String> dataEntry : pratilipiDataKeywordsMap.entrySet() )
 			documentList.add( createDocument( dataEntry.getKey(), dataEntry.getValue() ) );
 		indexDocumentList( documentList );
 	}
@@ -224,11 +224,11 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				
 				.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) );
 				
-				if( keywords != null && keywords.length() != 0 )
+				if( keywords != null && ! keywords.isEmpty() )
 					docBuilder.addField( Field.newBuilder().setName( "keywords" ).setText( keywords ) );
 				
 				// 4x weightage to PratilipiType
-				docBuilder.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+		docBuilder.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
