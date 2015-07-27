@@ -1,11 +1,14 @@
+<!-- Version:6.0 -->
+
 <dom-module id="pratilipi-search-bar">
 
 	<template>
 		<form method="get" action="/search" on-submit="onSubmit">
 			<div class="input-group">
+				<content></content>
 				<input class="form-control" name="q" placeholder="${ _strings.search_bar_help }" value="{{ query::input }}" />
 				<span class="input-group-btn">
-					<button class="btn yellow" type="submit">
+					<button class="btn" type="submit">
 						&nbsp;<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 						&nbsp; ${ _strings.search } &nbsp;&nbsp;
 					</button>

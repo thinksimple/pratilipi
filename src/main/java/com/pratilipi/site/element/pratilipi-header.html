@@ -1,5 +1,6 @@
 <!-- Version:6.0 -->
 
+<link rel='import' href='pratilipi-navigation-drawer.html'>
 <link rel="import" href="pratilipi-search-bar.html" />
 
 <dom-module id="pratilipi-header">
@@ -60,8 +61,23 @@
 					
 				</div>
 		
-				<pratilipi-search-bar></pratilipi-search-bar>
+				<!-- Search bar for extra-small & small screens. -->
+				<pratilipi-search-bar class="hidden-xs hidden-sm"></pratilipi-search-bar>
+				
 			</div>
+			
+			<!-- Navigation & Search bar for medium & large screens. -->
+			<div class="container hidden-md hidden-lg">
+				<pratilipi-search-bar>
+					<span class="input-group-btn">
+						<button class="btn" type="button" on-click="showMenu">
+							${ _strings.menu }
+						</button>
+					</span>
+				</pratilipi-search-bar>
+				<pratilipi-navigation-drawer with-backdrop></pratilipi-navigation-drawer>
+			</div>
+			
 		</div>
 	</template>
 
@@ -76,6 +92,10 @@
 				user: { type: Object, notify: true },
 			},
 
+			showMenu: function() {
+				this.querySelector( 'pratilipi-navigation-drawer' ).show();
+			},
+			
 			logIn: function() {
 				document.querySelector( 'pratilipi-user' ).logIn();
 			},
