@@ -186,14 +186,6 @@ public class PratilipiDataUtil {
 		if( includeAll )
 			pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
-		
-		if( includeMetaData ) {
-			try {
-				pratilipiData.setKeywords( getPratilipiKeywords( pratilipi.getId() ) );
-			} catch (UnexpectedServerException e) {
-				e.printStackTrace();
-			}
-		}
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
 		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
 		pratilipiData.setCoverImageUrl( createPratilipiCoverUrl( pratilipi ) );
@@ -625,8 +617,13 @@ public class PratilipiDataUtil {
 			
 		}
 		
-		if( pratilipiDataList.size() > 0 )
-			searchAccessor.indexPratilipiDataList( pratilipiDataList );
+		if( pratilipiDataList.size() > 0 ) {
+			Map < PratilipiData, String > pratilipiDataMap = new HashMap<>();
+			for( PratilipiData pratilipiData : pratilipiDataList )
+				pratilipiDataMap.put( pratilipiData, getPratilipiKeywords( pratilipiData.getId() ) );
+			
+			searchAccessor.indexPratilipiDataList( pratilipiDataMap );
+		}
 	}
 	
 	

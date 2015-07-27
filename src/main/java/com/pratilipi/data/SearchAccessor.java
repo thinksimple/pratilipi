@@ -1,6 +1,6 @@
 package com.pratilipi.data;
 
-import java.util.List;
+import java.util.Map;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -13,9 +13,9 @@ public interface SearchAccessor {
 	
 	DataListCursorTuple<Long> searchPratilipi( String searchQuery, PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 
-	void indexPratilipiData( PratilipiData pratilipiData ) throws UnexpectedServerException;
+	void indexPratilipiData( PratilipiData pratilipiData, String keywords ) throws UnexpectedServerException;
 
-	void indexPratilipiDataList( List<PratilipiData> pratilipiDataList ) throws UnexpectedServerException;
+	void indexPratilipiDataList( Map< PratilipiData, String > pratilipiDataList ) throws UnexpectedServerException;
 
 	void deletePratilipiDataIndex( Long pratilipiId );
 	

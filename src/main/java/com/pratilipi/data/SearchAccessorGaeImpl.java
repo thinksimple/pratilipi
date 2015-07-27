@@ -2,6 +2,7 @@ package com.pratilipi.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -178,15 +179,15 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	}
 
 	@Override
-	public void indexPratilipiData( PratilipiData pratilipiData ) throws UnexpectedServerException {
-		indexDocument( createDocument( pratilipiData ) );
+	public void indexPratilipiData( PratilipiData pratilipiData, String keywords ) throws UnexpectedServerException {
+		indexDocument( createDocument( pratilipiData, keywords ) );
 	}
 
 	@Override
-	public void indexPratilipiDataList( List<PratilipiData> pratilipiDataList ) throws UnexpectedServerException {
+	public void indexPratilipiDataList( Map< PratilipiData, String > pratilipiDataList ) throws UnexpectedServerException {
 		List<Document> documentList = new ArrayList<>( pratilipiDataList.size() );
-		for( PratilipiData pratilipiData : pratilipiDataList )
-			documentList.add( createDocument( pratilipiData ) );
+		for ( Map.Entry< PratilipiData, String > dataEntry : pratilipiDataList.entrySet() )
+			documentList.add( createDocument( dataEntry.getKey(), dataEntry.getValue() ) );
 		indexDocumentList( documentList );
 	}
 
@@ -195,7 +196,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 		deleteIndex( "PratilipiData:" + pratilipiId );
 	}
 
-	private Document createDocument( PratilipiData pratilipiData ) {
+	private Document createDocument( PratilipiData pratilipiData, String keywords ) {
 
 		String docId = "PratilipiData:" + pratilipiData.getId();
 		
@@ -221,12 +222,13 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguage().getNameEn() ) )
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguage().getNameEn() ) )
 				
-				.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) )
-
-				.addField( Field.newBuilder().setName( "keywords" ).setText( pratilipiData.getKeywords() ) )
+				.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) );
+				
+				if( keywords != null && keywords.length() != 0 )
+					docBuilder.addField( Field.newBuilder().setName( "keywords" ).setText( keywords ) );
 				
 				// 4x weightage to PratilipiType
-				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+				docBuilder.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
 				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
@@ -248,7 +250,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthor().getFullNameEn() ) )
 					.addField( Field.newBuilder().setName( "author" ).setText( pratilipiData.getAuthor().getFullNameEn() ) );
 		
-		if( pratilipiData.getCategoryIdList() != null )
+		if( pratilipiData.getCategoryIdList() != null && pratilipiData.getCategoryIdList().size() != 0 )
 			for( Long genreId : pratilipiData.getCategoryIdList() )
 				docBuilder.addField( Field.newBuilder().setName( "genre" ).setAtom( genreId.toString() ) );
 
