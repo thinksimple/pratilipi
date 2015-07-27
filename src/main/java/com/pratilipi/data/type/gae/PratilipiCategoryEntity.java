@@ -25,6 +25,14 @@ public class PratilipiCategoryEntity implements PratilipiCategory {
 	@Persistent( column = "CREATION_DATE" )
 	private Date creationDate;
 	
+	public PratilipiCategoryEntity() {}
+	
+	public PratilipiCategoryEntity( Long categoryId, Long pratilipiId ) {
+		this.id = pratilipiId + "-" + categoryId;
+		this.categoryId = categoryId;
+		this.pratilipiId = pratilipiId;
+	}
+	
 	public void setId( String id ){
 		this.id = id;
 	}

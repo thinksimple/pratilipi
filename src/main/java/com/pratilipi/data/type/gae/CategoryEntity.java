@@ -39,6 +39,13 @@ public class CategoryEntity implements Category {
 	@Persistent( column = "HIDDEN" )
 	private Boolean hidden;
 	
+	
+	public CategoryEntity() {}
+	
+	public CategoryEntity( Long id ) {
+		this.id = id;
+	}
+	
 	@Override
 	public Long getId() {
 		return id;
