@@ -39,7 +39,7 @@
 			
 			<div class="media-body">
 				<h4 class="media-heading">{{ review.reviewTitle }}</h4>
-				<div>{{ review.review }}</div>
+				<div class="review">{{ review.review }}</div>
 			</div>
 			
 		</div>
@@ -55,6 +55,10 @@
 
 			properties: {
 				review: { type:Object, notify:true }
+			},
+		
+			ready: {
+				jQuery( this.querySelector( '.review' ) ).html( this.review.review );
 			}
 
 		});
