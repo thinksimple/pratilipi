@@ -9,10 +9,10 @@ do
 	date
 	
 	cd ~/android/pratilipi
-	bash shell-scripts/update-android.sh 2>&1 | logger
+	sudo bash shell-scripts/update-android.sh 2>&1 | logger
 	
 	cd ~/test/pratilipi
-	bash shell-scripts/update-test.sh 2>&1 | logger
+	sudo bash shell-scripts/update-test.sh 2>&1 | logger
 	
 	sleep 60
 
