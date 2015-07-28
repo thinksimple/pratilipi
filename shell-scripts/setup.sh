@@ -33,19 +33,19 @@ sudo bash google-fluentd-install.sh
 rm google-fluentd-install.sh
 
 
-# Cloning git repository for devo-pratilipi/* prod-pratilipi/gamma
+# Cloning git repository for prod-pratilipi/gamma & devo-pratilipi/*
 sudo mkdir -p ~/test
 cd ~/test
-git clone -b master https://github.com/Pratilipi/pratilipi.git
-
-# Cloning git repository for prod-pratilipi/worker
-sudo mkdir -p ~/worker
-cd ~/worker
 git clone -b master https://github.com/Pratilipi/pratilipi.git
 
 # Cloning git repository for prod-pratilipi/default
 sudo mkdir -p ~/prod
 cd ~/prod
+git clone -b master https://github.com/Pratilipi/pratilipi.git
+
+# Cloning git repository for prod-pratilipi/worker
+sudo mkdir -p ~/worker
+cd ~/worker
 git clone -b master https://github.com/Pratilipi/pratilipi.git
 
 # Cloning git repository for prod-pratilipi/android
