@@ -9,7 +9,7 @@ while true
 do
 
 	date
-	bash update-test.sh 2>&1 | logger
+	bash shell-scripts/update-test.sh 2>&1 | logger
 	sleep 60
-	
+
 done
