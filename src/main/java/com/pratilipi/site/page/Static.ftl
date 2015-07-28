@@ -8,7 +8,7 @@
 
 		<#-- Page Title & Favicon -->
 		<title>${ title } &#0171; ${ _strings.pratilipi }</title>
-		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
+		<link rel="shortcut icon" type="image/png" href="/favicon.png">
 
 		<#-- Third-Party Library -->
 		<#list resourceList as resource>

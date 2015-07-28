@@ -8,7 +8,7 @@
 
 		<#-- Page Title & Favicon -->
 		<title>${ pratilipi.title } <#if pratilipi.titleEn??>/ ${ pratilipi.titleEn }</#if> &#0171; <#if pratilipi.author.name??>${ pratilipi.author.name } / </#if>${ pratilipi.author.nameEn } &#0171; ${ _strings.pratilipi }</title>		
-		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
+		<link rel="shortcut icon" type="image/png" href="/favicon.png">
 
 		<#-- Third-Party Library -->
 		<#list resourceList as resource>
