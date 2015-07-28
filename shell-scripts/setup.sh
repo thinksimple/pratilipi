@@ -1,3 +1,6 @@
+cd ~
+
+
 # Update apt-get
 echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" | sudo tee /etc/apt/sources.list.d/webupd8team-java.list
 echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" | sudo tee -a /etc/apt/sources.list.d/webupd8team-java.list
@@ -30,5 +33,22 @@ sudo bash google-fluentd-install.sh
 rm google-fluentd-install.sh
 
 
-# Clone git repository
+# Cloning git repository for devo-pratilipi/* prod-pratilipi/gamma
+sudo mkdir -p ~/test
+cd ~/test
+git clone -b master https://github.com/Pratilipi/pratilipi.git
+
+# Cloning git repository for prod-pratilipi/worker
+sudo mkdir -p ~/worker
+cd ~/worker
+git clone -b master https://github.com/Pratilipi/pratilipi.git
+
+# Cloning git repository for prod-pratilipi/default
+sudo mkdir -p ~/prod
+cd ~/prod
+git clone -b master https://github.com/Pratilipi/pratilipi.git
+
+# Cloning git repository for prod-pratilipi/android
+sudo mkdir -p ~/android
+cd ~/android
 git clone -b master https://github.com/Pratilipi/pratilipi.git
