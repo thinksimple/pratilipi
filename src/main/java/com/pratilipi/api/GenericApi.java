@@ -89,7 +89,11 @@ public abstract class GenericApi extends HttpServlet {
 		StringBuilder queryParamsStr = new StringBuilder( "{" );
 		while( queryParams.hasMoreElements() ) {
 			String param = queryParams.nextElement();
-			queryParamsStr.append( "\"" + param + "\":\"" + request.getParameter( param ) + "\"," );
+			String value = request.getParameter( param );
+			if( value.startsWith( "{" ) || value.startsWith( "[" ) )
+				queryParamsStr.append( "\"" + param + "\":" + value + "," );
+			else
+				queryParamsStr.append( "\"" + param + "\":\"" + value + "\"," );
 		}
 		if( queryParamsStr.length() > 1 )
 			queryParamsStr.setCharAt( queryParamsStr.length() - 1, '}' );
