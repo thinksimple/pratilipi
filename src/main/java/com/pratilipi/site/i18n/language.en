@@ -18,6 +18,7 @@ googleplus_page	= https://plus.google.com/+PratilipiTeam
 linkedin_page	= https://www.linkedin.com/company/pratilipi
 
 menu	= Menu
+back	= Back
 saving  = Saving ...
 working = Working ...
 
@@ -54,6 +55,7 @@ sign_up               = Sign Up !
 sign_up_for_pratilipi = Sign Up for Pratilipi
 sign_out			  = Sign Out
 
+not_a_member		= Not a member ?
 forgot_password     = Forgot Password ?
 reset_password      = Reset Password
 reset_password_help = Please enter the email address you signed up with. We will send you a link to reset your password.
