@@ -57,8 +57,9 @@
 				review: { type:Object, notify:true }
 			},
 		
-			ready: {
-				jQuery( this.querySelector( '.review' ) ).html( this.review.review );
+			ready: function() {
+				if( this.review )
+					jQuery( this.querySelector( '.review' ) ).html( this.review.review );
 			}
 
 		});
