@@ -187,7 +187,10 @@ public class PratilipiDataUtil {
 			pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		pratilipiData.setPageUrl( pratilipiPage.getUri() );
-		pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
+		if( pratilipiPage.getUriAlias() != null )
+			pratilipiData.setPageUrlAlias( pratilipiPage.getUriAlias() );
+		else
+			pratilipiData.setPageUrlAlias( pratilipiPage.getUri() );
 		pratilipiData.setCoverImageUrl( createPratilipiCoverUrl( pratilipi ) );
 		pratilipiData.setReaderPageUrl( PageType.READ.getUrlPrefix() + pratilipi.getId() );
 		pratilipiData.setWriterPageUrl( PageType.WRITE.getUrlPrefix() + pratilipi.getId() );
