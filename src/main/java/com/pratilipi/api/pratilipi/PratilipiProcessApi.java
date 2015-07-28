@@ -40,15 +40,18 @@ public class PratilipiProcessApi extends GenericApi {
 		pratilipiFilter.setNextProcessDateEnd( new Date() );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, 100 ).getDataList();
+		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
 		
-		Task task = TaskQueueFactory.newTask()
-				.setUrl( "/pratilipi/process" )
-				.addParam( "pratilipiIdList", new Gson().toJson( pratilipiIdList ) )
-				.addParam( "updateStats", "true" );
-		TaskQueueFactory.getPratilipiTaskQueue().add( task );
-		logger.log( Level.INFO, "Created task with " + pratilipiIdList.size() + " Pratilipi ids." );
+		for( int i = 0; i < pratilipiIdList.size(); i = i + 100 ) {
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/process" )
+					.addParam( "pratilipiIdList", new Gson().toJson( pratilipiIdList.subList( i, i + 100 < pratilipiIdList.size() ? i + 100 : pratilipiIdList.size() ) ) )
+					.addParam( "updateStats", "true" );
+			TaskQueueFactory.getPratilipiTaskQueue().add( task );
+		}
 		
+		logger.log( Level.INFO, "Created task(s) with " + pratilipiIdList.size() + " Pratilipi ids." );
+
 		return new GenericResponse();
 	}
 	
