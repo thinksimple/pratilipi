@@ -5,7 +5,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -85,28 +84,37 @@ public abstract class GenericApi extends HttpServlet {
 		String method = request.getMethod();
 		Gson gson = new Gson();
 
+		// Creating JsonObject from request parameters
+		Enumeration<String> queryParams = request.getParameterNames();
+		StringBuilder queryParamsStr = new StringBuilder( "{" );
+		while( queryParams.hasMoreElements() ) {
+			String param = queryParams.nextElement();
+			queryParamsStr.append( "\"" + param + "\":\"" + request.getParameter( param ) + "\"," );
+		}
+		if( queryParamsStr.length() > 1 )
+			queryParamsStr.setCharAt( queryParamsStr.length() - 1, '}' );
+		else
+			queryParamsStr.append( "}" );
+		JsonObject queryParamsJson = gson.fromJson( queryParamsStr.toString(), JsonElement.class ).getAsJsonObject();
+
 		// Creating JsonObject from request body (JSON)
-		JsonObject requestPayloadJson = method.equals( "PUT" )
+		JsonObject requestBodyJson = method.equals( "PUT" )
 				? gson.fromJson( IOUtils.toString( request.getInputStream(), "UTF-8" ), JsonElement.class ).getAsJsonObject()
 				: new JsonObject();
 
-		// Adding query string data in JsonObject
-		Enumeration<String> queryParams = request.getParameterNames();
-		while( queryParams.hasMoreElements() ) {
-			String param = queryParams.nextElement();
-			requestPayloadJson.addProperty( param, request.getParameter( param ) );
+		
+		JsonObject requestPayloadJson = new JsonObject();
+		for( Entry<String, JsonElement> entry : queryParamsJson.entrySet() ) {
+			requestPayloadJson.add( entry.getKey(), entry.getValue() );
+			requestPayloadJson.addProperty( "has" + Character.toUpperCase( entry.getKey().charAt( 0 ) ) + entry.getKey().substring( 1 ), true );
+		}
+		for( Entry<String, JsonElement> entry : requestBodyJson.entrySet() ) {
+			requestPayloadJson.add( entry.getKey(), entry.getValue() );
+			requestPayloadJson.addProperty( "has" + Character.toUpperCase( entry.getKey().charAt( 0 ) ) + entry.getKey().substring( 1 ), true );
 		}
 		
 		
 		logger.log( Level.INFO, "Request Payload: " + requestPayloadJson );
-
-
-		// Adding hasParam flags in JsonObject
-		ArrayList<String> paramList = new ArrayList<>( requestPayloadJson.entrySet().size() );
-		for( Entry<String, JsonElement> entry : requestPayloadJson.entrySet() )
-			paramList.add( entry.getKey() );
-		for( String param : paramList )
-			requestPayloadJson.addProperty( "has" + Character.toUpperCase( param.charAt( 0 ) ) + param.substring( 1 ), true );
 		
 		
 		// Invoking get/put method for API response
