@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 		<#-- Page Title & Favicon -->
-		<title>${ pratilipi.title } / ${ pratilipi.titleEn } &#0171; ${ pratilipi.author.name } / ${ pratilipi.author.nameEn } &#0171; ${ _strings.pratilipi }</title>		
+		<title>${ pratilipi.title } <#if pratilipi.titleEn??>/ ${ pratilipi.titleEn }</#if> &#0171; ${ pratilipi.author.name } / ${ pratilipi.author.nameEn } &#0171; ${ _strings.pratilipi }</title>		
 		<link rel="shortcut icon" type="image/png" href="/theme.pratilipi/favicon.png">
 
 		<#-- Third-Party Library -->
