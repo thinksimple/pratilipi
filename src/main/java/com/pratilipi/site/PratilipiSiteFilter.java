@@ -43,7 +43,7 @@ public class PratilipiSiteFilter implements Filter {
 			+ "localhost|127.0.0.1" );
 	
 	{
-//		redirections.put( "/favicon.ico", "/theme.pratilipi/favicon.png" );
+		redirections.put( "/favicon.ico", "/favicon.png" );
 //		redirections.put( "/apple-touch-icon.png", "/theme.pratilipi/favicon.png" );
 //		redirections.put( "/apple-touch-icon-precomposed.png", "/theme.pratilipi/favicon.png" );
 
