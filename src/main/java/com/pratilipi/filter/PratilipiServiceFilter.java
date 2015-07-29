@@ -1,4 +1,4 @@
-package com.pratilipi.api;
+package com.pratilipi.filter;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pratilipi.data.DataAccessorFactory;
 
-public class GenericServiceFilter implements Filter {
+public class PratilipiServiceFilter implements Filter {
 	
 	@Override
 	public void init( FilterConfig config ) throws ServletException { }
@@ -36,6 +36,7 @@ public class GenericServiceFilter implements Filter {
 			chain.doFilter( request, response );
 
 		DataAccessorFactory.destroyDataAccessor();
+		
 	}
 
 }

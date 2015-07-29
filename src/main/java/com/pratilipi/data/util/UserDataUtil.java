@@ -15,7 +15,7 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.User;
-import com.pratilipi.site.AccessTokenFilter;
+import com.pratilipi.filter.AccessTokenFilter;
 
 public class UserDataUtil {
 	
@@ -95,7 +95,7 @@ public class UserDataUtil {
 		user.setState( UserState.REGISTERED );
 		user.setSignUpDate( new Date() );
 		user.setSignUpSource( signUpSource );
-
+		
 		user = dataAccessor.createOrUpdateUser( user );
 
 		return createUserData( user );

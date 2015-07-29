@@ -7,7 +7,7 @@
 	
 	<filter>
 		<filter-name>PratilipiSiteFilter</filter-name>
-		<filter-class>com.pratilipi.site.PratilipiSiteFilter</filter-class>
+		<filter-class>com.pratilipi.filter.PratilipiSiteFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>PratilipiSiteFilter</filter-name>
@@ -16,7 +16,7 @@
 
 	<filter>
 		<filter-name>UxModeFilter</filter-name>
-		<filter-class>com.pratilipi.site.UxModeFilter</filter-class>
+		<filter-class>com.pratilipi.filter.UxModeFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>UxModeFilter</filter-name>
@@ -25,7 +25,11 @@
 
 	<filter>
 		<filter-name>AccessTokenFilter</filter-name>
-		<filter-class>com.pratilipi.site.AccessTokenFilter</filter-class>
+		<filter-class>com.pratilipi.filter.AccessTokenFilter</filter-class>
+		<init-param>
+			<param-name>AutoGenerate</param-name>
+			<param-value>true</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>AccessTokenFilter</filter-name>
@@ -34,8 +38,8 @@
 	
 	
 	<servlet>
-		<servlet-name>PratilipiApi</servlet-name>
-		<servlet-class>com.pratilipi.site.PratilipiApi</servlet-class>
+		<servlet-name>PratilipiService</servlet-name>
+		<servlet-class>com.pratilipi.service.PratilipiService</servlet-class>
 		<load-on-startup>1</load-on-startup>
 		<init-param>
 			<param-name>Prefix</param-name>
@@ -43,7 +47,7 @@
 		</init-param>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>PratilipiApi</servlet-name>
+		<servlet-name>PratilipiService</servlet-name>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
 

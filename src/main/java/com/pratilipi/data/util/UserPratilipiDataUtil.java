@@ -17,7 +17,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserPratilipi;
-import com.pratilipi.site.AccessTokenFilter;
+import com.pratilipi.filter.AccessTokenFilter;
 
 public class UserPratilipiDataUtil {
 	

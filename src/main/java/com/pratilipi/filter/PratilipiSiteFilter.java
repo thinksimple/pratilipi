@@ -1,4 +1,4 @@
-package com.pratilipi.site;
+package com.pratilipi.filter;
 
 import java.io.IOException;
 import java.util.HashMap;

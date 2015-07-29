@@ -6,23 +6,25 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<filter>
-		<filter-name>PratilipiWorkerFilter</filter-name>
-		<filter-class>com.pratilipi.worker.PratilipiWorkerFilter</filter-class>
+		<filter-name>PratilipiServiceFilter</filter-name>
+		<filter-class>com.pratilipi.filter.PratilipiServiceFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>PratilipiWorkerFilter</filter-name>
+		<filter-name>PratilipiServiceFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+
 	<servlet>
-		<servlet-name>PratilipiWorker</servlet-name>
-		<servlet-class>com.pratilipi.worker.PratilipiWorker</servlet-class>
+		<servlet-name>WorkerService</servlet-name>
+		<servlet-class>com.pratilipi.service.WorkerService</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>PratilipiWorker</servlet-name>
+		<servlet-name>WorkerService</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
+
 
 	<!-- Security Constraints -->
 	

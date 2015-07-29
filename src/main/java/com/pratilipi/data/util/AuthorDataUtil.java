@@ -30,7 +30,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.site.AccessTokenFilter;
+import com.pratilipi.filter.AccessTokenFilter;
 
 public class AuthorDataUtil {
 	

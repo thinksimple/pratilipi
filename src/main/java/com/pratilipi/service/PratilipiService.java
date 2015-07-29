@@ -1,4 +1,4 @@
-package com.pratilipi.site;
+package com.pratilipi.service;
 
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
@@ -12,7 +12,7 @@ import com.pratilipi.api.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.api.userpratilipi.UserPratilipiApi;
 
 @SuppressWarnings("serial")
-public class PratilipiApi extends GenericService {
+public class PratilipiService extends GenericService {
 	
 	static {
 		ApiRegistry.register( PratilipiListApi.class );

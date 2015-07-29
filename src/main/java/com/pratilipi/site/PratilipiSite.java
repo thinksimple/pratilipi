@@ -40,6 +40,7 @@ import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
+import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.site.page.data.Home;
 
 @SuppressWarnings("serial")

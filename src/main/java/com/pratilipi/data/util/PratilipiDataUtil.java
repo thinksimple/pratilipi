@@ -43,7 +43,7 @@ import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
-import com.pratilipi.site.AccessTokenFilter;
+import com.pratilipi.filter.AccessTokenFilter;
 
 public class PratilipiDataUtil {
 	

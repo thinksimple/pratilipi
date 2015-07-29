@@ -1,4 +1,4 @@
-package com.pratilipi.worker;
+package com.pratilipi.service;
 
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
@@ -9,7 +9,7 @@ import com.pratilipi.api.pratilipi.PratilipiIdfApi;
 import com.pratilipi.api.pratilipi.PratilipiProcessApi;
 
 @SuppressWarnings("serial")
-public class PratilipiWorker extends GenericService {
+public class WorkerService extends GenericService {
 	
 	static {
 		ApiRegistry.register( InitApi.class );
