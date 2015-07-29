@@ -3,8 +3,6 @@ package com.pratilipi.email;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.mail.Address;
 import javax.mail.Message;
@@ -26,12 +24,10 @@ public class EmailUtil {
 	private final static Session session =
 			Session.getDefaultInstance( properties, null );
 	
-	private static final Logger logger =
-			Logger.getLogger( EmailUtil.class.getName() );
 	private static Map<String, Object> dataModel;
 	
 	public static void sendMail( EmailTemplate emailTemplate )
-					throws MessagingException, IOException, TemplateException {
+					throws MessagingException, IOException, TemplateException, UnexpectedServerException {
 
 		//FreeMarker template
 		String templateName = emailTemplate.getTemplateName();
@@ -41,16 +37,11 @@ public class EmailUtil {
 			templateName = templateName + "." + "en" + ".ftl";
 		
 		dataModel = null;
-		dataModel.put( "Name" , emailTemplate.getRecipientName() );
-		
+		dataModel.put( "userName" , emailTemplate.getRecipientName() );
+		dataModel.put( "userEmail", emailTemplate.getRecipientEmail() );
+		dataModel.put( "userPassword", emailTemplate.getPassword() );
 		// The magic
-		String body = "";
-		try {
-			body = FreeMarkerUtil.processTemplate( dataModel, templateName );
-		} catch (UnexpectedServerException e) {
-			logger.log( Level.SEVERE, "Neither AuthorId, nor PratilipiId is provided !" );
-			e.printStackTrace();
-		}
+		String body = FreeMarkerUtil.processTemplate( dataModel, templateName );
 		
 		// Send E-mail
 		Message msg = new MimeMessage( session );

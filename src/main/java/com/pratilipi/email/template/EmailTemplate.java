@@ -6,6 +6,8 @@ public class EmailTemplate {
 	
 	private String senderEmail;
 	
+	private String userPassword;
+	
 	private String recipientName;
 	
 	private String recipientEmail;
@@ -50,7 +52,11 @@ public class EmailTemplate {
 	public void setSenderEmail( String senderEmail ) {
 		this.senderEmail = senderEmail;
 	}
-
+	
+	public String getPassword() {
+		return this.userPassword;
+	}
+	
 	public String getRecipientName() {
 		return this.recipientName;
 	}

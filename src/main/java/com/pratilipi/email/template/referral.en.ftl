@@ -2,7 +2,7 @@
 <body>
 <p>
 
-Hi<#if user.getFirstName() ??> ${ user.getFirstName() }</#if>,<br/><br/>
+Hi ${ userName },<br/><br/>
 
 Your friend <#if referer.getFirstName() ??>${ referer.getFirstName() }<#else>${ referer.getEmail() }</#if> has invited you to join him at <href="http://pratilipi.com?ref=${ user.getReferer() }">Pratilipi</a>.<br/><br/>
 

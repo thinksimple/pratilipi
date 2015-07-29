@@ -2,7 +2,7 @@
 <body>
 <p>
 
-Hi ${ Name }
+Hi ${ userName }
 
 Thank you for subscribing at <a href="http://pratilipi.com">Pratilipi</a> !<br/><br/>
 
