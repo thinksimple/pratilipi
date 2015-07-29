@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessTokenType;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.PasswordUtil;
@@ -22,9 +23,6 @@ public class UserDataUtil {
 	private static final Logger logger =
 			Logger.getLogger( UserDataUtil.class.getName() );
 	
-	
-	private static final long ACCESS_TOKEN_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 1 Wk
-
 	
 	public static String createUserName( User user ) {
 		if( user.getFirstName() != null && user.getLastName() == null )
@@ -46,6 +44,7 @@ public class UserDataUtil {
 		return userData;
 	}
 
+	
 	public static UserData getGuestUser() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.newUser();
@@ -63,6 +62,7 @@ public class UserDataUtil {
 			return createUserData( DataAccessorFactory.getDataAccessor().getUser( accessToken.getUserId() ) );
 	}
 
+	
 	public static UserData registerUser( String firstName, String lastName,
 			String email, String password, UserSignUpSource signUpSource )
 			throws InvalidArgumentException, UnexpectedServerException {
@@ -102,9 +102,14 @@ public class UserDataUtil {
 	}
 	
 	public static UserData loginUser( String email, String password )
-			throws InvalidArgumentException {
+			throws InvalidArgumentException, UnexpectedServerException {
 		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		
+		if( accessToken.getType() != AccessTokenType.USER ) {
+			logger.log( Level.SEVERE, "Invalid Access Token type '" + accessToken.getType() + "'" );
+			throw new UnexpectedServerException();
+		}
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email );
@@ -125,7 +130,6 @@ public class UserDataUtil {
 		
 		accessToken.setUserId( user.getId() );
 		accessToken.setLogInDate( new Date() );
-		accessToken.setExpiry( new Date( new Date().getTime() + ACCESS_TOKEN_EXPIRY ) );
 		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 		return createUserData( user );
 
@@ -138,7 +142,6 @@ public class UserDataUtil {
 					return createUserData( user );
 				accessToken.setUserId( user.getId() );
 				accessToken.setLogInDate( new Date() );
-				accessToken.setExpiry( new Date( new Date().getTime() + ACCESS_TOKEN_EXPIRY ) );
 				accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 				dataAccessor.commitTx();
 				return createUserData( user );
@@ -193,5 +196,5 @@ public class UserDataUtil {
 		}
  		*/
 	}
-	
+
 }
