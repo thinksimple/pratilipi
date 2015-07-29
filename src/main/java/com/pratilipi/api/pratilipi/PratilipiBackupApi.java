@@ -57,7 +57,7 @@ public class PratilipiBackupApi extends GenericApi {
 		}
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/backup-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm" ).format( backupDate ) );
+		BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm" ).format( backupDate ) + "-backup", null, "text/plain" );
 		blobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		

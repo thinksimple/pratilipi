@@ -79,7 +79,7 @@ public class PratilipiIdfApi extends GenericApi {
 
 		// Persist csv string in BlobStore
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/idf-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm" ).format( idfGenerationDate ) + ".csv" );
+		BlobEntry blobEntry = blobAccessor.newBlob( "pratilipi/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm" ).format( idfGenerationDate ) + "-idf.csv", null, "text/plain" );
 		blobEntry.setData( csv.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		

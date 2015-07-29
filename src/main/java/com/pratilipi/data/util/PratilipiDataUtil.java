@@ -794,7 +794,7 @@ public class PratilipiDataUtil {
 			} else {
 				
 				if( keywordsBlobEntry == null )
-					keywordsBlobEntry = blobAccessor.newBlob( KEYWORDS_FOLDER + "/" + pratilipiId, null, "text/html" );
+					keywordsBlobEntry = blobAccessor.newBlob( KEYWORDS_FOLDER + "/" + pratilipiId, null, "text/plain" );
 				else if( generatedKeywords.equals( new String( keywordsBlobEntry.getData(), Charset.forName( "UTF-8" ) ) ) )
 					return false;
 
