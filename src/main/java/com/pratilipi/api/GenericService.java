@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-public class GenericService extends HttpServlet {
+public abstract class GenericService extends HttpServlet {
 	
 	static { }
 	
