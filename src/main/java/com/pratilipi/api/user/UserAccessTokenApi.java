@@ -2,7 +2,7 @@ package com.pratilipi.api.user;
 
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
-import com.pratilipi.api.annotation.Put;
+import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.user.shared.GetUserAccessTokenRequest;
 import com.pratilipi.api.user.shared.GetUserAccessTokenResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -13,7 +13,7 @@ import com.pratilipi.data.util.AccessTokenDataUtil;
 @Bind( uri= "/user/accesstoken" )
 public class UserAccessTokenApi extends GenericApi {
 
-	@Put
+	@Get
 	public GetUserAccessTokenResponse get( GetUserAccessTokenRequest request )
 			throws InvalidArgumentException {
 		
