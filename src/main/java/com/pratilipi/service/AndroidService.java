@@ -6,6 +6,7 @@ import com.pratilipi.api.author.AuthorImageApi;
 import com.pratilipi.api.pratilipi.PratilipiApi;
 import com.pratilipi.api.pratilipi.PratilipiCoverApi;
 import com.pratilipi.api.pratilipi.PratilipiListApi;
+import com.pratilipi.api.user.UserAccessTokenApi;
 import com.pratilipi.api.user.UserLoginApi;
 import com.pratilipi.api.user.UserLogoutApi;
 import com.pratilipi.api.user.UserRegisterApi;
@@ -16,6 +17,7 @@ import com.pratilipi.api.userpratilipi.UserPratilipiReviewListApi;
 public class AndroidService extends GenericService {
 	
 	static {
+		ApiRegistry.register( UserAccessTokenApi.class );
 		ApiRegistry.register( UserLoginApi.class );
 		ApiRegistry.register( UserLogoutApi.class );
 		ApiRegistry.register( UserRegisterApi.class );
