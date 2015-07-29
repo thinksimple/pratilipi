@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -27,12 +26,12 @@ import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.AccessTokenType;
 import com.pratilipi.common.type.RequestCookie;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.util.AccessTokenDataUtil;
 
 public class AccessTokenFilter implements Filter {
 	
@@ -59,6 +58,8 @@ public class AccessTokenFilter implements Filter {
 		HttpServletRequest request = ( HttpServletRequest ) req;
 		HttpServletResponse response = ( HttpServletResponse ) resp;
 		
+		String requestUri = request.getRequestURI();
+		
 		String accessTokenId = request.getParameter( RequestParameter.ACCESS_TOKEN.getName() );
 		AccessToken accessToken;
 
@@ -74,17 +75,17 @@ public class AccessTokenFilter implements Filter {
 			
 			accessToken = dataAccessor.getAccessToken( accessTokenId );
 			if( accessToken == null || accessToken.isExpired() ) {
-				accessToken = dataAccessor.newAccessToken();
-				accessToken.setUserId( 0L );
-				accessToken.setType( AccessTokenType.USER );
-				accessToken.setExpiry( new Date( new Date().getTime() + 604800000 ) ); // 1Wk
-				accessToken = dataAccessor.createAccessToken( accessToken );
-				
+				accessToken = AccessTokenDataUtil.newUserAccessToken();
 				accessTokenId = accessToken.getId();
 				Cookie cookie = new Cookie( RequestCookie.ACCESS_TOKEN.getName(), accessToken.getId() );
 				cookie.setPath( "/" );
 				response.addCookie(cookie );
 			}
+			
+		} else if( requestUri.equals( "/user/accesstoken" ) ) {
+			
+			chain.doFilter( request, response );
+			return;
 	
 		} else {
 
