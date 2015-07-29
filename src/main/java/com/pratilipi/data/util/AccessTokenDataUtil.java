@@ -25,7 +25,7 @@ public class AccessTokenDataUtil {
 
 		accessToken.setUserId( 0L );
 		accessToken.setType( AccessTokenType.USER );
-		accessToken.setExpiry( new Date( ONE_MONTH_MILLIS ) );
+		accessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
 		accessToken.setCreationDate( new Date() );
 		
 		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
@@ -47,7 +47,7 @@ public class AccessTokenDataUtil {
 		} else if( accessToken.isExpired() ) {
 			errorMessages.addProperty( "accessToken", "Access Token is expired !" );
 			throw new InvalidArgumentException( errorMessages );
-		} else if( accessToken.getExpiry().after( new Date( ONE_DAY_MILLIS - ONE_DAY_MILLIS ) ) ) {
+		} else if( accessToken.getExpiry().getTime() > new Date().getTime() + ONE_MONTH_MILLIS - ONE_DAY_MILLIS ) {
 			return accessToken;
 		} else {
 			AccessToken newAccessToken = dataAccessor.newAccessToken();
@@ -55,7 +55,7 @@ public class AccessTokenDataUtil {
 			newAccessToken.setParentId( accessTokenId );
 			newAccessToken.setUserId( accessToken.getUserId() );
 			newAccessToken.setType( accessToken.getType() );
-			newAccessToken.setExpiry( new Date( ONE_MONTH_MILLIS ) );
+			newAccessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
 			newAccessToken.setCreationDate( new Date() );
 			
 			newAccessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
