@@ -5,17 +5,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.jdo.JDODataStoreException;
 import javax.jdo.JDOHelper;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
-import javax.jdo.Transaction;
 
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
@@ -187,39 +184,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		Cursor cursor = JDOCursorHelper.getCursor( accessTokenEntityList );
 		
 		return new DataListCursorTuple<AccessToken>( (List<AccessToken>) pm.detachCopyAll( accessTokenEntityList ), cursor.toWebSafeString() );
-	}
-	
-	@Override
-	public AccessToken createAccessToken( AccessToken accessToken ) {
-		accessToken.setCreationDate( new Date() );
-		if( accessToken.getExpiry() == null )
-			accessToken.setExpiry( new Date( new Date().getTime() + 86400000 ) ); // 1 Day
-
-		Transaction tx = null;
-		while( true ) {
-			((AccessTokenEntity) accessToken).setId( UUID.randomUUID().toString() );
-			try {
-				tx = pm.currentTransaction();
-				tx.begin();
-				pm.getObjectById( AccessTokenEntity.class, accessToken.getId() );
-			} catch( JDOObjectNotFoundException e ) {
-				try{
-					AccessToken at = pm.makePersistent( accessToken );
-					tx.commit();
-					return pm.detachCopy( at );
-				} catch( JDODataStoreException ex ) {
-					logger.log( Level.INFO, "Transaction failed. Retrying ...", ex );
-				}
-			} finally {
-				if( tx.isActive() )
-					tx.rollback();
-			}
-		}
-	}
-	
-	@Override
-	public AccessToken updateAccessToken( AccessToken accessToken ) {
-		return createOrUpdateEntity( accessToken );
 	}
 	
 	@Override

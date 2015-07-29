@@ -8,7 +8,6 @@ import static com.pratilipi.data.mock.UserPratilipiMock.USER_PRATILIPI_TABLE;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
@@ -144,18 +143,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return null;
 	}
 	
-	@Override
-	public AccessToken createAccessToken( AccessToken accessToken ) {
-		((AccessTokenEntity) accessToken).setId( UUID.randomUUID().toString() );
-		AccessTokenMock.ACCESS_TOKEN_TABLE.add( accessToken );
-		return accessToken;
-	}
-
-	@Override
-	public AccessToken updateAccessToken( AccessToken accessToken ) {
-		return accessToken;
-	}
-
 	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
 		AccessTokenMock.ACCESS_TOKEN_TABLE.add( accessToken );
