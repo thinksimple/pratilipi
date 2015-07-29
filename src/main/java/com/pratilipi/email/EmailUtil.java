@@ -27,7 +27,7 @@ public class EmailUtil {
 			Session.getDefaultInstance( properties, null );
 	
 	private static final Logger logger =
-			Logger.getLogger( CopyOfEmailUtil.class.getName() );
+			Logger.getLogger( EmailUtil.class.getName() );
 	private static Map<String, Object> dataModel;
 	
 	public static void sendMail( EmailTemplate emailTemplate )

@@ -21,13 +21,14 @@ import com.pratilipi.data.type.User;
 import com.pratilipi.email.EmailUtil;
 import com.pratilipi.email.template.EmailTemplate;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.filter.UxModeFilter;
 
 import freemarker.template.TemplateException;
 
 public class UserDataUtil {
 	
 	private static final Logger logger =
-			Logger.getLogger( CopyOfUserDataUtil.class.getName() );
+			Logger.getLogger( UserDataUtil.class.getName() );
 	
 	
 	private static final long ACCESS_TOKEN_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 1 Wk
@@ -40,6 +41,8 @@ public class UserDataUtil {
 			return user.getLastName();
 		else if( user.getFirstName() != null && user.getLastName() != null )
 			return user.getFirstName() + " " + user.getLastName();
+		else if( user.getEmail() != null )
+			return user.getEmail();
 		else
 			return null;
 	}
@@ -109,9 +112,9 @@ public class UserDataUtil {
 		EmailTemplate emailTemplate = new EmailTemplate( "welcome" );
 		emailTemplate.setRecipientName( createUserName( user ) );
 		emailTemplate.setRecipientEmail( email );
-		emailTemplate.setLanguage( "en" );
+		emailTemplate.setLanguage( UxModeFilter.getUserLanguage().getCode() );
 		EmailUtil.sendMail( emailTemplate );
-
+		
 		return createUserData( user );
 	}
 	
