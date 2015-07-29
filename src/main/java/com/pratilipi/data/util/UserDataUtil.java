@@ -1,8 +1,11 @@
 package com.pratilipi.data.util;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.mail.MessagingException;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -15,12 +18,16 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.User;
+import com.pratilipi.email.EmailUtil;
+import com.pratilipi.email.template.EmailTemplate;
 import com.pratilipi.filter.AccessTokenFilter;
+
+import freemarker.template.TemplateException;
 
 public class UserDataUtil {
 	
 	private static final Logger logger =
-			Logger.getLogger( UserDataUtil.class.getName() );
+			Logger.getLogger( CopyOfUserDataUtil.class.getName() );
 	
 	
 	private static final long ACCESS_TOKEN_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 1 Wk
@@ -65,7 +72,7 @@ public class UserDataUtil {
 
 	public static UserData registerUser( String firstName, String lastName,
 			String email, String password, UserSignUpSource signUpSource )
-			throws InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException, UnexpectedServerException, MessagingException, IOException, TemplateException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -95,8 +102,15 @@ public class UserDataUtil {
 		user.setState( UserState.REGISTERED );
 		user.setSignUpDate( new Date() );
 		user.setSignUpSource( signUpSource );
-		
+
 		user = dataAccessor.createOrUpdateUser( user );
+		
+		// Send Welcome mail to the user.
+		EmailTemplate emailTemplate = new EmailTemplate( "welcome" );
+		emailTemplate.setRecipientName( createUserName( user ) );
+		emailTemplate.setRecipientEmail( email );
+		emailTemplate.setLanguage( "en" );
+		EmailUtil.sendMail( emailTemplate );
 
 		return createUserData( user );
 	}

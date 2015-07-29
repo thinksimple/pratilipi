@@ -1,10 +1,10 @@
 package com.pratilipi.email;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.mail.Address;
 import javax.mail.Message;
@@ -15,10 +15,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.pratilipi.email.template.EmailTemplate;
-import com.pratilipi.data.type.User;
+import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.util.FreeMarkerUtil;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 public class EmailUtil {
@@ -26,40 +25,43 @@ public class EmailUtil {
 	private final static Properties properties = new Properties();
 	private final static Session session =
 			Session.getDefaultInstance( properties, null );
-
 	
-	public static void sendMail( String recepientName, String recepientEmail,
-			EmailTemplate emailTemplate, Object dataModel )
+	private static final Logger logger =
+			Logger.getLogger( CopyOfEmailUtil.class.getName() );
+	private static Map<String, Object> dataModel;
+	
+	public static void sendMail( EmailTemplate emailTemplate )
 					throws MessagingException, IOException, TemplateException {
 
-		Message msg = new MimeMessage( session );
-	
-		msg.setFrom( new InternetAddress( emailTemplate.getSenderEmail(), emailTemplate.getSenderName() ) );
-		msg.addRecipient( Message.RecipientType.TO, new InternetAddress( recepientEmail, recepientName ) );
-		msg.setReplyTo( new Address[]{ new InternetAddress( emailTemplate.getReplyToEmail(), emailTemplate.getReplyToName() ) } );
-
-		Writer writer = new StringWriter();
-		Template template = new Template( null, new StringReader( emailTemplate.getSubject() ), new Configuration() );
-		template.process( dataModel, writer ); 
-		msg.setSubject( writer.toString() );
+		//FreeMarker template
+		String templateName = emailTemplate.getTemplateName();
+		if( emailTemplate.getLanguage() != null )
+			templateName = templateName + "." + emailTemplate.getLanguage() + ".ftl";
+		else
+			templateName = templateName + "." + "en" + ".ftl";
 		
-		writer = new StringWriter();
-		template = new Template( null, new StringReader( emailTemplate.getBody() ), new Configuration() );
-		template.process( dataModel, writer ); 
-		msg.setContent( writer.toString(), "text/html" );
+		dataModel = null;
+		dataModel.put( "Name" , emailTemplate.getRecipientName() );
+		
+		// The magic
+		String body = "";
+		try {
+			body = FreeMarkerUtil.processTemplate( dataModel, templateName );
+		} catch (UnexpectedServerException e) {
+			logger.log( Level.SEVERE, "Neither AuthorId, nor PratilipiId is provided !" );
+			e.printStackTrace();
+		}
+		
+		// Send E-mail
+		Message msg = new MimeMessage( session );
+		
+		msg.setFrom( new InternetAddress( emailTemplate.getSenderEmail(), emailTemplate.getSenderName() ) );
+		msg.addRecipient( Message.RecipientType.TO, new InternetAddress( emailTemplate.getRecipientEmail(), emailTemplate.getRecipientName() ) );
+		msg.setReplyTo( new Address[]{ new InternetAddress( emailTemplate.getRecipientEmail(), emailTemplate.getRecipientName() ) } );
+		msg.setSubject( emailTemplate.getSubject() );
+		msg.setContent( body, "text/html" );
 
 		Transport.send( msg );
-	}
-	
-	public static String createUserName( User user ) {
-		if( user.getFirstName() != null && user.getLastName() != null )
-			return user.getFirstName() + " " + user.getLastName();
-		else if( user.getFirstName() != null )
-			return user.getFirstName();
-		else if( user.getNickName() != null )
-			return user.getNickName();
-		else
-			return null;
 	}
 	
 }
