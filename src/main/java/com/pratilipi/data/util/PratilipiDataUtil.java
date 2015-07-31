@@ -175,6 +175,8 @@ public class PratilipiDataUtil {
 	}
 
 	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, Page pratilipiPage, boolean includeAll, boolean includeMetaData ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
 		PratilipiData pratilipiData = new PratilipiData();
 
 		pratilipiData.setId( pratilipi.getId() );
@@ -200,17 +202,18 @@ public class PratilipiDataUtil {
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
 		pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
 		
-		List<Category> categoryList = getCategoryList( pratilipi.getId() );
-		if( categoryList != null && categoryList.size() > 0 ) {
-			List<Long> categoryIdList = new ArrayList<Long>( categoryList.size() );
-			List<String> categoryNameList = new ArrayList<String>( categoryList.size() );
-			for( Category category : categoryList ) {
+		List<PratilipiCategory> pratilipiCategoryList = dataAccessor.getPratilipiCategoryList( pratilipi.getId() );
+		List<Long> categoryIdList = new ArrayList<Long>( pratilipiCategoryList.size() );
+		List<String> categoryNameList = new ArrayList<String>( pratilipiCategoryList.size() );
+		for( PratilipiCategory pratilipiCategory : pratilipiCategoryList ) {
+			Category category = dataAccessor.getCategory( pratilipiCategory.getCategoryId() );
+			if( category.getType() == CategoryType.GENRE ) {
 				categoryIdList.add( category.getId() );
 				categoryNameList.add( category.getName() );
 			}
-			pratilipiData.setCategoryIdList( categoryIdList );
-			pratilipiData.setCategoryNameList( categoryNameList );
 		}
+		pratilipiData.setCategoryIdList( categoryIdList );
+		pratilipiData.setCategoryNameList( categoryNameList );
 		
 		if( includeAll )
 			pratilipiData.setIndex( pratilipi.getIndex() );
@@ -863,21 +866,4 @@ public class PratilipiDataUtil {
 		
 	}
 
-	
-	public static List<Category> getCategoryList( Long pratilipiId ) {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<PratilipiCategory> pratilipiCategoryList = dataAccessor.getPratilipiCategoryList( pratilipiId );
-		if( pratilipiCategoryList == null )
-			pratilipiCategoryList = new ArrayList<PratilipiCategory>( 0 );
-		List<Category> categoryList = new ArrayList<Category>( pratilipiCategoryList.size() );
-		for( PratilipiCategory pratilipiCategory : pratilipiCategoryList ){
-			Category category = dataAccessor.getCategory( pratilipiCategory.getCategoryId() );
-			if( category.getType() == CategoryType.GENRE )
-				categoryList.add( category );
-		}
-		
-		return categoryList;
-	}
-	
 }
