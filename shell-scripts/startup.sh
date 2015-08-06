@@ -3,9 +3,6 @@ do
 
 	date
 	
-	cd ~/test/pratilipi
-	sudo bash ~/test/pratilipi/shell-scripts/update-test.sh 2>&1 | logger
-	
 	cd ~/prod/pratilipi
 	sudo bash ~/prod/pratilipi/shell-scripts/update-prod.sh 2>&1 | logger
 
@@ -15,6 +12,9 @@ do
 	cd ~/worker/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-worker.sh 2>&1 | logger
 
+	cd ~/test/pratilipi
+	sudo bash ~/test/pratilipi/shell-scripts/update-test.sh 2>&1 | logger
+	
 	sleep 60
 
 done
