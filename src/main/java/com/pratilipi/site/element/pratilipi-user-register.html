@@ -74,7 +74,7 @@
 				document.querySelector( 'pratilipi-user' ).logIn();
 			},
 			
-			onSubmit: function() {
+			onSubmit: function( event ) {
 				if( event.keyCode != 0 && event.keyCode != 13 )
 					return;
 
@@ -86,7 +86,7 @@
 				this.$.AjaxPut.generateRequest();
 			},
 			
-			_handleAjaxPutResponse: function( request ) {
+			_handleAjaxPutResponse: function( event ) {
 				if( event.detail.xhr.status == 0 ) {
 					this.message = null;
 					this.errMessage = "Could not connect to server !";
