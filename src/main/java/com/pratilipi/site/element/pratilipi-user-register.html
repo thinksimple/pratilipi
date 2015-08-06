@@ -5,7 +5,7 @@
 	<template>
 		<div class="popup">
 			<h5 class="popup-heading">${ _strings.sign_up_for_pratilipi }</h5>
-			<div class="popup-body">
+			<div class="popup-body" on-keyup="onSubmit">
 				<div class="form-group">
 					<label for="FormInput-FullName">${ _strings.full_name }</label>
 					<input type="text" class="form-control" id="FormInput-FullName" placeholder="First Middle Last" value="{{ params.name::input }}">
@@ -75,6 +75,9 @@
 			},
 			
 			onSubmit: function() {
+				if( event.keyCode != 0 && event.keyCode != 13 )
+					return;
+
 				this.paramsErr = {};
 				this.errMessage = null;
 				this.message = "Working ...";
