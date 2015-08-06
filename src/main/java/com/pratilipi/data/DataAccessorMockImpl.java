@@ -405,7 +405,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	@Override
 	public List<PratilipiCategory> getPratilipiCategoryList(Long pratilipiId) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<PratilipiCategory>( 0 );
 	}
 	
 	
