@@ -40,7 +40,7 @@
 						class='pull-left hidden-xs hidden-sm'
 						></pratilipi-navigation>
 				<div style="overflow:hidden">
-					<pratilipi-tamil-carousel></pratilipi-tamil-carousel>
+					<pratilipi-tamil-carousel style="margin-bottom:10px"></pratilipi-tamil-carousel>
 					<pratilipi-card-grid
 							heading='${ _strings.featured }'
 							pratilipi-list='${ featuredListJson }'
