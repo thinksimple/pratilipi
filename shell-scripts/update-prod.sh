@@ -5,7 +5,7 @@ export PATH=$M2:$PATH
 
 git remote update
 
-if [ $(git rev-parse HEAD) != $(git rev-parse origin) ]
+if [ $(git rev-parse HEAD) != $(git rev-parse origin/release-prod) ]
 then
 	git fetch
 	git reset --hard origin/release-prod
