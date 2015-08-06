@@ -8,7 +8,7 @@ git remote update
 if [ $(git rev-parse HEAD) != $(git rev-parse origin) ]
 then
 	git fetch
-	git reset --hard origin/master
+	git reset --hard origin/release-prod
 	
 	mvn clean
 	mvn install
