@@ -7,7 +7,7 @@ do
 	sudo bash ~/test/pratilipi/shell-scripts/update-test.sh 2>&1 | logger
 	
 	cd ~/prod/pratilipi
-	sudo bash ~/test/pratilipi/shell-scripts/update-prod.sh 2>&1 | logger
+	sudo bash ~/prod/pratilipi/shell-scripts/update-prod.sh 2>&1 | logger
 
 	cd ~/android/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-android.sh 2>&1 | logger
