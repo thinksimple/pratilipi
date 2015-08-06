@@ -4,7 +4,7 @@ do
 	date
 	
 	cd ~/prod/pratilipi
-	sudo bash ~/prod/pratilipi/shell-scripts/update-prod.sh 2>&1 | logger
+	sudo bash ~/test/pratilipi/shell-scripts/update-prod.sh 2>&1 | logger
 
 	cd ~/android/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-android.sh 2>&1 | logger
