@@ -41,7 +41,6 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
 import com.pratilipi.filter.UxModeFilter;
-import com.pratilipi.site.page.data.Home;
 
 @SuppressWarnings("serial")
 public class PratilipiSite extends HttpServlet {
@@ -175,24 +174,11 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForHomePage( Language lang )
 			throws UnexpectedServerException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		String langCode = lang != null ? lang.getCode() : Language.ENGLISH.getCode();
-		Home home = getData( "home." + langCode + ".json", Home.class );
-		List<Long> pratilipiIdList = new ArrayList<>( home.getFeatured().length );
-		for( String uri : home.getFeatured() ) {
-			Page page = dataAccessor.getPage( uri );
-			if( page == null )
-				continue;
-			pratilipiIdList.add( page.getPrimaryContentId() );
-		}
-		List<PratilipiData> pratilipiDataList =
-				PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
-
-		Gson gson = new Gson();
+		Map<String, Object> featuredListDataModel = createDataModelForListPage( "featured", lang );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "featuredListJson", gson.toJson( pratilipiDataList ) );
+		dataModel.put( "featuredTitle", featuredListDataModel.get( "title" ) );
+		dataModel.put( "featuredListJson", featuredListDataModel.get( "pratilipiListJson" ) );
 		return dataModel;
 	}
 

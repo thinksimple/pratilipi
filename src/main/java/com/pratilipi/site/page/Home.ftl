@@ -20,9 +20,9 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-tamil-carousel.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-tamil-carousel.html'>
 
 		<#-- Custom Stylesheet -->
 		<link type="text/css" rel="stylesheet" href="/resources/style.css">
@@ -42,7 +42,7 @@
 				<div style="overflow:hidden">
 					<pratilipi-tamil-carousel style="margin-bottom:10px"></pratilipi-tamil-carousel>
 					<pratilipi-card-grid
-							heading='${ _strings.featured }'
+							heading='${ featuredTitle }'
 							pratilipi-list='${ featuredListJson }'
 							></pratilipi-card-grid>
 				</div>
