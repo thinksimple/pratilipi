@@ -8,6 +8,7 @@ public enum Language {
 	TAMIL	 ( "ta", "தமிழ்",	"Tamil",	     "tamil.pratilipi.com" ),
 	MARATHI	 ( "mr", "मराठी",		"Marathi",	   "marathi.pratilipi.com" ),
 	MALAYALAM( "ml", "മലയാളം",	"Malayalam", "malayalam.pratilipi.com" ),
+	BENGALI	 ( "bn", "বাংলা",		"Bengali",     "bengali.pratilipi.com" ),
 	ENGLISH  ( "en", "English",	"English",	   "english.pratilipi.com" ),
 	;
 	
