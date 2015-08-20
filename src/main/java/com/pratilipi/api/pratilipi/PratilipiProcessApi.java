@@ -16,7 +16,6 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -82,9 +81,7 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		if( request.processContent() ) {
 			for( Long pratilipiId : pratilipiIdList ) {
-				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-				if( pratilipi.getType() == PratilipiType.BOOK || pratilipi.getType() == PratilipiType.MAGAZINE )
-					PratilipiDataUtil.updatePratilipiIndex( pratilipiId );
+				PratilipiDataUtil.updatePratilipiIndex( pratilipiId );
 				
 				boolean changed = PratilipiDataUtil.updatePratilipiKeywords( pratilipiId );
 				if( changed )
