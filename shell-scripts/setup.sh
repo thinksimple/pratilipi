@@ -41,7 +41,7 @@ sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
 # Cloning git repository for prod-pratilipi/default
 sudo mkdir -p ~/prod
 cd ~/prod
-sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
+sudo git clone -b release-prod https://github.com/Pratilipi/pratilipi.git
 
 # Cloning git repository for prod-pratilipi/worker
 sudo mkdir -p ~/worker

@@ -5,7 +5,7 @@
 	<template>
 		<div class="popup">
 			<h5 class="popup-heading">${ _strings.sign_in_to_pratilipi }</h5>
-			<div class="popup-body">
+			<div class="popup-body" on-keyup="onSubmit">
 				<div class="form-group">
 					<label for="FormInput-UserEmail">${ _strings.email }</label>
 					<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="name@example.com" value="{{ email::input }}">
@@ -23,13 +23,12 @@
 					<br/>
 					<button type="button" class="btn" on-click="onSubmit">${ _strings.sign_in }</button>
 				</div>
-				<div class="small">
+				<div class="small text-center">
 					<br/>
 					<br/>
 					<br/>
-					<div class="pull-right">
-						${ _strings.not_a_member } <a class="text-muted" href="#" on-click="register">${ _strings.sign_up }</a>
-					</div>
+					<a class="text-muted" href="#" on-click="register">${ _strings.sign_up }</a>
+					<br/>
 					<a class="text-danger" href="#" on-click="resetPassword">${ _strings.forgot_password }</a>
 				</div>
 			</div>
@@ -73,7 +72,10 @@
 				document.querySelector( 'pratilipi-user' ).resetPassword();
 			},
 
-			onSubmit: function() {
+			onSubmit: function( event ) {
+				if( event.keyCode != 0 && event.keyCode != 13 )
+					return;
+				
 				this.clearMessages();
 				this.message = "Working ...";
 				

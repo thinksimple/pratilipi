@@ -133,20 +133,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 
 	@Override
-	public AccessToken createAccessToken( AccessToken accessToken ) {
-		accessToken = dataAccessor.createAccessToken( accessToken );
-		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
-		return accessToken;
-	}
-
-	@Override
-	public AccessToken updateAccessToken( AccessToken accessToken ) {
-		accessToken = dataAccessor.updateAccessToken( accessToken );
-		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
-		return accessToken;
-	}
-
-	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
 		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );

@@ -1,4 +1,4 @@
-RELEASE_COMMIT_ID="485cf93b84a3a0071fbf3a958cffb22e1f2074ef"
+RELEASE_COMMIT_ID="decd4236ec1d57ee3f5130b8b51d5102fcf995c2"
 
 export M2_HOME=/usr/local/apache-maven/apache-maven-3.3.3
 export M2=$M2_HOME/bin

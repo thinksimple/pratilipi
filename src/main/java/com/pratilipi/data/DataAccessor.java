@@ -33,10 +33,6 @@ public interface DataAccessor {
 	AccessToken newAccessToken();
 	AccessToken getAccessToken( String accessTokenId );
 	DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount );
-	@Deprecated
-	AccessToken createAccessToken( AccessToken accessToken );
-	@Deprecated
-	AccessToken updateAccessToken( AccessToken accessToken );
 	AccessToken createOrUpdateAccessToken( AccessToken accessToken );
 	void deleteAccessToken( AccessToken accessToken );
 

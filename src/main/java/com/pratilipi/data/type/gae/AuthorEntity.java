@@ -184,6 +184,8 @@ public class AuthorEntity implements Author {
 				return Language.MARATHI;
 			else if( languageId == 5752669171875840L )
 				return Language.MALAYALAM;
+			else if( languageId == 6235363433512960L )
+				return Language.BENGALI;
 			else if( languageId == 6213615354904576L || languageId == 5688424874901504L )
 				return Language.ENGLISH;
 		}

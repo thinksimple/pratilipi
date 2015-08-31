@@ -1,6 +1,7 @@
 package com.pratilipi.data.type.gae;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -17,6 +18,9 @@ public class AccessTokenEntity implements AccessToken {
 	@PrimaryKey
 	@Persistent( column = "ACCESS_TOKEN_ID" )
 	private String id;
+	
+	@Persistent( column = "PARENT_ACCESS_TOKEN_ID" )
+	private String parentId;
 	
 	@Persistent( column = "USER_ID" )
 	private Long userId;
@@ -41,13 +45,24 @@ public class AccessTokenEntity implements AccessToken {
 	private Date creationDate;
 
 	
+	public AccessTokenEntity() {
+		this.id = UUID.randomUUID().toString();
+	}
+	
+	
 	@Override
 	public String getId() {
 		return id;
 	}
 
-	public void setId( String id ) {
-		this.id = id;
+	@Override
+	public String getParentId() {
+		return parentId;
+	}
+
+	@Override
+	public void setParentId( String parentId ) {
+		this.parentId = parentId;
 	}
 
 	@Override
