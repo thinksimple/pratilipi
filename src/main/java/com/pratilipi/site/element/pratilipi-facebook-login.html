@@ -1,0 +1,104 @@
+<dom-module id="pratilipi-facebook-login">
+
+<template>
+	<iron-ajax
+				id="AjaxPut"
+				url="/api/user/facebook_login"
+				method="PUT"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxPutResponse"
+				on-error="_handleAjaxPutError"
+				></iron-ajax>
+</template>
+
+<script>
+	function statusChangeCallback( response ) {
+			if ( response.status === 'connected' ) {
+			handler.fire( 'facebook-signin-success', { response: response } );
+			} else if ( response.status === 'not_authorized' ) {
+			handler.fire( 'facebook-signin-not-authorized', { response: response } );
+			} else {
+			handler.fire( 'facebook-signin-not-logged', { response: response } );
+			loginFlag = true;
+			}
+		}
+	
+	var handler;
+	var loginFlag = false;
+		
+	Polymer ({
+		is: 'pratilipi-facebook-login',
+		
+		properties: {
+			userData: { type: Object, notify: true },
+			authResponse: { type: Object, notify: true },
+		},
+		
+		sendData: function( userData, authResponse ) {
+			this.$.AjaxPut.body = JSON.stringify ({ 
+				userId: 		userData.id, 
+				firstName: 		userData.first_name, 
+				lastName: 		userData.last_name,
+				emailId: 		userData.email,
+				gender: 		userData.gender,
+				birthday: 		userData.birthday,
+				timezone: 		userData.timezone,
+				verified: 		userData.verified,
+				updatedTime: 	userData.updated_time,
+				link: 			userData.link,
+				locale: 		userData.locale,
+				ACCESS_TOKEN: 	authResponse.accessToken,
+				signedRequest: 	authResponse.signedResponse,
+				expiresIn: 		authResponse.expiresIn });
+			this.$.AjaxPut.generateRequest();
+		},
+		ready: function() {
+		 	handler = this;
+			var container = this.$[ 'fb-login-container' ];
+			
+			window.fbAsyncInit = function() {
+				FB.init({
+					appId: '368844269953501',
+					cookie : true,
+					xfbml: true,
+					version: 'v2.0'
+				});
+				FB.getLoginStatus( function( response ) {
+					statusChangeCallback( response );
+				});
+				FB.XFBML.parse( container );
+				FB.customCheckLoginState = function() {
+					FB.getLoginStatus( function( response ) {
+						statusChangeCallback( response );
+					});
+					FB.api( '/me', function( userData ) {
+						document.querySelector( 'pratilipi-facebook-login' ).sendData( userData, FB.getAuthResponse() );
+				 	});
+					if ( loginFlag )
+						FB.logout();
+				};
+			}; 
+			if( typeof(FB) == 'undefined' ) {
+				( function( d, s, id ) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if ( d.getElementById( id ) ) return;
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js";
+					fjs.parentNode.insertBefore(js, fjs);
+				}( document, 'script', 'facebook-jssdk' ) );
+			}
+		},
+		
+		 _handleAjaxPutResponse: function( event ) {
+			document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
+		},
+		
+		_handleAjaxPutError: function( event ) {
+				alert( event.detail.request.xhr.response.message );
+		}, 
+
+ 	});
+</script>
+
+</dom-module>
