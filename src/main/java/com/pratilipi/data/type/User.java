@@ -35,7 +35,16 @@ public interface User extends Serializable {
 	String getPhone();
 
 	void setPhone( String phone );
-
+	
+	
+	Date getDateOfBirth();
+	
+	void setDateOfBirth( Date dateOfBirth );
+	
+	String getGender();
+	
+	void setGender( String gender );
+	
 	
 	UserState getState();
 
@@ -49,5 +58,10 @@ public interface User extends Serializable {
 	UserSignUpSource getSignUpSource();
 
 	void setSignUpSource( UserSignUpSource signUpSource );
+	
+	
+	String getSocialId();
+	
+	void setSocialId( String socialId );
 
 }

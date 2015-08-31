@@ -23,7 +23,6 @@ public class UserEntity implements User {
 	
 	@Persistent( column = "PASSWORD" )
 	private String password;
-
 	
 	@Persistent( column = "FIRST_NAME" )
 	private String firstName;
@@ -31,16 +30,20 @@ public class UserEntity implements User {
 	@Persistent( column = "LAST_NAME" )
 	private String lastName;
 	
-	@Persistent( column = "NICK_NAME" )
-	private String nickName;
-	
-	
 	@Persistent( column = "EMAIL" )
 	private String email;
 	
 	@Persistent( column = "PHONE" )
 	private String phone;
 	
+	@Persistent( column = "DATE_OF_BIRTH" )
+	private Date dateOfBirth;
+	
+	@Persistent( column = "GENDER" )
+	private String gender;
+	
+	@Persistent( column = "NICK_NAME" )
+	private String nickName;
 	
 	@Deprecated
 	@Persistent( column = "CAMPAIGN" )
@@ -63,14 +66,16 @@ public class UserEntity implements User {
 
 	@Persistent( column = "SIGN_UP_SOURCE" )
 	private UserSignUpSource signUpSource;
-
+	
+	@Persistent( column = "SOCIAL_ID" )
+	private String socialId;
+	
 	
 	public UserEntity() {}
 
 	public UserEntity( Long id ) {
 		this.id = id;
 	}
-
 	
 	@Override
 	public Long getId() {
@@ -142,8 +147,27 @@ public class UserEntity implements User {
 	public void setPhone( String phone ) {
 		this.phone = phone;
 	}
+	
+	@Override
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+	
+	@Override
+	public void setDateOfBirth( Date dateOfBirth ) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	
+	@Override
+	public String getGender() {
+		return gender;
+	}
 
-
+	@Override
+	public void setGender( String gender ) {
+		this.gender = gender;
+	}
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public UserState getState() {
@@ -210,6 +234,16 @@ public class UserEntity implements User {
 	@Override
 	public void setSignUpSource( UserSignUpSource signUpSource ) {
 		this.signUpSource = signUpSource;
+	}
+	
+	@Override 
+	public String getSocialId() {
+		return socialId;
+	}
+	
+	@Override
+	public void setSocialId( String socialId ) {
+		this.socialId = socialId;
 	}
 
 }
