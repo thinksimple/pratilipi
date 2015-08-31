@@ -109,6 +109,18 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public User getUserBySocialId( String socialId ) {
+		if( socialId == null )
+			return null;
+		
+		for( User user : UserMock.USER_TABLE )
+			if( user.getSocialId() != null && user.getSocialId().equals( socialId ) )
+				return user;
+				
+		return null;
+	}
+	
+	@Override
 	public User createOrUpdateUser( User user ) {
 		Long id = 0L;
 		for( User aUser : UserMock.USER_TABLE )

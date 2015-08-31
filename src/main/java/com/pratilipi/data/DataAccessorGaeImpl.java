@@ -138,6 +138,21 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public User getUserBySocialId( String socialId ) {
+		Query query = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) )
+				.addFilter( "socialId", socialId )
+				.build();
+		
+		@SuppressWarnings("unchecked")
+		List<User> userList = (List<User>) query.execute( socialId );
+
+		if( userList.size() > 1 )
+			logger.log( Level.SEVERE, userList.size() + " Users found with social Id " + socialId   + " ." );
+
+		return userList.size() == 0 ? null : pm.detachCopy( userList.get( 0 ) );
+	}
+
+	@Override
 	public User createOrUpdateUser( User user ) {
 		return createOrUpdateEntity( user );
 	}

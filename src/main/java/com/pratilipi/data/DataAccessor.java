@@ -27,6 +27,7 @@ public interface DataAccessor {
 	User newUser();
 	User getUser( Long id );
 	User getUserByEmail( String email );
+	User getUserBySocialId( String socialId );
 	User createOrUpdateUser( User user );
 
 	// ACCESS_TOKEN Table

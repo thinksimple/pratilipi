@@ -23,6 +23,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	private final static String PREFIX_APP_PROPERTY = "AppProperty-";
 	private final static String PREFIX_USER = "User-";
+	private final static String PREFIX_SOCIALID = "SocialId-";
 	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
 	private final static String PREFIX_PAGE = "Page-";
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
@@ -94,6 +95,17 @@ public class DataAccessorWithMemcache implements DataAccessor {
 			user = dataAccessor.getUserByEmail( email );
 			if( user != null )
 				memcache.put( PREFIX_USER + email, user );
+		}
+		return user;
+	}
+	
+	@Override
+	public User getUserBySocialId( String socialId ) {
+		User user = memcache.get( PREFIX_SOCIALID + socialId );
+		if( user == null ) {
+			user = dataAccessor.getUserBySocialId( socialId );
+			if( user != null )
+				memcache.put( PREFIX_SOCIALID + socialId, user );
 		}
 		return user;
 	}
