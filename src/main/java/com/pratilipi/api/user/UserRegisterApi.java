@@ -1,5 +1,9 @@
 package com.pratilipi.api.user;
 
+import java.io.IOException;
+
+import javax.mail.MessagingException;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
@@ -14,13 +18,15 @@ import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
+import freemarker.template.TemplateException;
+
 @SuppressWarnings("serial")
 @Bind( uri= "/user/register" )
 public class UserRegisterApi extends GenericApi {
 
 	@Put
 	public UserResponse put( PutUserRegisterRequest request )
-			throws InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException, UnexpectedServerException, MessagingException, IOException, TemplateException {
 
 		JsonObject errorMessages = new JsonObject();
 		if( ! request.getPassword().equals( request.getPassword2() ) ) {

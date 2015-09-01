@@ -145,7 +145,7 @@ public class UserDataUtil {
 		user.setDateOfBirth( facebookUserData.getBirthdayDate() );
 		user.setGender( facebookUserData.getGender() );
 		user.setNickName( facebookUserData.getFullName() );
-		user.setSocialId( facebookUserData.getUserId() );
+		user.setFacebookId( facebookUserData.getUserId() );
 		user.setState( UserState.REGISTERED );
 		user.setSignUpDate( new Date() );
 		user.setSignUpSource( signUpSource );
@@ -274,12 +274,12 @@ public class UserDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		// User Doesn't exist.
-		if( dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) == null && dataAccessor.getUserBySocialId( facebookUserData.getUserId() ) == null )
+		if( dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) == null && dataAccessor.getUserByFacebookId( facebookUserData.getUserId() ) == null )
 			return new UserData( 0L );
 		
 		
 		Boolean isChanged = false;
-		User user = dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) != null ? dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) : dataAccessor.getUserBySocialId( facebookUserData.getUserId() );
+		User user = dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) != null ? dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) : dataAccessor.getUserByFacebookId( facebookUserData.getUserId() );
 		
 		if( facebookUserData.getFirstName() != null ) {
 			if( user.getFirstName() == null || user.getFirstName().equals( facebookUserData.getFirstName() ) == false ) {

@@ -46,7 +46,7 @@ public class FacebookUserLoginApi extends GenericApi {
 		
 		/* Algorithm
 		 * EMAIL - Either facebookEmail or originalEmail
-		 * if( userNotPresentByEmail or UserNotPresentBySocialId ) 
+		 * if( userNotPresentByEmail or UserNotPresentByFacebookId ) 
 		 * 		loginUser;
 		 * else 
 		 * 		updateUser;
@@ -59,7 +59,7 @@ public class FacebookUserLoginApi extends GenericApi {
 		if( facebookUserData.getEmailId() == null )
 			facebookUserData.setEmailId( facebookEmail );
 		
-		if( dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) == null && dataAccessor.getUserBySocialId( facebookUserData.getUserId() ) == null ) 
+		if( dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) == null && dataAccessor.getUserByFacebookId( facebookUserData.getUserId() ) == null ) 
 				userData = UserDataUtil.registerFacebookUser( facebookUserData, UserSignUpSource.WEBSITE_FACEBOOK ) ;
 		else 
 				userData = UserDataUtil.updateFacebookUser( facebookUserData );

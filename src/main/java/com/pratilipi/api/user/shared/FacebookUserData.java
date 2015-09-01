@@ -106,13 +106,16 @@ public class FacebookUserData extends GenericRequest {
 		
 		// String to Date format.
 		DateFormat dateFormat = new SimpleDateFormat( "MM/dd/yyyy" ); 
-        try {
-			this.birthdayDate = dateFormat.parse( this.birthday );
-		} catch ( ParseException e ) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if( this.birthday != null) {
+			try {
+				this.birthdayDate = dateFormat.parse( this.birthday );
+			} catch ( ParseException e ) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return this.birthdayDate;
 		}
-		return this.birthdayDate;
+        return null;
 	}
 	
 	public void setBirthday( String birthday ) {

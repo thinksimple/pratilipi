@@ -60,8 +60,8 @@ public interface User extends Serializable {
 	void setSignUpSource( UserSignUpSource signUpSource );
 	
 	
-	String getSocialId();
+	String getFacebookId();
 	
-	void setSocialId( String socialId );
+	void setFacebookId( String facebookId );
 
 }

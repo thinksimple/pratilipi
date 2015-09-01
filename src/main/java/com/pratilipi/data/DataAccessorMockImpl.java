@@ -109,12 +109,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public User getUserBySocialId( String socialId ) {
-		if( socialId == null )
+	public User getUserByFacebookId( String facebookId ) {
+		if( facebookId == null )
 			return null;
 		
 		for( User user : UserMock.USER_TABLE )
-			if( user.getSocialId() != null && user.getSocialId().equals( socialId ) )
+			if( user.getFacebookId() != null && user.getFacebookId().equals( facebookId ) )
 				return user;
 				
 		return null;

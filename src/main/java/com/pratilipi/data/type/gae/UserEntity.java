@@ -67,8 +67,8 @@ public class UserEntity implements User {
 	@Persistent( column = "SIGN_UP_SOURCE" )
 	private UserSignUpSource signUpSource;
 	
-	@Persistent( column = "SOCIAL_ID" )
-	private String socialId;
+	@Persistent( column = "FACEBOOK_ID" )
+	private String facebookId;
 	
 	
 	public UserEntity() {}
@@ -237,13 +237,13 @@ public class UserEntity implements User {
 	}
 	
 	@Override 
-	public String getSocialId() {
-		return socialId;
+	public String getFacebookId() {
+		return facebookId;
 	}
 	
 	@Override
-	public void setSocialId( String socialId ) {
-		this.socialId = socialId;
+	public void setFacebookId( String facebookId ) {
+		this.facebookId = facebookId;
 	}
 
 }
