@@ -23,7 +23,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	private final static String PREFIX_APP_PROPERTY = "AppProperty-";
 	private final static String PREFIX_USER = "User-";
-	private final static String PREFIX_SOCIALID = "FacebookId-";
+	private final static String PREFIX_FACEBOOKID = "FacebookId-";
 	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
 	private final static String PREFIX_PAGE = "Page-";
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
@@ -101,11 +101,11 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	@Override
 	public User getUserByFacebookId( String facebookId ) {
-		User user = memcache.get( PREFIX_SOCIALID + facebookId );
+		User user = memcache.get( PREFIX_FACEBOOKID + facebookId );
 		if( user == null ) {
 			user = dataAccessor.getUserByFacebookId( facebookId );
 			if( user != null )
-				memcache.put( PREFIX_SOCIALID + facebookId, user );
+				memcache.put( PREFIX_FACEBOOKID + facebookId, user );
 		}
 		return user;
 	}

@@ -1,14 +1,11 @@
 package com.pratilipi.data.util;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.mail.MessagingException;
-
 import com.google.gson.JsonObject;
-import com.pratilipi.api.user.shared.FacebookUserData;
+import com.pratilipi.api.user.shared.PutUserFacebookLoginRequest;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.UserSignUpSource;
@@ -19,12 +16,9 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.User;
-import com.pratilipi.email.EmailUtil;
-import com.pratilipi.email.template.EmailTemplate;
 import com.pratilipi.filter.AccessTokenFilter;
-import com.pratilipi.filter.UxModeFilter;
-
-import freemarker.template.TemplateException;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class UserDataUtil {
 	
@@ -75,7 +69,7 @@ public class UserDataUtil {
 
 	public static UserData registerUser( String firstName, String lastName,
 			String email, String password, UserSignUpSource signUpSource )
-			throws InvalidArgumentException, UnexpectedServerException, MessagingException, IOException, TemplateException {
+			throws InvalidArgumentException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -108,44 +102,44 @@ public class UserDataUtil {
 
 		user = dataAccessor.createOrUpdateUser( user );
 		
-//		Task task1 = TaskQueueFactory.newTask()
-//				.setUrl( "/user/email" )
-//				.addParam( "userId", user.getId().toString() )
-//				.addParam( "sendWelcomeMail", "true" );
-//		Task task2 = TaskQueueFactory.newTask()
-//				.setUrl( "/user/email" )
-//				.addParam( "userId", user.getId().toString() )
-//				.addParam( "sendEmailVerificationMail", "true" );
-//		Task task3 = TaskQueueFactory.newTask()
-//				.setUrl( "/user/process" )
-//				.addParam( "userId", user.getId().toString() )
-//				.addParam( "createAuthorProfile", "true" );
-//		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2, task3 );
+		Task task1 = TaskQueueFactory.newTask()
+				.setUrl( "/user/email" )
+				.addParam( "userId", user.getId().toString() )
+				.addParam( "sendWelcomeMail", "true" );
+		Task task2 = TaskQueueFactory.newTask()
+				.setUrl( "/user/email" )
+				.addParam( "userId", user.getId().toString() )
+				.addParam( "sendEmailVerificationMail", "true" );
+		Task task3 = TaskQueueFactory.newTask()
+				.setUrl( "/user/process" )
+				.addParam( "userId", user.getId().toString() )
+				.addParam( "createAuthorProfile", "true" );
+		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2, task3 );
 
 		// Send Welcome mail to the user.
-		EmailTemplate emailTemplate = new EmailTemplate( "welcome" );
-		emailTemplate.setRecipientName( createUserName( user ) );
-		emailTemplate.setRecipientEmail( email );
-		emailTemplate.setLanguage( UxModeFilter.getUserLanguage().getCode() );
-		EmailUtil.sendMail( emailTemplate );
+//		EmailTemplate emailTemplate = new EmailTemplate( "welcome" );
+//		emailTemplate.setRecipientName( createUserName( user ) );
+//		emailTemplate.setRecipientEmail( email );
+//		emailTemplate.setLanguage( UxModeFilter.getUserLanguage().getCode() );
+//		EmailUtil.sendMail( emailTemplate );
 		
 		return createUserData( user );
 	}
 	
-		public static UserData registerFacebookUser( FacebookUserData facebookUserData, UserSignUpSource signUpSource )
-			throws InvalidArgumentException, UnexpectedServerException, MessagingException, IOException, TemplateException {
+		public static UserData registerFacebookUser( PutUserFacebookLoginRequest putUserFacebookLoginRequest, UserSignUpSource signUpSource )
+			throws InvalidArgumentException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		User user = dataAccessor.newUser();
-		user.setEmail( facebookUserData.getEmailId() );
-		user.setFirstName( facebookUserData.getFirstName() );
-		user.setLastName( facebookUserData.getLastName() );
+		user.setEmail( putUserFacebookLoginRequest.getEmailId() );
+		user.setFirstName( putUserFacebookLoginRequest.getFirstName() );
+		user.setLastName( putUserFacebookLoginRequest.getLastName() );
 		user.setPassword( null );
-		user.setDateOfBirth( facebookUserData.getBirthdayDate() );
-		user.setGender( facebookUserData.getGender() );
-		user.setNickName( facebookUserData.getFullName() );
-		user.setFacebookId( facebookUserData.getUserId() );
+		user.setDateOfBirth( putUserFacebookLoginRequest.getBirthdayDate() );
+		user.setGender( putUserFacebookLoginRequest.getGender() );
+		user.setNickName( putUserFacebookLoginRequest.getFullName() );
+		user.setFacebookId( putUserFacebookLoginRequest.getUserId() );
 		user.setState( UserState.REGISTERED );
 		user.setSignUpDate( new Date() );
 		user.setSignUpSource( signUpSource );
@@ -155,8 +149,8 @@ public class UserDataUtil {
 		// Send Welcome mail to the user only if userEmail is valid.
 		if( ! user.getEmail().contains( "@facebook.com" ) ) {
 			EmailTemplate emailTemplate = new EmailTemplate( "welcome" );
-			emailTemplate.setRecipientName( facebookUserData.getFullName() );
-			emailTemplate.setRecipientEmail( facebookUserData.getEmailId() );
+			emailTemplate.setRecipientName( putUserFacebookLoginRequest.getFullName() );
+			emailTemplate.setRecipientEmail( putUserFacebookLoginRequest.getEmailId() );
 			emailTemplate.setLanguage( UxModeFilter.getUserLanguage().getCode() );
 			EmailUtil.sendMail( emailTemplate );
 		}
@@ -219,16 +213,16 @@ public class UserDataUtil {
 		*/
 	}
 	
-	public static UserData loginFacebookUser( FacebookUserData facebookUserData )
+	public static UserData loginFacebookUser( PutUserFacebookLoginRequest putUserFacebookLoginRequest )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( facebookUserData.getEmailId() );
+		User user = dataAccessor.getUserByEmail( putUserFacebookLoginRequest.getEmailId() );
 
 		if( user == null ) {
-			logger.log( Level.SEVERE, "Facebook User " + facebookUserData.getEmailId() + " is not registered !" );
+			logger.log( Level.SEVERE, "Facebook User " + putUserFacebookLoginRequest.getEmailId() + " is not registered !" );
 			return new UserData( 0L );
 		}
 		
@@ -269,57 +263,57 @@ public class UserDataUtil {
 		*/
 	}
 
-	public static UserData updateFacebookUser( FacebookUserData facebookUserData ) {
+	public static UserData updateFacebookUser( PutUserFacebookLoginRequest putUserFacebookLoginRequest ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		// User Doesn't exist.
-		if( dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) == null && dataAccessor.getUserByFacebookId( facebookUserData.getUserId() ) == null )
+		if( dataAccessor.getUserByEmail( putUserFacebookLoginRequest.getEmailId() ) == null && dataAccessor.getUserByFacebookId( putUserFacebookLoginRequest.getUserId() ) == null )
 			return new UserData( 0L );
 		
 		
 		Boolean isChanged = false;
-		User user = dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) != null ? dataAccessor.getUserByEmail( facebookUserData.getEmailId() ) : dataAccessor.getUserByFacebookId( facebookUserData.getUserId() );
+		User user = dataAccessor.getUserByEmail( putUserFacebookLoginRequest.getEmailId() ) != null ? dataAccessor.getUserByEmail( putUserFacebookLoginRequest.getEmailId() ) : dataAccessor.getUserByFacebookId( putUserFacebookLoginRequest.getUserId() );
 		
-		if( facebookUserData.getFirstName() != null ) {
-			if( user.getFirstName() == null || user.getFirstName().equals( facebookUserData.getFirstName() ) == false ) {
-				user.setFirstName( facebookUserData.getFirstName() );
+		if( putUserFacebookLoginRequest.getFirstName() != null ) {
+			if( user.getFirstName() == null || user.getFirstName().equals( putUserFacebookLoginRequest.getFirstName() ) == false ) {
+				user.setFirstName( putUserFacebookLoginRequest.getFirstName() );
 				isChanged = true;
 			}
 		}
 		
-		if( facebookUserData.getLastName() != null ) {
-			if( user.getLastName() == null || user.getLastName().equals( facebookUserData.getLastName() ) == false ) {
-				user.setLastName( facebookUserData.getLastName() );
+		if( putUserFacebookLoginRequest.getLastName() != null ) {
+			if( user.getLastName() == null || user.getLastName().equals( putUserFacebookLoginRequest.getLastName() ) == false ) {
+				user.setLastName( putUserFacebookLoginRequest.getLastName() );
 				isChanged = true;
 			}
 		}
 		
-		if( facebookUserData.getEmailId() != null ) {
-			if( user.getEmail() == null || user.getEmail().equals( facebookUserData.getEmailId() ) == false ) {
-				if( ! facebookUserData.getEmailId().contains( "@facebook.com" ) );
-					user.setEmail( facebookUserData.getEmailId() );
+		if( putUserFacebookLoginRequest.getEmailId() != null ) {
+			if( user.getEmail() == null || user.getEmail().equals( putUserFacebookLoginRequest.getEmailId() ) == false ) {
+				if( ! putUserFacebookLoginRequest.getEmailId().contains( "@facebook.com" ) );
+					user.setEmail( putUserFacebookLoginRequest.getEmailId() );
 				isChanged = true;
 			}
 		}
 		
-		if( facebookUserData.getBirthdayDate() != null ) {
-			if( user.getDateOfBirth() == null || user.getDateOfBirth().equals( facebookUserData.getBirthdayDate() ) == false ) {
-				user.setDateOfBirth( facebookUserData.getBirthdayDate() );
+		if( putUserFacebookLoginRequest.getBirthdayDate() != null ) {
+			if( user.getDateOfBirth() == null || user.getDateOfBirth().equals( putUserFacebookLoginRequest.getBirthdayDate() ) == false ) {
+				user.setDateOfBirth( putUserFacebookLoginRequest.getBirthdayDate() );
 				isChanged = true;
 			}
 		}
 		
-		if( facebookUserData.getGender() != null ) {
-			if( user.getGender() == null || user.getGender().equals( facebookUserData.getGender() ) == false ) {
-				user.setGender( facebookUserData.getGender() );
+		if( putUserFacebookLoginRequest.getGender() != null ) {
+			if( user.getGender() == null || user.getGender().equals( putUserFacebookLoginRequest.getGender() ) == false ) {
+				user.setGender( putUserFacebookLoginRequest.getGender() );
 				isChanged = true;
 			}
 		}
 		
-		if( facebookUserData.getFullName() != null ) {
-			if( user.getNickName() == null || user.getNickName().equals( facebookUserData.getFullName() ) == false ) {
-				user.setNickName( facebookUserData.getFullName() );
+		if( putUserFacebookLoginRequest.getFullName() != null ) {
+			if( user.getNickName() == null || user.getNickName().equals( putUserFacebookLoginRequest.getFullName() ) == false ) {
+				user.setNickName( putUserFacebookLoginRequest.getFullName() );
 				isChanged = true;
 			}
 		}
