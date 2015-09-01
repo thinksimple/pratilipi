@@ -34,9 +34,7 @@
 				<div style="margin-top:51px; margin-bottom:45px; text-align:right;">
 				
 					<template is="dom-if" if="{{ user.isGuest }}">
-						<div class="fb-login-container">
-							<fb:login-button scope="public_profile email user_birthday" onlogin="FB.customCheckLoginState();" data-auto-logout-link="{{logoutLink}}">${ _strings.sign_in_with_facebook }</fb:login-button>
-						</div>
+						<pratilipi-facebook-login></pratilipi-facebook-login>
 						&nbsp;
 						<a href="#" on-click="logIn">${ _strings.sign_in }</a>
 						&nbsp;

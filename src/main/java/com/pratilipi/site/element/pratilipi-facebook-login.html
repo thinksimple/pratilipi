@@ -1,6 +1,9 @@
 <dom-module id="pratilipi-facebook-login">
 
 <template>
+	<div id= "fb-login-container" style = "display:inline-block;">
+ 		<a href="#" on-click="fb_login">${ _strings.sign_in_with_facebook }</a>
+	</div>			
 	<iron-ajax
 				id="AjaxPut"
 				url="/api/user/facebook_login"
@@ -13,20 +16,6 @@
 </template>
 
 <script>
-	function statusChangeCallback( response ) {
-			if ( response.status === 'connected' ) {
-			handler.fire( 'facebook-signin-success', { response: response } );
-			} else if ( response.status === 'not_authorized' ) {
-			handler.fire( 'facebook-signin-not-authorized', { response: response } );
-			} else {
-			handler.fire( 'facebook-signin-not-logged', { response: response } );
-			loginFlag = true;
-			}
-		}
-	
-	var handler;
-	var loginFlag = false;
-		
 	Polymer ({
 		is: 'pratilipi-facebook-login',
 		
@@ -53,10 +42,16 @@
 				expiresIn: 		authResponse.expiresIn });
 			this.$.AjaxPut.generateRequest();
 		},
+		
+		fb_login: function() {
+			FB.login( function( response ) {
+				FB.api( '/me', function( userData ) {
+					document.querySelector( 'pratilipi-facebook-login' ).sendData( userData, FB.getAuthResponse() );
+			 	});
+			}, { scope: 'public_profile,email,user_birthday' } );
+		},
+		
 		ready: function() {
-		 	handler = this;
-			var container = this.$[ 'fb-login-container' ];
-			
 			window.fbAsyncInit = function() {
 				FB.init({
 					appId: '368844269953501',
@@ -64,20 +59,6 @@
 					xfbml: true,
 					version: 'v2.0'
 				});
-				FB.getLoginStatus( function( response ) {
-					statusChangeCallback( response );
-				});
-				FB.XFBML.parse( container );
-				FB.customCheckLoginState = function() {
-					FB.getLoginStatus( function( response ) {
-						statusChangeCallback( response );
-					});
-					FB.api( '/me', function( userData ) {
-						document.querySelector( 'pratilipi-facebook-login' ).sendData( userData, FB.getAuthResponse() );
-				 	});
-					if ( loginFlag )
-						FB.logout();
-				};
 			}; 
 			if( typeof(FB) == 'undefined' ) {
 				( function( d, s, id ) {
