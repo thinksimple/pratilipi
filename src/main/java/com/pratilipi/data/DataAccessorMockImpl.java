@@ -13,6 +13,7 @@ import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.mock.AccessTokenMock;
+import com.pratilipi.data.mock.AppPropertyMock;
 import com.pratilipi.data.mock.UserMock;
 import com.pratilipi.data.mock.UserPratilipiMock;
 import com.pratilipi.data.type.AccessToken;
@@ -66,7 +67,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public AppProperty getAppProperty( String id ) {
-		// TODO: Implementation
+		if( id == null )
+			return null;
+				
+		for( AppProperty appProperty : AppPropertyMock.APP_PROPERTY_TABLE )
+			if( appProperty.getId().equals( id ) )
+				return appProperty;
 		return null;
 	}
 
@@ -103,6 +109,18 @@ public class DataAccessorMockImpl implements DataAccessor {
 		
 		for( User user : UserMock.USER_TABLE )
 			if( user.getEmail() != null && user.getEmail().equals( email ) )
+				return user;
+				
+		return null;
+	}
+	
+	@Override
+	public User getUserByFacebookId( String facebookId ) {
+		if( facebookId == null )
+			return null;
+		
+		for( User user : UserMock.USER_TABLE )
+			if( user.getFacebookId() != null && user.getFacebookId().equals( facebookId ) )
 				return user;
 				
 		return null;

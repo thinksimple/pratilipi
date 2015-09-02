@@ -7,6 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.type.UserStatus;
@@ -16,14 +17,17 @@ import com.pratilipi.data.type.User;
 public class UserEntity implements User {
 	
 	private static final long serialVersionUID = 5942981653445086715L;
-
+	
 	@PrimaryKey
 	@Persistent( column = "USER_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
+	@Persistent( column = "FACEBOOK_ID" )
+	private String facebookId;
+	
 	@Persistent( column = "PASSWORD" )
 	private String password;
-
+	
 	
 	@Persistent( column = "FIRST_NAME" )
 	private String firstName;
@@ -33,6 +37,12 @@ public class UserEntity implements User {
 	
 	@Persistent( column = "NICK_NAME" )
 	private String nickName;
+	
+	@Persistent( column = "GENDER" )
+	private Gender gender;
+	
+	@Persistent( column = "DATE_OF_BIRTH" )
+	private Date dateOfBirth;
 	
 	
 	@Persistent( column = "EMAIL" )
@@ -53,97 +63,127 @@ public class UserEntity implements User {
 	@Deprecated
 	@Persistent( column = "STATUS" )
 	private UserStatus status;
-
+	
 	@Persistent( column = "STATE" )
 	private UserState state;
-
+	
 	
 	@Persistent( column = "SIGN_UP_DATE" )
 	private Date signUpDate;
-
+	
 	@Persistent( column = "SIGN_UP_SOURCE" )
 	private UserSignUpSource signUpSource;
-
+	
 	
 	public UserEntity() {}
-
+	
 	public UserEntity( Long id ) {
 		this.id = id;
 	}
-
+	
 	
 	@Override
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId( Long id ) {
 		this.id = id;
 	}
-
+	
+	@Override 
+	public String getFacebookId() {
+		return facebookId;
+	}
+	
+	@Override
+	public void setFacebookId( String facebookId ) {
+		this.facebookId = facebookId;
+	}
+	
 	@Override
 	public String getPassword() {
 		return password;
 	}
-
+	
 	@Override
 	public void setPassword( String password ) {
 		this.password = password;
 	}
-
+	
 	
 	@Override
 	public String getFirstName() {
 		return firstName;
 	}
-
+	
 	@Override
 	public void setFirstName( String firstName ) {
 		this.firstName = firstName;
 	}
-
+	
 	@Override
 	public String getLastName() {
 		return lastName;
 	}
-
+	
 	@Override
 	public void setLastName( String lastName ) {
 		this.lastName = lastName;
 	}
-
+	
 	@Override
 	public String getNickName() {
 		return nickName;
 	}
-
+	
 	@Override
 	public void setNickName( String nickName ) {
 		this.nickName = nickName;
 	}
-
+	
+	@Override
+	public Gender getGender() {
+		return gender;
+	}
+	
+	@Override
+	public void setGender( Gender gender ) {
+		this.gender = gender;
+	}
+	
+	@Override
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+	
+	@Override
+	public void setDateOfBirth( Date dateOfBirth ) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	
 	
 	@Override
 	public String getEmail() {
 		return email;
 	}
-
+	
 	@Override
 	public void setEmail( String email ) {
 		this.email = email;
 	}
-
+	
 	@Override
 	public String getPhone() {
 		return phone;
 	}
-
+	
 	@Override
 	public void setPhone( String phone ) {
 		this.phone = phone;
 	}
-
-
+	
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public UserState getState() {
@@ -165,22 +205,22 @@ public class UserEntity implements User {
 		
 		return UserState.REGISTERED;
 	}
-
+	
 	@Override
 	public void setState( UserState state ) {
 		this.state = state;
 	}
-
-
+	
+	
 	@Override
 	public Date getSignUpDate() {
 		return signUpDate;
 	}
-
+	
 	public void setSignUpDate( Date signUpDate ) {
 		this.signUpDate = signUpDate;
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public UserSignUpSource getSignUpSource() {
@@ -206,10 +246,10 @@ public class UserEntity implements User {
 		
 		return null;
 	}
-
+	
 	@Override
 	public void setSignUpSource( UserSignUpSource signUpSource ) {
 		this.signUpSource = signUpSource;
 	}
-
+	
 }

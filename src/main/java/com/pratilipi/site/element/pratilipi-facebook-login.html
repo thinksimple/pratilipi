@@ -1,0 +1,78 @@
+<dom-module id="pratilipi-facebook-login">
+
+<template>
+	<div id= "fb-login-container" style = "display:inline-block;">
+ 		<a href="#" on-click="fb_login">${ _strings.sign_in_with_facebook }</a>
+	</div>			
+	<iron-ajax
+				id="AjaxPut"
+				url="/api/user/facebook_login"
+				method="PUT"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxPutResponse"
+				on-error="_handleAjaxPutError"
+				></iron-ajax>
+</template>
+
+<script>
+	Polymer ({
+		is: 'pratilipi-facebook-login',
+		
+		properties: {
+			userData: { type: Object, notify: true },
+			authResponse: { type: Object, notify: true },
+		},
+		
+		sendData: function( userData, authResponse ) {
+			this.$.AjaxPut.body = JSON.stringify ({ 
+				userId: 		userData.id, 
+				firstName: 		userData.first_name, 
+				lastName: 		userData.last_name,
+				emailId: 		userData.email,
+				gender: 		userData.gender,
+				birthday: 		userData.birthday,
+				accessToken: 	authResponse.accessToken });
+			this.$.AjaxPut.generateRequest();
+		},
+		
+		fb_login: function() {
+			FB.login( function( response ) {
+				FB.api( '/me', function( userData ) {
+					document.querySelector( 'pratilipi-facebook-login' ).sendData( userData, FB.getAuthResponse() );
+			 	});
+			}, { scope: 'public_profile,email,user_birthday' } );
+		},
+		
+		ready: function() {
+			window.fbAsyncInit = function() {
+				FB.init({
+					appId: '368844269953501',
+					cookie : true,
+					xfbml: true,
+					version: 'v2.0'
+				});
+			}; 
+			if( typeof(FB) == 'undefined' ) {
+				( function( d, s, id ) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if ( d.getElementById( id ) ) return;
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js";
+					fjs.parentNode.insertBefore(js, fjs);
+				}( document, 'script', 'facebook-jssdk' ) );
+			}
+		},
+		
+		 _handleAjaxPutResponse: function( event ) {
+			document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
+		},
+		
+		_handleAjaxPutError: function( event ) {
+				alert( event.detail.request.xhr.response.message );
+		}, 
+
+ 	});
+</script>
+
+</dom-module>

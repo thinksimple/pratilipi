@@ -2,6 +2,7 @@
 
 <link rel='import' href='pratilipi-navigation-drawer.html'>
 <link rel="import" href="pratilipi-search-bar.html" />
+<link rel='import' href="pratilipi-facebook-login.html" />
 
 <dom-module id="pratilipi-header">
 
@@ -16,6 +17,9 @@
 			width: 150px;
 		}
 		
+		.fb-login-container{
+			display: inline-block;
+		}
 	</style>
 
 
@@ -30,7 +34,7 @@
 				<div style="margin-top:51px; margin-bottom:45px; text-align:right;">
 				
 					<template is="dom-if" if="{{ user.isGuest }}">
-						<a href="#">${ _strings.sign_in_with_facebook }</a>
+						<pratilipi-facebook-login></pratilipi-facebook-login>
 						&nbsp;
 						<a href="#" on-click="logIn">${ _strings.sign_in }</a>
 						&nbsp;
