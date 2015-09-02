@@ -51,10 +51,8 @@ public class FacebookApi {
 			requestUrl = validateTokensEndpoint + URLEncoder.encode( "input_token", "UTF-8" ) + "=" + URLEncoder.encode( accessToken, "UTF-8" )
 					+ "&" + URLEncoder.encode( "access_token", "UTF-8" ) + "=" + URLEncoder.encode( getAccessToken(), "UTF-8" );
 			responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
-		} catch ( UnsupportedEncodingException e ) {
-			logger.log( Level.SEVERE, "Failed to encode the URL for facebook validation - " + requestUrl );
 		} catch ( IOException e ) {
-			logger.log( Level.SEVERE, "IOException occured in the URL call - " + requestUrl );
+			logger.log( Level.SEVERE, "Failed to encode the URL for facebook validation - " + requestUrl, e );
 		}
 		
 		logger.log( Level.INFO, "Facebook Response : " + responsePayload );
