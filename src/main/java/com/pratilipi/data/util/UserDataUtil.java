@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.PasswordUtil;
@@ -148,8 +149,17 @@ public class UserDataUtil {
 			}
 		}
 		
-		if( user.getGender() == null || user.getGender().equals( gender ) == false ) {
-			user.setGender( gender );
+		// String gender to Gender type conversion.
+		Gender userGender;
+		if( gender.toLowerCase().contains( "male" ) )
+			userGender = Gender.MALE;
+		else if( gender.toLowerCase().contains( "female" ) )
+			userGender = Gender.FEMALE;
+		else
+			userGender = Gender.OTHER;
+		
+		if( user.getGender() == null || user.getGender().equals( userGender ) == false ) {
+			user.setGender( userGender );
 			isChanged = true;
 		}
 		

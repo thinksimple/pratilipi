@@ -7,6 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.type.UserStatus;
@@ -38,7 +39,7 @@ public class UserEntity implements User {
 	private String nickName;
 	
 	@Persistent( column = "GENDER" )
-	private String gender;
+	private Gender gender;
 	
 	@Persistent( column = "DATE_OF_BIRTH" )
 	private Date dateOfBirth;
@@ -142,12 +143,12 @@ public class UserEntity implements User {
 	}
 	
 	@Override
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 	
 	@Override
-	public void setGender( String gender ) {
+	public void setGender( Gender gender ) {
 		this.gender = gender;
 	}
 	

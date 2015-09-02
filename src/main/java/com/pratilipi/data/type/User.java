@@ -3,6 +3,7 @@ package com.pratilipi.data.type;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 
@@ -31,9 +32,9 @@ public interface User extends Serializable {
 	
 	void setNickName( String nickName );
 	
-	String getGender();
+	Gender getGender();
 	
-	void setGender( String gender );
+	void setGender( Gender gender );
 	
 	Date getDateOfBirth();
 	
