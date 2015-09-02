@@ -22,25 +22,9 @@ public class PutUserFacebookLoginRequest extends GenericRequest {
 	
 	private Date birthdayDate;
 	
-	private Float timezone;
-	
-	private Boolean verified;
-	
-	private String updatedTime;
-	
-	private String link;
-	
-	private String locale;
-	
 	private String accessToken;
 	
-	private String signedRequest;
-	
-	private Integer expiresIn;
-	
-	public PutUserFacebookLoginRequest() {
-		
-	}
+	public PutUserFacebookLoginRequest() {}
 	
 	public String getUserId() {
 		return this.userId;
@@ -59,7 +43,10 @@ public class PutUserFacebookLoginRequest extends GenericRequest {
 	}
 	
 	public String getFullName() {
-		return ( this.firstName + " " + this.lastName ).trim(); 
+		if( this.lastName != null )
+			return ( this.firstName + " " + this.lastName ).trim();
+		else
+			return this.firstName;
 	}
 	
 	public void SetName( String firstName, String lastName ) {
@@ -128,57 +115,9 @@ public class PutUserFacebookLoginRequest extends GenericRequest {
 			e.printStackTrace();
 		}
 	}
-	
-	public float getTimezone() {
-		return this.timezone;
-	}
-	
-	public void setTimezone( float timezone ) {
-		this.timezone = timezone;
-	}
-
-	public Boolean getVerifiedFlag() {
-		return this.verified;
-	}
-	
-	public void setVerifiedFlag( Boolean verified ) {
-		this.verified = verified;
-	}
-	
-	public String getUpdatedTime() {
-		return this.updatedTime;
-	}
-	
-	public void setUpdatedTime( String updatedTime ) {
-		this.updatedTime = updatedTime.trim();
-	}
-	
-	public String getLink() {
-		return this.link;
-	}
-	
-	public void setLink( String link ) {
-		this.link = link.trim();
-	}
-	
-	public String getLocale() {
-		return this.locale;
-	}
-	
-	public void setLocale( String locale ) {
-		this.locale = locale.trim();
-	}
-	
+		
 	public String getAccessToken() {
 		return this.accessToken;
-	}
-	
-	public String getSignedRequest() {
-		return this.signedRequest;
-	}
-	
-	public Integer getExpiresIn() {
-		return this.expiresIn;
 	}
 	
 }

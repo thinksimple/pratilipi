@@ -115,6 +115,8 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		user = dataAccessor.createOrUpdateUser( user );
 		memcache.put( PREFIX_USER + user.getId(), user );
 		memcache.put( PREFIX_USER + user.getEmail(), user );
+		if( user.getFacebookId() != null )
+			memcache.put( PREFIX_FACEBOOKID + user.getFacebookId(), user );
 		return user;
 	}
 

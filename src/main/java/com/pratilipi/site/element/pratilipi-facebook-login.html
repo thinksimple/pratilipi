@@ -32,14 +32,7 @@
 				emailId: 		userData.email,
 				gender: 		userData.gender,
 				birthday: 		userData.birthday,
-				timezone: 		userData.timezone,
-				verified: 		userData.verified,
-				updatedTime: 	userData.updated_time,
-				link: 			userData.link,
-				locale: 		userData.locale,
-				accessToken: 	authResponse.accessToken,
-				signedRequest: 	authResponse.signedResponse,
-				expiresIn: 		authResponse.expiresIn });
+				accessToken: 	authResponse.accessToken });
 			this.$.AjaxPut.generateRequest();
 		},
 		

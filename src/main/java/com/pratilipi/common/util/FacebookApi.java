@@ -24,7 +24,7 @@ public class FacebookApi {
 	private static final Logger logger =
 			Logger.getLogger( FacebookApi.class.getName() );
 	
-	private static String validateTokensEndpoint = "https://graph.facebook.com/debug_token?";
+	private static final String validateTokensEndpoint = "https://graph.facebook.com/debug_token?";
 	
 	private static final String GRAPH_API_2p2_URL = "https://graph.facebook.com/v2.2";
 	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
@@ -44,33 +44,27 @@ public class FacebookApi {
 	
 	public static Boolean validateAccessToken( String socialId, String accessToken ) {
 		
-		// URL Formation
-		String urlParameters = "";
-		try {
-			urlParameters = URLEncoder.encode( "input_token", "UTF-8" ) + "=" + URLEncoder.encode( accessToken, "UTF-8" )
-						+ "&" + URLEncoder.encode( "access_token", "UTF-8" ) + "=" + URLEncoder.encode( getAccessToken(), "UTF-8" );
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String requestUrl = validateTokensEndpoint + urlParameters;
+		// URL Formation and call.
+		String requestUrl = "", responsePayload = "";
 		
-		// URL Call
-		String responsePayload = "";
 		try {
+			requestUrl = validateTokensEndpoint + URLEncoder.encode( "input_token", "UTF-8" ) + "=" + URLEncoder.encode( accessToken, "UTF-8" )
+					+ "&" + URLEncoder.encode( "access_token", "UTF-8" ) + "=" + URLEncoder.encode( getAccessToken(), "UTF-8" );
 			responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch ( UnsupportedEncodingException e ) {
+			logger.log( Level.SEVERE, "Failed to encode the URL for facebook validation - " + requestUrl );
+		} catch ( IOException e ) {
+			logger.log( Level.SEVERE, "IOException occured in the URL call - " + requestUrl );
 		}
+		
 		logger.log( Level.INFO, "Facebook Response : " + responsePayload );
 		
 		// Converting to JsonElement
 		JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject().get( "data" );
 		
 		// Checking for "error"
-		if( responsePayload.contains( "error" ) ) {
-			String errorMessage = responseJson.getAsJsonObject().get( "error" ).getAsJsonObject().get( "message" ).getAsString();
+		if( responseJson.getAsJsonObject().get( "error" ) != null || responseJson == null ) {
+			String errorMessage = responseJson == null ? responsePayload : responseJson.getAsJsonObject().get( "error" ).getAsJsonObject().get( "message" ).getAsString();
 			logger.log( Level.SEVERE, "Error returned by Facebook token end point : " + errorMessage );
 			return false;
 		}

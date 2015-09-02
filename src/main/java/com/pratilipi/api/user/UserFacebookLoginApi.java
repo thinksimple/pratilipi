@@ -15,6 +15,8 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 
 @Bind( uri= "/user/facebook_login" )  
@@ -27,25 +29,53 @@ public class UserFacebookLoginApi extends GenericApi {
 	public static UserResponse facebookLogin( PutUserFacebookLoginRequest putUserFacebookLoginRequest ) throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Gson gson = new Gson();
 		
 		//Validate the access token.
 		if( ! FacebookApi.validateAccessToken( putUserFacebookLoginRequest.getUserId(), putUserFacebookLoginRequest.getAccessToken() ) ) 
 				throw new InsufficientAccessException();
 		
-		// Register / Update User and login.
-		UserData userData;
-		String facebookEmail = putUserFacebookLoginRequest.getUserId() + FACEBOOK_SUFFIX;
+		//User has not given e-mail permission
 		if( putUserFacebookLoginRequest.getEmailId() == null )
-			putUserFacebookLoginRequest.setEmailId( facebookEmail );
+			putUserFacebookLoginRequest.setEmailId( putUserFacebookLoginRequest.getUserId() + FACEBOOK_SUFFIX );
 		
-		if( dataAccessor.getUserByEmail( putUserFacebookLoginRequest.getEmailId() ) == null && dataAccessor.getUserByFacebookId( putUserFacebookLoginRequest.getUserId() ) == null ) 
-				userData = UserDataUtil.registerFacebookUser( putUserFacebookLoginRequest, UserSignUpSource.WEBSITE_FACEBOOK ) ;
-		else 
-				userData = UserDataUtil.updateFacebookUser( putUserFacebookLoginRequest );
+		//Check if the user is new user.
+		Boolean newUser = true;
+		if( dataAccessor.getUserByEmail( putUserFacebookLoginRequest.getEmailId() ) != null 
+				|| dataAccessor.getUserByFacebookId( putUserFacebookLoginRequest.getUserId() ) != null )
+			newUser = false;
 		
-		userData = UserDataUtil.loginFacebookUser( putUserFacebookLoginRequest );
+		// Register / Update User and login.
+		UserData userData = UserDataUtil.registerOrUpdateFacebookUser(
+			putUserFacebookLoginRequest.getEmailId(), 
+			putUserFacebookLoginRequest.getUserId(), 
+			putUserFacebookLoginRequest.getFirstName(), 
+			putUserFacebookLoginRequest.getLastName(), 
+			putUserFacebookLoginRequest.getFullName(), 
+			putUserFacebookLoginRequest.getGender(), 
+			putUserFacebookLoginRequest.getBirthdayDate(), 
+			UserSignUpSource.WEBSITE_FACEBOOK );
 		
+		userData = UserDataUtil.loginFacebookUser( putUserFacebookLoginRequest.getEmailId() );
+		
+		if( newUser ) {
+			if( ! putUserFacebookLoginRequest.getEmailId().contains( FACEBOOK_SUFFIX ) ) {
+				Task task1 = TaskQueueFactory.newTask()
+						.setUrl( "/user/email" )
+						.addParam( "userId", userData.getId().toString() )
+						.addParam( "sendWelcomeMail", "true" );
+				Task task2 = TaskQueueFactory.newTask()
+						.setUrl( "/user/email" )
+						.addParam( "userId", userData.getId().toString() )
+						.addParam( "sendEmailVerificationMail", "true" );
+				Task task3 = TaskQueueFactory.newTask()
+						.setUrl( "/user/process" )
+						.addParam( "userId", userData.getId().toString() )
+						.addParam( "createAuthorProfile", "true" );
+				TaskQueueFactory.getUserTaskQueue().addAll( task1, task2, task3 );
+			}
+		}	
+		
+		Gson gson = new Gson();
 		return gson.fromJson( gson.toJson( userData ), UserResponse.class );
 	}
 

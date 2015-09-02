@@ -9,8 +9,6 @@ public interface AppProperty extends Serializable {
 	
 	String getId();
 	
-	void setId(String string);
-
 	<T> T getValue();
 
 	<T> void setValue( T value );
