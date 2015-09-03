@@ -122,56 +122,67 @@ public class UserDataUtil {
 		}
 		
 		// Update Data.
-		if( user.getFirstName() == null || user.getFirstName().equals( firstName ) == false ) {
+		if( user.getFirstName() == null || ! user.getFirstName().equals( firstName ) ) {
 			user.setFirstName( firstName );
 			isChanged = true;
 		}
 		
 		if( lastName != null ) {
-			if( user.getLastName() == null || user.getLastName().equals( lastName ) == false ) {
+			if( user.getLastName() == null || ! user.getLastName().equals( lastName ) ) {
 				user.setLastName( lastName );
 				isChanged = true;
 			}
 		}
 		
-		if( user.getEmail() == null || user.getEmail().equals( emailId ) == false ) {
-			if( user.getEmail() == null )
+		if( user.getEmail() == null || ! user.getEmail().equals( emailId ) ) {
+			if( user.getEmail() == null ) 
 				user.setEmail( emailId );
-			else if( ! emailId.contains( "@facebook.com" ) );
-				user.setEmail( emailId );
+			else {
+				if( user.getEmail().contains( "@facebook.com" ) ) {
+					user.setEmail( emailId );
+					isChanged = true;
+				}
+				else if( user.getPassword() == null ) {
+					user.setEmail( emailId );
+					isChanged = true;
+				}
+			}
+		}
+		
+		if( user.getFacebookId() == null ) {
+			user.setFacebookId( facebookId );
 			isChanged = true;
 		}
 		
 		if( dateOfBirth != null ) {
-			if( user.getDateOfBirth() == null || user.getDateOfBirth().equals( dateOfBirth ) == false ) {
+			if( user.getDateOfBirth() == null || ! user.getDateOfBirth().equals( dateOfBirth ) ) {
 				user.setDateOfBirth( dateOfBirth );
 				isChanged = true;
 			}
 		}
-		
+
 		// String gender to Gender type conversion.
 		Gender userGender;
-		if( gender.toLowerCase().contains( "male" ) )
+		if( gender.toLowerCase().equals( "male" ) )
 			userGender = Gender.MALE;
-		else if( gender.toLowerCase().contains( "female" ) )
+		else if( gender.toLowerCase().equals( "female" ) )
 			userGender = Gender.FEMALE;
 		else
 			userGender = Gender.OTHER;
 		
-		if( user.getGender() == null || user.getGender().equals( userGender ) == false ) {
+		if( user.getGender() == null || ! user.getGender().equals( userGender ) ) {
 			user.setGender( userGender );
 			isChanged = true;
 		}
 		
-		if( user.getNickName() == null || user.getNickName().equals( fullName ) == false ) {
+		if( user.getNickName() == null || ! user.getNickName().equals( fullName ) ) {
 			user.setNickName( fullName );
 			isChanged = true;
 		}
 		
 		user.setState( UserState.REGISTERED );
-		user.setSignUpSource( signUpSource );
-		if( user.getFacebookId() == null )
-			user.setFacebookId( facebookId );
+		if( user.getSignUpSource() == null )
+			user.setSignUpSource( signUpSource );
 		if( user.getSignUpDate() == null )
 			user.setSignUpDate( new Date() );
 		
