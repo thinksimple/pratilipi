@@ -135,11 +135,18 @@ public class UserDataUtil {
 		}
 		
 		if( user.getEmail() == null || user.getEmail().equals( emailId ) == false ) {
-			if( user.getEmail() == null )
+			if( user.getEmail() == null ) 
 				user.setEmail( emailId );
-			else if( ! emailId.contains( "@facebook.com" ) );
-				user.setEmail( emailId );
-			isChanged = true;
+			else {
+				if( user.getEmail().contains( "@facebook.com" ) ) {
+					user.setEmail( emailId );
+					isChanged = true;
+				}
+				else if( user.getPassword() == null ) {
+					user.setEmail( emailId );
+					isChanged = true;
+				}
+			}
 		}
 		
 		if( dateOfBirth != null ) {
@@ -148,7 +155,7 @@ public class UserDataUtil {
 				isChanged = true;
 			}
 		}
-		
+
 		// String gender to Gender type conversion.
 		Gender userGender;
 		if( gender.toLowerCase().contains( "male" ) )
@@ -169,7 +176,8 @@ public class UserDataUtil {
 		}
 		
 		user.setState( UserState.REGISTERED );
-		user.setSignUpSource( signUpSource );
+		if( user.getSignUpSource() == null )
+			user.setSignUpSource( signUpSource );
 		if( user.getFacebookId() == null )
 			user.setFacebookId( facebookId );
 		if( user.getSignUpDate() == null )

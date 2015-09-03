@@ -226,6 +226,8 @@ public class UserEntity implements User {
 	public UserSignUpSource getSignUpSource() {
 		if( signUpSource != null )
 			return signUpSource;
+		else if( status == null )
+			return null;
 		
 		switch( status ) {
 			case PRELAUNCH_REFERRAL:
