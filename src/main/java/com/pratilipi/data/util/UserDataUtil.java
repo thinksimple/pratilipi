@@ -163,9 +163,9 @@ public class UserDataUtil {
 
 		// String gender to Gender type conversion.
 		Gender userGender;
-		if( gender.toLowerCase().contains( "male" ) )
+		if( gender.toLowerCase().equals( "male" ) )
 			userGender = Gender.MALE;
-		else if( gender.toLowerCase().contains( "female" ) )
+		else if( gender.toLowerCase().equals( "female" ) )
 			userGender = Gender.FEMALE;
 		else
 			userGender = Gender.OTHER;
