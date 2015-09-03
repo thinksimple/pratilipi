@@ -122,19 +122,19 @@ public class UserDataUtil {
 		}
 		
 		// Update Data.
-		if( user.getFirstName() == null || user.getFirstName().equals( firstName ) == false ) {
+		if( user.getFirstName() == null || ! user.getFirstName().equals( firstName ) ) {
 			user.setFirstName( firstName );
 			isChanged = true;
 		}
 		
 		if( lastName != null ) {
-			if( user.getLastName() == null || user.getLastName().equals( lastName ) == false ) {
+			if( user.getLastName() == null || ! user.getLastName().equals( lastName ) ) {
 				user.setLastName( lastName );
 				isChanged = true;
 			}
 		}
 		
-		if( user.getEmail() == null || user.getEmail().equals( emailId ) == false ) {
+		if( user.getEmail() == null || ! user.getEmail().equals( emailId ) ) {
 			if( user.getEmail() == null ) 
 				user.setEmail( emailId );
 			else {
@@ -149,8 +149,13 @@ public class UserDataUtil {
 			}
 		}
 		
+		if( user.getFacebookId() == null ) {
+			user.setFacebookId( facebookId );
+			isChanged = true;
+		}
+		
 		if( dateOfBirth != null ) {
-			if( user.getDateOfBirth() == null || user.getDateOfBirth().equals( dateOfBirth ) == false ) {
+			if( user.getDateOfBirth() == null || ! user.getDateOfBirth().equals( dateOfBirth ) ) {
 				user.setDateOfBirth( dateOfBirth );
 				isChanged = true;
 			}
@@ -165,12 +170,12 @@ public class UserDataUtil {
 		else
 			userGender = Gender.OTHER;
 		
-		if( user.getGender() == null || user.getGender().equals( userGender ) == false ) {
+		if( user.getGender() == null || ! user.getGender().equals( userGender ) ) {
 			user.setGender( userGender );
 			isChanged = true;
 		}
 		
-		if( user.getNickName() == null || user.getNickName().equals( fullName ) == false ) {
+		if( user.getNickName() == null || ! user.getNickName().equals( fullName ) ) {
 			user.setNickName( fullName );
 			isChanged = true;
 		}
@@ -178,8 +183,6 @@ public class UserDataUtil {
 		user.setState( UserState.REGISTERED );
 		if( user.getSignUpSource() == null )
 			user.setSignUpSource( signUpSource );
-		if( user.getFacebookId() == null )
-			user.setFacebookId( facebookId );
 		if( user.getSignUpDate() == null )
 			user.setSignUpDate( new Date() );
 		

@@ -84,7 +84,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 	
 	public void setId( Long id ) {
@@ -93,7 +93,7 @@ public class UserEntity implements User {
 	
 	@Override 
 	public String getFacebookId() {
-		return facebookId;
+		return this.facebookId == null ? null : this.facebookId;
 	}
 	
 	@Override
@@ -103,7 +103,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public String getPassword() {
-		return password;
+		return this.password == null ? null : this.password;
 	}
 	
 	@Override
@@ -114,7 +114,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
 	
 	@Override
@@ -124,7 +124,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
 	
 	@Override
@@ -134,7 +134,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public String getNickName() {
-		return nickName;
+		return this.nickName;
 	}
 	
 	@Override
@@ -144,7 +144,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public Gender getGender() {
-		return gender;
+		return this.gender == null ? null : this.gender ;
 	}
 	
 	@Override
@@ -154,7 +154,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public Date getDateOfBirth() {
-		return dateOfBirth;
+		return this.dateOfBirth == null ? null : this.dateOfBirth;
 	}
 	
 	@Override
@@ -165,7 +165,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 	
 	@Override
@@ -175,7 +175,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public String getPhone() {
-		return phone;
+		return this.phone;
 	}
 	
 	@Override
@@ -214,7 +214,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public Date getSignUpDate() {
-		return signUpDate;
+		return this.signUpDate;
 	}
 	
 	public void setSignUpDate( Date signUpDate ) {
@@ -225,10 +225,9 @@ public class UserEntity implements User {
 	@Override
 	public UserSignUpSource getSignUpSource() {
 		if( signUpSource != null )
-			return signUpSource;
+			return this.signUpSource;
 		else if( status == null )
 			return null;
-		
 		switch( status ) {
 			case PRELAUNCH_REFERRAL:
 			case PRELAUNCH_SIGNUP:
