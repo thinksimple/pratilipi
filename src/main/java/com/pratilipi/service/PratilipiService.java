@@ -22,13 +22,14 @@ public class PratilipiService extends GenericService {
 		ApiRegistry.register( AuthorImageApi.class );
 		
 		ApiRegistry.register( UserLoginApi.class );
+		ApiRegistry.register( UserFacebookLoginApi.class );
 		ApiRegistry.register( UserLogoutApi.class );
 		ApiRegistry.register( UserRegisterApi.class );
 
 		ApiRegistry.register( UserPratilipiApi.class );
 		ApiRegistry.register( UserPratilipiReviewListApi.class );
 		
-		ApiRegistry.register( UserFacebookLoginApi.class );
+		
 	}
 	
 }
