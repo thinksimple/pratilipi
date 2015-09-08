@@ -93,8 +93,8 @@ public class AccessTokenFilter implements Filter {
 				final String requestPayload = IOUtils.toString( request.getInputStream(), "UTF-8" );
 				if( requestPayload != null && ! requestPayload.isEmpty() ) {
 					JsonObject requestPayloadJson = new Gson().fromJson( requestPayload, JsonElement.class ).getAsJsonObject();
-					if( requestPayloadJson.get( RequestCookie.ACCESS_TOKEN.getName() ) != null )
-						accessTokenId = requestPayloadJson.get( RequestCookie.ACCESS_TOKEN.getName() ).getAsString();
+					if( requestPayloadJson.get( RequestParameter.ACCESS_TOKEN.getName() ) != null )
+						accessTokenId = requestPayloadJson.get( RequestParameter.ACCESS_TOKEN.getName() ).getAsString();
 					request = new HttpServletRequestWrapper( request ) {
 						
 						public ServletInputStream getInputStream() throws IOException {

@@ -43,6 +43,7 @@ public class UxModeFilter implements Filter {
 		chain.doFilter( req, resp );
 
 		threadLocalLanguage.remove();
+		
 	}
 
 	
