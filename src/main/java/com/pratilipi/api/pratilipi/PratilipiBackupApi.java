@@ -39,15 +39,17 @@ public class PratilipiBackupApi extends GenericApi {
 	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		AuthorFilter authorFilter = new AuthorFilter();
 		String cursor;
 		int pratilipiCount = 0, authorCount = 0, userCount = 0;
-		StringBuilder pratilipiBackup = new StringBuilder(), authorBackup = new StringBuilder(), userBackup = new StringBuilder();
-		StringBuilder authorCSV = new StringBuilder(), userCSV = new StringBuilder();
+		StringBuilder backup = new StringBuilder();
+		StringBuilder CSV = new StringBuilder();
 		Date backupDate = new Date();
 		
+		// Backing up Pratilipi Table.
 		cursor = null;
 		while( true ) {
 			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
@@ -55,7 +57,7 @@ public class PratilipiBackupApi extends GenericApi {
 			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 
 			for( Pratilipi pratilipi : pratilipiList )  
-                pratilipiBackup.append( new Gson().toJson( pratilipi ) + LINE_SEPARATOR );
+                backup.append( new Gson().toJson( pratilipi ) + LINE_SEPARATOR );
 			
 			pratilipiCount = pratilipiCount + pratilipiList.size();
 
@@ -64,8 +66,13 @@ public class PratilipiBackupApi extends GenericApi {
 			else
 				cursor = pratilipiListCursorTupe.getCursor();
 		}
+		BlobEntry pratilipiBlobEntry = blobAccessor.newBlob( "pratilipi/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
+		pratilipiBlobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
+		blobAccessor.createOrUpdateBlob( pratilipiBlobEntry );
 		
+		// Backing up Author Table.
 		cursor = null;
+		backup.delete( 0, backup.length() ); 
 		while( true ) {
 			DataListCursorTuple<Author> authorListCursorTupe =
 					dataAccessor.getAuthorList( authorFilter, cursor, 1000 );
@@ -95,11 +102,10 @@ public class PratilipiBackupApi extends GenericApi {
                 oneLine.append( CSV_SEPARATOR );
                 oneLine.append( author.getUserId().toString() );
                 
-                authorCSV.append( oneLine.toString() + LINE_SEPARATOR );
-                authorBackup.append( new Gson().toJson( author ) + LINE_SEPARATOR );
+                CSV.append( oneLine.toString() + LINE_SEPARATOR );
+                backup.append( new Gson().toJson( author ) + LINE_SEPARATOR );
 			}
-				
-				
+			
 			authorCount = authorCount + authorList.size();
 
 			if( authorList.size() < 1000 )
@@ -108,7 +114,19 @@ public class PratilipiBackupApi extends GenericApi {
 				cursor = authorListCursorTupe.getCursor();
 		}
 		
+		BlobEntry authorBlobEntry = blobAccessor.newBlob( "author/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
+		BlobEntry authorCsvEntry = blobAccessor.newBlob( "author/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup-csv.csv", null, "text/plain" );
+		
+		authorBlobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
+		authorCsvEntry.setData( CSV.toString().getBytes( Charset.forName( "UTF-8" ) ) );
+		
+		blobAccessor.createOrUpdateBlob( authorBlobEntry );
+		blobAccessor.createOrUpdateBlob( authorCsvEntry );
+		
+		
 		cursor = null;
+		backup.delete( 0, backup.length() );
+		CSV.delete( 0, CSV.length() );
 		while( true ) {
 			DataListCursorTuple<User> userListCursorTupe = 
 					dataAccessor.getUserList( cursor, 1000 );
@@ -126,10 +144,9 @@ public class PratilipiBackupApi extends GenericApi {
                 oneLine.append( CSV_SEPARATOR );
                 oneLine.append( user.getId() );
                 
-                userCSV.append( oneLine.toString() + LINE_SEPARATOR );
-				userBackup.append( new Gson().toJson( user ) + LINE_SEPARATOR );
+                CSV.append( oneLine.toString() + LINE_SEPARATOR );
+				backup.append( new Gson().toJson( user ) + LINE_SEPARATOR );
 			}
-				
 				
 			userCount = userCount + userList.size();
 
@@ -140,28 +157,14 @@ public class PratilipiBackupApi extends GenericApi {
 		}
 		
 		
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		
-		BlobEntry pratilipiBlobEntry = blobAccessor.newBlob( "pratilipi/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
-		BlobEntry authorBlobEntry = blobAccessor.newBlob( "author/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
-		BlobEntry userBlobEntry = blobAccessor.newBlob( "user" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
-		
-		pratilipiBlobEntry.setData( pratilipiBackup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
-		authorBlobEntry.setData( authorBackup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
-		userBlobEntry.setData( userBackup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
-		
-		blobAccessor.createOrUpdateBlob( pratilipiBlobEntry );
-		blobAccessor.createOrUpdateBlob( authorBlobEntry );
-		blobAccessor.createOrUpdateBlob( userBlobEntry );
-		
-		
-		BlobEntry authorCsvEntry = blobAccessor.newBlob( "author/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup-csv.csv", null, "text/plain" );
+		BlobEntry userBlobEntry = blobAccessor.newBlob( "user/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
 		BlobEntry userCsvEntry = blobAccessor.newBlob( "user/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup-csv.csv", null, "text/plain" );
 		
-		authorCsvEntry.setData( authorCSV.toString().getBytes( Charset.forName( "UTF-8" ) ) );
-		userCsvEntry.setData( userCSV.toString().getBytes( Charset.forName( "UTF-8" ) ) );
+		userBlobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
+		userCsvEntry.setData( CSV.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 		
-		blobAccessor.createOrUpdateBlob( authorCsvEntry );
+		blobAccessor.createOrUpdateBlob( userBlobEntry );
 		blobAccessor.createOrUpdateBlob( userCsvEntry );
 		
 		
