@@ -33,6 +33,7 @@ public class PratilipiBackupApi extends GenericApi {
 			Logger.getLogger( PratilipiBackupApi.class.getName() );
 	
 	private static final String CSV_SEPARATOR = ",";
+	private static final String LINE_SEPARATOR = "\n";
 	
 	@Get
 	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
@@ -54,7 +55,7 @@ public class PratilipiBackupApi extends GenericApi {
 			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 
 			for( Pratilipi pratilipi : pratilipiList )  
-                pratilipiBackup.append( new Gson().toJson( pratilipi ) + '\n' );
+                pratilipiBackup.append( new Gson().toJson( pratilipi ) + LINE_SEPARATOR );
 			
 			pratilipiCount = pratilipiCount + pratilipiList.size();
 
@@ -95,8 +96,8 @@ public class PratilipiBackupApi extends GenericApi {
                 oneLine.append( author.getUserId().toString() );
                 oneLine.append( CSV_SEPARATOR );
                 
-                authorCSV.append( oneLine.toString() );
-                authorBackup.append( new Gson().toJson( author ) + '\n' );
+                authorCSV.append( oneLine.toString() + LINE_SEPARATOR );
+                authorBackup.append( new Gson().toJson( author ) + LINE_SEPARATOR );
 			}
 				
 				
@@ -127,8 +128,8 @@ public class PratilipiBackupApi extends GenericApi {
                 oneLine.append( user.getId() );
                 oneLine.append( CSV_SEPARATOR );
                 
-                userCSV.append( oneLine.toString() );
-				userBackup.append( new Gson().toJson( user ) + '\n' );
+                userCSV.append( oneLine.toString() + LINE_SEPARATOR );
+				userBackup.append( new Gson().toJson( user ) + LINE_SEPARATOR );
 			}
 				
 				
