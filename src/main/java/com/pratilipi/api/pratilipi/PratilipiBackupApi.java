@@ -49,30 +49,10 @@ public class PratilipiBackupApi extends GenericApi {
 		StringBuilder CSV = new StringBuilder();
 		Date backupDate = new Date();
 		
-		// Backing up Pratilipi Table.
-		cursor = null;
-		while( true ) {
-			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
-					dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
-			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
-
-			for( Pratilipi pratilipi : pratilipiList )  
-                backup.append( new Gson().toJson( pratilipi ) + LINE_SEPARATOR );
-			
-			pratilipiCount = pratilipiCount + pratilipiList.size();
-
-			if( pratilipiList.size() < 1000 )
-				break;
-			else
-				cursor = pratilipiListCursorTupe.getCursor();
-		}
-		BlobEntry pratilipiBlobEntry = blobAccessor.newBlob( "pratilipi/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
-		pratilipiBlobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
-		blobAccessor.createOrUpdateBlob( pratilipiBlobEntry );
-		
 		// Backing up Author Table.
 		cursor = null;
-		backup.delete( 0, backup.length() ); 
+		backup.delete( 0, backup.length() );
+		CSV.delete( 0, CSV.length() ); 
 		while( true ) {
 			DataListCursorTuple<Author> authorListCursorTupe =
 					dataAccessor.getAuthorList( authorFilter, cursor, 1000 );
@@ -123,7 +103,7 @@ public class PratilipiBackupApi extends GenericApi {
 		blobAccessor.createOrUpdateBlob( authorBlobEntry );
 		blobAccessor.createOrUpdateBlob( authorCsvEntry );
 		
-		
+		// Backing up User Table.
 		cursor = null;
 		backup.delete( 0, backup.length() );
 		CSV.delete( 0, CSV.length() );
@@ -166,7 +146,30 @@ public class PratilipiBackupApi extends GenericApi {
 		
 		blobAccessor.createOrUpdateBlob( userBlobEntry );
 		blobAccessor.createOrUpdateBlob( userCsvEntry );
+
 		
+		// Backing up Pratilipi Table.
+		cursor = null;
+		backup.delete( 0, backup.length() );
+		CSV.delete( 0, CSV.length() );
+		while( true ) {
+			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
+					dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
+			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
+
+			for( Pratilipi pratilipi : pratilipiList )  
+                backup.append( new Gson().toJson( pratilipi ) + LINE_SEPARATOR );
+			
+			pratilipiCount = pratilipiCount + pratilipiList.size();
+
+			if( pratilipiList.size() < 1000 )
+				break;
+			else
+				cursor = pratilipiListCursorTupe.getCursor();
+		}
+		BlobEntry pratilipiBlobEntry = blobAccessor.newBlob( "pratilipi/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
+		pratilipiBlobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
+		blobAccessor.createOrUpdateBlob( pratilipiBlobEntry );
 		
 		logger.log( Level.INFO, "Backed up " + pratilipiCount + " Pratilipi Entities." );
 		logger.log( Level.INFO, "Backed up " + authorCount + " Author Entities." );
