@@ -14,6 +14,7 @@ import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.mock.AccessTokenMock;
 import com.pratilipi.data.mock.AppPropertyMock;
+import com.pratilipi.data.mock.PratilipiMock;
 import com.pratilipi.data.mock.UserMock;
 import com.pratilipi.data.mock.UserPratilipiMock;
 import com.pratilipi.data.type.AccessToken;
@@ -136,6 +137,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 		( (UserEntity) user ).setId( id );
 		UserMock.USER_TABLE.add( user );
 		return user;
+	}
+	
+	@Override
+	public DataListCursorTuple<User> getUserList( String cursor, Integer resultCount ) {
+		// TODO: Implementation
+		return null;
 	}
 
 
@@ -280,9 +287,13 @@ public class DataAccessorMockImpl implements DataAccessor {
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
+		List<Pratilipi> dataList = new ArrayList<>(); 
+		
+		for( Pratilipi pratilipi : PratilipiMock.PRATILIPI_TABLE )
+				dataList.add( pratilipi );
+		DataListCursorTuple<Pratilipi> returnList = new DataListCursorTuple<Pratilipi>( dataList, "" );
+		return returnList;
 
-		// TODO: Implementation
-		return null;
 	}
 	
 	@Override
