@@ -44,7 +44,7 @@ public class PratilipiBackupApi extends GenericApi {
 		String cursor;
 		int pratilipiCount = 0, authorCount = 0, userCount = 0;
 		StringBuilder pratilipiBackup = new StringBuilder(), authorBackup = new StringBuilder(), userBackup = new StringBuilder();
-		StringBuilder pratilipiCSV = new StringBuilder(), authorCSV = new StringBuilder(), userCSV = new StringBuilder();
+		StringBuilder authorCSV = new StringBuilder(), userCSV = new StringBuilder();
 		Date backupDate = new Date();
 		
 		cursor = null;
@@ -53,48 +53,9 @@ public class PratilipiBackupApi extends GenericApi {
 					dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
 			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 
-			for( Pratilipi pratilipi : pratilipiList )  {
-				StringBuffer oneLine = new StringBuffer();
-                oneLine.append( pratilipi.getIndex() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getSummary() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getTitle() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getTitleEn() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getAuthorId() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getContentType().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getFbLikeShareCount().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getId().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getLanguage().getName() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getPageCount().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getPublicationYear().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getRatingCount().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getReadCount().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getReviewCount().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getState().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getType().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( pratilipi.getWordCount().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                
-                pratilipiCSV.append( oneLine.toString() );
+			for( Pratilipi pratilipi : pratilipiList )  
                 pratilipiBackup.append( new Gson().toJson( pratilipi ) + '\n' );
-			}
-				
-				
+			
 			pratilipiCount = pratilipiCount + pratilipiList.size();
 
 			if( pratilipiList.size() < 1000 )
@@ -163,8 +124,6 @@ public class PratilipiBackupApi extends GenericApi {
                 oneLine.append( CSV_SEPARATOR );
                 oneLine.append( user.getLastName() );
                 oneLine.append( CSV_SEPARATOR );
-                oneLine.append( user.getNickName() );
-                oneLine.append( CSV_SEPARATOR );
                 oneLine.append( user.getId() );
                 oneLine.append( CSV_SEPARATOR );
                 
@@ -197,15 +156,12 @@ public class PratilipiBackupApi extends GenericApi {
 		blobAccessor.createOrUpdateBlob( userBlobEntry );
 		
 		
-		BlobEntry pratilipiCsvEntry = blobAccessor.newBlob( "pratilipi/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup-csv.csv", null, "text/plain" );
 		BlobEntry authorCsvEntry = blobAccessor.newBlob( "author/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup-csv.csv", null, "text/plain" );
 		BlobEntry userCsvEntry = blobAccessor.newBlob( "user/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup-csv.csv", null, "text/plain" );
 		
-		pratilipiCsvEntry.setData( pratilipiCSV.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 		authorCsvEntry.setData( authorCSV.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 		userCsvEntry.setData( userCSV.toString().getBytes( Charset.forName( "UTF-8" ) ) );
 		
-		blobAccessor.createOrUpdateBlob( pratilipiCsvEntry );
 		blobAccessor.createOrUpdateBlob( authorCsvEntry );
 		blobAccessor.createOrUpdateBlob( userCsvEntry );
 		
