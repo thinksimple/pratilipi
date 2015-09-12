@@ -72,7 +72,7 @@ public class PratilipiBackupApi extends GenericApi {
 			List<Author> authorList = authorListCursorTupe.getDataList();
 
 			for( Author author : authorList ) {
-				StringBuffer oneLine = new StringBuffer();
+				StringBuilder oneLine = new StringBuilder();
                 oneLine.append( author.getEmail() );
                 oneLine.append( CSV_SEPARATOR );
                 oneLine.append( author.getFirstName() );
@@ -94,7 +94,6 @@ public class PratilipiBackupApi extends GenericApi {
                 oneLine.append( author.getLanguage().toString() );
                 oneLine.append( CSV_SEPARATOR );
                 oneLine.append( author.getUserId().toString() );
-                oneLine.append( CSV_SEPARATOR );
                 
                 authorCSV.append( oneLine.toString() + LINE_SEPARATOR );
                 authorBackup.append( new Gson().toJson( author ) + LINE_SEPARATOR );
@@ -116,7 +115,7 @@ public class PratilipiBackupApi extends GenericApi {
 			List<User> userList = userListCursorTupe.getDataList();
 
 			for( User user : userList ) {
-				StringBuffer oneLine = new StringBuffer();
+				StringBuilder oneLine = new StringBuilder();
                 oneLine.append( user.getEmail() );
                 oneLine.append( CSV_SEPARATOR );
                 oneLine.append( user.getFacebookId() );
@@ -126,7 +125,6 @@ public class PratilipiBackupApi extends GenericApi {
                 oneLine.append( user.getLastName() );
                 oneLine.append( CSV_SEPARATOR );
                 oneLine.append( user.getId() );
-                oneLine.append( CSV_SEPARATOR );
                 
                 userCSV.append( oneLine.toString() + LINE_SEPARATOR );
 				userBackup.append( new Gson().toJson( user ) + LINE_SEPARATOR );
