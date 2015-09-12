@@ -119,6 +119,11 @@ public class DataAccessorWithMemcache implements DataAccessor {
 			memcache.put( PREFIX_FACEBOOKID + user.getFacebookId(), user );
 		return user;
 	}
+	
+	@Override
+	public DataListCursorTuple<User> getUserList( String cursor, Integer resultCount ) {
+		return dataAccessor.getUserList( cursor, resultCount );
+	}
 
 
 	// ACCESS_TOKEN Table
