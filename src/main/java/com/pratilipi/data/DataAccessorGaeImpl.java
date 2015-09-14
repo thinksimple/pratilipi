@@ -87,9 +87,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public AppProperty newAppProperty( String id ) {
-		AppPropertyEntity appProperty = new AppPropertyEntity();
-		appProperty.setId( id );
-		return appProperty;
+		return new AppPropertyEntity( id );
 	}
 
 	@Override

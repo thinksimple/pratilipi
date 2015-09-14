@@ -19,13 +19,16 @@ public class AppPropertyEntity implements AppProperty {
 	private Object value;
 
 
+	public AppPropertyEntity() {}
+	
+	public AppPropertyEntity( String id ) {
+		this.id = id;
+	}
+
+	
 	@Override
 	public String getId() {
 		return id;
-	}
-
-	public void setId( String id ) {
-		this.id = id;
 	}
 
 	@SuppressWarnings("unchecked")
