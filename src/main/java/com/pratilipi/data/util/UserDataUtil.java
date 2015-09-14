@@ -10,6 +10,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
+import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -18,14 +19,11 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
 
-
 public class UserDataUtil {
 	
 	private static final Logger logger =
 			Logger.getLogger( UserDataUtil.class.getName() );
 	
-	private static final long ACCESS_TOKEN_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 1 Wk
-
 	
 	public static String createUserName( User user ) {
 		if( user.getFirstName() != null && user.getLastName() == null )
@@ -34,8 +32,6 @@ public class UserDataUtil {
 			return user.getLastName();
 		else if( user.getFirstName() != null && user.getLastName() != null )
 			return user.getFirstName() + " " + user.getLastName();
-		else if( user.getEmail() != null )
-			return user.getEmail();
 		else
 			return null;
 	}
@@ -49,6 +45,7 @@ public class UserDataUtil {
 		return userData;
 	}
 
+	
 	public static UserData getGuestUser() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.newUser();
@@ -66,6 +63,7 @@ public class UserDataUtil {
 			return createUserData( DataAccessorFactory.getDataAccessor().getUser( accessToken.getUserId() ) );
 	}
 
+	
 	public static UserData registerUser( String firstName, String lastName,
 			String email, String password, UserSignUpSource signUpSource )
 			throws InvalidArgumentException, UnexpectedServerException {
@@ -98,104 +96,14 @@ public class UserDataUtil {
 		user.setState( UserState.REGISTERED );
 		user.setSignUpDate( new Date() );
 		user.setSignUpSource( signUpSource );
-
+		
 		user = dataAccessor.createOrUpdateUser( user );
-				
+
 		return createUserData( user );
 	}
 	
-	public static UserData registerOrUpdateFacebookUser( String emailId, String facebookId, String firstName, String lastName, String fullName, String gender, Date dateOfBirth, UserSignUpSource signUpSource )
-			throws InvalidArgumentException, UnexpectedServerException {
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Boolean isChanged = false;
-		User user;
-		
-		// Get user object.
-		if( dataAccessor.getUserByEmail( emailId ) != null ) 
-			user = dataAccessor.getUserByEmail( emailId );
-		else if( dataAccessor.getUserByFacebookId( facebookId ) != null ) 
-			user = dataAccessor.getUserByFacebookId( facebookId );
-		else {
-			user = dataAccessor.newUser();
-			isChanged = true;
-		}
-		
-		// Update Data.
-		if( user.getFirstName() == null || ! user.getFirstName().equals( firstName ) ) {
-			user.setFirstName( firstName );
-			isChanged = true;
-		}
-		
-		if( lastName != null ) {
-			if( user.getLastName() == null || ! user.getLastName().equals( lastName ) ) {
-				user.setLastName( lastName );
-				isChanged = true;
-			}
-		}
-		
-		if( user.getEmail() == null || ! user.getEmail().equals( emailId ) ) {
-			if( user.getEmail() == null ) 
-				user.setEmail( emailId );
-			else {
-				if( user.getEmail().contains( "@facebook.com" ) ) {
-					user.setEmail( emailId );
-					isChanged = true;
-				}
-				else if( user.getPassword() == null ) {
-					user.setEmail( emailId );
-					isChanged = true;
-				}
-			}
-		}
-		
-		if( user.getFacebookId() == null ) {
-			user.setFacebookId( facebookId );
-			isChanged = true;
-		}
-		
-		if( dateOfBirth != null ) {
-			if( user.getDateOfBirth() == null || ! user.getDateOfBirth().equals( dateOfBirth ) ) {
-				user.setDateOfBirth( dateOfBirth );
-				isChanged = true;
-			}
-		}
-
-		// String gender to Gender type conversion.
-		Gender userGender;
-		if( gender.toLowerCase().equals( "male" ) )
-			userGender = Gender.MALE;
-		else if( gender.toLowerCase().equals( "female" ) )
-			userGender = Gender.FEMALE;
-		else
-			userGender = Gender.OTHER;
-		
-		if( user.getGender() == null || ! user.getGender().equals( userGender ) ) {
-			user.setGender( userGender );
-			isChanged = true;
-		}
-		
-		if( user.getNickName() == null || ! user.getNickName().equals( fullName ) ) {
-			user.setNickName( fullName );
-			isChanged = true;
-		}
-		
-		user.setState( UserState.REGISTERED );
-		if( user.getSignUpSource() == null )
-			user.setSignUpSource( signUpSource );
-		if( user.getSignUpDate() == null )
-			user.setSignUpDate( new Date() );
-		
-		if( isChanged ) 
-			user = dataAccessor.createOrUpdateUser( user );
-
-		return createUserData( user );
-	}
-
 	public static UserData loginUser( String email, String password )
-			throws InvalidArgumentException {
-		
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+			throws InvalidArgumentException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email );
@@ -211,63 +119,87 @@ public class UserDataUtil {
 			throw new InvalidArgumentException( errorMessages );
 		}
 
-		if( ! accessToken.getUserId().equals( 0L ) )
-			return createUserData( user );
-		
-		accessToken.setUserId( user.getId() );
-		accessToken.setLogInDate( new Date() );
-		accessToken.setExpiry( new Date( new Date().getTime() + ACCESS_TOKEN_EXPIRY ) );
-		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
+		loginUser( AccessTokenFilter.getAccessToken(), user );
 		return createUserData( user );
 
-		/*
-		while( true ) { 
-			try {
-				dataAccessor.beginTx();
-				accessToken = dataAccessor.getAccessToken( accessToken.getId() );
-				if( ! accessToken.getUserId().equals( 0L ) )
-					return createUserData( user );
-				accessToken.setUserId( user.getId() );
-				accessToken.setLogInDate( new Date() );
-				accessToken.setExpiry( new Date( new Date().getTime() + ACCESS_TOKEN_EXPIRY ) );
-				accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
-				dataAccessor.commitTx();8
-				return createUserData( user );
-			} catch( JDODataStoreException ex ) {
-				logger.log( Level.INFO, "Transaction failed. Retrying in 100 ms...", ex );
-			} finally {
-				if( dataAccessor.isTxActive() )
-					dataAccessor.rollbackTx();
-			}
-			
-			try {
-				Thread.sleep( 1000 );
-			} catch( InterruptedException e ) { } // Do nothing
-		}
-		*/
 	}
-	
-	public static UserData loginFacebookUser( String emailId )
+
+	public static UserData loginUser( String fbUserId, String fbUserAccessToken,
+			String firstName, String lastName, Gender gender, Date dateOfBirth,
+			String email, UserSignUpSource signUpSource )
 			throws InvalidArgumentException, UnexpectedServerException {
-		
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+
+		if( ! FacebookApi.validateUserAccessToken( fbUserId, fbUserAccessToken ) )
+			throw new InvalidArgumentException( "Invalid Facebook UserId or UserAccessToken." );
+
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( emailId );
 
-		if( user == null ) {
-			logger.log( Level.SEVERE, "Facebook User " + emailId + " is not registered !" );
-			return new UserData( 0L );
+		User user = dataAccessor.getUserByFacebookId( fbUserId );
+		Boolean isChanged = false;
+
+		if( user != null ) {
+
+			if( email != null && ! email.equals( user.getEmail() ) && user.getPassword() == null ) {
+				user.setEmail( email );
+				isChanged = true;
+			}
+			
+		} else { // user == null
+			
+			if( email != null )
+				user = dataAccessor.getUserByEmail( email );
+			
+			if( user == null ) {
+				user = dataAccessor.newUser();
+				user.setEmail( email );
+				user.setState( UserState.ACTIVE );
+				user.setSignUpDate( new Date() );
+				user.setSignUpSource( signUpSource );
+			}
+			
+			user.setFacebookId( fbUserId );
+			isChanged = true;
+		
 		}
 		
+		
+		if( firstName != null && ! firstName.equals( user.getFirstName() ) ) {
+			user.setFirstName( firstName );
+			isChanged = true;
+		}
+		
+		if( lastName != null && ! lastName.equals( user.getLastName() ) ) {
+			user.setLastName( lastName );
+			isChanged = true;
+		}
+		
+		if( gender != null && gender != user.getGender() ) {
+			user.setGender( gender );
+			isChanged = true;
+		}
+		
+		if( dateOfBirth != null && ! dateOfBirth.equals( user.getDateOfBirth() ) ) {
+			user.setDateOfBirth( dateOfBirth );
+			isChanged = true;
+		}
+
+		if( isChanged )
+			user = dataAccessor.createOrUpdateUser( user );
+		
+
+		loginUser( AccessTokenFilter.getAccessToken(), user );
+		return createUserData( user );
+	}
+	
+	private static void loginUser( AccessToken accessToken, User user ) {
+		
 		if( ! accessToken.getUserId().equals( 0L ) )
-			return createUserData( user );
+			return;
 		
 		accessToken.setUserId( user.getId() );
 		accessToken.setLogInDate( new Date() );
-		accessToken.setExpiry( new Date( new Date().getTime() + ACCESS_TOKEN_EXPIRY ) );
-		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
-		return createUserData( user );
+		accessToken = DataAccessorFactory.getDataAccessor().createOrUpdateAccessToken( accessToken );
 
 		/*
 		while( true ) { 
@@ -293,6 +225,7 @@ public class UserDataUtil {
 			} catch( InterruptedException e ) { } // Do nothing
 		}
 		*/
+		
 	}
 
 	public static UserData logoutUser() {
@@ -332,5 +265,5 @@ public class UserDataUtil {
 		}
  		*/
 	}
-	
+
 }

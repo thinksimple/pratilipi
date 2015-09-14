@@ -175,7 +175,7 @@ public abstract class GenericApi extends HttpServlet {
 			logger.log( Level.SEVERE, "Invalid JSON in request body.", e );
 			return new InvalidArgumentException( "Invalid JSON in request body." );
 		
-		} catch( UnexpectedServerException e) {
+		} catch( UnexpectedServerException e ) {
 			return e;
 		
 		} catch( InvocationTargetException e ) {

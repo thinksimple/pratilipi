@@ -37,6 +37,7 @@ public class UserEntity implements User {
 	
 	@Persistent( column = "NICK_NAME" )
 	private String nickName;
+
 	
 	@Persistent( column = "GENDER" )
 	private Gender gender;
@@ -141,6 +142,7 @@ public class UserEntity implements User {
 	public void setNickName( String nickName ) {
 		this.nickName = nickName;
 	}
+	
 	
 	@Override
 	public Gender getGender() {

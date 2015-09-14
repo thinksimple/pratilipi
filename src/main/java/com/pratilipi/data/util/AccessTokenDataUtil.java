@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.type.AccessTokenType;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AccessToken;
@@ -24,7 +23,6 @@ public class AccessTokenDataUtil {
 		AccessToken accessToken = dataAccessor.newAccessToken();
 
 		accessToken.setUserId( 0L );
-		accessToken.setType( AccessTokenType.USER );
 		accessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
 		accessToken.setCreationDate( new Date() );
 		
@@ -41,9 +39,6 @@ public class AccessTokenDataUtil {
 		if( accessToken == null ) {
 			errorMessages.addProperty( "accessToken", "Access Token is invalid !" );
 			throw new InvalidArgumentException( errorMessages );
-		} else if( accessToken.getType() != AccessTokenType.USER ) {
-			errorMessages.addProperty( "accessToken", "Access Token type is invalid !" );
-			throw new InvalidArgumentException( errorMessages );
 		} else if( accessToken.isExpired() ) {
 			errorMessages.addProperty( "accessToken", "Access Token is expired !" );
 			throw new InvalidArgumentException( errorMessages );
@@ -54,7 +49,6 @@ public class AccessTokenDataUtil {
 
 			newAccessToken.setParentId( accessTokenId );
 			newAccessToken.setUserId( accessToken.getUserId() );
-			newAccessToken.setType( accessToken.getType() );
 			newAccessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
 			newAccessToken.setCreationDate( new Date() );
 			
