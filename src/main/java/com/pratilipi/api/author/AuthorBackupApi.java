@@ -74,8 +74,6 @@ public class AuthorBackupApi extends GenericApi {
                 oneLine.append( author.getId().toString() );
                 oneLine.append( CSV_SEPARATOR );
                 oneLine.append( author.getLanguage().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( author.getUserId().toString() );
                 
                 CSV.append( oneLine.toString() + LINE_SEPARATOR );
                 backup.append( new Gson().toJson( author ) + LINE_SEPARATOR );
