@@ -157,7 +157,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public DataListCursorTuple<User> getUserList( String cursor, Integer resultCount ) {
-		return getUserList( cursor, resultCount, true);
+		return getUserList( cursor, resultCount, false );
 	}
 	
 	@SuppressWarnings("unchecked")
