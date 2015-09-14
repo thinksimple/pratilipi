@@ -3,8 +3,6 @@ package com.pratilipi.data.type;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.pratilipi.common.type.AccessTokenType;
-
 public interface AccessToken extends Serializable {
 
 	String getId();
@@ -16,11 +14,7 @@ public interface AccessToken extends Serializable {
 	Long getUserId();
 	
 	void setUserId( Long userId );
-	
-	AccessTokenType getType();
-	
-	void setType( AccessTokenType accessTokenType );
-	
+
 	Date getLogInDate();
 	
 	void setLogInDate( Date logInDate );

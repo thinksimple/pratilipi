@@ -29,6 +29,7 @@ public class AccessTokenEntity implements AccessToken {
 	@Persistent( column = "PUBLISHER_ID" )
 	private Long publisherId;
 
+	@Deprecated
 	@Persistent( column = "ACCESS_TOKEN_TYPE" )
 	private AccessTokenType type;
 
@@ -73,16 +74,6 @@ public class AccessTokenEntity implements AccessToken {
 	@Override
 	public void setUserId( Long userId ) {
 		this.userId = userId;
-	}
-
-	@Override
-	public AccessTokenType getType() {
-		return type;
-	}
-
-	@Override
-	public void setType( AccessTokenType accessTokenType ) {
-		this.type = accessTokenType;
 	}
 
 	@Override
