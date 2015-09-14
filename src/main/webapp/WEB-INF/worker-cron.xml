@@ -28,5 +28,21 @@
 		<schedule>every 5 minutes from 8:00 to 20:00</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
+	
+	
+	<cron>
+		<url>/author/backup?cron</url>
+		<target>worker</target>
+		<schedule>every 30 minutes from 8:00 to 20:00</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+	
+	
+	<cron>
+		<url>/user/backup?cron</url>
+		<target>worker</target>
+		<schedule>every 30 minutes from 8:00 to 20:00</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
 
 </cronentries>
