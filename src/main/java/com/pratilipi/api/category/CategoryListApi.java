@@ -15,8 +15,7 @@ import com.pratilipi.data.util.CategoryDataUtil;
 public class CategoryListApi extends GenericApi {
 	
 	@Get
-	public GetCategoryListResponse getPratilipiCategory(
-			GetCategoryListRequest request ) {
+	public GetCategoryListResponse getPratilipiCategory( GetCategoryListRequest request ) {
 		
 		List<CategoryData> categoryList = CategoryDataUtil.getCategoryList( request.getLanguage() );
 		return new GetCategoryListResponse( categoryList );

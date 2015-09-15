@@ -8,13 +8,13 @@ import com.pratilipi.data.client.CategoryData;
 @SuppressWarnings("unused")
 public class GetCategoryListResponse extends GenericResponse { 
 	
-	private List<CategoryData> pratilipiCategoryList;
+	private List<CategoryData> categoryList;
 
 	
 	private GetCategoryListResponse() {}
 	
-	public GetCategoryListResponse( List<CategoryData> pratilipiCategoryList ) {
-		this.pratilipiCategoryList = pratilipiCategoryList;
+	public GetCategoryListResponse( List<CategoryData> categoryList ) {
+		this.categoryList = categoryList;
 	}
 	
 }
