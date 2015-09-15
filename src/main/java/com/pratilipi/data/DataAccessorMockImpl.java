@@ -127,6 +127,14 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public DataListCursorTuple<User> getUserList( String cursor, Integer resultCount ) {
+		List<User> dataList = new ArrayList<>( UserMock.USER_TABLE.size() );
+		for( User user : UserMock.USER_TABLE )
+			dataList.add( user );
+		return new DataListCursorTuple<User>( dataList, null );
+	}
+
+	@Override
 	public User createOrUpdateUser( User user ) {
 		Long id = 0L;
 		for( User aUser : UserMock.USER_TABLE )
@@ -138,17 +146,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return user;
 	}
 	
-	@Override
-	public DataListCursorTuple<User> getUserList( String cursor, Integer resultCount ) {
-		// TODO: Implementation
-		List<User> dataList = new ArrayList<>(); 
-		
-		for( User user : UserMock.USER_TABLE )
-				dataList.add( user );
-		DataListCursorTuple<User> returnList = new DataListCursorTuple<User>( dataList, "" );
-		return returnList;
-	}
-
 
 	// ACCESS_TOKEN Table
 	
@@ -291,12 +288,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
-		List<Pratilipi> dataList = new ArrayList<>(); 
 		
+		List<Pratilipi> dataList = new ArrayList<>(); 
 		for( Pratilipi pratilipi : PratilipiMock.PRATILIPI_TABLE )
-				dataList.add( pratilipi );
-		DataListCursorTuple<Pratilipi> returnList = new DataListCursorTuple<Pratilipi>( dataList, "" );
-		return returnList;
+			dataList.add( pratilipi );
+		return new DataListCursorTuple<Pratilipi>( dataList, null );
 
 	}
 	
@@ -350,15 +346,13 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter,
-			String cursor, Integer resultCount ) {
+	public DataListCursorTuple<Author> getAuthorList(
+			AuthorFilter authorFilter, String cursor, Integer resultCount ) {
 		
 		List<Author> dataList = new ArrayList<>(); 
-		
 		for( Author author : AuthorMock.AUTHOR_TABLE )
-				dataList.add( author );
-		DataListCursorTuple<Author> returnList = new DataListCursorTuple<Author>( dataList, "" );
-		return returnList;
+			dataList.add( author );
+		return new DataListCursorTuple<Author>( dataList, null );
 
 	}
 

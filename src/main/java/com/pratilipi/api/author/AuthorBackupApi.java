@@ -29,7 +29,7 @@ public class AuthorBackupApi extends GenericApi {
 	private static final Logger logger =
 			Logger.getLogger( AuthorBackupApi.class.getName() );
 	
-	private static final String CSV_HEADER = "Email,FirstName,FirstName_en,LastName,LastName_en,PenName,PenName_en,ContentsPublished,AuthorId,Language,UserId";
+	private static final String CSV_HEADER = "AuthorId,UserId,FirstName,LastName,PenName,FirstNameEN,LastNameEN,PenNameEN,Email,Language,ContentsPublished";
 	private static final String CSV_SEPARATOR = ",";
 	private static final String LINE_SEPARATOR = "\n";
 	
@@ -39,46 +39,33 @@ public class AuthorBackupApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		
+		Date backupDate = new Date();
+
+		StringBuilder backup = new StringBuilder();
+		StringBuilder csv = new StringBuilder( CSV_HEADER + LINE_SEPARATOR );
+		
+		int count = 0;
 		AuthorFilter authorFilter = new AuthorFilter();
 		String cursor = null;
-		int count = 0;
-		StringBuilder backup = new StringBuilder();
-		StringBuilder CSV = new StringBuilder();
-		CSV.append( CSV_HEADER + LINE_SEPARATOR );
-		Date backupDate = new Date();
-		
-		// Backing up Author Table.
+		Gson gson = new Gson();
 		while( true ) {
-			DataListCursorTuple<Author> authorListCursorTupe =
-					dataAccessor.getAuthorList( authorFilter, cursor, 1000 );
+			DataListCursorTuple<Author> authorListCursorTupe = dataAccessor.getAuthorList( authorFilter, cursor, 1000 );
 			List<Author> authorList = authorListCursorTupe.getDataList();
 
 			for( Author author : authorList ) {
-				StringBuilder oneLine = new StringBuilder();
-                oneLine.append( author.getEmail() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( author.getFirstName() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( author.getFirstNameEn() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( author.getLastName() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( author.getLastNameEn() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( author.getPenName() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( author.getPenNameEn() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( author.getContentPublished().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( author.getId().toString() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( author.getLanguage().toString() );
-                
-                CSV.append( oneLine.toString() + LINE_SEPARATOR );
-                backup.append( new Gson().toJson( author ) + LINE_SEPARATOR );
+				backup.append( gson.toJson( author ) + LINE_SEPARATOR );
+                csv.append( author.getId().toString() ).append( CSV_SEPARATOR )
+                		.append( author.getUserId() == null ? "" : author.getUserId().toString() ).append( CSV_SEPARATOR )
+                		.append( author.getFirstName() ).append( CSV_SEPARATOR )
+                		.append( author.getLastName() ).append( CSV_SEPARATOR )
+                		.append( author.getPenName() ).append( CSV_SEPARATOR )
+                		.append( author.getFirstNameEn() ).append( CSV_SEPARATOR )
+                		.append( author.getLastNameEn() ).append( CSV_SEPARATOR )
+                		.append( author.getPenNameEn() ).append( CSV_SEPARATOR )
+                		.append( author.getEmail() ).append( CSV_SEPARATOR )
+                		.append( author.getLanguage().toString() ).append( CSV_SEPARATOR )
+                		.append( author.getContentPublished().toString() ).append( LINE_SEPARATOR );
 			}
-			
 			count = count + authorList.size();
 
 			if( authorList.size() < 1000 )
@@ -86,14 +73,22 @@ public class AuthorBackupApi extends GenericApi {
 			else
 				cursor = authorListCursorTupe.getCursor();
 		}
+
 		
-		BlobEntry authorBlobEntry = blobAccessor.newBlob( "author/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
-		BlobEntry authorCsvEntry = blobAccessor.newBlob( "author/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup-csv.csv", null, "text/plain" );
+		String fileName = "author/"
+				+ new SimpleDateFormat( "yyyy-MM-dd" ).format( backupDate ) + "/"
+				+ new SimpleDateFormat( "author-yyyy-MM-dd-HH:mm-z" ).format( backupDate );
+
+		BlobEntry authorBackupEntry = blobAccessor.newBlob(
+				fileName,
+				backup.toString().getBytes( Charset.forName( "UTF-8" ) ),
+				"text/plain" );
+		BlobEntry authorCsvEntry = blobAccessor.newBlob(
+				fileName + ".csv",
+				csv.toString().getBytes( Charset.forName( "UTF-8" ) ),
+				"text/plain" );
 		
-		authorBlobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
-		authorCsvEntry.setData( CSV.toString().getBytes( Charset.forName( "UTF-8" ) ) );
-		
-		blobAccessor.createOrUpdateBlob( authorBlobEntry );
+		blobAccessor.createOrUpdateBlob( authorBackupEntry );
 		blobAccessor.createOrUpdateBlob( authorCsvEntry );
 		
 		logger.log( Level.INFO, "Backed up " + count + " Author Entities." );

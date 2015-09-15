@@ -28,8 +28,8 @@ public interface DataAccessor {
 	User getUser( Long id );
 	User getUserByEmail( String email );
 	User getUserByFacebookId( String facebookId );
+	DataListCursorTuple<User> getUserList( String cursorStr, Integer resultCount );
 	User createOrUpdateUser( User user );
-	DataListCursorTuple<User> getUserList( String cursor, Integer resultCount );
 
 	// ACCESS_TOKEN Table
 	AccessToken newAccessToken();

@@ -151,11 +151,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public User createOrUpdateUser( User user ) {
-		return createOrUpdateEntity( user );
-	}
-
-	@Override
 	public DataListCursorTuple<User> getUserList( String cursor, Integer resultCount ) {
 		return getUserList( cursor, resultCount, false );
 	}
@@ -166,20 +161,13 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		GaeQueryBuilder gaeQueryBuilder =
 				new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
 		
+		gaeQueryBuilder.setCursor( cursorStr );
 		if( resultCount != null )
 			gaeQueryBuilder.setRange( 0, resultCount );
+		if( idOnly )
+			gaeQueryBuilder.setResult( "id" );
 	
 		Query query = gaeQueryBuilder.build();
-		if( cursorStr != null ) {
-			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-			Map<String, Object> extensionMap = new HashMap<String, Object>();
-			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions( extensionMap );
-		}
-
-		if( idOnly )
-			query.setResult( "id" );
-		
 		List<T> userEntityList = (List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 		Cursor cursor = JDOCursorHelper.getCursor( userEntityList );
 		
@@ -188,7 +176,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				cursor == null ? null : cursor.toWebSafeString() );
 	}
 
-	
+	@Override
+	public User createOrUpdateUser( User user ) {
+		return createOrUpdateEntity( user );
+	}
+
 	
 	// ACCESS_TOKEN Table
 

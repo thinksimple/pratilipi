@@ -37,20 +37,20 @@ public class PratilipiBackupApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		
-		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		String cursor = null;
-		int count = 0;
-		StringBuilder backup = new StringBuilder();
 		Date backupDate = new Date();
-		
-		// Backing up Pratilipi Table.
+
+		StringBuilder backup = new StringBuilder();
+
+		int count = 0;
+		String cursor = null;
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		Gson gson = new Gson();
 		while( true ) {
-			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe =
-					dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
+			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe = dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
 			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 
 			for( Pratilipi pratilipi : pratilipiList )  
-                backup.append( new Gson().toJson( pratilipi ) + LINE_SEPARATOR );
+                backup.append( gson.toJson( pratilipi ) + LINE_SEPARATOR );
 			
 			count = count + pratilipiList.size();
 
@@ -60,9 +60,17 @@ public class PratilipiBackupApi extends GenericApi {
 				cursor = pratilipiListCursorTupe.getCursor();
 		}
 		
-		BlobEntry pratilipiBlobEntry = blobAccessor.newBlob( "pratilipi/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
-		pratilipiBlobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
-		blobAccessor.createOrUpdateBlob( pratilipiBlobEntry );
+
+		String fileName = "pratilipi/"
+				+ new SimpleDateFormat( "yyyy-MM-dd" ).format( backupDate ) + "/"
+				+ new SimpleDateFormat( "pratilipi-yyyy-MM-dd-HH:mm-z" ).format( backupDate );
+
+		BlobEntry pratilipiBackupEntry = blobAccessor.newBlob(
+				fileName,
+				backup.toString().getBytes( Charset.forName( "UTF-8" ) ),
+				"text/plain" );
+		
+		blobAccessor.createOrUpdateBlob( pratilipiBackupEntry );
 		
 		logger.log( Level.INFO, "Backed up " + count + " Pratilipi Entities." );
 

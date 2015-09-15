@@ -28,9 +28,10 @@ public class UserBackupApi extends GenericApi {
 	private static final Logger logger =
 			Logger.getLogger( UserBackupApi.class.getName() );
 	
-	private static final String CSV_HEADER = "Email,FacebookId,FirstName,LastName,UserId";
+	private static final String CSV_HEADER = "UserId,FacebookId,FirstName,LastName,NickName,Email";
 	private static final String CSV_SEPARATOR = ",";
 	private static final String LINE_SEPARATOR = "\n";
+	
 	
 	@Get
 	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
@@ -38,35 +39,27 @@ public class UserBackupApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		
-		String cursor = null;
-		int count = 0;
-		StringBuilder backup = new StringBuilder();
-		StringBuilder CSV = new StringBuilder();
-		CSV.append( CSV_HEADER + LINE_SEPARATOR );
 		Date backupDate = new Date();
-		
-		// Backing up User Table.
-		while( true ) {
-			DataListCursorTuple<User> userListCursorTupe = 
-					dataAccessor.getUserList( cursor, 1000 );
-			List<User> userList = userListCursorTupe.getDataList();
 
+		StringBuilder backup = new StringBuilder();
+		StringBuilder csv = new StringBuilder( CSV_HEADER + LINE_SEPARATOR );
+		
+		int count = 0;
+		String cursor = null;
+		Gson gson = new Gson();
+		while( true ) {
+			DataListCursorTuple<User> userListCursorTupe = dataAccessor.getUserList( cursor, 1000 );
+
+			List<User> userList = userListCursorTupe.getDataList();
 			for( User user : userList ) {
-				StringBuilder oneLine = new StringBuilder();
-                oneLine.append( user.getEmail() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( user.getFacebookId() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( user.getFirstName() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( user.getLastName() );
-                oneLine.append( CSV_SEPARATOR );
-                oneLine.append( user.getId() );
-                
-                CSV.append( oneLine.toString() + LINE_SEPARATOR );
-				backup.append( new Gson().toJson( user ) + LINE_SEPARATOR );
+				backup.append( gson.toJson( user ) + LINE_SEPARATOR );
+				csv.append( user.getId() ).append( CSV_SEPARATOR )
+						.append( user.getFacebookId() ).append( CSV_SEPARATOR )
+						.append( user.getFirstName() ).append( CSV_SEPARATOR )
+						.append( user.getLastName() ).append( CSV_SEPARATOR )
+						.append( user.getNickName() ).append( CSV_SEPARATOR )
+						.append( user.getEmail() ).append( LINE_SEPARATOR );
 			}
-				
 			count = count + userList.size();
 
 			if( userList.size() < 1000 )
@@ -75,13 +68,21 @@ public class UserBackupApi extends GenericApi {
 				cursor = userListCursorTupe.getCursor();
 		}
 		
-		BlobEntry userBlobEntry = blobAccessor.newBlob( "user/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup", null, "text/plain" );
-		BlobEntry userCsvEntry = blobAccessor.newBlob( "user/" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate ) + "-backup-csv.csv", null, "text/plain" );
 		
-		userBlobEntry.setData( backup.toString().getBytes( Charset.forName( "UTF-8" ) ) );
-		userCsvEntry.setData( CSV.toString().getBytes( Charset.forName( "UTF-8" ) ) );
+		String fileName = "user/"
+				+ new SimpleDateFormat( "yyyy-MM-dd" ).format( backupDate ) + "/"
+				+ new SimpleDateFormat( "user-yyyy-MM-dd-HH:mm-z" ).format( backupDate );
+
+		BlobEntry userBackupEntry = blobAccessor.newBlob(
+				fileName,
+				backup.toString().getBytes( Charset.forName( "UTF-8" ) ),
+				"text/plain" );
+		BlobEntry userCsvEntry = blobAccessor.newBlob(
+				fileName + ".csv",
+				csv.toString().getBytes( Charset.forName( "UTF-8" ) ),
+				"text/plain" );
 		
-		blobAccessor.createOrUpdateBlob( userBlobEntry );
+		blobAccessor.createOrUpdateBlob( userBackupEntry );
 		blobAccessor.createOrUpdateBlob( userCsvEntry );
 		
 		logger.log( Level.INFO, "Backed up " + count + " User Entities." );

@@ -110,6 +110,9 @@ public class GaeQueryBuilder {
 	}
 
 	public GaeQueryBuilder setCursor( String cursorStr ) {
+		if( cursorStr == null )
+			return this;
+		
 		Cursor cursor = Cursor.fromWebSafeString( cursorStr );
 		Map<String, Object> extensionMap = new HashMap<String, Object>();
 		extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );

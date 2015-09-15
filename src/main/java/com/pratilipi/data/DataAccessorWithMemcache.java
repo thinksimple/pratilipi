@@ -110,6 +110,11 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	@Override
+	public DataListCursorTuple<User> getUserList( String cursor, Integer resultCount ) {
+		return dataAccessor.getUserList( cursor, resultCount );
+	}
+
+	@Override
 	public User createOrUpdateUser( User user ) {
 		user = dataAccessor.createOrUpdateUser( user );
 		memcache.put( PREFIX_USER + user.getId(), user );
@@ -119,11 +124,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return user;
 	}
 	
-	@Override
-	public DataListCursorTuple<User> getUserList( String cursor, Integer resultCount ) {
-		return dataAccessor.getUserList( cursor, resultCount );
-	}
-
 
 	// ACCESS_TOKEN Table
 	
