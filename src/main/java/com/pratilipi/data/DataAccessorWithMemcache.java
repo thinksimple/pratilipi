@@ -1,10 +1,12 @@
 package com.pratilipi.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -29,6 +31,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private static final String PREFIX_AUTHOR = "Author-";
 	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
 	private static final String PREFIX_CATEGORY = "Category-";
+	private static final String PREFIX_CATEGORY_LIST = "CategoryList-";
 	private static final String PREFIX_PRATILIPI_CATEGORY_LIST = "PratilipiCategoryList-";
 	
 	private final DataAccessor dataAccessor;
@@ -470,6 +473,18 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return category;
 	}
 	
+	@Override
+	public List<Category> getCategoryList( Language language ) {
+		String memcacheId = PREFIX_CATEGORY_LIST + language.getCode() + "-" + new Date().getTime() / 900000;
+		List<Category> categoryList = memcache.get( memcacheId );
+		if( categoryList == null ) {
+			categoryList = dataAccessor.getCategoryList( language );
+			if( categoryList != null )
+				memcache.put( memcacheId, new ArrayList<>( categoryList ) );
+		}
+		return categoryList;
+	}
+
 	
 	// PRATILIPI_CATEGORY Table
 	

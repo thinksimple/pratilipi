@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -431,6 +432,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return null;
 	}
 	
+	@Override
+	public List<Category> getCategoryList( Language language ) {
+		// TODO Auto-generated method stub
+		return new ArrayList<Category>( 0 );
+	}
+
 	
 	//PRATILIPI_CATEGORY Table
 	

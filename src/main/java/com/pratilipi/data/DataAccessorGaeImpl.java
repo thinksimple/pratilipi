@@ -16,6 +16,7 @@ import javax.jdo.Query;
 
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -642,6 +643,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return null;
 	}
 	
+	@Override
+	public List<Category> getCategoryList( Language language ) {
+		/* 
+		 * TODO: Read "curated/category + language.getClass()" file,
+		 * create and return CategoryEntity list.
+		 */
+		return new ArrayList<Category>( 0 );
+	}
+
 	
 	//PRATILIPI_CATEGORY Table
 	
@@ -664,6 +674,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		}
 		return null;
 	}
+
 	
 	// Destroy
 

@@ -3,42 +3,54 @@ package com.pratilipi.data.type.gae;
 import java.util.Date;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.pratilipi.common.type.CategoryType;
+import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.type.Category;
 
 @SuppressWarnings("serial")
 @PersistenceCapable( table = "CATEGORY" )
 public class CategoryEntity implements Category {
 
+	@Deprecated
 	@PrimaryKey
 	@Persistent( column = "CATEGORY_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Long id;
 	
+	@Deprecated
 	@Persistent( column = "SERIAL_NUMBER" )
 	private int serialNumber;
 	
 	@Persistent( column = "CATEGORY_NAME")
 	private String name;
 	
+	@Deprecated
 	@Persistent( column = "CATEGORY_PLURAL" )
 	private String plural;
 	
+	@Deprecated
 	@Persistent( column = "LANGUAGE_ID" )
 	private Long languageId;
 	
+	@Deprecated
 	@Persistent( column = "CATEGORY_TYPE" )
 	private CategoryType type;
 	
+	@Deprecated
 	@Persistent( column = "CREATION_DATE" )
 	private Date creationDate;
 	
+	@Deprecated
 	@Persistent( column = "HIDDEN" )
 	private Boolean hidden;
 	
+	@NotPersistent
+	private PratilipiFilter pratilipiFilter;
+
 	
 	public CategoryEntity() {}
 	
@@ -121,4 +133,8 @@ public class CategoryEntity implements Category {
 		this.hidden = hidden;
 	}
 
+	@Override
+	public PratilipiFilter getPratilipiFilter() {
+		return pratilipiFilter;
+	}
 }
