@@ -71,7 +71,7 @@ public class UserBackupApi extends GenericApi {
 		
 		String fileName = "user/"
 				+ new SimpleDateFormat( "yyyy-MM-dd" ).format( backupDate ) + "/"
-				+ new SimpleDateFormat( "user-yyyy-MM-dd-HH:mm-z" ).format( backupDate );
+				+ "user-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate );
 
 		BlobEntry userBackupEntry = blobAccessor.newBlob(
 				fileName,

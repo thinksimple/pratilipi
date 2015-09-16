@@ -77,7 +77,7 @@ public class AuthorBackupApi extends GenericApi {
 		
 		String fileName = "author/"
 				+ new SimpleDateFormat( "yyyy-MM-dd" ).format( backupDate ) + "/"
-				+ new SimpleDateFormat( "author-yyyy-MM-dd-HH:mm-z" ).format( backupDate );
+				+ "author-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate );
 
 		BlobEntry authorBackupEntry = blobAccessor.newBlob(
 				fileName,

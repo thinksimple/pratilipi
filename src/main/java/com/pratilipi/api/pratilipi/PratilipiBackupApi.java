@@ -63,7 +63,7 @@ public class PratilipiBackupApi extends GenericApi {
 
 		String fileName = "pratilipi/"
 				+ new SimpleDateFormat( "yyyy-MM-dd" ).format( backupDate ) + "/"
-				+ new SimpleDateFormat( "pratilipi-yyyy-MM-dd-HH:mm-z" ).format( backupDate );
+				+ "pratilipi-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate );
 
 		BlobEntry pratilipiBackupEntry = blobAccessor.newBlob(
 				fileName,
