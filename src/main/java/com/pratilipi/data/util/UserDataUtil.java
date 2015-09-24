@@ -129,7 +129,7 @@ public class UserDataUtil {
 			String email, UserSignUpSource signUpSource )
 			throws InvalidArgumentException, UnexpectedServerException {
 
-		if( ! FacebookApi.validateUserAccessToken( fbUserId, fbUserAccessToken ) )
+		if( ! FacebookApi.validateUserAccessToken( fbUserId, email, fbUserAccessToken ) )
 			throw new InvalidArgumentException( "Invalid Facebook UserId or UserAccessToken." );
 
 		
