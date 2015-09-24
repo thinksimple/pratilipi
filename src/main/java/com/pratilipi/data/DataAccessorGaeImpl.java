@@ -1,5 +1,8 @@
 package com.pratilipi.data;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.JDOObjectNotFoundException;
@@ -14,8 +19,12 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
+
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
+import com.google.gson.Gson;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
@@ -46,7 +55,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	private static final Logger logger =
 			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
-
+	
+	private static final String CURATED = "curated/";
+	private static final String CATEGORY_LIST = "category";
+	private static final String LINE_BREAK = "\n";
+	
 	private static final PersistenceManagerFactory pmfInstance =
 			JDOHelper.getPersistenceManagerFactory( "transactions-optional" );
 
@@ -645,13 +658,49 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public List<Category> getCategoryList( Language language ) {
-		/* 
-		 * TODO: Read "curated/category + language.getClass()" file,
-		 * create and return CategoryEntity list.
-		 */
-		return new ArrayList<Category>( 0 );
-	}
 
+		Gson gson = new Gson();
+		StringBuilder stringBuilder = new StringBuilder();
+		File file = null;
+		LineIterator it = null;
+		try {
+			file = new File( DataAccessor.class.getResource( CURATED + CATEGORY_LIST + "." + language.getCode() ).toURI() );
+		} catch( Exception e ) {
+			try {
+				file = new File( DataAccessor.class.getResource( CURATED + CATEGORY_LIST + "." + "en" ).toURI() );
+				language = Language.ENGLISH;
+			} catch ( URISyntaxException e1 ) {
+				logger.log( Level.SEVERE, "Category File Not found : category." + language.getCode() );
+			}
+		}
+			
+		try {
+			it = FileUtils.lineIterator( file, "UTF-8" );
+			while( it.hasNext() ) 
+				stringBuilder.append( it.nextLine() + LINE_BREAK );
+			LineIterator.closeQuietly( it );
+		} catch ( IOException e ) {
+			logger.log( Level.SEVERE, "Cannot read category List : category." + language.getCode() );
+		}
+		
+		String[] categories = stringBuilder.toString().split( "\n" );
+		Pattern pattern = Pattern.compile( "\\{([^}]*)\\}" );
+		List<Category> categoryList = new ArrayList<>();
+		for( String category : categories ) {
+			Matcher matcher = pattern.matcher( category );
+			String name = category.substring( 0, category.indexOf('{') ).trim();
+			String jsonString = "";
+			
+			if ( matcher.find() ) 
+				jsonString = "{" + matcher.group(1) + "}";
+			
+			PratilipiFilter pratilipiFilter = gson.fromJson( jsonString, PratilipiFilter.class );
+			
+			categoryList.add( new CategoryEntity( name, pratilipiFilter ) );
+		}
+		
+		return categoryList;
+	}
 	
 	//PRATILIPI_CATEGORY Table
 	

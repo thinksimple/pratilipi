@@ -54,6 +54,11 @@ public class CategoryEntity implements Category {
 	
 	public CategoryEntity() {}
 	
+	public CategoryEntity( String name, PratilipiFilter pratilipiFilter ){
+		this.name = name;
+		this.pratilipiFilter = pratilipiFilter;
+	}
+	
 	public CategoryEntity( Long id ) {
 		this.id = id;
 	}
