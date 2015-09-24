@@ -26,13 +26,13 @@
 		
 		sendData: function( userData, authResponse ) {
 			this.$.AjaxPut.body = JSON.stringify ({ 
-				userId: 		userData.id, 
+				fbUserId: 		userData.id, 
 				firstName: 		userData.first_name, 
 				lastName: 		userData.last_name,
-				emailId: 		userData.email,
+				email: 			userData.email,
 				gender: 		userData.gender,
-				birthday: 		userData.birthday,
-				accessToken: 	authResponse.accessToken });
+				dateOfBirth: 	userData.birthday,
+				fbUserAccessToken: 	authResponse.accessToken });
 			this.$.AjaxPut.generateRequest();
 		},
 		
