@@ -7,13 +7,13 @@ import java.util.logging.Logger;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.client.FacebookUserData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.User;
@@ -123,15 +123,26 @@ public class UserDataUtil {
 		return createUserData( user );
 
 	}
+	
+	public static Boolean isNewUser( String fbUserId, String fbAccessToken ) throws UnexpectedServerException {
+		// Returns true if user is new.
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		String fbUserEmail = FacebookApi.getFbUserEmail( fbAccessToken );
+		if( fbUserEmail != null )
+			return dataAccessor.getUserByFacebookId( fbUserId ) == null && 
+				dataAccessor.getUserByEmail( fbUserEmail ) == null;
+		else
+			return dataAccessor.getUserByFacebookId( fbUserId ) == null;
+	}
 
 	public static UserData loginUser( String fbUserId, String fbUserAccessToken,
-			String firstName, String lastName, Gender gender, Date dateOfBirth,
-			String email, UserSignUpSource signUpSource )
+			UserSignUpSource signUpSource )
 			throws InvalidArgumentException, UnexpectedServerException {
+		
+		FacebookUserData fbUserData = FacebookApi.getUserCredentials( fbUserId, fbUserAccessToken );
 
-		if( ! FacebookApi.validateUserAccessToken( fbUserId, email, fbUserAccessToken ) )
+		if( fbUserData == null )
 			throw new InvalidArgumentException( "Invalid Facebook UserId or UserAccessToken." );
-
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -140,20 +151,23 @@ public class UserDataUtil {
 
 		if( user != null ) {
 
-			if( email != null && ! email.equals( user.getEmail() ) && user.getPassword() == null ) {
-				user.setEmail( email );
+			if( fbUserData.getEmail() != null && ! fbUserData.getEmail().equals( user.getEmail() ) && user.getPassword() == null ) {
+				user.setEmail( fbUserData.getEmail() );
 				isChanged = true;
 			}
 			
 		} else { // user == null
 			
-			if( email != null )
-				user = dataAccessor.getUserByEmail( email );
+			if( fbUserData.getEmail() != null )
+				user = dataAccessor.getUserByEmail( fbUserData.getEmail() );
 			
 			if( user == null ) {
 				user = dataAccessor.newUser();
-				user.setEmail( email );
-				user.setState( UserState.ACTIVE );
+				user.setEmail( fbUserData.getEmail() );
+				if( fbUserData.getVerified() )
+					user.setState( UserState.ACTIVE );
+				else
+					user.setState( UserState.REGISTERED );
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
 			}
@@ -164,23 +178,23 @@ public class UserDataUtil {
 		}
 		
 		
-		if( firstName != null && ! firstName.equals( user.getFirstName() ) ) {
-			user.setFirstName( firstName );
+		if( fbUserData.getFirstName() != null && ! fbUserData.getFirstName().equals( user.getFirstName() ) ) {
+			user.setFirstName( fbUserData.getFirstName() );
 			isChanged = true;
 		}
 		
-		if( lastName != null && ! lastName.equals( user.getLastName() ) ) {
-			user.setLastName( lastName );
+		if( fbUserData.getLastName() != null && ! fbUserData.getLastName().equals( user.getLastName() ) ) {
+			user.setLastName( fbUserData.getLastName() );
 			isChanged = true;
 		}
 		
-		if( gender != null && gender != user.getGender() ) {
-			user.setGender( gender );
+		if( fbUserData.getGender() != null && fbUserData.getGender() != user.getGender() ) {
+			user.setGender( fbUserData.getGender() );
 			isChanged = true;
 		}
 		
-		if( dateOfBirth != null && ! dateOfBirth.equals( user.getDateOfBirth() ) ) {
-			user.setDateOfBirth( dateOfBirth );
+		if( fbUserData.getDateOfBirth() != null && ! fbUserData.getDateOfBirth().equals( user.getDateOfBirth() ) ) {
+			user.setDateOfBirth( fbUserData.getDateOfBirth() );
 			isChanged = true;
 		}
 

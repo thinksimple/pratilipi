@@ -6,7 +6,7 @@
 	</div>			
 	<iron-ajax
 				id="AjaxPut"
-				url="/api/user/facebook_login"
+				url="/api/user/login/facebook"
 				method="PUT"
 				content-type="application/json"
 				handle-as="json"
@@ -27,11 +27,6 @@
 		sendData: function( userData, authResponse ) {
 			this.$.AjaxPut.body = JSON.stringify ({ 
 				fbUserId: 		userData.id, 
-				firstName: 		userData.first_name, 
-				lastName: 		userData.last_name,
-				email: 			userData.email,
-				gender: 		userData.gender,
-				dateOfBirth: 	userData.birthday,
 				fbUserAccessToken: 	authResponse.accessToken });
 			this.$.AjaxPut.generateRequest();
 		},
