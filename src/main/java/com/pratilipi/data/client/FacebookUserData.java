@@ -21,8 +21,6 @@ public class FacebookUserData {
 	
 	private String last_name;
 	
-	private Boolean verified;
-	
 
 	public FacebookUserData() {}
 	
@@ -60,8 +58,4 @@ public class FacebookUserData {
 		return this.email;
 	}
 	
-	public Boolean getVerified() {
-		return this.verified;
-	}
-
 }

@@ -164,10 +164,7 @@ public class UserDataUtil {
 			if( user == null ) {
 				user = dataAccessor.newUser();
 				user.setEmail( fbUserData.getEmail() );
-				if( fbUserData.getVerified() )
-					user.setState( UserState.ACTIVE );
-				else
-					user.setState( UserState.REGISTERED );
+				user.setState( UserState.ACTIVE );
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
 			}
