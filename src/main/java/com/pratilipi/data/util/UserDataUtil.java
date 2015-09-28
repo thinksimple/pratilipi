@@ -194,6 +194,11 @@ public class UserDataUtil {
 			user.setDateOfBirth( fbUserData.getDateOfBirth() );
 			isChanged = true;
 		}
+		
+		if( ! user.getState().equals( UserState.ACTIVE ) ) {
+			user.setState( UserState.ACTIVE );
+			isChanged = true;
+		}
 
 		if( isChanged )
 			user = dataAccessor.createOrUpdateUser( user );
