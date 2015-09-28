@@ -656,7 +656,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public List<Category> getCategoryList( Language language ) {
 
 		File file = null;
-				 
+		Gson gson = new Gson();
+		List<Category> categoryList = new ArrayList<>();
+		LineIterator it = null;
+		
 		try {
 			try {
 				file = new File( DataAccessor.class.getResource( CATEGORY_DATA_FILE_PREFIX + language.getCode() ).toURI() );
@@ -665,15 +668,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				language = Language.ENGLISH;
 			}
 			logger.log( Level.INFO, "Fetched category file : category" + "." + language.getCode() );
-		} catch( URISyntaxException | NullPointerException e ) {
-			return null;
-		}
-		
-		Gson gson = new Gson();
-		List<Category> categoryList = new ArrayList<>();
-		LineIterator it = null;
-		
-		try {
 			it = FileUtils.lineIterator( file, "UTF-8" );
 			while( it.hasNext() ) {
 				String category = it.nextLine();
@@ -688,15 +682,13 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			}
 
 			LineIterator.closeQuietly( it );
-			
-		}  catch ( IOException e ) {
+
+		} catch( URISyntaxException | IOException | NullPointerException e ) {
 			logger.log( Level.SEVERE, "Cannot read category List : category." + language.getCode() );
-		}
-		
-		if( categoryList.size() != 0 && ! categoryList.isEmpty() )
-			return categoryList;
-		else
 			return null;
+		}
+	
+		return categoryList;
 	}
 	
 	//PRATILIPI_CATEGORY Table
