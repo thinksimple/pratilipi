@@ -41,48 +41,21 @@ public class FacebookApi {
 		return facebookCredentials.get( "appId" ) + "|" + facebookCredentials.get( "appSecret" );
 	}
 	
-	public static String getFbUserEmail( String fbUserAccessToken ) throws UnexpectedServerException {
-		String requestUrl = GRAPH_API_2p2_URL + "/me?" + "access_token=" + fbUserAccessToken;
-		String responsePayload = null;
-		try {
-			responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
-		} catch ( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to access Graph Api.", e );
-			throw new UnexpectedServerException();
-		}
-		return new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject().get( "email" ).getAsString();
-	}
-	
 	public static FacebookUserData getUserCredentials( String fbUserId, String fbUserAccessToken )
 			throws UnexpectedServerException {
 		
 		try {
-			String requestUrl = GRAPH_API_2p2_URL
-					+ "/debug_token"
-					+ "?input_token=" + fbUserAccessToken
-					+ "&access_token=" + URLEncoder.encode( FacebookApi.getAccessToken(), "UTF-8" );
+			String requestUrl = GRAPH_API_2p2_URL + "/me?" + "access_token=" + fbUserAccessToken;
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
-
+			
 			logger.log( Level.INFO, "Graph Api Request : " + requestUrl );
 			logger.log( Level.INFO, "Graph Api Response : " + responsePayload );
 
 			JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
-			JsonObject responseDataJson = responseJson.get( "data" ).getAsJsonObject();
-			
-			if( responseJson.get( "error" ) != null || 
-					!responseDataJson.get( "is_valid" ).getAsBoolean() ||
-					!responseDataJson.get( "user_id" ).getAsString().equals( fbUserId ) ||
-					!responseDataJson.get( "app_id" ).getAsString().equals( getAppId() ) )
+			if( responseJson.get( "error" ) != null )
 				return null;
-			
-			requestUrl = GRAPH_API_2p2_URL + "/me?" + "access_token=" + fbUserAccessToken;
-			responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
-			
-			logger.log( Level.INFO, "Graph Api Request : " + requestUrl );
-			logger.log( Level.INFO, "Graph Api Response : " + responsePayload );
-
-			responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
-			return new Gson().fromJson( responseJson, FacebookUserData.class );
+			else 
+				return new Gson().fromJson( responseJson, FacebookUserData.class );
 			
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to access Graph Api.", e );

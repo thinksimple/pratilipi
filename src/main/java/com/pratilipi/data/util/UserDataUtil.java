@@ -1,6 +1,8 @@
 package com.pratilipi.data.util;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +20,8 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class UserDataUtil {
 	
@@ -41,6 +45,7 @@ public class UserDataUtil {
 		userData.setFirstName( user.getFirstName() );
 		userData.setLastName( user.getLastName() );
 		userData.setName( createUserName( user ) );
+		userData.setEmail( user.getEmail() == null ? null : user.getEmail() );
 		userData.setIsGuest( user.getId() == null || user.getId().equals( 0L ) );
 		return userData;
 	}
@@ -114,6 +119,16 @@ public class UserDataUtil {
 			throw new InvalidArgumentException( errorMessages );
 		}
 		
+		if( user.getPassword() == null && user.getFacebookId() != null ) {
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/user/email" )
+					.addParam( "userId", user.getId().toString() )
+					.addParam( "sendPasswordResetMail", "true" );
+			TaskQueueFactory.getUserTaskQueue().add( task );
+			errorMessages.addProperty( "email", "Dear " + user.getFirstName() + ", you have registered with us via facebook. We have sent you a mail, check your inbox!" );
+			throw new InvalidArgumentException( errorMessages );
+		}
+			
 		if( ! PasswordUtil.check( password, user.getPassword() ) ) {
 			errorMessages.addProperty( "password", "Incorrect password !" );
 			throw new InvalidArgumentException( errorMessages );
@@ -124,22 +139,14 @@ public class UserDataUtil {
 
 	}
 	
-	public static Boolean isNewUser( String fbUserId, String fbAccessToken ) throws UnexpectedServerException {
-		// Returns true if user is new.
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		String fbUserEmail = FacebookApi.getFbUserEmail( fbAccessToken );
-		if( fbUserEmail != null )
-			return dataAccessor.getUserByFacebookId( fbUserId ) == null && 
-				dataAccessor.getUserByEmail( fbUserEmail ) == null;
-		else
-			return dataAccessor.getUserByFacebookId( fbUserId ) == null;
-	}
-
-	public static UserData loginUser( String fbUserId, String fbUserAccessToken,
+	public static Map<String, Object> loginUser( String fbUserId, String fbUserAccessToken,
 			UserSignUpSource signUpSource )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
+		Map<String, Object> userCredentials = new HashMap<>();
 		FacebookUserData fbUserData = FacebookApi.getUserCredentials( fbUserId, fbUserAccessToken );
+		
+		Boolean newUser = true;
 
 		if( fbUserData == null )
 			throw new InvalidArgumentException( "Invalid Facebook UserId or UserAccessToken." );
@@ -150,7 +157,7 @@ public class UserDataUtil {
 		Boolean isChanged = false;
 
 		if( user != null ) {
-
+			newUser = false;
 			if( fbUserData.getEmail() != null && ! fbUserData.getEmail().equals( user.getEmail() ) && user.getPassword() == null ) {
 				user.setEmail( fbUserData.getEmail() );
 				isChanged = true;
@@ -158,10 +165,12 @@ public class UserDataUtil {
 			
 		} else { // user == null
 			
-			if( fbUserData.getEmail() != null )
+			if( fbUserData.getEmail() != null ) 
 				user = dataAccessor.getUserByEmail( fbUserData.getEmail() );
 			
-			if( user == null ) {
+			if( user != null ) 
+				newUser = false;
+			else {
 				user = dataAccessor.newUser();
 				user.setEmail( fbUserData.getEmail() );
 				user.setState( UserState.ACTIVE );
@@ -205,7 +214,11 @@ public class UserDataUtil {
 		
 
 		loginUser( AccessTokenFilter.getAccessToken(), user );
-		return createUserData( user );
+		
+		userCredentials.put( "userData" , createUserData( user ) );
+		userCredentials.put( "newUser", newUser );
+
+		return userCredentials;
 	}
 	
 	private static void loginUser( AccessToken accessToken, User user ) {

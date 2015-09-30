@@ -1,5 +1,7 @@
 package com.pratilipi.api.user;
 
+import java.util.Map;
+
 import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -22,14 +24,14 @@ public class UserFacebookLoginApi extends GenericApi {
 	public static UserResponse facebookLogin( PutUserFacebookLoginRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
-		boolean newUser = UserDataUtil.isNewUser( request.getFbUserId(), request.getFbUserAccessToken() );
-
-		UserData userData = UserDataUtil.loginUser(
+		Map<String, Object> userCredentials = UserDataUtil.loginUser(
 				request.getFbUserId(),
 				request.getFbUserAccessToken(),
 				UserSignUpSource.WEBSITE_FACEBOOK ); // TODO: Facebook SignUp on Android ?
 
-		
+		UserData userData = ( UserData ) userCredentials.get( "userData" );
+		Boolean newUser = ( Boolean ) userCredentials.get( "newUser" );
+
 		if( newUser && userData.getEmail() != null ) {
 			
 			Task task1 = TaskQueueFactory.newTask()
