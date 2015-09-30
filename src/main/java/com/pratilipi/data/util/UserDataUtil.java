@@ -144,12 +144,15 @@ public class UserDataUtil {
 			throws InvalidArgumentException, UnexpectedServerException {
 		
 		Map<String, Object> userCredentials = new HashMap<>();
-		FacebookUserData fbUserData = FacebookApi.getUserCredentials( fbUserId, fbUserAccessToken );
+		FacebookUserData fbUserData = FacebookApi.getUserCredentials( fbUserAccessToken );
 		
 		Boolean newUser = true;
 
 		if( fbUserData == null )
-			throw new InvalidArgumentException( "Invalid Facebook UserId or UserAccessToken." );
+			throw new InvalidArgumentException( "Invalid UserAccessToken." );
+		
+		if( ! fbUserData.getFbUserId().equals( fbUserId ) || ! fbUserData.isVerified() )
+			throw new InvalidArgumentException( "Invalid Facebook UserId or not verified on facebook." );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 

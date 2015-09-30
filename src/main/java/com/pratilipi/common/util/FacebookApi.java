@@ -41,7 +41,7 @@ public class FacebookApi {
 		return facebookCredentials.get( "appId" ) + "|" + facebookCredentials.get( "appSecret" );
 	}
 	
-	public static FacebookUserData getUserCredentials( String fbUserId, String fbUserAccessToken )
+	public static FacebookUserData getUserCredentials( String fbUserAccessToken )
 			throws UnexpectedServerException {
 		
 		try {
