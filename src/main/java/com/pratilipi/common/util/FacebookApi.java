@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.client.FacebookUserData;
 import com.pratilipi.data.type.AppProperty;
 
 public class FacebookApi {
@@ -26,7 +27,6 @@ public class FacebookApi {
 	
 	private static final String GRAPH_API_2p2_URL = "https://graph.facebook.com/v2.2";
 	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
-	private static final String GRAPH_API_DEBUG_TOKEN_URL = "https://graph.facebook.com/debug_token";
 	
 	
 	public static String getAppId() {
@@ -41,27 +41,22 @@ public class FacebookApi {
 		return facebookCredentials.get( "appId" ) + "|" + facebookCredentials.get( "appSecret" );
 	}
 	
-	public static Boolean validateUserAccessToken( String fbUserId, String fbUserAccessToken )
+	public static FacebookUserData getUserCredentials( String fbUserAccessToken )
 			throws UnexpectedServerException {
 		
 		try {
-			String requestUrl = GRAPH_API_DEBUG_TOKEN_URL
-					+ "?input_token=" + fbUserAccessToken
-					+ "&access_token=" + getAccessToken();
+			String requestUrl = GRAPH_API_2p2_URL + "/me?" + "access_token=" + fbUserAccessToken;
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
-
+			
 			logger.log( Level.INFO, "Graph Api Request : " + requestUrl );
 			logger.log( Level.INFO, "Graph Api Response : " + responsePayload );
 
 			JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
 			if( responseJson.get( "error" ) != null )
-				return false;
-
-			JsonObject responseDataJson = responseJson.get( "data" ).getAsJsonObject();
-			return responseDataJson.get( "is_valid" ).getAsBoolean()
-					&& responseDataJson.get( "user_id" ).equals( fbUserId )
-					&& responseDataJson.get( "app_id" ).equals( getAppId() );
-
+				return null;
+			else 
+				return new Gson().fromJson( responseJson, FacebookUserData.class );
+			
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to access Graph Api.", e );
 			throw new UnexpectedServerException();

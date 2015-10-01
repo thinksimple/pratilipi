@@ -1,5 +1,8 @@
 package com.pratilipi.data;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,8 +17,12 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
+
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
+import com.google.gson.Gson;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
@@ -46,7 +53,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	private static final Logger logger =
 			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
-
+	
+	private static final String CATEGORY_DATA_FILE_PREFIX = "curated/category.";
+	
 	private static final PersistenceManagerFactory pmfInstance =
 			JDOHelper.getPersistenceManagerFactory( "transactions-optional" );
 
@@ -645,13 +654,42 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public List<Category> getCategoryList( Language language ) {
-		/* 
-		 * TODO: Read "curated/category + language.getClass()" file,
-		 * create and return CategoryEntity list.
-		 */
-		return new ArrayList<Category>( 0 );
-	}
 
+		File file = null;
+		Gson gson = new Gson();
+		List<Category> categoryList = new ArrayList<>();
+		LineIterator it = null;
+		
+		try {
+			try {
+				file = new File( DataAccessor.class.getResource( CATEGORY_DATA_FILE_PREFIX + language.getCode() ).toURI() );
+			} catch( NullPointerException e ) {
+				file = new File( DataAccessor.class.getResource( CATEGORY_DATA_FILE_PREFIX + Language.ENGLISH.getCode() ).toURI() );
+				language = Language.ENGLISH;
+			}
+			logger.log( Level.INFO, "Fetched category file : category" + "." + language.getCode() );
+			it = FileUtils.lineIterator( file, "UTF-8" );
+			while( it.hasNext() ) {
+				String category = it.nextLine();
+				String name = category.substring( 0, category.indexOf('{') ).trim();
+				String jsonString = category.substring( category.indexOf('{') ).trim();
+				try { 
+					PratilipiFilter pratilipiFilter = gson.fromJson( jsonString, PratilipiFilter.class );
+					categoryList.add( new CategoryEntity( name, pratilipiFilter ) );
+				} catch( com.google.gson.JsonSyntaxException e ) {
+					logger.log( Level.SEVERE, "Wrong Syntax :" + jsonString );
+				}
+			}
+
+			LineIterator.closeQuietly( it );
+
+		} catch( URISyntaxException | IOException | NullPointerException e ) {
+			logger.log( Level.SEVERE, "Cannot read category List : category." + language.getCode() );
+			return null;
+		}
+	
+		return categoryList;
+	}
 	
 	//PRATILIPI_CATEGORY Table
 	

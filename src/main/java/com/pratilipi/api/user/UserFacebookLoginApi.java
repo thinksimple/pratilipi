@@ -1,5 +1,7 @@
 package com.pratilipi.api.user;
 
+import java.util.Map;
+
 import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -9,8 +11,6 @@ import com.pratilipi.api.user.shared.UserResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.UserSignUpSource;
-import com.pratilipi.data.DataAccessor;
-import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.taskqueue.Task;
@@ -24,24 +24,14 @@ public class UserFacebookLoginApi extends GenericApi {
 	public static UserResponse facebookLogin( PutUserFacebookLoginRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-	
-		
-		boolean newUser = dataAccessor.getUserByFacebookId( request.getFbUserId() ) != null
-				|| ( request.getEmail() != null && dataAccessor.getUserByEmail( request.getEmail() ) != null );
-
-
-		UserData userData = UserDataUtil.loginUser(
+		Map<String, Object> userCredentials = UserDataUtil.loginUser(
 				request.getFbUserId(),
 				request.getFbUserAccessToken(),
-				request.getFirstName(),
-				request.getLastName(),
-				request.getGender(),
-				request.getDateOfBirth(),
-				request.getEmail(),
 				UserSignUpSource.WEBSITE_FACEBOOK ); // TODO: Facebook SignUp on Android ?
 
-		
+		UserData userData = ( UserData ) userCredentials.get( "userData" );
+		Boolean newUser = ( Boolean ) userCredentials.get( "newUser" );
+
 		if( newUser && userData.getEmail() != null ) {
 			
 			Task task1 = TaskQueueFactory.newTask()
@@ -55,7 +45,6 @@ public class UserFacebookLoginApi extends GenericApi {
 			TaskQueueFactory.getUserTaskQueue().addAll( task1, task2 );
 			
 		}	
-		
 		
 		Gson gson = new Gson();
 		return gson.fromJson( gson.toJson( userData ), UserResponse.class );
