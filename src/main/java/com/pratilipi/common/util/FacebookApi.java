@@ -118,7 +118,6 @@ public class FacebookApi {
 				// TODO: InvalidArgumentException if fbUserAccessToken is invalid or expired.
 				logger.log( Level.SEVERE, "Error response from Graph Api." );
 				throw new UnexpectedServerException();
-//			} else if { // TOOD: InsufficientAccessException if fbUser in not verified
 			} else {
 				FacebookUserData facebookUserData = new Gson().fromJson( responseJson, FacebookUserData.class );
 				UserData userData = new UserData( facebookUserData.getFbUserId() );
@@ -126,7 +125,8 @@ public class FacebookApi {
 				userData.setLastName( facebookUserData.getLastName() );
 				userData.setGender( facebookUserData.getGender() );
 				userData.setDateOfBirth( facebookUserData.getDateOfBirth() );
-				userData.setEmail( facebookUserData.getEmail() );
+				if( facebookUserData.isVerified() )
+					userData.setEmail( facebookUserData.getEmail() );
 				return userData;
 			}
 			

@@ -159,7 +159,7 @@ public class UserDataUtil {
 			}
 			
 			user.setFacebookId( fbUserData.getFacebookId() );
-			user.setState( UserState.ACTIVE ); // Counting of Facebook for e-mail validation
+			user.setState( UserState.ACTIVE ); // Counting of Facebook for e-mail/user verification
 			isChanged = true;
 		
 		}
