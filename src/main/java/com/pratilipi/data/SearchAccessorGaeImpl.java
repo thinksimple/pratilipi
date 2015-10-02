@@ -86,15 +86,16 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	}
 	
 	protected void indexDocumentList( List<Document> documentList ) throws UnexpectedServerException {
-		for( int i = 0; i < documentList.size(); i = i + 200 ) {
+		int batchSize = 100; // Max allowed is 200
+		for( int i = 0; i < documentList.size(); i = i + batchSize ) {
 			try {
-				searchIndex.put( documentList.subList( i, i + 200 > documentList.size() ? documentList.size() : i + 200 ) );
+				searchIndex.put( documentList.subList( i, i + batchSize > documentList.size() ? documentList.size() : i + batchSize ) );
 			} catch( PutException e ) {
 				if( StatusCode.TRANSIENT_ERROR.equals( e.getOperationResult().getCode() ) ) {
 					logger.log( Level.WARNING, "Failed to update search index. Retrying ...", e );
 					try {
 						Thread.sleep( 100 );
-						i = i - 200;
+						i = i - batchSize;
 						continue;
 					} catch( InterruptedException ex ) {
 						// Do nothing
