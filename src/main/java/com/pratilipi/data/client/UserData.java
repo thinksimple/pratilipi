@@ -1,8 +1,14 @@
 package com.pratilipi.data.client;
 
+import java.util.Date;
+
+import com.pratilipi.common.type.Gender;
+
 public class UserData {
 
 	private transient Long userId;
+
+	private transient String facebookId;
 
 	private String firstName;
 	private transient boolean hasFirstName;
@@ -17,19 +23,38 @@ public class UserData {
 
 	private String fullName;
 
+	
+	private Gender gender;
+	private transient boolean hasGender;
+
+	private Date dateOfBirth;
+	private transient boolean hasDateOfBirth;
+	
+	
 	private String email;
 	private transient boolean hasEmail;
 
 	private boolean isGuest;
 	
 	
+	private Date signUpDate;
+
+	
 	public UserData( Long userId ) {
 		this.userId = userId;
+	}
+
+	public UserData( String facebookId ) {
+		this.facebookId = facebookId;
 	}
 
 	
 	public Long getId() {
 		return userId;
+	}
+
+	public String getFacebookId() {
+		return facebookId;
 	}
 
 	public String getFirstName() {
@@ -87,6 +112,34 @@ public class UserData {
 		this.fullName = fullName;
 	}
 
+	
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender( Gender gender ) {
+		this.gender = gender;
+		this.hasGender = true;
+	}
+	
+	public boolean hasGender() {
+		return hasGender;
+	}
+	
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth( Date dateOfBirth ) {
+		this.dateOfBirth = dateOfBirth;
+		this.hasDateOfBirth = true;
+	}
+	
+	public boolean hasDateOfBirth() {
+		return hasDateOfBirth;
+	}
+	
+	
 	public String getEmail() {
 		return email;
 	}
@@ -106,6 +159,10 @@ public class UserData {
 
 	public void setIsGuest( boolean isGuest ) {
 		this.isGuest = isGuest;
+	}
+
+	public Date getSignUpDate() {
+		return signUpDate;
 	}
 
 }

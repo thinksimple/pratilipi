@@ -1,8 +1,6 @@
 package com.pratilipi.data.util;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +13,6 @@ import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.client.FacebookUserData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.User;
@@ -139,49 +136,38 @@ public class UserDataUtil {
 
 	}
 	
-	public static Map<String, Object> loginUser( String fbUserId, String fbUserAccessToken,
-			UserSignUpSource signUpSource )
+	public static UserData loginUser( String fbUserAccessToken, UserSignUpSource signUpSource )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
-		Map<String, Object> userCredentials = new HashMap<>();
-		FacebookUserData fbUserData = FacebookApi.getUserCredentials( fbUserAccessToken );
-		
-		Boolean newUser = true;
+		UserData fbUserData = FacebookApi.getUserData( fbUserAccessToken );
 
-		if( fbUserData == null )
-			throw new InvalidArgumentException( "Invalid UserAccessToken." );
-		
-		if( ! fbUserData.getFbUserId().equals( fbUserId ) || ! fbUserData.isVerified() )
-			throw new InvalidArgumentException( "Invalid Facebook UserId or not verified on facebook." );
-		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUserByFacebookId( fbUserData.getFacebookId() );
 
-		User user = dataAccessor.getUserByFacebookId( fbUserId );
 		Boolean isChanged = false;
 
 		if( user != null ) {
-			newUser = false;
-			if( fbUserData.getEmail() != null && ! fbUserData.getEmail().equals( user.getEmail() ) && user.getPassword() == null ) {
+
+			// "user.getPassword() == null" implies that User never logged-in using his/her e-mail id
+			if( user.getPassword() == null && fbUserData.getEmail() != null && ! fbUserData.getEmail().equals( user.getEmail() ) ) {
 				user.setEmail( fbUserData.getEmail() );
 				isChanged = true;
 			}
-			
+		
 		} else { // user == null
 			
 			if( fbUserData.getEmail() != null ) 
 				user = dataAccessor.getUserByEmail( fbUserData.getEmail() );
 			
-			if( user != null ) 
-				newUser = false;
-			else {
+			if( user == null ) {
 				user = dataAccessor.newUser();
 				user.setEmail( fbUserData.getEmail() );
-				user.setState( UserState.ACTIVE );
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
 			}
 			
-			user.setFacebookId( fbUserId );
+			user.setFacebookId( fbUserData.getFacebookId() );
+			user.setState( UserState.ACTIVE ); // Counting of Facebook for e-mail validation
 			isChanged = true;
 		
 		}
@@ -207,21 +193,12 @@ public class UserDataUtil {
 			isChanged = true;
 		}
 		
-		if( ! user.getState().equals( UserState.ACTIVE ) ) {
-			user.setState( UserState.ACTIVE );
-			isChanged = true;
-		}
-
 		if( isChanged )
 			user = dataAccessor.createOrUpdateUser( user );
 		
 
 		loginUser( AccessTokenFilter.getAccessToken(), user );
-		
-		userCredentials.put( "userData" , createUserData( user ) );
-		userCredentials.put( "newUser", newUser );
-
-		return userCredentials;
+		return createUserData( user );
 	}
 	
 	private static void loginUser( AccessToken accessToken, User user ) {

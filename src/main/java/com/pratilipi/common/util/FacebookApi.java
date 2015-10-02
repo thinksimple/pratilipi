@@ -3,6 +3,9 @@ package com.pratilipi.common.util;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +18,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Gender;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.client.FacebookUserData;
+import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AppProperty;
 
 public class FacebookApi {
@@ -27,6 +31,63 @@ public class FacebookApi {
 	
 	private static final String GRAPH_API_2p2_URL = "https://graph.facebook.com/v2.2";
 	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
+	
+	
+	private class FacebookUserData {
+
+		private String id;
+		
+		private String first_name;
+		
+		private String last_name;
+		
+		private String gender;
+		
+		private String birthday;
+		
+		private String email;
+		
+		private Boolean verified;
+		
+
+		public String getFbUserId() {
+			return this.id;
+		}
+
+		public String getFirstName() {
+			return this.first_name;
+		}
+		
+		public String getLastName() {
+			return this.last_name;
+		}
+		
+		public Gender getGender() {
+			return Gender.valueOf( this.gender.toUpperCase() );
+		}
+
+		public Date getDateOfBirth() {
+			
+			if( this.birthday != null ) {
+				try {
+					return new SimpleDateFormat( "MM/dd/yyyy" ).parse( this.birthday );
+				} catch( ParseException e ) {
+					logger.log( Level.SEVERE, "Failed to parse Date of Birth.", e );
+				}
+			}
+			
+			return null;
+		}
+		
+		public String getEmail() {
+			return this.email;
+		}
+		
+		public Boolean isVerified() { 
+			return this.verified;
+		}
+		
+	}
 	
 	
 	public static String getAppId() {
@@ -41,21 +102,33 @@ public class FacebookApi {
 		return facebookCredentials.get( "appId" ) + "|" + facebookCredentials.get( "appSecret" );
 	}
 	
-	public static FacebookUserData getUserCredentials( String fbUserAccessToken )
+	
+	public static UserData getUserData( String fbUserAccessToken )
 			throws UnexpectedServerException {
 		
 		try {
-			String requestUrl = GRAPH_API_2p2_URL + "/me?" + "access_token=" + fbUserAccessToken;
+			String requestUrl = GRAPH_API_2p4_URL + "/me?" + "access_token=" + fbUserAccessToken;
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
 			
 			logger.log( Level.INFO, "Graph Api Request : " + requestUrl );
 			logger.log( Level.INFO, "Graph Api Response : " + responsePayload );
 
 			JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
-			if( responseJson.get( "error" ) != null )
-				return null;
-			else 
-				return new Gson().fromJson( responseJson, FacebookUserData.class );
+			if( responseJson.get( "error" ) != null ) {
+				// TODO: InvalidArgumentException if fbUserAccessToken is invalid or expired.
+				logger.log( Level.SEVERE, "Error response from Graph Api." );
+				throw new UnexpectedServerException();
+//			} else if { // TOOD: InsufficientAccessException if fbUser in not verified
+			} else {
+				FacebookUserData facebookUserData = new Gson().fromJson( responseJson, FacebookUserData.class );
+				UserData userData = new UserData( facebookUserData.getFbUserId() );
+				userData.setFirstName( facebookUserData.getFirstName() );
+				userData.setLastName( facebookUserData.getLastName() );
+				userData.setGender( facebookUserData.getGender() );
+				userData.setDateOfBirth( facebookUserData.getDateOfBirth() );
+				userData.setEmail( facebookUserData.getEmail() );
+				return userData;
+			}
 			
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to access Graph Api.", e );
@@ -63,6 +136,7 @@ public class FacebookApi {
 		}
 		
 	}
+	
 	
 	public static long getUrlShareCount( String url ) throws UnexpectedServerException {
 		try {
