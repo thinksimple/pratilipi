@@ -86,7 +86,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	}
 	
 	protected void indexDocumentList( List<Document> documentList ) throws UnexpectedServerException {
-		int batchSize = 100; // Max allowed is 200
+		int batchSize = 50; // Max allowed is 200
 		for( int i = 0; i < documentList.size(); i = i + batchSize ) {
 			try {
 				searchIndex.put( documentList.subList( i, i + batchSize > documentList.size() ? documentList.size() : i + batchSize ) );
