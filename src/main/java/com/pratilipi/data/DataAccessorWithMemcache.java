@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
@@ -474,7 +475,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	@Override
-	public List<Category> getCategoryList( Language language ) {
+	public List<Category> getCategoryList( Language language ) throws UnexpectedServerException {
 		String memcacheId = PREFIX_CATEGORY_LIST + language.getCode() + "-" + new Date().getTime() / 900000;
 		List<Category> categoryList = memcache.get( memcacheId );
 		if( categoryList == null ) {

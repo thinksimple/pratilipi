@@ -2,7 +2,6 @@ package com.pratilipi.data.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -20,10 +19,6 @@ public class CategoryDataUtil {
 	public static List<CategoryData> getCategoryList( Language language ) throws UnexpectedServerException {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Category> categoryList = dataAccessor.getCategoryList( language );
-		if( categoryList == null ) {
-			logger.log( Level.SEVERE, "Failed to fetch category files : category" + "." + language.getCode() + " and category." + Language.ENGLISH.getCode() );
-			throw new UnexpectedServerException();
-		}
 		List<CategoryData> categoryDataList = new ArrayList<>( categoryList.size() );
 		for( Category category : categoryList )
 			categoryDataList.add( new CategoryData( category.getName(), category.getPratilipiFilter() ) );

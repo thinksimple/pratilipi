@@ -2,6 +2,7 @@ package com.pratilipi.data;
 
 import java.util.List;
 
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
@@ -82,7 +83,7 @@ public interface DataAccessor {
 	
 	//CATEGORY Table
 	Category getCategory( Long categoryId );
-	List<Category> getCategoryList( Language language );
+	List<Category> getCategoryList( Language language ) throws UnexpectedServerException;
 	
 	
 	//PRATILIPI_CATEGORY Table
