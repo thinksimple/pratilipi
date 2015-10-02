@@ -17,8 +17,6 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
-import com.pratilipi.taskqueue.Task;
-import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class UserDataUtil {
 	
@@ -42,8 +40,9 @@ public class UserDataUtil {
 		userData.setFirstName( user.getFirstName() );
 		userData.setLastName( user.getLastName() );
 		userData.setName( createUserName( user ) );
-		userData.setEmail( user.getEmail() == null ? null : user.getEmail() );
+		userData.setEmail( user.getEmail() );
 		userData.setIsGuest( user.getId() == null || user.getId().equals( 0L ) );
+		userData.setSignUpDate( user.getSignUpDate() );
 		return userData;
 	}
 
@@ -116,15 +115,8 @@ public class UserDataUtil {
 			throw new InvalidArgumentException( errorMessages );
 		}
 		
-		if( user.getPassword() == null && user.getFacebookId() != null ) {
-			Task task = TaskQueueFactory.newTask()
-					.setUrl( "/user/email" )
-					.addParam( "userId", user.getId().toString() )
-					.addParam( "sendPasswordResetMail", "true" );
-			TaskQueueFactory.getUserTaskQueue().add( task );
-			errorMessages.addProperty( "email", "Dear " + user.getFirstName() + ", you have registered with us via facebook. We have sent you a mail, check your inbox!" );
-			throw new InvalidArgumentException( errorMessages );
-		}
+		if( user.getPassword() == null && user.getFacebookId() != null )
+			throw new InvalidArgumentException( "You have registered with us via Facebook. Kindly login with Facebook." );
 			
 		if( ! PasswordUtil.check( password, user.getPassword() ) ) {
 			errorMessages.addProperty( "password", "Incorrect password !" );

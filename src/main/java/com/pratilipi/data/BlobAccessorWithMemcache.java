@@ -136,7 +136,7 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 
 	@Override
 	public BlobEntry getBlob( String fileName ) throws UnexpectedServerException {
-		BlobEntry blobEntry = memcacheGet( PREFIX + fileName );
+		BlobEntry blobEntry = memcacheGet( fileName );
 		if( blobEntry == null ) {
 			blobEntry = blobAccessor.getBlob( fileName );
 			memcachePut( blobEntry );

@@ -165,4 +165,8 @@ public class UserData {
 		return signUpDate;
 	}
 
+	public void setSignUpDate( Date signUpDate ) {
+		this.signUpDate = signUpDate;
+	}
+
 }
