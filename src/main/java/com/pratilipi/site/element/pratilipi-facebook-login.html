@@ -26,7 +26,6 @@
 		
 		sendData: function( userData, authResponse ) {
 			this.$.AjaxPut.body = JSON.stringify ({ 
-				fbUserId: 		userData.id, 
 				fbUserAccessToken: 	authResponse.accessToken });
 			this.$.AjaxPut.generateRequest();
 		},

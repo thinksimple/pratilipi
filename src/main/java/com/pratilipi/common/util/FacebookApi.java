@@ -5,7 +5,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,64 +31,6 @@ public class FacebookApi {
 	private static final String GRAPH_API_2p2_URL = "https://graph.facebook.com/v2.2";
 	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
 	
-	
-	private class FacebookUserData {
-
-		private String id;
-		
-		private String first_name;
-		
-		private String last_name;
-		
-		private String gender;
-		
-		private String birthday;
-		
-		private String email;
-		
-		private Boolean verified;
-		
-
-		public String getFbUserId() {
-			return this.id;
-		}
-
-		public String getFirstName() {
-			return this.first_name;
-		}
-		
-		public String getLastName() {
-			return this.last_name;
-		}
-		
-		public Gender getGender() {
-			return Gender.valueOf( this.gender.toUpperCase() );
-		}
-
-		public Date getDateOfBirth() {
-			
-			if( this.birthday != null ) {
-				try {
-					return new SimpleDateFormat( "MM/dd/yyyy" ).parse( this.birthday );
-				} catch( ParseException e ) {
-					logger.log( Level.SEVERE, "Failed to parse Date of Birth.", e );
-				}
-			}
-			
-			return null;
-		}
-		
-		public String getEmail() {
-			return this.email;
-		}
-		
-		public Boolean isVerified() { 
-			return this.verified;
-		}
-		
-	}
-	
-	
 	public static String getAppId() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Map<String, String> facebookCredentials = dataAccessor.getAppProperty( AppProperty.FACEBOOK_CREDENTIALS ).getValue();
@@ -107,7 +48,7 @@ public class FacebookApi {
 			throws UnexpectedServerException {
 		
 		try {
-			String requestUrl = GRAPH_API_2p4_URL + "/me?" + "access_token=" + fbUserAccessToken;
+			String requestUrl = GRAPH_API_2p2_URL + "/me?" + "access_token=" + fbUserAccessToken;
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
 			
 			logger.log( Level.INFO, "Graph Api Request : " + requestUrl );
@@ -119,14 +60,21 @@ public class FacebookApi {
 				logger.log( Level.SEVERE, "Error response from Graph Api." );
 				throw new UnexpectedServerException();
 			} else {
-				FacebookUserData facebookUserData = new Gson().fromJson( responseJson, FacebookUserData.class );
-				UserData userData = new UserData( facebookUserData.getFbUserId() );
-				userData.setFirstName( facebookUserData.getFirstName() );
-				userData.setLastName( facebookUserData.getLastName() );
-				userData.setGender( facebookUserData.getGender() );
-				userData.setDateOfBirth( facebookUserData.getDateOfBirth() );
-				if( facebookUserData.isVerified() )
-					userData.setEmail( facebookUserData.getEmail() );
+				UserData userData = new UserData( responseJson.get( "id" ).getAsString() );
+				userData.setFirstName( responseJson.get( "first_name" ).getAsString() );
+				userData.setLastName( responseJson.get( "last_name" ).getAsString() );
+				userData.setGender( Gender.valueOf( responseJson.get( "gender" ).getAsString().toUpperCase() ) );
+				
+				if( responseJson.get( "birthday" ) != null )
+					try {
+						
+							userData.setDateOfBirth( new SimpleDateFormat( "MM/dd/yyyy" ).parse( responseJson.get( "birthday" ).getAsString() ) );
+					} catch ( ParseException e ) {
+						logger.log( Level.SEVERE, "Failed to parse Date of Birth.", e );
+					}
+				
+				if( responseJson.get( "verified" ).getAsBoolean() )
+					userData.setEmail( responseJson.get( "email" ) == null ? null : responseJson.get( "email" ).getAsString() );
 				return userData;
 			}
 			
