@@ -19,43 +19,18 @@
 	Polymer ({
 		is: 'pratilipi-facebook-login',
 		
-		properties: {
-			userData: { type: Object, notify: true },
-			authResponse: { type: Object, notify: true },
-		},
-		
-		sendData: function( userData, authResponse ) {
+		sendData: function( accessToken ) {
 			this.$.AjaxPut.body = JSON.stringify ({ 
-				fbUserAccessToken: 	authResponse.accessToken });
+				fbUserAccessToken: 	accessToken });
 			this.$.AjaxPut.generateRequest();
 		},
 		
 		fb_login: function() {
 			FB.login( function( response ) {
 				FB.api( '/me', function( userData ) {
-					document.querySelector( 'pratilipi-facebook-login' ).sendData( userData, FB.getAuthResponse() );
+					document.querySelector( 'pratilipi-facebook-login' ).sendData( FB.getAuthResponse().accessToken );
 			 	});
 			}, { scope: 'public_profile,email,user_birthday' } );
-		},
-		
-		ready: function() {
-			window.fbAsyncInit = function() {
-				FB.init({
-					appId: ${ fbAppId },
-					cookie : true,
-					xfbml: true,
-					version: 'v2.0'
-				});
-			}; 
-			if( typeof(FB) == 'undefined' ) {
-				( function( d, s, id ) {
-					var js, fjs = d.getElementsByTagName(s)[0];
-					if ( d.getElementById( id ) ) return;
-					js = d.createElement(s); js.id = id;
-					js.src = "//connect.facebook.net/en_US/sdk.js";
-					fjs.parentNode.insertBefore(js, fjs);
-				}( document, 'script', 'facebook-jssdk' ) );
-			}
 		},
 		
 		 _handleAjaxPutResponse: function( event ) {
