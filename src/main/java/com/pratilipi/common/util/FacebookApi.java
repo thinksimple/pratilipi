@@ -65,16 +65,17 @@ public class FacebookApi {
 				userData.setLastName( responseJson.get( "last_name" ).getAsString() );
 				userData.setGender( Gender.valueOf( responseJson.get( "gender" ).getAsString().toUpperCase() ) );
 				
-				if( responseJson.get( "birthday" ) != null )
+				if( responseJson.get( "birthday" ) != null ) {
 					try {
-						
-							userData.setDateOfBirth( new SimpleDateFormat( "MM/dd/yyyy" ).parse( responseJson.get( "birthday" ).getAsString() ) );
+						userData.setDateOfBirth( new SimpleDateFormat( "MM/dd/yyyy" ).parse( responseJson.get( "birthday" ).getAsString() ) );
 					} catch ( ParseException e ) {
 						logger.log( Level.SEVERE, "Failed to parse Date of Birth.", e );
 					}
+				}
 				
-				if( responseJson.get( "verified" ).getAsBoolean() )
-					userData.setEmail( responseJson.get( "email" ) == null ? null : responseJson.get( "email" ).getAsString() );
+				if( responseJson.get( "email" ) != null && responseJson.get( "verified" ).getAsBoolean() )
+					userData.setEmail( responseJson.get( "email" ).getAsString() );
+
 				return userData;
 			}
 			
