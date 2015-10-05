@@ -16,32 +16,90 @@
 </template>
 
 <script>
+
+	function statusChangeCallback( response ) {
+		if ( response.status === 'connected' ) {
+			handler.fire( 'facebook-signin-success', { response: response } );
+		} else if ( response.status === 'not_authorized' ) {
+			handler.fire( 'facebook-signin-not-authorized', { response: response } );
+		} else {
+			handler.fire( 'facebook-signin-not-logged', { response: response } );
+			loginFlag = true;
+		}
+	}
+
+	var handler;
+	var loginFlag = false;
+
 	Polymer ({
+
 		is: 'pratilipi-facebook-login',
-		
+
 		sendData: function( accessToken ) {
 			this.$.AjaxPut.body = JSON.stringify ({ 
 				fbUserAccessToken: 	accessToken });
 			this.$.AjaxPut.generateRequest();
 		},
-		
+
 		fb_login: function() {
 			FB.login( function( response ) {
 				FB.api( '/me', function( userData ) {
 					document.querySelector( 'pratilipi-facebook-login' ).sendData( FB.getAuthResponse().accessToken );
-			 	});
+				});
 			}, { scope: 'public_profile,email,user_birthday' } );
 		},
-		
-		 _handleAjaxPutResponse: function( event ) {
+
+		ready: function() {
+			handler = this;
+			var container = this.$[ 'fb-login-container' ];
+
+			window.fbAsyncInit = function() {
+				FB.init({
+					appId: ${ fbAppId },
+					cookie : true,
+					xfbml: true,
+					version: 'v2.0'
+				});
+
+				FB.getLoginStatus( function( response ) {
+					statusChangeCallback( response );
+				});
+
+				FB.XFBML.parse( container );
+				FB.customCheckLoginState = function() {
+					FB.getLoginStatus( function( response ) {
+						statusChangeCallback( response );
+					});
+
+					FB.api( '/me', function( userData ) {
+						document.querySelector( 'pratilipi-facebook-login' ).sendData( userData, FB.getAuthResponse() );
+					});
+
+					if ( loginFlag )
+						FB.logout();
+				};
+			};
+
+			if( typeof(FB) == 'undefined' ) {
+				( function( d, s, id ) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if ( d.getElementById( id ) ) return;
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js";
+					fjs.parentNode.insertBefore(js, fjs);
+				}( document, 'script', 'facebook-jssdk' ) );
+			}
+		},
+
+		_handleAjaxPutResponse: function( event ) {
 			document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
 		},
-		
+
 		_handleAjaxPutError: function( event ) {
-				alert( event.detail.request.xhr.response.message );
+			alert( event.detail.request.xhr.response.message );
 		}, 
 
  	});
-</script>
 
+</script>
 </dom-module>
