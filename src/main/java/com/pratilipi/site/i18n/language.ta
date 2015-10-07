@@ -50,6 +50,9 @@ email            = மின்னஞ்சல் முகவரி
 password         = கடவுச்சொல்
 confirm_password = கடவுச்சொலை மீண்டும் பதிவு செய்க
 
+show_more = மேலும் 
+show_less = சுருக்கு 
+
 # Pratilipi related
 pratilipi_read = படிக்க
 pratilipi_free = இலவசம் !

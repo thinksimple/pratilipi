@@ -21,10 +21,12 @@
 
 		is: 'pratilipi-facebook-login',
 		
-		sendData: function( accessToken ) {
-			this.$.AjaxPut.body = JSON.stringify ({ 
-				fbUserAccessToken: 	accessToken });
-			this.$.AjaxPut.generateRequest();
+		sendData: function( authResponse ) {
+			if( authResponse != undefined ) {
+				this.$.AjaxPut.body = JSON.stringify ({ 
+					fbUserAccessToken: 	authResponse.accessToken });
+				this.$.AjaxPut.generateRequest();
+			}
 		},
 
 		fb_login: function() {
@@ -35,7 +37,7 @@
 				version: 'v2.0'
 			});
 			FB.login( function( response ) {
-				document.querySelector( 'pratilipi-facebook-login' ).sendData( response.authResponse.accessToken );
+				document.querySelector( 'pratilipi-facebook-login' ).sendData( response.authResponse );
 			}, { scope: 'public_profile,email,user_birthday' } );
 		},
 
