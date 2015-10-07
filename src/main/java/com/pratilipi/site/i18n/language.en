@@ -19,6 +19,8 @@ menu	= Menu
 back	= Back
 saving  = Saving ...
 working = Working ...
+show_more = show more
+show_less = show less
 
 
 
@@ -79,8 +81,7 @@ review_content		= Your Review
 review_content_help	= Share your thoughts ! What made this work interesting ? What made it inspiring ? What did you learn from it ? You are helping others make a better choice !
 submit_review		= SUBMIT
 
-show_more = show more
-show_less = show less
+
 
 # Author related
 

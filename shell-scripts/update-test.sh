@@ -5,10 +5,10 @@ export PATH=$M2:$PATH
 
 git remote update
 
-if [ $(git rev-parse HEAD) != $(git rev-parse origin) ]
+if [ $(git rev-parse HEAD) != $(git rev-parse origin/raghu-email) ]
 then
 	git fetch
-	git reset --hard origin/master
+	git reset --hard origin/raghu-email
 	
 	mvn clean
 	mvn install
