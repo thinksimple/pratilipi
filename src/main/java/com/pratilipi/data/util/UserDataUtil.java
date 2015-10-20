@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.FacebookApi;
@@ -16,6 +17,7 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.User;
+import com.pratilipi.email.EmailUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class UserDataUtil {
@@ -266,5 +268,11 @@ public class UserDataUtil {
 		}
  		*/
 	}
-
+	
+	public static void sendWelcomeMail( Long userId ) throws UnexpectedServerException {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUser( userId );
+		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "welcome", Language.ENGLISH );
+	}
+	
 }

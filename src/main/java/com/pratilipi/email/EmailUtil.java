@@ -1,10 +1,16 @@
 package com.pratilipi.email;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -12,47 +18,82 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.pratilipi.email.template.EmailTemplate;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
+
+import com.pratilipi.api.user.UserEmailApi;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.FreeMarkerUtil;
 
-import freemarker.template.TemplateException;
 
 public class EmailUtil {
+	
+	private static final Logger logger = Logger.getLogger( UserEmailApi.class.getName() );
 
 	private final static Properties properties = new Properties();
-	private final static Session session =
-			Session.getDefaultInstance( properties, null );
-	
-	private static Map<String, Object> dataModel;
-	
-	public static void sendMail( EmailTemplate emailTemplate )
-					throws MessagingException, IOException, TemplateException, UnexpectedServerException {
+	private final static Session session = Session.getDefaultInstance( properties, null );
 
-		//FreeMarker template
-		String templateName = emailTemplate.getTemplateName();
-		if( emailTemplate.getLanguage() != null )
-			templateName = templateName + "." + emailTemplate.getLanguage() + ".ftl";
-		else
-			templateName = templateName + "." + "en" + ".ftl";
-		
-		dataModel = null;
-		dataModel.put( "userName" , emailTemplate.getRecipientName() );
-		dataModel.put( "userEmail", emailTemplate.getRecipientEmail() );
-		dataModel.put( "userPassword", emailTemplate.getPassword() );
-		// The magic
-		String body = FreeMarkerUtil.processTemplate( dataModel, templateName );
-		
-		// Send E-mail
-		Message msg = new MimeMessage( session );
-		
-		msg.setFrom( new InternetAddress( emailTemplate.getSenderEmail(), emailTemplate.getSenderName() ) );
-		msg.addRecipient( Message.RecipientType.TO, new InternetAddress( emailTemplate.getRecipientEmail(), emailTemplate.getRecipientName() ) );
-		msg.setReplyTo( new Address[]{ new InternetAddress( emailTemplate.getRecipientEmail(), emailTemplate.getRecipientName() ) } );
-		msg.setSubject( emailTemplate.getSubject() );
-		msg.setContent( body, "text/html" );
 
-		Transport.send( msg );
+	public static void sendMail( String name, String email, String templateName,
+			Language language ) throws UnexpectedServerException {
+		
+		sendMail( name, email, templateName, language, new HashMap<String, String>() );
+	}
+	
+	public static void sendMail( String name, String email, String templateName,
+			Language language, Map<String, String> dataModel ) throws UnexpectedServerException {
+		
+		dataModel.put( "name" , name );
+		
+		String senderName = null;
+		Pattern senderNamePattern = Pattern.compile( "<#-- SENDER_NAME:(.+?)-->" );
+		String senderEmail = null;
+		Pattern senderEmailPattern = Pattern.compile( "<#-- SENDER_EMAIL:(.+?)-->" );
+		String subject = null;
+		Pattern subjectPattern = Pattern.compile( "<#-- SUBJECT:(.+?)-->" );
+		
+		String filePath = EmailUtil.class.getName().substring( 0, EmailUtil.class.getName().lastIndexOf(".") ).replace( ".", "/" ) + "/template/";
+		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + templateName + "." + language.getCode() + ".ftl" );
+		
+		try {
+			File file = new File( EmailUtil.class.getResource( "template/" + templateName + "." + language.getCode() + ".ftl" ).toURI() );
+			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+			Matcher m = null;
+			String line = null;
+			while( it.hasNext() ) {
+				line = it.nextLine();
+				
+				m = senderNamePattern.matcher( line );
+				if( m.find() )
+					senderName = m.group(1).trim();
+				m = senderEmailPattern.matcher( line );
+				if( m.find() )
+					senderEmail = m.group(1).trim();
+				m = subjectPattern.matcher( line );
+				if( m.find() )
+					subject = m.group(1).trim();
+				
+				if( senderName != null && senderEmail != null & subject != null )
+					break;
+			}
+			
+			Message msg = new MimeMessage( session );
+			msg.setFrom( new InternetAddress( senderEmail, senderName ) );
+			msg.addRecipient( Message.RecipientType.TO, new InternetAddress( email, name ) );
+			msg.setSubject( subject );
+			msg.setContent( body, "text/html" );
+			Transport.send( msg );
+			logger.log( Level.INFO, "Successfully sent mail to " + email + "." );
+			
+		} catch ( IOException | URISyntaxException e1 ) {
+			logger.log( Level.SEVERE, "Template file : " + templateName + " could not be fetched.", e1 );
+			throw new UnexpectedServerException();
+		} catch ( MessagingException e ) {
+			logger.log( Level.SEVERE, "Failed to send mail to " + email + ".", e );
+			throw new UnexpectedServerException();
+		}
+		
 	}
 	
 }
