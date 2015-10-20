@@ -30,7 +30,7 @@ public class PostUserEmailRequest extends GenericRequest {
 	}
 	
 	public boolean sendPasswordResetMail() { 
-		return this.sendPasswordResetMail == null ? false : sendPasswordResetMail;
+		return sendPasswordResetMail == null ? false : sendPasswordResetMail;
 	}
 	
 	public boolean sendBirthdayMail() {

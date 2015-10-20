@@ -62,19 +62,17 @@ public class EmailUtil {
 			Matcher m = null;
 			String line = null;
 			while( it.hasNext() ) {
-				line = it.nextLine();
+				line = it.nextLine().trim();
 				
-				m = senderNamePattern.matcher( line );
-				if( m.find() )
+				if( line.isEmpty() )
+					continue;
+				else if( senderName == null && (m = senderNamePattern.matcher( line )).find() )
 					senderName = m.group(1).trim();
-				m = senderEmailPattern.matcher( line );
-				if( m.find() )
+				else if( senderEmail == null && (m = senderEmailPattern.matcher( line )).find() )
 					senderEmail = m.group(1).trim();
-				m = subjectPattern.matcher( line );
-				if( m.find() )
+				else if( subject == null && (m = subjectPattern.matcher( line )).find() )
 					subject = m.group(1).trim();
-				
-				if( senderName != null && senderEmail != null & subject != null )
+				else if( senderName != null && senderEmail != null & subject != null )
 					break;
 			}
 			
@@ -87,7 +85,7 @@ public class EmailUtil {
 			logger.log( Level.INFO, "Successfully sent mail to " + email + "." );
 			
 		} catch ( IOException | URISyntaxException e1 ) {
-			logger.log( Level.SEVERE, "Template file : " + templateName + " could not be fetched.", e1 );
+			logger.log( Level.SEVERE, "Filed to process \"" + templateName + "." + language.getCode() + "\" email template.", e1 );
 			throw new UnexpectedServerException();
 		} catch ( MessagingException e ) {
 			logger.log( Level.SEVERE, "Failed to send mail to " + email + ".", e );
