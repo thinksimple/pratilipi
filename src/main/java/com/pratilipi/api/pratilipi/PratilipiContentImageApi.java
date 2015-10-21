@@ -26,7 +26,8 @@ public class PratilipiContentImageApi extends GenericApi {
 
 		BlobEntry blobEntry = (BlobEntry) PratilipiDataUtil.getPratilipiContent(
 				request.getPratilipiId(),
-				request.getPageNumber(),
+				0,
+				request.getPageNo(),
 				PratilipiContentType.IMAGE );
 		
 		return new GenericFileDownloadResponse(

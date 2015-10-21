@@ -1,5 +1,6 @@
 package com.pratilipi.api.pratilipi;
 
+import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -12,6 +13,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PratilipiContentType;
+import com.pratilipi.data.client.PratilipiContentData;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -24,15 +26,16 @@ public class PratilipiContentApi extends GenericApi {
 	public GetPratilipiContentResponse getPratilipiContent( GetPratilipiContentRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		String content = (String) PratilipiDataUtil.getPratilipiContent(
+		Object content = (PratilipiContentData) PratilipiDataUtil.getPratilipiContent(
 				request.getPratilipiId(),
-				request.getPageNumber(),
+				request.getChapterNo(),
+				request.getPageNo(),
 				PratilipiContentType.PRATILIPI );
-		
+
 		return new GetPratilipiContentResponse(
 				request.getPratilipiId(),
-				request.getPageNumber(), 
-				content );
+				request.getPageNo(),
+				new Gson().toJson( content ) );
 	}
 
 	@Put

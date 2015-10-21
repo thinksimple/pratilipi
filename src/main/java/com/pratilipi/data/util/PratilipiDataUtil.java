@@ -34,6 +34,8 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.client.AuthorData;
+import com.pratilipi.data.client.PratilipiContentData;
+import com.pratilipi.data.client.PratilipiContentData.Chapter;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
@@ -633,7 +635,7 @@ public class PratilipiDataUtil {
 	}
 	
 	
-	public static Object getPratilipiContent( long pratilipiId, int pageNo,
+	public static Object getPratilipiContent( long pratilipiId, Integer chapterNo, Integer pageNo,
 			PratilipiContentType contentType ) throws InvalidArgumentException,
 			InsufficientAccessException, UnexpectedServerException {
 		
@@ -651,11 +653,16 @@ public class PratilipiDataUtil {
 			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
 			
 			if( blobEntry == null )
-				return "";
+				return null;
 			
-			String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-			return pratilipiContentUtil.getContent( pageNo );
+			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( contentHtml );
+			Object content = pratilipiContentUtil.toPratilipiContentData();
+			if( content != null && chapterNo != null )
+				content = ( (PratilipiContentData) content ).getChapter( chapterNo );
+			if( content != null && pageNo != null )
+				content = ( (Chapter) content ).getPage( pageNo );
+			return content;
 
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			

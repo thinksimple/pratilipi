@@ -1,5 +1,6 @@
 package com.pratilipi.common.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +12,8 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.pratilipi.data.client.PratilipiContentData;
+import com.pratilipi.data.client.PratilipiContentData.Chapter;
 
 
 public class PratilipiContentUtil {
@@ -254,4 +257,11 @@ public class PratilipiContentUtil {
 		return keywords.trim();
 	}
 
+	
+	public PratilipiContentData toPratilipiContentData() {
+		// TODO: Implementation
+		ArrayList<Chapter> chapterList = new ArrayList<>(0);
+		return new PratilipiContentData( chapterList );
+	}
+	
 }

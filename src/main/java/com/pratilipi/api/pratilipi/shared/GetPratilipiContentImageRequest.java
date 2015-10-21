@@ -16,7 +16,7 @@ public class GetPratilipiContentImageRequest extends GenericRequest {
 		return pratilipiId;
 	}
 
-	public Integer getPageNumber() {
+	public Integer getPageNo() {
 		return pageNo;
 	}
 	

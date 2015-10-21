@@ -9,14 +9,28 @@ public class GetPratilipiContentRequest extends GenericRequest {
 	private Long pratilipiId;
 
 	@Validate( required = true )
+	private Integer chapterNo;
+	
+	@Validate( required = true )
 	private Integer pageNo;
 	
+	@Validate
+	private String pageletId;
 
+	
 	public Long getPratilipiId() {
 		return pratilipiId;
 	}
 
-	public Integer getPageNumber() {
+	public Integer getChapterNo() {
+		return chapterNo;
+	}
+	
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	
+	public Integer getPageletId() {
 		return pageNo;
 	}
 	
