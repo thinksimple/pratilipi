@@ -1,0 +1,101 @@
+<!-- Version:6.0 -->
+
+<dom-module id="pratilipi-user-verification">
+
+	<template>
+		
+		<div class="popup">
+			<h5 class="popup-heading">Verification</h5>
+			<div class="popup-body" on-keyup="onSubmit">
+				<br/>
+				<br/>
+				<div class="text-center">
+					<span class="text-center text-success">{{ message }}</span>
+					<span class="text-center text-danger">{{ errMessage }}</span>
+				</div>
+				<br/>
+				<br/>
+			</div>
+		</div>
+		
+		<iron-ajax
+				id="AjaxPut"
+				url="/api/user/verification"
+				method="PUT"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxPutResponse"
+				on-error="_handleAjaxPutError"
+				></iron-ajax>
+		
+	</template>
+	
+	
+	<script>
+
+		Polymer({
+
+ 			is: 'pratilipi-user-verification',
+ 			
+ 			behaviors: [
+ 				Polymer.IronOverlayBehavior
+ 			],
+ 					
+			properties: {
+				email: { type: String },
+				verificationToken: { type: String },
+				message: { type: String },
+				errMessage: { type: String },
+			},
+			
+			verifyRequest: function( email, verificationToken ) {
+				this.message = "Working ...";
+				var ajaxPut = this.$.AjaxPut;
+				ajaxPut.body = JSON.stringify( { 
+					email: email,
+					verificationToken: verificationToken,
+				} );
+				
+				ajaxPut.generateRequest();
+			},
+			
+			clearMessages: function() {
+				this.message = null;
+				this.errMessage = null; 
+			},
+			
+			
+			_handleAjaxPutResponse: function( event ) {
+				this.clearMessages();
+				if( event.detail.xhr.status == 0 ) {
+					this.errMessage = "Could not connect to server !";
+				} else {
+					this.message = "Verified Successfully !";
+					this.async( function() {
+ 						this.message = null;
+						this.close();
+					}, 2000 );
+				}
+				document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
+				window.location = "http://" + window.location.host;
+			},
+			
+			_handleAjaxPutError: function( event ) {
+				this.clearMessages();
+				if( event.detail.request.xhr.status == 400 ) {
+					if( event.detail.request.xhr.response.token != null )
+						this.errMessage = event.detail.request.xhr.response.token;
+					else if( event.detail.request.xhr.response.errMessage != null )
+						this.errMessage = event.detail.request.xhr.response.errMessage;
+					else
+						this.errMessage = "Invalid Input";
+				} else {
+					this.errMessage = event.detail.request.xhr.response.message;
+				}
+			},
+
+		});
+
+	</script>
+	
+</dom-module>

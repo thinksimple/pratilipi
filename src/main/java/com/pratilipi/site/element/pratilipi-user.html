@@ -2,6 +2,7 @@
 <link rel="import" href="pratilipi-user-login.html" />
 <link rel="import" href="pratilipi-user-register.html" />
 <link rel="import" href="pratilipi-user-password-reset.html" />
+<link rel="import" href="pratilipi-user-verification.html" />
 
 <dom-module id="pratilipi-user">
 
@@ -9,7 +10,8 @@
 		<pratilipi-user-login with-backdrop></pratilipi-user-login>
 		<pratilipi-user-register with-backdrop></pratilipi-user-register>
 		<pratilipi-user-password-reset with-backdrop></pratilipi-user-password-reset>
-
+		<pratilipi-user-verification with-backdrop></pratilipi-user-verification>
+		
 		<iron-ajax
 				id="AjaxGet"
 				url="/api/user/logout"
@@ -22,6 +24,13 @@
 	</template>
 	
 	<script>
+		
+		function get( name ){
+		   if( name=( new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec( location.search ) )
+		      return decodeURIComponent( name[1] );
+		   else
+			   return null;
+		}
 	
 		Polymer({
 			
@@ -39,6 +48,7 @@
 			logIn: function() {
 				this.querySelector( 'pratilipi-user-register' ).close();
 				this.querySelector( 'pratilipi-user-password-reset' ).close();
+				this.querySelector( 'pratilipi-user-verification' ).close();
 				this.async( function() {
 					this.querySelector( 'pratilipi-user-login' ).open();
 				});
@@ -51,6 +61,7 @@
 			register: function() {
 				this.querySelector( 'pratilipi-user-login' ).close();
 				this.querySelector( 'pratilipi-user-password-reset' ).close();
+				this.querySelector( 'pratilipi-user-verification' ).close();
 				this.async( function() {
 					this.querySelector( 'pratilipi-user-register' ).open();
 				});
@@ -59,8 +70,18 @@
 			resetPassword: function() {
 				this.querySelector( 'pratilipi-user-login' ).close();
 				this.querySelector( 'pratilipi-user-register' ).close();
+				this.querySelector( 'pratilipi-user-verification' ).close();
 				this.async( function() {
 					this.querySelector( 'pratilipi-user-password-reset' ).open();
+				});
+			},
+			
+			verify: function() {
+				this.querySelector( 'pratilipi-user-login' ).close();
+				this.querySelector( 'pratilipi-user-register' ).close();
+				this.querySelector( 'pratilipi-user-password-reset' ).close();
+				this.async( function() {
+					this.querySelector( 'pratilipi-user-verification' ).open();
 				});
 			},
 			
@@ -78,7 +99,23 @@
 			},
 
 			ready: function() {
-				this.updateUser( this.userData );
+				if( get( 'email' ) !== null ) {
+					this.querySelector( 'pratilipi-user-login' ).close();
+					this.querySelector( 'pratilipi-user-register' ).close();
+					this.querySelector( 'pratilipi-user-password-reset' ).close();
+					this.querySelector( 'pratilipi-user-verification' ).close();
+					
+					if( get( 'token' ) !== null ) {
+						this.async( function() {
+							if( get( 'verify_user' ) == "true" ) {
+								this.querySelector( 'pratilipi-user-verification' ).verifyRequest( get( 'email' ), get( 'token' ) );
+								this.querySelector( 'pratilipi-user-verification' ).open();								
+							}
+						});
+					} 
+				}
+				else
+					this.updateUser( this.userData );
 			}
 			
 		});
