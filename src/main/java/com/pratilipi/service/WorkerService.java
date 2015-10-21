@@ -9,6 +9,7 @@ import com.pratilipi.api.pratilipi.PratilipiBackupApi;
 import com.pratilipi.api.pratilipi.PratilipiIdfApi;
 import com.pratilipi.api.pratilipi.PratilipiProcessApi;
 import com.pratilipi.api.user.UserBackupApi;
+import com.pratilipi.api.user.UserEmailApi;
 
 @SuppressWarnings("serial")
 public class WorkerService extends GenericService {
@@ -23,6 +24,7 @@ public class WorkerService extends GenericService {
 		ApiRegistry.register( AuthorProcessApi.class );
 		ApiRegistry.register( AuthorBackupApi.class );
 
+		ApiRegistry.register( UserEmailApi.class );
 		ApiRegistry.register( UserBackupApi.class );
 		
 	}
