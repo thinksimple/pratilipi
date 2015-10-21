@@ -19,6 +19,8 @@ public class UserEmailApi extends GenericApi {
 	
 		if( request.sendWelcomeMail() )
 			UserDataUtil.sendWelcomeMail( request.getUserId() );
+		if( request.sendEmailVerificationMail() )
+			UserDataUtil.sendEmailVerificationMail( request.getUserId() );
 		else
 			throw new InvalidArgumentException( "Feature not yet supported !" );
 		

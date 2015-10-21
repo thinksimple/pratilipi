@@ -65,6 +65,9 @@ public class UserEntity implements User {
 	@Persistent( column = "STATUS" )
 	private UserStatus status;
 	
+	@Persistent( column = "UUID" )
+	private String uuid;
+	
 	@Persistent( column = "STATE" )
 	private UserState state;
 	
@@ -185,6 +188,16 @@ public class UserEntity implements User {
 		this.phone = phone;
 	}
 	
+	
+	@Override 
+	public String getUUID() {
+		return uuid;
+	}
+	
+	@Override
+	public void setUUID( String uuid ) {
+		this.uuid = uuid;
+	}
 	
 	@SuppressWarnings("deprecation")
 	@Override

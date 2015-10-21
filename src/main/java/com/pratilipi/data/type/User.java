@@ -50,6 +50,10 @@ public interface User extends Serializable {
 	void setPhone( String phone );
 	
 	
+	String getUUID();
+	
+	void setUUID( String uid );
+	
 	UserState getState();
 	
 	void setState( UserState userState );

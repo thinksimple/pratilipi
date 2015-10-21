@@ -1,6 +1,8 @@
 package com.pratilipi.data.util;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +21,7 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.User;
 import com.pratilipi.email.EmailUtil;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.filter.UxModeFilter;
 
 public class UserDataUtil {
 	
@@ -96,6 +99,7 @@ public class UserDataUtil {
 		user.setFirstName( firstName );
 		user.setLastName( lastName );
 		user.setPassword( PasswordUtil.getSaltedHash( password ) );
+		user.setUUID( PasswordUtil.getNextSessionId() );
 		user.setState( UserState.REGISTERED );
 		user.setSignUpDate( new Date() );
 		user.setSignUpSource( signUpSource );
@@ -275,4 +279,12 @@ public class UserDataUtil {
 		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "welcome", Language.ENGLISH );
 	}
 	
+	public static void sendEmailVerificationMail( Long userId ) throws UnexpectedServerException {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUser( userId );
+		Map<String, String> dataModel = new HashMap<>();
+		String verificationLink = "http://" + UxModeFilter.getUserLanguage().getHostName() + "/" + "?" + "email=" + user.getEmail() + "&" + "verify_token=" + user.getUUID();
+		dataModel.put( "verificationLink", verificationLink );
+		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "verification", Language.ENGLISH, dataModel );
+	}
 }

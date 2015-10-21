@@ -85,7 +85,7 @@ public class EmailUtil {
 			logger.log( Level.INFO, "Successfully sent mail to " + email + "." );
 			
 		} catch ( IOException | URISyntaxException e1 ) {
-			logger.log( Level.SEVERE, "Filed to process \"" + templateName + "." + language.getCode() + "\" email template.", e1 );
+			logger.log( Level.SEVERE, "Failed to process \"" + templateName + "." + language.getCode() + "\" email template.", e1 );
 			throw new UnexpectedServerException();
 		} catch ( MessagingException e ) {
 			logger.log( Level.SEVERE, "Failed to send mail to " + email + ".", e );
