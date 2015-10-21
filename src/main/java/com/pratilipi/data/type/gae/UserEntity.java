@@ -65,8 +65,8 @@ public class UserEntity implements User {
 	@Persistent( column = "STATUS" )
 	private UserStatus status;
 	
-	@Persistent( column = "UUID" )
-	private String uuid;
+	@Persistent( column = "VERIFICATION_TOKEN" )
+	private String verificationToken;
 	
 	@Persistent( column = "STATE" )
 	private UserState state;
@@ -190,13 +190,13 @@ public class UserEntity implements User {
 	
 	
 	@Override 
-	public String getUUID() {
-		return uuid;
+	public String getVerificationToken() {
+		return verificationToken;
 	}
 	
 	@Override
-	public void setUUID( String uuid ) {
-		this.uuid = uuid;
+	public void setVerificationToken( String verificationToken ) {
+		this.verificationToken = verificationToken;
 	}
 	
 	@SuppressWarnings("deprecation")

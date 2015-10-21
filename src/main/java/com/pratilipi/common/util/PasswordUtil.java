@@ -1,10 +1,8 @@
 package com.pratilipi.common.util;
 
-import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +30,6 @@ public class PasswordUtil {
     private static final int iterations = 10*1024;
     private static final int saltLen = 32;
     private static final int desiredKeyLen = 256;
-    private static SecureRandom random = new SecureRandom();
 
     /** Computes a salted PBKDF2 hash of given plaintext password
         suitable for storing in a database. 
@@ -75,9 +72,5 @@ public class PasswordUtil {
         );
         return Base64.encodeBase64String(key.getEncoded());
     }
-    
-    public static String getNextSessionId() {
-		return PasswordUtil.getSaltedHash( new BigInteger( 130, random ).toString( 32 ) ).replace( "+", String.valueOf( new Random().nextInt( 10 ) ) );
-	}
 
 }
