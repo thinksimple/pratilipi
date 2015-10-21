@@ -28,7 +28,18 @@ public class UserDataUtil {
 	
 	private static final Logger logger =
 			Logger.getLogger( UserDataUtil.class.getName() );
+
 	
+	public static String getNextToken( String verificationToken ) {
+		if( verificationToken != null ) {
+			Long expiryDateMillis = Long.parseLong( verificationToken.substring( verificationToken.indexOf( "|" ) + 1 ) );
+			if( ( expiryDateMillis - new Date().getTime() ) > TimeUnit.MILLISECONDS.convert( 4, TimeUnit.DAYS ) )
+				return verificationToken;
+		}
+		
+		return UUID.randomUUID().toString() + "|" + ( new Date().getTime() + TimeUnit.MILLISECONDS.convert( 7, TimeUnit.DAYS ) ); // Valid for 7 days.
+	}
+
 	
 	public static String createUserName( User user ) {
 		if( user.getFirstName() != null && user.getLastName() == null )
@@ -273,17 +284,6 @@ public class UserDataUtil {
  		*/
 	}
 	
-	public static String getNextUUID( String verificationToken ) {
-    	if( verificationToken == null )
-    		return UUID.randomUUID().toString() + "|" + ( new Date().getTime() + TimeUnit.MILLISECONDS.convert( 7, TimeUnit.DAYS ) ); // Valid for 7 days.
-    	
-		Long expiryDate = Long.parseLong( verificationToken.substring( verificationToken.indexOf( "|" ) + 1 ) );
-		if( ( expiryDate - new Date().getTime() ) > TimeUnit.MILLISECONDS.convert( 4, TimeUnit.DAYS ) )
-			return verificationToken;
-		else
-			return UUID.randomUUID().toString() + "|" + ( new Date().getTime() + TimeUnit.MILLISECONDS.convert( 7, TimeUnit.DAYS ) );
-	
-	}
 	
 	public static void sendWelcomeMail( Long userId ) throws UnexpectedServerException {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -294,11 +294,20 @@ public class UserDataUtil {
 	public static void sendEmailVerificationMail( Long userId ) throws UnexpectedServerException {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
-		user.setVerificationToken( getNextUUID( user.getVerificationToken() ) );
-		user = dataAccessor.createOrUpdateUser( user );
+		
+		String verificationToken = getNextToken( user.getVerificationToken() );
+		if( ! verificationToken.equals( user.getVerificationToken() ) ) {
+			user.setVerificationToken( verificationToken );
+			user = dataAccessor.createOrUpdateUser( user );
+		}
+		
 		Map<String, String> dataModel = new HashMap<>();
-		String verificationLink = "http://" + Language.ENGLISH.getHostName() + "/" + "?" + "email=" + user.getEmail() + "&" + "verify_token=" + user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
-		dataModel.put( "verificationLink", verificationLink );
+		String verificationLink = "http://" + Language.ENGLISH.getHostName()
+				+ "/" + "?" + "email=" + user.getEmail()
+				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) );
+		dataModel.put( "emailVerificationUrl", verificationLink );
+		
 		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "verification", Language.ENGLISH, dataModel );
 	}
+
 }
