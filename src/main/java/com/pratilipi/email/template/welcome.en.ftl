@@ -1,4 +1,4 @@
-<#-- SENDER_NAME: Ranjeet (Pratilipi) -->
+<#-- SENDER_NAME: Team Pratilipi -->
 <#-- SENDER_EMAIL: contact@pratilipi.com -->
 <#-- SUBJECT: Welcome to Pratilipi.com -->
 
