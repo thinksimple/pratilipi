@@ -83,12 +83,10 @@
 			_handleAjaxPutError: function( event ) {
 				this.clearMessages();
 				if( event.detail.request.xhr.status == 400 ) {
-					if( event.detail.request.xhr.response.token != null )
-						this.errMessage = event.detail.request.xhr.response.token;
-					else if( event.detail.request.xhr.response.errMessage != null )
-						this.errMessage = event.detail.request.xhr.response.errMessage;
+					if( event.detail.request.xhr.response.message != null )
+						this.errMessage = event.detail.request.xhr.response.message;
 					else
-						this.errMessage = "Invalid Input";
+						this.errMessage = "Invalid Input!";
 				} else {
 					this.errMessage = event.detail.request.xhr.response.message;
 				}

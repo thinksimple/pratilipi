@@ -120,51 +120,6 @@ public class UserDataUtil {
 		return createUserData( user );
 	}
 	
-	public static UserData verifyUser( String email, String hash ) throws UnexpectedServerException, InvalidArgumentException {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( email );
-		JsonObject errorMessages = new JsonObject();
-		
-		if( user == null ) {
-			errorMessages.addProperty( "errMessage", "Invalid Email!" );
-			throw new InvalidArgumentException( errorMessages );
-		}
-		
-		if( user.getState().equals( UserState.ACTIVE ) ) {
-			return createUserData( user );
-		}
-		
-		if( user.getState().equals( UserState.BLOCKED ) ) {
-			errorMessages.addProperty( "errMessage", "Sorry! Your Email ID " + email + " is blocked! For more information, mail us at contact@pratilipi.com" );
-			throw new InvalidArgumentException( errorMessages );
-		}
-		
-		if( user.getVerificationToken() == null ) {
-			errorMessages.addProperty( "errMessage", "Token Expired!" );
-			throw new InvalidArgumentException( errorMessages );
-		}
-		
-		String verificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
-		Long expiryDate = Long.parseLong( user.getVerificationToken().substring( user.getVerificationToken().indexOf( "|" ) + 1 ) );
-		
-		if( new Date().getTime() > expiryDate ) {
-			errorMessages.addProperty( "errMessage", "Token Expired!" );
-			throw new InvalidArgumentException( errorMessages );
-		}
-			
-		if( ! verificationToken.equals( hash ) ) {
-			errorMessages.addProperty( "errMessage", "Invalid Token!" );
-			throw new InvalidArgumentException( errorMessages );
-		}
-		
-		user.setState( UserState.ACTIVE );
-		user.setVerificationToken( null );
-		dataAccessor.createOrUpdateUser( user );
-		loginUser( AccessTokenFilter.getAccessToken(), user );
-		return createUserData( user );
-	}
-
 	public static UserData loginUser( String email, String password )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
@@ -179,14 +134,21 @@ public class UserDataUtil {
 		
 		if( user.getPassword() == null && user.getFacebookId() != null )
 			throw new InvalidArgumentException( "You have registered with us via Facebook. Kindly login with Facebook." );
-			
-		if( ! PasswordUtil.check( password, user.getPassword() ) ) {
-			errorMessages.addProperty( "password", "Incorrect password !" );
-			throw new InvalidArgumentException( errorMessages );
+		
+		if( password.equals( user.getVerificationToken() ) ) {
+			user.setVerificationToken( null );
+			dataAccessor.createOrUpdateUser( user );
+			loginUser( AccessTokenFilter.getAccessToken(), user );
+			return createUserData( user );
 		}
-
-		loginUser( AccessTokenFilter.getAccessToken(), user );
-		return createUserData( user );
+		
+		if( PasswordUtil.check( password, user.getPassword() ) ) {
+			loginUser( AccessTokenFilter.getAccessToken(), user );
+			return createUserData( user );
+		}
+		
+		errorMessages.addProperty( "password", "Incorrect password !" );
+		throw new InvalidArgumentException( errorMessages );
 
 	}
 	
@@ -350,7 +312,7 @@ public class UserDataUtil {
 		String verificationLink = "http://" + Language.ENGLISH.getHostName()
 				+ "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
-				+ "&" + "verify_user=" + Boolean.TRUE;
+				+ "&" + "verifyUser=" + Boolean.TRUE;
 		dataModel.put( "emailVerificationUrl", verificationLink );
 		
 		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "verification", Language.ENGLISH, dataModel );

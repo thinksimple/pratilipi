@@ -107,7 +107,7 @@
 					
 					if( get( 'token' ) !== null ) {
 						this.async( function() {
-							if( get( 'verify_user' ) == "true" ) {
+							if( get( 'verifyUser' ) == "true" ) {
 								this.querySelector( 'pratilipi-user-verification' ).verifyRequest( get( 'email' ), get( 'token' ) );
 								this.querySelector( 'pratilipi-user-verification' ).open();								
 							}
