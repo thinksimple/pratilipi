@@ -317,5 +317,25 @@ public class UserDataUtil {
 		
 		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "verification", Language.ENGLISH, dataModel );
 	}
+	
+	public static void sendPasswordResetMail( Long userId ) throws UnexpectedServerException {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUser( userId );
+		
+		String verificationToken = getNextToken( user.getVerificationToken() );
+		if( ! verificationToken.equals( user.getVerificationToken() ) ) {
+			user.setVerificationToken( verificationToken );
+			user = dataAccessor.createOrUpdateUser( user );
+		}
+		
+		Map<String, String> dataModel = new HashMap<>();
+		String passwordResetUrl = "http://" + Language.ENGLISH.getHostName()
+				+ "/" + "?" + "email=" + user.getEmail()
+				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
+				+ "&" + "passwordReset=" + Boolean.TRUE;
+		dataModel.put( "passwordResetUrl", passwordResetUrl );
+		
+		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "passwordreset", Language.ENGLISH, dataModel );
+	}
 
 }

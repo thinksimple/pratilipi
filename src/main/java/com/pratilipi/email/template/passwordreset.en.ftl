@@ -1,37 +1,103 @@
+<#-- SENDER_NAME: Team Pratilipi -->
+<#-- SENDER_EMAIL: contact@pratilipi.com -->
+<#-- SUBJECT: Please verify your e-mail address -->
+
+<!DOCTYPE html>
 <html>
 <body>
-<p>
+	<table style="background-color: #f3f3f3; width: 100%;">
+		<tr>
+			<td style="font-family: &quot;Helvetica&quot;, Helvetica, Arial, sans-serif; color: #4a4a4a;">
+				
+				<table align="center" table-layout="fixed;" style="margin: 75px auto 70px auto">
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td style="padding: 24px 24px 24px 24px; border: 1px solid #c3c3c3; background-color: #ffffff;">
+										
+										<table align="center" table-layout="fixed;" style="width: 100%; height: 100%;">
+											<tr>
+												<td>
+													<center>
+														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
+														<div>
+															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">Hi ${ name },</h2>
+															<p style="margin: 0; font-size: 16px;">You requested a new password for your Pratilipi account.</p>
+															<p style="margin-top: 0.5em; font-size: 16px;">Please click below to reset your password.</p>
+														</div>
+													</center>
+												</td>
+											</tr>
+										</table>
+										
+										<br/>
+										<br/>
 
-Dear ${ userName }
-	
-Greetings from Pratilipi.com<br/><br/>
+										<table align="center" cellspacing="0" cellpadding="0" table-layout="fixed;" style="margin: 0 auto;"> 
+											<tr>
+												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
+													<a href="${ passwordResetUrl }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
+														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
+															Reset Password
+														</span>
+													</a>
+												</td>
+											</tr> 
+										</table> 
 
+										<br/>
+										<br/>
+										
+										<table align="center" table-layout="fixed;" style="width: 100%; height: 100%;">
+											<tr>
+												<td>
+													<center>
+														<div>
+															<small style="margin: 0.75em 0 0.75em 0;">Click the link below or copy - paste it on your browser if the button doesn't work.</small>
+															<a href="${ passwordResetUrl }" target="_blank" style="color: #4a4a4a; text-decoration: underline;">
+																<br/>
+																<small>
+																	${ passwordResetUrl }
+																</small>
+															</a>
+														</div>
+													</center>
+												</td>
+											</tr>
+										</table>
 
-You have received this mail as you requested for password reset of your account on Pratilipi.com.<br/>
-
-<center>
-<table cellspacing="0" cellpadding="0"> 
-<tr>
-<td align="center" width="300" height="40" bgcolor="#d62828" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
-<a href="http://www.pratilipi.com/#changepassword-${ userEmail }-${ userPassword }" style="font-size:16px; font-weight: bold; font-family:sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
-<span style="color: #ffffff;">
-Reset Your Password
-</span>
-</a>
-</td>
-</tr> 
-</table> 
-</center>
-<br/>
-
-Please click (or copy and paste) on the link below to reset your password if above button doesn't work.<br/>
-
-<a href="http://www.pratilipi.com/#changepassword-${ userEmail }-${ userPassword }">
-	http://www.pratilipi.com/#changepassword-${ userEmail }-${ userPassword }</a><br/><br/>
-
-
-Thanks,<br/>
-Pratilipi Team<br/>
-</p>
+										<center>
+											<small>
+												<br/>
+												If you face any problems, please reach out to us at 
+												<a href="mailto:contact@pratilipi.com" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
+													contact@pratilipi.com
+												</a>
+												<br/>
+												<br/>
+											</small>
+										</center>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td style="font-family: &quot;Helvetica&quot;, Helvetica, Arial, sans-serif; color: #4a4a4a;">
+							<center>
+								<br/>
+								<small style="color: grey;">
+									Pratilipi House 23, 6'th Main, 16'th Cross, BTM Layout 2nd Stage
+									<br/>
+									Bengaluru, Karnataka 560076
+								</small>			
+							</center>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 </body>
 </html>
