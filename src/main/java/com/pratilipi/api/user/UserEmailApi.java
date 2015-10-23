@@ -23,7 +23,7 @@ public class UserEmailApi extends GenericApi {
 			UserDataUtil.sendEmailVerificationMail( request.getUserId() );
 		if( request.sendPasswordResetMail() )
 			UserDataUtil.sendPasswordResetMail( request.getUserId() );
-		else
+		if( request.sendBirthdayMail() )
 			throw new InvalidArgumentException( "Feature not yet supported !" );
 		
 		return new GenericResponse();
