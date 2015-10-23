@@ -29,7 +29,7 @@ public class UserPasswordResetApi extends GenericApi {
 		
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/user/email" )
-				.addParam( "userId", request.getEmail() )
+				.addParam( "userId", user.getId().toString() )
 				.addParam( "sendPasswordResetMail", "true" );
 		TaskQueueFactory.getUserTaskQueue().add( task );
 		
