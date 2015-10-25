@@ -5,8 +5,11 @@ import com.pratilipi.api.shared.GenericRequest;
 
 public class PostUserEmailRequest extends GenericRequest {
 	
-	@Validate( required = true )
+	@Validate( minLong = 1L )
 	private Long userId;
+	
+	@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_NOT_REGISTERED )
+	private String email;
 	
 	private Boolean sendWelcomeMail;
 	
@@ -19,6 +22,10 @@ public class PostUserEmailRequest extends GenericRequest {
 	
 	public Long getUserId() {
 		return userId;
+	}
+	
+	public String getEmail() {
+		return email;
 	}
 	
 	public boolean sendWelcomeMail() {

@@ -132,15 +132,15 @@ public class UserDataUtil {
 			throw new InvalidArgumentException( errorMessages );
 		}
 		
-		if( user.getPassword() == null && user.getFacebookId() != null )
-			throw new InvalidArgumentException( "You have registered with us via Facebook. Kindly login with Facebook." );
-		
 		if( password.equals( user.getVerificationToken() ) ) {
 			user.setVerificationToken( null );
 			dataAccessor.createOrUpdateUser( user );
 			loginUser( AccessTokenFilter.getAccessToken(), user );
 			return createUserData( user );
 		}
+		
+		if( user.getPassword() == null && user.getFacebookId() != null )
+			throw new InvalidArgumentException( "You have registered with us via Facebook. Kindly login with Facebook." );
 		
 		if( PasswordUtil.check( password, user.getPassword() ) ) {
 			loginUser( AccessTokenFilter.getAccessToken(), user );
@@ -319,6 +319,7 @@ public class UserDataUtil {
 	}
 	
 	public static void sendPasswordResetMail( Long userId ) throws UnexpectedServerException {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
 		
@@ -333,9 +334,12 @@ public class UserDataUtil {
 				+ "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "passwordReset=" + Boolean.TRUE;
+		if( user.getState() == UserState.REGISTERED )
+			passwordResetUrl = passwordResetUrl + "&" + "verifyUser=" + Boolean.TRUE;
 		dataModel.put( "passwordResetUrl", passwordResetUrl );
 		
-		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "passwordreset", Language.ENGLISH, dataModel );
+		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "password-reset", Language.ENGLISH, dataModel );
+		
 	}
 
 	

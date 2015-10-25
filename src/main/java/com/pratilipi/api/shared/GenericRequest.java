@@ -16,11 +16,18 @@ public class GenericRequest {
 	private static final Logger logger =
 			Logger.getLogger( GenericRequest.class.getName() );
 
-	
+
 	protected static final String REGEX_NUMBER = "[0-9]+";
 	protected static final String REGEX_PASSWORD = "\\S{6,128}";
 	protected static final String REGEX_URI = "(/[A-Za-z0-9-]+)+";
 	protected static final String REGEX_EMAIL = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.-][A-Za-z0-9]+)*\\.[A-Za-z]{2,4}";
+
+	public static final String ERR_INVALID_USER_ID = "Invalid user id.";
+	public static final String ERR_MISSING_USER_ID = "User id is required.";
+	
+	public static final String ERR_EMAIL_REQUIRED		= "Email is required.";
+	public static final String ERR_EMAIL_INVALID		= "Invalid email.";
+	public static final String ERR_EMAIL_NOT_REGISTERED = "Email not registered.";
 
 	
 	public GenericRequest() {}
