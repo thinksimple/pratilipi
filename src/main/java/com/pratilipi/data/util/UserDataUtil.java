@@ -338,4 +338,45 @@ public class UserDataUtil {
 		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "passwordreset", Language.ENGLISH, dataModel );
 	}
 
+	
+	public static void verifyUserEmail( String email, String verificationToken )
+			throws InvalidArgumentException, UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUserByEmail( email );
+		
+		if( user == null )
+			throw new InvalidArgumentException( "Invalid Email !" );
+		
+		switch( user.getState() ) {
+			case ACTIVE:
+				return;
+			case REGISTERED:
+				break;
+			case REFERRAL:
+			case BLOCKED:
+				logger.log( Level.SEVERE, "Verification not supported for " + user.getState() + " user state."  );
+				throw new UnexpectedServerException();
+			default:
+				logger.log( Level.SEVERE, "User state " + user.getState() + " is not handeled !"  );
+				throw new UnexpectedServerException();
+		}
+		
+		if( user.getVerificationToken() == null )
+			throw new InvalidArgumentException( "Token Expired !" );
+		
+		String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
+		Long expiryDate = Long.parseLong( user.getVerificationToken().substring( user.getVerificationToken().indexOf( "|" ) + 1 ) );
+		
+		if( ! userVerificationToken.equals( verificationToken ) )
+			throw new InvalidArgumentException( "Invalid or Expired Token !" );
+		
+		if( new Date().getTime() > expiryDate )
+			throw new InvalidArgumentException( "Token Expired !" );
+		
+		user.setState( UserState.ACTIVE );
+		dataAccessor.createOrUpdateUser( user );
+		
+	}
+	
 }

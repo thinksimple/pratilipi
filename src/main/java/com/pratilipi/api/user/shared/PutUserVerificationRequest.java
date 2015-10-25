@@ -19,4 +19,5 @@ public class PutUserVerificationRequest extends GenericRequest {
 	public String getVerificationToken() {
 		return verificationToken;
 	}
+	
 }

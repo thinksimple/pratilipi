@@ -18,10 +18,6 @@ import com.pratilipi.api.userpratilipi.UserPratilipiReviewListApi;
 public class PratilipiService extends GenericService {
 	
 	static {
-		ApiRegistry.register( PratilipiListApi.class );
-		ApiRegistry.register( PratilipiCoverApi.class );
-		
-		ApiRegistry.register( AuthorImageApi.class );
 		
 		ApiRegistry.register( UserLoginApi.class );
 		ApiRegistry.register( UserFacebookLoginApi.class );
@@ -30,9 +26,13 @@ public class PratilipiService extends GenericService {
 		ApiRegistry.register( UserVerificationApi.class );
 		ApiRegistry.register( UserPasswordResetApi.class );
 		
+		ApiRegistry.register( PratilipiListApi.class );
+		ApiRegistry.register( PratilipiCoverApi.class );
+		
+		ApiRegistry.register( AuthorImageApi.class );
+		
 		ApiRegistry.register( UserPratilipiApi.class );
 		ApiRegistry.register( UserPratilipiReviewListApi.class );
-		
 		
 	}
 	

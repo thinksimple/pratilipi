@@ -19,10 +19,13 @@ public class UserEmailApi extends GenericApi {
 	
 		if( request.sendWelcomeMail() )
 			UserDataUtil.sendWelcomeMail( request.getUserId() );
+		
 		if( request.sendEmailVerificationMail() )
 			UserDataUtil.sendEmailVerificationMail( request.getUserId() );
+
 		if( request.sendPasswordResetMail() )
 			UserDataUtil.sendPasswordResetMail( request.getUserId() );
+		
 		if( request.sendBirthdayMail() )
 			throw new InvalidArgumentException( "Feature not yet supported !" );
 		
