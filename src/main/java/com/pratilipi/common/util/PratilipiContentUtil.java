@@ -257,11 +257,13 @@ public class PratilipiContentUtil {
 		return keywords.trim();
 	}
 
-	
 	public PratilipiContentData toPratilipiContentData() {
-		// TODO: Implementation
 		ArrayList<Chapter> chapterList = new ArrayList<>(0);
-		return new PratilipiContentData( chapterList );
+		PratilipiContentData pratilipiContentData = new PratilipiContentData( chapterList );
+		Integer pageCount = getPageCount();
+		for( Integer i = 1; i <= pageCount; i++ ) 
+			chapterList.add( pratilipiContentData.new Chapter( getContent( i ) ) );
+		return pratilipiContentData;
 	}
 	
 }
