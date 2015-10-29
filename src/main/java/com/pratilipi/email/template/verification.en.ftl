@@ -31,8 +31,7 @@
 										</table>
 										
 										<br/>
-										<br/>
-
+										
 										<table align="center" cellspacing="0" cellpadding="0" table-layout="fixed;" style="margin: 0 auto;"> 
 											<tr>
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">

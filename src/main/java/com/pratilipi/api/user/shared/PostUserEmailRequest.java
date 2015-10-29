@@ -8,7 +8,7 @@ public class PostUserEmailRequest extends GenericRequest {
 	@Validate( minLong = 1L )
 	private Long userId;
 	
-	@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_NOT_REGISTERED )
+	@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
 	private String email;
 	
 	private Boolean sendWelcomeMail;
