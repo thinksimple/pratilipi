@@ -3,6 +3,8 @@ package com.pratilipi.service;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
 import com.pratilipi.api.author.AuthorImageApi;
+import com.pratilipi.api.init.InitApi;
+import com.pratilipi.api.pratilipi.PratilipiContentApi;
 import com.pratilipi.api.pratilipi.PratilipiCoverApi;
 import com.pratilipi.api.pratilipi.PratilipiListApi;
 import com.pratilipi.api.user.UserFacebookLoginApi;
@@ -17,6 +19,7 @@ import com.pratilipi.api.userpratilipi.UserPratilipiReviewListApi;
 public class PratilipiService extends GenericService {
 	
 	static {
+		ApiRegistry.register( InitApi.class );
 		
 		ApiRegistry.register( UserLoginApi.class );
 		ApiRegistry.register( UserFacebookLoginApi.class );
@@ -26,6 +29,7 @@ public class PratilipiService extends GenericService {
 		
 		ApiRegistry.register( PratilipiListApi.class );
 		ApiRegistry.register( PratilipiCoverApi.class );
+		ApiRegistry.register( PratilipiContentApi.class );
 		
 		ApiRegistry.register( AuthorImageApi.class );
 		
