@@ -132,7 +132,8 @@ public class UserDataUtil {
 			throw new InvalidArgumentException( errorMessages );
 		}
 		
-		if( password.equals( user.getVerificationToken() ) ) {
+		String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
+		if( password.equals( userVerificationToken ) ) {
 			user.setVerificationToken( null );
 			dataAccessor.createOrUpdateUser( user );
 			loginUser( AccessTokenFilter.getAccessToken(), user );
@@ -335,7 +336,7 @@ public class UserDataUtil {
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "passwordReset=" + Boolean.TRUE;
 		if( user.getState() == UserState.REGISTERED )
-			passwordResetUrl = passwordResetUrl + "&" + "verifyUser=" + Boolean.TRUE;
+			passwordResetUrl = passwordResetUrl + "&" + "passwordReset=" + Boolean.TRUE;
 		dataModel.put( "passwordResetUrl", passwordResetUrl );
 		
 		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "password-reset", Language.ENGLISH, dataModel );
@@ -381,6 +382,51 @@ public class UserDataUtil {
 		user.setState( UserState.ACTIVE );
 		dataAccessor.createOrUpdateUser( user );
 		
+	}
+	
+	public static void changeUserPassword( String email, String currentPassword, String newPassword ) throws InvalidArgumentException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUserByEmail( email );
+		
+		JsonObject errorMessages = new JsonObject();
+		
+		if( user == null ) {
+			errorMessages.addProperty( "errMessage", "Invalid User!" );
+			throw new InvalidArgumentException( errorMessages );
+		}
+		
+		if( user.getState().equals( UserState.BLOCKED ) ) {
+			errorMessages.addProperty( "errMessage", "Sorry! Your Email ID " + email + " is blocked! For more information, mail us at contact@pratilipi.com" );
+			throw new InvalidArgumentException( errorMessages );
+		}
+		
+		// From user Panel
+		if( PasswordUtil.check( currentPassword, user.getPassword() ) ) {
+			if( ! currentPassword.equals( newPassword ) ) {
+				user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
+				user = dataAccessor.createOrUpdateUser( user );
+				logger.log( Level.INFO, "Password for User : " + user.getId() + " changed successfully." );
+			}
+			return;
+		}
+		
+		// From E-mail
+		if( user.getVerificationToken() == null ) {
+			errorMessages.addProperty( "errMessage", "Invalid Credentials!" );
+			throw new InvalidArgumentException( errorMessages );
+		}
+		
+		String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
+
+		if( ! userVerificationToken.equals( currentPassword ) ) {
+			errorMessages.addProperty( "errMessage", "Invalid Credentials!" );
+			throw new InvalidArgumentException( errorMessages );
+		}
+		
+		user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
+		dataAccessor.createOrUpdateUser( user );
+		logger.log( Level.INFO, "Password for User : " + user.getId() + " changed successfully." );
 	}
 	
 }

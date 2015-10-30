@@ -2,6 +2,7 @@
 <link rel="import" href="pratilipi-user-login.html" />
 <link rel="import" href="pratilipi-user-register.html" />
 <link rel="import" href="pratilipi-user-password-reset.html" />
+<link rel="import" href="pratilipi-user-password-change.html" />
 <link rel="import" href="pratilipi-user-verification.html" />
 
 <dom-module id="pratilipi-user">
@@ -10,6 +11,7 @@
 		<pratilipi-user-login with-backdrop></pratilipi-user-login>
 		<pratilipi-user-register with-backdrop></pratilipi-user-register>
 		<pratilipi-user-password-reset with-backdrop></pratilipi-user-password-reset>
+		<pratilipi-user-password-change with-backdrop></pratilipi-user-password-change>
 		<pratilipi-user-verification with-backdrop></pratilipi-user-verification>
 		
 		<iron-ajax
@@ -44,11 +46,17 @@
 			updateUser: function( user ) {
 				this.set( 'user', user );
 			},
-
-			logIn: function() {
+			
+			closeAllElements: function() {
+				this.querySelector( 'pratilipi-user-login' ).close();
 				this.querySelector( 'pratilipi-user-register' ).close();
 				this.querySelector( 'pratilipi-user-password-reset' ).close();
+				this.querySelector( 'pratilipi-user-password-change' ).close();
 				this.querySelector( 'pratilipi-user-verification' ).close();
+			},
+
+			logIn: function() {
+				this.closeAllElements();
 				this.async( function() {
 					this.querySelector( 'pratilipi-user-login' ).open();
 				});
@@ -59,27 +67,28 @@
 			},
 			
 			register: function() {
-				this.querySelector( 'pratilipi-user-login' ).close();
-				this.querySelector( 'pratilipi-user-password-reset' ).close();
-				this.querySelector( 'pratilipi-user-verification' ).close();
+				this.closeAllElements();
 				this.async( function() {
 					this.querySelector( 'pratilipi-user-register' ).open();
 				});
 			},
 			
 			resetPassword: function() {
-				this.querySelector( 'pratilipi-user-login' ).close();
-				this.querySelector( 'pratilipi-user-register' ).close();
-				this.querySelector( 'pratilipi-user-verification' ).close();
+				this.closeAllElements();
 				this.async( function() {
 					this.querySelector( 'pratilipi-user-password-reset' ).open();
 				});
 			},
 			
+			changePassword: function() {
+				this.closeAllElements();
+				this.async( function() {
+					this.querySelector( 'pratilipi-user-password-change' ).open();
+				});
+			},
+			
 			verify: function() {
-				this.querySelector( 'pratilipi-user-login' ).close();
-				this.querySelector( 'pratilipi-user-register' ).close();
-				this.querySelector( 'pratilipi-user-password-reset' ).close();
+				this.closeAllElements();
 				this.async( function() {
 					this.querySelector( 'pratilipi-user-verification' ).open();
 				});
@@ -99,20 +108,22 @@
 			},
 
 			ready: function() {
-				if( get( 'email' ) !== null ) {
-					this.querySelector( 'pratilipi-user-login' ).close();
-					this.querySelector( 'pratilipi-user-register' ).close();
-					this.querySelector( 'pratilipi-user-password-reset' ).close();
-					this.querySelector( 'pratilipi-user-verification' ).close();
+				if( get( 'email' ) !== null && get( 'token' ) !== null ) {
 					
-					if( get( 'token' ) !== null ) {
+					this.closeAllElements();
+					
+					if( get( 'verifyUser' ) == "true" ) {
 						this.async( function() {
-							if( get( 'verifyUser' ) == "true" ) {
-								this.querySelector( 'pratilipi-user-verification' ).verifyRequest( get( 'email' ), get( 'token' ) );
-								this.querySelector( 'pratilipi-user-verification' ).open();								
-							}
+							this.querySelector( 'pratilipi-user-verification' ).verifyUser( get( 'email' ), get( 'token' ) );
+							this.querySelector( 'pratilipi-user-verification' ).open();
 						});
-					} 
+					}
+					else if( get( 'passwordReset' ) == "true" ) {
+						this.async( function() {
+							this.querySelector( 'pratilipi-user-password-change' ).setData( get( 'email' ), get( 'token' ) );
+							this.querySelector( 'pratilipi-user-password-change' ).open();
+						});
+					}
 				}
 				else
 					this.updateUser( this.userData );
