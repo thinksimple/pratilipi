@@ -83,12 +83,15 @@ public class PratilipiContentData {
 	public enum PageletType {
 		TEXT, HTML, IMAGE
 	}
+
 	
 	public List<Chapter> chapterList;
 
+	
 	public PratilipiContentData( List<Chapter> chapterList ) {
 		this.chapterList = chapterList;
 	}
+	
 
 	public int getChapterCount() {
 		return chapterList == null ? 0 : chapterList.size();

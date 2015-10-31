@@ -3,6 +3,7 @@ package com.pratilipi.common.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -14,6 +15,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import com.google.gson.Gson;
@@ -269,31 +271,31 @@ public class PratilipiContentUtil {
 
 	public PratilipiContentData toPratilipiContentData() {
 		
-		ArrayList<Chapter> chapterList = new ArrayList<>(0);
-		Integer pageCount = getPageCount();
+		int pageCount = getPageCount();
+		
+		List<Chapter> chapterList = new ArrayList<>( pageCount );
 
-		// Iterating through chapters.
-		for( Integer i = 1; i <= pageCount; i++ ) {
+		// Iterating through html pages and creating chapters.
+		for( int i = 1; i <= pageCount; i++ ) {
 			
-			ArrayList<Page> pageList = new ArrayList<>(0);
-			ArrayList<Pagelet> pageletList = new ArrayList<>(0);
+			String pageContent = getContent( i );
 			
-			// Getting the chapters.
-			String chapter = getContent( i );
+			List<Page> pageList = new LinkedList<>();
+			List<Pagelet> pageletList = new LinkedList<>();
 			
-			// Parsing the String to Jsoup.
-			Document document = Jsoup.parse( chapter );
+			// Creating Jsoup Document.
+			Document document = Jsoup.parse( pageContent );
 			
 			// Iterating through h1 to h6 for getting the title.
 			String title = null;
-			for( Integer h = 1; h <= 6; h ++ ) {
-				Elements elements = document.getElementsByTag( "h" + h ); 
+			for( int h = 1; h <= 6; h ++ ) {
+				Elements elements = document.getElementsByTag( "h" + h );
 				if( elements == null || elements.isEmpty() )
 					continue;
 				for( Element element : elements ) {
 					if( ! element.text().isEmpty() ) {
 						title = element.text().trim();
-						i = 7;
+						h = 7;
 						break;
 					}
 				}
@@ -303,15 +305,15 @@ public class PratilipiContentUtil {
 			
 			// Creating Pagelets
 			for( Node node : nodes ) {
-				if( node.getClass().getSimpleName().equals( "Element" ) ) {
-					Element element = (Element) node; 
-					if( element.tag().toString().toLowerCase().equals( "img" ) ) 
-						pageletList.add( new Pagelet( element.attr( "src" ), PageletType.IMAGE ) ); 
-					else  if( ! element.text().trim().isEmpty() && ! element.text().trim().equals( title ) ) 
-						pageletList.add( new Pagelet( element.text(), PageletType.TEXT ) );
-				}
-				else if( node.getClass().getSimpleName().equals( "TextNode" ) && ! node.toString().trim().isEmpty() )
+				if( node.getClass() == Element.class ) {
+					Element element = (Element) node;
+					if( element.tag().getName().equalsIgnoreCase( "img" ) )
+						pageletList.add( new Pagelet( element.attr( "src" ), PageletType.IMAGE ) );
+					else if( ! element.text().trim().isEmpty() && ! element.text().trim().equals( title ) )
+						pageletList.add( new Pagelet( element.text().trim(), PageletType.TEXT ) );
+				} else if( node.getClass() == TextNode.class && ! node.toString().trim().isEmpty() ) {
 					pageletList.add( new Pagelet( node.toString().trim(), PageletType.TEXT ) );
+				}
 			}
 			
 			pageList.add( new Page( pageletList ) );

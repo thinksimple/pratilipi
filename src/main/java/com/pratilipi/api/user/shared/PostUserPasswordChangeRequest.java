@@ -5,43 +5,38 @@ import com.pratilipi.api.shared.GenericRequest;
 
 public class PostUserPasswordChangeRequest extends GenericRequest {
 	
-	private static final String PASSWORD_REQUIRED_ERR_MSG = "Enter password.";
-	private static final String PASSWORD_INVALID_ERR_MSG = "Password must contain at least 6 characters, no spaces.";
-	private static final String PASSWORD2_REQUIRED_ERR_MSG = "Re-enter password.";
-
-	
-	@Validate( required = true, regEx = REGEX_EMAIL )
+	@Validate( regEx = REGEX_EMAIL )
 	private String email;
 	
-	private String token;
+	private String verificationToken;
 	
-	private String currentPassword;
-	
-	@Validate( required = true, requiredErrMsg = PASSWORD_REQUIRED_ERR_MSG, regEx = REGEX_PASSWORD, regExErrMsg = PASSWORD_INVALID_ERR_MSG )
 	private String password;
 	
-	@Validate( required = true, requiredErrMsg = PASSWORD2_REQUIRED_ERR_MSG )
-	private String password2;
+	@Validate( required = true, requiredErrMsg = ERR_PASSWORD_REQUIRED, regEx = REGEX_PASSWORD, regExErrMsg = ERR_PASSWORD_INVALID )
+	private String newPassword;
+	
+	@Validate( required = true, requiredErrMsg = ERR_PASSWORD2_REQUIRED )
+	private String newPassword2;
 	
 	
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 	
-	public String getToken() {
-		return this.token;
-	}
-	
-	public String getCurrentPassword() {
-		return this.currentPassword;
+	public String getVerificationToken() {
+		return verificationToken;
 	}
 	
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 	
-	public String getPassword2() {
-		return this.password2;
+	public String getNewPassword() {
+		return newPassword;
+	}
+	
+	public String getNewPassword2() {
+		return newPassword2;
 	}
 	
 }

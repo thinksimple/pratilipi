@@ -30,7 +30,7 @@ public class UserEmailApi extends GenericApi {
 		if( request.getUserId() == null && ( request.sendWelcomeMail() || request.sendEmailVerificationMail() || request.sendBirthdayMail() ) )
 			errorMessages.addProperty( "userId", GenericRequest.ERR_MISSING_USER_ID );
 			
-		if( request.sendPasswordResetMail() && ( request.getEmail() == null || request.getEmail().trim().isEmpty() ) ) 
+		if( request.sendPasswordResetMail() && ( request.getEmail() == null || request.getEmail().trim().isEmpty() ) )
 			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REQUIRED );
 
 		if( errorMessages.entrySet().size() > 0 )

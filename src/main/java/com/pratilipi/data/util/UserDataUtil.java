@@ -9,6 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.JsonObject;
+import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
@@ -384,7 +386,35 @@ public class UserDataUtil {
 		
 	}
 	
-	public static void changeUserPassword( String email, String currentPassword, String newPassword ) throws InvalidArgumentException {
+	public static void updateUserPassword( String password, String newPassword )
+			throws InvalidArgumentException, InsufficientAccessException {
+		
+		Long userId = AccessTokenFilter.getAccessToken().getUserId();
+		if( userId == 0L )
+			throw new InsufficientAccessException();
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUser( userId );
+		
+		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE )
+			throw new InsufficientAccessException();
+
+		
+		if( PasswordUtil.check( password, user.getPassword() ) ) {
+			if( ! password.equals( newPassword ) ) {
+				user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
+				user = dataAccessor.createOrUpdateUser( user );
+			}
+		} else {
+			JsonObject errorMessages = new JsonObject();
+			errorMessages.addProperty( "password", GenericRequest.ERR_PASSWORD_INCORRECT );
+			throw new InvalidArgumentException( errorMessages );
+		}
+		
+	}
+	
+	public static void updateUserPassword( String email, String verificationToken, String newPassword )
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email );
@@ -392,41 +422,20 @@ public class UserDataUtil {
 		JsonObject errorMessages = new JsonObject();
 		
 		if( user == null ) {
-			errorMessages.addProperty( "errMessage", "Invalid User!" );
+			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 			throw new InvalidArgumentException( errorMessages );
 		}
 		
-		if( user.getState().equals( UserState.BLOCKED ) ) {
-			errorMessages.addProperty( "errMessage", "Sorry! Your Email ID " + email + " is blocked! For more information, mail us at contact@pratilipi.com" );
-			throw new InvalidArgumentException( errorMessages );
-		}
+		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE )
+			throw new InsufficientAccessException();
 		
-		// From user Panel
-		if( PasswordUtil.check( currentPassword, user.getPassword() ) ) {
-			if( ! currentPassword.equals( newPassword ) ) {
-				user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
-				user = dataAccessor.createOrUpdateUser( user );
-				logger.log( Level.INFO, "Password for User : " + user.getId() + " changed successfully." );
-			}
-			return;
-		}
-		
-		// From E-mail
-		if( user.getVerificationToken() == null ) {
-			errorMessages.addProperty( "errMessage", "Invalid Credentials!" );
-			throw new InvalidArgumentException( errorMessages );
-		}
-		
-		String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
-
-		if( ! userVerificationToken.equals( currentPassword ) ) {
-			errorMessages.addProperty( "errMessage", "Invalid Credentials!" );
+		if( user.getVerificationToken().indexOf( verificationToken + "|" ) != 0 ) {
+			errorMessages.addProperty( "verificationToken", GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
 			throw new InvalidArgumentException( errorMessages );
 		}
 		
 		user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
 		dataAccessor.createOrUpdateUser( user );
-		logger.log( Level.INFO, "Password for User : " + user.getId() + " changed successfully." );
 	}
 	
 }

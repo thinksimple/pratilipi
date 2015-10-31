@@ -22,12 +22,23 @@ public class GenericRequest {
 	protected static final String REGEX_URI = "(/[A-Za-z0-9-]+)+";
 	protected static final String REGEX_EMAIL = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.-][A-Za-z0-9]+)*\\.[A-Za-z]{2,4}";
 
+	public static final String ERR_INSUFFICIENT_ARGS = "One or more required arguments are missing.";
+	
 	public static final String ERR_INVALID_USER_ID = "Invalid user id.";
 	public static final String ERR_MISSING_USER_ID = "User id is required.";
 	
 	public static final String ERR_EMAIL_REQUIRED		= "Email is required.";
 	public static final String ERR_EMAIL_INVALID		= "Invalid email.";
 	public static final String ERR_EMAIL_NOT_REGISTERED = "Email not registered.";
+
+	public static final String ERR_PASSWORD_REQUIRED = "Enter password.";
+	public static final String ERR_PASSWORD_INVALID = "Password must contain at least 6 characters, no spaces.";
+	public static final String ERR_PASSWORD_INCORRECT = "Incorrect password !";
+
+	public static final String ERR_PASSWORD2_REQUIRED = "Re-enter password.";
+	public static final String ERR_PASSWORD2_MISMATCH = "Must be same as password.";
+
+	public static final String ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED = "Verification token is invalid or expired.";
 
 	
 	public GenericRequest() {}
