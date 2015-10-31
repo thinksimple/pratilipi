@@ -7,7 +7,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Put;
 import com.pratilipi.api.shared.GenericRequest;
-import com.pratilipi.api.user.shared.PostUserPasswordChangeRequest;
+import com.pratilipi.api.user.shared.PostUserPasswordUpdateRequest;
 import com.pratilipi.api.user.shared.UserResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -17,10 +17,10 @@ import com.pratilipi.data.util.UserDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/user/upatepassword" )
-public class UserPasswordChangeApi extends GenericApi {
+public class UserPasswordUpdateApi extends GenericApi {
 	
-	@Post @Put
-	public static UserResponse post( PostUserPasswordChangeRequest request )
+	@Post
+	public static UserResponse post( PostUserPasswordUpdateRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		Gson gson = new Gson();
