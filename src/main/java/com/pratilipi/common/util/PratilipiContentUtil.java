@@ -3,6 +3,7 @@ package com.pratilipi.common.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import com.google.gson.Gson;
@@ -290,27 +292,26 @@ public class PratilipiContentUtil {
 					continue;
 				for( Element element : elements ) {
 					if( ! element.text().isEmpty() ) {
-						title = element.text();
+						title = element.text().trim();
 						i = 7;
 						break;
 					}
 				}
 			}
 			
-			Elements elements = document.getAllElements();
+			List<Node> nodes = document.body().childNodes();
 			
 			// Creating Pagelets
-			for( Element element : elements ) {
-				if( element.tag().toString().toLowerCase().equals( "img" ) ) 
-					pageletList.add( new Pagelet( element.attr( "src" ), PageletType.IMAGE ) ); 
-				else  if( ! element.text().isEmpty() && 
-						! element.tag().toString().equals( "#root" ) && 
-						! element.tag().toString().equals( "html" ) && 
-						! element.tag().toString().equals( "head" ) &&
-						! element.tag().toString().equals( "title" ) &&
-						! element.tag().toString().equals( "body" ) &&
-						! element.text().equals( title ) ) 
-					pageletList.add( new Pagelet( element.text(), PageletType.TEXT ) );
+			for( Node node : nodes ) {
+				if( node.getClass().getSimpleName().equals( "Element" ) ) {
+					Element element = (Element) node; 
+					if( element.tag().toString().toLowerCase().equals( "img" ) ) 
+						pageletList.add( new Pagelet( element.attr( "src" ), PageletType.IMAGE ) ); 
+					else  if( ! element.text().trim().isEmpty() && ! element.text().trim().equals( title ) ) 
+						pageletList.add( new Pagelet( element.text(), PageletType.TEXT ) );
+				}
+				else if( node.getClass().getSimpleName().equals( "TextNode" ) && ! node.toString().trim().isEmpty() )
+					pageletList.add( new Pagelet( node.toString().trim(), PageletType.TEXT ) );
 			}
 			
 			pageList.add( new Page( pageletList ) );
