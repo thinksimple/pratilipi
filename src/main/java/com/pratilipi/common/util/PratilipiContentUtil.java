@@ -9,11 +9,19 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.pratilipi.data.client.PratilipiContentData;
 import com.pratilipi.data.client.PratilipiContentData.Chapter;
+import com.pratilipi.data.client.PratilipiContentData.Page;
+import com.pratilipi.data.client.PratilipiContentData.Pagelet;
+import com.pratilipi.data.client.PratilipiContentData.PageletType;
 
 
 public class PratilipiContentUtil {
@@ -258,12 +266,60 @@ public class PratilipiContentUtil {
 	}
 
 	public PratilipiContentData toPratilipiContentData() {
+		
 		ArrayList<Chapter> chapterList = new ArrayList<>(0);
-		PratilipiContentData pratilipiContentData = new PratilipiContentData( chapterList );
 		Integer pageCount = getPageCount();
-		for( Integer i = 1; i <= pageCount; i++ ) 
-			chapterList.add( pratilipiContentData.new Chapter( getContent( i ) ) );
-		return pratilipiContentData;
+
+		// Iterating through chapters.
+		for( Integer i = 1; i <= pageCount; i++ ) {
+			
+			ArrayList<Page> pageList = new ArrayList<>(0);
+			ArrayList<Pagelet> pageletList = new ArrayList<>(0);
+			
+			// Getting the chapters.
+			String chapter = getContent( i );
+			
+			// Parsing the String to Jsoup.
+			Document document = Jsoup.parse( chapter );
+			
+			// Iterating through h1 to h6 for getting the title.
+			String title = null;
+			for( Integer h = 1; h <= 6; h ++ ) {
+				Elements elements = document.getElementsByTag( "h" + h ); 
+				if( elements == null || elements.isEmpty() )
+					continue;
+				for( Element element : elements ) {
+					if( ! element.text().isEmpty() ) {
+						title = element.text();
+						i = 7;
+						break;
+					}
+				}
+			}
+			
+			Elements elements = document.getAllElements();
+			
+			// Creating Pagelets
+			for( Element element : elements ) {
+				if( element.tag().toString().toLowerCase().equals( "img" ) ) 
+					pageletList.add( new Pagelet( element.attr( "src" ), PageletType.IMAGE ) ); 
+				else  if( ! element.text().isEmpty() && 
+						! element.tag().toString().equals( "#root" ) && 
+						! element.tag().toString().equals( "html" ) && 
+						! element.tag().toString().equals( "head" ) &&
+						! element.tag().toString().equals( "title" ) &&
+						! element.tag().toString().equals( "body" ) &&
+						! element.text().equals( title ) ) 
+					pageletList.add( new Pagelet( element.text(), PageletType.TEXT ) );
+			}
+			
+			pageList.add( new Page( pageletList ) );
+			chapterList.add( new Chapter( title, pageList ) );
+
+		}
+		
+		return new PratilipiContentData( chapterList );
+		
 	}
 	
 }
