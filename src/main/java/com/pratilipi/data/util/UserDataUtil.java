@@ -134,14 +134,6 @@ public class UserDataUtil {
 			throw new InvalidArgumentException( errorMessages );
 		}
 		
-		String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
-		if( password.equals( userVerificationToken ) ) {
-			user.setVerificationToken( null );
-			dataAccessor.createOrUpdateUser( user );
-			loginUser( AccessTokenFilter.getAccessToken(), user );
-			return createUserData( user );
-		}
-		
 		if( user.getPassword() == null && user.getFacebookId() != null )
 			throw new InvalidArgumentException( "You have registered with us via Facebook. Kindly login with Facebook." );
 		
@@ -150,8 +142,19 @@ public class UserDataUtil {
 			return createUserData( user );
 		}
 		
-		errorMessages.addProperty( "password", "Incorrect password !" );
-		throw new InvalidArgumentException( errorMessages );
+		if( user.getVerificationToken() == null ) {
+			throw new InvalidArgumentException( "Invalid Credentials!" );
+		}
+			
+		String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
+		if( password.equals( userVerificationToken ) ) {
+			user.setVerificationToken( null );
+			dataAccessor.createOrUpdateUser( user );
+			loginUser( AccessTokenFilter.getAccessToken(), user );
+			return createUserData( user );
+		}
+		
+		throw new InvalidArgumentException( "Invalid Credentials!" );
 
 	}
 	
@@ -337,8 +340,6 @@ public class UserDataUtil {
 				+ "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "passwordReset=" + Boolean.TRUE;
-		if( user.getState() == UserState.REGISTERED )
-			passwordResetUrl = passwordResetUrl + "&" + "passwordReset=" + Boolean.TRUE;
 		dataModel.put( "passwordResetUrl", passwordResetUrl );
 		
 		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "password-reset", Language.ENGLISH, dataModel );
@@ -429,7 +430,7 @@ public class UserDataUtil {
 		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE )
 			throw new InsufficientAccessException();
 		
-		if( user.getVerificationToken().indexOf( verificationToken + "|" ) != 0 ) {
+		if( user.getVerificationToken() == null || user.getVerificationToken().indexOf( verificationToken + "|" ) != 0 ) {
 			errorMessages.addProperty( "verificationToken", GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
 			throw new InvalidArgumentException( errorMessages );
 		}

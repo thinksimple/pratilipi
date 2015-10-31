@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.annotation.Put;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.user.shared.PostUserPasswordUpdateRequest;
 import com.pratilipi.api.user.shared.UserResponse;
@@ -16,7 +15,7 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 
 @SuppressWarnings("serial")
-@Bind( uri= "/user/upatepassword" )
+@Bind( uri= "/user/updatepassword" )
 public class UserPasswordUpdateApi extends GenericApi {
 	
 	@Post

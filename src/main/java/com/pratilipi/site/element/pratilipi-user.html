@@ -2,7 +2,7 @@
 <link rel="import" href="pratilipi-user-login.html" />
 <link rel="import" href="pratilipi-user-register.html" />
 <link rel="import" href="pratilipi-user-password-reset.html" />
-<link rel="import" href="pratilipi-user-password-change.html" />
+<link rel="import" href="pratilipi-user-password-update.html" />
 <link rel="import" href="pratilipi-user-verification.html" />
 
 <dom-module id="pratilipi-user">
@@ -11,7 +11,7 @@
 		<pratilipi-user-login with-backdrop></pratilipi-user-login>
 		<pratilipi-user-register with-backdrop></pratilipi-user-register>
 		<pratilipi-user-password-reset with-backdrop></pratilipi-user-password-reset>
-		<pratilipi-user-password-change with-backdrop></pratilipi-user-password-change>
+		<pratilipi-user-password-update with-backdrop></pratilipi-user-password-update>
 		<pratilipi-user-verification with-backdrop></pratilipi-user-verification>
 		
 		<iron-ajax
@@ -51,7 +51,7 @@
 				this.querySelector( 'pratilipi-user-login' ).close();
 				this.querySelector( 'pratilipi-user-register' ).close();
 				this.querySelector( 'pratilipi-user-password-reset' ).close();
-				this.querySelector( 'pratilipi-user-password-change' ).close();
+				this.querySelector( 'pratilipi-user-password-update' ).close();
 				this.querySelector( 'pratilipi-user-verification' ).close();
 			},
 
@@ -83,7 +83,7 @@
 			changePassword: function() {
 				this.closeAllElements();
 				this.async( function() {
-					this.querySelector( 'pratilipi-user-password-change' ).open();
+					this.querySelector( 'pratilipi-user-password-update' ).open();
 				});
 			},
 			
@@ -114,14 +114,14 @@
 					
 					if( get( 'verifyUser' ) == "true" ) {
 						this.async( function() {
-							this.querySelector( 'pratilipi-user-verification' ).verifyUser( get( 'email' ), get( 'token' ) );
 							this.querySelector( 'pratilipi-user-verification' ).open();
+							this.querySelector( 'pratilipi-user-verification' ).verifyUser( get( 'email' ), get( 'token' ) );
 						});
 					}
 					else if( get( 'passwordReset' ) == "true" ) {
 						this.async( function() {
-							this.querySelector( 'pratilipi-user-password-change' ).setData( get( 'email' ), get( 'token' ) );
-							this.querySelector( 'pratilipi-user-password-change' ).open();
+							this.querySelector( 'pratilipi-user-password-update' ).setData( get( 'email' ), get( 'token' ) );
+							this.querySelector( 'pratilipi-user-password-update' ).open();
 						});
 					}
 				}
