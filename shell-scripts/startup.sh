@@ -9,8 +9,8 @@ do
 	cd ~/android/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-android.sh 2>&1 | logger
 	
-	cd ~/backend/pratilipi
-	sudo bash ~/test/pratilipi/shell-scripts/update-backend.sh 2>&1 | logger
+	cd ~/api/pratilipi
+	sudo bash ~/test/pratilipi/shell-scripts/update-api.sh 2>&1 | logger
 	
 	cd ~/worker/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-worker.sh 2>&1 | logger

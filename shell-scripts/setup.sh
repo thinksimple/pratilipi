@@ -43,9 +43,9 @@ sudo mkdir -p ~/prod
 cd ~/prod
 sudo git clone -b release-prod https://github.com/Pratilipi/pratilipi.git
 
-# Cloning git repository for prod-pratilipi/backend
-sudo mkdir -p ~/backend
-cd ~/backend
+# Cloning git repository for prod-pratilipi/api
+sudo mkdir -p ~/api
+cd ~/api
 sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
 
 # Cloning git repository for prod-pratilipi/worker
