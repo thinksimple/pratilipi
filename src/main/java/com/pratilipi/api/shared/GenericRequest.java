@@ -30,7 +30,9 @@ public class GenericRequest {
 	public static final String ERR_EMAIL_REQUIRED		= "Email is required.";
 	public static final String ERR_EMAIL_INVALID		= "Invalid email.";
 	public static final String ERR_EMAIL_NOT_REGISTERED = "Email not registered.";
-
+	public static final String ERR_EMAIL_ALREADY_REGISTERED = "Email is already registered.";
+	public static final String ERR_EMAIL_REGISTERED_WITH_FB = "You have registered with us via Facebook. Kindly login with Facebook.";
+	
 	public static final String ERR_PASSWORD_REQUIRED = "Enter password.";
 	public static final String ERR_PASSWORD_INVALID = "Password must contain at least 6 characters, no spaces.";
 	public static final String ERR_PASSWORD_INCORRECT = "Incorrect password !";
@@ -39,6 +41,7 @@ public class GenericRequest {
 	public static final String ERR_PASSWORD2_MISMATCH = "Must be same as password.";
 
 	public static final String ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED = "Verification token is invalid or expired.";
+	public static final String ERR_INVALID_CREDENTIALS = "Invalid Credentials!";
 
 	
 	public GenericRequest() {}

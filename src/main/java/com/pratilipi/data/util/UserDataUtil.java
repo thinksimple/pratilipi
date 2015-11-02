@@ -32,7 +32,7 @@ public class UserDataUtil {
 			Logger.getLogger( UserDataUtil.class.getName() );
 
 	
-	public static String getNextToken( String verificationToken ) {
+	private static String getNextToken( String verificationToken ) {
 		if( verificationToken != null ) {
 			Long expiryDateMillis = Long.parseLong( verificationToken.substring( verificationToken.indexOf( "|" ) + 1 ) );
 			if( ( expiryDateMillis - new Date().getTime() ) > TimeUnit.MILLISECONDS.convert( 4, TimeUnit.DAYS ) )
@@ -41,8 +41,17 @@ public class UserDataUtil {
 		
 		return UUID.randomUUID().toString() + "|" + ( new Date().getTime() + TimeUnit.MILLISECONDS.convert( 7, TimeUnit.DAYS ) ); // Valid for 7 days.
 	}
-
 	
+	private static Boolean checkUserVerificationToken( User user, String verificationToken ) {
+		if( user.getVerificationToken() != null ) {
+			String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
+			Long userExpiryDate = Long.parseLong( user.getVerificationToken().substring( user.getVerificationToken().indexOf( "|" ) + 1 ) );
+			if( userVerificationToken.equals( verificationToken ) && userExpiryDate > new Date().getTime() )
+				return true;
+		}
+		return false;
+	}
+
 	public static String createUserName( User user ) {
 		if( user.getFirstName() != null && user.getLastName() == null )
 			return user.getFirstName();
@@ -99,7 +108,7 @@ public class UserDataUtil {
 				case ACTIVE:
 				case BLOCKED:
 					JsonObject errorMessages = new JsonObject();
-					errorMessages.addProperty( "email", "Email is already registered." );
+					errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_ALREADY_REGISTERED );
 					throw new InvalidArgumentException( errorMessages );
 				default:
 					logger.log( Level.SEVERE, "User state " + user.getState() + " is not handeled !"  );
@@ -130,27 +139,26 @@ public class UserDataUtil {
 
 		JsonObject errorMessages = new JsonObject();
 		if( user == null ) {
-			errorMessages.addProperty( "email", "Email is not registered !" );
+			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 			throw new InvalidArgumentException( errorMessages );
 		}
 		
 		if( user.getPassword() == null && user.getFacebookId() != null )
-			throw new InvalidArgumentException( "You have registered with us via Facebook. Kindly login with Facebook." );
+			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_REGISTERED_WITH_FB );
 		
 		if( PasswordUtil.check( password, user.getPassword() ) ) {
 			loginUser( AccessTokenFilter.getAccessToken(), user );
 			return createUserData( user );
 		}
 		
-		String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
-		if( password.equals( userVerificationToken ) ) {
+		if( checkUserVerificationToken( user, password ) ) {
 			user.setVerificationToken( null );
 			dataAccessor.createOrUpdateUser( user );
 			loginUser( AccessTokenFilter.getAccessToken(), user );
 			return createUserData( user );
 		}
 		
-		throw new InvalidArgumentException( "Invalid Credentials!" );
+		throw new InvalidArgumentException( GenericRequest.ERR_INVALID_CREDENTIALS );
 
 	}
 	
@@ -350,7 +358,10 @@ public class UserDataUtil {
 		User user = dataAccessor.getUserByEmail( email );
 		
 		if( user == null )
-			throw new InvalidArgumentException( "Invalid Email !" );
+			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
+		
+		if( ! checkUserVerificationToken( user, verificationToken ) )
+			throw new InvalidArgumentException( GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
 		
 		switch( user.getState() ) {
 			case ACTIVE:
@@ -366,18 +377,6 @@ public class UserDataUtil {
 				throw new UnexpectedServerException();
 		}
 		
-		if( user.getVerificationToken() == null )
-			throw new InvalidArgumentException( "Token Expired !" );
-		
-		String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
-		Long expiryDate = Long.parseLong( user.getVerificationToken().substring( user.getVerificationToken().indexOf( "|" ) + 1 ) );
-		
-		if( ! userVerificationToken.equals( verificationToken ) )
-			throw new InvalidArgumentException( "Invalid or Expired Token !" );
-		
-		if( new Date().getTime() > expiryDate )
-			throw new InvalidArgumentException( "Token Expired !" );
-		
 		user.setState( UserState.ACTIVE );
 		dataAccessor.createOrUpdateUser( user );
 		
@@ -387,6 +386,7 @@ public class UserDataUtil {
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		Long userId = AccessTokenFilter.getAccessToken().getUserId();
+
 		if( userId == 0L )
 			throw new InsufficientAccessException();
 
@@ -416,21 +416,15 @@ public class UserDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email );
 		
-		JsonObject errorMessages = new JsonObject();
-		
-		if( user == null ) {
-			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_NOT_REGISTERED );
-			throw new InvalidArgumentException( errorMessages );
-		}
+		if( user == null )
+			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 		
 		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE )
 			throw new InsufficientAccessException();
 		
-		if( user.getVerificationToken() == null || user.getVerificationToken().indexOf( verificationToken + "|" ) != 0 ) {
-			errorMessages.addProperty( "verificationToken", GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
-			throw new InvalidArgumentException( errorMessages );
-		}
-		
+		if( ! checkUserVerificationToken( user, verificationToken ) )
+			throw new InvalidArgumentException( GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
+			
 		user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
 		dataAccessor.createOrUpdateUser( user );
 	}

@@ -31,17 +31,17 @@ public class UserPasswordUpdateApi extends GenericApi {
 			throw new InvalidArgumentException( errorMessages );
 		}
 		
-		// Verifying user email.
-		if( request.getVerificationToken() != null )
-			UserDataUtil.verifyUserEmail( request.getEmail(), request.getVerificationToken() );
-
 		// Updating password.
-		if( request.getEmail() != null && request.getVerificationToken() != null )
+		if( request.getEmail() != null && request.getVerificationToken() != null ) {
+			UserDataUtil.verifyUserEmail( request.getEmail(), request.getVerificationToken() );
 			UserDataUtil.updateUserPassword( request.getEmail(), request.getVerificationToken(), request.getNewPassword() );
-		else if( request.getPassword() != null )
+		}
+		else if( request.getPassword() != null ) {
 			UserDataUtil.updateUserPassword( request.getPassword(), request.getNewPassword() );
-		else
+		}
+		else {
 			throw new InvalidArgumentException( GenericRequest.ERR_INSUFFICIENT_ARGS );
+		}
 		
 		// Logging-in the user.
 		UserData userData = UserDataUtil.loginUser(
