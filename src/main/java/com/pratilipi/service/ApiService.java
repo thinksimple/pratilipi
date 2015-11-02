@@ -6,9 +6,11 @@ import com.pratilipi.api.author.AuthorImageApi;
 import com.pratilipi.api.pratilipi.PratilipiCoverApi;
 
 @SuppressWarnings("serial")
-public class BackendService extends GenericService {
+public class ApiService extends GenericService {
 	
 	static {
+		ApiRegistry.register( PratilipiCoverApi.class );
+
 		ApiRegistry.register( PratilipiCoverApi.class );
 		
 		ApiRegistry.register( AuthorImageApi.class );

@@ -25,8 +25,8 @@
 
 
 	<servlet>
-		<servlet-name>BackendService</servlet-name>
-		<servlet-class>com.pratilipi.service.BackendService</servlet-class>
+		<servlet-name>ApiService</servlet-name>
+		<servlet-class>com.pratilipi.service.ApiService</servlet-class>
 		<load-on-startup>1</load-on-startup>
 		<init-param>
 			<param-name>Prefix</param-name>
@@ -34,7 +34,7 @@
 		</init-param>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>BackendService</servlet-name>
+		<servlet-name>ApiService</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
