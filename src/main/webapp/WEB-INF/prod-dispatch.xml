@@ -2,7 +2,7 @@
 <dispatch-entries>
 
 	<dispatch>
-		<url>*/api/user/login/facebook</url>
+		<url>*/api/user/login/facebook*</url>
 		<module>api</module>
 	</dispatch>
 
