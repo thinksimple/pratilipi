@@ -142,10 +142,6 @@ public class UserDataUtil {
 			return createUserData( user );
 		}
 		
-		if( user.getVerificationToken() == null ) {
-			throw new InvalidArgumentException( "Invalid Credentials!" );
-		}
-			
 		String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
 		if( password.equals( userVerificationToken ) ) {
 			user.setVerificationToken( null );

@@ -15,7 +15,7 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 
 @SuppressWarnings("serial")
-@Bind( uri= "/user/updatepassword" )
+@Bind( uri= "/user/passwordupdate" )
 public class UserPasswordUpdateApi extends GenericApi {
 	
 	@Post
