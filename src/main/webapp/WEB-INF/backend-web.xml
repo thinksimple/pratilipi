@@ -25,12 +25,12 @@
 
 
 	<servlet>
-		<servlet-name>AndroidService</servlet-name>
-		<servlet-class>com.pratilipi.service.AndroidService</servlet-class>
+		<servlet-name>BackendService</servlet-name>
+		<servlet-class>com.pratilipi.service.BackendService</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>AndroidService</servlet-name>
+		<servlet-name>BackendService</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
