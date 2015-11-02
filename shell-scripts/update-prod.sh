@@ -19,4 +19,10 @@ then
 
 	# Update prod-pratilipi/prod
 	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=default
+
+	
+	cp src/main/webapp/WEB-INF/prod-dispatch.xml		src/main/webapp/WEB-INF/dispatch.xml
+
+	# Update Routing
+	mvn appengine:update_dispatch -Dapp.id=prod-pratilipi -Dapp.module=default
 fi
