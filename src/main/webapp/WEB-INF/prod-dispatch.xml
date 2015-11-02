@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dispatch-entries>
 	<dispatch>
+		<url>www.pratilipi.com/*</url>
+		<module>www</module>
+	</dispatch>
+	<dispatch>
 		<url>*/worker/*</url>
 		<module>worker</module>
 	</dispatch>
