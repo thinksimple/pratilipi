@@ -14,6 +14,9 @@ then
 	mvn install
 	ant
 	
+	cp src/main/webapp/WEB-INF/gamma-web.xml			src/main/webapp/WEB-INF/web.xml
+	cp src/main/webapp/WEB-INF/gamma-appengine-web.xml	src/main/webapp/WEB-INF/appengine-web.xml
+	
 	# Update prod-pratilipi/gamma
 	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=gamma
 	
