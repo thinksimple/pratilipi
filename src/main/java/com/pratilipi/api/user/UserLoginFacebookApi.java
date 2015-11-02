@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Put;
-import com.pratilipi.api.user.shared.PutUserFacebookLoginRequest;
+import com.pratilipi.api.user.shared.PutUserLoginFacebookRequest;
 import com.pratilipi.api.user.shared.UserResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -18,10 +18,10 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/user/login/facebook" )  
-public class UserFacebookLoginApi extends GenericApi {
+public class UserLoginFacebookApi extends GenericApi {
 	
 	@Put
-	public static UserResponse facebookLogin( PutUserFacebookLoginRequest request )
+	public static UserResponse facebookLogin( PutUserLoginFacebookRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
 		UserData userData = UserDataUtil.loginUser(
