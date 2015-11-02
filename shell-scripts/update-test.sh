@@ -23,6 +23,7 @@ then
 	# Update devo-pratilipi/default
 	mvn appengine:update -Dapp.id=devo-pratilipi -Dapp.module=default
 	
+	cp src/main/webapp/WEB-INF/worker-dispatch.xml		src/main/webapp/WEB-INF/dispatch.xml
 	cp src/main/webapp/WEB-INF/worker-web.xml			src/main/webapp/WEB-INF/web.xml
 	cp src/main/webapp/WEB-INF/worker-appengine-web.xml	src/main/webapp/WEB-INF/appengine-web.xml
 	cp src/main/webapp/WEB-INF/worker-queue.xml			src/main/webapp/WEB-INF/queue.xml
