@@ -43,6 +43,11 @@ sudo mkdir -p ~/prod
 cd ~/prod
 sudo git clone -b release-prod https://github.com/Pratilipi/pratilipi.git
 
+# Cloning git repository for prod-pratilipi/backend
+sudo mkdir -p ~/backend
+cd ~/backend
+sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
+
 # Cloning git repository for prod-pratilipi/worker
 sudo mkdir -p ~/worker
 cd ~/worker
