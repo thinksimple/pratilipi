@@ -28,6 +28,10 @@
 		<servlet-name>BackendService</servlet-name>
 		<servlet-class>com.pratilipi.service.BackendService</servlet-class>
 		<load-on-startup>1</load-on-startup>
+		<init-param>
+			<param-name>Prefix</param-name>
+			<param-value>/api</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>BackendService</servlet-name>

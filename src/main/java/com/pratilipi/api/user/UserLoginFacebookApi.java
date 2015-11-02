@@ -5,7 +5,7 @@ import java.util.Date;
 import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
-import com.pratilipi.api.annotation.Put;
+import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.user.shared.PutUserLoginFacebookRequest;
 import com.pratilipi.api.user.shared.UserResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -20,7 +20,7 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @Bind( uri= "/user/login/facebook" )  
 public class UserLoginFacebookApi extends GenericApi {
 	
-	@Put
+	@Post
 	public static UserResponse facebookLogin( PutUserLoginFacebookRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
@@ -41,7 +41,7 @@ public class UserLoginFacebookApi extends GenericApi {
 					.addParam( "createAuthorProfile", "true" );
 			TaskQueueFactory.getUserTaskQueue().addAll( task1, task2 );
 			
-		}	
+		}
 		
 		Gson gson = new Gson();
 		return gson.fromJson( gson.toJson( userData ), UserResponse.class );
