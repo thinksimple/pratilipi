@@ -7,7 +7,6 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.pratilipi.common.type.AccessTokenType;
 import com.pratilipi.data.type.AccessToken;
 
 @PersistenceCapable( table = "ACCESS_TOKEN" )
@@ -31,7 +30,7 @@ public class AccessTokenEntity implements AccessToken {
 
 	@Deprecated
 	@Persistent( column = "ACCESS_TOKEN_TYPE" )
-	private AccessTokenType type;
+	private String type;
 
 	@Persistent( column = "LOGIN_DATE" )
 	private Date logInDate;
