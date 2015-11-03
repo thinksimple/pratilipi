@@ -3,6 +3,7 @@ package com.pratilipi.service;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
 import com.pratilipi.api.author.AuthorImageApi;
+import com.pratilipi.api.category.CategoryListApi;
 import com.pratilipi.api.pratilipi.PratilipiApi;
 import com.pratilipi.api.pratilipi.PratilipiContentApi;
 import com.pratilipi.api.pratilipi.PratilipiCoverApi;
@@ -34,6 +35,8 @@ public class AndroidService extends GenericService {
 		
 		ApiRegistry.register( UserPratilipiApi.class );
 		ApiRegistry.register( UserPratilipiReviewListApi.class );
+		
+		ApiRegistry.register( CategoryListApi.class );
 	}
 	
 }
