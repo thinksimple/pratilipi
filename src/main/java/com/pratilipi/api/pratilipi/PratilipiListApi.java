@@ -31,6 +31,7 @@ public class PratilipiListApi extends GenericApi {
 				PratilipiDataUtil.getPratilipiDataList(
 						request.getSearchQuery(),
 						pratilipiFilter,
+						request.includeSummaryAndIndex(),
 						request.getCursor(),
 						request.getResultCount() == null ? 20 : request.getResultCount() );
 				

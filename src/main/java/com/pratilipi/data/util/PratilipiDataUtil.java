@@ -234,8 +234,12 @@ public class PratilipiDataUtil {
 		return pratilipiData;
 	}
 	
-	public static List<PratilipiData> createPratilipiDataList(
-			List<Long> pratilipiIdList, boolean includeAuthorData ) {
+	
+	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeAuthorData ) {
+		return createPratilipiDataList( pratilipiIdList, includeAuthorData, false, false );
+	}
+
+	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeAuthorData, boolean includeAll, boolean includeMetaData ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
@@ -255,7 +259,7 @@ public class PratilipiDataUtil {
 
 		List<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
 		for( Pratilipi pratilipi : pratilipiList ) {
-			PratilipiData pratilipiData = createPratilipiData( pratilipi, null );
+			PratilipiData pratilipiData = createPratilipiData( pratilipi, null, includeAll, includeMetaData );
 			if( includeAuthorData && pratilipi.getAuthorId() != null )
 				pratilipiData.setAuthor( authorIdToDataMap.get( pratilipi.getAuthorId() ) );
 			pratilipiData.setRelevance( calculateRelevance( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) ) );
@@ -269,12 +273,19 @@ public class PratilipiDataUtil {
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			PratilipiFilter pratilipiFilter, String cursor, Integer resultCount ) {
 
-		return getPratilipiDataList( null, pratilipiFilter, cursor, resultCount);
+		return getPratilipiDataList( null, pratilipiFilter, false, cursor, resultCount);
 	}
-
+	
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
-			String searchQuery, PratilipiFilter pratilipiFilter, String cursor,
-			Integer resultCount ) {
+			String searchQuery, PratilipiFilter pratilipiFilter,
+			String cursor, Integer resultCount ) {
+		
+		return getPratilipiDataList( searchQuery, pratilipiFilter, false, cursor, resultCount);
+	}
+	
+	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
+			String searchQuery, PratilipiFilter pratilipiFilter, boolean includeSummaryAndIndex,
+			String cursor, Integer resultCount ) {
 		
 		if( ! hasAccessToListPratilipiData( pratilipiFilter ) ) {
 			// TODO: Clear filters which are not allow to non-admin roles.
@@ -289,7 +300,8 @@ public class PratilipiDataUtil {
 
 		List<PratilipiData> pratilipiDataList = createPratilipiDataList(
 				pratilipiIdListCursorTuple.getDataList(),
-				pratilipiFilter.getAuthorId() == null );
+				pratilipiFilter.getAuthorId() == null,
+				includeSummaryAndIndex, false );
 
 		return new DataListCursorTuple<PratilipiData>( pratilipiDataList, pratilipiIdListCursorTuple.getCursor() );
 	}
