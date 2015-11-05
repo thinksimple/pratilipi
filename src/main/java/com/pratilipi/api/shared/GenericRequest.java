@@ -28,6 +28,7 @@ public class GenericRequest {
 	public static final String ERR_MISSING_USER_ID = "User id is required.";
 	
 	public static final String ERR_EMAIL_REQUIRED		= "Email is required.";
+	public static final String ERR_EMAIL_BLOCKED		= "Your account is blocked with us! For more information, mail us at contact@pratilipi.com"; 
 	public static final String ERR_EMAIL_INVALID		= "Invalid email.";
 	public static final String ERR_EMAIL_NOT_REGISTERED = "Email not registered.";
 	public static final String ERR_EMAIL_ALREADY_REGISTERED = "Email is already registered.";

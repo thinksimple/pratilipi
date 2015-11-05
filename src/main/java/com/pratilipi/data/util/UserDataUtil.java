@@ -172,12 +172,6 @@ public class UserDataUtil {
 
 		User user = dataAccessor.getUserByFacebookId( fbUserData.getFacebookId() );
 		if( user != null ) {
-
-			if( user.getState() != UserState.ACTIVE && user.getState() != UserState.REGISTERED ) {
-				logger.log( Level.INFO, "User ID : " + user.getId() + "is prevented from logging via facebook." );
-				throw new InsufficientAccessException( "Sorry, your facebook id is blocked with us! " );
-			}
-			
 			// "user.getPassword() == null" implies that User never logged-in using his/her e-mail id
 			if( user.getPassword() == null && fbUserData.getEmail() != null && ! fbUserData.getEmail().equals( user.getEmail() ) ) {
 				user.setEmail( fbUserData.getEmail() );
@@ -194,17 +188,6 @@ public class UserDataUtil {
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
 				user.setState( UserState.REGISTERED );
-				
-			} else if ( user.getState() != UserState.ACTIVE && user.getState() != UserState.REGISTERED ) {
-				user.setFacebookId( fbUserData.getFacebookId() );
-				dataAccessor.createOrUpdateUser( user );
-				logger.log( Level.INFO, "User ID : " + user.getId() + "is prevented from logging via facebook." );
-				throw new InsufficientAccessException( "Sorry, your email id is blocked with us! " );
-			}
-			
-			if( fbUserData.getEmail() != null ) {
-				user.setEmail( fbUserData.getEmail() );
-				user.setState( UserState.ACTIVE ); // Counting of Facebook for e-mail/user verification
 			}
 			
 			user.setFacebookId( fbUserData.getFacebookId() );
@@ -212,6 +195,24 @@ public class UserDataUtil {
 		
 		}
 		
+		switch( user.getState() ) {
+			case ACTIVE:
+			case REGISTERED:
+			case REFERRAL:
+				break;
+			case BLOCKED: 
+				if( isChanged )
+					dataAccessor.createOrUpdateUser( user );
+				throw new InsufficientAccessException( GenericRequest.ERR_EMAIL_BLOCKED );
+			default: 
+				logger.log( Level.SEVERE, "UserState cases not handled for " + user.getState() );
+				throw new UnexpectedServerException();
+		}
+		
+		if( fbUserData.getEmail() != null ) {
+			user.setEmail( fbUserData.getEmail() );
+			user.setState( UserState.ACTIVE ); // Counting of Facebook for e-mail/user verification
+		}
 		
 		if( fbUserData.getFirstName() != null && ! fbUserData.getFirstName().equals( user.getFirstName() ) ) {
 			user.setFirstName( fbUserData.getFirstName() );
