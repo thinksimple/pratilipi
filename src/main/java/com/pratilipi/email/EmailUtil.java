@@ -79,7 +79,7 @@ public class EmailUtil {
 			Message msg = new MimeMessage( session );
 			msg.setFrom( new InternetAddress( senderEmail, senderName ) );
 			msg.addRecipient( Message.RecipientType.TO, new InternetAddress( email, name ) );
-			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive+" + templateName + "@pratilipi.com", "Mail Archive" ) );
+			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
 			msg.setSubject( subject );
 			msg.setContent( body, "text/html" );
 			Transport.send( msg );

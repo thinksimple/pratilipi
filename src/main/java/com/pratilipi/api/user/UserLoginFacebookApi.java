@@ -23,7 +23,7 @@ public class UserLoginFacebookApi extends GenericApi {
 	
 	@Post
 	public static UserResponse facebookLogin( PutUserLoginFacebookRequest request )
-			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		UserData userData = UserDataUtil.loginUser(
 				request.getFbUserAccessToken(),

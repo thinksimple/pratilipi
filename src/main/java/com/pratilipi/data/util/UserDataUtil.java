@@ -42,16 +42,16 @@ public class UserDataUtil {
 		return UUID.randomUUID().toString() + "|" + ( new Date().getTime() + TimeUnit.MILLISECONDS.convert( 7, TimeUnit.DAYS ) ); // Valid for 7 days.
 	}
 	
-	private static Boolean checkUserVerificationToken( User user, String verificationToken ) {
-		if( user.getVerificationToken() != null ) {
-			String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
-			Long userExpiryDate = Long.parseLong( user.getVerificationToken().substring( user.getVerificationToken().indexOf( "|" ) + 1 ) );
-			if( userVerificationToken.equals( verificationToken ) && userExpiryDate > new Date().getTime() )
-				return true;
-		}
-		return false;
+	private static boolean verifyToken( User user, String verificationToken ) {
+		if( user.getVerificationToken() == null )
+			return false;
+		
+		String userVerificationToken = user.getVerificationToken().substring( 0, user.getVerificationToken().indexOf( "|" ) );
+		Long expiryDateMillis = Long.parseLong( user.getVerificationToken().substring( user.getVerificationToken().indexOf( "|" ) + 1 ) );
+		return userVerificationToken.equals( verificationToken ) && expiryDateMillis > new Date().getTime();
 	}
 
+	
 	public static String createUserName( User user ) {
 		if( user.getFirstName() != null && user.getLastName() == null )
 			return user.getFirstName();
@@ -108,7 +108,7 @@ public class UserDataUtil {
 				case ACTIVE:
 				case BLOCKED:
 					JsonObject errorMessages = new JsonObject();
-					errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_ALREADY_REGISTERED );
+					errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
 					throw new InvalidArgumentException( errorMessages );
 				default:
 					logger.log( Level.SEVERE, "User state " + user.getState() + " is not handeled !"  );
@@ -151,7 +151,7 @@ public class UserDataUtil {
 			return createUserData( user );
 		}
 		
-		if( checkUserVerificationToken( user, password ) ) {
+		if( verifyToken( user, password ) ) {
 			user.setVerificationToken( null );
 			dataAccessor.createOrUpdateUser( user );
 			loginUser( AccessTokenFilter.getAccessToken(), user );
@@ -163,15 +163,17 @@ public class UserDataUtil {
 	}
 	
 	public static UserData loginUser( String fbUserAccessToken, UserSignUpSource signUpSource )
-			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		UserData fbUserData = FacebookApi.getUserData( fbUserAccessToken );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUserByFacebookId( fbUserData.getFacebookId() );
+
 		Boolean isChanged = false;
 
-		User user = dataAccessor.getUserByFacebookId( fbUserData.getFacebookId() );
 		if( user != null ) {
+		
 			// "user.getPassword() == null" implies that User never logged-in using his/her e-mail id
 			if( user.getPassword() == null && fbUserData.getEmail() != null && ! fbUserData.getEmail().equals( user.getEmail() ) ) {
 				user.setEmail( fbUserData.getEmail() );
@@ -185,33 +187,17 @@ public class UserDataUtil {
 				
 			if( user == null ) {
 				user = dataAccessor.newUser();
+				user.setEmail( fbUserData.getEmail() ); // Could be null
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
-				user.setState( UserState.REGISTERED );
+				user.setState( fbUserData.getEmail() == null ? UserState.REGISTERED : UserState.ACTIVE );
+			} else if( user.getState() == UserState.REFERRAL || user.getState() == UserState.REGISTERED ) {
+				user.setState( UserState.ACTIVE ); // Counting of Facebook for e-mail/user verification
 			}
 			
 			user.setFacebookId( fbUserData.getFacebookId() );
 			isChanged = true;
 		
-		}
-		
-		switch( user.getState() ) {
-			case ACTIVE:
-			case REGISTERED:
-			case REFERRAL:
-				break;
-			case BLOCKED: 
-				if( isChanged )
-					dataAccessor.createOrUpdateUser( user );
-				throw new InsufficientAccessException( GenericRequest.ERR_EMAIL_BLOCKED );
-			default: 
-				logger.log( Level.SEVERE, "UserState cases not handled for " + user.getState() );
-				throw new UnexpectedServerException();
-		}
-		
-		if( fbUserData.getEmail() != null ) {
-			user.setEmail( fbUserData.getEmail() );
-			user.setState( UserState.ACTIVE ); // Counting of Facebook for e-mail/user verification
 		}
 		
 		if( fbUserData.getFirstName() != null && ! fbUserData.getFirstName().equals( user.getFirstName() ) ) {
@@ -238,6 +224,19 @@ public class UserDataUtil {
 			user = dataAccessor.createOrUpdateUser( user );
 		
 
+		switch( user.getState() ) {
+			case ACTIVE:
+			case REGISTERED:
+			case REFERRAL:
+				break;
+			case BLOCKED:
+				throw new InsufficientAccessException( GenericRequest.ERR_ACCOUNT_BLOCKED );
+			default:
+				logger.log( Level.SEVERE, "User state " + user.getState() + " is not handeled !"  );
+				throw new UnexpectedServerException();
+		}
+		
+	
 		loginUser( AccessTokenFilter.getAccessToken(), user );
 		return createUserData( user );
 	}
@@ -375,7 +374,7 @@ public class UserDataUtil {
 		if( user == null )
 			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 		
-		if( ! checkUserVerificationToken( user, verificationToken ) )
+		if( ! verifyToken( user, verificationToken ) )
 			throw new InvalidArgumentException( GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
 		
 		switch( user.getState() ) {
@@ -431,13 +430,17 @@ public class UserDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email );
 		
-		if( user == null )
-			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
+		JsonObject errorMessages = new JsonObject();
+		
+		if( user == null ) {
+			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_NOT_REGISTERED );
+			throw new InvalidArgumentException( errorMessages );
+		}
 		
 		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE )
 			throw new InsufficientAccessException();
 		
-		if( ! checkUserVerificationToken( user, verificationToken ) )
+		if( ! verifyToken( user, verificationToken ) )
 			throw new InvalidArgumentException( GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
 			
 		user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );

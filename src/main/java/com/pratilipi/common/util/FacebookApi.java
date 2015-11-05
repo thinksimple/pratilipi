@@ -48,7 +48,8 @@ public class FacebookApi {
 			throws UnexpectedServerException {
 		
 		try {
-			String requestUrl = GRAPH_API_2p4_URL + "/me?" + "access_token=" + fbUserAccessToken + "&fields=id,first_name,last_name,gender,birthday,email,verified";
+			String requestUrl = GRAPH_API_2p4_URL + "/me?" + "access_token=" + fbUserAccessToken
+					+ "&fields=id,first_name,last_name,gender,birthday,email,verified";
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
 			
 			logger.log( Level.INFO, "Graph Api Request : " + requestUrl );
