@@ -8,11 +8,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.init.gsonUTCdateAdapter;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.api.user.shared.GetUserBackupRequest;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
@@ -34,7 +36,7 @@ public class UserBackupApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
+	public GenericResponse get( GetUserBackupRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
@@ -46,20 +48,25 @@ public class UserBackupApi extends GenericApi {
 		
 		int count = 0;
 		String cursor = null;
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new gsonUTCdateAdapter() ).create();
+		
 		while( true ) {
 			DataListCursorTuple<User> userListCursorTupe = dataAccessor.getUserList( cursor, 1000 );
 
 			List<User> userList = userListCursorTupe.getDataList();
 			for( User user : userList ) {
 				backup.append( gson.toJson( user ) + LINE_SEPARATOR );
-				csv.append( user.getId() ).append( CSV_SEPARATOR )
-						.append( user.getFacebookId() ).append( CSV_SEPARATOR )
-						.append( user.getFirstName() ).append( CSV_SEPARATOR )
-						.append( user.getLastName() ).append( CSV_SEPARATOR )
-						.append( user.getNickName() ).append( CSV_SEPARATOR )
-						.append( user.getEmail() ).append( LINE_SEPARATOR );
+				
+				if( request.getCsv() )
+					csv.append( user.getId() ).append( CSV_SEPARATOR )
+							.append( user.getFacebookId() ).append( CSV_SEPARATOR )
+							.append( user.getFirstName() ).append( CSV_SEPARATOR )
+							.append( user.getLastName() ).append( CSV_SEPARATOR )
+							.append( user.getNickName() ).append( CSV_SEPARATOR )
+							.append( user.getEmail() ).append( LINE_SEPARATOR );
+				
 			}
+			
 			count = count + userList.size();
 
 			if( userList.size() < 1000 )
@@ -77,13 +84,16 @@ public class UserBackupApi extends GenericApi {
 				fileName,
 				backup.toString().getBytes( Charset.forName( "UTF-8" ) ),
 				"text/plain" );
-		BlobEntry userCsvEntry = blobAccessor.newBlob(
-				fileName + ".csv",
-				csv.toString().getBytes( Charset.forName( "UTF-8" ) ),
-				"text/plain" );
 		
 		blobAccessor.createOrUpdateBlob( userBackupEntry );
-		blobAccessor.createOrUpdateBlob( userCsvEntry );
+		
+		if( request.getCsv() ) {
+			BlobEntry userCsvEntry = blobAccessor.newBlob(
+					fileName + ".csv",
+					csv.toString().getBytes( Charset.forName( "UTF-8" ) ),
+					"text/plain" );
+			blobAccessor.createOrUpdateBlob( userCsvEntry );
+		}
 		
 		logger.log( Level.INFO, "Backed up " + count + " User Entities." );
 

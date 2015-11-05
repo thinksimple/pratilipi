@@ -8,9 +8,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.init.gsonUTCdateAdapter;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -44,7 +46,8 @@ public class PratilipiBackupApi extends GenericApi {
 		int count = 0;
 		String cursor = null;
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new gsonUTCdateAdapter() ).create();
+		
 		while( true ) {
 			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe = dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
 			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();

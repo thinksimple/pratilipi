@@ -8,10 +8,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.author.shared.GetAuthorBackupRequest;
+import com.pratilipi.api.init.gsonUTCdateAdapter;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.AuthorFilter;
@@ -34,7 +36,7 @@ public class AuthorBackupApi extends GenericApi {
 	private static final String LINE_SEPARATOR = "\n";
 	
 	@Get
-	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
+	public GenericResponse get( GetAuthorBackupRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
@@ -47,25 +49,30 @@ public class AuthorBackupApi extends GenericApi {
 		int count = 0;
 		AuthorFilter authorFilter = new AuthorFilter();
 		String cursor = null;
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new gsonUTCdateAdapter() ).create();
+		
 		while( true ) {
 			DataListCursorTuple<Author> authorListCursorTupe = dataAccessor.getAuthorList( authorFilter, cursor, 1000 );
 			List<Author> authorList = authorListCursorTupe.getDataList();
-
+			
 			for( Author author : authorList ) {
 				backup.append( gson.toJson( author ) + LINE_SEPARATOR );
-                csv.append( author.getId().toString() ).append( CSV_SEPARATOR )
-                		.append( author.getUserId() == null ? "" : author.getUserId().toString() ).append( CSV_SEPARATOR )
-                		.append( author.getFirstName() ).append( CSV_SEPARATOR )
-                		.append( author.getLastName() ).append( CSV_SEPARATOR )
-                		.append( author.getPenName() ).append( CSV_SEPARATOR )
-                		.append( author.getFirstNameEn() ).append( CSV_SEPARATOR )
-                		.append( author.getLastNameEn() ).append( CSV_SEPARATOR )
-                		.append( author.getPenNameEn() ).append( CSV_SEPARATOR )
-                		.append( author.getEmail() ).append( CSV_SEPARATOR )
-                		.append( author.getLanguage().toString() ).append( CSV_SEPARATOR )
-                		.append( author.getContentPublished().toString() ).append( LINE_SEPARATOR );
+
+				if( request.getCsv() ) 
+				    csv.append( author.getId().toString() ).append( CSV_SEPARATOR )
+	                		.append( author.getUserId() == null ? "" : author.getUserId().toString() ).append( CSV_SEPARATOR )
+	                		.append( author.getFirstName() ).append( CSV_SEPARATOR )
+	                		.append( author.getLastName() ).append( CSV_SEPARATOR )
+	                		.append( author.getPenName() ).append( CSV_SEPARATOR )
+	                		.append( author.getFirstNameEn() ).append( CSV_SEPARATOR )
+	                		.append( author.getLastNameEn() ).append( CSV_SEPARATOR )
+	                		.append( author.getPenNameEn() ).append( CSV_SEPARATOR )
+	                		.append( author.getEmail() ).append( CSV_SEPARATOR )
+	                		.append( author.getLanguage().toString() ).append( CSV_SEPARATOR )
+	                		.append( author.getContentPublished().toString() ).append( LINE_SEPARATOR );
+				
 			}
+			
 			count = count + authorList.size();
 
 			if( authorList.size() < 1000 )
@@ -83,13 +90,18 @@ public class AuthorBackupApi extends GenericApi {
 				fileName,
 				backup.toString().getBytes( Charset.forName( "UTF-8" ) ),
 				"text/plain" );
-		BlobEntry authorCsvEntry = blobAccessor.newBlob(
-				fileName + ".csv",
-				csv.toString().getBytes( Charset.forName( "UTF-8" ) ),
-				"text/plain" );
 		
 		blobAccessor.createOrUpdateBlob( authorBackupEntry );
-		blobAccessor.createOrUpdateBlob( authorCsvEntry );
+		
+		if( request.getCsv() ) {
+			
+			BlobEntry authorCsvEntry = blobAccessor.newBlob(
+					fileName + ".csv",
+					csv.toString().getBytes( Charset.forName( "UTF-8" ) ),
+					"text/plain" );
+			
+			blobAccessor.createOrUpdateBlob( authorCsvEntry );
+		}
 		
 		logger.log( Level.INFO, "Backed up " + count + " Author Entities." );
 
