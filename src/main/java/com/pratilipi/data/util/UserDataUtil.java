@@ -163,17 +163,21 @@ public class UserDataUtil {
 	}
 	
 	public static UserData loginUser( String fbUserAccessToken, UserSignUpSource signUpSource )
-			throws InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
 		
 		UserData fbUserData = FacebookApi.getUserData( fbUserAccessToken );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByFacebookId( fbUserData.getFacebookId() );
-
 		Boolean isChanged = false;
 
+		User user = dataAccessor.getUserByFacebookId( fbUserData.getFacebookId() );
 		if( user != null ) {
 
+			if( user.getState() != UserState.ACTIVE && user.getState() != UserState.REGISTERED ) {
+				logger.log( Level.INFO, "User ID : " + user.getId() + "is prevented from logging via facebook." );
+				throw new InsufficientAccessException( "Sorry, your facebook id is blocked with us! " );
+			}
+			
 			// "user.getPassword() == null" implies that User never logged-in using his/her e-mail id
 			if( user.getPassword() == null && fbUserData.getEmail() != null && ! fbUserData.getEmail().equals( user.getEmail() ) ) {
 				user.setEmail( fbUserData.getEmail() );
@@ -182,18 +186,28 @@ public class UserDataUtil {
 		
 		} else { // user == null
 			
-			if( fbUserData.getEmail() != null ) 
+			if( fbUserData.getEmail() != null )
 				user = dataAccessor.getUserByEmail( fbUserData.getEmail() );
-			
+				
 			if( user == null ) {
 				user = dataAccessor.newUser();
-				user.setEmail( fbUserData.getEmail() );
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
+				user.setState( UserState.REGISTERED );
+				
+			} else if ( user.getState() != UserState.ACTIVE && user.getState() != UserState.REGISTERED ) {
+				user.setFacebookId( fbUserData.getFacebookId() );
+				dataAccessor.createOrUpdateUser( user );
+				logger.log( Level.INFO, "User ID : " + user.getId() + "is prevented from logging via facebook." );
+				throw new InsufficientAccessException( "Sorry, your email id is blocked with us! " );
+			}
+			
+			if( fbUserData.getEmail() != null ) {
+				user.setEmail( fbUserData.getEmail() );
+				user.setState( UserState.ACTIVE ); // Counting of Facebook for e-mail/user verification
 			}
 			
 			user.setFacebookId( fbUserData.getFacebookId() );
-			user.setState( UserState.ACTIVE ); // Counting of Facebook for e-mail/user verification
 			isChanged = true;
 		
 		}

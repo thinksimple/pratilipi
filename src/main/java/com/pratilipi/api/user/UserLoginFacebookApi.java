@@ -8,6 +8,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.user.shared.PutUserLoginFacebookRequest;
 import com.pratilipi.api.user.shared.UserResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.UserSignUpSource;
@@ -22,7 +23,7 @@ public class UserLoginFacebookApi extends GenericApi {
 	
 	@Post
 	public static UserResponse facebookLogin( PutUserLoginFacebookRequest request )
-			throws InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
 		
 		UserData userData = UserDataUtil.loginUser(
 				request.getFbUserAccessToken(),
