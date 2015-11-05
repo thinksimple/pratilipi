@@ -16,8 +16,9 @@ do
     if [ $hour -ge 8 -a $hour -le 20 ]; then
         { #try block
             gsutil -m cp -r gs://devo-pratilipi.appspot.com/user gs://devo-pratilipi.appspot.com/user-$(date)
+            logger _BLOB_STORE_BACKUP_SUCCEEDED_
         } || { #catch block
-            ./sendmail.sh
+            logger _BLOB_STORE_BACKUP_FAILED_
         }
         let sleeptime="( 60 - $minute ) * 60 - $second"
         echo "Next backup in $sleeptime seconds."
@@ -28,8 +29,6 @@ do
         sleep $sleeptime
     fi
 
-    message="Blobstore backup failed Permanently at : $(date). Re-run the script."
-    printf 'Subject: Backup Failure\r\n\r\n%s\r\n\r\n' "$message" | /usr/sbin/sendmail raghu@pratilipi.com
-    printf 'Subject: Backup Failure\r\n\r\n%s\r\n\r\n' "$message" | /usr/sbin/sendmail prashant@pratilipi.com
+    logger _BLOB_STORE_BACKUP_FAILED_PERMANENTLY_
 
 done
