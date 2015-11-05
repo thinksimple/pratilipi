@@ -1,7 +1,7 @@
 while true
 do
 
-	date
+	logger "_CONTINUOUS_DEPLOYMENT_RUNNING_"
 	
 	cd ~/prod/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-prod.sh 2>&1 | logger
