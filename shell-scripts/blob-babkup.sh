@@ -15,7 +15,7 @@ do
 
     if [ $hour -ge 8 -a $hour -le 20 ]; then
         { #try block
-            gsutil -m cp -r gs://devo-pratilipi.appspot.com/user gs://devo-pratilipi.appspot.com/user-$(date)
+            gsutil -m cp -r gs://static.pratilipi.com gs://backup.pratilipi.com/static.pratilipi.com-$(date)
             logger _BLOB_STORE_BACKUP_SUCCEEDED_
         } || { #catch block
             logger _BLOB_STORE_BACKUP_FAILED_
