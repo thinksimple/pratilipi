@@ -25,5 +25,3 @@ then
 		logger "_BLOBSTORE_BACKUP_FAILED_"
 	}
 fi
-
-gsutil -m cp -r gs://static.pratilipi.com gs://backup.pratilipi.com/static.pratilipi.com-test
