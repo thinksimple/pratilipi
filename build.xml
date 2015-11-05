@@ -11,6 +11,7 @@
 	<target name="copy">
 		<copy todir="${build.dir}/WEB-INF/classes" flatten="false">
 			<fileset dir="${src.dir}" includes="META-INF/jdoconfig.xml"/>
+			<fileset dir="${src.dir}" includes="**/data/curated/category.*"/>
 			<fileset dir="${src.dir}" includes="**/i18n/language.*"/>
 			<fileset dir="${src.dir}" includes="**/*.ftl"/>
 			<fileset dir="${src.dir}" includes="**/*.html"/>
