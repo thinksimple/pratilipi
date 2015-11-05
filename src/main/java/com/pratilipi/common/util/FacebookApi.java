@@ -49,7 +49,7 @@ public class FacebookApi {
 		
 		try {
 			String requestUrl = GRAPH_API_2p4_URL + "/me?" + "access_token=" + fbUserAccessToken
-					+ "&fields=id,first_name,last_name,gender,birthday,email,verified";
+					+ "&fields=id,first_name,last_name,gender,birthday,email";
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
 			
 			logger.log( Level.INFO, "Graph Api Request : " + requestUrl );
@@ -74,7 +74,7 @@ public class FacebookApi {
 					}
 				}
 				
-				if( responseJson.get( "email" ) != null && responseJson.get( "verified" ).getAsBoolean() )
+				if( responseJson.get( "email" ) != null )
 					userData.setEmail( responseJson.get( "email" ).getAsString() );
 
 				return userData;
