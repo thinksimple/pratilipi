@@ -7,7 +7,7 @@ git remote update
 
 if [ $(git rev-parse HEAD) != $(git rev-parse origin) ]
 then
-	git fetch
+	git fetch 1> /dev/null
 	git reset --hard origin/master 1> /dev/null
 	
 	mvn clean 1> /dev/null
