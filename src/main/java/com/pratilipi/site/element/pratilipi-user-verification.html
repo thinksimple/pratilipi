@@ -17,13 +17,13 @@
 		</div>
 		
 		<iron-ajax
-				id="AjaxPut"
+				id="AjaxPost"
 				url="/api/user/verification"
-				method="PUT"
-				content-type="application/json"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
 				handle-as="json"
-				on-response="_handleAjaxPutResponse"
-				on-error="_handleAjaxPutError"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
 				></iron-ajax>
 		
 	</template>
@@ -40,21 +40,17 @@
  			],
  					
 			properties: {
-				email: { type: String },
-				verificationToken: { type: String },
 				message: { type: String },
 				errMessage: { type: String },
 			},
 			
 			verifyUser: function( email, verificationToken ) {
 				this.message = "Working ...";
-				var ajaxPut = this.$.AjaxPut;
-				ajaxPut.body = JSON.stringify( { 
-					email: email,
-					verificationToken: verificationToken,
-				} );
+				this.$.AjaxPost.body = ( 
+					"email=" + email + "&" + 
+					"verificationToken=" + verificationToken );
 				
-				ajaxPut.generateRequest();
+				this.$.AjaxPost.generateRequest();
 			},
 			
 			clearMessages: function() {
@@ -62,8 +58,7 @@
 				this.errMessage = null; 
 			},
 			
-			
-			_handleAjaxPutResponse: function( event ) {
+			_handleAjaxPostResponse: function( event ) {
 				this.clearMessages();
 				if( event.detail.xhr.status == 0 ) {
 					this.errMessage = "Could not connect to server !";
@@ -78,7 +73,7 @@
 				}
 			},
 			
-			_handleAjaxPutError: function( event ) {
+			_handleAjaxPostError: function( event ) {
 				this.clearMessages();
 				if( event.detail.request.xhr.status == 400 ) {
 					if( event.detail.request.xhr.response.message != null )

@@ -3,7 +3,7 @@ package com.pratilipi.api.user.shared;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 
-public class PutUserVerificationRequest extends GenericRequest {
+public class PostUserVerificationRequest extends GenericRequest {
 	
 	@Validate( required = true, regEx = REGEX_EMAIL )
 	private String email;

@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.user.shared.PutUserLoginFacebookRequest;
+import com.pratilipi.api.user.shared.PostUserLoginFacebookRequest;
 import com.pratilipi.api.user.shared.UserResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -22,7 +22,7 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 public class UserLoginFacebookApi extends GenericApi {
 	
 	@Post
-	public static UserResponse facebookLogin( PutUserLoginFacebookRequest request )
+	public static UserResponse facebookLogin( PostUserLoginFacebookRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		UserData userData = UserDataUtil.loginUser(

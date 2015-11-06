@@ -4,7 +4,7 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.type.UserSignUpSource;
 
-public class PutUserRegisterRequest extends GenericRequest {
+public class PostUserRegisterRequest extends GenericRequest {
 
 	private static final String NAME_REQUIRED_ERR_MSG = "Please enter your name.";
 

@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
-import com.pratilipi.api.annotation.Put;
-import com.pratilipi.api.user.shared.PutUserRegisterRequest;
+import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.user.shared.PostUserRegisterRequest;
 import com.pratilipi.api.user.shared.UserResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -18,8 +18,8 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @Bind( uri= "/user/register" )
 public class UserRegisterApi extends GenericApi {
 
-	@Put
-	public UserResponse put( PutUserRegisterRequest request )
+	@Post
+	public UserResponse put( PostUserRegisterRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 
 		JsonObject errorMessages = new JsonObject();

@@ -3,8 +3,8 @@ package com.pratilipi.api.user;
 import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
-import com.pratilipi.api.annotation.Put;
-import com.pratilipi.api.user.shared.PutUserLoginRequest;
+import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.user.shared.PostUserLoginRequest;
 import com.pratilipi.api.user.shared.UserResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -15,8 +15,8 @@ import com.pratilipi.data.util.UserDataUtil;
 @Bind( uri= "/user/login" )
 public class UserLoginApi extends GenericApi {
 
-	@Put
-	public UserResponse login( PutUserLoginRequest request )
+	@Post
+	public UserResponse login( PostUserLoginRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
 		Gson gson = new Gson();
