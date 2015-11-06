@@ -10,11 +10,11 @@ import com.pratilipi.api.user.UserLoginFacebookApi;
 public class ApiService extends GenericService {
 	
 	static {
-		ApiRegistry.register( UserLoginFacebookApi.class );
+		ApiRegistry.register( UserLoginFacebookApi.class );	// *.pratilipi.com
 
-		ApiRegistry.register( PratilipiCoverApi.class );
+		ApiRegistry.register( PratilipiCoverApi.class );	// AWS CloudFront
 		
-		ApiRegistry.register( AuthorImageApi.class );
+		ApiRegistry.register( AuthorImageApi.class );		// AWS CloudFront
 	}
 	
 }
