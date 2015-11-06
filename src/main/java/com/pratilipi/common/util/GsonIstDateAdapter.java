@@ -1,4 +1,4 @@
-package com.pratilipi.api.init;
+package com.pratilipi.common.util;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
@@ -16,28 +16,29 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-/* To create a Gson object with custom TypeAdapter : 
-	Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new gsonUTCdateAdapter() ).create();
-*/
-
-public class gsonUTCdateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
+public class GsonIstDateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
 	
 	private final DateFormat dateFormat;
+
 	
-	public gsonUTCdateAdapter() {
+	public GsonIstDateAdapter() {
 		dateFormat = new SimpleDateFormat( "dd-MMM-yyyy HH:mm:ss.SSS z", Locale.US );
 		dateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
 	}
 	
-	@Override public synchronized JsonElement serialize( Date date, Type type, JsonSerializationContext jsonSerializationContext ) {
+	
+	@Override
+	public synchronized JsonElement serialize( Date date, Type type, JsonSerializationContext jsonSerializationContext ) {
 		return new JsonPrimitive( dateFormat.format( date ) );
 	}
 	
-	@Override public synchronized Date deserialize( JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext ) {
+	@Override
+	public synchronized Date deserialize( JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext ) {
 		try {
 			return dateFormat.parse( jsonElement.getAsString() );
-		} catch ( ParseException e ) {
+		} catch( ParseException e ) {
 			throw new JsonParseException( e );
 		}
 	}
+	
 }

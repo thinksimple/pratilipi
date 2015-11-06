@@ -1,9 +1,11 @@
 package com.pratilipi.api.author;
 
 import java.nio.charset.Charset;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,10 +15,10 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.author.shared.GetAuthorBackupRequest;
-import com.pratilipi.api.init.gsonUTCdateAdapter;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.common.util.GsonIstDateAdapter;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -35,11 +37,12 @@ public class AuthorBackupApi extends GenericApi {
 	private static final String CSV_SEPARATOR = ",";
 	private static final String LINE_SEPARATOR = "\n";
 	
+	
 	@Get
 	public GenericResponse get( GetAuthorBackupRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessorBackup();
 		
 		Date backupDate = new Date();
 
@@ -49,7 +52,7 @@ public class AuthorBackupApi extends GenericApi {
 		int count = 0;
 		AuthorFilter authorFilter = new AuthorFilter();
 		String cursor = null;
-		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new gsonUTCdateAdapter() ).create();
+		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new GsonIstDateAdapter() ).create();
 		
 		while( true ) {
 			DataListCursorTuple<Author> authorListCursorTupe = dataAccessor.getAuthorList( authorFilter, cursor, 1000 );
@@ -58,7 +61,7 @@ public class AuthorBackupApi extends GenericApi {
 			for( Author author : authorList ) {
 				backup.append( gson.toJson( author ) + LINE_SEPARATOR );
 
-				if( request.getCsv() ) 
+				if( request.generateCsv() ) 
 				    csv.append( author.getId().toString() ).append( CSV_SEPARATOR )
 	                		.append( author.getUserId() == null ? "" : author.getUserId().toString() ).append( CSV_SEPARATOR )
 	                		.append( author.getFirstName() ).append( CSV_SEPARATOR )
@@ -82,9 +85,14 @@ public class AuthorBackupApi extends GenericApi {
 		}
 
 		
-		String fileName = "author/"
-				+ new SimpleDateFormat( "yyyy-MM-dd" ).format( backupDate ) + "/"
-				+ "author-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate );
+		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+		DateFormat dateTimeFormat = new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" );
+		dateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+		dateTimeFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+
+		String fileName = "datastore.author/"
+				+ dateFormat.format( backupDate ) + "/"
+				+ "author-" + dateTimeFormat.format( backupDate );
 
 		BlobEntry authorBackupEntry = blobAccessor.newBlob(
 				fileName,
@@ -93,16 +101,16 @@ public class AuthorBackupApi extends GenericApi {
 		
 		blobAccessor.createOrUpdateBlob( authorBackupEntry );
 		
-		if( request.getCsv() ) {
-			
+		
+		if( request.generateCsv() ) {
 			BlobEntry authorCsvEntry = blobAccessor.newBlob(
 					fileName + ".csv",
 					csv.toString().getBytes( Charset.forName( "UTF-8" ) ),
 					"text/plain" );
-			
 			blobAccessor.createOrUpdateBlob( authorCsvEntry );
 		}
 		
+
 		logger.log( Level.INFO, "Backed up " + count + " Author Entities." );
 
 		return new GenericResponse();

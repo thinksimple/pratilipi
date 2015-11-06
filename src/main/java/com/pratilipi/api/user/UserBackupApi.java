@@ -1,9 +1,11 @@
 package com.pratilipi.api.user;
 
 import java.nio.charset.Charset;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,10 +14,10 @@ import com.google.gson.GsonBuilder;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.init.gsonUTCdateAdapter;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.api.user.shared.GetUserBackupRequest;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.util.GsonIstDateAdapter;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -39,7 +41,7 @@ public class UserBackupApi extends GenericApi {
 	public GenericResponse get( GetUserBackupRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessorBackup();
 		
 		Date backupDate = new Date();
 
@@ -48,16 +50,16 @@ public class UserBackupApi extends GenericApi {
 		
 		int count = 0;
 		String cursor = null;
-		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new gsonUTCdateAdapter() ).create();
+		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new GsonIstDateAdapter() ).create();
 		
 		while( true ) {
 			DataListCursorTuple<User> userListCursorTupe = dataAccessor.getUserList( cursor, 1000 );
-
 			List<User> userList = userListCursorTupe.getDataList();
+
 			for( User user : userList ) {
 				backup.append( gson.toJson( user ) + LINE_SEPARATOR );
 				
-				if( request.getCsv() )
+				if( request.generateCsv() )
 					csv.append( user.getId() ).append( CSV_SEPARATOR )
 							.append( user.getFacebookId() ).append( CSV_SEPARATOR )
 							.append( user.getFirstName() ).append( CSV_SEPARATOR )
@@ -75,10 +77,15 @@ public class UserBackupApi extends GenericApi {
 				cursor = userListCursorTupe.getCursor();
 		}
 		
-		
-		String fileName = "user/"
-				+ new SimpleDateFormat( "yyyy-MM-dd" ).format( backupDate ) + "/"
-				+ "user-" + new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" ).format( backupDate );
+
+		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+		DateFormat dateTimeFormat = new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" );
+		dateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+		dateTimeFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+	
+		String fileName = "datastore.user/"
+				+ dateFormat.format( backupDate ) + "/"
+				+ "user-" + dateTimeFormat.format( backupDate );
 
 		BlobEntry userBackupEntry = blobAccessor.newBlob(
 				fileName,
@@ -86,14 +93,16 @@ public class UserBackupApi extends GenericApi {
 				"text/plain" );
 		
 		blobAccessor.createOrUpdateBlob( userBackupEntry );
+
 		
-		if( request.getCsv() ) {
+		if( request.generateCsv() ) {
 			BlobEntry userCsvEntry = blobAccessor.newBlob(
 					fileName + ".csv",
 					csv.toString().getBytes( Charset.forName( "UTF-8" ) ),
 					"text/plain" );
 			blobAccessor.createOrUpdateBlob( userCsvEntry );
 		}
+
 		
 		logger.log( Level.INFO, "Backed up " + count + " User Entities." );
 

@@ -4,10 +4,10 @@ import com.pratilipi.api.shared.GenericRequest;
 
 public class GetAuthorBackupRequest extends GenericRequest {
 	
-	private Boolean csv;
+	private Boolean generateCsv;
 	
-	public Boolean getCsv() {
-		return csv == null ? false : csv;
+	public boolean generateCsv() {
+		return generateCsv == null ? false : generateCsv;
 	}
 
 }

@@ -28,9 +28,9 @@
 		<property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
 		<property name="prod-pratilipi.blobservice.gcs.bucket" value="static.pratilipi.com"/>
 
-		<property name="localhost.blobservice.gcs.bucket.public" value="localhost"/>
-		<property name="devo-pratilipi.blobservice.gcs.bucket.public" value="devo-pratilipi.appspot.com"/>
-		<property name="prod-pratilipi.blobservice.gcs.bucket.public" value="public.pratilipi.com"/>
+		<property name="localhost.blobservice.gcs.bucket.backup" value="localhost"/>
+		<property name="devo-pratilipi.blobservice.gcs.bucket.backup" value="devo-pratilipi.appspot.com"/>
+		<property name="prod-pratilipi.blobservice.gcs.bucket.backup" value="backup.pratilipi.com"/>
 
 		<!-- Configure Web Domain -->
 		<property name="localhost.domain" value="localhost"/>

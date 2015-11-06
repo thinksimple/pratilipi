@@ -7,6 +7,7 @@ public class DataAccessorFactory {
 	private static final String datasource = SystemProperty.get( "datasource" );
 	private static final String indexName = "GLOBAL_INDEX";
 	private static final String gcsBucket = SystemProperty.get( "blobservice.gcs.bucket" );
+	private static final String gcsBucketBackup = SystemProperty.get( "blobservice.gcs.bucket.backup" );
 
 
 	private static final Memcache cacheL1 = new MemcacheImpl();
@@ -16,6 +17,7 @@ public class DataAccessorFactory {
 			? new SearchAccessorGaeImpl( indexName )
 			: new SearchAccessorMockImpl( indexName );
 	private static final BlobAccessor blobAccessor = new BlobAccessorGcsImpl( gcsBucket );
+	private static final BlobAccessor blobAccessorBackup = new BlobAccessorGcsImpl( gcsBucketBackup );
 
 	
 	public static Memcache getL1CacheAccessor() {
@@ -51,6 +53,10 @@ public class DataAccessorFactory {
 
 	public static BlobAccessor getBlobAccessor() {
 		return new BlobAccessorWithMemcache( blobAccessor, cacheL2 );
+	}
+
+	public static BlobAccessor getBlobAccessorBackup() {
+		return blobAccessorBackup;
 	}
 
 }
