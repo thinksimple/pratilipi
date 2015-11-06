@@ -1,7 +1,7 @@
 while true
 do
 
-	logger -t cont_dep_script "_CONTINUOUS_DEPLOYMENT_RUNNING_"
+	logger -t ping "_CONTINUOUS_DEPLOYMENT_RUNNING_"
 	
 	cd ~/prod/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-prod.sh    2>&1 | grep -v "^\[INFO\]" | logger -t cont_dep_script
