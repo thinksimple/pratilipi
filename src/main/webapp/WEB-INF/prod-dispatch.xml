@@ -11,4 +11,9 @@
 		<module>www</module>
 	</dispatch>
 
+	<dispatch>
+		<url>api.pratilipi.com/*</url>
+		<module>api</module>
+	</dispatch>
+	
 </dispatch-entries>
