@@ -55,10 +55,6 @@
 		<property name="localhost.cdn" value="localhost:8080"/>
 		<property name="devo-pratilipi.cdn" value="ptlp.co/devo"/>
 		<property name="prod-pratilipi.cdn" value="ptlp.co"/>
-
-		<property name="localhost.cdn.3p" value="localhost:8080/third-party"/>
-		<property name="devo-pratilipi.cdn.3p" value="lib.cdssolutions.in"/>
-		<property name="prod-pratilipi.cdn.3p" value="lib.cdssolutions.in"/>
 	</system-properties>
 
 </appengine-web-app>
