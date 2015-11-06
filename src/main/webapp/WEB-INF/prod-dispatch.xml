@@ -2,6 +2,11 @@
 <dispatch-entries>
 
 	<dispatch>
+		<url>*/oauth*</url>
+		<module>www</module>
+	</dispatch>
+	
+	<dispatch>
 		<url>*/api/user/login/facebook*</url>
 		<module>api</module>
 	</dispatch>
