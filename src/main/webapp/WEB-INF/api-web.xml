@@ -38,7 +38,7 @@
 
 
 	<servlet>
-		<servlet-name>ApiService</servlet-name>
+		<servlet-name>FrontendApiService</servlet-name>
 		<servlet-class>com.pratilipi.service.ApiService</servlet-class>
 		<load-on-startup>1</load-on-startup>
 		<init-param>
@@ -47,7 +47,17 @@
 		</init-param>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ApiService</servlet-name>
+		<servlet-name>FrontendApiService</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>BackendApiService</servlet-name>
+		<servlet-class>com.pratilipi.service.ApiService</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BackendApiService</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
