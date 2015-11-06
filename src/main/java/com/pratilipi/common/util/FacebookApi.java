@@ -53,8 +53,11 @@ public class FacebookApi {
 					+ "?" + "input_token=" + userAccessToken
 					+ "&" + "access_token=" + getAccessToken();
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
-			JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
 			
+			logger.log( Level.INFO, "Graph Api Request : " + requestUrl );
+			logger.log( Level.INFO, "Graph Api Response : " + responsePayload );
+
+			JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
 			return responseJson.get( "error" ) == null
 					&& responseJson.get( "data" ) != null
 					&& responseJson.get( "data" ).getAsJsonObject().get( "app_id" ).getAsString().equals( getAppId() );

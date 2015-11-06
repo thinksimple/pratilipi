@@ -3,7 +3,7 @@ package com.pratilipi.api.user.shared;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 
-public class PostUserValidationFacebookRequest extends GenericRequest {
+public class PostUserFacebookValidationRequest extends GenericRequest {
 	
 	@Validate( required = true )
 	private String fbAccessToken;
