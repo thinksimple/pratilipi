@@ -51,12 +51,6 @@ public class UserLoginFacebookApi extends GenericApi {
 					.addParam( "userId", userData.getId().toString() )
 					.addParam( "sendWelcomeMail", "true" );
 			taskList.add( welcomeMailTask );
-
-			Task authorProfileTask = TaskQueueFactory.newTask()
-					.setUrl( "/user/process" )
-					.addParam( "userId", userData.getId().toString() )
-					.addParam( "createAuthorProfile", "true" );
-			taskList.add( authorProfileTask );
 			
 		}
 

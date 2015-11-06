@@ -52,11 +52,7 @@ public class UserRegisterApi extends GenericApi {
 				.setUrl( "/user/email" )
 				.addParam( "userId", userData.getId().toString() )
 				.addParam( "sendEmailVerificationMail", "true" );
-		Task task3 = TaskQueueFactory.newTask()
-				.setUrl( "/user/process" )
-				.addParam( "userId", userData.getId().toString() )
-				.addParam( "createAuthorProfile", "true" );
-		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2, task3 );
+		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2 );
 
 		
 		Gson gson = new Gson();
