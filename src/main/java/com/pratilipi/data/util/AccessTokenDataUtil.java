@@ -1,7 +1,6 @@
 package com.pratilipi.data.util;
 
 import java.util.Date;
-import java.util.logging.Logger;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -11,11 +10,7 @@ import com.pratilipi.data.type.AccessToken;
 
 public class AccessTokenDataUtil {
 	
-	private static final Logger logger =
-			Logger.getLogger( AccessTokenDataUtil.class.getName() );
-	
-	private static final long ONE_DAY_MILLIS = 24 * 60 * 60 * 1000;
-	private static final long ONE_MONTH_MILLIS = 30 * ONE_DAY_MILLIS;
+	private static final long ONE_MONTH_MILLIS = 30 * 24 * 60 * 60 * 1000;
 
 	
 	public static AccessToken newUserAccessToken() {
@@ -36,15 +31,29 @@ public class AccessTokenDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		AccessToken accessToken = dataAccessor.getAccessToken( accessTokenId );
 		JsonObject errorMessages = new JsonObject();
+
 		if( accessToken == null ) {
+			
 			errorMessages.addProperty( "accessToken", "Access Token is invalid !" );
 			throw new InvalidArgumentException( errorMessages );
+			
 		} else if( accessToken.isExpired() ) {
-			errorMessages.addProperty( "accessToken", "Access Token is expired !" );
-			throw new InvalidArgumentException( errorMessages );
-		} else if( accessToken.getExpiry().getTime() > new Date().getTime() + ONE_MONTH_MILLIS - ONE_DAY_MILLIS ) {
+			
+			AccessToken newAccessToken = dataAccessor.newAccessToken();
+
+			newAccessToken.setParentId( accessTokenId );
+			newAccessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
+			newAccessToken.setCreationDate( new Date() );
+			
+			newAccessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
+			return newAccessToken;
+			
+		} else if( accessToken.getExpiry().getTime() > new Date().getTime() + ONE_MONTH_MILLIS / 2 ) {
+			
 			return accessToken;
+			
 		} else {
+			
 			AccessToken newAccessToken = dataAccessor.newAccessToken();
 
 			newAccessToken.setParentId( accessTokenId );
@@ -54,6 +63,7 @@ public class AccessTokenDataUtil {
 			
 			newAccessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 			return newAccessToken;
+			
 		}
 		
 	}
