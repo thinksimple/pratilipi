@@ -36,7 +36,7 @@ public class PratilipiSiteFilter implements Filter {
 			"www\\.(tamil)\\.pratilipi\\.com" );
 	private final Pattern validHostRegEx = Pattern.compile(
 			// TODO: Remove cdn-asia as soon as wwww becomes www.
-			"(www|tamil|gamma|static|cdn-asia)\\.pratilipi\\.com"
+			"(www|tamil|api|gamma|static|cdn-asia)\\.pratilipi\\.com"
 			+ "|"
 			+ "mark-6\\.(prod|devo)-pratilipi\\.appspot\\.com"
 			+ "|"
