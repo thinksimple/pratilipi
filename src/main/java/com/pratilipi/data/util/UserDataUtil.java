@@ -278,8 +278,12 @@ public class UserDataUtil {
 	}
 
 	public static UserData logoutUser() {
+		return logoutUser( AccessTokenFilter.getAccessToken() );
+	}
+
+	public static UserData logoutUser( AccessToken accessToken ) {
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 
 		if( accessToken.getUserId().equals( 0L ) )
 			return getGuestUser();

@@ -10,6 +10,7 @@ import com.pratilipi.api.pratilipi.PratilipiIdfApi;
 import com.pratilipi.api.pratilipi.PratilipiProcessApi;
 import com.pratilipi.api.user.UserBackupApi;
 import com.pratilipi.api.user.UserEmailApi;
+import com.pratilipi.api.user.UserValidationFacebookApi;
 
 @SuppressWarnings("serial")
 public class WorkerService extends GenericService {
@@ -26,6 +27,7 @@ public class WorkerService extends GenericService {
 
 		ApiRegistry.register( UserEmailApi.class );
 		ApiRegistry.register( UserBackupApi.class );
+		ApiRegistry.register( UserValidationFacebookApi.class );
 		
 	}
 	
