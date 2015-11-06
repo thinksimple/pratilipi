@@ -16,7 +16,6 @@ import org.apache.commons.io.IOUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Gender;
 import com.pratilipi.data.DataAccessor;
@@ -45,34 +44,30 @@ public class FacebookApi {
 	}
 	
 	
-	public static Boolean validateUser( String facebookId, String accessToken ) 
+	public static Boolean validateUserAccessToken( String userAccessToken ) 
 			throws UnexpectedServerException {
 		
 		try {
-			String requestUrl = GRAPH_API_2p2_URL + "debug_token?" + "input_token=" + accessToken + "&" + "access_token=" + getAccessToken();
+			
+			String requestUrl = GRAPH_API_2p2_URL + "/" + "debug_token"
+					+ "?" + "input_token=" + userAccessToken
+					+ "&" + "access_token=" + getAccessToken();
 			String responsePayload = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
 			JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
 			
-			if( responseJson.get( "error" ) != null || responseJson.get( "data" ) == null ) 
-				return false;
+			return responseJson.get( "error" ) == null
+					&& responseJson.get( "data" ) != null
+					&& responseJson.get( "data" ).getAsJsonObject().get( "app_id" ).getAsString().equals( getAppId() );
 			
-			String responseAppId = responseJson.get( "data" ).getAsJsonObject().get( "app_id" ).getAsString();
-			String responseUserId = responseJson.get( "data" ).getAsJsonObject().get( "user_id" ).getAsString();
-			
-			if( responseAppId.equals( getAppId() ) || responseUserId.equals( facebookId ) )
-				return true;
-				
 		} catch ( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to access Facebook graph Api.", e );
 			throw new UnexpectedServerException();
 		}
 		
-		return false;
 	}
 	
-	
 	public static UserData getUserData( String fbUserAccessToken )
-			throws UnexpectedServerException, InsufficientAccessException {
+			throws UnexpectedServerException {
 		
 		try {
 			String requestUrl = GRAPH_API_2p4_URL + "/me?" + "access_token=" + fbUserAccessToken
@@ -86,7 +81,7 @@ public class FacebookApi {
 			if( responseJson.get( "error" ) != null ) {
 				// TODO: InvalidArgumentException if fbUserAccessToken is invalid or expired.
 				logger.log( Level.SEVERE, "Error response from Graph Api." );
-				throw new InsufficientAccessException();
+				throw new UnexpectedServerException();
 			} else {
 				UserData userData = new UserData( responseJson.get( "id" ).getAsString() );
 				userData.setFirstName( responseJson.get( "first_name" ).getAsString() );

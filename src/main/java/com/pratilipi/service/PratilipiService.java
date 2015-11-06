@@ -21,8 +21,6 @@ import com.pratilipi.api.userpratilipi.UserPratilipiReviewListApi;
 public class PratilipiService extends GenericService {
 	
 	static {
-		ApiRegistry.register( InitApi.class );
-		
 		ApiRegistry.register( UserLoginApi.class );
 		ApiRegistry.register( UserLoginFacebookApi.class );
 		ApiRegistry.register( UserEmailApi.class );
