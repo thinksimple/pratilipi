@@ -1,3 +1,14 @@
-Stories				{ "language":"HINDI", "type":"STORY" }
+Biography and True Accounts       { "language":"HINDI", "genre":"Biography and True Accounts" }
+Children's Literature       { "language":"HINDI", "genre":"Children's Literature" }
+Classics       { "language":"HINDI", "genre":"Classics" }
+Father's Day Special       { "language":"HINDI", "list":"Father's Day Special" }
+Fiction       { "language":"HINDI", "genre":"Fiction" }
+Humor       { "language":"HINDI", "genre":"Humor" }
+Jaishankar Prasad { "language":"HINDI", "authorId":5130467284090880 }
 Munshi Premchand	{ "language":"HINDI", "authorId":6308815452504064 }
-Jaishankar Prasad { "language":"HINDI", "authorId": }
+Poems         { "language":"HINDI", "type":"POEM" }
+Read for Free       { "language":"HINDI", "list":"Read for Free" }
+Religion and Spirituality       { "language":"HINDI", "genre":"Religion and Spirituality" }
+Romance       { "language":"HINDI", "genre":"Romance" }
+Stories				{ "language":"HINDI", "type":"STORY" }
+Suspense and Horror       { "language":"HINDI", "genre":"Suspense and Horror" }
