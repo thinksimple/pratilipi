@@ -74,6 +74,7 @@ public class PratilipiSite extends HttpServlet {
 		resourceList.add( ThirdPartyResource.POLYMER.getTag() );
 		resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 		resourceList.add( ThirdPartyResource.POLYMER_IRON_OVERLAY_BEHAVIOR.getTag() );
+		resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 
 		
 		// Data Model for FreeMarker
@@ -84,53 +85,47 @@ public class PratilipiSite extends HttpServlet {
 			String templateName = null;
 			
 			if( uri.equals( "/" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForHomePage( lang );
 				templateName = templateFilePrefix + "Home.ftl";
 				
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Pratilipi.ftl";
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Author.ftl";
 			
 			} else if( uri.equals( "/search" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForSearchPage( lang, request );
 				templateName = templateFilePrefix + "Search.ftl";
 				
 			} else if( uri.equals( "/books" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.BOOK, lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/stories" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.STORY, lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/poems" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.POEM, lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/articles" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, lang );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.equals( "/magazines" ) ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, lang );
 				templateName = templateFilePrefix + "List.ftl";
 			
+			} else if( uri.equals( "/read" ) ) {
+				dataModel = createDataModelForReadPage( null );
+				templateName = templateFilePrefix + "Read.ftl";
+			
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), lang ) ) != null ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
 				templateName = templateFilePrefix + "List.ftl";
 				
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), lang ) ) != null ) {
@@ -313,6 +308,12 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", listTitle );
 		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiDataList ).toString() );
+		return dataModel;
+	}
+	
+	public Map<String, Object> createDataModelForReadPage( Long pratilipiId ) {
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		// TODO:
 		return dataModel;
 	}
 	
