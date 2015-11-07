@@ -1,28 +1,18 @@
 package com.pratilipi.filter;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -89,28 +79,6 @@ public class AccessTokenFilter implements Filter {
 	
 		} else {
 
-			if( accessTokenId == null || accessTokenId.isEmpty() ) {
-				final String requestPayload = IOUtils.toString( request.getInputStream(), "UTF-8" );
-				if( requestPayload != null && ! requestPayload.isEmpty() ) {
-					JsonObject requestPayloadJson = new Gson().fromJson( requestPayload, JsonElement.class ).getAsJsonObject();
-					if( requestPayloadJson.get( RequestParameter.ACCESS_TOKEN.getName() ) != null )
-						accessTokenId = requestPayloadJson.get( RequestParameter.ACCESS_TOKEN.getName() ).getAsString();
-					request = new HttpServletRequestWrapper( request ) {
-						
-						public ServletInputStream getInputStream() throws IOException {
-							return new ServletInputStream() {
-								InputStream in = new ByteArrayInputStream( requestPayload.getBytes( StandardCharsets.UTF_8 ) );
-								@Override
-								public int read() throws IOException {
-									return in.read();
-								}
-							};
-						}
-
-					};
-				}
-			}
-			
 			if( accessTokenId == null ) {
 				dispatchResposne( response, new InvalidArgumentException( "Access Token is missing." ) );
 				return;
