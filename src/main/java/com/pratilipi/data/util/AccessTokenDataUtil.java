@@ -1,6 +1,7 @@
 package com.pratilipi.data.util;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -10,7 +11,7 @@ import com.pratilipi.data.type.AccessToken;
 
 public class AccessTokenDataUtil {
 	
-	private static final long ONE_MONTH_MILLIS = 30 * 24 * 60 * 60 * 1000;
+	private static final long ONE_MONTH_MILLIS = TimeUnit.MILLISECONDS.convert( 30, TimeUnit.DAYS );
 
 	
 	public static AccessToken newUserAccessToken() {
