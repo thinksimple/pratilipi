@@ -26,13 +26,12 @@ public enum ThirdPartyResource {
 		if( SystemProperty.CDN != null ) {
 
 			int indexSrc = tag.indexOf( "src='" );
-			int indexHref = tag.indexOf( "href='" );
-			
 			if( indexSrc != -1 ) {
 				String domain = SystemProperty.CDN.replace( '*', tag.charAt( indexSrc + 18 ) );
 				tag = tag.replace( "src='", "src='" + domain );
 			}
 			
+			int indexHref = tag.indexOf( "href='" );
 			if( indexHref != -1 ) {
 				String domain = SystemProperty.CDN.replace( '*', tag.charAt( indexHref + 19 ) );
 				tag = tag.replace( "href='", "href='" + domain );
