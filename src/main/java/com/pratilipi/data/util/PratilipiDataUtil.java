@@ -16,6 +16,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CategoryType;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
@@ -143,15 +144,17 @@ public class PratilipiDataUtil {
 	
 
 	public static String createPratilipiCoverUrl( Pratilipi pratilipi ) {
+		String url = "/pratilipi/cover";
 		if( pratilipi.hasCustomCover() ) {
-			String domain = "//" + pratilipi.getId() % 10 + "." + SystemProperty.get( "cdn" );
-			String uri = "/pratilipi/cover?pratilipiId=" + pratilipi.getId() + "&width=150&version=" + pratilipi.getLastUpdated().getTime();
-			return domain + uri;
+			url = url + "?pratilipiId=" + pratilipi.getId() + "&width=150&version=" + pratilipi.getLastUpdated().getTime();
+			if( SystemProperty.CDN != null )
+				url = SystemProperty.CDN.replace( "*", pratilipi.getId() % 10 + "" ) + url;
 		} else {
-			String domain = "//10." + SystemProperty.get( "cdn" );
-			String uri = "/pratilipi/cover?width=150";
-			return domain + uri;
+			url = url + "?width=150";
+			if( SystemProperty.CDN != null )
+				url = SystemProperty.CDN.replace( "*", "10" );
 		}
+		return url;
 	}
 
 	private static double calculateRelevance( Pratilipi pratilipi, Author author ) {
@@ -522,7 +525,7 @@ public class PratilipiDataUtil {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-		String fbLikeShareUrl = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
+		String fbLikeShareUrl = "http://" + Language.ENGLISH.getHostName() + pratilipiPage.getUri();
 		long fbLikeShareCount = FacebookApi.getUrlShareCount( fbLikeShareUrl );
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -545,7 +548,7 @@ public class PratilipiDataUtil {
 		List<String> urlList = new ArrayList<>( pratilipiIdList.size() );
 		for( Long pratilipiId : pratilipiIdList ) {
 			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-			String fbLikeShareUrl = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
+			String fbLikeShareUrl = "http://" + Language.ENGLISH.getHostName() + pratilipiPage.getUri();
 			urlList.add( fbLikeShareUrl );
 		}
 		Map<String, Long> urlShareCountMap = FacebookApi.getUrlShareCount( urlList );
@@ -557,7 +560,7 @@ public class PratilipiDataUtil {
 			long readCount = idReadCountMap.get( pratilipiId ) == null ? 0L : idReadCountMap.get( pratilipiId );
 			
 			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-			String fbLikeShareUrl = "http://" + SystemProperty.get( "domain" ) + pratilipiPage.getUri();
+			String fbLikeShareUrl = "http://" + Language.ENGLISH.getHostName() + pratilipiPage.getUri();
 			long fbLikeShareCount = urlShareCountMap.get( fbLikeShareUrl ) == null ? 0L : urlShareCountMap.get( fbLikeShareUrl );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 			

@@ -15,6 +15,7 @@ import com.pratilipi.api.user.UserRegisterApi;
 import com.pratilipi.api.user.UserVerificationApi;
 import com.pratilipi.api.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.userpratilipi.UserPratilipiReviewListApi;
+import com.pratilipi.common.util.SystemProperty;
 
 @SuppressWarnings("serial")
 public class PratilipiService extends GenericService {
@@ -29,14 +30,15 @@ public class PratilipiService extends GenericService {
 		ApiRegistry.register( UserPasswordUpdateApi.class );
 		
 		ApiRegistry.register( PratilipiListApi.class );
-		ApiRegistry.register( PratilipiCoverApi.class );
 		ApiRegistry.register( PratilipiContentApi.class );
-		
-		ApiRegistry.register( AuthorImageApi.class );
 		
 		ApiRegistry.register( UserPratilipiApi.class );
 		ApiRegistry.register( UserPratilipiReviewListApi.class );
 		
+		if( SystemProperty.CDN == null ) {
+			ApiRegistry.register( PratilipiCoverApi.class );
+			ApiRegistry.register( AuthorImageApi.class );
+		}		
 	}
 	
 }

@@ -4,10 +4,10 @@ import com.pratilipi.common.util.SystemProperty;
 
 public class DataAccessorFactory {
 
-	private static final String datasource = SystemProperty.get( "datasource" );
+	private static final String datasource = SystemProperty.DATASOURCE;
 	private static final String indexName = "GLOBAL_INDEX";
-	private static final String gcsBucket = SystemProperty.get( "blobservice.gcs.bucket" );
-	private static final String gcsBucketBackup = SystemProperty.get( "blobservice.gcs.bucket.backup" );
+	private static final String gcsBucket = SystemProperty.BLOBSERVICE_GCS_BUCKET;
+	private static final String gcsBucketBackup = SystemProperty.BLOBSERVICE_GCS_BUCKET_BACKUP;
 
 
 	private static final Memcache cacheL1 = new MemcacheImpl();

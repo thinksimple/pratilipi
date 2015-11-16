@@ -20,30 +20,6 @@
 	<system-properties>
 		<!-- Configure java.util.logging -->
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
-
-		<!-- Configure DataSource -->
-		<property name="localhost.datasource" value="mock"/>
-		<property name="devo-pratilipi.datasource" value="gae"/>
-		<property name="prod-pratilipi.datasource" value="gae"/>
-
-		<!-- Configure Blob Storage -->
-		<property name="localhost.blobservice.gcs.bucket" value="localhost"/>
-		<property name="devo-pratilipi.blobservice.gcs.bucket" value="devo-pratilipi.appspot.com"/>
-		<property name="prod-pratilipi.blobservice.gcs.bucket" value="static.pratilipi.com"/>
-
-		<property name="localhost.blobservice.gcs.bucket.backup" value="localhost"/>
-		<property name="devo-pratilipi.blobservice.gcs.bucket.backup" value="devo-pratilipi.appspot.com"/>
-		<property name="prod-pratilipi.blobservice.gcs.bucket.backup" value="backup.pratilipi.com"/>
-
-		<!-- Configure Web Domain -->
-		<property name="localhost.domain" value="localhost"/>
-		<property name="devo-pratilipi.domain" value="devo.pratilipi.com"/>
-		<property name="prod-pratilipi.domain" value="www.pratilipi.com"/>
-
-		<!-- Configure CDN -->
-		<property name="localhost.cdn" value="localhost:8080"/>
-		<property name="devo-pratilipi.cdn" value="ptlp.co/devo"/>
-		<property name="prod-pratilipi.cdn" value="ptlp.co"/>
 	</system-properties>
 
 </appengine-web-app>

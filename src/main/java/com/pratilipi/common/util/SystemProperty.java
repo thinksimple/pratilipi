@@ -1,26 +1,32 @@
 package com.pratilipi.common.util;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.google.apphosting.api.ApiProxy;
 
 public class SystemProperty {
 
-	private static final Logger logger =
-			Logger.getLogger( SystemProperty.class.getName() );
+	public static final String DATASOURCE;
+	public static final String BLOBSERVICE_GCS_BUCKET;
+	public static final String BLOBSERVICE_GCS_BUCKET_BACKUP;
+	public static final String CDN;
 
-
-	public static final String get( String propertyName ) {
+	static {
 		String appId = ApiProxy.getCurrentEnvironment().getAppId();
-		if( appId.startsWith("s~") )
-			appId = appId.substring( 2 );
-
-		String propertyValue = System.getProperty( appId + "." + propertyName );
-		if( propertyValue == null || propertyValue.isEmpty() )
-			logger.log( Level.WARNING, "System property '" + propertyName + "' is missing." );
-		
-		return propertyValue;
+		if( appId.equals( "prod-pratilipi" ) || appId.equals( "s~prod-pratilipi" ) ) {
+			DATASOURCE = "gae";
+			BLOBSERVICE_GCS_BUCKET = "static.pratilipi.com";
+			BLOBSERVICE_GCS_BUCKET_BACKUP = "backup.pratilipi.com";
+			CDN = "http://*.ptlp.co";
+		} else if( appId.equals( "devo-pratilipi" ) || appId.equals( "s~devo-pratilipi" ) ) {
+			DATASOURCE = "gae";
+			BLOBSERVICE_GCS_BUCKET = "devo-pratilipi.appspot.com";
+			BLOBSERVICE_GCS_BUCKET_BACKUP = "devo-pratilipi.appspot.com";
+			CDN = "http://*.ptlp.co/devo";
+		} else {
+			DATASOURCE = "mock";
+			BLOBSERVICE_GCS_BUCKET = "localhost";
+			BLOBSERVICE_GCS_BUCKET_BACKUP = "localhost";
+			CDN = null;
+		}
 	}
-
+	
 }
