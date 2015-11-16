@@ -152,7 +152,7 @@ public class PratilipiDataUtil {
 		} else {
 			url = url + "?width=150";
 			if( SystemProperty.CDN != null )
-				url = SystemProperty.CDN.replace( "*", "10" );
+				url = SystemProperty.CDN.replace( "*", "10" ) + url;
 		}
 		return url;
 	}
