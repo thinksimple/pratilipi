@@ -122,6 +122,11 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "List.ftl";
 			
 			} else if( uri.equals( "/read" ) ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_A11Y_KEYS.getTag() );
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_FLEX_LAYOUT.getTag() );
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS.getTag() );
+				resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
+				resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
 				dataModel = createDataModelForReadPage( null );
 				templateName = templateFilePrefix + "Read.ftl";
 			
