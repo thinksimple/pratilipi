@@ -1,14 +1,27 @@
-<!-- Version:6.0 -->
+<!-- Version:6.0.1 -->
 
-<link rel="import" href="pratilipi-reader.html" />
+<link rel="import" href="pratilipi-reader-navigation.html" />
 
 <dom-module id="pratilipi-reader">
 
-	<style></style>
+	<style>
+		
+		:host {
+			display: block;
+		}
+		
+	</style>
 	
 	
 	<template>
-		<div>Not yet implemented !</div>
+	
+		<pratilipi-reader-navigation
+				page-no="{{ pageNo }}"
+				page-count="{{ pageCount }}"
+				on-show-page="showPage"
+				on-show-previous="showPrevious"
+				on-show-next="showNext"></pratilipi-reader-navigation>
+				
 	</template>
 	
 	
@@ -16,7 +29,37 @@
 
 		Polymer({
 			
-			is: 'pratilipi-reader'
+			is: 'pratilipi-reader',
+		
+			properties: {
+				pageNo: { type:Number, notify:true, observer:"_pageNoChanged" },
+				pageCount: { type:Number },
+			},
+			
+			_pageNoChanged: function( pageNo ) {
+				console.log( pageNo );
+			},
+			
+			
+			showPage: function( e ) {
+				this.pageNo = e.detail.pageNo;
+			},
+			
+			showPrevious: function() {
+				if( this.pageNo > 0 )
+					this.pageNo--;
+			},
+			
+			showNext: function() {
+				if( this.pageNo < this.pageCount )
+					this.pageNo++;
+			},
+
+			
+			ready: function() {
+				this.pageNo = 5;
+				this.pageCount = 10;
+			}
 			
 		});
 
