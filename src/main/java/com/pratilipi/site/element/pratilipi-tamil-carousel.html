@@ -31,16 +31,16 @@
 				
 				<div class="carousel-inner" role="listbox">
 					<div class="item active">
-						<img src="//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-01.jpg">
+						<img src="{{ img1 }}">
 				 	</div>
 				 	<div class="item">
-						<img src="//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-02.jpg">
+						<img src="{{ img2 }}">
 				 	</div>
 				 	<div class="item">
-						<img src="//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-03.jpg">
+						<img src="{{ img3 }}">
 				 	</div>
 				 	<div class="item">
-						<img src="//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-04.jpg">
+						<img src="{{ img4 }}">
 				 	</div>
 				</div>
 				
@@ -52,10 +52,40 @@
 	
 	<script>
 
-		Polymer({
+	Polymer({
 
-			is: 'pratilipi-tamil-carousel',
-			
+		is: 'pratilipi-tamil-carousel',
+		
+		behaviors: [
+					Polymer.IronResizableBehavior
+				],
+				
+		listeners: {
+			'iron-resize': '_onIronResize'
+		},
+
+		properties: {
+			img1: { type: Image, notify: true },
+			img2: { type: Image, notify: true },
+			img3: { type: Image, notify: true },
+			img4: { type: Image, notify: true },
+		},
+		
+		_onIronResize: function() {
+			var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+			if( windowsize > 600 ) {
+				this.img1 = "//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-01.jpg";
+				this.img2 = "//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-02.jpg";
+				this.img3 = "//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-03.jpg";
+				this.img4 = "//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-04.jpg";
+			} else {
+				this.img1 = "//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-01-small.jpg";
+				this.img2 = "//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-02-small.jpg";
+				this.img3 = "//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-03-small.jpg";
+				this.img4 = "//0.prod.pratilipi.cdssolutions.in/resource-ta/pratilipi-tamil-carousel-04-small.jpg";
+			}
+		},
+
 		});
 
 	</script>
