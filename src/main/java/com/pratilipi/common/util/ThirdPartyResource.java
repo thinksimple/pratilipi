@@ -16,6 +16,11 @@ public enum ThirdPartyResource {
 	POLYMER_IRON_COLLAPSE			( "<link rel='import' href='/third-party/polymer-1.0/iron-collapse/iron-collapse.html'>" ),
 	POLYMER_IRON_OVERLAY_BEHAVIOR	( "<link rel='import' href='/third-party/polymer-1.0/iron-overlay-behavior/iron-overlay-behavior.html'>" ),
 	POLYMER_IRON_RESIZABLE_BEHAVIOR	( "<link rel='import' href='/third-party/polymer-1.0/iron-resizable-behavior/iron-resizable-behavior.html'>" ),
+	POLYMER_IRON_A11Y_KEYS			( "<link rel='import' href='/third-party/polymer-1.0/iron-a11y-keys/iron-a11y-keys.html'>" ),
+	POLYMER_IRON_FLEX_LAYOUT		( "<link rel='import' href='/third-party/polymer-1.0/iron-flex-layout/iron-flex-layout.html'>" ),
+	POLYMER_IRON_ICONS				( "<link rel='import' href='/third-party/polymer-1.0/iron-icons/iron-icons.html'>" ),
+	POLYMER_PAPER_FAB				( "<link rel='import' href='/third-party/polymer-1.0/paper-fab/paper-fab.html'>" ),
+	POLYMER_PAPER_SLIDER			( "<link rel='import' href='/third-party/polymer-1.0/paper-slider/paper-slider.html'>" )
 	;
 	
 	
