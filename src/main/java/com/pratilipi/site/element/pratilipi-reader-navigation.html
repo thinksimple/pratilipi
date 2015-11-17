@@ -1,20 +1,79 @@
-<!-- Version:6.0 -->
-
-<link rel="import" href="pratilipi-reader-navigation.html" />
+<!-- Version:6.0.1 -->
 
 <dom-module id="pratilipi-reader-navigation">
 
-	<style></style>
+	<style>
+		
+		:host {
+			display: block;
+		}
+		
+	</style>
+
+
+	<template>
+
+		<div class="horizontal layout center">
+		
+			<paper-slider
+					class="flex"
+					pin="false" snaps="false"
+					min="0" max="{{ pageCount }}" value="{{ sliderValue }}"
+					disabled="{{ sliderDisabled }}"
+					on-change="setPageNo"></paper-slider>
+
+			<paper-fab
+					mini style="margin-right:10px"
+					icon="icons:chevron-left" title="Previous Page"
+					disabled="{{ prevButtonDisabled }}"
+					on-click="showPrevious"></paper-fab>
+			<paper-fab
+					mini style="margin-right:10px"
+					icon="icons:chevron-right" title="Next Page"
+					disabled="{{ nextButtonDisabled }}"
+					on-click="showNext"></paper-fab>
+
+		</div>
 	
-	
-	<template></template>
+	</template>
 	
 	
 	<script>
 
 		Polymer({
 			
-			is: 'pratilipi-reader-navigation'
+			is: 'pratilipi-reader-navigation',
+
+			properties: {
+				pageNo: { type:Number, observer:"_pageNoChanged" },
+				pageCount: { type:Number },
+				sliderValue: { type:Number },
+				sliderDisabled: { type:Boolean },
+				prevButtonDisabled: { type:Boolean },
+				nextButtonDisabled: { type:Boolean },
+			},
+			
+			_pageNoChanged: function( pageNo ) {
+				this.sliderValue = pageNo;
+				this.prevButtonDisabled = pageNo <= 0;
+				this.nextButtonDisabled = pageNo >= this.pageCount;
+			},
+
+			
+			// Invoked when user changes slider position
+			setPageNo: function( e ) {
+				this.fire( 'change', { pageNo:e.target.value } );
+			},
+			
+			// Invoked when user clicks/taps on previous button
+			showPrevious: function() {
+				this.fire( 'change', { previous:true } );
+			},
+			
+			// Invoked when user clicks/taps on next button
+			showNext: function() {
+				this.fire( 'change', { next:true } );
+			}
 			
 		});
 
