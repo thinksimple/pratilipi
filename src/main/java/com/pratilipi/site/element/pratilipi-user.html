@@ -27,9 +27,9 @@
 	
 	<script>
 		
-		function get( name ){
-		   if( name=( new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec( location.search ) )
-		      return decodeURIComponent( name[1] );
+		function getValue( key ) {
+		   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+		      return decodeURIComponent( key[1] );
 		   else
 			   return "";
 		}
@@ -111,26 +111,26 @@
 				
 				this.updateUser( this.userData );
 				
-				if( get( 'email' ) !== null && get( 'token' ) !== null ) {
-					
+				if( getValue( 'email' ) !== "" && getValue( 'token' ) !== "" ) {
+
 					this.closeAllElements();
-					
-					if( get( 'verifyUser' ) == "true" ) {
+
+					if( getValue( 'verifyUser' ) == "true" ) {
 						this.async( function() {
 							this.querySelector( 'pratilipi-user-verification' ).open();
-							this.querySelector( 'pratilipi-user-verification' ).verifyUser( get( 'email' ), get( 'token' ) );
+							this.querySelector( 'pratilipi-user-verification' ).verifyUser( getValue( 'email' ), getValue( 'token' ) );
 						});
 					}
-					else if( get( 'passwordReset' ) == "true" ) {
+					else if( getValue( 'passwordReset' ) == "true" ) {
 						this.async( function() {
-							this.querySelector( 'pratilipi-user-password-update' ).setData( get( 'email' ), get( 'token' ) );
+							this.querySelector( 'pratilipi-user-password-update' ).setData( getValue( 'email' ), getValue( 'token' ) );
 							this.querySelector( 'pratilipi-user-password-update' ).open();
 						});
 					}
 				}
-			
+
 			}
-			
+
 		});
 
 	</script>
