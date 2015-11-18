@@ -104,6 +104,18 @@
 	
 	
 	<script>
+	
+	function getValue( url, key ) {
+		   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( url ) )
+		      return decodeURIComponent( key[1] );
+		   else
+			   return "";
+	}
+	
+	function replaceAll( string, find, replace ) {
+		return string.replace( new RegExp( find, 'g' ), replace );
+	}
+	
 		Polymer({
 			
 			is: 'pratilipi-author',
@@ -144,6 +156,13 @@
 			},
 			
 			ready: function() {
+				
+				// Reduce Author Image size to 67% on small screen devices.
+				if( this.clientWidth < 600 )
+					this.author.imageUrl = replaceAll( this.author.imageUrl, 
+					"width=" + getValue( this.author.imageUrl, "width" ), 
+					"width=" + ( getValue( this.author.imageUrl, "width" ) * 2/3 ) );
+				
 				this.set( 'author', this.authorData );
 				this.showSummarySnippet();
 			}
