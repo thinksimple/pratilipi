@@ -108,6 +108,9 @@
 			},
 
 			ready: function() {
+				
+				this.updateUser( this.userData );
+				
 				if( get( 'email' ) !== null && get( 'token' ) !== null ) {
 					
 					this.closeAllElements();
@@ -125,8 +128,7 @@
 						});
 					}
 				}
-				else
-					this.updateUser( this.userData );
+			
 			}
 			
 		});
