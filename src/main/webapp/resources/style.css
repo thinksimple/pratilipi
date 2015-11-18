@@ -2,11 +2,16 @@
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic&subset=latin,devanagari);
 
 
+html {
+	height: 100%;
+}
+
 body {
 	font-family: Montserrat, 'Noto Sans', sans-serif;
 	color: #333;
 	background: rgba(199,178,153,0.35);
 	margin: 0px;
+	height: 100%;
 }
 
 

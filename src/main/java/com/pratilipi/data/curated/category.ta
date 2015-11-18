@@ -8,5 +8,5 @@ Poems                         { "language":"TAMIL", "type":"POEM" }
 Read for Free                 { "language":"TAMIL", "list":"read-for-free" }
 Religion and Spirituality     { "language":"TAMIL", "genre":"Religion and Spirituality" }
 Romance                       { "language":"TAMIL", "genre":"Romance" }
-Stories				                { "language":"TAMIL", "type":"STORY" }
+Stories				          { "language":"TAMIL", "type":"STORY" }
 Suspense and Horror           { "language":"TAMIL", "genre":"Suspense and Horror" }

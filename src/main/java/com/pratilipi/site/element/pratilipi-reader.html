@@ -1,5 +1,6 @@
 <!-- Version:6.0.1 -->
 
+<link rel="import" href="pratilipi-reader-pager.html" />
 <link rel="import" href="pratilipi-reader-navigation.html" />
 
 <dom-module id="pratilipi-reader">
@@ -8,6 +9,7 @@
 		
 		:host {
 			display: block;
+			height: 100%;
 		}
 		
 	</style>
@@ -15,13 +17,20 @@
 	
 	<template>
 	
-		<pratilipi-reader-navigation
-				page-no="{{ pageNo }}"
-				page-count="{{ pageCount }}"
-				on-show-page="showPage"
-				on-show-previous="showPrevious"
-				on-show-next="showNext"></pratilipi-reader-navigation>
-				
+		<div class="vertical layout" style="height:100%">
+		
+			<pratilipi-reader-pager
+					class="flex"></pratilipi-reader-pager>
+			
+			<pratilipi-reader-navigation
+					page-no="{{ pageNo }}"
+					page-count="{{ pageCount }}"
+					on-show-page="showPage"
+					on-show-previous="showPrevious"
+					on-show-next="showNext"></pratilipi-reader-navigation>
+					
+		</div>
+		
 	</template>
 	
 	

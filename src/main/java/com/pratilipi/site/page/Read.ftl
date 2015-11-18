@@ -20,18 +20,15 @@
 
 		<#-- Custom Stylesheet -->
 		<link type="text/css" rel="stylesheet" href="/resources/style.css">
+		
 	</head>
 
 	<body>
 		<template is="dom-bind">
 
 			<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
-		
-			<div class="container" style="margin-top:10px; margin-bottom:10px">
-				<pratilipi-reader></pratilipi-reader>
-			</div>
-		
-			<pratilipi-footer></pratilipi-footer>
+
+			<pratilipi-reader class="container"></pratilipi-reader>
 		
 		</template>
 	</body>
