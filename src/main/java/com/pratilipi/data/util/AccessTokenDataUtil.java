@@ -46,7 +46,7 @@ public class AccessTokenDataUtil {
 			newAccessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
 			newAccessToken.setCreationDate( new Date() );
 			
-			newAccessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
+			newAccessToken = dataAccessor.createOrUpdateAccessToken( newAccessToken );
 			return newAccessToken;
 			
 		} else if( accessToken.getExpiry().getTime() > new Date().getTime() + ONE_MONTH_MILLIS / 2 ) {
@@ -62,7 +62,7 @@ public class AccessTokenDataUtil {
 			newAccessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
 			newAccessToken.setCreationDate( new Date() );
 			
-			newAccessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
+			newAccessToken = dataAccessor.createOrUpdateAccessToken( newAccessToken );
 			return newAccessToken;
 			
 		}
