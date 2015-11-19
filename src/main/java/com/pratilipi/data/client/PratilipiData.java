@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
@@ -41,6 +42,9 @@ public class PratilipiData {
 	
 	private PratilipiType type;
 	private transient boolean hasType;
+
+	private PratilipiContentType contentType;
+	private transient boolean hasContentType;
 
 	private PratilipiState state;
 	private transient boolean hasState;
@@ -220,7 +224,7 @@ public class PratilipiData {
 	}
 
 
-	public PratilipiType getType(){
+	public PratilipiType getType() {
 		return this.type;
 	}
 	
@@ -231,6 +235,19 @@ public class PratilipiData {
 	
 	public boolean hasType() {
 		return hasType;
+	}
+	
+	public PratilipiContentType getContentType() {
+		return this.contentType;
+	}
+	
+	public void setContentType( PratilipiContentType contentType ) {
+		this.contentType = contentType;
+		this.hasContentType = true;
+	}
+	
+	public boolean hasContentType() {
+		return hasContentType;
 	}
 	
 	public PratilipiState getState() {

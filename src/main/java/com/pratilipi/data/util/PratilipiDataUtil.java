@@ -203,6 +203,7 @@ public class PratilipiDataUtil {
 		pratilipiData.setWriterPageUrl( PageType.WRITE.getUrlPrefix() + pratilipi.getId() );
 		
 		pratilipiData.setType( pratilipi.getType() );
+		pratilipiData.setContentType( pratilipi.getContentType() );
 		pratilipiData.setState( pratilipi.getState() );
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
 		pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
