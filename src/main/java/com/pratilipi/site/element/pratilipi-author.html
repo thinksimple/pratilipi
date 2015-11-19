@@ -158,10 +158,14 @@
 			ready: function() {
 				
 				// Reduce Author Image size to 67% on small screen devices.
-				if( this.clientWidth < 600 )
+				if( this.clientWidth < 600 ) {
+					console.log( this.author.imageUrl );
 					this.author.imageUrl = replaceAll( this.author.imageUrl, 
-					"width=" + getValue( this.author.imageUrl, "width" ), 
-					"width=" + ( getValue( this.author.imageUrl, "width" ) * 2/3 ) );
+							"width=" + getValue( this.author.imageUrl, "width" ), 
+							"width=" + ( getValue( this.author.imageUrl, "width" ) * 2/3 ) );
+					console.log( this.author.imageUrl );
+				}
+					
 				
 				this.set( 'author', this.authorData );
 				this.showSummarySnippet();
