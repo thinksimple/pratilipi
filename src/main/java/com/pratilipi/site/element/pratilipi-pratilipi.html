@@ -136,14 +136,14 @@
 			},
 			
 			ready: function() {
-				
+
 				// Reduce Pratilipi Cover size to 67% on small screen devices.
 				if( this.clientWidth < 600 ) {
-					console.log( this.pratilipi.coverImageUrl );
-					this.pratilipi.coverImageUrl = replaceAll( this.pratilipi.coverImageUrl, 
-							"width=" + getValue( this.pratilipi.coverImageUrl, "width" ), 
-							"width=" + ( getValue( this.pratilipi.coverImageUrl, "width" ) * 2/3 ) );
-					console.log( this.pratilipi.coverImageUrl );
+					console.log( this.pratilipiData.coverImageUrl );
+					this.pratilipiData.coverImageUrl = replaceAll( this.pratilipiData.coverImageUrl, 
+							"width=" + getValue( this.pratilipiData.coverImageUrl, "width" ), 
+							"width=" + ( getValue( this.pratilipiData.coverImageUrl, "width" ) * 2/3 ) );
+					console.log( this.pratilipiData.coverImageUrl );
 				}
 					
 
