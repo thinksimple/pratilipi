@@ -15,7 +15,7 @@ import com.google.gson.JsonElement;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.init.shared.InitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 
@@ -67,8 +67,8 @@ public class InitApi extends GenericApi {
 	}
 	
 	@Get
-	public GenericResponse get( GenericRequest request ) throws IOException, UnexpectedServerException {
-		String response = excutePostCall( "https://graph.facebook.com:443", "id=http://www.pratilipi.com/r-anandan/kavanikapadadha-kavidhaigal&scrape=true" );
+	public GenericResponse get( InitApiRequest request ) throws IOException, UnexpectedServerException {
+		String response = excutePostCall( "https://graph.facebook.com:443", "id=" + request.getRequest() + "&scrape=true" );
 		logger.log( Level.INFO, response );
 		return new GenericResponse();
 		
