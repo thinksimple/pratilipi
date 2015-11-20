@@ -68,7 +68,7 @@ public class InitApi extends GenericApi {
 	
 	@Get
 	public GenericResponse get( GenericRequest request ) throws IOException, UnexpectedServerException {
-		String response = excutePostCall( "https://graph.facebook.com:443", "id=http://www.pratilipi.com/pon-kulendiren/azhagu&scrape=true" );
+		String response = excutePostCall( "https://graph.facebook.com:443", "id=http://www.pratilipi.com/r-anandan/kavanikapadadha-kavidhaigal&scrape=true" );
 		logger.log( Level.INFO, response );
 		return new GenericResponse();
 		
