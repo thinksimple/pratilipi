@@ -18,6 +18,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.init.shared.InitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.util.FacebookApi;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -68,7 +69,7 @@ public class InitApi extends GenericApi {
 	
 	@Get
 	public GenericResponse get( InitApiRequest request ) throws IOException, UnexpectedServerException {
-		String response = excutePostCall( "https://graph.facebook.com:443", "id=" + request.getRequest() + "&scrape=true" );
+		String response = excutePostCall( "https://graph.facebook.com:443", "id=" + request.getRequest() + "&scrape=true" + "&access_token=" + FacebookApi.getAccessToken() );
 		logger.log( Level.INFO, response );
 		return new GenericResponse();
 		
