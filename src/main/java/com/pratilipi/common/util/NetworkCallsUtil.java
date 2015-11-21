@@ -23,7 +23,7 @@ public class NetworkCallsUtil {
 	
 	private static final Logger logger = Logger.getLogger( NetworkCallsUtil.class.getName() );
 	
-	private static String getUrlParameterString( Map<String, String> keyValueParameters, Boolean encode )
+	private static String formURLParameterString( Map<String, String> keyValueParameters, Boolean encode )
 			throws UnsupportedEncodingException {
 	
 		// Forming URL parameter String
@@ -44,7 +44,7 @@ public class NetworkCallsUtil {
 		String requestUrl = null;
 		String response = null;
 		try {
-			requestUrl = targetURL + "?" + getUrlParameterString( keyValueParameters, true );
+			requestUrl = targetURL + "?" + formURLParameterString( keyValueParameters, true );
 			logger.log( Level.INFO, "Network GET Request : " + requestUrl );
 			response = new Gson().fromJson( IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" ), JsonElement.class ).toString();
 			logger.log( Level.INFO, "Network GET Response : " + response );
@@ -64,7 +64,7 @@ public class NetworkCallsUtil {
 		
 		try {
 			// Forming URL parameters
-			String urlParameters = getUrlParameterString( keyValueParameters, false );
+			String urlParameters = formURLParameterString( keyValueParameters, false );
 			
 			//Create connection
 			url = new URL( targetURL );

@@ -163,7 +163,7 @@ public class UserDataUtil {
 	}
 	
 	public static UserData loginUser( String fbUserAccessToken, UserSignUpSource signUpSource )
-			throws InsufficientAccessException, UnexpectedServerException {
+			throws InsufficientAccessException, UnexpectedServerException, InvalidArgumentException {
 		
 		UserData fbUserData = FacebookApi.getUserData( fbUserAccessToken );
 

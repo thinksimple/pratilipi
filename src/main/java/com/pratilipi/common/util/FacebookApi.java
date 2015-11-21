@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Gender;
 import com.pratilipi.data.DataAccessor;
@@ -27,18 +28,17 @@ public class FacebookApi {
 	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
 	private static final String FACEBOOK_RESCRAPE_URL = "https://graph.facebook.com:443";
 	
-	public static String getAppId() {
+	private static String getAppId() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Map<String, String> facebookCredentials = dataAccessor.getAppProperty( AppProperty.FACEBOOK_CREDENTIALS ).getValue();
 		return facebookCredentials.get( "appId" );
 	}
 	
-	public static String getAccessToken() {
+	private static String getAccessToken() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Map<String, String> facebookCredentials = dataAccessor.getAppProperty( AppProperty.FACEBOOK_CREDENTIALS ).getValue();
 		return facebookCredentials.get( "appId" ) + "|" + facebookCredentials.get( "appSecret" );
 	}
-	
 	
 	public static Boolean validateUserAccessToken( String userAccessToken ) 
 			throws UnexpectedServerException {
@@ -46,17 +46,16 @@ public class FacebookApi {
 		Map<String, String> keyValueParameters = new HashMap<String, String>();
 		keyValueParameters.put( "input_token", userAccessToken );
 		keyValueParameters.put( "access_token", getAccessToken() );
-		String responsePayload = NetworkCallsUtil.makeGetCall( GRAPH_API_2p2_URL + "/debug_token", keyValueParameters );
 		
+		String responsePayload = NetworkCallsUtil.makeGetCall( GRAPH_API_2p2_URL + "/debug_token", keyValueParameters );
 		JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
 		return responseJson.get( "error" ) == null
 				&& responseJson.get( "data" ) != null
 				&& responseJson.get( "data" ).getAsJsonObject().get( "app_id" ).getAsString().equals( getAppId() );
-		
 	}
 	
 	public static UserData getUserData( String fbUserAccessToken )
-			throws UnexpectedServerException {
+			throws UnexpectedServerException, InvalidArgumentException {
 
 		Map<String, String> keyValueParameters = new HashMap<String, String>();
 		keyValueParameters.put( "access_token", fbUserAccessToken );
@@ -65,9 +64,12 @@ public class FacebookApi {
 		String responsePayload = NetworkCallsUtil.makeGetCall( GRAPH_API_2p4_URL + "/me", keyValueParameters );
 		JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
 		if( responseJson.get( "error" ) != null ) {
-			// TODO: InvalidArgumentException if fbUserAccessToken is invalid or expired.
 			logger.log( Level.SEVERE, "Error response from Graph Api." );
-			throw new UnexpectedServerException();
+			// Facebook returns code 190 if access-token is expired
+			if( responseJson.get( "error" ).getAsJsonObject().get( "code" ).getAsInt() == 190 )
+				throw new InvalidArgumentException( "Sorry, your access token is expired." );
+			else
+				throw new UnexpectedServerException();
 		} else {
 			UserData userData = new UserData( responseJson.get( "id" ).getAsString() );
 			userData.setFirstName( responseJson.get( "first_name" ).getAsString() );
@@ -90,7 +92,6 @@ public class FacebookApi {
 			
 	}
 	
-	
 	public static long getUrlShareCount( String url )
 			throws UnexpectedServerException {
 		
@@ -99,7 +100,6 @@ public class FacebookApi {
 		keyValueParameters.put( "access_token", getAccessToken() );
 		
 		String responsePayload = NetworkCallsUtil.makeGetCall( GRAPH_API_2p2_URL, keyValueParameters );
-		
 		JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
 		JsonElement shareJson = responseJson.getAsJsonObject().get( "share" );
 		if( shareJson == null )
@@ -148,9 +148,10 @@ public class FacebookApi {
 		
 		Map<String, String> keyValueParameters = new HashMap<String, String>();
 		keyValueParameters.put( "id", link );
+		keyValueParameters.put( "scrape", "true" );
 		keyValueParameters.put( "access_token", getAccessToken() );
-		String responsePayload = NetworkCallsUtil.makePostCall( FACEBOOK_RESCRAPE_URL, keyValueParameters );
 		
+		String responsePayload = NetworkCallsUtil.makePostCall( FACEBOOK_RESCRAPE_URL, keyValueParameters );
 		JsonObject responseJson = new Gson().fromJson( responsePayload, JsonObject.class );
 		if( responseJson.get( "error" ) == null ) {
 			logger.log( Level.INFO, "Facebook scrapping for link : " + link + " completed successfully." );
