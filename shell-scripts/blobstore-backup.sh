@@ -17,21 +17,29 @@ backup_folder_public="public.pratilipi.com/yyyy-mm-$(date +%d)/public.pratilipi.
 if [ $hour -ge 8 -a $hour -le 20 -a $minute -eq 0 ]
 then
 
-	echo "Initiated backup at : $(date)" > info
+	echo "$(date)" > _backup.start
+	gsutil cp _backup.start "$bucket_backup/$backup_folder_static/"
+	
 	gsutil -m rsync -r $bucket_static "$bucket_backup/$backup_folder_static"
+	
+	echo "$(date)" > _backup.end
+	gsutil cp _backup.end "$bucket_backup/$backup_folder_static/"
+
+	
+	echo "$(date)" > _backup.start
+	gsutil cp _backup.start "$bucket_backup/$backup_folder_public/"
+	
 	gsutil -m rsync -r $bucket_public "$bucket_backup/$backup_folder_public"
-	echo "Backup was successfully completed at : $(date)" >> info
+	
+	echo "$(date)" > _backup.end
+	gsutil cp _backup.end "$bucket_backup/$backup_folder_public/"
 
-	gsutil cp info "$bucket_backup/$backup_folder_static/"
-	gsutil cp info "$bucket_backup/$backup_folder_public/"
 
-	echo "Last Backup taken at : $(date)" > last_backup_info
-	gsutil cp last_backup_info "$bucket_backup/static.pratilipi.com/"
-	gsutil cp last_backup_info "$bucket_backup/public.pratilipi.com/"
+	gsutil cp "$bucket_backup/log" log.old
+	echo "Backup Script Run At $(date)" > log
+	cat log.old >> log
+	gsutil cp log "$bucket_backup/log"
 
-	echo "Backup taken at : $(date)" >> logs
-	gsutil cp logs "$bucket_backup/static.pratilipi.com/"
-	gsutil cp logs "$bucket_backup/public.pratilipi.com/"
 
 #	gsutil -m du -s $bucket_static "$bucket_backup/$backup_folder_static"
 #	gsutil -m du -s $bucket_public "$bucket_backup/$backup_folder_public"
