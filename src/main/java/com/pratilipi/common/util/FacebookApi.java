@@ -26,7 +26,6 @@ public class FacebookApi {
 	
 	private static final String GRAPH_API_2p2_URL = "https://graph.facebook.com/v2.2";
 	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
-	private static final String FACEBOOK_RESCRAPE_URL = "https://graph.facebook.com";
 	
 	
 	private static String getAppId() {
@@ -152,7 +151,7 @@ public class FacebookApi {
 		paramsMap.put( "id", url );
 		paramsMap.put( "scrape", "true" );
 		paramsMap.put( "access_token", getAccessToken() );
-		String responsePayload = HttpUtil.doPost( FACEBOOK_RESCRAPE_URL, paramsMap );
+		String responsePayload = HttpUtil.doPost( GRAPH_API_2p4_URL, paramsMap );
 		
 		JsonObject responseJson = new Gson().fromJson( responsePayload, JsonObject.class );
 		if( responseJson.get( "error" ) != null ) {
