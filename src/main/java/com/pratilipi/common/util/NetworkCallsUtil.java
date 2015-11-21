@@ -5,8 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,31 +23,37 @@ public class NetworkCallsUtil {
 	
 	private static final Logger logger = Logger.getLogger( NetworkCallsUtil.class.getName() );
 	
-	private static String getUrlParameterString( Map<String, String> keyValueParameters ) {
+	private static String getUrlParameterString( Map<String, String> keyValueParameters, Boolean encode )
+			throws UnsupportedEncodingException {
+	
 		// Forming URL parameter String
 		String urlParameters = "";
-		for ( Map.Entry<String, String> entry : keyValueParameters.entrySet() ) 
-		    urlParameters = urlParameters + entry.getKey() + "=" + entry.getValue() + "&" ;
-		
+		for ( Map.Entry<String, String> entry : keyValueParameters.entrySet() ) {
+			if( encode )
+				urlParameters = urlParameters + entry.getKey() + "=" + URLEncoder.encode( entry.getValue(), "UTF-8" ) + "&" ;
+			else
+				urlParameters = urlParameters + entry.getKey() + "=" + entry.getValue() + "&" ;
+		}
+		    
 		return urlParameters.substring( 0, urlParameters.length() - 1 );
 	}
 	
 	public static String makeGetCall( String targetURL, Map<String, String> keyValueParameters ) 
 			throws UnexpectedServerException {
 		
-		String requestUrl = targetURL + "?" + getUrlParameterString( keyValueParameters );
-		logger.log( Level.INFO, "Network GET Request : " + requestUrl );
-		
+		String requestUrl = null;
 		String response = null;
 		try {
-			response = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
+			requestUrl = targetURL + "?" + getUrlParameterString( keyValueParameters, true );
+			logger.log( Level.INFO, "Network GET Request : " + requestUrl );
+			response = new Gson().fromJson( IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" ), JsonElement.class ).toString();
 			logger.log( Level.INFO, "Network GET Response : " + response );
 		} catch ( IOException e ) {
 			logger.log( Level.SEVERE, "GET call failed for URL : " + requestUrl, e );
 			throw new UnexpectedServerException();
 		}
 		
-		return new Gson().fromJson( response.toString(), JsonElement.class ).toString();
+		return response;
 	}
 	
 	public static String makePostCall( String targetURL, Map<String, String> keyValueParameters )
@@ -53,10 +61,11 @@ public class NetworkCallsUtil {
 		
 		URL url = null;
 		HttpURLConnection connection = null;
-		String urlParameters = getUrlParameterString( keyValueParameters );
 		
-		// Making the network call
 		try {
+			// Forming URL parameters
+			String urlParameters = getUrlParameterString( keyValueParameters, false );
+			
 			//Create connection
 			url = new URL( targetURL );
 			connection = (HttpURLConnection) url.openConnection();
@@ -81,14 +90,14 @@ public class NetworkCallsUtil {
 			StringBuffer response = new StringBuffer();
 			while( ( line = bufferedReader.readLine() ) != null )
 				response.append( line + "\n" );
-			
 			bufferedReader.close();
+			
 			String responseString = new Gson().fromJson( response.toString(), JsonElement.class ).toString();
 			logger.log( Level.INFO, "Network POST Response : " + responseString );
 			return responseString;
 		
 		} catch ( IOException e ) {
-			logger.log( Level.SEVERE, "POST call failed for URL : " + targetURL + "?" + urlParameters, e );
+			logger.log( Level.SEVERE, "POST call failed for URL : " + targetURL + "?" + new Gson().toJson( keyValueParameters ), e );
 			throw new UnexpectedServerException();
 			
 		} finally {

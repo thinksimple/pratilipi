@@ -1,7 +1,5 @@
 package com.pratilipi.common.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -27,7 +25,7 @@ public class FacebookApi {
 	
 	private static final String GRAPH_API_2p2_URL = "https://graph.facebook.com/v2.2";
 	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
-	private static final String FACEBOOK_RESCRAPE_URL = "http://graph.facebook.com:443";
+	private static final String FACEBOOK_RESCRAPE_URL = "https://graph.facebook.com:443";
 	
 	public static String getAppId() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -61,10 +59,10 @@ public class FacebookApi {
 			throws UnexpectedServerException {
 
 		Map<String, String> keyValueParameters = new HashMap<String, String>();
-		keyValueParameters.put( "access_token=", fbUserAccessToken );
+		keyValueParameters.put( "access_token", getAccessToken() );
 		keyValueParameters.put( "fields", "id,first_name,last_name,gender,birthday,email" );
+		
 		String responsePayload = NetworkCallsUtil.makeGetCall( GRAPH_API_2p4_URL + "/me", keyValueParameters );
-
 		JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
 		if( responseJson.get( "error" ) != null ) {
 			// TODO: InvalidArgumentException if fbUserAccessToken is invalid or expired.
@@ -97,13 +95,8 @@ public class FacebookApi {
 			throws UnexpectedServerException {
 		
 		Map<String, String> keyValueParameters = new HashMap<String, String>();
-		try {
-			keyValueParameters.put( "id", URLEncoder.encode( url, "UTF-8" ) );
-			keyValueParameters.put( "access_token", getAccessToken() );
-		} catch ( UnsupportedEncodingException e ) {
-			logger.log( Level.SEVERE, "Failed to Encode URL : " + url, e );
-			throw new UnexpectedServerException();
-		}
+		keyValueParameters.put( "id", url );
+		keyValueParameters.put( "access_token", getAccessToken() );
 		
 		String responsePayload = NetworkCallsUtil.makeGetCall( GRAPH_API_2p2_URL, keyValueParameters );
 		
@@ -129,13 +122,8 @@ public class FacebookApi {
 			urls = urls.substring( 0, urls.length() - 1 );
 
 			Map<String, String> keyValueParameters = new HashMap<String, String>();
-			try {
-				keyValueParameters.put( "ids", URLEncoder.encode( urls, "UTF-8" ) );
-				keyValueParameters.put( "access_token", getAccessToken() );
-			} catch ( UnsupportedEncodingException e ) {
-				logger.log( Level.SEVERE, "Failed to Encode URL : " + urls, e );
-				throw new UnexpectedServerException();
-			}
+			keyValueParameters.put( "ids", urls );
+			keyValueParameters.put( "access_token", getAccessToken() );
 			
 			String responsePayload = NetworkCallsUtil.makeGetCall( GRAPH_API_2p4_URL, keyValueParameters );
 			JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
