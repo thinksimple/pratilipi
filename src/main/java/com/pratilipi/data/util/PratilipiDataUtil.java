@@ -650,6 +650,24 @@ public class PratilipiDataUtil {
 		}
 	}
 	
+	public static void updateFacebookScrape( List<Long> pratilipiIdList ) throws UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		for( Long pratilipiId : pratilipiIdList ) {
+			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+			if( pratilipi.getState() != PratilipiState.PUBLISHED || pratilipi.getState() != PratilipiState.PUBLISHED_PAID )
+				return;
+			
+			Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
+			String uri = page.getUriAlias() == null ? page.getUri() : page.getUriAlias();
+			FacebookApi.postScrapeRequest( "http://" + Language.ENGLISH.getHostName() + "/" + uri );
+//			TODO: Uncomment following line once language specific websites are launched.
+//			FacebookApi.postScrapeRequest( "http://" + pratilipi.getLanguage().getHostName() + "/" + uri );
+		}
+				
+	}
+	
 	
 	public static Object getPratilipiContent( long pratilipiId, Integer chapterNo, Integer pageNo,
 			PratilipiContentType contentType ) throws InvalidArgumentException,
@@ -889,21 +907,4 @@ public class PratilipiDataUtil {
 		
 	}
 	
-	public static void updateFacebookScrape( List<Long> pratilipiIdList ) 
-			throws UnexpectedServerException {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		for( Long pratilipiId : pratilipiIdList ) {
-			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			if( pratilipi.getState() != PratilipiState.PUBLISHED || pratilipi.getState() != PratilipiState.PUBLISHED_PAID )
-				return;
-			
-			Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-			String relativeUrl = page.getUriAlias() != null ? page.getUriAlias() : page.getUri();
-			FacebookApi.sendScrapeRequestToFacebook( "http://" + Language.ENGLISH.getHostName() + relativeUrl );
-		}
-				
-	}
-
 }
