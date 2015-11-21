@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Map;
 import java.util.logging.Level;
@@ -40,7 +41,7 @@ public class HttpUtil {
 		try {
 			String requestUrl = targetURL + "?" + createQueryString( paramsMap );
 			logger.log( Level.INFO, "Http GET Request: " + requestUrl );
-			String response = IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" );
+			String response = URLDecoder.decode( IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" ), "UTF-8" );
 			logger.log( Level.INFO, "Http GET Response: " + response );
 			return response;
 		} catch( IOException e ) {
@@ -86,8 +87,7 @@ public class HttpUtil {
 				responseBuffer.append( line + "\n" );
 			bufferedReader.close();
 			
-			String response = responseBuffer.toString();
-			
+			String response = URLDecoder.decode( responseBuffer.toString(), "UTF-8" );
 			logger.log( Level.INFO, "Http POST Response: " + response );
 			
 			return response;

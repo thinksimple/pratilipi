@@ -26,7 +26,7 @@ public class FacebookApi {
 	
 	private static final String GRAPH_API_2p2_URL = "https://graph.facebook.com/v2.2";
 	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
-	private static final String FACEBOOK_RESCRAPE_URL = "https://graph.facebook.com:443";
+	private static final String FACEBOOK_RESCRAPE_URL = "https://graph.facebook.com";
 	
 	
 	private static String getAppId() {
