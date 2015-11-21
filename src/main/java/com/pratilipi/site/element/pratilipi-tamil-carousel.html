@@ -1,5 +1,3 @@
-<!-- Version:6.0 -->
-
 <dom-module id="pratilipi-tamil-carousel">
 
 	<style>
@@ -15,41 +13,40 @@
 		
 	</style>
 	
-
 	<template>
-	
-		<div class="container">
-	  
-			<div id="TamilCarousel" class="carousel slide" data-ride="carousel">
-				
-				<ol class="carousel-indicators" style="margin-bottom:0px; z-index:1;">
-				 	<li data-target="#TamilCarousel" data-slide-to="0" class="active"></li>
-				 	<li data-target="#TamilCarousel" data-slide-to="1"></li>
-				 	<li data-target="#TamilCarousel" data-slide-to="2"></li>
-				 	<li data-target="#TamilCarousel" data-slide-to="3"></li>
-				</ol>
-				
-				<div class="carousel-inner" role="listbox">
-					<div class="item active">
-						<img src="{{ image1 }}">
-				 	</div>
-				 	<div class="item">
-						<img src="{{ image2 }}">
-				 	</div>
-				 	<div class="item">
-						<img src="{{ image3 }}">
-				 	</div>
-				 	<div class="item">
-						<img src="{{ image4 }}">
-				 	</div>
-				</div>
-				
-		 	</div>
-		 </div>				
-	
+	<div id="carousel" class="carousel slide" data-ride="carousel">
+		<!-- Menu -->
+		<ol class="carousel-indicators">
+			<li data-target="#carousel" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel" data-slide-to="1"></li>
+			<li data-target="#carousel" data-slide-to="2"></li>
+			<li data-target="#carousel" data-slide-to="3"></li>
+		</ol>
+		
+		<!-- Items -->
+		<div class="carousel-inner">
+			<div class="item active">
+				<img src="{{ image1 }}" alt="Slide 1" />
+			</div>
+			<div class="item">
+				<img src="{{ image2 }}" alt="Slide 2" />
+			</div>
+			<div class="item">
+				<img src="{{ image3 }}" alt="Slide 3" />
+			</div>
+			<div class="item">
+				<img src="{{ image4 }}" alt="Slide 4" />
+			</div>
+		</div> 
+		<a href="#carousel" class="left carousel-control" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+		</a>
+		<a href="#carousel" class="right carousel-control" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right"></span>
+		</a>
+	</div>
 	</template>
-	
-	
+
 	<script>
 
 	Polymer({
@@ -57,13 +54,13 @@
 		is: 'pratilipi-tamil-carousel',
 		
 		behaviors: [
-					Polymer.IronResizableBehavior
-				],
+			Polymer.IronResizableBehavior
+		],
 				
 		listeners: {
 			'iron-resize': '_onIronResize'
 		},
-
+		
 		properties: {
 			image1: { type: Image },
 			image2: { type: Image },
@@ -72,6 +69,7 @@
 		},
 		
 		_onIronResize: function() {
+			$( '.carousel' ).carousel();
 			var windowsize = this.clientWidth;
 
 			if( windowsize > 600 ) {
