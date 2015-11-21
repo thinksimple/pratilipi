@@ -888,5 +888,22 @@ public class PratilipiDataUtil {
 		}
 		
 	}
+	
+	public static void updateFacebookScrape( List<Long> pratilipiIdList ) 
+			throws UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		for( Long pratilipiId : pratilipiIdList ) {
+			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+			if( pratilipi.getState() != PratilipiState.PUBLISHED || pratilipi.getState() != PratilipiState.PUBLISHED_PAID )
+				return;
+			
+			Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
+			String relativeUrl = page.getUriAlias() != null ? page.getUriAlias() : page.getUri();
+			FacebookApi.sendScrapeRequestToFacebook( "http://" + Language.ENGLISH.getHostName() + relativeUrl );
+		}
+				
+	}
 
 }

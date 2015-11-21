@@ -59,7 +59,7 @@ public class FacebookApi {
 			throws UnexpectedServerException {
 
 		Map<String, String> keyValueParameters = new HashMap<String, String>();
-		keyValueParameters.put( "access_token", getAccessToken() );
+		keyValueParameters.put( "access_token", fbUserAccessToken );
 		keyValueParameters.put( "fields", "id,first_name,last_name,gender,birthday,email" );
 		
 		String responsePayload = NetworkCallsUtil.makeGetCall( GRAPH_API_2p4_URL + "/me", keyValueParameters );
