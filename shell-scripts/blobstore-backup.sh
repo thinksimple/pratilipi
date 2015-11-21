@@ -35,10 +35,10 @@ then
 	gsutil cp _backup.end "$bucket_backup/$backup_folder_public/"
 
 
-	gsutil cp "$bucket_backup/log" log.old
-	echo "Backup Script Run At $(date)" > log
-	cat log.old >> log
-	gsutil cp log "$bucket_backup/log"
+	gsutil cp "$bucket_backup/_log" log
+	echo "Backup Script Run At $(date)" > _log
+	cat log >> _log
+	gsutil cp _log "$bucket_backup/"
 
 
 #	gsutil -m du -s $bucket_static "$bucket_backup/$backup_folder_static"
