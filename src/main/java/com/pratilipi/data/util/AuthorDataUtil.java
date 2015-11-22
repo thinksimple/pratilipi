@@ -298,6 +298,19 @@ public class AuthorDataUtil {
 			page.setUri( PageType.AUTHOR.getUrlPrefix() + authorId );
 			page.setPrimaryContentId( authorId );
 			page.setCreationDate( new Date() );
+			page = dataAccessor.createOrUpdatePage( page );
+			return true;
+		}
+		
+		if( author.getTotalReadCount() < 100 ) {
+			if( page.getUriAlias() == null ) {
+				return false;
+			} else {
+				logger.log( Level.INFO, "Clearing Author Page Url: '" + page.getUriAlias() + "' -> 'null'" );
+				page.setUriAlias( null );
+				page = dataAccessor.createOrUpdatePage( page );
+				return true;
+			}
 		}
 		
 		String uriAlias = UriAliasUtil.generateUriAlias(
