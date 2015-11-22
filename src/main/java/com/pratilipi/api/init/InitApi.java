@@ -30,13 +30,17 @@ public class InitApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		DataListCursorTuple<Long> authorIdListCursorTuple;
+		List<Long> pratilipiIdList;
+		String cursor = null;
 		do {
 			
 			authorIdListCursorTuple =
-					dataAccessor.getAuthorIdList( new AuthorFilter(), null, 1000 );
+					dataAccessor.getAuthorIdList( new AuthorFilter(), cursor, 1000 );
+			pratilipiIdList = authorIdListCursorTuple.getDataList();
+			cursor = authorIdListCursorTuple.getCursor();
 			
-			List<Task> taskList = new ArrayList<>( authorIdListCursorTuple.getDataList().size() );
-			for( Long authorId : authorIdListCursorTuple.getDataList() ) {
+			List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
+			for( Long authorId : pratilipiIdList ) {
 				Task task = TaskQueueFactory.newTask()
 						.setUrl( "/author/process" )
 						.addParam( "authorId", authorId.toString() )
@@ -47,7 +51,7 @@ public class InitApi extends GenericApi {
 			
 			logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
 		
-		} while( authorIdListCursorTuple.getCursor() != null && authorIdListCursorTuple.getDataList().size() == 1000 );
+		} while( cursor != null && pratilipiIdList.size() == 1000 );
 		
 		return new GenericResponse();
 		
