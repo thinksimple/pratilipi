@@ -65,7 +65,7 @@ public class AuthorProcessApi extends GenericApi {
 			PratilipiDataUtil.updatePratilipiSearchIndex( null, request.getAuthorId() );
 			boolean changed = AuthorDataUtil.createOrUpdateAuthorPageUrl( request.getAuthorId() );
 			if( changed ) {
-				AuthorDataUtil.createOrUpdateAuthorDashboardPageUrl( request.getAuthorId() );
+//				AuthorDataUtil.createOrUpdateAuthorDashboardPageUrl( request.getAuthorId() );
 				// TODO: Update all Pratilipi's PageUrl ( where AUTHOR_ID == request.getAuthorId() )
 			}
 		}

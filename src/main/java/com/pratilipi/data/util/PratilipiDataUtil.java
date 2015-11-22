@@ -499,7 +499,9 @@ public class PratilipiDataUtil {
 		
 			if( page.getUriAlias() == null )
 				return false;
-			
+
+			logger.log( Level.INFO, "Clearing Pratilipi Page Url: '" + page.getUriAlias() + "' -> 'null'" );
+
 			page.setUriAlias( null );
 		
 		} else {
@@ -508,8 +510,12 @@ public class PratilipiDataUtil {
 					page.getUriAlias(),
 					uriPrifix, pratilipi.getTitleEn() );
 			
-			if( uriAlias.equals( page.getUriAlias() ) )
+			if( uriAlias == page.getUriAlias()
+					|| ( uriAlias != null && uriAlias.equals( page.getUriAlias() ) )
+					|| ( page.getUriAlias() != null && page.getUriAlias().equals( uriAlias ) ) )
 				return false;
+
+			logger.log( Level.INFO, "Updating Pratilipi Page Url: '" + page.getUriAlias() + "' -> '" + uriAlias + "'" );
 
 			page.setUriAlias( uriAlias );
 		

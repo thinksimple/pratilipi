@@ -3,6 +3,7 @@ package com.pratilipi.data.util;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
@@ -307,6 +308,8 @@ public class AuthorDataUtil {
 				|| ( uriAlias != null && uriAlias.equals( page.getUriAlias() ) )
 				|| ( page.getUriAlias() != null && page.getUriAlias().equals( uriAlias ) ) )
 			return false;
+		
+		logger.log( Level.INFO, "Updating Author Page Url: '" + page.getUriAlias() + "' -> '" + uriAlias + "'" );
 		
 		page.setUriAlias( uriAlias );
 		page = dataAccessor.createOrUpdatePage( page );

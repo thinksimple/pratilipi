@@ -88,11 +88,12 @@ public class HttpUtil {
 			bufferedReader.close();
 			
 			String response = URLDecoder.decode( responseBuffer.toString(), "UTF-8" );
+			
 			logger.log( Level.INFO, "Http POST Response: " + response );
 			
 			return response;
 		
-		} catch ( IOException e ) {
+		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to execute Http Post call.", e );
 			throw new UnexpectedServerException();
 			
