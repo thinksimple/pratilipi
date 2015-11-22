@@ -61,13 +61,13 @@ public class AuthorProcessApi extends GenericApi {
 			throws InvalidArgumentException, UnexpectedServerException {
 
 		if( request.processData() ) {
-			AuthorDataUtil.updateAuthorSearchIndex( request.getAuthorId() );
-			PratilipiDataUtil.updatePratilipiSearchIndex( null, request.getAuthorId() );
 			boolean changed = AuthorDataUtil.createOrUpdateAuthorPageUrl( request.getAuthorId() );
 			if( changed ) {
 //				AuthorDataUtil.createOrUpdateAuthorDashboardPageUrl( request.getAuthorId() );
 				// TODO: Update all Pratilipi's PageUrl ( where AUTHOR_ID == request.getAuthorId() )
 			}
+			AuthorDataUtil.updateAuthorSearchIndex( request.getAuthorId() );
+			PratilipiDataUtil.updatePratilipiSearchIndex( null, request.getAuthorId() );
 		}
 		
 		if( request.processImage() ) { }
