@@ -23,7 +23,7 @@ public class UriAliasUtil {
 			else
 				uriAlias = uriAlias.substring( 0, uriAlias.length() - 1 );
 		} else {
-			uriAlias = uriAlias + "page";
+			return null;
 		}
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
