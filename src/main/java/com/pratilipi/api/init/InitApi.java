@@ -10,7 +10,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.taskqueue.Task;
@@ -28,13 +28,13 @@ public class InitApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			
-		List<Long> pratilipiIdList = dataAccessor.getAuthorIdList( new AuthorFilter(), null, null ).getDataList();
+		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( new PratilipiFilter(), null, null ).getDataList();
 		
 		List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
-		for( Long authorId : pratilipiIdList ) {
+		for( Long pratilipiId : pratilipiIdList ) {
 			Task task = TaskQueueFactory.newTask()
-					.setUrl( "/author/process" )
-					.addParam( "authorId", authorId.toString() )
+					.setUrl( "/pratilipi/process" )
+					.addParam( "pratilipiId", pratilipiId.toString() )
 					.addParam( "processData", "true" );
 			taskList.add( task );
 		}
