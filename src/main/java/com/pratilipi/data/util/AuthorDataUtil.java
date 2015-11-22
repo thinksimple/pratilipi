@@ -303,7 +303,9 @@ public class AuthorDataUtil {
 				page.getUriAlias(),
 				"/", author.getFirstNameEn(), author.getLastNameEn(), author.getPenNameEn() );
 
-		if( ( uriAlias == null && page.getUriAlias() == null ) || uriAlias.equals( page.getUriAlias() ) )
+		if( uriAlias == page.getUriAlias()
+				|| ( uriAlias != null && uriAlias.equals( page.getUriAlias() ) )
+				|| ( page.getUriAlias() != null && page.getUriAlias().equals( uriAlias ) ) )
 			return false;
 		
 		page.setUriAlias( uriAlias );
