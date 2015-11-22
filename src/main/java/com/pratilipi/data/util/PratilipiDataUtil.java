@@ -656,7 +656,7 @@ public class PratilipiDataUtil {
 		
 		for( Long pratilipiId : pratilipiIdList ) {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			if( pratilipi.getState() != PratilipiState.PUBLISHED || pratilipi.getState() != PratilipiState.PUBLISHED_PAID )
+			if( pratilipi.getState() != PratilipiState.PUBLISHED && pratilipi.getState() != PratilipiState.PUBLISHED_PAID )
 				return;
 			
 			Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
