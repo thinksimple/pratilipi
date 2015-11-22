@@ -38,7 +38,7 @@ public class InitApi extends GenericApi {
 					.addParam( "processData", "true" );
 			taskList.add( task );
 		}
-		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
+		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
 		
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
 		
