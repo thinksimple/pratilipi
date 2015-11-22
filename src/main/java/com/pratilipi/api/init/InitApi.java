@@ -13,7 +13,6 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -28,30 +27,20 @@ public class InitApi extends GenericApi {
 	public GenericResponse get( GetInitApiRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			
+		List<Long> pratilipiIdList = dataAccessor.getAuthorIdList( new AuthorFilter(), null, null ).getDataList();
 		
-		DataListCursorTuple<Long> authorIdListCursorTuple;
-		List<Long> pratilipiIdList;
-		String cursor = null;
-		do {
-			
-			authorIdListCursorTuple =
-					dataAccessor.getAuthorIdList( new AuthorFilter(), cursor, 1000 );
-			pratilipiIdList = authorIdListCursorTuple.getDataList();
-			cursor = authorIdListCursorTuple.getCursor();
-			
-			List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
-			for( Long authorId : pratilipiIdList ) {
-				Task task = TaskQueueFactory.newTask()
-						.setUrl( "/author/process" )
-						.addParam( "authorId", authorId.toString() )
-						.addParam( "processData", "true" );
-				taskList.add( task );
-			}
-			TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
-			
-			logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
+		List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
+		for( Long authorId : pratilipiIdList ) {
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/author/process" )
+					.addParam( "authorId", authorId.toString() )
+					.addParam( "processData", "true" );
+			taskList.add( task );
+		}
+		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
 		
-		} while( cursor != null && pratilipiIdList.size() == 1000 );
+		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
 		
 		return new GenericResponse();
 		
