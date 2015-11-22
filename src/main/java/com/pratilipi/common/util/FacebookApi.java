@@ -129,6 +129,13 @@ public class FacebookApi {
 			String responsePayload = HttpUtil.doGet( GRAPH_API_2p4_URL, paramsMap );
 
 			JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
+
+			// Facebook might return an error response.
+			if( responseJson.getAsJsonObject().get( "error" ) != null ) {
+				logger.log( Level.SEVERE, "Facebook responded with an error message :" + responseJson.getAsJsonObject().get( "error" ).getAsJsonObject().get( "message" ) );
+				throw new UnexpectedServerException();
+			}
+
 			for( int j = 0; i + j < urlList.size() && j < urlsPerRequest; j++ ) {
 				JsonElement jsonElement = responseJson.getAsJsonObject().get( urlList.get( i + j ) );
 				JsonElement shareJson = jsonElement.getAsJsonObject().get( "share" );
