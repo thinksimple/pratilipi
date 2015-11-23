@@ -66,6 +66,8 @@ public class HttpUtil {
 			connection.setRequestMethod( "POST" );
 			connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded" );
 			connection.setRequestProperty( "Content-Length", urlParams.getBytes().length + "" );
+			connection.setConnectTimeout( 60000 );	//60 Seconds
+			connection.setReadTimeout( 60000 );		//60 Seconds
 			connection.setUseCaches( false );
 			connection.setDoInput( true );
 			connection.setDoOutput( true );
