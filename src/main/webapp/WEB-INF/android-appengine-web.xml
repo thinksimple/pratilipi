@@ -18,7 +18,6 @@
 	</automatic-scaling>
 
 	<system-properties>
-		<!-- Configure java.util.logging -->
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
 	</system-properties>
 

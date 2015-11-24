@@ -18,9 +18,7 @@
 	</automatic-scaling>
 
 	<static-files>
-		<include path="**" >
-			<http-header name="Access-Control-Allow-Origin" value="*" />
-		</include>
+		<include path="**" />
 		<include path="**.html" expiration="1d" />
 		<include path="**.js"   expiration="3650d" />
 		<include path="**.css"  expiration="3650d" />
@@ -29,7 +27,6 @@
 	</static-files>
 
 	<system-properties>
-		<!-- Configure java.util.logging -->
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
 	</system-properties>
 
