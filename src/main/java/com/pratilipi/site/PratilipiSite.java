@@ -69,6 +69,7 @@ public class PratilipiSite extends HttpServlet {
 		// Common resource list
 		List<String> resourceList = new LinkedList<>();
 		resourceList.add( ThirdPartyResource.JQUERY.getTag() );
+		resourceList.add( ThirdPartyResource.ANGULARJS.getTag() );
 		resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
 		resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 		resourceList.add( ThirdPartyResource.POLYMER.getTag() );
