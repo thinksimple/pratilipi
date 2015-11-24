@@ -20,7 +20,7 @@ public class SystemProperty {
 			DATASOURCE = "gae";
 			BLOBSERVICE_GCS_BUCKET = "devo-pratilipi.appspot.com";
 			BLOBSERVICE_GCS_BUCKET_BACKUP = "devo-pratilipi.appspot.com";
-			CDN = "http://*.ptlp.co/devo";
+			CDN = "http://*.devo.ptlp.co";
 		} else {
 			DATASOURCE = "mock";
 			BLOBSERVICE_GCS_BUCKET = "localhost";
