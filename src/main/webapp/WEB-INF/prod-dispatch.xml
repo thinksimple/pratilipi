@@ -6,6 +6,7 @@
 		<module>www</module>
 	</dispatch>
 	
+
 	<dispatch>
 		<url>*/api/user/login/facebook*</url>
 		<module>api</module>
@@ -14,6 +15,11 @@
 	<dispatch>
 		<url>www.pratilipi.com/*</url>
 		<module>www</module>
+	</dispatch>
+
+	<dispatch>
+		<url>m.*.pratilipi.com/*</url>
+		<module>mobile</module>
 	</dispatch>
 
 	<dispatch>
