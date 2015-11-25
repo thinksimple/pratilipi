@@ -6,7 +6,7 @@ do
 	cd ~/prod/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-prod.sh       2>&1 | grep -v "^\[INFO\]" | grep -v "Fetching origin" | logger -t cont_dep_script
 
-	cd ~/prod/mobile
+	cd ~/mobile/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-mobile.sh     2>&1 | grep -v "^\[INFO\]" | grep -v "Fetching origin" | logger -t cont_dep_script
 
 	cd ~/api/pratilipi
