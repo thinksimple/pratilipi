@@ -21,7 +21,6 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
-import com.pratilipi.api.user.UserEmailApi;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.FreeMarkerUtil;
@@ -29,7 +28,7 @@ import com.pratilipi.common.util.FreeMarkerUtil;
 
 public class EmailUtil {
 	
-	private static final Logger logger = Logger.getLogger( UserEmailApi.class.getName() );
+	private static final Logger logger = Logger.getLogger( EmailUtil.class.getName() );
 
 	private final static Properties properties = new Properties();
 	private final static Session session = Session.getDefaultInstance( properties, null );

@@ -35,10 +35,15 @@ public class PratilipiSiteFilter implements Filter {
 	private final Pattern validHostSubdomainRegEx = Pattern.compile(
 			"www\\.(tamil)\\.pratilipi\\.com" );
 	private final Pattern validHostRegEx = Pattern.compile(
-			// TODO: Remove cdn-asia as soon as wwww becomes www.
-			"(www|tamil|api|gamma|static|cdn-asia)\\.pratilipi\\.com"
+			"(www|tamil)\\.pratilipi\\.com"
 			+ "|"
-			+ "mark-6\\.(prod|(raghu\\.)?devo)-pratilipi\\.appspot\\.com"
+			+ "m\\.(tamil)\\.pratilipi\\.com"
+			+ "|"
+			+ "(gamma|static|cdn-asia)\\.pratilipi\\.com"
+			+ "|"
+			+ "mark-6\\.prod-pratilipi\\.appspot\\.com"
+			+ "|"
+			+ "mark-6\\.(raghu\\.)?devo-pratilipi\\.appspot\\.com"
 			+ "|"
 			+ "localhost|127.0.0.1" );
 	

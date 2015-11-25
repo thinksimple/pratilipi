@@ -33,32 +33,37 @@ sudo bash google-fluentd-install.sh
 rm google-fluentd-install.sh
 
 
-# Cloning git repository for devo-pratilipi/raghu
-sudo mkdir -p ~/test-raghu
-cd ~/test-raghu
-sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
+# Cloning git repository for prod-pratilipi/default
+sudo mkdir -p ~/prod
+cd ~/prod
+sudo git clone -b release-prod https://github.com/Pratilipi/pratilipi.git
+
+# Cloning git repository for prod-pratilipi/mobile
+sudo mkdir -p ~/mobile
+cd ~/mobile
+sudo git clone -b release-mobile https://github.com/Pratilipi/pratilipi.git
+
+# Cloning git repository for prod-pratilipi/api
+sudo mkdir -p ~/api
+cd ~/api
+sudo git clone -b release-api https://github.com/Pratilipi/pratilipi.git
+
+# Cloning git repository for prod-pratilipi/android
+sudo mkdir -p ~/android
+cd ~/android
+sudo git clone -b release-android https://github.com/Pratilipi/pratilipi.git
+
+# Cloning git repository for prod-pratilipi/worker
+sudo mkdir -p ~/worker
+cd ~/worker
+sudo git clone -b release-worker https://github.com/Pratilipi/pratilipi.git
 
 # Cloning git repository for prod-pratilipi/gamma & devo-pratilipi/*
 sudo mkdir -p ~/test
 cd ~/test
 sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
 
-# Cloning git repository for prod-pratilipi/default
-sudo mkdir -p ~/prod
-cd ~/prod
-sudo git clone -b release-prod https://github.com/Pratilipi/pratilipi.git
-
-# Cloning git repository for prod-pratilipi/api
-sudo mkdir -p ~/api
-cd ~/api
-sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
-
-# Cloning git repository for prod-pratilipi/worker
-sudo mkdir -p ~/worker
-cd ~/worker
-sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
-
-# Cloning git repository for prod-pratilipi/android
-sudo mkdir -p ~/android
-cd ~/android
-sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
+# Cloning git repository for devo-pratilipi/raghu
+sudo mkdir -p ~/test-raghu
+cd ~/test-raghu
+sudo git clone -b raghu https://github.com/Pratilipi/pratilipi.git
