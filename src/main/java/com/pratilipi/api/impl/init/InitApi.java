@@ -1,4 +1,4 @@
-package com.pratilipi.api.init;
+package com.pratilipi.api.impl.init;
 
 import java.util.logging.Logger;
 

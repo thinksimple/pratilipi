@@ -2,19 +2,19 @@ package com.pratilipi.service;
 
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
-import com.pratilipi.api.author.AuthorImageApi;
-import com.pratilipi.api.category.CategoryListApi;
-import com.pratilipi.api.pratilipi.PratilipiApi;
-import com.pratilipi.api.pratilipi.PratilipiContentApi;
-import com.pratilipi.api.pratilipi.PratilipiCoverApi;
-import com.pratilipi.api.pratilipi.PratilipiListApi;
-import com.pratilipi.api.user.UserAccessTokenApi;
-import com.pratilipi.api.user.UserLoginApi;
-import com.pratilipi.api.user.UserLogoutApi;
-import com.pratilipi.api.user.UserPasswordUpdateApi;
-import com.pratilipi.api.user.UserRegisterApi;
-import com.pratilipi.api.userpratilipi.UserPratilipiApi;
-import com.pratilipi.api.userpratilipi.UserPratilipiReviewListApi;
+import com.pratilipi.api.impl.author.AuthorImageApi;
+import com.pratilipi.api.impl.category.CategoryListApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
+import com.pratilipi.api.impl.user.UserAccessTokenApi;
+import com.pratilipi.api.impl.user.UserLoginApi;
+import com.pratilipi.api.impl.user.UserLogoutApi;
+import com.pratilipi.api.impl.user.UserPasswordUpdateApi;
+import com.pratilipi.api.impl.user.UserRegisterApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 
 @SuppressWarnings("serial")
 public class AndroidService extends GenericService {

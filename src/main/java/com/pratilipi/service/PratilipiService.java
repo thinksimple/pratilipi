@@ -2,19 +2,19 @@ package com.pratilipi.service;
 
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
-import com.pratilipi.api.author.AuthorImageApi;
-import com.pratilipi.api.pratilipi.PratilipiContentApi;
-import com.pratilipi.api.pratilipi.PratilipiCoverApi;
-import com.pratilipi.api.pratilipi.PratilipiListApi;
-import com.pratilipi.api.user.UserEmailApi;
-import com.pratilipi.api.user.UserLoginApi;
-import com.pratilipi.api.user.UserLoginFacebookApi;
-import com.pratilipi.api.user.UserLogoutApi;
-import com.pratilipi.api.user.UserPasswordUpdateApi;
-import com.pratilipi.api.user.UserRegisterApi;
-import com.pratilipi.api.user.UserVerificationApi;
-import com.pratilipi.api.userpratilipi.UserPratilipiApi;
-import com.pratilipi.api.userpratilipi.UserPratilipiReviewListApi;
+import com.pratilipi.api.impl.author.AuthorImageApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
+import com.pratilipi.api.impl.user.UserEmailApi;
+import com.pratilipi.api.impl.user.UserLoginApi;
+import com.pratilipi.api.impl.user.UserLoginFacebookApi;
+import com.pratilipi.api.impl.user.UserLogoutApi;
+import com.pratilipi.api.impl.user.UserPasswordUpdateApi;
+import com.pratilipi.api.impl.user.UserRegisterApi;
+import com.pratilipi.api.impl.user.UserVerificationApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.common.util.SystemProperty;
 
 @SuppressWarnings("serial")

@@ -2,15 +2,15 @@ package com.pratilipi.service;
 
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
-import com.pratilipi.api.author.AuthorBackupApi;
-import com.pratilipi.api.author.AuthorProcessApi;
+import com.pratilipi.api.impl.author.AuthorBackupApi;
+import com.pratilipi.api.impl.author.AuthorProcessApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiBackupApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiIdfApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiProcessApi;
+import com.pratilipi.api.impl.user.UserBackupApi;
+import com.pratilipi.api.impl.user.UserEmailApi;
+import com.pratilipi.api.impl.user.UserFacebookValidationApi;
 import com.pratilipi.api.init.InitApi;
-import com.pratilipi.api.pratilipi.PratilipiBackupApi;
-import com.pratilipi.api.pratilipi.PratilipiIdfApi;
-import com.pratilipi.api.pratilipi.PratilipiProcessApi;
-import com.pratilipi.api.user.UserBackupApi;
-import com.pratilipi.api.user.UserEmailApi;
-import com.pratilipi.api.user.UserFacebookValidationApi;
 
 @SuppressWarnings("serial")
 public class WorkerService extends GenericService {
