@@ -18,13 +18,18 @@
 	</dispatch>
 
 	<dispatch>
-		<url>*.m.pratilipi.com/*</url>
-		<module>mobile</module>
-	</dispatch>
-
-	<dispatch>
 		<url>api.pratilipi.com/*</url>
 		<module>api</module>
 	</dispatch>
-	
+
+	<dispatch>
+		<url>android.pratilipi.com/*</url>
+		<module>android</module>
+	</dispatch>
+
+	<dispatch>
+		<url>worker.pratilipi.com/*</url>
+		<module>worker</module>
+	</dispatch>
+
 </dispatch-entries>
