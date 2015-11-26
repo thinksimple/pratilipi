@@ -57,6 +57,8 @@ public class AuthorData {
 	
 	private Long totalReadCount;
 	
+	private Long totalFbLikeShareCount;
+
 	
 	public Long getId() {
 		return authorId;
@@ -271,6 +273,14 @@ public class AuthorData {
 
 	public void setTotalReadCount( Long totalReadCount ) {
 		this.totalReadCount = totalReadCount;
+	}
+
+	public Long getTotalFbLikeShareCount() {
+		return totalFbLikeShareCount;
+	}
+
+	public void setTotalFbLikeShareCount( Long totalFbLikeShareCount ) {
+		this.totalFbLikeShareCount = totalFbLikeShareCount;
 	}
 
 }
