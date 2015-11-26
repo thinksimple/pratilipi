@@ -35,6 +35,9 @@ public class SiteElementUtil {
 
 			File elementFolder = new File( elementFolderName );
 			for( String elementName : elementFolder.list() ) {
+				if( ! elementName.endsWith( ".html" ) )
+					continue;
+				
 				File element = new File( elementFolder, elementName );
 				if( element.isDirectory() )
 					continue;
