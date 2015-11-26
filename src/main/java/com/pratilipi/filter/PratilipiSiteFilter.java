@@ -37,7 +37,7 @@ public class PratilipiSiteFilter implements Filter {
 	private final Pattern validHostRegEx = Pattern.compile(
 			"(www|tamil)\\.pratilipi\\.com"
 			+ "|"
-			+ "m\\.(tamil)\\.pratilipi\\.com"
+			+ "m\\.(tamil|hindi)\\.pratilipi\\.com"
 			+ "|"
 			+ "(gamma|static|cdn-asia)\\.pratilipi\\.com"
 			+ "|"

@@ -65,16 +65,21 @@ public class PratilipiSite extends HttpServlet {
 
 		// Language
 		Language lang = UxModeFilter.getUserLanguage();
+		boolean basicMode = UxModeFilter.isBasicMode();
 		
 		// Common resource list
 		List<String> resourceList = new LinkedList<>();
-		resourceList.add( ThirdPartyResource.JQUERY.getTag() );
-		resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
-		resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
-		resourceList.add( ThirdPartyResource.POLYMER.getTag() );
-		resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
-		resourceList.add( ThirdPartyResource.POLYMER_IRON_OVERLAY_BEHAVIOR.getTag() );
-		resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
+		if( basicMode ) {
+			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
+		} else {
+			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
+			resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
+			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_IRON_OVERLAY_BEHAVIOR.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
+		}
 
 		
 		// Data Model for FreeMarker
@@ -95,7 +100,7 @@ public class PratilipiSite extends HttpServlet {
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
-				templateName = templateFilePrefix + "Author.ftl";
+				templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 			
 			} else if( uri.equals( "/search" ) ) {
 				dataModel = createDataModelForSearchPage( lang, request );

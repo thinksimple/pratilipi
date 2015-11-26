@@ -43,9 +43,11 @@ public class UxModeFilter implements Filter {
 			}
 		}
 		
-		if( threadLocalLanguage.get() == null )
+		if( threadLocalLanguage.get() == null ) {
 			threadLocalLanguage.set( Language.TAMIL );
-			
+			threadLocalBasicMode.set( true );
+		}
+		
 		chain.doFilter( req, resp );
 
 		threadLocalLanguage.remove();
@@ -58,7 +60,7 @@ public class UxModeFilter implements Filter {
 	}
 
 	public static boolean isBasicMode() {
-		return threadLocalBasicMode.get() != null && threadLocalBasicMode.get();
+		return threadLocalBasicMode.get();
 	}
 
 }
