@@ -71,6 +71,10 @@ public interface Author extends Serializable {
 	
 	void setTotalReadCount( Long totalReadCount );
 	
+	Long getTotalFbLikeShareCount();
+	
+	void setTotalFbLikeShareCount( Long totalFbLikeShareCount );
+
 	
 	Date getLastProcessDate();
 

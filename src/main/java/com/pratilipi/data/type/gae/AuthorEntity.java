@@ -71,7 +71,10 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "TOTAL_READ_COUNT" )
 	private Long totalReadCount;
 
+	@Persistent( column = "TOTAL_FB_LIKE_SHARE_COUNT" )
+	private Long totalFbLikeShareCount;
 
+	
 	@Persistent( column = "LAST_PROCESS_DATE" )
 	private Date lastProcessDate;
 
@@ -257,6 +260,16 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setTotalReadCount( Long totalReadCount ) {
 		this.totalReadCount = totalReadCount;
+	}
+	
+	@Override
+	public Long getTotalFbLikeShareCount() {
+		return totalFbLikeShareCount == null ? 0L : totalFbLikeShareCount;
+	}
+	
+	@Override
+	public void setTotalFbLikeShareCount( Long totalFbLikeShareCount ) {
+		this.totalFbLikeShareCount = totalFbLikeShareCount;
 	}
 	
 	
