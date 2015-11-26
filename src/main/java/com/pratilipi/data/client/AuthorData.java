@@ -55,6 +55,8 @@ public class AuthorData {
 	
 	private Integer contentPublished;
 	
+	private Long totalReadCount;
+	
 	
 	public Long getId() {
 		return authorId;
@@ -236,6 +238,12 @@ public class AuthorData {
 		return imageUrl;
 	}
 
+	public String getImageUrl( int width ) {
+		return imageUrl.indexOf( '?' ) == -1
+				? imageUrl + "?width=" + width
+				: imageUrl + "&width=" + width;
+	}
+
 	public void setImageUrl( String imageUrl ) {
 		this.imageUrl = imageUrl;
 	}
@@ -255,6 +263,14 @@ public class AuthorData {
 
 	public void setContentPublished( Integer contentPublished ) {
 		this.contentPublished = contentPublished;
+	}
+
+	public Long getTotalReadCount() {
+		return totalReadCount;
+	}
+
+	public void setTotalReadCount( Long totalReadCount ) {
+		this.totalReadCount = totalReadCount;
 	}
 
 }
