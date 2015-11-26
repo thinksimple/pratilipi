@@ -15,6 +15,7 @@ import com.pratilipi.common.type.Language;
 public class UxModeFilter implements Filter {
 
 	private static final ThreadLocal<Language> threadLocalLanguage = new ThreadLocal<Language>();
+	private static final ThreadLocal<Boolean> threadLocalBasicMode = new ThreadLocal<Boolean>();
 
 	
 	@Override
@@ -33,11 +34,16 @@ public class UxModeFilter implements Filter {
 		for( Language language : Language.values() ) {
 			if( hostName.equals( language.getHostName() ) ) {
 				threadLocalLanguage.set( language );
+				threadLocalBasicMode.set( false );
+				break;
+			} else if( hostName.equals( language.getMobileHostName() ) ) {
+				threadLocalLanguage.set( language );
+				threadLocalBasicMode.set( true );
 				break;
 			}
 		}
 		
-		if( threadLocalLanguage.get() == null && ! hostName.equals( "www.pratilipi.com" ) )
+		if( threadLocalLanguage.get() == null )
 			threadLocalLanguage.set( Language.TAMIL );
 			
 		chain.doFilter( req, resp );
@@ -49,6 +55,10 @@ public class UxModeFilter implements Filter {
 	
 	public static Language getUserLanguage() {
 		return threadLocalLanguage.get();
+	}
+
+	public static boolean isBasicMode() {
+		return threadLocalBasicMode.get() != null && threadLocalBasicMode.get();
 	}
 
 }
