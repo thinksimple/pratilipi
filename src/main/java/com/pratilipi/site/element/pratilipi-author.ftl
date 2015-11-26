@@ -21,7 +21,7 @@
 				<p class="three-cols" style="text-align:center">
 					<small>${ _strings.author_count_works }</small> <br/> <span class="red" style="font-size:20px;font-weight:bold">${ author.contentPublished }</span> <br/>
 					<small>${ _strings.author_count_reads }</small> <br/> <span class="red" style="font-size:20px;font-weight:bold">${ author.totalReadCount }</span> <br/>
-					<small>${ _strings.author_count_likes }</small> <br/> <span class="red" style="font-size:20px;font-weight:bold">${ author.totalLikeCount }</span> <br/>
+					<small>${ _strings.author_count_likes }</small> <br/> <span class="red" style="font-size:20px;font-weight:bold">${ author.totalFbLikeShareCount }</span> <br/>
 				</p>
 			</td>
 		</tr>
