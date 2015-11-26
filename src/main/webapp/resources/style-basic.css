@@ -20,148 +20,21 @@ body {
 }
 
 .box {
+	background-color: white;
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 2px solid #ccc;
+}
+
+.box h2 {
 	margin: 10px;
-	background-color: white;
+	margin-top: 5px;
 }
 
-.xyz {
-	
-}
-
-
-.paper {
-	padding: 16px;
-	margin: 16px 5px 16px 5px;
-	background-color: #fff;
-	color: #555;
-	border: 1px solid #fff;
-	border-radius: 5px;
-	width: 100%;
-	max-width: 1000px;
-	min-height: 800px;
-}
-
-
-.popup {
-	width: 325px;
-	background: white;
-}
-
-.popup .popup-heading {
-	margin: 0px;
-	padding: 15px 20px;
-	color: #777;
-	background: #eee;
-}
-
-.popup .popup-body {
-	padding: 20px;
-}
-
-.popup button {
-	padding: 5px 30px;
-	border-radius: 0px;
-	color: white;
-	background: rgb(0,146,69);
-}
-
-
-
-/* Color Palette :: Primary */
-
-.primary-500 {
-	color: white;
-	background: red;
-}
-
-.primary-500 button {
-	color: black;
-	background: yellow;
-}
-
-.primary-500 a, .primary-500 a:hover, .primary-500 a:focus {
-	cursor: pointer;
-	color: white;
-	text-decoration: none;
-}
-
-.primary-500 ::selection { /* WebKit/Blink Browsers */
-	color: #ff0000;
-	background: #ffffff;
-}
-
-.primary-500 ::-moz-selection { /* Gecko Browsers */
-	color: #ff0000;
-	background: #ffffff;
-}
-
-
-
-/* Color Palette :: Secondary */
-
-.secondary-500 {
-	color: #333;
-	background-color: white;
-}
-
-.secondary-500 a {
-	color: #333;
-}
-
-.secondary-500 a:hover, .secondary-500 a:focus {
-	color: #000;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.secondary-500 h1, .secondary-500 h2, .secondary-500 h3, .secondary-500 h4 {
-	color: #4D4D4D;
-	font-weight: 700;
-	margin: 5px 0px 10px 0px;
-}
-
-.secondary-500 hr {
-	border: 0;
-	height: 1px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.5), rgba(0,0,0,0));
-}
-
-.secondary-500 button, .secondary-500 button:hover, .secondary-500 button:focus,
-.secondary-500 a.btn, .secondary-500 a.btn:hover, .secondary-500 a.btn:focus {
-	color: white;
-	background: #009245;
-}
-
-.secondary-500 .badge {
-	color: #333;
-	background-color: #eee;
-}
-
-.secondary-500 ::selection { /* WebKit/Blink Browsers */
-	color: #424242;
-	background: #bdbdbd;
-}
-
-.secondary-500 ::-moz-selection { /* Gecko Browsers */
-	color: #424242;
-	background: #bdbdbd;
-}
-
-
-
-/* Custom Overrides */
-
-a.blue, a.blue:hover, a.blue:focus,
-button.blue, button.blue:hover, button.blue:focus {
-	color: white;
-	background: #0071BC;
-}
-
-
-/* Bootstrap Overrides */
-
-.text-success {
-	color: #009245;
+.box p {
+	text-align: justify;
+	margin: 10px;
 }
