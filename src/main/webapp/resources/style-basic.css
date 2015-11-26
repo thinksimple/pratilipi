@@ -1,9 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
-@import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic&subset=latin,devanagari);
-
-
 body {
-	font-family: Montserrat, 'Noto Sans', sans-serif;
 	background: #F5F5F5;
 	margin: 0px;
 }
@@ -19,7 +14,6 @@ body {
 
 
 .box {
-	/* font-family: KohinoorDevanagari-Book; */
 	font-family: Helvetica;
 	font-size: 14px;
 	color: #888888;
@@ -30,21 +24,18 @@ body {
 }
 
 .box h1 {
-	/* font-family: KohinoorDevanagari-Book; */
 	color: #1A1A1A;
 	font-size: 30px;
 	margin: 5px 10px 5px 10px;
 }
 
 .box h2 {
-	/* font-family: KohinoorDevanagari-Book; */
 	color: #1A1A1A;
 	font-size: 22px;
 	margin: 5px 10px 5px 10px;
 }
 
 .box h3 {
-	/* font-family: KohinoorDevanagari-Book; */
 	color: #1A1A1A;
 	font-size: 14px;
 	margin: 5px;
