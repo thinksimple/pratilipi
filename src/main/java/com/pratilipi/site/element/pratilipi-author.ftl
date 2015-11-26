@@ -9,7 +9,7 @@
 				<#if author.penName?? >
 					<h2>"${ author.penName }"</h2>
 				</#if>
-				<div style="margin:5px 10px 5px 10px">
+				<div style="margin:5px 0px 5px 5px">
 					<h3>${ _strings.author_since }</h3>
 					<span>${ author.registrationDate?date }</span>
 				</div>

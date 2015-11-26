@@ -4,7 +4,6 @@
 
 body {
 	font-family: Montserrat, 'Noto Sans', sans-serif;
-	color: #333;
 	background: #F5F5F5;
 	margin: 0px;
 }
@@ -48,7 +47,7 @@ body {
 	/* font-family: KohinoorDevanagari-Book; */
 	color: #1A1A1A;
 	font-size: 14px;
-	margin: 5px 6px 5px 10px;
+	margin: 5px;
 	display: inline;
 }
 
@@ -61,7 +60,7 @@ body {
 .box p {
 	line-height: 21px;
 	text-align: justify;
-	margin: 10px 10px 10px 10px;
+	margin: 10px;
 }
 
 .box table {
@@ -84,4 +83,3 @@ body {
 .red {
 	color: #D0021B;
 }
-
