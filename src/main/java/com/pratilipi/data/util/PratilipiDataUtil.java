@@ -665,10 +665,7 @@ public class PratilipiDataUtil {
 				return;
 			
 			Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-			String uri = page.getUriAlias() == null ? page.getUri() : page.getUriAlias();
-			FacebookApi.postScrapeRequest( "http://" + Language.ENGLISH.getHostName() + uri );
-//			TODO: Uncomment following line once language specific websites are launched.
-//			FacebookApi.postScrapeRequest( "http://" + pratilipi.getLanguage().getHostName() + "/" + uri );
+			FacebookApi.postScrapeRequest( "http://" + Language.ENGLISH.getHostName() + page.getUri() );
 		}
 				
 	}
