@@ -29,7 +29,7 @@
 
 	<!-- Required for Manual Queries on DataStore -->
 
-	<datastore-index kind="PRATILIPI" ancestor="false" source="manual">
+	<datastore-index kind="AUTHOR" ancestor="false" source="manual">
 		<property name="LANGUAGE_ID" direction="asc"/>
 		<property name="TOTAL_READ_COUNT" direction="asc"/>
 	</datastore-index>
