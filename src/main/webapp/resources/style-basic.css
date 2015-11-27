@@ -41,15 +41,15 @@ body {
 	margin: 5px 10px 5px 10px;
 }
 
-.box h3 a {
-	color: #1A1A1A;
-}
-
 .box h4 {
 	color: #1A1A1A;
 	font-size: 14px;
 	margin: 5px;
 	display: inline;
+}
+
+.box h1 a, .box h2 a, .box h3 a, .box h4 a {
+	color: #1A1A1A;
 }
 
 .box hr {
@@ -74,6 +74,12 @@ body {
 	vertical-align: top;
 }
 
+
+.two-cols {
+	-webkit-column-count: 2; /* Chrome, Safari, Opera */
+	-moz-column-count: 2; /* Firefox */
+	column-count: 2;
+}
 
 .three-cols {
 	-webkit-column-count: 3; /* Chrome, Safari, Opera */

@@ -78,6 +78,8 @@ public class PratilipiData {
 
 
 	private Long readCount;
+	
+	private Long fbLikeShareCount;
 
 
 	
@@ -382,6 +384,14 @@ public class PratilipiData {
 
 	public void setReadCount( Long readCount ) {
 		this.readCount = readCount;
+	}
+	
+	public Long getFbLikeShareCount() {
+		return fbLikeShareCount;
+	}
+
+	public void setFbLikeShareCount( Long fbLikeShareCount ) {
+		this.fbLikeShareCount = fbLikeShareCount;
 	}
 	
 }

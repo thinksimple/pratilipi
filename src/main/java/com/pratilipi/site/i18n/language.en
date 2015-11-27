@@ -88,6 +88,7 @@ submit_review		= SUBMIT
 author_about = About the Author
 author_since = Author Since
 author_published_works = Published Works
+
 author_count_works = WORKS
 author_count_reads = READS
 author_count_likes = LIKES
@@ -95,5 +96,10 @@ author_count_likes = LIKES
 
 # Pratilipi related
 
+pratilipi_summary = Summary
+
 pratilipi_read = READ
 pratilipi_free = FREE !
+
+pratilipi_count_reads = READS
+pratilipi_count_likes = LIKES

@@ -233,6 +233,7 @@ public class PratilipiDataUtil {
 		pratilipiData.setRelevance( calculateRelevance( pratilipi, author ) );
 		
 		pratilipiData.setReadCount( pratilipi.getReadCount() );
+		pratilipiData.setFbLikeShareCount( pratilipi.getFbLikeShareCount() );
 
 		return pratilipiData;
 	}
