@@ -73,4 +73,18 @@ public class PratilipiFilter implements Serializable {
 		this.orderByReadCount = orderByReadCount;
 	}
 	
+	
+	public String toUrlEncodedString() {
+		String urlEncodedString = "";
+		
+		if( language != null )
+			urlEncodedString += "&language=" + language.toString();
+		if( authorId != null )
+			urlEncodedString += "&authorId=" + authorId;
+		if( type != null )
+			urlEncodedString += "&type=" + type.toString();
+		
+		return urlEncodedString.length() == 0 ? "" : urlEncodedString.substring( 1 );
+	}
+	
 }

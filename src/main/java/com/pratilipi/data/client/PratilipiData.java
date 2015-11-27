@@ -203,6 +203,12 @@ public class PratilipiData {
 		return coverImageUrl;
 	}
 
+	public String getCoverImageUrl( int width ) {
+		return coverImageUrl.indexOf( '?' ) == -1
+				? coverImageUrl + "?width=" + width
+				: coverImageUrl + "&width=" + width;
+	}
+
 	public void setCoverImageUrl( String coverImageUrl ) {
 		this.coverImageUrl = coverImageUrl;
 	}

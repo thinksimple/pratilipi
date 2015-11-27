@@ -32,6 +32,7 @@ public class AuthorMock {
 		hiAuthor_1.setRegistrationDate( new Date() );
 		hiAuthor_1.setContentPublished( 100 );
 		hiAuthor_1.setTotalReadCount( 1000L );
+		hiAuthor_1.setTotalFbLikeShareCount( 100L );
 		
 		guAuthor_1.setFirstName( "ગુજરાતી" );
 		guAuthor_1.setLastName( "ઐઠોર" );

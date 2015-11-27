@@ -92,14 +92,14 @@ public class PratilipiSite extends HttpServlet {
 			if( uri.equals( "/" ) ) {
 				dataModel = createDataModelForHomePage( lang );
 				templateName = templateFilePrefix + "Home.ftl";
-				
+			
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId() );
 				templateName = templateFilePrefix + "Pratilipi.ftl";
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId() );
+				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 			
 			} else if( uri.equals( "/search" ) ) {
@@ -223,7 +223,7 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 	
-	public Map<String, Object> createDataModelForAuthorPage( Long authorId ) {
+	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author, true, false );
@@ -236,11 +236,19 @@ public class PratilipiSite extends HttpServlet {
 		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "author", authorData );
-		dataModel.put( "authorJson", gson.toJson( authorData ).toString() );
-		dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ).toString() );
-		dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
-		dataModel.put( "publishedPratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+		if( basicMode ) {
+			dataModel.put( "author", authorData );
+			dataModel.put( "pratilipiList", pratilipiDataListCursorTuple.getDataList() );
+			if( pratilipiDataListCursorTuple.getDataList().size() == 20
+					&& pratilipiDataListCursorTuple.getCursor() != null )
+				dataModel.put( "searchQuery", pratilipiFilter.toUrlEncodedString() );
+		} else {
+			dataModel.put( "author", authorData );
+			dataModel.put( "authorJson", gson.toJson( authorData ).toString() );
+			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ).toString() );
+			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
+			dataModel.put( "publishedPratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+		}
 		return dataModel;
 	}
 

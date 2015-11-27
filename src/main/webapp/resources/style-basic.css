@@ -37,6 +37,16 @@ body {
 
 .box h3 {
 	color: #1A1A1A;
+	font-size: 18px;
+	margin: 5px 10px 5px 10px;
+}
+
+.box h3 a {
+	color: #1A1A1A;
+}
+
+.box h4 {
+	color: #1A1A1A;
 	font-size: 14px;
 	margin: 5px;
 	display: inline;
@@ -60,6 +70,7 @@ body {
 }
 
 .box table tr td {
+	padding: 0px;
 	vertical-align: top;
 }
 
