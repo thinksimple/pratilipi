@@ -1,8 +1,5 @@
 package com.pratilipi.api.impl.init;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.pratilipi.api.GenericApi;
@@ -10,10 +7,6 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.util.PratilipiFilter;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.taskqueue.Task;
-import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -40,7 +33,7 @@ public class InitApi extends GenericApi {
 		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
 */		
-		
+/*		
 		List<Long> pratilipiIdList = DataAccessorFactory.getDataAccessor()
 				.getPratilipiIdList( new PratilipiFilter(), null, null )
 				.getDataList();
@@ -53,9 +46,9 @@ public class InitApi extends GenericApi {
 					.addParam( "processData", "true" );
 			taskList.add( task );
 		}
-		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
+		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
-
+*/
 		return new GenericResponse();
 		
 	}

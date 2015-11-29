@@ -26,12 +26,4 @@
 		<property name="REVIEW_DATE" direction="desc"/>
 	</datastore-index>
 
-
-	<!-- Required for Manual Queries on DataStore -->
-
-	<datastore-index kind="AUTHOR" ancestor="false" source="manual">
-		<property name="LANGUAGE_ID" direction="asc"/>
-		<property name="TOTAL_READ_COUNT" direction="asc"/>
-	</datastore-index>
-
 </datastore-indexes>
