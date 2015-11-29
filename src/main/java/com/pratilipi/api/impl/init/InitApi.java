@@ -10,7 +10,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -24,7 +24,7 @@ public class InitApi extends GenericApi {
 
 	@Get
 	public GenericResponse get( GetInitApiRequest request ) {
-		
+/*		
 		List<Long> authorIdList = DataAccessorFactory.getDataAccessor()
 				.getAuthorIdList( new AuthorFilter(), null, null )
 				.getDataList();
@@ -39,7 +39,23 @@ public class InitApi extends GenericApi {
 		}
 		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
+*/		
 		
+		List<Long> pratilipiIdList = DataAccessorFactory.getDataAccessor()
+				.getPratilipiIdList( new PratilipiFilter(), null, null )
+				.getDataList();
+
+		List<Task> taskList = new ArrayList<Task>( pratilipiIdList.size() );
+		for( Long pratilipiId : pratilipiIdList ) {
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/process" )
+					.addParam( "pratilipiId", pratilipiId.toString() )
+					.addParam( "processData", "true" );
+			taskList.add( task );
+		}
+		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
+		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
+
 		return new GenericResponse();
 		
 	}
