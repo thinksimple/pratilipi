@@ -106,6 +106,9 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "READ_COUNT" )
 	private Long readCount;
 	
+	@Persistent( column = "FB_LIKE_SHARE_COUNT_OFFSET" )
+	private Long fbLikeShareCountOffset;
+	
 	@Persistent( column = "FB_LIKE_SHARE_COUNT" )
 	private Long fbLikeShareCount;
 
@@ -343,7 +346,8 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public Long getFbLikeShareCount() {
-		return fbLikeShareCount == null ? 0L : fbLikeShareCount;
+		return ( fbLikeShareCountOffset == null ? 0L : fbLikeShareCountOffset )
+				+ ( fbLikeShareCount == null ? 0L : fbLikeShareCount );
 	}
 
 	@Override
