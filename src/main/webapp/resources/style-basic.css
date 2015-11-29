@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/earlyaccess/notosanstamil.css);
+
 body {
 	background: #F5F5F5;
 	margin: 0px;
@@ -14,7 +16,7 @@ body {
 
 
 .box {
-	font-family: Helvetica;
+	font-family: 'Noto Sans Tamil', Helvetica;
 	font-size: 14px;
 	color: #888888;
 	background-color: white;
