@@ -89,17 +89,18 @@ author_about = About the Author
 author_since = Author Since
 author_published_works = Published Works
 
-author_count_works = WORKS
-author_count_reads = READS
-author_count_likes = LIKES
+author_count_works = Works
+author_count_reads = Reads
+author_count_likes = Likes
 
 
 # Pratilipi related
 
 pratilipi_summary = Summary
 
-pratilipi_read = READ
-pratilipi_free = FREE !
+pratilipi_read = Read
+pratilipi_free = Free !
 
-pratilipi_count_reads = READS
-pratilipi_count_likes = LIKES
+pratilipi_count_reads = Reads
+pratilipi_count_likes = Likes
+pratilipi_count_reviews = Reviews

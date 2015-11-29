@@ -18,7 +18,7 @@
 		<tr>
 			<td colspan="2">
 				<hr/>
-				<p class="two-cols" style="text-align:center">
+				<p class="two-cols" style="text-align:center;text-transform:uppercase;">
 					<small>${ _strings.pratilipi_count_reads }</small> <br/> <span class="red" style="font-size:20px;font-weight:bold">${ pratilipi.readCount }</span> <br/>
 					<small>${ _strings.pratilipi_count_likes }</small> <br/> <span class="red" style="font-size:20px;font-weight:bold">${ pratilipi.fbLikeShareCount }</span> <br/>
 				</p>
