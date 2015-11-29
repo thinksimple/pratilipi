@@ -60,7 +60,7 @@ public class AuthorDataUtil {
 	
 	public static String createAuthorImageUrl( Author author ) {
 		String url = "/author/image";
-		if( author.hasCustomCover() ) {
+		if( author.hasCustomImage() ) {
 			url = url + "?authorId=" + author.getId() + "&version=" + author.getLastUpdated().getTime();
 			if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", author.getId() % 10 + "" ) + url;
@@ -245,7 +245,7 @@ public class AuthorDataUtil {
 			throws UnexpectedServerException {
 
 		String fileName = "";
-		if( authorId != null && DataAccessorFactory.getDataAccessor().getAuthor( authorId ).hasCustomCover() )
+		if( authorId != null && DataAccessorFactory.getDataAccessor().getAuthor( authorId ).hasCustomImage() )
 			fileName = IMAGE_FOLDER + "/original/" + authorId;
 		else
 			fileName = IMAGE_FOLDER + "/original/" + "author";
@@ -300,18 +300,6 @@ public class AuthorDataUtil {
 			page.setPrimaryContentId( authorId );
 			page.setCreationDate( new Date() );
 			page = dataAccessor.createOrUpdatePage( page );
-			return true;
-		}
-		
-		if( author.getTotalReadCount() < 100 ) {
-			if( page.getUriAlias() == null ) {
-				return false;
-			} else {
-				logger.log( Level.INFO, "Clearing Author Page Url: '" + page.getUriAlias() + "' -> 'null'" );
-				page.setUriAlias( null );
-				page = dataAccessor.createOrUpdatePage( page );
-				return true;
-			}
 		}
 		
 		String uriAlias = UriAliasUtil.generateUriAlias(
