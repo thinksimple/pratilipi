@@ -50,9 +50,9 @@ public interface Author extends Serializable {
 	void setSummary( String summary );
 	
 
-	Boolean hasCustomCover();
+	Boolean hasCustomImage();
 
-	void setCustomCover( Boolean customCover );
+	void setCustomImage( Boolean customImage );
 
 	Date getRegistrationDate();
 	

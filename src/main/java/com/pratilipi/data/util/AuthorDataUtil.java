@@ -279,7 +279,7 @@ public class AuthorDataUtil {
 		auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( author ) );
 
-		author.setCustomCover( true );
+		author.setCustomImage( true );
 		author.setLastUpdated( new Date() );
 		author = dataAccessor.createOrUpdateAuthor( author );
 
