@@ -32,8 +32,8 @@ public class MemcacheImpl implements Memcache {
 		T value = (T) cache.get(key);
 		if( value == null )
 			logger.log( Level.INFO, "Cache Miss: " + key );
-		else
-			logger.log( Level.INFO, "Cache Hit: " + key );
+//		else
+//			logger.log( Level.INFO, "Cache Hit: " + key );
 		return value;
 	}
 
