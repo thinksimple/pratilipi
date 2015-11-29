@@ -300,7 +300,7 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public Long getReviewCount() {
-		return reviewCount;
+		return reviewCount == null ? 0 : reviewCount;
 	}
 
 	@Override
