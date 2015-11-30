@@ -144,12 +144,20 @@ public class PratilipiDataUtil {
 	
 
 	public static String createPratilipiCoverUrl( Pratilipi pratilipi ) {
+		return createPratilipiCoverUrl( pratilipi, null );
+	}
+	
+	public static String createPratilipiCoverUrl( Pratilipi pratilipi, Integer width ) {
 		String url = "/pratilipi/cover";
 		if( pratilipi.hasCustomCover() ) {
 			url = url + "?pratilipiId=" + pratilipi.getId() + "&version=" + pratilipi.getLastUpdated().getTime();
+			if( width != null )
+				url = url + "&width=" + width;
 			if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", pratilipi.getId() % 10 + "" ) + url;
 		} else {
+			if( width != null )
+				url = url + "?width=" + width;
 			if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", "10" ) + url;
 		}

@@ -59,12 +59,20 @@ public class AuthorDataUtil {
 	
 	
 	public static String createAuthorImageUrl( Author author ) {
+		return createAuthorImageUrl( author, null );
+	}
+	
+	public static String createAuthorImageUrl( Author author, Integer width ) {
 		String url = "/author/image";
 		if( author.hasCustomImage() ) {
 			url = url + "?authorId=" + author.getId() + "&version=" + author.getLastUpdated().getTime();
+			if( width != null )
+				url = url + "&width=" + width;
 			if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", author.getId() % 10 + "" ) + url;
 		} else {
+			if( width != null )
+				url = url + "?width=" + width;
 			if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", "10" ) + url;
 		}

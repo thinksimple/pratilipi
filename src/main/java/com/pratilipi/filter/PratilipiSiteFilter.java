@@ -123,7 +123,7 @@ public class PratilipiSiteFilter implements Filter {
 					: requestUri.substring( requestUri.lastIndexOf( '/' ) + 1, requestUri.indexOf( '?' ) );
 			Long pratilipiId = Long.parseLong( pratilipiIdStr );
 			Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( pratilipiId );
-			response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + PratilipiDataUtil.createPratilipiCoverUrl( pratilipi ) );
+			response.setHeader( "Location", PratilipiDataUtil.createPratilipiCoverUrl( pratilipi, 150 ) );
 
 
 		} else if( oldAuthorImageUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Author image url
@@ -133,7 +133,7 @@ public class PratilipiSiteFilter implements Filter {
 					: requestUri.substring( requestUri.lastIndexOf( '/' ) + 1, requestUri.indexOf( '?' ) );
 			Long authorId = Long.parseLong( authorIdStr );
 			Author author = DataAccessorFactory.getDataAccessor().getAuthor( authorId );
-			response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + AuthorDataUtil.createAuthorImageUrl( author ) );
+			response.setHeader( "Location", AuthorDataUtil.createAuthorImageUrl( author, 150 ) );
 		
 			
 		} else if( oldPratilipiReaderUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi reader url
