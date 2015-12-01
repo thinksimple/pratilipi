@@ -384,15 +384,16 @@ public class AuthorDataUtil {
 		}
 		
 		Author author = dataAccessor.getAuthor( authorId );
-		if( (int) author.getContentPublished() != contentPublished || (long) author.getTotalReadCount() != totalReadCount ) {
-			author.setContentPublished( contentPublished );
-			author.setTotalReadCount( totalReadCount );
-			author.setTotalFbLikeShareCount( totalFbLikeShareCount );
-			author = dataAccessor.createOrUpdateAuthor( author );
-			return true;
-		} else {
+		if( (int) author.getContentPublished() == contentPublished
+				&& (long) author.getTotalReadCount() == totalReadCount
+				&& (long) author.getTotalFbLikeShareCount() == totalFbLikeShareCount )
 			return false;
-		}
+		
+		author.setContentPublished( contentPublished );
+		author.setTotalReadCount( totalReadCount );
+		author.setTotalFbLikeShareCount( totalFbLikeShareCount );
+		author = dataAccessor.createOrUpdateAuthor( author );
+		return true;
 
 	}
 	
