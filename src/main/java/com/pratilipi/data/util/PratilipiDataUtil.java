@@ -179,15 +179,8 @@ public class PratilipiDataUtil {
 	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, boolean includeAll, boolean includeMetaData ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipi.getId() );
-		return createPratilipiData( pratilipi, author, pratilipiPage, includeAll, includeMetaData );
-	}
-	
-	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, Page pratilipiPage ) {
-		return createPratilipiData( pratilipi, author, pratilipiPage, false, false );
-	}
-
-	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, Page pratilipiPage, boolean includeAll, boolean includeMetaData ) {
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Page readPage = dataAccessor.getPage( PageType.READ, pratilipi.getId() );
+		Page writePage = dataAccessor.getPage( PageType.WRITE, pratilipi.getId() );
 		
 		PratilipiData pratilipiData = new PratilipiData();
 
@@ -206,8 +199,8 @@ public class PratilipiDataUtil {
 		else
 			pratilipiData.setPageUrlAlias( pratilipiPage.getUri() );
 		pratilipiData.setCoverImageUrl( createPratilipiCoverUrl( pratilipi ) );
-		pratilipiData.setReaderPageUrl( PageType.READ.getUrlPrefix() + pratilipi.getId() );
-		pratilipiData.setWriterPageUrl( PageType.WRITE.getUrlPrefix() + pratilipi.getId() );
+		pratilipiData.setReadPageUrl( readPage == null ? PageType.READ.getUrlPrefix() + pratilipi.getId() : readPage.getUriAlias() );
+		pratilipiData.setWritePageUrl( writePage == null ? PageType.WRITE.getUrlPrefix() + pratilipi.getId() : writePage.getUriAlias() );
 		
 		pratilipiData.setType( pratilipi.getType() );
 		pratilipiData.setContentType( pratilipi.getContentType() );
@@ -533,6 +526,28 @@ public class PratilipiDataUtil {
 		return true;
 	}
 	
+	public static boolean createOrUpdatePratilipiReadPageUrl( Long pratilipiId ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
+		Page readPage = dataAccessor.getPage( PageType.READ, pratilipiId );
+
+		if( readPage == null ) {
+			readPage = dataAccessor.newPage();
+			readPage.setType( PageType.READ );
+			readPage.setUri( PageType.READ.getUrlPrefix() + pratilipiId );
+			readPage.setPrimaryContentId( pratilipiId );
+			readPage.setCreationDate( new Date() );
+		} else if( ( page.getUriAlias() == null && readPage.getUriAlias() == null )
+				|| ( page.getUriAlias() != null && readPage.getUriAlias() != null && page.getUri().equals( page.getUriAlias() ) ) ) {
+			return false;
+		}
+		
+		readPage.setUriAlias( page.getUriAlias() == null ? null : page.getUriAlias() + "/read" );
+		readPage = dataAccessor.createOrUpdatePage( readPage );
+		
+		return true;
+	}
+
 	
 	public static boolean updatePratilipiStats( Long pratilipiId ) throws UnexpectedServerException {
 		

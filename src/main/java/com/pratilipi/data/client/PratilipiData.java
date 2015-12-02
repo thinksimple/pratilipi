@@ -36,8 +36,8 @@ public class PratilipiData {
 	private String pageUrl;
 	private String pageUrlAlias;
 	private String coverImageUrl;
-	private String readerPageUrl;
-	private String writerPageUrl;
+	private String readPageUrl;
+	private String writePageUrl;
 
 	
 	private PratilipiType type;
@@ -215,20 +215,20 @@ public class PratilipiData {
 		this.coverImageUrl = coverImageUrl;
 	}
 
-	public String getReaderPageUrl() {
-		return readerPageUrl;
+	public String getReadPageUrl() {
+		return readPageUrl;
 	}
 
-	public void setReaderPageUrl( String readerPageUrl ) {
-		this.readerPageUrl = readerPageUrl;
+	public void setReadPageUrl( String readPageUrl ) {
+		this.readPageUrl = readPageUrl;
 	}
 	
-	public String getWriterPageUrl(){
-		return this.writerPageUrl;
+	public String getWritePageUrl(){
+		return this.writePageUrl;
 	}
 	
-	public void setWriterPageUrl( String writerPageUrl ){
-		this.writerPageUrl = writerPageUrl;
+	public void setWritePageUrl( String writePageUrl ){
+		this.writePageUrl = writePageUrl;
 	}
 
 
