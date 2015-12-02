@@ -5,8 +5,8 @@ public enum PageType {
 	GENERIC( "/page/" ),
 
 	PRATILIPI( "/pratilipi/" ),
-	READ( "/read?id=" ),
-	WRITE( "/write?id=" ),
+	READ( "/read/" ),
+	WRITE( "/write/" ),
 
 	AUTHOR( "/author/" ),
 	AUTHOR_DASHBOARD( null ),
