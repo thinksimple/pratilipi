@@ -199,8 +199,12 @@ public class PratilipiDataUtil {
 		else
 			pratilipiData.setPageUrlAlias( pratilipiPage.getUri() );
 		pratilipiData.setCoverImageUrl( createPratilipiCoverUrl( pratilipi ) );
-		pratilipiData.setReadPageUrl( readPage == null ? PageType.READ.getUrlPrefix() + pratilipi.getId() : readPage.getUriAlias() );
-		pratilipiData.setWritePageUrl( writePage == null ? PageType.WRITE.getUrlPrefix() + pratilipi.getId() : writePage.getUriAlias() );
+		pratilipiData.setReadPageUrl( readPage == null || readPage.getUriAlias() == null
+				? PageType.READ.getUrlPrefix() + pratilipi.getId()
+				: readPage.getUriAlias() );
+		pratilipiData.setWritePageUrl( writePage == null || writePage.getUriAlias() == null
+				? PageType.WRITE.getUrlPrefix() + pratilipi.getId()
+				: writePage.getUriAlias() );
 		
 		pratilipiData.setType( pratilipi.getType() );
 		pratilipiData.setContentType( pratilipi.getContentType() );
