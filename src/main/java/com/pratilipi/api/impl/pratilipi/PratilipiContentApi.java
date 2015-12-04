@@ -13,7 +13,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PratilipiContentType;
-import com.pratilipi.data.client.PratilipiContentData;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -26,7 +25,7 @@ public class PratilipiContentApi extends GenericApi {
 	public GetPratilipiContentResponse getPratilipiContent( GetPratilipiContentRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		Object content = (PratilipiContentData) PratilipiDataUtil.getPratilipiContent(
+		Object content = PratilipiDataUtil.getPratilipiContent(
 				request.getPratilipiId(),
 				request.getChapterNo(),
 				request.getPageNo(),
