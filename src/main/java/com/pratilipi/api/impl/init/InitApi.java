@@ -53,7 +53,9 @@ public class InitApi extends GenericApi {
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
 */
 		
-		DataAccessorFactory.getSearchAccessor().deletePratilipiDataIndex( 5100585221095424L );
+		DataAccessorFactory.getSearchAccessor().deletePratilipiDataIndex( 5954827506941952L );
+		DataAccessorFactory.getSearchAccessor().deletePratilipiDataIndex( 5692964563058688L );
+		DataAccessorFactory.getSearchAccessor().deleteAuthorDataIndex( 5651568057647104L );
 		
 		return new GenericResponse();
 		

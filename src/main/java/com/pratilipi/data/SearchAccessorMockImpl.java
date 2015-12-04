@@ -84,4 +84,16 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 		// TODO: Implementation
 	}
 
+	@Override
+	public void deleteAuthorDataIndex( Long authorId ) {
+		for( Object object : GLOBAL_INDEX ) {
+			if( object.getClass() == AuthorData.class ) {
+				if( ( (AuthorData) object ).getId() == authorId ) {
+					GLOBAL_INDEX.remove( object );
+					break;
+				}
+			}
+		}
+	}
+	
 }

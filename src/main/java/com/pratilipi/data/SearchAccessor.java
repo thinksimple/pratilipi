@@ -21,4 +21,6 @@ public interface SearchAccessor {
 	
 	void indexAuthorData( AuthorData authorData ) throws UnexpectedServerException;
 	
+	void deleteAuthorDataIndex( Long authorId );
+	
 }

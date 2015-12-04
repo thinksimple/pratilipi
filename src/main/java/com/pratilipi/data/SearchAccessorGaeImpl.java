@@ -307,4 +307,9 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.build();
 	}
 	
+	@Override
+	public void deleteAuthorDataIndex( Long authorId ) {
+		deleteIndex( "AuthorData:" + authorId );
+	}
+
 }
