@@ -7,12 +7,12 @@ public class GetPratilipiContentResponse extends GenericResponse {
 	
 	private Long pratilipiId;
 	private Integer pageNo;
-	private String pageContent;
+	private Object pageContent;
 
 	
 	private GetPratilipiContentResponse() {}
 	
-	public GetPratilipiContentResponse( Long pratilipiId, Integer pageNo, String pageContent ) {
+	public GetPratilipiContentResponse( Long pratilipiId, Integer pageNo, Object pageContent ) {
 		this.pratilipiId = pratilipiId;
 		this.pageNo = pageNo;
 		this.pageContent = pageContent;

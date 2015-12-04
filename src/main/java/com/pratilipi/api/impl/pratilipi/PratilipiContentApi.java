@@ -1,6 +1,5 @@
 package com.pratilipi.api.impl.pratilipi;
 
-import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -34,7 +33,7 @@ public class PratilipiContentApi extends GenericApi {
 		return new GetPratilipiContentResponse(
 				request.getPratilipiId(),
 				request.getPageNo(),
-				new Gson().toJson( content ) );
+				content );
 	}
 
 	@Put
