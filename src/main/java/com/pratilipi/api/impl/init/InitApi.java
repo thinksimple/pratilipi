@@ -7,6 +7,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.data.DataAccessorFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -17,6 +18,7 @@ public class InitApi extends GenericApi {
 
 	@Get
 	public GenericResponse get( GetInitApiRequest request ) {
+		
 /*		
 		List<Long> authorIdList = DataAccessorFactory.getDataAccessor()
 				.getAuthorIdList( new AuthorFilter(), null, null )
@@ -32,7 +34,8 @@ public class InitApi extends GenericApi {
 		}
 		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
-*/		
+*/
+		
 /*		
 		List<Long> pratilipiIdList = DataAccessorFactory.getDataAccessor()
 				.getPratilipiIdList( new PratilipiFilter(), null, null )
@@ -49,6 +52,9 @@ public class InitApi extends GenericApi {
 		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
 */
+		
+		DataAccessorFactory.getSearchAccessor().deletePratilipiDataIndex( 5100585221095424L );
+		
 		return new GenericResponse();
 		
 	}

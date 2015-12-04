@@ -12,9 +12,9 @@ public class ApiService extends GenericService {
 	static {
 		ApiRegistry.register( UserLoginFacebookApi.class );	// *.pratilipi.com
 
-		ApiRegistry.register( PratilipiCoverApi.class );	// AWS CloudFront
+		ApiRegistry.register( PratilipiCoverApi.class );	// *.pratilipi.com & AWS CloudFront
 		
-		ApiRegistry.register( AuthorImageApi.class );		// AWS CloudFront
+		ApiRegistry.register( AuthorImageApi.class );		// *.pratilipi.com & AWS CloudFront
 	}
 	
 }
