@@ -13,6 +13,17 @@
 	</dispatch>
 
 	<dispatch>
+		<url>*/api/author/image</url>
+		<module>api</module>
+	</dispatch>
+
+	<dispatch>
+		<url>*/api/pratilipi/cover</url>
+		<module>api</module>
+	</dispatch>
+
+
+	<dispatch>
 		<url>www.pratilipi.com/*</url>
 		<module>www</module>
 	</dispatch>
