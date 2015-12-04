@@ -401,8 +401,10 @@ public class PratilipiDataUtil {
 	public static BlobEntry getPratilipiCover( Long pratilipiId, Integer width )
 			throws UnexpectedServerException {
 
+		Pratilipi pratilipi = pratilipiId == null ? null : DataAccessorFactory.getDataAccessor().getPratilipi( pratilipiId );
+		
 		String fileName = "";
-		if( pratilipiId != null && DataAccessorFactory.getDataAccessor().getPratilipi( pratilipiId ).hasCustomCover() )
+		if( pratilipi != null && pratilipi.hasCustomCover() )
 			fileName = COVER_FOLDER + "/original/" + pratilipiId;
 		else
 			fileName = COVER_FOLDER + "/original/" + "pratilipi";

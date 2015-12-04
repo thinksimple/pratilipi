@@ -252,8 +252,10 @@ public class AuthorDataUtil {
 	public static BlobEntry getAuthorImage( Long authorId, Integer width )
 			throws UnexpectedServerException {
 
+		Author author = authorId == null ? null : DataAccessorFactory.getDataAccessor().getAuthor( authorId );
+		
 		String fileName = "";
-		if( authorId != null && DataAccessorFactory.getDataAccessor().getAuthor( authorId ).hasCustomImage() )
+		if( author != null && author.hasCustomImage() )
 			fileName = IMAGE_FOLDER + "/original/" + authorId;
 		else
 			fileName = IMAGE_FOLDER + "/original/" + "author";
