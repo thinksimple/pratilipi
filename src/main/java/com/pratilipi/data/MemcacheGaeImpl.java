@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import javax.cache.CacheException;
 import javax.cache.CacheManager;
 
 import com.google.appengine.api.memcache.InvalidValueException;
+import com.google.appengine.api.memcache.MemcacheServiceException;
 import com.google.appengine.api.memcache.stdimpl.GCacheException;
 import com.google.appengine.api.memcache.stdimpl.GCacheFactory;
 
@@ -59,22 +61,13 @@ public class MemcacheGaeImpl implements Memcache {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
 	public <K, T extends Serializable> void put( K key, T value ) {
-		Map props = Collections.emptyMap();
-
-		try {
-			Cache cache = CacheManager.getInstance().getCacheFactory()
-					.createCache( props );
-			cache.put( key, value );
-		} catch( GCacheException ex ) {
-			logger.log( Level.SEVERE, "Failed to update value.", ex);
-		} catch( CacheException ex ) {
-			logger.log( Level.SEVERE, "Failed to create cache instance.", ex);
-		}
+		put( key, value, TimeUnit.DAYS.toMillis( 30 ) );
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
 	public <K, T extends Serializable> void put(
 			K key, T value, long expirationDeltaMillis ) {
 
@@ -84,31 +77,64 @@ public class MemcacheGaeImpl implements Memcache {
 		Map props = new HashMap();
 		props.put( GCacheFactory.EXPIRATION_DELTA_MILLIS, expirationDeltaMillis );
 
-		try {
-			Cache cache = CacheManager.getInstance().getCacheFactory()
-					.createCache(props);
-			cache.put( key, value );
-		} catch( GCacheException ex ) {
-			logger.log( Level.SEVERE, "Failed to update value.", ex);
-		} catch( CacheException ex ) {
-			logger.log( Level.SEVERE, "Failed to create cache instance.", ex);
+		for( int i = 0; i < 5; i++ ) {
+
+			try {
+				if( i > 0 ) {
+					long sleepMillis = (long) Math.pow( 2, i - 1 ) * 100;
+					logger.log( Level.INFO, "Retrying in " + sleepMillis + " milliseconds ..." );
+					Thread.sleep( sleepMillis );
+				}
+			} catch( InterruptedException ex ) {
+				logger.log( Level.SEVERE, "Thread sleep interrupted.", ex );
+			}
+			
+			try {
+				Cache cache = CacheManager.getInstance().getCacheFactory()
+						.createCache(props);
+				cache.put( key, value );
+				break;
+			} catch( GCacheException | MemcacheServiceException ex ) {
+				logger.log( Level.SEVERE, "Failed to update value.", ex );
+			} catch( CacheException ex ) {
+				logger.log( Level.SEVERE, "Failed to create cache instance.", ex );
+			}
+			
 		}
 		
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
 	public <K, T extends Serializable> void putAll( Map<K, T> keyValueMap ) {
+		
 		Map props = Collections.emptyMap();
 
-		try {
-			Cache cache = CacheManager.getInstance().getCacheFactory()
-					.createCache( props );
-			cache.putAll( keyValueMap );
-		} catch( GCacheException ex ) {
-			logger.log( Level.SEVERE, "Failed to update one or more values.", ex);
-		} catch (CacheException ex) {
-			logger.log( Level.SEVERE, "Failed to create cache instance.", ex);
+		for( int i = 0; i < 5; i++ ) {
+
+			try {
+				if( i > 0 ) {
+					long sleepMillis = (long) Math.pow( 2, i - 1 ) * 100;
+					logger.log( Level.INFO, "Retrying in " + sleepMillis + " milliseconds ..." );
+					Thread.sleep( sleepMillis );
+				}
+			} catch( InterruptedException ex ) {
+				logger.log( Level.SEVERE, "Thread sleep interrupted.", ex );
+			}
+			
+			try {
+				Cache cache = CacheManager.getInstance().getCacheFactory()
+						.createCache( props );
+				cache.putAll( keyValueMap );
+				break;
+			} catch( GCacheException | MemcacheServiceException ex ) {
+				logger.log( Level.SEVERE, "Failed to update one or more values.", ex );
+			} catch (CacheException ex) {
+				logger.log( Level.SEVERE, "Failed to create cache instance.", ex );
+			}
+		
 		}
+
 	}
 
 	public <K> void remove( K key ) {
