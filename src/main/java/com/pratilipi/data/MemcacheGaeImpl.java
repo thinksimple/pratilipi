@@ -79,14 +79,14 @@ public class MemcacheGaeImpl implements Memcache {
 
 		for( int i = 0; i < 5; i++ ) {
 
-			try {
-				if( i > 0 ) {
-					long sleepMillis = (long) Math.pow( 2, i - 1 ) * 100;
-					logger.log( Level.INFO, "Retrying in " + sleepMillis + " milliseconds ..." );
-					Thread.sleep( sleepMillis );
+			if( i > 0 ) {
+				try {
+						long sleepMillis = (long) Math.pow( 2, i - 1 ) * 100;
+						logger.log( Level.INFO, "Retrying in " + sleepMillis + " milliseconds ..." );
+						Thread.sleep( sleepMillis );
+				} catch( InterruptedException ex ) {
+					logger.log( Level.SEVERE, "Thread sleep interrupted.", ex );
 				}
-			} catch( InterruptedException ex ) {
-				logger.log( Level.SEVERE, "Thread sleep interrupted.", ex );
 			}
 			
 			try {
@@ -112,14 +112,14 @@ public class MemcacheGaeImpl implements Memcache {
 
 		for( int i = 0; i < 5; i++ ) {
 
-			try {
-				if( i > 0 ) {
-					long sleepMillis = (long) Math.pow( 2, i - 1 ) * 100;
-					logger.log( Level.INFO, "Retrying in " + sleepMillis + " milliseconds ..." );
-					Thread.sleep( sleepMillis );
+			if( i > 0 ) {
+				try {
+						long sleepMillis = (long) Math.pow( 2, i - 1 ) * 100;
+						logger.log( Level.INFO, "Retrying in " + sleepMillis + " milliseconds ..." );
+						Thread.sleep( sleepMillis );
+				} catch( InterruptedException ex ) {
+					logger.log( Level.SEVERE, "Thread sleep interrupted.", ex );
 				}
-			} catch( InterruptedException ex ) {
-				logger.log( Level.SEVERE, "Thread sleep interrupted.", ex );
 			}
 			
 			try {
