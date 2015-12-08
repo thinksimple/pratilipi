@@ -33,7 +33,9 @@ public class AuthorBackupApi extends GenericApi {
 	private static final Logger logger =
 			Logger.getLogger( AuthorBackupApi.class.getName() );
 	
-	private static final String CSV_HEADER = "AuthorId,UserId,FirstName,LastName,PenName,FirstNameEN,LastNameEN,PenNameEN,Email,Language,ContentsPublished";
+	private static final String CSV_HEADER = "AuthorId,UserId,"
+			+ "FirstName,LastName,PenName,FirstNameEN,LastNameEN,PenNameEN,"
+			+ "Email,Language,ContentsPublished,RegistrationDate";
 	private static final String CSV_SEPARATOR = ",";
 	private static final String LINE_SEPARATOR = "\n";
 	
@@ -62,17 +64,19 @@ public class AuthorBackupApi extends GenericApi {
 				backup.append( gson.toJson( author ) + LINE_SEPARATOR );
 
 				if( request.generateCsv() ) 
-				    csv.append( author.getId().toString() ).append( CSV_SEPARATOR )
-	                		.append( author.getUserId() == null ? "" : author.getUserId().toString() ).append( CSV_SEPARATOR )
-	                		.append( author.getFirstName() ).append( CSV_SEPARATOR )
-	                		.append( author.getLastName() ).append( CSV_SEPARATOR )
-	                		.append( author.getPenName() ).append( CSV_SEPARATOR )
-	                		.append( author.getFirstNameEn() ).append( CSV_SEPARATOR )
-	                		.append( author.getLastNameEn() ).append( CSV_SEPARATOR )
-	                		.append( author.getPenNameEn() ).append( CSV_SEPARATOR )
-	                		.append( author.getEmail() ).append( CSV_SEPARATOR )
-	                		.append( author.getLanguage().toString() ).append( CSV_SEPARATOR )
-	                		.append( author.getContentPublished().toString() ).append( LINE_SEPARATOR );
+				    csv.append( author.getId().toString() )
+				    		.append( CSV_SEPARATOR ).append( author.getUserId() == null ? "" : author.getUserId().toString() )
+				    		.append( CSV_SEPARATOR ).append( author.getFirstName() )
+				    		.append( CSV_SEPARATOR ).append( author.getLastName() )
+	                		.append( CSV_SEPARATOR ).append( author.getPenName() )
+	                		.append( CSV_SEPARATOR ).append( author.getFirstNameEn() )
+	                		.append( CSV_SEPARATOR ).append( author.getLastNameEn() )
+	                		.append( CSV_SEPARATOR ).append( author.getPenNameEn() )
+	                		.append( CSV_SEPARATOR ).append( author.getEmail() )
+	                		.append( CSV_SEPARATOR ).append( author.getLanguage().toString() )
+	                		.append( CSV_SEPARATOR ).append( author.getContentPublished().toString() )
+	                		.append( CSV_SEPARATOR ).append( author.getRegistrationDate().toString() )
+	                		.append( LINE_SEPARATOR );
 				
 			}
 			

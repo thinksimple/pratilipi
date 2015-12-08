@@ -32,7 +32,8 @@ public class UserBackupApi extends GenericApi {
 	private static final Logger logger =
 			Logger.getLogger( UserBackupApi.class.getName() );
 	
-	private static final String CSV_HEADER = "UserId,FacebookId,FirstName,LastName,NickName,Email";
+	private static final String CSV_HEADER = "UserId,FacebookId,"
+			+ "FirstName,LastName,NickName,Email,SignUpDate";
 	private static final String CSV_SEPARATOR = ",";
 	private static final String LINE_SEPARATOR = "\n";
 	
@@ -60,12 +61,14 @@ public class UserBackupApi extends GenericApi {
 				backup.append( gson.toJson( user ) + LINE_SEPARATOR );
 				
 				if( request.generateCsv() )
-					csv.append( user.getId() ).append( CSV_SEPARATOR )
-							.append( user.getFacebookId() ).append( CSV_SEPARATOR )
-							.append( user.getFirstName() ).append( CSV_SEPARATOR )
-							.append( user.getLastName() ).append( CSV_SEPARATOR )
-							.append( user.getNickName() ).append( CSV_SEPARATOR )
-							.append( user.getEmail() ).append( LINE_SEPARATOR );
+					csv.append( user.getId() )
+							.append( CSV_SEPARATOR ).append( user.getFacebookId() )
+							.append( CSV_SEPARATOR ).append( user.getFirstName() )
+							.append( CSV_SEPARATOR ).append( user.getLastName() )
+							.append( CSV_SEPARATOR ).append( user.getNickName() )
+							.append( CSV_SEPARATOR ).append( user.getEmail() )
+							.append( CSV_SEPARATOR ).append( user.getSignUpDate().toString() )
+							.append( LINE_SEPARATOR );
 				
 			}
 			
