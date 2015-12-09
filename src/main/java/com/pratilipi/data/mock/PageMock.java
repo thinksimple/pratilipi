@@ -32,7 +32,19 @@ public class PageMock {
 	public static final Page taPratilipi_2_Page = new PageEntity( 10302L );
 	public static final Page taPratilipi_3_Page = new PageEntity( 10303L );
 
+	public static final Page hiPratilipi_1_ReadPage = new PageEntity( 1010101L );
+	public static final Page hiPratilipi_2_ReadPage = new PageEntity( 1010201L );
+	public static final Page hiPratilipi_3_ReadPage = new PageEntity( 1010301L );
 	
+	public static final Page guPratilipi_1_ReadPage = new PageEntity( 1020101L );
+	public static final Page guPratilipi_2_ReadPage = new PageEntity( 1020201L );
+	public static final Page guPratilipi_3_ReadPage = new PageEntity( 1020301L );
+	
+	public static final Page taPratilipi_1_ReadPage = new PageEntity( 1030101L );
+	public static final Page taPratilipi_2_ReadPage = new PageEntity( 1030201L );
+	public static final Page taPratilipi_3_ReadPage = new PageEntity( 1030301L );
+
+
 	static {
 		PAGE_TABLE.add( home_Page );
 
@@ -51,6 +63,18 @@ public class PageMock {
 		PAGE_TABLE.add( taPratilipi_1_Page );
 		PAGE_TABLE.add( taPratilipi_2_Page );
 		PAGE_TABLE.add( taPratilipi_3_Page );
+
+		PAGE_TABLE.add( hiPratilipi_1_ReadPage );
+		PAGE_TABLE.add( hiPratilipi_2_ReadPage );
+		PAGE_TABLE.add( hiPratilipi_3_ReadPage );
+
+		PAGE_TABLE.add( guPratilipi_1_ReadPage );
+		PAGE_TABLE.add( guPratilipi_2_ReadPage );
+		PAGE_TABLE.add( guPratilipi_3_ReadPage );
+
+		PAGE_TABLE.add( taPratilipi_1_ReadPage );
+		PAGE_TABLE.add( taPratilipi_2_ReadPage );
+		PAGE_TABLE.add( taPratilipi_3_ReadPage );
 
 		
 		home_Page.setType( PageType.GENERIC );
@@ -119,6 +143,53 @@ public class PageMock {
 		taPratilipi_3_Page.setUri( PageType.PRATILIPI.getUrlPrefix() + taPratilipi_3.getId() );
 		taPratilipi_3_Page.setUriAlias( "/tamil-author-1/book-title-3" );
 		taPratilipi_3_Page.setPrimaryContentId( taPratilipi_3.getId() );
+		
+		
+		hiPratilipi_1_ReadPage.setType( PageType.READ );
+		hiPratilipi_1_ReadPage.setUri( PageType.READ.getUrlPrefix() + hiPratilipi_1.getId() );
+		hiPratilipi_1_ReadPage.setUriAlias( "/hindi-author-1/book-title-1/read" );
+		hiPratilipi_1_ReadPage.setPrimaryContentId( hiPratilipi_1.getId() );
+
+		hiPratilipi_2_ReadPage.setType( PageType.READ );
+		hiPratilipi_2_ReadPage.setUri( PageType.READ.getUrlPrefix() + hiPratilipi_2.getId() );
+		hiPratilipi_2_ReadPage.setUriAlias( "/hindi-author-1/book-title-2/read" );
+		hiPratilipi_2_ReadPage.setPrimaryContentId( hiPratilipi_2.getId() );
+
+		hiPratilipi_3_ReadPage.setType( PageType.READ );
+		hiPratilipi_3_ReadPage.setUri( PageType.READ.getUrlPrefix() + hiPratilipi_3.getId() );
+		hiPratilipi_3_ReadPage.setUriAlias( "/hindi-author-1/book-title-3/read" );
+		hiPratilipi_3_ReadPage.setPrimaryContentId( hiPratilipi_3.getId() );
+
+		guPratilipi_1_ReadPage.setType( PageType.READ );
+		guPratilipi_1_ReadPage.setUri( PageType.READ.getUrlPrefix() + guPratilipi_1.getId() );
+		guPratilipi_1_ReadPage.setUriAlias( "/gujarati-author-1/book-title-1/read" );
+		guPratilipi_1_ReadPage.setPrimaryContentId( guPratilipi_1.getId() );
+
+		guPratilipi_2_ReadPage.setType( PageType.READ );
+		guPratilipi_2_ReadPage.setUri( PageType.READ.getUrlPrefix() + guPratilipi_2.getId() );
+		guPratilipi_2_ReadPage.setUriAlias( "/gujarati-author-1/book-title-2/read" );
+		guPratilipi_2_ReadPage.setPrimaryContentId( guPratilipi_2.getId() );
+
+		guPratilipi_3_ReadPage.setType( PageType.READ );
+		guPratilipi_3_ReadPage.setUri( PageType.READ.getUrlPrefix() + guPratilipi_3.getId() );
+		guPratilipi_3_ReadPage.setUriAlias( "/gujarati-author-1/book-title-3/read" );
+		guPratilipi_3_ReadPage.setPrimaryContentId( guPratilipi_3.getId() );
+
+		taPratilipi_1_ReadPage.setType( PageType.READ );
+		taPratilipi_1_ReadPage.setUri( PageType.READ.getUrlPrefix() + taPratilipi_1.getId() );
+		taPratilipi_1_ReadPage.setUriAlias( "/tamil-author-1/book-title-1/read" );
+		taPratilipi_1_ReadPage.setPrimaryContentId( taPratilipi_1.getId() );
+	
+		taPratilipi_2_ReadPage.setType( PageType.READ );
+		taPratilipi_2_ReadPage.setUri( PageType.READ.getUrlPrefix() + taPratilipi_2.getId() );
+		taPratilipi_2_ReadPage.setUriAlias( "/tamil-author-1/book-title-2/read" );
+		taPratilipi_2_ReadPage.setPrimaryContentId( taPratilipi_2.getId() );
+
+		taPratilipi_3_ReadPage.setType( PageType.READ );
+		taPratilipi_3_ReadPage.setUri( PageType.READ.getUrlPrefix() + taPratilipi_3.getId() );
+		taPratilipi_3_ReadPage.setUriAlias( "/tamil-author-1/book-title-3/read" );
+		taPratilipi_3_ReadPage.setPrimaryContentId( taPratilipi_3.getId() );
+		
 	}
 	
 }
