@@ -43,6 +43,7 @@ public class AccessTokenDataUtil {
 			AccessToken newAccessToken = dataAccessor.newAccessToken();
 
 			newAccessToken.setParentId( accessTokenId );
+			newAccessToken.setUserId( 0L );
 			newAccessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
 			newAccessToken.setCreationDate( new Date() );
 			

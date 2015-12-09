@@ -64,19 +64,19 @@ public class AuthorBackupApi extends GenericApi {
 				backup.append( gson.toJson( author ) + LINE_SEPARATOR );
 
 				if( request.generateCsv() ) 
-				    csv.append( author.getId().toString() )
-				    		.append( CSV_SEPARATOR ).append( author.getUserId() == null ? "" : author.getUserId().toString() )
-				    		.append( CSV_SEPARATOR ).append( author.getFirstName() )
-				    		.append( CSV_SEPARATOR ).append( author.getLastName() )
-	                		.append( CSV_SEPARATOR ).append( author.getPenName() )
-	                		.append( CSV_SEPARATOR ).append( author.getFirstNameEn() )
-	                		.append( CSV_SEPARATOR ).append( author.getLastNameEn() )
-	                		.append( CSV_SEPARATOR ).append( author.getPenNameEn() )
-	                		.append( CSV_SEPARATOR ).append( author.getEmail() )
-	                		.append( CSV_SEPARATOR ).append( author.getLanguage().toString() )
-	                		.append( CSV_SEPARATOR ).append( author.getContentPublished().toString() )
-	                		.append( CSV_SEPARATOR ).append( author.getRegistrationDate().toString() )
-	                		.append( LINE_SEPARATOR );
+					csv.append( author.getId().toString() )
+							.append( CSV_SEPARATOR ).append( author.getUserId() == null ? "" : author.getUserId().toString() )
+							.append( CSV_SEPARATOR ).append( author.getFirstName() )
+							.append( CSV_SEPARATOR ).append( author.getLastName() )
+							.append( CSV_SEPARATOR ).append( author.getPenName() )
+							.append( CSV_SEPARATOR ).append( author.getFirstNameEn() )
+							.append( CSV_SEPARATOR ).append( author.getLastNameEn() )
+							.append( CSV_SEPARATOR ).append( author.getPenNameEn() )
+							.append( CSV_SEPARATOR ).append( author.getEmail() )
+							.append( CSV_SEPARATOR ).append( author.getLanguage().toString() )
+							.append( CSV_SEPARATOR ).append( author.getContentPublished().toString() )
+							.append( CSV_SEPARATOR ).append( author.getRegistrationDate().toString() )
+							.append( LINE_SEPARATOR );
 				
 			}
 			

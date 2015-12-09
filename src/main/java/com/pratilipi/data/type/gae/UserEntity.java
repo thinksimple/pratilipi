@@ -216,9 +216,10 @@ public class UserEntity implements User {
 			case ANDROID_SIGNUP_FACEBOOK:
 			case ANDROID_SIGNUP_GOOGLE:
 				return UserState.REGISTERED;
+			default:
+				return null;
 		}
 		
-		return UserState.REGISTERED;
 	}
 	
 	@Override
