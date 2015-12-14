@@ -22,16 +22,6 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 
 public class PratilipiSiteFilter implements Filter {
 	
-	private final Map<String, String> redirections = new HashMap<>();
-	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile(
-			"/resource\\.(book|poem|story|article|pratilipi)-cover/.*"
-			+ "|"
-			+ "/pratilipi-cover/(150|original)/.*" );
-	private final Pattern oldAuthorImageUrlRegEx = Pattern.compile(
-			"/resource.author-image/.*"
-			+ "|"
-			+ "/author-image/150/.*" );
-	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
 	private final Pattern validHostSubdomainRegEx = Pattern.compile(
 			"www\\.(tamil)\\.pratilipi\\.com" );
 	private final Pattern validHostRegEx = Pattern.compile(
@@ -45,7 +35,17 @@ public class PratilipiSiteFilter implements Filter {
 			+ "|"
 			+ "mark-6\\.(raghu\\.)?devo-pratilipi\\.appspot\\.com"
 			+ "|"
-			+ "localhost|127.0.0.1" );
+			+ "localhost|127.0.0.1|192.168.0.121" );
+	private final Map<String, String> redirections = new HashMap<>();
+	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile(
+			"/resource\\.(book|poem|story|article|pratilipi)-cover/.*"
+			+ "|"
+			+ "/pratilipi-cover/(150|original)/.*" );
+	private final Pattern oldAuthorImageUrlRegEx = Pattern.compile(
+			"/resource.author-image/.*"
+			+ "|"
+			+ "/author-image/150/.*" );
+	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
 	
 	{
 		redirections.put( "/favicon.ico", "/favicon.png" );
@@ -84,21 +84,7 @@ public class PratilipiSiteFilter implements Filter {
 		String userAgent = request.getHeader( "user-agent" );
 
 		
-		if( userAgent != null && userAgent.startsWith( "libwww-perl" ) ) {
-			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
-
-		
-		} else if( requestUri.length() > 1 && requestUri.endsWith( "/" ) ) { // Removing trailing "/"
-			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", requestUri.substring( 0, requestUri.length() -1 ) );
-
-			
-		} else if( redirections.get( requestUri ) != null ) {
-			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			response.setHeader( "Location", redirections.get( requestUri ) );
-
-			
-		} else if( validHostSubdomainRegEx.matcher( host ).matches() ) { // Redirecting to <lang>.pratilipi.com
+		if( validHostSubdomainRegEx.matcher( host ).matches() ) { // Redirecting to <lang>.pratilipi.com
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			String queryString = request.getQueryString();
 			if( queryString == null || queryString.isEmpty() )
@@ -114,6 +100,16 @@ public class PratilipiSiteFilter implements Filter {
 				response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + "//www.pratilipi.com" + requestUri );
 			else
 				response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + "//www.pratilipi.com" + requestUri + "?" + request.getQueryString() );
+
+			
+		} else if( requestUri.length() > 1 && requestUri.endsWith( "/" ) ) { // Removing trailing "/"
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", requestUri.substring( 0, requestUri.length() -1 ) );
+
+			
+		} else if( redirections.get( requestUri ) != null ) {
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			response.setHeader( "Location", redirections.get( requestUri ) );
 
 			
 		} else if( oldPratilipiCoverUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi cover url
@@ -140,17 +136,20 @@ public class PratilipiSiteFilter implements Filter {
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", requestUri.replaceFirst( "/(book|poem|story|article|pratilipi)/", "?id=" ) );
 
-			
+		
 		} else if( requestUri.equals( "/_ah/start" ) || requestUri.equals( "/_ah/stop" ) ) {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
+
 			
-			
-		} else {
-			chain.doFilter( request, response );
-		}
+		} else if( userAgent != null && userAgent.startsWith( "libwww-perl" ) ) {
+			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
 
 		
-		DataAccessorFactory.destroyDataAccessor();
+		} else {
+			chain.doFilter( request, response );
+			DataAccessorFactory.destroyDataAccessor();
+		}
+		
 	}
 
 }
