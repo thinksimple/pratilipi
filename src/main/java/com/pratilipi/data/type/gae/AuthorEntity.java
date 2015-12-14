@@ -8,6 +8,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.Author;
 
@@ -55,6 +56,9 @@ public class AuthorEntity implements Author {
 	private Text summary;
 	
 
+	@Persistent( column = "STATE" )
+	private AuthorState state;
+	
 	@Deprecated
 	@Persistent( column = "CUSTOM_COVER" )
 	private Boolean customCover;
@@ -214,6 +218,16 @@ public class AuthorEntity implements Author {
 		this.summary = summary == null ? null : new Text( summary );
 	}
 
+	
+	@Override
+	public AuthorState getState() {
+		return state;
+	}
+	
+	@Override
+	public void setState( AuthorState state ) {
+		this.state = state;
+	}
 	
 	@Override
 	public Boolean hasCustomImage() {
