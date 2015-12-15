@@ -62,7 +62,9 @@ public interface DataAccessor {
 	List<Pratilipi> getPratilipiList( List<Long> idList );
 	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 	DataListCursorTuple<Pratilipi> getPratilipiList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
+	@Deprecated
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
+	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog );
 	
 	// AUTHOR Table
 	Author newAuthor();
@@ -72,7 +74,9 @@ public interface DataAccessor {
 	List<Author> getAuthorList( List<Long> idList );
 	DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount );
 	DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount );
+	@Deprecated
 	Author createOrUpdateAuthor( Author author );
+	Author createOrUpdateAuthor( Author author, AuditLog auditLog );
 
 	
 	// USER_PRATILIPI Table

@@ -460,6 +460,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( pratilipi );
 	}
 	
+	@Override
+	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) {
+		return (Pratilipi) createOrUpdateEntities( pratilipi, auditLog )[ 0 ];
+	}
+
 	
 	// AUTHOR Table
 	
@@ -567,6 +572,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public Author createOrUpdateAuthor( Author author ) {
 		return createOrUpdateEntity( author );
+	}
+
+	@Override
+	public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) {
+		return (Author) createOrUpdateEntities( author, auditLog )[ 1 ];
 	}
 
 	

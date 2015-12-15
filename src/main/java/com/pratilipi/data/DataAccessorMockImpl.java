@@ -310,6 +310,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return pratilipi;
 	}
 	
+	@Override
+	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) {
+		PRATILIPI_TABLE.add( pratilipi );
+		return pratilipi;
+	}
+
 	
 	// AUTHOR Table
 	
@@ -374,6 +380,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Author createOrUpdateAuthor( Author author ) {
+		AUTHOR_TABLE.add( author );
+		return author;
+	}
+
+	@Override
+	public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) {
 		AUTHOR_TABLE.add( author );
 		return author;
 	}

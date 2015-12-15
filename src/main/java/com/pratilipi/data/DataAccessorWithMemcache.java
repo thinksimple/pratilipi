@@ -331,6 +331,13 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return pratilipi;
 	}
 	
+	@Override
+	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) {
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
+		memcache.put( PREFIX_PRATILIPI + pratilipi.getId(), pratilipi );
+		return pratilipi;
+	}
+
 	
 	// AUTHOR Table
 	
@@ -426,6 +433,13 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override
 	public Author createOrUpdateAuthor( Author author ) {
 		author = dataAccessor.createOrUpdateAuthor( author );
+		memcache.put( PREFIX_AUTHOR + author.getId(), author );
+		return author;
+	}
+
+	@Override
+	public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) {
+		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
 		memcache.put( PREFIX_AUTHOR + author.getId(), author );
 		return author;
 	}
