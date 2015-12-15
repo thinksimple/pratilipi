@@ -54,22 +54,23 @@ public class AccessTokenFilter implements Filter {
 		AccessToken accessToken;
 
 		if( autoGenerate ) {
-	
-			if( accessTokenId == null || accessTokenId.isEmpty() ) {
+		
+			if( accessTokenId == null || accessTokenId.isEmpty() )
 				accessTokenId = getCookieValue( RequestCookie.ACCESS_TOKEN.getName(), request );
-			} else {
-				Cookie cookie = new Cookie( RequestCookie.ACCESS_TOKEN.getName(), accessTokenId );
-				cookie.setPath( "/" );
-				response.addCookie( cookie );
-			}
-			
-			accessToken = dataAccessor.getAccessToken( accessTokenId );
-			if( accessToken == null || accessToken.isExpired() ) {
+
+			if( accessTokenId == null || accessTokenId.isEmpty() ) {
 				accessToken = AccessTokenDataUtil.newUserAccessToken();
+			} else {
+				try {
+					accessToken = AccessTokenDataUtil.renewUserAccessToken( accessTokenId );
+				} catch( InvalidArgumentException e ) {
+					accessToken = AccessTokenDataUtil.newUserAccessToken();
+				}
+			}
+
+			if( ! accessToken.getId().equals( accessTokenId ) ) {
 				accessTokenId = accessToken.getId();
-				Cookie cookie = new Cookie( RequestCookie.ACCESS_TOKEN.getName(), accessToken.getId() );
-				cookie.setPath( "/" );
-				response.addCookie(cookie );
+				setCookieValue( RequestCookie.ACCESS_TOKEN.getName(), accessTokenId, response );
 			}
 			
 		} else if( requestUri.equals( "/user/accesstoken" ) ) {
@@ -108,7 +109,7 @@ public class AccessTokenFilter implements Filter {
 		return threadLocalAccessToken.get();
 	}
 	
-	public final String getCookieValue( String cookieName, HttpServletRequest request ) {
+	private String getCookieValue( String cookieName, HttpServletRequest request ) {
 		Cookie[] cookies = request.getCookies();
 		if( cookies == null ) return null;
 		for( Cookie cookie : cookies ) {
@@ -117,7 +118,13 @@ public class AccessTokenFilter implements Filter {
 		}
 		return null;
 	}
-	
+
+	private void setCookieValue( String cookieName, String cookieValue, HttpServletResponse response ) {
+		Cookie cookie = new Cookie( cookieName, cookieValue );
+		cookie.setPath( "/" );
+		response.addCookie( cookie );
+	}
+
 	// Ref: GenericApi.dispatchApiResponse
 	private void dispatchResposne( HttpServletResponse response, Throwable ex )
 			throws IOException {
