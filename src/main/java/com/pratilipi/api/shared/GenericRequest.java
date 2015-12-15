@@ -45,6 +45,12 @@ public class GenericRequest {
 	
 	public static final String ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED = "Verification token is invalid or expired.";
 
+	public static final String ERR_LANGUAGE_REQUIRED = "Language is required.";
+
+	public static final String ERR_PRATILIPI_STATE_REQUIRED = "State is required.";
+
+	public static final String ERR_AUTHOR_STATE_REQUIRED = "State is required.";
+
 	
 	public GenericRequest() {}
 

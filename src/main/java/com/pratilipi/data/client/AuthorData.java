@@ -2,6 +2,7 @@ package com.pratilipi.data.client;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 
 public class AuthorData {
@@ -46,6 +47,10 @@ public class AuthorData {
 	private transient boolean hasSummary;
 	
 
+	private AuthorState state;
+	private transient boolean hasState;
+
+	
 	private String pageUrl;
 	private String pageUrlAlias;
 	private String imageUrl;
@@ -217,6 +222,20 @@ public class AuthorData {
 	
 	public boolean hasSummary() {
 		return this.hasSummary;
+	}
+
+	
+	public AuthorState getState() {
+		return state;
+	}
+
+	public void setState( AuthorState state ) {
+		this.state = state;
+		this.hasState = true;
+	}
+	
+	public boolean hasState() {
+		return this.hasState;
 	}
 
 	
