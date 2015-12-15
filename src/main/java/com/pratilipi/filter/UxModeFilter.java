@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.Website;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Author;
@@ -21,7 +22,8 @@ import com.pratilipi.data.type.Pratilipi;
 
 public class UxModeFilter implements Filter {
 
-	private static final ThreadLocal<Language> threadLocalLanguage = new ThreadLocal<Language>();
+	private static final ThreadLocal<Language> threadLocalDisplayLanguage = new ThreadLocal<Language>();
+	private static final ThreadLocal<Language> threadLocalFilterLanguage = new ThreadLocal<Language>();
 	private static final ThreadLocal<Boolean> threadLocalBasicMode = new ThreadLocal<Boolean>();
 
 	
@@ -39,39 +41,43 @@ public class UxModeFilter implements Filter {
 		HttpServletResponse response = ( HttpServletResponse ) resp;
 		String hostName = request.getServerName();
 		String requestUri = request.getRequestURI();
-		
-		Language language = Language.TAMIL;
+
+		// Defaults - for all test environments
+		Language displayLanguage = Language.TAMIL;
+		Language filterLanguage = Language.TAMIL;
 		boolean basicMode = true;
-		
-		for( Language lang : Language.values() ) {
-			if( hostName.equals( lang.getHostName() ) ) {
-				language = lang;
+
+		for( Website website : Website.values() ) {
+			if( hostName.equals( website.getHostName() ) ) {
+				displayLanguage = website.getDisplayLanguage();
+				filterLanguage = website.getFilterLanguage();
 				basicMode = false;
 				break;
-			} else if( hostName.equals( lang.getMobileHostName() ) ) {
-				language = lang;
+			} else if( hostName.equals( website.getMobileHostName() ) ) {
+				displayLanguage = website.getDisplayLanguage();
+				filterLanguage = website.getFilterLanguage();
 				basicMode = true;
 				break;
 			}
 		}
 		
 
-		if( language != Language.ENGLISH ) {
+		if( filterLanguage != null ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			Page page = dataAccessor.getPage( requestUri );
 			if( page != null ) {
 				if( page.getType() == PageType.PRATILIPI ) {
 					Pratilipi pratilipi = dataAccessor.getPratilipi( page.getPrimaryContentId() );
-					if( language != pratilipi.getLanguage() ) {
+					if( displayLanguage != pratilipi.getLanguage() ) {
 						response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-						response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + pratilipi.getLanguage().getHostName() + requestUri );
+						response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + Website.ALL_LANGUAGE.getHostName() + requestUri );
 						return;
 					}
 				} else if( page.getType() == PageType.AUTHOR ) {
 					Author author = dataAccessor.getAuthor( page.getPrimaryContentId() );
-					if( language != author.getLanguage() ) {
+					if( displayLanguage != author.getLanguage() ) {
 						response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-						response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + author.getLanguage().getHostName() + requestUri );
+						response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + Website.ALL_LANGUAGE.getHostName() + requestUri );
 						return;
 					}
 				}
@@ -79,19 +85,29 @@ public class UxModeFilter implements Filter {
 		}
 		
 		
-		threadLocalLanguage.set( language );
+		threadLocalDisplayLanguage.set( displayLanguage );
+		threadLocalFilterLanguage.set( filterLanguage );
 		threadLocalBasicMode.set( basicMode );
 
 		chain.doFilter( req, resp );
 
-		threadLocalLanguage.remove();
+		threadLocalDisplayLanguage.remove();
+		threadLocalFilterLanguage.remove();
 		threadLocalBasicMode.remove();
 		
 	}
 
-	
+	@Deprecated
 	public static Language getUserLanguage() {
-		return threadLocalLanguage.get();
+		return threadLocalDisplayLanguage.get();
+	}
+
+	public static Language getDisplayLanguage() {
+		return threadLocalDisplayLanguage.get();
+	}
+
+	public static Language getFilterLanguage() {
+		return threadLocalFilterLanguage.get();
 	}
 
 	public static boolean isBasicMode() {

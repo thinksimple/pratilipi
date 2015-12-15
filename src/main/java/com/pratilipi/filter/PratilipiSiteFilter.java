@@ -35,7 +35,7 @@ public class PratilipiSiteFilter implements Filter {
 			+ "|"
 			+ "mark-6\\.(raghu\\.)?devo-pratilipi\\.appspot\\.com"
 			+ "|"
-			+ "localhost|127.0.0.1|192.168.0.121" );
+			+ "localhost|127.0.0.1" );
 	private final Map<String, String> redirections = new HashMap<>();
 	private final Pattern oldPratilipiCoverUrlRegEx = Pattern.compile(
 			"/resource\\.(book|poem|story|article|pratilipi)-cover/.*"
