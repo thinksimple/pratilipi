@@ -21,6 +21,7 @@ import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
+import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.GoogleAnalyticsApi;
 import com.pratilipi.common.util.ImageUtil;
@@ -65,26 +66,27 @@ public class PratilipiDataUtil {
 		return true;
 	}
 	
-	public static boolean hasAccessToAddPratilipiData( Pratilipi pratilipi ) {
-		if( pratilipi.getState() == PratilipiState.DELETED )
-			return false;
-		
+	public static boolean hasAccessToAddPratilipiData( PratilipiData pratilipiData ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_ADD ) )
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipiData.getLanguage(), AccessType.PRATILIPI_ADD ) )
 			return true;
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		Author author = dataAccessor.getAuthor( pratilipiData.getAuthorId() );
 		if( author != null )
 			return accessToken.getUserId().equals( author.getUserId() );
 		
 		return false;
 	}
 
-	public static boolean hasAccessToUpdatePratilipiData( Pratilipi pratilipi ) {
+	public static boolean hasAccessToUpdatePratilipiData( Pratilipi pratilipi, PratilipiData pratilipiData ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_UPDATE ) )
-			return true;
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipi.getLanguage(), AccessType.PRATILIPI_UPDATE ) ) {
+			if( pratilipiData == null || ! pratilipiData.hasLanguage() || pratilipi.getLanguage() == pratilipiData.getLanguage() )
+				return true;
+			else if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipiData.getLanguage(), AccessType.PRATILIPI_UPDATE ) )
+				return true;
+		}
 			
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
@@ -94,19 +96,19 @@ public class PratilipiDataUtil {
 		return false;
 	}
 	
-	public static boolean hasAccessToReadPratilipiMetaData() {
+	public static boolean hasAccessToReadPratilipiMetaData( Language language ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_READ_META );
+		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), language, AccessType.PRATILIPI_READ_META );
 	}
 	
-	public static boolean hasAccessToUpdatePratilipiMetaData() {
+	public static boolean hasAccessToUpdatePratilipiMetaData( Language language ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_UPDATE_META );
+		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), language, AccessType.PRATILIPI_UPDATE_META );
 	}
 	
 	public static boolean hasAccessToAddPratilipiReview( Pratilipi pratilipi ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_ADD_REVIEW ) )
+		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipi.getLanguage(), AccessType.PRATILIPI_ADD_REVIEW ) )
 			return false;
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -117,17 +119,15 @@ public class PratilipiDataUtil {
 		return true;
 	}
 	
-	public static boolean hasAccessToReadPratilipiContent( Pratilipi pratilipi ) 
-			throws InvalidArgumentException {
-		
+	public static boolean hasAccessToReadPratilipiContent( Pratilipi pratilipi ) {
 		if( pratilipi.getState() == PratilipiState.PUBLISHED )
 			return true;
 		
 		if( pratilipi.getState() == PratilipiState.DELETED )
 			return false;
-		
+
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_READ_CONTENT ) )
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipi.getLanguage(), AccessType.PRATILIPI_READ_CONTENT ) )
 			return true;
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -139,7 +139,7 @@ public class PratilipiDataUtil {
 	}
 
 	public static boolean hasAccessToUpdatePratilipiContent( Pratilipi pratilipi ) {
-		return hasAccessToUpdatePratilipiData( pratilipi );
+		return hasAccessToUpdatePratilipiData( pratilipi, null );
 	}
 	
 
@@ -233,8 +233,7 @@ public class PratilipiDataUtil {
 		pratilipiData.setReviewCount( pratilipi.getReviewCount() );
 		pratilipiData.setRatingCount( pratilipi.getRatingCount() );
 		pratilipiData.setAverageRating(
-				pratilipi.getRatingCount() == 0L
-						? 5F : (float) ( (double) pratilipi.getTotalRating() / pratilipi.getRatingCount() ) );
+				pratilipi.getRatingCount() == 0L ? 5F : (float) ( (double) pratilipi.getTotalRating() / pratilipi.getRatingCount() ) );
 		pratilipiData.setRelevance( calculateRelevance( pratilipi, author ) );
 		
 		pratilipiData.setReadCount( pratilipi.getReadCount() );
@@ -329,6 +328,16 @@ public class PratilipiDataUtil {
 
 		if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
 
+			if( pratilipiData.getLanguage() == null )
+				throw new InvalidArgumentException( "'langauge' cannot be null." );
+			if( pratilipiData.getState() == null
+					|| pratilipiData.getState() == PratilipiState.PUBLISHED_DISCONTINUED
+					|| pratilipiData.getState() == PratilipiState.DELETED )
+				throw new InvalidArgumentException( "Invalid state '" + pratilipiData.getState() + "' for new content." );
+			
+			if ( ! hasAccessToAddPratilipiData( pratilipiData ) )
+				throw new InsufficientAccessException();
+
 			pratilipi = dataAccessor.newPratilipi();
 			auditLog.setAccessType( AccessType.PRATILIPI_ADD );
 			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
@@ -338,23 +347,23 @@ public class PratilipiDataUtil {
 			pratilipi.setListingDate( new Date() );
 			pratilipi.setLastUpdated( new Date() );
 
-			if ( ! hasAccessToAddPratilipiData( pratilipi ) )
-				throw new InsufficientAccessException();
-
 		} else { // Update Pratilipi usecase
 		
+			if( pratilipiData.hasLanguage() && pratilipiData.getLanguage() == null )
+				throw new InvalidArgumentException( "'langauge' cannot be null." );
+			
 			pratilipi = dataAccessor.getPratilipi( pratilipiData.getId() );
 			auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
 
+			if( ! hasAccessToUpdatePratilipiData( pratilipi, pratilipiData ) )
+				throw new InsufficientAccessException();
+			
 			// Do NOT update Author
 			pratilipi.setLastUpdated( new Date() );
 
-			if( ! hasAccessToUpdatePratilipiData( pratilipi ) )
-				throw new InsufficientAccessException();
-
 		}
-			
+		
 		if( pratilipiData.hasType() )
 			pratilipi.setType( pratilipiData.getType() );
 		if( pratilipiData.hasTitle() )
@@ -387,17 +396,17 @@ public class PratilipiDataUtil {
 					pratilipi.getType().getName() + " can not be published without a summary." );
 		
 		
-		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+		
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 		
 		if( pratilipiData.getId() == null )
 			createOrUpdatePratilipiPageUrl( pratilipi.getId() );
 		
-		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-		auditLog = dataAccessor.createAuditLog( auditLog );
-		
-		return createPratilipiData( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) );
+		return createPratilipiData( pratilipi, null );
 	}
 
+	
 	public static BlobEntry getPratilipiCover( Long pratilipiId, Integer width )
 			throws UnexpectedServerException {
 
@@ -421,7 +430,7 @@ public class PratilipiDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 
-		if( !hasAccessToUpdatePratilipiData( pratilipi ) )
+		if( !hasAccessToUpdatePratilipiData( pratilipi, null ) )
 			throw new InsufficientAccessException();
 
 		
@@ -439,12 +448,13 @@ public class PratilipiDataUtil {
 
 		pratilipi.setCustomCover( true );
 		pratilipi.setLastUpdated( new Date() );
-		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 
 		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 		auditLog.setEventComment( "Uploaded cover image." );
-		auditLog = dataAccessor.createAuditLog( auditLog );
+		
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 	}
+	
 	
 	public static void updatePratilipiIndex( Long pratilipiId )
 			throws InvalidArgumentException, UnexpectedServerException {
@@ -553,30 +563,9 @@ public class PratilipiDataUtil {
 		
 		return true;
 	}
-
 	
-	public static boolean updatePratilipiStats( Long pratilipiId ) throws UnexpectedServerException {
-		
-		long readCount = GoogleAnalyticsApi.getPratilipiReadCount( pratilipiId );
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-		String fbLikeShareUrl = "http://" + Language.ENGLISH.getHostName() + pratilipiPage.getUri();
-		long fbLikeShareCount = FacebookApi.getUrlShareCount( fbLikeShareUrl );
-		
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		if( pratilipi.getReadCount() != readCount || pratilipi.getFbLikeShareCount() != fbLikeShareCount ) {
-			pratilipi.setReadCount( readCount );
-			pratilipi.setFbLikeShareCount( fbLikeShareCount );
-			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	public static List<Long> updatePratilipiStats( List<Long> pratilipiIdList ) throws UnexpectedServerException {
+	public static List<Long> updatePratilipiStats( List<Long> pratilipiIdList )
+			throws UnexpectedServerException {
 		
 		Map<Long, Long> idReadCountMap = GoogleAnalyticsApi.getPratilipiReadCount( pratilipiIdList );		
 		
@@ -584,7 +573,7 @@ public class PratilipiDataUtil {
 		List<String> urlList = new ArrayList<>( pratilipiIdList.size() );
 		for( Long pratilipiId : pratilipiIdList ) {
 			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-			String fbLikeShareUrl = "http://" + Language.ENGLISH.getHostName() + pratilipiPage.getUri();
+			String fbLikeShareUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri();
 			urlList.add( fbLikeShareUrl );
 		}
 		Map<String, Long> urlShareCountMap = FacebookApi.getUrlShareCount( urlList );
@@ -596,7 +585,7 @@ public class PratilipiDataUtil {
 			long readCount = idReadCountMap.get( pratilipiId ) == null ? 0L : idReadCountMap.get( pratilipiId );
 			
 			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-			String fbLikeShareUrl = "http://" + Language.ENGLISH.getHostName() + pratilipiPage.getUri();
+			String fbLikeShareUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri();
 			long fbLikeShareCount = urlShareCountMap.get( fbLikeShareUrl ) == null ? 0L : urlShareCountMap.get( fbLikeShareUrl );
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 			
@@ -695,7 +684,7 @@ public class PratilipiDataUtil {
 				return;
 			
 			Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-			FacebookApi.postScrapeRequest( "http://" + Language.ENGLISH.getHostName() + page.getUri() );
+			FacebookApi.postScrapeRequest( "http://" + Website.ALL_LANGUAGE.getHostName() + page.getUri() );
 		}
 				
 	}
@@ -707,7 +696,7 @@ public class PratilipiDataUtil {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		
+
 		if( ! hasAccessToReadPratilipiContent( pratilipi ) )
 			throw new InsufficientAccessException();
 
@@ -806,10 +795,10 @@ public class PratilipiDataUtil {
 		}
 		
 		pratilipi.setLastUpdated( new Date() );
-		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-
+		
 		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-		auditLog = dataAccessor.createAuditLog( auditLog );
+
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 		
 		return pratilipi.getPageCount();
 	}

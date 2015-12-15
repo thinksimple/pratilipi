@@ -27,34 +27,6 @@ public class GoogleAnalyticsApi {
 	}
 	
 	
-	public static long getPratilipiReadCount( Long pratilipiId ) throws UnexpectedServerException {
-		long pratilipiReadCount = 0;
-		
-		try {
-			Get apiQuery = getAnalytics().data().ga()
-					.get( "ga:89762686",		// Table Id.
-							"2015-01-01",		// Start Date.
-							"today",			// End Date.
-							"ga:uniqueEvents" )	// Metrics.
-					.setDimensions( "ga:eventCategory,ga:eventAction" )
-					.setFilters( "ga:eventCategory==Pratilipi:" + pratilipiId + ";ga:eventAction=~^ReadTimeSec:.*" );
-
-			GaData gaData = apiQuery.execute();
-			if( gaData.getRows() != null ) {
-				for( List<String> row : gaData.getRows() ) {
-					long readCount = Long.parseLong( row.get( 2 ) );
-					if( readCount > pratilipiReadCount )
-						pratilipiReadCount = readCount;
-				}
-			}
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch data from Google Analytics.", e );
-			throw new UnexpectedServerException();
-		}
-		
-		return pratilipiReadCount;
-	}
-	
 	public static Map<Long, Long> getPratilipiReadCount( List<Long> pratilipiList ) throws UnexpectedServerException {
 		int idsPerRequest = 80;
 		Map <Long, Long> idCountMap = new HashMap<Long, Long>();

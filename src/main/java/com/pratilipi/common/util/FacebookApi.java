@@ -95,22 +95,6 @@ public class FacebookApi {
 	}
 	
 	
-	public static long getUrlShareCount( String url ) throws UnexpectedServerException {
-		
-		Map<String, String> paramsMap = new HashMap<String, String>();
-		paramsMap.put( "id", url );
-		paramsMap.put( "access_token", getAccessToken() );
-		String responsePayload = HttpUtil.doGet( GRAPH_API_2p2_URL, paramsMap );
-		
-		JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
-		JsonElement shareJson = responseJson.getAsJsonObject().get( "share" );
-		if( shareJson == null )
-			return 0L;
-		JsonElement shareCountJson = shareJson.getAsJsonObject().get( "share_count" );
-
-		return shareCountJson != null ? shareCountJson.getAsLong() : 0L; 
-	}
-	
 	public static Map<String, Long> getUrlShareCount( List<String> urlList ) throws UnexpectedServerException {
 		
 		int urlsPerRequest = 20;
