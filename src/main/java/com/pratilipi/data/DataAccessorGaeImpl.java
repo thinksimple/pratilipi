@@ -576,7 +576,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) {
-		return (Author) createOrUpdateEntities( author, auditLog )[ 1 ];
+		return (Author) createOrUpdateEntities( author, auditLog )[ 0 ];
 	}
 
 	

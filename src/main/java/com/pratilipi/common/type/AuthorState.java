@@ -2,7 +2,8 @@ package com.pratilipi.common.type;
 
 public enum AuthorState {
 
-	ACTIVE,
-	DELETED,
+	ACTIVE,		// Author profile active
+	BLOCKED,	// Author profile blocked by Moderator/System
+	DELETED,	// Author profile deleted by User
 	
 }

@@ -29,7 +29,7 @@ public class UserPratilipiDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.PRATILIPI_ADD_REVIEW ) )
+		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.PRATILIPI_ADD_REVIEW ) )
 			return false;
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );

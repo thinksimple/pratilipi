@@ -13,6 +13,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
@@ -50,6 +51,9 @@ public class AuthorDataUtil {
 	}
 
 	public static boolean hasAccessToAddAuthorData( AuthorData authorData ) {
+		if( authorData.getState() != AuthorState.ACTIVE )
+			return false;
+		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), authorData.getLanguage(), AccessType.AUTHOR_ADD );
 	}
@@ -62,8 +66,11 @@ public class AuthorDataUtil {
 			else if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), authorData.getLanguage(), AccessType.AUTHOR_UPDATE ) )
 				return true;
 		}
-			
-		return accessToken.getUserId().equals( author.getUserId() );
+		
+		if( author.getState() != AuthorState.BLOCKED && author.getState() != AuthorState.DELETED )
+			return accessToken.getUserId().equals( author.getUserId() );
+		
+		return false;
 	}
 	
 	
@@ -202,6 +209,11 @@ public class AuthorDataUtil {
 				throw new InvalidArgumentException( errorMessages );
 			}
 
+			if( authorData.getState() == null
+					|| authorData.getState() == AuthorState.BLOCKED
+					|| authorData.getState() == AuthorState.DELETED )
+				throw new InvalidArgumentException( "Invalid state '" + authorData.getState() + "' for new author." );
+			
 			if( ! hasAccessToAddAuthorData( authorData ) )
 				throw new InsufficientAccessException();
 			
@@ -219,9 +231,16 @@ public class AuthorDataUtil {
 
 		} else { // Update Author usecase
 
-			if( authorData.hasLanguage() && authorData.getLanguage() == null )
+			if( authorData.hasLanguage() && authorData.getLanguage() == null ) {
 				errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+				throw new InvalidArgumentException( errorMessages );
+			}
 			
+			if( authorData.hasState() && authorData.getState() == null ) {
+				errorMessages.addProperty( "state", GenericRequest.ERR_AUTHOR_STATE_REQUIRED );
+				throw new InvalidArgumentException( errorMessages );
+			}
+
 			author = dataAccessor.getAuthor( authorData.getId() );
 			auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
 			auditLog.setEventDataOld( gson.toJson( author ) );

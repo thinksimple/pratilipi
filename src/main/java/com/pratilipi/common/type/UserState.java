@@ -3,8 +3,9 @@ package com.pratilipi.common.type;
 public enum UserState {
 
 	REFERRAL,
-	REGISTERED,	// Pending email verification
-	ACTIVE,		// Email verified
-	BLOCKED,
+	REGISTERED,	// User account NOT active - email verification required
+	ACTIVE,		// User account active with verified email
+	BLOCKED,	// User account blocked by Moderator/System
+	DELETED,	// User account deleted by User
 	
 }

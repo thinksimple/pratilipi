@@ -69,6 +69,11 @@ public class PratilipiDataUtil {
 	}
 	
 	public static boolean hasAccessToAddPratilipiData( PratilipiData pratilipiData ) {
+		if( pratilipiData.getState() != PratilipiState.DRAFTED
+				&& pratilipiData.getState() != PratilipiState.SUBMITTED
+				&& pratilipiData.getState() != PratilipiState.PUBLISHED )
+			return false;
+		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipiData.getLanguage(), AccessType.PRATILIPI_ADD ) )
 			return true;
@@ -89,12 +94,14 @@ public class PratilipiDataUtil {
 			else if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipiData.getLanguage(), AccessType.PRATILIPI_UPDATE ) )
 				return true;
 		}
-			
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		if( author != null )
-			return accessToken.getUserId().equals( author.getUserId() );
-
+		
+		if( pratilipi.getState() != PratilipiState.BLOCKED && pratilipi.getState() != PratilipiState.DELETED ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			if( author != null )
+				return accessToken.getUserId().equals( author.getUserId() );
+		}
+		
 		return false;
 	}
 	
@@ -335,8 +342,10 @@ public class PratilipiDataUtil {
 				errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
 				throw new InvalidArgumentException( errorMessages );
 			}
+			
 			if( pratilipiData.getState() == null
-					|| pratilipiData.getState() == PratilipiState.PUBLISHED_DISCONTINUED
+					|| pratilipiData.getState() == PratilipiState.DISCONTINUED
+					|| pratilipiData.getState() == PratilipiState.BLOCKED
 					|| pratilipiData.getState() == PratilipiState.DELETED )
 				throw new InvalidArgumentException( "Invalid state '" + pratilipiData.getState() + "' for new content." );
 			
@@ -356,6 +365,11 @@ public class PratilipiDataUtil {
 		
 			if( pratilipiData.hasLanguage() && pratilipiData.getLanguage() == null ) {
 				errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+				throw new InvalidArgumentException( errorMessages );
+			}
+			
+			if( pratilipiData.hasState() && pratilipiData.getState() == null ) {
+				errorMessages.addProperty( "state", GenericRequest.ERR_PRATILIPI_STATE_REQUIRED );
 				throw new InvalidArgumentException( errorMessages );
 			}
 			

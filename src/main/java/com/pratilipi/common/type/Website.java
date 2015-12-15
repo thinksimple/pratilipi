@@ -6,9 +6,9 @@ public enum Website {
 	HINDI		(     "hindi.pratilipi.com", "hi.pratilipi.com", Language.HINDI,	 Language.HINDI ),
 	GUJARATI	(  "gujarati.pratilipi.com", "gu.pratilipi.com", Language.GUJARATI,	 Language.GUJARATI ),
 	TAMIL		(     "tamil.pratilipi.com", "ta.pratilipi.com", Language.TAMIL,	 Language.TAMIL ),
-	MARATHI		(   "marathi.pratilipi.com", "ta.pratilipi.com", Language.MARATHI,	 Language.MARATHI ),
-	MALAYALAM	( "malayalam.pratilipi.com", "ta.pratilipi.com", Language.MALAYALAM, Language.MALAYALAM ),
-	BENGALI		(   "bengali.pratilipi.com", "ta.pratilipi.com", Language.BENGALI,	 Language.BENGALI ),
+	MARATHI		(   "marathi.pratilipi.com", "mr.pratilipi.com", Language.MARATHI,	 Language.MARATHI ),
+	MALAYALAM	( "malayalam.pratilipi.com", "ml.pratilipi.com", Language.MALAYALAM, Language.MALAYALAM ),
+	BENGALI		(   "bengali.pratilipi.com", "bn.pratilipi.com", Language.BENGALI,	 Language.BENGALI ),
 	;
 	
 	
