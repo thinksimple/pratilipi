@@ -68,14 +68,14 @@ public class UxModeFilter implements Filter {
 			if( page != null ) {
 				if( page.getType() == PageType.PRATILIPI ) {
 					Pratilipi pratilipi = dataAccessor.getPratilipi( page.getPrimaryContentId() );
-					if( displayLanguage != pratilipi.getLanguage() ) {
+					if( filterLanguage != pratilipi.getLanguage() ) {
 						response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-						response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + Website.ALL_LANGUAGE.getHostName() + requestUri );
+						response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + Website.ALL_LANGUAGE.getHostName() + requestUri );
 						return;
 					}
 				} else if( page.getType() == PageType.AUTHOR ) {
 					Author author = dataAccessor.getAuthor( page.getPrimaryContentId() );
-					if( displayLanguage != author.getLanguage() ) {
+					if( filterLanguage != author.getLanguage() ) {
 						response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 						response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + Website.ALL_LANGUAGE.getHostName() + requestUri );
 						return;
