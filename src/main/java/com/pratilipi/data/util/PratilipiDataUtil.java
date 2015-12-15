@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -82,7 +84,7 @@ public class PratilipiDataUtil {
 	public static boolean hasAccessToUpdatePratilipiData( Pratilipi pratilipi, PratilipiData pratilipiData ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipi.getLanguage(), AccessType.PRATILIPI_UPDATE ) ) {
-			if( pratilipiData == null || ! pratilipiData.hasLanguage() || pratilipi.getLanguage() == pratilipiData.getLanguage() )
+			if( pratilipiData == null || ! pratilipiData.hasLanguage() || pratilipiData.getLanguage() == pratilipi.getLanguage() )
 				return true;
 			else if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipiData.getLanguage(), AccessType.PRATILIPI_UPDATE ) )
 				return true;
@@ -321,6 +323,7 @@ public class PratilipiDataUtil {
 		Pratilipi pratilipi = null;
 
 		Gson gson = new Gson();
+		JsonObject errorMessages = new JsonObject();
 		
 		AccessToken accessToken = (AccessToken) AccessTokenFilter.getAccessToken(); 
 		AuditLog auditLog = dataAccessor.newAuditLog();
@@ -328,8 +331,10 @@ public class PratilipiDataUtil {
 
 		if( pratilipiData.getId() == null ) { // Add Pratilipi usecase
 
-			if( pratilipiData.getLanguage() == null )
-				throw new InvalidArgumentException( "'langauge' cannot be null." );
+			if( pratilipiData.getLanguage() == null ) {
+				errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+				throw new InvalidArgumentException( errorMessages );
+			}
 			if( pratilipiData.getState() == null
 					|| pratilipiData.getState() == PratilipiState.PUBLISHED_DISCONTINUED
 					|| pratilipiData.getState() == PratilipiState.DELETED )
@@ -349,8 +354,10 @@ public class PratilipiDataUtil {
 
 		} else { // Update Pratilipi usecase
 		
-			if( pratilipiData.hasLanguage() && pratilipiData.getLanguage() == null )
-				throw new InvalidArgumentException( "'langauge' cannot be null." );
+			if( pratilipiData.hasLanguage() && pratilipiData.getLanguage() == null ) {
+				errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+				throw new InvalidArgumentException( errorMessages );
+			}
 			
 			pratilipi = dataAccessor.getPratilipi( pratilipiData.getId() );
 			auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
@@ -437,6 +444,7 @@ public class PratilipiDataUtil {
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		blobEntry.setName( COVER_FOLDER + "/original/" + pratilipiId );
 		blobAccessor.createOrUpdateBlob( blobEntry );
+		
 		
 		Gson gson = new Gson();
 

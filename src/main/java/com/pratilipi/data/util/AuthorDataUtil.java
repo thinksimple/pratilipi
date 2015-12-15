@@ -7,10 +7,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.util.AuthorFilter;
@@ -41,20 +44,26 @@ public class AuthorDataUtil {
 	private static final String IMAGE_FOLDER = "author-image";
 
 	
-	public static boolean hasAccessToListAuthorData() {
+	public static boolean hasAccessToListAuthorData( Language language ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.AUTHOR_LIST );
+		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), language, AccessType.AUTHOR_LIST );
 	}
 
-	public static boolean hasAccessToAddAuthorData() {
+	public static boolean hasAccessToAddAuthorData( AuthorData authorData ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.AUTHOR_ADD );
+		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), authorData.getLanguage(), AccessType.AUTHOR_ADD );
 	}
 
-	public static boolean hasAccessToUpdateAuthorData( Author author ) {
+	public static boolean hasAccessToUpdateAuthorData( Author author, AuthorData authorData ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.AUTHOR_UPDATE )
-				|| ( author.getUserId() != null && author.getUserId().equals( accessToken.getUserId() ) );
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), author.getLanguage(), AccessType.AUTHOR_UPDATE ) ) {
+			if( authorData == null || ! authorData.hasLanguage() || authorData.getLanguage() == author.getLanguage() )
+				return true;
+			else if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), authorData.getLanguage(), AccessType.AUTHOR_UPDATE ) )
+				return true;
+		}
+			
+		return accessToken.getUserId().equals( author.getUserId() );
 	}
 	
 	
@@ -161,7 +170,7 @@ public class AuthorDataUtil {
 	public static DataListCursorTuple<AuthorData> getAuthorDataList( AuthorFilter authorFilter,
 			String cursor, Integer resultCount ) throws InsufficientAccessException {
 		
-		if( ! hasAccessToListAuthorData() )
+		if( ! hasAccessToListAuthorData( authorFilter.getLanguage() ) )
 			throw new InsufficientAccessException();
 		
 		DataListCursorTuple<Author> authorListCursorTuple = DataAccessorFactory
@@ -179,22 +188,27 @@ public class AuthorDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = null;
 		
+		Gson gson = new Gson();
+		JsonObject errorMessages = new JsonObject();
+		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken(); 
 		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		
-		Gson gson = new Gson();
-		
 		if( authorData.getId() == null ) { // Add Author usecase
 			
-			if( ! hasAccessToAddAuthorData() )
+			if( authorData.getLanguage() == null ) {
+				errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+				throw new InvalidArgumentException( errorMessages );
+			}
+
+			if( ! hasAccessToAddAuthorData( authorData ) )
 				throw new InsufficientAccessException();
 			
-			if( ! authorData.hasLanguage() )
-				throw new InvalidArgumentException( "'language' is missing !" );
-
-			if( authorData.hasEmail() && dataAccessor.getAuthorByEmailId( authorData.getEmail().toLowerCase() ) != null )
-				throw new InvalidArgumentException( "Email is already linked with an exiting Author !" );
+			if( authorData.getEmail() != null && dataAccessor.getAuthorByEmailId( authorData.getEmail().toLowerCase() ) != null ) {
+				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
+				throw new InvalidArgumentException( errorMessages );
+			}
 			
 			author = dataAccessor.newAuthor();
 			auditLog.setAccessType( AccessType.AUTHOR_ADD );
@@ -205,15 +219,18 @@ public class AuthorDataUtil {
 
 		} else { // Update Author usecase
 
-			author = dataAccessor.getAuthor( authorData.getId() );
-
-			if( ! hasAccessToUpdateAuthorData( author ) )
-				throw new InsufficientAccessException();
+			if( authorData.hasLanguage() && authorData.getLanguage() == null )
+				errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
 			
+			author = dataAccessor.getAuthor( authorData.getId() );
 			auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
 			auditLog.setEventDataOld( gson.toJson( author ) );
 
+			if( ! hasAccessToUpdateAuthorData( author, authorData ) )
+				throw new InsufficientAccessException();
+			
 			author.setLastUpdated( new Date() );
+		
 		}
 		
 		if( authorData.hasFirstName() )
@@ -238,16 +255,16 @@ public class AuthorDataUtil {
 			author.setSummary( authorData.getSummary() );
 		
 		
-		author = dataAccessor.createOrUpdateAuthor( author );
+		auditLog.setEventDataNew( gson.toJson( author ) );
+		
+		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
 
 		if( authorData.getId() == null )
 			createOrUpdateAuthorPageUrl( author.getId() );
 
-		auditLog.setEventDataNew( gson.toJson( author ) );
-		auditLog = dataAccessor.createAuditLog( auditLog );
-		
 		return createAuthorData( author );
 	}
+	
 	
 	public static BlobEntry getAuthorImage( Long authorId, Integer width )
 			throws UnexpectedServerException {
@@ -272,7 +289,7 @@ public class AuthorDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
 
-		if( ! hasAccessToUpdateAuthorData( author ) )
+		if( ! hasAccessToUpdateAuthorData( author, null ) )
 			throw new InsufficientAccessException();
 
 		
@@ -291,12 +308,13 @@ public class AuthorDataUtil {
 
 		author.setCustomImage( true );
 		author.setLastUpdated( new Date() );
-		author = dataAccessor.createOrUpdateAuthor( author );
 
 		auditLog.setEventDataNew( gson.toJson( author ) );
 		auditLog.setEventComment( "Uploaded profile image." );
-		auditLog = dataAccessor.createAuditLog( auditLog );
+		
+		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
 	}
+
 	
 	public static boolean createOrUpdateAuthorPageUrl( Long authorId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
