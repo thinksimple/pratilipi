@@ -2,6 +2,7 @@ package com.pratilipi.data;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -159,6 +160,18 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
 		return accessToken;
+	}
+
+	@Override
+	public AccessToken[] createOrUpdateAccessTokens( AccessToken... accessTokens ) {
+		accessTokens = dataAccessor.createOrUpdateAccessTokens( accessTokens );
+
+		Map<String, AccessToken> keyValueMap = new HashMap<>();
+		for( AccessToken accessToken : accessTokens ) 
+			keyValueMap.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
+		memcache.putAll( keyValueMap );
+		
+		return accessTokens;
 	}
 
 	@Override

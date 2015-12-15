@@ -177,6 +177,13 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public AccessToken[] createOrUpdateAccessTokens( AccessToken... accessTokens ) {
+		for( AccessToken accessToken : accessTokens )
+			AccessTokenMock.ACCESS_TOKEN_TABLE.add( accessToken );
+		return accessTokens;
+	}
+
+	@Override
 	public void deleteAccessToken( AccessToken accessToken ) {
 		// TODO: Implementation
 	}

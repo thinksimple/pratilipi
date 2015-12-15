@@ -55,6 +55,8 @@ public class AccessTokenDataUtil {
 			return accessToken;
 			
 		} else {
+
+			accessToken.setExpiry( new Date() );
 			
 			AccessToken newAccessToken = dataAccessor.newAccessToken();
 
@@ -63,7 +65,10 @@ public class AccessTokenDataUtil {
 			newAccessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
 			newAccessToken.setCreationDate( new Date() );
 			
-			newAccessToken = dataAccessor.createOrUpdateAccessToken( newAccessToken );
+			AccessToken[] accessTokens = dataAccessor.createOrUpdateAccessTokens( accessToken, newAccessToken );
+			accessToken = accessTokens[ 0 ];
+			newAccessToken = accessTokens[ 1 ];
+
 			return newAccessToken;
 			
 		}

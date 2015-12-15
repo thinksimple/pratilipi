@@ -25,6 +25,7 @@ public interface DataAccessor {
 	AppProperty getAppProperty( String id );
 	AppProperty createOrUpdateAppProperty( AppProperty appProperty );
 
+	
 	// USER Table
 	User newUser();
 	User getUser( Long id );
@@ -38,6 +39,7 @@ public interface DataAccessor {
 	AccessToken getAccessToken( String accessTokenId );
 	DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount );
 	AccessToken createOrUpdateAccessToken( AccessToken accessToken );
+	AccessToken[] createOrUpdateAccessTokens( AccessToken... accessTokens );
 	void deleteAccessToken( AccessToken accessToken );
 
 	// AUDIT_LOG Table
