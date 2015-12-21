@@ -44,7 +44,7 @@
 		</template>
 		
 		<div class="row">
-			<template is="dom-if" if="{{ includeAddCard }}">
+			<!-- <template is="dom-if" if="{{ includeAddCard }}">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<paper-card class="add">
 						<div style="text-align: center; margin-top: 50px;">
@@ -58,7 +58,7 @@
 					</paper-card>
 					<br class="pratilipi-break">
 				</div>
-			</template>
+			</template> -->
 			<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<pratilipi-card pratilipi="{{ pratilipi }}"></pratilipi-card>

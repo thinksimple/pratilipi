@@ -38,7 +38,7 @@
 			<div id="pratilipi-row">
 	    		<div id="pratilipi-col-left" style=" max-width: 170px; padding-bottom: 10px;">
 	    			<div style="padding: 20px 0px 0px 10px;">
-	    				<img class="pratilipi-shadow" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+	    				<img style="width: 150px; height: 225px;" class="pratilipi-shadow" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
 		    			<div style="padding: 10px 20px;">
 		    				<a class="link" style="float: left;">Like</a>
 		    				<a class="link" style="float: right;">Share</a>
@@ -65,13 +65,13 @@
 					
 					<template is="dom-if" if="{{ !mobile }}">
 						<div style="position: absolute; bottom: 100px;">
-							<a href="{{ pratilipi.readerPageUrl }}" class="pratilipi-light-blue-button">Read</a>
+							<a href="{{ pratilipi.readPageUrl }}" class="pratilipi-light-blue-button">Read</a>
 							<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
 						</div>
 					</template>
 					<template is="dom-if" if="{{ mobile }}">
 						<div style="position: relative; margin-top: 25px;">
-							<a href="{{ pratilipi.readerPageUrl }}" class="pratilipi-light-blue-button">Read</a>
+							<a href="{{ pratilipi.readPageUrl }}" class="pratilipi-light-blue-button">Read</a>
 							<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
 						</div>
 					</template>
@@ -191,7 +191,9 @@
 			},
 			
 			ready: function() {
-				this.pratilipiData.readerPageUrl = "http://www.pratilipi.com" + this.pratilipiData.readerPageUrl;
+				if( this.pratilipi.readPageUrl !== undefined ) 
+					this.pratilipi.readPageUrl = "www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 );
+					
 				this.set( 'pratilipi', this.process( this.pratilipiData ) );
 			},
 			
