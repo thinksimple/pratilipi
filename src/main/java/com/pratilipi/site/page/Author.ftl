@@ -19,7 +19,7 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-author.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-author.html?20151222'>
 		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 
@@ -47,6 +47,7 @@
 									></pratilipi-author>
 								<pratilipi-card-grid
 									id='PublishedWorks'
+									heading='${ author_published_works }'
 									include-add-card="true"
 									pratilipi-list='${ publishedPratilipiListJson }'
 									filter='${ publishedPratilipiListFilterJson! }'
