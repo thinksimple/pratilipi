@@ -39,7 +39,7 @@ review_content_help	= உங்கள் கருத்துக்களைப
 submit_review		= பதிவுசெய்க 
 
 
-search 			= தேடு
+search 			= தேட
 search_bar_help	= தேட - கவிதை, கதை, புத்தகம், கட்டுரை மற்றும் பல  ...
 
 author_about = எழுத்தாளரைப் பற்றி
@@ -56,5 +56,10 @@ show_less = சுருக்கு
 # Pratilipi related
 pratilipi_read = படிக்க
 pratilipi_free = இலவசம் !
+
+write = எழுத
+published = பதிப்பு 
+book_summary = புத்தகத்தைப் பற்றி
+review_helpful = இந்த விமர்சனம் உதவியாக இருந்ததா?
 
 
