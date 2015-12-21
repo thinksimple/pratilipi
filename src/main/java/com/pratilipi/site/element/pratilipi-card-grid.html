@@ -1,4 +1,4 @@
-<link rel="import" href="pratilipi-card.html?20150806" />
+<link rel="import" href="pratilipi-card.html" />
 
 <dom-module id="pratilipi-card-grid">
 
@@ -7,32 +7,66 @@
 		:host {
 			display: block;
 		}
-
-		.secondary-500 {
-			padding: 10px;
+		
+		paper-card {
+			width: 100%;
+			--paper-card-header-color: #D0021B;
+			--paper-card-header-text: { font-size: 22px; font-weight: 300; }; 
 		}
 		
-		.secondary-500 h3 {
-			margin: 0px;
-			padding: 10px;
+		paper-card.add {
+			height: 200px;
+			background: #E0E0E0;
+			--paper-card-header: { display: none };
 		}
-
+		
+		iron-icon {
+			--iron-icon-height: 64px;
+			--iron-icon-width: 64px;
+		}
+		
+		.row {
+			margin-right: 0px;
+			margin-left: -10px;
+		}
+		
+		.col-xs-12, .col-sm-6, .col-md-6, .col-lg-6 {
+			padding-left: 10px;
+			padding-right: 0px;
+		}
+		
 	</style>
 
 	
 	<template>
-
-		<div class="secondary-500">
-			<template is="dom-if" if="{{ heading }}">
-				<h3>{{ heading }}</h3>
+		<template is="dom-if" if="{{ heading }}">
+			<paper-card heading="{{heading}}"></paper-card>
+		</template>
+		
+		<div class="row">
+			<template is="dom-if" if="{{ includeAddCard }}">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<paper-card class="add">
+						<div style="text-align: center; margin-top: 50px;">
+							<a on-click="_write">
+								<iron-icon icon="add-circle"></iron-icon>
+							</a>
+							<a on-click="_write">
+								<h6 style="margin-top: 30px;">Add New Content</h6>
+							</a>
+						</div>
+					</paper-card>
+					<br class="pratilipi-break">
+				</div>
 			</template>
-			<div>
-				<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
+			<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<pratilipi-card pratilipi="{{ pratilipi }}"></pratilipi-card>
-				</template>
-			</div>
-		</div>
-
+				</div>
+			</template>
+		</div>		
+			
+		
 		<iron-ajax
 				id="AjaxGet"
 				url="/api/pratilipi/list"
@@ -61,7 +95,8 @@
 				cursor: { type: String },
 
 				isLoading: { type: Boolean, value: false },
-				isFinished: { type: Boolean, value: false }
+				isFinished: { type: Boolean, value: false },
+				includeAddCard: { type: Boolean, value: false }
 			},
 			
 			reset: function() {
@@ -128,6 +163,10 @@
 				} else {
 					this.isFinished = true;
 				}
+			},
+			
+			_write: function() {
+				document.querySelector( 'pratilipi-user' ).write();
 			}
 
 		});

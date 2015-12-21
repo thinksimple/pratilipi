@@ -1,0 +1,120 @@
+<dom-module id="pratilipi-write">
+
+	<style>
+	
+		:host {
+			display: block;
+		}
+		
+		.popup-heading span {
+			font-size: 14px;
+			color: #333;
+			display: inline-block;
+		}
+		
+		paper-input.my-class {
+			--paper-input-container-focus-color: #107FE5;
+			display: block;
+		}
+		
+		
+	</style>
+	
+
+	<template>
+				<div class="modal-content">
+					<div class="modal-header">
+						<span>Write New Content</span>
+						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+					</div>
+					<div class="modal-body" on-keyup="onSubmit">
+					
+						<paper-input class="my-class" label="Title" value="{{ title::input }}"></paper-input>
+						<paper-input class="my-class" label="Title (English)" value="{{ titleEn::input }}"></paper-input>
+						
+						<paper-dropdown-menu style="display: block;" id="mydropdown" label="City?">
+							<paper-listbox style="width: 100%" class="dropdown-content">
+								<paper-item>Inbox</paper-item>
+								<paper-item>Starred</paper-item>
+								<paper-item>Sent mail</paper-item>
+								<paper-item>Drafts</paper-item>
+							</paper-listbox>
+						</paper-dropdown-menu>
+						
+						<paper-dropdown-menu style="display: block;" id="mydropdown" label="City?">
+							<paper-listbox class="dropdown-content">
+								<paper-item>Inbox</paper-item>
+								<paper-item>Starred</paper-item>
+								<paper-item>Sent mail</paper-item>
+								<paper-item>Drafts</paper-item>
+							</paper-listbox>
+						</paper-dropdown-menu>
+						
+							
+						<!-- <div class="horizontal-section">
+						<paper-dropdown-menu class="my-class" label="Your favourite pastry" role="combobox" aria-autocomplete="none" aria-haspopup="true" aria-disabled="false">
+							<paper-listbox class="dropdown-content">
+								<paper-item>Croissant</paper-item>
+								<paper-item>Donut</paper-item>
+								<paper-item>Financier</paper-item>
+								<paper-item>Madeleine</paper-item>
+							</paper-listbox>
+						</paper-dropdown-menu>
+						</div> -->
+						
+						 <!-- <paper-dropdown-menu id="mydropdown" label="City?">
+        <paper-listbox class="dropdown-content">
+          <paper-item>Inbox</paper-item>
+          <paper-item>Starred</paper-item>
+          <paper-item>Sent mail</paper-item>
+          <paper-item>Drafts</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu> -->
+      
+						
+						<!-- <div class="dropdown">
+							<paper-dropdown-menu id="LanguageDropdown" class="my-class" label="Language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></paper-dropdown-menu>
+							<ul style="min-width: 0px;" class="dropdown-menu" role="menu" aria-labelledby="LanguageDropdown">
+								<li><a style="padding: 0px;"><paper-item>Bengali</paper-item></a></li>
+								<li><a style="padding: 0px;"><paper-item>Gujarathi</paper-item></a></li>
+								<li><a style="padding: 0px;"><paper-item>Hindi</paper-item></a></li>
+								<li><a style="padding: 0px;"><paper-item>Tamil</paper-item></a></li>
+								<li><a style="padding: 0px;"><paper-item>Marathi</paper-item></a></li>
+								<li><a style="padding: 0px;"><paper-item>Malayalam</paper-item></a></li>
+							</ul>
+						</div> -->
+						
+
+					
+					</div>
+					<div class="modal-footer">
+						This is footer.
+					</div>
+				</div>
+		
+		
+		
+		<!--		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		
+		 		 
+				
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+				-->
+	</template>
+	
+	
+	
+	
+	<script>
+
+		Polymer({
+
+ 			is: 'pratilipi-write',
+ 			
+		});
+
+	</script>
+	
+</dom-module>

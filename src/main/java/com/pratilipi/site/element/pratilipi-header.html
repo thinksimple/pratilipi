@@ -1,88 +1,153 @@
-<!-- Version:6.0 -->
-
 <link rel='import' href='pratilipi-navigation-drawer.html'>
-<link rel="import" href="pratilipi-search-bar.html" />
 <link rel='import' href="pratilipi-facebook-login.html" />
 
 <dom-module id="pratilipi-header">
 
 	<style>
-
-		:host {
-			display: block;
+		paper-card {
+			width: 100%;
+			@apply(--layout-center);
 		}
 		
-		img {
-			height: 150px;
-			width: 150px;
-		}
-		
-		.fb-login-container{
+		.container, .container div {
 			display: inline-block;
 		}
+		
+		paper-input.search {
+	        --paper-input-container-color: #333;
+	        --paper-input-container-focus-color: #333;
+	        --paper-input-container-input-color: #333;
+		}
+		
+		paper-icon-button.search-icon {
+			margin-bottom: -5px;
+			margin-right: -10px;
+		}
+		
+		paper-icon-button.menu-icon {
+			margin-bottom: -5px;
+			margin-left: -10px;
+		}
+		
+		paper-item {
+			--paper-item-min-height: 40px;
+			--paper-item-min-weight: 0px;
+			--paper-item: {
+				font-size: 13px;
+				font-weight: 300;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+				color: #333;
+			};
+		}
+		
+		iron-icon {
+			--iron-icon-height: 20px;
+			--iron-icon-width: 20px;
+		}
+		
 	</style>
 
-
 	<template>
-		<div class="primary-500">
-			<div class="container">
-			
-				<a href="/">
-					<img class="pull-left" title="${ _strings.pratilipi_logo }" alt="${ _strings.pratilipi_logo }" src="${ _strings.pratilipi_logo_url }" />
-				</a>
-				
-				<div style="margin-top:51px; margin-bottom:45px; text-align:right;">
-				
-					<template is="dom-if" if="{{ user.isGuest }}">
-						<pratilipi-facebook-login></pratilipi-facebook-login>
-						&nbsp;
-						<a href="#" on-click="logIn">${ _strings.sign_in }</a>
-						&nbsp;
-					</template>
+		<paper-card>
+			<div class="parent-container"> 
+				<div class="container">
+					<table style="min-width: 100%; white-space: nowrap;">
+						<tr>
+							<td align="left" width="65px">
+								<a href="/">
+									<img style="padding-top: 5px; max-width: 60px;" title="${ _strings.pratilipi_logo }" alt="${ _strings.pratilipi_logo }" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/Logo-for-Site-Header.png" />
+								</a>
+							</td>
+							
+							<template is="dom-if" if="{{ !mobile }}">
+								<td width="90px">
+									<a href="/">
+										<img style= "padding-top: 5px; max-width: 90px;" title="${ _strings.pratilipi_logo }" alt="${ _strings.pratilipi_logo }" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/Pratilipi-Text.png" />
+									</a>
+								</td>
+							</template>
+							
+							<template is="dom-if" if="{{ medium }}">
+								<td width="25px"></td>
+							</template>
+							
+							<td width="auto">
+								<form style="margin: -20px 15px auto 10px;" is="iron-form" id="form" method="get" action="/search">
+									<template is="dom-if" if="{{ !mobile }}">
+										<paper-input name="q" class="search" type="search" label="${ _strings.search_bar_help }" value="{{ query::input }}">
+											<paper-icon-button class="search-icon" suffix icon="search" noink="true"></paper-icon-button>
+											<template is="dom-if" if="{{ !medium }}">
+												<paper-icon-button class="menu-icon" prefix icon="menu" noink="true" on-click="showMenu"></paper-icon-button>
+											</template>
+										</paper-input>
+									</template>
+									<template is="dom-if" if="{{ mobile }}">
+										<paper-input class="search" type="search" label="${ _strings.search }" value="{{ query::input }}">
+											<paper-icon-button class="search-icon" suffix icon="search" noink="true"></paper-icon-button>
+											<paper-icon-button class="menu-icon" prefix icon="menu" noink="true" on-click="showMenu"></paper-icon-button>
+										</paper-input>
+									</template>
+								</form>
+							</td>
+							
+							<td align="right" width="85px">
+								<template is="dom-if" if="{{ user.isGuest }}">
+									<button class="pratilipi-white-button" on-click="logIn"><small>${ _strings.sign_in }</small></button>
+								</template>
+								<template is="dom-if" if="{{ !user.isGuest }}">
+									<div style="width: 100%;" class="dropdown">
+										<button style="width: 100%" class="pratilipi-white-button" type="button" id="accountDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+											{{ user.firstName }}
+											<iron-icon icon="arrow-drop-down"></iron-icon>
+										</button>
+										<ul style="min-width: 0px;" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="accountDropdown">
+											<li><a style="padding: 0px;">
+												<paper-item on-click="myProfile">
+													<paper-icon-item><iron-icon style="color: #107FE5;" icon="account-circle"></iron-icon></paper-icon-item>
+													&nbsp;&nbsp;
+													<paper-item-body>My Profile</paper-item-body>
+												</paper-item>
+											</a></li>
+											<li><a style="padding: 0px;">
+												<paper-item on-click="logOut">
+													<paper-icon-item><iron-icon style="color: #D0021B;" icon="remove-circle"></iron-icon></paper-icon-item>
+													&nbsp;&nbsp;
+													<paper-item-body>${ _strings.sign_out }</paper-item-body>
+												</paper-item>
+											</a></li>
+										</ul>
+									</div>
+								</template>
+							</td>
 
-					<template is="dom-if" if="{{ !user.isGuest }}">
-						<span class="dropdown">
-							<a class="dropdown-toggle" id="ProfileMenu" data-toggle="dropdown" aria-expanded="true">
-								<span>{{ user.name }}</span>&nbsp;<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="ProfileMenu">
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="#" on-click="logOut">${ _strings.sign_out }</a></li>
-							</ul>
-						</span>
-						&nbsp;
-					</template>
-					
-					<span class="dropdown">
-						<a class="dropdown-toggle" id="LanguageMenu" data-toggle="dropdown" aria-expanded="true">
-							${ _strings.choose_language } &nbsp; <span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="LanguageMenu">
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="//www.pratilipi.com">${ _strings.language_all }</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="//tamil.pratilipi.com">${ _strings.language_ta }</a></li>
-						</ul>
-					</span>
-					&nbsp;
-					
+							
+							<template is="dom-if" if="{{ !container }}">
+								<template is="dom-if" if="{{ !mobile }}">
+									<td width="10px"></td>
+									<td width="85px">
+										<a><paper-button class="pratilipi-dark-blue-button" on-click="write"><iron-icon style="margin-top: -5px;" icon="create"></iron-icon>&nbsp;${ _strings.write }</paper-button></a>
+									</td>
+								</template>
+							</template>
+						</tr>
+					</table>
 				</div>
-		
-				<!-- Search bar for medium & large screens. -->
-				<pratilipi-search-bar class="hidden-xs hidden-sm"></pratilipi-search-bar>
 				
+				<template is="dom-if" if="{{ !mobile }}">
+					<template is="dom-if" if="{{ container }}">
+						<div style="position: absolute; display: inline-block; top: 12px; margin-left: 12px;">
+							<a><paper-button class="pratilipi-dark-blue-button" on-click="write"><iron-icon style="margin-top: -5px;" icon="create"></iron-icon>&nbsp;${ _strings.write }</paper-button></a>
+						</div>
+					</template>
+				</template>
 			</div>
-			
-			<!-- Navigation & Search bar for extra-small & small screens. -->
-			<div class="container hidden-md hidden-lg">
-				<pratilipi-search-bar>
-					<span class="input-group-btn">
-						<button class="btn" type="button" on-click="showMenu">
-							${ _strings.menu }
-						</button>
-					</span>
-				</pratilipi-search-bar>
-				<pratilipi-navigation-drawer with-backdrop></pratilipi-navigation-drawer>
-			</div>
-			
+		</paper-card>
+		
+		<!-- Navigation & Search bar for extra-small & small screens. -->
+		<div class="container hidden-md hidden-lg">
+			<pratilipi-navigation-drawer with-backdrop></pratilipi-navigation-drawer>
 		</div>
+		
 	</template>
 
 
@@ -92,8 +157,77 @@
 			
 			is: 'pratilipi-header',
 			
+			behaviors: [
+				Polymer.IronResizableBehavior
+			],
+			
+			listeners: {
+				'iron-resize': '_onIronResize'
+			},
+			
 			properties: {
 				user: { type: Object, notify: true },
+				query: { type: String },
+				mobile: { type: Boolean },
+				container: { type: Boolean },
+				medium: { type: Boolean }
+			},
+			
+			ready: function() {
+			    var reParam = new RegExp( '(?:[\?&]|&)q=([^&]+)', 'i' );
+			    var match = window.location.search.match( reParam ) ;
+			    if( match && match.length > 1 )
+			    	this.query = decodeURIComponent( match[ 1 ] ).split("+").join(" ");;
+			},
+			
+			attached: function() {
+				this._onIronResize();
+			},
+			
+			_search: function() {
+				var prefix = "/search?q=";
+				return prefix + this.query;
+			},
+			
+			_show: function() {
+				jQuery( '#dropdown' ).show();
+			},
+			
+			write: function() {
+				document.querySelector( 'pratilipi-user' ).write();
+			},
+			
+			_onIronResize: function() {
+				var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+				
+				if( windowsize > 600 )
+					this.mobile = false;
+				else
+					this.mobile = true;
+
+				if( windowsize > 1100 )
+					this.container = true;
+				else
+					this.container = false;
+				
+				if( windowsize > 991 )
+					this.medium = true;
+				else
+					this.medium = false;
+					
+			},
+			
+			onSubmit: function( event ) {
+				var searchResult = jQuery( '#SearchResult' )[0];
+				if( searchResult != undefined ) {
+					jQuery( searchResult ).attr( 'search-query', this.query.trim() );
+					searchResult.reset();
+					event.preventDefault();
+				} else if( this.query == undefined || this.query.trim() == '' ) {
+					event.preventDefault();
+				} else {
+					this.query = this.query.trim();
+				}
 			},
 
 			showMenu: function() {
@@ -102,6 +236,10 @@
 			
 			logIn: function() {
 				document.querySelector( 'pratilipi-user' ).logIn();
+			},
+			
+			myProfile: function() {
+				console.log( "myProfile" );
 			},
 			
 			logOut: function() {

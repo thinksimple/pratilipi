@@ -1,5 +1,3 @@
-<!-- Version:6.0 -->
-
 <link rel="import" href="pratilipi-rating-input.html">
 <link rel="import" href="pratilipi-review.html">
 
@@ -20,29 +18,31 @@
 			height: 150px;
 		}
 		
+		.form-group input, .form-group textarea {
+			font-size: 12px;
+		}
+		
 	</style>
 
 	
 	<template>
 		<iron-collapse id="ReviewInputCollapse" class="secondary-500">
-
 			<div class="media">
 				<div class="media-left">
 					<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading">{{ pratilipi.title }}</h4>
+					<h5>{{ pratilipi.author.name }}</h5>
+					<br/>
 					<pratilipi-rating-input
 							user="{{ user }}"
 							pratilipi-id="{{ pratilipi.pratilipiId }}"
 							value="{{ userpratilipi.rating }}"
 							></pratilipi-rating-input>
 				</div>
-				<div class="media-body">
-					<h4 class="media-heading">{{ pratilipi.title }}</h4>
-					<h5>{{ pratilipi.author.name }}</h5>
-				</div>
 			</div>
-
 			<br/>
-
 			<div class="form-group">
 				<label for="FormInput-Title">${ _strings.review_title }</label>
 				<input type="email" class="form-control" id="FormInput-Title" placeholder="${ _strings.review_title_help }" value="{{ params.reviewTitle::input }}">
@@ -54,16 +54,15 @@
 				<span class="text-danger">{{ paramsErr.review }}</span>
 			</div>
 			<div>
-				<button type="button" class="btn" on-click="onSubmit">${ _strings.submit_review }</button>
+				<button type="button" class="pratilipi-light-blue-button" on-click="onSubmit">${ _strings.submit_review }</button>
+				<button type="button" class="pratilipi-grey-button" on-click="close">Cancel</button>
 				<span class="text-center text-success">{{ message }}</span>
 				<span class="text-center text-danger">{{ errMessage }}</span>
 			</div>
 
-			<br/>
-			<br/>
-			<hr/>
-
 		</iron-collapse>
+		
+		<br class="pratilipi-break"/>
 
 		<iron-collapse id="ReviewCollapse">
 			<pratilipi-review review="{{ userpratilipi }}"></pratilipi-review>
@@ -92,6 +91,7 @@
 				user: { type: Object },
 				pratilipi: { type:Object, observer:"_pratilipiChangeObserver" },
 				userpratilipi: { type:Object, notify:true, observer:"_userpratilipiChangeObserver" },
+				isactive: { type: Boolean, notify: true },
 				
 				params: { type:Object, value:{} },
 				paramsErr: { type:Object },
@@ -122,6 +122,7 @@
 			},
 			
 			close: function() {
+				this.isactive = false;
 				if( this.$.ReviewInputCollapse.opened )
 					this.$.ReviewInputCollapse.toggle();
 				if( ! this.$.ReviewCollapse.opened && this.userpratilipi.review )
@@ -159,7 +160,7 @@
 					document.querySelector( 'pratilipi-user' ).logIn();
 				else
 					this.errMessage = event.detail.request.xhr.response.message;
-			},
+			}
 			
 		});
 		

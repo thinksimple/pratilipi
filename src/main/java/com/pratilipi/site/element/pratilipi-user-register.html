@@ -1,43 +1,57 @@
 <dom-module id="pratilipi-user-register">
 
+	<style>
+
+		.popup-heading span {
+			font-size: 14px;
+			color: #333;
+			display: inline-block;
+		}
+		
+		paper-input.pratilipi-blue {
+			--paper-input-container-focus-color: #107FE5;
+		}
+		
+	</style>
+
 	<template>
-		<div class="popup">
-			<h5 class="popup-heading">${ _strings.sign_up_for_pratilipi }</h5>
-			<div class="popup-body" on-keyup="onSubmit">
-				<div class="form-group">
-					<label for="FormInput-FullName">${ _strings.full_name }</label>
-					<input type="text" class="form-control" id="FormInput-FullName" placeholder="First Middle Last" value="{{ params.name::input }}">
-					<span class="text-danger">{{ paramsErr.name }}</span>
-				</div>
-				<div class="form-group">
-					<label for="FormInput-UserEmail">${ _strings.email }</label>
-					<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="name@example.com" value="{{ params.email::input }}">
-					<span class="text-danger">{{ paramsErr.email }}</span>
-				</div>
-				<div class="form-group">
-					<label for="FormInput-Password">${ _strings.password }</label>
-					<input type="password" class="form-control" id="FormInput-Password" placeholder="********" value="{{ params.password::input }}">
-					<span class="text-danger">{{ paramsErr.password }}</span>
-				</div>
-				<div class="form-group">
-					<label for="FormInput-Password2">${ _strings.confirm_password }</label>
-					<input type="password" class="form-control" id="FormInput-Password2" placeholder="********" value="{{ params.password2::input }}">
-					<span class="text-danger">{{ paramsErr.password2 }}</span>
-				</div>
-				<div class="text-center">
-					<span class="text-center text-success">{{ message }}</span>
-					<span class="text-center text-danger">{{ errMessage }}</span>
+		<div class="modal-content">
+			<div class="modal-header">
+				<span>${ _strings.sign_up_for_pratilipi }</span>
+				<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+			</div>
+			<div class="modal-body" on-keyup="onSubmit">
+				<pratilipi-facebook-login></pratilipi-facebook-login>
+				<div style="margin-right: 10px; margin-left: 10px;">
 					<br/>
-					<br/>
-					<button type="button" class="btn" on-click="onSubmit">${ _strings.sign_up }</button>
-				</div>
-				<div class="small">
-					<br/>
-					<a class="text-muted" href="#" on-click="logIn">${ _strings.back }</a>
+					<div style="height: 2px; background-color: #f5f5f5; text-align: center;">
+						<span style="background-color: white; position: relative; top: -1em;">
+							&nbsp;&nbsp;OR&nbsp;&nbsp;
+						</span>
+					</div>
+					
+					<paper-input class="pratilipi-blue" label="{{ nameInput }}" value="{{ params.name::input }}"></paper-input>
+					<paper-input class="pratilipi-blue" label="{{ emailInput }}" value="{{ params.email::input }}"></paper-input>
+					<paper-input class="pratilipi-blue" label="{{ passwordInput }}" type="password" value="{{ params.password::input }}"></paper-input>
+					
+					<div class="text-center">
+						<span style="display: block;">{{ message }}</span>
+						<a style="margin-top: 20px;" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_up }</a>
+						<span style="display: block; margin-top: 15px;">
+							By registering, you agree to the
+							<a href="/privacy-policy"><span style="color: #107FE5; white-space: nowrap;">privacy policy</span></a>
+							&nbsp;and&nbsp;
+							<a href="/terms-of-service"><span style="color: #107FE5; white-space: nowrap;">terms of service</span></a>.
+						</span>
+					</div>
+					
 				</div>
 			</div>
+			<div class="modal-footer">
+				<p class=" text-center">Already a Member?&nbsp;<a style="color: #107FE5;" href="#" on-click="logIn">Sign In !</a></p>
+			</div>
 		</div>
-
+		
 		<iron-ajax
 				id="AjaxPost"
 				url="/api/user/register"
@@ -66,25 +80,38 @@
 
 			properties: {
 				params: { type:Object, value:{"source":"WEBSITE_M6<#if language??>_${ language }</#if>"} },
-				paramsErr: { type:Object },
-				message: { type:String },
-				errMessage: { type:String },
+				nameInput: { type: String },
+				emailInput: { type: String },
+				passwordInput: { type: String },
+				message: { type:String }
 			},
-			
-			behaviors: [
-				Polymer.IronOverlayBehavior
-			],
 			
 			logIn: function() {
 				document.querySelector( 'pratilipi-user' ).logIn();
 			},
 			
+			defaultMessages: function() {
+				this.nameInput = "Name";
+				this.emailInput = "Email";
+				this.passwordInput = "Password";
+				this.message = null;
+			},
+			
+			ready: function() {
+				this.defaultMessages();
+			},
+			
 			onSubmit: function( event ) {
+				this.defaultMessages();
+				
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
 					return;
-
-				this.paramsErr = {};
-				this.errMessage = null;
+				
+				if( this.params.name === undefined || this.params.email === undefined || this.params.password === undefined ) {
+					this.message = "Please fill in the details";
+					return;
+				}
+				
 				this.message = "Working ...";
 				
 				this.$.AjaxPost.body = transformRequest( this.params );
@@ -93,13 +120,12 @@
 			
 			_handleAjaxPostResponse: function( event ) {
 				if( event.detail.xhr.status == 0 ) {
-					this.message = null;
-					this.errMessage = "Could not connect to server !";
+					this.message = "Could not connect to server !";
 				} else {
 					this.message = "Success !";
 					this.async( function() {
  						this.message = null;
-						this.close();
+ 						jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
 					}, 1000 );
 					document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
 				}
@@ -107,10 +133,16 @@
 
 			_handleAjaxPostError: function( event ) {
 				this.message = null;
-				if( event.detail.request.xhr.status == 400 )
-					this.paramsErr = event.detail.request.xhr.response;
+				console.log( event.detail.request.xhr.response );
+				if( event.detail.request.xhr.status == 400 ) {
+					if( event.detail.request.xhr.response.email !== undefined ) {
+						this.emailInput = event.detail.request.xhr.response.email;
+						return;
+					}
+					this.message = event.detail.request.xhr.response.password !== undefined ? event.detail.request.xhr.response.password : "";
+				}
 				else
-					this.errMessage = event.detail.request.xhr.response.message;
+					this.message = event.detail.request.xhr.response.message;
 			},
 
 		});

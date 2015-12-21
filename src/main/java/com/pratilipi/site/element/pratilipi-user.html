@@ -4,15 +4,37 @@
 <link rel="import" href="pratilipi-user-password-reset.html" />
 <link rel="import" href="pratilipi-user-password-update.html" />
 <link rel="import" href="pratilipi-user-verification.html" />
+<link rel="import" href="pratilipi-write.html" />
 
 <dom-module id="pratilipi-user">
 
 	<template>
-		<pratilipi-user-login with-backdrop></pratilipi-user-login>
-		<pratilipi-user-register with-backdrop></pratilipi-user-register>
-		<pratilipi-user-password-reset with-backdrop></pratilipi-user-password-reset>
 		<pratilipi-user-password-update with-backdrop></pratilipi-user-password-update>
 		<pratilipi-user-verification with-backdrop></pratilipi-user-verification>
+		
+		<div class="modal fade" id="pratilipiUserLogin" role="dialog">
+			<div class="modal-dialog" role="document">
+				<pratilipi-user-login></pratilipi-user-login>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="pratilipiUserRegister" role="dialog">
+			<div class="modal-dialog" role="document">
+				<pratilipi-user-register></pratilipi-user-register>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="pratilipiUserPasswordReset" role="dialog">
+			<div class="modal-dialog" role="document">
+				<pratilipi-user-password-reset></pratilipi-user-password-reset>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="pratilipiWrite" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<pratilipi-write></pratilipi-write>
+			</div>
+		</div>
 		
 		<iron-ajax
 				id="AjaxGet"
@@ -48,9 +70,10 @@
 			},
 			
 			closeAllElements: function() {
-				this.querySelector( 'pratilipi-user-login' ).close();
-				this.querySelector( 'pratilipi-user-register' ).close();
-				this.querySelector( 'pratilipi-user-password-reset' ).close();
+				jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
+				jQuery( "#pratilipiUserRegister" ).modal( 'hide' );
+				jQuery( "#pratilipiUserPasswordReset" ).modal( 'hide' );
+				jQuery( "#pratilipiWrite" ).modal( 'hide' );
 				this.querySelector( 'pratilipi-user-password-update' ).close();
 				this.querySelector( 'pratilipi-user-verification' ).close();
 			},
@@ -58,25 +81,21 @@
 			logIn: function() {
 				this.closeAllElements();
 				this.async( function() {
-					this.querySelector( 'pratilipi-user-login' ).open();
+					jQuery( "#pratilipiUserLogin" ).modal();
 				});
-			},
-			
-			logOut: function() {
-				this.$.AjaxGet.generateRequest();
 			},
 			
 			register: function() {
 				this.closeAllElements();
 				this.async( function() {
-					this.querySelector( 'pratilipi-user-register' ).open();
+					jQuery( "#pratilipiUserRegister" ).modal();
 				});
 			},
 			
 			resetPassword: function() {
 				this.closeAllElements();
 				this.async( function() {
-					this.querySelector( 'pratilipi-user-password-reset' ).open();
+					jQuery( "#pratilipiUserPasswordReset" ).modal();
 				});
 			},
 			
@@ -92,6 +111,17 @@
 				this.async( function() {
 					this.querySelector( 'pratilipi-user-verification' ).open();
 				});
+			},
+			
+			write: function() {
+				this.closeAllElements();
+				this.async( function() {
+					jQuery( "#pratilipiWrite" ).modal();
+				});
+			},
+			
+			logOut: function() {
+				this.$.AjaxGet.generateRequest();
 			},
 			
 			_handleAjaxGetResponse: function(  request ) {

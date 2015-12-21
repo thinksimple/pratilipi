@@ -1,7 +1,3 @@
-<!-- Version:6.0 -->
-
-<link rel="import" href="pratilipi-social.html" />
-
 <dom-module id="pratilipi-author">
 
 	<style>
@@ -9,166 +5,230 @@
 		:host {
 			display: block;
 		}
-
-		.media {
-			padding: 10px;
-		}		
-
 		
-		.media-left {
-			padding: 10px;
+		paper-card {
+			width: 100%;
+			--paper-card-header: { display: none };
 		}
 		
-		.media-left img {
-			width: 150px;
-			height: 225px;
+		.col-right-mobile table {
+			margin: 0 auto;
+			text-align: left;
+			white-space: nowrap;
 		}
 		
-		.media-left a {
-			display: block;
-			text-align:center;
-			width: 150px;
-			margin-top: 10px;
-			padding: 5px;
+		.col-right-widescreen table td, .col-right-widescreen table th, .col-right-mobile table td, .col-right-mobile table th {
+			width: 66%;
+			height: 30px;
 		}
 		
-		.media-left a * {
-			margin: 0px;
-			color: white;
+		.less {
+			max-height: 220px; 
+			overflow: hidden;"
 		}
 		
-		
-		.media-body {
-			padding: 10px;
+		.more {
+			max-height: auto;
+			overflow: visible;
 		}
 		
-		
-		
-		
-		
-		td, th {
-			width: 150px;
-			height: 25px;
+		#more, #less {
+			color: #333;
 		}
 
-		td, .summary{
-			color: #666666; 
-		}
-
-		.show-more, .show-less {
-			color: black;
-			font-weight: bold;
-			text-decoration: underline;
-		}
-		
-		
-		
-		
-		
 	</style>
 	
 	
 	<template>
-		<div class="secondary-500">
-			<div class="media">
-	
-				<div class="media-left">
-					<img class="media-object" src="{{ author.imageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
-					<div class="primary-500">
-						<a href="#PublishedWorks">
-							<h4><span>{{ author.contentPublished }}</span> Works</h4>
-							<span>on Pratilipi</span>
-						</a>
-					</div>
-					<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
+		<paper-card>		
+			<!-- For wide-screens and mobile screens-->
+			<div id="row">
+	    		<div id="col-left" style=" max-width: 220px;">
+	    			<div style="padding: 20px 0px 0px 10px;">
+	    				<img class="pratilipi-shadow" src="{{ author.imageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
+	    			</div>
+	    			<div style="padding: 15px 40px; margin-bottom: 15px;">
+	    				<a class="link" style="float: left;">Like</a>
+	    				<a class="link" style="float: right;">Share</a>
+	    			</div>
 				</div>
-				
-				<div class="media-body">
-					<h1 class="media-heading">{{ author.name }}</h1>
+	    		<div id="col-right" style="padding: 20px;">
+	    			<h2 style="margin-top: 0px; color: #D0021B;">{{ author.name }}</h2>
+	    			
 					<template is="dom-if" if="{{ author.penName }}">
-						<h4>"<span>{{ author.penName }}</span>"</h4>
+						<h4 style="margin: 0px;">"<span>{{ author.penName }}</span>"</h4>
+						<br/>
 					</template>
-					<br/>
-					<div>
-						<span class="summary" style="text-align:justify;">{{ pratilipi.summary }}</span>
-						<a href="#" class="show-more" on-click="showCompleteSummary"><small>(${ _strings.show_more })</small></a>
-						<a href="#" class="show-less" on-click="showSummarySnippet"><small>(${ _strings.show_less })</small></a>
-					</div>
-					<br/>
-				</div>
-				
+			
+					<!-- <table>
+						<tr> <th>Languages</th> <td>Hindi, Tamil</td> </tr>
+						<tr> <th>Location</th> <td>Delhi</td> </tr>
+						<tr> <th>Author Since</th> <td>16 Sep 2014</td> </tr>
+					</table> -->
+					
+					<template is="dom-if" if="{{ !mobile }}">
+						<div style="position: absolute; bottom: 105px;">
+							<a class="pratilipi-light-blue-button">Interviews</a>
+							<a class="pratilipi-grey-button">View Dashboard</a>
+							<a class="link">Tutorials</a>
+						</div>
+					</template>
+					<template is="dom-if" if="{{ mobile }}">
+						<div style="position: relative; margin-top: 20px;">
+							<a class="pratilipi-light-blue-button">Interviews</a>
+							<a class="pratilipi-grey-button">View Dashboard</a>
+							<a class="link">Tutorials</a>
+						</div>
+					</template>
+					
+					
+	    		</div>
+	    		<br/>
 			</div>
-			<hr/>
+			
+			<hr style="border: 1px solid #E5E5E5; margin: 0; padding: 0;"/>
+			
+			<!-- Works, Reads and Likes -->
+			<div class="row" style="text-align: center; padding: 10px; font-family: HelveticaNeue;">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<h3>{{ author.contentPublished }}&nbsp;&nbsp;<small>Works</small></h3>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<h3>{{ author.totalReadCount }}&nbsp;&nbsp;<small>Reads</small></h3>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<h3>{{ author.totalFbLikeShareCount }}&nbsp;&nbsp;<small>Likes</small></h3>
+				</div>
+			</div>
+			
+		</paper-card>
+		
+		<br class="pratilipi-break" />
+		
+		<!-- Displaying author summary if.. -->
+		<div id="author-summary">
+			<paper-card>
+				<div style="padding: 10px 20px 20px 20px; text-align: justify;">
+					<h3 style="color: #D0021B;">${ _strings.author_about }</h3>
+					<div id="author-summary-text" style="margin-top: 20px; margin-down: 20px;">{{ author.summary }}</div>
+					<div style="text-align: center; padding-top: 5px;">
+						<a id="more" on-click="_toggleSnippet"><span style="color: #9B9B9B;">(${ _strings.show_more })</span></a>
+						<a id="less" on-click="_toggleSnippet"><span style="color: #9B9B9B;">(${ _strings.show_less })</span></a>
+					</div>
+				</div>
+			</paper-card>
+			<br class="pratilipi-break"/>
 		</div>
+		
+		<!-- Books by Author -->
+		<paper-card>
+			<div class="row" style="text-align: center; padding: 10px;">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><a class="active">Drafts</a></div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><a class="active">Published Contents - Free</a></div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><a class="active">Published Contents - Paid</a></div>
+			</div>
+		</paper-card>
 	</template>
 	
-	
 	<script>
-	
-	function getValue( url, key ) {
-		   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( url ) )
-		      return decodeURIComponent( key[1] );
-		   else
-			   return "";
-	}
-	
-	function replaceAll( string, find, replace ) {
-		return string.replace( new RegExp( find, 'g' ), replace );
-	}
 	
 		Polymer({
 			
 			is: 'pratilipi-author',
 			
+			behaviors: [
+				Polymer.IronResizableBehavior
+			],
+			
+			listeners: {
+				'iron-resize': '_onIronResize',
+			},
+			
 			properties: {
 				user: { type:Object },
 				author: { type:Object, notify:true },
 				authorData: { type:Object },
+				mobile: { type: Boolean }
+			},
+			
+			processAuthorData: function( data ) {
+				if( data.name === undefined && data.nameEn !== undefined )
+					data.name = data.nameEn;
+				if( data.penName === undefined && data.penNameEn !== undefined )
+					data.penName = data.penNameEn;
+				data.contentPublished = data.contentPublished === undefined ? 0 : data.contentPublished;
+				data.totalFbLikeShareCount = data.totalFbLikeShareCount === undefined ? 0 : data.totalFbLikeShareCount;
+				data.totalReadCount = data.totalReadCount === undefined ? 0 : data.totalReadCount;
+				return data;
+			},
+			
+			ready: function() {
+				this.set( 'author', this.processAuthorData( this.authorData ) );
+			},
+			
+			attached: function() {
+				if( this.author.summary === undefined ) { 
+					document.getElementById( "author-summary" ).style.display = "none";
+					return;
+				}
+				
+				var jSummary = jQuery( document.getElementById( "author-summary-text" ) );
+				jSummary.html( this.author.summary ) 
+				
+				var height = jQuery( "#author-summary-text" ).height();
+				
+				if( height > 220 ) {
+					jQuery( '#author-summary-text' ).addClass( 'less' );
+					document.getElementById( "less" ).style.display = "none";
+					document.getElementById( "more" ).style.display = "block";
+				} else {
+					document.getElementById( "less" ).style.display = "none";
+					document.getElementById( "more" ).style.display = "none";
+				}
+			},
+			
+			_onIronResize: function() {
+				var windowsize = this.clientWidth;
+				if( windowsize > 600 ) {
+					this.mobile = false;
+					jQuery( '#row' ).removeClass( 'row-mobile' );
+					jQuery( '#col-left' ).removeClass( 'col-left-mobile' );
+					jQuery( '#col-right' ).removeClass( 'col-right-mobile' );
+					
+					jQuery( '#row' ).addClass( 'row-widescreen' );
+					jQuery( '#col-left' ).addClass( 'col-left-widescreen' );
+					jQuery( '#col-right' ).addClass( 'col-right-widescreen' );
+				}
+				else {
+					this.mobile = true;
+					jQuery( '#row' ).removeClass( 'row-widescreen' );
+					jQuery( '#col-left' ).removeClass( 'col-left-widescreen' );
+					jQuery( '#col-right' ).removeClass( 'col-right-widescreen' );
+					
+					jQuery( '#row' ).addClass( 'row-mobile' );
+					jQuery( '#col-left' ).addClass( 'col-left-mobile' );
+					jQuery( '#col-right' ).addClass( 'col-right-mobile' );
+				}
+				
+			},
+			
+			_toggleSnippet: function() {
+				jQuery( '#author-summary-text' ).toggleClass( 'less' );
+				jQuery( '#author-summary-text' ).toggleClass( 'more' );
+				
+				if( document.getElementById( "more" ).style.display === "block" )
+					document.getElementById( "more" ).style.display = "none";
+				else
+					document.getElementById( "more" ).style.display = "block";
+				
+				if( document.getElementById( "less" ).style.display === "block" )
+					document.getElementById( "less" ).style.display = "none";
+				else
+					document.getElementById( "less" ).style.display = "block";
 			},
 			
 			getShareUrl: function() {
 				return 'http://' + ${ domain } + pratilipi.pageUrl;
-			},
-			
-			showCompleteSummary: function() {
-				var jSummary = jQuery( this.querySelector( '.summary' ) );
-				jSummary.html( this.author.summary );
-				if( jSummary.text().length > 200 ) {
-					jQuery( this.querySelector( '.show-more' ) ).hide();
-					jQuery( this.querySelector( '.show-less' ) ).show();
-				} else {
-					jQuery( this.querySelector( '.show-more' ) ).hide();
-					jQuery( this.querySelector( '.show-less' ) ).hide();
-				}
-			},
-			
-			showSummarySnippet: function() {
-				var jSummary = jQuery( this.querySelector( '.summary' ) );
-				jSummary.html( this.author.summary );
-				if( jSummary.text().length > 200 ) {
-					jSummary.text( jSummary.text().substr( 0, 200 ) + '...' );
-					jQuery( this.querySelector( '.show-more' ) ).show();
-					jQuery( this.querySelector( '.show-less' ) ).hide();
-				} else {
-					jQuery( this.querySelector( '.show-more' ) ).hide();
-					jQuery( this.querySelector( '.show-less' ) ).hide();
-				}
-			},
-			
-			ready: function() {
-				
-				// Reduce Author Image size to 67% on small screen devices.
-				if( this.clientWidth < 600 ) {
-					console.log( this.authorData.imageUrl );
-					this.authorData.imageUrl = replaceAll( this.authorData.imageUrl, 
-							"width=" + getValue( this.authorData.imageUrl, "width" ), 
-							"width=" + ( getValue( this.authorData.imageUrl, "width" ) * 2/3 ) );
-					console.log( this.authorData.imageUrl );
-				}
-					
-				
-				this.set( 'author', this.authorData );
-				this.showSummarySnippet();
 			}
 			
 		});

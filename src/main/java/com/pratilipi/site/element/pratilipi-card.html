@@ -1,19 +1,24 @@
-<!-- Version:6.0 -->
-
 <link rel="import" href="pratilipi-rating.html">
 
 <dom-module id="pratilipi-card">
 
 	<style>
-	
-		:host {
-			display: inline-block;
-			margin-right: -4px;
-			padding: 10px;
+		
+		paper-card {
+			height: 200px;
+			--paper-card-header: { display: none };
 		}
-	
+		
+		.card-heading {
+			font-size: 16px;
+			color: #434343;
+			line-height: 20px;
+		}
+		
 		.media {
 			overflow: visible;
+			min-width: 100%;
+			padding: 10px;
 		}
 		
 		.media-left img {
@@ -21,52 +26,36 @@
 			height: 150px;
 		}
 		
-		.media-body {
-			position: relative;
-			padding-bottom: 32px;	
-			overflow: visible;
-		}
-
-		.media-body h6 {
-			margin-top: 0px;
-			margin-bottom: 5px;
-		}
-		
-		.media-body .btn {
-			position: absolute;
-			bottom: 0px;
-			padding: 3px 30px;
-			border-radius: 0px;
-		}
-		
 	</style>
 
 
 	<template>
-		<div class="media">
-
-			<div class="media-left">
-				<a href="{{ pratilipi.pageUrlAlias }}">
-					<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
-				</a>
-			</div>
-
-		  	<div class="media-body">
-		  		<h4 class="media-heading">
-				 	<a href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
-				</h4>
-				<h6>
-					<a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
-				</h6>
-				<div>
-					<pratilipi-rating value="{{ pratilipi.averageRating }}" />
+		<paper-card>
+			<div class="card-content">
+				<div class="media">
+					<div class="media-left">
+						<a href="{{ pratilipi.pageUrlAlias }}">
+							<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+						</a>
+					</div>
+				  	<div class="media-body">
+				  		<h4 class="media-heading">
+						 	<a class="card-heading" href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
+						</h4>
+						<h6>
+							<a class="card-heading" style="font-size: 12px;" href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
+						</h6>
+						<div>
+							<pratilipi-rating value="{{ pratilipi.averageRating }}" />
+							<span class="rating-text">&nbsp;({{ pratilipi.averageRating }})</span>
+						</div>
+						<div style="position: absolute; bottom: 25px;">
+							<button class="pratilipi-light-blue-button">${ _strings.pratilipi_read }</button>
+						</div>
+					</div>
 				</div>
-				<div>
-					<span class="text-success">${ _strings.pratilipi_free }</span>
-				</div>
 			</div>
-			
-		</div>
+		</paper-card>
 	</template>
 
 
@@ -88,24 +77,8 @@
 				'iron-resize': '_onIronResize'
 			},
 			
-			attached: function() {
-				$('[data-toggle="tooltip"]').tooltip();   
-				this.async( this.notifyResize, 1 );
-			},
-			
 			_onIronResize: function() {
-				// Adjusting card width
-				var width = jQuery( this.parentNode ).width();
-				if( width >= 1000 )
-					jQuery( this ).width( Math.floor( width / 4 ) - 20 );
-				else if( width >= 750 )
-					jQuery( this ).width( Math.floor( width / 3 ) - 20 );
-				else if( width >= 500 )
-					jQuery( this ).width( Math.floor( width / 2 ) - 20 );
-				else
-					jQuery( this ).width( width - 20 );
-
-				// Adjusting card heading length
+				/* // Adjusting heading
 				var heading = jQuery( this.querySelector( 'h4 a' ) );
 				var title = this.pratilipi.title;
 				heading.text( title );
@@ -113,7 +86,7 @@
 				while( jQuery( this ).height() > 150 && len > 1 ) {
 					len = len - 1;
 					heading.text( title.substring( 0, len ).trim() + " ..." );
-				}
+				} */
 			}
 			
 		});

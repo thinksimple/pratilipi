@@ -1,37 +1,56 @@
+<link rel="import" href="pratilipi-facebook-login.html" />
+
+
 <dom-module id="pratilipi-user-login">
 
+	<style>
+
+		.popup-heading span {
+			font-size: 14px;
+			color: #333;
+			display: inline-block;
+		}
+		
+		paper-input.pratilipi-blue {
+			--paper-input-container-focus-color: #107FE5;
+		}
+		
+	</style>
+
 	<template>
-		<div class="popup">
-			<h5 class="popup-heading">${ _strings.sign_in_to_pratilipi }</h5>
-			<div class="popup-body" on-keyup="onSubmit">
-				<div class="form-group">
-					<label for="FormInput-UserEmail">${ _strings.email }</label>
-					<input type="email" class="form-control" id="FormInput-UserEmail" placeholder="name@example.com" value="{{ email::input }}">
-					<span class="text-danger">{{ errEmail }}</span>
+	
+		<div class="modal-content">
+			<div class="modal-header">
+				<span>${ _strings.sign_in_to_pratilipi }</span>
+				<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+			</div>
+			<div class="modal-body" on-keyup="onSubmit">
+				<pratilipi-facebook-login></pratilipi-facebook-login>
+				<div style="margin: 20px 10px;">
+					<div style="height: 2px; background-color: #f5f5f5; text-align: center;">
+						<span style="background-color: white; position: relative; top: -1em;">
+							&nbsp;&nbsp;OR&nbsp;&nbsp;
+						</span>
+					</div>
+					<paper-input class="pratilipi-blue" label="{{ emailInput }}" value="{{ email::input }}"></paper-input>
+					<paper-input class="pratilipi-blue" label="{{ passwordInput }}" type="password" value="{{ password::input }}"></paper-input>
+					<div class="text-center">
+						<span class="text-center">{{ message }}</span>
+					 	<br/>
+						<br style="line-height: 10px;"/>
+						<a class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_in }</a>
+					</div>
 				</div>
-				<div class="form-group">
-					<label for="FormInput-Password">${ _strings.password }</label>
-					<input type="password" class="form-control" id="FormInput-Password" placeholder="********" value="{{ password::input }}">
-					<span class="text-danger">{{ errPassword }}</span>
-				</div>
-				<div class="text-center">
-					<span class="text-center text-success">{{ message }}</span>
-					<span class="text-center text-danger">{{ errMessage }}</span>
-					<br/>
-					<br/>
-					<button type="button" class="btn" on-click="onSubmit">${ _strings.sign_in }</button>
-				</div>
-				<div class="small text-center">
-					<br/>
-					<br/>
-					<br/>
-					<a class="text-muted" href="#" on-click="register">${ _strings.sign_up }</a>
-					<br/>
-					<a class="text-danger" href="#" on-click="resetPassword">${ _strings.forgot_password }</a>
+			</div>
+			<div class="modal-footer">
+				<a style="font-size: 13px; font-weight: 300; left; color: #D0021B; float: left;" href="#" on-click="resetPassword">Forgot Password?</a>
+				<div style="float: right;">
+					<span style="font-size: 13px; font-weight: 300; color: #9B9B9B;">New?</span>
+					<a style="font-size: 13px; font-weight: 300; color: #107FE5;" href="#" on-click="register">Sign Up !</a>
 				</div>
 			</div>
 		</div>
-		
+	
 		<iron-ajax
 				id="AjaxPost"
 				url="/api/user/login"
@@ -55,13 +74,10 @@
 				email: { type: String, value:"" },
 				password: { type: String, value:"" },
 				message: { type: String },
-				errMessage: { type: String },
+				emailInput: { type: String },
+				passwordInput: { type: String }
 			},
 			
-			behaviors: [
-				Polymer.IronOverlayBehavior
-			],
-
 			register: function() {
 				document.querySelector( 'pratilipi-user' ).register();
 			},
@@ -69,45 +85,56 @@
 			resetPassword: function() {
 				document.querySelector( 'pratilipi-user' ).resetPassword();
 			},
+			
+			ready: function() {
+				this.defaultMessages();
+			},
+			
 			onSubmit: function( event ) {
+				this.defaultMessages();
+				
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
 					return;
 				
-				this.clearMessages();
+				if( this.email === "" || this.password === "" ) {
+					this.message = "Please fill in the details";
+					return;
+				}
+				
 				this.message = "Working ...";
 				
 				this.$.AjaxPost.body = ( "email=" + this.email + "&" + "password=" + this.password );
 				this.$.AjaxPost.generateRequest();
 			},
 			
-			clearMessages: function() {
-				this.errEmail = null;
-				this.errPassword = null;
-				this.errMessage = null;
+			defaultMessages: function() {
 				this.message = null;
+				this.emailInput = "Email";
+				this.passwordInput = "Password";
 			},
 			
 			_handleAjaxPostResponse: function( event ) {
-				this.clearMessages();
+				this.defaultMessages();
 				if( event.detail.xhr.status == 0 ) {
-					this.errMessage = "Could not connect to server !";
+					this.message = "Could not connect to server !";
 				} else {
 					this.message = "Success !";
 					this.async( function() {
- 						this.message = null;				
-						this.close();
+						this.message = null;
+						jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
 					}, 1000 );
 					document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
 				}
 			},
 
 			_handleAjaxPostError: function( event ) {
-				this.clearMessages();
+				this.defaultMessages();
 				if( event.detail.request.xhr.status == 400 ) {
-					this.errEmail = event.detail.request.xhr.response.email;
-					this.errPassword = event.detail.request.xhr.response.password;
+					this.emailInput = event.detail.request.xhr.response.email !== undefined ? event.detail.request.xhr.response.email : "Email"; 
+					this.passwordInput = event.detail.request.xhr.response.password  !== undefined ? event.detail.request.xhr.response.password : "Password";
+					this.message = event.detail.request.xhr.response.message !== undefined ? event.detail.request.xhr.response.message : this.message;
 				} else {
-					this.errMessage = event.detail.request.xhr.response.message;
+					this.message = event.detail.request.xhr.response.message;
 				}
 			},
 			

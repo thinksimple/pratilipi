@@ -1,16 +1,9 @@
-<!-- Version:6.0 -->
-
 <dom-module id="pratilipi-rating-input">
 
 	<style>
 
 		:host {
 			display: inline-block;
-		}
-		
-		label {
-			margin-top: 5px;
-			margin-bottom: 0px;
 		}
 		
 		div > div {
@@ -34,9 +27,10 @@
 
 
 	<template>
-		<div>
-			<label>{{ title }}</label>
-			<div>
+		<div class="secondary-500">
+			<span>{{ title }}</span>
+			<br/>
+			<div style="display: block; float: left;">
 				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showFiveStars"  on-mouseout="init" on-click="rateFiveStars"></span>
 				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showFourStars"  on-mouseout="init" on-click="rateFourStars"></span>
 				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showThreeStars" on-mouseout="init" on-click="rateThreeStars"></span>

@@ -14,9 +14,14 @@
 			padding-bottom: 15px;
 		}
 		
-		.secondary-500 h4 {
+		.secondary-500 h6 {
 			margin: 0px;
 			padding: 20px 20px 5px 20px;
+			color: #D0021B;
+		}
+		
+		.secondary-500 a {
+			color: #333;
 		}
 		
 		.secondary-500 div {
@@ -27,16 +32,18 @@
 
 
 	<template>
-		<div class="secondary-500">
-			<#list data.sections as section>
-				<h4>${ section.title }</h4>
-				<#list section.items as item>
-		        	<div>
-		        		<a href="${ item.url }">${ item.text }</a>
-		        	</div>
+		<paper-card>
+			<div class="secondary-500">
+				<#list data.sections as section>
+					<h6>${ section.title }</h6>
+					<#list section.items as item>
+			        	<div>
+			        		<a href="${ item.url }">${ item.text }</a>
+			        	</div>
+					</#list>
 				</#list>
-			</#list>
-		</div>
+			</div>
+		</paper-card>
 	</template>
 
 

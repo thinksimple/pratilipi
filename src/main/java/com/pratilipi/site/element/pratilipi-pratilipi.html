@@ -1,5 +1,3 @@
-<!-- Version:6.0 -->
-
 <link rel="import" href="pratilipi-rating.html" />
 <link rel="import" href="pratilipi-social.html" />
 <link rel="import" href="pratilipi-rating-input.html" />
@@ -11,69 +9,108 @@
 		:host {
 			display: block;
 		}
-
-		.media {
-			padding: 10px;
+		
+		paper-card {
+			width: 100%;
+			--paper-card-header: { display: none };
 		}
 		
-		
-		.media-left {
-			padding: 10px;
+		#more, #less {
+			color: #333;
 		}
 		
-		.media-left img {
-			width: 150px;
-			height: 225px;
+		.less {
+			max-height: 190px; 
+			overflow: hidden;
 		}
-
-
-		.media-body {
-			padding: 10px;
+		
+		.more {
+			max-height: auto;
+			overflow: visible;
 		}
 		
 	</style>
 
 	<template>
-		<div class="secondary-500">
-			<div class="media">
-	
-				<div class="media-left">
-					<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
-					<div style="text-align:center">
-						<pratilipi-rating-input
-								user="{{ user }}"
-								pratilipi-id="{{ pratilipi.pratilipiId }}"
-								value="{{ userpratilipi.rating }}"
-								></pratilipi-rating-input>
-						<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
-					</div>
+		<paper-card>
+			<!-- For wide-screens and mobile screens-->
+			
+			<div id="pratilipi-row">
+	    		<div id="pratilipi-col-left" style=" max-width: 170px; padding-bottom: 10px;">
+	    			<div style="padding: 20px 0px 0px 10px;">
+	    				<img class="pratilipi-shadow" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+		    			<div style="padding: 10px 20px;">
+		    				<a class="link" style="float: left;">Like</a>
+		    				<a class="link" style="float: right;">Share</a>
+		    			</div>
+		    		</div>
+	    		</div>
+	    		<div id="pratilipi-col-right" style="padding: 20px;">
+	    			<h2 style="margin-top: 0px; color: #D0021B">{{ pratilipi.title }}</h2>
+					<template is="dom-if" if="{{ pratilipi.author }}">
+						<a href="{{ pratilipi.author.pageUrlAlias }}">
+							<h5>{{ pratilipi.author.name }}</h5>
+						</a>
+					</template>
+					
+					<pratilipi-rating value="{{ pratilipi.averageRating }}">
+							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
+					</pratilipi-rating>
+					
+					<template is="dom-if" if="{{ pratilipi.publicationYear }}">
+						<div style="margin-top: 10px;">
+							${ _strings.published }: {{ pratilipi.publicationYear }}
+						</div>
+					</template>
+					
+					<template is="dom-if" if="{{ !mobile }}">
+						<div style="position: absolute; bottom: 100px;">
+							<a href="{{ pratilipi.readerPageUrl }}" class="pratilipi-light-blue-button">Read</a>
+							<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
+						</div>
+					</template>
+					<template is="dom-if" if="{{ mobile }}">
+						<div style="position: relative; margin-top: 25px;">
+							<a href="{{ pratilipi.readerPageUrl }}" class="pratilipi-light-blue-button">Read</a>
+							<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
+						</div>
+					</template>
+					
+	    		</div>
+	    	</div>
+	    	
+			<hr style="border: 1px solid #E5E5E5; margin: 0; padding: 0;"/>
+			
+			<!-- Works, Reads and Likes -->
+			<div class="row" style="text-align: center; padding: 10px; font-family: HelveticaNeue;">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<h3 style="display: inline-block;">{{ pratilipi.readCount }}</h3>&nbsp;&nbsp;<p style="display: inline-block;">Reads</p>
 				</div>
-				
-				<div class="media-body">
-					<h1 class="media-heading">{{ pratilipi.title }}</h1>
-					<h4><a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a></h4>
-					<div>
-						<pratilipi-rating value="{{ pratilipi.averageRating }}">
-							<strong><strong>&nbsp;&bull;&nbsp;</strong></strong>
-							<strong>{{ getRatingsStr( pratilipi.ratingCount ) }}</strong>
-						</pratilipi-rating>
-					</div>
-					<br/>
-					<div>
-						<a href="{{ pratilipi.readerPageUrl }}" target="_blank" class="btn">${ _strings.pratilipi_read }</a>
-						<span class="text-success">${ _strings.pratilipi_free }</span>
-					</div>
-					<br/>
-					<div>
-						<span class="summary" style="text-align:justify;">{{ pratilipi.summary }}</span>
-						<a href="#" class="show-more" on-click="showCompleteSummary"><small>(${ _strings.show_more })</small></a>
-						<a href="#" class="show-less" on-click="showSummarySnippet"><small>(${ _strings.show_less })</small></a>
-					</div>
-					<br/>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<h3 style="display: inline-block;">{{ pratilipi.reviewCount }}</h3>&nbsp;&nbsp;<p style="display: inline-block;">Reviews</p>
 				</div>
-	
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<h3 style="display: inline-block;">{{ pratilipi.fbLikeShareCount }}</h3>&nbsp;&nbsp;<p style="display: inline-block;">Likes</p>
+				</div>
 			</div>
-			<hr/>
+			
+		</paper-card>
+		
+		<br class="pratilipi-break" />
+		
+		<!-- Displaying author summary if.. -->
+		<div id="pratilipi-summary">
+			<paper-card>
+				<div style="padding: 10px 20px 20px 20px; text-align: justify;">
+					<h3 style="color: #D0021B;">${ _strings.book_summary }</h3>
+						<div id="pratilipi-summary-text" style="margin-top: 10px; margin-down: 20px;">{{ pratilipi.summary }}</div>
+						<div style="text-align: center; padding-top: 10px;">
+							<a id="more" on-click="_toggleSnippet"><span>(${ _strings.show_more })</span></a>
+							<a id="less" on-click="_toggleSnippet"><span>(${ _strings.show_less })</span></a>
+						</div>
+				</div>
+			</paper-card>
+			<br class="pratilipi-break" />
 		</div>
 	</template>
 	
@@ -95,61 +132,103 @@
 
 			is: 'pratilipi-pratilipi',
 			
+			behaviors: [
+				Polymer.IronResizableBehavior
+			],
+			
+			listeners: {
+				'iron-resize': '_onIronResize'
+			},
+			
 			properties: {
 				user: { type: Object },
 				pratilipi: { type:Object, notify:true },
 				pratilipiData: { type:Object },
-				userpratilipi: { type:Object, notify:true }
+				userpratilipi: { type:Object, notify:true },
+				mobile: { type: Boolean }
 			},
 			
-			getRatingsStr: function( ratingCount ) {
-				return this.pratilipi.ratingCount + ' ' + ( this.pratilipi.ratingCount <= 1 ? '${ _strings.rating }' : '${ _strings.ratings }' );
-			},
-
 			getShareUrl: function() {
 				return 'http://' + ${ domain } + pratilipi.pageUrl;
 			},
 			
-			showCompleteSummary: function() {
-				var jSummary = jQuery( this.querySelector( '.summary' ) );
-				jSummary.html( this.pratilipi.summary );
-				if( jSummary.text().length > 200 ) {
-					jQuery( this.querySelector( '.show-more' ) ).hide();
-					jQuery( this.querySelector( '.show-less' ) ).show();
-				} else {
-					jQuery( this.querySelector( '.show-more' ) ).hide();
-					jQuery( this.querySelector( '.show-less' ) ).hide();
+			_onIronResize: function() {
+				var windowsize = this.clientWidth;
+				if( windowsize > 600 ) {
+					this.mobile = false;
+					jQuery( '#pratilipi-row' ).removeClass( 'row-mobile' );
+					jQuery( '#pratilipi-col-left' ).removeClass( 'col-left-mobile' );
+					jQuery( '#pratilipi-col-right' ).removeClass( 'col-right-mobile' );
+					
+					jQuery( '#pratilipi-row' ).addClass( 'row-widescreen' );
+					jQuery( '#pratilipi-col-left' ).addClass( 'col-left-widescreen' );
+					jQuery( '#pratilipi-col-right' ).addClass( 'col-right-widescreen' );
 				}
+				else {
+					this.mobile = true;
+					jQuery( '#pratilipi-row' ).removeClass( 'row-widescreen' );
+					jQuery( '#pratilipi-col-left' ).removeClass( 'col-left-widescreen' );
+					jQuery( '#pratilipi-col-right' ).removeClass( 'col-right-widescreen' );
+					
+					jQuery( '#pratilipi-row' ).addClass( 'row-mobile' );
+					jQuery( '#pratilipi-col-left' ).addClass( 'col-left-mobile' );
+					jQuery( '#pratilipi-col-right' ).addClass( 'col-right-mobile' );
+				}
+				
 			},
 			
-			showSummarySnippet: function() {
-				var jSummary = jQuery( this.querySelector( '.summary' ) );
-				jSummary.html( this.pratilipi.summary );
-				if( jSummary.text().length > 200 ) {
-					jSummary.text( jSummary.text().substr( 0, 200 ) + '...' );
-					jQuery( this.querySelector( '.show-more' ) ).show();
-					jQuery( this.querySelector( '.show-less' ) ).hide();
-				} else {
-					jQuery( this.querySelector( '.show-more' ) ).hide();
-					jQuery( this.querySelector( '.show-less' ) ).hide();
-				}
+			process: function( data ) {
+				if( data.title === undefined && data.titleEn !== undefined )
+					data.title = data.titleEn;
+				if( data.author.name === undefined && data.author.name !== undefined )
+					data.author.name = data.author.nameEn;
+				data.averageRating = data.averageRating === undefined ? 0 : data.averageRating;
+				data.ratingCount = data.ratingCount === undefined ? 0 : data.ratingCount;
+				data.readCount = data.readCount === undefined ? 0 : data.readCount;
+				data.reviewCount = data.reviewCount === undefined ? 0 : data.reviewCount;
+				data.fbLikeShareCount = data.fbLikeShareCount === undefined ? 0 : data.fbLikeShareCount;
+				return data;
 			},
 			
 			ready: function() {
-
-				// Reduce Pratilipi Cover size to 67% on small screen devices.
-				if( this.clientWidth < 600 ) {
-					console.log( this.pratilipiData.coverImageUrl );
-					this.pratilipiData.coverImageUrl = replaceAll( this.pratilipiData.coverImageUrl, 
-							"width=" + getValue( this.pratilipiData.coverImageUrl, "width" ), 
-							"width=" + ( getValue( this.pratilipiData.coverImageUrl, "width" ) * 2/3 ) );
-					console.log( this.pratilipiData.coverImageUrl );
-				}
-					
-
 				this.pratilipiData.readerPageUrl = "http://www.pratilipi.com" + this.pratilipiData.readerPageUrl;
-				this.set( 'pratilipi', this.pratilipiData );
-				this.showSummarySnippet();
+				this.set( 'pratilipi', this.process( this.pratilipiData ) );
+			},
+			
+			attached: function() {
+				// Not displaying Summary if..
+				if( this.pratilipi.summary === undefined ) { 
+					document.getElementById( "pratilipi-summary" ).style.display = "none";
+					return;
+				}
+				
+				var jSummary = jQuery( document.getElementById( "pratilipi-summary-text" ) );
+				jSummary.html( this.pratilipi.summary );
+				var height = jQuery( "#pratilipi-summary-text" ).height();
+				
+				if( height > 190 ) {
+					jQuery( '#pratilipi-summary-text' ).addClass( 'less' );
+					document.getElementById( "less" ).style.display = "none";
+					document.getElementById( "more" ).style.display = "block";
+				} else {
+					document.getElementById( "less" ).style.display = "none";
+					document.getElementById( "more" ).style.display = "none";
+				}
+			},
+			
+			_toggleSnippet: function() {
+				jQuery( '#pratilipi-summary-text' ).toggleClass( 'less' );
+				jQuery( '#pratilipi-summary-text' ).toggleClass( 'more' );
+				
+				if( document.getElementById( "more" ).style.display === "block" )
+					document.getElementById( "more" ).style.display = "none";
+				else
+					document.getElementById( "more" ).style.display = "block";
+				
+				if( document.getElementById( "less" ).style.display === "block" )
+					document.getElementById( "less" ).style.display = "none";
+				else
+					document.getElementById( "less" ).style.display = "block";
 			}
 			
 		});

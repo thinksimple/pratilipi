@@ -1,5 +1,3 @@
-<!-- Version:6.0 -->
-
 <link rel="import" href="pratilipi-review.html" />
 <link rel="import" href="pratilipi-review-input.html" />
 
@@ -10,18 +8,20 @@
 		:host {
 			display: block;
 		}
-
-		.secondary-500 {
-			padding: 10px;
-		}
 		
-		.secondary-500 h3 {
+		paper-card {
+			width: 100%;
+			padding: 10px;
+			--paper-card-header: { display: none };
+		}
+
+		paper-card h3 {
 			margin: 0px;
 			padding: 10px;
 			display: inline-block;
 		}
 
-		.secondary-500 a {
+		paper-card a {
 			margin-bottom: 6px;
 		}
 
@@ -30,22 +30,27 @@
 	
 	<template>
 
-		<div class="secondary-500">
-			<div>
-				<h3>${ _strings.reviews }</h3>
-				<a class="btn blue" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.write_a_review }</a>
-			</div>
+		<paper-card>
+			<h3 style="color: #D0021B;">${ _strings.reviews }</h3>
+			<template is="dom-if" if="{{ !isactive }}">
+				<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.write_a_review }</a>
+			</template>
+			
 			<pratilipi-review-input
 					id="ReviewInput"
 					user="{{ user }}"
 					pratilipi="{{ pratilipi }}"
 					userpratilipi="{{ userpratilipi }}"
+					isactive="{{ isactive }}"
 					></pratilipi-review-input>
+					
 			<template is="dom-repeat" items="{{ reviewList }}" as="review">
+				<hr style="border: 1px solid #E5E5E5; margin: 0; padding: 0;"/>
 				<pratilipi-review review="{{ review }}"></pratilipi-review>
 			</template>
-		</div>
+		</paper-card>
 
+		
 		<iron-ajax
 				id="AjaxGet"
 				url="/api/userpratilipi/review/list"
@@ -66,7 +71,7 @@
 			is: 'pratilipi-review-list',
 
 			properties: {
-				user: { type: Object },
+				user: { type: Object, observer:"_userChanged" },
 				pratilipi: { type:Object },
 				userpratilipi: { type:Object },
 				
@@ -75,14 +80,28 @@
 				cursor: { type: String },
 
 				isLoading: { type: Boolean, value: false },
-				isFinished: { type: Boolean, value: false }
+				isFinished: { type: Boolean, value: false },
+				
+				reviewButtonClicked: { type: Boolean, value: false },
+				isactive: { type: Boolean, value: false }
+			},
+			
+			_userChanged: function() {
+				if( ! this.user.isGuest && this.reviewButtonClicked ) {
+					this.reviewButtonClicked = false;
+					this.showReviewInput();
+				}
 			},
 			
 			showReviewInput: function() {
-				if( this.user.isGuest )
+				if( this.user.isGuest ) {
+					this.reviewButtonClicked = true;
 					document.querySelector( 'pratilipi-user' ).logIn();
-				else
+				} 
+				else {
+					this.isactive = true;
 					this.$.ReviewInput.open();
+				}
 			},
 			
 			loadMore: function() {
