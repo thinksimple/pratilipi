@@ -50,7 +50,7 @@
 							<span class="rating-text">&nbsp;({{ pratilipi.averageRating }})</span>
 						</div>
 						<div style="position: absolute; bottom: 25px;">
-							<a href="{{ pratilipi.readPageUrl }}" class="pratilipi-light-blue-button">${ _strings.pratilipi_read }</a>
+							<button on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.pratilipi_read }</button>
 						</div>
 					</div>
 				</div>
@@ -77,9 +77,9 @@
 				'iron-resize': '_onIronResize'
 			},
 			
-			ready: function() {
+			redirectToReader: function() {
 				if( this.pratilipi.readPageUrl !== undefined ) 
-					this.pratilipi.readPageUrl = "www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 );
+					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 );
 			},
 			
 			_onIronResize: function() {
