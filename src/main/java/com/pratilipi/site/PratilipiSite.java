@@ -18,6 +18,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
@@ -165,7 +166,7 @@ public class PratilipiSite extends HttpServlet {
 			// The magic
 			html = FreeMarkerUtil.processTemplate( dataModel, templateName );
 
-		} catch( UnexpectedServerException e ) {
+		} catch( InvalidArgumentException | UnexpectedServerException e ) {
 			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 			try {
 				html = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "error/ServerError.ftl" );
@@ -290,7 +291,8 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	public Map<String, Object> createDataModelForReadPage( Long pratilipiId, boolean basicMode ) {
+	public Map<String, Object> createDataModelForReadPage( Long pratilipiId, boolean basicMode )
+			throws InvalidArgumentException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -300,6 +302,7 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		if( basicMode ) {
 			dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
+			dataModel.put( "pratilipi", pratilipiData );
 		} else {
 			dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
 		}
