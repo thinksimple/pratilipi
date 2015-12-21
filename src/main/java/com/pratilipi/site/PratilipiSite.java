@@ -77,8 +77,18 @@ public class PratilipiSite extends HttpServlet {
 			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_OVERLAY_BEHAVIOR.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
+			
+			resourceList.add( ThirdPartyResource.POLYMER_PAPER_HEADER_PANEL.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_PAPER_CARD.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_PAPER_DROPDOWN_MENU.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_PAPER_ICON_BUTTON.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_PAPER_INPUT.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_PAPER_LISTBOX.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_PAPER_ITEM.getTag() );
+			
 		}
 
 		
@@ -108,7 +118,6 @@ public class PratilipiSite extends HttpServlet {
 				} else {
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_A11Y_KEYS.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_FLEX_LAYOUT.getTag() );
-					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
 				}

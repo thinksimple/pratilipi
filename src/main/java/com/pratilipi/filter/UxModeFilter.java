@@ -45,7 +45,7 @@ public class UxModeFilter implements Filter {
 		// Defaults - for all test environments
 		Language displayLanguage = Language.TAMIL;
 		Language filterLanguage = Language.TAMIL;
-		boolean basicMode = true;
+		boolean basicMode = false;
 
 		for( Website website : Website.values() ) {
 			if( hostName.equals( website.getHostName() ) ) {

@@ -1,7 +1,6 @@
 package com.pratilipi.api.impl.user;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -22,13 +21,6 @@ public class UserRegisterApi extends GenericApi {
 	public UserResponse put( PostUserRegisterRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 
-		JsonObject errorMessages = new JsonObject();
-		if( ! request.getPassword().equals( request.getPassword2() ) ) {
-			errorMessages.addProperty( "password2", "Must be same as password." );
-			throw new InvalidArgumentException( errorMessages );
-		}
-
-		
 		String firstName = request.getName().trim();
 		String lastName = null;
 		String email = request.getEmail().trim().toLowerCase();

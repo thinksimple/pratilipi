@@ -14,9 +14,7 @@ public class PostUserRegisterRequest extends GenericRequest {
 	private static final String PASSWORD_REQUIRED_ERR_MSG = "Enter password.";
 	private static final String PASSWORD_INVALID_ERR_MSG = "Password must contain at least 6 characters, no spaces.";
 
-	private static final String PASSWORD2_REQUIRED_ERR_MSG = "Re-enter password.";
 
-	
 	@Validate( required = true, requiredErrMsg = NAME_REQUIRED_ERR_MSG )
 	private String name;
 
@@ -25,9 +23,6 @@ public class PostUserRegisterRequest extends GenericRequest {
 
 	@Validate( required = true, requiredErrMsg = PASSWORD_REQUIRED_ERR_MSG, regEx = REGEX_PASSWORD, regExErrMsg = PASSWORD_INVALID_ERR_MSG )
 	private String password;
-
-	@Validate( required = true, requiredErrMsg = PASSWORD2_REQUIRED_ERR_MSG )
-	private String password2;
 
 	@Validate( required = true )
 	private UserSignUpSource source;
@@ -43,10 +38,6 @@ public class PostUserRegisterRequest extends GenericRequest {
 
 	public String getPassword() {
 		return password;
-	}
-	
-	public String getPassword2() {
-		return password2;
 	}
 	
 	public UserSignUpSource getSignUpSource() {

@@ -21,8 +21,17 @@ public enum ThirdPartyResource {
 	POLYMER_IRON_ICONS				( "<link rel='import' href='/third-party/polymer-1.0/iron-icons/iron-icons.html'>" ),
 	POLYMER_IRON_OVERLAY_BEHAVIOR	( "<link rel='import' href='/third-party/polymer-1.0/iron-overlay-behavior/iron-overlay-behavior.html'>" ),
 	POLYMER_IRON_RESIZABLE_BEHAVIOR	( "<link rel='import' href='/third-party/polymer-1.0/iron-resizable-behavior/iron-resizable-behavior.html'>" ),
+	POLYMER_PAPER_CARD				( "<link rel='import' href='/third-party/polymer-1.0/paper-card/paper-card.html'>" ),
+	POLYMER_PAPER_DROPDOWN_MENU		( "<link rel='import' href='/third-party/polymer-1.0/paper-dropdown-menu/paper-dropdown-menu.html'>" ),
 	POLYMER_PAPER_FAB				( "<link rel='import' href='/third-party/polymer-1.0/paper-fab/paper-fab.html'>" ),
-	POLYMER_PAPER_SLIDER			( "<link rel='import' href='/third-party/polymer-1.0/paper-slider/paper-slider.html'>" )
+	POLYMER_PAPER_ICON_BUTTON		( "<link rel='import' href='/third-party/polymer-1.0/paper-icon-button/paper-icon-button.html'>" ),
+	POLYMER_PAPER_INPUT				( "<link rel='import' href='/third-party/polymer-1.0/paper-input/paper-input.html'>" ),
+	POLYMER_PAPER_ITEM				( "<link rel='import' href='/third-party/polymer-1.0/paper-item/paper-item.html'>" ),
+	POLYMER_PAPER_LISTBOX			( "<link rel='import' href='/third-party/polymer-1.0/paper-listbox/paper-listbox.html'>" ),
+	POLYMER_PAPER_SLIDER			( "<link rel='import' href='/third-party/polymer-1.0/paper-slider/paper-slider.html'>" ),
+	POLYMER_PAPER_HEADER_PANEL		( "<link rel='import' href='/third-party/polymer-1.0/paper-header-panel/paper-header-panel.html'>"
+										+ "<link type='text/css' rel='stylesheet' href='/third-party/polymer-1.0/paper-header-panel/paper-header-panel.css'>" )
+	
 	;
 	
 	
