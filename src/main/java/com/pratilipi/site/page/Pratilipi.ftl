@@ -26,7 +26,7 @@
 		
 
 		<#-- Custom Stylesheet -->
-		<link type="text/css" rel="stylesheet" href="/resources/style.css">
+		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151218">
 
 		<script defer>
 			jQuery( window ).scroll( function() {
@@ -35,44 +35,47 @@
 		</script>
 	</head>
 	
-	<body>
+	<body class="fullbleed layout vertical">
 		<template is="dom-bind">
-
-			<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
-			<pratilipi-header user='{{ user }}'></pratilipi-header>
-
-			<pratilipi-userpratilipi
-					user='{{ user }}'
-					pratilipi-id='${ pratilipi.getId()?c }'
-					userpratilipi='{{ userpratilipi }}'
-					userpratilipi-data='${ userpratilipiJson! }'
-					></pratilipi-userpratilipi>
-		
-			<div class="container" style="margin-top:10px; margin-bottom:10px">
-				<pratilipi-navigation
-						class='pull-left hidden-xs hidden-sm'
-						></pratilipi-navigation>
-				<div style="overflow:hidden">
-					<pratilipi-pratilipi
-							user="{{ user }}"
-							pratilipi='{{ pratilipi }}'
-							pratilipi-data='${ pratilipiJson }'
-							userpratilipi='{{ userpratilipi }}'
-							></pratilipi-pratilipi>
-					<pratilipi-review-list
-							id="ReviewSection"
-							user="{{ user }}"
-							pratilipi='{{ pratilipi }}'
-							userpratilipi='{{ userpratilipi }}'
-							review-list='${ reviewListJson }'
-							pratilipi-id='${ pratilipi.getId()?c }'
-							cursor='${ reviewListCursor! }'
-							></pratilipi-review-list>
-				</div>
-			</div>
-		
-			<pratilipi-footer></pratilipi-footer>
-
+			<paper-header-panel class="flex" mode="waterfall">
+  				<div class="paper-header">
+  					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
+					<pratilipi-header user='{{ user }}'></pratilipi-header>
+  				</div>
+  				<div class="fit" style="margin-top: 5px;">
+  					<div class="parent-container">
+						<div class="container">
+							<pratilipi-navigation
+									class='pull-left hidden-xs hidden-sm'
+									></pratilipi-navigation>
+							<div style="overflow:hidden">
+								<pratilipi-userpratilipi
+									user='{{ user }}'
+									pratilipi-id='${ pratilipi.getId()?c }'
+									userpratilipi='{{ userpratilipi }}'
+									userpratilipi-data='${ userpratilipiJson! }'
+									></pratilipi-userpratilipi>
+								<pratilipi-pratilipi
+									user="{{ user }}"
+									pratilipi='{{ pratilipi }}'
+									pratilipi-data='${ pratilipiJson }'
+									userpratilipi='{{ userpratilipi }}'
+									></pratilipi-pratilipi>
+								<pratilipi-review-list
+									id="ReviewSection"
+									user="{{ user }}"
+									pratilipi='{{ pratilipi }}'
+									userpratilipi='{{ userpratilipi }}'
+									review-list='${ reviewListJson }'
+									pratilipi-id='${ pratilipi.getId()?c }'
+									cursor='${ reviewListCursor! }'
+									></pratilipi-review-list>
+							</div>
+						</div>
+					</div>
+					<pratilipi-footer></pratilipi-footer>
+  				</div>
+			</paper-header-panel>
 		</template>
 	</body>
 	

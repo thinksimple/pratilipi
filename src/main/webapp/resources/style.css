@@ -1,29 +1,37 @@
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
-@import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic&subset=latin,devanagari);
-
+@import url(http://fonts.googleapis.com/earlyaccess/notosanstamil.css);
 
 html {
 	height: 100%;
 }
 
 body {
-	font-family: Montserrat, 'Noto Sans', sans-serif;
-	color: #333;
-	background: rgba(199,178,153,0.35);
+	font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+	background: #f5f5f5;
 	margin: 0px;
 	height: 100%;
+	font-size: 14px;
+	line-height: 24px; 
 }
 
 
-.container {
-	width: auto;
+/* container classes */
+
+.parent-container {
+	padding: 0px;
 	min-width: 300px;
 	max-width: 1200px;
-	padding: 0px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
+.container {
+	width: 100%;
+	max-width: 1000px;
+	margin: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
 
 .paper {
 	padding: 16px;
@@ -37,6 +45,8 @@ body {
 	min-height: 800px;
 }
 
+
+/* popup classes */
 
 .popup {
 	width: 325px;
@@ -62,89 +72,65 @@ body {
 }
 
 
-
-/* Color Palette :: Primary */
-
-.primary-500 {
-	color: white;
-	background: red;
-}
-
-.primary-500 button {
-	color: black;
-	background: yellow;
-}
-
-.primary-500 a, .primary-500 a:hover, .primary-500 a:focus {
-	cursor: pointer;
-	color: white;
-	text-decoration: none;
-}
-
-.primary-500 ::selection { /* WebKit/Blink Browsers */
-	color: #ff0000;
-	background: #ffffff;
-}
-
-.primary-500 ::-moz-selection { /* Gecko Browsers */
-	color: #ff0000;
-	background: #ffffff;
-}
-
-
-
-/* Color Palette :: Secondary */
+/* Color Palette :: secondary */
 
 .secondary-500 {
 	color: #333;
 	background-color: white;
 }
 
-.secondary-500 a {
-	color: #333;
+a {
+	font-size: 14px;
 }
 
-.secondary-500 a:hover, .secondary-500 a:focus {
+a:hover, a:focus {
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
 }
 
-.secondary-500 h1, .secondary-500 h2, .secondary-500 h3, .secondary-500 h4 {
-	color: #4D4D4D;
-	font-weight: 700;
+br { 
+	line-height: 20px;
+}
+
+table {
+	white-space: nowrap;
+}
+
+span {
+	font-size: 12px;
+	font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #333;
+	font-weight: 400;
 	margin: 5px 0px 10px 0px;
 }
 
-.secondary-500 hr {
-	border: 0;
-	height: 1px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.5), rgba(0,0,0,0));
+h1 {
+	font-size: 26px;
 }
 
-.secondary-500 button, .secondary-500 button:hover, .secondary-500 button:focus,
-.secondary-500 a.btn, .secondary-500 a.btn:hover, .secondary-500 a.btn:focus {
-	color: white;
-	background: #009245;
+h2 {
+	font-size: 24px;
 }
 
-.secondary-500 .badge {
-	color: #333;
-	background-color: #eee;
+h3 {
+	font-size: 22px;
 }
 
-.secondary-500 ::selection { /* WebKit/Blink Browsers */
-	color: #424242;
-	background: #bdbdbd;
+h4 {
+	font-size: 20px;
 }
 
-.secondary-500 ::-moz-selection { /* Gecko Browsers */
-	color: #424242;
-	background: #bdbdbd;
+h5 {
+	font-size: 18px;
 }
 
+h6 {
+	font-size: 16px;
+}
 
 
 /* Custom Overrides */
@@ -160,4 +146,201 @@ button.blue, button.blue:hover, button.blue:focus {
 
 .text-success {
 	color: #009245;
+}
+
+
+/* Mobile Responsive Property - For mobile and wide-screens*/
+
+.row-widescreen {
+   display: flex;
+}
+
+.col-left-widescreen {
+	width: auto;
+}
+
+.col-right-widescreen {
+	flex: 1;
+}
+
+.row-mobile {
+	width: 100%;
+	display: block;
+	text-align: center;
+}
+
+.col-left-mobile {
+	width: auto;
+	display: block;
+	margin: 0 auto;
+}
+
+.col-right-mobile {
+	width: 100%;
+	display: block;
+	text-align: center;
+	margin: 0 auto;
+}
+
+
+/* Custom  Elements  */
+
+/* <hr> style */
+.pratilipi-top {
+	border-top: 1px solid #f3f3f3;
+	margin: 0;
+	padding: 0;
+}
+
+/* <br> style */
+.pratilipi-break {
+	line-height:3px;
+	display: block;
+	margin: 5px;
+	content: " ";
+}
+
+/* custom box shadow */
+.pratilipi-shadow {
+	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
+	-webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
+	-moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
+}
+
+/* Custom Buttons and Links */
+
+.pratilipi-light-blue-button {
+	background: #F1F8FB;
+	border: 1px solid #0C68BD;
+	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
+	border-radius: 2px;
+	font-family: Helvetica-Bold, 'Noto Sans Tamil';
+	font-size: 13px;
+	color: #0C68BD;
+	letter-spacing: 0.3px;
+	line-height: 16px;
+	text-shadow: 0px 1px 2px #FFFFFF;
+	display: inline-block;
+	padding: 10px 15px 10px 15px;
+	margin-right: 10px;
+	outline: none;
+}
+
+a.pratilipi-light-blue-button:hover, a.pratilipi-light-blue-button:focus {
+	color: #0C68BD;
+}
+
+.pratilipi-dark-blue-button {
+	background-color: #107FE5;
+	height: 40px;
+	padding: 10px;
+	color: #ffffff;
+	font-size: 13px;
+	letter-spacing: 0.3px;
+	text-align: center;
+	min-width: 80px;
+	width: auto;
+	font-weight: 300;
+	line-height: 20px;
+	display: inline-block;	
+	outline: none;
+}
+
+a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
+	color: #ffffff; 
+}
+
+.pratilipi-grey-button {
+	/* Dashboard Button */
+	background: #E5E5E5;
+	border: 1px solid #979797;
+	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
+	border-radius: 2px;
+	font-family: Helvetica-Bold, 'Noto Sans Tamil';
+	font-size: 13px;
+	color: #4A4A4A;
+	letter-spacing: 0.3px;
+	line-height: 16px;
+	text-shadow: 0px 1px 2px #FFFFFF;
+	display: inline-block;
+	padding: 10px 15px 10px 15px;
+	margin-right: 10px;
+	outline: none;
+}
+
+a.pratilipi-grey-button:hover, a.pratilipi-grey-button:focus {
+	color: #4A4A4A; 
+}
+
+.pratilipi-white-button {
+	background: #FFFFFF;
+	border: 1px solid #979797;
+	font-size: 13px;
+	color: #000000;
+	min-width: 70px;
+	width: 100%;
+	height: 40px;
+	text-align: center;
+	line-height: 15px;
+	padding: 10px 0px 10px 0px;
+	display: inline-block;
+	outline: none;
+}
+
+a.pratilipi-white-button:hover, a.pratilipi-white-button:focus {
+	color: #000000; 
+}
+
+.pratilipi-orange-button {
+	background: #FBF5F1;
+	border: 1px solid #F5A623;
+	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
+	border-radius: 2px;
+	font-family: Helvetica-Bold, 'Noto Sans Tamil';
+	font-size: 12px;
+	color: #F58823;
+	letter-spacing: 0.3px;
+	line-height: 14px;
+	text-shadow: 0px 1px 2px #FFFFFF;
+	padding: 10px 0px 10px 0px;
+	display: inline-block;
+	outline: none;
+}
+
+a.pratilipi-orange-button:hover, a.pratilipi-orange-button:focus {
+	color: #F58823; 
+}
+
+.link {
+	font-family: Helvetica, 'Noto Sans Tamil';
+	font-size: 14px;
+	color: #9B9B9B;
+	line-height: 17px;
+}
+
+
+/* Active or Inactive */
+
+.active {
+	font-family: HelveticaNeue-Bold;
+	font-size: 16px;
+	color: #0C68BD;
+	line-height: 19px;
+}
+
+.inactive {
+	font-family: HelveticaNeue;
+	font-size: 12px;
+	color: #9B9B9B;
+	line-height: 14px;
+}
+
+
+
+/* Other Elements */
+.rating-text {
+	font-family: Helvetica;
+	font-size: 12px;
+	color: #9B9B9B;
+	line-height: 14px;
 }

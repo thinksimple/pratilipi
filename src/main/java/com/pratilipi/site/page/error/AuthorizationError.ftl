@@ -21,43 +21,43 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 
 		<#-- Custom Stylesheets -->
-		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
-		<link type="text/css" rel="stylesheet" href="/stylesheets/palettes.css">
+		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151209">
 		
 		<#-- Fontawesome style -->
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	</head>
-	<body>
-
-		<div class="primary-500">
-			<div class="container">
-				<pratilipi-header>
-					<pratilipi-search-bar/>
-				</pratilipi-header>
-			</div>
-		</div>
-		
-		<div class="container" style="margin-top: 20px; ">
-			<div class="secondary-500" style="margin-left: 150px;">
-				<div class="media" >
-					<div class="media-left">
-						<img src="/stylesheets/Authorization.png" alt="Img">
+	<body class="fullbleed layout vertical">
+		<template is="dom-bind">
+			<paper-header-panel class="flex" mode="waterfall">
+  				<div class="paper-header">
+  					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
+					<pratilipi-header user='{{ user }}'></pratilipi-header>
+  				</div>
+  				<div class="fit" style="margin-top: 5px;">
+  					<div class="parent-container">
+						<div class="container">
+							<paper-card>
+								<div class="media" style="padding: 20px;">
+									<div class="media-left">
+										<img src="/stylesheets/Authorization.png" alt="Img">
+									</div>
+									<div class="media-body" style="padding-left: 35px;">
+										<h4><b>Error!</b></h4>
+										<h2>Not authorized.</h2>
+										<p>Sorry! We can't allow you to view this page.</p>
+										<p>You can still search for your favorite content in the search bar on top<br>
+											or head over to the home page.</p> <br>
+										<a class="pratilipi-light-blue-button" href="http://tamil.pratilipi.com">Home</a>
+					    			</div>
+								</div>
+							</paper-card>
+						</div>
 					</div>
-		
-					<div class="media-body">
-						<h4><b>Error!</b></h4>
-						<h1><strong>Not authorized.</strong></h1>
-						<p><b>Sorry! We can't allow you to view this page.</b></p>
-						<p><b>You can still search for your favourite content in the search bar on top<br>
-						or head over to teh home page</b></p> <br>
-						<a class="btn btn-success" href="http://tamil.pratilipi.com">Home
-			            </a>
-	    			</div>
-				</div>
-			</div>
-		</div>	
-		
-		<pratilipi-footer></pratilipi-footer>
-		
+					<div style="position: absolute; bottom: 0px; width: 100%;">
+						<pratilipi-footer></pratilipi-footer>
+					</div>
+  				</div>
+			</paper-header-panel>
+		</template>	
 	</body>
 </html>

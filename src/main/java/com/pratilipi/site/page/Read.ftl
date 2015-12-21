@@ -19,7 +19,7 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-reader.html'>
 
 		<#-- Custom Stylesheet -->
-		<link type="text/css" rel="stylesheet" href="/resources/style.css">
+		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151209">
 		
 	</head>
 

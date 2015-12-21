@@ -23,7 +23,7 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 
 		<#-- Custom Stylesheet -->
-		<link type="text/css" rel="stylesheet" href="/resources/style.css">
+		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151218">
 
 
 		<script defer>
@@ -33,27 +33,31 @@
 		</script>
 	</head>
 	
-	<body>
+	<body class="fullbleed layout vertical">
 		<template is="dom-bind">
-
-			<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
-			<pratilipi-header user='{{ user }}'></pratilipi-header>
-
-			<div class="container" style="margin-top:10px; margin-bottom:10px">
-				<pratilipi-navigation
-						class='pull-left hidden-xs hidden-sm'
-						></pratilipi-navigation>
-				<pratilipi-card-grid
-						style='overflow:hidden'
-						heading='${ title }'
-						pratilipi-list='${ pratilipiListJson }'
-						filter='${ pratilipiListFilterJson! }'
-						cursor='${ pratilipiListCursor! }'
-						></pratilipi-card-grid>
-			</div>
-			
-			<pratilipi-footer></pratilipi-footer>
-
+			<paper-header-panel class="flex" mode="waterfall">
+  				<div class="paper-header">
+  					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
+					<pratilipi-header user='{{ user }}'></pratilipi-header>
+  				</div>
+  				<div class="fit" style="margin-top: 5px;">
+  					<div class="parent-container">
+						<div class="container">
+							<pratilipi-navigation
+								class='pull-left hidden-xs hidden-sm'
+								></pratilipi-navigation>
+							<pratilipi-card-grid
+								style='overflow:hidden'
+								heading='${ title }'
+								pratilipi-list='${ pratilipiListJson }'
+								filter='${ pratilipiListFilterJson! }'
+								cursor='${ pratilipiListCursor! }'
+								></pratilipi-card-grid>
+						</div>
+					</div>
+					<pratilipi-footer></pratilipi-footer>
+  				</div>
+			</paper-header-panel>
 		</template>
 	</body>
 
