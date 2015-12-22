@@ -38,7 +38,8 @@
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>60</min-backoff-seconds>
-			<max-backoff-seconds>60</max-backoff-seconds>
+			<max-backoff-seconds>3600</max-backoff-seconds>
+			<max-doublings>2</max-doublings>
 		</retry-parameters>
 	</queue>
 
@@ -52,7 +53,8 @@
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>60</min-backoff-seconds>
-			<max-backoff-seconds>60</max-backoff-seconds>
+			<max-backoff-seconds>3600</max-backoff-seconds>
+			<max-doublings>2</max-doublings>
 		</retry-parameters>
 	</queue>
 
@@ -66,7 +68,8 @@
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>60</min-backoff-seconds>
-			<max-backoff-seconds>60</max-backoff-seconds>
+			<max-backoff-seconds>3600</max-backoff-seconds>
+			<max-doublings>2</max-doublings>
 		</retry-parameters>
 	</queue>
 
