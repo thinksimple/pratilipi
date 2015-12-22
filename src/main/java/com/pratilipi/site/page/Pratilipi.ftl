@@ -20,7 +20,7 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-userpratilipi.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi.html?20151222'>
+		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-review-list.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 		

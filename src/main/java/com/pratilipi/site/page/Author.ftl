@@ -24,7 +24,7 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 
 		<#-- Custom Stylesheet -->
-		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151218">
+		<link type="text/css" rel="stylesheet" href="/resources/style.css">
 	</head>
 
 	<body class="fullbleed layout vertical">
@@ -47,7 +47,7 @@
 									></pratilipi-author>
 								<pratilipi-card-grid
 									id='PublishedWorks'
-									heading='${ author_published_works }'
+									heading='${ _strings.author_published_works }' 
 									include-add-card="true"
 									pratilipi-list='${ publishedPratilipiListJson }'
 									filter='${ publishedPratilipiListFilterJson! }'

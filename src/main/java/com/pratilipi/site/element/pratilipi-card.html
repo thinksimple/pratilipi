@@ -40,7 +40,7 @@
 					</div>
 				  	<div class="media-body">
 				  		<h4 class="media-heading">
-						 	<a class="card-heading" href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
+						 	<a id="pratilipi-title" class="card-heading" href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
 						</h4>
 						<h6>
 							<a class="card-heading" style="font-size: 12px;" href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
@@ -50,7 +50,7 @@
 							<span class="rating-text">&nbsp;({{ pratilipi.averageRating }})</span>
 						</div>
 						<div style="position: absolute; bottom: 25px;">
-							<button on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.pratilipi_read }</button>
+							<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.pratilipi_read }</a>
 						</div>
 					</div>
 				</div>
@@ -84,16 +84,16 @@
 			
 			_onIronResize: function() {
 				// Adjusting heading
-				var heading = jQuery( this.querySelector( 'h4 a' ) );
+				var heading = jQuery( this.querySelector( '#pratilipi-title' ) );
+				
 				var title = this.pratilipi.title;
 				heading.text( title );
 				var len = title.length;
-				while( jQuery( this ).height() > 150 && len > 1 ) {
+				while( heading.height() > 62 && len > 1 ) {
 					len = len - 1;
-					heading.text( title.substring( 0, len ).trim() + " ..." );
-				}
+					heading.text( title.substring( 0, len - 20 ).trim() + "..." );
+				}	
 			}
-			
 		});
 
 	</script>
