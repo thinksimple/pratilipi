@@ -39,9 +39,8 @@
 	    		<div id="pratilipi-col-left" style=" max-width: 170px; padding-bottom: 10px;">
 	    			<div style="padding: 20px 0px 0px 10px;">
 	    				<img style="width: 150px; height: 225px;" class="pratilipi-shadow" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
-		    			<div style="padding: 10px 20px;">
-		    				<a class="link" style="float: left;">Like</a>
-		    				<a class="link" style="float: right;">Share</a>
+		    			<div style="padding: 10px; margin-bottom: 15px;">
+		    				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
 		    			</div>
 		    		</div>
 	    		</div>
@@ -64,7 +63,7 @@
 					</template>
 					
 					<template is="dom-if" if="{{ !mobile }}">
-						<div style="position: absolute; bottom: 100px;">
+						<div style="position: absolute; bottom: 110px;">
 							<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.pratilipi_read }</a>
 							<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
 						</div>
@@ -149,12 +148,12 @@
 			},
 			
 			getShareUrl: function() {
-				return 'http://' + ${ domain } + pratilipi.pageUrl;
+				return 'http://' + ${ domain } + this.pratilipi.pageUrl;
 			},
 			
 			redirectToReader: function() {
 				if( this.pratilipi.readPageUrl !== undefined ) 
-					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 );
+					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 ) + "&ret=" + window.location.href;
 			},
 			
 			_onIronResize: function() {
@@ -196,9 +195,6 @@
 			},
 			
 			ready: function() {
-				if( this.pratilipiData.readPageUrl !== undefined ) 
-					this.pratilipiData.readPageUrl = "www.pratilipi.com/read?id=" + this.pratilipiData.readPageUrl.substring( 6 );
-					
 				this.set( 'pratilipi', this.process( this.pratilipiData ) );
 			},
 			

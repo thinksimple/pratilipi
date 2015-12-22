@@ -1,3 +1,5 @@
+<link rel="import" href="pratilipi-social.html" />
+
 <dom-module id="pratilipi-author">
 
 	<style>
@@ -48,8 +50,7 @@
 	    				<img style="width: 200px; height: 200px;" class="pratilipi-shadow" src="{{ author.imageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
 	    			</div>
 	    			<div style="padding: 15px 40px; margin-bottom: 15px;">
-	    				<a class="link" style="float: left;">Like</a>
-	    				<a class="link" style="float: right;">Share</a>
+	    				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
 	    			</div>
 				</div>
 	    		<div id="col-right" style="padding: 20px;">
@@ -162,6 +163,10 @@
 				return data;
 			},
 			
+			getShareUrl: function() {
+				return 'http://' + ${ domain } + this.author.pageUrl;
+			},
+			
 			ready: function() {
 				this.set( 'author', this.processAuthorData( this.authorData ) );
 			},
@@ -226,10 +231,6 @@
 				else
 					document.getElementById( "less" ).style.display = "block";
 			},
-			
-			getShareUrl: function() {
-				return 'http://' + ${ domain } + pratilipi.pageUrl;
-			}
 			
 		});
 
