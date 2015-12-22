@@ -33,11 +33,10 @@
 	</script>
 
 	<template>
-		<!-- <div style="position: absolute; margin-left: 70px; margin-top: 5px;">
-			<div class="fb-like" data-href="https://www.pratilipi.com" data-layout="button_count" data-action="like" data-show-faces="true"></div>
-			<div id="fb-root"></div>		
-	 	</div> -->
-	 	<div class="drop_menu" style="margin-left: 40px; position:  absolute;">
+		<div style="position: absolute; margin-left: 0px;">
+			<div class="fb-like" data-href="{{ shareUrl }}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>		
+	 	</div>
+	 	<div class="drop_menu" style="margin-left: 70px; position:  absolute;">
 			    <a class="link" href="#" class="dropdown-toggle" data-toggle="dropdown">
 					Share 
 					<b class="caret"></b>
@@ -45,17 +44,17 @@
 			
 			    <ul class="dropdown-menu" role="menu">
 					<li>
-						<a href="{{__hack__}}#" title="On Facebook" onclick="window.open('http://www.facebook.com/sharer.php?u=http://www.pratilipi.com','mywindow','width=1100,height=500,left=70px,top=60px');">
+						<a href="{{__hack__}}#" title="On Facebook" on-click="_share_facebook">
 							<i class="fa fa-facebook fa-sm fb"></i>
 						</a>
 					</li>
        				<li>
-						<a href="{{__hack__}}#" title="On Twitter" onclick="window.open('http://twitter.com/share?url=http://www.pratilipi.com','mywindow','width=1100,height=500,left=70px,top=60px');">
+						<a href="{{__hack__}}#" title="On Twitter" on-click="_share_twitter">
 							<i class="fa fa-twitter fa-sm tw"></i>
 						</a>
 					</li>
 					<li>
-						<a href="{{__hack__}}#" title="On Google Plus" onclick="window.open('https://plusone.google.com/_/+1/confirm?hl=en&url=http://www.pratilipi.com','mywindow','width=1100,height=500,left=70px,top=60px');">
+						<a href="{{__hack__}}#" title="On Google Plus" on-click="_share_google_plus">
 							<i class="fa fa-google-plus fa-sm google"></i>
 						</a>
 					</li>				
@@ -70,9 +69,27 @@
 			is: 'pratilipi-social',
 			
 			properties: {
-				shareUrl: { type: String }
+				shareUrl: { type: String },
+			},
+			
+			_share_facebook: function() {
+				window.open( "http://www.facebook.com/sharer.php?u=" + this.shareUrl, "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+			
+			_share_twitter: function() {
+				window.open( "http://twitter.com/share?url=" + this.shareUrl, "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+			
+			_share_google_plus: function() {
+				window.open( "https://plus.google.com/share?url=" + this.shareUrl, "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+			
+			ready: function() {
+				if( this.shareUrl === undefined )
+					this.shareUrl = window.location.href;
 			}
-			});
+			
+		});
 
 	</script>
 
