@@ -65,13 +65,13 @@
 					
 					<template is="dom-if" if="{{ !mobile }}">
 						<div style="position: absolute; bottom: 100px;">
-							<a href="{{ pratilipi.readPageUrl }}" class="pratilipi-light-blue-button">Read</a>
+							<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.pratilipi_read }</a>
 							<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
 						</div>
 					</template>
 					<template is="dom-if" if="{{ mobile }}">
 						<div style="position: relative; margin-top: 25px;">
-							<a href="{{ pratilipi.readPageUrl }}" class="pratilipi-light-blue-button">Read</a>
+						<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.pratilipi_read }</a>
 							<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
 						</div>
 					</template>
@@ -150,6 +150,11 @@
 			
 			getShareUrl: function() {
 				return 'http://' + ${ domain } + pratilipi.pageUrl;
+			},
+			
+			redirectToReader: function() {
+				if( this.pratilipi.readPageUrl !== undefined ) 
+					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 );
 			},
 			
 			_onIronResize: function() {
