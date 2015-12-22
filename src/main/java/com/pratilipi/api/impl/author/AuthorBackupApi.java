@@ -48,6 +48,13 @@ public class AuthorBackupApi extends GenericApi {
 		
 		Date backupDate = new Date();
 
+		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+		DateFormat csvDateFormat = new SimpleDateFormat( "YYYY-MM-DD HH:MM" );
+		DateFormat dateTimeFormat = new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" );
+		dateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+		csvDateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+		dateTimeFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+
 		StringBuilder backup = new StringBuilder();
 		StringBuilder csv = new StringBuilder( CSV_HEADER + LINE_SEPARATOR );
 		
@@ -63,21 +70,21 @@ public class AuthorBackupApi extends GenericApi {
 			for( Author author : authorList ) {
 				backup.append( gson.toJson( author ) + LINE_SEPARATOR );
 
-				if( request.generateCsv() ) 
-					csv.append( author.getId().toString() )
-							.append( CSV_SEPARATOR ).append( author.getUserId() == null ? "" : author.getUserId().toString() )
-							.append( CSV_SEPARATOR ).append( author.getFirstName() )
-							.append( CSV_SEPARATOR ).append( author.getLastName() )
-							.append( CSV_SEPARATOR ).append( author.getPenName() )
-							.append( CSV_SEPARATOR ).append( author.getFirstNameEn() )
-							.append( CSV_SEPARATOR ).append( author.getLastNameEn() )
-							.append( CSV_SEPARATOR ).append( author.getPenNameEn() )
-							.append( CSV_SEPARATOR ).append( author.getEmail() )
+				if( request.generateCsv() )
+					csv.append( "\"" + author.getId().toString() + "\"" )
+							.append( CSV_SEPARATOR ).append( author.getUserId()			== null ? "" : "\"" + author.getUserId().toString() + "\"" )
+							.append( CSV_SEPARATOR ).append( author.getFirstName()		== null ? "" : "\"" + author.getFirstName() )
+							.append( CSV_SEPARATOR ).append( author.getLastName()		== null ? "" : "\"" + author.getLastName() )
+							.append( CSV_SEPARATOR ).append( author.getPenName()		== null ? "" : "\"" + author.getPenName() )
+							.append( CSV_SEPARATOR ).append( author.getFirstNameEn()	== null ? "" : "\"" + author.getFirstNameEn() )
+							.append( CSV_SEPARATOR ).append( author.getLastNameEn()		== null ? "" : "\"" + author.getLastNameEn() )
+							.append( CSV_SEPARATOR ).append( author.getPenNameEn()		== null ? "" : "\"" + author.getPenNameEn() )
+							.append( CSV_SEPARATOR ).append( author.getEmail()			== null ? "" : "\"" + author.getEmail() )
 							.append( CSV_SEPARATOR ).append( author.getLanguage().toString() )
 							.append( CSV_SEPARATOR ).append( author.getSummary() != null && author.getSummary().trim().length() != 0 )
 							.append( CSV_SEPARATOR ).append( author.hasCustomImage() )
 							.append( CSV_SEPARATOR ).append( author.getContentPublished().toString() )
-							.append( CSV_SEPARATOR ).append( author.getRegistrationDate().toString() )
+							.append( CSV_SEPARATOR ).append( csvDateFormat.format( author.getRegistrationDate() ) )
 							.append( LINE_SEPARATOR );
 				
 			}
@@ -91,11 +98,6 @@ public class AuthorBackupApi extends GenericApi {
 		}
 
 		
-		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
-		DateFormat dateTimeFormat = new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" );
-		dateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
-		dateTimeFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
-
 		String fileName = "datastore.author/"
 				+ dateFormat.format( backupDate ) + "/"
 				+ "author-" + dateTimeFormat.format( backupDate );
