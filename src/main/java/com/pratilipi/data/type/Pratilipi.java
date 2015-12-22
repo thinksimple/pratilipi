@@ -92,6 +92,8 @@ public interface Pratilipi extends Serializable {
 	
 	void setReadCount( Long readCount );
 	
+	Long getFbLikeShareCountOffset();
+
 	Long getFbLikeShareCount();
 
 	void setFbLikeShareCount( Long fbLikeShareCount );

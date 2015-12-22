@@ -345,6 +345,11 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
+	public Long getFbLikeShareCountOffset() {
+		return fbLikeShareCountOffset == null ? 0L : fbLikeShareCountOffset;
+	}
+
+	@Override
 	public Long getFbLikeShareCount() {
 		return ( fbLikeShareCountOffset == null ? 0L : fbLikeShareCountOffset )
 				+ ( fbLikeShareCount == null ? 0L : fbLikeShareCount );

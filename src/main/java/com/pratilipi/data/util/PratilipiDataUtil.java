@@ -616,8 +616,10 @@ public class PratilipiDataUtil {
 				continue;
 			}
 
-			if( pratilipi.getFbLikeShareCount() > fbLikeShareCount ) {
-				logger.log( Level.SEVERE, "Facebook LikeShare count for " + pratilipiId + " decreased from " + pratilipi.getFbLikeShareCount() + " to " + fbLikeShareCount + ". Skipping Update." );
+			if( pratilipi.getFbLikeShareCount() > pratilipi.getFbLikeShareCountOffset() + fbLikeShareCount ) {
+				logger.log( Level.SEVERE, "Facebook LikeShare count for " + pratilipiId
+						+ " decreased from " + pratilipi.getFbLikeShareCount()
+						+ " to " + ( pratilipi.getFbLikeShareCountOffset() + fbLikeShareCount ) + ". Skipping Update." );
 				continue;
 			}
 
