@@ -49,7 +49,7 @@ public class AuthorBackupApi extends GenericApi {
 		Date backupDate = new Date();
 
 		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
-		DateFormat csvDateFormat = new SimpleDateFormat( "YYYY-MM-DD HH:MM" );
+		DateFormat csvDateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
 		DateFormat dateTimeFormat = new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" );
 		dateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
 		csvDateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
@@ -71,19 +71,19 @@ public class AuthorBackupApi extends GenericApi {
 				backup.append( gson.toJson( author ) + LINE_SEPARATOR );
 
 				if( request.generateCsv() )
-					csv.append( "\"" + author.getId().toString() + "\"" )
-							.append( CSV_SEPARATOR ).append( author.getUserId()			== null ? "" : "\"" + author.getUserId().toString() + "\"" )
-							.append( CSV_SEPARATOR ).append( author.getFirstName()		== null ? "" : "\"" + author.getFirstName() )
-							.append( CSV_SEPARATOR ).append( author.getLastName()		== null ? "" : "\"" + author.getLastName() )
-							.append( CSV_SEPARATOR ).append( author.getPenName()		== null ? "" : "\"" + author.getPenName() )
-							.append( CSV_SEPARATOR ).append( author.getFirstNameEn()	== null ? "" : "\"" + author.getFirstNameEn() )
-							.append( CSV_SEPARATOR ).append( author.getLastNameEn()		== null ? "" : "\"" + author.getLastNameEn() )
-							.append( CSV_SEPARATOR ).append( author.getPenNameEn()		== null ? "" : "\"" + author.getPenNameEn() )
-							.append( CSV_SEPARATOR ).append( author.getEmail()			== null ? "" : "\"" + author.getEmail() )
-							.append( CSV_SEPARATOR ).append( author.getLanguage().toString() )
+					csv.append( "\"" + author.getId() + "\"" )
+							.append( CSV_SEPARATOR ).append( author.getUserId()			== null ? "" : "\"" + author.getUserId()		+ "\"" )
+							.append( CSV_SEPARATOR ).append( author.getFirstName()		== null ? "" : "\"" + author.getFirstName()		+ "\"" )
+							.append( CSV_SEPARATOR ).append( author.getLastName()		== null ? "" : "\"" + author.getLastName()		+ "\"" )
+							.append( CSV_SEPARATOR ).append( author.getPenName()		== null ? "" : "\"" + author.getPenName()		+ "\"" )
+							.append( CSV_SEPARATOR ).append( author.getFirstNameEn()	== null ? "" : "\"" + author.getFirstNameEn()	+ "\"" )
+							.append( CSV_SEPARATOR ).append( author.getLastNameEn()		== null ? "" : "\"" + author.getLastNameEn()	+ "\"" )
+							.append( CSV_SEPARATOR ).append( author.getPenNameEn()		== null ? "" : "\"" + author.getPenNameEn()		+ "\"" )
+							.append( CSV_SEPARATOR ).append( author.getEmail()			== null ? "" : "\"" + author.getEmail()			+ "\"" )
+							.append( CSV_SEPARATOR ).append( "\"" + author.getLanguage() + "\"" )
 							.append( CSV_SEPARATOR ).append( author.getSummary() != null && author.getSummary().trim().length() != 0 )
 							.append( CSV_SEPARATOR ).append( author.hasCustomImage() )
-							.append( CSV_SEPARATOR ).append( author.getContentPublished().toString() )
+							.append( CSV_SEPARATOR ).append( "\"" + author.getContentPublished() + "\"" )
 							.append( CSV_SEPARATOR ).append( csvDateFormat.format( author.getRegistrationDate() ) )
 							.append( LINE_SEPARATOR );
 				
