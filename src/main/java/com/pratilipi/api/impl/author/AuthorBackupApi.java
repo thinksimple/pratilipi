@@ -112,9 +112,9 @@ public class AuthorBackupApi extends GenericApi {
 		
 		if( request.generateCsv() ) {
 			BlobEntry authorCsvEntry = blobAccessor.newBlob(
-					"datastore.author/author.csv",
+					"datastore/author.csv",
 					csv.toString().getBytes( Charset.forName( "UTF-8" ) ),
-					"text/plain" );
+					"text/csv" );
 			blobAccessor.createOrUpdateBlob( authorCsvEntry );
 		}
 		
