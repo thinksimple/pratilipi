@@ -46,6 +46,13 @@ public class UserBackupApi extends GenericApi {
 		
 		Date backupDate = new Date();
 
+		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+		DateFormat csvDateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		DateFormat dateTimeFormat = new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" );
+		dateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+		csvDateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+		dateTimeFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+
 		StringBuilder backup = new StringBuilder();
 		StringBuilder csv = new StringBuilder( CSV_HEADER + LINE_SEPARATOR );
 		
@@ -62,12 +69,12 @@ public class UserBackupApi extends GenericApi {
 				
 				if( request.generateCsv() )
 					csv.append( user.getId().toString() )
-							.append( CSV_SEPARATOR ).append( user.getFacebookId().toString() )
+							.append( CSV_SEPARATOR ).append( user.getFacebookId() == null ? "" : "'" + user.getFacebookId() )
 							.append( CSV_SEPARATOR ).append( user.getFirstName() )
 							.append( CSV_SEPARATOR ).append( user.getLastName() )
 							.append( CSV_SEPARATOR ).append( user.getNickName() )
 							.append( CSV_SEPARATOR ).append( user.getEmail() )
-							.append( CSV_SEPARATOR ).append( user.getSignUpDate().toString() )
+							.append( CSV_SEPARATOR ).append( csvDateFormat.format( user.getSignUpDate() ) )
 							.append( LINE_SEPARATOR );
 				
 			}
@@ -81,11 +88,6 @@ public class UserBackupApi extends GenericApi {
 		}
 		
 
-		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
-		DateFormat dateTimeFormat = new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" );
-		dateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
-		dateTimeFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
-	
 		String fileName = "datastore.user/"
 				+ dateFormat.format( backupDate ) + "/"
 				+ "user-" + dateTimeFormat.format( backupDate );
@@ -100,9 +102,9 @@ public class UserBackupApi extends GenericApi {
 		
 		if( request.generateCsv() ) {
 			BlobEntry userCsvEntry = blobAccessor.newBlob(
-					fileName + ".csv",
+					"datastore/user.csv",
 					csv.toString().getBytes( Charset.forName( "UTF-8" ) ),
-					"text/plain" );
+					"text/csv" );
 			blobAccessor.createOrUpdateBlob( userCsvEntry );
 		}
 
