@@ -92,7 +92,7 @@
 							
 							<td align="right" width="85px">
 								<template is="dom-if" if="{{ user.isGuest }}">
-									<button class="pratilipi-white-button" on-click="logIn"><small>${ _strings.sign_in }</small></button>
+									<button type="button" class="pratilipi-white-button" on-click="logIn"><small>${ _strings.sign_in }</small></button>
 								</template>
 								<template is="dom-if" if="{{ !user.isGuest }}">
 									<div style="width: 100%;" class="dropdown">
@@ -125,7 +125,7 @@
 								<template is="dom-if" if="{{ !mobile }}">
 									<td width="10px"></td>
 									<td width="85px">
-										<a><paper-button class="pratilipi-dark-blue-button" on-click="write"><iron-icon style="margin-top: -5px;" icon="create"></iron-icon>&nbsp;${ _strings.write }</paper-button></a>
+										<a><paper-button type="button"  class="pratilipi-dark-blue-button" on-click="write"><iron-icon style="margin-top: -5px;" icon="create"></iron-icon>&nbsp;${ _strings.write }</paper-button></a>
 									</td>
 								</template>
 							</template>
@@ -136,7 +136,7 @@
 				<template is="dom-if" if="{{ !mobile }}">
 					<template is="dom-if" if="{{ container }}">
 						<div style="position: absolute; display: inline-block; top: 12px; margin-left: 12px;">
-							<a><paper-button class="pratilipi-dark-blue-button" on-click="write"><iron-icon style="margin-top: -5px;" icon="create"></iron-icon>&nbsp;${ _strings.write }</paper-button></a>
+							<a><paper-button type="button"  class="pratilipi-dark-blue-button" on-click="write"><iron-icon style="margin-top: -5px;" icon="create"></iron-icon>&nbsp;${ _strings.write }</paper-button></a>
 						</div>
 					</template>
 				</template>

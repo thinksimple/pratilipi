@@ -12,9 +12,25 @@
 			display: inline-block;
 		}
 		
-		paper-input.my-class {
+		paper-input.write, paper-textarea.write {
 			--paper-input-container-focus-color: #107FE5;
 			display: block;
+		}
+		
+		paper-dropdown-menu {
+			--paper-dropdown-menu-focus-color: #107FE5;
+			width: 100%;
+			--paper-dropdown-menu-ripple: {
+				left: auto;
+				right: auto;
+			};
+		}
+		
+		paper-menu {
+			--paper-menu-color: #333;
+			--paper-menu-focused-item: {
+				color: #107FE5;
+			};
 		}
 		
 		
@@ -22,96 +38,122 @@
 	
 
 	<template>
-				<div class="modal-content">
-					<div class="modal-header">
-						<span>Write New Content</span>
-						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+		<div class="modal-content">
+			
+			<div class="modal-header">
+				<span>Write New Content</span>
+				<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+			</div>
+			
+			<div class="modal-body" on-keyup="onSubmit">
+				<paper-input class="write" label="Title *" value="{{ title::input }}"></paper-input>
+				<paper-input class="write" label="Title (English)" value="{{ titleEn::input }}"></paper-input>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<paper-dropdown-menu noink="true" id="pratilipiType" label="Select Type *">
+							<paper-menu noink="true" class="dropdown-content" style="white-space: nowrap; width: auto;">
+								<paper-item>Book</paper-item>
+								<paper-item>Poem</paper-item>
+								<paper-item>Story</paper-item>
+								<paper-item>Article</paper-item>
+								<paper-item>Magazine</paper-item>
+							</paper-menu>
+						</paper-dropdown-menu>
 					</div>
-					<div class="modal-body" on-keyup="onSubmit">
-					
-						<paper-input class="my-class" label="Title" value="{{ title::input }}"></paper-input>
-						<paper-input class="my-class" label="Title (English)" value="{{ titleEn::input }}"></paper-input>
-						
-						<paper-dropdown-menu style="display: block;" id="mydropdown" label="City?">
-							<paper-listbox style="width: 100%" class="dropdown-content">
-								<paper-item>Inbox</paper-item>
-								<paper-item>Starred</paper-item>
-								<paper-item>Sent mail</paper-item>
-								<paper-item>Drafts</paper-item>
-							</paper-listbox>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<paper-dropdown-menu noink="true" disabled="true" id="language" label="Language">
+							<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
+								<paper-item>Tamil</paper-item>
+								<paper-item>Bengali</paper-item>
+								<paper-item>Gujarati</paper-item>
+								<paper-item>Hindi</paper-item>
+								<paper-item>Marati</paper-item>
+								<paper-item>Malayalam</paper-item>
+							</paper-menu>
 						</paper-dropdown-menu>
-						
-						<paper-dropdown-menu style="display: block;" id="mydropdown" label="City?">
-							<paper-listbox class="dropdown-content">
-								<paper-item>Inbox</paper-item>
-								<paper-item>Starred</paper-item>
-								<paper-item>Sent mail</paper-item>
-								<paper-item>Drafts</paper-item>
-							</paper-listbox>
-						</paper-dropdown-menu>
-						
-							
-						<!-- <div class="horizontal-section">
-						<paper-dropdown-menu class="my-class" label="Your favourite pastry" role="combobox" aria-autocomplete="none" aria-haspopup="true" aria-disabled="false">
-							<paper-listbox class="dropdown-content">
-								<paper-item>Croissant</paper-item>
-								<paper-item>Donut</paper-item>
-								<paper-item>Financier</paper-item>
-								<paper-item>Madeleine</paper-item>
-							</paper-listbox>
-						</paper-dropdown-menu>
-						</div> -->
-						
-						 <!-- <paper-dropdown-menu id="mydropdown" label="City?">
-        <paper-listbox class="dropdown-content">
-          <paper-item>Inbox</paper-item>
-          <paper-item>Starred</paper-item>
-          <paper-item>Sent mail</paper-item>
-          <paper-item>Drafts</paper-item>
-        </paper-listbox>
-      </paper-dropdown-menu> -->
-      
-						
-						<!-- <div class="dropdown">
-							<paper-dropdown-menu id="LanguageDropdown" class="my-class" label="Language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></paper-dropdown-menu>
-							<ul style="min-width: 0px;" class="dropdown-menu" role="menu" aria-labelledby="LanguageDropdown">
-								<li><a style="padding: 0px;"><paper-item>Bengali</paper-item></a></li>
-								<li><a style="padding: 0px;"><paper-item>Gujarathi</paper-item></a></li>
-								<li><a style="padding: 0px;"><paper-item>Hindi</paper-item></a></li>
-								<li><a style="padding: 0px;"><paper-item>Tamil</paper-item></a></li>
-								<li><a style="padding: 0px;"><paper-item>Marathi</paper-item></a></li>
-								<li><a style="padding: 0px;"><paper-item>Malayalam</paper-item></a></li>
-							</ul>
-						</div> -->
-						
-
-					
-					</div>
-					<div class="modal-footer">
-						This is footer.
 					</div>
 				</div>
+				<paper-textarea class="write" label="Summary (optional)" value="{{ summary::input }}"></paper-textarea>
+				<div class="text-center" style="min-height: 20px;">
+					<span>{{ message }}</span>
+				</div>
+			</div>
+			
+			<div class="modal-footer">
+				<button class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Create</button>
+			</div>
+			
+		</div>
 		
-		
-		
-		<!--		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-		
-		 		 
-				
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-				-->
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/pratilipi"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
 	</template>
-	
-	
-	
 	
 	<script>
 
 		Polymer({
 
  			is: 'pratilipi-write',
+ 			
+			properties: {
+				authorId: { type: String, value: null },
+					
+				title: { type: String, value: "" },
+				titleEn: { type: String, value: "" },
+ 				summary: { type: String, value: "" },
+ 				
+ 				pratilipiType: { type: String, value: null },
+ 				language: { type: String, value: null },
+ 				
+ 				message: { type: String, value: "" }
+			},
+			
+			onSubmit: function() {
+				
+				this.message = "";
+
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+					return;
+				
+				this.pratilipiType = pratilipiType.selectedItemLabel;
+				this.language = language.selectedItemLabel;
+				
+				if( this.title.trim() === "" ) {
+					this.message = "Please fill in the Title.";
+					return;
+				}
+				
+				if( this.pratilipiType === undefined ) {
+					this.message = "Please select the type.";
+					return;
+				}
+				
+				this.message = "Please Wait...";
+				
+				this.$.AjaxPost.body = ( "title=" + this.title + "&" + 
+										 "titleEn=" + this.titleEn + "&" +
+										 "summary=" + this.summary + "&" +
+										 "pratilipiType=" + this.pratilipiType + "&" +
+										 "language=" + this.language );
+				
+				this.$.AjaxPost.generateRequest();
+				
+			},
+			
+			_handleAjaxPostResponse: function() {
+				// Redirect to writer with ret option
+			},
+			
+			_handleAjaxPostError: function() {
+				// Redirect to access_limited or server-Error
+			}
  			
 		});
 
