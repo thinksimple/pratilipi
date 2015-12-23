@@ -17,6 +17,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.CategoryType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
@@ -60,33 +61,75 @@ public class PratilipiDataUtil {
 	private static final String CONTENT_FOLDER 		 = "pratilipi-content/pratilipi";
 	private static final String IMAGE_CONTENT_FOLDER = "pratilipi-content/image";
 	private static final String KEYWORDS_FOLDER 	 = "pratilipi-keywords/pratilipi";
-	private static final String COVER_FOLDER 		 = "pratilipi-cover";
+	private static final String COVER_FOLDER 		 = "pratilipi-cover/original";
 	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
 
 
 	public static boolean hasAccessToListPratilipiData( PratilipiFilter pratilipiFilter ) {
-		return true;
+		
+		// Case 1: User can list PUBLISHED Pratilipis.
+
+		if( pratilipiFilter.getState() == PratilipiState.PUBLISHED )
+			return true;
+
+		
+		// Case 2: User with PRATILIPI_LIST access can list Pratilipis in any State.
+
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipiFilter.getLanguage(), AccessType.PRATILIPI_LIST ) )
+			return true;
+
+		
+		// Case 3: User can list Pratilipis in any State, except DELETED state, for their own Author profile.
+
+		if( pratilipiFilter.getState() == PratilipiState.DELETED )
+			return false;
+
+		if( pratilipiFilter.getAuthorId() == null )
+			return false;
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( pratilipiFilter.getAuthorId() );
+		if( author == null )
+			return false;
+		
+		return accessToken.getUserId().equals( author.getUserId() );
+		
 	}
 	
 	public static boolean hasAccessToAddPratilipiData( PratilipiData pratilipiData ) {
+		
 		if( pratilipiData.getState() != PratilipiState.DRAFTED
 				&& pratilipiData.getState() != PratilipiState.SUBMITTED
 				&& pratilipiData.getState() != PratilipiState.PUBLISHED )
 			return false;
+
+		
+		// Case 1: User with PRATILIPI_ADD access can add Pratilipi against any Author profile.
 		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipiData.getLanguage(), AccessType.PRATILIPI_ADD ) )
 			return true;
+
+		
+		// Case 2: User can add Pratilipi against his/her own ACTIVE Author profile.
+		
+		if( pratilipiData.getAuthorId() == null )
+			return false;
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( pratilipiData.getAuthorId() );
-		if( author != null )
-			return accessToken.getUserId().equals( author.getUserId() );
+		if( author == null || author.getState() != AuthorState.ACTIVE )
+			return false;
 		
-		return false;
+		return accessToken.getUserId().equals( author.getUserId() );
+		
 	}
 
 	public static boolean hasAccessToUpdatePratilipiData( Pratilipi pratilipi, PratilipiData pratilipiData ) {
+
+		// Case 1: User with PRATILIPI_UPDATE access can update any Pratilipi in any State.
+		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipi.getLanguage(), AccessType.PRATILIPI_UPDATE ) ) {
 			if( pratilipiData == null || ! pratilipiData.hasLanguage() || pratilipiData.getLanguage() == pratilipi.getLanguage() )
@@ -94,15 +137,23 @@ public class PratilipiDataUtil {
 			else if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipiData.getLanguage(), AccessType.PRATILIPI_UPDATE ) )
 				return true;
 		}
+
 		
-		if( pratilipi.getState() != PratilipiState.BLOCKED && pratilipi.getState() != PratilipiState.DELETED ) {
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			if( author != null )
-				return accessToken.getUserId().equals( author.getUserId() );
-		}
+		// Case 2: User can update non-BLOCKED, non-DELETED Pratilipi linked with his/her own ACTIVE Author profile.
 		
-		return false;
+		if( pratilipi.getState() == PratilipiState.BLOCKED || pratilipi.getState() == PratilipiState.DELETED )
+			return false;
+
+		if( pratilipiData.getAuthorId() == null )
+			return false;
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( pratilipiData.getAuthorId() );
+		if( author == null || author.getState() != AuthorState.ACTIVE )
+			return false;
+
+		return accessToken.getUserId().equals( author.getUserId() );
+		
 	}
 	
 	public static boolean hasAccessToReadPratilipiMetaData( Language language ) {
@@ -148,6 +199,9 @@ public class PratilipiDataUtil {
 	}
 
 	public static boolean hasAccessToUpdatePratilipiContent( Pratilipi pratilipi ) {
+		if( pratilipi.getState() == PratilipiState.BLOCKED || pratilipi.getState() == PratilipiState.DELETED )
+			return false;
+		
 		return hasAccessToUpdatePratilipiData( pratilipi, null );
 	}
 	
@@ -435,9 +489,9 @@ public class PratilipiDataUtil {
 		
 		String fileName = "";
 		if( pratilipi != null && pratilipi.hasCustomCover() )
-			fileName = COVER_FOLDER + "/original/" + pratilipiId;
+			fileName = COVER_FOLDER + "/" + pratilipiId;
 		else
-			fileName = COVER_FOLDER + "/original/" + "pratilipi";
+			fileName = COVER_FOLDER + "/" + "pratilipi";
 
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
 		if( width != null )
@@ -456,7 +510,7 @@ public class PratilipiDataUtil {
 
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		blobEntry.setName( COVER_FOLDER + "/original/" + pratilipiId );
+		blobEntry.setName( COVER_FOLDER + "/" + pratilipiId );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		
 		
