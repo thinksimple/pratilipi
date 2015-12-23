@@ -68,12 +68,12 @@ public class UserBackupApi extends GenericApi {
 				backup.append( gson.toJson( user ) + LINE_SEPARATOR );
 				
 				if( request.generateCsv() )
-					csv.append( user.getId().toString() )
+					csv.append( "'" + user.getId().toString() )
 							.append( CSV_SEPARATOR ).append( user.getFacebookId() == null ? "" : "'" + user.getFacebookId() )
-							.append( CSV_SEPARATOR ).append( user.getFirstName() )
-							.append( CSV_SEPARATOR ).append( user.getLastName() )
-							.append( CSV_SEPARATOR ).append( user.getNickName() )
-							.append( CSV_SEPARATOR ).append( user.getEmail() )
+							.append( CSV_SEPARATOR ).append( user.getFirstName()  == null ? "" : user.getFirstName() )
+							.append( CSV_SEPARATOR ).append( user.getLastName()   == null ? "" : user.getLastName() )
+							.append( CSV_SEPARATOR ).append( user.getNickName()   == null ? "" : user.getNickName() )
+							.append( CSV_SEPARATOR ).append( user.getEmail()	  == null ? "" : user.getEmail() )
 							.append( CSV_SEPARATOR ).append( csvDateFormat.format( user.getSignUpDate() ) )
 							.append( LINE_SEPARATOR );
 				
