@@ -16,6 +16,7 @@
 		</#list>
 
 		<#-- Polymer 1.0 Custom Elements -->
+		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi-page.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-userpratilipi.html'>
@@ -27,55 +28,17 @@
 
 		<#-- Custom Stylesheet -->
 		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151218">
-
-		<script defer>
-			jQuery( window ).scroll( function() {
-				document.querySelector( 'pratilipi-review-list' ).loadMore();
-			} );
-		</script>
 	</head>
 	
 	<body class="fullbleed layout vertical">
 		<template is="dom-bind">
-			<paper-header-panel class="flex" mode="waterfall">
-  				<div class="paper-header">
-  					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
-					<pratilipi-header user='{{ user }}'></pratilipi-header>
-  				</div>
-  				<div class="fit" style="margin-top: 5px;">
-  					<div class="parent-container">
-						<div class="container">
-							<pratilipi-navigation
-									class='pull-left hidden-xs hidden-sm'
-									></pratilipi-navigation>
-							<div style="overflow:hidden">
-								<pratilipi-userpratilipi
-									user='{{ user }}'
-									pratilipi-id='${ pratilipi.getId()?c }'
-									userpratilipi='{{ userpratilipi }}'
-									userpratilipi-data='${ userpratilipiJson! }'
-									></pratilipi-userpratilipi>
-								<pratilipi-pratilipi
-									user="{{ user }}"
-									pratilipi='{{ pratilipi }}'
-									pratilipi-data='${ pratilipiJson }'
-									userpratilipi='{{ userpratilipi }}'
-									></pratilipi-pratilipi>
-								<pratilipi-review-list
-									id="ReviewSection"
-									user="{{ user }}"
-									pratilipi='{{ pratilipi }}'
-									userpratilipi='{{ userpratilipi }}'
-									review-list='${ reviewListJson }'
-									pratilipi-id='${ pratilipi.getId()?c }'
-									cursor='${ reviewListCursor! }'
-									></pratilipi-review-list>
-							</div>
-						</div>
-					</div>
-					<pratilipi-footer></pratilipi-footer>
-  				</div>
-			</paper-header-panel>
+			<pratilipi-pratilipi-page user-data='${ userJson }'
+					pratilipi-id='${ pratilipi.getId()?c }'
+					userpratilipi-data='${ userpratilipiJson! }'
+					pratilipi-data='${ pratilipiJson }'
+					
+					review-list='${ reviewListJson }'
+					cursor='${ reviewListCursor! }'></pratilipi-pratilipi-page>
 		</template>
 	</body>
 	

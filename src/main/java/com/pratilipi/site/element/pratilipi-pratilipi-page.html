@@ -1,0 +1,68 @@
+<dom-module id="pratilipi-pratilipi-page">
+
+	<template>
+		<paper-header-panel on-content-scroll="scrollHandler" class="flex" mode="waterfall">
+			<div class="paper-header">
+				<pratilipi-user user='{{ user }}' user-data='{{ userData }}'></pratilipi-user>
+				<pratilipi-header user='{{ user }}'></pratilipi-header>
+			</div>
+			<div class="fit" style="margin-top: 5px;">
+				<div class="parent-container">
+					<div class="container">
+						<pratilipi-navigation
+								class='pull-left hidden-xs hidden-sm'
+								></pratilipi-navigation>
+						<div style="overflow:hidden">
+							<pratilipi-userpratilipi
+									user='{{ user }}'
+									pratilipi-id='{{ pratilipiId }}'
+									userpratilipi='{{ userpratilipi }}'
+									userpratilipi-data='{{ userpratilipiData }}'
+									></pratilipi-userpratilipi>
+							<pratilipi-pratilipi
+									user="{{ user }}"
+									pratilipi='{{ pratilipi }}'
+									pratilipi-data='{{ pratilipiData }}'
+									userpratilipi='{{ userpratilipi }}'
+									></pratilipi-pratilipi>
+							<br class="pratilipi-break"/>
+							<pratilipi-review-list
+									id="ReviewSection"
+									user="{{ user }}"
+									pratilipi='{{ pratilipi }}'
+									userpratilipi='{{ userpratilipi }}'
+									review-list='{{ reviewList }}'
+									pratilipi-id='{{ pratilipiId }}'
+									cursor='{{ cursor }}'
+									></pratilipi-review-list>
+						</div>
+					</div>
+				</div>
+				<pratilipi-footer></pratilipi-footer>
+			</div>
+		</paper-header-panel>
+	</template>
+
+	<script>
+		Polymer({
+
+			is: 'pratilipi-pratilipi-page',
+			
+			properties: {
+				userData: { type: Object },
+				pratilipiId: { type:Number },
+				userpratilipiData: { type: Object },
+				pratilipiData: { type: Object },
+				
+				reviewList: { type: Array },
+				cursor: { type: String }
+			},
+			
+			scrollHandler: function( event ) {
+				this.querySelector( 'pratilipi-review-list' ).loadMore( event.detail.target.scrollTop );
+			}
+			
+		});
+	</script>
+
+</dom-module>

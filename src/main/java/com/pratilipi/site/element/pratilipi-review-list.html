@@ -104,11 +104,11 @@
 				}
 			},
 			
-			loadMore: function() {
+			loadMore: function( scrollTop ) {
 				if( this.isLoading || this.isFinished )
 					return;
 
-				var reqHeight = jQuery( window ).scrollTop()
+				var reqHeight = scrollTop
 						- jQuery( this ).position().top
 						+ jQuery( window ).height()
 						+ 2 * jQuery( window ).height();
