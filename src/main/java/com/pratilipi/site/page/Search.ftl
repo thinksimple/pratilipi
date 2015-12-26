@@ -28,7 +28,7 @@
 
 	</head>
 
-	<body class="fullbleed layout vertical">
+	<body>
 		<template is="dom-bind">
 			<pratilipi-search-page user-data='${ userJson }'
 				pratilipi-list='${ pratilipiListJson }'

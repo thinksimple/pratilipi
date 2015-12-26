@@ -30,7 +30,7 @@
 		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151218">
 	</head>
 	
-	<body class="fullbleed layout vertical">
+	<body>
 		<template is="dom-bind">
 			<pratilipi-pratilipi-page user-data='${ userJson }'
 					pratilipi-id='${ pratilipi.getId()?c }'

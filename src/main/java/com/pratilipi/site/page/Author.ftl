@@ -28,7 +28,7 @@
 		<link type="text/css" rel="stylesheet" href="/resources/style.css">
 	</head>
 
-	<body class="fullbleed layout vertical">
+	<body>
 		<template is="dom-bind">
 			<pratilipi-author-page user-data='${ userJson }'
 				author-data='${ authorJson }'
