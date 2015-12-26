@@ -17,6 +17,7 @@
 		</#list>
 
 		<#-- Polymer 1.0 Custom Elements -->
+		<link rel='import' href='/elements.${lang}/pratilipi-home-page.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
@@ -30,30 +31,9 @@
 
 	<body class="fullbleed layout vertical">
 		<template is="dom-bind">
-			<paper-header-panel class="flex" mode="waterfall">
-  				<div class="paper-header">
-  					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
-					<pratilipi-header user='{{ user }}'></pratilipi-header>
-  				</div>
-  				<div class="fit" style="margin-top: 5px;">
-  					<div class="parent-container">
-						<div class="container">
-							<pratilipi-navigation
-									class='pull-left hidden-xs hidden-sm'
-									></pratilipi-navigation>
-							<div style="overflow:hidden">
-								<pratilipi-tamil-carousel></pratilipi-tamil-carousel>
-								<br class="pratilipi-break"/>
-								<pratilipi-card-grid
-										heading='${ featuredTitle }'
-										pratilipi-list='${ featuredListJson }'
-										></pratilipi-card-grid>
-							</div>
-						</div>
-					</div>
-					<pratilipi-footer></pratilipi-footer>
-  				</div>
-			</paper-header-panel>
+			<pratilipi-home-page user-data='${ userJson }'
+				heading='${ featuredTitle }'
+				pratilipi-list='${ featuredListJson }'></pratilipi-home-page>
 		</template>
 	</body>
 

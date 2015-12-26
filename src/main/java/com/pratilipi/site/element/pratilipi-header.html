@@ -14,9 +14,7 @@
 		}
 		
 		paper-input.search {
-	        --paper-input-container-color: #333;
-	        --paper-input-container-focus-color: #333;
-	        --paper-input-container-input-color: #333;
+	        --paper-input-container-focus-color: #797979;
 		}
 		
 		paper-icon-button.search-icon {
@@ -38,6 +36,10 @@
 				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
 				color: #333;
 			};
+		}
+		
+		paper-dropdown-menu {
+			margin-top: -10px;
 		}
 		
 		iron-icon {
@@ -95,28 +97,25 @@
 									<button type="button" class="pratilipi-white-button" on-click="logIn"><small>${ _strings.sign_in }</small></button>
 								</template>
 								<template is="dom-if" if="{{ !user.isGuest }}">
-									<div style="width: 100%;" class="dropdown">
-										<button style="width: 100%" class="pratilipi-white-button" type="button" id="accountDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-											{{ user.firstName }}
-											<iron-icon icon="arrow-drop-down"></iron-icon>
-										</button>
-										<ul style="min-width: 0px;" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="accountDropdown">
-											<li><a style="padding: 0px;">
-												<paper-item on-click="myProfile">
-													<paper-icon-item><iron-icon style="color: #107FE5;" icon="account-circle"></iron-icon></paper-icon-item>
-													&nbsp;&nbsp;
-													<paper-item-body>My Profile</paper-item-body>
-												</paper-item>
-											</a></li>
-											<li><a style="padding: 0px;">
-												<paper-item on-click="logOut">
-													<paper-icon-item><iron-icon style="color: #D0021B;" icon="remove-circle"></iron-icon></paper-icon-item>
-													&nbsp;&nbsp;
-													<paper-item-body>${ _strings.sign_out }</paper-item-body>
-												</paper-item>
-											</a></li>
-										</ul>
-									</div>
+									<paper-dropdown-menu alwaysFloatLabel noink="true" label="{{ user.firstName }}">
+										<div class="dropdown-content" style="white-space: nowrap; width: auto;">
+											<paper-item on-click="myProfile">
+												<paper-icon-item><iron-icon style="color: #107FE5;" icon="description"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>My Profile</paper-item-body>
+											</paper-item>
+											<paper-item on-click="myAccount">
+												<paper-icon-item><iron-icon style="color: #107FE5;" icon="account-circle"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>My Account</paper-item-body>
+											</paper-item>
+											<paper-item on-click="logOut">
+												<paper-icon-item><iron-icon style="color: #D0021B;" icon="remove-circle"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>${ _strings.sign_out }</paper-item-body>
+											</paper-item>
+										</div>
+									</paper-dropdown-menu>
 								</template>
 							</td>
 
@@ -125,7 +124,7 @@
 								<template is="dom-if" if="{{ !mobile }}">
 									<td width="10px"></td>
 									<td width="85px">
-										<a><paper-button type="button"  class="pratilipi-dark-blue-button" on-click="write"><iron-icon style="margin-top: -5px;" icon="create"></iron-icon>&nbsp;${ _strings.write }</paper-button></a>
+										<button type="button" class="pratilipi-dark-blue-button" on-click="write"><iron-icon style="margin-top: -5px;" icon="create"></iron-icon>&nbsp;${ _strings.write }</button>
 									</td>
 								</template>
 							</template>
@@ -136,7 +135,7 @@
 				<template is="dom-if" if="{{ !mobile }}">
 					<template is="dom-if" if="{{ container }}">
 						<div style="position: absolute; display: inline-block; top: 12px; margin-left: 12px;">
-							<a><paper-button type="button"  class="pratilipi-dark-blue-button" on-click="write"><iron-icon style="margin-top: -5px;" icon="create"></iron-icon>&nbsp;${ _strings.write }</paper-button></a>
+							<button type="button" class="pratilipi-dark-blue-button" on-click="write"><iron-icon style="margin-top: -5px;" icon="create"></iron-icon>&nbsp;${ _strings.write }</button>
 						</div>
 					</template>
 				</template>
@@ -144,7 +143,7 @@
 		</paper-card>
 		
 		<!-- Navigation & Search bar for extra-small & small screens. -->
-		<div class="container hidden-md hidden-lg">
+		<div class="hidden-md hidden-lg">
 			<pratilipi-navigation-drawer with-backdrop></pratilipi-navigation-drawer>
 		</div>
 		
@@ -168,6 +167,8 @@
 			properties: {
 				user: { type: Object, notify: true },
 				query: { type: String },
+				
+				/* Screen sizes */
 				mobile: { type: Boolean },
 				container: { type: Boolean },
 				medium: { type: Boolean }
@@ -180,21 +181,28 @@
 			    	this.query = decodeURIComponent( match[ 1 ] ).split("+").join(" ");;
 			},
 			
-			attached: function() {
-				this._onIronResize();
+			myAccount: function() {
+				console.log( "myAccount" );
 			},
 			
-			_search: function() {
-				var prefix = "/search?q=";
-				return prefix + this.query;
-			},
-			
-			_show: function() {
-				jQuery( '#dropdown' ).show();
+			myProfile: function() {
+				console.log( "myProfile" );
 			},
 			
 			write: function() {
 				document.querySelector( 'pratilipi-user' ).write();
+			},
+			
+			showMenu: function() {
+				this.querySelector( 'pratilipi-navigation-drawer' ).show();
+			},
+			
+			logIn: function() {
+				document.querySelector( 'pratilipi-user' ).logIn();
+			},
+			
+			logOut: function() {
+				document.querySelector( 'pratilipi-user' ).logOut();
 			},
 			
 			_onIronResize: function() {
@@ -228,22 +236,6 @@
 				} else {
 					this.query = this.query.trim();
 				}
-			},
-
-			showMenu: function() {
-				this.querySelector( 'pratilipi-navigation-drawer' ).show();
-			},
-			
-			logIn: function() {
-				document.querySelector( 'pratilipi-user' ).logIn();
-			},
-			
-			myProfile: function() {
-				console.log( "myProfile" );
-			},
-			
-			logOut: function() {
-				document.querySelector( 'pratilipi-user' ).logOut();
 			},
 
 		});

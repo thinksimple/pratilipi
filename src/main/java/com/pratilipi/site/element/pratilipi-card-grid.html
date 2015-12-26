@@ -8,12 +8,6 @@
 			display: block;
 		}
 		
-		paper-card {
-			width: 100%;
-			--paper-card-header-color: #D0021B;
-			--paper-card-header-text: { font-size: 22px; font-weight: 300; }; 
-		}
-		
 		paper-card.add {
 			height: 200px;
 			background: #E0E0E0;
@@ -40,7 +34,7 @@
 	
 	<template>
 		<template is="dom-if" if="{{ heading }}">
-			<paper-card heading="{{ heading }}"></paper-card>
+			<div class="secondary-500 pratilipi-shadow" style="color: #D0021B; font-size: 22px; font-weight: 300; padding: 15px;">{{ heading }}</div>
 			<br class="pratilipi-break"/>
 		</template>
 		
@@ -89,6 +83,7 @@
 			is: 'pratilipi-card-grid',
 
 			properties: {
+				author: { type: Object },
 				heading: { type: String },
 				pratilipiList: { type: Array },
 				searchQuery: { type: String },
@@ -115,11 +110,11 @@
 				this.isFinished = false;
 			},
 			
-			loadMore: function() {
+			loadMore: function( scrollTop ) {
 				if( this.isLoading || this.isFinished )
 					return;
 
-				var reqHeight = jQuery( window ).scrollTop()
+				var reqHeight = scrollTop
 						- jQuery( this ).position().top
 						+ jQuery( window ).height()
 						+ 3 * jQuery( window ).height();
