@@ -50,7 +50,7 @@
 				<paper-input class="write" label="Title (English)" value="{{ titleEn::input }}"></paper-input>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<paper-dropdown-menu noink="true" id="pratilipiType" label="Select Type *">
+						<paper-dropdown-menu noink="true" label="Select Type *" value="{{ pratilipiType }}">
 							<paper-menu noink="true" class="dropdown-content" style="white-space: nowrap; width: auto;">
 								<paper-item>Book</paper-item>
 								<paper-item>Poem</paper-item>
@@ -61,14 +61,9 @@
 						</paper-dropdown-menu>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<paper-dropdown-menu noink="true" disabled="true" id="language" label="Language">
+						<paper-dropdown-menu noink="true" disabled="true" id="language" label="Language" value="{{ language }}">
 							<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
-								<paper-item>Tamil</paper-item>
-								<paper-item>Bengali</paper-item>
-								<paper-item>Gujarati</paper-item>
-								<paper-item>Hindi</paper-item>
-								<paper-item>Marati</paper-item>
-								<paper-item>Malayalam</paper-item>
+								<paper-item>${ _strings.website_language }</paper-item>
 							</paper-menu>
 						</paper-dropdown-menu>
 					</div>
@@ -122,15 +117,12 @@
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
 					return;
 				
-				this.pratilipiType = pratilipiType.selectedItemLabel;
-				this.language = language.selectedItemLabel;
-				
 				if( this.title.trim() === "" ) {
 					this.message = "Please fill in the Title.";
 					return;
 				}
 				
-				if( this.pratilipiType === undefined ) {
+				if( this.pratilipiType === null ) {
 					this.message = "Please select the type.";
 					return;
 				}
@@ -140,8 +132,8 @@
 				this.$.AjaxPost.body = ( "title=" + this.title + "&" + 
 										 "titleEn=" + this.titleEn + "&" +
 										 "summary=" + this.summary + "&" +
-										 "pratilipiType=" + this.pratilipiType + "&" +
-										 "language=" + this.language );
+										 "pratilipiType=" + this.pratilipiType.toUpperCase() + "&" +
+										 "language=" + this.language.toUpperCase() );
 				
 				this.$.AjaxPost.generateRequest();
 				

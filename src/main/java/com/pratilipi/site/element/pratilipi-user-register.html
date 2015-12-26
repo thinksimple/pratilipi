@@ -30,9 +30,15 @@
 						</span>
 					</div>
 					
-					<paper-input class="pratilipi-blue" label="{{ nameInput }}" value="{{ params.name::input }}"></paper-input>
-					<paper-input class="pratilipi-blue" label="{{ emailInput }}" value="{{ params.email::input }}"></paper-input>
-					<paper-input class="pratilipi-blue" label="{{ passwordInput }}" type="password" value="{{ params.password::input }}"></paper-input>
+					<paper-input class="pratilipi-blue" label="{{ nameInput }}" value="{{ params.name::input }}">
+						<iron-icon style="margin-right: 5px;" icon="account-box" prefix></iron-icon>
+					</paper-input>
+					<paper-input class="pratilipi-blue" label="{{ emailInput }}" value="{{ params.email::input }}">
+						<iron-icon style="margin-right: 5px;" icon="mail" prefix></iron-icon>
+					</paper-input>
+					<paper-input class="pratilipi-blue" label="{{ passwordInput }}" type="password" value="{{ params.password::input }}">
+						<iron-icon style="margin-right: 5px;" icon="lock" prefix></iron-icon>
+					</paper-input>
 					
 					<div class="text-center">
 						<span style="display: block;">{{ message }}</span>

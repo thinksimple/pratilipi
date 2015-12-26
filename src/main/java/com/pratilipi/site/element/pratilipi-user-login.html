@@ -32,8 +32,12 @@
 							&nbsp;&nbsp;OR&nbsp;&nbsp;
 						</span>
 					</div>
-					<paper-input class="pratilipi-blue" label="{{ emailInput }}" value="{{ email::input }}"></paper-input>
-					<paper-input class="pratilipi-blue" label="{{ passwordInput }}" type="password" value="{{ password::input }}"></paper-input>
+					<paper-input class="pratilipi-blue" label="{{ emailInput }}" value="{{ email::input }}">
+						 <iron-icon style="margin-right: 5px;" icon="mail" prefix></iron-icon>
+					</paper-input>
+					<paper-input class="pratilipi-blue" label="{{ passwordInput }}" type="password" value="{{ password::input }}">
+						<iron-icon style="margin-right: 5px;" icon="lock" prefix></iron-icon>
+					</paper-input>
 					<div class="text-center">
 						<span class="text-center">{{ message }}</span>
 					 	<br/>
