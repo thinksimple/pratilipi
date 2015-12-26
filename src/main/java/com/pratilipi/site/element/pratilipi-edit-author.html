@@ -1,0 +1,154 @@
+<dom-module id="pratilipi-edit-author">
+	
+	<style>
+	
+		:host {
+			display: block;
+		}
+		
+		.popup-heading span {
+			font-size: 14px;
+			color: #333;
+			display: inline-block;
+		}
+		
+		paper-input.edit, paper-textarea.edit {
+			--paper-input-container-focus-color: #107FE5;
+			display: block;
+		}
+		
+		paper-dropdown-menu {
+			--paper-dropdown-menu-focus-color: #107FE5;
+			width: 100%;
+			--paper-dropdown-menu-ripple: {
+				left: auto;
+				right: auto;
+			};
+		}
+		
+		paper-menu {
+			--paper-menu-color: #333;
+			--paper-menu-focused-item: {
+				color: #107FE5;
+			};
+		}
+	</style>
+	
+	<template>
+		<div class="modal fade" id="pratilipiEditAuthor" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+			
+					<div class="modal-header">
+						<span>Edit Author</span>
+						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+					</div>
+					
+					<div class="modal-body" on-keyup="onSubmit">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" label="First Name (${ _strings.website_language })" value="{{ author.firstName::input }}"></paper-input>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" label="Last Name (${ _strings.website_language })" value="{{ author.lastName::input }}"></paper-input>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" label="First Name (English)" value="{{ author.firstNameEn::input }}"></paper-input>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" label="Last Name (English)" value="{{ author.lastNameEn::input }}"></paper-input>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" label="Pen Name (${ _strings.website_language })" value="{{ author.penName::input }}"></paper-input>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" label="Pen Name (English)" value="{{ author.penNameEn::input }}"></paper-input>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" type="date" label="Birthday" always-float-label></paper-input>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-dropdown-menu noink="true" disabled="true" label="Language" value="{{ author.language::input }}">
+									<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
+										<paper-item>${ _strings.website_language }</paper-item>
+									</paper-menu>
+								</paper-dropdown-menu>
+							</div>
+						</div>
+						
+						<paper-textarea class="edit" label="Summary (optional)" value="{{ author.summary::input }}"></paper-textarea>
+						<div class="text-center" style="min-height: 20px;">
+							<span>{{ message }}</span>
+						</div>
+					</div>
+					
+					<div class="modal-footer">
+						<button class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Save Changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/author"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
+	</template>
+	
+	<script>
+		Polymer({
+	
+			is: 'pratilipi-edit-author',
+			
+			properties: {
+				author: { type: Object, notify: true },
+			},
+
+			open: function() {
+				this.async( function() {
+					jQuery( "#pratilipiEditAuthor" ).modal();
+				});
+			},
+			
+			onSubmit: function() {
+				
+				this.message = "";
+				
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+					return;
+				
+				this.author.language = ${ _strings.website_language };
+				
+				console.log( this.author.language );
+				
+				this.message = "Please Wait...";
+				
+				this.$.AjaxPost.body = ( "" );
+
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			_handleAjaxPostResponse: function() {
+				
+			},
+			
+			_handleAjaxPostError: function(){
+				
+			}
+			
+			
+		});
+	</script>
+	
+</dom-module>

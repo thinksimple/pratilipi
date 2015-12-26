@@ -1,3 +1,4 @@
+<link rel="import" href="pratilipi-edit-author.html" />
 <link rel="import" href="pratilipi-social.html" />
 
 <dom-module id="pratilipi-author">
@@ -42,7 +43,11 @@
 	
 	
 	<template>
-		<paper-card>		
+		<paper-card>
+		
+			<!-- <paper-icon-button style="color: #333;" class="pull-right" icon="create" noink="true" on-click="openAuthorEdit"></paper-icon-button>
+			<pratilipi-edit-author author="{{ author }}"></pratilipi-edit-author> -->
+				
 			<!-- For wide-screens and mobile screens-->
 			<div id="row">
 	    		<div id="col-left" style=" max-width: 220px;">
@@ -146,10 +151,13 @@
 			},
 			
 			properties: {
-				user: { type:Object },
 				author: { type:Object, notify:true },
 				authorData: { type:Object },
 				mobile: { type: Boolean }
+			},
+			
+			openAuthorEdit: function() {
+				/* this.querySelector( 'pratilipi-edit-author' ).open(); */
 			},
 			
 			processAuthorData: function( data ) {

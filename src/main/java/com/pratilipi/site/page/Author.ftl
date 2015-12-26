@@ -16,6 +16,7 @@
 		</#list>
 
 		<#-- Polymer 1.0 Custom Elements -->
+		<link rel='import' href='/elements.${lang}/pratilipi-author-page.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
@@ -29,36 +30,11 @@
 
 	<body class="fullbleed layout vertical">
 		<template is="dom-bind">
-			<paper-header-panel class="flex" mode="waterfall">
-  				<div class="paper-header">
-  					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
-					<pratilipi-header user='{{ user }}'></pratilipi-header>
-  				</div>
-  				<div class="fit" style="margin-top: 5px;">
-  					<div class="parent-container">
-						<div class="container">
-							<pratilipi-navigation
-									class='pull-left hidden-xs hidden-sm'
-									></pratilipi-navigation>
-							<div style="overflow:hidden">
-								<pratilipi-author
-									author='{{ author }}'
-									author-data='${ authorJson }'
-									></pratilipi-author>
-								<pratilipi-card-grid
-									id='PublishedWorks'
-									heading='${ _strings.author_published_works }' 
-									include-add-card="true"
-									pratilipi-list='${ publishedPratilipiListJson }'
-									filter='${ publishedPratilipiListFilterJson! }'
-									cursor='${ publishedPratilipiListCursor! }'
-									></pratilipi-card-grid>
-							</div>
-						</div>
-					</div>
-					<pratilipi-footer></pratilipi-footer>
-  				</div>
-			</paper-header-panel>
+			<pratilipi-author-page user-data='${ userJson }'
+				author-data='${ authorJson }'
+				pratilipi-list='${ publishedPratilipiListJson }'
+				filter='${ publishedPratilipiListFilterJson! }'
+				cursor='${ publishedPratilipiListCursor! }'></pratilipi-author-page>
 		</template>
 	</body>
 	

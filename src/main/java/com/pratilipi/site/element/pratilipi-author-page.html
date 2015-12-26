@@ -1,0 +1,57 @@
+<dom-module id="pratilipi-author-page">
+
+	<template>
+		<paper-header-panel class="flex" mode="waterfall">
+			<div class="paper-header">
+				<pratilipi-user user='{{ user }}' user-data='{{ userData }}'></pratilipi-user>
+				<pratilipi-header user='{{ user }}'></pratilipi-header>
+			</div>
+			<div class="fit" style="margin-top: 5px;">
+				<div class="parent-container">
+					<div class="container">
+						<pratilipi-navigation
+								class='pull-left hidden-xs hidden-sm'
+								></pratilipi-navigation>
+						<div style="overflow:hidden">
+							<pratilipi-author
+									author='{{ author }}'
+									author-data='{{ authorData }}'
+									></pratilipi-author>
+									
+							<br class="pratilipi-break">
+							<pratilipi-card-grid
+								id='PublishedWorks'
+								heading='${ _strings.author_published_works }' 
+								include-add-card="true"
+								pratilipi-list='{{ pratilipiList }}'
+								filter='{{ filter }}'
+								cursor='{{ cursor }}'
+								></pratilipi-card-grid>
+						</div>
+					</div>
+				</div>
+				<pratilipi-footer></pratilipi-footer>
+			</div>
+		</paper-header-panel>
+	</template>
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-author-page',
+			
+			properties: {
+				userData: { type: Object },
+				authorData: { type:Object },
+				
+				pratilipiList: { type: Array },
+				filter: { type: Object },
+				cursor: { type: String }
+			}
+
+		});
+
+	</script>
+
+</dom-module>
