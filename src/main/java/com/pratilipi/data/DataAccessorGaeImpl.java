@@ -84,8 +84,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return pm.detachCopy( entity );
 	}
 	
-	@SuppressWarnings("unchecked")
-	private <T> T[] createOrUpdateEntities( T... entities ) {
+	private Object[] createOrUpdateEntities( Object... entities ) {
 		entities = pm.makePersistentAll( entities );
 		return pm.detachCopyAll( entities );
 	}
@@ -251,7 +250,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) {
-		return createOrUpdateEntities( newAccessToken, oldAccessToken )[ 0 ];
+		return (AccessToken) createOrUpdateEntities( newAccessToken, oldAccessToken )[ 0 ];
 	}
 	
 	@Override
