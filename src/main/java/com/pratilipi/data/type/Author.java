@@ -37,9 +37,11 @@ public interface Author extends Serializable {
 	String getPenNameEn();
 	
 	void setPenNameEn( String penNameEn );
-	
+
+	@Deprecated
 	String getEmail();
 	
+	@Deprecated
 	void setEmail( String email );
 	
 	Language getLanguage();
