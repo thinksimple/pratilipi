@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.Language;
 
 public interface Author extends Serializable {
@@ -38,6 +39,16 @@ public interface Author extends Serializable {
 	
 	void setPenNameEn( String penNameEn );
 
+	
+	Gender getGender();
+	
+	void setGender( Gender gender );
+	
+	Date getDateOfBirth();
+	
+	void setDateOfBirth( Date dateOfBirth );
+	
+	
 	@Deprecated
 	String getEmail();
 	

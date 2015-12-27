@@ -9,6 +9,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.Author;
 
@@ -42,6 +43,14 @@ public class AuthorEntity implements Author {
 	@Persistent( column = "PEN_NAME_EN" )
 	private String penNameEn;
 
+
+	@Persistent( column = "GENDER" )
+	private Gender gender;
+	
+	@Persistent( column = "DATE_OF_BIRTH" )
+	private Date dateOfBirth;
+	
+	
 	@Deprecated
 	@Persistent( column = "EMAIL" )
 	private String email;
@@ -177,6 +186,28 @@ public class AuthorEntity implements Author {
 		this.penNameEn = penNameEn;
 	}
 
+	
+	@Override
+	public Gender getGender() {
+		return gender ;
+	}
+	
+	@Override
+	public void setGender( Gender gender ) {
+		this.gender = gender;
+	}
+	
+	@Override
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+	
+	@Override
+	public void setDateOfBirth( Date dateOfBirth ) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	
 	@Override
 	public String getEmail() {
 		return email;
