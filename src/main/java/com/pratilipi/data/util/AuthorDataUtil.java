@@ -17,6 +17,8 @@ import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.UserCampaign;
+import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.ImageUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -35,6 +37,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class AuthorDataUtil {
@@ -42,7 +45,7 @@ public class AuthorDataUtil {
 	private static final Logger logger =
 			Logger.getLogger( AuthorDataUtil.class.getName() );
 	
-	private static final String IMAGE_FOLDER = "author-image";
+	private static final String IMAGE_FOLDER = "author-image/original";
 
 	
 	public static boolean hasAccessToListAuthorData( Language language ) {
@@ -192,65 +195,27 @@ public class AuthorDataUtil {
 	public static AuthorData saveAuthorData( AuthorData authorData )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
+		_validateAuthorDataforSave( authorData );
+
+		boolean isNew = authorData.getId() == null;
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = null;
+		Author author = isNew ? dataAccessor.newAuthor() : dataAccessor.getAuthor( authorData.getId() );
+		
+		if( isNew && ! hasAccessToAddAuthorData( authorData ) )
+			throw new InsufficientAccessException();
+		if( ! isNew && ! hasAccessToUpdateAuthorData( author, authorData ) )
+			throw new InsufficientAccessException();
+		
 		
 		Gson gson = new Gson();
-		JsonObject errorMessages = new JsonObject();
+
 		
-		AccessToken accessToken = AccessTokenFilter.getAccessToken(); 
 		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
+		auditLog.setAccessType( isNew ? AccessType.AUTHOR_ADD : AccessType.AUTHOR_UPDATE );
+		auditLog.setEventDataOld( gson.toJson( author ) );
 		
-		if( authorData.getId() == null ) { // Add Author usecase
-			
-			if( authorData.getLanguage() == null ) {
-				errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
-				throw new InvalidArgumentException( errorMessages );
-			}
-
-			if( authorData.getState() == null
-					|| authorData.getState() == AuthorState.BLOCKED
-					|| authorData.getState() == AuthorState.DELETED )
-				throw new InvalidArgumentException( "Invalid state '" + authorData.getState() + "' for new author." );
-			
-			if( ! hasAccessToAddAuthorData( authorData ) )
-				throw new InsufficientAccessException();
-			
-			if( authorData.getEmail() != null && dataAccessor.getAuthorByEmailId( authorData.getEmail().toLowerCase() ) != null ) {
-				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
-				throw new InvalidArgumentException( errorMessages );
-			}
-			
-			author = dataAccessor.newAuthor();
-			auditLog.setAccessType( AccessType.AUTHOR_ADD );
-			auditLog.setEventDataOld( gson.toJson( author ) );
-			
-			author.setRegistrationDate( new Date() );
-			author.setLastUpdated( new Date() );
-
-		} else { // Update Author usecase
-
-			if( authorData.hasLanguage() && authorData.getLanguage() == null ) {
-				errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
-				throw new InvalidArgumentException( errorMessages );
-			}
-			
-			if( authorData.hasState() && authorData.getState() == null ) {
-				errorMessages.addProperty( "state", GenericRequest.ERR_AUTHOR_STATE_REQUIRED );
-				throw new InvalidArgumentException( errorMessages );
-			}
-
-			author = dataAccessor.getAuthor( authorData.getId() );
-			auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
-			auditLog.setEventDataOld( gson.toJson( author ) );
-
-			if( ! hasAccessToUpdateAuthorData( author, authorData ) )
-				throw new InsufficientAccessException();
-			
-			author.setLastUpdated( new Date() );
-		
-		}
 		
 		if( authorData.hasFirstName() )
 			author.setFirstName( authorData.getFirstName() );
@@ -272,16 +237,102 @@ public class AuthorDataUtil {
 			author.setLanguage( authorData.getLanguage() );
 		if( authorData.hasSummary() )
 			author.setSummary( authorData.getSummary() );
-		
+
+		if( authorData.hasState() )
+			author.setState( authorData.getState() );
+		if( isNew )
+			author.setRegistrationDate( new Date() );
+		author.setLastUpdated( new Date() );
+
 		
 		auditLog.setEventDataNew( gson.toJson( author ) );
+
+		
+		if( isNew && authorData.hasEmail() && authorData.getEmail() != null ) {
+
+			User user = dataAccessor.newUser();
+			user.setEmail( authorData.getEmail().toLowerCase() );
+			user.setState( UserState.REGISTERED );
+			user.setCampaign( UserCampaign.AEE_TEAM );
+			user.setReferrer( AccessTokenFilter.getAccessToken().getUserId().toString() );
+			user.setSignUpDate( new Date() );
+			user.setSignUpSource( UserDataUtil.getUserSignUpSource( false, false ) );
+
+			user = dataAccessor.createOrUpdateUser( user );
+			
+			author.setUserId( user.getId() );
+			
+		} else if( ! isNew && authorData.hasEmail() && authorData.getEmail() != null ) {
+
+			User user = dataAccessor.getUser( author.getUserId() );
+			if( ! user.getEmail().equals( authorData.getEmail().toLowerCase() ) ) {
+
+				user.setEmail( authorData.getEmail().toLowerCase() );
+				if( user.getState() == UserState.ACTIVE )
+					user.setState( UserState.REGISTERED );
+				
+				user = dataAccessor.createOrUpdateUser( user );
+				
+			}
+			
+		}
+		
 		
 		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
 
-		if( authorData.getId() == null )
+		if( isNew )
 			createOrUpdateAuthorPageUrl( author.getId() );
 
 		return createAuthorData( author );
+		
+	}
+	
+	private static void _validateAuthorDataforSave( AuthorData authorData ) throws InvalidArgumentException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		boolean isNew = authorData.getId() == null;
+		JsonObject errorMessages = new JsonObject();
+
+		
+		// Language is mandatory.
+		if( isNew && ( ! authorData.hasLanguage() || authorData.getLanguage() == null ) )
+			errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+		// Language can not be un-set or set to null.
+		if( ! isNew && authorData.hasLanguage() && authorData.getLanguage() == null )
+			errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+
+		
+		// Email is optional.
+		if( isNew && authorData.hasEmail() && authorData.getEmail() != null ) {
+			Author author = dataAccessor.getAuthorByEmailId( authorData.getEmail().toLowerCase() );
+			if( author != null )
+				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
+		}
+		// Email, once set, can not be un-set or changed to null.
+		if( ! isNew && authorData.hasEmail() && authorData.getEmail() == null ) {
+			Author author = dataAccessor.getAuthor( authorData.getId() );
+			if( author.getEmail() != null )
+				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REQUIRED );
+		}
+		// Email should not be registered already.
+		if( ! isNew && authorData.hasEmail() && authorData.getEmail() != null ) {
+			Author author = dataAccessor.getAuthorByEmailId( authorData.getEmail().toLowerCase() );
+			if( author != null && ! author.getId().equals( authorData.getId() ) )
+				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );				
+		}
+		
+
+		// State must be ACTIVE for new profile.
+		if( isNew && ( ! authorData.hasState() || authorData.getState() != AuthorState.ACTIVE ) )
+			errorMessages.addProperty( "state", GenericRequest.ERR_AUTHOR_STATE_INVALID );
+		// State can not be un-set or set to null.
+		if( ! isNew && authorData.hasState() && authorData.getState() == null )
+			errorMessages.addProperty( "state", GenericRequest.ERR_AUTHOR_STATE_REQUIRED );
+
+
+		if( errorMessages.entrySet().size() > 0 )
+			throw new InvalidArgumentException( errorMessages );
 	}
 	
 	
@@ -292,9 +343,9 @@ public class AuthorDataUtil {
 		
 		String fileName = "";
 		if( author != null && author.hasCustomImage() )
-			fileName = IMAGE_FOLDER + "/original/" + authorId;
+			fileName = IMAGE_FOLDER + "/" + authorId;
 		else
-			fileName = IMAGE_FOLDER + "/original/" + "author";
+			fileName = IMAGE_FOLDER + "/" + "author";
 
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
 		if( width != null )
@@ -313,7 +364,7 @@ public class AuthorDataUtil {
 
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		blobEntry.setName( IMAGE_FOLDER + "/original/" + authorId );
+		blobEntry.setName( IMAGE_FOLDER + "/" + authorId );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		
 
