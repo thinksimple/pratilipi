@@ -8,6 +8,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.pratilipi.common.type.Gender;
+import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.type.UserStatus;
@@ -28,20 +29,25 @@ public class UserEntity implements User {
 	@Persistent( column = "PASSWORD" )
 	private String password;
 	
-	
+
+	@Deprecated
 	@Persistent( column = "FIRST_NAME" )
 	private String firstName;
 	
+	@Deprecated
 	@Persistent( column = "LAST_NAME" )
 	private String lastName;
 	
+	@Deprecated
 	@Persistent( column = "NICK_NAME" )
 	private String nickName;
 
 	
+	@Deprecated
 	@Persistent( column = "GENDER" )
 	private Gender gender;
 	
+	@Deprecated
 	@Persistent( column = "DATE_OF_BIRTH" )
 	private Date dateOfBirth;
 	
@@ -53,24 +59,22 @@ public class UserEntity implements User {
 	private String phone;
 	
 	
-	@Deprecated
-	@Persistent( column = "CAMPAIGN" )
-	private String campaign;
-	
-	@Deprecated
-	@Persistent( column = "REFERER" )
-	private String referer;
+	@Persistent( column = "VERIFICATION_TOKEN" )
+	private String verificationToken;
 	
 	@Deprecated
 	@Persistent( column = "STATUS" )
 	private UserStatus status;
 	
-	@Persistent( column = "VERIFICATION_TOKEN" )
-	private String verificationToken;
-	
 	@Persistent( column = "STATE" )
 	private UserState state;
 	
+	
+	@Persistent( column = "CAMPAIGN" )
+	private String campaign;
+	
+	@Persistent( column = "REFERER" )
+	private String referer;
 	
 	@Persistent( column = "SIGN_UP_DATE" )
 	private Date signUpDate;
@@ -229,10 +233,31 @@ public class UserEntity implements User {
 	
 	
 	@Override
+	public UserCampaign getCampaign() {
+		return campaign == null ? null : UserCampaign.fromString( campaign );
+	}
+	
+	@Override
+	public void setCampaign( UserCampaign campaign ) {
+		this.campaign = campaign == null ? null : campaign.toString();
+	}
+	
+	@Override
+	public String getReferrer() {
+		return referer;
+	}
+	
+	@Override
+	public void setReferrer( String referrer ) {
+		this.referer = referrer;
+	}
+	
+	@Override
 	public Date getSignUpDate() {
 		return signUpDate;
 	}
 	
+	@Override
 	public void setSignUpDate( Date signUpDate ) {
 		this.signUpDate = signUpDate;
 	}
