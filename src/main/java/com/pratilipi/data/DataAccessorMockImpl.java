@@ -177,10 +177,9 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public AccessToken[] createOrUpdateAccessTokens( AccessToken... accessTokens ) {
-		for( AccessToken accessToken : accessTokens )
-			AccessTokenMock.ACCESS_TOKEN_TABLE.add( accessToken );
-		return accessTokens;
+	public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) {
+		AccessTokenMock.ACCESS_TOKEN_TABLE.add( newAccessToken );
+		return newAccessToken;
 	}
 
 	@Override
@@ -380,14 +379,26 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Author createOrUpdateAuthor( Author author ) {
+		
+		if( author.getId() != null )
+			return author;
+
+		long authorId = 0L;
+		for( Author aAuthor : AUTHOR_TABLE )
+			if( authorId <= aAuthor.getId() )
+				authorId = aAuthor.getId() + 1;
+		
+		( ( AuthorEntity ) author ).setId( authorId );
 		AUTHOR_TABLE.add( author );
+		
 		return author;
+		
 	}
 
 	@Override
 	public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) {
-		AUTHOR_TABLE.add( author );
-		return author;
+		createAuditLog( auditLog );
+		return createOrUpdateAuthor( author );
 	}
 
 	

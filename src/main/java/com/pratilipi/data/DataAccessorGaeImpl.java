@@ -250,8 +250,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public AccessToken[] createOrUpdateAccessTokens( AccessToken... accessTokens ) {
-		return createOrUpdateEntities( accessTokens );
+	public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) {
+		return createOrUpdateEntities( newAccessToken, oldAccessToken )[ 0 ];
 	}
 	
 	@Override

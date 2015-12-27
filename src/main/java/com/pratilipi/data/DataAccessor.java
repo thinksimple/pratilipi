@@ -39,7 +39,7 @@ public interface DataAccessor {
 	AccessToken getAccessToken( String accessTokenId );
 	DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount );
 	AccessToken createOrUpdateAccessToken( AccessToken accessToken );
-	AccessToken[] createOrUpdateAccessTokens( AccessToken... accessTokens );
+	AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken );
 	void deleteAccessToken( AccessToken accessToken );
 
 	// AUDIT_LOG Table

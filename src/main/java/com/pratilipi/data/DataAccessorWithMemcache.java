@@ -163,15 +163,15 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 
 	@Override
-	public AccessToken[] createOrUpdateAccessTokens( AccessToken... accessTokens ) {
-		accessTokens = dataAccessor.createOrUpdateAccessTokens( accessTokens );
+	public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) {
+		newAccessToken = dataAccessor.createOrUpdateAccessToken( newAccessToken, oldAccessToken );
 
 		Map<String, AccessToken> keyValueMap = new HashMap<>();
-		for( AccessToken accessToken : accessTokens ) 
-			keyValueMap.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
+		keyValueMap.put( PREFIX_ACCESS_TOKEN + newAccessToken.getId(), newAccessToken );
+		keyValueMap.put( PREFIX_ACCESS_TOKEN + oldAccessToken.getId(), oldAccessToken );
 		memcache.putAll( keyValueMap );
 		
-		return accessTokens;
+		return newAccessToken;
 	}
 
 	@Override
