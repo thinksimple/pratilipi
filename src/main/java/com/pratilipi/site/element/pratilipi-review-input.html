@@ -18,8 +18,9 @@
 			height: 150px;
 		}
 		
-		.form-group input, .form-group textarea {
-			font-size: 12px;
+		paper-input, paper-textarea {
+			--paper-input-container-focus-color: #107FE5;
+			display: block;
 		}
 		
 	</style>
@@ -34,30 +35,24 @@
 				<div class="media-body">
 					<h4 class="media-heading">{{ pratilipi.title }}</h4>
 					<h5>{{ pratilipi.author.name }}</h5>
-					<br/>
-					<pratilipi-rating-input
-							user="{{ user }}"
-							pratilipi-id="{{ pratilipi.pratilipiId }}"
-							value="{{ userpratilipi.rating }}"
+					
+					<div style="margin-top: 50px;">
+						<pratilipi-rating-input
+							value="{{ ratingValue }}"
 							></pratilipi-rating-input>
+					</div>
 				</div>
 			</div>
-			<br/>
-			<div class="form-group">
-				<label for="FormInput-Title">${ _strings.review_title }</label>
-				<input type="email" class="form-control" id="FormInput-Title" placeholder="${ _strings.review_title_help }" value="{{ params.reviewTitle::input }}">
-				<span class="text-danger">{{ paramsErr.reviewTitle }}</span>
+			
+			<div style="margin: 25px auto;" on-keyup="onSubmit">
+				<paper-input label="${ _strings.review_title }" value="{{ params.reviewTitle::input }}"></paper-input>
+				<paper-textarea label="${ _strings.review_content }" value="{{ params.review::input }}"></paper-textarea>
 			</div>
-			<div class="form-group">
-				<label for="FormInput-Content">${ _strings.review_content }</label>
-				<textarea class="form-control" id="FormInput-Content" rows="6" placeholder="${ _strings.review_content_help }"></textarea>
-				<span class="text-danger">{{ paramsErr.review }}</span>
-			</div>
-			<div>
+			
+			<div style="margin-bottom: 20px;">
 				<button type="button" class="pratilipi-light-blue-button" on-click="onSubmit">${ _strings.submit_review }</button>
 				<button type="button" class="pratilipi-grey-button" on-click="close">Cancel</button>
-				<span class="text-center text-success">{{ message }}</span>
-				<span class="text-center text-danger">{{ errMessage }}</span>
+				<span class="text-center">{{ message }}</span>
 			</div>
 
 		</iron-collapse>
@@ -91,10 +86,11 @@
 				user: { type: Object },
 				pratilipi: { type:Object, observer:"_pratilipiChangeObserver" },
 				userpratilipi: { type:Object, notify:true, observer:"_userpratilipiChangeObserver" },
+				ratingValue: { type: Number, value: 0 },
 				isactive: { type: Boolean, notify: true },
 				
-				params: { type:Object, value:{} },
-				paramsErr: { type:Object },
+				params: { type: Object, value:{} },
+				message: { type: String }
 			},
 			
 			_pratilipiChangeObserver: function() {
@@ -102,16 +98,24 @@
 			},
 			
 			_userpratilipiChangeObserver: function() {
+				
 				if( ! this.userpratilipi.pratilipiId )
 					this.close();
+				
 				this.set( 'params.reviewTitle', this.userpratilipi.reviewTitle );
-				if( this.userpratilipi.review ) {
-					this.querySelector( 'textarea' ).value = this.userpratilipi.review;
-					if( ! this.$.ReviewInputCollapse.opened && ! this.$.ReviewCollapse.opened )
-						this.$.ReviewCollapse.toggle();
-				} else {
-					this.querySelector( 'textarea' ).value = "";
+				
+				if( this.userpratilipi.review )
+					this.set( 'params.review', this.userpratilipi.review );
+				else
+					this.set( 'params.review', "" );
+				
+				if( this.userpratilipi.rating ) {
+					this.set( 'params.rating', this.userpratilipi.rating );
+					this.set( 'ratingValue', this.userpratilipi.rating );
+					this.querySelector( 'pratilipi-rating-input' ).setRating( this.userpratilipi.rating );
 				}
+				else
+					this.set( 'params.rating', 0 );
 			},
 			
 			open: function() {
@@ -130,11 +134,25 @@
 			},
 			
 			onSubmit: function() {
-				this.paramsErr = {};
-				this.errMessage = null;
+				
+				this.message = "";
+				
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+					return;
+				
 				this.message = "${ _strings.saving }";
 				
-				this.params.review = this.querySelector( 'textarea' ).value;
+				if( this.ratingValue === 0 ) {
+					this.message = "Please rate the book.";
+					return;
+				}
+					
+				this.params.rating = this.ratingValue;
+				
+				if( this.params.reviewTitle !== undefined && this.params.review === undefined ) {
+					this.message = "Please enter the review.";
+					return;
+				}
 				
 				this.$.AjaxPut.body = JSON.stringify( this.params );
 				this.$.AjaxPut.generateRequest();
@@ -148,6 +166,7 @@
 					this.message = null;
 					this.set( 'userpratilipi.reviewTitle', this.params.reviewTitle );
 					this.set( 'userpratilipi.review', this.params.review );
+					this.set( 'userpratilipi.rating', this.params.rating );
 					this.close();
 				}
 			},

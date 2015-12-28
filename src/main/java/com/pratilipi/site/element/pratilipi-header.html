@@ -74,7 +74,7 @@
 							</template>
 							
 							<td width="auto">
-								<form style="margin: -20px 15px auto 10px;" is="iron-form" id="form" method="get" action="/search">
+								<form method="get" action="/search" style="margin: -20px 15px auto 10px;" is="iron-form" id="form" on-submit="onSubmit">
 									<template is="dom-if" if="{{ !mobile }}">
 										<paper-input name="q" class="search" type="search" label="${ _strings.search_bar_help }" value="{{ query::input }}">
 											<paper-icon-button class="search-icon" suffix icon="search" noink="true"></paper-icon-button>
@@ -174,13 +174,6 @@
 				medium: { type: Boolean }
 			},
 			
-			ready: function() {
-			    var reParam = new RegExp( '(?:[\?&]|&)q=([^&]+)', 'i' );
-			    var match = window.location.search.match( reParam ) ;
-			    if( match && match.length > 1 )
-			    	this.query = decodeURIComponent( match[ 1 ] ).split("+").join(" ");;
-			},
-			
 			myAccount: function() {
 				console.log( "myAccount" );
 			},
@@ -223,6 +216,13 @@
 				else
 					this.medium = false;
 					
+			},
+			
+			ready: function() {
+			    var reParam = new RegExp( '(?:[\?&]|&)q=([^&]+)', 'i' );
+			    var match = window.location.search.match( reParam ) ;
+			    if( match && match.length > 1 )
+			    	this.query = decodeURIComponent( match[ 1 ] ).split("+").join(" ");;
 			},
 			
 			onSubmit: function( event ) {

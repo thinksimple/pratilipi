@@ -115,7 +115,7 @@
 					return;
 
 				var reqHeight = scrollTop
-						- jQuery( this ).position().top
+						- jQuery( this ).context.offsetTop
 						+ jQuery( window ).height()
 						+ 3 * jQuery( window ).height();
 		

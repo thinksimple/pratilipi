@@ -87,6 +87,10 @@
 			},
 			
 			_userChanged: function() {
+				if( this.user.isGuest ) {
+					this.reviewButtonClicked = false;
+					this.querySelector( 'pratilipi-review-input' ).close();
+				}
 				if( ! this.user.isGuest && this.reviewButtonClicked ) {
 					this.reviewButtonClicked = false;
 					this.showReviewInput();
@@ -109,7 +113,7 @@
 					return;
 
 				var reqHeight = scrollTop
-						- jQuery( this ).position().top
+						- jQuery( this ).context.offsetTop
 						+ jQuery( window ).height()
 						+ 2 * jQuery( window ).height();
 		

@@ -12,15 +12,16 @@
 		}
 
 		.glyphicon {
-			color: #bdc3c7;
-		}
-
-		.glyphicon-selected {
-			color: #e67e22;
+			color: #D0021B;
 		}
 
 		.glyphicon:hover ~ .glyphicon, .glyphicon:hover {
-			color: gold;
+			color: #D0021B;
+		}
+		
+		iron-icon {
+			width: 20px;
+			height: 20px;
 		}
 
 	</style>
@@ -28,25 +29,17 @@
 
 	<template>
 		<div class="secondary-500">
-			<span>{{ title }}</span>
+			<span style="cursor: default; color: #333;">{{ title }}</span>
 			<br/>
 			<div style="display: block; float: left;">
-				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showFiveStars"  on-mouseout="init" on-click="rateFiveStars"></span>
-				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showFourStars"  on-mouseout="init" on-click="rateFourStars"></span>
-				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showThreeStars" on-mouseout="init" on-click="rateThreeStars"></span>
-				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showTwoStars"   on-mouseout="init" on-click="rateTwoStars"></span>
-				<span class="glyphicon glyphicon-star" aria-hidden="true" on-mouseover="showOneStar"    on-mouseout="init" on-click="rateOneStar"></span>
+				<span style="cursor: default; color: #333;">{{ text }}</span>
+				<iron-icon icon="{{ icon5 }}" class="glyphicon" on-mouseover="showFiveStars"  on-mouseout="init" on-click="rateFiveStars"></iron-icon>
+				<iron-icon icon="{{ icon4 }}" class="glyphicon" on-mouseover="showFourStars"  on-mouseout="init" on-click="rateFourStars"></iron-icon>
+				<iron-icon icon="{{ icon3 }}" class="glyphicon" on-mouseover="showThreeStars" on-mouseout="init" on-click="rateThreeStars"></iron-icon>
+				<iron-icon icon="{{ icon2 }}" class="glyphicon" on-mouseover="showTwoStars"   on-mouseout="init" on-click="rateTwoStars"></iron-icon>
+				<iron-icon icon="{{ icon1 }}" class="glyphicon" on-mouseover="showOneStar"    on-mouseout="init" on-click="rateOneStar"></iron-icon>
 			</div>
 		</div>
-		<iron-ajax
-				id="AjaxPut"
-				url="/api/userpratilipi"
-				method="PUT"
-				content-type="application/json"
-				handle-as="json"
-				on-response="_handleAjaxPutResponse"
-				on-error="_handleAjaxPutError"
-				></iron-ajax>
 	</template>
 
 
@@ -57,128 +50,98 @@
 			is: 'pratilipi-rating-input',
 
 			properties: {
-				user: { type: Object },
-				pratilipiId: { type: String },
-				value: { type: Number, value: 0, notify: true, observer: 'init' },
-				rating: { type: Number, value: 0 },
-				isSaving: { type: Number, value: 0 }
+				value: { type: Number, value: 0, notify: true, observer: 'init' }
 			},
-
+			
 			init: function() {
-				if( this.isSaving )
-					this.title = '${ _strings.saving }';
-				else if( this.value == undefined || this.value == 0 )
+				if( this.value == undefined || this.value == 0 )
 					this.title = '${ _strings.rate_this }';
 				else
 					this.title = '${ _strings.your_rating }';
-
 				
-				var stars = this.querySelectorAll( 'span' );
-
-				if( this.value >= 1 )
-					jQuery( stars[4] ).addClass( 'glyphicon-selected' );
-				else
-					jQuery( stars[4] ).removeClass( 'glyphicon-selected' );
-
-				if( this.value >= 2 )
-					jQuery( stars[3] ).addClass( 'glyphicon-selected' );
-				else
-					jQuery( stars[3] ).removeClass( 'glyphicon-selected' );
-
-				if( this.value >= 3 )
-					jQuery( stars[2] ).addClass( 'glyphicon-selected' );
-				else
-					jQuery( stars[2] ).removeClass( 'glyphicon-selected' );
-
-				if( this.value >= 4 )
-					jQuery( stars[1] ).addClass( 'glyphicon-selected' );
-				else
-					jQuery( stars[1] ).removeClass( 'glyphicon-selected' );
-
-				if( this.value == 5 )
-					jQuery( stars[0] ).addClass( 'glyphicon-selected' );
-				else
-					jQuery( stars[0] ).removeClass( 'glyphicon-selected' );
+				switch( this.value ) {
+					case 0:
+						this.text = null;
+						break;
+					case 1:
+						this.showOneStar();
+						break;
+					case 2:
+						this.showTwoStars();
+						break;
+					case 3:
+						this.showThreeStars();
+						break;
+					case 4:
+						this.showFourStars();
+						break;
+					case 5:
+						this.showFiveStars();
+						break;
+				}
 			},
-
+			
+			setRating: function( value ) {
+				this.value = value;
+				this.setStar( this.value );
+				this.init();
+			},
+			
+			setStar: function( n ) {
+				for( var i = 1; i <= 5; i++ )
+					this.set( "icon" + i, "star-border" );
+				for( var i = 1; i <= n; i++ )
+					this.set( "icon" + i, "star" );
+			},
 			
 			showOneStar: function() {
-				this.title = '${ _strings.rating_1_star }';
+				this.text = '${ _strings.rating_1_star }';
 			},
 
 			showTwoStars: function() {
-				this.title = '${ _strings.rating_2_star }';
+				this.text = '${ _strings.rating_2_star }';
 			},
 			
 			showThreeStars: function() {
-				this.title = '${ _strings.rating_3_star }';
+				this.text = '${ _strings.rating_3_star }';
 			},
 			
 			showFourStars: function() {
-				this.title = '${ _strings.rating_4_star }';
+				this.text = '${ _strings.rating_4_star }';
 			},
 			
 			showFiveStars: function() {
-				this.title = '${ _strings.rating_5_star }';
+				this.text = '${ _strings.rating_5_star }';
 			},
 			
 			
 			rateOneStar: function() {
-				this.submitRating( 1 );
+				this.value = 1;
+				this.setStar(1);
 			},
 
 			rateTwoStars: function() {
-				this.submitRating( 2 );
+				this.value = 2;
+				this.setStar(2);
 			},
 			
 			rateThreeStars: function() {
-				this.submitRating( 3 );
+				this.value = 3;
+				this.setStar(3);
 			},
 			
 			rateFourStars: function() {
-				this.submitRating( 4 );
+				this.value = 4;
+				this.setStar(4);
 			},
 			
 			rateFiveStars: function() {
-				this.submitRating( 5 );
+				this.value = 5;
+				this.setStar(5);
 			},
 
-			
-			submitRating: function( rating ) {
-				if( this.user.isGuest ) {
-					document.querySelector( 'pratilipi-user' ).logIn();
-					return;
-				}
-				
-				if( this.isSaving )
-					return;
-				
-				this.isSaving = true;
-				this.rating = this.value;
-				this.set( 'value', rating );
-				
-				var ajaxPut = this.$.AjaxPut;
-				ajaxPut.body = JSON.stringify( { pratilipiId:this.pratilipiId, rating:rating } );
-				ajaxPut.generateRequest();
-			},
-			
-			_handleAjaxPutResponse: function( event ) {
-				this.isSaving = false;
-				if( event.detail.xhr.status == 0 )
-					this.set( 'value', this.rating );
-				else
-					this.init();
-			},
-
-			_handleAjaxPutError: function( event ) {
-				this.isSaving = false;
-				if( event.detail.request.xhr.status == 401 )
-					document.querySelector( 'pratilipi-user' ).logIn();
-				this.set( 'value', this.rating );
-			},
-
-			
 			ready: function() {
+				this.setStar( this.value );
 				this.init();
 			}
 
