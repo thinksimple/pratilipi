@@ -137,7 +137,6 @@
 				if( event.detail.response.cursor ) {
 					this.$.AjaxGet.params.cursor = event.detail.response.cursor;
 					this.isLoading = false;
-					this.loadMore();
 				} else {
 					this.isFinished = true;
 				}
@@ -151,7 +150,6 @@
 				if( this.pratilipiId && this.cursor ) {
 					var ajaxGet = this.$.AjaxGet;
 					ajaxGet.params = { 'pratilipiId':this.pratilipiId, 'cursor':this.cursor };
-					this.loadMore();
 				} else {
 					this.isFinished = true;
 				}

@@ -139,7 +139,6 @@
 				if( request.detail.response.cursor ) {
 					this.$.AjaxGet.params.cursor = request.detail.response.cursor;
 					this.isLoading = false;
-					this.loadMore();
 				} else {
 					this.isFinished = true;
 				}
@@ -155,7 +154,6 @@
 					if( this.searchQuery )
 						ajaxGet.params.searchQuery = this.searchQuery;
 					ajaxGet.params.cursor = this.cursor;
-					this.loadMore();
 				} else {
 					this.isFinished = true;
 				}
