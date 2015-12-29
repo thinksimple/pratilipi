@@ -2,7 +2,6 @@ package com.pratilipi.api.impl.user.shared;
 
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
-import com.pratilipi.common.type.UserSignUpSource;
 
 public class PostUserRegisterRequest extends GenericRequest {
 
@@ -24,9 +23,6 @@ public class PostUserRegisterRequest extends GenericRequest {
 	@Validate( required = true, requiredErrMsg = PASSWORD_REQUIRED_ERR_MSG, regEx = REGEX_PASSWORD, regExErrMsg = PASSWORD_INVALID_ERR_MSG )
 	private String password;
 
-	@Validate( required = true )
-	private UserSignUpSource source;
-
 	
 	public String getName() {
 		return name;
@@ -38,10 +34,6 @@ public class PostUserRegisterRequest extends GenericRequest {
 
 	public String getPassword() {
 		return password;
-	}
-	
-	public UserSignUpSource getSignUpSource() {
-		return source;
 	}
 	
 }

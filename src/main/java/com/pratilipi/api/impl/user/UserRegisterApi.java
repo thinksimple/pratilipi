@@ -11,6 +11,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
+import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -34,9 +35,10 @@ public class UserRegisterApi extends GenericApi {
 
 		// Register the User.
 		UserData userData = UserDataUtil.registerUser( firstName, lastName,
-				email, request.getPassword(), request.getSignUpSource() );
+				email, request.getPassword(),
+				UserDataUtil.getUserSignUpSource( false, false ) );
 		// Create Author profile for the User.
-		UserDataUtil.createAuthorProfile( userData.getId() );
+		UserDataUtil.createAuthorProfile( userData.getId(), UxModeFilter.getFilterLanguage() );
 		// Log-in the User.
 		userData = UserDataUtil.loginUser( email, request.getPassword() );
 

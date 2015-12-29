@@ -5,32 +5,75 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
+import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AuditLog;
+import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.email.EmailUtil;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.filter.UxModeFilter;
 
 public class UserDataUtil {
 	
 	private static final Logger logger =
 			Logger.getLogger( UserDataUtil.class.getName() );
 
+
+	public static UserSignUpSource getUserSignUpSource( boolean isFbLogin, boolean isGpLogin ) {
+
+		if( UxModeFilter.isAndroidApp() ) {
+
+			if( isFbLogin )
+				return UserSignUpSource.ANDROID_APP_FACEBOOK;
+			else if( isGpLogin )
+				return UserSignUpSource.ANDROID_APP_GOOGLE;
+			else
+				return UserSignUpSource.ANDROID_APP;
+		
+		} else {
+			
+			if( isFbLogin ) {
+				
+				switch( UxModeFilter.getFilterLanguage() ) {
+					case TAMIL:
+						return UserSignUpSource.WEBSITE_M6_TAMIL_FACEBOOK;
+					default:
+						return UserSignUpSource.WEBSITE_M6_FACEBOOK;
+				}
+				
+			} else {
+
+				switch( UxModeFilter.getFilterLanguage() ) {
+					case TAMIL:
+						return UserSignUpSource.WEBSITE_M6_TAMIL;
+					default:
+						return UserSignUpSource.WEBSITE_M6;
+				}
+				
+			}
+			
+		}
+		
+	}
 	
 	private static String getNextToken( String verificationToken ) {
 		if( verificationToken != null ) {
@@ -98,70 +141,77 @@ public class UserDataUtil {
 			throws InvalidArgumentException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		User user = dataAccessor.getUserByEmail( email );
-		if( user != null ) {
-			switch( user.getState() ) {
-				case REFERRAL:
-					break;
-				case REGISTERED:
-				case ACTIVE:
-				case BLOCKED:
-					JsonObject errorMessages = new JsonObject();
-					errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
-					throw new InvalidArgumentException( errorMessages );
-				default:
-					logger.log( Level.SEVERE, "User state " + user.getState() + " is not handeled !"  );
-					throw new UnexpectedServerException();
-			}
-		} else {
+		User user = dataAccessor.getUserByEmail( email.toLowerCase() );
+		
+		if( user == null || user.getState() == UserState.DELETED ) {
 			user = dataAccessor.newUser();
-			user.setEmail( email );
+		} else if( user.getState() != UserState.REFERRAL ) {
+			JsonObject errorMessages = new JsonObject();
+			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
+			throw new InvalidArgumentException( errorMessages );
 		}
 
+		
+		Gson gson = new Gson();
+
+		
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
+		auditLog.setAccessType( AccessType.USER_ADD );
+		auditLog.setEventDataOld( gson.toJson( user ) );
+		
+		
 		user.setFirstName( firstName );
 		user.setLastName( lastName );
 		user.setPassword( PasswordUtil.getSaltedHash( password ) );
+		user.setEmail( email.toLowerCase() );
 		user.setState( UserState.REGISTERED );
 		user.setSignUpDate( new Date() );
 		user.setSignUpSource( signUpSource );
-		
-		user = dataAccessor.createOrUpdateUser( user );
 
+		
+		auditLog.setEventDataNew( gson.toJson( user ) );
+
+		
+		user = dataAccessor.createOrUpdateUser( user, auditLog );
+		
 		return createUserData( user );
+
 	}
-	
+
 	public static UserData loginUser( String email, String password )
-			throws InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( email );
+		User user = dataAccessor.getUserByEmail( email.toLowerCase() );
 
-		JsonObject errorMessages = new JsonObject();
-		if( user == null ) {
+		if( user == null || user.getState() == UserState.REFERRAL || user.getState() == UserState.DELETED ) {
+			JsonObject errorMessages = new JsonObject();
 			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 			throw new InvalidArgumentException( errorMessages );
+		} else if( user.getState() == UserState.BLOCKED ) {
+			throw new InsufficientAccessException( GenericRequest.ERR_ACCOUNT_BLOCKED );
 		}
 		
 		if( user.getPassword() == null && user.getFacebookId() != null )
 			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_REGISTERED_WITH_FB );
 		
 		if( PasswordUtil.check( password, user.getPassword() ) ) {
-			loginUser( AccessTokenFilter.getAccessToken(), user );
+			_loginUser( AccessTokenFilter.getAccessToken(), user );
 			return createUserData( user );
 		}
 		
 		if( verifyToken( user, password ) ) {
 			user.setVerificationToken( null );
 			dataAccessor.createOrUpdateUser( user );
-			loginUser( AccessTokenFilter.getAccessToken(), user );
+			_loginUser( AccessTokenFilter.getAccessToken(), user );
 			return createUserData( user );
 		}
 		
 		throw new InvalidArgumentException( GenericRequest.ERR_INVALID_CREDENTIALS );
 
 	}
-	
+
 	public static UserData loginUser( String fbUserAccessToken, UserSignUpSource signUpSource )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
@@ -170,78 +220,77 @@ public class UserDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByFacebookId( fbUserData.getFacebookId() );
 
-		Boolean isChanged = false;
-
-		if( user != null ) {
-		
-			// "user.getPassword() == null" implies that User never logged-in using his/her e-mail id
-			if( user.getPassword() == null && fbUserData.getEmail() != null && ! fbUserData.getEmail().equals( user.getEmail() ) ) {
-				user.setEmail( fbUserData.getEmail() );
-				isChanged = true;
-			}
-		
-		} else { // user == null
+		if( user == null || user.getState() == UserState.DELETED ) {
 			
 			if( fbUserData.getEmail() != null )
-				user = dataAccessor.getUserByEmail( fbUserData.getEmail() );
+				user = dataAccessor.getUserByEmail( fbUserData.getEmail().toLowerCase() );
 				
-			if( user == null ) {
+			Gson gson = new Gson();
+			
+			AuditLog auditLog = dataAccessor.newAuditLog();
+			auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
+
+			if( user == null || user.getState() == UserState.DELETED ) {
+				
 				user = dataAccessor.newUser();
-				user.setEmail( fbUserData.getEmail() ); // Could be null
+				
+				auditLog.setAccessType( AccessType.USER_ADD );
+				auditLog.setEventDataOld( gson.toJson( user ) );
+				
+				user.setFirstName( fbUserData.getFirstName() );
+				user.setLastName( fbUserData.getLastName() );
+				user.setGender( fbUserData.getGender() );
+				user.setDateOfBirth( fbUserData.getDateOfBirth() );
+				user.setEmail( fbUserData.getEmail() == null ? null : fbUserData.getEmail().toLowerCase() );
+				user.setState( UserState.ACTIVE ); // Counting on Facebook for e-mail/user verification
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
-				user.setState( fbUserData.getEmail() == null ? UserState.REGISTERED : UserState.ACTIVE );
-			} else if( user.getState() == UserState.REFERRAL || user.getState() == UserState.REGISTERED ) {
-				user.setState( UserState.ACTIVE ); // Counting of Facebook for e-mail/user verification
+				
+			} else if( user.getState() == UserState.REFERRAL ) {
+				
+				auditLog.setAccessType( AccessType.USER_ADD );
+				auditLog.setEventDataOld( gson.toJson( user ) );
+				
+				user.setFirstName( fbUserData.getFirstName() );
+				user.setLastName( fbUserData.getLastName() );
+				user.setGender( fbUserData.getGender() );
+				user.setDateOfBirth( fbUserData.getDateOfBirth() );
+				user.setState( UserState.ACTIVE ); // Counting on Facebook for e-mail/user verification
+				user.setSignUpDate( new Date() );
+				user.setSignUpSource( signUpSource );
+
+			} else if( user.getState() == UserState.REGISTERED ) {
+
+				auditLog.setAccessType( AccessType.USER_UPDATE );
+				auditLog.setEventDataOld( gson.toJson( user ) );
+
+				user.setState( UserState.ACTIVE ); // Counting on Facebook for e-mail/user verification
+
+			} else { // user.getState() == UserState.ACTIVE || user.getState() == UserState.BLOCKED
+				
+				auditLog.setAccessType( AccessType.USER_UPDATE );
+				auditLog.setEventDataOld( gson.toJson( user ) );
+
 			}
 			
 			user.setFacebookId( fbUserData.getFacebookId() );
-			isChanged = true;
-		
-		}
-		
-		if( fbUserData.getFirstName() != null && ! fbUserData.getFirstName().equals( user.getFirstName() ) ) {
-			user.setFirstName( fbUserData.getFirstName() );
-			isChanged = true;
-		}
-		
-		if( fbUserData.getLastName() != null && ! fbUserData.getLastName().equals( user.getLastName() ) ) {
-			user.setLastName( fbUserData.getLastName() );
-			isChanged = true;
-		}
-		
-		if( fbUserData.getGender() != null && fbUserData.getGender() != user.getGender() ) {
-			user.setGender( fbUserData.getGender() );
-			isChanged = true;
-		}
-		
-		if( fbUserData.getDateOfBirth() != null && ! fbUserData.getDateOfBirth().equals( user.getDateOfBirth() ) ) {
-			user.setDateOfBirth( fbUserData.getDateOfBirth() );
-			isChanged = true;
-		}
-		
-		if( isChanged )
-			user = dataAccessor.createOrUpdateUser( user );
-		
+			
+			auditLog.setEventDataNew( gson.toJson( user ) );
 
-		switch( user.getState() ) {
-			case ACTIVE:
-			case REGISTERED:
-			case REFERRAL:
-				break;
-			case BLOCKED:
-				throw new InsufficientAccessException( GenericRequest.ERR_ACCOUNT_BLOCKED );
-			default:
-				logger.log( Level.SEVERE, "User state " + user.getState() + " is not handeled !"  );
-				throw new UnexpectedServerException();
-		}
+			user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
-	
-		loginUser( AccessTokenFilter.getAccessToken(), user );
+		}
+			
+		if( user.getState() == UserState.BLOCKED )
+			throw new InsufficientAccessException( GenericRequest.ERR_ACCOUNT_BLOCKED );
+
+		_loginUser( AccessTokenFilter.getAccessToken(), user );
+		
 		return createUserData( user );
+		
 	}
 	
-	private static void loginUser( AccessToken accessToken, User user ) {
+	private static void _loginUser( AccessToken accessToken, User user ) {
 		
 		if( ! accessToken.getUserId().equals( 0L ) )
 			return;
@@ -289,7 +338,7 @@ public class UserDataUtil {
 			return getGuestUser();
 
 		accessToken.setLogOutDate( new Date() );
-		accessToken.setExpiry( accessToken.getLogOutDate() );
+		accessToken.setExpiry( new Date() );
 		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 		return getGuestUser();
 
@@ -320,6 +369,53 @@ public class UserDataUtil {
 	}
 	
 	
+	public static void createAuthorProfile( Long userId, Language language ) throws InsufficientAccessException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUser( userId );
+		
+		if( user == null || ( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE ) )
+			throw new InsufficientAccessException();
+		
+		Gson gson = new Gson();
+
+		Author author = user.getEmail() == null
+				? dataAccessor.newAuthor()
+				: dataAccessor.getAuthorByEmailId( user.getEmail() );
+		
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
+		
+		if( author != null && author.getState() != AuthorState.DELETED && author.getUserId() == null ) {
+			auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
+			auditLog.setEventDataOld( gson.toJson( author ) );
+		} else {
+			author = dataAccessor.newAuthor();
+			
+			auditLog.setAccessType( AccessType.AUTHOR_ADD );
+			auditLog.setEventDataOld( gson.toJson( author ) );
+			
+			author.setFirstName( user.getFirstName() );
+			author.setLastName( user.getLastName() );
+			author.setPenName( user.getNickName() );
+			author.setGender( user.getGender() );
+			author.setDateOfBirth( user.getDateOfBirth() );
+			author.setEmail( user.getEmail() );
+			author.setLanguage( language );
+			author.setState( AuthorState.ACTIVE );
+			author.setRegistrationDate( new Date() );
+			author.setLastUpdated( new Date() );
+		}
+
+		author.setUserId( userId );
+		
+		auditLog.setEventDataNew( gson.toJson( author ) );
+
+		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
+		
+	}
+
+	
 	public static void sendWelcomeMail( Long userId ) throws UnexpectedServerException {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
@@ -337,7 +433,7 @@ public class UserDataUtil {
 		}
 		
 		Map<String, String> dataModel = new HashMap<>();
-		String verificationLink = "http://" + Language.ENGLISH.getHostName()
+		String verificationLink = "http://" + Website.ALL_LANGUAGE.getHostName()
 				+ "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "verifyUser=" + Boolean.TRUE;
@@ -346,10 +442,15 @@ public class UserDataUtil {
 		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "verification", Language.ENGLISH, dataModel );
 	}
 	
-	public static void sendPasswordResetMail( Long userId ) throws UnexpectedServerException {
-		
+	public static void sendPasswordResetMail( String email )
+			throws InvalidArgumentException, UnexpectedServerException {
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUser( userId );
+		User user = dataAccessor.getUserByEmail( email );
+		if( user == null || user.getState() == UserState.REFERRAL || user.getState() == UserState.DELETED )
+			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
+		else if( user.getState() == UserState.BLOCKED )
+			throw new InvalidArgumentException( GenericRequest.ERR_ACCOUNT_BLOCKED );
 		
 		String verificationToken = getNextToken( user.getVerificationToken() );
 		if( ! verificationToken.equals( user.getVerificationToken() ) ) {
@@ -358,7 +459,7 @@ public class UserDataUtil {
 		}
 		
 		Map<String, String> dataModel = new HashMap<>();
-		String passwordResetUrl = "http://" + Language.ENGLISH.getHostName()
+		String passwordResetUrl = "http://" + Website.ALL_LANGUAGE.getHostName()
 				+ "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "passwordReset=" + Boolean.TRUE;
@@ -369,31 +470,16 @@ public class UserDataUtil {
 	}
 
 	
-	public static void verifyUserEmail( String email, String verificationToken )
-			throws InvalidArgumentException, UnexpectedServerException {
+	public static void verifyUserEmail( String email, String verificationToken ) throws InvalidArgumentException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email );
 		
-		if( user == null )
-			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
+		if( user == null || user.getState() != UserState.REGISTERED )
+			return;
 		
 		if( ! verifyToken( user, verificationToken ) )
 			throw new InvalidArgumentException( GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
-		
-		switch( user.getState() ) {
-			case ACTIVE:
-				return;
-			case REGISTERED:
-				break;
-			case REFERRAL:
-			case BLOCKED:
-				logger.log( Level.SEVERE, "Verification not supported for " + user.getState() + " user state."  );
-				throw new UnexpectedServerException();
-			default:
-				logger.log( Level.SEVERE, "User state " + user.getState() + " is not handeled !"  );
-				throw new UnexpectedServerException();
-		}
 		
 		user.setState( UserState.ACTIVE );
 		dataAccessor.createOrUpdateUser( user );
@@ -404,16 +490,14 @@ public class UserDataUtil {
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		Long userId = AccessTokenFilter.getAccessToken().getUserId();
-
-		if( userId == 0L )
+		if( userId == null )
 			throw new InsufficientAccessException();
-
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
 		
-		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE )
+		if( user == null || ( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE  ) )
 			throw new InsufficientAccessException();
-
 		
 		if( PasswordUtil.check( password, user.getPassword() ) ) {
 			if( ! password.equals( newPassword ) ) {
@@ -435,20 +519,19 @@ public class UserDataUtil {
 		User user = dataAccessor.getUserByEmail( email );
 		
 		JsonObject errorMessages = new JsonObject();
-		
-		if( user == null ) {
+		if( user == null || user.getState() == UserState.REFERRAL || user.getState() == UserState.DELETED ) {
 			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 			throw new InvalidArgumentException( errorMessages );
+		} else if( user.getState() == UserState.BLOCKED ) {
+			throw new InvalidArgumentException( GenericRequest.ERR_ACCOUNT_BLOCKED );
 		}
-		
-		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE )
-			throw new InsufficientAccessException();
 		
 		if( ! verifyToken( user, verificationToken ) )
 			throw new InvalidArgumentException( GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
 			
 		user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
 		dataAccessor.createOrUpdateUser( user );
+
 	}
 	
 }

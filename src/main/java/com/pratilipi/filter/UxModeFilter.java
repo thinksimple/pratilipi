@@ -33,7 +33,7 @@ public class UxModeFilter implements Filter {
 	@Override
 	public void init( FilterConfig config ) throws ServletException {
 		String moduleParam = config.getInitParameter( "Module" );
-		isAndroidApp = moduleParam != null && moduleParam.equalsIgnoreCase( "Android" );
+		isAndroidApp = moduleParam != null && moduleParam.equalsIgnoreCase( "android" );
 	}
 
 	@Override

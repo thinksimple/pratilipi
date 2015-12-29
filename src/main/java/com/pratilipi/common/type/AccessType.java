@@ -2,6 +2,9 @@ package com.pratilipi.common.type;
 
 public enum AccessType {
 
+	USER_ADD   ( "Add User" ),
+	USER_UPDATE( "Update User" ),
+
 	PRATILIPI_LIST		  ( "List Pratilipi" ),
 	PRATILIPI_ADD		  ( "Add Pratilipi" ),
 	PRATILIPI_UPDATE	  ( "Update Pratilipi" ),
