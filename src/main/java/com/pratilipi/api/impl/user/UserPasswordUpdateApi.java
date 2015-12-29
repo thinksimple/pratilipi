@@ -22,30 +22,31 @@ public class UserPasswordUpdateApi extends GenericApi {
 	public static UserResponse post( PostUserPasswordUpdateRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
-		Gson gson = new Gson();
-
-		JsonObject errorMessages = new JsonObject();
-		
 		if( ! request.getNewPassword().equals( request.getNewPassword2() ) ) {
+			JsonObject errorMessages = new JsonObject();
 			errorMessages.addProperty( "password2", GenericRequest.ERR_PASSWORD2_MISMATCH );
 			throw new InvalidArgumentException( errorMessages );
 		}
 		
-		// Verifying email and Updating password.
+		UserData userData;
 		if( request.getEmail() != null && request.getVerificationToken() != null ) {
+			// Verifying email
 			UserDataUtil.verifyUserEmail( request.getEmail(), request.getVerificationToken() );
+			// Updating password
 			UserDataUtil.updateUserPassword( request.getEmail(), request.getVerificationToken(), request.getNewPassword() );
+			// Logging-in the user
+			userData = UserDataUtil.loginUser(
+					request.getEmail(),
+					request.getVerificationToken() != null ? request.getVerificationToken() : request.getNewPassword() );
 		} else if( request.getPassword() != null ) {
 			UserDataUtil.updateUserPassword( request.getPassword(), request.getNewPassword() );
+			userData = UserDataUtil.getCurrentUser();
+			
 		} else {
 			throw new InvalidArgumentException( GenericRequest.ERR_INSUFFICIENT_ARGS );
 		}
 		
-		// Logging-in the user.
-		UserData userData = UserDataUtil.loginUser(
-				request.getEmail(),
-				request.getVerificationToken() != null ? request.getVerificationToken() : request.getNewPassword() );
-		
+		Gson gson = new Gson();
 		return gson.fromJson( gson.toJson( userData ), UserResponse.class );
 	}
 	

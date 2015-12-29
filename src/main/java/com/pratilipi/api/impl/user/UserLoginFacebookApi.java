@@ -13,7 +13,6 @@ import com.pratilipi.api.impl.user.shared.UserResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -30,8 +29,9 @@ public class UserLoginFacebookApi extends GenericApi {
 		
 		UserData userData = UserDataUtil.loginUser(
 				request.getFbUserAccessToken(),
-				UserSignUpSource.WEBSITE_FACEBOOK ); // TODO: Facebook SignUp on Android ?
+				UserDataUtil.getUserSignUpSource( true, false ) );
 
+		
 		List<Task> taskList = new LinkedList<>();
 		
 
@@ -39,18 +39,20 @@ public class UserLoginFacebookApi extends GenericApi {
 				.setUrl( "/user/facebook/validation" )
 				.addParam( "pratilipiAccessToken", AccessTokenFilter.getAccessToken().getId() )
 				.addParam( "fbAccessToken", request.getFbUserAccessToken() );
-		
 		taskList.add( fbValidationTask );
 
 		
-		if( new Date().getTime() - userData.getSignUpDate().getTime() <= 60000
-				&& userData.getEmail() != null ) {
+		if( new Date().getTime() - userData.getSignUpDate().getTime() <= 60000 ) {
 			
-			Task welcomeMailTask = TaskQueueFactory.newTask()
-					.setUrl( "/user/email" )
-					.addParam( "userId", userData.getId().toString() )
-					.addParam( "sendWelcomeMail", "true" );
-			taskList.add( welcomeMailTask );
+			UserDataUtil.createAuthorProfile( userData.getId() );
+			
+			if( userData.getEmail() != null ) {
+				Task welcomeMailTask = TaskQueueFactory.newTask()
+						.setUrl( "/user/email" )
+						.addParam( "userId", userData.getId().toString() )
+						.addParam( "sendWelcomeMail", "true" );
+				taskList.add( welcomeMailTask );
+			}
 			
 		}
 
@@ -60,6 +62,7 @@ public class UserLoginFacebookApi extends GenericApi {
 		
 		Gson gson = new Gson();
 		return gson.fromJson( gson.toJson( userData ), UserResponse.class );
+	
 	}
 
 }

@@ -6,6 +6,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.user.shared.PostUserVerificationRequest;
 import com.pratilipi.api.impl.user.shared.UserResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
@@ -17,7 +18,7 @@ public class UserVerificationApi extends GenericApi {
 	
 	@Post
 	public UserResponse put( PostUserVerificationRequest request )
-			throws InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		Gson gson = new Gson();
 

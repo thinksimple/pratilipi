@@ -6,6 +6,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.user.shared.PostUserRegisterRequest;
 import com.pratilipi.api.impl.user.shared.UserResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
@@ -19,7 +20,7 @@ public class UserRegisterApi extends GenericApi {
 
 	@Post
 	public UserResponse put( PostUserRegisterRequest request )
-			throws InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		String firstName = request.getName().trim();
 		String lastName = null;
@@ -30,9 +31,13 @@ public class UserRegisterApi extends GenericApi {
 			firstName = firstName.substring( 0, firstName.lastIndexOf( ' ' ) );
 		}
 		
-		
+
+		// Register the User.
 		UserData userData = UserDataUtil.registerUser( firstName, lastName,
 				email, request.getPassword(), request.getSignUpSource() );
+		// Create Author profile for the User.
+		UserDataUtil.createAuthorProfile( userData.getId() );
+		// Log-in the User.
 		userData = UserDataUtil.loginUser( email, request.getPassword() );
 
 		

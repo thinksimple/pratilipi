@@ -21,6 +21,7 @@ public class UserLogoutApi extends GenericApi {
 		Gson gson = new Gson();
 		UserData userData = UserDataUtil.logoutUser();
 		return gson.fromJson( gson.toJson( userData ), UserResponse.class );
+		
 	}
 	
 }
