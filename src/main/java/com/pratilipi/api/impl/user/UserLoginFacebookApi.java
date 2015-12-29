@@ -16,6 +16,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -44,7 +45,7 @@ public class UserLoginFacebookApi extends GenericApi {
 		
 		if( new Date().getTime() - userData.getSignUpDate().getTime() <= 60000 ) {
 			
-			UserDataUtil.createAuthorProfile( userData.getId() );
+			UserDataUtil.createAuthorProfile( userData.getId(), UxModeFilter.getFilterLanguage() );
 			
 			if( userData.getEmail() != null ) {
 				Task welcomeMailTask = TaskQueueFactory.newTask()

@@ -73,7 +73,8 @@ public class FacebookApi {
 			else
 				throw new UnexpectedServerException();
 		} else {
-			UserData userData = new UserData( responseJson.get( "id" ).getAsString() );
+			UserData userData = new UserData();
+			userData.setFacebookId( responseJson.get( "id" ).getAsString() );
 			userData.setFirstName( responseJson.get( "first_name" ).getAsString() );
 			userData.setLastName( responseJson.get( "last_name" ).getAsString() );
 			userData.setGender( Gender.valueOf( responseJson.get( "gender" ).getAsString().toUpperCase() ) );

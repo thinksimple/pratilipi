@@ -38,7 +38,7 @@ public class AuthorApi extends GenericApi {
 	
 	@Put
 	public PutAuthorResponse putAuthor( PutAuthorRequest request ) 
-			throws InvalidArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		Gson gson = new Gson();
 

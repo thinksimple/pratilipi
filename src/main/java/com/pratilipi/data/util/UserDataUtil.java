@@ -376,38 +376,44 @@ public class UserDataUtil {
 		
 		if( user == null || ( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE ) )
 			throw new InsufficientAccessException();
+
+		
+		Author author = dataAccessor.getAuthorByUserId( userId );
+		if( author == null && user.getEmail() != null )
+			author = dataAccessor.getAuthorByEmailId( user.getEmail() );
+		
+		if( author == null || author.getState() == AuthorState.DELETED ) {
+			author = dataAccessor.newAuthor();
+		} else if( author.getUserId() != null && author.getUserId().equals( userId ) ) {
+			return;
+		} else if( author.getEmail() != null && author.getEmail().equals( user.getEmail() ) ) {
+			author.setUserId( userId );
+			author = dataAccessor.createOrUpdateAuthor( author );
+			return;
+		} else {
+			author = dataAccessor.newAuthor();
+		}
+		
 		
 		Gson gson = new Gson();
 
-		Author author = user.getEmail() == null
-				? dataAccessor.newAuthor()
-				: dataAccessor.getAuthorByEmailId( user.getEmail() );
 		
 		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		
-		if( author != null && author.getState() != AuthorState.DELETED && author.getUserId() == null ) {
-			auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
-			auditLog.setEventDataOld( gson.toJson( author ) );
-		} else {
-			author = dataAccessor.newAuthor();
+		auditLog.setAccessType( AccessType.AUTHOR_ADD );
+		auditLog.setEventDataOld( gson.toJson( author ) );
 			
-			auditLog.setAccessType( AccessType.AUTHOR_ADD );
-			auditLog.setEventDataOld( gson.toJson( author ) );
-			
-			author.setFirstName( user.getFirstName() );
-			author.setLastName( user.getLastName() );
-			author.setPenName( user.getNickName() );
-			author.setGender( user.getGender() );
-			author.setDateOfBirth( user.getDateOfBirth() );
-			author.setEmail( user.getEmail() );
-			author.setLanguage( language );
-			author.setState( AuthorState.ACTIVE );
-			author.setRegistrationDate( new Date() );
-			author.setLastUpdated( new Date() );
-		}
-
 		author.setUserId( userId );
+		author.setFirstName( user.getFirstName() );
+		author.setLastName( user.getLastName() );
+		author.setPenName( user.getNickName() );
+		author.setGender( user.getGender() );
+		author.setDateOfBirth( user.getDateOfBirth() );
+		author.setEmail( user.getEmail() );
+		author.setLanguage( language );
+		author.setState( AuthorState.ACTIVE );
+		author.setRegistrationDate( new Date() );
+		author.setLastUpdated( new Date() );
 		
 		auditLog.setEventDataNew( gson.toJson( author ) );
 
