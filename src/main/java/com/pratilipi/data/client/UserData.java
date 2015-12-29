@@ -3,6 +3,7 @@ package com.pratilipi.data.client;
 import java.util.Date;
 
 import com.pratilipi.common.type.Gender;
+import com.pratilipi.common.type.UserState;
 
 public class UserData {
 
@@ -11,13 +12,10 @@ public class UserData {
 	private transient String facebookId;
 
 	private String firstName;
-	private transient boolean hasFirstName;
 	
 	private String lastName;
-	private transient boolean hasLastName;
 	
 	private String penName;
-	private transient boolean hasPenName;
 
 	private String name;
 
@@ -25,27 +23,27 @@ public class UserData {
 
 	
 	private Gender gender;
-	private transient boolean hasGender;
 
 	private Date dateOfBirth;
-	private transient boolean hasDateOfBirth;
 	
 	
 	private String email;
 	private transient boolean hasEmail;
 
+	private UserState state;
+	
+	
 	private boolean isGuest;
 	
 	
 	private Date signUpDate;
 
 	
+	
+	public UserData() {}
+
 	public UserData( Long userId ) {
 		this.userId = userId;
-	}
-
-	public UserData( String facebookId ) {
-		this.facebookId = facebookId;
 	}
 
 	
@@ -53,49 +51,42 @@ public class UserData {
 		return userId;
 	}
 
+	public void setId( Long id ) {
+		this.userId = id;
+	}
+	
 	public String getFacebookId() {
 		return facebookId;
 	}
 
+	public void setFacebookId( String facebookId ) {
+		this.facebookId = facebookId;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
 
 	public void setFirstName( String firstName ) {
 		this.firstName = firstName;
-		this.hasFirstName = true;
 	}
 
-	public boolean hasFirstName() {
-		return hasFirstName;
-	}
-	
 	public String getLastName() {
 		return lastName;
 	}
 
 	public void setLastName( String lastName ) {
 		this.lastName = lastName;
-		this.hasLastName = true;
 	}
 	
-	public boolean hasLastName() {
-		return hasLastName;
-	}
-
 	public String getPenName() {
 		return penName;
 	}
 
 	public void setPenName( String penName ) {
 		this.penName = penName;
-		this.hasPenName = true;
 	}
 	
-	public boolean hasPenName() {
-		return hasPenName;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -119,11 +110,6 @@ public class UserData {
 
 	public void setGender( Gender gender ) {
 		this.gender = gender;
-		this.hasGender = true;
-	}
-	
-	public boolean hasGender() {
-		return hasGender;
 	}
 	
 	public Date getDateOfBirth() {
@@ -132,16 +118,11 @@ public class UserData {
 
 	public void setDateOfBirth( Date dateOfBirth ) {
 		this.dateOfBirth = dateOfBirth;
-		this.hasDateOfBirth = true;
-	}
-	
-	public boolean hasDateOfBirth() {
-		return hasDateOfBirth;
 	}
 	
 	
 	public String getEmail() {
-		return email;
+		return email == null || email.trim().isEmpty() ? null : email.trim().toLowerCase();
 	}
 
 	public void setEmail( String email ) {
@@ -152,7 +133,17 @@ public class UserData {
 	public boolean hasEmail() {
 		return hasEmail;
 	}
+
 	
+	public UserState getState() {
+		return state;
+	}
+
+	public void setState( UserState state ) {
+		this.state = state;
+	}
+	
+
 	public boolean isGuest() {
 		return isGuest;
 	}
@@ -161,6 +152,7 @@ public class UserData {
 		this.isGuest = isGuest;
 	}
 
+	
 	public Date getSignUpDate() {
 		return signUpDate;
 	}
@@ -168,5 +160,6 @@ public class UserData {
 	public void setSignUpDate( Date signUpDate ) {
 		this.signUpDate = signUpDate;
 	}
+
 
 }
