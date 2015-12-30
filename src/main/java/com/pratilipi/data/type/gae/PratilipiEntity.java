@@ -120,6 +120,7 @@ public class PratilipiEntity implements Pratilipi {
 	private Date nextProcessDate;
 
 	
+	
 	public PratilipiEntity() {}
 	
 	public PratilipiEntity( Long id ) {
@@ -156,19 +157,19 @@ public class PratilipiEntity implements Pratilipi {
 	public Language getLanguage() {
 		if( language == null ) {
 			if( languageId == 5130467284090880L || languageId == 5750790484393984L )
-				return Language.HINDI;
+				language = Language.HINDI;
 			else if( languageId == 5965057007550464L || languageId == 5746055551385600L )
-				return Language.GUJARATI;
+				language = Language.GUJARATI;
 			else if( languageId == 6319546696728576L || languageId == 5719238044024832L )
-				return Language.TAMIL;
+				language = Language.TAMIL;
 			else if( languageId == 5173513199550464L )
-				return Language.MARATHI;
+				language = Language.MARATHI;
 			else if( languageId == 5752669171875840L )
-				return Language.MALAYALAM;
+				language = Language.MALAYALAM;
 			else if( languageId == 6235363433512960L )
-				return Language.BENGALI;
+				language = Language.BENGALI;
 			else if( languageId == 6213615354904576L || languageId == 5688424874901504L )
-				return Language.ENGLISH;
+				language = Language.ENGLISH;
 		}
 		return language;
 	}
@@ -323,11 +324,14 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public Long getTotalRating() {
-		return totalRating == null ? starCount : totalRating;
+		if( totalRating == null )
+			totalRating = starCount;
+		return totalRating;
 	}
 
 	@Override
 	public void setTotalRating( Long totalRating ) {
+		this.starCount = totalRating;
 		this.totalRating = totalRating;
 	}
 	

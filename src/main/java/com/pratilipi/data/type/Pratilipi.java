@@ -16,9 +16,9 @@ public interface Pratilipi extends Serializable {
 	
 	void setTitle( String title );
 	
-	public String getTitleEn();
+	String getTitleEn();
 	
-	public void setTitleEn( String titleEn );
+	void setTitleEn( String titleEn );
 	
 	Language getLanguage();
 	
