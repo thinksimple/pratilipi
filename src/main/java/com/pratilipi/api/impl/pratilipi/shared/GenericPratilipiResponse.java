@@ -9,7 +9,7 @@ import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.data.client.AuthorData;
 
 @SuppressWarnings("unused")
-public class PratilipiResponse {
+public class GenericPratilipiResponse {
 	
 	public class AuthorResponse {
 		private String name;

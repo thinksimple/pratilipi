@@ -8,13 +8,13 @@ import com.pratilipi.data.client.PratilipiData;
 @SuppressWarnings("unused")
 public class GetPratilipiListResponse extends GenericResponse { 
 	
-	private List<PratilipiData> pratilipiList;
+	private List<GenericPratilipiResponse> pratilipiList;
 	private String cursor;
 
 	
 	private GetPratilipiListResponse() {}
 	
-	public GetPratilipiListResponse( List<PratilipiData> pratilipiList, String cursor ) {
+	public GetPratilipiListResponse( List<GenericPratilipiResponse> pratilipiList, String cursor ) {
 		this.pratilipiList = pratilipiList;
 		this.cursor = cursor;
 	}

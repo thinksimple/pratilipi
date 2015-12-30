@@ -98,7 +98,7 @@ public class PostPratilipiRequest extends GenericRequest {
 	
 	
 	public PratilipiType getType() {
-		return this.type;
+		return type;
 	}
 	
 	public boolean hasType() {
@@ -106,7 +106,7 @@ public class PostPratilipiRequest extends GenericRequest {
 	}
 	
 	public PratilipiContentType getContentType() {
-		return this.contentType;
+		return contentType;
 	}
 	
 	public boolean hasContentType() {
