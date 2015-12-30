@@ -28,8 +28,10 @@ public interface Pratilipi extends Serializable {
 	
 	void setAuthorId( Long authorId );
 	
+	@Deprecated
 	String getSummary();
 	
+	@Deprecated
 	void setSummary( String summary );
 
 	Integer getPublicationYear();
@@ -62,8 +64,10 @@ public interface Pratilipi extends Serializable {
 	void setLastUpdated( Date lastUpdated );
 
 
+	@Deprecated
 	String getIndex();
 	
+	@Deprecated
 	void setIndex( String index );
 	
 	Long getWordCount();

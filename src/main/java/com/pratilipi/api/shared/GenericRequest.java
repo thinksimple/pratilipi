@@ -47,7 +47,10 @@ public class GenericRequest {
 
 	public static final String ERR_LANGUAGE_REQUIRED = "Language is required.";
 
-	public static final String ERR_PRATILIPI_STATE_REQUIRED = "State is required.";
+	public static final String ERR_PRATILIPI_TYPE_REQUIRED			= "Type is required.";
+	public static final String ERR_PRATILIPI_CONTENT_TYPE_REQUIRED	= "Content type is required.";
+	public static final String ERR_PRATILIPI_STATE_REQUIRED			= "State is required.";
+	public static final String ERR_PRATILIPI_STATE_INVALID			= "Invalid State.";
 
 	public static final String ERR_AUTHOR_STATE_REQUIRED = "State is required.";
 	public static final String ERR_AUTHOR_STATE_INVALID = "Invalid State.";

@@ -1,7 +1,6 @@
 package com.pratilipi.data.client;
 
 import java.util.Date;
-import java.util.List;
 
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiContentType;
@@ -26,7 +25,9 @@ public class PratilipiData {
 	
 	private AuthorData author;
 
+	@Deprecated
 	private String summary;
+	@Deprecated
 	private transient boolean hasSummary;
 	
 	private Integer publicationYear;
@@ -34,7 +35,6 @@ public class PratilipiData {
 	
 	
 	private String pageUrl;
-	private String pageUrlAlias;
 	private String coverImageUrl;
 	private String readPageUrl;
 	private String writePageUrl;
@@ -52,33 +52,12 @@ public class PratilipiData {
 	private Date listingDate;
 	private Date lastUpdated;
 
-	
-	private String index;
-	private transient boolean hasIndex;
-
-	
-	private Long wordCount;
-	private transient boolean hasWordCount;
-	
-	private Integer pageCount;
-	private transient boolean hasPageCount;
-	
-	
-	private List<Long> categoryIdList;
-	private List<String> categoryNameList;
-
 
 	private Long reviewCount;
-	
 	private Long ratingCount;
-	
 	private Float averageRating;
-	
 	private Double relevance;
-
-
 	private Long readCount;
-	
 	private Long fbLikeShareCount;
 
 
@@ -193,14 +172,6 @@ public class PratilipiData {
 		this.pageUrl = pageUrl;
 	}
 
-	public String getPageUrlAlias() {
-		return pageUrlAlias;
-	}
-
-	public void setPageUrlAlias( String pageUrlAlias ) {
-		this.pageUrlAlias = pageUrlAlias;
-	}
-
 	public String getCoverImageUrl() {
 		return coverImageUrl;
 	}
@@ -287,63 +258,6 @@ public class PratilipiData {
 		this.lastUpdated = lastUpdated;
 	}
 
-
-	public String getIndex() {
-		return index;
-	}
-	
-	public void setIndex( String index ) {
-		this.index = index;
-		this.hasIndex = true;
-	}
-
-	public boolean hasIndex() {
-		return hasIndex;
-	}
-
-	public Long getWordCount() {
-		return wordCount;
-	}
-
-	public void setWordCount( Long wordCount ) {
-		this.wordCount = wordCount;
-		this.hasWordCount = true;
-	}
-	
-	public boolean hasWordCount() {
-		return hasWordCount;
-	}
-	
-	public Integer getPageCount() {
-		return pageCount;
-	}
-
-	public void setPageCount( Integer pageCount ) {
-		this.pageCount = pageCount;
-		this.hasPageCount = true;
-	}
-	
-	public boolean hasPageCount() {
-		return hasPageCount;
-	}
-	
-	
-	public List<Long> getCategoryIdList() {
-		return categoryIdList;
-	}
-
-	public void setCategoryIdList( List<Long> categoryIdList ) {
-		this.categoryIdList = categoryIdList;
-	}
-	
-	public List<String> getCategoryNameList() {
-		return categoryNameList;
-	}
-
-	public void setCategoryNameList( List<String> categoryNameList ) {
-		this.categoryNameList = categoryNameList;
-	}
-	
 
 	public Long getReviewCount() {
 		return reviewCount;

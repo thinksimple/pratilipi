@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.annotation.Put;
+import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.author.shared.GetAuthorResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiRequest;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiResponse;
-import com.pratilipi.api.impl.pratilipi.shared.PutPratilipiRequest;
-import com.pratilipi.api.impl.pratilipi.shared.PutPratilipiResponse;
+import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiRequest;
+import com.pratilipi.api.impl.pratilipi.shared.PratilipiResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -47,14 +47,14 @@ public class PratilipiApi extends GenericApi {
 		return response;
 	}
 
-	@Put
-	public PutPratilipiResponse putPratilipi( PutPratilipiRequest request )
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+	@Post
+	public PratilipiResponse putPratilipi( PostPratilipiRequest request )
+			throws InvalidArgumentException, InsufficientAccessException {
 
 		Gson gson = new Gson();
 
 		PratilipiData pratilipiData = gson.fromJson( gson.toJson( request ), PratilipiData.class );
-		PratilipiDataUtil.savePratilipiData( pratilipiData);
+		pratilipiData = PratilipiDataUtil.savePratilipiData( pratilipiData );
 		
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/pratilipi/process" )
@@ -62,8 +62,8 @@ public class PratilipiApi extends GenericApi {
 				.addParam( "processData", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 		
+		return gson.fromJson( gson.toJson( pratilipiData ), PratilipiResponse.class );
 		
-		return new PutPratilipiResponse();
 	}		
 
 }

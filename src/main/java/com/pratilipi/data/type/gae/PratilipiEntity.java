@@ -43,6 +43,7 @@ public class PratilipiEntity implements Pratilipi {
 	@Persistent( column = "PUBLISHER_ID" )
 	private Long publisherId;
 
+	@Deprecated
 	@Persistent( column = "SUMMARY" )
 	private Text summary;
 
@@ -73,6 +74,7 @@ public class PratilipiEntity implements Pratilipi {
 	private Date lastUpdated;
 
 	
+	@Deprecated
 	@Persistent( column = "INDEX" )
 	private Text index;
 	
