@@ -20,6 +20,7 @@ public class GaeQueryBuilder {
 
 	public enum Operator {
 		NOT_NULL,
+		NOT_EQUALS,
 		EQUALS,
 		LESS_THAN,
 		LESS_THAN_OR_EQUAL,
@@ -63,6 +64,9 @@ public class GaeQueryBuilder {
 		switch( operator ) {
 			case NOT_NULL:
 				filters.add( param + " != null" );
+				break;
+			case NOT_EQUALS:
+				filters.add( param + " != " + paramKey );
 				break;
 			case EQUALS:
 				filters.add( param + " == " + paramKey );

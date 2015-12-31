@@ -33,6 +33,7 @@ public interface DataAccessor {
 	User getUserByFacebookId( String facebookId );
 	DataListCursorTuple<User> getUserList( String cursorStr, Integer resultCount );
 	User createOrUpdateUser( User user );
+	User createOrUpdateUser( User user, AuditLog auditLog );
 
 	// ACCESS_TOKEN Table
 	AccessToken newAccessToken();

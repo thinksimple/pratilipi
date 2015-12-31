@@ -26,8 +26,10 @@ import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
@@ -142,6 +144,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public User getUserByEmail( String email ) {
 		Query query = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) )
 				.addFilter( "email", email )
+				.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS )
+				.addOrdering( "signUpDate", true )
 				.build();
 		
 		@SuppressWarnings("unchecked")
@@ -157,6 +161,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public User getUserByFacebookId( String facebookId ) {
 		Query query = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) )
 				.addFilter( "facebookId", facebookId )
+				.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS )
+				.addOrdering( "signUpDate", true )
 				.build();
 		
 		@SuppressWarnings("unchecked")
@@ -199,6 +205,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( user );
 	}
 
+	public User createOrUpdateUser( User user, AuditLog auditLog ) {
+		return (User) createOrUpdateEntities( user, auditLog )[ 0 ];
+	}
+	
 	
 	// ACCESS_TOKEN Table
 
@@ -481,7 +491,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public Author getAuthorByEmailId( String email ) {
 		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
 				.addFilter( "email", email )
-				.addFilter( "registrationDate", true )
+				.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS )
+				.addOrdering( "registrationDate", true )
 				.build();
 
 		@SuppressWarnings("unchecked")
@@ -497,7 +508,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public Author getAuthorByUserId( Long userId ) {
 		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
 				.addFilter( "userId", userId )
-				.addFilter( "registrationDate", true )
+				.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS )
+				.addOrdering( "registrationDate", true )
 				.build();
 		
 		@SuppressWarnings("unchecked")

@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
@@ -123,9 +125,37 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	public User createOrUpdateUser( User user ) {
 		user = dataAccessor.createOrUpdateUser( user );
 		memcache.put( PREFIX_USER + user.getId(), user );
-		memcache.put( PREFIX_USER + user.getEmail(), user );
-		if( user.getFacebookId() != null )
-			memcache.put( PREFIX_USER + "fb::" + user.getFacebookId(), user );
+		if( user.getEmail() != null ) {
+			if( user.getState() == UserState.DELETED )
+				memcache.remove( PREFIX_USER + user.getEmail() );
+			else
+				memcache.put( PREFIX_USER + user.getEmail(), user );
+		}
+		if( user.getFacebookId() != null ) {
+			if( user.getState() == UserState.DELETED )
+				memcache.remove( PREFIX_USER + "fb::" + user.getFacebookId() );
+			else
+				memcache.put( PREFIX_USER + "fb::" + user.getFacebookId(), user );
+		}
+		return user;
+	}
+	
+	@Override
+	public User createOrUpdateUser( User user, AuditLog auditLog ) {
+		user = dataAccessor.createOrUpdateUser( user, auditLog );
+		memcache.put( PREFIX_USER + user.getId(), user );
+		if( user.getEmail() != null ) {
+			if( user.getState() == UserState.DELETED )
+				memcache.remove( PREFIX_USER + user.getEmail() );
+			else
+				memcache.put( PREFIX_USER + user.getEmail(), user );
+		}
+		if( user.getFacebookId() != null ) {
+			if( user.getState() == UserState.DELETED )
+				memcache.remove( PREFIX_USER + "fb::" + user.getFacebookId() );
+			else
+				memcache.put( PREFIX_USER + "fb::" + user.getFacebookId(), user );
+		}
 		return user;
 	}
 	
@@ -434,6 +464,18 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	public Author createOrUpdateAuthor( Author author ) {
 		author = dataAccessor.createOrUpdateAuthor( author );
 		memcache.put( PREFIX_AUTHOR + author.getId(), author );
+		if( author.getEmail() != null ) {
+			if( author.getState() == AuthorState.DELETED )
+				memcache.remove( PREFIX_AUTHOR + author.getEmail() );
+			else
+				memcache.put( PREFIX_AUTHOR + author.getEmail(), author );
+		}
+		if( author.getUserId() != null ) {
+			if( author.getState() == AuthorState.DELETED )
+				memcache.remove( PREFIX_AUTHOR + "User-" + author.getUserId() );
+			else
+				memcache.put( PREFIX_AUTHOR + "User-" + author.getUserId(), author );
+		}
 		return author;
 	}
 
@@ -441,6 +483,18 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) {
 		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
 		memcache.put( PREFIX_AUTHOR + author.getId(), author );
+		if( author.getEmail() != null ) {
+			if( author.getState() == AuthorState.DELETED )
+				memcache.remove( PREFIX_AUTHOR + author.getEmail() );
+			else
+				memcache.put( PREFIX_AUTHOR + author.getEmail(), author );
+		}
+		if( author.getUserId() != null ) {
+			if( author.getState() == AuthorState.DELETED )
+				memcache.remove( PREFIX_AUTHOR + "User-" + author.getUserId() );
+			else
+				memcache.put( PREFIX_AUTHOR + "User-" + author.getUserId(), author );
+		}
 		return author;
 	}
 

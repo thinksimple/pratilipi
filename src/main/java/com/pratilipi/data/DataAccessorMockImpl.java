@@ -146,6 +146,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 		UserMock.USER_TABLE.add( user );
 		return user;
 	}
+
+	@Override
+	public User createOrUpdateUser( User user, AuditLog auditLog ) {
+		createAuditLog( auditLog );
+		return createOrUpdateUser( user );
+	}
 	
 
 	// ACCESS_TOKEN Table

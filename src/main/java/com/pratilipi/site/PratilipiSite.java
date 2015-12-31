@@ -18,6 +18,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
@@ -175,6 +176,9 @@ public class PratilipiSite extends HttpServlet {
 			// The magic
 			html = FreeMarkerUtil.processTemplate( dataModel, templateName );
 
+		} catch( InsufficientAccessException e ) {
+			// TODO
+
 		} catch( InvalidArgumentException | UnexpectedServerException e ) {
 			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 			try {
@@ -237,7 +241,7 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
-	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode ) {
+	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode ) throws InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
@@ -319,7 +323,7 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	public Map<String, Object> createDataModelForSearchPage( Language lang, HttpServletRequest request ) {
+	public Map<String, Object> createDataModelForSearchPage( Language lang, HttpServletRequest request ) throws InsufficientAccessException {
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( lang );
 		
@@ -336,7 +340,9 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
-	public Map<String, Object> createDataModelForListPage( PratilipiType type, Language lang ) {
+	public Map<String, Object> createDataModelForListPage( PratilipiType type, Language lang )
+			throws InsufficientAccessException {
+		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setType( type );
 		pratilipiFilter.setLanguage( lang );
@@ -352,6 +358,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
 		dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
 		return dataModel;
+		
 	}
 
 	public Map<String, Object> createDataModelForListPage( String listName, Language lang )
