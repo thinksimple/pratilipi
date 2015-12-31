@@ -1,101 +1,76 @@
 <dom-module id="pratilipi-facebook-login">
 
-<style>
-	
-	:host {
-		display: block;
-	}
-	
-</style>
-
-<template>
-	<div style="width: 100%; text-align: center;">
-		<fb:login-button data-size="large" scope="public_profile,email,user_birthday" on-click="fb_login" data-auto-logout-link="false">&nbsp;${ _strings.sign_in_with_facebook }&nbsp;&nbsp;</fb:login-button>
-	</div>
-	<iron-ajax
-				id="AjaxPost"
-				url="/api/user/login/facebook"
-				method="POST"
-				content-type="application/x-www-form-urlencoded"
-				handle-as="json"
-				on-response="_handleAjaxPostResponse"
-				on-error="_handleAjaxPostError"
-				></iron-ajax>
-</template>
-
-<script>
-
-	Polymer ({
-
-		is: 'pratilipi-facebook-login',
+	<style>
 		
-		sendData: function( authResponse ) {
-			if( authResponse != undefined ) {
-				this.$.AjaxPost.body = ( "fbUserAccessToken=" + authResponse.accessToken );
-				this.$.AjaxPost.generateRequest();
-				this.async( function() {
-					this.close();
-				}, 1000 );
-			}
-		},
+		:host {
+			display: block;
+		}
+		
+	</style>
 
-		fb_login: function() {
-			FB.login( function( response ) {
-				document.querySelector( 'pratilipi-facebook-login' ).sendData( response.authResponse );
-			}, { scope: 'public_profile,email,user_birthday' } );
-		},
+	<template>
+		<div style="width: 270px; margin: 0 auto; text-align: center; font-size: 14px;">
+			<button class="btn btn-block btn-social btn-facebook" on-click="fb_login">
+				<span class="fa fa-facebook"></span> ${ _strings.sign_in_with_facebook }
+			</button>
+		</div>
+		<iron-ajax
+					id="AjaxPost"
+					url="/api/user/login/facebook"
+					method="POST"
+					content-type="application/x-www-form-urlencoded"
+					handle-as="json"
+					on-response="_handleAjaxPostResponse"
+					on-error="_handleAjaxPostError"
+					></iron-ajax>
+	</template>
 
-		ready: function() {
-			window.fbAsyncInit = function() {
+	<script>
+		Polymer ({
+			
+			is: 'pratilipi-facebook-login',
+			
+			sendData: function( authResponse ) {
+				if( authResponse != undefined ) {
+					this.$.AjaxPost.body = ( "fbUserAccessToken=" + authResponse.accessToken );
+					this.$.AjaxPost.generateRequest();
+				}
+			},
+			
+			fb_login: function() {
+				
 				FB.init({
-					appId		: ${ fbAppId },
-					cookie		: true,
-					xfbml		: true,
-					version		: 'v2.0'
+					appId: ${ fbAppId },
+					cookie : true,
+					xfbml: true,
+					version: 'v2.0'
 				});
-				// Now that we've initialized the JavaScript SDK, we call 
-				// FB.getLoginStatus(). This function gets the state of the
-				// person visiting this page and can return one of three states to
-				// the callback you provide. They can be:
-				//
-				// 1. Logged into your app ('connected')
-				// 2. Logged into Facebook, but not your app ('not_authorized')
-				// 3. Not logged into Facebook and can't tell if they are logged into
-				//    your app or not.
-				//
-				// These three cases are handled in the callback function.
-				/* FB.getLoginStatus(function(response) {
-				  statusChangeCallback(response);
-				});
-				FB.XFBML.parse(container);
-				FB.checkLoginState = function () {
-					FB.getLoginStatus(function(response) {
-						statusChangeCallback(response);
-					});
-				}; */
-			};
-			if(typeof(FB) == 'undefined') {
-				(function(d, s, id) {
-					var js, fjs = d.getElementsByTagName(s)[0];
-					if (d.getElementById(id)) return;
-					js = d.createElement(s); js.id = id;
-					js.src = "//connect.facebook.net/en_US/sdk.js";
-					fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk'));
-			}
-		},
-
-
-		_handleAjaxPostResponse: function( event ) {
-			document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
-			jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
-		},
-
-		_handleAjaxPostError: function( event ) {
-			alert( event.detail.request.xhr.response.message );
-		}, 
-
- 	});
-
-</script>
+				
+				FB.login( function( response ) {
+					document.querySelector( 'pratilipi-facebook-login' ).sendData( response.authResponse );
+				}, { scope: 'public_profile,email,user_birthday' } );
+				
+			},
+			
+			ready: function() {
+				if( typeof(FB) == 'undefined' ) {
+					(function(d, s, id) {
+						var js, fjs = d.getElementsByTagName(s)[0];
+						if (d.getElementById(id)) return;
+						js = d.createElement(s); js.id = id;
+						js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4";
+						fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));
+				}
+			},
+			
+			_handleAjaxPostResponse: function( event ) {
+				document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
+			},
+			
+			_handleAjaxPostError: function( event ) {
+				alert( event.detail.request.xhr.response.message );
+			}, 
+		});
+	</script>
 </dom-module>

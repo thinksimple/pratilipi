@@ -140,7 +140,6 @@
 				}
 				
 				this.message = "Please Wait...";
-				
 				jQuery( 'button' ).prop( 'disabled', true );
 				
 				this.$.AjaxPost.body = ( "title=" + this.title + "&" + 
@@ -167,6 +166,7 @@
 			},
 			
 			_handleAjaxPostError: function( event ) {
+				
 				jQuery( 'button' ).prop( 'disabled', false );
 				
 				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )

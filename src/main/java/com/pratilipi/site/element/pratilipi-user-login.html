@@ -42,7 +42,7 @@
 						<span class="text-center">{{ message }}</span>
 					 	<br/>
 						<br style="line-height: 10px;"/>
-						<a class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_in }</a>
+						<button class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_in }</button>
 					</div>
 				</div>
 			</div>
@@ -106,6 +106,7 @@
 				}
 				
 				this.message = "Working ...";
+				jQuery( 'button' ).prop( 'disabled', true );
 				
 				this.$.AjaxPost.body = ( "email=" + this.email + "&" + "password=" + this.password );
 				this.$.AjaxPost.generateRequest();
@@ -133,6 +134,7 @@
 
 			_handleAjaxPostError: function( event ) {
 				this.defaultMessages();
+				jQuery( 'button' ).prop( 'disabled', false );
 				if( event.detail.request.xhr.status == 400 ) {
 					this.message = event.detail.request.xhr.response.email !== undefined ? event.detail.request.xhr.response.email : "Invalid Email!"; 
 					this.message = event.detail.request.xhr.response.message !== undefined ? event.detail.request.xhr.response.message : "Invalid Credentials!";
