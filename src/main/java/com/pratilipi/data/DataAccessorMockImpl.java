@@ -311,14 +311,25 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
+		
+		if( pratilipi.getId() != null )
+			return pratilipi;
+
+		long pratilipiId = 0L;
+		for( Pratilipi aPratilipi : PRATILIPI_TABLE )
+			if( pratilipiId <= aPratilipi.getId() )
+				pratilipiId = aPratilipi.getId() + 1;
+		
+		( ( PratilipiEntity ) pratilipi ).setId( pratilipiId );
 		PRATILIPI_TABLE.add( pratilipi );
+		
 		return pratilipi;
+		
 	}
 	
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) {
-		PRATILIPI_TABLE.add( pratilipi );
-		return pratilipi;
+		return createOrUpdatePratilipi( pratilipi );
 	}
 
 	
@@ -350,7 +361,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	@Override
 	public Author getAuthorByUserId( Long userId ) {
 		for( Author author : AUTHOR_TABLE )
-			if( author.getUserId().equals( userId ) )
+			if( author.getUserId() != null && author.getUserId().equals( userId ) )
 				return author;
 		
 		return null;

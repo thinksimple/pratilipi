@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.gae.AuthorEntity;
@@ -34,6 +35,8 @@ public class AuthorMock {
 		hiAuthor_1.setContentPublished( 100 );
 		hiAuthor_1.setTotalReadCount( 1000L );
 		hiAuthor_1.setTotalFbLikeShareCount( 100L );
+		hiAuthor_1.setUserId( 1L );
+		hiAuthor_1.setState( AuthorState.ACTIVE );
 		
 		guAuthor_1.setFirstName( "ગુજરાતી" );
 		guAuthor_1.setLastName( "ઐઠોર" );

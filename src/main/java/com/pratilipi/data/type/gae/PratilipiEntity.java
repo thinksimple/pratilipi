@@ -135,6 +135,10 @@ public class PratilipiEntity implements Pratilipi {
 		return id;
 	}
 
+	public void setId( Long id ) {
+		this.id = id;
+	}
+
 	@Override
 	public String getTitle() {
 		return title;

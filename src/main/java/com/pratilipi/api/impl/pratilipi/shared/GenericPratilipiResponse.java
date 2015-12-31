@@ -2,6 +2,7 @@ package com.pratilipi.api.impl.pratilipi.shared;
 
 import java.util.Date;
 
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
@@ -9,9 +10,9 @@ import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.data.client.AuthorData;
 
 @SuppressWarnings("unused")
-public class GenericPratilipiResponse {
+public class GenericPratilipiResponse extends GenericResponse {
 	
-	public class AuthorResponse {
+	public static class AuthorResponse {
 		private String name;
 		private String pageUrl;
 	}
@@ -33,7 +34,6 @@ public class GenericPratilipiResponse {
 	private String writePageUrl;
 
 	private PratilipiType type;
-	private PratilipiContentType contentType;
 	private PratilipiState state;
 	
 	private Date listingDate;
