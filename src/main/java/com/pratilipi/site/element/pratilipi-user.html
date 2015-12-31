@@ -4,7 +4,6 @@
 <link rel="import" href="pratilipi-user-password-reset.html" />
 <link rel="import" href="pratilipi-user-password-update.html" />
 <link rel="import" href="pratilipi-user-verification.html" />
-<link rel="import" href="pratilipi-write.html" />
 
 <dom-module id="pratilipi-user">
 
@@ -27,12 +26,6 @@
 		<div class="modal fade" id="pratilipiUserPasswordReset" role="dialog">
 			<div class="modal-dialog" role="document">
 				<pratilipi-user-password-reset></pratilipi-user-password-reset>
-			</div>
-		</div>
-		
-		<div class="modal fade" id="pratilipiWrite" role="dialog">
-			<div class="modal-dialog modal-lg" role="document">
-				<pratilipi-write></pratilipi-write>
 			</div>
 		</div>
 		
@@ -73,7 +66,6 @@
 				jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
 				jQuery( "#pratilipiUserRegister" ).modal( 'hide' );
 				jQuery( "#pratilipiUserPasswordReset" ).modal( 'hide' );
-				jQuery( "#pratilipiWrite" ).modal( 'hide' );
 				this.querySelector( 'pratilipi-user-password-update' ).close();
 				this.querySelector( 'pratilipi-user-verification' ).close();
 			},
@@ -110,13 +102,6 @@
 				this.closeAllElements();
 				this.async( function() {
 					this.querySelector( 'pratilipi-user-verification' ).open();
-				});
-			},
-			
-			write: function() {
-				this.closeAllElements();
-				this.async( function() {
-					jQuery( "#pratilipiWrite" ).modal();
 				});
 			},
 			

@@ -41,14 +41,18 @@
 			<div id="pratilipi-row">
 	    		<div id="pratilipi-col-left" style=" max-width: 170px; padding-bottom: 10px;">
 	    			<div style="padding: 20px 0px 0px 10px;">
-	    				<img style="width: 150px; height: 225px;" class="pratilipi-shadow" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
-		    			<div style="padding: 10px; margin-bottom: 15px;">
+	    				<img style="width: 150px; height: 225px;" class="pratilipi-shadow" src="{{ pratilipi.coverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+						<!-- <template is="dom-if" if="{{ !mobile }}">
+							<paper-icon-button style="position: absolute; top: 200px; left: 120px;" type="button" on-click="_chooseFile" icon="file-upload" noink="true">choose file</paper-icon-button>
+						</template>
+						<input id="fileupload" type="file" name="files[]" data-url="api/pratilipi/" multiple> -->
+						<div style="padding: 10px; margin-bottom: 15px;">
 		    				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
 		    			</div>
 		    		</div>
 	    		</div>
 	    		<div id="pratilipi-col-right" style="padding: 20px;">
-	    			<h2 style="margin-top: 0px; color: #D0021B">{{ pratilipi.title }}</h2>
+					<h2 style="margin-top: 0px; color: #D0021B">{{ title }}</h2>
 					<template is="dom-if" if="{{ pratilipi.author }}">
 						<a href="{{ pratilipi.author.pageUrlAlias }}">
 							<h5>{{ pratilipi.author.name }}</h5>
@@ -105,7 +109,7 @@
 			<paper-card>
 				<div style="padding: 10px 20px 20px 20px; text-align: justify;">
 					<h3 style="color: #D0021B;">${ _strings.book_summary }</h3>
-						<div id="pratilipi-summary-text" style="margin-top: 10px; margin-down: 20px;">{{ pratilipi.summary }}</div>
+						<div id="pratilipi-summary-text" style="margin-top: 10px; margin-down: 20px;">{{ summary }}</div>
 						<div style="text-align: center; padding-top: 10px;">
 							<a id="more" on-click="_toggleSnippet"><span>(${ _strings.show_more })</span></a>
 							<a id="less" on-click="_toggleSnippet"><span>(${ _strings.show_less })</span></a>
@@ -116,20 +120,31 @@
 		</div>
 	</template>
 	
-
 	<script>
 	
-	function getValue( url, key ) {
-		   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( url ) )
-		      return decodeURIComponent( key[1] );
-		   else
-			   return "";
-	}
+	$(function () {
+		$('#fileupload').fileupload({
+			dataType: 'json',
+	        done: function (e, data) {
+	        	console.log( "Triggered" );
+	            $.each(data.result.files, function (index, file) {
+	                $('<p/>').text(file.name).appendTo(document.body);
+	            });
+	        }
+	    });
+	});
 	
-	function replaceAll( string, find, replace ) {
-		return string.replace( new RegExp( find, 'g' ), replace );
-	}
-
+		function getValue( url, key ) {
+			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( url ) )
+			      return decodeURIComponent( key[1] );
+			   else
+				   return "";
+		}
+		
+		function replaceAll( string, find, replace ) {
+			return string.replace( new RegExp( find, 'g' ), replace );
+		}
+	
 		Polymer({
 
 			is: 'pratilipi-pratilipi',
@@ -143,7 +158,7 @@
 			},
 			
 			properties: {
-				pratilipi: { type:Object, notify:true },
+				pratilipi: { type:Object, notify: true },
 				pratilipiData: { type:Object },
 				mobile: { type: Boolean }
 			},
@@ -153,7 +168,7 @@
 			},
 			
 			openPratilipiEdit: function() {
-				/* this.querySelector( 'pratilipi-edit-pratilipi' ).open(); */
+				this.querySelector( 'pratilipi-edit-pratilipi' ).open();
 			},
 			
 			redirectToReader: function() {
@@ -199,20 +214,31 @@
 				return data;
 			},
 			
-			ready: function() {
-				this.set( 'pratilipi', this.process( this.pratilipiData ) );
+			updatePratilipi: function( pratilipi ) {
+				this.set( 'pratilipi', this.process( pratilipi ) );
+				this.title = pratilipi.title;
+				this.titleEn = pratilipi.titleEn;
+				this.processSummary();
 			},
 			
 			attached: function() {
+				this.updatePratilipi( this.pratilipiData );
+			},
+			
+			processSummary: function() {
 				// Not displaying Summary if..
 				if( this.pratilipi.summary === undefined ) { 
 					document.getElementById( "pratilipi-summary" ).style.display = "none";
 					return;
 				}
 				
-				var jSummary = jQuery( document.getElementById( "pratilipi-summary-text" ) );
+				jQuery( '#pratilipi-summary-text' ).removeClass( 'less' );
+				jQuery( '#pratilipi-summary-text' ).removeClass( 'more' );
+				
+				this.summary = this.pratilipi.summary;
+				var jSummary = jQuery( "#pratilipi-summary-text" );
 				jSummary.html( this.pratilipi.summary );
-				var height = jQuery( "#pratilipi-summary-text" ).height();
+				var height = jSummary.height();
 				
 				if( height > 190 ) {
 					jQuery( '#pratilipi-summary-text' ).addClass( 'less' );
@@ -237,7 +263,11 @@
 					document.getElementById( "less" ).style.display = "none";
 				else
 					document.getElementById( "less" ).style.display = "block";
-			}
+			},
+			
+			_chooseFile: function() {
+				$( '#fileupload' ).click();
+			},
 			
 		});
 		

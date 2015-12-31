@@ -18,6 +18,7 @@
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-write.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 
@@ -31,6 +32,7 @@
   				<div class="paper-header">
   					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
 					<pratilipi-header user='{{ user }}'></pratilipi-header>
+					<pratilipi-write></pratilipi-write>
   				</div>
   				<div class="fit" style="margin-top: 5px;">
   					<div class="parent-container">

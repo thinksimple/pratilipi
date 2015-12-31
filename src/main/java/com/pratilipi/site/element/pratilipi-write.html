@@ -38,46 +38,50 @@
 	
 
 	<template>
-		<div class="modal-content">
-			
-			<div class="modal-header">
-				<span>Write New Content</span>
-				<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
-			</div>
-			
-			<div class="modal-body" on-keyup="onSubmit">
-				<paper-input class="write" label="Title *" value="{{ title::input }}"></paper-input>
-				<paper-input class="write" label="Title (English)" value="{{ titleEn::input }}"></paper-input>
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<paper-dropdown-menu noink="true" label="Select Type *" value="{{ pratilipiType }}">
-							<paper-menu noink="true" class="dropdown-content" style="white-space: nowrap; width: auto;">
-								<paper-item>Book</paper-item>
-								<paper-item>Poem</paper-item>
-								<paper-item>Story</paper-item>
-								<paper-item>Article</paper-item>
-								<paper-item>Magazine</paper-item>
-							</paper-menu>
-						</paper-dropdown-menu>
+		<div class="modal fade" id="pratilipiWrite" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<span>Write New Content</span>
+						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<paper-dropdown-menu noink="true" disabled="true" id="language" label="Language" value="{{ language }}">
-							<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
-								<paper-item>${ _strings.website_language }</paper-item>
-							</paper-menu>
-						</paper-dropdown-menu>
+					
+					<div class="modal-body" on-keyup="onSubmit">
+						<paper-input class="write" label="Title *" value="{{ title::input }}"></paper-input>
+						<paper-input class="write" label="Title (English)" value="{{ titleEn::input }}"></paper-input>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<paper-dropdown-menu noink="true" label="Select Type *" value="{{ pratilipiType }}">
+									<paper-menu noink="true" class="dropdown-content" style="white-space: nowrap; width: auto;">
+										<paper-item>Book</paper-item>
+										<paper-item>Poem</paper-item>
+										<paper-item>Story</paper-item>
+										<paper-item>Article</paper-item>
+										<paper-item>Magazine</paper-item>
+									</paper-menu>
+								</paper-dropdown-menu>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<paper-dropdown-menu noink="true" disabled="true" id="language" label="Language" value="{{ language }}">
+									<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
+										<paper-item>${ _strings.website_language }</paper-item>
+									</paper-menu>
+								</paper-dropdown-menu>
+							</div>
+						</div>
+						<paper-textarea class="write" label="Summary (optional)" value="{{ summary::input }}"></paper-textarea>
+						<div class="text-center" style="min-height: 20px;">
+							<span>{{ message }}</span>
+						</div>
 					</div>
-				</div>
-				<paper-textarea class="write" label="Summary (optional)" value="{{ summary::input }}"></paper-textarea>
-				<div class="text-center" style="min-height: 20px;">
-					<span>{{ message }}</span>
+					
+					<div class="modal-footer">
+						<button class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Create</button>
+					</div>
+					
 				</div>
 			</div>
-			
-			<div class="modal-footer">
-				<button class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Create</button>
-			</div>
-			
 		</div>
 		
 		<iron-ajax
@@ -110,6 +114,14 @@
  				message: { type: String, value: "" }
 			},
 			
+			open: function() {
+				jQuery( "#pratilipiWrite" ).modal();	
+			},
+			
+			close: function() {
+				jQuery( "#pratilipiWrite" ).modal( 'hide' );	
+			},
+			
 			onSubmit: function() {
 				
 				this.message = "";
@@ -140,7 +152,7 @@
 			},
 			
 			_handleAjaxPostResponse: function() {
-				// Redirect to writer with ret option
+				// Redirect to writer with ret option as pratilipi page
 			},
 			
 			_handleAjaxPostError: function() {

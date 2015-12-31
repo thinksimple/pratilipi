@@ -1,5 +1,4 @@
 <link rel='import' href='pratilipi-navigation-drawer.html'>
-<link rel='import' href="pratilipi-facebook-login.html" />
 
 <dom-module id="pratilipi-header">
 
@@ -74,10 +73,10 @@
 							</template>
 							
 							<td width="auto">
-								<form method="get" action="/search" style="margin: -20px 15px auto 10px;" is="iron-form" id="form" on-submit="onSubmit">
+								<form method="get" action="/search" style="margin: -20px 15px auto 10px;" id="form" on-submit="onSubmit">
 									<template is="dom-if" if="{{ !mobile }}">
 										<paper-input name="q" class="search" type="search" label="${ _strings.search_bar_help }" value="{{ query::input }}">
-											<paper-icon-button class="search-icon" suffix icon="search" noink="true"></paper-icon-button>
+											<paper-icon-button class="search-icon" suffix icon="search" noink="true" on-click="onSubmit"></paper-icon-button>
 											<template is="dom-if" if="{{ !medium }}">
 												<paper-icon-button class="menu-icon" prefix icon="menu" noink="true" on-click="showMenu"></paper-icon-button>
 											</template>
@@ -94,7 +93,7 @@
 							
 							<td align="right" width="85px">
 								<template is="dom-if" if="{{ user.isGuest }}">
-									<button type="button" class="pratilipi-white-button" on-click="logIn"><small>${ _strings.sign_in }</small></button>
+									<button type="button" class="pratilipi-white-button" on-click="logInButtonClicked"><small>${ _strings.sign_in }</small></button>
 								</template>
 								<template is="dom-if" if="{{ !user.isGuest }}">
 									<paper-dropdown-menu alwaysFloatLabel noink="true" label="{{ user.firstName }}">
@@ -165,8 +164,10 @@
 			},
 			
 			properties: {
-				user: { type: Object, notify: true },
+				user: { type: Object, notify: true, observer: "_userChanged" },
 				query: { type: String },
+				
+				writeButtonActive: { type: Boolean, value: false },
 				
 				/* Screen sizes */
 				mobile: { type: Boolean },
@@ -182,15 +183,31 @@
 				console.log( "myProfile" );
 			},
 			
+			_userChanged: function() {
+				if( ! this.user.isGuest && this.writeButtonActive ) {
+					this.async( function() {
+						this.write();
+					}, 1000 );
+				}
+			},
+			
 			write: function() {
-				document.querySelector( 'pratilipi-user' ).write();
+				if( this.user.isGuest ) {
+					this.writeButtonActive = true;
+					document.querySelector( 'pratilipi-user' ).logIn();
+				}
+				else {
+					this.writeButtonActive = false;
+					document.querySelector( 'pratilipi-write' ).open();
+				}
 			},
 			
 			showMenu: function() {
 				this.querySelector( 'pratilipi-navigation-drawer' ).show();
 			},
 			
-			logIn: function() {
+			logInButtonClicked: function() {
+				this.writeButtonActive = false;
 				document.querySelector( 'pratilipi-user' ).logIn();
 			},
 			

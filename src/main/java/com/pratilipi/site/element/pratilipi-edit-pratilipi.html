@@ -44,12 +44,12 @@
 						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					
-					<div class="modal-body" on-keyup="onSubmit">
-						<paper-input class="edit" label="Title *" value="{{ pratilipi.title::input }}"></paper-input>
-						<paper-input class="edit" label="Title (English)" value="{{ pratilipi.titleEn::input }}"></paper-input>
+					<div class="modal-body">
+						<paper-input class="edit" label="Title *" value="{{ params.title::input }}"></paper-input>
+						<paper-input class="edit" label="Title (English)" value="{{ params.titleEn::input }}"></paper-input>
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<paper-dropdown-menu noink="true" label="Select Type *" value="{{ pratilipi.type::input }}">
+								<paper-dropdown-menu noink="true" label="Select Type *" value="{{ params.type::input }}">
 									<paper-menu selected="{{ selected }}" noink="true" class="dropdown-content" style="white-space: nowrap; width: auto;">
 										<paper-item>Book</paper-item>
 										<paper-item>Poem</paper-item>
@@ -60,14 +60,16 @@
 								</paper-dropdown-menu>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<paper-dropdown-menu noink="true" disabled="true" id="language" label="Language" value="{{ pratilipi.language::input }}">
+								<paper-dropdown-menu noink="true" disabled="true" id="language" label="Language" value="{{ params.language::input }}">
 									<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
 										<paper-item>${ _strings.website_language }</paper-item>
 									</paper-menu>
 								</paper-dropdown-menu>
 							</div>
 						</div>
-						<paper-textarea class="edit" label="Summary (optional)" value="{{ pratilipi.summary::input }}"></paper-textarea>
+						<br/>
+						<script type="text/javascript">tinymce.init({ selector:'#summary', content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+						<paper-textarea class="edit" id="summary"  label="Summary (Optional)" value="{{ params.summary::input }}"></paper-textarea>
 						<div class="text-center" style="min-height: 20px;">
 							<span>{{ message }}</span>
 						</div>
@@ -91,69 +93,78 @@
 	</template>
 	
 	<script>
+	
 		Polymer({
 	
 			is: 'pratilipi-edit-pratilipi',
 			
 			properties: {
+				params: { type: Object },
+				
 				pratilipi: { type: Object, notify: true },
 				selected: { type: Number }
 			},
 			
-			ready: function() {
-				
+			attached: function() {
 				if( this.pratilipi === undefined )
 					return;
 				
-				if( this.pratilipi.type.toUpperCase() === "BOOK" )
+				this.set( 'params', this.pratilipi );
+				
+				if( this.params.type.toUpperCase() === "BOOK" )
 					this.selected = 0;
-				else if( this.pratilipi.type.toUpperCase() === "POEM" )
+				else if( this.params.type.toUpperCase() === "POEM" )
 					this.selected = 1;
-				else if( this.pratilipi.type.toUpperCase() === "STORY" )
+				else if( this.params.type.toUpperCase() === "STORY" )
 					this.selected = 2;
-				else if( this.pratilipi.type.toUpperCase() === "ARTICLE" )
+				else if( this.params.type.toUpperCase() === "ARTICLE" )
 					this.selected = 3;
-				else if( this.pratilipi.type.toUpperCase() === "MAGAZINE" )
+				else if( this.params.type.toUpperCase() === "MAGAZINE" )
 					this.selected = 4;
 			},
 			
 			open: function() {
-				this.async( function() {
-					jQuery( "#pratilipiEditPratilipi" ).modal();
-				});
+				jQuery( "#pratilipiEditPratilipi" ).modal();
+			},
+			
+			close: function() {
+				jQuery( "#pratilipiEditPratilipi" ).modal( 'hide' );
 			},
 			
 			onSubmit: function() {
 				
 				this.message = "";
 				
-				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
-					return;
+				if( tinyMCE.activeEditor !== null )
+					this.params.summary = tinyMCE.activeEditor.getContent();
 				
-				if( this.pratilipi.title.trim() === "" ) {
+				if( this.params.title.trim() === "" ) {
 					this.message = "Please fill in the Title.";
 					return;
 				}
 				
-				if( this.pratilipi.type === undefined ) {
+				if( this.params.type === undefined ) {
 					this.message = "Please select the type.";
 					return;
 				}
 				
-				this.message = "Please Wait...";
+				/* this.message = "Please Wait...";
 				
-				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" +
-						 "title=" + this.pratilipi.title + "&" + 
-						 "titleEn=" + this.pratilipi.titleEn + "&" +
-						 "summary=" + this.pratilipi.summary + "&" +
-						 "pratilipiType=" + this.pratilipi.type.toUpperCase() + "&" +
-						 "language=" + this.pratilipi.language.toUpperCase() );
+				this.$.AjaxPost.body = ( "pratilipiId=" + this.params.pratilipiId + "&" +
+						 "title=" + this.params.title + "&" + 
+						 "titleEn=" + this.params.titleEn + "&" +
+						 "summary=" + this.params.summary + "&" +
+						 "pratilipiType=" + this.params.type.toUpperCase() + "&" +
+						 "language=" + this.params.language.toUpperCase() );
 
-				this.$.AjaxPost.generateRequest();
+				this.$.AjaxPost.generateRequest(); */
+				
+				
 			},
 			
 			_handleAjaxPostResponse: function() {
-				
+				document.querySelector( 'pratilipi-pratilipi' ).updatePratilipi( this.params );
+				this.close();
 			},
 			
 			_handleAjaxPostError: function(){
