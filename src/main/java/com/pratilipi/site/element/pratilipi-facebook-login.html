@@ -66,6 +66,7 @@
 			
 			_handleAjaxPostResponse: function( event ) {
 				document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
+				document.querySelector( 'pratilipi-user' ).closeAllElements();
 			},
 			
 			_handleAjaxPostError: function( event ) {
