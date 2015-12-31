@@ -134,9 +134,8 @@
 			_handleAjaxPostError: function( event ) {
 				this.defaultMessages();
 				if( event.detail.request.xhr.status == 400 ) {
-					this.emailInput = event.detail.request.xhr.response.email !== undefined ? event.detail.request.xhr.response.email : "Email"; 
-					this.passwordInput = event.detail.request.xhr.response.password  !== undefined ? event.detail.request.xhr.response.password : "Password";
-					this.message = event.detail.request.xhr.response.message !== undefined ? event.detail.request.xhr.response.message : this.message;
+					this.message = event.detail.request.xhr.response.email !== undefined ? event.detail.request.xhr.response.email : "Invalid Email!"; 
+					this.message = event.detail.request.xhr.response.message !== undefined ? event.detail.request.xhr.response.message : "Invalid Credentials!";
 				} else {
 					this.message = event.detail.request.xhr.response.message;
 				}

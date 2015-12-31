@@ -122,7 +122,7 @@
 	
 	<script>
 	
-	$(function () {
+	/* $(function () {
 		$('#fileupload').fileupload({
 			dataType: 'json',
 	        done: function (e, data) {
@@ -132,7 +132,7 @@
 	            });
 	        }
 	    });
-	});
+	}); */
 	
 		function getValue( url, key ) {
 			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( url ) )
@@ -265,9 +265,9 @@
 					document.getElementById( "less" ).style.display = "block";
 			},
 			
-			_chooseFile: function() {
+			/* _chooseFile: function() {
 				$( '#fileupload' ).click();
-			},
+			}, */
 			
 		});
 		

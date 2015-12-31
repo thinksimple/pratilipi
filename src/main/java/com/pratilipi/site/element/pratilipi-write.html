@@ -141,22 +141,38 @@
 				
 				this.message = "Please Wait...";
 				
+				jQuery( 'button' ).prop( 'disabled', true );
+				
 				this.$.AjaxPost.body = ( "title=" + this.title + "&" + 
 										 "titleEn=" + this.titleEn + "&" +
 										 "summary=" + this.summary + "&" +
-										 "pratilipiType=" + this.pratilipiType.toUpperCase() + "&" +
-										 "language=" + this.language.toUpperCase() );
+										 "type=" + this.pratilipiType.toUpperCase() + "&" +
+										 "language=" + this.language.toUpperCase() + "&" + 
+										 "state=" + "DRAFTED" );
 				
 				this.$.AjaxPost.generateRequest();
 				
 			},
 			
-			_handleAjaxPostResponse: function() {
-				// Redirect to writer with ret option as pratilipi page
+			_handleAjaxPostResponse: function( event ) {
+				
+				var pratilipi = event.detail.response;
+				this.message = "Success !";
+				
+				this.async( function() {
+					// Redirect to writer with return option to pratilipi page
+					window.location = "http://www.pratilipi.com/write?id=" + pratilipi.pratilipiId + "&ret=" + window.location.host + pratilipi.pageUrl;
+					this.message = null;
+				}, 1000 );
 			},
 			
-			_handleAjaxPostError: function() {
-				// Redirect to access_limited or server-Error
+			_handleAjaxPostError: function( event ) {
+				jQuery( 'button' ).prop( 'disabled', false );
+				
+				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
+					this.message = event.detail.request.xhr.response.message;
+				else
+					this.message = "Some Error occured! Please try Again."
 			}
  			
 		});
