@@ -1,17 +1,14 @@
 package com.pratilipi.api.impl.pratilipi.shared;
 
-import java.util.Date;
-
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
-import com.pratilipi.data.client.AuthorData;
 
 @SuppressWarnings("unused")
-public class GenericPratilipiResponse {
+public class GenericPratilipiResponse extends GenericResponse {
 	
-	public class Author {
+	public static class Author {
 		private String name;
 		private String pageUrl;
 	}
