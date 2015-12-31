@@ -78,6 +78,9 @@ public class PratilipiDataUtil {
 		
 		// Case 3: User can list Pratilipis in any State, except DELETED state, for their own Author profile.
 
+		if( pratilipiFilter.getState() == PratilipiState.DELETED )
+			return false;
+		
 		if( pratilipiFilter.getAuthorId() == null )
 			return false;
 		
@@ -429,6 +432,8 @@ public class PratilipiDataUtil {
 			pratilipi.setContentType( PratilipiContentType.PRATILIPI );
 		if( pratilipiData.hasState() )
 			pratilipi.setState( pratilipiData.getState() );
+		else if( isNew )
+			pratilipi.setState( PratilipiState.DRAFTED );
 
 		if( isNew )
 			pratilipi.setListingDate( new Date() );
@@ -472,11 +477,8 @@ public class PratilipiDataUtil {
 		if( ! isNew && pratilipiData.hasContentType() && pratilipiData.getContentType() == null )
 			errorMessages.addProperty( "type", GenericRequest.ERR_PRATILIPI_CONTENT_TYPE_REQUIRED );
 
-		// New content piece must have a state.
-		if( isNew && ( ! pratilipiData.hasState() || pratilipiData.getState() == null ) )
-			errorMessages.addProperty( "state", GenericRequest.ERR_PRATILIPI_STATE_REQUIRED );
 		// State can not be un-set or set to null.
-		if( ! isNew && pratilipiData.hasState() && pratilipiData.getState() == null )
+		if( pratilipiData.hasState() && pratilipiData.getState() == null ) // isNew || ! isNew
 			errorMessages.addProperty( "state", GenericRequest.ERR_PRATILIPI_STATE_REQUIRED );
 		// isNew || !isNew
 		else if( pratilipiData.hasState()

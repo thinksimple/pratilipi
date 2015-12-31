@@ -16,6 +16,7 @@ import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -47,6 +48,11 @@ public class PratilipiApi extends GenericApi {
 		Gson gson = new Gson();
 
 		PratilipiData pratilipiData = gson.fromJson( gson.toJson( request ), PratilipiData.class );
+		if( pratilipiData.getId() == null && ! pratilipiData.hasAuthorId() ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			Author author = dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() );
+			pratilipiData.setAuthorId( author.getId() );
+		}
 		pratilipiData = PratilipiDataUtil.savePratilipiData( pratilipiData );
 		
 		Task task = TaskQueueFactory.newTask()

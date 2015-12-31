@@ -12,26 +12,26 @@ public class PratilipiData {
 	private Long pratilipiId;
 	
 	private String title;
-	private transient boolean hasTitle;
+	private boolean hasTitle;
 	
 	private String titleEn;
-	private transient boolean hasTitleEn;
+	private boolean hasTitleEn;
 	
 	private Language language;
-	private transient boolean hasLanguage;
+	private boolean hasLanguage;
 	
 	private Long authorId;
-	private transient boolean hasAuthorId;
+	private boolean hasAuthorId;
 	
 	private AuthorData author;
 
 	@Deprecated
 	private String summary;
 	@Deprecated
-	private transient boolean hasSummary;
+	private boolean hasSummary;
 	
 	private Integer publicationYear;
-	private transient boolean hasPublicationYear;
+	private boolean hasPublicationYear;
 	
 	
 	private String pageUrl;
@@ -41,13 +41,13 @@ public class PratilipiData {
 
 	
 	private PratilipiType type;
-	private transient boolean hasType;
+	private boolean hasType;
 
 	private PratilipiContentType contentType;
-	private transient boolean hasContentType;
+	private boolean hasContentType;
 
 	private PratilipiState state;
-	private transient boolean hasState;
+	private boolean hasState;
 	
 	private Date listingDate;
 	private Date lastUpdated;
