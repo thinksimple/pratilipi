@@ -49,8 +49,8 @@ public class PratilipiData {
 	private PratilipiState state;
 	private boolean hasState;
 	
-	private Date listingDate;
-	private Date lastUpdated;
+	private Long listingDateMillis;
+	private Long lastUpdatedMillis;
 
 
 	private Long reviewCount;
@@ -59,6 +59,9 @@ public class PratilipiData {
 	private Double relevance;
 	private Long readCount;
 	private Long fbLikeShareCount;
+	
+	
+	private Boolean hasAccessToUpdate;
 
 
 	
@@ -243,19 +246,19 @@ public class PratilipiData {
 	}
 	
 	public Date getListingDate() {
-		return listingDate;
+		return listingDateMillis == null ? null : new Date( this.listingDateMillis );
 	}
 
 	public void setListingDate( Date listingDate ) {
-		this.listingDate = listingDate;
+		this.listingDateMillis = listingDate == null ? null : listingDate.getTime();
 	}
 
-	public Date getLastUpdated(){
-		return this.lastUpdated;
+	public Date getLastUpdated() {
+		return this.lastUpdatedMillis == null ? null : new Date( this.lastUpdatedMillis );
 	}
 	
 	public void setLastUpdated( Date lastUpdated ){
-		this.lastUpdated = lastUpdated;
+		this.lastUpdatedMillis = lastUpdated == null ? null : lastUpdated.getTime();
 	}
 
 
@@ -308,4 +311,13 @@ public class PratilipiData {
 		this.fbLikeShareCount = fbLikeShareCount;
 	}
 	
+
+	public boolean hasAccessToUpdate() {
+		return hasAccessToUpdate == null ? false : hasAccessToUpdate;
+	}
+	
+	public void setAccessToUpdate( Boolean hasAccessToUpdate ) {
+		this.hasAccessToUpdate = hasAccessToUpdate;
+	}
+
 }

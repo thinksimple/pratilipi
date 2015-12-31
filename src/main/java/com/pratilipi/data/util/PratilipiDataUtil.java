@@ -158,9 +158,20 @@ public class PratilipiDataUtil {
 		
 	}
 	
-	public static boolean hasAccessToReadPratilipiMetaData( Language language ) {
+	public static boolean hasAccessToReadPratilipiMetaData( Pratilipi pratilipi ) {
+		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), language, AccessType.PRATILIPI_READ_META );
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipi.getLanguage(), AccessType.PRATILIPI_READ_META ) )
+			return true;
+		
+		Author author = pratilipi.getAuthorId() == null
+				? null
+				: DataAccessorFactory.getDataAccessor().getAuthor( pratilipi.getAuthorId() );
+		if( author != null && author.getUserId().equals( accessToken.getUserId() ) )
+			return true;
+		
+		return false;
+		
 	}
 	
 	public static boolean hasAccessToUpdatePratilipiMetaData( Language language ) {
@@ -293,7 +304,8 @@ public class PratilipiDataUtil {
 		pratilipiData.setContentType( pratilipi.getContentType() );
 		pratilipiData.setState( pratilipi.getState() );
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
-		pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
+		if( includeMetaData )
+			pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
 		
 		pratilipiData.setReviewCount( pratilipi.getReviewCount() );
 		pratilipiData.setRatingCount( pratilipi.getRatingCount() );
@@ -304,6 +316,8 @@ public class PratilipiDataUtil {
 		pratilipiData.setReadCount( pratilipi.getReadCount() );
 		pratilipiData.setFbLikeShareCount( pratilipi.getFbLikeShareCount() );
 
+		pratilipiData.setAccessToUpdate( hasAccessToUpdatePratilipiData( pratilipi, null ) );
+		
 		return pratilipiData;
 		
 	}
@@ -448,7 +462,11 @@ public class PratilipiDataUtil {
 		if( isNew )
 			createOrUpdatePratilipiPageUrl( pratilipi.getId() );
 
-		return createPratilipiData( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) );
+		return createPratilipiData(
+				pratilipi,
+				dataAccessor.getAuthor( pratilipi.getAuthorId() ),
+				false,
+				hasAccessToReadPratilipiMetaData( pratilipi ));
 		
 	}
 
