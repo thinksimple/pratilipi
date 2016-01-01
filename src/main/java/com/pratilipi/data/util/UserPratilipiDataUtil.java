@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -65,7 +66,6 @@ public class UserPratilipiDataUtil {
 		
 	}
 	
-	
 	public static List<UserPratilipiData> createUserPratilipiDataList( List<UserPratilipi> userPratilipiList ) {
 		List<UserPratilipiData> userPratilipiDataList = new ArrayList<>( userPratilipiList.size() );
 		for( UserPratilipi userPratilipi : userPratilipiList )
@@ -75,15 +75,21 @@ public class UserPratilipiDataUtil {
 
 	
 	public static UserPratilipiData getUserPratilipi( Long pratilipiId ) {
+
 		Long userId = AccessTokenFilter.getAccessToken().getUserId();
+		if( userId.equals( 0L ) )
+			return null;
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( userId, pratilipiId );
-		if( userPratilipi == null && ! userId.equals( 0L ) ) {
+		if( userPratilipi == null ) {
 			userPratilipi = dataAccessor.newUserPratilipi();
 			userPratilipi.setUserId( userId );
 			userPratilipi.setPratilipiId( pratilipiId );
 		}
+		
 		return createUserPratilipiData( userPratilipi );
+		
 	}
 	
 	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList(
@@ -101,15 +107,13 @@ public class UserPratilipiDataUtil {
 		
 	}
 	
-	public static void saveUserPratilipi( UserPratilipiData userPratilipiData )
+	public static UserPratilipiData saveUserPratilipi( UserPratilipiData userPratilipiData )
 			throws InsufficientAccessException {
 
 		if( ! hasAccessToAddUserPratilipiData( userPratilipiData.getPratilipiId() ) )
 			throw new InsufficientAccessException();
 
-		if( userPratilipiData.getRating() == null && userPratilipiData.getReview() == null )
-			return;
-
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(
 				AccessTokenFilter.getAccessToken().getUserId(),
@@ -121,20 +125,27 @@ public class UserPratilipiDataUtil {
 			userPratilipi.setPratilipiId( userPratilipiData.getPratilipiId() );
 		}
 		
-		if( userPratilipiData.getRating() != null ) {
+		if( ! userPratilipiData.hasRating() && ! userPratilipiData.hasReview() )
+			return createUserPratilipiData( userPratilipi );
+
+		
+		if( userPratilipiData.hasRating() ) {
 			userPratilipi.setRating( userPratilipiData.getRating() );
 			userPratilipi.setRatingDate( new Date() );
 		}
 		
-		if( userPratilipiData.getReviewTitle() != null )
+		if( userPratilipiData.hasReviewTitle() )
 			userPratilipi.setReviewTitle( userPratilipiData.getReviewTitle() );
 
-		if( userPratilipiData.getReview() != null ) {
+		if( userPratilipiData.hasReview() ) {
 			userPratilipi.setReview( userPratilipiData.getReview() );
+			userPratilipi.setReviewState( UserReviewState.SUBMITTED );
 			userPratilipi.setReviewDate( new Date() );
 		}
 		
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+		
+		return createUserPratilipiData( userPratilipi );
 	}
 	
 }

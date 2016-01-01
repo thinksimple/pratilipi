@@ -169,6 +169,8 @@ public class UserPratilipiEntity implements UserPratilipi {
 	
 	@Override
 	public UserReviewState getReviewState() {
+		if( reviewState == UserReviewState.PENDING_APPROVAL || ( reviewState == null && reviewDate != null ) )
+			reviewState = UserReviewState.SUBMITTED;
 		return reviewState;
 	}
 	

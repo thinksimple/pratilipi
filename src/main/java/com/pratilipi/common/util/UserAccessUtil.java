@@ -31,7 +31,7 @@ public class UserAccessUtil {
 
 		
 		public boolean hasAccess( Language language, AccessType accessType ) {
-			if( this.language != null && this.language  != language )
+			if( this.language != null && this.language != language )
 				return false;
 			if( this.accessTypes == null )
 				return false;
@@ -45,6 +45,9 @@ public class UserAccessUtil {
 	
 	private static Role[] getRoles( Long userId ) { // TODO: Migrate this data to DataStore/CloudStore
 		switch( userId.toString() ) {
+			case "0":
+				return new Role[] { Role.GUEST };
+				
 			case "6243664397336576": // moumita@
 				return new Role[] { Role.MEMBER, Role.ADMIN_BENGALI };
 			case "5644707593977856": // nimisha@
