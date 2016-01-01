@@ -65,6 +65,9 @@ public class AuthorData {
 	private Long totalFbLikeShareCount;
 
 	
+	private Boolean hasAccessToUpdate;
+	
+	
 	public Long getId() {
 		return authorId;
 	}
@@ -301,5 +304,13 @@ public class AuthorData {
 	public void setTotalFbLikeShareCount( Long totalFbLikeShareCount ) {
 		this.totalFbLikeShareCount = totalFbLikeShareCount;
 	}
+	
+	public boolean hasAccessToUpdate() {
+		return hasAccessToUpdate == null ? false : hasAccessToUpdate;
+	}
 
+	public void setAccessToUpdate( boolean hasAccessToUpdate ) {
+		this.hasAccessToUpdate = hasAccessToUpdate;
+	}
+	
 }

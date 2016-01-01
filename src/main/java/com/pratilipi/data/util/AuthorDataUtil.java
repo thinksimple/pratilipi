@@ -17,7 +17,6 @@ import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
-import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.ImageUtil;
@@ -62,6 +61,9 @@ public class AuthorDataUtil {
 	}
 
 	public static boolean hasAccessToUpdateAuthorData( Author author, AuthorData authorData ) {
+		if( author.getState() == AuthorState.DELETED )
+			return false;
+		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), author.getLanguage(), AccessType.AUTHOR_UPDATE ) ) {
 			if( authorData == null || ! authorData.hasLanguage() || authorData.getLanguage() == author.getLanguage() )
@@ -70,7 +72,7 @@ public class AuthorDataUtil {
 				return true;
 		}
 		
-		if( author.getState() != AuthorState.BLOCKED && author.getState() != AuthorState.DELETED )
+		if( author.getState() != AuthorState.BLOCKED )
 			return accessToken.getUserId().equals( author.getUserId() );
 		
 		return false;
@@ -166,6 +168,8 @@ public class AuthorDataUtil {
 		authorData.setTotalReadCount( author.getTotalReadCount() );
 		authorData.setTotalFbLikeShareCount( author.getTotalFbLikeShareCount() );
 		
+		authorData.setAccessToUpdate( hasAccessToUpdateAuthorData( author, null ));
+		
 		return authorData;
 	}
 	
@@ -193,9 +197,9 @@ public class AuthorDataUtil {
 	}
 	
 	public static AuthorData saveAuthorData( AuthorData authorData )
-			throws InvalidArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
-		_validateAuthorDataforSave( authorData );
+		_validateAuthorDataForSave( authorData );
 
 		boolean isNew = authorData.getId() == null;
 		
@@ -248,21 +252,7 @@ public class AuthorDataUtil {
 		auditLog.setEventDataNew( gson.toJson( author ) );
 
 		
-		if( isNew && authorData.hasEmail() && authorData.getEmail() != null ) {
-
-			User user = dataAccessor.newUser();
-			user.setEmail( authorData.getEmail().toLowerCase() );
-			user.setState( UserState.REGISTERED );
-			user.setCampaign( UserCampaign.AEE_TEAM );
-			user.setReferrer( AccessTokenFilter.getAccessToken().getUserId().toString() );
-			user.setSignUpDate( new Date() );
-			user.setSignUpSource( UserDataUtil.getUserSignUpSource( false, false ) );
-
-			user = dataAccessor.createOrUpdateUser( user );
-			
-			author.setUserId( user.getId() );
-			
-		} else if( ! isNew && authorData.hasEmail() && authorData.getEmail() != null ) {
+		if( author.getUserId() != null && authorData.hasEmail() && authorData.getEmail() != null ) {
 
 			User user = dataAccessor.getUser( author.getUserId() );
 			if( ! user.getEmail().equals( authorData.getEmail().toLowerCase() ) ) {
@@ -287,7 +277,7 @@ public class AuthorDataUtil {
 		
 	}
 	
-	private static void _validateAuthorDataforSave( AuthorData authorData ) throws InvalidArgumentException {
+	private static void _validateAuthorDataForSave( AuthorData authorData ) throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -333,6 +323,7 @@ public class AuthorDataUtil {
 
 		if( errorMessages.entrySet().size() > 0 )
 			throw new InvalidArgumentException( errorMessages );
+		
 	}
 	
 	
