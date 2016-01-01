@@ -34,8 +34,10 @@
 	<template>
 		<paper-card>
 			
-			<!-- <paper-icon-button style="color: #333;" class="pull-right" icon="create" noink="true" on-click="openPratilipiEdit"></paper-icon-button>
-			<pratilipi-edit-pratilipi pratilipi="{{ pratilipi }}"></pratilipi-edit-pratilipi> -->
+			<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
+				<paper-icon-button style="color: #333;" class="pull-right" icon="create" noink="true" on-click="openPratilipiEdit"></paper-icon-button>
+				<pratilipi-edit-pratilipi pratilipi="{{ pratilipi }}"></pratilipi-edit-pratilipi>
+			</template>
 			
 			<!-- For wide-screens and mobile screens-->
 			<div id="pratilipi-row">

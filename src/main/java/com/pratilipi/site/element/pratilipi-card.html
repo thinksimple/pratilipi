@@ -34,16 +34,16 @@
 			<div class="card-content">
 				<div class="media">
 					<div class="media-left">
-						<a href="{{ pratilipi.pageUrlAlias }}">
+						<a href="{{ pratilipi.pageUrl }}">
 							<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
 						</a>
 					</div>
 				  	<div class="media-body">
 				  		<h4 class="media-heading">
-						 	<a class="card-heading" href="{{ pratilipi.pageUrlAlias }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
+						 	<a id="pratilipi-heading" class="card-heading" href="{{ pratilipi.pageUrl }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
 						</h4>
 						<h6>
-							<a class="card-heading" style="font-size: 12px;" href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
+							<a class="card-heading" style="font-size: 12px;" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a>
 						</h6>
 						<div>
 							<pratilipi-rating value="{{ pratilipi.averageRating }}" />
@@ -84,7 +84,7 @@
 			
 			_onIronResize: function() {
 				// Adjusting heading
-				var heading = jQuery( this.querySelector( 'h4 a' ) );
+				var heading = jQuery( '#pratilipi-heading' );
 				var title = this.pratilipi.title;
 				heading.text( title );
 				var len = title.length;

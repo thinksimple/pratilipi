@@ -42,7 +42,7 @@
 						<span class="text-center">{{ message }}</span>
 					 	<br/>
 						<br style="line-height: 10px;"/>
-						<button class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_in }</button>
+						<button id="loginButton" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_in }</button>
 					</div>
 				</div>
 			</div>
@@ -106,7 +106,7 @@
 				}
 				
 				this.message = "Working ...";
-				jQuery( 'button' ).prop( 'disabled', true );
+				jQuery( '#loginButton' ).prop( 'disabled', true );
 				
 				this.$.AjaxPost.body = ( "email=" + this.email + "&" + "password=" + this.password );
 				this.$.AjaxPost.generateRequest();
@@ -128,18 +128,22 @@
 						this.message = null;
 						jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
 					}, 1000 );
+					jQuery( '#loginButton' ).prop( 'disabled', false );
 					document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
 				}
 			},
 
 			_handleAjaxPostError: function( event ) {
 				this.defaultMessages();
-				jQuery( 'button' ).prop( 'disabled', false );
+				jQuery( '#loginButton' ).prop( 'disabled', false );
 				if( event.detail.request.xhr.status == 400 ) {
 					this.message = event.detail.request.xhr.response.email !== undefined ? event.detail.request.xhr.response.email : "Invalid Email!"; 
 					this.message = event.detail.request.xhr.response.message !== undefined ? event.detail.request.xhr.response.message : "Invalid Credentials!";
 				} else {
-					this.message = event.detail.request.xhr.response.message;
+					if( event.detail.request.xhr.response !== null )
+						this.message = event.detail.request.xhr.response.message;
+					else
+						this.message = "Some exception occured at the server, please try again!";
 				}
 			},
 			

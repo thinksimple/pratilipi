@@ -42,7 +42,7 @@
 					
 					<div class="text-center">
 						<span style="display: block;">{{ message }}</span>
-						<button style="margin-top: 20px;" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_up }</button>
+						<button id="registerButton" style="margin-top: 20px;" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_up }</button>
 						<span style="display: block; margin-top: 15px;">
 							By registering, you agree to the
 							<a href="/privacy-policy"><span style="color: #107FE5; white-space: nowrap;">privacy policy</span></a>
@@ -119,7 +119,7 @@
 				}
 				
 				this.message = "Working ...";
-				jQuery( 'button' ).prop( 'disabled', true );
+				jQuery( '#registerButton' ).prop( 'disabled', true );
 				
 				this.$.AjaxPost.body = transformRequest( this.params );
 				this.$.AjaxPost.generateRequest();
@@ -134,13 +134,14 @@
  						this.message = null;
  						jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
 					}, 1000 );
+					jQuery( '#registerButton' ).prop( 'disabled', false );
 					document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
 				}
 			},
 
 			_handleAjaxPostError: function( event ) {
 				this.message = null;
-				jQuery( 'button' ).prop( 'disabled', false );
+				jQuery( '#registerButton' ).prop( 'disabled', false );
 				if( event.detail.request.xhr.status == 400 ) {
 					if( event.detail.request.xhr.response.email !== undefined ) {
 						this.emailInput = event.detail.request.xhr.response.email;

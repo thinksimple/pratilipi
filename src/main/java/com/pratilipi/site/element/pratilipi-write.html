@@ -142,12 +142,14 @@
 				this.message = "Please Wait...";
 				jQuery( 'button' ).prop( 'disabled', true );
 				
-				this.$.AjaxPost.body = ( "title=" + this.title + "&" + 
-										 "titleEn=" + this.titleEn + "&" +
-										 "summary=" + this.summary + "&" +
-										 "type=" + this.pratilipiType.toUpperCase() + "&" +
-										 "language=" + this.language.toUpperCase() + "&" + 
-										 "state=" + "DRAFTED" );
+				var body = "title=" + this.title + "&" + 
+				 "titleEn=" + this.titleEn + "&" +
+				 "summary=" + this.summary + "&" +
+				 "type=" + this.pratilipiType.toUpperCase() + "&" +
+				 "language=" + this.language.toUpperCase() + "&" + 
+				 "state=" + "DRAFTED" ;
+				
+				this.$.AjaxPost.body = ( body );
 				
 				this.$.AjaxPost.generateRequest();
 				
@@ -159,6 +161,7 @@
 				this.message = "Success !";
 				
 				this.async( function() {
+					jQuery( 'button' ).prop( 'disabled', false );
 					// Redirect to writer with return option to pratilipi page
 					window.location = "http://www.pratilipi.com/write?id=" + pratilipi.pratilipiId + "&ret=" + window.location.host + pratilipi.pageUrl;
 					this.message = null;
