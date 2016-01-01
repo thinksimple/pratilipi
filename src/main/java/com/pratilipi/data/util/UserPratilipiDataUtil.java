@@ -48,7 +48,6 @@ public class UserPratilipiDataUtil {
 			return null;
 		
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
-		userPratilipiData.setUserId( userPratilipi.getUserId() );
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 		userPratilipiData.setRating( userPratilipi.getRating() );
 		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
@@ -66,6 +65,7 @@ public class UserPratilipiDataUtil {
 			User user = dataAccessor.getUser( userPratilipi.getUserId() );
 
 			UserPratilipiData userPratilipiData = new UserPratilipiData();
+			userPratilipiData.setUserId( userPratilipi.getUserId() );
 			userPratilipiData.setUserName( UserDataUtil.createUserName( user ) );
 			userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 			userPratilipiData.setRating( userPratilipi.getRating() );
