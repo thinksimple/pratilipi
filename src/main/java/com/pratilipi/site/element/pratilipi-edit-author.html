@@ -44,7 +44,7 @@
 						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					
-					<div class="modal-body" on-keyup="onSubmit">
+					<div class="modal-body">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<paper-input class="edit" label="First Name (${ _strings.website_language })" value="{{ params.firstName::input }}"></paper-input>
@@ -82,8 +82,8 @@
 								</paper-dropdown-menu>
 							</div>
 						</div>
-						
-						<paper-textarea class="edit" label="Summary (optional)" value="{{ params.summary::input }}"></paper-textarea>
+						<script type="text/javascript">tinymce.init({ selector:'#authorSummary', content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+						<paper-textarea class="edit" id="authorSummary" label="Summary (Optional)" value="{{ params.summary::input }}"></paper-textarea>
 						<div class="text-center" style="min-height: 20px;">
 							<span>{{ message }}</span>
 						</div>
@@ -113,14 +113,42 @@
 			
 			properties: {
 				author: { type: Object, notify: true },
-				params: { type: Object }
+				params: { type: Object, value: {} }
 			},
 			
 			attached: function() {
 				if( this.author === undefined )
 					return;
 				
-				this.set( 'params', this.author );
+				if( this.author.summary === undefined )
+					this.author.summary = "";
+				
+				this.set( 'params', this.process( this.author ) );
+			},
+			
+			process: function( data ) {
+				if( data.authorId === undefined )
+					data.authorId = null;
+				if( data.firstName === undefined )
+					data.firstName = null;
+				if( data.lastName === undefined )
+					data.lastName = null;
+				if( data.firstNameEn === undefined )
+					data.firstNameEn = null;
+				if( data.lastNameEn === undefined )
+					data.lastNameEn = null;
+				if( data.penName === undefined )
+					data.penName = null;
+				if( data.penNameEn === undefined )
+					data.penNameEn = null;
+				if( data.summary === undefined )
+					data.summary = null;
+				if( data.language === undefined )
+					data.language = null;
+				if( data.birthday === undefined )
+					data.birthday = null;
+				
+				return data;
 			},
 
 			open: function() {
@@ -136,10 +164,9 @@
 				if( tinyMCE.activeEditor !== null )
 					this.params.summary = tinyMCE.activeEditor.getContent();
 				
-				this.params.language = ${ _strings.website_language };
-				
 				this.message = "Please Wait...";
 				jQuery( '#authorEditButton' ).prop( 'disabled', true );
+				
 				
 				this.$.AjaxPost.body = ( "authorId=" + this.params.authorId + "&" +
 						 "firstName=" + this.params.firstName + "&" + 
@@ -149,9 +176,11 @@
 						 "penName=" + this.params.penName + "&" + 
 						 "penNameEn=" + this.params.penNameEn + "&" +
 						 "summary=" + this.params.summary + "&" +
-						 "language=" + this.params.language.toUpperCase() );
+						 "language=" + this.params.language.toUpperCase() + "&" +
+						 "birthday=" + this.params.birthday );
 
 				this.$.AjaxPost.generateRequest();
+				
 			},
 			
 			_handleAjaxPostResponse: function( event ) {

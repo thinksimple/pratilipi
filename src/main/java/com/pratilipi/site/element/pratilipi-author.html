@@ -62,11 +62,12 @@
 	    		<div id="col-right" style="padding: 20px;">
 	    			<h2 style="margin-top: 0px; color: #D0021B;">{{ name }}</h2>
 	    			
-					<template is="dom-if" if="{{ author.penName }}">
+					<template is="dom-if" if="{{ penName }}">
 						<h4 style="margin: 0px;">"<span>{{ penName }}</span>"</h4>
-						<br/>
 					</template>
-			
+					
+					<br/>
+					
 					<table>
 						<tr> <th>Language</th> <td>{{ language }}</td> </tr>
 						<!-- <tr> <th>Location</th> <td>Delhi</td> </tr> -->
@@ -158,10 +159,10 @@
 			},
 			
 			openAuthorEdit: function() {
-				/* this.querySelector( 'pratilipi-edit-author' ).open(); */
+				this.querySelector( 'pratilipi-edit-author' ).open();
 			},
 			
-			processAuthorData: function( data ) {
+			process: function( data ) {
 				if( data.name === undefined && data.nameEn !== undefined )
 					data.name = data.nameEn;
 				if( data.penName === undefined && data.penNameEn !== undefined )
@@ -180,10 +181,10 @@
 				this.set( 'author', this.process( author ) );
 				this.name = author.name;
 				
-				if( author.penName !== null )
-					this.penname = author.penName;
-				else if( author.penNameEn !== null )
-					this.penname = author.penNameEn;
+				if( author.penName !== undefined )
+					this.penName = author.penName;
+				else if( author.penNameEn !== undefined )
+					this.penName = author.penNameEn;
 				else
 					this.penName = null;
 				

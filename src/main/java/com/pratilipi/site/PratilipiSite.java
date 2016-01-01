@@ -75,6 +75,7 @@ public class PratilipiSite extends HttpServlet {
 			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 		} else {
 			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
+			resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 			resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
 			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER.getTag() );
