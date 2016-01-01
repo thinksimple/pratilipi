@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class UserPratilipiData {
 
+	private String userPratilipiId;
+	
 	private Long userId;
 	
 	private String userName;
@@ -23,6 +25,14 @@ public class UserPratilipiData {
 	private Long reviewDate;
 	
 
+	public String getId() {
+		return userPratilipiId;
+	}
+	
+	public void setId( String id ) {
+		this.userPratilipiId = id;
+	}
+	
 	public Long getUserId() {
 		return userId;
 	}

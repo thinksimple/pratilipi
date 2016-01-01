@@ -44,38 +44,32 @@ public class UserPratilipiDataUtil {
 	
 
 	public static UserPratilipiData createUserPratilipiData( UserPratilipi userPratilipi ) {
+		
 		if( userPratilipi == null )
 			return null;
 		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUser( userPratilipi.getUserId() );
+		
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
+		userPratilipiData.setId( userPratilipi.getId() );
+		userPratilipiData.setUserId( userPratilipi.getPratilipiId() );
+		userPratilipiData.setUserName( UserDataUtil.createUserName( user ) );
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 		userPratilipiData.setRating( userPratilipi.getRating() );
 		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
-		userPratilipiData.setReview( userPratilipi.getReview() );
+		userPratilipiData.setReview( userPratilipi.getReview() == null ? null : userPratilipi.getReview().replaceAll( "<[^>]*>", "" ) );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 		
 		return userPratilipiData;
+		
 	}
 	
-	public static List<UserPratilipiData> createPratilipiReviewDataList( List<UserPratilipi> userPratilipiList ) {
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
+	
+	public static List<UserPratilipiData> createUserPratilipiDataList( List<UserPratilipi> userPratilipiList ) {
 		List<UserPratilipiData> userPratilipiDataList = new ArrayList<>( userPratilipiList.size() );
-		for( UserPratilipi userPratilipi : userPratilipiList ) {
-			User user = dataAccessor.getUser( userPratilipi.getUserId() );
-
-			UserPratilipiData userPratilipiData = new UserPratilipiData();
-			userPratilipiData.setUserId( userPratilipi.getUserId() );
-			userPratilipiData.setUserName( UserDataUtil.createUserName( user ) );
-			userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
-			userPratilipiData.setRating( userPratilipi.getRating() );
-			userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
-			userPratilipiData.setReview( userPratilipi.getReview() == null ? null : userPratilipi.getReview().replaceAll( "<[^>]*>", "" ) );
-			userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
-			
-			userPratilipiDataList.add( userPratilipiData );
-		}
-		
+		for( UserPratilipi userPratilipi : userPratilipiList )
+			userPratilipiDataList.add( createUserPratilipiData( userPratilipi ) );
 		return userPratilipiDataList;
 	}
 
@@ -102,7 +96,7 @@ public class UserPratilipiDataUtil {
 		List<UserPratilipi> userPratilipiList = userPratilipiListCursorTuple.getDataList();
 		
 		return new DataListCursorTuple<UserPratilipiData>(
-				createPratilipiReviewDataList( userPratilipiList ),
+				createUserPratilipiDataList( userPratilipiList ),
 				userPratilipiListCursorTuple.getCursor() );
 		
 	}

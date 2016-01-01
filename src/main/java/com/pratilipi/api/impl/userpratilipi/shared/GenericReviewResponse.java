@@ -11,7 +11,7 @@ import com.pratilipi.data.client.UserPratilipiData;
 @SuppressWarnings("unused")
 public class GenericReviewResponse extends GenericResponse {
 	
-	private Long userId;
+	private String userPratilipiId;
 	private String userName;
 	
 	private Integer rating;
@@ -24,7 +24,7 @@ public class GenericReviewResponse extends GenericResponse {
 	
 	public GenericReviewResponse( UserPratilipiData userPratilipiData ) {
 		
-		this.userId = userPratilipiData.getUserId();
+		this.userPratilipiId = userPratilipiData.getId();
 		this.userName = userPratilipiData.getUserName();
 		this.rating = userPratilipiData.getRating();
 		this.reviewTitle = userPratilipiData.getReviewTitle();
