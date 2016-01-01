@@ -149,6 +149,9 @@
 				 "language=" + this.language.toUpperCase() + "&" + 
 				 "state=" + "DRAFTED" ;
 				
+				if( this.authorId !== null )
+					body = body + "&" + "authorId=" + this.authorId;
+				
 				this.$.AjaxPost.body = ( body );
 				
 				this.$.AjaxPost.generateRequest();

@@ -47,35 +47,35 @@
 					<div class="modal-body" on-keyup="onSubmit">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="First Name (${ _strings.website_language })" value="{{ author.firstName::input }}"></paper-input>
+								<paper-input class="edit" label="First Name (${ _strings.website_language })" value="{{ params.firstName::input }}"></paper-input>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="Last Name (${ _strings.website_language })" value="{{ author.lastName::input }}"></paper-input>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="First Name (English)" value="{{ author.firstNameEn::input }}"></paper-input>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="Last Name (English)" value="{{ author.lastNameEn::input }}"></paper-input>
+								<paper-input class="edit" label="Last Name (${ _strings.website_language })" value="{{ params.lastName::input }}"></paper-input>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="Pen Name (${ _strings.website_language })" value="{{ author.penName::input }}"></paper-input>
+								<paper-input class="edit" label="First Name (English)" value="{{ params.firstNameEn::input }}"></paper-input>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="Pen Name (English)" value="{{ author.penNameEn::input }}"></paper-input>
+								<paper-input class="edit" label="Last Name (English)" value="{{ params.lastNameEn::input }}"></paper-input>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" label="Pen Name (${ _strings.website_language })" value="{{ params.penName::input }}"></paper-input>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" label="Pen Name (English)" value="{{ params.penNameEn::input }}"></paper-input>
 							</div>
 						</div>
 						
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" type="date" label="Birthday" always-float-label></paper-input>
+								<paper-input class="edit" type="date" label="Birthday" always-float-label value="{{ params.birthday::input }}"></paper-input>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-dropdown-menu noink="true" disabled="true" label="Language" value="{{ author.language::input }}">
+								<paper-dropdown-menu noink="true" disabled="true" label="Language" value="{{ params.language::input }}">
 									<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
 										<paper-item>${ _strings.website_language }</paper-item>
 									</paper-menu>
@@ -83,14 +83,14 @@
 							</div>
 						</div>
 						
-						<paper-textarea class="edit" label="Summary (optional)" value="{{ author.summary::input }}"></paper-textarea>
+						<paper-textarea class="edit" label="Summary (optional)" value="{{ params.summary::input }}"></paper-textarea>
 						<div class="text-center" style="min-height: 20px;">
 							<span>{{ message }}</span>
 						</div>
 					</div>
 					
 					<div class="modal-footer">
-						<button class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Save Changes</button>
+						<button id="authorEditButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Save Changes</button>
 					</div>
 				</div>
 			</div>
@@ -113,40 +113,68 @@
 			
 			properties: {
 				author: { type: Object, notify: true },
+				params: { type: Object }
+			},
+			
+			attached: function() {
+				if( this.author === undefined )
+					return;
+				
+				this.set( 'params', this.author );
 			},
 
 			open: function() {
-				this.async( function() {
-					jQuery( "#pratilipiEditAuthor" ).modal();
-				});
+				jQuery( "#pratilipiEditAuthor" ).modal();
+			},
+			
+			close: function() {
+				jQuery( "#pratilipiEditAuthor" ).modal( 'hide' );
 			},
 			
 			onSubmit: function() {
 				
-				this.message = "";
+				if( tinyMCE.activeEditor !== null )
+					this.params.summary = tinyMCE.activeEditor.getContent();
 				
-				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
-					return;
-				
-				this.author.language = ${ _strings.website_language };
-				
-				console.log( this.author.language );
+				this.params.language = ${ _strings.website_language };
 				
 				this.message = "Please Wait...";
+				jQuery( '#authorEditButton' ).prop( 'disabled', true );
 				
-				this.$.AjaxPost.body = ( "" );
+				this.$.AjaxPost.body = ( "authorId=" + this.params.authorId + "&" +
+						 "firstName=" + this.params.firstName + "&" + 
+						 "lastName=" + this.params.lastName + "&" +
+						 "firstNameEn=" + this.params.firstNameEn + "&" + 
+						 "lastNameEn=" + this.params.lastNameEn + "&" +
+						 "penName=" + this.params.penName + "&" + 
+						 "penNameEn=" + this.params.penNameEn + "&" +
+						 "summary=" + this.params.summary + "&" +
+						 "language=" + this.params.language.toUpperCase() );
 
 				this.$.AjaxPost.generateRequest();
 			},
 			
-			_handleAjaxPostResponse: function() {
+			_handleAjaxPostResponse: function( event ) {
 				
+				var author = event.detail.response;
+				this.message = "Success !";
+				this.set( 'author', author );
+				document.querySelector( 'pratilipi-author' ).updateAuthor( author );
+				
+				this.async( function() {
+					jQuery( '#authorEditButton' ).prop( 'disabled', false );
+					this.message = null;
+					this.close();
+				}, 1000 );
 			},
 			
-			_handleAjaxPostError: function(){
-				
+			_handleAjaxPostError: function( event ) {
+				jQuery( '#authorEditButton' ).prop( 'disabled', false );
+				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
+					this.message = event.detail.request.xhr.response.message;
+				else
+					this.message = "Some Error occured! Please try Again."
 			}
-			
 			
 		});
 	</script>

@@ -76,7 +76,7 @@
 					</div>
 					
 					<div class="modal-footer">
-						<button class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Save Changes</button>
+						<button id="pratilipiEditButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Save Changes</button>
 					</div>
 				</div>
 			</div>
@@ -133,7 +133,7 @@
 			
 			onSubmit: function() {
 				
-				this.message = "";
+				this.message = "Please Wait...";
 				
 				if( tinyMCE.activeEditor !== null )
 					this.params.summary = tinyMCE.activeEditor.getContent();
@@ -149,7 +149,7 @@
 				}
 				
 				this.message = "Please Wait...";
-				jQuery( 'button' ).prop( 'disabled', true );
+				jQuery( '#pratilipiEditButton' ).prop( 'disabled', true );
 				
 				this.$.AjaxPost.body = ( "pratilipiId=" + this.params.pratilipiId + "&" +
 						 "title=" + this.params.title + "&" + 
@@ -162,23 +162,26 @@
 				
 			},
 			
-			_handleAjaxPostResponse: function() {
+			_handleAjaxPostResponse: function( event ) {
 				
 				var pratilipi = event.detail.response;
 				this.message = "Success !";
+				this.set( 'pratilipi', pratilipi );
+				document.querySelector( 'pratilipi-pratilipi' ).updatePratilipi( pratilipi );
 				
 				this.async( function() {
-					this.set( 'pratilipi', this.params );
-					document.querySelector( 'pratilipi-pratilipi' ).updatePratilipi( this.params );
-					jQuery( 'button' ).prop( 'disabled', false );
+					jQuery( '#pratilipiEditButton' ).prop( 'disabled', false );
 					this.message = null;
 					this.close();
 				}, 1000 );
-
 			},
 			
-			_handleAjaxPostError: function(){
-				jQuery( 'button' ).prop( 'disabled', false );
+			_handleAjaxPostError: function( event ) {
+				jQuery( '#pratilipiEditButton' ).prop( 'disabled', false );
+				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
+					this.message = event.detail.request.xhr.response.message;
+				else
+					this.message = "Some Error occured! Please try Again."
 			}
 			
 			

@@ -44,9 +44,10 @@
 	
 	<template>
 		<paper-card>
-		
-			<!-- <paper-icon-button style="color: #333;" class="pull-right" icon="create" noink="true" on-click="openAuthorEdit"></paper-icon-button>
-			<pratilipi-edit-author author="{{ author }}"></pratilipi-edit-author> -->
+			<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
+				<paper-icon-button style="color: #333;" class="pull-right" icon="create" noink="true" on-click="openAuthorEdit"></paper-icon-button>
+				<pratilipi-edit-author author="{{ author }}"></pratilipi-edit-author>
+			</template>
 				
 			<!-- For wide-screens and mobile screens-->
 			<div id="row">
@@ -59,18 +60,18 @@
 	    			</div>
 				</div>
 	    		<div id="col-right" style="padding: 20px;">
-	    			<h2 style="margin-top: 0px; color: #D0021B;">{{ author.name }}</h2>
+	    			<h2 style="margin-top: 0px; color: #D0021B;">{{ name }}</h2>
 	    			
 					<template is="dom-if" if="{{ author.penName }}">
-						<h4 style="margin: 0px;">"<span>{{ author.penName }}</span>"</h4>
+						<h4 style="margin: 0px;">"<span>{{ penName }}</span>"</h4>
 						<br/>
 					</template>
 			
-					<!-- <table>
-						<tr> <th>Languages</th> <td>Hindi, Tamil</td> </tr>
-						<tr> <th>Location</th> <td>Delhi</td> </tr>
-						<tr> <th>Author Since</th> <td>16 Sep 2014</td> </tr>
-					</table> -->
+					<table>
+						<tr> <th>Language</th> <td>{{ language }}</td> </tr>
+						<!-- <tr> <th>Location</th> <td>Delhi</td> </tr> -->
+						<!-- <tr> <th>Author Since</th> <td>16 Sep 2014</td> </tr> -->
+					</table>
 					
 					<!-- <template is="dom-if" if="{{ !mobile }}">
 						<div style="position: absolute; bottom: 105px;">
@@ -116,7 +117,7 @@
 			<paper-card>
 				<div style="padding: 10px 20px 20px 20px; text-align: justify;">
 					<h3 style="color: #D0021B;">${ _strings.author_about }</h3>
-					<div id="author-summary-text" style="margin-top: 10px; margin-down: 20px;">{{ author.summary }}</div>
+					<div id="author-summary-text" style="margin-top: 10px; margin-down: 20px;">{{ summary }}</div>
 					<div style="text-align: center; padding-top: 5px;">
 						<a id="more" on-click="_toggleSnippet"><span style="color: #9B9B9B;">(${ _strings.show_more })</span></a>
 						<a id="less" on-click="_toggleSnippet"><span style="color: #9B9B9B;">(${ _strings.show_less })</span></a>
@@ -175,16 +176,35 @@
 				return 'http://' + ${ domain } + this.author.pageUrl;
 			},
 			
-			ready: function() {
-				this.set( 'author', this.processAuthorData( this.authorData ) );
+			updateAuthor: function( author ) {
+				this.set( 'author', this.process( author ) );
+				this.name = author.name;
+				
+				if( author.penName !== null )
+					this.penname = author.penName;
+				else if( author.penNameEn !== null )
+					this.penname = author.penNameEn;
+				else
+					this.penName = null;
+				
+				this.language = author.language;
+				this.processSummary();
 			},
 			
 			attached: function() {
+				this.updateAuthor( this.authorData );
+			},
+			
+			processSummary: function() {
 				if( this.author.summary === undefined ) { 
 					document.getElementById( "author-summary" ).style.display = "none";
 					return;
 				}
 				
+				jQuery( '#author-summary-text' ).removeClass( 'less' );
+				jQuery( '#author-summary-text' ).removeClass( 'more' );
+				
+				this.summary = this.author.summary;
 				var jSummary = jQuery( document.getElementById( "author-summary-text" ) );
 				jSummary.html( this.author.summary ) 
 				
@@ -198,6 +218,21 @@
 					document.getElementById( "less" ).style.display = "none";
 					document.getElementById( "more" ).style.display = "none";
 				}
+			},
+			
+			_toggleSnippet: function() {
+				jQuery( '#author-summary-text' ).toggleClass( 'less' );
+				jQuery( '#author-summary-text' ).toggleClass( 'more' );
+				
+				if( document.getElementById( "more" ).style.display === "block" )
+					document.getElementById( "more" ).style.display = "none";
+				else
+					document.getElementById( "more" ).style.display = "block";
+				
+				if( document.getElementById( "less" ).style.display === "block" )
+					document.getElementById( "less" ).style.display = "none";
+				else
+					document.getElementById( "less" ).style.display = "block";
 			},
 			
 			_onIronResize: function() {
@@ -223,21 +258,6 @@
 					jQuery( '#col-right' ).addClass( 'col-right-mobile' );
 				}
 				
-			},
-			
-			_toggleSnippet: function() {
-				jQuery( '#author-summary-text' ).toggleClass( 'less' );
-				jQuery( '#author-summary-text' ).toggleClass( 'more' );
-				
-				if( document.getElementById( "more" ).style.display === "block" )
-					document.getElementById( "more" ).style.display = "none";
-				else
-					document.getElementById( "more" ).style.display = "block";
-				
-				if( document.getElementById( "less" ).style.display === "block" )
-					document.getElementById( "less" ).style.display = "none";
-				else
-					document.getElementById( "less" ).style.display = "block";
 			},
 			
 		});
