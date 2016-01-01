@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class UserPratilipiData {
 
-	private transient Long userId;
+	private Long userId;
 	
 	private String userName;
 	
@@ -22,7 +22,7 @@ public class UserPratilipiData {
 	
 	private Long reviewDate;
 	
-	
+
 	public Long getUserId() {
 		return userId;
 	}

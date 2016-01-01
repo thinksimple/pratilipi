@@ -1,8 +1,12 @@
 package com.pratilipi.api.impl.userpratilipi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.impl.userpratilipi.shared.GenericReviewResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GetUserPratilipiReviewListRequest;
 import com.pratilipi.api.impl.userpratilipi.shared.GetUserPratilipiReviewListResponse;
 import com.pratilipi.data.DataListCursorTuple;
@@ -22,8 +26,12 @@ public class UserPratilipiReviewListApi extends GenericApi {
 						request.getCursor(),
 						request.getResultCount() == null ? 20 : request.getResultCount() );
 		
+		List<GenericReviewResponse> reviewList = new ArrayList<>( userPratilipiListCursorTuple.getDataList().size() );
+		for( UserPratilipiData userPratilipiData : userPratilipiListCursorTuple.getDataList() )
+			reviewList.add( new GenericReviewResponse( userPratilipiData ) );
+		
 		return new GetUserPratilipiReviewListResponse(
-				userPratilipiListCursorTuple.getDataList(),
+				reviewList,
 				userPratilipiListCursorTuple.getCursor() );
 	
 	}

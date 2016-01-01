@@ -42,7 +42,7 @@ public class PratilipiApi extends GenericApi {
 	}
 
 	@Post
-	public GenericPratilipiResponse putPratilipi( PostPratilipiRequest request )
+	public GenericPratilipiResponse postPratilipi( PostPratilipiRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 
 		Gson gson = new Gson();

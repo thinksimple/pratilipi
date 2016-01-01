@@ -7,15 +7,15 @@ import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserPratilipiData;
 
 @SuppressWarnings("unused")
-public class GetUserPratilipiReviewListResponse extends GenericResponse { 
+public class GetUserPratilipiReviewListResponse extends GenericResponse {
 	
-	private List<UserPratilipiData> reviewList;
+	private List<GenericReviewResponse> reviewList;
 	private String cursor;
 
 	
 	private GetUserPratilipiReviewListResponse() {}
 	
-	public GetUserPratilipiReviewListResponse( List<UserPratilipiData> reviewList, String cursor ) {
+	public GetUserPratilipiReviewListResponse( List<GenericReviewResponse> reviewList, String cursor ) {
 		this.reviewList = reviewList;
 		this.cursor = cursor;
 	}

@@ -26,6 +26,7 @@ public class UserPratilipiDataUtil {
 
 	
 	public static boolean hasAccessToAddUserPratilipiData( Long pratilipiId ) {
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
@@ -38,6 +39,7 @@ public class UserPratilipiDataUtil {
 			return false;
 		
 		return true;
+		
 	}
 	
 
@@ -46,11 +48,13 @@ public class UserPratilipiDataUtil {
 			return null;
 		
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
+		userPratilipiData.setUserId( userPratilipi.getUserId() );
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 		userPratilipiData.setRating( userPratilipi.getRating() );
 		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
 		userPratilipiData.setReview( userPratilipi.getReview() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
+		
 		return userPratilipiData;
 	}
 	
@@ -100,6 +104,7 @@ public class UserPratilipiDataUtil {
 		return new DataListCursorTuple<UserPratilipiData>(
 				createPratilipiReviewDataList( userPratilipiList ),
 				userPratilipiListCursorTuple.getCursor() );
+		
 	}
 	
 	public static void saveUserPratilipi( UserPratilipiData userPratilipiData )
