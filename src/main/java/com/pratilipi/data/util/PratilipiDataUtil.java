@@ -129,9 +129,9 @@ public class PratilipiDataUtil {
 			return false;
 
 		
-		Author author = pratilipiData.getAuthorId() == null
+		Author author = pratilipi.getAuthorId() == null
 				? null :
-				DataAccessorFactory.getDataAccessor().getAuthor( pratilipiData.getAuthorId() );
+				DataAccessorFactory.getDataAccessor().getAuthor( pratilipi.getAuthorId() );
 
 	
 		// Case 2: Content pieces can be updated only if Author profile is ACTIVE.
