@@ -1,7 +1,7 @@
 # Home Page related
 
 home_page_title = Read Hindi, Gujarati and Tamil Stories, Poems and Books
-website_language = All
+
 
 
 # Generic
@@ -15,6 +15,7 @@ twitter_page	= https://twitter.com/TeamPratilipi
 googleplus_page	= https://plus.google.com/+PratilipiTeam
 linkedin_page	= https://www.linkedin.com/company/pratilipi
 
+write	= Write
 menu	= Menu
 back	= Back
 saving  = Saving ...
@@ -80,6 +81,7 @@ review_title_help	= e.g., Great Story !
 review_content		= Your Review
 review_content_help	= Share your thoughts ! What made this work interesting ? What made it inspiring ? What did you learn from it ? You are helping others make a better choice !
 submit_review		= SUBMIT
+review_helpful = Was this review helpful?
 
 
 
@@ -94,7 +96,10 @@ author_count_reads = READS
 author_count_likes = LIKES
 
 
+
 # Pratilipi related
+
+pratilipi_published = Published
 
 pratilipi_summary = Summary
 
@@ -103,9 +108,4 @@ pratilipi_free = FREE !
 
 pratilipi_count_reads = READS
 pratilipi_count_likes = LIKES
-
-write = Write
-published = Published
-book_summary = Summary
-review_helpful = Was this review helpful?
 

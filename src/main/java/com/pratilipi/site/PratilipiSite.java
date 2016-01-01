@@ -23,6 +23,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.LanguageUtil;
@@ -177,6 +178,7 @@ public class PratilipiSite extends HttpServlet {
 			html = FreeMarkerUtil.processTemplate( dataModel, templateName );
 
 		} catch( InsufficientAccessException e ) {
+			logger.log( Level.SEVERE, "", e );
 			// TODO
 
 		} catch( InvalidArgumentException | UnexpectedServerException e ) {
@@ -249,6 +251,7 @@ public class PratilipiSite extends HttpServlet {
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setAuthorId( authorId );
+		pratilipiFilter.setState( PratilipiState.PUBLISHED );
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
 		
@@ -326,6 +329,7 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForSearchPage( Language lang, HttpServletRequest request ) throws InsufficientAccessException {
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( lang );
+		pratilipiFilter.setState( PratilipiState.PUBLISHED );
 		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList( request.getParameter( "q" ), pratilipiFilter, null, 20 );
@@ -344,8 +348,9 @@ public class PratilipiSite extends HttpServlet {
 			throws InsufficientAccessException {
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setType( type );
 		pratilipiFilter.setLanguage( lang );
+		pratilipiFilter.setType( type );
+		pratilipiFilter.setState( PratilipiState.PUBLISHED );
 		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );

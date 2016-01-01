@@ -67,7 +67,7 @@
 					
 					<template is="dom-if" if="{{ pratilipi.publicationYear }}">
 						<div style="margin-top: 10px;">
-							${ _strings.published }: {{ pratilipi.publicationYear }}
+							${ _strings.pratilipi_published }: {{ pratilipi.publicationYear }}
 						</div>
 					</template>
 					
@@ -110,7 +110,7 @@
 		<div id="pratilipi-summary">
 			<paper-card>
 				<div style="padding: 10px 20px 20px 20px; text-align: justify;">
-					<h3 style="color: #D0021B;">${ _strings.book_summary }</h3>
+					<h3 style="color: #D0021B;">${ _strings.pratilipi_summary }</h3>
 						<div id="pratilipi-summary-text" style="margin-top: 10px; margin-down: 20px;">{{ summary }}</div>
 						<div style="text-align: center; padding-top: 10px;">
 							<a id="more" on-click="_toggleSnippet"><span>(${ _strings.show_more })</span></a>
