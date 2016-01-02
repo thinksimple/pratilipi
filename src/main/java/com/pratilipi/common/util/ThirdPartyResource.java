@@ -32,6 +32,7 @@ public enum ThirdPartyResource {
 									+ "<link rel='import' href='/third-party/polymer-1.0/paper-input/paper-textarea.html'>" ),
 	POLYMER_PAPER_ITEM				( "<link rel='import' href='/third-party/polymer-1.0/paper-item/paper-item.html'>" ),
 	POLYMER_PAPER_MENU				( "<link rel='import' href='/third-party/polymer-1.0/paper-menu/paper-menu.html'>" ),
+	POLYMER_PAPER_MENU_BUTTON		( "<link rel='import' href='/third-party/polymer-1.0/paper-menu-button/paper-menu-button.html'>" ),
 	POLYMER_PAPER_SLIDER			( "<link rel='import' href='/third-party/polymer-1.0/paper-slider/paper-slider.html'>" ),
 	POLYMER_PAPER_HEADER_PANEL		( "<link rel='import' href='/third-party/polymer-1.0/paper-header-panel/paper-header-panel.html'>"
 										+ "<link type='text/css' rel='stylesheet' href='/third-party/polymer-1.0/paper-header-panel/paper-header-panel.css'>" )

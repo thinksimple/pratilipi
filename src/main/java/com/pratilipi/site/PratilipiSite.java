@@ -90,6 +90,7 @@ public class PratilipiSite extends HttpServlet {
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_ICON_BUTTON.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_INPUT.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_MENU.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_PAPER_MENU_BUTTON.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_ITEM.getTag() );
 			
 		}
