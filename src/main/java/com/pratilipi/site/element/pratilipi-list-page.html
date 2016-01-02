@@ -3,7 +3,7 @@
 	<template>
 		<paper-header-panel on-content-scroll="scrollHandler" class="flex fullbleed layout vertical" mode="waterfall">
  				<div class="paper-header">
- 					<pratilipi-user user='{{ user }}' user-data='{{ userData }}'></pratilipi-user>
+ 					<pratilipi-user user='{{ user }}'></pratilipi-user>
 					<pratilipi-header user='{{ user }}'></pratilipi-header>
 					<pratilipi-write></pratilipi-write>
  				</div>
@@ -13,13 +13,14 @@
 						<pratilipi-navigation
 							class='pull-left hidden-xs hidden-sm'
 							></pratilipi-navigation>
-						<pratilipi-card-grid
-							style='overflow:hidden'
-							heading='{{ heading }}'
-							pratilipi-list='{{ pratilipiList }}'
-							filter='{{ filter }}'
-							cursor='{{ cursor }}'
-							></pratilipi-card-grid>
+						<div style="overflow: hidden">
+							<pratilipi-card-grid
+								heading='{{ heading }}'
+								pratilipi-list='{{ pratilipiList }}'
+								filter='{{ filter }}'
+								cursor='{{ cursor }}'
+								></pratilipi-card-grid>
+						</div>
 					</div>
 				</div>
 				<pratilipi-footer></pratilipi-footer>
@@ -34,7 +35,7 @@
 			is: 'pratilipi-list-page',
 			
 			properties: {
-				userData: { type: Object },
+				user: { type: Object, value: {} },
 				heading: { type: String },
 				pratilipiList: { type: Array },
 				filter: { type: Object },

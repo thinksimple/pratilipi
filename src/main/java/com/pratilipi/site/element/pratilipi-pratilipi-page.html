@@ -3,7 +3,7 @@
 	<template>
 		<paper-header-panel on-content-scroll="scrollHandler" class="flex fullbleed layout vertical" mode="waterfall">
 			<div class="paper-header">
-				<pratilipi-user user='{{ user }}' user-data='{{ userData }}'></pratilipi-user>
+				<pratilipi-user user='{{ user }}'></pratilipi-user>
 				<pratilipi-header user='{{ user }}'></pratilipi-header>
 				<pratilipi-write></pratilipi-write>
 			</div>
@@ -18,7 +18,6 @@
 									user='{{ user }}'
 									pratilipi-id='{{ pratilipiId }}'
 									userpratilipi='{{ userpratilipi }}'
-									userpratilipi-data='{{ userpratilipiData }}'
 									></pratilipi-userpratilipi>
 							<pratilipi-pratilipi
 									pratilipi='{{ pratilipi }}'
@@ -30,8 +29,8 @@
 									user="{{ user }}"
 									pratilipi='{{ pratilipi }}'
 									userpratilipi='{{ userpratilipi }}'
-									review-list='{{ reviewList }}'
 									pratilipi-id='{{ pratilipiId }}'
+									review-list='{{ reviewList }}'
 									cursor='{{ cursor }}'
 									></pratilipi-review-list>
 						</div>
@@ -40,23 +39,48 @@
 				<pratilipi-footer></pratilipi-footer>
 			</div>
 		</paper-header-panel>
+		<iron-ajax
+				id="AjaxGet"
+				url="/api/pratilipi"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				></iron-ajax>
 	</template>
 
 	<script>
+	
 		Polymer({
 
 			is: 'pratilipi-pratilipi-page',
 			
 			properties: {
-				userData: { type: Object },
-				pratilipiId: { type:Number },
-				userpratilipiData: { type: Object },
-				pratilipiData: { type: Object },
-				pratilipi: { type: Object, notify: true },
-				
+				user: { type: Object, value: {}, observer: "_userChanged" },
+				pratilipiId: { type: Number, value: null },
+				userpratilipi: { type: Object, value: {} },
+				pratilipi: { type: Object, value: {} },
 				
 				reviewList: { type: Array },
 				cursor: { type: String }
+			},
+			
+			ready: function() {
+				if( this.userpratilipi === null )
+					this.userpratilipi = {};
+			},
+			
+			_userChanged: function() {
+				if( this.pratilipi === undefined )
+					return;
+				
+				var ajaxGet = this.$.AjaxGet;
+				ajaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
+				ajaxGet.generateRequest();
+			},
+			
+			_handleAjaxGetResponse: function( event ) {
+				this.querySelector( 'pratilipi-pratilipi' ).updatePratilipi( event.detail.response );
 			},
 			
 			scrollHandler: function( event ) {

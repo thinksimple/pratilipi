@@ -3,7 +3,7 @@
 	<template>
 		<paper-header-panel on-content-scroll="scrollHandler" class="flex fullbleed layout vertical" mode="waterfall">
 			<div class="paper-header">
-				<pratilipi-user user='{{ user }}' user-data='{{ userData }}'></pratilipi-user>
+				<pratilipi-user user='{{ user }}'></pratilipi-user>
 				<pratilipi-header user='{{ user }}'></pratilipi-header>
 				<pratilipi-write></pratilipi-write>
 			</div>
@@ -34,7 +34,7 @@
 			is: 'pratilipi-search-page',
 			
 			properties: {
-				userData: { type: Object },
+				user: { type: Object, value: {} },
 				pratilipiList: { type: Array },
 				searchQuery: { type: String },
 				filter: { type: Object },

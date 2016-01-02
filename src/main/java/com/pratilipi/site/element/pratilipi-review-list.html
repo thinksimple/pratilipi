@@ -38,7 +38,6 @@
 			
 			<pratilipi-review-input
 					id="ReviewInput"
-					user="{{ user }}"
 					pratilipi="{{ pratilipi }}"
 					userpratilipi="{{ userpratilipi }}"
 					isactive="{{ isactive }}"
@@ -72,11 +71,11 @@
 
 			properties: {
 				user: { type: Object, observer:"_userChanged" },
-				pratilipi: { type:Object },
-				userpratilipi: { type:Object },
+				pratilipi: { type: Object },
+				userpratilipi: { type: Object, value: {} },
 				
 				reviewList: { type: Array },
-				pratilipiId: { type:Number },
+				pratilipiId: { type: Number },
 				cursor: { type: String },
 
 				isLoading: { type: Boolean, value: false },
@@ -89,7 +88,8 @@
 			_userChanged: function() {
 				if( this.user.isGuest ) {
 					this.reviewButtonClicked = false;
-					this.querySelector( 'pratilipi-review-input' ).close();
+					if( this.userpratilipi !== null )
+						this.querySelector( 'pratilipi-review-input' ).close();
 				}
 				if( ! this.user.isGuest && this.reviewButtonClicked ) {
 					this.showReviewInput();
@@ -104,7 +104,7 @@
 				else {
 					this.reviewButtonClicked = false;
 					this.isactive = true;
-					this.$.ReviewInput.open();
+					this.querySelector( 'pratilipi-review-input' ).open();
 				}
 			},
 			
@@ -132,7 +132,8 @@
 				
 				var reviewList = event.detail.response.reviewList;
 				for( var i = 0; i < reviewList.length; i++ )
-					this.push( 'reviewList', reviewList[ i ] );
+					if( reviewList[i].userPratilipiId !== this.userpratilipi.userPratilipiId )
+						this.push( 'reviewList', reviewList[ i ] );
 
 				if( event.detail.response.cursor ) {
 					this.$.AjaxGet.params.cursor = event.detail.response.cursor;
@@ -152,6 +153,14 @@
 					ajaxGet.params = { 'pratilipiId':this.pratilipiId, 'cursor':this.cursor };
 				} else {
 					this.isFinished = true;
+				}
+				
+				// Removing userpratilipi from reviewList.
+				for( var i = 0; i < this.reviewList.length; i++ ) {
+					if( this.reviewList[i].userPratilipiId === this.userPratilipiId ) {
+						this.reviewList.splice( i, 1 );
+						break;
+					}
 				}
 			}
 

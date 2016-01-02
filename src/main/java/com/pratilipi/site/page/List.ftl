@@ -30,7 +30,8 @@
 	
 	<body>
 		<template is="dom-bind">
-			<pratilipi-list-page user-data='${ userJson }'
+			<pratilipi-list-page 
+				user='${ userJson }'
 				heading='${ title }'
 				pratilipi-list='${ pratilipiListJson }'
 				filter='${ pratilipiListFilterJson! }'

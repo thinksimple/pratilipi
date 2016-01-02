@@ -160,7 +160,6 @@
 			
 			properties: {
 				pratilipi: { type:Object, notify: true },
-				pratilipiData: { type:Object },
 				mobile: { type: Boolean }
 			},
 			
@@ -223,7 +222,7 @@
 			},
 			
 			attached: function() {
-				this.updatePratilipi( this.pratilipiData );
+				this.updatePratilipi( this.pratilipi );
 			},
 			
 			processSummary: function() {

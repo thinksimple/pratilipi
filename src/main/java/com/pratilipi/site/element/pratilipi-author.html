@@ -153,8 +153,7 @@
 			},
 			
 			properties: {
-				author: { type:Object, notify:true },
-				authorData: { type:Object },
+				author: { type: Object, notify: true },
 				mobile: { type: Boolean }
 			},
 			
@@ -178,22 +177,22 @@
 			},
 			
 			updateAuthor: function( author ) {
+
 				this.set( 'author', this.process( author ) );
-				this.name = author.name;
 				
+				this.name = author.name;
 				if( author.penName !== undefined )
 					this.penName = author.penName;
 				else if( author.penNameEn !== undefined )
 					this.penName = author.penNameEn;
 				else
 					this.penName = null;
-				
 				this.language = author.language;
 				this.processSummary();
 			},
 			
 			attached: function() {
-				this.updateAuthor( this.authorData );
+				this.updateAuthor( this.author );
 			},
 			
 			processSummary: function() {

@@ -83,9 +83,8 @@
 			is: 'pratilipi-review-input',
 
 			properties: {
-				user: { type: Object },
-				pratilipi: { type:Object, observer:"_pratilipiChangeObserver" },
-				userpratilipi: { type:Object, notify:true, observer:"_userpratilipiChangeObserver" },
+				pratilipi: { type: Object, observer: "_pratilipiChangeObserver" },
+				userpratilipi: { type: Object, value: {}, observer:"_userpratilipiChangeObserver" },
 				ratingValue: { type: Number, value: 0 },
 				isactive: { type: Boolean, notify: true },
 				
@@ -98,6 +97,9 @@
 			},
 			
 			_userpratilipiChangeObserver: function() {
+				
+				if( this.userpratilipi === null )
+					return;
 				
 				if( ! this.userpratilipi.pratilipiId )
 					this.close();
@@ -158,15 +160,14 @@
 				this.$.AjaxPut.generateRequest();
 			},
 			
-			_handleAjaxPutResponse: function( request ) {
+			_handleAjaxPutResponse: function( event ) {
 				if( event.detail.xhr.status == 0 ) {
 					this.message = null;
 					this.errMessage = "Could not connect to server !";
 				} else {
 					this.message = null;
-					this.set( 'userpratilipi.reviewTitle', this.params.reviewTitle );
-					this.set( 'userpratilipi.review', this.params.review );
-					this.set( 'userpratilipi.rating', this.params.rating );
+					document.querySelector( 'pratilipi-userpratilipi' ).setUserPratilipi( event.detail.response )
+					this.set( 'userpratilipi', event.detail.response );
 					this.close();
 				}
 			},

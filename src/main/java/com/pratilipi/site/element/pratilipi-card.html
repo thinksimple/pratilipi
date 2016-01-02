@@ -40,7 +40,7 @@
 					</div>
 				  	<div class="media-body">
 				  		<h4 class="media-heading">
-						 	<a id="pratilipi-heading" class="card-heading" href="{{ pratilipi.pageUrl }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
+						 	<a class="pratilipi-card-heading" class="card-heading" href="{{ pratilipi.pageUrl }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ pratilipi.title }}</a>
 						</h4>
 						<h6>
 							<a class="card-heading" style="font-size: 12px;" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a>
@@ -84,7 +84,7 @@
 			
 			_onIronResize: function() {
 				// Adjusting heading
-				var heading = jQuery( '#pratilipi-heading' );
+				var heading = jQuery( this.querySelector( '.pratilipi-card-heading' ) );
 				var title = this.pratilipi.title;
 				heading.text( title );
 				var len = title.length;

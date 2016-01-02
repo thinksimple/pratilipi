@@ -31,8 +31,9 @@
 
 	<body>
 		<template is="dom-bind">
-			<pratilipi-author-page user-data='${ userJson }'
-				author-data='${ authorJson }'
+			<pratilipi-author-page 
+				user='${ userJson }'
+				author='${ authorJson }'
 				pratilipi-list='${ publishedPratilipiListJson }'
 				filter='${ publishedPratilipiListFilterJson! }'
 				cursor='${ publishedPratilipiListCursor! }'></pratilipi-author-page>

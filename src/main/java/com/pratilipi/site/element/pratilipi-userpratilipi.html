@@ -1,5 +1,3 @@
-<!-- Version:6.0 -->
-
 <dom-module id="pratilipi-userpratilipi">
 
 	<template>
@@ -24,16 +22,19 @@
 			properties: {
 				user: { type: Object, observer: '_userChangeObserver' },
 				pratilipiId: { type: Number },
-				userpratilipi: { type: Object, notify: true },
-				userpratilipiData: { type: Object }
+				userpratilipi: { type: Object, notify: true, value: {} },
+			},
+			
+			setUserPratilipi: function( userPratilipi ) {
+				this.set( 'userpratilipi', userPratilipi );
 			},
 			
 			_userChangeObserver: function() {
 				if( this.user.isGuest ) {
 					this.set( 'userpratilipi', {} );
-				} else if( ! this.userpratilipi.pratilipiId ) {
+				} else {
 					var ajaxGet = this.$.AjaxGet;
-					ajaxGet.params = { pratilipiId:this.pratilipiId };
+					ajaxGet.params.pratilipiId = this.pratilipiId;
 					ajaxGet.generateRequest();
 				}
 			},
@@ -44,7 +45,7 @@
 						this._userChangeObserver();
 					}, 10000 );
 				} else {
-					this.set( 'userpratilipi', event.detail.response );
+					this.setUserPratilipi( event.detail.response );
 				}
 			},
 
@@ -52,13 +53,6 @@
 				this.async( function() {
 					this._userChangeObserver();
 				}, 10000 );
-			},
-			
-			ready: function() {
-				if( this.userpratilipiData )
-					this.set( 'userpratilipi', this.userpratilipiData );
-				else
-					this.set( 'userpratilipi', {} );
 			}
 
 		});

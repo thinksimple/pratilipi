@@ -31,7 +31,7 @@
 
 	<body>
 		<template is="dom-bind">
-			<pratilipi-search-page user-data='${ userJson }'
+			<pratilipi-search-page user='${ userJson }'
 				pratilipi-list='${ pratilipiListJson }'
 				search-query='${ pratilipiListSearchQuery! }'
 				filter='${ pratilipiListFilterJson }'

@@ -3,7 +3,7 @@
 	<template>
 		<paper-header-panel class="flex fullbleed layout vertical" mode="waterfall">
 			<div class="paper-header">
-				<pratilipi-user user='{{ user }}' user-data='{{ userData }}'></pratilipi-user>
+				<pratilipi-user user='{{ user }}'></pratilipi-user>
 				<pratilipi-header user='{{ user }}'></pratilipi-header>
 				<pratilipi-write></pratilipi-write>
 			</div>
@@ -16,9 +16,7 @@
 						<div style="overflow:hidden">
 							<pratilipi-author
 									author='{{ author }}'
-									author-data='{{ authorData }}'
 									></pratilipi-author>
-									
 							<br class="pratilipi-break">
 							<pratilipi-card-grid
 								id='PublishedWorks'
@@ -34,6 +32,14 @@
 				<pratilipi-footer></pratilipi-footer>
 			</div>
 		</paper-header-panel>
+		<iron-ajax
+				id="AjaxGet"
+				url="/api/author"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				></iron-ajax>
 	</template>
 
 	<script>
@@ -43,13 +49,27 @@
 			is: 'pratilipi-author-page',
 			
 			properties: {
-				userData: { type: Object },
-				authorData: { type:Object },
+				user: { type: Object, value: {}, observer: "_userChanged" },
+				author: { type:Object, value: {} },
 				
 				pratilipiList: { type: Array },
 				filter: { type: Object },
 				cursor: { type: String }
-			}
+			},
+			
+			_userChanged: function() {
+				
+				if( this.author === undefined )
+					return;
+				
+				var ajaxGet = this.$.AjaxGet;
+				ajaxGet.params.authorId = this.author.authorId;
+				ajaxGet.generateRequest();
+			},
+			
+			_handleAjaxGetResponse: function( event ) {
+				this.querySelector( 'pratilipi-author' ).updateAuthor( event.detail.response );
+			},
 
 		});
 

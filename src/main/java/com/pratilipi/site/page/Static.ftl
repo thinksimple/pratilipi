@@ -30,8 +30,8 @@
 		<template is="dom-bind">
 			<paper-header-panel class="flex" mode="waterfall">
   				<div class="paper-header">
-  					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
-					<pratilipi-header user='{{ user }}'></pratilipi-header>
+  					<pratilipi-user user='${ userJson }'></pratilipi-user>
+					<pratilipi-header user='${ userJson }'></pratilipi-header>
 					<pratilipi-write></pratilipi-write>
   				</div>
   				<div class="fit" style="margin-top: 5px;">

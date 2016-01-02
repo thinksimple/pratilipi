@@ -33,10 +33,11 @@
 	
 	<body>
 		<template is="dom-bind">
-			<pratilipi-pratilipi-page user-data='${ userJson }'
+			<pratilipi-pratilipi-page 
+					user='${ userJson }'
 					pratilipi-id='${ pratilipi.getId()?c }'
-					userpratilipi-data='${ userpratilipiJson! }'
-					pratilipi-data='${ pratilipiJson }'
+					userpratilipi='${ userpratilipiJson! }'
+					pratilipi='${ pratilipiJson }'
 					
 					review-list='${ reviewListJson }'
 					cursor='${ reviewListCursor! }'></pratilipi-pratilipi-page>
