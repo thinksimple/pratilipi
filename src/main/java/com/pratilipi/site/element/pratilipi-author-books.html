@@ -1,0 +1,69 @@
+<dom-module id="pratilipi-author-books">
+
+	<style>
+
+		:host {
+			display: block;
+		}
+		
+		paper-card {
+			width: 100%;
+			padding-top: 15px;
+			padding-bottom: 15px;
+		}
+		
+	</style>
+
+
+	<template>
+		<paper-card>
+			<div class="row text-center">
+				<a id="drafts" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" href="#drafts" on-click="draftsClicked">
+					Drafts
+				</a>
+				<a id="published" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" href="#published" on-click="publishedClicked">
+					Published Contents
+				</a>
+			</div>
+		</paper-card>
+		<br class="pratilipi-break" />
+		<pratilipi-card-grid
+			include-add-card="true"
+			></pratilipi-card-grid>
+	</template>
+
+
+	<script>
+
+		Polymer({
+			
+			is: 'pratilipi-author-books',
+			
+			attached: function() {
+				this.draftsClicked();
+			},
+			
+			removeAllClasses: function() {
+				jQuery( '#drafts' ).removeClass( 'active' );
+				jQuery( '#drafts' ).removeClass( 'inactive' );
+				jQuery( '#published' ).removeClass( 'active' );
+				jQuery( '#published' ).removeClass( 'inactive' );
+			},
+			
+			draftsClicked: function() {
+				this.removeAllClasses();
+				jQuery( '#drafts' ).addClass( 'active' );
+				jQuery( '#published' ).addClass( 'inactive' );
+			},
+		
+			publishedClicked: function() {
+				this.removeAllClasses();
+				jQuery( '#published' ).addClass( 'active' );
+				jQuery( '#drafts' ).addClass( 'inactive' );
+			},
+			
+		});
+
+	</script>
+
+</dom-module>

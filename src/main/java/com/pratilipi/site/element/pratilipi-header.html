@@ -96,7 +96,7 @@
 									<button type="button" class="pratilipi-white-button" on-click="logInButtonClicked"><small>${ _strings.sign_in }</small></button>
 								</template>
 								<template is="dom-if" if="{{ !user.isGuest }}">
-									<paper-dropdown-menu alwaysFloatLabel noink="true" label="{{ user.firstName }}">
+									<paper-dropdown-menu noink="true" label="{{ user.firstName }}">
 										<div class="dropdown-content" style="white-space: nowrap; width: auto;">
 											<paper-item on-click="myProfile">
 												<paper-icon-item><iron-icon style="color: #107FE5;" icon="description"></iron-icon></paper-icon-item>

@@ -67,9 +67,11 @@
 								</paper-dropdown-menu>
 							</div>
 						</div>
-						<br/>
+						<div style="margin-top: 15px; margin-bottom: 5px;">
+							<span>Summary (Optional) :</span>
+						</div>
 						<script type="text/javascript">tinymce.init({ selector:'#pratilipiSummary', content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
-						<paper-textarea class="edit" id="pratilipiSummary"  label="Summary (Optional)" value="{{ params.summary::input }}"></paper-textarea>
+						<paper-textarea class="edit" id="pratilipiSummary" value="{{ summary::input }}"></paper-textarea>
 						<div class="text-center" style="min-height: 20px;">
 							<span>{{ message }}</span>
 						</div>
@@ -102,17 +104,17 @@
 				params: { type: Object, value: {} },
 				
 				pratilipi: { type: Object, notify: true },
+				summary: { type: String },
 				selected: { type: Number }
 			},
 			
-			attached: function() {
+			ready: function() {
 				if( this.pratilipi === undefined )
 					return;
 				
 				this.set( 'params', this.pratilipi );
 				
-				if( this.params.summary === undefined )
-					this.params.summary = "";
+				this.summary = this.params.summary === undefined ? "" : this.params.summary;
 				
 				if( this.params.type.toUpperCase() === "BOOK" )
 					this.selected = 0;
@@ -140,6 +142,8 @@
 				
 				if( tinyMCE.activeEditor !== null )
 					this.params.summary = tinyMCE.activeEditor.getContent();
+				else
+					this.params.summary = this.summary;
 				
 				if( this.params.title.trim() === "" ) {
 					this.message = "Please fill in the Title.";

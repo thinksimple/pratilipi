@@ -72,7 +72,7 @@
 						
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" type="date" label="Birthday" always-float-label value="{{ params.birthday::input }}"></paper-input>
+								<paper-input class="edit" type="date" label="Birthday (dd-mm-yyyy)" always-float-label value="{{ params.birthday::input }}"></paper-input>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<paper-dropdown-menu noink="true" disabled="true" label="Language" value="{{ params.language::input }}">
@@ -82,8 +82,11 @@
 								</paper-dropdown-menu>
 							</div>
 						</div>
+						<div style="margin-top: 15px; margin-bottom: 5px;">
+							<span>Summary (Optional) :</span>
+						</div>
 						<script type="text/javascript">tinymce.init({ selector:'#authorSummary', content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
-						<paper-textarea class="edit" id="authorSummary" label="Summary (Optional)" value="{{ params.summary::input }}"></paper-textarea>
+						<paper-textarea class="edit" id="authorSummary" value="{{ summary::input }}"></paper-textarea>
 						<div class="text-center" style="min-height: 20px;">
 							<span>{{ message }}</span>
 						</div>
@@ -113,44 +116,36 @@
 			
 			properties: {
 				author: { type: Object, notify: true },
-				params: { type: Object, value: {} }
+				params: { type: Object, value: {} },
+				
+				summary: { type: String }
 			},
 			
-			attached: function() {
+			processBirthday: function( input ) {
+				var datePart = input.match(/\d+/g);
+				
+				if( parseInt( datePart[0] ) < 1800 )
+					return input;
+					
+				var year = datePart[0],
+				month = datePart[1],
+				day = datePart[2];
+
+				console.log( datePart );
+				return day+'-'+month+'-'+year;
+				
+			},
+			
+			ready: function() {
 				if( this.author === undefined )
 					return;
 				
-				if( this.author.summary === undefined )
-					this.author.summary = "";
+				this.set( 'params', this.author );
 				
-				this.set( 'params', this.process( this.author ) );
+				this.summary = this.params.summary === undefined ? "" : this.params.summary;
+				
 			},
 			
-			process: function( data ) {
-				if( data.authorId === undefined )
-					data.authorId = null;
-				if( data.firstName === undefined )
-					data.firstName = null;
-				if( data.lastName === undefined )
-					data.lastName = null;
-				if( data.firstNameEn === undefined )
-					data.firstNameEn = null;
-				if( data.lastNameEn === undefined )
-					data.lastNameEn = null;
-				if( data.penName === undefined )
-					data.penName = null;
-				if( data.penNameEn === undefined )
-					data.penNameEn = null;
-				if( data.summary === undefined )
-					data.summary = null;
-				if( data.language === undefined )
-					data.language = null;
-				if( data.birthday === undefined )
-					data.birthday = null;
-				
-				return data;
-			},
-
 			open: function() {
 				jQuery( "#pratilipiEditAuthor" ).modal();
 			},
@@ -163,10 +158,14 @@
 				
 				if( tinyMCE.activeEditor !== null )
 					this.params.summary = tinyMCE.activeEditor.getContent();
+				else
+					this.params.summary = this.summary;
+				
+				if( this.params.birthday !== undefined )
+					this.params.birthday = this.processBirthday( this.params.birthday );
 				
 				this.message = "Please Wait...";
-				jQuery( '#authorEditButton' ).prop( 'disabled', true );
-				
+				jQuery( '#authorEditButton' ).prop( 'disabled', true );				
 				
 				this.$.AjaxPost.body = ( "authorId=" + this.params.authorId + "&" +
 						 "firstName=" + this.params.firstName + "&" + 

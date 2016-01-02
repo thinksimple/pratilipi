@@ -70,8 +70,11 @@
 								</paper-dropdown-menu>
 							</div>
 						</div>
+						<div style="margin-top: 15px; margin-bottom: 5px;">
+							<span>Summary (Optional) :</span>
+						</div>
 						<script type="text/javascript">tinymce.init({ selector:'#writeSummary', content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
-						<paper-textarea class="write" id="writeSummary"  label="Summary (Optional)" value="{{ summary::input }}"></paper-textarea>
+						<paper-textarea class="write" id="writeSummary" value="{{ summary::input }}"></paper-textarea>
 						<div class="text-center" style="min-height: 20px;">
 							<span>{{ message }}</span>
 						</div>

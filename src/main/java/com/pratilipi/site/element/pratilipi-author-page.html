@@ -1,3 +1,5 @@
+<link rel="import" href="pratilipi-author-books.html" />
+
 <dom-module id="pratilipi-author-page">
 
 	<template>
@@ -18,14 +20,19 @@
 									author='{{ author }}'
 									></pratilipi-author>
 							<br class="pratilipi-break">
-							<pratilipi-card-grid
-								id='PublishedWorks'
-								heading='${ _strings.author_published_works }' 
-								include-add-card="true"
-								pratilipi-list='{{ pratilipiList }}'
-								filter='{{ filter }}'
-								cursor='{{ cursor }}'
-								></pratilipi-card-grid>
+							<template is="dom-if" if="{{ ! author.hasAccessToUpdate }}">
+								<pratilipi-card-grid
+									id='PublishedWorks'
+									heading='${ _strings.author_published_works }' 
+									pratilipi-list='{{ pratilipiList }}'
+									filter='{{ filter }}'
+									cursor='{{ cursor }}'
+									></pratilipi-card-grid>
+							</template>
+							<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
+								<pratilipi-author-books>
+								</pratilipi-author-books>
+							</template>
 						</div>
 					</div>
 				</div>

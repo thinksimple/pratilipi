@@ -35,7 +35,13 @@
 		<paper-card>
 			
 			<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
-				<paper-icon-button style="color: #333;" class="pull-right" icon="create" noink="true" on-click="openPratilipiEdit"></paper-icon-button>
+				<paper-menu-button horizontal-align="right" class="pull-right">
+					<paper-icon-button style="color: #333;" class="dropdown-trigger" icon="create" noink="true"></paper-icon-button>
+						<paper-menu class="dropdown-content">
+							<paper-item on-click="openPratilipiEdit">Edit Details</paper-item>
+	                    	<paper-item on-click="openWriterPanel">Edit Content</paper-item>
+						</paper-menu>
+				</paper-menu-button>
 				<pratilipi-edit-pratilipi pratilipi="{{ pratilipi }}"></pratilipi-edit-pratilipi>
 			</template>
 			
@@ -169,6 +175,10 @@
 			
 			openPratilipiEdit: function() {
 				this.querySelector( 'pratilipi-edit-pratilipi' ).open();
+			},
+			
+			openWriterPanel: function() {
+				window.location = "http://www.pratilipi.com/write?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.host + this.pratilipi.pageUrl;
 			},
 			
 			redirectToReader: function() {
