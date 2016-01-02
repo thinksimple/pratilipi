@@ -33,7 +33,7 @@ public class PratilipiApi extends GenericApi {
 				? null
 				: dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		
-		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, true, false );
 
 		Gson gson = new Gson();
 
