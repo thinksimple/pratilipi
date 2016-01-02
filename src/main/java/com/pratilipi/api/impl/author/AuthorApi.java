@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.annotation.Put;
+import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.author.shared.GetAuthorRequest;
 import com.pratilipi.api.impl.author.shared.GetAuthorResponse;
-import com.pratilipi.api.impl.author.shared.PutAuthorRequest;
+import com.pratilipi.api.impl.author.shared.PostAuthorRequest;
 import com.pratilipi.api.impl.author.shared.PutAuthorResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -36,8 +36,8 @@ public class AuthorApi extends GenericApi {
 		return gson.fromJson( gson.toJson( authorData ), GetAuthorResponse.class );
 	}
 	
-	@Put
-	public PutAuthorResponse putAuthor( PutAuthorRequest request ) 
+	@Post
+	public PutAuthorResponse postAuthor( PostAuthorRequest request ) 
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		Gson gson = new Gson();

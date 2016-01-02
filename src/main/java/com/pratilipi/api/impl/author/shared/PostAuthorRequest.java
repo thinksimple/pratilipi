@@ -3,7 +3,7 @@ package com.pratilipi.api.impl.author.shared;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 
-public class PutAuthorRequest extends GenericRequest {
+public class PostAuthorRequest extends GenericRequest {
 	
 	private Long authorId;
 	
