@@ -29,27 +29,30 @@
 
 	
 	<template>
-
 		<paper-card>
 			<h3 style="color: #D0021B;">${ _strings.reviews }</h3>
 			<template is="dom-if" if="{{ !isactive }}">
 				<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.write_a_review }</a>
 			</template>
-			
-			<pratilipi-review-input
-					id="ReviewInput"
-					pratilipi="{{ pratilipi }}"
-					userpratilipi="{{ userpratilipi }}"
-					isactive="{{ isactive }}"
-					></pratilipi-review-input>
-					
-			<template is="dom-repeat" items="{{ reviewList }}" as="review">
-				<hr style="border: 1px solid #E5E5E5; margin: 0; padding: 0;"/>
-				<pratilipi-review review="{{ review }}"></pratilipi-review>
-			</template>
 		</paper-card>
-
 		
+		
+		<!-- <pratilipi-review-input
+				id="ReviewInput"
+				pratilipi="{{ pratilipi }}"
+				userpratilipi="{{ userpratilipi }}"
+				isactive="{{ isactive }}"
+				></pratilipi-review-input> -->
+		
+		<div class="row">
+			<template is="dom-repeat" items="{{ reviewList }}" as="review">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<pratilipi-review review="{{ review }}"></pratilipi-review>
+				</div>
+			</template>	
+		</div>
+		
+
 		<iron-ajax
 				id="AjaxGet"
 				url="/api/userpratilipi/review/list"

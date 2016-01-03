@@ -7,41 +7,48 @@
 		:host {
 			display: block;
 		}
+		
+		paper-card {
+			width: 100%;
+			padding: 10px;
+		}
 
 	</style>
 
 	
 	<template>
-	
-	<div class="row" style="padding: 10px;">
-		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="text-align: center; padding-top: 7px;">
-			<small><pratilipi-rating value="{{ review.rating }}" /></small>
-   			<img class="img-circle" style="max-width: 140px; max-height: 140px; display: block; margin: 0 auto;" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/user.png" alt="{{ user.fullName }}" title="{{ user.fullNameEn }}"/>
-   			<span>{{ review.userName }}</span>
-		</div>
-		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-			<h4 style="color: #D0021B;">{{ review.reviewTitle }}</h4>
-			<div class="review" style="text-align: justify;">{{ review.review }}</div>
-		</div>
-	</div>
-	<!-- <div class="row" style="padding: 0px 0px 10px 0px; margin: 0px;">
-		<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3" style="text-align: center;">
-			{ review.reviewcount } Reviews
-		</div>
-		<div class="col-xs-8 col-sm-9 col-md-9 col-lg-9" style="dislay: inline-block;">
-			${ _strings.review_helpful }
-			<div style="white-space: nowrap; display: inline-block;">
-				<a>
-					<iron-icon icon="thumb-up"></iron-icon>
-					<span>Yes</span>
-				</a>
-				<a>
-					<iron-icon icon="thumb-down"></iron-icon>
-					<span>No</span>
-				</a>
+		<paper-card>
+			<div class="row" style="padding: 10px;">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="text-align: center; padding-top: 7px;">
+					<small><pratilipi-rating value="{{ review.rating }}" /></small>
+		   			<img class="img-circle" style="max-width: 140px; max-height: 140px; display: block; margin: 0 auto;" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/user.png" alt="{{ user.fullName }}" title="{{ user.fullNameEn }}"/>
+		   			<span>{{ review.userName }}</span>
+				</div>
+				<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+					<h4 style="color: #D0021B;">{{ review.reviewTitle }}</h4>
+					<div class="review" style="text-align: justify;">{{ review.review }}</div>
+				</div>
 			</div>
-		</div>
-	</div> -->
+		</paper-card>
+		
+		<!-- <div class="row" style="padding: 0px 0px 10px 0px; margin: 0px;">
+			<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3" style="text-align: center;">
+				{ review.reviewcount } Reviews
+			</div>
+			<div class="col-xs-8 col-sm-9 col-md-9 col-lg-9" style="dislay: inline-block;">
+				${ _strings.review_helpful }
+				<div style="white-space: nowrap; display: inline-block;">
+					<a>
+						<iron-icon icon="thumb-up"></iron-icon>
+						<span>Yes</span>
+					</a>
+					<a>
+						<iron-icon icon="thumb-down"></iron-icon>
+						<span>No</span>
+					</a>
+				</div>
+			</div>
+		</div> -->
 	</template>
 	
 
