@@ -75,7 +75,7 @@
 							<td width="auto">
 								<form method="get" action="/search" style="margin: -20px 15px auto 10px;" id="form" on-submit="onSubmit">
 									<template is="dom-if" if="{{ !mobile }}">
-										<paper-input name="q" class="search" type="search" label="${ _strings.search_bar_help }" value="{{ query::input }}">
+										<paper-input name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
 											<paper-icon-button class="search-icon" suffix icon="search" noink="true" on-click="onSubmit"></paper-icon-button>
 											<template is="dom-if" if="{{ !medium }}">
 												<paper-icon-button class="menu-icon" prefix icon="menu" noink="true" on-click="showMenu"></paper-icon-button>
@@ -83,7 +83,7 @@
 										</paper-input>
 									</template>
 									<template is="dom-if" if="{{ mobile }}">
-										<paper-input class="search" type="search" label="${ _strings.search }" value="{{ query::input }}">
+										<paper-input name="q" class="search" type="search" placeholder="${ _strings.search }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search }'" value="{{ query::input }}">
 											<paper-icon-button class="search-icon" suffix icon="search" noink="true"></paper-icon-button>
 											<paper-icon-button class="menu-icon" prefix icon="menu" noink="true" on-click="showMenu"></paper-icon-button>
 										</paper-input>
