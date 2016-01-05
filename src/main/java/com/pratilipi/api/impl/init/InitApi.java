@@ -1,5 +1,7 @@
 package com.pratilipi.api.impl.init;
 
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.pratilipi.api.GenericApi;
@@ -7,7 +9,12 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.User;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -52,10 +59,28 @@ public class InitApi extends GenericApi {
 		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
 */
+
 		
-		DataAccessorFactory.getSearchAccessor().deletePratilipiDataIndex( 5954827506941952L );
-		DataAccessorFactory.getSearchAccessor().deletePratilipiDataIndex( 5692964563058688L );
-		DataAccessorFactory.getSearchAccessor().deleteAuthorDataIndex( 5651568057647104L );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		String cursor = null;
+		int count = 0;
+		do {
+			DataListCursorTuple<Author> authorListCursorTuple =
+					dataAccessor.getAuthorList( new AuthorFilter(), null, 100 );
+			List<Author> authorList = authorListCursorTuple.getDataList();
+			cursor = authorListCursorTuple.getCursor();
+			count = count + authorList.size();
+			for( Author author : authorList ) {
+				if( author.getUserId() != null ) {
+					User user = dataAccessor.getUser( author.getUserId() );
+					if( author.getEmail().equals( user.getEmail() ) )
+						logger.log( Level.SEVERE, "Author email " + author.getEmail() + " doesn't match with user email " + user.getEmail() );
+				}
+			}
+		} while( cursor != null );
+		
+		logger.log( Level.INFO, "Checked " + count + " author records." );
+		
 		
 		return new GenericResponse();
 		

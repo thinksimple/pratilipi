@@ -44,4 +44,12 @@
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
 
+
+	<cron>
+		<url>/init</url>
+		<target>worker</target>
+		<schedule>every day 8:00</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+
 </cronentries>
