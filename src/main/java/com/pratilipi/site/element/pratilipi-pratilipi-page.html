@@ -67,12 +67,12 @@
 			},
 			
 			ready: function() {
-				if( this.userpratilipi === null )
+				if( this.userpratilipi == null )
 					this.userpratilipi = {};
 			},
 			
 			_userChanged: function() {
-				if( this.pratilipi === undefined )
+				if( this.pratilipi == null )
 					return;
 				
 				var ajaxGet = this.$.AjaxGet;

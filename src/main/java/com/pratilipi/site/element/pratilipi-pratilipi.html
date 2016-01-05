@@ -182,7 +182,7 @@
 			},
 			
 			redirectToReader: function() {
-				if( this.pratilipi.readPageUrl !== undefined ) 
+				if( this.pratilipi.readPageUrl != null ) 
 					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 ) + "&ret=" + window.location.href;
 			},
 			
@@ -212,15 +212,15 @@
 			},
 			
 			process: function( data ) {
-				if( data.title === undefined && data.titleEn !== undefined )
+				if( data.title == null && data.titleEn != null )
 					data.title = data.titleEn;
-				if( data.author.name === undefined && data.author.name !== undefined )
+				if( data.author.name == null && data.author.name != null )
 					data.author.name = data.author.nameEn;
-				data.averageRating = data.averageRating === undefined ? 0 : data.averageRating;
-				data.ratingCount = data.ratingCount === undefined ? 0 : data.ratingCount;
-				data.readCount = data.readCount === undefined ? 0 : data.readCount;
-				data.reviewCount = data.reviewCount === undefined ? 0 : data.reviewCount;
-				data.fbLikeShareCount = data.fbLikeShareCount === undefined ? 0 : data.fbLikeShareCount;
+				data.averageRating = data.averageRating == null ? 0 : data.averageRating;
+				data.ratingCount = data.ratingCount == null ? 0 : data.ratingCount;
+				data.readCount = data.readCount == null ? 0 : data.readCount;
+				data.reviewCount = data.reviewCount == null ? 0 : data.reviewCount;
+				data.fbLikeShareCount = data.fbLikeShareCount == null ? 0 : data.fbLikeShareCount;
 				return data;
 			},
 			
@@ -237,7 +237,7 @@
 			
 			processSummary: function() {
 				// Not displaying Summary if..
-				if( this.pratilipi.summary === undefined ) { 
+				if( this.pratilipi.summary == null ) { 
 					document.getElementById( "pratilipi-summary" ).style.display = "none";
 					return;
 				}

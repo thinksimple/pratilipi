@@ -31,7 +31,7 @@
 			is: 'pratilipi-facebook-login',
 			
 			sendData: function( authResponse ) {
-				if( authResponse != undefined ) {
+				if( authResponse != null ) {
 					this.$.AjaxPost.body = ( "fbUserAccessToken=" + authResponse.accessToken );
 					this.$.AjaxPost.generateRequest();
 				}

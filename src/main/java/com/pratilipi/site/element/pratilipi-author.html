@@ -162,13 +162,13 @@
 			},
 			
 			process: function( data ) {
-				if( data.name === undefined && data.nameEn !== undefined )
+				if( data.name == null && data.nameEn != null )
 					data.name = data.nameEn;
-				if( data.penName === undefined && data.penNameEn !== undefined )
+				if( data.penName == null && data.penNameEn != null )
 					data.penName = data.penNameEn;
-				data.contentPublished = data.contentPublished === undefined ? 0 : data.contentPublished;
-				data.totalFbLikeShareCount = data.totalFbLikeShareCount === undefined ? 0 : data.totalFbLikeShareCount;
-				data.totalReadCount = data.totalReadCount === undefined ? 0 : data.totalReadCount;
+				data.contentPublished = data.contentPublished == null ? 0 : data.contentPublished;
+				data.totalFbLikeShareCount = data.totalFbLikeShareCount == null ? 0 : data.totalFbLikeShareCount;
+				data.totalReadCount = data.totalReadCount == null ? 0 : data.totalReadCount;
 				return data;
 			},
 			
@@ -181,9 +181,9 @@
 				this.set( 'author', this.process( author ) );
 				
 				this.name = author.name;
-				if( author.penName !== undefined )
+				if( author.penName != null )
 					this.penName = author.penName;
-				else if( author.penNameEn !== undefined )
+				else if( author.penNameEn != null )
 					this.penName = author.penNameEn;
 				else
 					this.penName = null;
@@ -196,7 +196,7 @@
 			},
 			
 			processSummary: function() {
-				if( this.author.summary === undefined ) { 
+				if( this.author.summary == null ) { 
 					document.getElementById( "author-summary" ).style.display = "none";
 					return;
 				}

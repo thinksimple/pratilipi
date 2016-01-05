@@ -37,18 +37,27 @@
 		</paper-card>
 		
 		
-		<!-- <pratilipi-review-input
+		<pratilipi-review-input
 				id="ReviewInput"
 				pratilipi="{{ pratilipi }}"
 				userpratilipi="{{ userpratilipi }}"
 				isactive="{{ isactive }}"
-				></pratilipi-review-input> -->
+				></pratilipi-review-input>
 		
 		<div class="row">
-			<template is="dom-repeat" items="{{ reviewList }}" as="review">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<pratilipi-review review="{{ review }}"></pratilipi-review>
-				</div>
+			<template is="dom-if" if="{{ userpratilipi.review }}">
+				<template is="dom-if" if="{{ !isactive }}">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<pratilipi-review review="{{ userpratilipi }}"></pratilipi-review>
+					</div>
+				</template>
+			</template>
+			<template is="dom-repeat" items="[[reviewList]]">
+				<template is="dom-if" if="{{ _check(item) }}">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<pratilipi-review review="{{ item }}"></pratilipi-review>
+					</div>
+				</template>
 			</template>	
 		</div>
 		
@@ -75,9 +84,9 @@
 			properties: {
 				user: { type: Object, observer:"_userChanged" },
 				pratilipi: { type: Object },
-				userpratilipi: { type: Object, value: {} },
+				userpratilipi: { type: Object, value: {}, observer:"_userPratilipiChanged" },
 				
-				reviewList: { type: Array },
+				reviewList: { type: Array, notify: true },
 				pratilipiId: { type: Number },
 				cursor: { type: String },
 
@@ -88,15 +97,25 @@
 				isactive: { type: Boolean, value: false }
 			},
 			
+			_check: function( review ) {
+				
+				if( review.userPratilipiId === this.userpratilipi.userPratilipiId )
+					return false;
+				else
+					return true;
+			},
+			
 			_userChanged: function() {
-				if( this.user.isGuest ) {
+				if( this.user.isGuest )
 					this.reviewButtonClicked = false;
-					if( this.userpratilipi !== null )
-						this.querySelector( 'pratilipi-review-input' ).close();
-				}
-				if( ! this.user.isGuest && this.reviewButtonClicked ) {
+				
+				if( ! this.user.isGuest && this.reviewButtonClicked )
 					this.showReviewInput();
-				}
+			},
+			
+			_userPratilipiChanged: function() {				
+				if( this.reviewList == null ) 
+					return;
 			},
 			
 			showReviewInput: function() {
@@ -135,8 +154,7 @@
 				
 				var reviewList = event.detail.response.reviewList;
 				for( var i = 0; i < reviewList.length; i++ )
-					if( reviewList[i].userPratilipiId !== this.userpratilipi.userPratilipiId )
-						this.push( 'reviewList', reviewList[ i ] );
+					this.push( 'reviewList', reviewList[ i ] );
 
 				if( event.detail.response.cursor ) {
 					this.$.AjaxGet.params.cursor = event.detail.response.cursor;
@@ -156,14 +174,6 @@
 					ajaxGet.params = { 'pratilipiId':this.pratilipiId, 'cursor':this.cursor };
 				} else {
 					this.isFinished = true;
-				}
-				
-				// Removing userpratilipi from reviewList.
-				for( var i = 0; i < this.reviewList.length; i++ ) {
-					if( this.reviewList[i].userPratilipiId === this.userPratilipiId ) {
-						this.reviewList.splice( i, 1 );
-						break;
-					}
 				}
 			}
 

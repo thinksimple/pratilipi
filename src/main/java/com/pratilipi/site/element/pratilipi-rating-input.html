@@ -54,7 +54,7 @@
 			},
 			
 			init: function() {
-				if( this.value == undefined || this.value == 0 )
+				if( this.value == null || this.value == 0 )
 					this.title = '${ _strings.rate_this }';
 				else
 					this.title = '${ _strings.your_rating }';

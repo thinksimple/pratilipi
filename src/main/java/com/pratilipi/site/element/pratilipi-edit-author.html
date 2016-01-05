@@ -137,12 +137,12 @@
 			},
 			
 			ready: function() {
-				if( this.author === undefined )
+				if( this.author == null )
 					return;
 				
 				this.set( 'params', this.author );
 				
-				this.summary = this.params.summary === undefined ? "" : this.params.summary;
+				this.summary = this.params.summary == null ? "" : this.params.summary;
 				
 			},
 			
@@ -161,7 +161,7 @@
 				else
 					this.params.summary = this.summary;
 				
-				if( this.params.birthday !== undefined )
+				if( this.params.birthday != null )
 					this.params.birthday = this.processBirthday( this.params.birthday );
 				
 				this.message = "Please Wait...";

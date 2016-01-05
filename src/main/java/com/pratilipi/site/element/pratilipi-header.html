@@ -244,7 +244,7 @@
 			
 			onSubmit: function( event ) {
 				var searchResult = jQuery( '#SearchResult' )[0];
-				if( searchResult != undefined ) {
+				if( searchResult != null ) {
 					jQuery( searchResult ).attr( 'search-query', this.query.trim() );
 					searchResult.reset();
 					event.preventDefault();

@@ -50,19 +50,13 @@
 			</div>
 			
 			<div style="margin-bottom: 20px;">
+				<span style="display: block;" class="text-center">{{ message }}</span>
 				<button type="button" class="pratilipi-light-blue-button" on-click="onSubmit">${ _strings.submit_review }</button>
 				<button type="button" class="pratilipi-grey-button" on-click="close">Cancel</button>
-				<span class="text-center">{{ message }}</span>
 			</div>
 
 		</iron-collapse>
 		
-		<br class="pratilipi-break"/>
-
-		<iron-collapse id="ReviewCollapse">
-			<pratilipi-review review="{{ userpratilipi }}"></pratilipi-review>
-		</iron-collapse>
-
 		<iron-ajax
 				id="AjaxPut"
 				url="/api/userpratilipi"
@@ -98,41 +92,22 @@
 			
 			_userpratilipiChangeObserver: function() {
 				
-				if( this.userpratilipi === null )
+				if( this.userpratilipi == null )
 					return;
 				
-				if( ! this.userpratilipi.pratilipiId )
-					this.close();
+				this.set( 'params', this.userpratilipi );
 				
-				this.set( 'params.reviewTitle', this.userpratilipi.reviewTitle );
-				
-				if( this.userpratilipi.review )
-					this.set( 'params.review', this.userpratilipi.review );
-				else
-					this.set( 'params.review', "" );
-				
-				if( this.userpratilipi.rating ) {
-					this.set( 'params.rating', this.userpratilipi.rating );
-					this.set( 'ratingValue', this.userpratilipi.rating );
-					this.querySelector( 'pratilipi-rating-input' ).setRating( this.userpratilipi.rating );
-				}
-				else
-					this.set( 'params.rating', 0 );
 			},
 			
 			open: function() {
 				if( ! this.$.ReviewInputCollapse.opened )
 					this.$.ReviewInputCollapse.toggle();
-				if( this.$.ReviewCollapse.opened )
-					this.$.ReviewCollapse.toggle();
 			},
 			
 			close: function() {
 				this.isactive = false;
 				if( this.$.ReviewInputCollapse.opened )
 					this.$.ReviewInputCollapse.toggle();
-				if( ! this.$.ReviewCollapse.opened && this.userpratilipi.review )
-					this.$.ReviewCollapse.toggle();
 			},
 			
 			onSubmit: function() {
@@ -151,11 +126,10 @@
 					
 				this.params.rating = this.ratingValue;
 				
-				if( this.params.reviewTitle !== undefined && this.params.review === undefined ) {
+				if( this.params.reviewTitle != null && this.params.review == null ) {
 					this.message = "Please enter the review.";
 					return;
 				}
-				
 				this.$.AjaxPut.body = JSON.stringify( this.params );
 				this.$.AjaxPut.generateRequest();
 			},

@@ -109,12 +109,12 @@
 			},
 			
 			ready: function() {
-				if( this.pratilipi === undefined )
+				if( this.pratilipi == null )
 					return;
 				
 				this.set( 'params', this.pratilipi );
 				
-				this.summary = this.params.summary === undefined ? "" : this.params.summary;
+				this.summary = this.params.summary == null ? "" : this.params.summary;
 				
 				if( this.params.type.toUpperCase() === "BOOK" )
 					this.selected = 0;
@@ -150,7 +150,7 @@
 					return;
 				}
 				
-				if( this.params.type === undefined ) {
+				if( this.params.type == null ) {
 					this.message = "Please select the type.";
 					return;
 				}

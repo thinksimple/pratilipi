@@ -32,7 +32,7 @@
 			_userChangeObserver: function() {
 				if( this.user.isGuest ) {
 					this.set( 'userpratilipi', {} );
-				} else {
+				} else if( this.pratilipiId != null ) {
 					var ajaxGet = this.$.AjaxGet;
 					ajaxGet.params.pratilipiId = this.pratilipiId;
 					ajaxGet.generateRequest();

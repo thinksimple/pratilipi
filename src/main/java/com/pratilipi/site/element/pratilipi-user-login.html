@@ -137,8 +137,8 @@
 				this.defaultMessages();
 				jQuery( '#loginButton' ).prop( 'disabled', false );
 				if( event.detail.request.xhr.status == 400 ) {
-					this.message = event.detail.request.xhr.response.email !== undefined ? event.detail.request.xhr.response.email : "Invalid Email!"; 
-					this.message = event.detail.request.xhr.response.message !== undefined ? event.detail.request.xhr.response.message : "Invalid Credentials!";
+					this.message = event.detail.request.xhr.response.email != null ? event.detail.request.xhr.response.email : "Invalid Email!"; 
+					this.message = event.detail.request.xhr.response.message != null ? event.detail.request.xhr.response.message : "Invalid Credentials!";
 				} else {
 					if( event.detail.request.xhr.response !== null )
 						this.message = event.detail.request.xhr.response.message;
