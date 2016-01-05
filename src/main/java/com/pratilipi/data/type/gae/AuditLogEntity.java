@@ -37,7 +37,7 @@ public class AuditLogEntity implements AuditLog {
 	private Text eventDataNew;
 	
 	@Persistent( column = "EVENT_COMMENT" )
-	private String eventComment;
+	private Text eventComment;
 	
 	@Persistent( column = "CREATION_DATE" )
 	private Date creationDate;
@@ -60,7 +60,9 @@ public class AuditLogEntity implements AuditLog {
 
 	@Override
 	public AccessType getAccessType() {
-		return accessType == null ? AccessType.valueOf( eventId ) : accessType;
+		if( accessType == null )
+			accessType = AccessType.valueOf( eventId );
+		return accessType;
 	}
 
 	@Override
@@ -90,12 +92,12 @@ public class AuditLogEntity implements AuditLog {
 
 	@Override
 	public String getEventComment() {
-		return eventComment;
+		return eventComment == null ? null : eventComment.getValue();
 	}
 
 	@Override
 	public void setEventComment( String eventComment ) {
-		this.eventComment = eventComment;
+		this.eventComment = eventComment == null ? null : new Text( eventComment );
 	}
 
 	@Override
