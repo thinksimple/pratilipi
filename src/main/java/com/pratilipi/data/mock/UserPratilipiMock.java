@@ -14,7 +14,7 @@ public class UserPratilipiMock {
 
 	public static final List<UserPratilipi> USER_PRATILIPI_TABLE = new LinkedList<>();
 
-	public static final UserPratilipi user_pratilipi_1 = new UserPratilipiEntity( user_1.getId(), hiPratilipi_1.getId() );
+	public static final UserPratilipi user_pratilipi_1 = new UserPratilipiEntity( user_1.getId(), taPratilipi_1.getId() );
 	public static final UserPratilipi user_pratilipi_2 = new UserPratilipiEntity( user_2.getId(), hiPratilipi_1.getId() );
 	public static final UserPratilipi user_pratilipi_3 = new UserPratilipiEntity( user_3.getId(), hiPratilipi_1.getId() );
 
