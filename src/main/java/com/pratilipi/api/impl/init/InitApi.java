@@ -83,7 +83,7 @@ public class InitApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		String cursor = null;
 		int count = 0;
-		do {
+		while( true) {
 			DataListCursorTuple<User> userListCursorTuple = dataAccessor.getUserList( cursor, 100 );
 			List<User> userList = userListCursorTuple.getDataList();
 			cursor = userListCursorTuple.getCursor();
@@ -95,7 +95,8 @@ public class InitApi extends GenericApi {
 					count++;
 				}
 			}
-		} while( cursor != null );
+			if( cursor == null || userList.size() < 100 ) break;
+		}
 		logger.log( Level.INFO, "Updated " + count + " user records." );
 		
 		
