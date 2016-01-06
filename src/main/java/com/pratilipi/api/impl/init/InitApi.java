@@ -73,7 +73,7 @@ public class InitApi extends GenericApi {
 			for( Author author : authorList ) {
 				if( author.getUserId() != null ) {
 					User user = dataAccessor.getUser( author.getUserId() );
-					if( author.getEmail().equals( user.getEmail() ) )
+					if( ! author.getEmail().equals( user.getEmail() ) )
 						logger.log( Level.SEVERE, "Author email " + author.getEmail() + " doesn't match with user email " + user.getEmail() );
 				}
 			}
