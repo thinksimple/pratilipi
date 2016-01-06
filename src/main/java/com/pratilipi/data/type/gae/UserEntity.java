@@ -206,8 +206,10 @@ public class UserEntity implements User {
 	@SuppressWarnings("deprecation")
 	@Override
 	public UserState getState() {
-		
-		if( state == null ) {
+
+		if( campaign != null && campaign.equals( "Publisher:5684064812007424" ) ) {
+			state = UserState.DELETED;
+		} else if( state == null && status != null ) {
 			switch( status ) {
 				case PRELAUNCH_REFERRAL:
 				case POSTLAUNCH_REFERRAL:
@@ -268,7 +270,9 @@ public class UserEntity implements User {
 	@Override
 	public UserSignUpSource getSignUpSource() {
 
-		if( signUpSource == null && status != null ) {
+		if( campaign != null && campaign.equals( "Publisher:5684064812007424" ) ) {
+			signUpSource = null;
+		} else if( signUpSource == null && status != null ) {
 			switch( status ) {
 				case PRELAUNCH_REFERRAL:
 				case PRELAUNCH_SIGNUP:
@@ -300,6 +304,14 @@ public class UserEntity implements User {
 	@Override
 	public void setSignUpSource( UserSignUpSource signUpSource ) {
 		this.signUpSource = signUpSource;
+	}
+	
+	
+	public boolean isUpdateRequired() {
+		return ( campaign != null && campaign.equals( "Publisher:5684064812007424" ) && state != UserState.DELETED )
+				|| ( campaign != null && campaign.equals( "Publisher:5684064812007424" ) && signUpSource != null )
+				|| state == null
+				|| signUpSource == null;
 	}
 	
 }

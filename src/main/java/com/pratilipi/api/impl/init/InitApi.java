@@ -13,6 +13,7 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.gae.UserEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -86,15 +87,16 @@ public class InitApi extends GenericApi {
 			DataListCursorTuple<User> userListCursorTuple = dataAccessor.getUserList( cursor, 100 );
 			List<User> userList = userListCursorTuple.getDataList();
 			cursor = userListCursorTuple.getCursor();
-			count = count + userList.size();
 			for( User user : userList ) {
-				user.getState();
-				user.getSignUpSource();
-				dataAccessor.createOrUpdateUser( user );
+				if( ( ( UserEntity ) user ).isUpdateRequired() ) {
+					user.getState();
+					user.getSignUpSource();
+					dataAccessor.createOrUpdateUser( user );
+					count++;
+				}
 			}
 		} while( cursor != null );
-		
-		logger.log( Level.INFO, "Checked " + count + " author records." );
+		logger.log( Level.INFO, "Updated " + count + " user records." );
 		
 		
 		return new GenericResponse();
