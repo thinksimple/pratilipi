@@ -1,5 +1,11 @@
 <datastore-indexes autoGenerate="false">
 
+	<datastore-index kind="USER" ancestor="false" source="manual">
+		<property name="EMAIL" direction="asc"/>
+		<property name="STATE" direction="asc"/>
+		<property name="SIGN_UP_DATE" direction="asc"/>
+	</datastore-index>
+
 	<datastore-index kind="ACCESS_TOKEN" ancestor="false" source="manual">
 		<property name="USER_ID" direction="asc"/>
 		<property name="EXPIRY" direction="asc"/>
