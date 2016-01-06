@@ -88,10 +88,10 @@
 				var title = this.pratilipi.title;
 				heading.text( title );
 				var len = title.length;
-				while( heading.height() > 62 && len > 1 ) {
+				while( heading.height() >= 16 ) {
 					len = len - 1;
-					heading.text( title.substring( 0, len - 20 ).trim() + "..." );
-				}	
+					heading.text( title.substring( 0, len - 3 ).trim() + "..." );
+				}
 			}
 		});
 
