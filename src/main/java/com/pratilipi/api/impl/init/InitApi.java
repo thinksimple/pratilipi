@@ -66,7 +66,7 @@ public class InitApi extends GenericApi {
 		int count = 0;
 		do {
 			DataListCursorTuple<Author> authorListCursorTuple =
-					dataAccessor.getAuthorList( new AuthorFilter(), null, 100 );
+					dataAccessor.getAuthorList( new AuthorFilter(), cursor, 100 );
 			List<Author> authorList = authorListCursorTuple.getDataList();
 			cursor = authorListCursorTuple.getCursor();
 			count = count + authorList.size();
