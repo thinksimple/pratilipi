@@ -239,8 +239,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AccessTokenEntity.class ) );
 		if( userId != null )
 			gaeQueryBuilder.addFilter( "userId", userId );
-		if( minExpiry != null )
+		if( minExpiry != null ) {
 			gaeQueryBuilder.addFilter( "expiry", minExpiry, Operator.GREATER_THAN_OR_EQUAL );
+			gaeQueryBuilder.addOrdering( "expiry", true );
+		}
 		gaeQueryBuilder.addOrdering( "creationDate", true );
 
 		if( resultCount != null )
