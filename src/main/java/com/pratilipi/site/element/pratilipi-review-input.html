@@ -96,6 +96,9 @@
 					return;
 				
 				this.set( 'params', this.userpratilipi );
+
+				if( this.userpratilipi.rating != null )
+					this.querySelector( 'pratilipi-rating-input' ).setRating( this.userpratilipi.rating );
 				
 			},
 			
@@ -108,6 +111,10 @@
 				this.isactive = false;
 				if( this.$.ReviewInputCollapse.opened )
 					this.$.ReviewInputCollapse.toggle();
+			},
+			
+			deleteReview: function() {
+				// TODO: Change state and make PUT call.
 			},
 			
 			onSubmit: function() {
@@ -126,7 +133,7 @@
 					
 				this.params.rating = this.ratingValue;
 				
-				if( this.params.reviewTitle != null && this.params.review == null ) {
+				if( this.params.review == null || this.params.review.trim() === "" ) {
 					this.message = "Please enter the review.";
 					return;
 				}

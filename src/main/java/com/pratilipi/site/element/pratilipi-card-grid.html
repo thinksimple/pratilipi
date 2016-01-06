@@ -30,6 +30,13 @@
 			padding-right: 0px;
 		}
 		
+		paper-spinner.pratilipi-spinner {
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
+		
 	</style>
 
 	
@@ -60,8 +67,11 @@
 					<pratilipi-card pratilipi="{{ pratilipi }}"></pratilipi-card>
 				</div>
 			</template>
-		</div>		
-			
+		</div>
+		
+		<template is="dom-if" if="{{ isLoading }}">
+			<paper-spinner class="pratilipi-spinner" active></paper-spinner>
+		</template>
 		
 		<iron-ajax
 				id="AjaxGet"

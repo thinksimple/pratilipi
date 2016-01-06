@@ -81,11 +81,11 @@
 				if( this.value == 5.0 )
 					jQuery( stars[4] ).addClass( 'full' );
 
-				if( this.value % 1 > 0.66 )
+				if( this.value % 1 > 0.6 )
 					jQuery( stars[Math.floor( this.value)] ).addClass( 'two-third' );
 				else if( this.value % 1 >= 0.5 )
 					jQuery( stars[Math.floor( this.value)] ).addClass( 'half' );
-				else if( this.value % 1 >= 0.33 )
+				else if( this.value % 1 >= 0.3 )
 					jQuery( stars[Math.floor( this.value)] ).addClass( 'one-third' );
 			}
 

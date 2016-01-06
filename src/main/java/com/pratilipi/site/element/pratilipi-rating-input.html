@@ -82,7 +82,7 @@
 			},
 			
 			setRating: function( value ) {
-				this.value = value;
+				this.set( 'value', value );
 				this.setStar( this.value );
 				this.init();
 			},
@@ -141,8 +141,7 @@
 			},
 
 			ready: function() {
-				this.setStar( this.value );
-				this.init();
+				this.setRating( 0 );
 			}
 
 		});

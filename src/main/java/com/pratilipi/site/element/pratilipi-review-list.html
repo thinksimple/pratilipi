@@ -24,6 +24,32 @@
 		paper-card a {
 			margin-bottom: 6px;
 		}
+		
+		.modal {
+			text-align: center;
+		}
+
+		@media screen { 
+			.modal:before {
+				display: inline-block;
+				vertical-align: middle;
+				content: " ";
+				height: 100%;
+			}
+		}
+
+		.modal-dialog {
+			display: inline-block;
+			text-align: left;
+			vertical-align: middle;
+		}
+		
+		paper-spinner.pratilipi-spinner {
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
 
 	</style>
 
@@ -32,7 +58,15 @@
 		<paper-card>
 			<h3 style="color: #D0021B;">${ _strings.reviews }</h3>
 			<template is="dom-if" if="{{ !isactive }}">
-				<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.write_a_review }</a>
+				<template is="dom-if" if="{{ !reviewAvailable }}">
+					<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.write_a_review }</a>
+				</template>
+				<template is="dom-if" if="{{ reviewAvailable }}">
+					<div style="white-space: nowrap; display: inline-block;">
+						<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">Edit Review</a>
+						<a class="pratilipi-grey-button" role="button" on-click="openDeleteReview">Delete Review</a>
+					</div>
+				</template>
 			</template>
 		</paper-card>
 		
@@ -45,20 +79,49 @@
 				></pratilipi-review-input>
 		
 		<div class="row">
-			<template is="dom-if" if="{{ userpratilipi.review }}">
+			<!-- <template is="dom-if" if="{{ userpratilipi.review }}">
 				<template is="dom-if" if="{{ !isactive }}">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<pratilipi-review review="{{ userpratilipi }}"></pratilipi-review>
 					</div>
 				</template>
-			</template>
+			</template> -->
 			<template is="dom-repeat" items="[[reviewList]]">
-				<template is="dom-if" if="{{ _check(item) }}">
+				<!-- <template is="dom-if" if="{{ _check(item) }}">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<pratilipi-review review="{{ item }}"></pratilipi-review>
 					</div>
-				</template>
+				</template> -->
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<pratilipi-review review="{{ item }}"></pratilipi-review>
+				</div>
 			</template>	
+		</div>
+		<template is="dom-if" if="{{ isLoading }}">
+			<paper-spinner class="pratilipi-spinner" active></paper-spinner>
+		</template>
+		
+		<div class="modal fade" id="deleteReview">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<span>Sure to Delete Review?</span>
+						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+					</div>
+					<div class="modal-body">
+						Are you sure to delete the review? You are a dumbass!
+						
+						<div style="margin-top: 5px; min-height: 20px;" class="text-center">
+							<span>{{ message }}</span>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="deleteReviewButton" style="float: left; outline: none;" class="btn btn-danger" on-click="deleteReview">Okay</button>
+						<div style="display: inline-block; min-width: 40px;" ></div>
+						<button style="float: right; outline: none;" class="btn btn-primary" on-click="closeDeleteReview">Cancel</button>
+					</div>
+				</div>
+			</div>
 		</div>
 		
 
@@ -94,11 +157,12 @@
 				isFinished: { type: Boolean, value: false },
 				
 				reviewButtonClicked: { type: Boolean, value: false },
-				isactive: { type: Boolean, value: false }
+				isactive: { type: Boolean, value: false },
+				
+				reviewAvailable: { type: Boolean, value: false }
 			},
 			
 			_check: function( review ) {
-				
 				if( review.userPratilipiId === this.userpratilipi.userPratilipiId )
 					return false;
 				else
@@ -114,8 +178,29 @@
 			},
 			
 			_userPratilipiChanged: function() {				
-				if( this.reviewList == null ) 
-					return;
+				if( this.userpratilipi != null && this.userpratilipi.review != null )
+					this.reviewAvailable = true;
+				else
+					this.reviewAvailable = false;
+			},
+			
+			openDeleteReview: function( val ) {
+				jQuery( "#deleteReview" ).modal();
+			},
+			
+			closeDeleteReview: function() {
+				jQuery( "#deleteReview" ).modal( 'hide' );
+			},
+			
+			deleteReview: function() {
+				this.message = "Please Wait";
+				this.querySelector( 'pratilipi-review-input' ).deleteReview();
+				jQuery( '#deleteReviewButton' ).prop( 'disabled', true );
+				this.async( function() {
+					jQuery( '#deleteReviewButton' ).prop( 'disabled', false );
+					this.message = null;
+					this.closeDeleteReview();
+				}, 1000 );
 			},
 			
 			showReviewInput: function() {
