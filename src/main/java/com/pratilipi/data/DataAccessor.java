@@ -1,5 +1,6 @@
 package com.pratilipi.data;
 
+import java.util.Date;
 import java.util.List;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -39,6 +40,7 @@ public interface DataAccessor {
 	AccessToken newAccessToken();
 	AccessToken getAccessToken( String accessTokenId );
 	DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount );
+	DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount );
 	AccessToken createOrUpdateAccessToken( AccessToken accessToken );
 	AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken );
 	void deleteAccessToken( AccessToken accessToken );

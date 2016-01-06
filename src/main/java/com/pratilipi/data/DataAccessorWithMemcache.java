@@ -181,8 +181,14 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return accessToken;
 	}
 	
+	@Override
 	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
 		return dataAccessor.getAccessTokenList( cursorStr, resultCount );
+	}
+
+	@Override
+	public DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount ) {
+		return dataAccessor.getAccessTokenList( userId, minExpiry, cursorStr, resultCount );
 	}
 
 	@Override

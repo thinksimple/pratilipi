@@ -231,7 +231,16 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
+		return getAccessTokenList( null, null, cursorStr, resultCount );
+	}
+	
+	@Override
+	public DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount ) {
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AccessTokenEntity.class ) );
+		if( userId != null )
+			gaeQueryBuilder.addFilter( "userId", userId );
+		if( minExpiry != null )
+			gaeQueryBuilder.addFilter( "expiry", minExpiry, Operator.GREATER_THAN_OR_EQUAL );
 		gaeQueryBuilder.addOrdering( "creationDate", true );
 
 		if( resultCount != null )

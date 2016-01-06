@@ -6,6 +6,7 @@ import static com.pratilipi.data.mock.PratilipiMock.PRATILIPI_TABLE;
 import static com.pratilipi.data.mock.UserPratilipiMock.USER_PRATILIPI_TABLE;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -172,6 +173,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+	@Override
+	public DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount ) {
 		// TODO: Implementation
 		return null;
 	}

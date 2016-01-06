@@ -2,6 +2,9 @@ package com.pratilipi.filter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -25,15 +28,20 @@ import com.pratilipi.data.util.AccessTokenDataUtil;
 
 public class AccessTokenFilter implements Filter {
 	
+	private static final Logger logger = Logger.getLogger( AccessTokenFilter.class.getName() );
+
 	private static final ThreadLocal<AccessToken> threadLocalAccessToken = new ThreadLocal<AccessToken>();
 
 	private static boolean autoGenerate;
+	private static Long runAsUserId;
 	
 	
 	@Override
 	public void init( FilterConfig config ) throws ServletException {
 		String autoGenerateParam = config.getInitParameter( "AutoGenerate" );
 		autoGenerate = autoGenerateParam != null && autoGenerateParam.equalsIgnoreCase( "true" );
+		String runAsParam = config.getInitParameter( "RunAs" );
+		runAsUserId = runAsParam == null ? null : Long.parseLong( runAsParam );
 	}
 
 	@Override
@@ -53,7 +61,7 @@ public class AccessTokenFilter implements Filter {
 		String accessTokenId = request.getParameter( RequestParameter.ACCESS_TOKEN.getName() );
 		AccessToken accessToken;
 
-		if( autoGenerate ) {
+		if( autoGenerate ) { // Used by gamma, default & api modules.
 		
 			if( accessTokenId == null || accessTokenId.isEmpty() )
 				accessTokenId = getCookieValue( RequestCookie.ACCESS_TOKEN.getName(), request );
@@ -64,6 +72,7 @@ public class AccessTokenFilter implements Filter {
 				try {
 					accessToken = AccessTokenDataUtil.renewUserAccessToken( accessTokenId );
 				} catch( InvalidArgumentException e ) {
+					logger.log( Level.SEVERE, "", e );
 					accessToken = AccessTokenDataUtil.newUserAccessToken();
 				}
 			}
@@ -73,12 +82,21 @@ public class AccessTokenFilter implements Filter {
 				setCookieValue( RequestCookie.ACCESS_TOKEN.getName(), accessTokenId, response );
 			}
 			
-		} else if( requestUri.equals( "/user/accesstoken" ) ) {
+		} else if( runAsUserId != null ) { // Used by worker module.
+
+			accessToken = dataAccessor.getAccessTokenList( runAsUserId, new Date(), null, 1 ).getDataList().get( 0 );
+			try {
+				accessToken = AccessTokenDataUtil.renewUserAccessToken( accessToken.getId() );
+			} catch( InvalidArgumentException e ) {
+				// Do Nothing.
+			}
+			
+		} else if( requestUri.equals( "/user/accesstoken" ) ) { // Used by android module.
 			
 			chain.doFilter( request, response );
 			return;
 	
-		} else {
+		} else { // Used by android module.
 
 			if( accessTokenId == null ) {
 				dispatchResposne( response, new InvalidArgumentException( "Access Token is missing." ) );
