@@ -206,23 +206,25 @@ public class UserEntity implements User {
 	@SuppressWarnings("deprecation")
 	@Override
 	public UserState getState() {
-		if( state != null )
-			return state;
 		
-		switch( status ) {
-			case PRELAUNCH_REFERRAL:
-			case POSTLAUNCH_REFERRAL:
-				return UserState.REFERRAL;
-			case PRELAUNCH_SIGNUP:
-			case POSTLAUNCH_SIGNUP:
-			case POSTLAUNCH_SIGNUP_SOCIALLOGIN:
-			case ANDROID_SIGNUP:
-			case ANDROID_SIGNUP_FACEBOOK:
-			case ANDROID_SIGNUP_GOOGLE:
-				return UserState.REGISTERED;
-			default:
-				return null;
+		if( state == null ) {
+			switch( status ) {
+				case PRELAUNCH_REFERRAL:
+				case POSTLAUNCH_REFERRAL:
+					state = UserState.REFERRAL;
+					break;
+				case PRELAUNCH_SIGNUP:
+				case POSTLAUNCH_SIGNUP:
+				case POSTLAUNCH_SIGNUP_SOCIALLOGIN:
+				case ANDROID_SIGNUP:
+				case ANDROID_SIGNUP_FACEBOOK:
+				case ANDROID_SIGNUP_GOOGLE:
+					state = UserState.REGISTERED;
+					break;
+			}
 		}
+		
+		return state;
 		
 	}
 	
@@ -265,30 +267,34 @@ public class UserEntity implements User {
 	@SuppressWarnings("deprecation")
 	@Override
 	public UserSignUpSource getSignUpSource() {
-		if( signUpSource != null )
-			return signUpSource;
-		
-		if( status == null )
-			return null;
-		
-		switch( status ) {
-			case PRELAUNCH_REFERRAL:
-			case PRELAUNCH_SIGNUP:
-				return UserSignUpSource.PRE_LAUNCH_WEBSITE;
-			case POSTLAUNCH_REFERRAL:
-			case POSTLAUNCH_SIGNUP:
-				return UserSignUpSource.WEBSITE;
-			case POSTLAUNCH_SIGNUP_SOCIALLOGIN:
-				return UserSignUpSource.WEBSITE_FACEBOOK;
-			case ANDROID_SIGNUP:
-				return UserSignUpSource.ANDROID_APP;
-			case ANDROID_SIGNUP_FACEBOOK:
-				return UserSignUpSource.ANDROID_APP_FACEBOOK;
-			case ANDROID_SIGNUP_GOOGLE:
-				return UserSignUpSource.ANDROID_APP_GOOGLE;
+
+		if( signUpSource == null && status != null ) {
+			switch( status ) {
+				case PRELAUNCH_REFERRAL:
+				case PRELAUNCH_SIGNUP:
+					signUpSource = UserSignUpSource.PRE_LAUNCH_WEBSITE;
+					break;
+				case POSTLAUNCH_REFERRAL:
+				case POSTLAUNCH_SIGNUP:
+					signUpSource = UserSignUpSource.WEBSITE;
+					break;
+				case POSTLAUNCH_SIGNUP_SOCIALLOGIN:
+					signUpSource = UserSignUpSource.WEBSITE_FACEBOOK;
+					break;
+				case ANDROID_SIGNUP:
+					signUpSource = UserSignUpSource.ANDROID_APP;
+					break;
+				case ANDROID_SIGNUP_FACEBOOK:
+					signUpSource = UserSignUpSource.ANDROID_APP_FACEBOOK;
+					break;
+				case ANDROID_SIGNUP_GOOGLE:
+					signUpSource = UserSignUpSource.ANDROID_APP_GOOGLE;
+					break;
+			}
 		}
 		
-		return null;
+		return signUpSource;
+		
 	}
 	
 	@Override

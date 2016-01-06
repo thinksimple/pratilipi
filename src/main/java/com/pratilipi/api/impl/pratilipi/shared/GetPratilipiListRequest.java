@@ -13,6 +13,8 @@ public class GetPratilipiListRequest extends GenericRequest {
 	private PratilipiType type;
 	private PratilipiState state;
 
+	private Boolean orderByLastUpdated;
+
 	private String cursor;
 	private Integer resultCount;
 	private Boolean includeSummaryAndIndex;
@@ -39,6 +41,11 @@ public class GetPratilipiListRequest extends GenericRequest {
 	}
 
 	
+	public Boolean getOrderByLastUpdate() {
+		return orderByLastUpdated;
+	}
+
+
 	public String getCursor() {
 		return cursor;
 	}

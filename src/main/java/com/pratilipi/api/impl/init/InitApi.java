@@ -9,11 +9,9 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 
 @SuppressWarnings("serial")
@@ -59,9 +57,8 @@ public class InitApi extends GenericApi {
 		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
 */
-
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+/*		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		String cursor = null;
 		int count = 0;
 		do {
@@ -76,6 +73,24 @@ public class InitApi extends GenericApi {
 					if( ! author.getEmail().equals( user.getEmail() ) )
 						logger.log( Level.SEVERE, "Author email " + author.getEmail() + " doesn't match with user email " + user.getEmail() );
 				}
+			}
+		} while( cursor != null );
+		
+		logger.log( Level.INFO, "Checked " + count + " author records." );
+*/
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		String cursor = null;
+		int count = 0;
+		do {
+			DataListCursorTuple<User> userListCursorTuple = dataAccessor.getUserList( cursor, 100 );
+			List<User> userList = userListCursorTuple.getDataList();
+			cursor = userListCursorTuple.getCursor();
+			count = count + userList.size();
+			for( User user : userList ) {
+				user.getState();
+				user.getSignUpSource();
+				dataAccessor.createOrUpdateUser( user );
 			}
 		} while( cursor != null );
 		

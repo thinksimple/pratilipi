@@ -28,6 +28,7 @@ public class PratilipiListApi extends GenericApi {
 		pratilipiFilter.setLanguage( request.getLanguage() );
 		pratilipiFilter.setType( request.getType() );
 		pratilipiFilter.setState( request.getState() );
+		pratilipiFilter.setOrderByLastUpdate( request.getOrderByLastUpdate() );
 		
 		DataListCursorTuple<PratilipiData> pratilipiListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList(
