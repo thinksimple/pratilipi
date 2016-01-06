@@ -145,6 +145,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		Query query = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) )
 				.addFilter( "email", email )
 				.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS )
+				.addOrdering( "state", true )
 				.addOrdering( "signUpDate", true )
 				.build();
 		
@@ -162,6 +163,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		Query query = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) )
 				.addFilter( "facebookId", facebookId )
 				.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS )
+				.addOrdering( "state", true )
 				.addOrdering( "signUpDate", true )
 				.build();
 		
@@ -506,6 +508,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
 				.addFilter( "email", email )
 				.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS )
+				.addOrdering( "state", true )
 				.addOrdering( "registrationDate", true )
 				.build();
 
@@ -523,6 +526,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
 				.addFilter( "userId", userId )
 				.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS )
+				.addOrdering( "state", true )
 				.addOrdering( "registrationDate", true )
 				.build();
 		
