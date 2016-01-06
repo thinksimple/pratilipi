@@ -1,5 +1,11 @@
 <datastore-indexes autoGenerate="false">
 
+	<datastore-index kind="ACCESS_TOKEN" ancestor="false" source="manual">
+		<property name="USER_ID" direction="asc"/>
+		<property name="EXPIRY" direction="asc"/>
+		<property name="CREATION_DATE" direction="asc"/>
+	</datastore-index>
+
 	<datastore-index kind="AUDIT_LOG" ancestor="false" source="manual">
 		<property name="ACCESS_ID" direction="asc"/>
 		<property name="CREATION_DATE" direction="desc"/>
