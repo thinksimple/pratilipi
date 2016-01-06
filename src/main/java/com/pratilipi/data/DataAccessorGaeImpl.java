@@ -149,7 +149,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.build();
 		
 		@SuppressWarnings("unchecked")
-		List<User> userList = (List<User>) query.execute( email );
+		List<User> userList = (List<User>) query.execute( email, UserState.DELETED );
 
 		if( userList.size() > 1 )
 			logger.log( Level.SEVERE, userList.size() + " Users found with Email Id " + email   + " ." );
@@ -166,7 +166,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.build();
 		
 		@SuppressWarnings("unchecked")
-		List<User> userList = (List<User>) query.execute( facebookId );
+		List<User> userList = (List<User>) query.execute( facebookId, UserState.DELETED );
 
 		if( userList.size() > 1 )
 			logger.log( Level.SEVERE, userList.size() + " Users found with facebook Id " + facebookId   + " ." );
@@ -510,7 +510,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.build();
 
 		@SuppressWarnings("unchecked")
-		List<Author> authorList = (List<Author>) query.execute( email );
+		List<Author> authorList = (List<Author>) query.execute( email, AuthorState.DELETED );
 
 		if( authorList.size() > 1 )
 			logger.log( Level.SEVERE, authorList.size() + " Authors found with Email Id " + email   + " ." );
@@ -527,7 +527,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.build();
 		
 		@SuppressWarnings("unchecked")
-		List<Author> authorList = (List<Author>) query.execute( userId );
+		List<Author> authorList = (List<Author>) query.execute( userId, AuthorState.DELETED );
 		
 		if( authorList.size() > 1 )
 			logger.log( Level.SEVERE, authorList.size() + " Authors found with User Id " + userId + " ." );
