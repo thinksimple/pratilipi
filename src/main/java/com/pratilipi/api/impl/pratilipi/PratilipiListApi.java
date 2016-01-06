@@ -9,7 +9,6 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListRequest;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
-import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataListCursorTuple;
@@ -25,9 +24,9 @@ public class PratilipiListApi extends GenericApi {
 			throws InsufficientAccessException {
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setType( request.getType() );
-		pratilipiFilter.setLanguage( request.getLanguage() );
 		pratilipiFilter.setAuthorId( request.getAuthorId() );
+		pratilipiFilter.setLanguage( request.getLanguage() );
+		pratilipiFilter.setType( request.getType() );
 		pratilipiFilter.setState( request.getState() );
 		
 		DataListCursorTuple<PratilipiData> pratilipiListCursorTuple =
@@ -38,12 +37,15 @@ public class PratilipiListApi extends GenericApi {
 						request.getCursor(),
 						request.getResultCount() == null ? 20 : request.getResultCount() );
 
-		List<GenericPratilipiResponse> pratilipiResponseList =
+		
+		// Preparing & returning response object.
+		
+		List<GetPratilipiListResponse.Pratilipi> pratilipiResponseList =
 				new ArrayList<>( pratilipiListCursorTuple.getDataList().size() );
 		
 		Gson gson = new Gson();
 		for( PratilipiData pratilipiData : pratilipiListCursorTuple.getDataList() )
-			pratilipiResponseList.add( gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class ) );
+			pratilipiResponseList.add( gson.fromJson( gson.toJson( pratilipiData ), GetPratilipiListResponse.Pratilipi.class ) );
 		
 		return new GetPratilipiListResponse(
 				pratilipiResponseList,

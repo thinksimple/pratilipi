@@ -1,29 +1,31 @@
 package com.pratilipi.common.util;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
-public class PratilipiFilter implements Serializable {
+public class PratilipiFilter {
 	
-	private static final long serialVersionUID = 1505314094311320037L;
-
-	
-	private Language language;
-
 	private Long authorId;
-
+	private Language language;
 	private PratilipiType type;
-
 	private PratilipiState state;
 	
 	private Date nextProcessDateEnd;
 
 	private Boolean orderByReadCount;
+	private Boolean orderByLastUpdated;
 	
+	
+	public Long getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId( Long authorId ) {
+		this.authorId = authorId;
+	}
 	
 	public Language getLanguage() {
 		return language;
@@ -33,14 +35,6 @@ public class PratilipiFilter implements Serializable {
 		this.language = language;
 	}
 
-	public Long getAuthorId() {
-		return authorId;
-	}
-
-	public void setAuthorId( Long authorId ) {
-		this.authorId = authorId;
-	}
-	
 	public PratilipiType getType() {
 		return type;
 	}
@@ -56,6 +50,7 @@ public class PratilipiFilter implements Serializable {
 	public void setState( PratilipiState state ) {
 		this.state = state;
 	}
+
 	
 	public Date getNextProcessDateEnd() {
 		return nextProcessDateEnd;
@@ -73,6 +68,14 @@ public class PratilipiFilter implements Serializable {
 		this.orderByReadCount = orderByReadCount;
 	}
 	
+	public Boolean getOrderByLastUpdate() {
+		return orderByLastUpdated;
+	}
+
+	public void setOrderByLastUpdate( Boolean orderByLastUpdated ) {
+		this.orderByLastUpdated = orderByLastUpdated;
+	}
+
 	
 	public String toUrlEncodedString() {
 		String urlEncodedString = "";

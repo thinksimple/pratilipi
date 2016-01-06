@@ -436,14 +436,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		GaeQueryBuilder gaeQueryBuilder =
 				new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
 
-		if( pratilipiFilter.getType() != null )
-			gaeQueryBuilder.addFilter( "type", pratilipiFilter.getType() );
-		if( pratilipiFilter.getLanguage() != null )
-			gaeQueryBuilder.addFilter( "language", pratilipiFilter.getLanguage() );
 		if( pratilipiFilter.getAuthorId() != null )
 			gaeQueryBuilder.addFilter( "authorId", pratilipiFilter.getAuthorId() );
+		if( pratilipiFilter.getLanguage() != null )
+			gaeQueryBuilder.addFilter( "language", pratilipiFilter.getLanguage() );
+		if( pratilipiFilter.getType() != null )
+			gaeQueryBuilder.addFilter( "type", pratilipiFilter.getType() );
 		if( pratilipiFilter.getState() != null )
 			gaeQueryBuilder.addFilter( "state", pratilipiFilter.getState() );
+
 		if( pratilipiFilter.getNextProcessDateEnd() != null ) {
 			gaeQueryBuilder.addFilter( "nextProcessDate", pratilipiFilter.getNextProcessDateEnd(), Operator.LESS_THAN_OR_EQUAL );
 			gaeQueryBuilder.addOrdering( "nextProcessDate", true );
@@ -451,6 +452,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		if( pratilipiFilter.getOrderByReadCount() != null )
 			gaeQueryBuilder.addOrdering( "readCount", pratilipiFilter.getOrderByReadCount() );
+		if( pratilipiFilter.getOrderByLastUpdate() != null )
+			gaeQueryBuilder.addOrdering( "lastUpdated", pratilipiFilter.getOrderByLastUpdate() );
 
 		if( resultCount != null )
 			gaeQueryBuilder.setRange( 0, resultCount );

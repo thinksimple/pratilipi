@@ -8,19 +8,13 @@ import com.pratilipi.common.type.PratilipiType;
 public class GetPratilipiListRequest extends GenericRequest {
 
 	private String searchQuery;
-	
-	private PratilipiType type;
-	
-	private Language language;
-	
 	private Long authorId;
-
+	private Language language;
+	private PratilipiType type;
 	private PratilipiState state;
 
 	private String cursor;
-	
 	private Integer resultCount;
-	
 	private Boolean includeSummaryAndIndex;
 
 	
@@ -28,26 +22,23 @@ public class GetPratilipiListRequest extends GenericRequest {
 		return searchQuery;
 	}
 
-	public void setSearchQuery( String searchQuery ) {
-		this.searchQuery = searchQuery;
-	}
-
-	public PratilipiType getType() {
-		return type;
+	public Long getAuthorId() {
+		return authorId;
 	}
 
 	public Language getLanguage() {
 		return language;
 	}
 
-	public Long getAuthorId() {
-		return authorId;
+	public PratilipiType getType() {
+		return type;
 	}
 
 	public PratilipiState getState() {
 		return state;
 	}
 
+	
 	public String getCursor() {
 		return cursor;
 	}

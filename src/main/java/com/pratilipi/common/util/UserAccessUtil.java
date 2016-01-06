@@ -10,12 +10,12 @@ public class UserAccessUtil {
 		GUEST			( null ),
 		MEMBER			( null,					AccessType.PRATILIPI_ADD_REVIEW ),
 
-		ADMIN_BENGALI	( Language.BENGALI,		AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
-		ADMIN_HINDI		( Language.HINDI,		AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
-		ADMIN_GUJARATI	( Language.GUJARATI,	AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
-		ADMIN_MALAYALAM	( Language.MALAYALAM,	AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
-		ADMIN_MARATHI	( Language.MARATHI,		AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
-		ADMIN_TAMIL		( Language.TAMIL,		AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
+		ADMIN_BENGALI	( Language.BENGALI,		AccessType.PRATILIPI_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
+		ADMIN_HINDI		( Language.HINDI,		AccessType.PRATILIPI_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
+		ADMIN_GUJARATI	( Language.GUJARATI,	AccessType.PRATILIPI_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
+		ADMIN_MALAYALAM	( Language.MALAYALAM,	AccessType.PRATILIPI_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
+		ADMIN_MARATHI	( Language.MARATHI,		AccessType.PRATILIPI_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
+		ADMIN_TAMIL		( Language.TAMIL,		AccessType.PRATILIPI_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
 		
 		ADMINISTRATOR	( null,					AccessType.values() );
 
