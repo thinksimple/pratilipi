@@ -98,7 +98,7 @@
 			</template>	
 		</div>
 		<template is="dom-if" if="{{ isLoading }}">
-			<paper-spinner class="pratilipi-spinner" active></paper-spinner>
+			<paper-spinner style="margin: 15px auto; display: block;" class="pratilipi-spinner" active></paper-spinner>
 		</template>
 		
 		<div class="modal fade" id="deleteReview">
@@ -109,8 +109,7 @@
 						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					<div class="modal-body">
-						Are you sure to delete the review? You are a dumbass!
-						
+						Are you sure to delete the review?
 						<div style="margin-top: 5px; min-height: 20px;" class="text-center">
 							<span>{{ message }}</span>
 						</div>
