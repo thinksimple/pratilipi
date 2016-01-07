@@ -7,7 +7,7 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.Page;
 
 @SuppressWarnings("unused")
-public class GenericUserLoginResponse extends GenericResponse {
+public class GenericUserResponse extends GenericResponse {
 	
 	private String displayName;
 	private String email;
@@ -20,7 +20,7 @@ public class GenericUserLoginResponse extends GenericResponse {
 	private String profilePageUrl;
 
 	
-	public GenericUserLoginResponse( UserData userData ) {
+	public GenericUserResponse( UserData userData ) {
 		this.displayName = userData.getDisplayName();
 		this.email = userData.getEmail();
 		this.state = userData.getState();

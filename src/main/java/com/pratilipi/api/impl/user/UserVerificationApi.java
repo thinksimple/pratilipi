@@ -1,14 +1,12 @@
 package com.pratilipi.api.impl.user;
 
-import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.user.shared.PostUserVerificationRequest;
-import com.pratilipi.api.impl.user.shared.UserResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 
@@ -17,11 +15,9 @@ import com.pratilipi.data.util.UserDataUtil;
 public class UserVerificationApi extends GenericApi {
 	
 	@Post
-	public UserResponse put( PostUserVerificationRequest request )
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+	public GenericUserResponse put( PostUserVerificationRequest request )
+			throws InvalidArgumentException, InsufficientAccessException {
 		
-		Gson gson = new Gson();
-
 		UserDataUtil.verifyUserEmail(
 				request.getEmail(),
 				request.getVerificationToken() );
@@ -30,7 +26,7 @@ public class UserVerificationApi extends GenericApi {
 				request.getEmail(),
 				request.getVerificationToken() );
 		
-		return gson.fromJson( gson.toJson( userData ), UserResponse.class );
+		return new GenericUserResponse( userData );
 		
 	}
 	

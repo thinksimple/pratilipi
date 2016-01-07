@@ -1,11 +1,10 @@
 package com.pratilipi.api.impl.user;
 
-import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.user.shared.PostUserRegisterRequest;
-import com.pratilipi.api.impl.user.shared.UserResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -20,7 +19,7 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 public class UserRegisterApi extends GenericApi {
 
 	@Post
-	public UserResponse put( PostUserRegisterRequest request )
+	public GenericUserResponse put( PostUserRegisterRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		String firstName = request.getName().trim();
@@ -54,8 +53,8 @@ public class UserRegisterApi extends GenericApi {
 		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2 );
 
 		
-		Gson gson = new Gson();
-		return gson.fromJson( gson.toJson( userData ), UserResponse.class );
+		return new GenericUserResponse( userData );
+		
 	}
 	
 }

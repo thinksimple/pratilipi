@@ -378,8 +378,7 @@ public class UserDataUtil {
 	}
 	
 	
-	public static void createAuthorProfile( UserData userData, Language language )
-			throws InsufficientAccessException {
+	public static void createAuthorProfile( UserData userData, Language language ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
