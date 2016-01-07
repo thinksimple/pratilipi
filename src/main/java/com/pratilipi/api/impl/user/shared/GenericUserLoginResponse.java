@@ -11,6 +11,7 @@ public class GenericUserLoginResponse extends GenericResponse {
 	
 	private String displayName;
 	private String email;
+	private UserState state;
 
 	@Deprecated
 	private Boolean isGuest;
@@ -22,6 +23,7 @@ public class GenericUserLoginResponse extends GenericResponse {
 	public GenericUserLoginResponse( UserData userData ) {
 		this.displayName = userData.getDisplayName();
 		this.email = userData.getEmail();
+		this.state = userData.getState();
 		this.isGuest = userData.getState() == UserState.GUEST;
 		this.isEmailVerified = userData.getState() == UserState.ACTIVE;
 		this.profilePageUrl = userData.getProfilePageUrl();

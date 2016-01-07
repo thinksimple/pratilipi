@@ -1,10 +1,12 @@
 package com.pratilipi.common.util;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -84,7 +86,9 @@ public class FacebookApi {
 			
 			if( responseJson.get( "birthday" ) != null ) {
 				try {
-					userData.setDateOfBirth( new SimpleDateFormat( "MM/dd/yyyy" ).parse( responseJson.get( "birthday" ).getAsString() ) );
+					DateFormat dateFormat = new SimpleDateFormat( "MM/dd/yyyy" );
+					dateFormat.setTimeZone( TimeZone.getTimeZone( "UTC" ) );
+					userData.setDateOfBirth( dateFormat.parse( responseJson.get( "birthday" ).getAsString() ) );
 				} catch ( ParseException e ) {
 					logger.log( Level.SEVERE, "Failed to parse Date of Birth.", e );
 				}

@@ -254,10 +254,6 @@ public class UserDataUtil {
 				auditLog.setAccessType( AccessType.USER_ADD );
 				auditLog.setEventDataOld( gson.toJson( user ) );
 				
-				user.setFirstName( fbUserData.getFirstName() );
-				user.setLastName( fbUserData.getLastName() );
-				user.setGender( fbUserData.getGender() );
-				user.setDateOfBirth( fbUserData.getDateOfBirth() );
 				user.setEmail( fbUserData.getEmail() == null ? null : fbUserData.getEmail().toLowerCase() );
 				user.setState( UserState.ACTIVE ); // Counting on Facebook for e-mail/user verification
 				user.setSignUpDate( new Date() );
@@ -268,10 +264,6 @@ public class UserDataUtil {
 				auditLog.setAccessType( AccessType.USER_ADD );
 				auditLog.setEventDataOld( gson.toJson( user ) );
 				
-				user.setFirstName( fbUserData.getFirstName() );
-				user.setLastName( fbUserData.getLastName() );
-				user.setGender( fbUserData.getGender() );
-				user.setDateOfBirth( fbUserData.getDateOfBirth() );
 				user.setState( UserState.ACTIVE ); // Counting on Facebook for e-mail/user verification
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
@@ -386,30 +378,16 @@ public class UserDataUtil {
 	}
 	
 	
-	public static void createAuthorProfile( Long userId, Language language ) throws InsufficientAccessException {
+	public static void createAuthorProfile( UserData userData, Language language )
+			throws InsufficientAccessException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUser( userId );
 		
-		if( user == null || ( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE ) )
-			throw new InsufficientAccessException();
-
-		
-		Author author = dataAccessor.getAuthorByUserId( userId );
-		if( author == null && user.getEmail() != null )
-			author = dataAccessor.getAuthorByEmailId( user.getEmail() );
-		
-		if( author == null || author.getState() == AuthorState.DELETED ) {
-			author = dataAccessor.newAuthor();
-		} else if( author.getUserId() != null && author.getUserId().equals( userId ) ) {
+		Author author = dataAccessor.getAuthorByUserId( userData.getId() );
+		if( author != null && author.getState() != AuthorState.DELETED )
 			return;
-		} else if( author.getEmail() != null && author.getEmail().equals( user.getEmail() ) ) {
-			author.setUserId( userId );
-			author = dataAccessor.createOrUpdateAuthor( author );
-			return;
-		} else {
+		else if( author == null )
 			author = dataAccessor.newAuthor();
-		}
 		
 		
 		Gson gson = new Gson();
@@ -420,13 +398,12 @@ public class UserDataUtil {
 		auditLog.setAccessType( AccessType.AUTHOR_ADD );
 		auditLog.setEventDataOld( gson.toJson( author ) );
 			
-		author.setUserId( userId );
-		author.setFirstName( user.getFirstName() );
-		author.setLastName( user.getLastName() );
-		author.setPenName( user.getNickName() );
-		author.setGender( user.getGender() );
-		author.setDateOfBirth( user.getDateOfBirth() );
-		author.setEmail( user.getEmail() );
+		author.setUserId( userData.getId() );
+		author.setFirstName( userData.getFirstName() );
+		author.setLastName( userData.getLastName() );
+		author.setGender( userData.getGender() );
+		author.setDateOfBirth( userData.getDateOfBirth() );
+		author.setEmail( userData.getEmail() ); // For backward compatibility with Mark-4
 		author.setLanguage( language );
 		author.setState( AuthorState.ACTIVE );
 		author.setRegistrationDate( new Date() );

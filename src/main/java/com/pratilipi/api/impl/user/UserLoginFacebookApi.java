@@ -4,15 +4,15 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.impl.user.shared.GenericUserLoginResponse;
 import com.pratilipi.api.impl.user.shared.PostUserLoginFacebookRequest;
-import com.pratilipi.api.impl.user.shared.UserResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -25,7 +25,7 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 public class UserLoginFacebookApi extends GenericApi {
 	
 	@Post
-	public static UserResponse facebookLogin( PostUserLoginFacebookRequest request )
+	public static GenericUserLoginResponse facebookLogin( PostUserLoginFacebookRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		UserData userData = UserDataUtil.loginUser(
@@ -45,7 +45,8 @@ public class UserLoginFacebookApi extends GenericApi {
 		
 		if( new Date().getTime() - userData.getSignUpDate().getTime() <= 60000 ) {
 			
-			UserDataUtil.createAuthorProfile( userData.getId(), UxModeFilter.getFilterLanguage() );
+			UserDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
+			userData = UserDataUtil.createUserData( DataAccessorFactory.getDataAccessor().getUser( userData.getId() ) );
 			
 			if( userData.getEmail() != null ) {
 				Task welcomeMailTask = TaskQueueFactory.newTask()
@@ -61,8 +62,7 @@ public class UserLoginFacebookApi extends GenericApi {
 		TaskQueueFactory.getUserTaskQueue().addAll( taskList );
 
 		
-		Gson gson = new Gson();
-		return gson.fromJson( gson.toJson( userData ), UserResponse.class );
+		return new GenericUserLoginResponse( userData );
 	
 	}
 
