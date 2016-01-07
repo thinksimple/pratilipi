@@ -24,8 +24,8 @@ public class GenericRequest {
 
 	public static final String ERR_INSUFFICIENT_ARGS = "One or more required arguments are missing.";
 	
-	public static final String ERR_INVALID_USER_ID = "Invalid user id.";
-	public static final String ERR_MISSING_USER_ID = "User id is required.";
+	public static final String ERR_USER_ID_REQUIRED	= "User id is required.";
+	public static final String ERR_USER_ID_INVALID	= "Invalid user id.";
 	
 	public static final String ERR_EMAIL_REQUIRED			= "Email is required.";
 	public static final String ERR_EMAIL_INVALID			= "Invalid email.";

@@ -16,6 +16,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.type.Website;
@@ -27,6 +28,7 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.User;
 import com.pratilipi.email.EmailUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -37,7 +39,9 @@ public class UserDataUtil {
 	private static final Logger logger =
 			Logger.getLogger( UserDataUtil.class.getName() );
 
+	private static final Long USER_ID_SYSTEM = 5636632866717696L;
 
+	
 	public static UserSignUpSource getUserSignUpSource( boolean isFbLogin, boolean isGpLogin ) {
 
 		if( UxModeFilter.isAndroidApp() ) {
@@ -107,23 +111,36 @@ public class UserDataUtil {
 	}
 	
 	public static UserData createUserData( User user ) {
+		
 		UserData userData = new UserData( user.getId() );
-		userData.setFirstName( user.getFirstName() );
-		userData.setLastName( user.getLastName() );
-		userData.setName( createUserName( user ) );
+		userData.setFacebookId( user.getFacebookId() );
 		userData.setEmail( user.getEmail() );
-		userData.setIsGuest( user.getId() == null || user.getId().equals( 0L ) );
+		userData.setState( user.getState() );
 		userData.setSignUpDate( user.getSignUpDate() );
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthorByUserId( user.getId() );
+		if( author != null ) {
+			Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
+			userData.setFirstName( author.getFirstName() != null ? author.getFirstName() : author.getFirstNameEn() );
+			userData.setLastName( author.getLastName() != null ? author.getLastName() : author.getLastNameEn() );
+			userData.setDisplayName( userData.getFirstName() != null ? userData.getFirstName() : userData.getLastName() );
+			userData.setGender( author.getGender() );
+			userData.setDateOfBirth( author.getDateOfBirth() );
+			userData.setProfilePageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
+		}
+		
 		return userData;
+		
 	}
 
 	
 	public static UserData getGuestUser() {
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.newUser();
-		user.setFirstName( "Guest" );
-		user.setLastName( "User" );
-		return createUserData( user );
+		UserData userData = new UserData( 0L );
+		userData.setFirstName( "Guest" );
+		userData.setLastName( "User" );
+		userData.setState( UserState.GUEST );
+		return userData;
 	}
 
 	public static UserData getCurrentUser() {

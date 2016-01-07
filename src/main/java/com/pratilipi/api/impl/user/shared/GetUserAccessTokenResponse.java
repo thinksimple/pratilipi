@@ -8,12 +8,12 @@ import com.pratilipi.api.shared.GenericResponse;
 public class GetUserAccessTokenResponse extends GenericResponse {
 	
 	private String accessToken;
-	private Long expiry;
+	private Long expiryMills;
 
 	
 	public GetUserAccessTokenResponse( String accessToken, Date expiry ) {
 		this.accessToken = accessToken;
-		this.expiry = expiry.getTime();
+		this.expiryMills = expiry.getTime();
 	}
 	
 }

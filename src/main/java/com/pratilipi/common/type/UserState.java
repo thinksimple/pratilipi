@@ -1,7 +1,8 @@
 package com.pratilipi.common.type;
 
 public enum UserState {
-
+	
+	GUEST,
 	REFERRAL,
 	REGISTERED,	// User account NOT active - email verification required
 	ACTIVE,		// User account active with verified email

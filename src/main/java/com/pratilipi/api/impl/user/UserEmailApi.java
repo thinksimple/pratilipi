@@ -21,11 +21,8 @@ public class UserEmailApi extends GenericApi {
 
 		JsonObject errorMessages = new JsonObject();
 
-		if( request.sendBirthdayMail() )
-			throw new InvalidArgumentException( "Feature not yet supported !" );
-
 		if( request.getUserId() == null && ( request.sendWelcomeMail() || request.sendEmailVerificationMail() || request.sendBirthdayMail() ) )
-			errorMessages.addProperty( "userId", GenericRequest.ERR_MISSING_USER_ID );
+			errorMessages.addProperty( "userId", GenericRequest.ERR_USER_ID_REQUIRED );
 			
 		if( request.sendPasswordResetMail() && ( request.getEmail() == null || request.getEmail().trim().isEmpty() ) )
 			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REQUIRED );
@@ -42,6 +39,10 @@ public class UserEmailApi extends GenericApi {
 
 		if( request.sendPasswordResetMail() )
 			UserDataUtil.sendPasswordResetMail( request.getEmail() );
+		
+		if( request.sendBirthdayMail() )
+			throw new InvalidArgumentException( "Feature not yet supported !" );
+
 		
 		return new GenericResponse();
 		

@@ -7,38 +7,34 @@ import com.pratilipi.common.type.UserState;
 
 public class UserData {
 
-	private transient Long userId;
+	private Long userId;
 
-	private transient String facebookId;
+	private String facebookId;
 
 	private String firstName;
 	
 	private String lastName;
-	
-	private String penName;
 
-	private String name;
-
-	private String fullName;
+	private String displayName;
 
 	
 	private Gender gender;
 
-	private Date dateOfBirth;
+	private Long dateOfBirthMillis;
 	
 	
 	private String email;
 	private transient boolean hasEmail;
 
 	private UserState state;
-	
-	
-	private boolean isGuest;
-	
-	
-	private Date signUpDate;
 
 	
+	private String profilePageUrl;
+	
+	
+	private Long signUpDateMillis;
+
+
 	
 	public UserData() {}
 
@@ -79,28 +75,12 @@ public class UserData {
 		this.lastName = lastName;
 	}
 	
-	public String getPenName() {
-		return penName;
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public void setPenName( String penName ) {
-		this.penName = penName;
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName( String name ) {
-		this.name = name;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName( String fullName ) {
-		this.fullName = fullName;
+	public void setDisplayName( String displayName ) {
+		this.displayName = displayName;
 	}
 
 	
@@ -113,11 +93,11 @@ public class UserData {
 	}
 	
 	public Date getDateOfBirth() {
-		return dateOfBirth;
+		return dateOfBirthMillis == null ? null : new Date( dateOfBirthMillis );
 	}
 
 	public void setDateOfBirth( Date dateOfBirth ) {
-		this.dateOfBirth = dateOfBirth;
+		this.dateOfBirthMillis = dateOfBirth == null ? null : dateOfBirth.getTime();
 	}
 	
 	
@@ -144,21 +124,21 @@ public class UserData {
 	}
 	
 
-	public boolean isGuest() {
-		return isGuest;
+	public String getProfilePageUrl() {
+		return profilePageUrl;
 	}
 
-	public void setIsGuest( boolean isGuest ) {
-		this.isGuest = isGuest;
+	public void setProfilePageUrl( String profilePageUrl ) {
+		this.profilePageUrl = profilePageUrl;
 	}
-
 	
+
 	public Date getSignUpDate() {
-		return signUpDate;
+		return signUpDateMillis == null ? null : new Date( signUpDateMillis );
 	}
 
 	public void setSignUpDate( Date signUpDate ) {
-		this.signUpDate = signUpDate;
+		this.signUpDateMillis = signUpDate == null ? null : signUpDate.getTime();
 	}
 
 

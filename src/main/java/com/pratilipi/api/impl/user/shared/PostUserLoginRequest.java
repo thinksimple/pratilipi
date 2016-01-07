@@ -5,15 +5,10 @@ import com.pratilipi.api.shared.GenericRequest;
 
 public class PostUserLoginRequest extends GenericRequest {
 
-	private static final String EMAIL_REQUIRED_ERR_MSG = "Please provide your email.";
-	private static final String EMAIL_INVALID_ERR_MSG = "Invalid email.";
-	private static final String PASSWORD_REQUIRED_ERR_MSG = "Enter password.";
-
-	
-	@Validate( required = true, requiredErrMsg = EMAIL_REQUIRED_ERR_MSG, regEx = REGEX_EMAIL, regExErrMsg = EMAIL_INVALID_ERR_MSG )
+	@Validate( required = true, requiredErrMsg = ERR_EMAIL_REQUIRED, regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
 	private String email;
 
-	@Validate( required = true, requiredErrMsg = PASSWORD_REQUIRED_ERR_MSG )
+	@Validate( required = true, requiredErrMsg = ERR_PASSWORD_REQUIRED )
 	private String password;
 
 	
