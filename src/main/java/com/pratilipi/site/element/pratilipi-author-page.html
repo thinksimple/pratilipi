@@ -30,8 +30,9 @@
 									></pratilipi-card-grid>
 							</template>
 							<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
-								<pratilipi-author-books>
-								</pratilipi-author-books>
+								<pratilipi-author-books 
+									author='{{ author }}'
+									></pratilipi-author-books>
 							</template>
 							<br class="pratilipi-break"/>
 						</div>

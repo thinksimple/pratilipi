@@ -214,6 +214,22 @@
 				}
 			},
 			
+			reset: function() {
+				
+				var ajaxGet = this.$.AjaxGet;
+
+				if( ajaxGet.lastRequest )
+					ajaxGet.lastRequest.abort();
+				
+				this.reviewList = [];
+				this.isLoading = true;
+				this.isFinished = false;
+
+				ajaxGet.params.cursor = null;
+				ajaxGet.generateRequest();
+				
+			},
+			
 			loadMore: function( scrollTop ) {
 				if( this.isLoading || this.isFinished )
 					return;
