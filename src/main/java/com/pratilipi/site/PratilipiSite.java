@@ -18,6 +18,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GetUserPratilipiResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -171,7 +172,7 @@ public class PratilipiSite extends HttpServlet {
 			}
 
 			// Adding common data to the Data Model
-			dataModel.put( "userJson", new Gson().toJson( UserDataUtil.getCurrentUser() ) );
+			dataModel.put( "userJson", new Gson().toJson( new GenericUserResponse( UserDataUtil.getCurrentUser() ) ) );
 			dataModel.put( "lang", lang != null ? lang.getCode() : Language.ENGLISH.getCode() );
 			dataModel.put( "_strings", LanguageUtil.getStrings(
 					languageFilePrefix + (lang != null ? lang.getCode() : Language.ENGLISH.getCode()),
