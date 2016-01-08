@@ -430,11 +430,32 @@ public class UserDataUtil {
 	public static void sendEmailVerificationMail( Long userId )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
+		_sendEmailVerificationMail( DataAccessorFactory.getDataAccessor().getUser( userId ) );
+		
+	}
+
+	public static void sendEmailVerificationMail( String emailId )
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+
+		Long userId = AccessTokenFilter.getAccessToken().getUserId();
+		if( userId.equals( 0L ) )
+			throw new InsufficientAccessException();
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUser( userId );
+		User user = dataAccessor.getUserByEmail( emailId.trim().toLowerCase() );
+		if( user == null || ! user.getId().equals( userId ) )
+			throw new InsufficientAccessException();
+		
+		_sendEmailVerificationMail( user );
+		
+	}
+
+	private static void _sendEmailVerificationMail( User user )
+			throws InvalidArgumentException, UnexpectedServerException {
 		
 		String verificationToken = getNextToken( user.getVerificationToken() );
 		if( ! verificationToken.equals( user.getVerificationToken() ) ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			user.setVerificationToken( verificationToken );
 			user = dataAccessor.createOrUpdateUser( user );
 		}

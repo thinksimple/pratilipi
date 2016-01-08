@@ -7,6 +7,7 @@ import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.user.shared.PostUserEmailRequest;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.util.UserDataUtil;
@@ -17,13 +18,16 @@ public class UserEmailApi extends GenericApi {
 	
 	@Post
 	public static GenericResponse putUserEmail( PostUserEmailRequest request )
-			throws InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		JsonObject errorMessages = new JsonObject();
 
-		if( request.getUserId() == null && ( request.sendWelcomeMail() || request.sendEmailVerificationMail() || request.sendBirthdayMail() ) )
+		if( ( request.sendWelcomeMail() || request.sendBirthdayMail() ) && request.getUserId() == null )
 			errorMessages.addProperty( "userId", GenericRequest.ERR_USER_ID_REQUIRED );
-			
+		
+		if( request.sendEmailVerificationMail() && request.getUserId() == null && ( request.getEmail() == null || request.getEmail().trim().isEmpty() ) )
+			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REQUIRED );
+		
 		if( request.sendPasswordResetMail() && ( request.getEmail() == null || request.getEmail().trim().isEmpty() ) )
 			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REQUIRED );
 
@@ -34,8 +38,12 @@ public class UserEmailApi extends GenericApi {
 		if( request.sendWelcomeMail() )
 			UserDataUtil.sendWelcomeMail( request.getUserId() );
 		
-		if( request.sendEmailVerificationMail() )
-			UserDataUtil.sendEmailVerificationMail( request.getUserId() );
+		if( request.sendEmailVerificationMail() ) {
+			if( request.getUserId() != null )
+				UserDataUtil.sendEmailVerificationMail( request.getUserId() );
+			else
+				UserDataUtil.sendEmailVerificationMail( request.getEmail() );
+		}
 
 		if( request.sendPasswordResetMail() )
 			UserDataUtil.sendPasswordResetMail( request.getEmail() );
