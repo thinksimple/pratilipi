@@ -15,46 +15,50 @@
 	</style>
 
 	<template>
-		<div class="modal-content">
-			<div class="modal-header">
-				<span>${ _strings.sign_up_for_pratilipi }</span>
-				<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
-			</div>
-			<div class="modal-body" on-keyup="onSubmit">
-				<pratilipi-facebook-login></pratilipi-facebook-login>
-				<div style="margin-right: 10px; margin-left: 10px;">
-					<br/>
-					<div style="height: 2px; background-color: #f5f5f5; text-align: center;">
-						<span style="background-color: white; position: relative; top: -1em;">
-							&nbsp;&nbsp;OR&nbsp;&nbsp;
-						</span>
+		<div class="modal fade" id="pratilipiUserRegister" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<span>${ _strings.sign_up_for_pratilipi }</span>
+						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
-					
-					<paper-input class="pratilipi-blue" label="{{ nameInput }}" value="{{ params.name::input }}">
-						<iron-icon style="margin-right: 5px;" icon="account-box" prefix></iron-icon>
-					</paper-input>
-					<paper-input class="pratilipi-blue" label="{{ emailInput }}" value="{{ params.email::input }}">
-						<iron-icon style="margin-right: 5px;" icon="mail" prefix></iron-icon>
-					</paper-input>
-					<paper-input class="pratilipi-blue" label="{{ passwordInput }}" type="password" value="{{ params.password::input }}">
-						<iron-icon style="margin-right: 5px;" icon="lock" prefix></iron-icon>
-					</paper-input>
-					
-					<div class="text-center">
-						<span style="display: block;">{{ message }}</span>
-						<button id="registerButton" style="margin-top: 20px;" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_up }</button>
-						<span style="display: block; margin-top: 15px;">
-							By registering, you agree to the
-							<a href="/privacy-policy"><span style="color: #107FE5; white-space: nowrap;">privacy policy</span></a>
-							&nbsp;and&nbsp;
-							<a href="/terms-of-service"><span style="color: #107FE5; white-space: nowrap;">terms of service</span></a>.
-						</span>
+					<div class="modal-body" on-keyup="onSubmit">
+						<pratilipi-facebook-login></pratilipi-facebook-login>
+						<div style="margin-right: 10px; margin-left: 10px;">
+							<br/>
+							<div style="height: 2px; background-color: #f5f5f5; text-align: center;">
+								<span style="background-color: white; position: relative; top: -1em;">
+									&nbsp;&nbsp;OR&nbsp;&nbsp;
+								</span>
+							</div>
+							
+							<paper-input class="pratilipi-blue" label="{{ nameInput }}" value="{{ params.name::input }}">
+								<iron-icon style="margin-right: 5px;" icon="account-box" prefix></iron-icon>
+							</paper-input>
+							<paper-input class="pratilipi-blue" label="{{ emailInput }}" value="{{ params.email::input }}">
+								<iron-icon style="margin-right: 5px;" icon="mail" prefix></iron-icon>
+							</paper-input>
+							<paper-input class="pratilipi-blue" label="{{ passwordInput }}" type="password" value="{{ params.password::input }}">
+								<iron-icon style="margin-right: 5px;" icon="lock" prefix></iron-icon>
+							</paper-input>
+							
+							<div class="text-center">
+								<span style="display: block;">{{ message }}</span>
+								<button id="registerButton" style="margin-top: 20px;" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_up }</button>
+								<span style="display: block; margin-top: 15px;">
+									By registering, you agree to the
+									<a href="/privacy-policy"><span style="color: #107FE5; white-space: nowrap;">privacy policy</span></a>
+									&nbsp;and&nbsp;
+									<a href="/terms-of-service"><span style="color: #107FE5; white-space: nowrap;">terms of service</span></a>.
+								</span>
+							</div>
+							
+						</div>
 					</div>
-					
+					<div class="modal-footer">
+						<p class=" text-center">Already a Member?&nbsp;<a style="color: #107FE5;" href="#" on-click="logIn">Sign In !</a></p>
+					</div>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<p class=" text-center">Already a Member?&nbsp;<a style="color: #107FE5;" href="#" on-click="logIn">Sign In !</a></p>
 			</div>
 		</div>
 		
@@ -103,6 +107,16 @@
 				this.message = null;
 			},
 			
+			open: function() {
+				this.async( function() {
+					jQuery( "#pratilipiUserRegister" ).modal();
+				});
+			},
+			
+			close: function() {
+				jQuery( "#pratilipiUserRegister" ).modal( 'hide' );
+			},
+			
 			ready: function() {
 				this.defaultMessages();
 			},
@@ -132,7 +146,7 @@
 					this.message = "Success !";
 					this.async( function() {
  						this.message = null;
- 						jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
+ 						this.close();
 					}, 1000 );
 					jQuery( '#registerButton' ).prop( 'disabled', false );
 					document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );

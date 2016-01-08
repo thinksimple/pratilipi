@@ -152,7 +152,7 @@ button.blue, button.blue:hover, button.blue:focus {
 /* Mobile Responsive Property - For mobile and wide-screens*/
 
 .row-widescreen {
-   display: flex;
+	 display: flex;
 }
 
 .col-left-widescreen {
@@ -183,7 +183,7 @@ button.blue, button.blue:hover, button.blue:focus {
 }
 
 
-/* Custom  Elements  */
+/* Custom	Elements	*/
 
 /* <hr> style */
 .pratilipi-top {
@@ -309,6 +309,30 @@ a.pratilipi-white-button:hover, a.pratilipi-white-button:focus {
 
 a.pratilipi-orange-button:hover, a.pratilipi-orange-button:focus {
 	color: #F58823; 
+}
+
+.pratilipi-new-blue-button {
+	background: #F0F8FF;
+	background-image: -webkit-linear-gradient(top, #F0F8FF, #F0FFFF);
+	background-image: -moz-linear-gradient(top, #F0F8FF, #F0FFFF);
+	background-image: -ms-linear-gradient(top, #F0F8FF, #F0FFFF);
+	background-image: -o-linear-gradient(top, #F0F8FF, #F0FFFF);
+	background-image: linear-gradient(to bottom, #F0F8FF, #F0FFFF);
+	-webkit-border-radius: 2;
+	-moz-border-radius: 2;
+	border-radius: 1px;
+	min-width: 80px;
+	height: 40px;
+	color: #107FE5;
+	font-size: 13px;
+	line-height: 20px;
+	padding: 10px 12px;
+	border: solid #107FE5 1px;
+	text-decoration: none;
+}
+
+.pratilipi-new-blue-button:hover {
+	text-decoration: none;
 }
 
 .link {

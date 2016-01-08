@@ -146,6 +146,29 @@
 			<pratilipi-navigation-drawer with-backdrop></pratilipi-navigation-drawer>
 		</div>
 		
+		<div class="modal fade" id="myAccount" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<span>Edit My Account</span>
+						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+					</div>
+					
+					<div class="modal-body">
+						<div style="display: block;">
+							<paper-input style="display: inline-block;" noink always-float-label disabled label="Email" value="user-one@pratilipi.com" ></paper-input>
+							<button style="margin-top: 10px; float: right" class="pratilipi-grey-button">Verify Email</button>
+						</div>
+						
+						<div style="min-height: 15px;"></div>
+						
+						<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="changePassword"> Change Password </button> 
+					</div>
+				</div>
+			</div>
+		</div>
+		
 	</template>
 
 
@@ -176,10 +199,16 @@
 			},
 			
 			myAccount: function() {
-				console.log( "myAccount" );
+				jQuery( "#myAccount" ).modal();
+			},
+			
+			changePassword: function() {
+				jQuery( "#myAccount" ).modal( 'hide' );
+				document.querySelector( 'pratilipi-user' ).changePassword();
 			},
 			
 			myProfile: function() {
+				// Redirect
 				console.log( "myProfile" );
 			},
 			

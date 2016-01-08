@@ -8,26 +8,11 @@
 <dom-module id="pratilipi-user">
 
 	<template>
-		<pratilipi-user-password-update with-backdrop></pratilipi-user-password-update>
+		<pratilipi-user-password-update></pratilipi-user-password-update>
 		<pratilipi-user-verification with-backdrop></pratilipi-user-verification>
-		
-		<div class="modal fade" id="pratilipiUserLogin" role="dialog">
-			<div class="modal-dialog" role="document">
-				<pratilipi-user-login></pratilipi-user-login>
-			</div>
-		</div>
-		
-		<div class="modal fade" id="pratilipiUserRegister" role="dialog">
-			<div class="modal-dialog" role="document">
-				<pratilipi-user-register></pratilipi-user-register>
-			</div>
-		</div>
-		
-		<div class="modal fade" id="pratilipiUserPasswordReset" role="dialog">
-			<div class="modal-dialog" role="document">
-				<pratilipi-user-password-reset></pratilipi-user-password-reset>
-			</div>
-		</div>
+		<pratilipi-user-login></pratilipi-user-login>
+		<pratilipi-user-register></pratilipi-user-register>
+		<pratilipi-user-password-reset></pratilipi-user-password-reset>
 		
 		<iron-ajax
 				id="AjaxGet"
@@ -62,39 +47,31 @@
 			},
 			
 			closeAllElements: function() {
-				jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
-				jQuery( "#pratilipiUserRegister" ).modal( 'hide' );
-				jQuery( "#pratilipiUserPasswordReset" ).modal( 'hide' );
+				this.querySelector( 'pratilipi-user-login' ).close();
+				this.querySelector( 'pratilipi-user-register' ).close();
+				this.querySelector( 'pratilipi-user-password-reset' ).close();
 				this.querySelector( 'pratilipi-user-password-update' ).close();
 				this.querySelector( 'pratilipi-user-verification' ).close();
 			},
 
 			logIn: function() {
 				this.closeAllElements();
-				this.async( function() {
-					jQuery( "#pratilipiUserLogin" ).modal();
-				});
+				this.querySelector( 'pratilipi-user-login' ).open();
 			},
 			
 			register: function() {
 				this.closeAllElements();
-				this.async( function() {
-					jQuery( "#pratilipiUserRegister" ).modal();
-				});
+				this.querySelector( 'pratilipi-user-register' ).open();
 			},
 			
 			resetPassword: function() {
 				this.closeAllElements();
-				this.async( function() {
-					jQuery( "#pratilipiUserPasswordReset" ).modal();
-				});
+				this.querySelector( 'pratilipi-user-password-reset' ).open();
 			},
 			
 			changePassword: function() {
 				this.closeAllElements();
-				this.async( function() {
-					this.querySelector( 'pratilipi-user-password-update' ).open();
-				});
+				this.querySelector( 'pratilipi-user-password-update' ).open();
 			},
 			
 			verify: function() {
@@ -135,8 +112,7 @@
 					}
 					else if( getValue( 'passwordReset' ) == "true" ) {
 						this.async( function() {
-							this.querySelector( 'pratilipi-user-password-update' ).setData( getValue( 'email' ), getValue( 'token' ) );
-							this.querySelector( 'pratilipi-user-password-update' ).open();
+							this.querySelector( 'pratilipi-user-password-update' ).openPasswordUpdate( getValue( 'email' ), getValue( 'token' ) );
 						});
 					}
 				}
