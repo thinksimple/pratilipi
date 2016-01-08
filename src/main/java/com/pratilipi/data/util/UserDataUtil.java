@@ -99,18 +99,11 @@ public class UserDataUtil {
 	}
 
 	
-	public static String createUserName( User user ) {
-		if( user.getFirstName() != null && user.getLastName() == null )
-			return user.getFirstName();
-		else if( user.getFirstName() == null && user.getLastName() != null )
-			return user.getLastName();
-		else if( user.getFirstName() != null && user.getLastName() != null )
-			return user.getFirstName() + " " + user.getLastName();
-		else
-			return null;
-	}
-	
 	public static UserData createUserData( User user ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthorByUserId( user.getId() );
+		Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
 		
 		UserData userData = new UserData( user.getId() );
 		userData.setFacebookId( user.getFacebookId() );
@@ -118,17 +111,12 @@ public class UserDataUtil {
 		userData.setState( user.getState() );
 		userData.setSignUpDate( user.getSignUpDate() );
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = dataAccessor.getAuthorByUserId( user.getId() );
-		if( author != null ) {
-			Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
-			userData.setFirstName( author.getFirstName() != null ? author.getFirstName() : author.getFirstNameEn() );
-			userData.setLastName( author.getLastName() != null ? author.getLastName() : author.getLastNameEn() );
-			userData.setDisplayName( userData.getFirstName() != null ? userData.getFirstName() : userData.getLastName() );
-			userData.setGender( author.getGender() );
-			userData.setDateOfBirth( author.getDateOfBirth() );
-			userData.setProfilePageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
-		}
+		userData.setFirstName( author.getFirstName() != null ? author.getFirstName() : author.getFirstNameEn() );
+		userData.setLastName( author.getLastName() != null ? author.getLastName() : author.getLastNameEn() );
+		userData.setDisplayName( userData.getFirstName() != null ? userData.getFirstName() : userData.getLastName() );
+		userData.setGender( author.getGender() );
+		userData.setDateOfBirth( author.getDateOfBirth() );
+		userData.setProfilePageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
 		
 		return userData;
 		
@@ -178,8 +166,6 @@ public class UserDataUtil {
 		auditLog.setEventDataOld( gson.toJson( user ) );
 		
 		
-		user.setFirstName( firstName );
-		user.setLastName( lastName );
 		user.setPassword( PasswordUtil.getSaltedHash( password ) );
 		user.setEmail( email.toLowerCase() );
 		user.setState( UserState.REGISTERED );
@@ -234,14 +220,19 @@ public class UserDataUtil {
 		
 		UserData fbUserData = FacebookApi.getUserData( fbUserAccessToken );
 
+		boolean isNew = false;
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByFacebookId( fbUserData.getFacebookId() );
 
+		// * Users having Facebook Id can never be in GUEST or REFERRAL state.
+		// * No action required for REGISTERED or ACTIVE users.
+		
 		if( user == null || user.getState() == UserState.DELETED ) {
 			
 			if( fbUserData.getEmail() != null )
-				user = dataAccessor.getUserByEmail( fbUserData.getEmail().toLowerCase() );
-				
+				user = dataAccessor.getUserByEmail( fbUserData.getEmail() );
+			
 			Gson gson = new Gson();
 			
 			AuditLog auditLog = dataAccessor.newAuditLog();
@@ -254,10 +245,12 @@ public class UserDataUtil {
 				auditLog.setAccessType( AccessType.USER_ADD );
 				auditLog.setEventDataOld( gson.toJson( user ) );
 				
-				user.setEmail( fbUserData.getEmail() == null ? null : fbUserData.getEmail().toLowerCase() );
+				user.setEmail( fbUserData.getEmail() );
 				user.setState( UserState.ACTIVE ); // Counting on Facebook for e-mail/user verification
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
+				
+				isNew = true;
 				
 			} else if( user.getState() == UserState.REFERRAL ) {
 				
@@ -267,6 +260,8 @@ public class UserDataUtil {
 				user.setState( UserState.ACTIVE ); // Counting on Facebook for e-mail/user verification
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
+				
+				isNew = true;
 
 			} else if( user.getState() == UserState.REGISTERED ) {
 
@@ -289,13 +284,21 @@ public class UserDataUtil {
 			user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
 		}
-			
+		
+		
 		if( user.getState() == UserState.BLOCKED )
 			throw new InsufficientAccessException( GenericRequest.ERR_ACCOUNT_BLOCKED );
 
+		
 		_loginUser( AccessTokenFilter.getAccessToken(), user );
 		
-		return createUserData( user );
+		
+		if( isNew ) {
+			fbUserData.setId( user.getId() );
+			return fbUserData;
+		} else {
+			return createUserData( user );
+		}
 		
 	}
 	
@@ -385,7 +388,7 @@ public class UserDataUtil {
 		Author author = dataAccessor.getAuthorByUserId( userData.getId() );
 		if( author != null && author.getState() != AuthorState.DELETED )
 			return;
-		else if( author == null )
+		else
 			author = dataAccessor.newAuthor();
 		
 		
@@ -415,13 +418,18 @@ public class UserDataUtil {
 	}
 
 	
-	public static void sendWelcomeMail( Long userId ) throws UnexpectedServerException {
+	public static void sendWelcomeMail( Long userId )
+			throws UnexpectedServerException {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
-		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "welcome", Language.ENGLISH );
+		EmailUtil.sendMail( createUserData( user ).getDisplayName(), user.getEmail(), "welcome", Language.ENGLISH );
+		
 	}
 	
-	public static void sendEmailVerificationMail( Long userId ) throws UnexpectedServerException {
+	public static void sendEmailVerificationMail( Long userId )
+			throws InvalidArgumentException, UnexpectedServerException {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
 		
@@ -438,7 +446,8 @@ public class UserDataUtil {
 				+ "&" + "verifyUser=" + Boolean.TRUE;
 		dataModel.put( "emailVerificationUrl", verificationLink );
 		
-		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "verification", Language.ENGLISH, dataModel );
+		EmailUtil.sendMail( createUserData( user ).getDisplayName(), user.getEmail(), "verification", Language.ENGLISH, dataModel );
+		
 	}
 	
 	public static void sendPasswordResetMail( String email )
@@ -446,11 +455,6 @@ public class UserDataUtil {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email );
-		if( user == null || user.getState() == UserState.REFERRAL || user.getState() == UserState.DELETED )
-			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
-		else if( user.getState() == UserState.BLOCKED )
-			throw new InvalidArgumentException( GenericRequest.ERR_ACCOUNT_BLOCKED );
-		
 		String verificationToken = getNextToken( user.getVerificationToken() );
 		if( ! verificationToken.equals( user.getVerificationToken() ) ) {
 			user.setVerificationToken( verificationToken );
@@ -464,12 +468,13 @@ public class UserDataUtil {
 				+ "&" + "passwordReset=" + Boolean.TRUE;
 		dataModel.put( "passwordResetUrl", passwordResetUrl );
 		
-		EmailUtil.sendMail( createUserName( user ), user.getEmail(), "password-reset", Language.ENGLISH, dataModel );
+		EmailUtil.sendMail( createUserData( user ).getDisplayName(), user.getEmail(), "password-reset", Language.ENGLISH, dataModel );
 		
 	}
 
 	
-	public static void verifyUserEmail( String email, String verificationToken ) throws InvalidArgumentException {
+	public static void verifyUserEmail( String email, String verificationToken )
+			throws InvalidArgumentException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email );
@@ -489,13 +494,12 @@ public class UserDataUtil {
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		Long userId = AccessTokenFilter.getAccessToken().getUserId();
-		if( userId == null )
+		if( userId.equals( 0L ) )
 			throw new InsufficientAccessException();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
-		
-		if( user == null || ( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE  ) )
+		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE  )
 			throw new InsufficientAccessException();
 		
 		if( PasswordUtil.check( password, user.getPassword() ) ) {
@@ -515,7 +519,7 @@ public class UserDataUtil {
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( email );
+		User user = dataAccessor.getUserByEmail( email.trim().toLowerCase() );
 		
 		JsonObject errorMessages = new JsonObject();
 		if( user == null || user.getState() == UserState.REFERRAL || user.getState() == UserState.DELETED ) {

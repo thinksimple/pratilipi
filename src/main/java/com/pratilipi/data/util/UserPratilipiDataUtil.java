@@ -55,7 +55,7 @@ public class UserPratilipiDataUtil {
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
 		userPratilipiData.setId( userPratilipi.getId() );
 		userPratilipiData.setUserId( userPratilipi.getPratilipiId() );
-		userPratilipiData.setUserName( UserDataUtil.createUserName( user ) );
+		userPratilipiData.setUserName( UserDataUtil.createUserData( user ).getDisplayName() );
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 		userPratilipiData.setRating( userPratilipi.getRating() );
 		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
