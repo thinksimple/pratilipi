@@ -15,9 +15,6 @@ public class PostUserPasswordUpdateRequest extends GenericRequest {
 	@Validate( required = true, requiredErrMsg = ERR_PASSWORD_REQUIRED, regEx = REGEX_PASSWORD, regExErrMsg = ERR_PASSWORD_INVALID )
 	private String newPassword;
 	
-	@Validate( required = true, requiredErrMsg = ERR_PASSWORD2_REQUIRED )
-	private String newPassword2;
-	
 	
 	public String getEmail() {
 		return email;
@@ -33,10 +30,6 @@ public class PostUserPasswordUpdateRequest extends GenericRequest {
 	
 	public String getNewPassword() {
 		return newPassword;
-	}
-	
-	public String getNewPassword2() {
-		return newPassword2;
 	}
 	
 }

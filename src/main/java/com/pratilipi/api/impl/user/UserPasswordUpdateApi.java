@@ -1,6 +1,5 @@
 package com.pratilipi.api.impl.user;
 
-import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -19,12 +18,6 @@ public class UserPasswordUpdateApi extends GenericApi {
 	@Post
 	public static GenericUserResponse post( PostUserPasswordUpdateRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
-		
-		if( ! request.getNewPassword().equals( request.getNewPassword2() ) ) {
-			JsonObject errorMessages = new JsonObject();
-			errorMessages.addProperty( "password2", GenericRequest.ERR_PASSWORD2_MISMATCH );
-			throw new InvalidArgumentException( errorMessages );
-		}
 		
 		UserData userData;
 		if( request.getEmail() != null && request.getVerificationToken() != null ) {
