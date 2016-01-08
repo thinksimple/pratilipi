@@ -2,28 +2,42 @@
 
 	<template>
 		
-		<div class="popup">
-			<h5 class="popup-heading">Verification</h5>
-			<div class="popup-body" on-keyup="onSubmit">
-				<br/>
-				<br/>
-				<div class="text-center">
-					<span class="text-center text-success">{{ message }}</span>
-					<span class="text-center text-danger">{{ errMessage }}</span>
+		<div class="modal fade" id=pratilipiUserVerification role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<span>Write New Content</span>
+						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+					</div>
+					<div class="modal-body">
+						<div class="text-center">
+							<span class="text-center">{{ message }}</span>
+						</div>
+					</div>
+					<div class="modal-footer">
+					</div>
 				</div>
-				<br/>
-				<br/>
 			</div>
 		</div>
 		
 		<iron-ajax
-				id="AjaxPost"
+				id="verifyEmail"
 				url="/api/user/verification"
 				method="POST"
 				content-type="application/x-www-form-urlencoded"
 				handle-as="json"
-				on-response="_handleAjaxPostResponse"
-				on-error="_handleAjaxPostError"
+				on-response="_handleVerifyEmailPostResponse"
+				on-error="_handleVerifyEmailPostError"
+				></iron-ajax>
+				
+		<iron-ajax
+				id="sendVerificationEmail"
+				url="/api/user/email"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleSendVerificationPostResponse"
+				on-error="_handleSendVerificationPostError"
 				></iron-ajax>
 		
 	</template>
@@ -35,37 +49,49 @@
 
  			is: 'pratilipi-user-verification',
  			
- 			behaviors: [
- 				Polymer.IronOverlayBehavior
- 			],
- 					
 			properties: {
-				message: { type: String },
-				errMessage: { type: String },
+				message: { type: String }
 			},
 			
-			verifyUser: function( email, verificationToken ) {
-				this.message = "Working ...";
-				this.$.AjaxPost.body = ( 
-					"email=" + email + "&" + 
-					"verificationToken=" + verificationToken );
-				
-				this.$.AjaxPost.generateRequest();
+			open: function() {
+				this.async( function() {
+					jQuery( "#pratilipiUserVerification" ).modal();
+				});
+			},
+			
+			close: function() {
+				jQuery( "#pratilipiUserVerification" ).modal( 'hide' );
 			},
 			
 			clearMessages: function() {
 				this.message = null;
-				this.errMessage = null; 
 			},
 			
-			_handleAjaxPostResponse: function( event ) {
+			sendVerificationMail: function( email ) {
+				this.open();
+				this.message = "Working ...";
+				this.$.sendVerificationEmail.body = ( "email=" + email + "&" + "sendEmailVerificationMail=true" );
+				this.$.sendVerificationEmail.generateRequest();
+			},
+			
+			verifyUser: function( email, verificationToken ) {
+				this.open();
+				this.message = "Working ...";
+				this.$.verifyEmail.body = ( 
+					"email=" + email + "&" + 
+					"verificationToken=" + verificationToken );
+				
+				this.$.verifyEmail.generateRequest();
+			},
+			
+			_handleVerifyEmailPostResponse: function( event ) {
 				this.clearMessages();
 				if( event.detail.xhr.status == 0 ) {
-					this.errMessage = "Could not connect to server !";
+					this.message = "Could not connect to server !";
 				} else {
 					this.message = "Verified Successfully !";
 					this.async( function() {
- 						this.message = null;
+ 						this.clearMessages();
 						this.close();
 						document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
 						window.location = "http://" + window.location.host;
@@ -73,17 +99,42 @@
 				}
 			},
 			
-			_handleAjaxPostError: function( event ) {
+			_handleVerifyEmailPostError: function( event ) {
 				this.clearMessages();
 				if( event.detail.request.xhr.status == 400 ) {
 					if( event.detail.request.xhr.response.message != null )
-						this.errMessage = event.detail.request.xhr.response.message;
+						this.message = event.detail.request.xhr.response.message;
 					else
-						this.errMessage = "Invalid Input!";
+						this.message = "Invalid Input!";
 				} else {
-					this.errMessage = event.detail.request.xhr.response.message;
+					this.message = event.detail.request.xhr.response.message;
 				}
 			},
+			
+			_handleSendVerificationPostResponse: function( event ) {
+				this.clearMessages();
+				if( event.detail.xhr.status == 0 ) {
+					this.message = "Could not connect to server !";
+				} else {
+					this.message = "Email Sent Successfully !";
+					this.async( function() {
+ 						this.clearMessages();
+						this.close();
+					}, 2000 );
+				}
+			},
+			
+			_handleSendVerificationPostError: function( event ) {
+				this.clearMessages();
+				if( event.detail.request.xhr.status == 400 ) {
+					if( event.detail.request.xhr.response.message != null )
+						this.message = event.detail.request.xhr.response.message;
+					else
+						this.message = "Invalid Input!";
+				} else {
+					this.message = event.detail.request.xhr.response.message;
+				}
+			}
 
 		});
 

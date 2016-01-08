@@ -101,9 +101,9 @@
 			is: 'pratilipi-edit-pratilipi',
 			
 			properties: {
-				params: { type: Object, value: {} },
-				
 				pratilipi: { type: Object, notify: true },
+				
+				params: { type: Object, value: {} },
 				summary: { type: String },
 				selected: { type: Number }
 			},
@@ -145,7 +145,7 @@
 				else
 					this.params.summary = this.summary;
 				
-				if( this.params.title.trim() === "" ) {
+				if( this.params.title == null || this.params.title.trim() == "" ) {
 					this.message = "Please fill in the Title.";
 					return;
 				}
@@ -158,12 +158,7 @@
 				this.message = "Please Wait...";
 				jQuery( '#pratilipiEditButton' ).prop( 'disabled', true );
 				
-				this.$.AjaxPost.body = ( "pratilipiId=" + this.params.pratilipiId + "&" +
-						 "title=" + this.params.title + "&" + 
-						 "titleEn=" + this.params.titleEn + "&" +
-						 "summary=" + this.params.summary + "&" +
-						 "type=" + this.params.type.toUpperCase() + "&" +
-						 "language=" + this.params.language.toUpperCase() );
+				this.$.AjaxPost.body = ( jQuery.param( this.params ) );
 
 				this.$.AjaxPost.generateRequest();
 				
@@ -171,9 +166,11 @@
 			
 			_handleAjaxPostResponse: function( event ) {
 				
-				var pratilipi = event.detail.response;
 				this.message = "Success !";
+				
+				var pratilipi = event.detail.response;
 				this.set( 'pratilipi', pratilipi );
+				this.set( 'params', pratilipi );
 				document.querySelector( 'pratilipi-pratilipi' ).updatePratilipi( pratilipi );
 				
 				this.async( function() {

@@ -141,24 +141,9 @@
 	    });
 	}); */
 	
-		function getValue( url, key ) {
-			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( url ) )
-			      return decodeURIComponent( key[1] );
-			   else
-				   return "";
-		}
-		
-		function replaceAll( string, find, replace ) {
-			return string.replace( new RegExp( find, 'g' ), replace );
-		}
-	
 		Polymer({
 
 			is: 'pratilipi-pratilipi',
-			
-			behaviors: [
-				Polymer.IronResizableBehavior
-			],
 			
 			listeners: {
 				'iron-resize': '_onIronResize'

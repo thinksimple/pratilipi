@@ -73,8 +73,8 @@
  			is: 'pratilipi-user-login',
 
 			properties: {
-				email: { type: String, value:"" },
-				password: { type: String, value:"" },
+				email: { type: String, value: null },
+				password: { type: String, value: null },
 				message: { type: String },
 				emailInput: { type: String },
 				passwordInput: { type: String }
@@ -109,7 +109,7 @@
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
 					return;
 				
-				if( this.email === "" || this.password === "" ) {
+				if( this.email == null || this.password == null || this.email.trim() == "" ) {
 					this.message = "Please fill in the details";
 					return;
 				}
@@ -134,10 +134,13 @@
 				} else {
 					this.message = "Success !";
 					this.async( function() {
-						this.message = null;
+						this.email = null;
+						this.password = null;
+						this.defaultMessages();
+						jQuery( '#loginButton' ).prop( 'disabled', false );
 						this.close();
 					}, 1000 );
-					jQuery( '#loginButton' ).prop( 'disabled', false );
+					
 					document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
 				}
 			},

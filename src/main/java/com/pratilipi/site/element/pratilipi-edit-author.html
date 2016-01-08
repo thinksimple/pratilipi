@@ -131,7 +131,6 @@
 				month = datePart[1],
 				day = datePart[2];
 
-				console.log( datePart );
 				return day+'-'+month+'-'+year;
 				
 			},
@@ -167,16 +166,7 @@
 				this.message = "Please Wait...";
 				jQuery( '#authorEditButton' ).prop( 'disabled', true );				
 				
-				this.$.AjaxPost.body = ( "authorId=" + this.params.authorId + "&" +
-						 "firstName=" + this.params.firstName + "&" + 
-						 "lastName=" + this.params.lastName + "&" +
-						 "firstNameEn=" + this.params.firstNameEn + "&" + 
-						 "lastNameEn=" + this.params.lastNameEn + "&" +
-						 "penName=" + this.params.penName + "&" + 
-						 "penNameEn=" + this.params.penNameEn + "&" +
-						 "summary=" + this.params.summary + "&" +
-						 "language=" + this.params.language.toUpperCase() + "&" +
-						 "birthday=" + this.params.birthday );
+				this.$.AjaxPost.body = ( jQuery.param( this.params ) );
 
 				this.$.AjaxPost.generateRequest();
 				
@@ -184,9 +174,11 @@
 			
 			_handleAjaxPostResponse: function( event ) {
 				
-				var author = event.detail.response;
 				this.message = "Success !";
+				
+				var author = event.detail.response;
 				this.set( 'author', author );
+				this.set( 'params', author );
 				document.querySelector( 'pratilipi-author' ).updateAuthor( author );
 				
 				this.async( function() {

@@ -74,11 +74,9 @@
 				this.querySelector( 'pratilipi-user-password-update' ).open();
 			},
 			
-			verify: function() {
+			sendVerificationMail: function() {
 				this.closeAllElements();
-				this.async( function() {
-					this.querySelector( 'pratilipi-user-verification' ).open();
-				});
+				this.querySelector( 'pratilipi-user-verification' ).sendVerificationMail( this.user.email );
 			},
 			
 			logOut: function() {
@@ -105,15 +103,10 @@
 					this.closeAllElements();
 
 					if( getValue( 'verifyUser' ) == "true" ) {
-						this.async( function() {
-							this.querySelector( 'pratilipi-user-verification' ).open();
-							this.querySelector( 'pratilipi-user-verification' ).verifyUser( getValue( 'email' ), getValue( 'token' ) );
-						});
+						this.querySelector( 'pratilipi-user-verification' ).verifyUser( getValue( 'email' ), getValue( 'token' ) );
 					}
 					else if( getValue( 'passwordReset' ) == "true" ) {
-						this.async( function() {
-							this.querySelector( 'pratilipi-user-password-update' ).openPasswordUpdate( getValue( 'email' ), getValue( 'token' ) );
-						});
+						this.querySelector( 'pratilipi-user-password-update' ).openPasswordUpdate( getValue( 'email' ), getValue( 'token' ) );
 					}
 				}
 

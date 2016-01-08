@@ -81,7 +81,7 @@
 					</div>
 					
 					<div class="modal-footer">
-						<button class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Create</button>
+						<button id="pratilipiWriteButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Create</button>
 					</div>
 					
 				</div>
@@ -147,7 +147,7 @@
 					this.summary = tinyMCE.activeEditor.getContent();
 				
 				this.message = "Please Wait...";
-				jQuery( 'button' ).prop( 'disabled', true );
+				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', true );
 				
 				var body = "title=" + this.title + "&" + 
 				 "titleEn=" + this.titleEn + "&" +
@@ -171,7 +171,7 @@
 				this.message = "Success !";
 				
 				this.async( function() {
-					jQuery( 'button' ).prop( 'disabled', false );
+					jQuery( '#pratilipiWriteButton' ).prop( 'disabled', false );
 					// Redirect to writer with return option to pratilipi page
 					window.location = "http://www.pratilipi.com/write?id=" + pratilipi.pratilipiId + "&ret=" + window.location.host + pratilipi.pageUrl;
 					this.message = null;
@@ -180,7 +180,7 @@
 			
 			_handleAjaxPostError: function( event ) {
 				
-				jQuery( 'button' ).prop( 'disabled', false );
+				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', false );
 				
 				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
 					this.message = event.detail.request.xhr.response.message;

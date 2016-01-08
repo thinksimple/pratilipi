@@ -96,7 +96,7 @@
 									<button type="button" class="pratilipi-white-button" on-click="logInButtonClicked"><small>${ _strings.sign_in }</small></button>
 								</template>
 								<template is="dom-if" if="{{ !user.isGuest }}">
-									<paper-dropdown-menu noink="true" label="{{ user.firstName }}">
+									<paper-dropdown-menu noink="true" label="{{ user.displayName }}">
 										<div class="dropdown-content" style="white-space: nowrap; width: auto;">
 											<paper-item on-click="myProfile">
 												<paper-icon-item><iron-icon style="color: #107FE5;" icon="description"></iron-icon></paper-icon-item>
@@ -158,7 +158,7 @@
 					<div class="modal-body">
 						<div style="display: block;">
 							<paper-input style="display: inline-block;" noink always-float-label disabled label="Email" value="user-one@pratilipi.com" ></paper-input>
-							<button style="margin-top: 10px; float: right" class="pratilipi-grey-button">Verify Email</button>
+							<button style="margin-top: 10px; float: right" class="pratilipi-grey-button" on-click="verifyEmail">Verify Email</button>
 						</div>
 						
 						<div style="min-height: 15px;"></div>
@@ -207,9 +207,15 @@
 				document.querySelector( 'pratilipi-user' ).changePassword();
 			},
 			
+			verifyEmail: function() {
+				jQuery( "#myAccount" ).modal( 'hide' );
+				document.querySelector( 'pratilipi-user' ).sendVerificationMail();
+			},
+			
 			myProfile: function() {
-				// Redirect
-				console.log( "myProfile" );
+				// Redirect to MyProfile Page
+				if( this.user.profilePageUrl != null )
+					window.location.href = "http://" + window.location.host + this.user.profilePageUrl; 
 			},
 			
 			_userChanged: function() {
