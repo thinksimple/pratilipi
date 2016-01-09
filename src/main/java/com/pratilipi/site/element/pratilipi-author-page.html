@@ -3,7 +3,7 @@
 <dom-module id="pratilipi-author-page">
 
 	<template>
-		<paper-header-panel class="flex fullbleed layout vertical" mode="waterfall">
+		<paper-header-panel on-content-scroll="scrollHandler" class="flex fullbleed layout vertical" mode="waterfall">
 			<div class="paper-header">
 				<pratilipi-user user='{{ user }}'></pratilipi-user>
 				<pratilipi-header user='{{ user }}'></pratilipi-header>
@@ -79,6 +79,10 @@
 			_handleAjaxGetResponse: function( event ) {
 				this.querySelector( 'pratilipi-author' ).updateAuthor( event.detail.response );
 			},
+			
+			scrollHandler: function( event ) {
+				this.querySelector( 'pratilipi-card-grid' ).loadMore( event.detail.target.scrollTop );
+			}
 
 		});
 

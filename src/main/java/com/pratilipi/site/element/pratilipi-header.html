@@ -156,14 +156,16 @@
 					</div>
 					
 					<div class="modal-body">
-						<div style="display: block;">
-							<paper-input style="display: inline-block;" noink always-float-label disabled label="Email" value="user-one@pratilipi.com" ></paper-input>
-							<button style="margin-top: 10px; float: right" class="pratilipi-grey-button" on-click="verifyEmail">Verify Email</button>
+						<paper-input noink always-float-label disabled label="Email" value="{{ user.email }}" ></paper-input>
+						
+						<div class="row" style="margin-top: 15px;">
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="verifyEmail">Verify Email</button>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="changePassword"> Change Password </button>
+							</div>
 						</div>
-						
-						<div style="min-height: 15px;"></div>
-						
-						<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="changePassword"> Change Password </button> 
 					</div>
 				</div>
 			</div>
