@@ -79,19 +79,19 @@
 					<br/>
 
 					<table>
-						<tr> <th>Language :</th> 		<td>{{ language }}</td> </tr>
-						<tr> <th>Author Since :</th> 	<td>{{ date }}</td> </tr>
+						<tr> <th>${ _strings.author_language } :</th> 		<td>{{ language }}</td> </tr>
+						<tr> <th>${ _strings.author_since } :</th> 	<td>{{ date }}</td> </tr>
 					</table>
 
 					<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
 						<template is="dom-if" if="{{ !mobile }}">
 							<div style="position: absolute; bottom: 110px;">
-								<button class="pratilipi-light-blue-button" on-click="openAuthorEdit">Edit My Profile</button>
+								<button class="pratilipi-light-blue-button" on-click="openAuthorEdit">${ _strings.author_edit_profile }</button>
 							</div>
 						</template>
 						<template is="dom-if" if="{{ mobile }}">
 							<div style="position: relative; margin-top: 20px;">
-								<button class="pratilipi-light-blue-button" on-click="openAuthorEdit">Edit My Profile</button>
+								<button class="pratilipi-light-blue-button" on-click="openAuthorEdit">${ _strings.author_edit_profile }</button>
 							</div>
 						</template>
 						<pratilipi-edit-author author="{{ author }}"></pratilipi-edit-author>
@@ -105,13 +105,13 @@
 			<!-- Works, Reads and Likes -->
 			<div class="row" style="text-align: center; padding: 10px; font-family: HelveticaNeue;">
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<h3>{{ author.contentPublished }}&nbsp;&nbsp;<small>Works</small></h3>
+					<h3>{{ author.contentPublished }}&nbsp;&nbsp;<small>${ _strings.author_count_works }</small></h3>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<h3>{{ author.totalReadCount }}&nbsp;&nbsp;<small>Reads</small></h3>
+					<h3>{{ author.totalReadCount }}&nbsp;&nbsp;<small>${ _strings.author_count_reads }</small></h3>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<h3>{{ author.totalFbLikeShareCount }}&nbsp;&nbsp;<small>Likes</small></h3>
+					<h3>{{ author.totalFbLikeShareCount }}&nbsp;&nbsp;<small>${ _strings.author_count_likes }</small></h3>
 				</div>
 			</div>
 			

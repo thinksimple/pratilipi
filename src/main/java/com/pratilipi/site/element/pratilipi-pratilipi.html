@@ -93,16 +93,16 @@
 					</pratilipi-rating>
 					
 					<table style="margin-top: 10px; margin-bottom: 30px;">
-						<tr> <th>Type :</th> 		<td>{{ type }}</td> </tr>
-						<tr> <th>Listing Date :</th> 	<td>{{ listingDate }}</td> </tr>
+						<tr> <th>${ _strings.pratilipi_type } :</th> 		<td>{{ type }}</td> </tr>
+						<tr> <th>${ _strings.pratilipi_listing_date } :</th> 	<td>{{ listingDate }}</td> </tr>
 					</table>
 					
 					<div style="position: relative; display: inline-block;">
-						<button on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.pratilipi_read }</button>
+						<button on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</button>
 						<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
 						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
-							<button on-click="openPratilipiEdit" class="pratilipi-light-blue-button">Edit Info</button>
-							<button on-click="openWriterPanel" class="pratilipi-light-blue-button">Edit Content</button>
+							<button on-click="openPratilipiEdit" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_info }</button>
+							<button on-click="openWriterPanel" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_content }</button>
 							<pratilipi-edit-pratilipi pratilipi="{{ pratilipi }}"></pratilipi-edit-pratilipi>
 						</template>
 					</div>
@@ -115,13 +115,13 @@
 			<!-- Works, Reads and Likes -->
 			<div class="row" style="text-align: center; padding: 10px; font-family: HelveticaNeue;">
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<h3 style="display: inline-block;">{{ pratilipi.readCount }}</h3>&nbsp;&nbsp;<p style="display: inline-block;">Reads</p>
+					<h3 style="display: inline-block;">{{ pratilipi.readCount }}</h3>&nbsp;&nbsp;<p style="display: inline-block;">${ _strings.pratilipi_count_reads }</p>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<h3 style="display: inline-block;">{{ pratilipi.reviewCount }}</h3>&nbsp;&nbsp;<p style="display: inline-block;">Reviews</p>
+					<h3 style="display: inline-block;">{{ pratilipi.reviewCount }}</h3>&nbsp;&nbsp;<p style="display: inline-block;">${ _strings.pratilipi_count_reviews }</p>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<h3 style="display: inline-block;">{{ pratilipi.fbLikeShareCount }}</h3>&nbsp;&nbsp;<p style="display: inline-block;">Likes</p>
+					<h3 style="display: inline-block;">{{ pratilipi.fbLikeShareCount }}</h3>&nbsp;&nbsp;<p style="display: inline-block;">${ _strings.pratilipi_count_likes }</p>
 				</div>
 			</div>
 			

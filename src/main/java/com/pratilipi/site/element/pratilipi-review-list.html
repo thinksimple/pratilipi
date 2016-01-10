@@ -56,15 +56,15 @@
 	
 	<template>
 		<paper-card>
-			<h3 style="color: #D0021B;">${ _strings.reviews }</h3>
+			<h3 style="color: #D0021B;">${ _strings.review_heading }</h3>
 			<template is="dom-if" if="{{ !isactive }}">
 				<template is="dom-if" if="{{ !reviewAvailable }}">
-					<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.write_a_review }</a>
+					<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
 				</template>
 				<template is="dom-if" if="{{ reviewAvailable }}">
 					<div style="white-space: nowrap; display: inline-block;">
-						<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">Edit Review</a>
-						<a class="pratilipi-grey-button" role="button" on-click="openDeleteReview">Delete Review</a>
+						<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_edit_review }</a>
+						<a class="pratilipi-grey-button" role="button" on-click="openDeleteReview">${ _strings.review_delete_review }</a>
 					</div>
 				</template>
 			</template>
@@ -105,19 +105,19 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<span>Sure to Delete Review?</span>
+						<span>${ _strings.review_delete_review }</span>
 						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					<div class="modal-body">
-						Are you sure to delete the review?
+						${ _strings.review_delete_review_confirm }
 						<div style="margin-top: 5px; min-height: 20px;" class="text-center">
 							<span>{{ message }}</span>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="deleteReviewButton" style="float: left; outline: none;" class="btn btn-danger" on-click="deleteReview">Okay</button>
+						<button id="deleteReviewButton" style="float: left; outline: none;" class="btn btn-danger" on-click="deleteReview">${ _strings.okay }</button>
 						<div style="display: inline-block; min-width: 40px;" ></div>
-						<button style="float: right; outline: none;" class="btn btn-primary" on-click="closeDeleteReview">Cancel</button>
+						<button style="float: right; outline: none;" class="btn btn-primary" on-click="closeDeleteReview">${ _strings.cancel }</button>
 					</div>
 				</div>
 			</div>

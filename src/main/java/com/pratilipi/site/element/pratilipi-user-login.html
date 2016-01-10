@@ -17,7 +17,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<span>${ _strings.sign_in_to_pratilipi }</span>
+						<span>${ _strings.user_sign_in_to_pratilipi }</span>
 						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					<div class="modal-body" on-keyup="onSubmit">
@@ -38,15 +38,15 @@
 								<span class="text-center">{{ message }}</span>
 							 	<br/>
 								<br style="line-height: 10px;"/>
-								<button id="loginButton" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_in }</button>
+								<button id="loginButton" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.user_sign_in }</button>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a style="font-size: 13px; font-weight: 300; left; color: #D0021B; float: left;" href="#" on-click="resetPassword">Forgot Password?</a>
+						<a style="font-size: 13px; font-weight: 300; left; color: #D0021B; float: left;" href="#" on-click="resetPassword">${ _strings.user_forgot_password }</a>
 						<div style="float: right;">
-							<span style="font-size: 13px; font-weight: 300; color: #9B9B9B;">New?</span>
-							<a style="font-size: 13px; font-weight: 300; color: #107FE5;" href="#" on-click="register">Sign Up !</a>
+							<span style="font-size: 13px; font-weight: 300; color: #9B9B9B;">${ _strings.user_is_new }</span>
+							<a style="font-size: 13px; font-weight: 300; color: #107FE5;" href="#" on-click="register">${ _strings.user_sign_up_for_pratilipi }</a>
 						</div>
 					</div>
 				</div>

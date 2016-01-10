@@ -56,14 +56,14 @@
 						<tr>
 							<td align="left" width="65px">
 								<a href="/">
-									<img style="padding-top: 5px; max-width: 60px;" title="${ _strings.pratilipi_logo }" alt="${ _strings.pratilipi_logo }" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/Logo-for-Site-Header.png" />
+									<img style="padding-top: 5px; max-width: 60px;" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/Logo-for-Site-Header.png" />
 								</a>
 							</td>
 							
 							<template is="dom-if" if="{{ !mobile }}">
 								<td width="90px">
 									<a href="/">
-										<img style= "padding-top: 5px; max-width: 90px;" title="${ _strings.pratilipi_logo }" alt="${ _strings.pratilipi_logo }" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/Pratilipi-Text.png" />
+										<img style= "padding-top: 5px; max-width: 90px;" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/Pratilipi-Text.png" />
 									</a>
 								</td>
 							</template>
@@ -93,7 +93,7 @@
 							
 							<td align="right" width="85px">
 								<template is="dom-if" if="{{ user.isGuest }}">
-									<button type="button" class="pratilipi-white-button" on-click="logInButtonClicked"><small>${ _strings.sign_in }</small></button>
+									<button type="button" class="pratilipi-white-button" on-click="logInButtonClicked"><small>${ _strings.user_sign_in }</small></button>
 								</template>
 								<template is="dom-if" if="{{ !user.isGuest }}">
 									<paper-dropdown-menu noink="true" label="{{ user.displayName }}">
@@ -101,17 +101,17 @@
 											<paper-item on-click="myProfile">
 												<paper-icon-item><iron-icon style="color: #107FE5;" icon="description"></iron-icon></paper-icon-item>
 												&nbsp;&nbsp;
-												<paper-item-body>My Profile</paper-item-body>
+												<paper-item-body>${ _strings.user_my_profile }</paper-item-body>
 											</paper-item>
 											<paper-item on-click="myAccount">
 												<paper-icon-item><iron-icon style="color: #107FE5;" icon="account-circle"></iron-icon></paper-icon-item>
 												&nbsp;&nbsp;
-												<paper-item-body>My Account</paper-item-body>
+												<paper-item-body>${ _strings.user_my_account }</paper-item-body>
 											</paper-item>
 											<paper-item on-click="logOut">
 												<paper-icon-item><iron-icon style="color: #D0021B;" icon="remove-circle"></iron-icon></paper-icon-item>
 												&nbsp;&nbsp;
-												<paper-item-body>${ _strings.sign_out }</paper-item-body>
+												<paper-item-body>${ _strings.user_sign_out }</paper-item-body>
 											</paper-item>
 										</paper-dropdown>
 									</paper-dropdown-menu>
@@ -151,7 +151,7 @@
 				<div class="modal-content">
 					
 					<div class="modal-header">
-						<span>Edit My Account</span>
+						<span>${ _strings.edit_account_heading }</span>
 						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					
@@ -161,15 +161,15 @@
 						<div class="row" style="margin-top: 15px;">
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<template is="dom-if" if="{{ ! user.isEmailVerified }}">
-									<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="verifyEmail">Verify Email</button>
+									<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="verifyEmail">${ _strings.edit_account_verify_email }</button>
 								</template>
 								<template is="dom-if" if="{{ user.isEmailVerified }}">
 									<iron-icon style="color: #107FE5; width: 32px; height: 32px;" icon="check-circle"></iron-icon>
-									<h6 style="display: inline-block;">Email Verified!</h6>
+									<h6 style="display: inline-block;">${ _strings.edit_account_email_verified }</h6>
 								</template>
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-								<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="changePassword"> Change Password </button>
+								<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="changePassword">${ _strings.edit_account_change_password }</button>
 							</div>
 						</div>
 					</div>

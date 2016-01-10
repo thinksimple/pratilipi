@@ -19,7 +19,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<span>${ _strings.sign_up_for_pratilipi }</span>
+						<span>${ _strings.user_sign_up_for_pratilipi }</span>
 						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					<div class="modal-body" on-keyup="onSubmit">
@@ -44,7 +44,7 @@
 							
 							<div class="text-center">
 								<span style="display: block;">{{ message }}</span>
-								<button id="registerButton" style="margin-top: 20px;" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.sign_up }</button>
+								<button id="registerButton" style="margin-top: 20px;" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.user_sign_up }</button>
 								<span style="display: block; margin-top: 15px;">
 									By registering, you agree to the
 									<a href="/privacy-policy"><span style="color: #107FE5; white-space: nowrap;">privacy policy</span></a>
@@ -56,7 +56,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<p class=" text-center">Already a Member?&nbsp;<a style="color: #107FE5;" href="#" on-click="logIn">Sign In !</a></p>
+						<p class=" text-center">${ _strings.user_is_registered }&nbsp;<a style="color: #107FE5;" href="#" on-click="logIn">${ _strings.user_sign_in }</a></p>
 					</div>
 				</div>
 			</div>
