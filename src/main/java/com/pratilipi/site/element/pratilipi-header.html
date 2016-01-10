@@ -160,7 +160,13 @@
 						
 						<div class="row" style="margin-top: 15px;">
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-								<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="verifyEmail">Verify Email</button>
+								<template is="dom-if" if="{{ ! user.isEmailVerified }}">
+									<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="verifyEmail">Verify Email</button>
+								</template>
+								<template is="dom-if" if="{{ user.isEmailVerified }}">
+									<iron-icon style="color: #107FE5; width: 32px; height: 32px;" icon="check-circle"></iron-icon>
+									<h6 style="display: inline-block;">Email Verified!</h6>
+								</template>
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="changePassword"> Change Password </button>
@@ -216,7 +222,7 @@
 			
 			myProfile: function() {
 				// Redirect to MyProfile Page
-				if( this.user.profilePageUrl != null )
+				if( this.user.profilePageUrl != null && window.location != "http://" + window.location.host + this.user.profilePageUrl )
 					window.location.href = "http://" + window.location.host + this.user.profilePageUrl; 
 			},
 			

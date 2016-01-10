@@ -81,7 +81,8 @@
 			},
 			
 			scrollHandler: function( event ) {
-				this.querySelector( 'pratilipi-card-grid' ).loadMore( event.detail.target.scrollTop );
+				if( this.author != null && ! this.author.hasAccessToUpdate )
+					this.querySelector( 'pratilipi-card-grid' ).loadMore( event.detail.target.scrollTop );
 			}
 
 		});
