@@ -94,6 +94,7 @@
 			is: 'pratilipi-card-grid',
 
 			properties: {
+				authorId: { type: String, value: null },
 				heading: { type: String },
 				pratilipiList: { type: Array },
 				searchQuery: { type: String },
@@ -170,6 +171,7 @@
 			},
 			
 			_write: function() {
+				document.querySelector( 'pratilipi-write' ).setAuthorId( this.authorId );
 				document.querySelector( 'pratilipi-write' ).open();
 			}
 

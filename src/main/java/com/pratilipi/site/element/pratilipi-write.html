@@ -118,12 +118,26 @@
  				message: { type: String, value: "" }
 			},
 			
+			setAuthorId: function( authorId ) {
+				this.authorId = authorId;
+			},
+			
 			open: function() {
 				jQuery( "#pratilipiWrite" ).modal();	
 			},
 			
 			close: function() {
 				jQuery( "#pratilipiWrite" ).modal( 'hide' );	
+			},
+			
+			clear: function() {
+				this.authorId = null;
+				this.title = "";
+				this.titleEn = "";
+				this.summary = "";
+				this.pratilipiType = null;
+				this.language = null;
+				this.message = null;
 			},
 			
 			onSubmit: function() {
@@ -174,7 +188,7 @@
 					jQuery( '#pratilipiWriteButton' ).prop( 'disabled', false );
 					// Redirect to writer with return option to pratilipi page
 					window.location = "http://www.pratilipi.com/write?id=" + pratilipi.pratilipiId + "&ret=" + window.location.host + pratilipi.pageUrl;
-					this.message = null;
+					this.clear();
 				}, 1000 );
 			},
 			
