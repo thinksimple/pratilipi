@@ -73,7 +73,7 @@
 						<div style="margin-top: 15px; margin-bottom: 5px;">
 							<span>Summary (Optional) :</span>
 						</div>
-						<script type="text/javascript">tinymce.init({ selector:'#writeSummary', content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+						<script type="text/javascript">tinymce.init({ selector:'#writeSummary', editor_selector : "writeSummary", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 						<paper-textarea class="write" id="writeSummary" value="{{ summary::input }}"></paper-textarea>
 						<div class="text-center" style="min-height: 20px;">
 							<span>{{ message }}</span>
@@ -108,14 +108,14 @@
 			properties: {
 				authorId: { type: String, value: null },
 					
-				title: { type: String, value: "" },
-				titleEn: { type: String, value: "" },
+				title: { type: String, value: null },
+				titleEn: { type: String, value: null },
  				summary: { type: String, value: "" },
  				
  				pratilipiType: { type: String, value: null },
  				language: { type: String, value: null },
  				
- 				message: { type: String, value: "" }
+ 				message: { type: String, value: null }
 			},
 			
 			setAuthorId: function( authorId ) {
@@ -132,8 +132,8 @@
 			
 			clear: function() {
 				this.authorId = null;
-				this.title = "";
-				this.titleEn = "";
+				this.title = null;
+				this.titleEn = null;
 				this.summary = "";
 				this.pratilipiType = null;
 				this.language = null;
@@ -147,32 +147,37 @@
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
 					return;
 				
-				if( this.title.trim() === "" ) {
+				if( this.title == null || this.title.trim() === "" ) {
 					this.message = "Please fill in the Title.";
 					return;
 				}
 				
-				if( this.pratilipiType === null ) {
+				if( this.pratilipiType == null ) {
 					this.message = "Please select the type.";
 					return;
 				}
 				
 				if( tinyMCE.activeEditor !== null )
-					this.summary = tinyMCE.activeEditor.getContent();
+					this.summary = tinyMCE.get( 'writeSummary' ).getContent();
 				
 				this.message = "Please Wait...";
-				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', true );
+				
 				
 				var body = "title=" + this.title + "&" + 
-				 "titleEn=" + this.titleEn + "&" +
-				 "summary=" + this.summary + "&" +
 				 "type=" + this.pratilipiType.toUpperCase() + "&" +
 				 "language=" + this.language.toUpperCase() + "&" + 
 				 "state=" + "DRAFTED" ;
 				
+				if( this.titleEn != null && this.titleEn.trim() !== "" )
+					body = body + "&" + "titleEn=" + this.titleEn;
+				
+				if( this.summary.trim() != "" )
+					body = body + "&" + "summary=" + this.summary;
+				
 				if( this.authorId !== null )
 					body = body + "&" + "authorId=" + this.authorId;
 				
+				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', true );
 				this.$.AjaxPost.body = ( body );
 				
 				this.$.AjaxPost.generateRequest();
