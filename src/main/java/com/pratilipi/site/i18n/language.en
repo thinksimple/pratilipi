@@ -1,117 +1,176 @@
-# Deprecated
+# Do NOT edit
 
-website_language = All
+pratilipi					= Pratilipi
+pratilipi_logo_url			= /resources/en/pratilipi-logo.png
 
+facebook_page				= https://www.facebook.com/Pratilipidotcom
 
+home_page_title				= Read Hindi, Gujarati and Tamil Stories, Poems and Books
+website_language			= Tamil 
 
-# Home Page related
-
-home_page_title = Read Hindi, Gujarati and Tamil Stories, Poems and Books
-
-
-
-# Generic
-
-pratilipi			= Pratilipi
-pratilipi_logo		= Pratilipi Logo
-pratilipi_logo_url	= /resources/en/pratilipi-logo.png
-
-facebook_page	= https://www.facebook.com/Pratilipidotcom
-twitter_page	= https://twitter.com/TeamPratilipi
-googleplus_page	= https://plus.google.com/+PratilipiTeam
-linkedin_page	= https://www.linkedin.com/company/pratilipi
-
-write	= Write
-menu	= Menu
-back	= Back
-saving  = Saving ...
-working = Working ...
-show_more = show more
-show_less = show less
+facebook_page				= https://www.facebook.com/Pratilipidotcom
+twitter_page				= https://twitter.com/TeamPratilipi
+googleplus_page				= https://plus.google.com/+PratilipiTeam
+linkedin_page				= https://www.linkedin.com/company/pratilipi
 
 
 
-# Language Selection only
+# Language
 
-choose_language = Choose Language
-language_all	= All Languages
-language_hi		= Hindi
-language_gu		= Gujarati
-language_ta		= Tamil
-
-
-
-# Search bar & results
-
-search 			= Search
-search_bar_help	= Search for books, stories, poems and more ...
+language_choose_language	= Choose Language
+language_all				= All Languages
+language_hi					= Hindi
+language_gu					= Gujarati
+language_ta					= Tamil
+language_mr					= Marathi
+lanugage_ml					= Malayalam
+language_bn					= Bengali
+language_en					= English
 
 
 
-# 'Sign In' / 'Sign Out' / Register / 'Forgot Password' links & forms
+# Author
 
-full_name        = Full Name
-email            = Email
-password         = Password
-confirm_password = Confirm Password
+author_about				= About the Author
+author_language				= Language
+author_since				= Author Since
 
-sign_in				  = Sign In
-sign_in_with_facebook = Sign In with Facebook
-sign_in_to_pratilipi  = Sign in to Pratilipi
-sign_up               = Sign Up !
-sign_up_for_pratilipi = Sign Up for Pratilipi
-sign_out			  = Sign Out
+author_count_works			= WORKS
+author_count_reads			= READS
+author_count_likes			= LIKES
 
-forgot_password     = Forgot Password ?
-reset_password      = Reset Password
-reset_password_help = Please enter the email address you signed up with. We will send you a link to reset your password.
+author_edit_profile			= Edit My Profile
+author_edit_profile_heading	= Edit Author
 
-
-
-# Rating / Review related
-
-rating  = rating
-ratings	= ratings
-rate_this = Rate This !
-your_rating = Your Rating
-rating_1_star = Poor
-rating_2_star = Fair
-rating_3_star = Good
-rating_4_star = Very Good
-rating_5_star = Excellent
-
-reviews				= Reviews
-write_a_review		= Write a Review
-review_title		= Review Title
-review_title_help	= e.g., Great Story !
-review_content		= Your Review
-review_content_help	= Share your thoughts ! What made this work interesting ? What made it inspiring ? What did you learn from it ? You are helping others make a better choice !
-submit_review		= SUBMIT
-review_helpful = Was this review helpful?
+author_drafts				= Drafts
+author_published_works		= Published Works
+author_add_new_content		= Add New Content
 
 
 
-# Author related
+# Pratilipi
 
-author_about = About the Author
-author_since = Author Since
-author_published_works = Published Works
+pratilipi_type				= Type
+pratilipi_listing_date		= Listing Date
+pratilipi_published			= Published
+pratilipi_published_year	= Published Year
+pratilipi_summary			= Summary
 
-author_count_works = WORKS
-author_count_reads = READS
-author_count_likes = LIKES
+pratilipi_edit_info			= Edit Info
+pratilipi_edit_info_heading	= Edit Pratilipi
+pratilipi_edit_content		= Edit Content
+
+pratilipi_count_reads		= READS
+pratilipi_count_reviews		= REVIEWS
+pratilipi_count_likes		= LIKES
 
 
 
-# Pratilipi related
+# Rating
 
-pratilipi_published = Published
+rating_rating				= Rating 
+rating_ratings				= Ratings
+rating_rate_this			= Rate This !
+rating_your_rating			= Your Rating
 
-pratilipi_summary = Summary
+rating_1_star				= Poor
+rating_2_star				= Fair
+rating_3_star				= Good
+rating_4_star				= Very Good
+rating_5_star				= Excellent
 
-pratilipi_read = READ
-pratilipi_free = FREE !
 
-pratilipi_count_reads = READS
-pratilipi_count_likes = LIKES
 
+# Review
+
+review_heading				= Reviews 
+review_write_a_review		= Write a Review
+review_title				= Review Title
+review_title_help			= e.g., Great Story !
+review_content				= Your Review
+review_content_help			= Share your thoughts ! What made this work interesting ? What made it inspiring ? What did you learn from it ? You are helping others make a better choice !
+review_submit_review		= SUBMIT
+review_edit_review			= Edit Review
+review_delete_review		= Delete Review
+review_delete_review_confirm	= Are you sure to delete your review?
+review_helpful				= Was this review helpful?
+
+
+
+# Search
+
+search 						= Search
+search_bar_help				= Search for books, stories, poems and more ...
+
+
+
+# Write
+
+write_heading				= Add New Content
+write_help					= You can write on Pratilipi!
+write_create_new_content	= Create New Content
+
+
+
+# Common User Popups
+
+user_sign_in				= Sign In
+user_sign_in_with_facebook	= Sign In with Facebook
+user_sign_in_to_pratilipi	= Sign in to Pratilipi
+user_sign_out				= வSign Out
+
+user_sign_up				= Sign Up !
+user_sign_up_for_pratilipi	= Sign Up for Pratilipi
+
+user_forgot_password		= Forgot Password ?
+user_reset_password			= Reset Password
+user_reset_password_help	=  Please enter the email address you signed up with. We will send you a link to reset your password.
+
+user_full_name				= Full Name
+user_email					= Email
+user_password				= Password
+user_confirm_password		= Confirm Password
+
+user_my_profile				= My Profile
+user_my_account				= My Account
+
+user_is_new					= New?
+user_is_registered			= Already a Member?
+user_email_verification		= Email Verification
+
+
+
+# My Account popup
+
+edit_account_heading		= Edit My Account
+edit_account_verify_email	= Verify Email
+edit_account_email_verified	= Email Verified
+edit_account_change_password	= Change Password
+
+
+
+# Footer
+
+footer_follow_us_on_social_media	= Follow us on Social Media
+footer_about_us				= About Us
+footer_work_with_us			= Work With Us
+footer_blog					= Blog
+footer_privacy_policy		= Privacy Policy
+footer_terms_of_service		= Terms
+
+
+
+# Common Words
+
+okay						= Okay
+cancel						= Cancel
+save_changes				= Save Changes
+show_more					= show more
+show_less					= show less
+read						= Read
+write						= Write
+free						= FREE !
+saving						= Saving ...
+working						= Working ...
+menu						= Menu
+back						= Back

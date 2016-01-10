@@ -104,11 +104,20 @@ search_bar_help				= தேட - கவிதை, கதை, புத்தக�
 
 
 
+# Write
+
+write_heading				= Add New Content
+write_help					= You can write on Pratilipi!
+write_create_new_content	= Create New Content
+
+
+
 # Common User Popups
 
 user_sign_in				= உள்நுழைக
 user_sign_in_with_facebook	= முகநூல்  மூலம் உள்நுழைய 
-user_sign_in_to_pratilipi	= ப்ரதிலிபியில் உள்நுழைக  
+user_sign_in_to_pratilipi	= ப்ரதிலிபியில் உள்நுழைக
+user_sign_out				= வெளியேற  
 
 user_sign_up				= தளத்தில்  பதிவு செய்க !
 user_sign_up_for_pratilipi	= ப்ரதிலிபியில் பதிவு செய்க !
@@ -124,6 +133,10 @@ user_confirm_password		= கடவுச்சொலை மீண்டும்
 
 user_my_profile				= My Profile
 user_my_account				= My Account
+
+user_is_new					= New?
+user_is_registered			= Already a Member?
+user_email_verification		= Email Verification
 
 
 
