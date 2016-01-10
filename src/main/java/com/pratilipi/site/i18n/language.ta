@@ -1,66 +1,163 @@
-pratilipi			= ப்ரதிலிபி
-pratilipi_logo		= Pratilipi Logo
-pratilipi_logo_url	= /resources/ta/pratilipi-tamil-logo.png
+# Do NOT edit
 
-facebook_page = https://www.facebook.com/pages/ப்ரதிலிபி/448203822022932
+pratilipi					= ப்ரதிலிபி
+pratilipi_logo_url			= /resources/ta/pratilipi-tamil-logo.png
 
-home_page_title = தமிழ் கதைகள், புத்தகங்கள் , விதைகள், கட்டுரைகள், ஆகியவற்றை படிக்க
-website_language = Tamil 
+facebook_page				= https://www.facebook.com/pages/ப்ரதிலிபி/448203822022932
 
-sign_in				  = உள்நுழைக
-sign_in_with_facebook = முகநூல்  மூலம் உள்நுழைய 
-sign_in_to_pratilipi  = ப்ரதிலிபியில் உள்நுழைக  
-sign_up               = தளத்தில்  பதிவு செய்க !
-sign_up_for_pratilipi = ப்ரதிலிபியில் பதிவு செய்க !
-sign_out			  = வெளியேற
+home_page_title				= தமிழ் கதைகள், புத்தகங்கள் , விதைகள், கட்டுரைகள், ஆகியவற்றை படிக்க
+website_language			= Tamil 
 
-forgot_password     = கடவுச்சொல் நினைவில் இல்லை? 
-reset_password      = கடவுச்சொல்லை மாற்ற
-reset_password_help =  இத்தளத்தில் பதிவு செய்யப் பயன்படுத்திய மின்னஞ்சல் முகவரியை வழங்கவும். அம்முகவரியில் கடவுச்சொல் மாற்றுவதற்கான இணைப்பை அனுப்பிவைக்கிறோம்.  
+facebook_page				= https://www.facebook.com/Pratilipidotcom
+twitter_page				= https://twitter.com/TeamPratilipi
+googleplus_page				= https://plus.google.com/+PratilipiTeam
+linkedin_page				= https://www.linkedin.com/company/pratilipi
 
 
-choose_language = மொழித்தேர்வு
-language_all	= அனைத்தும்
-language_gu		= Gujarati
-language_ta		= தமிழ் 
 
-saving = பதிவேற்றபடுகிறது ...
-working = காத்திருக்க...
+# Language
 
-rating  = மதிப்பீடு 
-ratings	= மதிப்பீடகள்
-rate_this = மதிப்பிடுக!
-your_rating = உங்கள் மதிப்பீடு!
-reviews				= விமர்சனங்கள் 
-write_a_review		= விமர்சனம் எழுத 
-review_title		= விமர்சனத் தலைப்பு 
-review_title_help	= எ.கா - அருமையான கதை!  
-review_content		= உங்கள் விமர்சனம் 
-review_content_help	= உங்கள் கருத்துக்களைப் பதிவிடுக. இக்கதையில் / புத்தகத்தில் / கவிதையில் / கட்டுரையில் எது உங்களை மிகவும் கவர்ந்தது? உங்களுக்கு பிடிக்காதது? உங்கள் விமர்சனம் எழுத்தாளருக்கும், மற்ற வாசகர்களுக்கு மிக உதவியாக இருக்கும். 
-submit_review		= பதிவுசெய்க 
+language_choose_language	= மொழித்தேர்வு
+language_all				= அனைத்தும்
+language_hi					= Hindi
+language_gu					= Gujarati
+language_ta					= தமிழ்
+language_mr					= Marathi
+lanugage_ml					= Malayalam
+language_bn					= Bengali
+language_en					= English
 
 
-search 			= தேட
-search_bar_help	= தேட - கவிதை, கதை, புத்தகம், கட்டுரை மற்றும் பல  ...
 
-author_about = எழுத்தாளரைப் பற்றி
-author_published_works = பதிப்பித்துள்ள படைப்புகள்
+# Author
 
-full_name        = முழுப்பெயர்
-email            = மின்னஞ்சல் முகவரி 
-password         = கடவுச்சொல்
-confirm_password = கடவுச்சொலை மீண்டும் பதிவு செய்க
+author_about				= எழுத்தாளரைப் பற்றி
+author_language				= Language
+author_since				= Author Since
 
-show_more = மேலும் 
-show_less = சுருக்கு 
+author_count_works			= WORKS
+author_count_reads			= READS
+author_count_likes			= LIKES
 
-# Pratilipi related
-pratilipi_read = படிக்க
-pratilipi_free = இலவசம் !
+author_edit_profile			= Edit My Profile
+author_edit_profile_heading	= Edit Author
 
-write = எழுத
-published = பதிப்பு 
-pratilipi_summary = புத்தகத்தைப் பற்றி
-review_helpful = இந்த விமர்சனம் உதவியாக இருந்ததா?
+author_drafts				= Drafts
+author_published_works		= பதிப்பித்துள்ள படைப்புகள்
+author_add_new_content		= Add New Content
 
 
+
+# Pratilipi
+
+pratilipi_type				= Type
+pratilipi_listing_date		= Listing Date
+pratilipi_published			= Published
+pratilipi_published_year	= பதிப்பு 
+pratilipi_summary			= புத்தகத்தைப் பற்றி
+
+pratilipi_edit_info			= Edit Info
+pratilipi_edit_info_heading	= Edit Pratilipi
+pratilipi_edit_content		= Edit Content
+
+pratilipi_count_reads		= READS
+pratilipi_count_reviews		= REVIEWS
+pratilipi_count_likes		= LIKES
+
+
+
+# Rating
+
+rating_rating				= மதிப்பீடு 
+rating_ratings				= மதிப்பீடகள்
+rating_rate_this			= மதிப்பிடுக!
+rating_your_rating			= உங்கள் மதிப்பீடு!
+
+rating_1_star				= Poor
+rating_2_star				= Fair
+rating_3_star				= Good
+rating_4_star				= Very Good
+rating_5_star				= Excellent
+
+
+
+# Review
+
+review_heading				= விமர்சனங்கள் 
+review_write_a_review		= விமர்சனம் எழுத 
+review_title				= விமர்சனத் தலைப்பு 
+review_title_help			= எ.கா - அருமையான கதை!  
+review_content				= உங்கள் விமர்சனம் 
+review_content_help			= உங்கள் கருத்துக்களைப் பதிவிடுக. இக்கதையில் / புத்தகத்தில் / கவிதையில் / கட்டுரையில் எது உங்களை மிகவும் கவர்ந்தது? உங்களுக்கு பிடிக்காதது? உங்கள் விமர்சனம் எழுத்தாளருக்கும், மற்ற வாசகர்களுக்கு மிக உதவியாக இருக்கும். 
+review_submit_review		= பதிவுசெய்க
+review_edit_review			= Edit Review
+review_delete_review		= Delete Review
+review_delete_review_confirm	= Are you sure to delete your review?
+review_helpful				= இந்த விமர்சனம் உதவியாக இருந்ததா?
+
+
+
+# Search
+
+search 						= தேட
+search_bar_help				= தேட - கவிதை, கதை, புத்தகம், கட்டுரை மற்றும் பல  ...
+
+
+
+# Common User Popups
+
+user_sign_in				= உள்நுழைக
+user_sign_in_with_facebook	= முகநூல்  மூலம் உள்நுழைய 
+user_sign_in_to_pratilipi	= ப்ரதிலிபியில் உள்நுழைக  
+
+user_sign_up				= தளத்தில்  பதிவு செய்க !
+user_sign_up_for_pratilipi	= ப்ரதிலிபியில் பதிவு செய்க !
+
+user_forgot_password		= கடவுச்சொல் நினைவில் இல்லை? 
+user_reset_password			= கடவுச்சொல்லை மாற்ற
+user_reset_password_help	=  இத்தளத்தில் பதிவு செய்யப் பயன்படுத்திய மின்னஞ்சல் முகவரியை வழங்கவும். அம்முகவரியில் கடவுச்சொல் மாற்றுவதற்கான இணைப்பை அனுப்பிவைக்கிறோம்.
+
+user_full_name				= முழுப்பெயர்
+user_email					= மின்னஞ்சல் முகவரி 
+user_password				= கடவுச்சொல்
+user_confirm_password		= கடவுச்சொலை மீண்டும் பதிவு செய்க
+
+user_my_profile				= My Profile
+user_my_account				= My Account
+
+
+
+# My Account popup
+
+edit_account_heading		= Edit My Account
+edit_account_verify_email	= Verify Email
+edit_account_email_verified	= Email Verified
+edit_account_change_password	= Change Password
+
+
+
+# Footer
+
+footer_follow_us_on_social_media	= Follow us on Social Media
+footer_about_us				= About Us
+footer_work_with_us			= Work With Us
+footer_blog					= Blog
+footer_privacy_policy		= Privacy Policy
+footer_terms_of_service		= Terms
+
+
+
+# Common Words
+
+okay						= Okay
+cancel						= Cancel
+save_changes				= Save Changes
+show_more					= மேலும் 
+show_less					= சுருக்கு 
+read						= படிக்க
+write						= எழுத
+free						= இலவசம் !
+saving						= பதிவேற்றபடுகிறது ...
+working						= காத்திருக்க...
+menu						= Menu
+back						= Back
