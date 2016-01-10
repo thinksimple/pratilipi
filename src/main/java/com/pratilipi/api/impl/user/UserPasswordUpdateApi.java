@@ -30,8 +30,7 @@ public class UserPasswordUpdateApi extends GenericApi {
 		} else if( request.getPassword() != null ) {
 			// Updating password
 			UserDataUtil.updateUserPassword( request.getPassword(), request.getNewPassword() );
-			// Logging-in the user
-			userData = UserDataUtil.loginUser( request.getEmail(), request.getNewPassword() );
+			userData = UserDataUtil.getCurrentUser();
 		} else {
 			throw new InvalidArgumentException( GenericRequest.ERR_INSUFFICIENT_ARGS );
 		}
