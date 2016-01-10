@@ -75,9 +75,14 @@
 								<paper-input class="edit" type="date" label="Birthday (dd-mm-yyyy)" always-float-label value="{{ params.birthday::input }}"></paper-input>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-dropdown-menu noink="true" disabled="true" label="Language" value="{{ params.language::input }}">
-									<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
-										<paper-item>${ _strings.website_language }</paper-item>
+								<paper-dropdown-menu id="authorLanguage" noink label="Language">
+									<paper-menu noink selected="[[ selected ]]" class="dropdown-content" style="white-space: nowrap; width: auto;">
+										<paper-item>Bengali</paper-item>
+										<paper-item>Gujarati</paper-item>
+										<paper-item>Hindi</paper-item>
+										<paper-item>Malayalam</paper-item>
+										<paper-item>Marathi</paper-item>
+										<paper-item>Tamil</paper-item>
 									</paper-menu>
 								</paper-dropdown-menu>
 							</div>
@@ -85,7 +90,7 @@
 						<div style="margin-top: 15px; margin-bottom: 5px;">
 							<span>Summary (Optional) :</span>
 						</div>
-						<script type="text/javascript">tinymce.init({ selector:'#authorSummary', content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+						<script type="text/javascript">tinymce.init({ selector:'#authorSummary', editor_selector : "authorSummary", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 						<paper-textarea class="edit" id="authorSummary" value="{{ summary::input }}"></paper-textarea>
 						<div class="text-center" style="min-height: 20px;">
 							<span>{{ message }}</span>
@@ -143,6 +148,18 @@
 				
 				this.summary = this.params.summary == null ? "" : this.params.summary;
 				
+				if( this.params.language.toUpperCase() === "BENGALI" )
+					this.selected = 0;
+				else if( this.params.language.toUpperCase() === "GUJARATI" )
+					this.selected = 1;
+				else if( this.params.language.toUpperCase() === "HINDI" )
+					this.selected = 2;
+				else if( this.params.language.toUpperCase() === "MALAYALAM" )
+					this.selected = 3;
+				else if( this.params.language.toUpperCase() === "MARATHI" )
+					this.selected = 4;
+				else if( this.params.language.toUpperCase() === "TAMIL" )
+					this.selected = 5;
 			},
 			
 			open: function() {
@@ -155,14 +172,16 @@
 			
 			onSubmit: function() {
 				
-				if( tinyMCE.activeEditor !== null )
-					this.params.summary = tinyMCE.activeEditor.getContent();
+				if( tinyMCE.activeEditor != null )
+					this.params.summary = tinyMCE.get( 'authorSummary' ).getContent();
 				else
 					this.params.summary = this.summary;
 				
 				if( this.params.birthday != null )
 					this.params.birthday = this.processBirthday( this.params.birthday );
 				
+				this.params.language = this.$.authorLanguage.selectedItemLabel.toUpperCase();
+
 				this.message = "Please Wait...";
 				jQuery( '#authorEditButton' ).prop( 'disabled', true );				
 				

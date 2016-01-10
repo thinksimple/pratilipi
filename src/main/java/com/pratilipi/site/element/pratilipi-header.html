@@ -97,7 +97,7 @@
 								</template>
 								<template is="dom-if" if="{{ !user.isGuest }}">
 									<paper-dropdown-menu noink="true" label="{{ user.displayName }}">
-										<div class="dropdown-content" style="white-space: nowrap; width: auto;">
+										<paper-dropdown class="dropdown-content" style="white-space: nowrap; width: auto;">
 											<paper-item on-click="myProfile">
 												<paper-icon-item><iron-icon style="color: #107FE5;" icon="description"></iron-icon></paper-icon-item>
 												&nbsp;&nbsp;
@@ -113,7 +113,7 @@
 												&nbsp;&nbsp;
 												<paper-item-body>${ _strings.sign_out }</paper-item-body>
 											</paper-item>
-										</div>
+										</paper-dropdown>
 									</paper-dropdown-menu>
 								</template>
 							</td>
