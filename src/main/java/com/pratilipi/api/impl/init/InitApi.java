@@ -127,7 +127,7 @@ public class InitApi extends GenericApi {
 		
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
 		gaeQueryBuilder.addFilter( "reviewDate", null, Operator.NOT_NULL );
-		gaeQueryBuilder.addFilter( "state", null, Operator.IS_NULL );
+		gaeQueryBuilder.addFilter( "reviewState", null, Operator.IS_NULL );
 		gaeQueryBuilder.setRange( 0, 25 );
 		Query query = gaeQueryBuilder.build();
 		
@@ -151,7 +151,7 @@ public class InitApi extends GenericApi {
 		
 		
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
-		gaeQueryBuilder.addFilter( "state", UserReviewState.PENDING_APPROVAL );
+		gaeQueryBuilder.addFilter( "reviewState", UserReviewState.PENDING_APPROVAL );
 		gaeQueryBuilder.setRange( 0, 25 );
 		Query query = gaeQueryBuilder.build();
 		
@@ -166,7 +166,7 @@ public class InitApi extends GenericApi {
 
 		
 		gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
-		gaeQueryBuilder.addFilter( "state", UserReviewState.SUBMITTED );
+		gaeQueryBuilder.addFilter( "reviewState", UserReviewState.SUBMITTED );
 		gaeQueryBuilder.setRange( 0, 25 );
 		query = gaeQueryBuilder.build();
 		
