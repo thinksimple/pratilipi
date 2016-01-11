@@ -104,7 +104,7 @@ public class PostAuthorRequest extends GenericRequest {
 		return hasGender;
 	}
 	
-	public String getDateOfBirthStr() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 	

@@ -43,7 +43,7 @@ public class AuthorApi extends GenericApi {
 		Gson gson = new Gson();
 
 		AuthorData authorData = gson.fromJson( gson.toJson( request ), AuthorData.class );
-		AuthorDataUtil.saveAuthorData( authorData );
+		authorData = AuthorDataUtil.saveAuthorData( authorData );
 		
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/author/process" )
@@ -51,7 +51,7 @@ public class AuthorApi extends GenericApi {
 				.addParam( "processData", "true" );
 		TaskQueueFactory.getAuthorTaskQueue().add( task );
 
-		return new GenericAuthorResponse();
+		return gson.fromJson( gson.toJson( authorData ), GenericAuthorResponse.class );
 		
 	}
 	
