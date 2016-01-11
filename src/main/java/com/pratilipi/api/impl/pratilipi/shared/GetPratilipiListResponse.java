@@ -11,6 +11,8 @@ import com.pratilipi.common.type.PratilipiType;
 public class GetPratilipiListResponse extends GenericResponse { 
 
 	public static class Pratilipi {
+		private Long pratilipiId;
+		
 		private String title;
 		private Author author;
 
