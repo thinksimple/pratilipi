@@ -4,6 +4,7 @@ import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
 import com.pratilipi.api.impl.author.AuthorBackupApi;
 import com.pratilipi.api.impl.author.AuthorProcessApi;
+import com.pratilipi.api.impl.init.InitApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiBackupApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiIdfApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiProcessApi;
@@ -16,6 +17,8 @@ public class WorkerService extends GenericService {
 	
 	static {
 
+		ApiRegistry.register( InitApi.class );
+		
 		ApiRegistry.register( PratilipiProcessApi.class );
 		ApiRegistry.register( PratilipiBackupApi.class );
 		ApiRegistry.register( PratilipiIdfApi.class );

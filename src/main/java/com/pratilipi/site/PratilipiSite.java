@@ -19,7 +19,7 @@ import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
-import com.pratilipi.api.impl.userpratilipi.shared.GetUserPratilipiResponse;
+import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -303,7 +303,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "title", createPratilipiPageTitle( pratilipiData ) );
 			dataModel.put( "pratilipi", pratilipiData );
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiData ).toString() );
-			dataModel.put( "userpratilipiJson", gson.toJson( gson.fromJson( gson.toJson( userPratilipiData ), GetUserPratilipiResponse.class ) ).toString() );
+			dataModel.put( "userpratilipiJson", gson.toJson( gson.fromJson( gson.toJson( userPratilipiData ), GenericUserPratilipiResponse.class ) ).toString() );
 //			dataModel.put( "recommendedJsonList", gson.toJson( pratilipiDataList ).toString() );
 			dataModel.put( "reviewListJson", gson.toJson( reviewListCursorTuple.getDataList() ).toString() );
 			dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
