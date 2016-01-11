@@ -3,20 +3,22 @@ package com.pratilipi.data.client;
 import java.util.Date;
 
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.Language;
 
 public class AuthorData {
 
 	private Long authorId;
 
+	
 	private String firstName;
-	private transient boolean hasFirstName;
+	private boolean hasFirstName;
 	
 	private String lastName;
-	private transient boolean hasLastName;
+	private boolean hasLastName;
 	
 	private String penName;
-	private transient boolean hasPenName;
+	private boolean hasPenName;
 
 	private String name;
 
@@ -24,39 +26,42 @@ public class AuthorData {
 
 	
 	private String firstNameEn;
-	private transient boolean hasFirstNameEn;
+	private boolean hasFirstNameEn;
 	
 	private String lastNameEn;
-	private transient boolean hasLastNameEn;
+	private boolean hasLastNameEn;
 	
 	private String penNameEn;
-	private transient boolean hasPenNameEn;
+	private boolean hasPenNameEn;
 	
 	private String nameEn;
 
 	private String fullNameEn;
 
 
-	private String email;
-	private transient boolean hasEmail;
+	private Gender gender;
+	private boolean hasGender;
+	
+	private String dateOfBirth;
+	private boolean hasDateOfBirth;
 
+	
 	private Language language;
-	private transient boolean hasLanguage;
+	private boolean hasLanguage;
 	
 	private String summary;
-	private transient boolean hasSummary;
+	private boolean hasSummary;
 	
 
 	private AuthorState state;
-	private transient boolean hasState;
+	private boolean hasState;
 
 	
 	private String pageUrl;
-	private String pageUrlAlias;
 	private String imageUrl;
 
 	
-	private Long registrationDate;
+	private Long registrationDateMillis;
 	
 	private Integer contentPublished;
 	
@@ -66,6 +71,7 @@ public class AuthorData {
 
 	
 	private Boolean hasAccessToUpdate;
+	
 	
 	
 	public Long getId() {
@@ -188,19 +194,33 @@ public class AuthorData {
 	}
 
 
-	public String getEmail() {
-		return email;
+	public Gender getGender() {
+		return gender;
 	}
 
-	public void setEmail( String email ) {
-		this.email = email;
-		this.hasEmail = true;
+	public void setGender( Gender gender ) {
+		this.gender = gender;
+		this.hasGender = true;
 	}
 	
-	public boolean hasEmail() {
-		return hasEmail;
+	public boolean hasGender() {
+		return hasGender;
+	}
+	
+	public String getDateOfBirth() {
+		return dateOfBirth;
 	}
 
+	public void setDateOfBirth( String dateOfBirth ) {
+		this.dateOfBirth = dateOfBirth;
+		this.hasDateOfBirth = true;
+	}
+	
+	public boolean hasDateOfBirth() {
+		return hasDateOfBirth;
+	}
+	
+	
 	public Language getLanguage() {
 		return language;
 	}
@@ -250,14 +270,6 @@ public class AuthorData {
 		this.pageUrl = pageUrl;
 	}
 
-	public String getPageUrlAlias() {
-		return pageUrlAlias;
-	}
-
-	public void setPageUrlAlias( String pageUrlAlias ) {
-		this.pageUrlAlias = pageUrlAlias;
-	}
-
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -274,11 +286,11 @@ public class AuthorData {
 
 	
 	public Date getRegistrationDate() {
-		return registrationDate == null ? null : new Date( registrationDate );
+		return registrationDateMillis == null ? null : new Date( registrationDateMillis );
 	}
 
 	public void setRegistrationDate( Date registrationDate ) {
-		this.registrationDate = registrationDate == null ? null : registrationDate.getTime();
+		this.registrationDateMillis = registrationDate == null ? null : registrationDate.getTime();
 	}
 	
 	public Integer getContentPublished() {

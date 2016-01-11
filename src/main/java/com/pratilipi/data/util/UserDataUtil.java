@@ -444,7 +444,7 @@ public class UserDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( emailId.trim().toLowerCase() );
 		if( user == null || ! user.getId().equals( userId ) )
-			throw new InsufficientAccessException();
+			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 		
 		_sendEmailVerificationMail( user );
 		

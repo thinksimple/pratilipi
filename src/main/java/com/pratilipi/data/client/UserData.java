@@ -20,7 +20,7 @@ public class UserData {
 	
 	private Gender gender;
 
-	private Long dateOfBirthMillis;
+	private String dateOfBirth;
 	
 	
 	private String email;
@@ -92,12 +92,12 @@ public class UserData {
 		this.gender = gender;
 	}
 	
-	public Date getDateOfBirth() {
-		return dateOfBirthMillis == null ? null : new Date( dateOfBirthMillis );
+	public String getDateOfBirth() {
+		return dateOfBirth;
 	}
 
-	public void setDateOfBirth( Date dateOfBirth ) {
-		this.dateOfBirthMillis = dateOfBirth == null ? null : dateOfBirth.getTime();
+	public void setDateOfBirth( String dateOfBirth ) {
+		this.dateOfBirth = dateOfBirth;
 	}
 	
 	
