@@ -71,14 +71,12 @@
 	    		<div id="pratilipi-col-left" style=" max-width: 170px; padding-bottom: 10px;">
 	    			<div style="padding: 20px 0px 0px 10px;">
 	    				<img style="width: 150px; height: 225px;" class="pratilipi-shadow" src="{{ pratilipi.coverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
-	    				<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
 							<form method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId={{ pratilipi.pratilipiId }}">
 								<div style="display: inline-block;">
 									<input type="file" name="pic" accept="image/*">
 									<input type="submit">
 								</div>
 							</form>	
-						</template>
 						<div style="padding: 10px; margin-bottom: 15px;">
 		    				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
 		    			</div>

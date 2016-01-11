@@ -57,15 +57,17 @@
 	<template>
 		<paper-card>
 			<h3 style="color: #D0021B;">${ _strings.review_heading }</h3>
-			<template is="dom-if" if="{{ !isactive }}">
-				<template is="dom-if" if="{{ !reviewAvailable }}">
-					<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
-				</template>
-				<template is="dom-if" if="{{ reviewAvailable }}">
-					<div style="white-space: nowrap; display: inline-block;">
-						<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_edit_review }</a>
-						<a class="pratilipi-grey-button" role="button" on-click="openDeleteReview">${ _strings.review_delete_review }</a>
-					</div>
+			<template is="dom-if" if="{{ userpratilipi.hasAccessToReview }}">
+				<template is="dom-if" if="{{ !isactive }}">
+					<template is="dom-if" if="{{ !reviewAvailable }}">
+						<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
+					</template>
+					<template is="dom-if" if="{{ reviewAvailable }}">
+						<div style="white-space: nowrap; display: inline-block;">
+							<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_edit_review }</a>
+							<a class="pratilipi-grey-button" role="button" on-click="openDeleteReview">${ _strings.review_delete_review }</a>
+						</div>
+					</template>
 				</template>
 			</template>
 		</paper-card>

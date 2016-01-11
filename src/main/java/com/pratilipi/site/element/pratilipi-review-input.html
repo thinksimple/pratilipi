@@ -115,7 +115,7 @@
 			
 			deleteReview: function() {
 				// TODO: Change state and make PUT call.
-				var body = { pratilipiId: this.pratilipi.pratilipiId, state:"DELETED" };
+				var body = { pratilipiId: this.pratilipi.pratilipiId, reviewState:"DELETED" };
 				this.$.AjaxPut.body = JSON.stringify( body );
 				this.$.AjaxPut.generateRequest();
 			},
