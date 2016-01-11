@@ -44,9 +44,9 @@ public interface Author extends Serializable {
 	
 	void setGender( Gender gender );
 	
-	Date getDateOfBirth();
+	String getDateOfBirth();
 	
-	void setDateOfBirth( Date dateOfBirth );
+	void setDateOfBirth( String dateOfBirth );
 	
 	
 	@Deprecated

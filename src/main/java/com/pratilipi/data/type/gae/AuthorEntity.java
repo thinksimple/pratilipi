@@ -48,7 +48,7 @@ public class AuthorEntity implements Author {
 	private Gender gender;
 	
 	@Persistent( column = "DATE_OF_BIRTH" )
-	private Date dateOfBirth;
+	private String dateOfBirth;
 	
 	
 	@Deprecated
@@ -198,12 +198,12 @@ public class AuthorEntity implements Author {
 	}
 	
 	@Override
-	public Date getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 	
 	@Override
-	public void setDateOfBirth( Date dateOfBirth ) {
+	public void setDateOfBirth( String dateOfBirth ) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
