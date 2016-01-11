@@ -1,10 +1,11 @@
 package com.pratilipi.api.impl.author.shared;
 
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.Language;
 
 @SuppressWarnings( "unused" )
-public class GetAuthorResponse extends GenericResponse {
+public class GenericAuthorResponse extends GenericResponse {
 
 	private Long authorId;
 
@@ -20,17 +21,16 @@ public class GetAuthorResponse extends GenericResponse {
 	private String nameEn;
 	private String fullNameEn;
 
-	private String email;
+	private Gender gender;
+	private String dateOfBirth;
+	
 	private Language language;
 	private String summary;
 	
 	private String pageUrl;
-	private String pageUrlAlias;
 	private String imageUrl;
 
-	private Long registrationDate;
-	
-	private Integer contentPublished;
+	private Long registrationDateMillis;
 	
 	private Boolean hasAccessToUpdate;
 	

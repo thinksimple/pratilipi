@@ -1,14 +1,12 @@
 package com.pratilipi.api.impl.author.shared;
 
-import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.common.type.Gender;
+import com.pratilipi.common.type.Language;
 
 public class PostAuthorRequest extends GenericRequest {
 	
 	private Long authorId;
-	
-	private Long languageId;
-	private boolean hasLanguageId;
 	
 	private String firstName;
 	private boolean hasFirstName;
@@ -19,7 +17,6 @@ public class PostAuthorRequest extends GenericRequest {
 	private String penName;
 	private boolean hasPenName;
 	
-	@Validate( required = true )
 	private String firstNameEn;
 	private boolean hasFirstNameEn;
 	
@@ -29,9 +26,20 @@ public class PostAuthorRequest extends GenericRequest {
 	private String penNameEn;
 	private boolean hasPenNameEn;
 	
-	@Validate( regEx = REGEX_EMAIL )
-	private String email;
-	private boolean hasEmail;
+
+	private Gender gender;
+	private boolean hasGender;
+	
+	private String dateOfBirth;
+	private boolean hasDateOfBirth;
+
+	
+	private Language language;
+	private boolean hasLanguage;
+	
+	private String summary;
+	private boolean hasSummary;
+	
 
 	
 	public Long getId() {
@@ -39,14 +47,6 @@ public class PostAuthorRequest extends GenericRequest {
 	}
 	
 
-	public Long getLanguageId() {
-		return languageId;
-	}
-	
-	public boolean hasLanguageId() {
-		return hasLanguageId;
-	}
-	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -95,12 +95,38 @@ public class PostAuthorRequest extends GenericRequest {
 		return hasPenNameEn;
 	}
 	
-	public String getEmail() {
-		return email;
+	
+	public Gender getGender() {
+		return gender;
 	}
 	
-	public boolean hasEmail() {
-		return hasEmail;
+	public boolean hasGender() {
+		return hasGender;
+	}
+	
+	public String getDateOfBirthStr() {
+		return dateOfBirth;
+	}
+	
+	public boolean hasDateOfBirth() {
+		return hasDateOfBirth;
+	}
+	
+	
+	public Language getLanguage() {
+		return language;
 	}
 
+	public boolean hasLanguage() {
+		return hasLanguage;
+	}
+	
+	public String getSummary() {
+		return summary;
+	}
+
+	public boolean hasSummary() {
+		return hasSummary;
+	}
+	
 }

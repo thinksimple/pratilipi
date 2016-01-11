@@ -5,10 +5,9 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.impl.author.shared.GenericAuthorResponse;
 import com.pratilipi.api.impl.author.shared.GetAuthorRequest;
-import com.pratilipi.api.impl.author.shared.GetAuthorResponse;
 import com.pratilipi.api.impl.author.shared.PostAuthorRequest;
-import com.pratilipi.api.impl.author.shared.PutAuthorResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -25,7 +24,7 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 public class AuthorApi extends GenericApi {
 
 	@Get
-	public GetAuthorResponse getAuthor( GetAuthorRequest request )
+	public GenericAuthorResponse getAuthor( GetAuthorRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -33,11 +32,12 @@ public class AuthorApi extends GenericApi {
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author, true, false );
 		
 		Gson gson = new Gson();
-		return gson.fromJson( gson.toJson( authorData ), GetAuthorResponse.class );
+		return gson.fromJson( gson.toJson( authorData ), GenericAuthorResponse.class );
+		
 	}
 	
 	@Post
-	public PutAuthorResponse postAuthor( PostAuthorRequest request ) 
+	public GenericAuthorResponse postAuthor( PostAuthorRequest request ) 
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		Gson gson = new Gson();
@@ -51,8 +51,8 @@ public class AuthorApi extends GenericApi {
 				.addParam( "processData", "true" );
 		TaskQueueFactory.getAuthorTaskQueue().add( task );
 
+		return new GenericAuthorResponse();
 		
-		return new PutAuthorResponse();
 	}
 	
 }
