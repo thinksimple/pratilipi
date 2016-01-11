@@ -63,7 +63,7 @@
 			<div id="row">
 	    		<div id="col-left" style=" max-width: 220px;">
 	    			<div style="padding: 20px 0px 0px 10px;">
-	    				<img style="width: 200px; height: 200px;" class="pratilipi-shadow" src="{{ author.imageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
+	    				<img style="width: 200px; height: 200px;" class="pratilipi-shadow" src="{{ authorImageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
 	    			</div>
 	    			<div style="padding: 15px 40px; margin-bottom: 20px;">
 	    				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
@@ -196,6 +196,8 @@
 					this.penName = author.penNameEn;
 				else
 					this.penName = null;
+				
+				this.authorImageUrl = author.imageUrl + "&" + "width=200";
 				this.language = capitalizeFirstLetter( author.language );
 				this.date = convertDate( author.registrationDateMillis );
 				this.processSummary();

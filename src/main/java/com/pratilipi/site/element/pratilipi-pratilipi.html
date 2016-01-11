@@ -75,7 +75,7 @@
 			<div id="pratilipi-row">
 	    		<div id="pratilipi-col-left" style=" max-width: 170px; padding-bottom: 10px;">
 	    			<div style="padding: 20px 0px 0px 10px;">
-	    				<img style="width: 150px; height: 225px;" class="pratilipi-shadow" src="{{ pratilipi.coverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+	    				<img style="width: 150px; height: 225px;" class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
 	    					
 	    					<template is="dom-if" if="{{ !mobile }}">
 	    						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
@@ -258,6 +258,7 @@
 				this.set( 'pratilipi', this.process( pratilipi ) );
 				this.title = pratilipi.title;
 				this.titleEn = pratilipi.titleEn;
+				this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "&" + "width=150";
 				this.type = capitalizeFirstLetter( pratilipi.type );
 				this.listingDate = convertDate( pratilipi.listingDateMillis );
 				this.processSummary();

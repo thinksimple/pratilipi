@@ -34,7 +34,7 @@
 				<div class="media">
 					<div class="media-left">
 						<a href="{{ pratilipi.pageUrl }}">
-							<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
+							<img class="media-object" src="{{ pratilipiCoverImage }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.title }}"/>
 						</a>
 					</div>
 				  	<div class="media-body">
@@ -97,6 +97,10 @@
 			redirectToReader: function() {
 				if( this.pratilipi.readPageUrl != null ) 
 					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 ) + "&ret=" + window.location.href;
+			},
+			
+			ready: function() {
+				this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
 			},
 			
 			attached: function() {
