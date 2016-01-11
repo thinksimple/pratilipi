@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.jdo.PersistenceManager;
+
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
@@ -49,6 +51,10 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		this.memcache = memcache;
 	}
 	
+	public PersistenceManager getPersistenceManager() {
+		return dataAccessor.getPersistenceManager();
+	}
+
 	
 	// APP_PROPERTY Table
 	

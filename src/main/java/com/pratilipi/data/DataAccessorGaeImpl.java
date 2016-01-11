@@ -74,6 +74,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		this.pm = pmfInstance.getPersistenceManager();
 	}
 
+	@Override
+	public PersistenceManager getPersistenceManager() {
+		return pm;
+	}
+	
 	
 	// Helper Methods
 	

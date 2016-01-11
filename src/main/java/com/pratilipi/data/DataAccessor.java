@@ -3,6 +3,8 @@ package com.pratilipi.data;
 import java.util.Date;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
+
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
@@ -21,6 +23,9 @@ import com.pratilipi.data.type.UserPratilipi;
 
 public interface DataAccessor {
 
+	PersistenceManager getPersistenceManager();
+
+	
 	// APP_PROPERTY Table
 	AppProperty newAppProperty( String id );
 	AppProperty getAppProperty( String id );

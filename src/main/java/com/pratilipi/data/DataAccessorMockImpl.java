@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
+
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
@@ -41,6 +43,11 @@ import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
 public class DataAccessorMockImpl implements DataAccessor {
 
+	public PersistenceManager getPersistenceManager() {
+		return null;
+	}
+
+	
 	// Transaction Helpers
 
 	public void beginTx() {

@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -11,7 +16,10 @@ import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataAccessorGaeImpl;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.GaeQueryBuilder;
+import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.UserEntity;
 
@@ -79,29 +87,35 @@ public class InitApi extends GenericApi {
 		
 		logger.log( Level.INFO, "Checked " + count + " author records." );
 */
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		String cursor = null;
-		int count = 0;
-		while( true) {
-			DataListCursorTuple<User> userListCursorTuple = dataAccessor.getUserList( cursor, 100 );
-			List<User> userList = userListCursorTuple.getDataList();
-			cursor = userListCursorTuple.getCursor();
-			for( User user : userList ) {
-				if( ( ( UserEntity ) user ).isUpdateRequired() ) {
-					user.getState();
-					user.getSignUpSource();
-					dataAccessor.createOrUpdateUser( user );
-					count++;
-				}
-			}
-			if( cursor == null || userList.size() < 100 ) break;
-		}
-		logger.log( Level.INFO, "Updated " + count + " user records." );
+
+		_updateUserState();
 		
 		
 		return new GenericResponse();
 		
+	}
+	
+	private void _updateUserState() {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		PersistenceManager pm = dataAccessor.getPersistenceManager();
+		
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
+		gaeQueryBuilder.addFilter( "state", null );
+		Query query = gaeQueryBuilder.build();
+		
+		List<User> userList = (List<User>) query.execute();
+		
+		int count = 0;
+		for( User user : userList ) {
+			user.getState();
+			user.getSignUpSource();
+			dataAccessor.createOrUpdateUser( user );
+			count++;
+		}
+		
+		logger.log( Level.INFO, "Updated state for " + count + " user records." );
+
 	}
 	
 }
