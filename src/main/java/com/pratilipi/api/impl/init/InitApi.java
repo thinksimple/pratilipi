@@ -17,8 +17,10 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.GaeQueryBuilder;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
+import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
@@ -88,12 +90,36 @@ public class InitApi extends GenericApi {
 */
 
 		_backfillUserStateAndSignUpSource();
+		_backfillPratilipiLanguage();
 		_backfillUserReviewState();
 		_publishUserReview();
 		
 		
 		return new GenericResponse();
 		
+	}
+	
+	private void _backfillPratilipiLanguage() {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		PersistenceManager pm = dataAccessor.getPersistenceManager();
+		
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
+		gaeQueryBuilder.addFilter( "language", null, Operator.IS_NULL );
+		gaeQueryBuilder.setRange( 0, 25 );
+		Query query = gaeQueryBuilder.build();
+		
+		List<Pratilipi> pratilipiList = (List<Pratilipi>) query.execute();
+		
+		int count = 0;
+		for( Pratilipi pratilipi : pratilipiList ) {
+			pratilipi.getLanguage();
+			dataAccessor.createOrUpdatePratilipi( pratilipi );
+			count++;
+		}
+
+		logger.log( Level.INFO, "Backfilled languge for " + count + " Pratilipis." );
+
 	}
 	
 	private void _backfillUserStateAndSignUpSource() {
@@ -140,7 +166,7 @@ public class InitApi extends GenericApi {
 			count++;
 		}
 		
-		logger.log( Level.INFO, "Backfilled state for " + count + " user reviews." );
+		logger.log( Level.INFO, "Backfilled reviewState for " + count + " user reviews." );
 
 	}
 
