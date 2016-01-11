@@ -77,15 +77,15 @@
 	    			<div style="padding: 20px 0px 0px 10px;">
 	    				<img style="width: 150px; height: 225px;" class="pratilipi-shadow" src="{{ pratilipi.coverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
 	    					
-	    					<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
-	    						<form id="uploadImage" method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId={{ pratilipi.pratilipiId }}" target="upload_target">
-									<div style="display: inline-block;">
+	    					<template is="dom-if" if="{{ !mobile }}">
+	    						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
+		    						<form id="uploadImage" method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId={{ pratilipi.pratilipiId }}" target="upload_target">
 										<input id="uploadImageInput" type="file" on-change="uploadImage" name="{{ pratilipi.pratilipiId }}" accept="image/*">
 										<paper-icon-button style="position: absolute; top: 200px; left: 120px;" type="button" on-click="_chooseFile" icon="file-upload" noink></paper-icon-button>
-									</div>
-								</form>
-								
-								<iframe id="upload_target" name="upload_target" style="display: none;"></iframe>
+									</form>
+									
+									<iframe id="upload_target" name="upload_target" style="display: none;"></iframe>
+		    					</template>
 	    					</template>
 								
 						<div style="padding: 10px; margin-bottom: 15px;">
@@ -189,7 +189,7 @@
 			},
 			
 			_chooseFile: function() {
-				this.$.uploadImageInput.click();
+				document.getElementById( "uploadImageInput" ).click();
 			},
 			
 			uploadImage: function() {
