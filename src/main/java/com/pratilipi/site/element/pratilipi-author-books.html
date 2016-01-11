@@ -87,10 +87,6 @@
 				this.draftedListCursor = "";
 				this.publishedListCursor = "";
 				
-				if( this.draftsActive )
-					this.draftsClicked();
-				else if( this.publishedActive )
-					this.publishedClicked();
 			},
 			
 			removeAllClasses: function() {
@@ -204,7 +200,6 @@
 			
 			_handleAjaxGetDraftedListError: function( event ) {
 				if( event.detail.request.xhr.status == 401 ) {
-					alert( event.detail.request.xhr.response.message )
 					return;
 				}
 				this.async( function() {
@@ -214,7 +209,6 @@
 			
 			_handleAjaxGetPublishedListError: function( event ) {
 				if( event.detail.request.xhr.status == 401 ) {
-					alert( event.detail.request.xhr.response.message )
 					return;
 				}
 				this.async( function() {

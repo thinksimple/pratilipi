@@ -131,7 +131,10 @@
 				this.set( 'pratilipi', pratilipi );
 				
 				document.querySelector( 'pratilipi-author-books' ).reset();
-				
+				if( this.draftsActive )
+					document.querySelector( 'pratilipi-author-books' ).draftsClicked();
+				else if( this.publishedActive )
+					document.querySelector( 'pratilipi-author-books' ).publishedClicked();
 			},
 			
 			_handleAjaxPostError: function( event ) {
