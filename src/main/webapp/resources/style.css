@@ -346,14 +346,12 @@ a.pratilipi-orange-button:hover, a.pratilipi-orange-button:focus {
 /* Active or Inactive */
 
 .active, .active:focus {
-	font-family: HelveticaNeue-Bold;
 	font-size: 18px;
 	color: #D0021B;
 	line-height: 20px;
 }
 
 .inactive, .inactive:focus {
-	font-family: HelveticaNeue;
 	font-size: 12px;
 	color: #989898;
 	line-height: 20px;
