@@ -274,8 +274,8 @@ public class PratilipiDataUtil {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipi.getId() );
-		Page readPage = dataAccessor.getPage( PageType.READ, pratilipi.getId() );
-		Page writePage = dataAccessor.getPage( PageType.WRITE, pratilipi.getId() );
+		Page readPage = null; // dataAccessor.getPage( PageType.READ, pratilipi.getId() ); TODO: Uncomment this once data in DataStore is fixed.
+		Page writePage = null; // dataAccessor.getPage( PageType.WRITE, pratilipi.getId() ); TODO: Uncomment this once data in DataStore is fixed.
 		
 		PratilipiData pratilipiData = new PratilipiData();
 
