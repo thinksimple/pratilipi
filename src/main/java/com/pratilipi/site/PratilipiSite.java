@@ -19,6 +19,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
@@ -302,9 +303,12 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
 		} else {
 			Gson gson = new Gson();
+			
+			GenericPratilipiResponse gpr = gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class );
+			
 			dataModel.put( "title", createPratilipiPageTitle( pratilipiData ) );
 			dataModel.put( "pratilipi", pratilipiData );
-			dataModel.put( "pratilipiJson", gson.toJson( pratilipiData ).toString() );
+			dataModel.put( "pratilipiJson", gson.toJson( gpr ).toString() );
 			dataModel.put( "userpratilipiJson", gson.toJson( gson.fromJson( gson.toJson( userPratilipiData ), GenericUserPratilipiResponse.class ) ).toString() );
 //			dataModel.put( "recommendedJsonList", gson.toJson( pratilipiDataList ).toString() );
 			dataModel.put( "reviewListJson", gson.toJson( reviewListCursorTuple.getDataList() ).toString() );

@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 		<#-- Page Title & Favicon -->
-		<title>${ author.name } / ${ author.nameEn } &#0171; ${ _strings.pratilipi }</title>
+		<title>${ title } &#0171; ${ _strings.pratilipi }</title>
 		<link rel="shortcut icon" type="image/png" href="/favicon.png">
 
 		<#-- Third-Party Library -->
