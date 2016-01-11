@@ -2,6 +2,8 @@ package com.pratilipi.data.client;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.UserReviewState;
+
 public class UserPratilipiData {
 
 	private String userPratilipiId;
@@ -14,17 +16,21 @@ public class UserPratilipiData {
 	
 	
 	private Integer rating;
-	private transient boolean hasRating;
+	private boolean hasRating;
 	
 	private String reviewTitle;
-	private transient boolean hasReviewTitle;
+	private boolean hasReviewTitle;
 	
 	private String review;
-	private transient boolean hasReview;
+	private boolean hasReview;
 	
-	private Long reviewDate;
+	private UserReviewState reviewState;
+	private boolean hasReviewState;
+	
+	private Long reviewDateMillis;
 	
 
+	
 	public String getId() {
 		return userPratilipiId;
 	}
@@ -97,12 +103,25 @@ public class UserPratilipiData {
 		return hasReview;
 	}
 
+	public UserReviewState getReviewState() {
+		return reviewState;
+	}
+
+	public void setReviewState( UserReviewState reviewState ) {
+		this.reviewState = reviewState;
+		this.hasReviewState = true;
+	}
+	
+	public boolean hasReviewState() {
+		return hasReviewState;
+	}
+
 	public Date getReviewDate() {
-		return reviewDate == null ? null : new Date( reviewDate );
+		return reviewDateMillis == null ? null : new Date( reviewDateMillis );
 	}
 
 	public void setReviewDate( Date reviewDate ) {
-		this.reviewDate = reviewDate == null ? null : reviewDate.getTime();
+		this.reviewDateMillis = reviewDate == null ? null : reviewDate.getTime();
 	}
 	
 }

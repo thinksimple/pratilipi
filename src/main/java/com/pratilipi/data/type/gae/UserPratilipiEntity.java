@@ -65,6 +65,7 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Persistent( column = "ADDED_TO_LIB" )
 	private Boolean addedToLib;
 	
+
 	
 	public UserPratilipiEntity() {}
 	

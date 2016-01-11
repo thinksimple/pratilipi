@@ -30,12 +30,14 @@ public class UserPratilipiDataUtil {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
+		// Case 1: User not having PRATILIPI_ADD_REVIEW access can not review a content piece.
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.PRATILIPI_ADD_REVIEW ) )
 			return false;
-		
+
+		// Case 2: User can not review content pieces lined with his/her own author profile.
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		Author author = pratilipi.getAuthorId() == null ? null : dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		if( author != null && accessToken.getUserId().equals( author.getUserId() ) )
 			return false;
 		
@@ -60,6 +62,7 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setRating( userPratilipi.getRating() );
 		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
 		userPratilipiData.setReview( userPratilipi.getReview() == null ? null : userPratilipi.getReview().replaceAll( "<[^>]*>", "" ) );
+		userPratilipiData.setReviewState( userPratilipi.getReviewState() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 		
 		return userPratilipiData;
@@ -146,6 +149,7 @@ public class UserPratilipiDataUtil {
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		
 		return createUserPratilipiData( userPratilipi );
+		
 	}
 	
 }

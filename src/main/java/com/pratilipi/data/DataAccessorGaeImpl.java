@@ -29,6 +29,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -635,7 +636,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		GaeQueryBuilder queryBuilder =
 				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) )
 						.addFilter( "pratilipiId", pratilipiId )
-						.addFilter( "reviewDate", null, Operator.NOT_NULL )
+						.addFilter( "reviewState", UserReviewState.PUBLISHED )
 						.addOrdering( "reviewDate", false );
 		
 		if( cursorStr != null )
