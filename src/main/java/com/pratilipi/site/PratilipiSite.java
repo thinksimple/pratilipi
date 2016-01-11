@@ -3,6 +3,7 @@ package com.pratilipi.site;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -405,11 +407,16 @@ public class PratilipiSite extends HttpServlet {
 		List<PratilipiData> pratilipiDataList =
 				PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
 
-		Gson gson = new Gson();
+		List<GetPratilipiListResponse.Pratilipi> pratilipiList = 
+				new ArrayList<>( pratilipiDataList.size() );
 
+		Gson gson = new Gson();
+		for( PratilipiData pratilipiData : pratilipiDataList )
+			pratilipiList.add( gson.fromJson( gson.toJson( pratilipiData ), GetPratilipiListResponse.Pratilipi.class ) );
+		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", listTitle );
-		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiDataList ).toString() );
+		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiList ).toString() );
 		return dataModel;
 	}
 	
