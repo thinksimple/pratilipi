@@ -300,8 +300,6 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
 				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
 
-				.addField( Field.newBuilder().setName( "email" ).setText( authorData.getEmail() ) )
-
 				.addField( Field.newBuilder().setName( "summary" ).setHTML( authorData.getSummary() ) )
 
 				.build();

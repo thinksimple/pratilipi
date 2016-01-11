@@ -17,7 +17,6 @@ import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
-import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.ImageUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -36,7 +35,6 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class AuthorDataUtil {
@@ -53,17 +51,17 @@ public class AuthorDataUtil {
 	}
 
 	public static boolean hasAccessToAddAuthorData( AuthorData authorData ) {
-		if( authorData.getState() != AuthorState.ACTIVE )
-			return false;
-		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), authorData.getLanguage(), AccessType.AUTHOR_ADD );
 	}
 
 	public static boolean hasAccessToUpdateAuthorData( Author author, AuthorData authorData ) {
-		if( author.getState() == AuthorState.DELETED )
+
+		// Case 1: Only ACTIVE Author Profiles can be updated.
+		if( author.getState() != AuthorState.ACTIVE )
 			return false;
-		
+
+		// Case 2: User with AUTHOR_UPDATE access can update any Author Profile.
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), author.getLanguage(), AccessType.AUTHOR_UPDATE ) ) {
 			if( authorData == null || ! authorData.hasLanguage() || authorData.getLanguage() == author.getLanguage() )
@@ -71,11 +69,13 @@ public class AuthorDataUtil {
 			else if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), authorData.getLanguage(), AccessType.AUTHOR_UPDATE ) )
 				return true;
 		}
-		
-		if( author.getState() != AuthorState.BLOCKED )
+
+		// Case 3: User can update their own Author Profile.
+		if( author.getUserId() != null )
 			return accessToken.getUserId().equals( author.getUserId() );
-		
+			
 		return false;
+		
 	}
 	
 	
@@ -102,12 +102,14 @@ public class AuthorDataUtil {
 	
 	
 	public static AuthorData createAuthorData( Author author ) {
-		return createAuthorData(author, false, false );
+		return createAuthorData( author, false, false );
 	}
 	
 	public static AuthorData createAuthorData( Author author, boolean includeAll, boolean includeMetaData ) {
+
 		if( author == null )
 			return null;
+
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
@@ -153,14 +155,11 @@ public class AuthorDataUtil {
 		else if( authorData.getNameEn() != null && author.getPenNameEn() != null )
 			authorData.setFullNameEn( authorData.getNameEn() + " '" + author.getPenNameEn() + "'" );
 
-		if( includeMetaData )
-			authorData.setEmail( author.getEmail() );
 		authorData.setLanguage( author.getLanguage() );
 		if( includeAll )
 			authorData.setSummary( author.getSummary() );
 		
-		authorData.setPageUrl( authorPage.getUri() );
-		authorData.setPageUrlAlias( authorPage.getUriAlias() );
+		authorData.setPageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
 		authorData.setImageUrl( createAuthorImageUrl( author ) );
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
@@ -171,6 +170,7 @@ public class AuthorDataUtil {
 		authorData.setAccessToUpdate( hasAccessToUpdateAuthorData( author, null ));
 		
 		return authorData;
+		
 	}
 	
 	public static List<AuthorData> createAuthorDataList( List<Author> authorList ) {
@@ -181,8 +181,9 @@ public class AuthorDataUtil {
 	}
 	
 
-	public static DataListCursorTuple<AuthorData> getAuthorDataList( AuthorFilter authorFilter,
-			String cursor, Integer resultCount ) throws InsufficientAccessException {
+	public static DataListCursorTuple<AuthorData> getAuthorDataList(
+			AuthorFilter authorFilter, String cursor, Integer resultCount )
+			throws InsufficientAccessException {
 		
 		if( ! hasAccessToListAuthorData( authorFilter.getLanguage() ) )
 			throw new InsufficientAccessException();
@@ -194,7 +195,9 @@ public class AuthorDataUtil {
 		List<AuthorData> authorDataList = createAuthorDataList( authorListCursorTuple.getDataList() );
 		
 		return new DataListCursorTuple<AuthorData>( authorDataList, authorListCursorTuple.getCursor() );
+		
 	}
+	
 	
 	public static AuthorData saveAuthorData( AuthorData authorData )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
@@ -235,8 +238,6 @@ public class AuthorDataUtil {
 		if( authorData.hasPenNameEn() )
 			author.setPenNameEn( authorData.getPenNameEn() );
 		
-		if( authorData.hasEmail() )
-			author.setEmail( authorData.getEmail() == null ? null : authorData.getEmail().toLowerCase() );
 		if( authorData.hasLanguage() )
 			author.setLanguage( authorData.getLanguage() );
 		if( authorData.hasSummary() )
@@ -252,22 +253,6 @@ public class AuthorDataUtil {
 		auditLog.setEventDataNew( gson.toJson( author ) );
 
 		
-		if( author.getUserId() != null && authorData.hasEmail() && authorData.getEmail() != null ) {
-
-			User user = dataAccessor.getUser( author.getUserId() );
-			if( ! user.getEmail().equals( authorData.getEmail().toLowerCase() ) ) {
-
-				user.setEmail( authorData.getEmail().toLowerCase() );
-				if( user.getState() == UserState.ACTIVE )
-					user.setState( UserState.REGISTERED );
-				
-				user = dataAccessor.createOrUpdateUser( user );
-				
-			}
-			
-		}
-		
-		
 		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
 
 		if( isNew )
@@ -279,8 +264,6 @@ public class AuthorDataUtil {
 	
 	private static void _validateAuthorDataForSave( AuthorData authorData ) throws InvalidArgumentException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
 		boolean isNew = authorData.getId() == null;
 		JsonObject errorMessages = new JsonObject();
 
@@ -293,26 +276,6 @@ public class AuthorDataUtil {
 			errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
 
 		
-		// Email is optional.
-		if( isNew && authorData.hasEmail() && authorData.getEmail() != null ) {
-			Author author = dataAccessor.getAuthorByEmailId( authorData.getEmail().toLowerCase() );
-			if( author != null )
-				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
-		}
-		// Email, once set, can not be un-set or changed to null.
-		if( ! isNew && authorData.hasEmail() && authorData.getEmail() == null ) {
-			Author author = dataAccessor.getAuthor( authorData.getId() );
-			if( author.getEmail() != null )
-				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REQUIRED );
-		}
-		// Email should not be registered already.
-		if( ! isNew && authorData.hasEmail() && authorData.getEmail() != null ) {
-			Author author = dataAccessor.getAuthorByEmailId( authorData.getEmail().toLowerCase() );
-			if( author != null && ! author.getId().equals( authorData.getId() ) )
-				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );				
-		}
-		
-
 		// State must be ACTIVE for new profile.
 		if( isNew && ( ! authorData.hasState() || authorData.getState() != AuthorState.ACTIVE ) )
 			errorMessages.addProperty( "state", GenericRequest.ERR_AUTHOR_STATE_INVALID );
@@ -342,6 +305,7 @@ public class AuthorDataUtil {
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, width ) );
 		return blobEntry;
+		
 	}
 	
 	public static void saveAuthorImage( Long authorId, BlobEntry blobEntry )
@@ -374,10 +338,12 @@ public class AuthorDataUtil {
 		auditLog.setEventComment( "Uploaded profile image." );
 		
 		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
+		
 	}
 
 	
 	public static boolean createOrUpdateAuthorPageUrl( Long authorId ) {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
 		Page page = dataAccessor.getPage( PageType.AUTHOR, authorId );
@@ -405,9 +371,11 @@ public class AuthorDataUtil {
 		page.setUriAlias( uriAlias );
 		page = dataAccessor.createOrUpdatePage( page );
 		return true;
+		
 	}
 	
 	public static boolean createOrUpdateAuthorDashboardPageUrl( Long authorId ) {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page page = dataAccessor.getPage( PageType.AUTHOR, authorId );
 		
@@ -442,9 +410,11 @@ public class AuthorDataUtil {
 		dashboardPage = dataAccessor.createOrUpdatePage( dashboardPage );
 
 		return true;
+		
 	}
 	
 	public static boolean updateAuthorStats( Long authorId ) {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
@@ -486,6 +456,7 @@ public class AuthorDataUtil {
 
 		Author author = dataAccessor.getAuthor( authorId );
 		searchAccessor.indexAuthorData( createAuthorData( author, true, true ) );
+		
 	}
 	
 }
