@@ -310,7 +310,7 @@ public class PratilipiDataUtil {
 		pratilipiData.setReviewCount( pratilipi.getReviewCount() );
 		pratilipiData.setRatingCount( pratilipi.getRatingCount() );
 		pratilipiData.setAverageRating( pratilipi.getRatingCount() == 0L
-				? 5F
+				? 0F
 				: (float) ( (double) pratilipi.getTotalRating() / pratilipi.getRatingCount() ) );
 		pratilipiData.setRelevance( calculateRelevance( pratilipi, author ) );
 		pratilipiData.setReadCount( pratilipi.getReadCount() );
