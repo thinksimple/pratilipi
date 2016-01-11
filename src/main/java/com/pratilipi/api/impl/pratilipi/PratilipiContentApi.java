@@ -3,11 +3,11 @@ package com.pratilipi.api.impl.pratilipi;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.annotation.Put;
+import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiContentRequest;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiContentResponse;
-import com.pratilipi.api.impl.pratilipi.shared.PutPratilipiContentRequest;
-import com.pratilipi.api.impl.pratilipi.shared.PutPratilipiContentResponse;
+import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiContentRequest;
+import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiContentResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -37,8 +37,8 @@ public class PratilipiContentApi extends GenericApi {
 		
 	}
 
-	@Put
-	public PutPratilipiContentResponse putPratilipiContent( PutPratilipiContentRequest request )
+	@Post
+	public PostPratilipiContentResponse postPratilipiContent( PostPratilipiContentRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		int pageCount = PratilipiDataUtil.updatePratilipiContent(
@@ -54,7 +54,7 @@ public class PratilipiContentApi extends GenericApi {
 				.addParam( "processContent", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 			
-		return new PutPratilipiContentResponse( request.getPageNumber(), pageCount );
+		return new PostPratilipiContentResponse( request.getPageNumber(), pageCount );
 		
 	}		
 

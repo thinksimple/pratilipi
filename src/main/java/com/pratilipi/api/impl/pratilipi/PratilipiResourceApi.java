@@ -30,6 +30,7 @@ public class PratilipiResourceApi extends GenericApi {
 				blobEntry.getData(),
 				blobEntry.getMimeType(),
 				blobEntry.getETag() );
+		
 	}
 
 	@Post
@@ -47,6 +48,7 @@ public class PratilipiResourceApi extends GenericApi {
 				request.getOverWrite() );
 
 		return new GenericResponse();
+		
 	}
 
 }

@@ -30,6 +30,7 @@ public class PratilipiCoverApi extends GenericApi {
 				blobEntry.getData(),
 				blobEntry.getMimeType(),
 				blobEntry.getETag() );
+		
 	}
 
 	@Post
@@ -45,6 +46,7 @@ public class PratilipiCoverApi extends GenericApi {
 				blobEntry );
 
 		return new GenericResponse();
+		
 	}		
 
 }

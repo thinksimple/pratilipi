@@ -29,17 +29,18 @@ public class PratilipiContentImageApi extends GenericApi {
 				0,
 				request.getPageNo(),
 				PratilipiContentType.IMAGE );
-		
+	
 		return new GenericFileDownloadResponse(
 				blobEntry.getData(),
 				blobEntry.getMimeType(),
 				blobEntry.getETag() );
+	
 	}
 
 	@Post
 	public PostPratilipiContentImageResponse postPratilipiContent(
-			PostPratilipiContentImageRequest request ) throws InvalidArgumentException,
-			InsufficientAccessException, UnexpectedServerException {
+			PostPratilipiContentImageRequest request )
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );
 		blobEntry.setData( request.getData() );
@@ -53,6 +54,7 @@ public class PratilipiContentImageApi extends GenericApi {
 				false );
 			
 		return new PostPratilipiContentImageResponse( request.getPageNumber(), pageCount );
+		
 	}		
 
 }

@@ -52,6 +52,7 @@ public class PratilipiProcessApi extends GenericApi {
 		logger.log( Level.INFO, "Created task(s) with " + pratilipiIdList.size() + " Pratilipi ids." );
 
 		return new GenericResponse();
+		
 	}
 	
 	@Post
@@ -116,6 +117,7 @@ public class PratilipiProcessApi extends GenericApi {
 		}
 		
 		return new GenericResponse();
+		
 	}
 
 }

@@ -2,7 +2,7 @@ package com.pratilipi.api.impl.pratilipi.shared;
 
 import com.pratilipi.api.shared.GenericResponse;
 
-public class PutPratilipiContentResponse extends GenericResponse {
+public class PostPratilipiContentResponse extends GenericResponse {
 	
 	@SuppressWarnings("unused")
 	private Integer pageNo;
@@ -12,9 +12,9 @@ public class PutPratilipiContentResponse extends GenericResponse {
 
 	
 	@SuppressWarnings("unused")
-	private PutPratilipiContentResponse() {}
+	private PostPratilipiContentResponse() {}
 	
-	public PutPratilipiContentResponse( Integer pageNo, Integer pageCount ) {
+	public PostPratilipiContentResponse( Integer pageNo, Integer pageCount ) {
 		this.pageNo = pageNo;
 		this.pageCount = pageCount;
 	}

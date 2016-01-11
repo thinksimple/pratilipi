@@ -32,6 +32,7 @@ public class AuthorListApi extends GenericApi {
 		return new GetAuthorListResponse(
 				authorListCursorTuple.getDataList(),
 				authorListCursorTuple.getCursor() );
+		
 	}
 
 }

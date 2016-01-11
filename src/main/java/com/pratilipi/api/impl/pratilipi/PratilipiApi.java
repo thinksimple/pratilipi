@@ -36,7 +36,6 @@ public class PratilipiApi extends GenericApi {
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, true, false );
 
 		Gson gson = new Gson();
-
 		return gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class );
 		
 	}
@@ -48,6 +47,8 @@ public class PratilipiApi extends GenericApi {
 		Gson gson = new Gson();
 
 		PratilipiData pratilipiData = gson.fromJson( gson.toJson( request ), PratilipiData.class );
+
+		// If not set already, setting AuthorId for new content.
 		if( pratilipiData.getId() == null && ! pratilipiData.hasAuthorId() ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			Author author = dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() );
