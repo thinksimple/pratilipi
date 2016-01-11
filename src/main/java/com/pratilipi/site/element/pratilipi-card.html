@@ -48,13 +48,28 @@
 							<pratilipi-rating value="{{ pratilipi.averageRating }}" />
 							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
 						</div>
-						<div style="position: absolute; bottom: 25px;">
+						<div style="position: absolute; bottom: 25px; display: inline-block;">
 							<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</a>
+							<template is="dom-if" if="{{ draftsActive }}">
+								<a on-click="publishNow" class="pratilipi-light-blue-button">Publish Now!</a>
+							</template>
+							<template is="dom-if" if="{{ publishedActive }}">
+								<a on-click="moveToDrafts" class="pratilipi-grey-button">Move to Drafts</a>
+							</template>
 						</div>
 					</div>
 				</div>
 			</div>
 		</paper-card>
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/pratilipi"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
 	</template>
 
 
@@ -69,7 +84,10 @@
 			],
           
 			properties: {
-				pratilipi: { type: Object }
+				pratilipi: { type: Object },
+				
+				draftsActive: { type: Boolean, value: false },
+				publishedActive: { type: Boolean, value: false }
 			},
 			
 			listeners: {
@@ -95,6 +113,32 @@
 					len = len - 1;
 					heading.text( title.substring( 0, len - 3 ).trim() + " ..." );
 				}
+			},
+			
+			publishNow: function() {
+				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=PUBLISHED" );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			moveToDrafts: function() {
+				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=DRAFTED" );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			_handleAjaxPostResponse: function( event ) {
+				
+				var pratilipi = event.detail.response;
+				this.set( 'pratilipi', pratilipi );
+				
+				document.querySelector( 'pratilipi-author-books' ).reset();
+				
+			},
+			
+			_handleAjaxPostError: function( event ) {
+				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
+					alert( event.detail.request.xhr.response.message );
+				else
+					alert( "Some Error occured! Please try Again." );
 			}
 		});
 

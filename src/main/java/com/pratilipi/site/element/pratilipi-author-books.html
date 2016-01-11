@@ -31,6 +31,8 @@
 			id='booksByAuthor'
 			author-id='{{ author.authorId }}'
 			include-add-card="true"
+			drafts-active="{{ draftsActive }}"
+			published-active="{{ publishedActive }}"
 			pratilipi-list='{{ pratilipiList }}'
 			></pratilipi-card-grid>
 		<iron-ajax
@@ -75,6 +77,20 @@
 			
 			attached: function() {
 				this.draftsClicked();
+			},
+			
+			reset: function() {
+				this.set( 'pratilipiList', [] );
+				this.set( 'draftedList', [] );
+				this.set( 'publishedList', [] );
+				
+				this.draftedListCursor = "";
+				this.publishedListCursor = "";
+				
+				if( this.draftsActive )
+					this.draftsClicked();
+				else if( this.publishedActive )
+					this.publishedClicked();
 			},
 			
 			removeAllClasses: function() {
