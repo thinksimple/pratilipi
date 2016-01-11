@@ -120,7 +120,6 @@ public class InitApi extends GenericApi {
 
 	}
 	
-	
 	private void _backfillUserReviewState() {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -136,7 +135,7 @@ public class InitApi extends GenericApi {
 		
 		int count = 0;
 		for( UserPratilipi userPratilipi : userPratilipiList ) {
-			userPratilipi.setReviewState( UserReviewState.SUBMITTED );
+			userPratilipi.getReviewState();
 			dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 			count++;
 		}
@@ -150,8 +149,9 @@ public class InitApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		
+		
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
-		gaeQueryBuilder.addFilter( "state", UserReviewState.PUBLISHED );
+		gaeQueryBuilder.addFilter( "state", UserReviewState.PENDING_APPROVAL );
 		gaeQueryBuilder.setRange( 0, 25 );
 		Query query = gaeQueryBuilder.build();
 		
@@ -163,6 +163,21 @@ public class InitApi extends GenericApi {
 			dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 			count++;
 		}
+
+		
+		gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
+		gaeQueryBuilder.addFilter( "state", UserReviewState.PUBLISHED );
+		gaeQueryBuilder.setRange( 0, 25 );
+		query = gaeQueryBuilder.build();
+		
+		userPratilipiList = (List<UserPratilipi>) query.execute();
+		
+		for( UserPratilipi userPratilipi : userPratilipiList ) {
+			userPratilipi.setReviewState( UserReviewState.PUBLISHED );
+			dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+			count++;
+		}
+
 		
 		logger.log( Level.INFO, "Published " + count + " user reviews." );
 
