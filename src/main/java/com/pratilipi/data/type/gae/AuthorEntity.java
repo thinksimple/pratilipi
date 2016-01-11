@@ -257,6 +257,8 @@ public class AuthorEntity implements Author {
 	
 	@Override
 	public AuthorState getState() {
+		if( state == null )
+			state = AuthorState.ACTIVE;
 		return state;
 	}
 	
