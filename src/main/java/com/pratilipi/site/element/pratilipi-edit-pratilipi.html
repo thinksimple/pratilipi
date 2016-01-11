@@ -129,7 +129,9 @@
 			},
 			
 			open: function() {
-				jQuery( "#pratilipiEditPratilipi" ).modal();
+				this.async( function() {
+					jQuery( "#pratilipiEditPratilipi" ).modal();
+				});
 			},
 			
 			close: function() {

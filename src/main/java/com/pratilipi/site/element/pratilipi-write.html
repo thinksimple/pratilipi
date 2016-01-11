@@ -126,7 +126,9 @@
 			},
 			
 			open: function() {
-				jQuery( "#pratilipiWrite" ).modal();	
+				this.async( function() {
+					jQuery( "#pratilipiWrite" ).modal();
+				});
 			},
 			
 			close: function() {

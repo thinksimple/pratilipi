@@ -163,7 +163,9 @@
 			},
 			
 			open: function() {
-				jQuery( "#pratilipiEditAuthor" ).modal();
+				this.async( function() {
+					jQuery( "#pratilipiEditAuthor" ).modal();
+				});
 			},
 			
 			close: function() {
