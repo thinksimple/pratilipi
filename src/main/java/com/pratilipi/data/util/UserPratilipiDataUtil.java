@@ -64,6 +64,7 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setReview( userPratilipi.getReview() == null ? null : userPratilipi.getReview().replaceAll( "<[^>]*>", "" ) );
 		userPratilipiData.setReviewState( userPratilipi.getReviewState() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
+		userPratilipiData.setAccessToReview( hasAccessToAddUserPratilipiData( userPratilipi.getPratilipiId() ) );
 		
 		return userPratilipiData;
 		

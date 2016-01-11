@@ -13,5 +13,6 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	private String reviewTitle;
 	private String review;
 	private Long reviewDateMills;
+	private Boolean hasAccessToReview;
 	
 }

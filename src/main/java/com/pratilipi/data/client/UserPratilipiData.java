@@ -29,6 +29,8 @@ public class UserPratilipiData {
 	
 	private Long reviewDateMillis;
 	
+	private Boolean hasAccessToReview;
+	
 
 	
 	public String getId() {
@@ -122,6 +124,14 @@ public class UserPratilipiData {
 
 	public void setReviewDate( Date reviewDate ) {
 		this.reviewDateMillis = reviewDate == null ? null : reviewDate.getTime();
+	}
+
+	public boolean hasAccessToReview() {
+		return hasAccessToReview == null ? false : hasAccessToReview;
+	}
+	
+	public void setAccessToReview( Boolean hasAccessToReview ) {
+		this.hasAccessToReview = hasAccessToReview;
 	}
 	
 }
