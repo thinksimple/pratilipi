@@ -7,21 +7,20 @@ import java.util.logging.Logger;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataAccessorGaeImpl;
-import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.GaeQueryBuilder;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.gae.UserEntity;
+import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -88,20 +87,23 @@ public class InitApi extends GenericApi {
 		logger.log( Level.INFO, "Checked " + count + " author records." );
 */
 
-		_updateUserState();
+		_backfillUserStateAndSignUpSource();
+		_backfillUserReviewState();
+		_publishUserReview();
 		
 		
 		return new GenericResponse();
 		
 	}
 	
-	private void _updateUserState() {
+	private void _backfillUserStateAndSignUpSource() {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
 		gaeQueryBuilder.addFilter( "state", null, Operator.IS_NULL );
+		gaeQueryBuilder.setRange( 0, 25 );
 		Query query = gaeQueryBuilder.build();
 		
 		List<User> userList = (List<User>) query.execute();
@@ -114,8 +116,56 @@ public class InitApi extends GenericApi {
 			count++;
 		}
 		
-		logger.log( Level.INFO, "Updated state for " + count + " user records." );
+		logger.log( Level.INFO, "Backfilled state & signUpSouce for " + count + " user records." );
 
 	}
 	
+	
+	private void _backfillUserReviewState() {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		PersistenceManager pm = dataAccessor.getPersistenceManager();
+		
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
+		gaeQueryBuilder.addFilter( "reviewDate", null, Operator.NOT_NULL );
+		gaeQueryBuilder.addFilter( "state", null, Operator.IS_NULL );
+		gaeQueryBuilder.setRange( 0, 25 );
+		Query query = gaeQueryBuilder.build();
+		
+		List<UserPratilipi> userPratilipiList = (List<UserPratilipi>) query.execute();
+		
+		int count = 0;
+		for( UserPratilipi userPratilipi : userPratilipiList ) {
+			userPratilipi.setReviewState( UserReviewState.SUBMITTED );
+			dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+			count++;
+		}
+		
+		logger.log( Level.INFO, "Backfilled state for " + count + " user reviews." );
+
+	}
+
+	private void _publishUserReview() {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		PersistenceManager pm = dataAccessor.getPersistenceManager();
+		
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
+		gaeQueryBuilder.addFilter( "state", UserReviewState.PUBLISHED );
+		gaeQueryBuilder.setRange( 0, 25 );
+		Query query = gaeQueryBuilder.build();
+		
+		List<UserPratilipi> userPratilipiList = (List<UserPratilipi>) query.execute();
+		
+		int count = 0;
+		for( UserPratilipi userPratilipi : userPratilipiList ) {
+			userPratilipi.setReviewState( UserReviewState.PUBLISHED );
+			dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+			count++;
+		}
+		
+		logger.log( Level.INFO, "Published " + count + " user reviews." );
+
+	}
+
 }

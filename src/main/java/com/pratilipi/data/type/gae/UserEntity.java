@@ -305,13 +305,5 @@ public class UserEntity implements User {
 	public void setSignUpSource( UserSignUpSource signUpSource ) {
 		this.signUpSource = signUpSource;
 	}
-	
-	
-	public boolean isUpdateRequired() {
-		return ( campaign != null && campaign.equals( "Publisher:5684064812007424" ) && state != UserState.DELETED )
-				|| ( campaign != null && campaign.equals( "Publisher:5684064812007424" ) && signUpSource != null )
-				|| state == null
-				|| signUpSource == null;
-	}
-	
+		
 }
