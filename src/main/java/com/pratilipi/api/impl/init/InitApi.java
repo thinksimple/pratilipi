@@ -166,7 +166,7 @@ public class InitApi extends GenericApi {
 
 		
 		gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
-		gaeQueryBuilder.addFilter( "state", UserReviewState.PUBLISHED );
+		gaeQueryBuilder.addFilter( "state", UserReviewState.SUBMITTED );
 		gaeQueryBuilder.setRange( 0, 25 );
 		query = gaeQueryBuilder.build();
 		
