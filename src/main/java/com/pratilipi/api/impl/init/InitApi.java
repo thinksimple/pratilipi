@@ -155,7 +155,7 @@ public class InitApi extends GenericApi {
 		gaeQueryBuilder.setRange( 0, 25 );
 		Query query = gaeQueryBuilder.build();
 		
-		List<UserPratilipi> userPratilipiList = (List<UserPratilipi>) query.execute();
+		List<UserPratilipi> userPratilipiList = (List<UserPratilipi>) query.execute( UserReviewState.PENDING_APPROVAL );
 		
 		int count = 0;
 		for( UserPratilipi userPratilipi : userPratilipiList ) {
@@ -170,7 +170,7 @@ public class InitApi extends GenericApi {
 		gaeQueryBuilder.setRange( 0, 25 );
 		query = gaeQueryBuilder.build();
 		
-		userPratilipiList = (List<UserPratilipi>) query.execute();
+		userPratilipiList = (List<UserPratilipi>) query.execute( UserReviewState.SUBMITTED );
 		
 		for( UserPratilipi userPratilipi : userPratilipiList ) {
 			userPratilipi.setReviewState( UserReviewState.PUBLISHED );
