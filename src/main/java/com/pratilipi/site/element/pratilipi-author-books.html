@@ -62,13 +62,15 @@
 			
 			properties: {
 				author: { type: Object },
-				pratilipiList: { type: Array, value: {} },
+				pratilipiList: { type: Array, value: [] },
 				
-				draftedContents: { type: Array, value: {} },
-				draftedListCursor: { type: String },
+				draftedList: { type: Array, value: [] },
+				draftedListCursor: { type: String, value: "" },
+				draftsActive : { type: Boolean, value: false },
 				
-				publishedContents: { type: Array, value: {} },
-				publishedListCursor: { type: String }
+				publishedList: { type: Array, value: [] },
+				publishedListCursor: { type: String, value: "" },
+				publishedActive : { type: Boolean, value: false }
 			},
 			
 			attached: function() {
@@ -83,45 +85,125 @@
 			},
 			
 			draftsClicked: function() {
-				this.removeAllClasses();
-				jQuery( '#drafts' ).addClass( 'active' );
-				jQuery( '#published' ).addClass( 'inactive' );
-				
-				// Load Drafted Contents
-				this.loadDraftedContents();
+				if( ! this.draftsActive ) {
+					this.removeAllClasses();
+					jQuery( '#drafts' ).addClass( 'active' );
+					jQuery( '#published' ).addClass( 'inactive' );
+					
+					this.set( 'pratilipiList', this.draftedList );
+					
+					// Set Boolean flags
+					this.draftsActive = true;
+					this.publishedActive = false;
+
+					// Load Published Contents
+					if( this.draftedListCursor != null ) 
+						this.loadDraftedContents();
+				}
 			},
 		
 			publishedClicked: function() {
-				this.removeAllClasses();
-				jQuery( '#published' ).addClass( 'active' );
-				jQuery( '#drafts' ).addClass( 'inactive' );
-				
-				// Load Published Contents
-				this.loadPublishedContents();
+				if( ! this.publishedActive ) {
+					this.removeAllClasses();
+					jQuery( '#published' ).addClass( 'active' );
+					jQuery( '#drafts' ).addClass( 'inactive' );
+					
+					this.set( 'pratilipiList', this.publishedList );
+					
+					// Set Boolean flags
+					this.publishedActive = true;
+					this.draftsActive = false;
+
+					// Load Published Contents
+					if( this.publishedListCursor != null ) 
+						this.loadPublishedContents();
+				}
 			},
 			
 			loadDraftedContents: function() {
-				// Make AJAX Call
+				if( this.draftedListCursor != null ) {
+					// Make AJAX Call
+					var draftedList = this.$.AjaxGetDraftedList;
+					draftedList.params = { authorId: this.author.authorId, cursor: this.draftedListCursor, state: "DRAFTED" };
+					draftedList.generateRequest();
+				}
 			},
 			
 			loadPublishedContents: function() {
-				// Make AJAX Call				
+				if( this.publishedListCursor != null ) {
+					// Make AJAX Call
+					var publishedList = this.$.AjaxGetPublishedList;
+					publishedList.params = { authorId: this.author.authorId, cursor: this.publishedListCursor, state: "PUBLISHED" };
+					publishedList.generateRequest();
+				}
 			},
 			
-			_handleAjaxGetDraftedListResponse: function() {
+			_handleAjaxGetDraftedListResponse: function( event ) {
+				if( event.detail.response == null ) {
+					this.async( function() {
+						this.loadDraftedContents();
+					}, 1000 );
+					return;
+				}
+				
+				var draftedList = event.detail.response.pratilipiList;
+				
+				for( var i = 0; i < draftedList.length; i++ )
+					this.push( 'pratilipiList', draftedList[i] );
+				
+				this.set( 'draftedList', this.pratilipiList );
+					
+				if( draftedList.length < 20 || event.detail.response.cursor == null )
+					this.draftedListCursor = null;
+				else if( event.detail.response.cursor != null )
+					this.draftedListCursor = event.detail.response.cursor;
+				
+				this.loadDraftedContents();
 				
 			},
 			
-			_handleAjaxGetDraftedListError: function() {
+			_handleAjaxGetPublishedListResponse: function( event ) {
+				if( event.detail.response == null ) {
+					this.async( function() {
+						this.loadPublishedContents();
+					}, 1000 );
+					return;
+				}
+				
+				var publishedList = event.detail.response.pratilipiList;
+				
+				for( var i = 0; i < publishedList.length; i++ )
+					this.push( 'pratilipiList', publishedList[i] );
+				
+				this.set( 'publishedList', this.pratilipiList );
+					
+				if( publishedList.length < 20 || event.detail.response.cursor == null )
+					this.publishedListCursor = null;
+				else if( event.detail.response.cursor != null )
+					this.publishedListCursor = event.detail.response.cursor;
+				
+				this.loadPublishedContents();
 				
 			},
 			
-			_handleAjaxGetPublishedListResponse: function() {
-				
+			_handleAjaxGetDraftedListError: function( event ) {
+				if( event.detail.request.xhr.status == 401 ) {
+					alert( event.detail.request.xhr.response.message )
+					return;
+				}
+				this.async( function() {
+					this.loadDraftedContents();
+				}, 3000 );
 			},
 			
-			_handleAjaxGetPublishedListError: function() {
-				
+			_handleAjaxGetPublishedListError: function( event ) {
+				if( event.detail.request.xhr.status == 401 ) {
+					alert( event.detail.request.xhr.response.message )
+					return;
+				}
+				this.async( function() {
+					this.loadPublishedContents();
+				}, 3000 );
 			}
 		});
 
