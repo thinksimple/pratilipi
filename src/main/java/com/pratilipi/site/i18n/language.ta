@@ -32,37 +32,37 @@ language_en					= English
 # Author
 
 author_about				= எழுத்தாளரைப் பற்றி
-author_language				= Language
-author_since				= Author Since
+author_language				= மொழி	
+author_since				= எழுத ஆரம்பித்தது	
 
-author_count_works			= WORKS
-author_count_reads			= READS
-author_count_likes			= LIKES
+author_count_works			= எழுதியவை	
+author_count_reads			= படித்தவர்கள்	
+author_count_likes			= விருப்பங்கள்	
 
-author_edit_profile			= Edit My Profile
-author_edit_profile_heading	= Edit Author
+author_edit_profile			= சுயவிவரத்தை திருத்த	
+author_edit_profile_heading	= சுயவிவரத்தை திருத்த	
 
-author_drafts				= Drafts
+author_drafts				= வரைவுகள்	
 author_published_works		= பதிப்பித்துள்ள படைப்புகள்
-author_add_new_content		= Add New Content
+author_add_new_content		= புதிய படைப்பை சேர்க்க	
 
 
 
 # Pratilipi
 
-pratilipi_type				= Type
-pratilipi_listing_date		= Listing Date
-pratilipi_published			= Published
+pratilipi_type				= வகை	
+pratilipi_listing_date		= சேர்க்கப்பட்டது	
+pratilipi_published			= பதிப்பிக்கப்பட்டது	
 pratilipi_published_year	= பதிப்பு 
 pratilipi_summary			= புத்தகத்தைப் பற்றி
 
-pratilipi_edit_info			= Edit Info
-pratilipi_edit_info_heading	= Edit Pratilipi
-pratilipi_edit_content		= Edit Content
+pratilipi_edit_info			= விவரத்தை திருத்த	
+pratilipi_edit_info_heading	= விவரத்தை திருத்த	
+pratilipi_edit_content		= படைப்பைத் திருத்த
 
-pratilipi_count_reads		= READS
-pratilipi_count_reviews		= REVIEWS
-pratilipi_count_likes		= LIKES
+pratilipi_count_reads		= படித்தவர்கள்	
+pratilipi_count_reviews		= விமர்சனங்கள்	
+pratilipi_count_likes		= விருப்பங்கள்	
 
 
 
@@ -73,11 +73,11 @@ rating_ratings				= மதிப்பீடகள்
 rating_rate_this			= மதிப்பிடுக!
 rating_your_rating			= உங்கள் மதிப்பீடு!
 
-rating_1_star				= Poor
-rating_2_star				= Fair
-rating_3_star				= Good
-rating_4_star				= Very Good
-rating_5_star				= Excellent
+rating_1_star				= சுமார்(1)
+rating_2_star				= நன்று(2)	
+rating_3_star				= அருமை(3)
+rating_4_star				= அபாரம்(4)	
+rating_5_star				= அற்புதம்(5)
 
 
 
@@ -90,10 +90,10 @@ review_title_help			= எ.கா - அருமையான கதை!
 review_content				= உங்கள் விமர்சனம் 
 review_content_help			= உங்கள் கருத்துக்களைப் பதிவிடுக. இக்கதையில் / புத்தகத்தில் / கவிதையில் / கட்டுரையில் எது உங்களை மிகவும் கவர்ந்தது? உங்களுக்கு பிடிக்காதது? உங்கள் விமர்சனம் எழுத்தாளருக்கும், மற்ற வாசகர்களுக்கு மிக உதவியாக இருக்கும். 
 review_submit_review		= பதிவுசெய்க
-review_edit_review			= Edit Review
-review_delete_review		= Delete Review
-review_delete_review_confirm	= Are you sure to delete your review?
-review_helpful				= இந்த விமர்சனம் உதவியாக இருந்ததா?
+review_edit_review			= விமர்சனத்தை திருத்த
+review_delete_review		= விமர்சனத்தை அழிக்க
+review_delete_review_confirm	= விமர்சனத்தை உறுதியாக அழிக்கவேண்டுமா?
+review_helpful				= இந்த விமர்சனம் உதவியாக இருந்ததா?  
 
 
 
@@ -106,9 +106,9 @@ search_bar_help				= தேட - கவிதை, கதை, புத்தக�
 
 # Write
 
-write_heading				= Add New Content
-write_help					= You can write on Pratilipi!
-write_create_new_content	= Create New Content
+write_heading				= படைப்பை சேர்க்க                                                                                                                                                                                                                                                                                     
+write_help					= ப்ரதிலிபியில் எழுதலாம்!
+write_create_new_content	= புதிய படைப்பை உருவாக்க
 
 
 
@@ -131,30 +131,30 @@ user_email					= மின்னஞ்சல் முகவரி
 user_password				= கடவுச்சொல்
 user_confirm_password		= கடவுச்சொலை மீண்டும் பதிவு செய்க
 
-user_my_profile				= My Profile
-user_my_account				= My Account
+user_my_profile				= என் சுயவிவரம்	
+user_my_account				= என் கணக்கு	
 
-user_is_new					= New?
-user_is_registered			= Already a Member?
-user_email_verification		= Email Verification
+user_is_new					= புதியவர்?	
+user_is_registered			= உறுப்பினர்?	
+user_email_verification		= மின்னஞ்சல் சரிபார்ப்பு	
 
 
 
 # My Account popup
 
-edit_account_heading		= Edit My Account
-edit_account_verify_email	= Verify Email
-edit_account_email_verified	= Email Verified
-edit_account_change_password	= Change Password
+edit_account_heading		= என் கணக்கை திருத்த	
+edit_account_verify_email	= மின்னஞ்சலை சரிபார்க்க	
+edit_account_email_verified	= மின்னஞ்சல் சரிபார்க்கப்பட்டது	
+edit_account_change_password	= கடவுச்சொல்லை மாற்ற	
 
 
 
 # Footer
 
-footer_follow_us_on_social_media	= Follow us on Social Media
-footer_about_us				= About Us
-footer_work_with_us			= Work With Us
-footer_blog					= Blog
+footer_follow_us_on_social_media	= சமூக வலைதளங்களில் தொடர	
+footer_about_us				= எங்களைப் பற்றி	
+footer_work_with_us			= எங்களுடன் இணைய	
+footer_blog					= வலைப்பதிவு	
 footer_privacy_policy		= Privacy Policy
 footer_terms_of_service		= Terms
 
@@ -162,9 +162,9 @@ footer_terms_of_service		= Terms
 
 # Common Words
 
-okay						= Okay
-cancel						= Cancel
-save_changes				= Save Changes
+okay						= ஆம்	
+cancel						= இல்லை	
+save_changes				= மாற்றங்களை சேமிக்க	
 show_more					= மேலும் 
 show_less					= சுருக்கு 
 read						= படிக்க
