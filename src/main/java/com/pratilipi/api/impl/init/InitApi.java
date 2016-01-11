@@ -101,7 +101,7 @@ public class InitApi extends GenericApi {
 		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
-		gaeQueryBuilder.addFilter( "state", null );
+		gaeQueryBuilder.addFilter( "state", null, Operator.IS_NULL );
 		Query query = gaeQueryBuilder.build();
 		
 		List<User> userList = (List<User>) query.execute();

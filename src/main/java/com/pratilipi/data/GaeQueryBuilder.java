@@ -19,6 +19,7 @@ public class GaeQueryBuilder {
 			Logger.getLogger( GaeQueryBuilder.class.getName() );
 
 	public enum Operator {
+		IS_NULL,
 		NOT_NULL,
 		NOT_EQUALS,
 		EQUALS,
@@ -62,6 +63,9 @@ public class GaeQueryBuilder {
 		}
 		
 		switch( operator ) {
+			case IS_NULL:
+				filters.add( param + " == null" );
+				break;
 			case NOT_NULL:
 				filters.add( param + " != null" );
 				break;
@@ -90,7 +94,7 @@ public class GaeQueryBuilder {
 				throw new UnsupportedOperationException( "Operator '" + operator + "' is not yet supported." );
 		}
 		
-		if( operator != Operator.NOT_NULL ) {
+		if( operator != Operator.IS_NULL && operator != Operator.NOT_NULL ) {
 			parameteres.add( value.getClass().getName() + " " + paramKey );
 			paramNameValueMap.put( paramKey, value );
 		}
