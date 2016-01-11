@@ -32,5 +32,11 @@
 		<property name="PRIMARY_CONTENT_ID" direction="asc"/>
 		<property name="CREATION_DATE" direction="asc"/>
 	</datastore-index>
-	
+
+	<datastore-index kind="USER_PRATILIPI" ancestor="false" source="manual">
+		<property name="PRATILIPI_ID" direction="asc"/>
+		<property name="REVIEW_STATE" direction="asc"/>
+		<property name="REVIEW_DATE" direction="desc"/>
+	</datastore-index>
+
 </datastore-indexes>
