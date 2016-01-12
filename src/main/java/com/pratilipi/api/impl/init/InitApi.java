@@ -101,7 +101,7 @@ public class InitApi extends GenericApi {
 		
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/pratilipi/process" )
-				.addParam( "pratilipiId", "5179335692517376" )
+				.addParam( "pratilipiId", "5728229560156160" )
 				.addParam( "processData", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 
