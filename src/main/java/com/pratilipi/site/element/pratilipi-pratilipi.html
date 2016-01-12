@@ -305,7 +305,7 @@
 			
 			processSummary: function() {
 				// Not displaying Summary if..
-				if( this.pratilipi.summary == null ) { 
+				if( this.pratilipi.summary == null || this.pratilipi.summary.trim() == "" ) { 
 					document.getElementById( "pratilipi-summary" ).style.display = "none";
 					return;
 				}

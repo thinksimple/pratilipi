@@ -208,7 +208,7 @@
 			},
 			
 			processSummary: function() {
-				if( this.author.summary == null ) { 
+				if( this.author.summary == null || this.author.summary.trim() == "" ) { 
 					document.getElementById( "author-summary" ).style.display = "none";
 					return;
 				}
