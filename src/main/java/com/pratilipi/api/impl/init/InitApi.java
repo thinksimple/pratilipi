@@ -13,6 +13,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -179,7 +180,7 @@ public class InitApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		
-		AppProperty appProperty = dataAccessor.getAppProperty( "Jarvis.Backfill.AuthorProfile" ).getValue();
+		AppProperty appProperty = dataAccessor.getAppProperty( "Jarvis.Backfill.AuthorProfile" );
 		if( appProperty == null ) {
 			appProperty = dataAccessor.newAppProperty( "Jarvis.Backfill.AuthorProfile" );
 			appProperty.setValue( new Date( 0 ) );
@@ -202,6 +203,12 @@ public class InitApi extends GenericApi {
 			if( authorList.size() != 1 ) {
 				logger.log( Level.SEVERE, authorList.size() + " author profiles found for user " + user.getEmail() + ", " + user.getFacebookId() );
 				count++;
+			} else {
+				Author author = authorList.get( 0 );
+				if( author.getState() == AuthorState.DELETED ) {
+					logger.log( Level.SEVERE, "author profile is deleted for user " + user.getEmail() + ", " + user.getFacebookId() );
+					count++;
+				}
 			}
 		}
 		logger.log( Level.INFO, count + " issues found in " + userList.size() + " user records checked." );
