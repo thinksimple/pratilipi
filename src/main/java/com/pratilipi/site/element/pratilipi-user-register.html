@@ -127,7 +127,7 @@
 				if( event.detail.xhr.status == 0 ) {
 					this.message = "Could not connect to server !";
 				} else {
-					this.message = "Success !";
+					this.message = "${ _strings.user_register_success }";
 					this.async( function() {
 						this.message = null;
 						this.params = {"source":"WEBSITE_M6<#if language??>_${ language }</#if>"};

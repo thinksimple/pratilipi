@@ -127,7 +127,7 @@
 				if( event.detail.xhr.status == 0 ) {
 					this.message = "Could not connect to server !";
 				} else {
-					this.message = "Success !";
+					this.message = "${ _strings.user_login_success }";
 					this.async( function() {
 						this.email = null;
 						this.password = null;

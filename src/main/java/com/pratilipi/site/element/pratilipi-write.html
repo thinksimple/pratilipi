@@ -194,7 +194,7 @@
 			_handleAjaxPostResponse: function( event ) {
 				
 				var pratilipi = event.detail.response;
-				this.message = "Success !";
+				this.message = "${ _strings.content_created_success }";
 				
 				this.async( function() {
 					jQuery( '#pratilipiWriteButton' ).prop( 'disabled', false );

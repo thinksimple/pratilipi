@@ -195,7 +195,7 @@
 			
 			_handleAjaxPostResponse: function( event ) {
 				
-				this.message = "Success !";
+				this.message = "${ _strings.updated_author_info_success }";
 				
 				var author = event.detail.response;
 				this.set( 'author', author );
