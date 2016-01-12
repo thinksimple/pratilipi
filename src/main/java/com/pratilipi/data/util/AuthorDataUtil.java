@@ -258,7 +258,7 @@ public class AuthorDataUtil {
 		if( isNew )
 			createOrUpdateAuthorPageUrl( author.getId() );
 
-		return createAuthorData( author );
+		return createAuthorData( author, true, false );
 		
 	}
 	

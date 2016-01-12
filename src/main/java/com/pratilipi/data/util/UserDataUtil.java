@@ -409,7 +409,7 @@ public class UserDataUtil {
 		author.setEmail( userData.getEmail() ); // For backward compatibility with Mark-4
 		author.setLanguage( language );
 		author.setState( AuthorState.ACTIVE );
-		author.setRegistrationDate( new Date() );
+		author.setRegistrationDate( userData.getSignUpDate() );
 		author.setLastUpdated( new Date() );
 		
 		auditLog.setEventDataNew( gson.toJson( author ) );

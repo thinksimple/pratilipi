@@ -13,7 +13,8 @@ public class GenericReviewResponse extends GenericResponse {
 	
 	private String userPratilipiId;
 	private String userName;
-	
+	private String userImageUrl;
+
 	private Integer rating;
 	private String reviewTitle;
 	private String review;
