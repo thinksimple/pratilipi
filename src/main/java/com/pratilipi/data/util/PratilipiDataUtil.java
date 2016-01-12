@@ -615,8 +615,7 @@ public class PratilipiDataUtil {
 			page.setUri( PageType.PRATILIPI.getUrlPrefix() + pratilipiId );
 			page.setPrimaryContentId( pratilipiId );
 			page.setCreationDate( new Date() );
-			if( uriPrifix == null )
-				page = dataAccessor.createOrUpdatePage( page );
+			page = dataAccessor.createOrUpdatePage( page );
 		}
 		
 		
