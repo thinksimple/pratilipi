@@ -2,14 +2,16 @@
 
 	<style>
 
-		.popup-heading span {
-			font-size: 14px;
-			color: #333;
-			display: inline-block;
-		}
-		
 		paper-input.pratilipi-blue {
 			--paper-input-container-focus-color: #107FE5;
+			--paper-input-container-label: {
+				font-size: 15px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
+			--paper-input-container-input: {
+				font-size: 15px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
 		}
 		
 	</style>
@@ -19,8 +21,8 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<span>${ _strings.user_sign_up_for_pratilipi }</span>
-						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+						<h6 style="margin: 0px; padding: 0px; font-weight: 700;">${ _strings.user_sign_up_for_pratilipi }</h6>
+						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					<div class="modal-body" on-keyup="onSubmit">
 						<pratilipi-facebook-login></pratilipi-facebook-login>
@@ -32,13 +34,13 @@
 								</span>
 							</div>
 							
-							<paper-input class="pratilipi-blue" label="{{ nameInput }}" value="{{ params.name::input }}">
+							<paper-input class="pratilipi-blue" label="${ _strings.user_full_name }" value="{{ params.name::input }}">
 								<iron-icon style="margin-right: 5px;" icon="account-box" prefix></iron-icon>
 							</paper-input>
-							<paper-input class="pratilipi-blue" label="{{ emailInput }}" value="{{ params.email::input }}">
+							<paper-input class="pratilipi-blue" label="${ _strings.user_email }" value="{{ params.email::input }}">
 								<iron-icon style="margin-right: 5px;" icon="mail" prefix></iron-icon>
 							</paper-input>
-							<paper-input class="pratilipi-blue" label="{{ passwordInput }}" type="password" value="{{ params.password::input }}">
+							<paper-input class="pratilipi-blue" label="${ _strings.user_password }" type="password" value="{{ params.password::input }}">
 								<iron-icon style="margin-right: 5px;" icon="lock" prefix></iron-icon>
 							</paper-input>
 							
@@ -56,7 +58,10 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<p class=" text-center">${ _strings.user_is_registered }&nbsp;<a style="color: #107FE5;" href="#" on-click="logIn">${ _strings.user_sign_in }</a></p>
+						<div class="text-center" style="display: block;">
+							<span style="font-size: 12px; font-weight: 300; color: #9B9B9B;">${ _strings.user_is_registered }&nbsp;</span>
+							<a style="font-size: 13px; font-weight: 300; color: #107FE5;" href="#" on-click="logIn">${ _strings.user_to_sign_in }</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -82,11 +87,8 @@
 			is: 'pratilipi-user-register',
 
 			properties: {
-				params: { type:Object, value:{"source":"WEBSITE_M6<#if language??>_${ language }</#if>"} },
-				nameInput: { type: String },
-				emailInput: { type: String },
-				passwordInput: { type: String },
-				message: { type:String }
+				params: { type: Object, value: {"source":"WEBSITE_M6<#if language??>_${ language }</#if>"} },
+				message: { type: String, value: null }
 			},
 			
 			logIn: function() {
@@ -94,9 +96,6 @@
 			},
 			
 			defaultMessages: function() {
-				this.nameInput = "Name";
-				this.emailInput = "Email";
-				this.passwordInput = "Password";
 				this.message = null;
 			},
 			
@@ -110,12 +109,8 @@
 				jQuery( "#pratilipiUserRegister" ).modal( 'hide' );
 			},
 			
-			ready: function() {
-				this.defaultMessages();
-			},
-			
 			onSubmit: function( event ) {
-				this.defaultMessages();
+				this.message = null;
 				
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
 					return;
@@ -138,7 +133,7 @@
 				} else {
 					this.message = "Success !";
 					this.async( function() {
-						this.defaultMessages();
+						this.message = null;
 						this.params = {"source":"WEBSITE_M6<#if language??>_${ language }</#if>"};
 						jQuery( '#registerButton' ).prop( 'disabled', false );
  						this.close();
