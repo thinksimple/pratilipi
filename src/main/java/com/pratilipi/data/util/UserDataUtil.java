@@ -102,8 +102,6 @@ public class UserDataUtil {
 	public static UserData createUserData( User user ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = dataAccessor.getAuthorByUserId( user.getId() );
-		Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
 		
 		UserData userData = new UserData( user.getId() );
 		userData.setFacebookId( user.getFacebookId() );
@@ -111,13 +109,17 @@ public class UserDataUtil {
 		userData.setState( user.getState() );
 		userData.setSignUpDate( user.getSignUpDate() );
 		
-		userData.setFirstName( author.getFirstName() != null ? author.getFirstName() : author.getFirstNameEn() );
-		userData.setLastName( author.getLastName() != null ? author.getLastName() : author.getLastNameEn() );
-		userData.setDisplayName( userData.getFirstName() != null ? userData.getFirstName() : userData.getLastName() );
-		userData.setGender( author.getGender() );
-		userData.setDateOfBirth( author.getDateOfBirth() );
-		userData.setProfilePageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
-		userData.setProfileImageUrl( AuthorDataUtil.createAuthorImageUrl( author ) );
+		Author author = dataAccessor.getAuthorByUserId( user.getId() );
+		if( author != null ) {
+			Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
+			userData.setFirstName( author.getFirstName() != null ? author.getFirstName() : author.getFirstNameEn() );
+			userData.setLastName( author.getLastName() != null ? author.getLastName() : author.getLastNameEn() );
+			userData.setDisplayName( userData.getFirstName() != null ? userData.getFirstName() : userData.getLastName() );
+			userData.setGender( author.getGender() );
+			userData.setDateOfBirth( author.getDateOfBirth() );
+			userData.setProfilePageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
+			userData.setProfileImageUrl( AuthorDataUtil.createAuthorImageUrl( author ) );
+		}
 		
 		return userData;
 		
@@ -294,12 +296,14 @@ public class UserDataUtil {
 		_loginUser( AccessTokenFilter.getAccessToken(), user );
 		
 		
+		UserData userData = createUserData( user );
 		if( isNew ) {
-			fbUserData.setId( user.getId() );
-			return fbUserData;
-		} else {
-			return createUserData( user );
+			userData.setFirstName( fbUserData.getFirstName() );
+			userData.setLastName( fbUserData.getLastName() );
+			userData.setGender( fbUserData.getGender() );
+			userData.setDateOfBirth( fbUserData.getDateOfBirth() );
 		}
+		return userData;
 		
 	}
 	
@@ -410,7 +414,7 @@ public class UserDataUtil {
 		author.setLanguage( language );
 		author.setState( AuthorState.ACTIVE );
 		author.setRegistrationDate( userData.getSignUpDate() );
-		author.setLastUpdated( new Date() );
+		author.setLastUpdated( userData.getSignUpDate() );
 		
 		auditLog.setEventDataNew( gson.toJson( author ) );
 

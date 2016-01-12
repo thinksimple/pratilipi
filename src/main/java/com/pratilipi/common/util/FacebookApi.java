@@ -77,9 +77,6 @@ public class FacebookApi {
 			userData.setLastName( responseJson.get( "last_name" ).getAsString() );
 			userData.setGender( Gender.valueOf( responseJson.get( "gender" ).getAsString().toUpperCase() ) );
 			
-			if( responseJson.get( "email" ) != null )
-				userData.setEmail( responseJson.get( "email" ).getAsString() );
-			
 			if( responseJson.get( "birthday" ) != null ) {
 				String dob = responseJson.get( "birthday" ).getAsString();
 				String year = dob.substring( 6 );
@@ -88,7 +85,11 @@ public class FacebookApi {
 				userData.setDateOfBirth( year + "-" + month + "-" + date );
 			}
 			
+			if( responseJson.get( "email" ) != null )
+				userData.setEmail( responseJson.get( "email" ).getAsString() );
+			
 			return userData;
+			
 		}
 			
 	}
