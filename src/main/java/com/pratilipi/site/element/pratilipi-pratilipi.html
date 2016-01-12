@@ -26,6 +26,17 @@
 			height: 30px;
 		}
 		
+		.buttons-widescreen {
+			position: absolute; 
+			display: inline-block; 
+			top: 205px;
+		}
+		
+		.buttons-mobile {
+			position: relative; 
+			display: inline-block; 
+		}
+		
 		#more, #less {
 			color: #333;
 		}
@@ -105,18 +116,20 @@
 							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
 					</pratilipi-rating>
 					
-					<table style="margin-top: 10px; margin-bottom: 30px;">
-						<tr> <th>{{ type }}</th> 		<td></td> </tr>
+					<h6>{{ type }}</h6>
+					
+					<table style="margin-top: 10px; margin-bottom: 20px;">
 						<tr> <th>${ _strings.pratilipi_listing_date } :</th> 	<td>{{ listingDate }}</td> </tr>
 					</table>
 					
-					<div style="position: relative; display: inline-block;">
+					<div id="buttons">
 						<button on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</button>
 						<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
 						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
 							<button on-click="openPratilipiEdit" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_info }</button>
 							<button on-click="openWriterPanel" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_content }</button>
 							<pratilipi-edit-pratilipi pratilipi="{{ pratilipi }}"></pratilipi-edit-pratilipi>
+							<button id="changeStateButton" on-click="changeState" class="pratilipi-light-blue-button">{{ changeState }}</button>
 						</template>
 					</div>
 					
@@ -156,6 +169,16 @@
 			</paper-card>
 			<br class="pratilipi-break" />
 		</div>
+		
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/pratilipi"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
 	</template>
 	
 	<script>
@@ -227,6 +250,9 @@
 					jQuery( '#pratilipi-row' ).addClass( 'row-widescreen' );
 					jQuery( '#pratilipi-col-left' ).addClass( 'col-left-widescreen' );
 					jQuery( '#pratilipi-col-right' ).addClass( 'col-right-widescreen' );
+					
+					jQuery( '#buttons' ).removeClass( 'buttons-mobile' );
+					jQuery( '#buttons' ).addClass( 'buttons-widescreen' );
 				}
 				else {
 					this.mobile = true;
@@ -237,6 +263,9 @@
 					jQuery( '#pratilipi-row' ).addClass( 'row-mobile' );
 					jQuery( '#pratilipi-col-left' ).addClass( 'col-left-mobile' );
 					jQuery( '#pratilipi-col-right' ).addClass( 'col-right-mobile' );
+					
+					jQuery( '#buttons' ).removeClass( 'buttons-widescreen' );
+					jQuery( '#buttons' ).addClass( 'buttons-mobile' );
 				}
 				
 			},
@@ -261,6 +290,12 @@
 				this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "&" + "width=150";
 				this.type = capitalizeFirstLetter( pratilipi.type );
 				this.listingDate = convertDate( pratilipi.listingDateMillis );
+				if( pratilipi.state == "DRAFTED" )
+					this.changeState = "Publish it !";
+				else if ( pratilipi.state == "PUBLISHED" )
+					this.changeState = "Move to Drafts !";
+				else
+					jQuery( '#changeStateButton' ).hide();
 				this.processSummary();
 			},
 			
@@ -306,6 +341,36 @@
 					document.getElementById( "less" ).style.display = "none";
 				else
 					document.getElementById( "less" ).style.display = "block";
+			},
+			
+			changeState: function() {
+				if( this.pratilipi.state == "DRAFTED" )
+					this.publishPratilipi();
+				else if( this.pratilipi.state == "PUBLISHED" )
+					this.moveToDrafts();
+			},
+			
+			publishPratilipi: function( pratilipiId ) {
+				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=PUBLISHED" );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			moveToDrafts: function( pratilipiId ) {
+				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=PUBLISHED" );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			_handleAjaxPostResponse: function( event ) {
+				var pratilipi = event.detail.response;
+				this.updatePratilipi( 'pratilipi', pratilipi );
+				alert( "Success!" );
+			},
+			
+			_handleAjaxPostError: function( event ) {
+				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
+					alert( event.detail.request.xhr.response.message );
+				else
+					alert( "Some Error occured! Please try Again." );
 			}
 			
 		});
