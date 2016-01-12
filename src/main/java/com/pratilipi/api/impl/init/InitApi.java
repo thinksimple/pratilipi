@@ -28,6 +28,7 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.data.util.UserDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -185,7 +186,8 @@ public class InitApi extends GenericApi {
 			appProperty = dataAccessor.newAppProperty( "Jarvis.Backfill.AuthorProfile" );
 			appProperty.setValue( new Date( 0 ) );
 		}
-		
+
+		// Fetch next 100 users
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
 		gaeQueryBuilder.addFilter( "signUpDate", appProperty.getValue(), Operator.GREATER_THAN );
 		gaeQueryBuilder.addOrdering( "signUpDate", true );
@@ -196,23 +198,121 @@ public class InitApi extends GenericApi {
 		
 		int count = 0;
 		for( User user : userList ) {
-			gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-			gaeQueryBuilder.addFilter( "userId", user.getId() );
-			query = gaeQueryBuilder.build();
-			List<Author> authorList = (List<Author>) query.execute( user.getId() );
-			if( authorList.size() != 1 ) {
-				logger.log( Level.SEVERE, authorList.size() + " author profiles found for user " + user.getEmail() + ", " + user.getFacebookId() );
+			
+			// Either email or facebook id should be present.
+			if( user.getEmail() == null && user.getFacebookId() == null ) {
+				logger.log( Level.SEVERE, "User " + user.getId() + " doesn't have email and facebook id." );
 				count++;
-			} else {
-				Author author = authorList.get( 0 );
-				if( author.getState() == AuthorState.DELETED ) {
-					logger.log( Level.SEVERE, "author profile is deleted for user " + user.getEmail() + ", " + user.getFacebookId() );
+				continue;
+			}
+
+			// Email, if present, must not be empty.
+			if( user.getEmail() != null && user.getEmail().trim().isEmpty() ) {
+				logger.log( Level.SEVERE, "User " + user.getId() + " has empty email id." );
+				count++;
+				continue;
+			}
+			
+			// Facebook id, if present, must not be empty.
+			if( user.getFacebookId() != null && user.getFacebookId().trim().isEmpty() ) {
+				logger.log( Level.SEVERE, "User " + user.getId() + " has empty facebook id." );
+				count++;
+				continue;
+			}
+
+			// Email id must be in lower case.
+			if( ! user.getEmail().equals( user.getEmail().trim().toLowerCase() ) ) {
+				logger.log( Level.SEVERE, "User " + user.getEmail() + " doesn't have email in lower case." );
+				count++;
+				continue;
+			}
+
+			// Only one user account can exist per email id.
+			if( user.getEmail() != null ) {
+				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
+				gaeQueryBuilder.addFilter( "email", user.getId() );
+				query = gaeQueryBuilder.build();
+				List<User> list = (List<User>) query.execute( user.getEmail() );
+				if( list.size() != 1 ) {
+					logger.log( Level.SEVERE, "User " + user.getEmail() + " has " + list.size() + " accounts." );
 					count++;
+					continue;
 				}
 			}
-		}
-		logger.log( Level.INFO, count + " issues found in " + userList.size() + " user records checked." );
+			
+			// Only one user account can exist per facebook id.
+			if( user.getFacebookId() != null ) {
+				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
+				gaeQueryBuilder.addFilter( "facebookId", user.getFacebookId() );
+				query = gaeQueryBuilder.build();
+				List<User> list = (List<User>) query.execute( user.getFacebookId() );
+				if( list.size() != 1 ) {
+					logger.log( Level.SEVERE, "User " + user.getId() + " has " + list.size() + " accounts." );
+					count++;
+					continue;
+				}
+			}
 
+			
+			// Author profile for the user.
+			gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
+			gaeQueryBuilder.addFilter( "userId", user.getId() );
+			gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
+			gaeQueryBuilder.addOrdering( "state", true );
+			gaeQueryBuilder.addOrdering( "registrationDate", true );
+			query = gaeQueryBuilder.build();
+			List<Author> authorList = (List<Author>) query.execute( user.getId(), AuthorState.DELETED );
+			
+			if( authorList.size() == 0 ) {
+				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
+				gaeQueryBuilder.addFilter( "email", user.getId() );
+				gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
+				gaeQueryBuilder.addOrdering( "state", true );
+				gaeQueryBuilder.addOrdering( "registrationDate", true );
+				query = gaeQueryBuilder.build();
+
+				List<Author> list = (List<Author>) query.execute( user.getEmail(), AuthorState.DELETED );
+				
+				if( list.size() == 0 ) {
+					logger.log( Level.SEVERE, "User " + user.getId() + " doesn't have a author profile" );
+					continue;
+				}
+				
+				if( list.size() == 1 ) {
+					Author author = list.get( 0 );
+					if( author.getId() != null )
+						logger.log( Level.SEVERE, "User " + user.getId() + "'s author profile is linked with some other user." );
+					else
+						logger.log( Level.SEVERE, "User " + user.getId() + "'s author profile is not linked." );
+					count++;
+					continue;
+				}
+				
+				if( list.size() > 1 ) {
+					logger.log( Level.SEVERE, "User " + user.getId() + " has " + list.size() + " unlinked author profiles." );
+					count++;
+					continue;
+				}
+				
+			}
+			
+			if( authorList.size() == 1 ) {
+				Author author = authorList.get( 0 );
+				if( ( user.getEmail() == null && author.getEmail() != null ) || ( user.getEmail() != null && ! user.getEmail().equals( author.getEmail() ) ) ) {
+					logger.log( Level.SEVERE, "User " + user.getId() + " email doesn't match with the same in author profile " + author.getEmail() );
+					count++;
+					continue;
+				}
+			}
+			
+			if( authorList.size() > 1 ) {
+				logger.log( Level.SEVERE, "User " + user.getId() + " has " + authorList.size() + " author profiles." );
+				count++;
+				continue;
+			}
+	
+		}
+		
 	}
 	
 	private void _backfillUserReviewState() {
