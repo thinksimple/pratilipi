@@ -68,11 +68,19 @@
 			},
 			
 			ready: function() {
-				if( this.review )
+				
+				if( this.review == null )
+					return;
+				
+				if( this.review.review )
 					jQuery( this.querySelector( '.review' ) ).html( this.review.review );
 				
-				if( this.review.userImageUrl )
-					this.reviewUserImageUrl = this.review.userImageUrl + "&" + "width=64";
+				if( this.review.userImageUrl ) {
+					if( this.review.userImageUrl.indexOf( '?' ) == -1 )
+						this.reviewUserImageUrl = this.review.userImageUrl + "?" + "width=64";
+					else
+						this.reviewUserImageUrl = this.review.userImageUrl + "&" + "width=64";
+				}
 			}
 
 		});

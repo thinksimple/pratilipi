@@ -96,7 +96,6 @@
 					<br/>
 
 					<table>
-						<tr> <th>${ _strings.author_language } :</th> 		<td>{{ language }}</td> </tr>
 						<tr> <th>${ _strings.author_since } :</th> 	<td>{{ date }}</td> </tr>
 					</table>
 
@@ -214,7 +213,11 @@
 				else
 					this.penName = null;
 				
-				this.authorImageUrl = author.imageUrl + "&" + "width=200";
+				if( author.imageUrl.indexOf( '?' ) == -1 )
+					this.authorImageUrl = author.imageUrl + "?" + "width=200";
+				else
+					this.authorImageUrl = author.imageUrl + "&" + "width=200";
+				
 				this.language = capitalizeFirstLetter( author.language );
 				this.date = convertDate( author.registrationDateMillis );
 				this.processSummary();

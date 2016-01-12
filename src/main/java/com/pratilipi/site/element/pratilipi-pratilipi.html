@@ -288,7 +288,12 @@
 				this.set( 'pratilipi', this.process( pratilipi ) );
 				this.title = pratilipi.title;
 				this.titleEn = pratilipi.titleEn;
-				this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "&" + "width=150";
+				
+				if( pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
+					this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "?" + "width=150";
+				else
+					this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "&" + "width=150";
+				
 				this.type = capitalizeFirstLetter( pratilipi.type );
 				this.listingDate = convertDate( pratilipi.listingDateMillis );
 				if( pratilipi.state == "DRAFTED" )
