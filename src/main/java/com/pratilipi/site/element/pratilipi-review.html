@@ -21,8 +21,12 @@
 			<div class="row" style="padding: 10px;">
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="text-align: center; padding-top: 7px;">
 					<small><pratilipi-rating value="{{ review.rating }}" /></small>
-		   			<!-- <img class="img-circle" style="max-width: 140px; max-height: 140px; display: block; margin: 0 auto;" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/user.png" alt="{{ user.fullName }}" title="{{ user.fullNameEn }}"/> -->
-		   			<iron-icon icon="account-circle" style="display: block; margin: 10px auto; color: #989898; width: 64px; height: 64px"></iron-icon>
+		   			<template is="dom-if" if="{{ review.userImageUrl }}">
+		   				<img class="img-circle" style="max-width: 64px; max-height: 64px; display: block; margin: 0 auto;" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>
+		   			</template>
+		   			<template is="dom-if" if="{{ !review.userImageUrl }}">
+		   				<iron-icon icon="account-circle" style="display: block; margin: 10px auto; color: #989898; width: 64px; height: 64px"></iron-icon>
+		   			</template>
 		   			<span>{{ review.userName }}</span>
 				</div>
 				<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
@@ -66,6 +70,9 @@
 			ready: function() {
 				if( this.review )
 					jQuery( this.querySelector( '.review' ) ).html( this.review.review );
+				
+				if( this.review.userImageUrl )
+					this.reviewUserImageUrl = this.review.userImageUrl + "&" + "width=64";
 			}
 
 		});
