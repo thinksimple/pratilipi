@@ -15,6 +15,7 @@ import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.UserReviewState;
+import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.GaeQueryBuilder;
@@ -98,7 +99,7 @@ public class InitApi extends GenericApi {
 		_backfillUserStateAndSignUpSource();
 		_backfillPratilipiLanguage();
 		_backfillAuthorLanguage();
-		_createAuthorProfile();
+		_validateAndUpdateUserProfile();
 		_backfillUserReviewState();
 		_publishUserReview();
 		
@@ -176,14 +177,14 @@ public class InitApi extends GenericApi {
 
 	}
 
-	private void _createAuthorProfile() {
+	private void _validateAndUpdateUserProfile() {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		
-		AppProperty appProperty = dataAccessor.getAppProperty( "Jarvis.Backfill.AuthorProfile" );
+		AppProperty appProperty = dataAccessor.getAppProperty( "Jarvis.Validate.User" );
 		if( appProperty == null ) {
-			appProperty = dataAccessor.newAppProperty( "Jarvis.Backfill.AuthorProfile" );
+			appProperty = dataAccessor.newAppProperty( "Jarvis.Validate.User" );
 			appProperty.setValue( new Date( 0 ) );
 		}
 
@@ -231,8 +232,11 @@ public class InitApi extends GenericApi {
 			if( user.getEmail() != null ) {
 				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
 				gaeQueryBuilder.addFilter( "email", user.getId() );
+				gaeQueryBuilder.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS );
+				gaeQueryBuilder.addOrdering( "state", true );
+				gaeQueryBuilder.addOrdering( "signUpDate", true );
 				query = gaeQueryBuilder.build();
-				List<User> list = (List<User>) query.execute( user.getEmail() );
+				List<User> list = (List<User>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 				if( list.size() != 1 ) {
 					logger.log( Level.SEVERE, "User " + user.getEmail() + " has " + list.size() + " accounts." );
 					count++;
@@ -244,8 +248,11 @@ public class InitApi extends GenericApi {
 			if( user.getFacebookId() != null ) {
 				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
 				gaeQueryBuilder.addFilter( "facebookId", user.getFacebookId() );
+				gaeQueryBuilder.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS );
+				gaeQueryBuilder.addOrdering( "state", true );
+				gaeQueryBuilder.addOrdering( "signUpDate", true );
 				query = gaeQueryBuilder.build();
-				List<User> list = (List<User>) query.execute( user.getFacebookId() );
+				List<User> list = (List<User>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 				if( list.size() != 1 ) {
 					logger.log( Level.SEVERE, "User " + user.getId() + " has " + list.size() + " accounts." );
 					count++;
@@ -261,7 +268,7 @@ public class InitApi extends GenericApi {
 			gaeQueryBuilder.addOrdering( "state", true );
 			gaeQueryBuilder.addOrdering( "registrationDate", true );
 			query = gaeQueryBuilder.build();
-			List<Author> authorList = (List<Author>) query.execute( user.getId(), AuthorState.DELETED );
+			List<Author> authorList = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );;
 			
 			if( authorList.size() == 0 ) {
 				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
@@ -271,16 +278,17 @@ public class InitApi extends GenericApi {
 				gaeQueryBuilder.addOrdering( "registrationDate", true );
 				query = gaeQueryBuilder.build();
 
-				List<Author> list = (List<Author>) query.execute( user.getEmail(), AuthorState.DELETED );
+				List<Author> list = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 				
 				if( list.size() == 0 ) {
 					logger.log( Level.SEVERE, "User " + user.getId() + " doesn't have a author profile" );
+					count++;
 					continue;
 				}
 				
 				if( list.size() == 1 ) {
 					Author author = list.get( 0 );
-					if( author.getId() != null )
+					if( author.getUserId() != null )
 						logger.log( Level.SEVERE, "User " + user.getId() + "'s author profile is linked with some other user." );
 					else
 						logger.log( Level.SEVERE, "User " + user.getId() + "'s author profile is not linked." );
