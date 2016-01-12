@@ -48,7 +48,6 @@
 							<pratilipi-rating value="{{ pratilipi.averageRating }}" />
 							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
 						</div>
-						<span style="display: block; text-align: center;">{{message}}</span>
 						<div style="position: absolute; bottom: 25px; display: inline-block;">
 							<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</a>
 							<template is="dom-if" if="{{ draftsActive }}">
@@ -135,13 +134,11 @@
 				var pratilipi = event.detail.response;
 				this.set( 'pratilipi', pratilipi );
 				
-				if( this.draftsActive ) {
-					this.message = "Published!";
-					document.querySelector( 'pratilipi-author-books' ).resetPublished();
-				} else if( this.publishedActive ) {
-					this.message = "Moved to Drafts!";
-					document.querySelector( 'pratilipi-author-books' ).resetDrafts();
-				}
+				document.querySelector( 'pratilipi-author-books' ).reset();
+				if( this.draftsActive )
+					document.querySelector( 'pratilipi-author-books' ).draftsClicked();
+				else if( this.publishedActive )
+					document.querySelector( 'pratilipi-author-books' ).publishedClicked();
 				
 			},
 			

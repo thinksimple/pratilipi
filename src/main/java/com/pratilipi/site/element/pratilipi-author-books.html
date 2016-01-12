@@ -79,14 +79,14 @@
 				this.draftsClicked();
 			},
 			
-			resetDrafts: function() {
+			reset: function() {
+				this.set( 'pratilipiList', [] );
 				this.set( 'draftedList', [] );
-				this.draftedListCursor = "";
-			},
-			
-			resetPublished: function() {
 				this.set( 'publishedList', [] );
+				
+				this.draftedListCursor = "";
 				this.publishedListCursor = "";
+				
 			},
 			
 			removeAllClasses: function() {
@@ -102,10 +102,7 @@
 					jQuery( '#drafts' ).addClass( 'active' );
 					jQuery( '#published' ).addClass( 'inactive' );
 					
-					console.log( this.draftedList );
-					this.set( 'pratilipiList', [] );
-					for( var i = 0; i < this.draftedList.length; i++ )
-						this.push( 'pratilipiList', this.draftedList[i] );
+					this.set( 'pratilipiList', this.draftedList );
 					
 					// Set Boolean flags
 					this.draftsActive = true;
@@ -123,10 +120,7 @@
 					jQuery( '#published' ).addClass( 'active' );
 					jQuery( '#drafts' ).addClass( 'inactive' );
 					
-					console.log( this.publishedList );
-					this.set( 'pratilipiList', [] );
-					for( var i = 0; i < this.publishedList.length; i++ )
-						this.push( 'pratilipiList', this.publishedList[i] );
+					this.set( 'pratilipiList', this.publishedList );
 					
 					// Set Boolean flags
 					this.publishedActive = true;
