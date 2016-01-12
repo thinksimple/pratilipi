@@ -38,7 +38,6 @@ author_count_reads			= READS
 author_count_likes			= LIKES
 
 author_edit_profile			= Edit My Profile
-author_edit_profile_heading	= Edit Author
 
 author_drafts				= Drafts
 author_published_works		= Published Works
@@ -55,7 +54,6 @@ pratilipi_published_year	= Published Year
 pratilipi_summary			= Summary
 
 pratilipi_edit_info			= Edit Info
-pratilipi_edit_info_heading	= Edit Pratilipi
 pratilipi_edit_content		= Edit Content
 
 pratilipi_count_reads		= READS
@@ -106,6 +104,11 @@ search_bar_help				= Search for books, stories, poems and more ...
 
 write_heading				= Add New Content
 write_help					= You can write on Pratilipi!
+write_title					= Title *
+write_title_en				= Title (English)
+write_type					= Select Type *
+write_language				= Language
+write_summary				= Summary (Optional)
 write_create_new_content	= Create New Content
 
 
@@ -189,3 +192,27 @@ user_verified_success				= Verified Successfully !
 content_created_success				= Success !
 updated_author_info_success			= Success !
 updated_pratilipi_info_success		= Success !
+
+# Author Edit Popup
+
+edit_author_heading				= சுயவிவரத்தை திருத்த	
+edit_author_first_name			= First Name( Tamil )
+edit_author_last_name			= Last Name( Tamil )
+edit_author_first_name_en		= First Name( English )
+edit_author_last_name_en		= Last Name( English )
+edit_author_pen_name			= Pen Name ( Tamil )
+edit_author_pen_name_en			= Pen Name ( English )
+edit_author_birthday_ddmmyyyy	= Birthday (dd-mm-yyyy)
+edit_author_language			= Select Language
+edit_author_summary				= Summary ( Optional )
+edit_author_save_changes		= Save Changes
+
+# Pratilipi Edit Popup
+
+edit_pratilipi_heading			= விவரத்தை திருத்த
+edit_pratilipi_title			= Title *
+edit_pratilipi_title_en			= Title (English)
+edit_pratilipi_type				= Select Type *
+edit_pratilipi_language			= Language
+edit_pratilipi_summary			= Summary (Optional) :
+edit_pratilipi_save_changes		= Save Changes

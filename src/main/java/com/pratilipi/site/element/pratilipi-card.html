@@ -100,7 +100,10 @@
 			},
 			
 			ready: function() {
-				this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
+				if( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
+					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "?" + "width=100";
+				else
+					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
 			},
 			
 			attached: function() {

@@ -15,6 +15,10 @@
 		paper-input.edit, paper-textarea.edit {
 			--paper-input-container-focus-color: #107FE5;
 			display: block;
+			--paper-input-container-label: {
+				font-size: 15px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
 		}
 		
 		paper-dropdown-menu {
@@ -40,16 +44,16 @@
 				<div class="modal-content">
 			
 					<div class="modal-header">
-						<span>${ _strings.pratilipi_edit_info_heading }</span>
+						<span>${ _strings.edit_pratilipi_heading }</span>
 						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					
 					<div class="modal-body">
-						<paper-input class="edit" label="Title *" value="{{ params.title::input }}"></paper-input>
-						<paper-input class="edit" label="Title (English)" value="{{ params.titleEn::input }}"></paper-input>
+						<paper-input class="edit" label="${ _strings.edit_pratilipi_title }" value="{{ params.title::input }}"></paper-input>
+						<paper-input class="edit" label="${ _strings.edit_pratilipi_title_en }" value="{{ params.titleEn::input }}"></paper-input>
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<paper-dropdown-menu id="pratilipiType" noink label="Select Type *">
+								<paper-dropdown-menu id="pratilipiType" noink label="${ _strings.edit_pratilipi_type }">
 									<paper-menu selected="[[ selected ]]" class="dropdown-content" noink style="white-space: nowrap; width: auto;">
 										<paper-item>Book</paper-item>
 										<paper-item>Poem</paper-item>
@@ -60,7 +64,7 @@
 								</paper-dropdown-menu>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<paper-dropdown-menu id="language" noink disabled label="Language">
+								<paper-dropdown-menu id="language" noink disabled label="${ _strings.edit_pratilipi_language }">
 									<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
 										<paper-item>${ _strings.website_language }</paper-item>
 									</paper-menu>
@@ -68,7 +72,7 @@
 							</div>
 						</div>
 						<div style="margin-top: 15px; margin-bottom: 5px;">
-							<span>Summary (Optional) :</span>
+							<span>${ _strings.edit_pratilipi_summary }</span>
 						</div>
 						<script language="javascript" type="text/javascript">tinymce.init({ selector:'#pratilipiSummary', editor_selector : "pratilipiSummary", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 						<paper-textarea class="edit" id="pratilipiSummary" value="{{ summary::input }}"></paper-textarea>
@@ -78,7 +82,7 @@
 					</div>
 					
 					<div class="modal-footer">
-						<button id="pratilipiEditButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Save Changes</button>
+						<button id="pratilipiEditButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">${ _strings.edit_pratilipi_save_changes }</button>
 					</div>
 				</div>
 			</div>

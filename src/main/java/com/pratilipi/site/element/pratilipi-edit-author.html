@@ -15,6 +15,10 @@
 		paper-input.edit, paper-textarea.edit {
 			--paper-input-container-focus-color: #107FE5;
 			display: block;
+			--paper-input-container-label: {
+				font-size: 15px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
 		}
 		
 		paper-dropdown-menu {
@@ -40,42 +44,42 @@
 				<div class="modal-content">
 			
 					<div class="modal-header">
-						<span>${ _strings.author_edit_profile_heading }</span>
+						<span>${ _strings.edit_author_heading }</span>
 						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="First Name (${ _strings.website_language })" value="{{ params.firstName::input }}"></paper-input>
+								<paper-input class="edit" label="${ _strings.edit_author_first_name }" value="{{ params.firstName::input }}"></paper-input>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="Last Name (${ _strings.website_language })" value="{{ params.lastName::input }}"></paper-input>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="First Name (English)" value="{{ params.firstNameEn::input }}"></paper-input>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="Last Name (English)" value="{{ params.lastNameEn::input }}"></paper-input>
+								<paper-input class="edit" label="${ _strings.edit_author_last_name }" value="{{ params.lastName::input }}"></paper-input>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="Pen Name (${ _strings.website_language })" value="{{ params.penName::input }}"></paper-input>
+								<paper-input class="edit" label="${ _strings.edit_author_first_name_en }" value="{{ params.firstNameEn::input }}"></paper-input>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" label="Pen Name (English)" value="{{ params.penNameEn::input }}"></paper-input>
+								<paper-input class="edit" label="${ _strings.edit_author_last_name_en }" value="{{ params.lastNameEn::input }}"></paper-input>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" label="${ _strings.edit_author_pen_name }" value="{{ params.penName::input }}"></paper-input>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<paper-input class="edit" label="${ _strings.edit_author_pen_name_en }" value="{{ params.penNameEn::input }}"></paper-input>
 							</div>
 						</div>
 						
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" type="date" label="Birthday (dd-mm-yyyy)" always-float-label value="{{ params.birthday::input }}"></paper-input>
+								<paper-input class="edit" type="date" label="${ _strings.edit_author_birthday_ddmmyyyy }" always-float-label value="{{ params.birthday::input }}"></paper-input>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-dropdown-menu id="authorLanguage" noink label="Language">
+								<paper-dropdown-menu id="authorLanguage" noink label="${ _strings.edit_author_language }">
 									<paper-menu noink selected="[[ selected ]]" class="dropdown-content" style="white-space: nowrap; width: auto;">
 										<paper-item>Bengali</paper-item>
 										<paper-item>Gujarati</paper-item>
@@ -88,7 +92,7 @@
 							</div>
 						</div>
 						<div style="margin-top: 15px; margin-bottom: 5px;">
-							<span>Summary (Optional) :</span>
+							<span>${ _strings.edit_author_summary }</span>
 						</div>
 						<script language="javascript" type="text/javascript">tinymce.init({ selector:'#authorSummary', editor_selector : "authorSummary", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 						<paper-textarea class="edit" id="authorSummary" value="{{ summary::input }}"></paper-textarea>
@@ -98,7 +102,7 @@
 					</div>
 					
 					<div class="modal-footer">
-						<button id="authorEditButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Save Changes</button>
+						<button id="authorEditButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">${ _strings.edit_author_save_changes }</button>
 					</div>
 				</div>
 			</div>

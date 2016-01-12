@@ -15,6 +15,10 @@
 		paper-input.write, paper-textarea.write {
 			--paper-input-container-focus-color: #107FE5;
 			display: block;
+			--paper-input-container-label: {
+				font-size: 15px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
 		}
 		
 		paper-dropdown-menu {
@@ -51,11 +55,11 @@
 						<p class="text-muted">
 							${ _strings.write_help }
 						</p>
-						<paper-input class="write" label="Title *" value="{{ title::input }}"></paper-input>
-						<paper-input class="write" label="Title (English)" value="{{ titleEn::input }}"></paper-input>
+						<paper-input class="write" label="${ _strings.write_title }" value="{{ title::input }}"></paper-input>
+						<paper-input class="write" label="${ _strings.write_title_en }" value="{{ titleEn::input }}"></paper-input>
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<paper-dropdown-menu noink="true" label="Select Type *" value="{{ pratilipiType }}">
+								<paper-dropdown-menu noink="true" label="${ _strings.write_type }" value="{{ pratilipiType }}">
 									<paper-menu noink="true" class="dropdown-content" style="white-space: nowrap; width: auto;">
 										<paper-item>Book</paper-item>
 										<paper-item>Poem</paper-item>
@@ -66,7 +70,7 @@
 								</paper-dropdown-menu>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<paper-dropdown-menu id="language" noink disabled label="Language">
+								<paper-dropdown-menu id="language" noink disabled label="${ _strings.write_language }">
 									<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
 										<paper-item>${ _strings.website_language }</paper-item>
 									</paper-menu>
@@ -74,7 +78,7 @@
 							</div>
 						</div>
 						<div style="margin-top: 15px; margin-bottom: 5px;">
-							<span>Summary (Optional) :</span>
+							<span>${ _strings.write_summary }</span>
 						</div>
 						<script language="javascript" type="text/javascript">tinymce.init({ selector:'#writeSummary', editor_selector : "writeSummary", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 						<paper-textarea class="write" id="writeSummary" value="{{ summary::input }}"></paper-textarea>

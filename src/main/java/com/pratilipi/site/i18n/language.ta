@@ -3,7 +3,6 @@
 pratilipi					= ப்ரதிலிபி
 pratilipi_logo_url			= /resources/ta/pratilipi-tamil-logo.png
 
-
 home_page_title				= தமிழ் கதைகள், புத்தகங்கள் , விதைகள், கட்டுரைகள், ஆகியவற்றை படிக்க
 website_language			= Tamil 
 
@@ -39,7 +38,6 @@ author_count_reads			= படித்தவர்கள்
 author_count_likes			= விருப்பங்கள்	
 
 author_edit_profile			= சுயவிவரத்தை திருத்த	
-author_edit_profile_heading	= சுயவிவரத்தை திருத்த	
 
 author_drafts				= வரைவுகள்	
 author_published_works		= பதிப்பித்துள்ள படைப்புகள்
@@ -55,8 +53,7 @@ pratilipi_published			= பதிப்பிக்கப்பட்டது
 pratilipi_published_year	= பதிப்பு 
 pratilipi_summary			= புத்தகத்தைப் பற்றி
 
-pratilipi_edit_info			= விவரத்தை திருத்த	
-pratilipi_edit_info_heading	= விவரத்தை திருத்த	
+pratilipi_edit_info			= விவரத்தை திருத்த		
 pratilipi_edit_content		= படைப்பைத் திருத்த
 
 pratilipi_count_reads		= படித்தவர்கள்	
@@ -107,6 +104,11 @@ search_bar_help				= தேட - கவிதை, கதை, புத்தக�
 
 write_heading				= படைப்பை சேர்க்க                                                                                                                                                                                                                                                                                     
 write_help					= ப்ரதிலிபியில் அனைவரும் எழுதலாம். உங்கள் படைப்புகளை நீங்களே வெளியிட்டுக் கொள்ளலாம். இது எல்லா வகையான எழுத்திற்கும், எழுத்தாளர்களுக்குமான தளம்.
+write_title					= Title *
+write_title_en				= Title (English)
+write_type					= Select Type *
+write_language				= Language
+write_summary				= Summary (Optional)
 write_create_new_content	= புதிய படைப்பை உருவாக்க
 
 
@@ -191,3 +193,26 @@ content_created_success				= Success !
 updated_author_info_success			= Success !
 updated_pratilipi_info_success		= Success !
 
+# Author Edit Popup
+
+edit_author_heading				= சுயவிவரத்தை திருத்த	
+edit_author_first_name			= First Name( Tamil )
+edit_author_last_name			= Last Name( Tamil )
+edit_author_first_name_en		= First Name( English )
+edit_author_last_name_en		= Last Name( English )
+edit_author_pen_name			= Pen Name ( Tamil )
+edit_author_pen_name_en			= Pen Name ( English )
+edit_author_birthday_ddmmyyyy	= Birthday (dd-mm-yyyy)
+edit_author_language			= Select Language
+edit_author_summary				= Summary ( Optional )
+edit_author_save_changes		= Save Changes
+
+# Pratilipi Edit Popup
+
+edit_pratilipi_heading			= விவரத்தை திருத்த
+edit_pratilipi_title			= Title *
+edit_pratilipi_title_en			= Title (English)
+edit_pratilipi_type				= Select Type *
+edit_pratilipi_language			= Language
+edit_pratilipi_summary			= Summary (Optional) :
+edit_pratilipi_save_changes		= Save Changes
