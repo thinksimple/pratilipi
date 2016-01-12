@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.init;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +18,7 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.GaeQueryBuilder;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
@@ -94,9 +96,9 @@ public class InitApi extends GenericApi {
 		_backfillUserStateAndSignUpSource();
 		_backfillPratilipiLanguage();
 		_backfillAuthorLanguage();
+		_createAuthorProfile();
 		_backfillUserReviewState();
 		_publishUserReview();
-		
 		
 		return new GenericResponse();
 		
@@ -169,6 +171,40 @@ public class InitApi extends GenericApi {
 		}
 		
 		logger.log( Level.INFO, "Backfilled state & signUpSouce for " + count + " user records." );
+
+	}
+
+	private void _createAuthorProfile() {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		PersistenceManager pm = dataAccessor.getPersistenceManager();
+		
+		AppProperty appProperty = dataAccessor.getAppProperty( "Jarvis.Backfill.AuthorProfile" ).getValue();
+		if( appProperty == null ) {
+			appProperty = dataAccessor.newAppProperty( "Jarvis.Backfill.AuthorProfile" );
+			appProperty.setValue( new Date( 0 ) );
+		}
+		
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
+		gaeQueryBuilder.addFilter( "signUpDate", appProperty.getValue(), Operator.GREATER_THAN );
+		gaeQueryBuilder.addOrdering( "signUpDate", true );
+		gaeQueryBuilder.setRange( 0, 100 );
+		Query query = gaeQueryBuilder.build();
+		
+		List<User> userList = (List<User>) query.execute( appProperty.getValue() );
+		
+		int count = 0;
+		for( User user : userList ) {
+			gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
+			gaeQueryBuilder.addFilter( "userId", user.getId() );
+			query = gaeQueryBuilder.build();
+			List<Author> authorList = (List<Author>) query.execute( user.getId() );
+			if( authorList.size() != 1 ) {
+				logger.log( Level.SEVERE, authorList.size() + " author profiles found for user " + user.getEmail() + ", " + user.getFacebookId() );
+				count++;
+			}
+		}
+		logger.log( Level.INFO, count + " issues found in " + userList.size() + " user records checked." );
 
 	}
 	
