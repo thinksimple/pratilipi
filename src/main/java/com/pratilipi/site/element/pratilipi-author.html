@@ -48,6 +48,11 @@
 			font-weight: 400;
 			font-size: 14px;
 		}
+		
+		input {
+ 			position:absolute; 
+ 			top:-100px;
+		}
 
 	</style>
 	
@@ -64,6 +69,18 @@
 	    		<div id="col-left" style=" max-width: 220px;">
 	    			<div style="padding: 20px 0px 0px 10px;">
 	    				<img style="width: 200px; height: 200px;" class="pratilipi-shadow" src="{{ authorImageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
+	    				<template is="dom-if" if="{{ ! mobile }}">
+	    					<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
+	    						<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId={{ author.authorId }}" target="upload_target">
+									<div style="display: inline-block;">
+										<input id="uploadAuthorImageInput" type="file" on-change="uploadImage" name="{{ author.authorId }}" accept="image/*">
+										<paper-icon-button style="position: absolute; top: 180px; left: 170px;" type="button" on-click="_chooseFile" icon="file-upload" noink></paper-icon-button>
+									</div>
+								</form>
+								
+								<iframe id="upload_target" name="upload_target" style="display: none;"></iframe>
+	    					</template>
+	    				</template>
 	    			</div>
 	    			<div style="padding: 15px 40px; margin-bottom: 20px;">
 	    				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
@@ -270,6 +287,17 @@
 					jQuery( '#col-right' ).addClass( 'col-right-mobile' );
 				}
 				
+			},
+			
+			_chooseFile: function() {
+				document.getElementById( "uploadAuthorImageInput" ).click();
+			},
+			
+			uploadImage: function() {
+				document.getElementById( "uploadAuthorImage" ).submit();
+				this.async( function() {
+					location.reload();
+				}, 7000 );
 			},
 			
 		});
