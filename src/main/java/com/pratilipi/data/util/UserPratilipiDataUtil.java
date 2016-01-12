@@ -12,6 +12,7 @@ import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.Author;
@@ -53,11 +54,13 @@ public class UserPratilipiDataUtil {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userPratilipi.getUserId() );
+		UserData userData = UserDataUtil.createUserData( user );
 		
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
 		userPratilipiData.setId( userPratilipi.getId() );
 		userPratilipiData.setUserId( userPratilipi.getPratilipiId() );
-		userPratilipiData.setUserName( UserDataUtil.createUserData( user ).getDisplayName() );
+		userPratilipiData.setUserName( userData.getDisplayName() );
+		userPratilipiData.setUserImageUrl( userData.getProfileImageUrl() );
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 		userPratilipiData.setRating( userPratilipi.getRating() );
 		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );

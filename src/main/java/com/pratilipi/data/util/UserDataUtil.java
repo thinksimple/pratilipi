@@ -117,6 +117,7 @@ public class UserDataUtil {
 		userData.setGender( author.getGender() );
 		userData.setDateOfBirth( author.getDateOfBirth() );
 		userData.setProfilePageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
+		userData.setProfileImageUrl( AuthorDataUtil.createAuthorImageUrl( author ) );
 		
 		return userData;
 		
