@@ -230,7 +230,7 @@ public class InitApi extends GenericApi {
 			// Only one user account can exist per email id.
 			if( user.getEmail() != null ) {
 				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
-				gaeQueryBuilder.addFilter( "email", user.getId() );
+				gaeQueryBuilder.addFilter( "email", user.getEmail() );
 				gaeQueryBuilder.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS );
 				gaeQueryBuilder.addOrdering( "state", true );
 				gaeQueryBuilder.addOrdering( "signUpDate", true );
@@ -319,6 +319,8 @@ public class InitApi extends GenericApi {
 			}
 	
 		}
+		
+		logger.log( Level.SEVERE, "Found " + count + " issues in " + userList.size() + " user records processed." );
 		
 	}
 	
