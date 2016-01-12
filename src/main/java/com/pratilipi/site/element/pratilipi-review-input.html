@@ -136,10 +136,10 @@
 					
 				this.params.rating = this.ratingValue;
 				
-				if( this.params.review == null || this.params.review.trim() === "" ) {
+				/* if( this.params.review == null || this.params.review.trim() === "" ) {
 					this.message = "Please enter the review.";
 					return;
-				}
+				} */
 				this.$.AjaxPut.body = JSON.stringify( this.params );
 				this.$.AjaxPut.generateRequest();
 			},

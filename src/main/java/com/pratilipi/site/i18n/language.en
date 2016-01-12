@@ -3,8 +3,6 @@
 pratilipi					= Pratilipi
 pratilipi_logo_url			= /resources/en/pratilipi-logo.png
 
-facebook_page				= https://www.facebook.com/Pratilipidotcom
-
 home_page_title				= Read Hindi, Gujarati and Tamil Stories, Poems and Books
 website_language			= Tamil 
 
@@ -127,6 +125,9 @@ user_forgot_password		= Forgot Password ?
 user_reset_password			= Reset Password
 user_reset_password_help	=  Please enter the email address you signed up with. We will send you a link to reset your password.
 
+user_current_password		= Current Password
+user_new_password			= New Password
+
 user_full_name				= Full Name
 user_email					= Email
 user_password				= Password
@@ -173,5 +174,6 @@ write						= Write
 free						= FREE !
 saving						= Saving ...
 working						= Working ...
+update						= Update
 menu						= Menu
 back						= Back

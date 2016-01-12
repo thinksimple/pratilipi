@@ -126,6 +126,9 @@ user_forgot_password		= கடவுச்சொல் நினைவில் 
 user_reset_password			= கடவுச்சொல்லை மாற்ற
 user_reset_password_help	=  இத்தளத்தில் பதிவு செய்யப் பயன்படுத்திய மின்னஞ்சல் முகவரியை வழங்கவும். அம்முகவரியில் கடவுச்சொல் மாற்றுவதற்கான இணைப்பை அனுப்பிவைக்கிறோம்.
 
+user_current_password		= Current Password
+user_new_password			= New Password
+
 user_full_name				= முழுப்பெயர்
 user_email					= மின்னஞ்சல் முகவரி 
 user_password				= கடவுச்சொல்
@@ -172,5 +175,6 @@ write						= எழுத
 free						= இலவசம் !
 saving						= பதிவேற்றபடுகிறது ...
 working						= காத்திருக்க...
+update						= Update
 menu						= Menu
 back						= Back
