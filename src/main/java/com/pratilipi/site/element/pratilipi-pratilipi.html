@@ -129,7 +129,8 @@
 							<button on-click="openPratilipiEdit" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_info }</button>
 							<button on-click="openWriterPanel" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_content }</button>
 							<pratilipi-edit-pratilipi pratilipi="{{ pratilipi }}"></pratilipi-edit-pratilipi>
-							<button id="changeStateButton" on-click="changeState" class="pratilipi-light-blue-button">{{ changeState }}</button>
+							<br class="pratilipi-break"/>
+							<button id="changeStateButton" on-click="changePratilipiState" class="pratilipi-light-blue-button">{{ changeState }}</button>
 						</template>
 					</div>
 					
@@ -343,7 +344,7 @@
 					document.getElementById( "less" ).style.display = "block";
 			},
 			
-			changeState: function() {
+			changePratilipiState: function() {
 				if( this.pratilipi.state == "DRAFTED" )
 					this.publishPratilipi();
 				else if( this.pratilipi.state == "PUBLISHED" )
