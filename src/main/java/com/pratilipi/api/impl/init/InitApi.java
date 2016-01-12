@@ -29,6 +29,7 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.data.util.UserDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -271,7 +272,7 @@ public class InitApi extends GenericApi {
 			
 			if( authorList.size() == 0 ) {
 				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-				gaeQueryBuilder.addFilter( "email", user.getId() );
+				gaeQueryBuilder.addFilter( "email", user.getEmail() );
 				gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
 				gaeQueryBuilder.addOrdering( "state", true );
 				gaeQueryBuilder.addOrdering( "registrationDate", true );
@@ -280,8 +281,13 @@ public class InitApi extends GenericApi {
 				List<Author> list = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 				
 				if( list.size() == 0 ) {
-					logger.log( Level.SEVERE, "User " + user.getId() + " doesn't have a author profile" );
-					count++;
+					if( user.getId().equals( 5176457257025536L ) ) {
+						UserDataUtil.createAuthorProfile( UserDataUtil.createUserData( user ), null );
+						logger.log( Level.SEVERE, "Created author profile for user " + user.getId() + "." );
+					} else {
+						logger.log( Level.SEVERE, "User " + user.getId() + " doesn't have a author profile" );
+						count++;
+					}
 					continue;
 				}
 				
