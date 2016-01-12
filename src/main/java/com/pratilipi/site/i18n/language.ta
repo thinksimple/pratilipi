@@ -114,6 +114,7 @@ write_create_new_content	= புதிய படைப்பை உருவா
 # Common User Popups
 
 user_sign_in				= உள்நுழைக
+user_to_sign_in				= உள்நுழைய 
 user_sign_in_with_facebook	= முகநூல்  மூலம் உள்நுழைய 
 user_sign_in_to_pratilipi	= ப்ரதிலிபியில் உள்நுழைக
 user_sign_out				= வெளியேற  

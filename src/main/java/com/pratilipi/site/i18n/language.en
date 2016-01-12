@@ -115,6 +115,7 @@ write_create_new_content	= Create New Content
 # Common User Popups
 
 user_sign_in				= Sign In
+user_to_sign_in				= To Sign In
 user_sign_in_with_facebook	= Sign In with Facebook
 user_sign_in_to_pratilipi	= Sign in to Pratilipi
 user_sign_out				= வSign Out
