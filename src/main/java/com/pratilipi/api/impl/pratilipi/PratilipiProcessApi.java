@@ -74,9 +74,8 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		if( request.processData() ) {
 			for( Long pratilipiId : pratilipiIdList ) {
-				boolean changed = PratilipiDataUtil.createOrUpdatePratilipiPageUrl( pratilipiId );
-				if( changed )
-					PratilipiDataUtil.createOrUpdatePratilipiReadPageUrl( pratilipiId );
+				PratilipiDataUtil.createOrUpdatePratilipiPageUrl( pratilipiId );
+				PratilipiDataUtil.createOrUpdatePratilipiReadPageUrl( pratilipiId );
 			}
 			PratilipiDataUtil.updatePratilipiSearchIndex( pratilipiIdList );
 			PratilipiDataUtil.updateFacebookScrape( pratilipiIdList );

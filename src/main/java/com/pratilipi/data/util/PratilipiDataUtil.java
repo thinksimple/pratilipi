@@ -597,11 +597,23 @@ public class PratilipiDataUtil {
 		}
 	}
 	
-	public static boolean createOrUpdatePratilipiPageUrl( Long pratilipiId ) {
+	public static void createOrUpdatePratilipiPageUrl( Long pratilipiId ) {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
 
+		boolean isNew = page == null;
+		
+		if( isNew ) {
+			page = dataAccessor.newPage();
+			page.setType( PageType.PRATILIPI );
+			page.setUri( PageType.PRATILIPI.getUrlPrefix() + pratilipiId );
+			page.setPrimaryContentId( pratilipiId );
+			page.setCreationDate( new Date() );
+		}
+
+		
 		String uriPrifix = null;
 		if( pratilipi.getAuthorId() != null ) {
 			Page authorPage = dataAccessor.getPage( PageType.AUTHOR, pratilipi.getAuthorId() );
@@ -609,44 +621,42 @@ public class PratilipiDataUtil {
 				uriPrifix = authorPage.getUriAlias() + "/";
 		}
 
-		if( page == null ) {
-			page = dataAccessor.newPage();
-			page.setType( PageType.PRATILIPI );
-			page.setUri( PageType.PRATILIPI.getUrlPrefix() + pratilipiId );
-			page.setPrimaryContentId( pratilipiId );
-			page.setCreationDate( new Date() );
-			page = dataAccessor.createOrUpdatePage( page );
-		}
-		
 		
 		if( uriPrifix == null ) {
 		
-			if( page.getUriAlias() == null )
-				return false;
-
-			logger.log( Level.INFO, "Clearing Pratilipi Page Url: '" + page.getUriAlias() + "' -> 'null'" );
-
-			page.setUriAlias( null );
+			if( isNew ) {
+				// Do NOT return.
+			} else if( page.getUriAlias() == null ) {
+				// Do Nothing.
+				return;
+			} else {
+				logger.log( Level.INFO, "Clearing Pratilipi Page Url: '" + page.getUriAlias() + "' -> 'null'" );
+				page.setUriAlias( null );
+			}
 		
 		} else {
 			
 			String uriAlias = UriAliasUtil.generateUriAlias(
 					page.getUriAlias(),
-					uriPrifix, pratilipi.getTitleEn() );
+					uriPrifix, pratilipi.getTitle(), pratilipi.getTitleEn() );
 			
-			if( uriAlias == page.getUriAlias()
+			if( isNew && uriAlias == null ) {
+				// Do NOT return.
+			} else if( uriAlias == page.getUriAlias()
 					|| ( uriAlias != null && uriAlias.equals( page.getUriAlias() ) )
-					|| ( page.getUriAlias() != null && page.getUriAlias().equals( uriAlias ) ) )
-				return false;
-
-			logger.log( Level.INFO, "Updating Pratilipi Page Url: '" + page.getUriAlias() + "' -> '" + uriAlias + "'" );
-
-			page.setUriAlias( uriAlias );
+					|| ( page.getUriAlias() != null && page.getUriAlias().equals( uriAlias ) ) ) {
+				// Do Nothing.
+				return;
+			} else {
+				logger.log( Level.INFO, "Updating Pratilipi Page Url: '" + page.getUriAlias() + "' -> '" + uriAlias + "'" );
+				page.setUriAlias( uriAlias );
+			}
 		
 		}
+	
 		
 		page = dataAccessor.createOrUpdatePage( page );
-		return true;
+	
 	}
 	
 	public static boolean createOrUpdatePratilipiReadPageUrl( Long pratilipiId ) {
