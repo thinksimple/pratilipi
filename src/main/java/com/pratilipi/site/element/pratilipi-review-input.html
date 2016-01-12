@@ -21,6 +21,10 @@
 		paper-input, paper-textarea {
 			--paper-input-container-focus-color: #107FE5;
 			display: block;
+			--paper-input-container-label: {
+				font-size: 15px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
 		}
 		
 	</style>
@@ -33,10 +37,10 @@
 					<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
 				</div>
 				<div class="media-body">
-					<h4 class="media-heading">{{ pratilipi.title }}</h4>
-					<h5>{{ pratilipi.author.name }}</h5>
+					<h4 style="color: #D0021B;">{{ pratilipi.title }}</h4>
+					<h6>{{ pratilipi.author.name }}</h6>
 					
-					<div style="margin-top: 50px;">
+					<div style="margin-top: 15px;">
 						<pratilipi-rating-input
 							value="{{ ratingValue }}"
 							></pratilipi-rating-input>

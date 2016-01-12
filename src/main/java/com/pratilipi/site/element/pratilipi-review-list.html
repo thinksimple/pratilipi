@@ -9,19 +9,18 @@
 			display: block;
 		}
 		
-		paper-card {
+		.secondary-500 {
 			width: 100%;
 			padding: 10px;
-			--paper-card-header: { display: none };
 		}
 
-		paper-card h3 {
+		.secondary-500 h3 {
 			margin: 0px;
 			padding: 10px;
 			display: inline-block;
 		}
 
-		paper-card a {
+		.secondary-500 a {
 			margin-bottom: 6px;
 		}
 		
@@ -55,7 +54,7 @@
 
 	
 	<template>
-		<paper-card>
+		<div class="secondary-500 pratilipi-shadow">
 			<h3 style="color: #D0021B;">${ _strings.review_heading }</h3>
 			<template is="dom-if" if="{{ userpratilipi.hasAccessToReview }}">
 				<template is="dom-if" if="{{ !isactive }}">
@@ -70,8 +69,7 @@
 					</template>
 				</template>
 			</template>
-		</paper-card>
-		
+		</div>
 		
 		<pratilipi-review-input
 				id="ReviewInput"
