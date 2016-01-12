@@ -7,6 +7,14 @@
 
 		paper-input.pratilipi-blue {
 			--paper-input-container-focus-color: #107FE5;
+			--paper-input-container-label: {
+				font-size: 16px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
+			--paper-input-container-input: {
+				font-size: 16px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
 		}
 		
 	</style>
@@ -17,8 +25,8 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<span>${ _strings.user_sign_in_to_pratilipi }</span>
-						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+						<h6 style="margin: 0px; padding: 0px; font-weight: 700;">${ _strings.user_sign_in_to_pratilipi }</h6>
+						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					<div class="modal-body" on-keyup="onSubmit">
 						<pratilipi-facebook-login></pratilipi-facebook-login>
@@ -28,10 +36,10 @@
 									&nbsp;&nbsp;OR&nbsp;&nbsp;
 								</span>
 							</div>
-							<paper-input class="pratilipi-blue" label="{{ emailInput }}" value="{{ email::input }}">
+							<paper-input class="pratilipi-blue" label="${ _strings.user_email }" value="{{ email::input }}">
 								 <iron-icon style="margin-right: 5px;" icon="mail" prefix></iron-icon>
 							</paper-input>
-							<paper-input class="pratilipi-blue" label="{{ passwordInput }}" type="password" value="{{ password::input }}">
+							<paper-input class="pratilipi-blue" label="${ _strings.user_password }" type="password" value="{{ password::input }}">
 								<iron-icon style="margin-right: 5px;" icon="lock" prefix></iron-icon>
 							</paper-input>
 							<div class="text-center">
@@ -43,10 +51,14 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a style="font-size: 13px; font-weight: 300; left; color: #D0021B; float: left;" href="#" on-click="resetPassword">${ _strings.user_forgot_password }</a>
-						<div style="float: right;">
-							<span style="font-size: 13px; font-weight: 300; color: #9B9B9B;">${ _strings.user_is_new }</span>
-							<a style="font-size: 13px; font-weight: 300; color: #107FE5;" href="#" on-click="register">${ _strings.user_sign_up_for_pratilipi }</a>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
+								<a style="font-size: 13px; font-weight: 300; left; color: #D0021B;" href="#" on-click="resetPassword">${ _strings.user_forgot_password }</a>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
+								<span style="font-size: 13px; font-weight: 300; color: #9B9B9B;">${ _strings.user_is_new }</span>
+								<a style="font-size: 13px; font-weight: 300; color: #107FE5;" href="#" on-click="register">${ _strings.user_sign_up_for_pratilipi }</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -75,9 +87,7 @@
 			properties: {
 				email: { type: String, value: null },
 				password: { type: String, value: null },
-				message: { type: String },
-				emailInput: { type: String },
-				passwordInput: { type: String }
+				message: { type: String, value: null }
 			},
 			
 			register: function() {
@@ -98,13 +108,8 @@
 				jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
 			},
 			
-			
-			ready: function() {
-				this.defaultMessages();
-			},
-			
 			onSubmit: function( event ) {
-				this.defaultMessages();
+				this.message = null;
 				
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
 					return;
@@ -121,14 +126,8 @@
 				this.$.AjaxPost.generateRequest();
 			},
 			
-			defaultMessages: function() {
-				this.message = null;
-				this.emailInput = "Email";
-				this.passwordInput = "Password";
-			},
-			
 			_handleAjaxPostResponse: function( event ) {
-				this.defaultMessages();
+				this.message = null;
 				if( event.detail.xhr.status == 0 ) {
 					this.message = "Could not connect to server !";
 				} else {
@@ -136,7 +135,7 @@
 					this.async( function() {
 						this.email = null;
 						this.password = null;
-						this.defaultMessages();
+						this.message = null;
 						jQuery( '#loginButton' ).prop( 'disabled', false );
 						this.close();
 					}, 1000 );
@@ -146,7 +145,7 @@
 			},
 
 			_handleAjaxPostError: function( event ) {
-				this.defaultMessages();
+				this.message = null;
 				jQuery( '#loginButton' ).prop( 'disabled', false );
 				if( event.detail.request.xhr.status == 400 ) {
 					this.message = event.detail.request.xhr.response.email != null ? event.detail.request.xhr.response.email : "Invalid Email!"; 
