@@ -30,6 +30,8 @@ import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
 import com.pratilipi.data.util.UserDataUtil;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -96,6 +98,14 @@ public class InitApi extends GenericApi {
 		logger.log( Level.INFO, "Checked " + count + " author records." );
 */
 
+		
+		Task task = TaskQueueFactory.newTask()
+				.setUrl( "/pratilipi/process" )
+				.addParam( "pratilipiId", "5179335692517376" )
+				.addParam( "processData", "true" );
+		TaskQueueFactory.getPratilipiTaskQueue().add( task );
+
+		
 		_backfillUserStateAndSignUpSource();
 		_backfillPratilipiLanguage();
 		_backfillAuthorLanguage();
