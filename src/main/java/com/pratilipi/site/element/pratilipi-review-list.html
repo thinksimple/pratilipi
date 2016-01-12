@@ -99,7 +99,7 @@
 				</div>
 			</template>	
 		</div>
-		<template is="dom-if" if="{{ isLoading }}">
+		<template is="dom-if" if="{{ !isFinished }}">
 			<paper-spinner style="margin: 15px auto; display: block;" class="pratilipi-spinner" active></paper-spinner>
 		</template>
 		
