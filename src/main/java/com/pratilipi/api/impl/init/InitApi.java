@@ -359,17 +359,19 @@ public class InitApi extends GenericApi {
 				continue;
 			}
 			
-			if( author.getEmail().equals( author.getEmail().trim().toLowerCase() ) ) {
+			if( ! author.getEmail().equals( author.getEmail().trim().toLowerCase() ) ) {
 				logger.log( Level.WARNING, author.getEmail() + " email is not trimmed or in lower case " );
 				count++;
 				continue;
 			}
 			
-			User user = dataAccessor.getUser( author.getUserId() );
-			if( ! author.getEmail().equals( user.getEmail() ) ) {
-				logger.log( Level.WARNING, "Author email " + author.getEmail() + " doesn't match with the same in user table " + user.getEmail() );
-				count++;
-				continue;
+			if( author.getUserId() != null ) {
+				User user = dataAccessor.getUser( author.getUserId() );
+				if( ! author.getEmail().equals( user.getEmail() ) ) {
+					logger.log( Level.WARNING, "Author email " + author.getEmail() + " doesn't match with the same in user table " + user.getEmail() );
+					count++;
+					continue;
+				}
 			}
 
 			gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
@@ -389,7 +391,7 @@ public class InitApi extends GenericApi {
 			
 		}
 
-		logger.log( Level.WARNING, count + " issues found in " + authorList.size() + " records processed." );
+		logger.log( Level.WARNING, count + " issues found in " + authorList.size() + " author records processed." );
 		
 		if( count == 0 ) {
 			appProperty.setValue( authorList.get( authorList.size() - 1 ).getLastUpdated() );
