@@ -56,19 +56,22 @@
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
 			<h3 style="color: #D0021B;">${ _strings.review_heading }</h3>
-			<template is="dom-if" if="{{ userpratilipi.hasAccessToReview }}">
+			<!-- <template is="dom-if" if="{{ userpratilipi.hasAccessToReview }}"> -->
 				<template is="dom-if" if="{{ !isactive }}">
+				
 					<template is="dom-if" if="{{ !reviewAvailable }}">
 						<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
 					</template>
+					
 					<template is="dom-if" if="{{ reviewAvailable }}">
 						<div style="white-space: nowrap; display: inline-block;">
 							<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_edit_review }</a>
 							<a class="pratilipi-grey-button" role="button" on-click="openDeleteReview">${ _strings.review_delete_review }</a>
 						</div>
 					</template>
+					
 				</template>
-			</template>
+			<!-- </template> -->
 		</div>
 		
 		<pratilipi-review-input
@@ -79,22 +82,17 @@
 				></pratilipi-review-input>
 		
 		<div class="row">
-			<!-- <template is="dom-if" if="{{ userpratilipi.review }}">
+			<template is="dom-if" if="{{ userpratilipi.review }}">
 				<template is="dom-if" if="{{ !isactive }}">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<pratilipi-review review="{{ userpratilipi }}"></pratilipi-review>
 					</div>
 				</template>
-			</template> -->
-			<template is="dom-repeat" items="[[reviewList]]">
-				<!-- <template is="dom-if" if="{{ _check(item) }}">
+			</template>
+			<template id="repeat" is="dom-repeat" items="[[reviewList]]">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<pratilipi-review review="{{ item }}"></pratilipi-review>
+						<pratilipi-review review="[[ item ]]"></pratilipi-review>
 					</div>
-				</template> -->
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<pratilipi-review review="{{ item }}"></pratilipi-review>
-				</div>
 			</template>	
 		</div>
 		<!-- <template is="dom-if" if="{{ !isFinished }}">
@@ -148,42 +146,53 @@
 				pratilipi: { type: Object },
 				userpratilipi: { type: Object, value: {}, observer:"_userPratilipiChanged" },
 				
-				reviewList: { type: Array,value: [], notify: true },
-				pratilipiId: { type: Number },
-				cursor: { type: String },
+				reviewList: { type: Array, value: [], notify: true },
+				cursor: { type: String, value: null },
 
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
 				
-				reviewButtonClicked: { type: Boolean, value: false },
 				isactive: { type: Boolean, value: false },
 				
-				reviewAvailable: { type: Boolean, value: false }
-			},
-			
-			_check: function( review ) {
-				if( review.userPratilipiId === this.userpratilipi.userPratilipiId )
-					return false;
-				else
-					return true;
+				reviewAvailable: { type: Boolean, value: false },
+				userReviewDeleted: { type: Boolean, value: false }
 			},
 			
 			_userChanged: function() {
-				if( this.user.isGuest )
-					this.reviewButtonClicked = false;
 				
-				if( ! this.user.isGuest && this.reviewButtonClicked )
-					this.showReviewInput();
+				if( this.user.isGuest && this.userReviewDeleted ) {
+					this.userReviewDeleted = false;
+					this.set( 'reviewList', [] );
+					this.$.AjaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
+					this.$.AjaxGet.params.cursor = null;
+					this.$.AjaxGet.generateRequest();
+				}
+					
 			},
 			
-			_userPratilipiChanged: function() {				
-				if( this.userpratilipi != null && this.userpratilipi.review != null )
-					this.reviewAvailable = true;
-				else
+			_userPratilipiChanged: function() {		
+				if( this.userpratilipi == null || this.userpratilipi.review == null || this.reviewList == null ) {
 					this.reviewAvailable = false;
+					return;
+				}
+
+				this.reviewAvailable = true;
+				
+				var temp = this.reviewList;
+				this.set( 'reviewList', [] );
+				
+				for( var i = 0; i < temp.length; i++ )
+					if( this.userpratilipi.userPratilipiId != temp[i].userPratilipiId )
+						this.push( 'reviewList', temp[i] );
+				this.userReviewDeleted = true;
+				this.$.repeat.render();
 			},
 			
-			openDeleteReview: function( val ) {
+			attached: function() {
+				this._userPratilipiChanged();
+			},
+			
+			openDeleteReview: function() {
 				jQuery( "#deleteReview" ).modal();
 			},
 			
@@ -203,12 +212,9 @@
 			},
 			
 			showReviewInput: function() {
-				if( this.user.isGuest ) {
-					this.reviewButtonClicked = true;
+				if( this.user.isGuest )
 					document.querySelector( 'pratilipi-user' ).logIn();
-				} 
 				else {
-					this.reviewButtonClicked = false;
 					this.isactive = true;
 					this.querySelector( 'pratilipi-review-input' ).open();
 				}
@@ -221,19 +227,19 @@
 				if( ajaxGet.lastRequest )
 					ajaxGet.lastRequest.abort();
 				
-				this.reviewList = [];
-				this.isLoading = true;
+				this.set( 'reviewList', [] );
+				this.cursor = null;
+				
+				this.isLoading = false;
 				this.isFinished = false;
 
-				ajaxGet.params.cursor = null;
-				ajaxGet.generateRequest();
-				
 			},
 			
 			loadMore: function( scrollTop ) {
-				if( this.isLoading || this.isFinished )
-					return;
 
+				if( this.isLoading || this.isFinished || this.cursor == null )
+					return;
+				
 				var reqHeight = scrollTop
 						- jQuery( this ).context.offsetTop
 						+ jQuery( window ).height()
@@ -243,6 +249,9 @@
 					return;
 				
 				this.isLoading = true;
+				
+				this.$.AjaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
+				this.$.AjaxGet.params.cursor = this.cursor;
 				this.$.AjaxGet.generateRequest();
 			},
 			
@@ -256,10 +265,11 @@
 				for( var i = 0; i < reviewList.length; i++ )
 					this.push( 'reviewList', reviewList[ i ] );
 
-				if( event.detail.response.cursor ) {
-					this.$.AjaxGet.params.cursor = event.detail.response.cursor;
+				if( event.detail.response.cursor != null ) {
+					this.cursor = event.detail.response.cursor;
 					this.isLoading = false;
 				} else {
+					this.cursor = null;
 					this.isFinished = true;
 				}
 			},
@@ -268,15 +278,6 @@
 				this.isLoading = false;
 			},
 			
-			ready: function() {
-				if( this.pratilipiId && this.cursor ) {
-					var ajaxGet = this.$.AjaxGet;
-					ajaxGet.params = { 'pratilipiId':this.pratilipiId, 'cursor':this.cursor };
-				} else {
-					this.isFinished = true;
-				}
-			}
-
 		});
 
 	</script>
