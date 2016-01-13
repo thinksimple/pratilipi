@@ -51,7 +51,7 @@ pratilipi_type				= வகை
 pratilipi_listing_date		= சேர்க்கப்பட்டது	
 pratilipi_published			= பதிப்பிக்கப்பட்டது	
 pratilipi_published_year	= பதிப்பு 
-pratilipi_summary			= புத்தகத்தைப் பற்றி
+pratilipi_summary			= படைப்பைப் பற்றி
 
 pratilipi_edit_info			= விவரத்தை திருத்த		
 pratilipi_edit_content		= படைப்பைத் திருத்த
@@ -85,7 +85,7 @@ review_title				= விமர்சனத் தலைப்பு
 review_title_help			= எ.கா - அருமையான கதை!  
 review_content				= உங்கள் விமர்சனம் 
 review_content_help			= உங்கள் கருத்துக்களைப் பதிவிடுக. இக்கதையில் / புத்தகத்தில் / கவிதையில் / கட்டுரையில் எது உங்களை மிகவும் கவர்ந்தது? உங்களுக்கு பிடிக்காதது? உங்கள் விமர்சனம் எழுத்தாளருக்கும், மற்ற வாசகர்களுக்கு மிக உதவியாக இருக்கும். 
-review_submit_review		= பதிவுசெய்க
+review_submit_review		= சமர்ப்பிக்க
 review_edit_review			= விமர்சனத்தை திருத்த
 review_delete_review		= விமர்சனத்தை அழிக்க
 review_delete_review_confirm	= விமர்சனத்தை உறுதியாக அழிக்கவேண்டுமா?
@@ -104,11 +104,11 @@ search_bar_help				= தேட - கவிதை, கதை, புத்தக�
 
 write_heading				= படைப்பை சேர்க்க                                                                                                                                                                                                                                                                                     
 write_help					= ப்ரதிலிபியில் அனைவரும் எழுதலாம். உங்கள் படைப்புகளை நீங்களே வெளியிட்டுக் கொள்ளலாம். இது எல்லா வகையான எழுத்திற்கும், எழுத்தாளர்களுக்குமான தளம்.
-write_title					= Title *
-write_title_en				= Title (English)
-write_type					= Select Type *
+write_title					= தலைப்பு *
+write_title_en				= தலைப்பு (ஆங்கிலத்தில்)
+write_type					= வகை *
 write_language				= Language
-write_summary				= Summary (Optional)
+write_summary				=  படைப்பைப் பற்றி (விருப்பமிருப்பின்)
 write_create_new_content	= புதிய படைப்பை உருவாக்க
 
 
@@ -128,16 +128,16 @@ user_forgot_password		= கடவுச்சொல் நினைவில் 
 user_reset_password			= கடவுச்சொல்லை மாற்ற
 user_reset_password_help	=  இத்தளத்தில் பதிவு செய்யப் பயன்படுத்திய மின்னஞ்சல் முகவரியை வழங்கவும். அம்முகவரியில் கடவுச்சொல் மாற்றுவதற்கான இணைப்பை அனுப்பிவைக்கிறோம்.
 
-user_current_password		= Current Password
-user_new_password			= New Password
+user_current_password		= தற்போதைய கடவுச்சொல்
+user_new_password			= புதிய கடவுச்சொல்
 
 user_full_name				= முழுப்பெயர்
 user_email					= மின்னஞ்சல் முகவரி 
 user_password				= கடவுச்சொல்
 user_confirm_password		= கடவுச்சொலை மீண்டும் பதிவு செய்க
 
-user_my_profile				= என் சுயவிவரம்	
-user_my_account				= என் கணக்கு	
+user_my_profile				= என் பக்கம்
+user_my_account				= என் கணக்கு
 
 user_is_new					= புதியவர்?	
 user_is_registered			= உறுப்பினர்?	
@@ -161,13 +161,13 @@ footer_about_us				= எங்களைப் பற்றி
 footer_work_with_us			= எங்களுடன் இணைய	
 footer_blog					= வலைப்பதிவு	
 footer_privacy_policy		= Privacy Policy
-footer_terms_of_service		= Terms
+footer_terms_of_service		= Terms Of Service
 
 
 
 # Common Words
 
-okay						= ஆம்	
+okay						= சரி	
 cancel						= இல்லை	
 save_changes				= மாற்றங்களை சேமிக்க	
 show_more					= மேலும் 
@@ -177,43 +177,43 @@ write						= எழுத
 free						= இலவசம் !
 saving						= பதிவேற்றபடுகிறது ...
 working						= காத்திருக்க...
-update						= Update
-share						= Share
+update						= மாற்று
+share						= பகிர 
 menu						= Menu
 back						= Back
 
 # Success Messages
 
-password_reset_request_success		= A mail has been sent to your email Id! 
-user_login_success					= Success !
-user_register_success				= Success !
-password_change_success				= Password has been changed Successfully!
-verification_email_sent_success		= Email Sent Successfully !
-user_verified_success				= Verified Successfully !
-content_created_success				= Success !
-updated_author_info_success			= Success !
-updated_pratilipi_info_success		= Success !
+password_reset_request_success		= உங்கள்  முகவரிக்கு மின்னஞ்சல் அனுப்பியுள்ளோம்! 
+user_login_success					= வெற்றி !
+user_register_success				= வெற்றி !
+password_change_success				= கடவுச்சொல் மாற்றப்பட்டது!
+verification_email_sent_success		= மின்னஞ்சல் அனுப்பப்பட்டது !
+user_verified_success				= சரி பார்க்கப்பட்டது !
+content_created_success				= வெற்றி !
+updated_author_info_success			= வெற்றி !
+updated_pratilipi_info_success		= வெற்றி !
 
 # Author Edit Popup
 
-edit_author_heading				= சுயவிவரத்தை திருத்த	
-edit_author_first_name			= First Name( Tamil )
-edit_author_last_name			= Last Name( Tamil )
-edit_author_first_name_en		= First Name( English )
-edit_author_last_name_en		= Last Name( English )
-edit_author_pen_name			= Pen Name ( Tamil )
-edit_author_pen_name_en			= Pen Name ( English )
-edit_author_birthday_ddmmyyyy	= Birthday (dd-mm-yyyy)
-edit_author_language			= Select Language
-edit_author_summary				= Summary ( Optional )
-edit_author_save_changes		= Save Changes
+edit_author_heading				= உங்கள் விவரத்தை திருத்த	
+edit_author_first_name			= பெயர் (தமிழில்)
+edit_author_last_name			= 
+edit_author_first_name_en		= பெயர் (ஆங்கிலத்தில்)
+edit_author_last_name_en		= 
+edit_author_pen_name			= புனைப்பெயர்  ( தமிழில் )
+edit_author_pen_name_en			= புனைப்பெயர்  ( ஆங்கிலத்தில்) 
+edit_author_birthday_ddmmyyyy	= பிறந்த நாள் (dd-mm-yyyy)
+edit_author_language			= மொழித்தேர்வு
+edit_author_summary				= உங்களைப் பற்றி ( விருப்பமிருப்பின் )
+edit_author_save_changes		= மாற்றங்களை சேமிக்க
 
 # Pratilipi Edit Popup
 
 edit_pratilipi_heading			= விவரத்தை திருத்த
-edit_pratilipi_title			= Title *
-edit_pratilipi_title_en			= Title (English)
-edit_pratilipi_type				= Select Type *
+edit_pratilipi_title			= பெயர் *
+edit_pratilipi_title_en			= பெயர் (ஆங்கிலத்தில்)
+edit_pratilipi_type				= வகை *
 edit_pratilipi_language			= Language
-edit_pratilipi_summary			= Summary (Optional) :
-edit_pratilipi_save_changes		= Save Changes
+edit_pratilipi_summary			= படைப்பைப் பற்றி  (விருப்பமிருப்பின்) :
+edit_pratilipi_save_changes		= மாற்றங்களை சேமிக்க
