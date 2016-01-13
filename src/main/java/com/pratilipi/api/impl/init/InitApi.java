@@ -144,9 +144,10 @@ public class InitApi extends GenericApi {
 		
 		int count = 0;
 		for( Author author : authorList ) {
-			author.getLanguage();
-			dataAccessor.createOrUpdateAuthor( author );
-			count++;
+			if( author.getLanguage() != null ) {
+				dataAccessor.createOrUpdateAuthor( author );
+				count++;
+			}
 		}
 
 		logger.log( Level.INFO, "Backfilled languge for " + count + " Authors." );
