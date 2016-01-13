@@ -205,6 +205,7 @@
 				this.set( 'author', author );
 				this.set( 'params', author );
 				document.querySelector( 'pratilipi-author' ).updateAuthor( author );
+				location.reload();
 				
 				this.async( function() {
 					jQuery( '#authorEditButton' ).prop( 'disabled', false );

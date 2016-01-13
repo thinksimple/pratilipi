@@ -63,7 +63,7 @@
 							<span style="display: inline-block; color: #D0021B; position: absolute;">&hellip;</span>
 						</template>
 						
-						<template is="dom-if" if="{{ pratilipi.author.name }}">
+						<template is="dom-if" if="{{ !draftsActive }}">
 							<h6>
 								<a style="font-size: 12px; color: #434343; line-height: 20px;" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a>
 							</h6>
