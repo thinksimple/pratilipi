@@ -112,10 +112,12 @@
 						</a>
 					</template>
 					
-					<pratilipi-rating value="{{ pratilipi.averageRating }}">
-							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
-					</pratilipi-rating>
-					
+					<div>
+						<pratilipi-rating value="{{ pratilipi.averageRating }}">
+								<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
+						</pratilipi-rating>
+					</div>
+					<br>
 					<h6>{{ type }}</h6>
 					
 					<table style="margin-top: 10px; margin-bottom: 20px;">
@@ -231,7 +233,7 @@
 				document.getElementById( "uploadImage" ).submit();
 				this.async( function() {
 					location.reload();
-				}, 5000 );
+				}, 3000 );
 			},
 			
 			getShareUrl: function() {
