@@ -287,22 +287,17 @@ public class InitApi extends GenericApi {
 				List<Author> list = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 				
 				if( list.size() == 0 ) {
-					if( user.getId().equals( 5747610597982208L ) ) {
-						UserData userData = UserDataUtil.createUserData( user );
-						userData.setFirstName( user.getFirstName() );
-						userData.setLastName( user.getLastName() );
-						userData.setGender( user.getGender() );
-						Long authorId = AuthorDataUtil.createAuthorProfile( userData, null );
-						Task task = TaskQueueFactory.newTask()
-								.setUrl( "/author/process" )
-								.addParam( "authorId", authorId.toString() )
-								.addParam( "processData", "true" );
-						TaskQueueFactory.getAuthorTaskQueue().add( task );
-						logger.log( Level.SEVERE, "Created author profile for user " + user.getId() + "." );
-					} else {
-						logger.log( Level.SEVERE, "User " + user.getId() + " doesn't have a author profile" );
-						count++;
-					}
+					UserData userData = UserDataUtil.createUserData( user );
+					userData.setFirstName( user.getFirstName() );
+					userData.setLastName( user.getLastName() );
+					userData.setGender( user.getGender() );
+					Long authorId = AuthorDataUtil.createAuthorProfile( userData, null );
+					Task task = TaskQueueFactory.newTask()
+							.setUrl( "/author/process" )
+							.addParam( "authorId", authorId.toString() )
+							.addParam( "processData", "true" );
+					TaskQueueFactory.getAuthorTaskQueue().add( task );
+					logger.log( Level.SEVERE, "Created author profile for user " + user.getId() + "." );
 					continue;
 				}
 				
