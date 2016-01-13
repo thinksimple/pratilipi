@@ -60,6 +60,9 @@ pratilipi_count_reads		= READS
 pratilipi_count_reviews		= REVIEWS
 pratilipi_count_likes		= LIKES
 
+pratilipi_move_to_drafts	= Move to Drafts
+pratilipi_publish_it		= Publish it!
+
 
 
 # Rating

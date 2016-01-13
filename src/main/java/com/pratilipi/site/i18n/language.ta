@@ -60,6 +60,9 @@ pratilipi_count_reads		= படித்தவர்கள்
 pratilipi_count_reviews		= விமர்சனங்கள்	
 pratilipi_count_likes		= விருப்பங்கள்	
 
+pratilipi_move_to_drafts	= வரைவுகளுக்கு அனுப்ப
+pratilipi_publish_it		= பதிப்பிக்க
+
 
 
 # Rating

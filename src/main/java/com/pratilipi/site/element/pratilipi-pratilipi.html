@@ -129,7 +129,7 @@
 							<button on-click="openPratilipiEdit" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_info }</button>
 							<button on-click="openWriterPanel" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_content }</button>
 							<pratilipi-edit-pratilipi pratilipi="{{ pratilipi }}"></pratilipi-edit-pratilipi>
-							<br class="pratilipi-break"/>
+							<div style="min-height: 15px"></div>
 							<button id="changeStateButton" on-click="changePratilipiState" class="pratilipi-light-blue-button">{{ changeState }}</button>
 						</template>
 					</div>
@@ -283,10 +283,6 @@
 			},
 			
 			process: function( data ) {
-				if( data.title == null && data.titleEn != null )
-					data.title = data.titleEn;
-				if( data.author.name == null && data.author.name != null )
-					data.author.name = data.author.nameEn;
 				data.averageRating = data.averageRating == null ? 0 : data.averageRating;
 				data.ratingCount = data.ratingCount == null ? 0 : data.ratingCount;
 				data.readCount = data.readCount == null ? 0 : data.readCount;
@@ -308,9 +304,9 @@
 				this.type = capitalizeFirstLetter( pratilipi.type );
 				this.listingDate = convertDate( pratilipi.listingDateMillis );
 				if( pratilipi.state == "DRAFTED" )
-					this.changeState = "Publish it !";
+					this.changeState = "${ _strings.pratilipi_publish_it }";
 				else if ( pratilipi.state == "PUBLISHED" )
-					this.changeState = "Move to Drafts !";
+					this.changeState = "${ _strings.pratilipi_move_to_drafts }";
 				else
 					jQuery( '#changeStateButton' ).hide();
 				this.processSummary();
