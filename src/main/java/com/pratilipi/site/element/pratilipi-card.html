@@ -65,19 +65,33 @@
 						<pratilipi-rating value="{{ pratilipi.averageRating }}">
 							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
 						</pratilipi-rating>
+						
+						<template is="dom-if" if="{{ draftsActive }}">
+							<paper-menu-button style="position: absolute; top: 0px; right: 0px;" horizontal-align="right" class="pull-right">
+								<paper-icon-button style="color: #333;" class="dropdown-trigger" icon="more-vert" noink="true"></paper-icon-button>
+									<paper-menu class="dropdown-content">
+										<paper-item on-click="redirectToReader">${ _strings.read }</paper-item>
+									</paper-menu>
+							</paper-menu-button>
+						</template>
 
-						<template is="dom-if" if="{{ _hasAccessToWrite( draftsActive, publishedActive ) }}">
-							<paper-icon-button style="color: #989898; position: absolute; top: 0px; right: 0px;" icon="create" on-click="redirectToWriter"></paper-icon-button>
+						<template is="dom-if" if="{{ publishedActive }}">
+							<paper-menu-button style="position: absolute; top: 0px; right: 0px;" horizontal-align="right" class="pull-right">
+								<paper-icon-button style="color: #333;" class="dropdown-trigger" icon="more-vert" noink="true"></paper-icon-button>
+									<paper-menu class="dropdown-content">
+										<paper-item on-click="redirectToWriter">${ _strings.pratilipi_edit_content }</paper-item>
+				                    	<paper-item on-click="moveToDrafts">${ _strings.pratilipi_move_to_drafts }</paper-item>
+									</paper-menu>
+							</paper-menu-button>
 						</template>
 						
 						<div style="position: absolute; bottom: 25px; display: inline-block;">
-							<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</a>
 							<template is="dom-if" if="{{ draftsActive }}">
+								<a on-click="redirectToWriter" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_content }</a>
 								<a on-click="publishNow" class="pratilipi-light-blue-button">${ _strings.pratilipi_publish_it }</a>
 							</template>
 							<template is="dom-if" if="{{ publishedActive }}">
-								<br class="pratilipi-break"/>
-								<a on-click="moveToDrafts" class="pratilipi-grey-button">${ _strings.pratilipi_move_to_drafts }</a>
+								<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</a>
 							</template>
 						</div>
 						
@@ -129,21 +143,13 @@
 				'iron-resize': '_onIronResize'
 			},
 			
-			_hasAccessToWrite: function( draftsActive, publishedActive ) {
-				if( draftsActive || publishedActive )
-					return true;
-				else
-					return false;
-			},
-			
 			redirectToReader: function() {
 				if( this.pratilipi.readPageUrl != null ) 
 					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
 			},
 			
 			redirectToWriter: function() {
-				if( this.pratilipi.writePageUrl != null ) 
-					window.location.href = "http://www.pratilipi.com/write?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
+				window.location.href = "http://www.pratilipi.com/write?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
 			},
 			
 			attached: function() {
@@ -176,6 +182,7 @@
 			},
 			
 			moveToDrafts: function() {
+				console.log( "Reached Here" );
 				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=DRAFTED" );
 				this.$.AjaxPost.generateRequest();
 			},
