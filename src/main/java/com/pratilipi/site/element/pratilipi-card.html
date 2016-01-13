@@ -9,8 +9,17 @@
 			--paper-card-header: { display: none };
 		}
 		
+		.media-heading {
+			max-height: 20px;
+			overflow: hidden;
+			max-width: 95%;
+			display: inline-block;
+			white-space: normal;
+		}
+		
 		.pratilipi-card-heading, .pratilipi-card-heading:hover, .pratilipi-card-heading:focus {
 			font-size: 16px;
+			line-height: 18px;
 			color: #D0021B;
 		}
 		
@@ -39,8 +48,11 @@
 					</div>
 				  	<div class="media-body">
 				  		<h4 class="media-heading">
-						 	<a class="pratilipi-card-heading" href="{{ pratilipi.pageUrl }}"  data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ title }}</a>
+						 	<a class="pratilipi-card-heading" href="{{ pratilipi.pageUrl }}" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ title }}</a>
 						</h4>
+						<template is="dom-if" if="{{ showDots }}">
+							<span style="display: inline-block; color: #D0021B; position: absolute;">&hellip;</span>
+						</template>
 						<h6>
 							<a style="font-size: 12px; color: #434343; line-height: 20px;" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a>
 						</h6>
@@ -84,7 +96,7 @@
 			],
           
 			properties: {
-				pratilipi: { type: Object },
+				pratilipi: { type: Object, observer: "init" },
 				
 				draftsActive: { type: Boolean, value: false },
 				publishedActive: { type: Boolean, value: false }
@@ -99,27 +111,28 @@
 					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 ) + "&ret=" + window.location.href;
 			},
 			
-			ready: function() {
+			attached: function() {
+				this.init();
+			},
+			
+			init: function() {
 				if( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "?" + "width=100";
 				else
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
-			},
-			
-			attached: function() {
+				
+				this.title = this.pratilipi.title;
+
 				$('[data-toggle="tooltip"]').tooltip();
 			},
 			
 			_onIronResize: function() {
 				// Adjusting heading
 				var heading = jQuery( this.querySelector( '.pratilipi-card-heading' ) );
-				this.title = this.pratilipi.title;
-				heading.text( this.title );
-				var len = this.title.length;
-				while( heading.height() >= 24 && len > 20 ) {
-					len = len - 1;
-					heading.text( this.title.substring( 0, len - 3 ).trim() + " ..." );
-				}
+				if( heading.height() > 20 )
+					this.showDots = true;
+				else
+					this.showDots = false;
 			},
 			
 			publishNow: function() {

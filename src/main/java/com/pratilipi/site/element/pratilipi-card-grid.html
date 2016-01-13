@@ -62,16 +62,15 @@
 					<br class="pratilipi-break">
 				</div>
 			</template>
-			<template is="dom-repeat" items="[[ pratilipiList ]]" as="pratilipi">
+			<template id="repeat" is="dom-repeat" items="[[ pratilipiList ]]">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<pratilipi-card 
-						pratilipi="{{ pratilipi }}"
-						drafts-active="{{ draftsActive }}"
-						published-active="{{ publishedActive }}"></pratilipi-card>
+						pratilipi="[[ item ]]"
+						drafts-active="[[ draftsActive ]]"
+						published-active="[[ publishedActive ]]"></pratilipi-card>
 				</div>
 			</template>
 		</div>
-		
 		<template is="dom-if" if="{{ isLoading }}">
 			<paper-spinner style="margin: 15px auto; display: block;" class="pratilipi-spinner" active></paper-spinner>
 		</template>
@@ -99,7 +98,7 @@
 			properties: {
 				authorId: { type: String, value: null },
 				heading: { type: String },
-				pratilipiList: { type: Array },
+				pratilipiList: { type: Array, notify: true },
 				searchQuery: { type: String },
 				filter: { type: Object },
 				cursor: { type: String },
@@ -112,8 +111,9 @@
 				publishedActive: { type: Boolean, value: false }
 			},
 			
-			clearPratilipiList: function() {
-				this.set( 'pratilipiList', [] );
+			setPratilipiList: function( pratilipiList ) {
+				this.set( 'pratilipiList', pratilipiList );
+				this.$.repeat.render();
 			},
 			
 			reset: function() {
