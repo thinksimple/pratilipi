@@ -243,6 +243,8 @@ public class AuthorEntity implements Author {
 
 	@Override
 	public void setLanguage( Language language ) {
+		if( language == null )
+			languageId = null;
 		switch( language ) {
 			case HINDI:
 				languageId = 5130467284090880L;
