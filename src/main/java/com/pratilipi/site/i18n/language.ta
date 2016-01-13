@@ -220,3 +220,11 @@ edit_pratilipi_type				= வகை *
 edit_pratilipi_language			= Language
 edit_pratilipi_summary			= படைப்பைப் பற்றி  (விருப்பமிருப்பின்) :
 edit_pratilipi_save_changes		= மாற்றங்களை சேமிக்க
+
+
+
+# Register Form
+
+register_part_1					= இத்தளத்தில் பதிவு செய்வதன்மூலம், எங்களின் 
+register_part_2					= மற்றும்
+register_part_3					= க்கு ஒப்புக்கொள்கிறீர்கள்.

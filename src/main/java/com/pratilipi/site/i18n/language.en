@@ -220,3 +220,11 @@ edit_pratilipi_type				= Select Type *
 edit_pratilipi_language			= Language
 edit_pratilipi_summary			= Summary (Optional) :
 edit_pratilipi_save_changes		= Save Changes
+
+
+
+# Register Form
+
+register_part_1					= By registering, you agree to the 
+register_part_2					= and
+register_part_3					= .

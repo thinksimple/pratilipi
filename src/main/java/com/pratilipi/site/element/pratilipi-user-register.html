@@ -43,12 +43,13 @@
 							<div class="text-center">
 								<span style="display: block;">{{ message }}</span>
 								<button id="registerButton" style="margin-top: 20px;" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.user_sign_up }</button>
-								<span style="display: block; margin-top: 15px;">
-									By registering, you agree to the
+								<p style="display: block; margin-top: 15px;">
+									${ _strings.register_part_1 }
 									<a href="/privacy-policy"><span style="color: #107FE5; white-space: nowrap;">privacy policy</span></a>
-									&nbsp;and&nbsp;
-									<a href="/terms-of-service"><span style="color: #107FE5; white-space: nowrap;">terms of service</span></a>.
-								</span>
+									&nbsp;${ _strings.register_part_2 }&nbsp;
+									<a href="/terms-of-service"><span style="color: #107FE5; white-space: nowrap;">terms of service</span></a>
+									&nbsp;${ _strings.register_part_3 }
+								</p>
 							</div>
 							
 						</div>
