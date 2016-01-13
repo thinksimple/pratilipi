@@ -325,10 +325,11 @@ public class InitApi extends GenericApi {
 				Author author = authorList.get( 0 );
 				if( ( user.getEmail() == null && author.getEmail() != null ) || ( user.getEmail() != null && ! user.getEmail().equals( author.getEmail() ) ) ) {
 					logger.log( Level.SEVERE, "User " + user.getId() + " email doesn't match with the same in author profile " + author.getEmail() );
+					count++;
 				} else if( dataAccessor.getPage( PageType.AUTHOR, author.getId() ) == null ){
 					logger.log( Level.SEVERE, "Author Page missing for user " + user.getId() + "." );
+					count++;
 				}
-				count++;
 				continue;
 			}
 			
