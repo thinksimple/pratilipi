@@ -203,8 +203,12 @@ public class InitApi extends GenericApi {
 		
 		List<User> userList = (List<User>) query.execute( appProperty.getValue() );
 		
-		int count = 0;
+		int count = 0; // Un-resolved issue count.
 		for( User user : userList ) {
+			
+			if( user.getState() == UserState.DELETED ) {
+				continue;
+			}
 			
 			// Either email or facebook id should be present.
 			if( user.getEmail() == null && user.getFacebookId() == null ) {
@@ -291,27 +295,22 @@ public class InitApi extends GenericApi {
 					userData.setFirstName( user.getFirstName() );
 					userData.setLastName( user.getLastName() );
 					userData.setGender( user.getGender() );
-					Long authorId = AuthorDataUtil.createAuthorProfile( userData, null );
-					Task task = TaskQueueFactory.newTask()
-							.setUrl( "/author/process" )
-							.addParam( "authorId", authorId.toString() )
-							.addParam( "processData", "true" );
-					TaskQueueFactory.getAuthorTaskQueue().add( task );
+					AuthorDataUtil.createAuthorProfile( userData, null );
 					logger.log( Level.SEVERE, "Created author profile for user " + user.getId() + "." );
 					continue;
 				}
 				
 				if( list.size() == 1 ) {
 					Author author = list.get( 0 );
-					if( author.getUserId() != null ) {
-						logger.log( Level.SEVERE, "User " + user.getId() + "'s author profile is linked with some other user." );
-						count++;
-						continue;
-					} else {
+					if( author.getUserId() == null ) {
 						author.setUserId( user.getId() );
 						dataAccessor.createOrUpdateAuthor( author );
-						logger.log( Level.SEVERE, "Linked user " + user.getEmail() + "'s with author profile " + author.getId() + " ." );
+						logger.log( Level.SEVERE, "Linked user " + user.getEmail() + " with an author profile " + author.getId() + " ." );
+					} else {
+						logger.log( Level.SEVERE, "User " + user.getId() + "'s author profile is linked with some other user." );
+						count++;
 					}
+					continue;
 				}
 				
 				if( list.size() > 1 ) {
@@ -326,13 +325,11 @@ public class InitApi extends GenericApi {
 				Author author = authorList.get( 0 );
 				if( ( user.getEmail() == null && author.getEmail() != null ) || ( user.getEmail() != null && ! user.getEmail().equals( author.getEmail() ) ) ) {
 					logger.log( Level.SEVERE, "User " + user.getId() + " email doesn't match with the same in author profile " + author.getEmail() );
-					count++;
-					continue;
 				} else if( dataAccessor.getPage( PageType.AUTHOR, author.getId() ) == null ){
 					logger.log( Level.SEVERE, "Author Page missing for user " + user.getId() + "." );
-					count++;
-					continue;
 				}
+				count++;
+				continue;
 			}
 			
 			if( authorList.size() > 1 ) {
