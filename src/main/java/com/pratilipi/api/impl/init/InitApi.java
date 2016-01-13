@@ -103,8 +103,10 @@ public class InitApi extends GenericApi {
 		
 		_backfillUserStateAndSignUpSource();
 		_backfillPratilipiLanguage();
+		
 		_validateAndUpdateUserProfile();
 		_validateAndUpdateAuthorProfile();
+		
 		_backfillUserReviewState();
 		_publishUserReview();
 		
@@ -381,7 +383,7 @@ public class InitApi extends GenericApi {
 			gaeQueryBuilder.addOrdering( "registrationDate", true );
 			query = gaeQueryBuilder.build();
 
-			List<Author> list = (List<Author>) query.execute( gaeQueryBuilder.getParamNameValueMap() );
+			List<Author> list = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 			
 			if( list.size() > 1 ) {
 				logger.log( Level.WARNING, list.size() + " author accouts found for email " + author.getEmail() );
