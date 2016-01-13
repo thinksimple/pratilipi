@@ -62,13 +62,13 @@
 		</iron-collapse>
 		
 		<iron-ajax
-				id="AjaxPut"
+				id="AjaxPost"
 				url="/api/userpratilipi"
-				method="PUT"
-				content-type="application/json"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
 				handle-as="json"
-				on-response="_handleAjaxPutResponse"
-				on-error="_handleAjaxPutError"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
 				></iron-ajax>
 
 	</template>
@@ -118,10 +118,10 @@
 			},
 			
 			deleteReview: function() {
-				// TODO: Change state and make PUT call.
+				// TODO: Change state and make Post call.
 				var body = { pratilipiId: this.pratilipi.pratilipiId, reviewState:"DELETED" };
-				this.$.AjaxPut.body = JSON.stringify( body );
-				this.$.AjaxPut.generateRequest();
+				this.$.AjaxPost.body = jQuery.param( body );
+				this.$.AjaxPost.generateRequest();
 			},
 			
 			onSubmit: function() {
@@ -144,11 +144,11 @@
 					this.message = "Please enter the review.";
 					return;
 				} */
-				this.$.AjaxPut.body = JSON.stringify( this.params );
-				this.$.AjaxPut.generateRequest();
+				this.$.AjaxPost.body = jQuery.param( this.params );
+				this.$.AjaxPost.generateRequest();
 			},
 			
-			_handleAjaxPutResponse: function( event ) {
+			_handleAjaxPostResponse: function( event ) {
 				if( event.detail.xhr.status == 0 ) {
 					this.message = null;
 					this.errMessage = "Could not connect to server !";
@@ -160,7 +160,7 @@
 				}
 			},
 
-			_handleAjaxPutError: function( event ) {
+			_handleAjaxPostError: function( event ) {
 				this.message = null;
 				if( event.detail.request.xhr.status == 400 )
 					this.paramsErr = event.detail.request.xhr.response;
