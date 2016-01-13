@@ -57,21 +57,21 @@ public class UserDataUtil {
 			
 			if( isFbLogin ) {
 				
-				switch( UxModeFilter.getFilterLanguage() ) {
-					case TAMIL:
-						return UserSignUpSource.WEBSITE_M6_TAMIL_FACEBOOK;
-					default:
-						return UserSignUpSource.WEBSITE_M6_FACEBOOK;
-				}
+				if( UxModeFilter.getFilterLanguage() == null )
+					return UserSignUpSource.WEBSITE_FACEBOOK;
+				else if( UxModeFilter.getFilterLanguage() == Language.TAMIL )
+					return UserSignUpSource.WEBSITE_M6_TAMIL_FACEBOOK;
+				else
+					return UserSignUpSource.WEBSITE_M6_FACEBOOK;
 				
 			} else {
 
-				switch( UxModeFilter.getFilterLanguage() ) {
-					case TAMIL:
-						return UserSignUpSource.WEBSITE_M6_TAMIL;
-					default:
-						return UserSignUpSource.WEBSITE_M6;
-				}
+				if( UxModeFilter.getFilterLanguage() == null )
+					return UserSignUpSource.WEBSITE;
+				if( UxModeFilter.getFilterLanguage() == Language.TAMIL )
+					return UserSignUpSource.WEBSITE_M6_TAMIL;
+				else
+					return UserSignUpSource.WEBSITE_M6;
 				
 			}
 			

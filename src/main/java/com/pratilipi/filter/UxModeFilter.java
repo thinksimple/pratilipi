@@ -76,7 +76,7 @@ public class UxModeFilter implements Filter {
 			}
 			
 	
-			if( filterLanguage != null ) {
+/*			if( filterLanguage != null ) {
 				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 				Page page = dataAccessor.getPage( requestUri );
 				if( page != null ) {
@@ -96,7 +96,7 @@ public class UxModeFilter implements Filter {
 						}
 					}
 				}
-			}
+			}*/
 			
 			
 			threadLocalBasicMode.set( basicMode );
