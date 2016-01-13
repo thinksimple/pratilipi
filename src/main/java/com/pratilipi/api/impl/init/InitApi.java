@@ -103,8 +103,8 @@ public class InitApi extends GenericApi {
 		
 		_backfillUserStateAndSignUpSource();
 		_backfillPratilipiLanguage();
-		_backfillAuthorLanguage();
 		_validateAndUpdateUserProfile();
+		_validateAndUpdateAuthorProfile();
 		_backfillUserReviewState();
 		_publishUserReview();
 		
@@ -132,30 +132,6 @@ public class InitApi extends GenericApi {
 		}
 
 		logger.log( Level.WARNING, "Backfilled languge for " + count + " Pratilipis." );
-
-	}
-
-	private void _backfillAuthorLanguage() {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		PersistenceManager pm = dataAccessor.getPersistenceManager();
-		
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-		gaeQueryBuilder.addFilter( "language", null, Operator.IS_NULL );
-		gaeQueryBuilder.setRange( 0, 25 );
-		Query query = gaeQueryBuilder.build();
-		
-		List<Author> authorList = (List<Author>) query.execute();
-		
-		int count = 0;
-		for( Author author : authorList ) {
-			if( author.getLanguage() != null ) {
-				dataAccessor.createOrUpdateAuthor( author );
-				count++;
-			}
-		}
-
-		logger.log( Level.WARNING, "Backfilled languge for " + count + " Authors." );
 
 	}
 
@@ -281,6 +257,8 @@ public class InitApi extends GenericApi {
 			List<Author> authorList = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );;
 			
 			if( authorList.size() == 0 ) {
+				
+				// Try to find Author profile by his email
 				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
 				gaeQueryBuilder.addFilter( "email", user.getEmail() );
 				gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
@@ -326,7 +304,7 @@ public class InitApi extends GenericApi {
 				if( ( user.getEmail() == null && author.getEmail() != null ) || ( user.getEmail() != null && ! user.getEmail().equals( author.getEmail() ) ) ) {
 					logger.log( Level.SEVERE, "User " + user.getId() + " email doesn't match with the same in author profile " + author.getEmail() );
 					count++;
-				} else if( dataAccessor.getPage( PageType.AUTHOR, author.getId() ) == null ){
+				} else if( dataAccessor.getPage( PageType.AUTHOR, author.getId() ) == null ) {
 					logger.log( Level.SEVERE, "Author Page missing for user " + user.getId() + "." );
 					count++;
 				}
@@ -348,6 +326,76 @@ public class InitApi extends GenericApi {
 			dataAccessor.createOrUpdateAppProperty( appProperty );
 		}			
 		
+	}
+
+	private void _validateAndUpdateAuthorProfile() {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		PersistenceManager pm = dataAccessor.getPersistenceManager();
+		
+		AppProperty appProperty = dataAccessor.getAppProperty( "Jarvis.Validate.Author" );
+		if( appProperty == null ) {
+			appProperty = dataAccessor.newAppProperty( "Jarvis.Validate.Author" );
+			appProperty.setValue( new Date( 0 ) );
+		}
+
+		// Fetch next 100 users
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
+		gaeQueryBuilder.addFilter( "lastUpdated", appProperty.getValue(), Operator.GREATER_THAN_OR_EQUAL );
+		gaeQueryBuilder.addOrdering( "lastUpdated", true );
+		gaeQueryBuilder.setRange( 0, 100 );
+		Query query = gaeQueryBuilder.build();
+		
+		List<Author> authorList = (List<Author>) query.execute( appProperty.getValue() );
+		
+		int count = 0;
+		for( Author author : authorList ) {
+			
+			if( author.getState() == AuthorState.DELETED ) {
+				continue;
+			}
+
+			if( author.getEmail() == null ) {
+				continue;
+			}
+			
+			if( author.getEmail().equals( author.getEmail().trim().toLowerCase() ) ) {
+				logger.log( Level.WARNING, author.getEmail() + " email is not trimmed or in lower case " );
+				count++;
+				continue;
+			}
+			
+			User user = dataAccessor.getUser( author.getUserId() );
+			if( ! author.getEmail().equals( user.getEmail() ) ) {
+				logger.log( Level.WARNING, "Author email " + author.getEmail() + " doesn't match with the same in user table " + user.getEmail() );
+				count++;
+				continue;
+			}
+
+			gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
+			gaeQueryBuilder.addFilter( "email", author.getEmail() );
+			gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
+			gaeQueryBuilder.addOrdering( "state", true );
+			gaeQueryBuilder.addOrdering( "registrationDate", true );
+			query = gaeQueryBuilder.build();
+
+			List<Author> list = (List<Author>) query.execute();
+			
+			if( list.size() > 1 ) {
+				logger.log( Level.WARNING, list.size() + " author accouts found for email " + author.getEmail() );
+				count++;
+				continue;
+			}
+			
+		}
+
+		logger.log( Level.WARNING, count + " issues found in " + authorList.size() + " records processed." );
+		
+		if( count == 0 ) {
+			appProperty.setValue( authorList.get( authorList.size() - 1 ).getLastUpdated() );
+			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
+		}
+
 	}
 	
 	private void _backfillUserReviewState() {
