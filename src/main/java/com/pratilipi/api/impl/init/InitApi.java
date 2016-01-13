@@ -29,6 +29,7 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 
 @SuppressWarnings("serial")
@@ -283,7 +284,8 @@ public class InitApi extends GenericApi {
 				
 				if( list.size() == 0 ) {
 					if( user.getId().equals( 5176457257025536L ) ) {
-						UserDataUtil.createAuthorProfile( UserDataUtil.createUserData( user ), null );
+						Long authorId = UserDataUtil.createAuthorProfile( UserDataUtil.createUserData( user ), null );
+						AuthorDataUtil.createOrUpdateAuthorPageUrl( authorId );
 						logger.log( Level.SEVERE, "Created author profile for user " + user.getId() + "." );
 					} else {
 						logger.log( Level.SEVERE, "User " + user.getId() + " doesn't have a author profile" );

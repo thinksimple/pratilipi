@@ -386,13 +386,13 @@ public class UserDataUtil {
 	}
 	
 	
-	public static void createAuthorProfile( UserData userData, Language language ) {
+	public static Long createAuthorProfile( UserData userData, Language language ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		Author author = dataAccessor.getAuthorByUserId( userData.getId() );
 		if( author != null && author.getState() != AuthorState.DELETED )
-			return;
+			return author.getId();
 		else
 			author = dataAccessor.newAuthor();
 		
@@ -419,6 +419,8 @@ public class UserDataUtil {
 		auditLog.setEventDataNew( gson.toJson( author ) );
 
 		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
+		
+		return author.getId();
 		
 	}
 
