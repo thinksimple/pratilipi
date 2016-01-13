@@ -38,8 +38,7 @@ public class UserRegisterApi extends GenericApi {
 				email, request.getPassword(),
 				UserDataUtil.getUserSignUpSource( false, false ) );
 		// Create Author profile for the User.
-		Long authorId = UserDataUtil.createAuthorEntity( userData, UxModeFilter.getFilterLanguage() );
-		AuthorDataUtil.createOrUpdateAuthorPageUrl( authorId );
+		Long authorId = AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
 		// Log-in the User.
 		userData = UserDataUtil.loginUser( email, request.getPassword() );
 

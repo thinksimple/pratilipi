@@ -14,7 +14,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
-import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserSignUpSource;
@@ -385,45 +384,6 @@ public class UserDataUtil {
  		*/
 	}
 	
-	
-	public static Long createAuthorEntity( UserData userData, Language language ) {
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		Author author = dataAccessor.getAuthorByUserId( userData.getId() );
-		if( author != null && author.getState() != AuthorState.DELETED )
-			return author.getId();
-		else
-			author = dataAccessor.newAuthor();
-		
-		
-		Gson gson = new Gson();
-
-		
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( AccessType.AUTHOR_ADD );
-		auditLog.setEventDataOld( gson.toJson( author ) );
-			
-		author.setUserId( userData.getId() );
-		author.setFirstName( userData.getFirstName() );
-		author.setLastName( userData.getLastName() );
-		author.setGender( userData.getGender() );
-		author.setDateOfBirth( userData.getDateOfBirth() );
-		author.setEmail( userData.getEmail() ); // For backward compatibility with Mark-4
-		author.setLanguage( language );
-		author.setState( AuthorState.ACTIVE );
-		author.setRegistrationDate( userData.getSignUpDate() );
-		author.setLastUpdated( userData.getSignUpDate() );
-		
-		auditLog.setEventDataNew( gson.toJson( author ) );
-
-		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
-		
-		return author.getId();
-		
-	}
-
 	
 	public static void sendWelcomeMail( Long userId )
 			throws UnexpectedServerException {

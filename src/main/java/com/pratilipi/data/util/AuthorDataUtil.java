@@ -29,6 +29,7 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.client.AuthorData;
+import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
@@ -198,6 +199,46 @@ public class AuthorDataUtil {
 		
 	}
 	
+	
+	public static Long createAuthorProfile( UserData userData, Language language ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Author author = dataAccessor.getAuthorByUserId( userData.getId() );
+		if( author != null && author.getState() != AuthorState.DELETED )
+			return author.getId();
+		else
+			author = dataAccessor.newAuthor();
+		
+		
+		Gson gson = new Gson();
+
+		
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
+		auditLog.setAccessType( AccessType.AUTHOR_ADD );
+		auditLog.setEventDataOld( gson.toJson( author ) );
+			
+		author.setUserId( userData.getId() );
+		author.setFirstName( userData.getFirstName() );
+		author.setLastName( userData.getLastName() );
+		author.setGender( userData.getGender() );
+		author.setDateOfBirth( userData.getDateOfBirth() );
+		author.setEmail( userData.getEmail() ); // For backward compatibility with Mark-4
+		author.setLanguage( language );
+		author.setState( AuthorState.ACTIVE );
+		author.setRegistrationDate( userData.getSignUpDate() );
+		author.setLastUpdated( userData.getSignUpDate() );
+		
+		auditLog.setEventDataNew( gson.toJson( author ) );
+
+		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
+		
+		createOrUpdateAuthorPageUrl( author.getId() );
+		
+		return author.getId();
+		
+	}
 	
 	public static AuthorData saveAuthorData( AuthorData authorData )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {

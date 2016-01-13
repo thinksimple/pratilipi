@@ -14,6 +14,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.DataAccessor;
@@ -29,6 +30,7 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -285,7 +287,7 @@ public class InitApi extends GenericApi {
 				
 				if( list.size() == 0 ) {
 					if( user.getId().equals( 5631383682678784L ) || user.getId().equals( 5113880120393728L ) || user.getId().equals( 5634472569470976L ) ) {
-						Long authorId = UserDataUtil.createAuthorEntity( UserDataUtil.createUserData( user ), null );
+						Long authorId = AuthorDataUtil.createAuthorProfile( UserDataUtil.createUserData( user ), null );
 						Task task = TaskQueueFactory.newTask()
 								.setUrl( "/author/process" )
 								.addParam( "authorId", authorId.toString() )
@@ -323,12 +325,10 @@ public class InitApi extends GenericApi {
 					logger.log( Level.SEVERE, "User " + user.getId() + " email doesn't match with the same in author profile " + author.getEmail() );
 					count++;
 					continue;
-				} else {
-					Task task = TaskQueueFactory.newTask()
-							.setUrl( "/author/process" )
-							.addParam( "authorId", author.getId().toString() )
-							.addParam( "processData", "true" );
-					TaskQueueFactory.getAuthorTaskQueue().add( task );
+				} else if( dataAccessor.getPage( PageType.AUTHOR, author.getId() ) == null ){
+					logger.log( Level.SEVERE, "Author Page missing for user " + user.getId() + "." );
+					count++;
+					continue;
 				}
 			}
 			

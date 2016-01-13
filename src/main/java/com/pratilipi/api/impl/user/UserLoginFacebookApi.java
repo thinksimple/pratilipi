@@ -45,8 +45,7 @@ public class UserLoginFacebookApi extends GenericApi {
 		
 		if( new Date().getTime() - userData.getSignUpDate().getTime() <= 60000 ) {
 			
-			Long authorId = UserDataUtil.createAuthorEntity( userData, UxModeFilter.getFilterLanguage() );
-			AuthorDataUtil.createOrUpdateAuthorPageUrl( authorId );
+			Long authorId = AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
 			userData = UserDataUtil.getCurrentUser();
 
 			Task authorProcessTask = TaskQueueFactory.newTask()
