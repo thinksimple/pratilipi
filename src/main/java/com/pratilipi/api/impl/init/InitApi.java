@@ -29,7 +29,6 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
-import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -129,7 +128,7 @@ public class InitApi extends GenericApi {
 			count++;
 		}
 
-		logger.log( Level.INFO, "Backfilled languge for " + count + " Pratilipis." );
+		logger.log( Level.WARNING, "Backfilled languge for " + count + " Pratilipis." );
 
 	}
 
@@ -153,7 +152,7 @@ public class InitApi extends GenericApi {
 			}
 		}
 
-		logger.log( Level.INFO, "Backfilled languge for " + count + " Authors." );
+		logger.log( Level.WARNING, "Backfilled languge for " + count + " Authors." );
 
 	}
 
@@ -177,7 +176,7 @@ public class InitApi extends GenericApi {
 			count++;
 		}
 		
-		logger.log( Level.INFO, "Backfilled state & signUpSouce for " + count + " user records." );
+		logger.log( Level.WARNING, "Backfilled state & signUpSouce for " + count + " user records." );
 
 	}
 
@@ -285,8 +284,13 @@ public class InitApi extends GenericApi {
 				List<Author> list = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 				
 				if( list.size() == 0 ) {
-					if( user.getId().equals( 5176457257025536L ) ) {
-						UserDataUtil.createAuthorEntity( UserDataUtil.createUserData( user ), null );
+					if( user.getId().equals( 5631383682678784L ) || user.getId().equals( 5113880120393728L ) || user.getId().equals( 5634472569470976L ) ) {
+						Long authorId = UserDataUtil.createAuthorEntity( UserDataUtil.createUserData( user ), null );
+						Task task = TaskQueueFactory.newTask()
+								.setUrl( "/author/process" )
+								.addParam( "authorId", authorId.toString() )
+								.addParam( "processData", "true" );
+						TaskQueueFactory.getAuthorTaskQueue().add( task );
 						logger.log( Level.SEVERE, "Created author profile for user " + user.getId() + "." );
 					} else {
 						logger.log( Level.SEVERE, "User " + user.getId() + " doesn't have a author profile" );
@@ -360,7 +364,7 @@ public class InitApi extends GenericApi {
 			count++;
 		}
 		
-		logger.log( Level.INFO, "Backfilled reviewState for " + count + " user reviews." );
+		logger.log( Level.WARNING, "Backfilled reviewState for " + count + " user reviews." );
 
 	}
 
@@ -399,7 +403,7 @@ public class InitApi extends GenericApi {
 		}
 
 		
-		logger.log( Level.INFO, "Published " + count + " user reviews." );
+		logger.log( Level.WARNING, "Published " + count + " user reviews." );
 
 	}
 
