@@ -92,11 +92,11 @@
 			properties: {
 				author: { type: Object },
 				
-				draftedList: { type: Array, value: [] },
+				draftedList: { type: Array, value: [], notify: true },
 				draftedListCursor: { type: String, value: "" },
 				draftsActive : { type: Boolean, value: false },
 				
-				publishedList: { type: Array, value: [] },
+				publishedList: { type: Array, value: [], notify: true },
 				publishedListCursor: { type: String, value: "" },
 				publishedActive : { type: Boolean, value: false }
 			},
@@ -115,13 +115,58 @@
 					return false;
 			},
 			
-			reset: function() {
+			clearDraftedList: function() {
 				this.set( 'draftedList', [] );
-				this.set( 'publishedList', [] );
-				
 				this.draftedListCursor = "";
+			},
+			
+			clearPublishedList: function() {
+				this.set( 'publishedList', [] );
 				this.publishedListCursor = "";
-				
+			},
+			
+			addToDraftedList: function( draftedContent ) {
+				this.push( 'draftedList', draftedContent );
+			},
+			
+			addToPublishedList: function( publishedContent ) {
+				this.push( 'publishedList', publishedContent );
+			},
+			
+			removeFromDraftedList: function( draftedContent ) {
+				var index = -1;
+				for( var i = 0; i < this.draftedList.length; i++ ) {
+					if( draftedContent.pratilipiId == this.draftedList[i].pratilipiId ) {
+						index = i;
+						break;
+					}
+				}
+				if( index != -1 ) {
+					var temp = this.draftedList;
+					temp.splice( index, 1 );
+					this.set( 'draftedList', [] );
+					/* this.querySelector( '#draftedBooksByAuthor' ).clearPratilipiList(); */
+					for( var i = 0; i < temp.length; i++ )
+						this.push( 'draftedList', temp[i] );
+				}
+			},
+			
+			removeFromPublishedList: function( publishedContent ) {
+				var index = -1;
+				for( var i = 0; i < this.publishedList.length; i++ ) {
+					if( publishedContent.pratilipiId == this.publishedList[i].pratilipiId ) {
+						index = i;
+						break;
+					}
+				}
+				if( index != -1 ) {
+					var temp = this.publishedList;
+					temp.splice( index, 1 );
+					this.set( 'publishedList', [] );
+					/* this.querySelector( '#publishedBooksByAuthor' ).clearPratilipiList(); */
+					for( var i = 0; i < temp.length; i++ )
+						this.push( 'publishedList', temp[i] );
+				}
 			},
 			
 			removeAllClasses: function() {
@@ -207,6 +252,11 @@
 				
 				var draftedList = event.detail.response.pratilipiList;
 				
+				if( draftedList.length == 0 ) {
+					this.draftedListCursor = null;
+					return;
+				}
+				
 				for( var i = 0; i < draftedList.length; i++ )
 					this.push( 'draftedList', draftedList[i] );
 				
@@ -229,6 +279,11 @@
 				
 				var publishedList = event.detail.response.pratilipiList;
 				
+				if( publishedList.length == 0 ) {
+					this.publishedListCursor = null;
+					return;
+				}
+					
 				for( var i = 0; i < publishedList.length; i++ )
 					this.push( 'publishedList', publishedList[i] );
 				
@@ -245,9 +300,9 @@
 				if( event.detail.request.xhr.status == 401 ) {
 					return;
 				}
-				this.async( function() {
+				/* this.async( function() {
 					this.loadDraftedContents();
-				}, 10000 );
+				}, 10000 ); */
 			},
 			
 			_handleAjaxGetPublishedListError: function( event ) {

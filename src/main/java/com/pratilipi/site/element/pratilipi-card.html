@@ -135,13 +135,19 @@
 			_handleAjaxPostResponse: function( event ) {
 				
 				var pratilipi = event.detail.response;
-				this.set( 'pratilipi', pratilipi );
 				
-				document.querySelector( 'pratilipi-author-books' ).reset();
-				if( this.draftsActive )
-					document.querySelector( 'pratilipi-author-books' ).draftsClicked();
-				else if( this.publishedActive )
+				// Move to Published Section if drafts is already active
+				if( this.draftsActive ) {
+					document.querySelector( 'pratilipi-author-books' ).addToPublishedList( pratilipi );
+					document.querySelector( 'pratilipi-author-books' ).removeFromDraftedList( pratilipi );
 					document.querySelector( 'pratilipi-author-books' ).publishedClicked();
+				}
+				// Move to Drafted Section if published is already active
+				else if( this.publishedActive ) {
+					document.querySelector( 'pratilipi-author-books' ).addToDraftedList( pratilipi );
+					document.querySelector( 'pratilipi-author-books' ).removeFromPublishedList( pratilipi );
+					document.querySelector( 'pratilipi-author-books' ).draftsClicked();
+				}
 				
 			},
 			

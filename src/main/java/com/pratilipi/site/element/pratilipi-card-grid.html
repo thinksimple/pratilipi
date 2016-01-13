@@ -62,7 +62,7 @@
 					<br class="pratilipi-break">
 				</div>
 			</template>
-			<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
+			<template is="dom-repeat" items="[[ pratilipiList ]]" as="pratilipi">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<pratilipi-card 
 						pratilipi="{{ pratilipi }}"
@@ -110,6 +110,10 @@
 				
 				draftsActive: { type: Boolean, value: false },
 				publishedActive: { type: Boolean, value: false }
+			},
+			
+			clearPratilipiList: function() {
+				this.set( 'pratilipiList', [] );
 			},
 			
 			reset: function() {
