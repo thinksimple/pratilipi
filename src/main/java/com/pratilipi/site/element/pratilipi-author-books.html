@@ -33,18 +33,35 @@
 				</a>
 			</div>
 		</paper-card>
+		
 		<br class="pratilipi-break" />
-		<pratilipi-card-grid
-			id='booksByAuthor'
+		
+		<template is="dom-if" if="{{ draftsActive }}">
+			<pratilipi-card-grid
+			id='draftedBooksByAuthor'
 			author-id='{{ author.authorId }}'
 			include-add-card="true"
 			drafts-active="{{ draftsActive }}"
 			published-active="{{ publishedActive }}"
-			pratilipi-list='{{ pratilipiList }}'
+			pratilipi-list='{{ draftedList }}'
 			></pratilipi-card-grid>
+		</template>
+		
+		<template is="dom-if" if="{{ publishedActive }}">
+			<pratilipi-card-grid
+			id='publishedBooksByAuthor'
+			author-id='{{ author.authorId }}'
+			include-add-card="true"
+			drafts-active="{{ draftsActive }}"
+			published-active="{{ publishedActive }}"
+			pratilipi-list='{{ publishedList }}'
+			></pratilipi-card-grid>
+		</template>
+		
 		<template is="dom-if" if="{{ _checkSpinner }}">
 			<paper-spinner style="margin: 15px auto; display: block;" class="pratilipi-spinner" active></paper-spinner>	
 		</template>
+		
 		<iron-ajax
 				id="AjaxGetDraftedList"
 				url="/api/pratilipi/list"
@@ -74,7 +91,6 @@
 			
 			properties: {
 				author: { type: Object },
-				pratilipiList: { type: Array, value: [] },
 				
 				draftedList: { type: Array, value: [] },
 				draftedListCursor: { type: String, value: "" },
@@ -87,6 +103,7 @@
 			
 			attached: function() {
 				this.draftsClicked();
+				this.loadPublishedContents();
 			},
 			
 			_checkSpinner: function() {
@@ -99,7 +116,6 @@
 			},
 			
 			reset: function() {
-				this.set( 'pratilipiList', [] );
 				this.set( 'draftedList', [] );
 				this.set( 'publishedList', [] );
 				
@@ -116,57 +132,69 @@
 			},
 			
 			draftsClicked: function() {
-				if( ! this.draftsActive ) {
-					this.removeAllClasses();
-					jQuery( '#drafts' ).addClass( 'active' );
-					jQuery( '#published' ).addClass( 'inactive' );
-					
-					this.set( 'pratilipiList', this.draftedList );
-					
-					// Set Boolean flags
-					this.draftsActive = true;
-					this.publishedActive = false;
+				
+				if( this.draftsActive )
+					return;
+				
+				// Highlight Drafts 
+				this.removeAllClasses();
+				jQuery( '#drafts' ).addClass( 'active' );
+				jQuery( '#published' ).addClass( 'inactive' );
+				
+				// Set Boolean flags
+				this.draftsActive = true;
+				this.publishedActive = false;
 
-					// Load Drafted Contents
-					if( this.draftedListCursor != null ) 
-						this.loadDraftedContents();
-				}
+				// Load Drafted Contents
+				this.loadDraftedContents();
+				
 			},
 		
 			publishedClicked: function() {
-				if( ! this.publishedActive ) {
-					this.removeAllClasses();
-					jQuery( '#published' ).addClass( 'active' );
-					jQuery( '#drafts' ).addClass( 'inactive' );
-					
-					this.set( 'pratilipiList', this.publishedList );
-					
-					// Set Boolean flags
-					this.publishedActive = true;
-					this.draftsActive = false;
+				
+				if( ! this.publishedActive )
+					return;
+				
+				// Highlight Published
+				this.removeAllClasses();
+				jQuery( '#published' ).addClass( 'active' );
+				jQuery( '#drafts' ).addClass( 'inactive' );
+				
+				// Set Boolean flags
+				this.publishedActive = true;
+				this.draftsActive = false;
 
-					// Load Published Contents
-					if( this.publishedListCursor != null ) 
-						this.loadPublishedContents();
-				}
+				// Load Published Contents
+				this.loadPublishedContents();
+				
 			},
 			
 			loadDraftedContents: function() {
-				if( this.draftedListCursor != null ) {
-					// Make AJAX Call
-					var draftedList = this.$.AjaxGetDraftedList;
-					draftedList.params = { authorId: this.author.authorId, cursor: this.draftedListCursor, state: "DRAFTED" };
-					draftedList.generateRequest();
-				}
+				
+				if( this.draftedListCursor == null ) 
+					return;
+				
+				// Make AJAX Call
+				var draftedList = this.$.AjaxGetDraftedList;
+				draftedList.params.authorId = this.author.authorId;
+				draftedList.params.cursor = this.draftedListCursor;
+				draftedList.params.state = "DRAFTED";
+				draftedList.generateRequest();
+				
 			},
 			
 			loadPublishedContents: function() {
-				if( this.publishedListCursor != null ) {
-					// Make AJAX Call
-					var publishedList = this.$.AjaxGetPublishedList;
-					publishedList.params = { authorId: this.author.authorId, cursor: this.publishedListCursor, state: "PUBLISHED" };
-					publishedList.generateRequest();
-				}
+				
+				if( this.publishedListCursor == null )
+					return;
+				
+				// Make AJAX Call
+				var publishedList = this.$.AjaxGetPublishedList;
+				publishedList.params.authorId = this.author.authorId;
+				publishedList.params.cursor = this.publishedListCursor;
+				publishedList.params.state = "PUBLISHED";
+				publishedList.generateRequest();
+				
 			},
 			
 			_handleAjaxGetDraftedListResponse: function( event ) {
@@ -180,10 +208,8 @@
 				var draftedList = event.detail.response.pratilipiList;
 				
 				for( var i = 0; i < draftedList.length; i++ )
-					this.push( 'pratilipiList', draftedList[i] );
+					this.push( 'draftedList', draftedList[i] );
 				
-				this.set( 'draftedList', this.pratilipiList );
-					
 				if( draftedList.length < 20 || event.detail.response.cursor == null )
 					this.draftedListCursor = null;
 				else if( event.detail.response.cursor != null )
@@ -204,10 +230,8 @@
 				var publishedList = event.detail.response.pratilipiList;
 				
 				for( var i = 0; i < publishedList.length; i++ )
-					this.push( 'pratilipiList', publishedList[i] );
+					this.push( 'publishedList', publishedList[i] );
 				
-				this.set( 'publishedList', this.pratilipiList );
-					
 				if( publishedList.length < 20 || event.detail.response.cursor == null )
 					this.publishedListCursor = null;
 				else if( event.detail.response.cursor != null )
