@@ -13,6 +13,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
+import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
@@ -44,8 +45,15 @@ public class UserLoginFacebookApi extends GenericApi {
 		
 		if( new Date().getTime() - userData.getSignUpDate().getTime() <= 60000 ) {
 			
-			UserDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
+			Long authorId = UserDataUtil.createAuthorEntity( userData, UxModeFilter.getFilterLanguage() );
+			AuthorDataUtil.createOrUpdateAuthorPageUrl( authorId );
 			userData = UserDataUtil.getCurrentUser();
+
+			Task authorProcessTask = TaskQueueFactory.newTask()
+					.setUrl( "/author/process" )
+					.addParam( "authorId", authorId.toString() )
+					.addParam( "processData", "true" );
+			taskList.add( authorProcessTask );
 			
 			if( userData.getEmail() != null ) {
 				Task welcomeMailTask = TaskQueueFactory.newTask()

@@ -386,7 +386,7 @@ public class UserDataUtil {
 	}
 	
 	
-	public static Long createAuthorProfile( UserData userData, Language language ) {
+	public static Long createAuthorEntity( UserData userData, Language language ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		

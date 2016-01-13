@@ -31,6 +31,8 @@ import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -284,8 +286,7 @@ public class InitApi extends GenericApi {
 				
 				if( list.size() == 0 ) {
 					if( user.getId().equals( 5176457257025536L ) ) {
-						Long authorId = UserDataUtil.createAuthorProfile( UserDataUtil.createUserData( user ), null );
-						AuthorDataUtil.createOrUpdateAuthorPageUrl( authorId );
+						UserDataUtil.createAuthorEntity( UserDataUtil.createUserData( user ), null );
 						logger.log( Level.SEVERE, "Created author profile for user " + user.getId() + "." );
 					} else {
 						logger.log( Level.SEVERE, "User " + user.getId() + " doesn't have a author profile" );
@@ -318,6 +319,12 @@ public class InitApi extends GenericApi {
 					logger.log( Level.SEVERE, "User " + user.getId() + " email doesn't match with the same in author profile " + author.getEmail() );
 					count++;
 					continue;
+				} else {
+					Task task = TaskQueueFactory.newTask()
+							.setUrl( "/author/process" )
+							.addParam( "authorId", author.getId().toString() )
+							.addParam( "processData", "true" );
+					TaskQueueFactory.getAuthorTaskQueue().add( task );
 				}
 			}
 			

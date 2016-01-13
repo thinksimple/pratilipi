@@ -455,7 +455,10 @@ public class AuthorDataUtil {
 		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
 
 		Author author = dataAccessor.getAuthor( authorId );
-		searchAccessor.indexAuthorData( createAuthorData( author, true, true ) );
+		if( author.getState() == AuthorState.ACTIVE && author.getContentPublished() > 0 )
+			searchAccessor.indexAuthorData( createAuthorData( author, true, true ) );
+		else
+			searchAccessor.deleteAuthorDataIndex( authorId );
 		
 	}
 	

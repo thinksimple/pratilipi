@@ -9,6 +9,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
+import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
@@ -37,7 +38,8 @@ public class UserRegisterApi extends GenericApi {
 				email, request.getPassword(),
 				UserDataUtil.getUserSignUpSource( false, false ) );
 		// Create Author profile for the User.
-		UserDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
+		Long authorId = UserDataUtil.createAuthorEntity( userData, UxModeFilter.getFilterLanguage() );
+		AuthorDataUtil.createOrUpdateAuthorPageUrl( authorId );
 		// Log-in the User.
 		userData = UserDataUtil.loginUser( email, request.getPassword() );
 
@@ -50,7 +52,11 @@ public class UserRegisterApi extends GenericApi {
 				.setUrl( "/user/email" )
 				.addParam( "userId", userData.getId().toString() )
 				.addParam( "sendEmailVerificationMail", "true" );
-		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2 );
+		Task task3 = TaskQueueFactory.newTask()
+				.setUrl( "/author/process" )
+				.addParam( "authorId", authorId.toString() )
+				.addParam( "processData", "true" );
+		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2, task3 );
 
 		
 		return new GenericUserResponse( userData );
