@@ -196,7 +196,7 @@ public class InitApi extends GenericApi {
 
 		// Fetch next 100 users
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
-		gaeQueryBuilder.addFilter( "signUpDate", appProperty.getValue(), Operator.GREATER_THAN );
+		gaeQueryBuilder.addFilter( "signUpDate", appProperty.getValue(), Operator.GREATER_THAN_OR_EQUAL );
 		gaeQueryBuilder.addOrdering( "signUpDate", true );
 		gaeQueryBuilder.setRange( 0, 100 );
 		Query query = gaeQueryBuilder.build();
@@ -344,6 +344,11 @@ public class InitApi extends GenericApi {
 		}
 		
 		logger.log( Level.WARNING, "Found " + count + " issues in " + userList.size() + " user records processed." );
+		
+		if( count == 0 ) {
+			appProperty.setValue( userList.get( userList.size() - 1 ).getSignUpDate() );
+			dataAccessor.createOrUpdateAppProperty( appProperty );
+		}			
 		
 	}
 	
