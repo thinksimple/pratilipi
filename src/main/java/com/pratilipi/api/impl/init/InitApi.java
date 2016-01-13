@@ -303,12 +303,15 @@ public class InitApi extends GenericApi {
 				
 				if( list.size() == 1 ) {
 					Author author = list.get( 0 );
-					if( author.getUserId() != null )
+					if( author.getUserId() != null ) {
 						logger.log( Level.SEVERE, "User " + user.getId() + "'s author profile is linked with some other user." );
-					else
-						logger.log( Level.SEVERE, "User " + user.getId() + "'s author profile is not linked." );
-					count++;
-					continue;
+						count++;
+						continue;
+					} else {
+						author.setUserId( user.getId() );
+						dataAccessor.createOrUpdateAuthor( author );
+						logger.log( Level.SEVERE, "Linked user " + user.getEmail() + "'s with author profile " + author.getId() + " ." );
+					}
 				}
 				
 				if( list.size() > 1 ) {
