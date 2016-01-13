@@ -428,7 +428,7 @@ public class UserDataUtil {
 		}
 		
 		Map<String, String> dataModel = new HashMap<>();
-		String verificationLink = "http://" + Website.ALL_LANGUAGE.getHostName()
+		String verificationLink = "http://" + Language.TAMIL.getHostName()
 				+ "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "verifyUser=" + Boolean.TRUE;
@@ -450,7 +450,7 @@ public class UserDataUtil {
 		}
 		
 		Map<String, String> dataModel = new HashMap<>();
-		String passwordResetUrl = "http://" + Website.ALL_LANGUAGE.getHostName()
+		String passwordResetUrl = "http://" + Language.TAMIL.getHostName()
 				+ "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "passwordReset=" + Boolean.TRUE;
