@@ -12,6 +12,12 @@
 			display: inline-block;
 		}
 		
+		paper-input {
+			--paper-input-container-disabled: {
+				opacity: 0.9;
+			};
+		} 
+		
 		paper-input.search {
 	        --paper-input-container-focus-color: #797979;
 		}
@@ -156,19 +162,19 @@
 					</div>
 					
 					<div class="modal-body">
-						<paper-input noink always-float-label disabled label="Email" value="{{ user.email }}" ></paper-input>
+						<paper-input noink always-float-label disabled label="${ _strings.user_email }" value="{{ user.email }}" ></paper-input>
 						
 						<div class="row" style="margin-top: 15px;">
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
 								<template is="dom-if" if="{{ ! user.isEmailVerified }}">
 									<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="verifyEmail">${ _strings.edit_account_verify_email }</button>
 								</template>
 								<template is="dom-if" if="{{ user.isEmailVerified }}">
 									<iron-icon style="color: #107FE5; width: 32px; height: 32px;" icon="check-circle"></iron-icon>
-									<h6 style="display: inline-block;">${ _strings.edit_account_email_verified }</h6>
+									<span style="display: inline-block; font-size: 14px;">${ _strings.edit_account_email_verified }</span>
 								</template>
 							</div>
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="changePassword">${ _strings.edit_account_change_password }</button>
 							</div>
 						</div>
