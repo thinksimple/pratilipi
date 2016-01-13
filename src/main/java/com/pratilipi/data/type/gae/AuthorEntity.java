@@ -221,7 +221,9 @@ public class AuthorEntity implements Author {
 	@Override
 	public Language getLanguage() {
 		if( language == null ) {
-			if( languageId == 5130467284090880L || languageId == 5750790484393984L )
+			if( languageId == null )
+				language = null;
+			else if( languageId == 5130467284090880L || languageId == 5750790484393984L )
 				language = Language.HINDI;
 			else if( languageId == 5965057007550464L || languageId == 5746055551385600L )
 				language = Language.GUJARATI;
