@@ -141,14 +141,10 @@
 						break;
 					}
 				}
-				if( index != -1 ) {
-					var temp = this.draftedList;
-					temp.splice( index, 1 );
-					this.set( 'draftedList', [] );
-					/* this.querySelector( '#draftedBooksByAuthor' ).clearPratilipiList(); */
-					for( var i = 0; i < temp.length; i++ )
-						this.push( 'draftedList', temp[i] );
-				}
+				
+				if( index != -1 )
+					this.splice( 'draftedList', index, 1 );
+
 			},
 			
 			removeFromPublishedList: function( publishedContent ) {
@@ -159,14 +155,10 @@
 						break;
 					}
 				}
-				if( index != -1 ) {
-					var temp = this.publishedList;
-					temp.splice( index, 1 );
-					this.set( 'publishedList', [] );
-					/* this.querySelector( '#publishedBooksByAuthor' ).clearPratilipiList(); */
-					for( var i = 0; i < temp.length; i++ )
-						this.push( 'publishedList', temp[i] );
-				}
+
+				if( index != -1 )
+					this.splice( 'publishedList', index, 1 );
+					
 			},
 			
 			removeAllClasses: function() {

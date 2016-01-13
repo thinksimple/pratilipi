@@ -179,13 +179,21 @@
 				this.reviewAvailable = true;
 				
 				var temp = this.reviewList;
-				this.set( 'reviewList', [] );
 				
-				for( var i = 0; i < temp.length; i++ )
-					if( this.userpratilipi.userPratilipiId != temp[i].userPratilipiId )
-						this.push( 'reviewList', temp[i] );
-				this.userReviewDeleted = true;
-				this.$.repeat.render();
+				var index = -1;
+				for( var i = 0; i < temp.length; i++ ) {
+					if( this.userpratilipi.userPratilipiId == temp[i].userPratilipiId ) {
+						index = i;
+						break;
+					}
+				}
+				
+				if( index != -1 ) {
+					this.splice( 'reviewList', index, 1 );
+					this.userReviewDeleted = true;
+					this.$.repeat.render();
+				}
+				
 			},
 			
 			attached: function() {
