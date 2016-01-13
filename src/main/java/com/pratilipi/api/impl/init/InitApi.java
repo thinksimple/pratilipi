@@ -21,6 +21,7 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.GaeQueryBuilder;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
+import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
@@ -286,7 +287,11 @@ public class InitApi extends GenericApi {
 				List<Author> list = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 				
 				if( list.size() == 0 ) {
-					if( user.getId().equals( 5631383682678784L ) || user.getId().equals( 5113880120393728L ) || user.getId().equals( 5634472569470976L ) ) {
+					if( user.getId().equals( 5069036098420736L ) ) {
+						UserData userData = UserDataUtil.createUserData( user );
+						userData.setFirstName( user.getFirstName() );
+						userData.setLastName( user.getLastName() );
+						userData.setGender( user.getGender() );
 						Long authorId = AuthorDataUtil.createAuthorProfile( UserDataUtil.createUserData( user ), null );
 						Task task = TaskQueueFactory.newTask()
 								.setUrl( "/author/process" )
