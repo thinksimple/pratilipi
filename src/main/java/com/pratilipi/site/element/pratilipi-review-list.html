@@ -56,7 +56,7 @@
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
 			<h3 style="color: #D0021B;">${ _strings.review_heading }</h3>
-			<!-- <template is="dom-if" if="{{ userpratilipi.hasAccessToReview }}"> -->
+			<template is="dom-if" if="{{ userpratilipi.hasAccessToReview }}">
 				<template is="dom-if" if="{{ !isactive }}">
 				
 					<template is="dom-if" if="{{ !reviewAvailable }}">
@@ -71,7 +71,7 @@
 					</template>
 					
 				</template>
-			<!-- </template> -->
+			</template>
 		</div>
 		
 		<pratilipi-review-input

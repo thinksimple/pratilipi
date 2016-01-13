@@ -95,6 +95,7 @@
 						<div style="position: absolute; bottom: 25px; display: inline-block;">
 							<template is="dom-if" if="{{ draftsActive }}">
 								<a on-click="redirectToWriter" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_content }</a>
+								<br class="pratilipi-break" />
 								<a on-click="publishNow" class="pratilipi-light-blue-button">${ _strings.pratilipi_publish_it }</a>
 							</template>
 							<template is="dom-if" if="{{ publishedActive }}">
