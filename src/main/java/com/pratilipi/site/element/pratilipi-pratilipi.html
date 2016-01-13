@@ -92,7 +92,7 @@
 	    						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
 		    						<form id="uploadImage" method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId={{ pratilipi.pratilipiId }}" target="upload_target">
 										<input id="uploadImageInput" type="file" on-change="uploadImage" name="{{ pratilipi.pratilipiId }}" accept="image/*">
-										<paper-icon-button style="position: absolute; top: 200px; left: 120px;" type="button" on-click="_chooseFile" icon="file-upload" noink></paper-icon-button>
+										<paper-icon-button style="color: #107FE5; position: absolute; top: 200px; left: 120px;" type="button" on-click="_chooseFile" icon="cloud-upload" noink></paper-icon-button>
 									</form>
 									
 									<iframe id="upload_target" name="upload_target" style="display: none;"></iframe>
@@ -141,14 +141,14 @@
 			
 			<!-- Works, Reads and Likes -->
 			<div class="row" style="text-align: center; padding: 10px;">
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<h3><small>${ _strings.pratilipi_count_reads }&nbsp;&mdash;&nbsp;</small>{{ pratilipi.readCount }}</h3>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+					<h6><small>${ _strings.pratilipi_count_reads }&nbsp;&minus;&nbsp;</small>{{ pratilipi.readCount }}</h6>
 				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<h3><small>${ _strings.pratilipi_count_reviews }&nbsp;&mdash;&nbsp;</small>{{ pratilipi.reviewCount }}</h3>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+					<h6><small>${ _strings.pratilipi_count_reviews }&nbsp;&minus;&nbsp;</small>{{ pratilipi.reviewCount }}</h6>
 				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<h3><small>${ _strings.pratilipi_count_likes }&nbsp;&mdash;&nbsp;</small>{{ pratilipi.fbLikeShareCount }}</h3>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+					<h6><small>${ _strings.pratilipi_count_likes }&nbsp;&minus;&nbsp;</small>{{ pratilipi.fbLikeShareCount }}</h6>
 				</div>
 			</div>
 			
