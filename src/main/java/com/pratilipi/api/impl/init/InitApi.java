@@ -287,12 +287,12 @@ public class InitApi extends GenericApi {
 				List<Author> list = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 				
 				if( list.size() == 0 ) {
-					if( user.getId().equals( 5069036098420736L ) ) {
+					if( user.getId().equals( 5747610597982208L ) ) {
 						UserData userData = UserDataUtil.createUserData( user );
 						userData.setFirstName( user.getFirstName() );
 						userData.setLastName( user.getLastName() );
 						userData.setGender( user.getGender() );
-						Long authorId = AuthorDataUtil.createAuthorProfile( UserDataUtil.createUserData( user ), null );
+						Long authorId = AuthorDataUtil.createAuthorProfile( userData, null );
 						Task task = TaskQueueFactory.newTask()
 								.setUrl( "/author/process" )
 								.addParam( "authorId", authorId.toString() )
@@ -345,7 +345,7 @@ public class InitApi extends GenericApi {
 	
 		}
 		
-		logger.log( Level.SEVERE, "Found " + count + " issues in " + userList.size() + " user records processed." );
+		logger.log( Level.WARNING, "Found " + count + " issues in " + userList.size() + " user records processed." );
 		
 	}
 	
