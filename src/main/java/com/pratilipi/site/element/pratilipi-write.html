@@ -107,6 +107,17 @@
 	</template>
 	
 	<script>
+	
+		function getCookie( cname ) {
+			var name = cname + "=";
+			var ca = document.cookie.split( ';' );
+			for( var i = 0; i < ca.length; i++ ) {
+				var c = ca[i];
+				while ( c.charAt(0)==' ' ) c = c.substring( 1 );
+				if( c.indexOf( name ) == 0 ) return c.substring( name.length,c.length );
+			}
+			return "";
+		}
 
 		Polymer({
 
@@ -202,8 +213,8 @@
 				
 				this.async( function() {
 					jQuery( '#pratilipiWriteButton' ).prop( 'disabled', false );
-					// Redirect to writer with return option to pratilipi page
-					window.location = "http://www.pratilipi.com/write?id=" + pratilipi.pratilipiId + "&ret=" + "http://" + window.location.host + pratilipi.pageUrl;
+					// Redirect to writer with return option to pratilipi page and access token
+					window.location = "http://www.pratilipi.com/write?id=" + pratilipi.pratilipiId + "&ret=" + "http://" + window.location.host + pratilipi.pageUrl + "&accessToken=" + getCookie( "access_token" );
 					this.clear();
 				}, 1000 );
 			},
