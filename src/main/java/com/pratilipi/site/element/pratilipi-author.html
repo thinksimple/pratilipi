@@ -74,7 +74,7 @@
 	    						<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId={{ author.authorId }}" target="upload_target">
 									<div style="display: inline-block;">
 										<input id="uploadAuthorImageInput" type="file" on-change="uploadImage" name="{{ author.authorId }}" accept="image/*">
-										<paper-icon-button style="color: #107FE5; position: absolute; top: 180px; left: 170px;" type="button" on-click="_chooseFile" icon="cloud-upload" noink></paper-icon-button>
+										<paper-icon-button style="color: #000; width: 54px; height: 54px; position: absolute; top: 170px; left: 150px;" type="button" on-click="_chooseFile" icon="cloud-upload" noink></paper-icon-button>
 									</div>
 								</form>
 								
@@ -82,7 +82,10 @@
 	    					</template>
 	    				</template>
 	    			</div>
-	    			<div style="padding: 15px 40px; margin-bottom: 20px;">
+	    			<template is="dom-if" if="{{ !author.hasAccessToUpdate }}">
+	    				<div style="min-height: 20px;"></div>
+	    			</template>
+	    			<div style="padding: 0px 40px 15px 40px; margin-bottom: 20px;">
 	    				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
 	    			</div>
 				</div>
@@ -101,7 +104,7 @@
 
 					<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
 						<template is="dom-if" if="{{ !mobile }}">
-							<div style="position: absolute; bottom: 110px;">
+							<div style="position: absolute; top: 180px;">
 								<button class="pratilipi-light-blue-button" on-click="openAuthorEdit">${ _strings.author_edit_profile }</button>
 							</div>
 						</template>
@@ -121,13 +124,13 @@
 			<!-- Works, Reads and Likes -->
 			<div class="row" style="text-align: center; padding: 10px;">
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h6><small>${ _strings.author_count_works }&nbsp;&minus;&nbsp;</small>{{ author.contentPublished }}</h6>
+					<h6>${ _strings.author_count_works }&nbsp;&minus;&nbsp;{{ author.contentPublished }}</h6>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h3><small>${ _strings.author_count_reads }&nbsp;&minus;&nbsp;</small>{{ author.totalReadCount }}</h3>
+					<h6>${ _strings.author_count_reads }&nbsp;&minus;&nbsp;{{ author.totalReadCount }}</h6>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h3><small>${ _strings.author_count_likes }&nbsp;&minus;&nbsp;</small>{{ author.totalFbLikeShareCount }}</h3>
+					<h6>${ _strings.author_count_likes }&nbsp;&minus;&nbsp;{{ author.totalFbLikeShareCount }}</h6>
 				</div>
 			</div>
 			
@@ -142,8 +145,8 @@
 					<h4 style="color: #D0021B;">${ _strings.author_about }</h4>
 					<div id="author-summary-text" style="margin-top: 15px; margin-down: 20px;">{{ summary }}</div>
 					<div style="text-align: center; padding-top: 5px;">
-						<a id="more" style="font-size: 13px;" on-click="_toggleSnippet">(${ _strings.show_more })</a>
-						<a id="less" style="font-size: 13px;" on-click="_toggleSnippet">(${ _strings.show_less })</a>
+						<a id="more" style="font-size: 14px; font-weight: 700;" on-click="_toggleSnippet">(${ _strings.show_more })</a>
+						<a id="less" style="font-size: 14px; font-weight: 700;" on-click="_toggleSnippet">(${ _strings.show_less })</a>
 					</div>
 				</div>
 			</paper-card>

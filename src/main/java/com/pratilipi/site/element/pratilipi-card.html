@@ -60,6 +60,9 @@
 							<pratilipi-rating value="{{ pratilipi.averageRating }}" />
 							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
 						</div>
+						<template is="dom-if" if="{{ _hasAccessToWrite( draftsActive, publishedActive ) }}">
+							<paper-icon-button style="color: #989898; position: absolute; top: 0px; right: 0px;" icon="create" on-click="redirectToWriter"></paper-icon-button>
+						</template>
 						<div style="position: absolute; bottom: 25px; display: inline-block;">
 							<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</a>
 							<template is="dom-if" if="{{ draftsActive }}">
@@ -117,9 +120,21 @@
 				'iron-resize': '_onIronResize'
 			},
 			
+			_hasAccessToWrite: function( draftsActive, publishedActive ) {
+				if( draftsActive || publishedActive )
+					return true;
+				else
+					return false;
+			},
+			
 			redirectToReader: function() {
 				if( this.pratilipi.readPageUrl != null ) 
-					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 ) + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
+					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
+			},
+			
+			redirectToWriter: function() {
+				if( this.pratilipi.writePageUrl != null ) 
+					window.location.href = "http://www.pratilipi.com/write?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
 			},
 			
 			attached: function() {

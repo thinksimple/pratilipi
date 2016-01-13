@@ -29,7 +29,7 @@
 		.buttons-widescreen {
 			position: absolute; 
 			display: inline-block; 
-			top: 205px;
+			top: 210px;
 		}
 		
 		.buttons-mobile {
@@ -92,7 +92,7 @@
 	    						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
 		    						<form id="uploadImage" method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId={{ pratilipi.pratilipiId }}" target="upload_target">
 										<input id="uploadImageInput" type="file" on-change="uploadImage" name="{{ pratilipi.pratilipiId }}" accept="image/*">
-										<paper-icon-button style="color: #107FE5; position: absolute; top: 200px; left: 120px;" type="button" on-click="_chooseFile" icon="cloud-upload" noink></paper-icon-button>
+										<paper-icon-button style="color: #000; width: 54px; height: 54px; position: absolute; top: 190px; left: 100px;" type="button" on-click="_chooseFile" icon="cloud-upload" noink></paper-icon-button>
 									</form>
 									
 									<iframe id="upload_target" name="upload_target" style="display: none;"></iframe>
@@ -112,13 +112,11 @@
 						</a>
 					</template>
 					
-					<div>
-						<pratilipi-rating value="{{ pratilipi.averageRating }}">
-								<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
-						</pratilipi-rating>
-					</div>
-					<br>
-					<h6>{{ type }}</h6>
+					<pratilipi-rating value="{{ pratilipi.averageRating }}">
+							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
+					</pratilipi-rating>
+					
+					<h6 style="margin-top: 10px;">{{ type }}</h6>
 					
 					<table style="margin-top: 10px; margin-bottom: 20px;">
 						<tr> <th>${ _strings.pratilipi_listing_date } :</th> 	<td>{{ listingDate }}</td> </tr>
@@ -144,13 +142,13 @@
 			<!-- Works, Reads and Likes -->
 			<div class="row" style="text-align: center; padding: 10px;">
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h6><small>${ _strings.pratilipi_count_reads }&nbsp;&minus;&nbsp;</small>{{ pratilipi.readCount }}</h6>
+					<h6>${ _strings.pratilipi_count_reads }&nbsp;&minus;&nbsp;{{ pratilipi.readCount }}</h6>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h6><small>${ _strings.pratilipi_count_reviews }&nbsp;&minus;&nbsp;</small>{{ pratilipi.reviewCount }}</h6>
+					<h6>${ _strings.pratilipi_count_reviews }&nbsp;&minus;&nbsp;{{ pratilipi.reviewCount }}</h6>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h6><small>${ _strings.pratilipi_count_likes }&nbsp;&minus;&nbsp;</small>{{ pratilipi.fbLikeShareCount }}</h6>
+					<h6>${ _strings.pratilipi_count_likes }&nbsp;&minus;&nbsp;{{ pratilipi.fbLikeShareCount }}</h6>
 				</div>
 			</div>
 			
@@ -165,8 +163,8 @@
 					<h4 style="color: #D0021B;">${ _strings.pratilipi_summary }</h4>
 						<div id="pratilipi-summary-text" style="margin-top: 10px; margin-down: 20px;">{{ summary }}</div>
 						<div style="text-align: center; padding-top: 10px;">
-							<a id="more" style="font-size: 13px;" on-click="_toggleSnippet">(${ _strings.show_more })</a>
-							<a id="less" style="font-size: 13px;" on-click="_toggleSnippet">(${ _strings.show_less })</a>
+							<a id="more" style="font-size: 14px; font-weight: 700;" on-click="_toggleSnippet">(${ _strings.show_more })</a>
+							<a id="less" style="font-size: 14px; font-weight: 700;" on-click="_toggleSnippet">(${ _strings.show_less })</a>
 						</div>
 				</div>
 			</paper-card>
@@ -250,7 +248,7 @@
 			
 			redirectToReader: function() {
 				if( this.pratilipi.readPageUrl != null ) 
-					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.readPageUrl.substring( 6 ) + "&ret=" + window.location.href;
+					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.href;
 			},
 			
 			_onIronResize: function() {
