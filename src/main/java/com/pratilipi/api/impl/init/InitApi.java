@@ -14,14 +14,11 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.AuthorState;
-import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserReviewState;
-import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.GaeQueryBuilder;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
-import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
@@ -31,10 +28,6 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
-import com.pratilipi.data.util.AuthorDataUtil;
-import com.pratilipi.data.util.UserDataUtil;
-import com.pratilipi.taskqueue.Task;
-import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -104,7 +97,6 @@ public class InitApi extends GenericApi {
 		_backfillUserStateAndSignUpSource();
 		_backfillPratilipiLanguage();
 		
-		_validateAndUpdateUserProfile();
 		_validateAndUpdateAuthorProfile();
 		
 		_backfillUserReviewState();
@@ -159,175 +151,6 @@ public class InitApi extends GenericApi {
 		
 		logger.log( Level.WARNING, "Backfilled state & signUpSouce for " + count + " user records." );
 
-	}
-
-	private void _validateAndUpdateUserProfile() {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		PersistenceManager pm = dataAccessor.getPersistenceManager();
-		
-		AppProperty appProperty = dataAccessor.getAppProperty( "Jarvis.Validate.User" );
-		if( appProperty == null ) {
-			appProperty = dataAccessor.newAppProperty( "Jarvis.Validate.User" );
-			appProperty.setValue( new Date( 0 ) );
-		}
-
-		// Fetch next 100 users
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
-		gaeQueryBuilder.addFilter( "signUpDate", appProperty.getValue(), Operator.GREATER_THAN_OR_EQUAL );
-		gaeQueryBuilder.addOrdering( "signUpDate", true );
-		gaeQueryBuilder.setRange( 0, 100 );
-		Query query = gaeQueryBuilder.build();
-		
-		List<User> userList = (List<User>) query.execute( appProperty.getValue() );
-		
-		int count = 0; // Un-resolved issue count.
-		for( User user : userList ) {
-			
-			if( user.getState() == UserState.DELETED ) {
-				continue;
-			}
-			
-			// Either email or facebook id should be present.
-			if( user.getEmail() == null && user.getFacebookId() == null ) {
-				logger.log( Level.SEVERE, "User " + user.getId() + " doesn't have email and facebook id." );
-				count++;
-				continue;
-			}
-
-			// Email, if present, must not be empty.
-			if( user.getEmail() != null && user.getEmail().trim().isEmpty() ) {
-				logger.log( Level.SEVERE, "User " + user.getId() + " has empty email id." );
-				count++;
-				continue;
-			}
-			
-			// Facebook id, if present, must not be empty.
-			if( user.getFacebookId() != null && user.getFacebookId().trim().isEmpty() ) {
-				logger.log( Level.SEVERE, "User " + user.getId() + " has empty facebook id." );
-				count++;
-				continue;
-			}
-
-			// Email id must be in lower case.
-			if( ! user.getEmail().equals( user.getEmail().trim().toLowerCase() ) ) {
-				logger.log( Level.SEVERE, "User " + user.getEmail() + " doesn't have email in lower case." );
-				count++;
-				continue;
-			}
-
-			// Only one user account can exist per email id.
-			if( user.getEmail() != null ) {
-				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
-				gaeQueryBuilder.addFilter( "email", user.getEmail() );
-				gaeQueryBuilder.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS );
-				gaeQueryBuilder.addOrdering( "state", true );
-				gaeQueryBuilder.addOrdering( "signUpDate", true );
-				query = gaeQueryBuilder.build();
-				List<User> list = (List<User>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-				if( list.size() != 1 ) {
-					logger.log( Level.SEVERE, "User " + user.getEmail() + " has " + list.size() + " accounts." );
-					count++;
-					continue;
-				}
-			}
-			
-			// Only one user account can exist per facebook id.
-			if( user.getFacebookId() != null ) {
-				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
-				gaeQueryBuilder.addFilter( "facebookId", user.getFacebookId() );
-				gaeQueryBuilder.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS );
-				gaeQueryBuilder.addOrdering( "state", true );
-				gaeQueryBuilder.addOrdering( "signUpDate", true );
-				query = gaeQueryBuilder.build();
-				List<User> list = (List<User>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-				if( list.size() != 1 ) {
-					logger.log( Level.SEVERE, "User " + user.getId() + " has " + list.size() + " accounts." );
-					count++;
-					continue;
-				}
-			}
-
-			
-			// Author profile for the user.
-			gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-			gaeQueryBuilder.addFilter( "userId", user.getId() );
-			gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
-			gaeQueryBuilder.addOrdering( "state", true );
-			gaeQueryBuilder.addOrdering( "registrationDate", true );
-			query = gaeQueryBuilder.build();
-			List<Author> authorList = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );;
-			
-			if( authorList.size() == 0 ) {
-				
-				// Try to find Author profile by his email
-				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-				gaeQueryBuilder.addFilter( "email", user.getEmail() );
-				gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
-				gaeQueryBuilder.addOrdering( "state", true );
-				gaeQueryBuilder.addOrdering( "registrationDate", true );
-				query = gaeQueryBuilder.build();
-
-				List<Author> list = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-				
-				if( list.size() == 0 ) {
-					UserData userData = UserDataUtil.createUserData( user );
-					userData.setFirstName( user.getFirstName() );
-					userData.setLastName( user.getLastName() );
-					userData.setGender( user.getGender() );
-					AuthorDataUtil.createAuthorProfile( userData, null );
-					logger.log( Level.SEVERE, "Created author profile for user " + user.getId() + "." );
-					continue;
-				}
-				
-				if( list.size() == 1 ) {
-					Author author = list.get( 0 );
-					if( author.getUserId() == null ) {
-						author.setUserId( user.getId() );
-						dataAccessor.createOrUpdateAuthor( author );
-						logger.log( Level.SEVERE, "Linked user " + user.getEmail() + " with an author profile " + author.getId() + " ." );
-					} else {
-						logger.log( Level.SEVERE, "User " + user.getId() + "'s author profile is linked with some other user." );
-						count++;
-					}
-					continue;
-				}
-				
-				if( list.size() > 1 ) {
-					logger.log( Level.SEVERE, "User " + user.getId() + " has " + list.size() + " unlinked author profiles." );
-					count++;
-					continue;
-				}
-				
-			}
-			
-			if( authorList.size() == 1 ) {
-				Author author = authorList.get( 0 );
-				if( ( user.getEmail() == null && author.getEmail() != null ) || ( user.getEmail() != null && ! user.getEmail().equals( author.getEmail() ) ) ) {
-					logger.log( Level.SEVERE, "User " + user.getId() + " email doesn't match with the same in author profile " + author.getEmail() );
-					count++;
-				} else if( dataAccessor.getPage( PageType.AUTHOR, author.getId() ) == null ) {
-					logger.log( Level.SEVERE, "Author Page missing for user " + user.getId() + "." );
-					count++;
-				}
-				continue;
-			}
-			
-			if( authorList.size() > 1 ) {
-				logger.log( Level.SEVERE, "User " + user.getId() + " has " + authorList.size() + " author profiles." );
-				count++;
-				continue;
-			}
-	
-		}
-		
-		logger.log( Level.WARNING, "Found " + count + " issues in " + userList.size() + " user records processed." );
-		
-		if( count == 0 ) {
-			appProperty.setValue( userList.get( userList.size() - 1 ).getSignUpDate() );
-			dataAccessor.createOrUpdateAppProperty( appProperty );
-		}			
-		
 	}
 
 	private void _validateAndUpdateAuthorProfile() {

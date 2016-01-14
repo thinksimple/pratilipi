@@ -201,6 +201,7 @@ public abstract class GenericApi extends HttpServlet {
 			HttpServletResponse response ) throws IOException {
 		
 		if( apiResponse instanceof GenericFileDownloadResponse ) {
+			
 			GenericFileDownloadResponse gfdResponse = (GenericFileDownloadResponse) apiResponse;
 
 			String eTag = request.getHeader( "If-None-Match" );
@@ -221,18 +222,21 @@ public abstract class GenericApi extends HttpServlet {
 			}
 			
 		} else if( apiResponse instanceof GenericResponse ) {
+			
 			response.setCharacterEncoding( "UTF-8" );
 			PrintWriter writer = response.getWriter();
 			writer.println( new Gson().toJson( apiResponse ) );
 			writer.close();
 		
 		} else if( apiResponse instanceof Throwable ) {
+			
 			response.setCharacterEncoding( "UTF-8" );
 			PrintWriter writer = response.getWriter();
 
-			if( apiResponse instanceof InvalidArgumentException )
+			if( apiResponse instanceof InvalidArgumentException ) {
+				logger.log( Level.SEVERE, ((Throwable) apiResponse ).getMessage() );
 				response.setStatus( HttpServletResponse.SC_BAD_REQUEST );
-			else if( apiResponse instanceof InsufficientAccessException )
+			} else if( apiResponse instanceof InsufficientAccessException )
 				response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
 			else if( apiResponse instanceof UnexpectedServerException )
 				response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
@@ -241,7 +245,7 @@ public abstract class GenericApi extends HttpServlet {
 			
 			writer.println( ((Throwable) apiResponse ).getMessage() );
 			writer.close();
-
+			
 		}
 		
 	}
