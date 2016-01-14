@@ -17,7 +17,6 @@ import com.pratilipi.api.impl.user.shared.PostUserProcessRequest;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserState;
@@ -97,7 +96,7 @@ public class UserProcessApi extends GenericApi {
 	
 	@Post
 	public GenericResponse postUserProcess( PostUserProcessRequest request )
-			throws InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException {
 
 		if( request.validateData() ) {
 			
