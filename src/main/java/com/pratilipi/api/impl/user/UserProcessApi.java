@@ -80,7 +80,7 @@ public class UserProcessApi extends GenericApi {
 					.addParam( "validateData", "true" );
 			taskList.add( task );
 		}
-		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
+		TaskQueueFactory.getUserTaskQueue().addAll( taskList );
 		
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
 		
