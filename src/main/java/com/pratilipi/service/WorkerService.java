@@ -11,6 +11,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiProcessApi;
 import com.pratilipi.api.impl.user.UserBackupApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserFacebookValidationApi;
+import com.pratilipi.api.impl.user.UserProcessApi;
 
 @SuppressWarnings("serial")
 public class WorkerService extends GenericService {
@@ -19,6 +20,11 @@ public class WorkerService extends GenericService {
 
 		ApiRegistry.register( InitApi.class );
 		
+		ApiRegistry.register( UserProcessApi.class );
+		ApiRegistry.register( UserEmailApi.class );
+		ApiRegistry.register( UserFacebookValidationApi.class );
+		ApiRegistry.register( UserBackupApi.class );
+		
 		ApiRegistry.register( PratilipiProcessApi.class );
 		ApiRegistry.register( PratilipiBackupApi.class );
 		ApiRegistry.register( PratilipiIdfApi.class );
@@ -26,10 +32,6 @@ public class WorkerService extends GenericService {
 		ApiRegistry.register( AuthorProcessApi.class );
 		ApiRegistry.register( AuthorBackupApi.class );
 
-		ApiRegistry.register( UserEmailApi.class );
-		ApiRegistry.register( UserFacebookValidationApi.class );
-		ApiRegistry.register( UserBackupApi.class );
-		
 	}
 	
 }
