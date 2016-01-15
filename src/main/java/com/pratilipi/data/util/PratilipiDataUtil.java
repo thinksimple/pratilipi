@@ -167,7 +167,7 @@ public class PratilipiDataUtil {
 		Author author = pratilipi.getAuthorId() == null
 				? null
 				: DataAccessorFactory.getDataAccessor().getAuthor( pratilipi.getAuthorId() );
-		if( author != null && author.getUserId().equals( accessToken.getUserId() ) )
+		if( author != null && author.getUserId() != null && author.getUserId().equals( accessToken.getUserId() ) )
 			return true;
 		
 		return false;
