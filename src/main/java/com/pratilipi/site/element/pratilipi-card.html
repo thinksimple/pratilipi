@@ -98,7 +98,7 @@
 								<br class="pratilipi-break" />
 								<a on-click="publishNow" class="pratilipi-light-blue-button">${ _strings.pratilipi_publish_it }</a>
 							</template>
-							<template is="dom-if" if="{{ publishedActive }}">
+							<template is="dom-if" if="{{ ! draftsActive }}">
 								<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</a>
 							</template>
 						</div>
