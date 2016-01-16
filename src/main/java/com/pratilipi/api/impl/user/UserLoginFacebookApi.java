@@ -45,15 +45,9 @@ public class UserLoginFacebookApi extends GenericApi {
 		
 		if( new Date().getTime() - userData.getSignUpDate().getTime() <= 60000 ) {
 			
-			Long authorId = AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
+			AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
 			userData = UserDataUtil.getCurrentUser();
 
-			Task authorProcessTask = TaskQueueFactory.newTask()
-					.setUrl( "/author/process" )
-					.addParam( "authorId", authorId.toString() )
-					.addParam( "processData", "true" );
-			taskList.add( authorProcessTask );
-			
 			if( userData.getEmail() != null ) {
 				Task welcomeMailTask = TaskQueueFactory.newTask()
 						.setUrl( "/user/email" )

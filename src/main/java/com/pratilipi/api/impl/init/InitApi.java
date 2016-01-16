@@ -1,6 +1,5 @@
 package com.pratilipi.api.impl.init;
 
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,18 +12,14 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.GaeQueryBuilder;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
-import com.pratilipi.data.type.AppProperty;
-import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserPratilipi;
-import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
@@ -97,8 +92,6 @@ public class InitApi extends GenericApi {
 		_backfillUserStateAndSignUpSource();
 		_backfillPratilipiLanguage();
 		
-		_validateAndUpdateAuthorProfile();
-		
 		_backfillUserReviewState();
 		_publishUserReview();
 		
@@ -153,78 +146,6 @@ public class InitApi extends GenericApi {
 
 	}
 
-	private void _validateAndUpdateAuthorProfile() {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		PersistenceManager pm = dataAccessor.getPersistenceManager();
-		
-		AppProperty appProperty = dataAccessor.getAppProperty( "Jarvis.Validate.Author" );
-		if( appProperty == null ) {
-			appProperty = dataAccessor.newAppProperty( "Jarvis.Validate.Author" );
-			appProperty.setValue( new Date( 0 ) );
-		}
-
-		// Fetch next 100 users
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-		gaeQueryBuilder.addFilter( "lastUpdated", appProperty.getValue(), Operator.GREATER_THAN_OR_EQUAL );
-		gaeQueryBuilder.addOrdering( "lastUpdated", true );
-		gaeQueryBuilder.setRange( 0, 100 );
-		Query query = gaeQueryBuilder.build();
-		
-		List<Author> authorList = (List<Author>) query.execute( appProperty.getValue() );
-		
-		int count = 0;
-		for( Author author : authorList ) {
-			
-			if( author.getState() == AuthorState.DELETED ) {
-				continue;
-			}
-
-			if( author.getEmail() == null ) {
-				continue;
-			}
-			
-			if( ! author.getEmail().equals( author.getEmail().trim().toLowerCase() ) ) {
-				logger.log( Level.WARNING, author.getEmail() + " email is not trimmed or in lower case " );
-				count++;
-				continue;
-			}
-			
-			if( author.getUserId() != null ) {
-				User user = dataAccessor.getUser( author.getUserId() );
-				if( ! author.getEmail().equals( user.getEmail() ) ) {
-					logger.log( Level.WARNING, "Author email " + author.getEmail() + " doesn't match with the same in user table " + user.getEmail() );
-					count++;
-					continue;
-				}
-			}
-
-			gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-			gaeQueryBuilder.addFilter( "email", author.getEmail() );
-			gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
-			gaeQueryBuilder.addOrdering( "state", true );
-			gaeQueryBuilder.addOrdering( "registrationDate", true );
-			query = gaeQueryBuilder.build();
-
-			List<Author> list = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-			
-			if( list.size() > 1 ) {
-				logger.log( Level.WARNING, list.size() + " author accouts found for email " + author.getEmail() );
-				count++;
-				continue;
-			}
-			
-		}
-
-		logger.log( Level.WARNING, count + " issues found in " + authorList.size() + " author records processed." );
-		
-		if( count == 0 ) {
-			appProperty.setValue( authorList.get( authorList.size() - 1 ).getLastUpdated() );
-			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
-		}
-
-	}
-	
 	private void _backfillUserReviewState() {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
