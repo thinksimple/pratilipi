@@ -9,6 +9,7 @@ import com.pratilipi.api.impl.pratilipi.shared.GetAuthorImageRequest;
 import com.pratilipi.api.shared.GenericFileDownloadResponse;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.BlobEntry;
@@ -34,8 +35,15 @@ public class AuthorImageApi extends GenericApi {
 
 	@Post
 	public GenericResponse postAuthorImage( PostAuthorImageRequest request )
-			throws InsufficientAccessException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
+		// This is to cover issue with jQuery FileUpload plug-in.
+		// When user hits "Ctrl+v", the plug-in uploads the data in clipboard as
+		// an image with file name "undefined".
+		// This can be removed as soon as Mark-4 is deprecated.
+		if( request.getName() != null && request.getName().equals( "undefined" ) )
+			throw new InvalidArgumentException( "File name 'undefined' is not allowed." );
+		
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );
 		blobEntry.setData( request.getData() );
 		blobEntry.setMimeType( request.getMimeType() );

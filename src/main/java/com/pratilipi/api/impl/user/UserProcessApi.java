@@ -86,9 +86,10 @@ public class UserProcessApi extends GenericApi {
 		
 		
 		// Updating AppProperty.
-		appProperty.setValue( dataAccessor.getUser( userIdList.get( userIdList.size() - 1 ) ).getSignUpDate() );
-		dataAccessor.createOrUpdateAppProperty( appProperty );
-
+		if( userIdList.size() > 0 ) {
+			appProperty.setValue( dataAccessor.getUser( userIdList.get( userIdList.size() - 1 ) ).getSignUpDate() );
+			dataAccessor.createOrUpdateAppProperty( appProperty );
+		}
 		
 		return new GenericResponse();
 		

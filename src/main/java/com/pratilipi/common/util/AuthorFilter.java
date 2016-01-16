@@ -29,7 +29,7 @@ public class AuthorFilter {
 	}
 
 	public boolean isMinLastUpdatedInclusive() {
-		return minLastUpdatedInclusive == null ? false : minLastUpdatedInclusive;
+		return minLastUpdatedInclusive == null ? true : minLastUpdatedInclusive;
 	}
 	
 	public void setMinLastUpdate( Date minLastUpdated, boolean inclusive ) {
