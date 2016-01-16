@@ -8,6 +8,9 @@ public class AuthorFilter {
 	
 	private Language language;
 	
+	private Date minLastUpdated;
+	private Boolean minLastUpdatedInclusive;
+	
 	private Date nextProcessDateEnd;
 
 	private Boolean orderByContentPublished;
@@ -21,6 +24,19 @@ public class AuthorFilter {
 		this.language = language;
 	}
 
+	public Date getMinLastUpdated() {
+		return minLastUpdated;
+	}
+
+	public boolean isMinLastUpdatedInclusive() {
+		return minLastUpdatedInclusive == null ? false : minLastUpdatedInclusive;
+	}
+	
+	public void setMinLastUpdate( Date minLastUpdated, boolean inclusive ) {
+		this.minLastUpdated = minLastUpdated;
+		this.minLastUpdatedInclusive = inclusive;
+	}
+	
 	public Date getNextProcessDateEnd() {
 		return nextProcessDateEnd;
 	}

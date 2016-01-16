@@ -574,6 +574,13 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		GaeQueryBuilder gaeQueryBuilder =
 				new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
 		
+		if( authorFilter.getMinLastUpdated() != null ) {
+			gaeQueryBuilder.addFilter( "lastUpdated",
+					authorFilter.getMinLastUpdated(),
+					authorFilter.isMinLastUpdatedInclusive() ? Operator.GREATER_THAN_OR_EQUAL : Operator.GREATER_THAN );
+			gaeQueryBuilder.addOrdering( "lastUpdated", true );
+		}
+		
 		if( authorFilter.getNextProcessDateEnd() != null ) {
 			gaeQueryBuilder.addFilter( "nextProcessDate", authorFilter.getNextProcessDateEnd(), Operator.LESS_THAN_OR_EQUAL );
 			gaeQueryBuilder.addOrdering( "nextProcessDate", true );
