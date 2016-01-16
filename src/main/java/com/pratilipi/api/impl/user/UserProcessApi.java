@@ -161,17 +161,20 @@ public class UserProcessApi extends GenericApi {
 			
 			if( authorList.size() == 0 ) {
 				
-				// Try to find Author profile by his email
-				gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-				gaeQueryBuilder.addFilter( "email", user.getEmail() );
-				gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
-				gaeQueryBuilder.addOrdering( "state", true );
-				gaeQueryBuilder.addOrdering( "registrationDate", true );
-				query = gaeQueryBuilder.build();
-
-				List<Author> authorList2 = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
+				List<Author> authorList2 = null;
 				
-				if( authorList2.size() == 0 ) {
+				// Try to find Author profile by his email
+				if( user.getEmail() != null ) {
+					gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
+					gaeQueryBuilder.addFilter( "email", user.getEmail() );
+					gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
+					gaeQueryBuilder.addOrdering( "state", true );
+					gaeQueryBuilder.addOrdering( "registrationDate", true );
+					query = gaeQueryBuilder.build();
+					authorList2 = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
+				}
+				
+				if( authorList2 == null || authorList2.size() == 0 ) {
 					
 					logger.log( Level.SEVERE, "Could not find an Author entity for this User. Creating a new one ..." );
 					UserData userData = UserDataUtil.createUserData( user );
