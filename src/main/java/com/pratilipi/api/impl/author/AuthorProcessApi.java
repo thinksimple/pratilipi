@@ -156,7 +156,7 @@ public class AuthorProcessApi extends GenericApi {
 			return;
 
 		// Email, if present, must be trimmed and converted to lower case.
-		if( ! author.getEmail().equals( author.getEmail().trim().toLowerCase() ) )
+		if( author.getEmail() != null && ! author.getEmail().equals( author.getEmail().trim().toLowerCase() ) )
 			throw new InvalidArgumentException( "Email is either not trimmed or not converted to lower case." );
 
 		// Email must be same as email in User entity.
