@@ -32,16 +32,14 @@
 	</head>
 	
 	<body>
-		<template is="dom-bind">
-			<pratilipi-pratilipi-page 
-					user='${ userJson }'
-					pratilipi-id='${ pratilipi.getId()?c }'
-					userpratilipi='${ userpratilipiJson! }'
-					pratilipi='${ pratilipiJson }'
-					
-					review-list='${ reviewListJson }'
-					cursor='${ reviewListCursor! }'></pratilipi-pratilipi-page>
-		</template>
+		<pratilipi-pratilipi-page 
+				user='${ userJson }'
+				pratilipi-id='${ pratilipi.getId()?c }'
+				userpratilipi='${ userpratilipiJson! }'
+				pratilipi='${ pratilipiJson }'
+				
+				review-list='${ reviewListJson }'
+				cursor='${ reviewListCursor! }'></pratilipi-pratilipi-page>
 	</body>
 	
 </html>

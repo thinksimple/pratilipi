@@ -29,14 +29,12 @@
 	</head>
 	
 	<body>
-		<template is="dom-bind">
-			<pratilipi-list-page 
-				user='${ userJson }'
-				heading='${ title }'
-				pratilipi-list='${ pratilipiListJson }'
-				filter='${ pratilipiListFilterJson! }'
-				cursor='${ pratilipiListCursor! }'></pratilipi-list-page>
-		</template>
+		<pratilipi-list-page 
+			user='${ userJson }'
+			heading='${ title }'
+			pratilipi-list='${ pratilipiListJson }'
+			filter='${ pratilipiListFilterJson! }'
+			cursor='${ pratilipiListCursor! }'></pratilipi-list-page>
 	</body>
 
 </html>

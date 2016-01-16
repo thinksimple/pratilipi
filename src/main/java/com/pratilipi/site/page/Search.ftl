@@ -30,13 +30,11 @@
 	</head>
 
 	<body>
-		<template is="dom-bind">
-			<pratilipi-search-page 
-				user='${ userJson }'
-				pratilipi-list='${ pratilipiListJson }'
-				search-query='${ pratilipiListSearchQuery! }'
-				filter='${ pratilipiListFilterJson }'
-				cursor='${ pratilipiListCursor! }'></pratilipi-search-page>
-		</template>
+		<pratilipi-search-page 
+			user='${ userJson }'
+			pratilipi-list='${ pratilipiListJson }'
+			search-query='${ pratilipiListSearchQuery! }'
+			filter='${ pratilipiListFilterJson }'
+			cursor='${ pratilipiListCursor! }'></pratilipi-search-page>
 	</body>
 </html>

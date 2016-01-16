@@ -31,12 +31,10 @@
 	</head>
 
 	<body>
-		<template is="dom-bind">
-			<pratilipi-home-page 
-				user='${ userJson }'
-				heading='${ featuredTitle }'
-				pratilipi-list='${ featuredListJson }'></pratilipi-home-page>
-		</template>
+		<pratilipi-home-page 
+			user='${ userJson }'
+			heading='${ featuredTitle }'
+			pratilipi-list='${ featuredListJson }'></pratilipi-home-page>
 	</body>
 
 </html>

@@ -30,14 +30,12 @@
 	</head>
 
 	<body>
-		<template is="dom-bind">
-			<pratilipi-author-page 
-				user='${ userJson }'
-				author='${ authorJson }'
-				pratilipi-list='${ publishedPratilipiListJson }'
-				filter='${ publishedPratilipiListFilterJson! }'
-				cursor='${ publishedPratilipiListCursor! }'></pratilipi-author-page>
-		</template>
+		<pratilipi-author-page 
+			user='${ userJson }'
+			author='${ authorJson }'
+			pratilipi-list='${ publishedPratilipiListJson }'
+			filter='${ publishedPratilipiListFilterJson! }'
+			cursor='${ publishedPratilipiListCursor! }'></pratilipi-author-page>
 	</body>
 	
 </html>
