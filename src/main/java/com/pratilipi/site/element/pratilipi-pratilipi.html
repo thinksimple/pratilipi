@@ -95,7 +95,7 @@
 										<paper-icon-button style="color: #000; width: 54px; height: 54px; position: absolute; top: 190px; left: 100px;" type="button" on-click="_chooseFile" icon="cloud-upload" noink></paper-icon-button>
 									</form>
 									
-									<iframe id="upload_target" name="upload_target" style="display: none;"></iframe>
+									<iframe id="upload_target" name="upload_target" style="display: none;" on-change="_onchangeiframe"></iframe>
 		    					</template>
 	    					</template>
 								
@@ -227,11 +227,17 @@
 				document.getElementById( "uploadImageInput" ).click();
 			},
 			
+			_onchangeiframe: function() {
+				this.async( function() {
+					location.reload();
+				}, 500 );
+			},
+			
 			uploadImage: function() {
 				document.getElementById( "uploadImage" ).submit();
 				this.async( function() {
-					location.reload();
-				}, 3000 );
+					this._onchangeiframe();
+				}, 5000 );
 			},
 			
 			getShareUrl: function() {

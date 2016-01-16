@@ -94,9 +94,9 @@
 						
 						<div style="position: absolute; bottom: 25px; display: inline-block;">
 							<template is="dom-if" if="{{ draftsActive }}">
-								<a on-click="redirectToWriter" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_content }</a>
-								<br class="pratilipi-break" />
 								<a on-click="publishNow" class="pratilipi-light-blue-button">${ _strings.pratilipi_publish_it }</a>
+								<br class="pratilipi-break" />
+								<a on-click="redirectToWriter" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_content }</a>
 							</template>
 							<template is="dom-if" if="{{ ! draftsActive }}">
 								<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</a>
@@ -190,7 +190,6 @@
 			},
 			
 			moveToDrafts: function() {
-				console.log( "Reached Here" );
 				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=DRAFTED" );
 				this.$.AjaxPost.generateRequest();
 			},

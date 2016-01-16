@@ -223,6 +223,7 @@ button.blue, button.blue:hover, button.blue:focus {
 	display: inline-block;
 	padding: 10px 15px 10px 15px;
 	margin-right: 10px;
+	magin-top: 5px;
 	outline: none;
 }
 
@@ -265,6 +266,7 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	display: inline-block;
 	padding: 10px 15px 10px 15px;
 	margin-right: 10px;
+	margin-top: 5px;
 	outline: none;
 }
 
@@ -326,6 +328,7 @@ a.pratilipi-orange-button:hover, a.pratilipi-orange-button:focus {
 	font-size: 13px;
 	line-height: 20px;
 	padding: 10px 12px;
+	margin-top: 5px;
 	border: solid #107FE5 1px;
 	outline: none;
 	text-decoration: none;
