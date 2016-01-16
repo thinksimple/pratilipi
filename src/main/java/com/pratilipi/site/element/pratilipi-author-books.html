@@ -126,11 +126,11 @@
 			},
 			
 			addToDraftedList: function( draftedContent ) {
-				this.push( 'draftedList', draftedContent );
+				this.unshift( 'draftedList', draftedContent );
 			},
 			
 			addToPublishedList: function( publishedContent ) {
-				this.push( 'publishedList', publishedContent );
+				this.unshift( 'publishedList', publishedContent );
 			},
 			
 			removeFromDraftedList: function( draftedContent ) {
