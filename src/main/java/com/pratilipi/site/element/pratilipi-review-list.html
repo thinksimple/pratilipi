@@ -82,7 +82,7 @@
 				></pratilipi-review-input>
 		
 		<div class="row">
-			<template is="dom-if" if="{{ userpratilipi.review }}">
+			<template is="dom-if" if="{{ reviewAvailable }}">
 				<template is="dom-if" if="{{ !isactive }}">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<pratilipi-review review="{{ userpratilipi }}"></pratilipi-review>
@@ -108,9 +108,6 @@
 					</div>
 					<div class="modal-body">
 						${ _strings.review_delete_review_confirm }
-						<div style="margin-top: 5px; min-height: 20px;" class="text-center">
-							<span>{{ message }}</span>
-						</div>
 					</div>
 					<div class="modal-footer">
 						<button id="deleteReviewButton" style="float: left; outline: none;" class="btn btn-danger" on-click="deleteReview">${ _strings.okay }</button>
@@ -171,18 +168,16 @@
 			},
 			
 			_userPratilipiChanged: function() {		
-				if( this.userpratilipi == null || this.userpratilipi.review == null || this.reviewList == null ) {
+				if( this.userpratilipi == null || this.userpratilipi.review == null || this.reviewList == null || this.userpratilipi.state != "PUBLISHED" ) {
 					this.reviewAvailable = false;
 					return;
 				}
 
 				this.reviewAvailable = true;
 				
-				var temp = this.reviewList;
-				
 				var index = -1;
-				for( var i = 0; i < temp.length; i++ ) {
-					if( this.userpratilipi.userPratilipiId == temp[i].userPratilipiId ) {
+				for( var i = 0; i < this.reviewList.length; i++ ) {
+					if( this.userpratilipi.userPratilipiId == this.reviewList[i].userPratilipiId ) {
 						index = i;
 						break;
 					}
@@ -205,18 +200,12 @@
 			},
 			
 			closeDeleteReview: function() {
+				jQuery( '#deleteReviewButton' ).prop( 'disabled', false );
 				jQuery( "#deleteReview" ).modal( 'hide' );
 			},
 			
 			deleteReview: function() {
-				this.message = "Please Wait";
 				this.querySelector( 'pratilipi-review-input' ).deleteReview();
-				jQuery( '#deleteReviewButton' ).prop( 'disabled', true );
-				this.async( function() {
-					jQuery( '#deleteReviewButton' ).prop( 'disabled', false );
-					this.message = null;
-					this.closeDeleteReview();
-				}, 1000 );
 			},
 			
 			showReviewInput: function() {
