@@ -375,13 +375,13 @@
 			},
 			
 			moveToDrafts: function( pratilipiId ) {
-				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=PUBLISHED" );
+				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=DRAFTED" );
 				this.$.AjaxPost.generateRequest();
 			},
 			
 			_handleAjaxPostResponse: function( event ) {
 				var pratilipi = event.detail.response;
-				this.updatePratilipi( 'pratilipi', pratilipi );
+				this.updatePratilipi( pratilipi );
 				alert( "Success!" );
 			},
 			
