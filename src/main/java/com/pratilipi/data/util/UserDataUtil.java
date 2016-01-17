@@ -180,7 +180,11 @@ public class UserDataUtil {
 		
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
-		return createUserData( user );
+		UserData userData = createUserData( user );
+		userData.setFirstName( firstName );
+		userData.setLastName( lastName );
+		
+		return userData;
 
 	}
 
