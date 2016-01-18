@@ -37,7 +37,7 @@ public class GetPratilipiListResponse extends GenericResponse {
 		private Boolean hasAccessToUpdate;
 
 		
-		private Pratilipi( PratilipiData pratilipi ) {
+		public Pratilipi( PratilipiData pratilipi ) {
 			this.pratilipiId = pratilipi.getId();
 			this.title = pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle();
 			if( UxModeFilter.isAndroidApp() )
