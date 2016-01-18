@@ -279,6 +279,11 @@ public class AuthorDataUtil {
 		if( authorData.hasPenNameEn() )
 			author.setPenNameEn( authorData.getPenNameEn() );
 		
+		if( authorData.hasGender() )
+			author.setGender( authorData.getGender() );
+		if( authorData.hasDateOfBirth() )
+			author.setDateOfBirth( authorData.getDateOfBirth() );
+		
 		if( authorData.hasLanguage() )
 			author.setLanguage( authorData.getLanguage() );
 		if( authorData.hasSummary() )
