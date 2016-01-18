@@ -241,7 +241,7 @@ public class PratilipiSite extends HttpServlet {
 
 	
 	public Map<String, Object> createDataModelForHomePage( Language lang )
-			throws UnexpectedServerException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		Map<String, Object> featuredListDataModel = createDataModelForListPage( "featured", lang );
 
@@ -378,50 +378,39 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	public Map<String, Object> createDataModelForListPage( String listName, Language lang )
-			throws UnexpectedServerException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		String fileName = "list." + lang.getCode() + "." + listName;
-		
-		// Fetching Pratilipi List from data file
+		// Fetching Pratilipi list title
 		String listTitle = null;
-		List<Long> pratilipiIdList = new LinkedList<Long>();
 		try {
-			File file = new File( getClass().getResource( dataFilePrefix + fileName ).toURI() );
+			String fileName = "list." + lang.getCode() + "." + listName;
+			File file = new File( DataAccessor.class.getResource( "curated/" + fileName ).toURI() );
 			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
-			if( it.hasNext() )
-				listTitle = it.nextLine().trim();
-			while( it.hasNext() ) {
-				String pageUrl = it.nextLine();
-				if( ! pageUrl.trim().isEmpty() ) {
-					Page page = dataAccessor.getPage( pageUrl );
-					if( page != null && page.getPrimaryContentId() != null )
-						pratilipiIdList.add( page.getPrimaryContentId() );
-				}
-			}
+			listTitle = it.nextLine().trim();
 			LineIterator.closeQuietly( it );
-		} catch( NullPointerException e ) {
-			return null;
-		} catch( URISyntaxException | IOException e ) {
+		} catch( URISyntaxException | NullPointerException | IOException e ) {
 			logger.log( Level.SEVERE, "Exception while reading from data file.", e );
-			throw new UnexpectedServerException();
 		}
 
-		List<PratilipiData> pratilipiDataList =
-				PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
+		// Fetching Pratilipi list
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setLanguage( lang );
+		pratilipiFilter.setListName( listName );
+		pratilipiFilter.setState( PratilipiState.PUBLISHED );
+		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
+				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
 
+		// Creating data model
 		List<GetPratilipiListResponse.Pratilipi> pratilipiList = 
-				new ArrayList<>( pratilipiDataList.size() );
-
-		Gson gson = new Gson();
-		for( PratilipiData pratilipiData : pratilipiDataList )
+				new ArrayList<>( pratilipiDataListCursorTuple.getDataList().size() );
+		for( PratilipiData pratilipiData : pratilipiDataListCursorTuple.getDataList() )
 			pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
-		
+	
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", listTitle );
-		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiList ).toString() );
+		dataModel.put( "pratilipiListJson", new Gson().toJson( pratilipiList ).toString() );
 		return dataModel;
+		
 	}
 	
 	public Map<String, Object> createDataModelForStaticPage( String pageName, Language lang )
