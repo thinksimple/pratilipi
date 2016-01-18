@@ -86,7 +86,7 @@
 	                    	<paper-item on-click="openWriterPanel">${ _strings.pratilipi_edit_content }</paper-item>
 						</paper-menu>
 				</paper-menu-button>
-				<pratilipi-edit-pratilipi pratilipi="{{ pratilipi }}"></pratilipi-edit-pratilipi>
+				<pratilipi-edit-pratilipi pratilipi="[[ pratilipi ]]"></pratilipi-edit-pratilipi>
 			</template>
 			
 			<!-- For wide-screens and mobile screens-->
@@ -223,24 +223,9 @@
 			
 			properties: {
 				pratilipi: { type:Object, notify: true },
+				pratilipiData: { type: Object },
+				
 				mobile: { type: Boolean }
-			},
-			
-			_chooseFile: function() {
-				document.getElementById( "uploadImageInput" ).click();
-			},
-			
-			_onchangeiframe: function() {
-				this.async( function() {
-					location.reload();
-				}, 500 );
-			},
-			
-			uploadImage: function() {
-				document.getElementById( "uploadImage" ).submit();
-				this.async( function() {
-					this._onchangeiframe();
-				}, 5000 );
 			},
 			
 			getShareUrl: function() {
@@ -302,6 +287,7 @@
 			
 			updatePratilipi: function( pratilipi ) {
 				this.set( 'pratilipi', this.process( pratilipi ) );
+				
 				this.title = pratilipi.title;
 				this.titleEn = pratilipi.titleEn;
 				
@@ -322,7 +308,7 @@
 			},
 			
 			attached: function() {
-				this.updatePratilipi( this.pratilipi );
+				this.updatePratilipi( this.pratilipiData );
 			},
 			
 			processSummary: function() {
@@ -393,6 +379,23 @@
 					alert( event.detail.request.xhr.response.message );
 				else
 					alert( "Some Error occured! Please try Again." );
+			},
+			
+			_chooseFile: function() {
+				document.getElementById( "uploadImageInput" ).click();
+			},
+			
+			_onchangeiframe: function() {
+				this.async( function() {
+					location.reload();
+				}, 500 );
+			},
+			
+			uploadImage: function() {
+				document.getElementById( "uploadImage" ).submit();
+				this.async( function() {
+					this._onchangeiframe();
+				}, 5000 );
 			}
 			
 		});

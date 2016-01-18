@@ -1,10 +1,16 @@
+<link rel='import' href='pratilipi-userpratilipi.html'>
+<link rel='import' href='pratilipi-pratilipi.html'>
+<link rel='import' href='pratilipi-review-list.html'>
+<link rel='import' href='pratilipi-footer.html'>
+
 <dom-module id="pratilipi-pratilipi-page">
 
 	<template>
 		<paper-header-panel on-content-scroll="scrollHandler" class="flex fullbleed layout vertical" mode="waterfall">
 			<div class="paper-header">
-				<pratilipi-user user='{{ user }}'></pratilipi-user>
-				<pratilipi-header user='{{ user }}'></pratilipi-header>
+				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+				<pratilipi-header user='[[ user ]]'></pratilipi-header>
+				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 				<pratilipi-write></pratilipi-write>
 			</div>
 			<div class="fit" style="margin-top: 5px;">
@@ -14,23 +20,24 @@
 								class='pull-left hidden-xs hidden-sm'
 								></pratilipi-navigation>
 						<div style="overflow:hidden">
-							<pratilipi-userpratilipi
-									user='{{ user }}'
-									pratilipi-id='{{ pratilipiId }}'
-									userpratilipi='{{ userpratilipi }}'
-									></pratilipi-userpratilipi>
 							<pratilipi-pratilipi
 									pratilipi='{{ pratilipi }}'
-									pratilipi-data='{{ pratilipiData }}'
+									pratilipi-data='[[ pratilipiData ]]'
 									></pratilipi-pratilipi>
 							<div style="min-height: 5px;"></div>
+							<pratilipi-userpratilipi
+									user='[[ user ]]'
+									pratilipi-id='[[ pratilipiId ]]'
+									userpratilipi='{{ userpratilipi }}'
+									userpratilipi-data='[[ userpratilipiData ]]'
+									></pratilipi-userpratilipi>
 							<pratilipi-review-list
 									id="ReviewSection"
-									user="{{ user }}"
-									pratilipi='{{ pratilipi }}'
-									userpratilipi='{{ userpratilipi }}'
-									review-list='{{ reviewList }}'
-									cursor='{{ cursor }}'
+									user="[[ user ]]"
+									pratilipi='[[ pratilipi ]]'
+									userpratilipi='[[ userpratilipi ]]'
+									review-list='[[ reviewList ]]'
+									cursor='[[ cursor ]]'
 									></pratilipi-review-list>
 							<br class="pratilipi-break" />
 						</div>
@@ -56,18 +63,13 @@
 			is: 'pratilipi-pratilipi-page',
 			
 			properties: {
-				user: { type: Object, value: {}, observer: "_userChanged" },
-				pratilipiId: { type: Number, value: null },
-				userpratilipi: { type: Object, value: {} },
-				pratilipi: { type: Object, value: {} },
+				userData: { type: Object, observer: "_userChanged" },
+				pratilipiId: { type: Number },
+				pratilipiData: { type: Object },
+				userpratilipiData: { type: Object },
 				
 				reviewList: { type: Array },
 				cursor: { type: String }
-			},
-			
-			ready: function() {
-				if( this.userpratilipi == null )
-					this.userpratilipi = {};
 			},
 			
 			_userChanged: function() {

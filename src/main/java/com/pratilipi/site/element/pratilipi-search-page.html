@@ -1,10 +1,14 @@
+<link rel='import' href='pratilipi-card-grid.html'>
+<link rel='import' href='pratilipi-footer.html'>
+
 <dom-module id="pratilipi-search-page">
 	
 	<template>
 		<paper-header-panel on-content-scroll="scrollHandler" class="flex fullbleed layout vertical" mode="waterfall">
 			<div class="paper-header">
-				<pratilipi-user user='{{ user }}'></pratilipi-user>
-				<pratilipi-header user='{{ user }}'></pratilipi-header>
+				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+				<pratilipi-header user='[[ user ]]'></pratilipi-header>
+				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 				<pratilipi-write></pratilipi-write>
 			</div>
 			<div class="fit" style="margin-top: 5px;">
@@ -16,10 +20,10 @@
 						<pratilipi-card-grid
 							id='SearchResult'
 							style='overflow:hidden'
-							pratilipi-list='{{ pratilipiList }}'
-							search-query='{{ searchQuery }}'
-							filter='{{ filter }}'
-							cursor='{{ cursor }}'
+							pratilipi-list='[[ pratilipiList ]]'
+							search-query='[[ searchQuery ]]'
+							filter='[[ filter ]]'
+							cursor='[[ cursor ]]'
 							></pratilipi-card-grid>
 						<br class="pratilipi-break"/>
 					</div>
@@ -35,7 +39,7 @@
 			is: 'pratilipi-search-page',
 			
 			properties: {
-				user: { type: Object, value: {} },
+				userData: { type: Object },
 				pratilipiList: { type: Array },
 				searchQuery: { type: String },
 				filter: { type: Object },

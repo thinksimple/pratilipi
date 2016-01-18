@@ -22,17 +22,22 @@
 			properties: {
 				user: { type: Object, observer: '_userChangeObserver' },
 				pratilipiId: { type: Number },
-				userpratilipi: { type: Object, notify: true, value: {} },
+				userpratilipi: { type: Object, notify: true },
+				userpratilipiData: { type: Object }
 			},
 			
 			setUserPratilipi: function( userPratilipi ) {
 				this.set( 'userpratilipi', userPratilipi );
 			},
 			
+			ready: function() {
+				this.setUserPratilipi( this.userpratilipiData );
+			},
+			
 			_userChangeObserver: function() {
 				if( this.user.isGuest ) {
-					this.set( 'userpratilipi', {} );
-				} else if( this.pratilipiId != null ) {
+					this.setUserPratilipi( {} );
+				} else {
 					var ajaxGet = this.$.AjaxGet;
 					ajaxGet.params.pratilipiId = this.pratilipiId;
 					ajaxGet.generateRequest();

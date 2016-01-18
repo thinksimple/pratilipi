@@ -13,10 +13,21 @@
 		
 		paper-input.search {
 	        --paper-input-container-focus-color: #797979;
-	        --paper-input-container-label: {
-				font-size: 15px;
-				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
-			};
+		}
+		
+		paper-input.search /deep/ ::-webkit-input-placeholder {
+			font-size: 15px;
+			font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+		}
+
+		paper-input.search /deep/ ::-moz-placeholder {
+			font-size: 15px;
+			font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+		}
+
+		paper-input.search /deep/ :-ms-input-placeholder {
+			font-size: 15px;
+			font-family: Helvetica,'Noto Sans Tamil', sans-serif;
 		}
 		
 		paper-icon-button.search-icon {

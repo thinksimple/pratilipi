@@ -82,7 +82,7 @@
 
 			properties: {
 				pratilipi: { type: Object, observer: "_pratilipiChangeObserver" },
-				userpratilipi: { type: Object, value: {}, observer:"_userpratilipiChangeObserver" },
+				userpratilipi: { type: Object, observer:"_userpratilipiChangeObserver" },
 				ratingValue: { type: Number, value: 0 },
 				isactive: { type: Boolean, notify: true },
 				
@@ -96,14 +96,12 @@
 			
 			_userpratilipiChangeObserver: function() {
 				
-				if( this.userpratilipi == null )
-					return;
-				
 				this.set( 'params', this.userpratilipi );
 
 				if( this.userpratilipi.rating != null )
 					this.querySelector( 'pratilipi-rating-input' ).setRating( this.userpratilipi.rating );
-				
+				else
+					this.querySelector( 'pratilipi-rating-input' ).setRating( 0 );
 			},
 			
 			open: function() {
@@ -119,7 +117,7 @@
 			
 			deleteReview: function() {
 				// TODO: Change state and make Post call.
-				var body = { pratilipiId: this.pratilipi.pratilipiId, reviewState:"DELETED" };
+				var body = { pratilipiId: this.pratilipi.pratilipiId, reviewState: "DELETED" };
 				this.$.AjaxPost.body = jQuery.param( body );
 				this.$.AjaxPost.generateRequest();
 			},
@@ -155,7 +153,6 @@
 				} else {
 					this.message = null;
 					document.querySelector( 'pratilipi-userpratilipi' ).setUserPratilipi( event.detail.response )
-					this.set( 'userpratilipi', event.detail.response );
 					this.close();
 				}
 			},

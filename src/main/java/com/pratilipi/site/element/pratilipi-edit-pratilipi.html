@@ -178,8 +178,7 @@
 				this.message = "${ _strings.updated_pratilipi_info_success }";
 				
 				var pratilipi = event.detail.response;
-				this.set( 'pratilipi', pratilipi );
-				this.set( 'params', pratilipi );
+
 				document.querySelector( 'pratilipi-pratilipi' ).updatePratilipi( pratilipi );
 				location.reload();
 				

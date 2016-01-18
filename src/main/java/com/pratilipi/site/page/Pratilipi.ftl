@@ -18,25 +18,21 @@
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi-page.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-write.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-userpratilipi.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-edit-account.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-write.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-review-list.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 		
-
 		<#-- Custom Stylesheet -->
-		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151218">
+		<link type="text/css" rel="stylesheet" href="/resources/style.css">
+
 	</head>
 	
 	<body>
 		<pratilipi-pratilipi-page 
-				user='${ userJson }'
+				user-data='${ userJson }'
 				pratilipi-id='${ pratilipi.getId()?c }'
-				userpratilipi='${ userpratilipiJson! }'
-				pratilipi='${ pratilipiJson }'
+				pratilipi-data='${ pratilipiJson }'
 				
 				review-list='${ reviewListJson }'
 				cursor='${ reviewListCursor! }'></pratilipi-pratilipi-page>
