@@ -16,13 +16,16 @@ public class CategoryDataUtil {
 	private static final Logger logger = 
 			Logger.getLogger( CategoryDataUtil.class.getName() );
 
-	public static List<CategoryData> getCategoryList( Language language ) throws UnexpectedServerException {
+	public static List<CategoryData> getCategoryList( Language language )
+			throws UnexpectedServerException {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Category> categoryList = dataAccessor.getCategoryList( language );
 		List<CategoryData> categoryDataList = new ArrayList<>( categoryList.size() );
 		for( Category category : categoryList )
 			categoryDataList.add( new CategoryData( category.getName(), category.getPratilipiFilter() ) );
 		return categoryDataList;
+		
 	}
 
 }

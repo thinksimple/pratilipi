@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
@@ -14,12 +15,15 @@ public class GetPratilipiListResponse extends GenericResponse {
 		private Long pratilipiId;
 		
 		private String title;
+		private Language language;
 		private Author author;
 
 		private String pageUrl;
 		private String coverImageUrl;
 		private String readPageUrl;
 	
+		private PratilipiContentType contentType;
+
 		private Long ratingCount;
 		private Float averageRating;
 

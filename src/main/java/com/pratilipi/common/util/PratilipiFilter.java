@@ -1,12 +1,16 @@
 package com.pratilipi.common.util;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
-public class PratilipiFilter {
+public class PratilipiFilter implements Serializable {
+	
+	private static final long serialVersionUID = 6769002082197329230L;
+
 	
 	private Long authorId;
 	private Language language;
