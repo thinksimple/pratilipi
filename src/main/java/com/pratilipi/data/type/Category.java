@@ -19,6 +19,7 @@ public interface Category extends Serializable {
 	
 	String getName();
 	
+	@Deprecated
 	void setName( String name );
 	
 	@Deprecated

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.jdo.PersistenceManager;
 
@@ -568,12 +569,14 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	@Override
 	public List<Category> getCategoryList( Language language ) {
-		String memcacheId = PREFIX_CATEGORY_LIST + language.getCode() + "-" + new Date().getTime() / 900000;
+		String memcacheId = PREFIX_CATEGORY_LIST + language.getCode();
 		List<Category> categoryList = memcache.get( memcacheId );
 		if( categoryList == null ) {
 			categoryList = dataAccessor.getCategoryList( language );
 			if( categoryList != null )
-				memcache.put( memcacheId, new ArrayList<>( categoryList ) );
+				memcache.put( memcacheId,
+						new ArrayList<>( categoryList ),
+						TimeUnit.MILLISECONDS.convert( 15, TimeUnit.MINUTES ) );
 		}
 		return categoryList;
 	}

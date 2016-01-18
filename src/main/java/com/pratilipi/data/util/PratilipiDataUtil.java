@@ -630,7 +630,8 @@ public class PratilipiDataUtil {
 			
 			String uriAlias = UriAliasUtil.generateUriAlias(
 					page.getUriAlias(),
-					uriPrifix, pratilipi.getTitle(), pratilipi.getTitleEn() );
+					uriPrifix,
+					pratilipi.getTitleEn() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
 			
 			if( isNew && uriAlias == null ) {
 				// Do NOT return.
