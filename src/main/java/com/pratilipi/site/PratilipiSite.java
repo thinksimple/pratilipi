@@ -19,6 +19,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
@@ -240,15 +242,62 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	
-	public Map<String, Object> createDataModelForHomePage( Language lang )
-			throws InsufficientAccessException, UnexpectedServerException {
+	private String createListPageTitle( String listName, Language lang ) {
+		String listTitle = null;
+		try {
+			String fileName = "list." + lang.getCode() + "." + listName;
+			File file = new File( DataAccessor.class.getResource( "curated/" + fileName ).toURI() );
+			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+			listTitle = it.nextLine().trim();
+			LineIterator.closeQuietly( it );
+		} catch( URISyntaxException | NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception while reading from data file.", e );
+		}
+		return listTitle;
+	}
 
-		Map<String, Object> featuredListDataModel = createDataModelForListPage( "featured", lang );
+	
+	private Map<String, Object> createDataModelForHomePage( Language lang )
+			throws InsufficientAccessException {
 
+		Gson gson = new Gson();
+		
+		String[] listNames = { "featured", "fiction", "magazines" };
+		JsonArray sections = new JsonArray();
+		
+		for( String listName : listNames ) {
+			
+			String title = createListPageTitle( listName, lang );
+			if( title == null )
+				continue;
+			
+			PratilipiFilter pratilipiFilter = new PratilipiFilter();
+			pratilipiFilter.setLanguage( lang );
+			pratilipiFilter.setListName( listName );
+			pratilipiFilter.setState( PratilipiState.PUBLISHED );
+			
+			DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
+					PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 6 );
+
+			if( pratilipiDataListCursorTuple.getDataList().size() == 0 )
+				continue;
+			
+			List<GetPratilipiListResponse.Pratilipi> pratilipiList = 
+					new ArrayList<>( pratilipiDataListCursorTuple.getDataList().size() );
+			for( PratilipiData pratilipiData : pratilipiDataListCursorTuple.getDataList() )
+				pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
+			
+			JsonObject section = new JsonObject();
+			section.addProperty( "title", title );
+			section.add( "pratilipiList", gson.toJsonTree( pratilipiList ) );
+			sections.add( section );
+			
+		}
+		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "featuredTitle", featuredListDataModel.get( "title" ) );
-		dataModel.put( "featuredListJson", featuredListDataModel.get( "pratilipiListJson" ) );
+		dataModel.put( "sectionsJson", gson.toJson( sections ) );
 		return dataModel;
+		
 	}
 
 	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode ) throws InsufficientAccessException {
@@ -365,14 +414,14 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	private Map<String, Object> createDataModelForListPage( PratilipiType type, Language lang )
-			throws InsufficientAccessException, UnexpectedServerException {
+			throws InsufficientAccessException {
 		
 		return createDataModelForListPage( type, null, lang );
 		
 	}
 
 	private Map<String, Object> createDataModelForListPage( String listName, Language lang )
-				throws InsufficientAccessException, UnexpectedServerException {
+				throws InsufficientAccessException {
 
 		return createDataModelForListPage( null, listName, lang );
 		
@@ -398,7 +447,7 @@ public class PratilipiSite extends HttpServlet {
 		Gson gson = new Gson();
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", type == null ? getCurateListTitle( listName, lang ) : type.getNamePlural() );
+		dataModel.put( "title", type == null ? createListPageTitle( listName, lang ) : type.getNamePlural() );
 		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiList ).toString() );
 		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
 		dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
@@ -432,21 +481,6 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "title", title );
 		dataModel.put( "content", content.toString() );
 		return dataModel;
-	}
-
-	
-	private String getCurateListTitle( String listName, Language lang ) {
-		String listTitle = null;
-		try {
-			String fileName = "list." + lang.getCode() + "." + listName;
-			File file = new File( DataAccessor.class.getResource( "curated/" + fileName ).toURI() );
-			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
-			listTitle = it.nextLine().trim();
-			LineIterator.closeQuietly( it );
-		} catch( URISyntaxException | NullPointerException | IOException e ) {
-			logger.log( Level.SEVERE, "Exception while reading from data file.", e );
-		}
-		return listTitle;
 	}
 
 	
