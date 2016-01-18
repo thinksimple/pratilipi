@@ -39,7 +39,8 @@
 	 		is: 'pratilipi-user',
 
 	 		properties: {
-				user: { type: Object, notify: true }
+				user: { type: Object, notify: true },
+				userData: { type: Object }
 			},
 			
 			updateUser: function( user ) {
@@ -97,6 +98,8 @@
 			},
 
 			ready: function() {
+				
+				this.updateUser( this.userData );
 				
 				if( getValue( 'email' ) !== "" && getValue( 'token' ) !== "" ) {
 

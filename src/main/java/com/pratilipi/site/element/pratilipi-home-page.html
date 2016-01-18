@@ -3,7 +3,7 @@
 	<template>
 		<paper-header-panel class="flex fullbleed layout vertical" mode="waterfall">
 			<div class="paper-header">
-				<pratilipi-user user='{{ user }}'></pratilipi-user>
+				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 				<pratilipi-header user='[[ user ]]'></pratilipi-header>
 				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 				<pratilipi-write></pratilipi-write>
@@ -37,7 +37,7 @@
 			is: 'pratilipi-home-page',
 
 			properties: {
-				user: { type: Object },
+				userData: { type: Object },
 				heading: { type: String },
 				pratilipiList: { type: Object }
 			}

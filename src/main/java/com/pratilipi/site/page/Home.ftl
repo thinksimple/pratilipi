@@ -33,7 +33,7 @@
 
 	<body>
 		<pratilipi-home-page 
-			user='${ userJson }'
+			user-data='${ userJson }'
 			heading='${ featuredTitle }'
 			pratilipi-list='${ featuredListJson }'></pratilipi-home-page>
 	</body>
