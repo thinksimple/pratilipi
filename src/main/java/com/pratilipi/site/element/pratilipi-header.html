@@ -1,5 +1,4 @@
 <link rel='import' href='pratilipi-navigation-drawer.html'>
-<link rel='import' href='pratilipi-edit-account.html'>
 
 <dom-module id="pratilipi-header">
 
@@ -163,8 +162,6 @@
 			<pratilipi-navigation-drawer with-backdrop></pratilipi-navigation-drawer>
 		</div>
 		
-		<pratilipi-edit-account user="{{ user }}"></pratilipi-edit-account>
-		
 	</template>
 
 
@@ -195,7 +192,7 @@
 			},
 			
 			myAccount: function() {
-				this.querySelector( 'pratilipi-edit-account' ).open();
+				document.querySelector( 'pratilipi-edit-account' ).open();
 			},
 			
 			myProfile: function() {

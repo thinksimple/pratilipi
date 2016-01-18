@@ -4,7 +4,8 @@
 		<paper-header-panel class="flex fullbleed layout vertical" mode="waterfall">
 			<div class="paper-header">
 				<pratilipi-user user='{{ user }}'></pratilipi-user>
-				<pratilipi-header user='{{ user }}'></pratilipi-header>
+				<pratilipi-header user='[[ user ]]'></pratilipi-header>
+				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 				<pratilipi-write></pratilipi-write>
 			</div>
 			<div class="fit" style="margin-top: 5px;">
@@ -17,8 +18,8 @@
 							<pratilipi-tamil-carousel></pratilipi-tamil-carousel>
 							<br class="pratilipi-break"/>
 							<pratilipi-card-grid
-									heading='{{ heading }}'
-									pratilipi-list='{{ pratilipiList }}'
+									heading='[[ heading ]]'
+									pratilipi-list='[[ pratilipiList ]]'
 									></pratilipi-card-grid>
 							<br class="pratilipi-break"/>
 						</div>

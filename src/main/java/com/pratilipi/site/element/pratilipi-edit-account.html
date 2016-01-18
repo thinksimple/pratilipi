@@ -1,7 +1,7 @@
 <dom-module id="pratilipi-edit-account">
 
 	<template>
-		<div class="modal fade" id="myAccount" role="dialog">
+		<div class="modal fade" id="pratilipiEditAccount" role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					
@@ -46,12 +46,12 @@
 			
 			open: function() {
 				this.async( function() {
-					jQuery( "#myAccount" ).modal();
+					jQuery( "#pratilipiEditAccount" ).modal();
 				});
 			},
 			
 			close: function() {
-				jQuery( "#myAccount" ).modal( 'hide' );	
+				jQuery( "#pratilipiEditAccount" ).modal( 'hide' );	
 			},
 			
 			changePassword: function() {
@@ -62,7 +62,7 @@
 			verifyEmail: function() {
 				this.close();
 				document.querySelector( 'pratilipi-user' ).sendVerificationMail();
-			},
+			}
 			
 		});
 	</script>
