@@ -1,9 +1,5 @@
 package com.pratilipi.api.impl.pratilipi;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -40,16 +36,8 @@ public class PratilipiListApi extends GenericApi {
 
 		
 		// Preparing & returning response object.
-		
-		List<GetPratilipiListResponse.Pratilipi> pratilipiResponseList =
-				new ArrayList<>( pratilipiListCursorTuple.getDataList().size() );
-		
-		Gson gson = new Gson();
-		for( PratilipiData pratilipiData : pratilipiListCursorTuple.getDataList() )
-			pratilipiResponseList.add( gson.fromJson( gson.toJson( pratilipiData ), GetPratilipiListResponse.Pratilipi.class ) );
-		
 		return new GetPratilipiListResponse(
-				pratilipiResponseList,
+				pratilipiListCursorTuple.getDataList(),
 				pratilipiListCursorTuple.getCursor() );
 		
 	}		

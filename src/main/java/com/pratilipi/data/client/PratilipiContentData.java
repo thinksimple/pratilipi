@@ -49,6 +49,10 @@ public class PratilipiContentData {
 			return pageletList == null || pageletList.size() < pageletNo ? null : pageletList.get( pageletNo - 1 );
 		}
 
+		public void clear() {
+			this.pageletList = null;
+		}
+		
 	}
 	
 	public static class Pagelet {
@@ -101,4 +105,28 @@ public class PratilipiContentData {
 		return chapterList == null || chapterList.size() < chapterNo ? null : chapterList.get( chapterNo - 1 );
 	}
 	
+	public Page getPage( int pageNo ) {
+		if( chapterList == null )
+			return null;
+		
+		for( Chapter chapter : chapterList ) {
+			if( pageNo > chapter.getPageCount() )
+				pageNo = pageNo - chapter.getPageCount();
+			else
+				return chapter.getPage( pageNo );
+		}
+		
+		return null;
+	}
+	
+	public int getTotalPageCount() {
+		if( chapterList == null )
+			return 0;
+		
+		int totalPageCount = 0;
+		for( Chapter chapter : chapterList )
+			totalPageCount += chapter.getPageCount();
+		return totalPageCount;
+	}
+
 }
