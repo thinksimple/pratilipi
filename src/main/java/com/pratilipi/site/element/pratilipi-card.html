@@ -3,6 +3,10 @@
 <dom-module id="pratilipi-card">
 
 	<style>
+	
+		:host {
+			display: block;
+		}
 		
 		paper-card {
 			height: 200px;
@@ -16,15 +20,18 @@
 			};
 		}
 		
-		.media-heading {
-			max-height: 22px;
-			overflow: hidden;
-			max-width: 95%;
-			display: inline-block;
-			white-space: normal;
+		.contain-title {
+			width: 250px;
 		}
 		
-		.pratilipi-card-heading, .pratilipi-card-heading:hover, .pratilipi-card-heading:focus {
+		.ellipsed, .ellipsed:hover, .ellipsed:focus {
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			color: #D0021B;
+		}
+		
+		.card-heading, .card-heading:hover, .card-heading:focus {
 			font-size: 16px;
 			line-height: 18px;
 			color: #D0021B;
@@ -46,7 +53,6 @@
 
 	<template>
 		<paper-card>
-			<div class="card-content">
 				<div class="media">
 					
 					<div class="media-left">
@@ -56,12 +62,9 @@
 					</div>
 					
 				  	<div class="media-body">
-				  		<h4 class="media-heading">
-						 	<a class="pratilipi-card-heading" href="{{ pratilipi.pageUrl }}" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">{{ title }}</a>
-						</h4>
-						<template is="dom-if" if="{{ showDots }}">
-							<span style="display: inline-block; color: #D0021B; position: absolute;">&hellip;</span>
-						</template>
+				  		<div class="contain-title">
+				  		 	<h4 style="text-align: left;" class="ellipsed" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}"><a class="card-heading" href="{{ pratilipi.pageUrl }}">{{ title }}</a></h4>
+						</div>
 						
 						<template is="dom-if" if="{{ !draftsActive }}">
 							<h6>
@@ -105,7 +108,6 @@
 						
 					</div>
 				</div>
-			</div>
 		</paper-card>
 		<iron-ajax
 				id="AjaxPost"
@@ -136,10 +138,6 @@
 
 			is: 'pratilipi-card',
 			
-			behaviors: [
-				Polymer.IronResizableBehavior
-			],
-          
 			properties: {
 				pratilipi: { type: Object, observer: "init" },
 				
@@ -147,8 +145,22 @@
 				publishedActive: { type: Boolean, value: false }
 			},
 			
+			behaviors: [
+				Polymer.IronResizableBehavior
+			],
+			
 			listeners: {
 				'iron-resize': '_onIronResize'
+			},
+			
+			_onIronResize: function() {
+				// titleWidth = width occupied by the title + 20 px (occupied by ellipses)
+				var titleWidth = jQuery( this.querySelector( 'h4 a' ) ).width() + 20;
+				// maxWidth = width of the card - image - padding.
+				var maxWidth = jQuery( this ).width() - 130;
+				
+				// Setting the minimum of two to the card heading.
+				jQuery( this.querySelector( '.contain-title' ) ).css( "width", Math.min( titleWidth, maxWidth ) + "px" );
 			},
 			
 			redirectToReader: function() {
@@ -173,15 +185,6 @@
 				this.title = this.pratilipi.title;
 
 				$('[data-toggle="tooltip"]').tooltip();
-			},
-			
-			_onIronResize: function() {
-				// Adjusting heading
-				var heading = jQuery( this.querySelector( '.pratilipi-card-heading' ) );
-				if( heading.height() > 20 )
-					this.showDots = true;
-				else
-					this.showDots = false;
 			},
 			
 			publishNow: function() {
