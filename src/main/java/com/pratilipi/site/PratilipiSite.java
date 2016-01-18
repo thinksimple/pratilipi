@@ -416,7 +416,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Gson gson = new Gson();
 		for( PratilipiData pratilipiData : pratilipiDataList )
-			pratilipiList.add( gson.fromJson( gson.toJson( pratilipiData ), GetPratilipiListResponse.Pratilipi.class ) );
+			pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", listTitle );
