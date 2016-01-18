@@ -60,6 +60,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
 	
 	private static final String CATEGORY_DATA_FILE_PREFIX = "curated/category.";
+	private static final String CURATED_DATA_FOLDER = "curated";
 	
 	private static final PersistenceManagerFactory pmfInstance =
 			JDOHelper.getPersistenceManagerFactory( "transactions-optional" );
@@ -440,49 +441,95 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			PratilipiFilter pratilipiFilter, String cursorStr,
 			Integer resultCount, boolean idOnly ) {
 		
-		GaeQueryBuilder gaeQueryBuilder =
-				new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
+		if( pratilipiFilter.getListName() == null ) {
+		
+			GaeQueryBuilder gaeQueryBuilder =
+					new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
+	
+			if( pratilipiFilter.getAuthorId() != null )
+				gaeQueryBuilder.addFilter( "authorId", pratilipiFilter.getAuthorId() );
+			if( pratilipiFilter.getLanguage() != null )
+				gaeQueryBuilder.addFilter( "language", pratilipiFilter.getLanguage() );
+			if( pratilipiFilter.getType() != null )
+				gaeQueryBuilder.addFilter( "type", pratilipiFilter.getType() );
+			if( pratilipiFilter.getState() != null )
+				gaeQueryBuilder.addFilter( "state", pratilipiFilter.getState() );
+	
+			if( pratilipiFilter.getNextProcessDateEnd() != null ) {
+				gaeQueryBuilder.addFilter( "nextProcessDate", pratilipiFilter.getNextProcessDateEnd(), Operator.LESS_THAN_OR_EQUAL );
+				gaeQueryBuilder.addOrdering( "nextProcessDate", true );
+			}
+			
+			if( pratilipiFilter.getOrderByReadCount() != null )
+				gaeQueryBuilder.addOrdering( "readCount", pratilipiFilter.getOrderByReadCount() );
+			if( pratilipiFilter.getOrderByLastUpdate() != null )
+				gaeQueryBuilder.addOrdering( "lastUpdated", pratilipiFilter.getOrderByLastUpdate() );
+	
+			if( resultCount != null )
+				gaeQueryBuilder.setRange( 0, resultCount );
+			
+			Query query = gaeQueryBuilder.build();
+			if( cursorStr != null ) {
+				Cursor cursor = Cursor.fromWebSafeString( cursorStr );
+				Map<String, Object> extensionMap = new HashMap<String, Object>();
+				extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
+				query.setExtensions( extensionMap );
+			}
+	
+			if( idOnly )
+				query.setResult( "id" );
+			
+			List<T> pratilipiEntityList =
+					(List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
+			Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
+			
+			return new DataListCursorTuple<T>(
+					idOnly ? pratilipiEntityList : (List<T>) pm.detachCopyAll( pratilipiEntityList ),
+					cursor == null ? null : cursor.toWebSafeString() );
+			
+		} else {
+			
+			int startIndex = cursorStr == null ? 0 : Integer.parseInt( cursorStr );
+			List<T> responseList = new LinkedList<>();
+			
+			try {
+				
+				String fileName = CURATED_DATA_FOLDER + "/list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
+				File file = new File( DataAccessor.class.getResource( fileName ).toURI() );
+				LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+				while( it.hasNext() ) {
+					
+					String uri = it.nextLine().trim();
+					if( uri.isEmpty() )
+						continue;
+					
+					Page page = getPage( uri );
+					if( page == null || page.getType() != PageType.PRATILIPI )
+						continue;
+					
+					if( startIndex > 0 ) {
+						startIndex--;
+						continue;
+					}
+					
+					responseList.add( idOnly
+							? (T) page.getPrimaryContentId()
+							: (T) getPratilipi( page.getPrimaryContentId() ) );
+					
+					if( responseList.size() == resultCount ) // resultCount could be null
+						break;
+					
+				}
+				LineIterator.closeQuietly( it );
+				
+			} catch( URISyntaxException | NullPointerException | JsonSyntaxException | IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch " + pratilipiFilter.getListName() + " list for " + pratilipiFilter.getLanguage() + ".", e );
+			}
 
-		if( pratilipiFilter.getAuthorId() != null )
-			gaeQueryBuilder.addFilter( "authorId", pratilipiFilter.getAuthorId() );
-		if( pratilipiFilter.getLanguage() != null )
-			gaeQueryBuilder.addFilter( "language", pratilipiFilter.getLanguage() );
-		if( pratilipiFilter.getType() != null )
-			gaeQueryBuilder.addFilter( "type", pratilipiFilter.getType() );
-		if( pratilipiFilter.getState() != null )
-			gaeQueryBuilder.addFilter( "state", pratilipiFilter.getState() );
-
-		if( pratilipiFilter.getNextProcessDateEnd() != null ) {
-			gaeQueryBuilder.addFilter( "nextProcessDate", pratilipiFilter.getNextProcessDateEnd(), Operator.LESS_THAN_OR_EQUAL );
-			gaeQueryBuilder.addOrdering( "nextProcessDate", true );
+			return new DataListCursorTuple<T>( responseList,  startIndex + responseList.size() + "" );
+			
 		}
 		
-		if( pratilipiFilter.getOrderByReadCount() != null )
-			gaeQueryBuilder.addOrdering( "readCount", pratilipiFilter.getOrderByReadCount() );
-		if( pratilipiFilter.getOrderByLastUpdate() != null )
-			gaeQueryBuilder.addOrdering( "lastUpdated", pratilipiFilter.getOrderByLastUpdate() );
-
-		if( resultCount != null )
-			gaeQueryBuilder.setRange( 0, resultCount );
-		
-		Query query = gaeQueryBuilder.build();
-		if( cursorStr != null ) {
-			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-			Map<String, Object> extensionMap = new HashMap<String, Object>();
-			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions( extensionMap );
-		}
-
-		if( idOnly )
-			query.setResult( "id" );
-		
-		List<T> pratilipiEntityList =
-				(List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-		Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
-		
-		return new DataListCursorTuple<T>(
-				idOnly ? pratilipiEntityList : (List<T>) pm.detachCopyAll( pratilipiEntityList ),
-				cursor == null ? null : cursor.toWebSafeString() );
 	}
 	
 	@Override

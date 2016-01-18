@@ -11,6 +11,7 @@ public class GetPratilipiListRequest extends GenericRequest {
 	private Long authorId;
 	private Language language;
 	private PratilipiType type;
+	private String listName;
 	private PratilipiState state;
 
 	private Boolean orderByLastUpdated;
@@ -18,7 +19,7 @@ public class GetPratilipiListRequest extends GenericRequest {
 	private String cursor;
 	private Integer resultCount;
 
-	
+
 	public String getSearchQuery() {
 		return searchQuery;
 	}
@@ -35,6 +36,10 @@ public class GetPratilipiListRequest extends GenericRequest {
 		return type;
 	}
 
+	public String getListName() {
+		return listName;
+	}
+	
 	public PratilipiState getState() {
 		return state;
 	}

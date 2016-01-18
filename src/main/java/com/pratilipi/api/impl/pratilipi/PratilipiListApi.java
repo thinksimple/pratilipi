@@ -23,6 +23,7 @@ public class PratilipiListApi extends GenericApi {
 		pratilipiFilter.setAuthorId( request.getAuthorId() );
 		pratilipiFilter.setLanguage( request.getLanguage() );
 		pratilipiFilter.setType( request.getType() );
+		pratilipiFilter.setListName( request.getListName() );
 		pratilipiFilter.setState( request.getState() );
 		pratilipiFilter.setOrderByLastUpdate( request.getOrderByLastUpdate() );
 		
@@ -33,12 +34,11 @@ public class PratilipiListApi extends GenericApi {
 						request.getCursor(),
 						request.getResultCount() == null ? 20 : request.getResultCount() );
 
-		
 		// Preparing & returning response object.
 		return new GetPratilipiListResponse(
 				pratilipiListCursorTuple.getDataList(),
 				pratilipiListCursorTuple.getCursor() );
 		
-	}		
+	}
 
 }

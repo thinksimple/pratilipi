@@ -15,6 +15,7 @@ public class PratilipiFilter implements Serializable {
 	private Long authorId;
 	private Language language;
 	private PratilipiType type;
+	private String listName;
 	private PratilipiState state;
 	
 	private Date nextProcessDateEnd;
@@ -22,7 +23,7 @@ public class PratilipiFilter implements Serializable {
 	private Boolean orderByReadCount;
 	private Boolean orderByLastUpdated;
 	
-	
+
 	public Long getAuthorId() {
 		return authorId;
 	}
@@ -47,6 +48,14 @@ public class PratilipiFilter implements Serializable {
 		this.type = pratilipiType;
 	}
 
+	public String getListName() {
+		return listName;
+	}
+	
+	public void setListName( String listName ) {
+		this.listName = listName;
+	}
+	
 	public PratilipiState getState() {
 		return state;
 	}

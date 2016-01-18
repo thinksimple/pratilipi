@@ -379,7 +379,8 @@ public class PratilipiDataUtil {
 			searchQuery = searchQuery.toLowerCase().trim().replaceAll( "[\\s]+", " OR " );
 
 		
-		DataListCursorTuple<Long> pratilipiIdListCursorTuple = pratilipiFilter.getState() == PratilipiState.PUBLISHED
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
+				pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED
 				? DataAccessorFactory.getSearchAccessor().searchPratilipi( searchQuery, pratilipiFilter, cursor, resultCount )
 				: DataAccessorFactory.getDataAccessor().getPratilipiIdList( pratilipiFilter, cursor, resultCount );
 
