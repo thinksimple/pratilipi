@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.jdo.PersistenceManager;
 
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
@@ -97,7 +96,7 @@ public interface DataAccessor {
 	
 	//CATEGORY Table
 	Category getCategory( Long categoryId );
-	List<Category> getCategoryList( Language language ) throws UnexpectedServerException;
+	List<Category> getCategoryList( Language language );
 	
 	
 	//PRATILIPI_CATEGORY Table

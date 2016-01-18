@@ -25,7 +25,6 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
@@ -719,41 +718,27 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public List<Category> getCategoryList( Language language ) throws UnexpectedServerException {
+	public List<Category> getCategoryList( Language language ) {
+
+		List<Category> categoryList = new LinkedList<>();
 
 		try {
-			
-			File file = null;
-			try {
-				file = new File( DataAccessor.class.getResource( CATEGORY_DATA_FILE_PREFIX + language.getCode() ).toURI() );
-			} catch( NullPointerException e ) {
-				file = new File( DataAccessor.class.getResource( CATEGORY_DATA_FILE_PREFIX + Language.ENGLISH.getCode() ).toURI() );
-			}
-			
 			Gson gson = new Gson();
-			List<Category> categoryList = new LinkedList<>();
-
-			LineIterator it = null;
-			it = FileUtils.lineIterator( file, "UTF-8" );
+			File file = new File( DataAccessor.class.getResource( CATEGORY_DATA_FILE_PREFIX + language.getCode() ).toURI() );
+			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
 			while( it.hasNext() ) {
 				String categoryStr = it.nextLine();
 				String categoryName = categoryStr.substring( 0, categoryStr.indexOf( '{' ) ).trim();
 				String pratilipiFilterJson = categoryStr.substring( categoryStr.indexOf( '{' ) ).trim();
-				try {
-					PratilipiFilter pratilipiFilter = gson.fromJson( pratilipiFilterJson, PratilipiFilter.class );
-					categoryList.add( new CategoryEntity( categoryName, pratilipiFilter ) );
-				} catch( JsonSyntaxException e ) {
-					logger.log( Level.SEVERE, "Failed to process category: " + categoryStr );
-				}
+				PratilipiFilter pratilipiFilter = gson.fromJson( pratilipiFilterJson, PratilipiFilter.class );
+				categoryList.add( new CategoryEntity( categoryName, pratilipiFilter ) );
 			}
 			LineIterator.closeQuietly( it );
-			
-			return categoryList;
-
-		} catch( URISyntaxException | NullPointerException | IOException e ) {
+		} catch( URISyntaxException | NullPointerException | JsonSyntaxException | IOException e ) {
 			logger.log( Level.SEVERE, "Failed to fetch " + language.getNameEn() + " category list.", e );
-			throw new UnexpectedServerException();
 		}
+		
+		return categoryList;
 	
 	}
 	

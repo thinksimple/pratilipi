@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
@@ -568,7 +567,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	@Override
-	public List<Category> getCategoryList( Language language ) throws UnexpectedServerException {
+	public List<Category> getCategoryList( Language language ) {
 		String memcacheId = PREFIX_CATEGORY_LIST + language.getCode() + "-" + new Date().getTime() / 900000;
 		List<Category> categoryList = memcache.get( memcacheId );
 		if( categoryList == null ) {
