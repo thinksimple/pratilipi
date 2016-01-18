@@ -406,9 +406,13 @@ public class PratilipiSite extends HttpServlet {
 		for( PratilipiData pratilipiData : pratilipiDataListCursorTuple.getDataList() )
 			pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
 	
+		Gson gson = new Gson();
+		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", listTitle );
-		dataModel.put( "pratilipiListJson", new Gson().toJson( pratilipiList ).toString() );
+		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiList ).toString() );
+		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
+		dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
 		return dataModel;
 		
 	}
