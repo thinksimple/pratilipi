@@ -491,7 +491,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			
 			int startIndex = cursorStr == null ? 0 : Integer.parseInt( cursorStr );
 			List<T> responseList = new LinkedList<>();
-			
+
+			int entitiesToSkip = startIndex;
 			try {
 				
 				String fileName = CURATED_DATA_FOLDER + "/list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
@@ -507,8 +508,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 					if( page == null || page.getType() != PageType.PRATILIPI )
 						continue;
 					
-					if( startIndex > 0 ) {
-						startIndex--;
+					if( entitiesToSkip > 0 ) {
+						entitiesToSkip--;
 						continue;
 					}
 					
@@ -526,7 +527,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				logger.log( Level.SEVERE, "Failed to fetch " + pratilipiFilter.getListName() + " list for " + pratilipiFilter.getLanguage() + ".", e );
 			}
 
-			return new DataListCursorTuple<T>( responseList,  startIndex + responseList.size() + "" );
+			return new DataListCursorTuple<T>( responseList, startIndex + responseList.size() + "" );
 			
 		}
 		
