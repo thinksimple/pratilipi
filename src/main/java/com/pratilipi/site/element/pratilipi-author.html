@@ -113,7 +113,7 @@
 								<button class="pratilipi-light-blue-button" on-click="openAuthorEdit">${ _strings.author_edit_profile }</button>
 							</div>
 						</template>
-						<pratilipi-edit-author author="{{ author }}"></pratilipi-edit-author>
+						<pratilipi-edit-author author="[[ author ]]"></pratilipi-edit-author>
 					</template>
 	    		</div>
 	    		<br/>
@@ -153,6 +153,15 @@
 			<br class="pratilipi-break"/>
 		</div>
 		
+		<iron-ajax
+				id="AjaxGet"
+				url="/api/author"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				></iron-ajax>
+		
 	</template>
 	
 	<script>
@@ -181,7 +190,10 @@
 			},
 			
 			properties: {
+				user: { type: Object, observer: "_userChanged" },
 				author: { type: Object, notify: true },
+				authorData: { type: Object },
+				
 				mobile: { type: Boolean }
 			},
 			
@@ -227,7 +239,7 @@
 			},
 			
 			attached: function() {
-				this.updateAuthor( this.author );
+				this.updateAuthor( this.authorData );
 			},
 			
 			processSummary: function() {
@@ -293,6 +305,20 @@
 					jQuery( '#col-right' ).addClass( 'col-right-mobile' );
 				}
 				
+			},
+			
+			_userChanged: function() {
+				// Exploiting the fact that Author will be undefined before DOM is attached.
+				if( this.author == null )
+					return;
+
+				var ajaxGet = this.$.AjaxGet;
+				ajaxGet.params.authorId = this.author.authorId;
+				ajaxGet.generateRequest();
+			},
+			
+			_handleAjaxGetResponse: function( event ) {
+				this.updateAuthor( event.detail.response );
 			},
 			
 			_chooseFile: function() {

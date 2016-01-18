@@ -28,7 +28,8 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
 
 		<#-- Custom Stylesheet -->
-		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151218">
+		<link type="text/css" rel="stylesheet" href="/resources/style.css">
+
 	</head>
 
 	<body>

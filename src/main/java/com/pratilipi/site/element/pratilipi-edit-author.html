@@ -202,8 +202,7 @@
 				this.message = "${ _strings.updated_author_info_success }";
 				
 				var author = event.detail.response;
-				this.set( 'author', author );
-				this.set( 'params', author );
+
 				document.querySelector( 'pratilipi-author' ).updateAuthor( author );
 				location.reload();
 				
