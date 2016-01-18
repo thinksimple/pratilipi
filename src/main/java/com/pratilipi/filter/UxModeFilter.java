@@ -12,7 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.Website;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Page;
+import com.pratilipi.data.type.Pratilipi;
 
 public class UxModeFilter implements Filter {
 
@@ -27,7 +33,7 @@ public class UxModeFilter implements Filter {
 	@Override
 	public void init( FilterConfig config ) throws ServletException {
 		String moduleParam = config.getInitParameter( "Module" );
-		isAndroidApp = moduleParam != null && moduleParam.equalsIgnoreCase( "android" );
+		isAndroidApp = moduleParam != null && moduleParam.equalsIgnoreCase( "Android" );
 	}
 
 	@Override
@@ -50,11 +56,20 @@ public class UxModeFilter implements Filter {
 			String hostName = request.getServerName();
 			String requestUri = request.getRequestURI();
 	
+			
+			// Redirect uri to uriAlias, if present
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			Page page = dataAccessor.getPage( requestUri );
+			if( page != null && page.getUriAlias() != null && requestUri.equals( page.getUri() ) )
+				response.setHeader( "Location", page.getUri() );
+			
+			
 			// Defaults - for all test environments
 			boolean basicMode = false;
 			Language displayLanguage = Language.TAMIL;
 			Language filterLanguage = Language.TAMIL;
 	
+			// Figuring out Mode and Languages from a pre-configured list
 			for( Website website : Website.values() ) {
 				if( hostName.equals( website.getHostName() ) ) {
 					basicMode = false;
@@ -69,7 +84,7 @@ public class UxModeFilter implements Filter {
 				}
 			}
 			
-	
+			
 /*			if( filterLanguage != null ) {
 				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 				Page page = dataAccessor.getPage( requestUri );
