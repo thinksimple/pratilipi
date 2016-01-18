@@ -190,7 +190,7 @@ public class PratilipiMobileSite extends HttpServlet {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor .getAuthor( pratilipi.getAuthorId() );
-		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, true, false );
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
 		
 		List<PratilipiData> pratilipiDataList = new ArrayList<>( 12 );
