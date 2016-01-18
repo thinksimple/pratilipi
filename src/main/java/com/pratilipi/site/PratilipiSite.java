@@ -282,14 +282,9 @@ public class PratilipiSite extends HttpServlet {
 			if( pratilipiDataListCursorTuple.getDataList().size() == 0 )
 				continue;
 			
-			List<GetPratilipiListResponse.Pratilipi> pratilipiList = 
-					new ArrayList<>( pratilipiDataListCursorTuple.getDataList().size() );
-			for( PratilipiData pratilipiData : pratilipiDataListCursorTuple.getDataList() )
-				pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
-			
 			JsonObject section = new JsonObject();
 			section.addProperty( "title", title );
-			section.add( "pratilipiList", gson.toJsonTree( pratilipiList ) );
+			section.add( "pratilipiList", gson.toJsonTree( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
 			sections.add( section );
 			
 		}
@@ -324,9 +319,9 @@ public class PratilipiSite extends HttpServlet {
 			Gson gson = new Gson();
 			dataModel.put( "title", createAuthorPageTitle( authorData ) );
 			dataModel.put( "author", authorData );
-			dataModel.put( "authorJson", gson.toJson( authorData ).toString() );
-			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ).toString() );
-			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
+			dataModel.put( "authorJson", gson.toJson( authorData ) );
+			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ) );
+			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
 			dataModel.put( "publishedPratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
 		}
 		return dataModel;
@@ -397,17 +392,12 @@ public class PratilipiSite extends HttpServlet {
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList( request.getParameter( "q" ), pratilipiFilter, null, 20 );
 
-		List<GetPratilipiListResponse.Pratilipi> pratilipiList = 
-				new ArrayList<>( pratilipiDataListCursorTuple.getDataList().size() );
-		for( PratilipiData pratilipiData : pratilipiDataListCursorTuple.getDataList() )
-			pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
-	
 		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiList ).toString() );
+		dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
 		dataModel.put( "pratilipiListSearchQuery", request.getParameter( "q" ) );
-		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
+		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
 		dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
 		return dataModel;
 		
@@ -439,17 +429,12 @@ public class PratilipiSite extends HttpServlet {
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
 
-		List<GetPratilipiListResponse.Pratilipi> pratilipiList = 
-				new ArrayList<>( pratilipiDataListCursorTuple.getDataList().size() );
-		for( PratilipiData pratilipiData : pratilipiDataListCursorTuple.getDataList() )
-			pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
-	
 		Gson gson = new Gson();
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", type == null ? createListPageTitle( listName, lang ) : type.getNamePlural() );
-		dataModel.put( "pratilipiListJson", gson.toJson( pratilipiList ).toString() );
-		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ).toString() );
+		dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
+		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
 		dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
 		return dataModel;
 		
@@ -483,6 +468,14 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
+
+	private List<GetPratilipiListResponse.Pratilipi> toResponseObject( List<PratilipiData> pratilipiDataList ) {
+		List<GetPratilipiListResponse.Pratilipi> pratilipiList = new ArrayList<>( pratilipiDataList.size() );
+		for( PratilipiData pratilipiData : pratilipiDataList )
+			pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
+		return pratilipiList;
+	}
+	
 	
 	public <T> T getData( String fileName, Class<T> clazz )
 			throws UnexpectedServerException {
