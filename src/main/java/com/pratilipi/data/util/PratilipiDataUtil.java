@@ -267,10 +267,10 @@ public class PratilipiDataUtil {
 	
 
 	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author ) {
-		return createPratilipiData( pratilipi, author, false, false );
+		return createPratilipiData( pratilipi, author, false );
 	}
 	
-	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, boolean includeAll, boolean includeMetaData ) {
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, boolean includeMetaData ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipi.getId() );
@@ -285,8 +285,7 @@ public class PratilipiDataUtil {
 		pratilipiData.setLanguage( pratilipi.getLanguage() );
 		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
 		pratilipiData.setAuthor( AuthorDataUtil.createAuthorData( author ) );
-		if( includeAll )
-			pratilipiData.setSummary( pratilipi.getSummary() );
+		pratilipiData.setSummary( pratilipi.getSummary() );
 		pratilipiData.setPublicationYear( pratilipi.getPublicationYear() );
 		
 		pratilipiData.setPageUrl( pratilipiPage.getUriAlias() == null
@@ -307,6 +306,8 @@ public class PratilipiDataUtil {
 		if( includeMetaData )
 			pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
 		
+		pratilipiData.setIndex( pratilipi.getIndex() );
+		
 		pratilipiData.setReviewCount( pratilipi.getReviewCount() );
 		pratilipiData.setRatingCount( pratilipi.getRatingCount() );
 		pratilipiData.setAverageRating( pratilipi.getRatingCount() == 0L
@@ -324,10 +325,10 @@ public class PratilipiDataUtil {
 	
 	
 	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeAuthorData ) {
-		return createPratilipiDataList( pratilipiIdList, includeAuthorData, false, false );
+		return createPratilipiDataList( pratilipiIdList, includeAuthorData, false );
 	}
 
-	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeAuthorData, boolean includeAll, boolean includeMetaData ) {
+	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeAuthorData, boolean includeMetaData ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
@@ -347,7 +348,7 @@ public class PratilipiDataUtil {
 
 		List<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
 		for( Pratilipi pratilipi : pratilipiList ) {
-			PratilipiData pratilipiData = createPratilipiData( pratilipi, null, includeAll, includeMetaData );
+			PratilipiData pratilipiData = createPratilipiData( pratilipi, null, includeMetaData );
 			if( includeAuthorData && pratilipi.getAuthorId() != null )
 				pratilipiData.setAuthor( authorIdToDataMap.get( pratilipi.getAuthorId() ) );
 			pratilipiData.setRelevance( calculateRelevance( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) ) );
@@ -363,19 +364,11 @@ public class PratilipiDataUtil {
 			PratilipiFilter pratilipiFilter, String cursor, Integer resultCount )
 			throws InsufficientAccessException {
 
-		return getPratilipiDataList( null, pratilipiFilter, false, cursor, resultCount);
+		return getPratilipiDataList( null, pratilipiFilter, cursor, resultCount);
 	}
 	
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			String searchQuery, PratilipiFilter pratilipiFilter,
-			String cursor, Integer resultCount )
-			throws InsufficientAccessException {
-		
-		return getPratilipiDataList( searchQuery, pratilipiFilter, false, cursor, resultCount);
-	}
-	
-	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
-			String searchQuery, PratilipiFilter pratilipiFilter, boolean includeSummaryAndIndex,
 			String cursor, Integer resultCount )
 			throws InsufficientAccessException {
 		
@@ -393,7 +386,7 @@ public class PratilipiDataUtil {
 		List<PratilipiData> pratilipiDataList = createPratilipiDataList(
 				pratilipiIdListCursorTuple.getDataList(),
 				pratilipiFilter.getAuthorId() == null,
-				includeSummaryAndIndex, false );
+				false );
 
 		return new DataListCursorTuple<PratilipiData>( pratilipiDataList, pratilipiIdListCursorTuple.getCursor() );
 		
@@ -466,7 +459,6 @@ public class PratilipiDataUtil {
 		return createPratilipiData(
 				pratilipi,
 				dataAccessor.getAuthor( pratilipi.getAuthorId() ),
-				false,
 				hasAccessToReadPratilipiMetaData( pratilipi ));
 		
 	}
@@ -776,7 +768,7 @@ public class PratilipiDataUtil {
 			
 			if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
 				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-				pratilipiDataList.add( createPratilipiData( pratilipi, author, true, true ) );
+				pratilipiDataList.add( createPratilipiData( pratilipi, author, true ) );
 				
 			} else {
 				searchAccessor.deletePratilipiDataIndex( pratilipi.getId() );

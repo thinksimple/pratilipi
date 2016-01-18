@@ -53,6 +53,10 @@ public class PratilipiData {
 	private Long lastUpdatedMillis;
 
 
+	@Deprecated
+	private String index;
+	
+	
 	private Long reviewCount;
 	private Long ratingCount;
 	private Float averageRating;
@@ -259,6 +263,15 @@ public class PratilipiData {
 	
 	public void setLastUpdated( Date lastUpdated ){
 		this.lastUpdatedMillis = lastUpdated == null ? null : lastUpdated.getTime();
+	}
+
+
+	public String getIndex() {
+		return index;
+	}
+	
+	public void setIndex( String index ) {
+		this.index = index;
 	}
 
 

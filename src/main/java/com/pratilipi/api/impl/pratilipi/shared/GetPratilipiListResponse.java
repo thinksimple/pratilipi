@@ -21,12 +21,16 @@ public class GetPratilipiListResponse extends GenericResponse {
 		private Language language;
 		private Author author;
 
+		private String summary;
+		
 		private String pageUrl;
 		private String coverImageUrl;
 		private String readPageUrl;
 	
 		private PratilipiContentType contentType;
 
+		private String index;
+		
 		private Long ratingCount;
 		private Float averageRating;
 
@@ -40,11 +44,15 @@ public class GetPratilipiListResponse extends GenericResponse {
 				this.language = pratilipi.getLanguage();
 			if( pratilipi.getAuthor() != null )
 				this.author = new Author( pratilipi.getAuthor() );
+			if( UxModeFilter.isAndroidApp() )
+				this.summary = pratilipi.getSummary();
 			this.pageUrl = pratilipi.getPageUrl();
 			this.coverImageUrl = pratilipi.getCoverImageUrl();
 			this.readPageUrl = pratilipi.getReadPageUrl();
 			if( UxModeFilter.isAndroidApp() )
 				this.contentType = pratilipi.getContentType();
+			if( UxModeFilter.isAndroidApp() )
+				this.index = pratilipi.getIndex();
 			this.ratingCount = pratilipi.getRatingCount();
 			this.averageRating = pratilipi.getAverageRating();
 			this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();

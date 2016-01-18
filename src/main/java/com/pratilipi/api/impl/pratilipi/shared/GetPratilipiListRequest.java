@@ -17,7 +17,6 @@ public class GetPratilipiListRequest extends GenericRequest {
 
 	private String cursor;
 	private Integer resultCount;
-	private Boolean includeSummaryAndIndex;
 
 	
 	public String getSearchQuery() {
@@ -52,10 +51,6 @@ public class GetPratilipiListRequest extends GenericRequest {
 	
 	public Integer getResultCount() {
 		return resultCount;
-	}
-	
-	public boolean includeSummaryAndIndex() {
-		return includeSummaryAndIndex == null ? false : includeSummaryAndIndex;
 	}
 	
 }
