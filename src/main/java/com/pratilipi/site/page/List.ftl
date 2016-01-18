@@ -18,19 +18,19 @@
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-list-page.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-write.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-header.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-edit-account.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-write.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-navigation.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html'>
-		<link rel='import' href='/elements.${lang}/pratilipi-footer.html'>
-
+		
 		<#-- Custom Stylesheet -->
-		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151218">
+		<link type="text/css" rel="stylesheet" href="/resources/style.css">
+		
 	</head>
 	
 	<body>
 		<pratilipi-list-page 
-			user='${ userJson }'
+			user-data='${ userJson }'
 			heading='${ title }'
 			pratilipi-list='${ pratilipiListJson }'
 			filter='${ pratilipiListFilterJson! }'
