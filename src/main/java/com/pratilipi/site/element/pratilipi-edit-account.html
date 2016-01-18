@@ -1,0 +1,71 @@
+<dom-module id="pratilipi-edit-account">
+
+	<template>
+		<div class="modal fade" id="myAccount" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<h6 style="margin: 0px; padding: 0px; font-weight: 700;">${ _strings.edit_account_heading }</h6>
+						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
+					</div>
+					
+					<div class="modal-body">
+						<paper-input noink always-float-label disabled label="${ _strings.user_email }" value="{{ user.email }}" ></paper-input>
+						
+						<div class="row" style="margin-top: 15px;">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
+								<template is="dom-if" if="{{ ! user.isEmailVerified }}">
+									<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="verifyEmail">${ _strings.edit_account_verify_email }</button>
+								</template>
+								<template is="dom-if" if="{{ user.isEmailVerified }}">
+									<iron-icon style="color: #107FE5; width: 32px; height: 32px;" icon="check-circle"></iron-icon>
+									<span style="display: inline-block; font-size: 14px;">${ _strings.edit_account_email_verified }</span>
+								</template>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="changePassword">${ _strings.edit_account_change_password }</button>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</template>
+	
+	<script>
+		Polymer({
+	
+			is: 'pratilipi-edit-account',
+	
+			properties: {
+				user: { type: Object }
+			},
+			
+			open: function() {
+				this.async( function() {
+					jQuery( "#myAccount" ).modal();
+				});
+			},
+			
+			close: function() {
+				jQuery( "#myAccount" ).modal( 'hide' );	
+			},
+			
+			changePassword: function() {
+				this.close();
+				document.querySelector( 'pratilipi-user' ).changePassword();
+			},
+			
+			verifyEmail: function() {
+				this.close();
+				document.querySelector( 'pratilipi-user' ).sendVerificationMail();
+			},
+			
+		});
+	</script>
+	
+
+</dom-module>

@@ -21,7 +21,7 @@
 			<div class="row" style="padding: 10px;">
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="text-align: center; padding-top: 7px;">
 					<small><pratilipi-rating value="{{ review.rating }}" /></small>
-		   			<template is="dom-if" if="{{ review.userImageUrl }}">
+		   			<template is="dom-if" if="{{ reviewUserImageUrl }}">
 		   				<img class="img-circle" style="max-width: 64px; max-height: 64px; display: block; margin: 0 auto;" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>
 		   			</template>
 		   			<template is="dom-if" if="{{ !review.userImageUrl }}">

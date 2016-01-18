@@ -15,6 +15,13 @@
 			--paper-card-header: { display: none };
 		}
 		
+		paper-menu {
+			--paper-menu-color: #333;
+			--paper-menu-focused-item: {
+				color: #107FE5;
+			};
+		}
+		
 		.col-right-mobile table {
 			margin: 0 auto;
 			text-align: left;
@@ -71,16 +78,16 @@
 	<template>
 		<paper-card>
 			
-			<!-- <template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
+			<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
 				<paper-menu-button horizontal-align="right" class="pull-right">
-					<paper-icon-button style="color: #333;" class="dropdown-trigger" icon="create" noink="true"></paper-icon-button>
+					<paper-icon-button style="color: #333;" class="dropdown-trigger" icon="more-vert" noink></paper-icon-button>
 						<paper-menu class="dropdown-content">
-							<paper-item on-click="openPratilipiEdit">Edit Details</paper-item>
-	                    	<paper-item on-click="openWriterPanel">Edit Content</paper-item>
+							<paper-item on-click="openPratilipiEdit">${ _strings.pratilipi_edit_info }</paper-item>
+	                    	<paper-item on-click="openWriterPanel">${ _strings.pratilipi_edit_content }</paper-item>
 						</paper-menu>
 				</paper-menu-button>
 				<pratilipi-edit-pratilipi pratilipi="{{ pratilipi }}"></pratilipi-edit-pratilipi>
-			</template> -->
+			</template>
 			
 			<!-- For wide-screens and mobile screens-->
 			<div id="pratilipi-row">
@@ -126,10 +133,6 @@
 						<button on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</button>
 						<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
 						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
-							<button on-click="openPratilipiEdit" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_info }</button>
-							<button on-click="openWriterPanel" class="pratilipi-light-blue-button">${ _strings.pratilipi_edit_content }</button>
-							<pratilipi-edit-pratilipi pratilipi="{{ pratilipi }}"></pratilipi-edit-pratilipi>
-							<div style="min-height: 15px"></div>
 							<button id="changeStateButton" on-click="changePratilipiState" class="pratilipi-light-blue-button">{{ changeState }}</button>
 						</template>
 					</div>

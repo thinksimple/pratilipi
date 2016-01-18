@@ -1,11 +1,11 @@
 <link rel='import' href='pratilipi-navigation-drawer.html'>
+<link rel='import' href='pratilipi-edit-account.html'>
 
 <dom-module id="pratilipi-header">
 
 	<style>
 		paper-card {
 			width: 100%;
-			@apply(--layout-center);
 		}
 		
 		.container, .container div {
@@ -41,10 +41,6 @@
 				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
 				color: #333;
 			};
-		}
-		
-		paper-dropdown-menu {
-			margin-top: -10px;
 		}
 		
 		iron-icon {
@@ -97,30 +93,45 @@
 								</form>
 							</td>
 							
-							<td align="right" width="85px">
+							<td align="right" width="90px">
 								<template is="dom-if" if="{{ user.isGuest }}">
 									<button type="button" class="pratilipi-white-button" on-click="logInButtonClicked"><small>${ _strings.user_sign_in }</small></button>
 								</template>
 								<template is="dom-if" if="{{ !user.isGuest }}">
-									<paper-dropdown-menu noink="true" label="{{ user.displayName }}">
-										<paper-dropdown class="dropdown-content" style="white-space: nowrap; width: auto;">
-											<paper-item on-click="myProfile">
-												<paper-icon-item><iron-icon style="color: #107FE5;" icon="description"></iron-icon></paper-icon-item>
-												&nbsp;&nbsp;
-												<paper-item-body>${ _strings.user_my_profile }</paper-item-body>
-											</paper-item>
-											<paper-item on-click="myAccount">
-												<paper-icon-item><iron-icon style="color: #107FE5;" icon="account-circle"></iron-icon></paper-icon-item>
-												&nbsp;&nbsp;
-												<paper-item-body>${ _strings.user_my_account }</paper-item-body>
-											</paper-item>
-											<paper-item on-click="logOut">
-												<paper-icon-item><iron-icon style="color: #D0021B;" icon="remove-circle"></iron-icon></paper-icon-item>
-												&nbsp;&nbsp;
-												<paper-item-body>${ _strings.user_sign_out }</paper-item-body>
-											</paper-item>
-										</paper-dropdown>
-									</paper-dropdown-menu>
+									<div class="dropdown">
+										<button style="width: 90px;" class="pratilipi-white-button dropdown-toggle" type="button" data-toggle="dropdown">
+											{{ user.displayName }}
+										<span class="caret"></span></button>
+										<ul class="dropdown-menu pull-right">
+											<li>
+												<a style="padding: 5px; margin: 0;" href="#">
+													<paper-item on-click="myProfile">
+														<paper-icon-item><iron-icon style="color: #107FE5;" icon="description"></iron-icon></paper-icon-item>
+														&nbsp;&nbsp;
+														<paper-item-body>${ _strings.user_my_profile }</paper-item-body>
+													</paper-item>
+												</a>
+											</li>
+											<li>
+												<a style="padding: 5px; margin: 0;" href="#">
+													<paper-item on-click="myAccount">
+														<paper-icon-item><iron-icon style="color: #107FE5;" icon="account-circle"></iron-icon></paper-icon-item>
+														&nbsp;&nbsp;
+														<paper-item-body>${ _strings.user_my_account }</paper-item-body>
+													</paper-item>
+												</a>
+											</li>
+											<li>
+												<a style="padding: 5px; margin: 0;" href="#">
+													<paper-item on-click="logOut">
+														<paper-icon-item><iron-icon style="color: #D0021B;" icon="remove-circle"></iron-icon></paper-icon-item>
+														&nbsp;&nbsp;
+														<paper-item-body>${ _strings.user_sign_out }</paper-item-body>
+													</paper-item>
+												</a>
+											</li>
+										</ul>
+									</div>
 								</template>
 							</td>
 
@@ -152,36 +163,7 @@
 			<pratilipi-navigation-drawer with-backdrop></pratilipi-navigation-drawer>
 		</div>
 		
-		<div class="modal fade" id="myAccount" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					
-					<div class="modal-header">
-						<h6 style="margin: 0px; padding: 0px; font-weight: 700;">${ _strings.edit_account_heading }</h6>
-						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
-					</div>
-					
-					<div class="modal-body">
-						<paper-input noink always-float-label disabled label="${ _strings.user_email }" value="{{ user.email }}" ></paper-input>
-						
-						<div class="row" style="margin-top: 15px;">
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
-								<template is="dom-if" if="{{ ! user.isEmailVerified }}">
-									<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="verifyEmail">${ _strings.edit_account_verify_email }</button>
-								</template>
-								<template is="dom-if" if="{{ user.isEmailVerified }}">
-									<iron-icon style="color: #107FE5; width: 32px; height: 32px;" icon="check-circle"></iron-icon>
-									<span style="display: inline-block; font-size: 14px;">${ _strings.edit_account_email_verified }</span>
-								</template>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<button style="margin: 0 auto; display: block;" class="pratilipi-new-blue-button" on-click="changePassword">${ _strings.edit_account_change_password }</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<pratilipi-edit-account user="{{ user }}"></pratilipi-edit-account>
 		
 	</template>
 
@@ -201,7 +183,7 @@
 			},
 			
 			properties: {
-				user: { type: Object, notify: true, observer: "_userChanged" },
+				user: { type: Object, observer: "_userChanged" },
 				query: { type: String },
 				
 				writeButtonActive: { type: Boolean, value: false },
@@ -213,17 +195,7 @@
 			},
 			
 			myAccount: function() {
-				jQuery( "#myAccount" ).modal();
-			},
-			
-			changePassword: function() {
-				jQuery( "#myAccount" ).modal( 'hide' );
-				document.querySelector( 'pratilipi-user' ).changePassword();
-			},
-			
-			verifyEmail: function() {
-				jQuery( "#myAccount" ).modal( 'hide' );
-				document.querySelector( 'pratilipi-user' ).sendVerificationMail();
+				this.querySelector( 'pratilipi-edit-account' ).open();
 			},
 			
 			myProfile: function() {
