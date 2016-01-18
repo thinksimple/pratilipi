@@ -38,7 +38,8 @@ public class GetPratilipiListResponse extends GenericResponse {
 			this.title = pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle();
 			if( UxModeFilter.isAndroidApp() )
 				this.language = pratilipi.getLanguage();
-			this.author = new Author( pratilipi.getAuthor() );
+			if( pratilipi.getAuthor() != null )
+				this.author = new Author( pratilipi.getAuthor() );
 			this.pageUrl = pratilipi.getPageUrl();
 			this.coverImageUrl = pratilipi.getCoverImageUrl();
 			this.readPageUrl = pratilipi.getReadPageUrl();
