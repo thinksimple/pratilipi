@@ -155,6 +155,10 @@ public class AuthorProcessApi extends GenericApi {
 		if( author.getState() == AuthorState.DELETED )
 			return;
 
+		// At least one of four name fields must be set.
+		if( author.getFirstName() == null && author.getLastName() == null && author.getFirstNameEn() == null && author.getLastNameEn() == null )
+			throw new InvalidArgumentException( "Author name is missing." );
+
 		// Email, if present, must be trimmed and converted to lower case.
 		if( author.getEmail() != null && ! author.getEmail().equals( author.getEmail().trim().toLowerCase() ) )
 			throw new InvalidArgumentException( "Email is either not trimmed or not converted to lower case." );
@@ -165,7 +169,7 @@ public class AuthorProcessApi extends GenericApi {
 			if( ( author.getEmail() == null && user.getEmail() != null ) || ( author.getEmail() != null && ! author.getEmail().equals( user.getEmail() ) ) )
 				throw new InvalidArgumentException( "Author email doesn't match with the email in User entity." );
 		}
-
+		
 		// Only one non-DELETED author entity can exist per email id.
 		if( author.getEmail() != null ) {
 			GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
