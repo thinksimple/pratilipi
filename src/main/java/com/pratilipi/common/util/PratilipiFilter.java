@@ -91,16 +91,28 @@ public class PratilipiFilter implements Serializable {
 
 	
 	public String toUrlEncodedString() {
+		
 		String urlEncodedString = "";
 		
-		if( language != null )
-			urlEncodedString += "&language=" + language.toString();
 		if( authorId != null )
 			urlEncodedString += "&authorId=" + authorId;
+		if( language != null )
+			urlEncodedString += "&language=" + language;
 		if( type != null )
-			urlEncodedString += "&type=" + type.toString();
+			urlEncodedString += "&type=" + type;
+		if( listName != null )
+			urlEncodedString += "&listName=" + listName;
+		if( state != null )
+			urlEncodedString += "&state=" + state;
+		if( nextProcessDateEnd != null )
+			urlEncodedString += "&nextProcessDateEnd=" + nextProcessDateEnd.getTime();
+		if( orderByReadCount != null )
+			urlEncodedString += "&orderByReadCount=" + orderByReadCount;
+		if( orderByLastUpdated != null )
+			urlEncodedString += "&orderByLastUpdated=" + orderByLastUpdated;
 		
 		return urlEncodedString.length() == 0 ? "" : urlEncodedString.substring( 1 );
+		
 	}
 	
 }

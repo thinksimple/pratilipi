@@ -34,6 +34,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
 	private final static String PREFIX_PAGE = "Page-";
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
+	private static final String PREFIX_PRATILIPI_LIST = "PratilipiList-";
 	private static final String PREFIX_AUTHOR = "Author-";
 	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
 	private static final String PREFIX_CATEGORY = "Category-";
@@ -277,11 +278,11 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	@Override
 	public Page getPage( PageType pageType, Long primaryContentId ) {
-		Page page = memcache.get( PREFIX_PAGE + pageType + "-" + primaryContentId );
+		Page page = memcache.get( PREFIX_PAGE + pageType + "::" + primaryContentId );
 		if( page == null ) {
 			page = dataAccessor.getPage( pageType, primaryContentId );
 			if( page != null )
-				memcache.put( PREFIX_PAGE + pageType + "-" + primaryContentId, page );
+				memcache.put( PREFIX_PAGE + pageType + "::" + primaryContentId, page );
 		}
 		return page;
 	}
@@ -295,7 +296,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		if( page.getUriAlias() != null )
 			memcache.put( PREFIX_PAGE + page.getUriAlias(), page );
 		if( page.getPrimaryContentId() != null )
-			memcache.put( PREFIX_PAGE + page.getType() + "-" + page.getPrimaryContentId(), page );
+			memcache.put( PREFIX_PAGE + page.getType() + "::" + page.getPrimaryContentId(), page );
 		return page;
 	}
 
@@ -363,7 +364,20 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 
-		return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
+		String memcacheId = PREFIX_PRATILIPI_LIST + pratilipiFilter.toUrlEncodedString();
+		if( resultCount != null )
+			memcacheId = memcacheId + "&resultCount" + resultCount;
+		if( cursorStr != null )
+			memcacheId = memcacheId + "&cursorStr" + cursorStr;
+		
+		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple = memcache.get( memcacheId );
+		if( pratilipiListCursorTuple == null ) {
+			pratilipiListCursorTuple = dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
+			if( pratilipiListCursorTuple != null )
+				memcache.put( memcacheId, pratilipiListCursorTuple );
+		}
+		return pratilipiListCursorTuple;
+		
 	}
 	
 	@Override
@@ -415,11 +429,11 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	@Override
 	public Author getAuthorByUserId( Long userId ) {
-		Author author = memcache.get( PREFIX_AUTHOR + "User-" + userId );
+		Author author = memcache.get( PREFIX_AUTHOR + "USER::" + userId );
 		if( author == null ) {
 			author = dataAccessor.getAuthorByUserId( userId );
 			if( author != null )
-				memcache.put( PREFIX_AUTHOR + "User-" + userId, author );
+				memcache.put( PREFIX_AUTHOR + "USER::" + userId, author );
 		}
 		return author;
 	}
@@ -484,9 +498,9 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		}
 		if( author.getUserId() != null ) {
 			if( author.getState() == AuthorState.DELETED )
-				memcache.remove( PREFIX_AUTHOR + "User-" + author.getUserId() );
+				memcache.remove( PREFIX_AUTHOR + "USER::" + author.getUserId() );
 			else
-				memcache.put( PREFIX_AUTHOR + "User-" + author.getUserId(), author );
+				memcache.put( PREFIX_AUTHOR + "USER::" + author.getUserId(), author );
 		}
 		return author;
 	}
@@ -503,9 +517,9 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		}
 		if( author.getUserId() != null ) {
 			if( author.getState() == AuthorState.DELETED )
-				memcache.remove( PREFIX_AUTHOR + "User-" + author.getUserId() );
+				memcache.remove( PREFIX_AUTHOR + "USER::" + author.getUserId() );
 			else
-				memcache.put( PREFIX_AUTHOR + "User-" + author.getUserId(), author );
+				memcache.put( PREFIX_AUTHOR + "USER::" + author.getUserId(), author );
 		}
 		return author;
 	}
