@@ -61,6 +61,25 @@
 
 		</iron-collapse>
 		
+		<div class="modal fade" id="deleteReview">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<span>${ _strings.review_delete_review }</span>
+						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+					</div>
+					<div class="modal-body">
+						${ _strings.review_delete_review_confirm }
+					</div>
+					<div class="modal-footer">
+						<button id="deleteReviewButton" style="float: left; outline: none;" class="btn btn-danger" on-click="deleteReview">${ _strings.okay }</button>
+						<div style="display: inline-block; min-width: 40px;" ></div>
+						<button style="float: right; outline: none;" class="btn btn-primary" on-click="closeDeleteReview">${ _strings.cancel }</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		<iron-ajax
 				id="AjaxPost"
 				url="/api/userpratilipi"
@@ -69,6 +88,16 @@
 				handle-as="json"
 				on-response="_handleAjaxPostResponse"
 				on-error="_handleAjaxPostError"
+				></iron-ajax>
+				
+		<iron-ajax
+				id="AjaxPostDeleteReview"
+				url="/api/userpratilipi"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostDeleteReviewResponse"
+				on-error="_handleAjaxPostDeleteReviewError"
 				></iron-ajax>
 
 	</template>
@@ -115,11 +144,34 @@
 					this.$.ReviewInputCollapse.toggle();
 			},
 			
+			openDeleteReview: function() {
+				this.async( function() {
+					jQuery( "#deleteReview" ).modal();
+				});
+			},
+			
+			closeDeleteReview: function() {
+				jQuery( "#deleteReview" ).modal( 'hide' );
+			},
+			
 			deleteReview: function() {
 				// TODO: Change state and make Post call.
+				jQuery( '#deleteReviewButton' ).prop( 'disabled', true );
 				var body = { pratilipiId: this.pratilipi.pratilipiId, reviewState: "DELETED" };
-				this.$.AjaxPost.body = jQuery.param( body );
-				this.$.AjaxPost.generateRequest();
+				this.$.AjaxPostDeleteReview.body = jQuery.param( body );
+				this.$.AjaxPostDeleteReview.generateRequest();
+			},
+			
+			_handleAjaxPostDeleteReviewResponse: function( event ) {
+				if( event.detail.xhr.status != 0 ) {
+					jQuery( '#deleteReviewButton' ).prop( 'disabled', false );
+					document.querySelector( 'pratilipi-userpratilipi' ).setUserPratilipi( event.detail.response )
+					this.closeDeleteReview();
+				}
+			}
+			
+			_handleAjaxPostDeleteReviewError: function( event ) {
+				jQuery( '#deleteReviewButton' ).prop( 'disabled', false );
 			},
 			
 			onSubmit: function() {
@@ -142,7 +194,16 @@
 					this.message = "Please enter the review.";
 					return;
 				} */
-				this.$.AjaxPost.body = jQuery.param( this.params );
+				
+				var requestObject = {
+					pratilipiId : this.pratilipi.pratilipiId,
+					rating : this.params.rating,
+					reviewTitle : this.params.reviewTitle,
+					review : this.params.review
+			    };
+				
+				
+				this.$.AjaxPost.body = jQuery.param( requestObject );
 				this.$.AjaxPost.generateRequest();
 			},
 			

@@ -206,8 +206,10 @@
 			
 			myProfile: function() {
 				// Redirect to MyProfile Page
-				if( this.user.profilePageUrl != null && window.location != "http://" + window.location.host + this.user.profilePageUrl )
-					window.location.href = "http://" + window.location.host + this.user.profilePageUrl; 
+				var windowLocation = window.location;
+				var profilePageUrl = "http://" + window.location.host + this.user.profilePageUrl;
+				if( this.user.profilePageUrl != null && windowLocation != profilePageUrl )
+					window.location.href = profilePageUrl; 
 			},
 			
 			_userChanged: function() {
