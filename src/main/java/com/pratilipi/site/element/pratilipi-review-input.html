@@ -165,7 +165,7 @@
 			_handleAjaxPostDeleteReviewResponse: function( event ) {
 				if( event.detail.xhr.status != 0 ) {
 					jQuery( '#deleteReviewButton' ).prop( 'disabled', false );
-					document.querySelector( 'pratilipi-userpratilipi' ).setUserPratilipi( event.detail.response )
+					document.querySelector( 'pratilipi-userpratilipi' ).setUserPratilipi( event.detail.response );
 					this.closeDeleteReview();
 				}
 			},
@@ -213,7 +213,7 @@
 					this.errMessage = "Could not connect to server !";
 				} else {
 					this.message = null;
-					document.querySelector( 'pratilipi-userpratilipi' ).setUserPratilipi( event.detail.response )
+					document.querySelector( 'pratilipi-userpratilipi' ).setUserPratilipi( event.detail.response );
 					this.close();
 				}
 			},
