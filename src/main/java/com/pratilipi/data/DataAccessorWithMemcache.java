@@ -357,7 +357,21 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	public DataListCursorTuple<Long> getPratilipiIdList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 		
-		return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, resultCount );
+		String memcacheId = PREFIX_PRATILIPI_LIST + pratilipiFilter.toUrlEncodedString();
+		memcacheId = memcacheId + "&idOnly";
+		if( resultCount != null )
+			memcacheId = memcacheId + "&resultCount=" + resultCount;
+		if( cursorStr != null )
+			memcacheId = memcacheId + "&cursorStr=" + cursorStr;
+		
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple = memcache.get( memcacheId );
+		if( pratilipiIdListCursorTuple == null ) {
+			pratilipiIdListCursorTuple = dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, resultCount );
+			if( pratilipiIdListCursorTuple != null )
+				memcache.put( memcacheId, pratilipiIdListCursorTuple );
+		}
+		return pratilipiIdListCursorTuple;
+		
 	}
 	
 	@Override
@@ -366,9 +380,9 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 		String memcacheId = PREFIX_PRATILIPI_LIST + pratilipiFilter.toUrlEncodedString();
 		if( resultCount != null )
-			memcacheId = memcacheId + "&resultCount" + resultCount;
+			memcacheId = memcacheId + "&resultCount=" + resultCount;
 		if( cursorStr != null )
-			memcacheId = memcacheId + "&cursorStr" + cursorStr;
+			memcacheId = memcacheId + "&cursorStr=" + cursorStr;
 		
 		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple = memcache.get( memcacheId );
 		if( pratilipiListCursorTuple == null ) {
