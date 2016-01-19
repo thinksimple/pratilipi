@@ -105,8 +105,15 @@ public class UserProcessApi extends GenericApi {
 			PersistenceManager pm = dataAccessor.getPersistenceManager();
 			User user = dataAccessor.getUser( request.getUserId() );
 			
-			if( user.getState() == UserState.DELETED )
+			// DELETED User entity can not have a non-DELETED Author entity linked.
+			if( user.getState() == UserState.DELETED ) {
+				Author author = dataAccessor.getAuthorByUserId( user.getId() );
+				if( author != null && author.getState() != AuthorState.DELETED )
+					throw new InvalidArgumentException( "DELETED User entity has a non-DELETED Author entity linked." );
 				return new GenericResponse();
+			}
+
+			// TODO: DELETED User entity can not have non-DELETED UserPratilipi entities.
 			
 			// Either of two - email and facebook id - must be present.
 			if( user.getEmail() == null && user.getFacebookId() == null )
@@ -124,7 +131,7 @@ public class UserProcessApi extends GenericApi {
 			if( user.getEmail() != null && ! user.getEmail().equals( user.getEmail().trim().toLowerCase() ) )
 				throw new InvalidArgumentException( "Email is either not trimmed or not converted to lower case." );
 
-			// Only one non-DELETED user account can exist per email id.
+			// Only one non-DELETED User entity can exist per email id.
 			if( user.getEmail() != null ) {
 				GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
 				gaeQueryBuilder.addFilter( "email", user.getEmail() );
@@ -137,7 +144,7 @@ public class UserProcessApi extends GenericApi {
 					throw new InvalidArgumentException( list.size() + " non-DELETED User entities found for email " + user.getEmail() + " ." );
 			}
 			
-			// Only one non-DELETED user account can exist per facebook id.
+			// Only one non-DELETED User entity can exist per facebook id.
 			if( user.getFacebookId() != null ) {
 				GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
 				gaeQueryBuilder.addFilter( "facebookId", user.getFacebookId() );
@@ -150,7 +157,15 @@ public class UserProcessApi extends GenericApi {
 					throw new InvalidArgumentException( list.size() + " non-DELETED User entities found for Facebook Id " + user.getFacebookId() + " ." );
 			}
 
-			
+			// REFERRAL User entity can not have a non-DELETED Author entity linked.
+			if( user.getState() == UserState.REFERRAL ) {
+				Author author = dataAccessor.getAuthorByUserId( user.getId() );
+				if( author != null && author.getState() != AuthorState.DELETED )
+					throw new InvalidArgumentException( "REFERRAL User entity has a non-DELETED Author entity linked." );
+				return new GenericResponse();
+			}
+
+
 			// Author profile for the user.
 			GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
 			gaeQueryBuilder.addFilter( "userId", user.getId() );

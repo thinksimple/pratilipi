@@ -155,6 +155,8 @@ public class AuthorProcessApi extends GenericApi {
 		if( author.getState() == AuthorState.DELETED )
 			return;
 
+		// TODO: DELETED Author cannot have non-DELETED Pratilipi entities linked.
+		
 		// At least one of four name fields must be set.
 		if( author.getFirstName() == null && author.getLastName() == null && author.getFirstNameEn() == null && author.getLastNameEn() == null )
 			throw new InvalidArgumentException( "Author name is missing." );
