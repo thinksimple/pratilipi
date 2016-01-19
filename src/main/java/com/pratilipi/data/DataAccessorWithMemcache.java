@@ -34,7 +34,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
 	private final static String PREFIX_PAGE = "Page-";
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
-	private static final String PREFIX_PRATILIPI_LIST = "PratilipiList-";
 	private static final String PREFIX_AUTHOR = "Author-";
 	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
 	private static final String PREFIX_CATEGORY = "Category-";
@@ -357,20 +356,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	public DataListCursorTuple<Long> getPratilipiIdList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 		
-		String memcacheId = PREFIX_PRATILIPI_LIST + pratilipiFilter.toUrlEncodedString();
-		memcacheId = memcacheId + "&idOnly";
-		if( resultCount != null )
-			memcacheId = memcacheId + "&resultCount=" + resultCount;
-		if( cursorStr != null )
-			memcacheId = memcacheId + "&cursorStr=" + cursorStr;
-		
-		DataListCursorTuple<Long> pratilipiIdListCursorTuple = memcache.get( memcacheId );
-		if( pratilipiIdListCursorTuple == null ) {
-			pratilipiIdListCursorTuple = dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, resultCount );
-			if( pratilipiIdListCursorTuple != null )
-				memcache.put( memcacheId, pratilipiIdListCursorTuple );
-		}
-		return pratilipiIdListCursorTuple;
+		return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, resultCount );
 		
 	}
 	
@@ -378,19 +364,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 
-		String memcacheId = PREFIX_PRATILIPI_LIST + pratilipiFilter.toUrlEncodedString();
-		if( resultCount != null )
-			memcacheId = memcacheId + "&resultCount=" + resultCount;
-		if( cursorStr != null )
-			memcacheId = memcacheId + "&cursorStr=" + cursorStr;
-		
-		DataListCursorTuple<Pratilipi> pratilipiListCursorTuple = memcache.get( memcacheId );
-		if( pratilipiListCursorTuple == null ) {
-			pratilipiListCursorTuple = dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
-			if( pratilipiListCursorTuple != null )
-				memcache.put( memcacheId, pratilipiListCursorTuple );
-		}
-		return pratilipiListCursorTuple;
+		return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
 		
 	}
 	

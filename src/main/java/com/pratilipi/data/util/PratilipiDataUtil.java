@@ -375,21 +375,41 @@ public class PratilipiDataUtil {
 		if( ! hasAccessToListPratilipiData( pratilipiFilter ) )
 			throw new InsufficientAccessException();
 
+		// Processing search query
 		if( searchQuery != null )
 			searchQuery = searchQuery.toLowerCase().trim().replaceAll( "[\\s]+", " OR " );
 
-		
-		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
-				pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED
-				? DataAccessorFactory.getSearchAccessor().searchPratilipi( searchQuery, pratilipiFilter, cursor, resultCount )
-				: DataAccessorFactory.getDataAccessor().getPratilipiIdList( pratilipiFilter, cursor, resultCount );
+		// Creating memcache id
+		String memcacheId = PratilipiDataUtil.class.getName() + pratilipiFilter.toUrlEncodedString();
+		if( searchQuery != null )
+			memcacheId += "&searchQuery=" + searchQuery;
+		if( resultCount != null )
+			memcacheId += "&resultCount=" + resultCount;
+		if( cursor != null )
+			memcacheId = memcacheId + "&cursor=" + cursor;
 
-		List<PratilipiData> pratilipiDataList = createPratilipiDataList(
-				pratilipiIdListCursorTuple.getDataList(),
-				pratilipiFilter.getAuthorId() == null,
-				false );
+		// Fetching cached response from Memcache
+		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
+				= DataAccessorFactory.getL2CacheAccessor().get( memcacheId );
 
-		return new DataListCursorTuple<PratilipiData>( pratilipiDataList, pratilipiIdListCursorTuple.getCursor() );
+		if( pratilipiDataListCursorTuple == null ) {
+			// Fetching Pratilipi id list from DataStore/SearchIndex
+			DataListCursorTuple<Long> pratilipiIdListCursorTuple =
+					pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED
+					? DataAccessorFactory.getSearchAccessor().searchPratilipi( searchQuery, pratilipiFilter, cursor, resultCount )
+					: DataAccessorFactory.getDataAccessor().getPratilipiIdList( pratilipiFilter, cursor, resultCount );
+			// Creating PratilipiData list from Pratilipi id list
+			List<PratilipiData> pratilipiDataList = createPratilipiDataList(
+					pratilipiIdListCursorTuple.getDataList(),
+					pratilipiFilter.getAuthorId() == null,
+					false );
+			// Creating response object
+			pratilipiDataListCursorTuple = new DataListCursorTuple<PratilipiData>( pratilipiDataList, pratilipiIdListCursorTuple.getCursor() );
+			// Caching response object in Memcache
+			DataAccessorFactory.getL2CacheAccessor().put( memcacheId, pratilipiDataListCursorTuple );
+		}
+
+		return pratilipiDataListCursorTuple;
 		
 	}
 	
