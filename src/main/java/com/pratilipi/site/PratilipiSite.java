@@ -420,6 +420,12 @@ public class PratilipiSite extends HttpServlet {
 	private Map<String, Object> createDataModelForListPage( PratilipiType type, String listName, Language lang )
 			throws InsufficientAccessException {
 
+		String title = listName == null
+				? type.getNamePlural()
+				: createListPageTitle( listName, lang );
+		if( title == null )
+			return null;
+			
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( lang );
 		pratilipiFilter.setType( type );
@@ -432,7 +438,7 @@ public class PratilipiSite extends HttpServlet {
 		Gson gson = new Gson();
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", type == null ? createListPageTitle( listName, lang ) : type.getNamePlural() );
+		dataModel.put( "title", title );
 		dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
 		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
 		dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
