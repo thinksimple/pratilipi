@@ -21,11 +21,13 @@
 						<div style="overflow:hidden">
 							<pratilipi-tamil-carousel></pratilipi-tamil-carousel>
 							<br class="pratilipi-break"/>
-							<pratilipi-card-grid
-									heading='[[ heading ]]'
-									pratilipi-list='[[ pratilipiList ]]'
+							<template is="dom-repeat" items="[[ sectionsList ]]">
+								<pratilipi-card-grid
+									heading='[[ item.title ]]'
+									pratilipi-list='[[ item.pratilipiList ]]'
 									></pratilipi-card-grid>
-							<br class="pratilipi-break"/>
+								<br class="pratilipi-break"/>
+							</template>
 						</div>
 					</div>
 				</div>
@@ -42,8 +44,7 @@
 
 			properties: {
 				userData: { type: Object },
-				heading: { type: String },
-				pratilipiList: { type: Object }
+				sectionsList: { type: Array }
 			}
 			
 		});

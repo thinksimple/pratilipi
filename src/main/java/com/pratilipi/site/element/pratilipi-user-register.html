@@ -144,10 +144,10 @@
 				jQuery( '#registerButton' ).prop( 'disabled', false );
 				if( event.detail.request.xhr.status == 400 ) {
 					if( event.detail.request.xhr.response.email != null ) {
-						this.emailInput = event.detail.request.xhr.response.email;
+						this.message = event.detail.request.xhr.response.email;
 						return;
 					}
-					this.message = event.detail.request.xhr.response.password != null ? event.detail.request.xhr.response.password : null;
+					this.message = event.detail.request.xhr.response.password != null ? event.detail.request.xhr.response.password : "Invalid Data!";
 				}
 				else
 					this.message = event.detail.request.xhr.response.message;

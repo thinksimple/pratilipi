@@ -32,8 +32,7 @@
 	<body>
 		<pratilipi-home-page 
 			user-data='${ userJson }'
-			heading='${ featuredTitle }'
-			pratilipi-list='${ featuredListJson }'></pratilipi-home-page>
+			sections-list='${ sectionsJson }'></pratilipi-home-page>
 	</body>
 
 </html>
