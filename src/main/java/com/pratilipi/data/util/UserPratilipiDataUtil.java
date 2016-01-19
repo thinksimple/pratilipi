@@ -132,7 +132,7 @@ public class UserPratilipiDataUtil {
 			userPratilipi.setPratilipiId( userPratilipiData.getPratilipiId() );
 		}
 		
-		if( ! userPratilipiData.hasRating() && ! userPratilipiData.hasReview() )
+		if( ! userPratilipiData.hasRating() && ! userPratilipiData.hasReview() && ! userPratilipiData.hasReviewState() )
 			return createUserPratilipiData( userPratilipi );
 
 		
@@ -149,7 +149,10 @@ public class UserPratilipiDataUtil {
 			userPratilipi.setReviewState( UserReviewState.SUBMITTED );
 			userPratilipi.setReviewDate( new Date() );
 		}
-		
+
+		if( userPratilipiData.hasReviewState() )
+			userPratilipi.setReviewState( userPratilipiData.getReviewState() );
+
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		
 		return createUserPratilipiData( userPratilipi );
