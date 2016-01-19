@@ -61,7 +61,7 @@
 					</paper-card>
 				</div>
 			</template>
-			<template id="repeat" is="dom-repeat" items="[[ pratilipiList ]]">
+			<template is="dom-repeat" id="repeatPratilipiList" items="[[ pratilipiList ]]">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<pratilipi-card 
 						pratilipi="[[ item ]]"
@@ -78,7 +78,7 @@
 				id="AjaxGet"
 				url="/api/pratilipi/list"
 				method="GET"
-				params="{{ filter }}"
+				params="[[ filter ]]"
 				content-type="application/json"
 				handle-as="json"
 				on-response="_handleAjaxGetResponse"
@@ -104,6 +104,7 @@
 
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
+				
 				includeAddCard: { type: Boolean, value: false },
 				
 				draftsActive: { type: Boolean, value: false },
@@ -112,28 +113,42 @@
 			
 			setPratilipiList: function( pratilipiList ) {
 				this.set( 'pratilipiList', pratilipiList );
-				this.$.repeat.render();
+				this.$.repeatPratilipiList.render();
 			},
 			
 			reset: function() {
+				
 				var ajaxGet = this.$.AjaxGet;
 
 				if( ajaxGet.lastRequest )
 					ajaxGet.lastRequest.abort();
-				this.pratilipiList = [];
-
-				ajaxGet.params.searchQuery = this.searchQuery;
-				ajaxGet.params.cursor = null;
-				ajaxGet.generateRequest();
-
+				
+				this.setPratilipiList( [] );
+				
+				// Setting the flags and clearing the cursor.
+				this.cursor = null;
 				this.isLoading = true;
 				this.isFinished = false;
+
+				// Set params and make ajax GET call. Filters already set when element initialised.
+				if( this.searchQuery != null )
+					ajaxGet.params.searchQuery = this.searchQuery;
+				
+				if( ajaxGet.params.state == null )
+					ajaxGet.params.state = "PUBLISHED";
+				
+				ajaxGet.params.cursor = this.cursor;
+				ajaxGet.generateRequest();
+				
 			},
 			
 			loadMore: function( scrollTop ) {
-				if( this.isLoading || this.isFinished )
+				
+				// Return if there is an active call or cursor = null.
+				if( this.isLoading || this.isFinished || this.cursor == null )
 					return;
 
+				// Check for window height.
 				var reqHeight = scrollTop
 						- jQuery( this ).context.offsetTop
 						+ jQuery( window ).height()
@@ -142,14 +157,30 @@
 				if( jQuery( this ).outerHeight( true ) >= reqHeight )
 					return;
 				
-				this.$.AjaxGet.generateRequest();
+				
+				// Spinner Active
 				this.isLoading = true;
+				
+				// Set params and make ajax GET call. Filters already set when element initialised.
+				var ajaxGet = this.$.AjaxGet;
+				if( this.searchQuery != null )
+					ajaxGet.params.searchQuery = this.searchQuery;
+				
+				// Set state = PUBLISHED iff state is null. ( Might be set in filters )
+				if( ajaxGet.params.state == null )
+					ajaxGet.params.state = "PUBLISHED";
+				
+				ajaxGet.params.cursor = this.cursor;
+				ajaxGet.generateRequest();
+				
 			},
 			
-			_handleAjaxGetResponse: function(  request ) {
+			_handleAjaxGetResponse: function( request ) {
 				
+				// Disable spinner
 				this.isLoading = false;
 				
+				// Call didn't succeed.
 				if( ! request.detail.response )
 					return;
 				
@@ -157,26 +188,15 @@
 				for( var i = 0; i < pratilipiList.length; i++ )
 					this.push( 'pratilipiList', pratilipiList[i] );
 
-				if( request.detail.response.cursor == null || pratilipiList.size() < 20 )
+				if( request.detail.response.cursor == null || pratilipiList.length < 20 )
 					this.isFinished = true;
 				else
-					this.$.AjaxGet.params.cursor = request.detail.response.cursor;
+					this.cursor = request.detail.response.cursor;
+
 			},
 
 			_handleAjaxGetError: function() {
 				this.isLoading = false;
-			},
-			
-			ready: function() {
-				var ajaxGet = this.$.AjaxGet;
-				ajaxGet.params.state = "PUBLISHED";
-				if( this.cursor && this.filter ) {
-					if( this.searchQuery )
-						ajaxGet.params.searchQuery = this.searchQuery;
-					ajaxGet.params.cursor = this.cursor;
-				} else {
-					this.isFinished = true;
-				}
 			},
 			
 			_write: function() {
