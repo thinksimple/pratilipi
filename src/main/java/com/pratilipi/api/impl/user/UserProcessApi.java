@@ -64,7 +64,6 @@ public class UserProcessApi extends GenericApi {
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
 		gaeQueryBuilder.addFilter( "signUpDate", appProperty.getValue(), Operator.GREATER_THAN );
 		gaeQueryBuilder.addOrdering( "signUpDate", true );
-		gaeQueryBuilder.setRange( 0, 1000 );
 		gaeQueryBuilder.setResult( "id" );
 		Query query = gaeQueryBuilder.build();
 		
