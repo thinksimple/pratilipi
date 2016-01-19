@@ -29,10 +29,9 @@
 
 	<template>
 		<div class="secondary-500">
-			<span style="cursor: default; color: #333; display: inline-block; margin: 0px; font-size: 15px;">{{ title }}</span>
+			<span style="cursor: default; color: #333; display: inline-block; margin: 0px; font-size: 15px;">{{ title }}&nbsp;&minus;&nbsp;{{ text }}</span>
 			<br/>
 			<div style="display: block; float: left;">
-				<h6 style="cursor: default; color: #333; display: inline-block; margin: 0px 10px;">{{ text }}</h6>
 				<iron-icon icon="{{ icon5 }}" class="glyphicon" on-mouseover="showFiveStars"  on-mouseout="init" on-click="rateFiveStars"></iron-icon>
 				<iron-icon icon="{{ icon4 }}" class="glyphicon" on-mouseover="showFourStars"  on-mouseout="init" on-click="rateFourStars"></iron-icon>
 				<iron-icon icon="{{ icon3 }}" class="glyphicon" on-mouseover="showThreeStars" on-mouseout="init" on-click="rateThreeStars"></iron-icon>

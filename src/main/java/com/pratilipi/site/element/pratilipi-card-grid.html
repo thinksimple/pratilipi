@@ -42,7 +42,7 @@
 	
 	<template>
 		<template is="dom-if" if="{{ heading }}">
-			<div class="secondary-500 pratilipi-shadow" style="color: #D0021B; font-size: 22px; font-weight: 300; padding: 15px;">{{ heading }}</div>
+			<div class="secondary-500 pratilipi-shadow" style="color: #D0021B; font-size: 22px; font-weight: 300; padding: 15px; background: #EEEEEE;">{{ heading }}</div>
 			<br class="pratilipi-break"/>
 		</template>
 		
@@ -145,7 +145,7 @@
 			loadMore: function( scrollTop ) {
 				
 				// Return if there is an active call or cursor = null.
-				if( this.isLoading || this.isFinished || this.cursor == null )
+				if( this.isLoading || this.isFinished || this.cursor == null || this.cursor == "" )
 					return;
 
 				// Check for window height.
