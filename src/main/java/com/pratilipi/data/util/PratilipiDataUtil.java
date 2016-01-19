@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -406,7 +407,10 @@ public class PratilipiDataUtil {
 			// Creating response object
 			pratilipiDataListCursorTuple = new DataListCursorTuple<PratilipiData>( pratilipiDataList, pratilipiIdListCursorTuple.getCursor() );
 			// Caching response object in Memcache
-			DataAccessorFactory.getL2CacheAccessor().put( memcacheId, pratilipiDataListCursorTuple );
+			DataAccessorFactory.getL2CacheAccessor().put(
+					memcacheId,
+					pratilipiDataListCursorTuple,
+					TimeUnit.MILLISECONDS.convert( 15, TimeUnit.MINUTES ) );
 		}
 
 		return pratilipiDataListCursorTuple;

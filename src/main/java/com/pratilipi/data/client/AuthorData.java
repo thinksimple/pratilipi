@@ -1,12 +1,16 @@
 package com.pratilipi.data.client;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.Language;
 
-public class AuthorData {
+public class AuthorData implements Serializable {
+
+	private static final long serialVersionUID = -8877405689421212298L;
+
 
 	private Long authorId;
 

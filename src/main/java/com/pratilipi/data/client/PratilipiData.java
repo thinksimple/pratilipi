@@ -1,5 +1,6 @@
 package com.pratilipi.data.client;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.Language;
@@ -7,8 +8,11 @@ import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
-public class PratilipiData {
+public class PratilipiData implements Serializable {
 
+	private static final long serialVersionUID = -155635027192257511L;
+
+	
 	private Long pratilipiId;
 	
 	private String title;
