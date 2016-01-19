@@ -147,21 +147,20 @@
 			},
 			
 			_handleAjaxGetResponse: function(  request ) {
-				if( ! request.detail.response ) {
-					this.isLoading = false;
+				
+				this.isLoading = false;
+				
+				if( ! request.detail.response )
 					return;
-				}
 				
 				var pratilipiList = request.detail.response.pratilipiList;
 				for( var i = 0; i < pratilipiList.length; i++ )
-					this.push( 'pratilipiList', pratilipiList[ i ] );
+					this.push( 'pratilipiList', pratilipiList[i] );
 
-				if( request.detail.response.cursor ) {
-					this.$.AjaxGet.params.cursor = request.detail.response.cursor;
-					this.isLoading = false;
-				} else {
+				if( request.detail.response.cursor == null || pratilipiList.size() < 20 )
 					this.isFinished = true;
-				}
+				else
+					this.$.AjaxGet.params.cursor = request.detail.response.cursor;
 			},
 
 			_handleAjaxGetError: function() {
