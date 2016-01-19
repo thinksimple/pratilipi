@@ -94,7 +94,7 @@ public class AuthorProcessApi extends GenericApi {
 		authorFilter.setNextProcessDateEnd( new Date() );
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<Long> authorIdList = dataAccessor.getAuthorIdList( authorFilter, null, 100 ).getDataList();
+		List<Long> authorIdList = dataAccessor.getAuthorIdList( authorFilter, null, null ).getDataList();
 		
 		List<Task> taskList = new ArrayList<>( authorIdList.size() );
 		for( Long authorId : authorIdList ) {
@@ -124,7 +124,7 @@ public class AuthorProcessApi extends GenericApi {
 		// Fetching list of author ids.
 		AuthorFilter authorFilter = new AuthorFilter();
 		authorFilter.setMinLastUpdate( (Date) appProperty.getValue(), false );
-		List<Long> authorIdList = dataAccessor.getAuthorIdList( authorFilter, null, 1000 ).getDataList();
+		List<Long> authorIdList = dataAccessor.getAuthorIdList( authorFilter, null, null ).getDataList();
 
 		// Creating one task per author id.
 		List<Task> taskList = new ArrayList<>( authorIdList.size() );
