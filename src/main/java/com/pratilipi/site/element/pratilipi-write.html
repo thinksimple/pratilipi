@@ -167,7 +167,7 @@
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
 					return;
 				
-				if( this.title == null || this.title.trim() === "" ) {
+				if( this.title == null || this.title.trim() == "" ) {
 					this.message = "Please fill in the Title.";
 					return;
 				}
@@ -190,13 +190,13 @@
 				 "language=" + this.language.toUpperCase() + "&" + 
 				 "state=" + "DRAFTED" ;
 				
-				if( this.titleEn != null && this.titleEn.trim() !== "" )
+				if( this.titleEn != null && this.titleEn.trim() != "" )
 					body = body + "&" + "titleEn=" + this.titleEn;
 				
 				if( this.summary.trim() != "" )
 					body = body + "&" + "summary=" + this.summary;
 				
-				if( this.authorId !== null )
+				if( this.authorId != null )
 					body = body + "&" + "authorId=" + this.authorId;
 				
 				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', true );
