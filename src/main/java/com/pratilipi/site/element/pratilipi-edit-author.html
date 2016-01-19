@@ -76,7 +76,7 @@
 						
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<paper-input class="edit" type="date" label="${ _strings.edit_author_birthday_ddmmyyyy }" always-float-label value="{{ params.birthday::input }}"></paper-input>
+								<paper-input class="edit" type="date" label="${ _strings.edit_author_birthday_ddmmyyyy }" always-float-label value="{{ params.dateOfBirth::input }}"></paper-input>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<paper-dropdown-menu id="authorLanguage" noink label="${ _strings.edit_author_language }">
@@ -130,7 +130,7 @@
 				summary: { type: String }
 			},
 			
-			processBirthday: function( input ) {
+			processDateOfBirth: function( input ) {
 				var datePart = input.match(/\d+/g);
 				
 				if( parseInt( datePart[0] ) < 1800 )
@@ -183,8 +183,8 @@
 				else
 					this.params.summary = this.summary;
 				
-				if( this.params.birthday != null )
-					this.params.birthday = this.processBirthday( this.params.birthday );
+				if( this.params.dateOfBirth != null )
+					this.params.dateOfBirth = this.processDateOfBirth( this.params.dateOfBirth );
 				
 				this.params.language = this.$.authorLanguage.selectedItemLabel.toUpperCase();
 
