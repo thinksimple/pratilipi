@@ -48,7 +48,7 @@
 						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					
-					<div class="modal-body">
+					<div class="modal-body" on-keyup="onSubmit">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<paper-input class="edit" label="${ _strings.edit_author_first_name }" value="{{ params.firstName::input }}"></paper-input>
@@ -176,7 +176,12 @@
 				jQuery( "#pratilipiEditAuthor" ).modal( 'hide' );
 			},
 			
-			onSubmit: function() {
+			onSubmit: function( event ) {
+				
+				this.message = "";
+				
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+					return;
 				
 				if( tinyMCE.activeEditor != null )
 					this.params.summary = tinyMCE.get( 'authorSummary' ).getContent();

@@ -48,7 +48,7 @@
 						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					
-					<div class="modal-body">
+					<div class="modal-body" on-keyup="onSubmit">
 						<paper-input class="edit" label="${ _strings.edit_pratilipi_title }" value="{{ params.title::input }}"></paper-input>
 						<paper-input class="edit" label="${ _strings.edit_pratilipi_title_en }" value="{{ params.titleEn::input }}"></paper-input>
 						<div class="row">
@@ -142,9 +142,12 @@
 				jQuery( "#pratilipiEditPratilipi" ).modal( 'hide' );
 			},
 			
-			onSubmit: function() {
+			onSubmit: function( event ) {
 				
-				this.message = "Please Wait...";
+				this.message = "";
+				
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+					return;
 				
 				if( tinyMCE.activeEditor !== null )
 					this.params.summary = tinyMCE.get( 'pratilipiSummary' ).getContent();

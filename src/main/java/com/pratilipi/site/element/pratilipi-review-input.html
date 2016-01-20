@@ -65,8 +65,8 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<span>${ _strings.review_delete_review }</span>
-						<span style="float: right;"><paper-icon-button style="margin-top: -10px; margin-right: -10px;" noink="true" icon="close" data-dismiss="modal"></paper-icon-button></span>
+						<h6 style="margin: 0px; padding: 0px; font-weight: 700;">${ _strings.review_delete_review }</h6>
+						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					<div class="modal-body">
 						${ _strings.review_delete_review_confirm }
@@ -174,7 +174,7 @@
 				jQuery( '#deleteReviewButton' ).prop( 'disabled', false );
 			},
 			
-			onSubmit: function() {
+			onSubmit: function( event ) {
 				
 				this.message = null;
 				

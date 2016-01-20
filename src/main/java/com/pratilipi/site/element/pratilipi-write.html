@@ -30,8 +30,14 @@
 			};
 		}
 		
+		paper-dropdown-menu paper-menu-button {
+			width: 100%;
+			padding: 0;
+		}
+		
 		paper-menu {
 			--paper-menu-color: #333;
+			width: 100%;
 			--paper-menu-focused-item: {
 				color: #107FE5;
 			};
@@ -160,7 +166,7 @@
 				this.message = null;
 			},
 			
-			onSubmit: function() {
+			onSubmit: function( event ) {
 				
 				this.message = "";
 
