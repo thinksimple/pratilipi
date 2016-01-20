@@ -22,6 +22,10 @@
 			};
 		}
 		
+		paper-item {
+			cursor: pointer;
+		}
+		
 		.col-right-mobile table {
 			margin: 0 auto;
 			text-align: left;
@@ -107,7 +111,7 @@
 	    					</template>
 								
 						<div style="padding: 10px; margin-bottom: 15px;">
-		    				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
+		    				<pratilipi-social share-url="[[ pratilipiData.pageUrl ]]"></pratilipi-social>
 		    			</div>
 		    		</div>
 	    		</div>
@@ -140,10 +144,10 @@
 	    		</div>
 	    	</div>
 	    	
-			<hr style="border: 1px solid #E5E5E5; margin: 0; padding: 0;"/>
+			<!-- <hr style="border: 1px solid #E5E5E5; margin: 0; padding: 0;"/>
 			
 			<!-- Works, Reads and Likes -->
-			<div class="row" style="text-align: center; padding: 10px;">
+			<!-- <div class="row" style="text-align: center; padding: 10px;">
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<h6>${ _strings.pratilipi_count_reads }&nbsp;&minus;&nbsp;{{ pratilipi.readCount }}</h6>
 				</div>
@@ -153,7 +157,7 @@
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<h6>${ _strings.pratilipi_count_likes }&nbsp;&minus;&nbsp;{{ pratilipi.fbLikeShareCount }}</h6>
 				</div>
-			</div>
+			</div> -->
 			
 		</paper-card>
 		
@@ -226,10 +230,6 @@
 				pratilipiData: { type: Object },
 				
 				mobile: { type: Boolean }
-			},
-			
-			getShareUrl: function() {
-				return 'http://' + ${ domain } + this.pratilipi.pageUrl;
 			},
 			
 			openPratilipiEdit: function() {

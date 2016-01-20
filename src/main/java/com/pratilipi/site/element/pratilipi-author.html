@@ -86,7 +86,7 @@
 	    				<div style="min-height: 20px;"></div>
 	    			</template>
 	    			<div style="padding: 0px 40px 15px 40px; margin-bottom: 20px;">
-	    				<pratilipi-social shareUrl="getShareUrl"></pratilipi-social>
+	    				<pratilipi-social share-url="[[ authorData.pageUrl ]]"></pratilipi-social>
 	    			</div>
 				</div>
 	    		<div id="col-right" style="padding: 20px;">
@@ -210,10 +210,6 @@
 				data.totalFbLikeShareCount = data.totalFbLikeShareCount == null ? 0 : data.totalFbLikeShareCount;
 				data.totalReadCount = data.totalReadCount == null ? 0 : data.totalReadCount;
 				return data;
-			},
-			
-			getShareUrl: function() {
-				return 'http://' + ${ domain } + this.author.pageUrl;
 			},
 			
 			updateAuthor: function( author ) {

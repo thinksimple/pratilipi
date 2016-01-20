@@ -20,8 +20,12 @@
 			};
 		}
 		
+		paper-item {
+			cursor: pointer;
+		}
+		
 		.contain-title {
-			width: 250px;
+			min-width: 200px;
 		}
 		
 		.ellipsed, .ellipsed:hover, .ellipsed:focus {
@@ -174,7 +178,6 @@
 			
 			attached: function() {
 				this.init();
-				this._onIronResize();
 			},
 			
 			init: function() {
@@ -186,6 +189,8 @@
 				this.title = this.pratilipi.title;
 
 				$('[data-toggle="tooltip"]').tooltip();
+				
+				this._onIronResize();
 			},
 			
 			publishNow: function() {

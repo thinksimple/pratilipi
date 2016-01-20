@@ -135,10 +135,7 @@
 				// To reload the page when the user( with review ) logs out.
 				if( this.user.isGuest && this.userReviewDeleted ) {
 					this.userReviewDeleted = false;
-					this.set( 'reviewList', [] );
-					this.$.AjaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
-					this.$.AjaxGet.params.cursor = null;
-					this.$.AjaxGet.generateRequest();
+					this.reset();
 				}
 					
 			},
@@ -189,18 +186,26 @@
 					ajaxGet.lastRequest.abort();
 				
 				this.set( 'reviewList', [] );
-				this.cursor = null;
 				
-				this.isLoading = false;
+				// Setting the flags and clearing the cursor.
+				this.cursor = null;
+				this.isLoading = true;
 				this.isFinished = false;
+				
+				// Set params and make ajax GET call.
+				ajaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
+				ajaxGet.params.cursor = this.cursor;
+				ajaxGet.generateRequest();
 
 			},
 			
 			loadMore: function( scrollTop ) {
 
-				if( this.isLoading || this.isFinished || this.cursor == null || this.pratilipi == null )
+				// Return if there is an active call or cursor = null.
+				if( this.isLoading || this.isFinished || this.cursor == null || this.pratilipi == null || this.cursor == "" )
 					return;
 				
+				// Check for window height.
 				var reqHeight = scrollTop
 						- jQuery( this ).context.offsetTop
 						+ jQuery( window ).height()
@@ -208,31 +213,34 @@
 		
 				if( jQuery( this ).outerHeight( true ) >= reqHeight )
 					return;
-				
+
+				// Spinner Active
 				this.isLoading = true;
 				
+				// Set params and make ajax GET call.
 				this.$.AjaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
 				this.$.AjaxGet.params.cursor = this.cursor;
 				this.$.AjaxGet.generateRequest();
 			},
 			
 			_handleAjaxGetResponse: function( event ) {
-				if( event.detail.xhr.status == 0 ) {
-					this.isLoading = false;
+				
+				// Disable spinner
+				this.isLoading = false;
+				
+				// Call didn't succeed.
+				if( event.detail.xhr.status == 0 )
 					return;
-				}
 				
 				var reviewList = event.detail.response.reviewList;
 				for( var i = 0; i < reviewList.length; i++ )
-					this.push( 'reviewList', reviewList[ i ] );
+					this.push( 'reviewList', reviewList[i] );
 
-				if( event.detail.response.cursor != null ) {
-					this.cursor = event.detail.response.cursor;
-					this.isLoading = false;
-				} else {
-					this.cursor = null;
+				if( event.detail.response.cursor == null || reviewList.length < 20 )
 					this.isFinished = true;
-				}
+				else
+					this.cursor = event.detail.response.cursor;
+
 			},
 
 			_handleAjaxGetError: function() {
