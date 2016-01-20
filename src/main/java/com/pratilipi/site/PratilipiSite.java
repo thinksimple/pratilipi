@@ -188,7 +188,7 @@ public class PratilipiSite extends HttpServlet {
 			html = FreeMarkerUtil.processTemplate( dataModel, templateName );
 
 		} catch( InsufficientAccessException e ) {
-			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+			response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
 			try {
 				html = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "error/AuthorizationError.ftl" );
 			} catch( UnexpectedServerException ex ) { }
