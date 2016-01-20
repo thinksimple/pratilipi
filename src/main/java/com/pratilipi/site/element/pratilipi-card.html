@@ -155,7 +155,7 @@
 			
 			_onIronResize: function() {
 				// titleWidth = width occupied by the title.
-				var titleWidth = jQuery( this.querySelector( 'h4 a' ) ).width();
+				var titleWidth = jQuery( this.querySelector( '.card-heading' ) ).width();
 				// maxWidth = width of the card - image - padding.
 				var maxWidth = jQuery( this ).width() - 130;
 				
@@ -174,9 +174,10 @@
 			
 			attached: function() {
 				$('[data-toggle="tooltip"]').tooltip();
+				jQuery( this.querySelector( '.contain-title' ) ).width( jQuery( this ).width() - 130 );
 				this.async( function() {
-					this._onIronResize();
-				}, 50 );
+					window.dispatchEvent( new Event( 'resize' ) );
+				}, 2000 );
 			},
 			
 			init: function() {
