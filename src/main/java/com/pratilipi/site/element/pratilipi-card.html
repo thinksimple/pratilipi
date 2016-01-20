@@ -24,10 +24,6 @@
 			cursor: pointer;
 		}
 		
-		.contain-title {
-			min-width: 200px;
-		}
-		
 		.ellipsed, .ellipsed:hover, .ellipsed:focus {
 			text-overflow: ellipsis;
 			overflow: hidden;
@@ -158,13 +154,13 @@
 			},
 			
 			_onIronResize: function() {
-				// titleWidth = width occupied by the title + 20 px (occupied by ellipses)
-				var titleWidth = jQuery( this.querySelector( 'h4 a' ) ).width() + 30;
+				// titleWidth = width occupied by the title.
+				var titleWidth = jQuery( this.querySelector( 'h4 a' ) ).width();
 				// maxWidth = width of the card - image - padding.
 				var maxWidth = jQuery( this ).width() - 130;
 				
 				// Setting the minimum of two to the card heading.
-				jQuery( this.querySelector( '.contain-title' ) ).css( "width", Math.min( titleWidth, maxWidth ) + "px" );
+				jQuery( this.querySelector( '.contain-title' ) ).width( Math.min( titleWidth, maxWidth ) );
 			},
 			
 			redirectToReader: function() {
@@ -177,7 +173,10 @@
 			},
 			
 			attached: function() {
-				this.init();
+				$('[data-toggle="tooltip"]').tooltip();
+				this.async( function() {
+					this._onIronResize();
+				}, 50 );
 			},
 			
 			init: function() {
@@ -187,10 +186,6 @@
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
 				
 				this.title = this.pratilipi.title;
-
-				$('[data-toggle="tooltip"]').tooltip();
-				
-				this._onIronResize();
 			},
 			
 			publishNow: function() {
