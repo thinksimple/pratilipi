@@ -22,7 +22,13 @@
 	
 	<template>
 		<div style="position: absolute; margin-left: 0px;">
-			<div class="fb-like" data-href="{{ shareUrl }}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>		
+			<template is="dom-if" if="{{ showLikeCount }}">
+				<div class="fb-like" data-href="{{ shareUrl }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+			</template>
+			<template is="dom-if" if="{{ !showLikeCount }}">
+				<div class="fb-like" data-href="{{ shareUrl }}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+			</template>
+					
 	 	</div>
 	 	<div class="drop_menu" style="margin-left: 70px; position:  absolute;">
 			    <a class="link" href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -57,7 +63,8 @@
 			is: 'pratilipi-social',
 			
 			properties: {
-				shareUrl: { type: String }
+				shareUrl: { type: String },
+				showLikeCount: { type: Boolean, value: false }
 			},
 			
 			ready: function() {

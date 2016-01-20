@@ -110,8 +110,8 @@
 		    					</template>
 	    					</template>
 								
-						<div style="padding: 10px; margin-bottom: 15px;">
-		    				<pratilipi-social share-url="[[ pratilipiData.pageUrl ]]"></pratilipi-social>
+						<div style="padding: 10px 5px; margin-bottom: 15px;">
+		    				<pratilipi-social show-like-count share-url="[[ pratilipiData.pageUrl ]]"></pratilipi-social>
 		    			</div>
 		    		</div>
 	    		</div>
@@ -176,6 +176,19 @@
 				</div>
 			</paper-card>
 			<br class="pratilipi-break" />
+		</div>
+		
+		<div id="alertSuccess" class="modal fade">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-body">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<div style="margin-top: 50px; margin-bottom: 50px; text-align: center;">
+							<h5>${ _strings.updated_pratilipi_info_success }</h5>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		
 		<iron-ajax
@@ -371,7 +384,12 @@
 			_handleAjaxPostResponse: function( event ) {
 				var pratilipi = event.detail.response;
 				this.updatePratilipi( pratilipi );
-				alert( "Success!" );
+				this.async( function() {
+					jQuery( "#alertSuccess" ).modal();
+				});
+				this.async( function() {
+					jQuery( "#alertSuccess" ).modal( 'hide' );
+				}, 1200);
 			},
 			
 			_handleAjaxPostError: function( event ) {
