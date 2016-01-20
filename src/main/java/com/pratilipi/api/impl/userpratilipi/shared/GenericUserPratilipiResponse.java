@@ -8,6 +8,7 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 
 	private String userPratilipiId;
 	private String userName;
+	private String userImageUrl;
 	private Long pratilipiId;
 	
 	private Integer rating;
