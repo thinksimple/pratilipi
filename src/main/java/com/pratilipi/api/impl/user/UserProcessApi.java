@@ -24,14 +24,11 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.GaeQueryBuilder;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
-import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
-import com.pratilipi.data.util.AuthorDataUtil;
-import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -103,16 +100,17 @@ public class UserProcessApi extends GenericApi {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			PersistenceManager pm = dataAccessor.getPersistenceManager();
 			User user = dataAccessor.getUser( request.getUserId() );
+
 			
 			// DELETED User entity can not have a non-DELETED Author entity linked.
 			if( user.getState() == UserState.DELETED ) {
 				Author author = dataAccessor.getAuthorByUserId( user.getId() );
 				if( author != null && author.getState() != AuthorState.DELETED )
 					throw new InvalidArgumentException( "DELETED User entity has a non-DELETED Author entity linked." );
+				// TODO: DELETED User entity can not have non-DELETED UserPratilipi entities.
 				return new GenericResponse();
 			}
 
-			// TODO: DELETED User entity can not have non-DELETED UserPratilipi entities.
 			
 			// Either of two - email and facebook id - must be present.
 			if( user.getEmail() == null && user.getFacebookId() == null )
@@ -191,20 +189,23 @@ public class UserProcessApi extends GenericApi {
 				
 				if( authorList2 == null || authorList2.size() == 0 ) {
 					
-					logger.log( Level.SEVERE, "Could not find an Author entity for this User. Creating a new one ..." );
+/*					logger.log( Level.SEVERE, "Could not find an Author entity for this User. Creating a new one ..." );
 					UserData userData = UserDataUtil.createUserData( user );
 					userData.setFirstName( user.getFirstName() );
 					userData.setLastName( user.getLastName() );
 					userData.setGender( user.getGender() );
-					AuthorDataUtil.createAuthorProfile( userData, null );
+					AuthorDataUtil.createAuthorProfile( userData, null );*/
+					
+					throw new InvalidArgumentException( "Could not find an Author entity linked." );
 					
 				} else if( authorList2.size() == 1 ) {
 					
 					Author author = authorList2.get( 0 );
 					if( author.getUserId() == null ) {
-						logger.log( Level.SEVERE, "Author entity is not linked for the User. Linking it ..." );
+/*						logger.log( Level.SEVERE, "Author entity is not linked for the User. Linking it ..." );
 						author.setUserId( user.getId() );
-						dataAccessor.createOrUpdateAuthor( author );
+						dataAccessor.createOrUpdateAuthor( author );*/
+						throw new InvalidArgumentException( "Author entity is not linked." );
 					} else {
 						throw new InvalidArgumentException( "Author entity, having email same as User's email, is linked to a different User entity." );
 					}

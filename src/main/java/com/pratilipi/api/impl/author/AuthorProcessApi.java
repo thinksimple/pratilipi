@@ -19,6 +19,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -26,6 +27,7 @@ import com.pratilipi.data.GaeQueryBuilder;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.util.AuthorDataUtil;
@@ -151,16 +153,27 @@ public class AuthorProcessApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		Author author = dataAccessor.getAuthor( authorId );
+		Page page = dataAccessor.getPage( PageType.AUTHOR, authorId );
 
-		if( author.getState() == AuthorState.DELETED )
+		
+		// Must have a page entity linked.
+		if( page == null )
+			throw new InvalidArgumentException( "Page entity is missing." );
+		
+		// Page entity linked with DELETED Author must not have uriAlias.
+		if( author.getState() == AuthorState.DELETED ) {
+			if( page.getUriAlias() != null )
+				throw new InvalidArgumentException( "Author entity is DELETED but uriAlias in Page entity is not null." );
+			// TODO: DELETED Author cannot have non-DELETED Pratilipi entities linked.
 			return;
+		}
 
-		// TODO: DELETED Author cannot have non-DELETED Pratilipi entities linked.
 		
 		// At least one of four name fields must be set.
 		if( author.getFirstName() == null && author.getLastName() == null && author.getFirstNameEn() == null && author.getLastNameEn() == null )
 			throw new InvalidArgumentException( "Author name is missing." );
 
+		
 		// Email, if present, must be trimmed and converted to lower case.
 		if( author.getEmail() != null && ! author.getEmail().equals( author.getEmail().trim().toLowerCase() ) )
 			throw new InvalidArgumentException( "Email is either not trimmed or not converted to lower case." );
