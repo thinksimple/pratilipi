@@ -188,8 +188,10 @@ public class PratilipiSite extends HttpServlet {
 			html = FreeMarkerUtil.processTemplate( dataModel, templateName );
 
 		} catch( InsufficientAccessException e ) {
-			logger.log( Level.SEVERE, "", e );
-			// TODO
+			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+			try {
+				html = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "error/AuthorizationError.ftl" );
+			} catch( UnexpectedServerException ex ) { }
 
 		} catch( InvalidArgumentException | UnexpectedServerException e ) {
 			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
@@ -328,10 +330,14 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
-	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId, boolean basicMode ) {
+	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId, boolean basicMode )
+			throws InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		if( ! PratilipiDataUtil.hasAccessToReadPratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
+		
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
