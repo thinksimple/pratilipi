@@ -92,6 +92,8 @@ review_submit_review		= சமர்ப்பிக்க
 review_edit_review			= விமர்சனத்தை திருத்த
 review_delete_review		= விமர்சனத்தை அழிக்க
 review_delete_review_confirm	= விமர்சனத்தை உறுதியாக அழிக்கவேண்டுமா?
+review_delete_okay			= அழி
+review_delete_cancel		= இல்லை
 review_helpful				= இந்த விமர்சனம் உதவியாக இருந்ததா?  
 
 
@@ -112,7 +114,7 @@ write_title					= தலைப்பு *
 write_title_en				= தலைப்பு (ஆங்கிலத்தில்)
 write_type					= வகை *
 write_language				= மொழித்தேர்வு
-write_summary				=  படைப்பைப் பற்றி (விருப்பமிருப்பின்)
+write_summary				= படைப்பைப் பற்றி (விருப்பமிருப்பின்)
 write_create_new_content	= புதிய படைப்பை உருவாக்க
 
 
@@ -218,7 +220,7 @@ edit_pratilipi_heading			= விவரத்தை திருத்த
 edit_pratilipi_title			= பெயர் *
 edit_pratilipi_title_en			= பெயர் (ஆங்கிலத்தில்)
 edit_pratilipi_type				= வகை *
-edit_pratilipi_language			= Language
+edit_pratilipi_language			= மொழி
 edit_pratilipi_summary			= படைப்பைப் பற்றி  (விருப்பமிருப்பின்) :
 edit_pratilipi_save_changes		= மாற்றங்களை சேமிக்க
 

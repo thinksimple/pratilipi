@@ -92,6 +92,8 @@ review_submit_review		= SUBMIT
 review_edit_review			= Edit Review
 review_delete_review		= Delete Review
 review_delete_review_confirm	= Are you sure to delete your review?
+review_delete_okay			= Yes, Delete review!
+review_delete_cancel		= No, Don't!
 review_helpful				= Was this review helpful?
 
 
