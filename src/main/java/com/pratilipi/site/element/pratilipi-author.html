@@ -326,7 +326,7 @@
 				if( this.imageUploaded ) {
 					this.imageUploaded = false;
 					this.async( function() {
-						location.reload();
+						this.authorImageUrl = this.authorImageUrl + "&" + "version=" + new Date().getTime();
 					}, 500 );
 				}
 			},
