@@ -30,7 +30,7 @@
 			</template>
 					
 	 	</div>
-	 	<div class="drop_menu" style="margin-left: 70px; position:  absolute;">
+	 	<div class="drop_menu" style="margin-left: 90px; position:  absolute;">
 			    <a class="link" href="#" class="dropdown-toggle" data-toggle="dropdown">
 					${ _strings.share } 
 					<b class="caret"></b>
@@ -91,7 +91,7 @@
 				window.open( "https://plus.google.com/share?url=" + this.shareUrl, "share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
-			ready: function() {
+			attached: function() {
 				if( this.shareUrl != null )
 					this.shareUrl =  "http://" + "${ domain }" + this.shareUrl;
 				else
