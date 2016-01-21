@@ -91,9 +91,9 @@
 					<pratilipi-review review="[[ item ]]"></pratilipi-review>
 			</template>
 		</div>
-		<!-- <template is="dom-if" if="{{ !isFinished }}">
+		<template is="dom-if" if="{{ isLoading }}">
 			<paper-spinner style="margin: 15px auto; display: block;" class="pratilipi-spinner" active></paper-spinner>
-		</template> -->
+		</template>
 		
 		<iron-ajax
 				id="AjaxGet"
