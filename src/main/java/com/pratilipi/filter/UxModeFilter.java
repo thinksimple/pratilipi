@@ -45,7 +45,7 @@ public class UxModeFilter implements Filter {
 		
 		if( isAndroidApp ) {
 
-			threadLocalBasicMode.set( false );
+			threadLocalBasicMode.set( true );
 			threadLocalDisplayLanguage.set( Language.ENGLISH );
 			threadLocalFilterLanguage.set( null );
 		
