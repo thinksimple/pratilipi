@@ -45,7 +45,7 @@ public class UxModeFilter implements Filter {
 		
 		if( isAndroidApp ) {
 
-			threadLocalBasicMode.set( true );
+			threadLocalBasicMode.set( false );
 			threadLocalDisplayLanguage.set( Language.ENGLISH );
 			threadLocalFilterLanguage.set( null );
 		
@@ -65,7 +65,7 @@ public class UxModeFilter implements Filter {
 			
 			
 			// Defaults - for all test environments
-			boolean basicMode = false;
+			boolean basicMode = true;
 			Language displayLanguage = Language.TAMIL;
 			Language filterLanguage = Language.TAMIL;
 	
