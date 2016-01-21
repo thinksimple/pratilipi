@@ -78,7 +78,7 @@
 									</div>
 								</form>
 								
-								<iframe id="upload_target" name="upload_target" style="display: none;" on-change="_onchangeiframe"></iframe>
+								<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
 	    					</template>
 	    				</template>
 	    			</div>
@@ -194,7 +194,8 @@
 				author: { type: Object, notify: true },
 				authorData: { type: Object },
 				
-				mobile: { type: Boolean }
+				mobile: { type: Boolean },
+				imageUploaded: { type: Boolean, value: false }
 			},
 			
 			openAuthorEdit: function() {
@@ -322,16 +323,17 @@
 			},
 			
 			_onchangeiframe: function() {
-				this.async( function() {
-					location.reload();
-				}, 500 );
+				if( this.imageUploaded ) {
+					this.imageUploaded = false;
+					this.async( function() {
+						location.reload();
+					}, 500 );
+				}
 			},
 			
 			uploadImage: function() {
 				document.getElementById( "uploadAuthorImage" ).submit();
-				this.async( function() {
-					this._onchangeiframe();
-				}, 5000 );
+				this.imageUploaded = true;
 			},
 			
 		});
