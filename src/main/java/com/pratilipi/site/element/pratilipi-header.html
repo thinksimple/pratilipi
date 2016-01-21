@@ -94,7 +94,7 @@
 									</template>
 									<template is="dom-if" if="{{ mobile }}">
 										<paper-input name="q" class="search" type="search" placeholder="${ _strings.search }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search }'" value="{{ query::input }}">
-											<paper-icon-button class="search-icon" suffix icon="search" noink="true"></paper-icon-button>
+											<paper-icon-button class="search-icon" suffix icon="search" noink="true" on-click="onSubmit"></paper-icon-button>
 											<paper-icon-button class="menu-icon" prefix icon="menu" noink="true" on-click="showMenu"></paper-icon-button>
 										</paper-input>
 									</template>
@@ -282,6 +282,7 @@
 				} else {
 					this.query = this.query.trim();
 				}
+				document.getElementById( "form" ).submit();
 			},
 
 		});
