@@ -6,35 +6,28 @@
 	
 	.tftextinput {
 		margin: 0;
-		padding: 5px 15px;
+		padding: 7px 15px;
 		font-size:14px;
 		border:1px solid #333; border-right:0px;
-		border-top-left-radius: 5px 5px;
-		border-bottom-left-radius: 5px 5px;
+		border-top-left-radius: 1px 1px;
+		border-bottom-left-radius: 1px 1px;
 	}
 	
 	.tfbutton {
 		margin: 0;
-		padding: 5px 10px;
+		padding: 7px 10px;
 		font-size:14px;
 		outline: none;
 		cursor: pointer;
 		text-align: center;
 		text-decoration: none;
 		color: #ffffff;
-		border: solid 1px #333; border-right:0px;
+		border: solid 1px #333;
 		background: #D0021B;
 		background: -webkit-gradient(linear, left top, left bottom, from(#d93448), to(#D0021B));
 		background: -moz-linear-gradient(top,  #d93448,  #D0021B);
-		border-top-right-radius: 5px 5px;
-		border-bottom-right-radius: 5px 5px;
-	}
-	
-	.tfbutton:hover {
-		text-decoration: none;
-		background: #107FE5;
-		background: -webkit-gradient(linear, left top, left bottom, from(#6fb2ef), to(#107FE5));
-		background: -moz-linear-gradient(top,  #6fb2ef,  #107FE5);
+		border-top-right-radius: 1px 1px;
+		border-bottom-right-radius: 1px 1px;
 	}
 	
 	/* Fixes submit button height problem in Firefox */
@@ -70,10 +63,10 @@
 		</td>
 		
 		<td width="auto" align="center">
-			<div style="width: 100%; margin-top: 20px; margin-left: auto; margin-right: auto;">
+			<div style="width: 100%; margin-top: 15px; margin-left: auto; margin-right: auto;">
 				<div style="width: 100%; display: table;">
 				    <form method="get" action="/search">
-				    	<input type="text" class="tftextinput" name="q" style="display: table-cell; width:60%;" maxlength="120" /><input type="submit" value="search" class="tfbutton" style="display: table-cell; width:60px;" />
+				    	<input type="text" class="tftextinput" name="q" style="display: table-cell; width:60%;" maxlength="120" /><input type="submit" value="${ _strings.search }" class="tfbutton" style="display: table-cell; width:60px;" />
 		        	</form>
 				</div>
 			</div>
