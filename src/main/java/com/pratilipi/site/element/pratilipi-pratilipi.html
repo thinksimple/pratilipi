@@ -409,7 +409,7 @@
 				if( this.imageUploaded ) {
 					this.imageUploaded = false;
 					this.async( function() {
-						location.reload();
+						this.pratilipiCoverImageUrl = this.pratilipiCoverImageUrl + "&" + "version=" + new Date().getTime();
 					}, 500 );
 				}
 			},
