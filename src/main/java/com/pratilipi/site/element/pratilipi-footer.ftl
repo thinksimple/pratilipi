@@ -2,7 +2,7 @@
 	.link:link, .link:visited, .link:hover, .link:active {
 		font-size: 16px;
 		color: #9B9B9B;
-		line-height: 32px;
+		line-height: 36px;
 		white-space: nowrap;
 		text-decoration: none;
 	}
@@ -20,11 +20,16 @@
 </style>
 
 <div class="box" style="padding: 25px 30px; margin-bottom: 10px;">
-	<!-- <a class="pratilipi-light-blue-button">Download App !</a>
-	&nbsp;&nbsp; -->
-	<a class="link" style="float: left;" href="mailto:contact@pratilipi.com">contact@pratilipi.com</a>
-	<a class="link" style="float: right;" href="tel:+919789316700">+91 9789316700</a>
-	<br />
+	
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
+			<a class="link" href="mailto:contact@pratilipi.com">contact@pratilipi.com</a>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
+			<a class="link" href="tel:+919789316700">+91 9789316700</a>
+		</div>
+	</div>
+
 	<div style="display: block; text-align: center; margin: 30px auto 0px auto;">
 		${ _strings.footer_follow_us_on_social_media }
 	</div>
@@ -37,21 +42,22 @@
 	</div>
 	<br />
 	<div class="row">
-		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-center">
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center">
 			<a class="link" href="/about/pratilipi">${ _strings.footer_about_us }</a>
 		</div>
-		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-center">
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center">
 			<a class="link" href="/work-with-us">${ _strings.footer_work_with_us }</a>
 		</div>
-		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-center">
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center">
 			<a class="link" href="/privacy-policy">${ _strings.footer_privacy_policy }</a>
 		</div>
-		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-center">
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center">
 			<a class="link" href="/terms-of-service">${ _strings.footer_terms_of_service }</a>
 		</div>
 	</div>
 </div>
+
 <div class="text-center" style="display: block; margin: 10px auto;">
-	<span>&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</span>
+	<span style="color: #333;">&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</span>
 </div>
 	
