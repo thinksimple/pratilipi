@@ -52,6 +52,6 @@
 	</div>
 </div>
 <div class="text-center" style="display: block; margin: 10px auto;">
-	<span class="link">&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</span>
+	<span>&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</span>
 </div>
 	
