@@ -46,6 +46,7 @@ public class PratilipiApi extends GenericApi {
 
 		Gson gson = new Gson();
 
+		// Creating PratilipiData object.
 		PratilipiData pratilipiData = gson.fromJson( gson.toJson( request ), PratilipiData.class );
 
 		// If not set already, setting AuthorId for new content.
@@ -54,13 +55,25 @@ public class PratilipiApi extends GenericApi {
 			Author author = dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() );
 			pratilipiData.setAuthorId( author.getId() );
 		}
+
+		// Saving PratilipiData object.
 		pratilipiData = PratilipiDataUtil.savePratilipiData( pratilipiData );
-		
+
+		// Creating PratilipiProcess task to process the data.
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/pratilipi/process" )
 				.addParam( "pratilipiId", pratilipiData.getId().toString() )
 				.addParam( "processData", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
+
+		// If PratilipiState has changed, creating AuthorProcess task to update Author stats.
+		if( request.hasState() && request.getState() != pratilipiData.getState() && pratilipiData.getAuthorId() != null ) {
+			Task authorTask = TaskQueueFactory.newTask()
+					.setUrl( "/author/process" )
+					.addParam( "authorId", pratilipiData.getAuthorId().toString() )
+					.addParam( "updateStats", "true" );
+			TaskQueueFactory.getAuthorTaskQueue().add( authorTask );
+		}
 		
 		return gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class );
 		
