@@ -467,14 +467,11 @@ public class AuthorDataUtil {
 		pratilipiFilter.setAuthorId( authorId );
 		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiFilter, null, null ).getDataList();
 		
-		if( pratilipiList.size() == 0 )
-			return false;
-		
 		int contentPublished = 0;
 		long totalReadCount = 0;
 		long totalFbLikeShareCount = 0;
 		for( Pratilipi pratilipi : pratilipiList ) {
-			if( pratilipi.getState() == PratilipiState.PUBLISHED || pratilipi.getState() == PratilipiState.PUBLISHED_PAID )
+			if( pratilipi.getState() == PratilipiState.PUBLISHED )
 				contentPublished++;
 			totalReadCount = totalReadCount + pratilipi.getReadCount();
 			totalFbLikeShareCount = totalFbLikeShareCount + pratilipi.getFbLikeShareCount();

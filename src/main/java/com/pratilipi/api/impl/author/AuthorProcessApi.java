@@ -46,9 +46,7 @@ public class AuthorProcessApi extends GenericApi {
 	@Get
 	public GenericResponse getAuthorProcess( GenericRequest request ) {
 		
-		_createUpdateStateTasks();
-		
-		_createValidateDataTasks();
+		createValidateDataTasks();
 		
 		return new GenericResponse();
 		
@@ -59,7 +57,7 @@ public class AuthorProcessApi extends GenericApi {
 			throws InvalidArgumentException, UnexpectedServerException {
 
 		if( request.validateData() )
-			_validateAuthorData( request.getAuthorId() );
+			validateAuthorData( request.getAuthorId() );
 		
 		if( request.processData() ) {
 			boolean changed = AuthorDataUtil.createOrUpdateAuthorPageUrl( request.getAuthorId() );
@@ -75,14 +73,6 @@ public class AuthorProcessApi extends GenericApi {
 
 		if( request.updateStats() ) {
 			boolean changed = AuthorDataUtil.updateAuthorStats( request.getAuthorId() );
-			
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			Author author = dataAccessor.getAuthor( request.getAuthorId() );
-			if( changed )
-				author.setLastProcessDate( new Date() );
-			author.setNextProcessDate( new Date( new Date().getTime() + 3600000L ) ); // Now + 1 Hr
-			author = dataAccessor.createOrUpdateAuthor( author );
-			
 			if( changed )
 				AuthorDataUtil.updateAuthorSearchIndex( request.getAuthorId() );
 		}
@@ -90,28 +80,7 @@ public class AuthorProcessApi extends GenericApi {
 		return new GenericResponse();
 	}
 
-	private void _createUpdateStateTasks() {
-		
-		AuthorFilter authorFilter = new AuthorFilter();
-		authorFilter.setNextProcessDateEnd( new Date() );
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<Long> authorIdList = dataAccessor.getAuthorIdList( authorFilter, null, null ).getDataList();
-		
-		List<Task> taskList = new ArrayList<>( authorIdList.size() );
-		for( Long authorId : authorIdList ) {
-			Task task = TaskQueueFactory.newTask()
-					.setUrl( "/author/process" )
-					.addParam( "authorId", authorId.toString() )
-					.addParam( "updateStats", "true" );
-			taskList.add( task );
-		}
-		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
-		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
-		
-	}
-	
-	private void _createValidateDataTasks() {
+	private void createValidateDataTasks() {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -148,7 +117,7 @@ public class AuthorProcessApi extends GenericApi {
 		
 	}
 	
-	private void _validateAuthorData( Long authorId ) throws InvalidArgumentException {
+	private void validateAuthorData( Long authorId ) throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		PersistenceManager pm = dataAccessor.getPersistenceManager();

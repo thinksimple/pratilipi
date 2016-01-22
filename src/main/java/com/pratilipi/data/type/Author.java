@@ -94,12 +94,4 @@ public interface Author extends Serializable {
 	void setTotalFbLikeShareCount( Long totalFbLikeShareCount );
 
 	
-	Date getLastProcessDate();
-
-	void setLastProcessDate( Date lastProcessDate );
-
-	Date getNextProcessDate();
-
-	void setNextProcessDate( Date nextProcessDate );
-
 }

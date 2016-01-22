@@ -93,9 +93,11 @@ public class AuthorEntity implements Author {
 	private Long totalFbLikeShareCount;
 
 	
+	@Deprecated
 	@Persistent( column = "LAST_PROCESS_DATE" )
 	private Date lastProcessDate;
 
+	@Deprecated
 	@Persistent( column = "NEXT_PROCESS_DATE" )
 	private Date nextProcessDate;
 	
@@ -358,25 +360,4 @@ public class AuthorEntity implements Author {
 		this.totalFbLikeShareCount = totalFbLikeShareCount;
 	}
 	
-	
-	@Override
-	public Date getLastProcessDate() {
-		return lastProcessDate == null ? registrationDate : lastProcessDate;
-	}
-
-	@Override
-	public void setLastProcessDate( Date lastProcessDate ) {
-		this.lastProcessDate = lastProcessDate;
-	}
-
-	@Override
-	public Date getNextProcessDate() {
-		return nextProcessDate;
-	}
-
-	@Override
-	public void setNextProcessDate( Date nextProcessDate ) {
-		this.nextProcessDate = nextProcessDate;
-	}
-
 }
