@@ -19,7 +19,7 @@
 		<filter-class>com.pratilipi.filter.UxModeFilter</filter-class>
 		<init-param>
 			<param-name>Module</param-name>
-			<param-value>android</param-value>
+			<param-value>Android</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
