@@ -67,7 +67,7 @@ public class PratilipiApi extends GenericApi {
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 
 		// If PratilipiState has changed, creating AuthorProcess task to update Author stats.
-		if( request.hasState() && request.getState() != pratilipiData.getState() && pratilipiData.getAuthorId() != null ) {
+		if( request.hasState() && pratilipiData.getAuthorId() != null ) {
 			Task authorTask = TaskQueueFactory.newTask()
 					.setUrl( "/author/process" )
 					.addParam( "authorId", pratilipiData.getAuthorId().toString() )
