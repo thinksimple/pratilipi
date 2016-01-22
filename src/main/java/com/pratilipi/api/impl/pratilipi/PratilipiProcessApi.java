@@ -2,6 +2,7 @@ package com.pratilipi.api.impl.pratilipi;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,15 +42,18 @@ public class PratilipiProcessApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
 		
-		for( int i = 0; i < pratilipiIdList.size(); i = i + 100 ) {
+		int batchSize = 25;
+		List<Task> taskList = new ArrayList<>( (int) Math.ceil( ( (double) pratilipiIdList.size() ) / batchSize  ) );
+		for( int i = 0; i < pratilipiIdList.size(); i = i + batchSize ) {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/pratilipi/process" )
-					.addParam( "pratilipiIdList", new Gson().toJson( pratilipiIdList.subList( i, i + 100 < pratilipiIdList.size() ? i + 100 : pratilipiIdList.size() ) ) )
+					.addParam( "pratilipiIdList", new Gson().toJson( pratilipiIdList.subList( i, i + batchSize < pratilipiIdList.size() ? i + batchSize : pratilipiIdList.size() ) ) )
 					.addParam( "updateStats", "true" );
-			TaskQueueFactory.getPratilipiTaskQueue().add( task );
+			taskList.add( task );
 		}
+		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
 		
-		logger.log( Level.INFO, "Created task(s) with " + pratilipiIdList.size() + " Pratilipi ids." );
+		logger.log( Level.INFO, "Created " + taskList.size() + " task(s) with " + pratilipiIdList.size() + " Pratilipi ids." );
 
 		return new GenericResponse();
 		
@@ -75,13 +79,15 @@ public class PratilipiProcessApi extends GenericApi {
 		if( request.processData() ) {
 			for( Long pratilipiId : pratilipiIdList ) {
 				PratilipiDataUtil.createOrUpdatePratilipiPageUrl( pratilipiId );
-				PratilipiDataUtil.createOrUpdatePratilipiReadPageUrl( pratilipiId );
+//				PratilipiDataUtil.createOrUpdatePratilipiReadPageUrl( pratilipiId );
 			}
 			PratilipiDataUtil.updatePratilipiSearchIndex( pratilipiIdList );
 			PratilipiDataUtil.updateFacebookScrape( pratilipiIdList );
 		}
+
 		
 		if( request.processCover() ) { }
+		
 		
 		if( request.processContent() ) {
 			for( Long pratilipiId : pratilipiIdList ) {
@@ -93,14 +99,24 @@ public class PratilipiProcessApi extends GenericApi {
 			}
 		}
 		
+		
 		if( request.updateStats() ) {
-			List<Long> updatedIds = PratilipiDataUtil.updatePratilipiStats( pratilipiIdList );
+
+			// Batch updating Pratilipi stats.
+			List<Long> updatedIdList = PratilipiDataUtil.updatePratilipiStats( pratilipiIdList );
 			
+			// List of Author ids to be updated.
+			List<Long> authorIdList = new LinkedList<Long>();
+
+			// Updating Pratilipi.nextProcessDate
 			for( Long pratilipiId : pratilipiIdList ) {
 				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-				if( updatedIds.contains( pratilipiId ) ) {
+				if( updatedIdList.contains( pratilipiId ) ) {
 					pratilipi.setLastProcessDate( new Date() );
 					pratilipi.setNextProcessDate( new Date( new Date().getTime() + 900000L ) ); // Now + 15 Min
+					if( pratilipi.getAuthorId() != null )
+						if( ! authorIdList.contains( pratilipi.getAuthorId() ) )
+							authorIdList.add( pratilipi.getAuthorId() );
 				} else {
 					Long nextUpdateAfterMillis = 2 * ( new Date().getTime() - pratilipi.getLastProcessDate().getTime() );
 					if( nextUpdateAfterMillis < 900000L ) // 15 Min
@@ -109,10 +125,24 @@ public class PratilipiProcessApi extends GenericApi {
 						nextUpdateAfterMillis = 86400000L;
 					pratilipi.setNextProcessDate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
 				}
-				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi ); // TODO: Batch this call
 			}
-			
-			PratilipiDataUtil.updatePratilipiSearchIndex( updatedIds );
+
+			// Batch updating search index.
+			PratilipiDataUtil.updatePratilipiSearchIndex( updatedIdList );
+
+			// Creating tasks to update author entities.
+			List<Task> taskList = new ArrayList<>( authorIdList.size() );
+			for( Long authorId : authorIdList ) {
+				Task task = TaskQueueFactory.newTask()
+						.setUrl( "/author/process" )
+						.addParam( "authorId", authorId.toString() )
+						.addParam( "updateStats", "true" );
+				taskList.add( task );
+			}
+			TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
+			logger.log( Level.INFO, "Added " + taskList.size() + " AuthorProcessApi.updateStats tasks." );
+
 		}
 		
 		return new GenericResponse();
