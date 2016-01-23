@@ -80,6 +80,7 @@ public class PratilipiSite extends HttpServlet {
 		List<String> resourceList = new LinkedList<>();
 		if( basicMode ) {
 			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
+			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 			resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
 		} else {
 			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
