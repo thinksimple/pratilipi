@@ -1,24 +1,3 @@
-<style type="text/css">
-	.link:link, .link:visited, .link:hover, .link:active {
-		font-size: 16px;
-		color: #9B9B9B;
-		line-height: 36px;
-		white-space: nowrap;
-		text-decoration: none;
-	}
-	
-	.img-circle {
-		width: 48px;
-		height: 48px;
-		margin: 10px;
-		border-radius: 50%;
-	}
-	
-	.text-center {
-		text-align: center;
-	}
-</style>
-
 <div class="box" style="padding: 25px 30px; margin-bottom: 10px;">
 	
 	<div class="row">

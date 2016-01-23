@@ -15,15 +15,15 @@
 		</div>
 	</div>
 	<hr/>
-	<div class="row" style="padding: 10px 0px;">
-		<div style="text-align: center;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<small>${ _strings.author_count_works }</small> <br/> <span class="red" style="font-size:20px;font-weight:bold">${ author.contentPublished }</span>
+	<div class="row" style="padding: 0px; margin-bottom: 10px;">
+		<div style="text-align: center; padding: 10px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+			<h4>${ _strings.author_count_works }</h4>&nbsp;&minus;&nbsp;<span class="red" style="font-size:20px;font-weight:bold">${ author.contentPublished }</span>
 		</div>
-		<div style="text-align: center;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<small>${ _strings.author_count_reads }</small> <br/> <span class="red" style="font-size:20px;font-weight:bold">${ author.totalReadCount }</span>
+		<div style="text-align: center; padding: 10px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+			<h4>${ _strings.author_count_reads }</h4>&nbsp;&minus;&nbsp;<span class="red" style="font-size:20px;font-weight:bold">${ author.totalReadCount }</span>
 		</div>
-		<div style="text-align: center;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<small>${ _strings.author_count_likes }</small> <br/> <span class="red" style="font-size:20px;font-weight:bold">${ author.totalFbLikeShareCount }</span>
+		<div style="text-align: center; padding: 10px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+			<h4>${ _strings.author_count_likes }</h4>&nbsp;&minus;&nbsp;<span class="red" style="font-size:20px;font-weight:bold">${ author.totalFbLikeShareCount }</span>
 		</div>
 	</div>
 </div>
