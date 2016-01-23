@@ -1,6 +1,9 @@
 <div class="box" style="padding: 10px; margin-top: 0px;" >
 	<div class="row">
-		<div class="col-xs-7 col-sm-3 col-md-3 col-lg-3">
+	
+		<#-- For Larger screens -->
+		
+		<div class="hidden-xs col-sm-3 col-md-3 col-lg-3">
 			<a href="/">
 				<img style="max-width: 60px;" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/Logo-for-Site-Header.png" />
 			</a>
@@ -18,14 +21,22 @@
 				</div>
 			</form>    
 		</div>
-		
-		<div class="col-xs-5 col-sm-2 col-md-2 col-lg-2" style="margin-top: 10px;">
-			<button type="button" style="cursor: pointer;" class="pratilipi-white-button pull-right" onclick="openLoginForm()">${ _strings.user_sign_in }</button>
+		<div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
+			<button type="button" style="cursor: pointer; margin-top: 10px;" class="pratilipi-white-button pull-right" data-toggle="modal" data-target="#pratilipiUserLogin">${ _strings.user_sign_in }</button>
 		</div>
-	</div>
-	
-	
-	<div class="row">
+		
+		
+		<#-- For Mobile screens -->
+		
+		<div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+			<a href="/">
+				<img style="max-width: 60px;" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/Logo-for-Site-Header.png" />
+			</a>
+			<a href="/">
+				<img style= "max-width: 90px;" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/Pratilipi-Text.png" />
+			</a>
+			<button type="button" style="cursor: pointer; margin-top: 10px;" class="pratilipi-white-button pull-right" data-toggle="modal" data-target="#pratilipiUserLogin">${ _strings.user_sign_in }</button>
+		</div>
 		<div class="col-xs-12 hidden-sm hidden-md hidden-lg" style="margin-top: 5px; padding: 10px;">
 			<form method="get" action="/search">
 				<div class="form-group">
@@ -36,7 +47,6 @@
 				</div>
 			</form>
 		</div>
+
 	</div>
-	
-	
 </div>
