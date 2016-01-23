@@ -54,7 +54,7 @@
 		</div>
 		
 		<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 pull-right" style="margin-top: 10px;">
-			<button type="button" style="cursor: pointer;" class="pratilipi-white-button">${ _strings.user_sign_in }</button>
+			<button type="button" style="cursor: pointer;" class="pratilipi-white-button" onclick="openLoginForm()">${ _strings.user_sign_in }</button>
 		</div>
 	</div>
 	
