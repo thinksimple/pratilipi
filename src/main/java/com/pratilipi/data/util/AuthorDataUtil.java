@@ -465,7 +465,11 @@ public class AuthorDataUtil {
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setAuthorId( authorId );
-		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiFilter, null, null ).getDataList();
+		// This call is not consistent due to some issue with Google AppEngine
+		// Relying on Memcahe until the issue is fixed
+//		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiFilter, null, null ).getDataList();
+		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
+		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
 		
 		int contentPublished = 0;
 		long totalReadCount = 0;
