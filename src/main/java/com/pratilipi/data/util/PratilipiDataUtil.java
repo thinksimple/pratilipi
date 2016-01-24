@@ -382,7 +382,7 @@ public class PratilipiDataUtil {
 
 		boolean skipCache = false;
 		// Skip cache for cases when User is listing his own works.
-		if( pratilipiFilter.getAuthorId() != null && AccessTokenFilter.getAccessToken().getUserId().equals( 0L ) ) {
+		if( pratilipiFilter.getAuthorId() != null && ! AccessTokenFilter.getAccessToken().getUserId().equals( 0L ) ) {
 			Author author = dataAccessor.getAuthor( pratilipiFilter.getAuthorId() );
 			Long userId = author.getUserId();
 			if( userId != null && userId.equals( AccessTokenFilter.getAccessToken().getUserId() ) )
