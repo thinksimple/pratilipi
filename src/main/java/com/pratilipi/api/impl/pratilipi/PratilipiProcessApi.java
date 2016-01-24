@@ -42,7 +42,7 @@ public class PratilipiProcessApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
 		
-		int batchSize = 25;
+		int batchSize = 20;
 		List<Task> taskList = new ArrayList<>( (int) Math.ceil( ( (double) pratilipiIdList.size() ) / batchSize  ) );
 		for( int i = 0; i < pratilipiIdList.size(); i = i + batchSize ) {
 			Task task = TaskQueueFactory.newTask()
