@@ -376,6 +376,17 @@ public class PratilipiDataUtil {
 		if( ! hasAccessToListPratilipiData( pratilipiFilter ) )
 			throw new InsufficientAccessException();
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		boolean skipCache = false;
+		// Skip cache for cases when User is listing his own works.
+		if( pratilipiFilter.getAuthorId() != null ) {
+			Author author = dataAccessor.getAuthor( pratilipiFilter.getAuthorId() );
+			Long userId = author.getUserId();
+			if( userId != null && userId.equals( AccessTokenFilter.getAccessToken().getUserId() ) )
+				skipCache = true;
+		}
+		
 		// Processing search query
 		if( searchQuery != null )
 			searchQuery = searchQuery.toLowerCase().trim().replaceAll( "[\\s]+", " OR " );
@@ -391,7 +402,7 @@ public class PratilipiDataUtil {
 
 		// Fetching cached response from Memcache
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
-				= DataAccessorFactory.getL2CacheAccessor().get( memcacheId );
+				= skipCache ? null : (DataListCursorTuple<PratilipiData>) DataAccessorFactory.getL2CacheAccessor().get( memcacheId );
 
 		if( pratilipiDataListCursorTuple == null ) {
 			// Fetching Pratilipi id list from DataStore/SearchIndex
