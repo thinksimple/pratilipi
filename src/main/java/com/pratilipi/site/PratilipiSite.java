@@ -459,7 +459,7 @@ public class PratilipiSite extends HttpServlet {
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", title );
-		dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
+		dataModel.put( "pratilipiList", toResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
 		if( basicMode ) {
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
 			if( pratilipiDataListCursorTuple.getNumberFound() != null )
