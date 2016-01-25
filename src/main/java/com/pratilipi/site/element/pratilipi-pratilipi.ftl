@@ -21,9 +21,12 @@
 			</div>
 			
 			<div style="margin:25px 0px 5px 5px">
-				<h4>${ _strings.pratilipi_listing_date }</h4>
-				<span>&nbsp;&minus;&nbsp;${ pratilipi.listingDateMillis }</span>
-				<br/>
+				<#if pratilipi.listingDateMillis?? >
+					<h4>${ _strings.pratilipi_listing_date }</h4>
+					<span>&nbsp;&minus;&nbsp;${ pratilipi.listingDateMillis }</span>
+					<br/>
+				</#if>
+				
 				<h4>${ _strings.pratilipi_count_reads }</h4>
 				<span>&nbsp;&minus;&nbsp;${ pratilipi.readCount }</span>
 			</div>
