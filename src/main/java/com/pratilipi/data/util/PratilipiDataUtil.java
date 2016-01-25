@@ -435,7 +435,7 @@ public class PratilipiDataUtil {
 			// Creating response object
 			pratilipiDataListCursorTuple = new DataListCursorTuple<PratilipiData>( pratilipiDataList, pratilipiIdListCursorTuple.getCursor() );
 			// Caching response object in Memcache
-			l2Cache.put( memcacheId, pratilipiDataListCursorTuple, TimeUnit.MILLISECONDS.convert( 15, TimeUnit.MINUTES ) );
+			l2Cache.put( memcacheId, pratilipiDataListCursorTuple, TimeUnit.MINUTES.toMillis( 15 ) );
 		}
 
 		return pratilipiDataListCursorTuple;

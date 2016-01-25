@@ -68,7 +68,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.setNumberFoundAccuracy( 10000 )
 				.setFieldsToReturn( fieldsToReturn );
 		
-		if( cursorStr != null && cursorStr.isEmpty() )
+		if( cursorStr != null && ! cursorStr.isEmpty() )
 			queryOptionsBuilder.setCursor( Cursor.newBuilder().build( cursorStr ) );
 		else if( offset != null && offset > 0 )
 			queryOptionsBuilder.setOffset( offset );
