@@ -13,6 +13,8 @@ public interface SearchAccessor {
 	
 	DataListCursorTuple<Long> searchPratilipi( String searchQuery, PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 
+	DataListCursorTuple<Long> searchPratilipi( String searchQuery, PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount );
+
 	void indexPratilipiData( PratilipiData pratilipiData, String keywords ) throws UnexpectedServerException;
 
 	void indexPratilipiDataList( Map<PratilipiData, String> pratilipiDataListKeywordsMap ) throws UnexpectedServerException;

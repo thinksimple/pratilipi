@@ -22,11 +22,16 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 	
 	@Override
 	public DataListCursorTuple<Long> searchPratilipi( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
-		return searchPratilipi( null, pratilipiFilter, cursorStr, resultCount );
+		return searchPratilipi( null, pratilipiFilter, cursorStr, null, resultCount );
 	}
 		
 	@Override
 	public DataListCursorTuple<Long> searchPratilipi( String query, PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
+		return searchPratilipi( query, pratilipiFilter, cursorStr, null, resultCount );
+	}
+	
+	@Override
+	public DataListCursorTuple<Long> searchPratilipi( String query, PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) {
 		
 		List<Long> pratilipiIdList = new LinkedList<>();
 		

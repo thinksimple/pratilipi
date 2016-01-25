@@ -49,7 +49,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	// Helper Methods
 	
 	public Results<ScoredDocument> search(
-			String searchQuery, SortOptions sortOptions, String cursorStr,
+			String searchQuery, SortOptions sortOptions, String cursorStr, Integer offset,
 			Integer resultCount, String... fieldsToReturn ) {
 		
 		if( sortOptions == null ) {
@@ -65,6 +65,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 		QueryOptions queryOptions = QueryOptions.newBuilder()
 				.setSortOptions( sortOptions )
 				.setCursor( cursorStr == null || cursorStr.isEmpty() ? Cursor.newBuilder().build() : Cursor.newBuilder().build( cursorStr ) )
+				.setOffset( offset == null ? 0 : offset )
 				.setLimit( resultCount == null ? 1000 : resultCount )
 				.setNumberFoundAccuracy( 10000 )
 				.setFieldsToReturn( fieldsToReturn )
@@ -117,11 +118,16 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	
 	@Override
 	public DataListCursorTuple<Long> searchPratilipi( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
-		return searchPratilipi( null, pratilipiFilter, cursorStr, resultCount );
+		return searchPratilipi( null, pratilipiFilter, cursorStr, null, resultCount );
 	}
 	
 	@Override
 	public DataListCursorTuple<Long> searchPratilipi( String query, PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
+		return searchPratilipi( null, pratilipiFilter, cursorStr, null, resultCount );
+	}
+	
+	@Override
+	public DataListCursorTuple<Long> searchPratilipi( String query, PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) {
 		
 		SortOptions.Builder sortOptionsBuilder = SortOptions.newBuilder();
 
@@ -168,7 +174,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 			searchQuery = "( " + query + " ) AND " + searchQuery;
 
 		
-		Results<ScoredDocument> result = search( searchQuery, sortOptions, cursorStr, resultCount, "docId" );
+		Results<ScoredDocument> result = search( searchQuery, sortOptions, cursorStr, offset, resultCount, "docId" );
 		
 		List<Long> pratilipiIdList = new ArrayList<>( result.getNumberReturned() ); 
 		for( ScoredDocument document : result )
