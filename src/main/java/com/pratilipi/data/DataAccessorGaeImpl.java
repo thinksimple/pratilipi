@@ -426,19 +426,26 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public DataListCursorTuple<Long> getPratilipiIdList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 		
-		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, true );
+		return getPratilipiList( pratilipiFilter, cursorStr, null, resultCount, true );
+	}
+	
+	@Override
+	public DataListCursorTuple<Long> getPratilipiIdList(
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) {
+		
+		return getPratilipiList( pratilipiFilter, cursorStr, offset, resultCount, true );
 	}
 	
 	@Override
 	public DataListCursorTuple<Pratilipi> getPratilipiList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
 		
-		return getPratilipiList( pratilipiFilter, cursorStr, resultCount, false );
+		return getPratilipiList( pratilipiFilter, cursorStr, null, resultCount, false );
 	}
 
 	@SuppressWarnings("unchecked")
 	private <T> DataListCursorTuple<T> getPratilipiList(
-			PratilipiFilter pratilipiFilter, String cursorStr,
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer offset,
 			Integer resultCount, boolean idOnly ) {
 		
 		if( pratilipiFilter.getListName() == null ) {
@@ -465,19 +472,19 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			if( pratilipiFilter.getOrderByLastUpdate() != null )
 				gaeQueryBuilder.addOrdering( "lastUpdated", pratilipiFilter.getOrderByLastUpdate() );
 	
-			if( resultCount != null )
+			if( idOnly )
+				gaeQueryBuilder.setResult( "id" );
+			
+			gaeQueryBuilder.setCursor( cursorStr );
+			
+			if( offset != null && resultCount != null )
+				gaeQueryBuilder.setRange( offset, resultCount );
+			else if( resultCount != null )
 				gaeQueryBuilder.setRange( 0, resultCount );
+				
 			
 			Query query = gaeQueryBuilder.build();
-			if( cursorStr != null ) {
-				Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-				Map<String, Object> extensionMap = new HashMap<String, Object>();
-				extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-				query.setExtensions( extensionMap );
-			}
 	
-			if( idOnly )
-				query.setResult( "id" );
 			
 			List<T> pratilipiEntityList =
 					(List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
@@ -491,13 +498,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			
 			int startIndex = cursorStr == null ? 0 : Integer.parseInt( cursorStr );
 			List<T> responseList = new LinkedList<>();
-
-			int entitiesToSkip = startIndex;
+			int numberFound = 0;
+			
+			int entitiesToSkip = startIndex + ( offset == null ? 0 : offset );
 			try {
 				
 				String fileName = CURATED_DATA_FOLDER + "/list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
 				File file = new File( DataAccessor.class.getResource( fileName ).toURI() );
 				LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+				it.hasNext(); // Skipping the first line having title.
 				while( it.hasNext() ) {
 					
 					String uri = it.nextLine().trim();
@@ -508,17 +517,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 					if( page == null || page.getType() != PageType.PRATILIPI )
 						continue;
 					
+					numberFound++;
+					
 					if( entitiesToSkip > 0 ) {
 						entitiesToSkip--;
 						continue;
 					}
 					
-					responseList.add( idOnly
-							? (T) page.getPrimaryContentId()
-							: (T) getPratilipi( page.getPrimaryContentId() ) );
-					
-					if( responseList.size() == resultCount ) // resultCount could be null
-						break;
+					if( responseList.size() != resultCount ) { // resultCount could be null
+						responseList.add( idOnly
+								? (T) page.getPrimaryContentId()
+								: (T) getPratilipi( page.getPrimaryContentId() ) );
+					}
 					
 				}
 				LineIterator.closeQuietly( it );
@@ -527,7 +537,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				logger.log( Level.SEVERE, "Failed to fetch " + pratilipiFilter.getListName() + " list for " + pratilipiFilter.getLanguage() + ".", e );
 			}
 
-			return new DataListCursorTuple<T>( responseList, startIndex + responseList.size() + "" );
+			return new DataListCursorTuple<T>( responseList, startIndex + responseList.size() + "", (long) numberFound );
 			
 		}
 		

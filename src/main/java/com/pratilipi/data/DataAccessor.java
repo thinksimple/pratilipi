@@ -68,6 +68,7 @@ public interface DataAccessor {
 	Pratilipi getPratilipi( Long id );
 	List<Pratilipi> getPratilipiList( List<Long> idList );
 	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
+	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount );
 	DataListCursorTuple<Pratilipi> getPratilipiList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 	@Deprecated
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );

@@ -161,15 +161,15 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 			
-			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), filterLanguage ) ) != null ) {
+			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, filterLanguage, request ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), filterLanguage ) ) != null ) {
-				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+				templateName = templateFilePrefix + ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
 				
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
-				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-				
+				templateName = templateFilePrefix + ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
+			
 			} else {
 				dataModel = new HashMap<String, Object>();
 				templateName = templateFilePrefix + "error/PageNotFound.ftl";
@@ -420,10 +420,10 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
-	private Map<String, Object> createDataModelForListPage( String listName, Language lang )
+	private Map<String, Object> createDataModelForListPage( String listName, boolean basicMode, Language lang, HttpServletRequest request )
 				throws InsufficientAccessException {
 
-		return createDataModelForListPage( null, listName, false, lang, null );
+		return createDataModelForListPage( null, listName, basicMode, lang, request );
 		
 	}
 	

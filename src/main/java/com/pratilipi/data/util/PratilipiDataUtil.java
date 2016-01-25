@@ -426,7 +426,7 @@ public class PratilipiDataUtil {
 			DataListCursorTuple<Long> pratilipiIdListCursorTuple =
 					pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED
 					? DataAccessorFactory.getSearchAccessor().searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount )
-					: dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, resultCount );
+					: dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, offset, resultCount );
 			// Creating PratilipiData list from Pratilipi id list
 			List<PratilipiData> pratilipiDataList = createPratilipiDataList(
 					pratilipiIdListCursorTuple.getDataList(),
