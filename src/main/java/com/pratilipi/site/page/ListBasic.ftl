@@ -18,6 +18,9 @@
 			function redirectToReader( pratilipiId ) {
 				window.location.href = "http://www.pratilipi.com/read?id=" + pratilipiId + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
 			}
+			function getUrlParameters() {
+				return JSON.parse('{"' + decodeURI( location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}' );
+			}			
 		</script>
 	</head>
 
