@@ -9,6 +9,7 @@ public class TaskQueueFactory {
 	
 	private static final String QUEUE_USER = "user";
 	private static final String QUEUE_PRATILIPI = "pratilipi";
+	private static final String QUEUE_PRATILIPI_OFFLINE = "pratilipi-offline";
 	private static final String QUEUE_AUTHOR = "author";
 	
 	
@@ -18,6 +19,10 @@ public class TaskQueueFactory {
 
 	public static TaskQueue getPratilipiTaskQueue() {
 		return getTaskQueue( QUEUE_PRATILIPI );
+	}
+
+	public static TaskQueue getPratilipiOfflineTaskQueue() {
+		return getTaskQueue( QUEUE_PRATILIPI_OFFLINE );
 	}
 
 	public static TaskQueue getAuthorTaskQueue() {
