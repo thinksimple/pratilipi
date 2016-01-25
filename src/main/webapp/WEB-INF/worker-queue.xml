@@ -28,6 +28,11 @@
     </retry-parameters>
   </queue>
 
+
+
+
+
+
 	<!-- User Data offline processing. -->
 	<queue>
 		<name>user</name>
@@ -37,13 +42,13 @@
 		<max-concurrent-requests>10</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
-			<min-backoff-seconds>60</min-backoff-seconds>
-			<max-backoff-seconds>3600</max-backoff-seconds>
+			<min-backoff-seconds>5</min-backoff-seconds>
+			<max-backoff-seconds>300</max-backoff-seconds>
 			<max-doublings>2</max-doublings>
 		</retry-parameters>
 	</queue>
 
-	<!-- Pratilipi Data/Content offline processing. -->
+	<!-- Pratilipi Data/Content real-time processing. -->
 	<queue>
 		<name>pratilipi</name>
 		<target>worker</target>
@@ -52,12 +57,13 @@
 		<max-concurrent-requests>10</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
-			<min-backoff-seconds>60</min-backoff-seconds>
-			<max-backoff-seconds>3600</max-backoff-seconds>
+			<min-backoff-seconds>5</min-backoff-seconds>
+			<max-backoff-seconds>300</max-backoff-seconds>
 			<max-doublings>2</max-doublings>
 		</retry-parameters>
 	</queue>
 
+	<!-- Pratilipi Stats offline update. -->
 	<queue>
 		<name>pratilipi-offline</name>
 		<target>worker</target>
@@ -81,11 +87,14 @@
 		<max-concurrent-requests>10</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
-			<min-backoff-seconds>60</min-backoff-seconds>
-			<max-backoff-seconds>3600</max-backoff-seconds>
+			<min-backoff-seconds>5</min-backoff-seconds>
+			<max-backoff-seconds>300</max-backoff-seconds>
 			<max-doublings>2</max-doublings>
 		</retry-parameters>
 	</queue>
+
+
+
 
   <!-- Notification -->
   <queue>
