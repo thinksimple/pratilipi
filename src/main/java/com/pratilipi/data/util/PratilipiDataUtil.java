@@ -366,12 +366,27 @@ public class PratilipiDataUtil {
 			PratilipiFilter pratilipiFilter, String cursor, Integer resultCount )
 			throws InsufficientAccessException {
 
-		return getPratilipiDataList( null, pratilipiFilter, cursor, resultCount);
+		return getPratilipiDataList( null, pratilipiFilter, cursor, null, resultCount);
+	}
+	
+	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
+			PratilipiFilter pratilipiFilter, String cursor, Integer offset, Integer resultCount )
+			throws InsufficientAccessException {
+
+		return getPratilipiDataList( null, pratilipiFilter, cursor, offset, resultCount);
 	}
 	
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			String searchQuery, PratilipiFilter pratilipiFilter,
 			String cursor, Integer resultCount )
+			throws InsufficientAccessException {
+		
+		return getPratilipiDataList( searchQuery, pratilipiFilter, cursor, null, resultCount );
+	}
+	
+	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
+			String searchQuery, PratilipiFilter pratilipiFilter,
+			String cursor, Integer offset, Integer resultCount )
 			throws InsufficientAccessException {
 		
 		if( ! hasAccessToListPratilipiData( pratilipiFilter ) )
@@ -410,7 +425,7 @@ public class PratilipiDataUtil {
 			// Fetching Pratilipi id list from DataStore/SearchIndex
 			DataListCursorTuple<Long> pratilipiIdListCursorTuple =
 					pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED
-					? DataAccessorFactory.getSearchAccessor().searchPratilipi( searchQuery, pratilipiFilter, cursor, resultCount )
+					? DataAccessorFactory.getSearchAccessor().searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount )
 					: dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, resultCount );
 			// Creating PratilipiData list from Pratilipi id list
 			List<PratilipiData> pratilipiDataList = createPratilipiDataList(

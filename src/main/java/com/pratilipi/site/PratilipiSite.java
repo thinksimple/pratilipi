@@ -32,6 +32,7 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
+import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.LanguageUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -62,9 +63,7 @@ public class PratilipiSite extends HttpServlet {
 	private static final String languageFilePrefix = "WEB-INF/classes/com/pratilipi/site/i18n/language.";
 	
 	
-	public void doGet(
-			HttpServletRequest request,
-			HttpServletResponse response ) throws IOException {
+	public void doGet( HttpServletRequest request, HttpServletResponse response ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -73,8 +72,10 @@ public class PratilipiSite extends HttpServlet {
 		Page page = dataAccessor.getPage( uri );
 
 		// Language
-		Language lang = UxModeFilter.getUserLanguage();
 		boolean basicMode = UxModeFilter.isBasicMode();
+		Language displayLanguage = UxModeFilter.getDisplayLanguage();
+		Language filterLanguage = UxModeFilter.getFilterLanguage();
+
 		
 		// Common resource list
 		List<String> resourceList = new LinkedList<>();
@@ -84,15 +85,14 @@ public class PratilipiSite extends HttpServlet {
 			resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
 		} else {
 			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
-			resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 			resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
 			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
+			resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_OVERLAY_BEHAVIOR.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-			
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_HEADER_PANEL.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_CARD.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_DROPDOWN_MENU.getTag() );
@@ -102,7 +102,6 @@ public class PratilipiSite extends HttpServlet {
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_MENU_BUTTON.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_ITEM.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_SPINNER.getTag() );
-			
 		}
 
 		
@@ -114,7 +113,7 @@ public class PratilipiSite extends HttpServlet {
 			String templateName = null;
 			
 			if( uri.equals( "/" ) ) {
-				dataModel = createDataModelForHomePage( lang );
+				dataModel = createDataModelForHomePage( filterLanguage );
 				templateName = templateFilePrefix + "Home.ftl";
 			
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
@@ -139,37 +138,37 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 			
 			} else if( uri.equals( "/search" ) ) {
-				dataModel = createDataModelForSearchPage( lang, request );
-				templateName = templateFilePrefix + "Search.ftl";
+				dataModel = createDataModelForSearchPage( filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
 				
 			} else if( uri.equals( "/books" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.BOOK, lang );
-				templateName = templateFilePrefix + "List.ftl";
+				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( uri.equals( "/stories" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.STORY, lang );
-				templateName = templateFilePrefix + "List.ftl";
+				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 			
 			} else if( uri.equals( "/poems" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.POEM, lang );
-				templateName = templateFilePrefix + "List.ftl";
+				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( uri.equals( "/articles" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, lang );
-				templateName = templateFilePrefix + "List.ftl";
+				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( uri.equals( "/magazines" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, lang );
-				templateName = templateFilePrefix + "List.ftl";
+				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 			
-			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), lang ) ) != null ) {
-				templateName = templateFilePrefix + "List.ftl";
+			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), filterLanguage ) ) != null ) {
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
-			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), lang ) ) != null ) {
-				templateName = templateFilePrefix + "Static.ftl";
+			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), filterLanguage ) ) != null ) {
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
-				templateName = templateFilePrefix + "Static.ftl";
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else {
 				dataModel = new HashMap<String, Object>();
@@ -180,9 +179,9 @@ public class PratilipiSite extends HttpServlet {
 
 			// Adding common data to the Data Model
 			dataModel.put( "userJson", new Gson().toJson( new GenericUserResponse( UserDataUtil.getCurrentUser() ) ) );
-			dataModel.put( "lang", lang != null ? lang.getCode() : Language.ENGLISH.getCode() );
+			dataModel.put( "lang", displayLanguage != null ? displayLanguage.getCode() : Language.ENGLISH.getCode() );
 			dataModel.put( "_strings", LanguageUtil.getStrings(
-					languageFilePrefix + (lang != null ? lang.getCode() : Language.ENGLISH.getCode()),
+					languageFilePrefix + (displayLanguage != null ? displayLanguage.getCode() : Language.ENGLISH.getCode()),
 					languageFilePrefix + Language.ENGLISH.getCode() ) );
 			dataModel.put( "resourceList", resourceList );
 			
@@ -195,18 +194,21 @@ public class PratilipiSite extends HttpServlet {
 				html = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "error/AuthorizationError.ftl" );
 			} catch( UnexpectedServerException ex ) { }
 
-		} catch( InvalidArgumentException | UnexpectedServerException e ) {
+		} catch( IOException | InvalidArgumentException | UnexpectedServerException e ) {
 			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 			try {
 				html = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "error/ServerError.ftl" );
 			} catch( UnexpectedServerException ex ) { }
 		}
 
-		
+		try {
 		// Dispatching response
 		response.setCharacterEncoding( "UTF-8" );
 		response.getWriter().write( html );
 		response.getWriter().close();
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "", e );
+		}
 	}
 	
 	
@@ -411,21 +413,22 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
-	private Map<String, Object> createDataModelForListPage( PratilipiType type, Language lang )
+	private Map<String, Object> createDataModelForListPage( PratilipiType type, boolean basicMode, Language lang, HttpServletRequest request )
 			throws InsufficientAccessException {
 		
-		return createDataModelForListPage( type, null, lang );
+		return createDataModelForListPage( type, null, basicMode, lang, request );
 		
 	}
 
 	private Map<String, Object> createDataModelForListPage( String listName, Language lang )
 				throws InsufficientAccessException {
 
-		return createDataModelForListPage( null, listName, lang );
+		return createDataModelForListPage( null, listName, false, lang, null );
 		
 	}
 	
-	private Map<String, Object> createDataModelForListPage( PratilipiType type, String listName, Language lang )
+	private Map<String, Object> createDataModelForListPage( PratilipiType type, String listName,
+			boolean basicMode, Language lang, HttpServletRequest request )
 			throws InsufficientAccessException {
 
 		String title = listName == null
@@ -440,16 +443,31 @@ public class PratilipiSite extends HttpServlet {
 		pratilipiFilter.setListName( listName );
 		pratilipiFilter.setState( PratilipiState.PUBLISHED );
 		
+		int pageCurr = 1;
+		int pageSize = 20;
+		
+		if( basicMode ) {
+			String pageNoStr = request.getParameter( RequestParameter.PAGE_NUMBER.getName() );
+			if( pageNoStr != null && ! pageNoStr.trim().isEmpty() )
+				pageCurr = Integer.parseInt( pageNoStr );
+		}
+		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
+				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, ( pageCurr - 1 ) * pageSize, pageSize );
 
 		Gson gson = new Gson();
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", title );
 		dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
-		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
-		dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+		if( basicMode ) {
+			dataModel.put( "pratilipiListPageCurr", pageCurr );
+			if( pratilipiDataListCursorTuple.getNumberFound() == null )
+				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) pratilipiDataListCursorTuple.getNumberFound() ) / pageSize ) );
+		} else {
+			dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
+			dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+		}
 		return dataModel;
 		
 	}

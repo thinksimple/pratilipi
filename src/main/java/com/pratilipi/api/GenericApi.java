@@ -89,7 +89,7 @@ public abstract class GenericApi extends HttpServlet {
 		StringBuilder queryParamsStr = new StringBuilder( "{" );
 		while( queryParams.hasMoreElements() ) {
 			String param = queryParams.nextElement();
-			String value = request.getParameter( param );
+			String value = request.getParameter( param ); // Value could be a valid JSON string.
 			if( value.startsWith( "{" ) || value.startsWith( "[" ) )
 				queryParamsStr.append( "\"" + param + "\":" + value + "," );
 			else

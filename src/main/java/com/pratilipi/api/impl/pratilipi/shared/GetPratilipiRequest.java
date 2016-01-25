@@ -5,7 +5,7 @@ import com.pratilipi.api.shared.GenericRequest;
 
 public class GetPratilipiRequest extends GenericRequest {
 
-	@Validate( required = true )
+	@Validate( required = true, minLong = 1L )
 	private Long pratilipiId;
 	
 	

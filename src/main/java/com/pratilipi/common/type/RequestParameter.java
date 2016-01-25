@@ -3,6 +3,7 @@ package com.pratilipi.common.type;
 public enum RequestParameter {
 	
 	ACCESS_TOKEN ( "accessToken" ),
+	PAGE_NUMBER( "page" ),
 	;
 	
 	

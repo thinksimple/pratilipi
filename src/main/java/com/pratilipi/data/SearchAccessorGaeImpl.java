@@ -123,7 +123,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	
 	@Override
 	public DataListCursorTuple<Long> searchPratilipi( String query, PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
-		return searchPratilipi( null, pratilipiFilter, cursorStr, null, resultCount );
+		return searchPratilipi( query, pratilipiFilter, cursorStr, null, resultCount );
 	}
 	
 	@Override
@@ -182,7 +182,10 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 		
 		Cursor cursor = result.getCursor();
 		
-		return new DataListCursorTuple<Long>( pratilipiIdList, cursor == null ? null : cursor.toWebSafeString() );
+		return new DataListCursorTuple<Long>(
+				pratilipiIdList,
+				cursor == null ? null : cursor.toWebSafeString(),
+				result.getNumberFound() );
 	}
 
 	@Override

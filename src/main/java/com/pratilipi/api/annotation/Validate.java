@@ -15,6 +15,8 @@ public @interface Validate {
 	public String regEx() default "";
 	public String regExErrMsg() default "";
 
+	public int minInt() default Integer.MIN_VALUE;
+	
 	public long minLong() default Long.MIN_VALUE;
 
 }

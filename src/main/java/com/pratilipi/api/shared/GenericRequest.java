@@ -88,6 +88,10 @@ public class GenericRequest {
 										? "'" + field.getName() + "' value is invalid."
 										: validate.regExErrMsg() );
 	
+						} else if( field.getType() == Integer.class ) {
+							if( (Integer) value < validate.minInt() )
+								errorMessages.addProperty( field.getName(), "'" + field.getName() + "' must be greater than or equal to " + validate.minInt() );
+						
 						} else if( field.getType() == Long.class ) {
 							if( (Long) value < validate.minLong() )
 								errorMessages.addProperty( field.getName(), "'" + field.getName() + "' must be greater than or equal to " + validate.minLong() );
