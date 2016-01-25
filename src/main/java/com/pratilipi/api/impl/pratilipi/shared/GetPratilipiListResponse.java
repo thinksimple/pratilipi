@@ -89,6 +89,12 @@ public class GetPratilipiListResponse extends GenericResponse {
 			return coverImageUrl;
 		}
 		
+		public String getCoverImageUrl( int width ) {
+			return coverImageUrl.indexOf( '?' ) == -1
+					? coverImageUrl + "?width=" + width
+					: coverImageUrl + "&width=" + width;
+		}
+
 		public String getReadPageUrl() {
 			return readPageUrl;
 		}

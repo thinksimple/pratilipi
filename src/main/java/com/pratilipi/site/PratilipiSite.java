@@ -459,12 +459,13 @@ public class PratilipiSite extends HttpServlet {
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", title );
-		dataModel.put( "pratilipiList", toResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
 		if( basicMode ) {
+			dataModel.put( "pratilipiList", toResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
 			if( pratilipiDataListCursorTuple.getNumberFound() != null )
 				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) pratilipiDataListCursorTuple.getNumberFound() ) / pageSize ) );
 		} else {
+			dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
 			dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
 			dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
 		}
