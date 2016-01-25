@@ -93,7 +93,7 @@ review_edit_review			= விமர்சனத்தை திருத்த
 review_delete_review		= விமர்சனத்தை அழிக்க
 review_delete_review_confirm	= விமர்சனத்தை உறுதியாக அழிக்கவேண்டுமா?
 review_delete_okay			= அழி
-review_delete_cancel		= இல்லை
+review_delete_cancel		= வேண்டாம்
 review_helpful				= இந்த விமர்சனம் உதவியாக இருந்ததா?  
 
 
