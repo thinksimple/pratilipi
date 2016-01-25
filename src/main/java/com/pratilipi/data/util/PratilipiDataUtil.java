@@ -414,6 +414,8 @@ public class PratilipiDataUtil {
 			memcacheId += "&searchQuery=" + searchQuery;
 		if( resultCount != null )
 			memcacheId += "&resultCount=" + resultCount;
+		if( offset != null )
+			memcacheId = memcacheId + "&offset=" + offset;
 		if( cursor != null )
 			memcacheId = memcacheId + "&cursor=" + cursor;
 
@@ -433,7 +435,10 @@ public class PratilipiDataUtil {
 					pratilipiFilter.getAuthorId() == null,
 					false );
 			// Creating response object
-			pratilipiDataListCursorTuple = new DataListCursorTuple<PratilipiData>( pratilipiDataList, pratilipiIdListCursorTuple.getCursor() );
+			pratilipiDataListCursorTuple = new DataListCursorTuple<PratilipiData>(
+					pratilipiDataList,
+					pratilipiIdListCursorTuple.getCursor(),
+					pratilipiIdListCursorTuple.getNumberFound() );
 			// Caching response object in Memcache
 			l2Cache.put( memcacheId, pratilipiDataListCursorTuple, TimeUnit.MINUTES.toMillis( 15 ) );
 		}
