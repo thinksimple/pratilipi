@@ -11,7 +11,7 @@
 		return "";
 	}
 	function redirectToReader() {
-		window.location.href = "http://www.pratilipi.com/read?id=" + "${ pratilipi.id }" + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
+		window.location.href = "http://www.pratilipi.com/read?id=" + "${ pratilipi.id?c }" + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
 	}
 </script>
 <div class="box" style="padding:10px">
@@ -19,11 +19,11 @@
 		<tr>
 			<td rowspan="2" style="height:120px;width:80px;">
 				<a href="${ pratilipi.pageUrl }">
-					<img src="http://6.ptlp.co/pratilipi/cover?pratilipiId=5664592977985536&version=1446819509075&width=80" alt="${ pratilipi.title }" title="${ pratilipi.title }" />
+					<img src="${ pratilipi.getCoverImageUrl( 80 ) }" alt="${ pratilipi.title }" title="${ pratilipi.title }" />
 				</a>
 			</td>
 			<td>
-				<h3><a style="text-decoration: none;" href="${ pratilipi.pageUrl }">${ pratilipi.title }</a></h3>
+				<h3><a style="text-decoration: none; color: #D0021B;" href="${ pratilipi.pageUrl }">${ pratilipi.title }</a></h3>
 				<#if pratilipi.author?? >
 					<h4 style="margin-left: 10px;"><a style="text-decoration: none;" href="${ pratilipi.author.pageUrl }">
 						${ pratilipi.author.name }
@@ -38,7 +38,7 @@
 		<tr>
 			<td style="vertical-align:bottom">
 				<div style="margin:3px 10px;text-transform:uppercase">
-					<button class="btn btn-default" style="background: #D0021B; color: #FFF;" type="button" onclick="redirectToReader()">${ _strings.read }</button>
+					<button class="btn btn-default red" type="button" onclick="redirectToReader()">${ _strings.read }</button>
 				</div>
 			</td>
 		</tr>

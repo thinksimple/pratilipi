@@ -1,3 +1,9 @@
+
+<style>
+	.fa {
+		color: #D0021B;
+	}
+</style>
 <span>
 
 	<#if rating < 0.75 >
