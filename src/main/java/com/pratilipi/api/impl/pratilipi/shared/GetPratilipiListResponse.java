@@ -58,6 +58,65 @@ public class GetPratilipiListResponse extends GenericResponse {
 			this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();
 		}
 		
+		
+		public Long getId() {
+			return pratilipiId;
+		}
+		
+		
+		public String getTitle() {
+			return title;
+		}
+		
+		public Language getLanguage() {
+			return language;
+		}
+		
+		public Author getAuthor() {
+			return author;
+		}
+
+		public String getSummary() {
+			return summary;
+		}
+
+		
+		public String getPageUrl() {
+			return pageUrl;
+		}
+		
+		public String getCoverImageUrl() {
+			return coverImageUrl;
+		}
+		
+		public String getReadPageUrl() {
+			return readPageUrl;
+		}
+
+		
+		public PratilipiContentType getContentType() {
+			return contentType;
+		}
+
+		
+		public String getIndex() {
+			return index;
+		}
+
+		
+		public Long getRatingCount() {
+			return ratingCount;
+		}
+		
+		public Float getAverageRating() {
+			return averageRating;
+		}
+
+		
+		public Boolean hasAccessToUpdate() {
+			return hasAccessToUpdate;
+		}
+		
 	}
 	
 	public static class Author {
@@ -69,6 +128,15 @@ public class GetPratilipiListResponse extends GenericResponse {
 		private Author( AuthorData authorData ) {
 			this.name = authorData.getName() == null ? authorData.getNameEn() : authorData.getName();
 			this.pageUrl = authorData.getPageUrl();
+		}
+		
+		
+		public String getName() {
+			return name;
+		}
+		
+		public String getPageUrl() {
+			return pageUrl;
 		}
 		
 	}
