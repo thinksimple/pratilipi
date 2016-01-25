@@ -462,7 +462,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
 		if( basicMode ) {
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
-			if( pratilipiDataListCursorTuple.getNumberFound() == null )
+			if( pratilipiDataListCursorTuple.getNumberFound() != null )
 				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) pratilipiDataListCursorTuple.getNumberFound() ) / pageSize ) );
 		} else {
 			dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
