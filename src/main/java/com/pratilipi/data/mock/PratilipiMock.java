@@ -2,10 +2,12 @@ package com.pratilipi.data.mock;
 
 import static com.pratilipi.data.mock.AuthorMock.*;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -108,11 +110,14 @@ public class PratilipiMock {
 		
 		taPratilipi_1.setTitle( "புக் டைட்டில் 1" );
 		taPratilipi_1.setTitleEn( "Book Title 1" );
+		taPratilipi_1.setState( PratilipiState.PUBLISHED );
 		taPratilipi_1.setLanguage( Language.TAMIL );
 		taPratilipi_1.setAuthorId( taAuthor_1.getId() );
 		taPratilipi_1.setSummary( "ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும். ஒரு கணம் ஆத்திரம் உங்கள் எதிர்காலத்தை பற்றி என்ன செய்ய முடியும் ." );
 		taPratilipi_1.setPublicationYear( 2015 );
 		taPratilipi_1.setType( PratilipiType.BOOK );
+		taPratilipi_1.setListingDate( new Date() );
+		taPratilipi_1.setReadCount( 10000L );
 		taPratilipi_1.setReviewCount( 10L );
 		taPratilipi_1.setRatingCount( 10L );
 		taPratilipi_1.setTotalRating( 35L );
