@@ -7,14 +7,19 @@ public class TaskQueueFactory {
 
 	private static final Map<String, TaskQueue> taskQueueMap = new HashMap<>();
 	
-	private static final String QUEUE_USER = "user";
-	private static final String QUEUE_PRATILIPI = "pratilipi";
-	private static final String QUEUE_PRATILIPI_OFFLINE = "pratilipi-offline";
-	private static final String QUEUE_AUTHOR = "author";
+	private static final String QUEUE_USER				= "user";
+	private static final String QUEUE_USER_OFFLINE		= "user-offline";
+	private static final String QUEUE_PRATILIPI			= "pratilipi";
+	private static final String QUEUE_PRATILIPI_OFFLINE	= "pratilipi-offline";
+	private static final String QUEUE_AUTHOR			= "author";
 	
 	
 	public static TaskQueue getUserTaskQueue() {
 		return getTaskQueue( QUEUE_USER );
+	}
+
+	public static TaskQueue getUserOfflineTaskQueue() {
+		return getTaskQueue( QUEUE_USER_OFFLINE );
 	}
 
 	public static TaskQueue getPratilipiTaskQueue() {

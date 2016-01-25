@@ -33,7 +33,8 @@
 
 
 
-	<!-- User Data offline processing. -->
+	<!-- User Data real-time & offline processing. -->
+	
 	<queue>
 		<name>user</name>
 		<target>worker</target>
@@ -47,8 +48,24 @@
 			<max-doublings>2</max-doublings>
 		</retry-parameters>
 	</queue>
+	
+	<queue>
+		<name>user-offline</name>
+		<target>worker</target>
+		<rate>1/s</rate>
+		<bucket-size>10</bucket-size>
+		<max-concurrent-requests>10</max-concurrent-requests>
+		<retry-parameters>
+			<task-age-limit>90d</task-age-limit>
+			<min-backoff-seconds>60</min-backoff-seconds>
+			<max-backoff-seconds>10800</max-backoff-seconds>
+			<max-doublings>2</max-doublings>
+		</retry-parameters>
+	</queue>
+	
 
-	<!-- Pratilipi Data/Content real-time processing. -->
+	<!-- Pratilipi Data/Content real-time & offline processing. -->
+
 	<queue>
 		<name>pratilipi</name>
 		<target>worker</target>
@@ -63,7 +80,6 @@
 		</retry-parameters>
 	</queue>
 
-	<!-- Pratilipi Stats offline update. -->
 	<queue>
 		<name>pratilipi-offline</name>
 		<target>worker</target>
@@ -71,14 +87,16 @@
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>10</max-concurrent-requests>
 		<retry-parameters>
-			<task-age-limit>1h</task-age-limit>
+			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>60</min-backoff-seconds>
-			<max-backoff-seconds>3600</max-backoff-seconds>
+			<max-backoff-seconds>10800</max-backoff-seconds>
 			<max-doublings>2</max-doublings>
 		</retry-parameters>
 	</queue>
 
-	<!-- Author Data offline processing. -->
+
+	<!-- Author Data real-time processing. -->
+	
 	<queue>
 		<name>author</name>
 		<target>worker</target>

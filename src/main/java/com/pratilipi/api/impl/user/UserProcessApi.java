@@ -48,7 +48,6 @@ public class UserProcessApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		
-		
 		// Fetching AppProperty
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
 		if( appProperty == null ) {
@@ -56,16 +55,14 @@ public class UserProcessApi extends GenericApi {
 			appProperty.setValue( new Date( 0 ) );
 		}
 
-		
 		// Fetching list of user ids.
 		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
 		gaeQueryBuilder.addFilter( "signUpDate", appProperty.getValue(), Operator.GREATER_THAN );
 		gaeQueryBuilder.addOrdering( "signUpDate", true );
 		gaeQueryBuilder.setResult( "id" );
+		gaeQueryBuilder.setRange( 0, 10000 );
 		Query query = gaeQueryBuilder.build();
-		
 		List<Long> userIdList = (List<Long>) query.execute( appProperty.getValue() );
-		
 		
 		// Creating task for each user.
 		List<Task> taskList = new ArrayList<>( userIdList.size() );
@@ -76,10 +73,8 @@ public class UserProcessApi extends GenericApi {
 					.addParam( "validateData", "true" );
 			taskList.add( task );
 		}
-		TaskQueueFactory.getUserTaskQueue().addAll( taskList );
-		
+		TaskQueueFactory.getUserOfflineTaskQueue().addAll( taskList );
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
-		
 		
 		// Updating AppProperty.
 		if( userIdList.size() > 0 ) {
