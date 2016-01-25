@@ -138,7 +138,7 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 			
 			} else if( uri.equals( "/search" ) ) {
-				dataModel = createDataModelForSearchPage( filterLanguage, request );
+				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
 				
 			} else if( uri.equals( "/books" ) ) {
@@ -392,23 +392,42 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	
-	private Map<String, Object> createDataModelForSearchPage( Language lang, HttpServletRequest request )
+	private Map<String, Object> createDataModelForSearchPage( boolean basicMode, Language lang, HttpServletRequest request )
 			throws InsufficientAccessException {
+		
+		String searchQuery = request.getParameter( RequestParameter.SEARCH_QUERY.getName() );
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( lang );
 		pratilipiFilter.setState( PratilipiState.PUBLISHED );
 		
+		int pageCurr = 1;
+		int pageSize = 20;
+		
+		if( basicMode ) {
+			String pageNoStr = request.getParameter( RequestParameter.PAGE_NUMBER.getName() );
+			if( pageNoStr != null && ! pageNoStr.trim().isEmpty() )
+				pageCurr = Integer.parseInt( pageNoStr );
+		}
+		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-				PratilipiDataUtil.getPratilipiDataList( request.getParameter( "q" ), pratilipiFilter, null, 20 );
+				PratilipiDataUtil.getPratilipiDataList( searchQuery, pratilipiFilter, null, pageSize );
 
 		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
-		dataModel.put( "pratilipiListSearchQuery", request.getParameter( "q" ) );
-		dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
-		dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+		if( basicMode ) {
+			dataModel.put( "pratilipiList", toResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
+			dataModel.put( "pratilipiListSearchQuery", searchQuery );
+			dataModel.put( "pratilipiListPageCurr", pageCurr );
+			if( pratilipiDataListCursorTuple.getNumberFound() != null )
+				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) pratilipiDataListCursorTuple.getNumberFound() ) / pageSize ) );
+		} else {
+			dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
+			dataModel.put( "pratilipiListSearchQuery", searchQuery );
+			dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
+			dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+		}
 		return dataModel;
 		
 	}

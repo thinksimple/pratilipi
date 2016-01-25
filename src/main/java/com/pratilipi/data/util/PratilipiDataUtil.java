@@ -415,9 +415,9 @@ public class PratilipiDataUtil {
 		if( resultCount != null )
 			memcacheId += "&resultCount=" + resultCount;
 		if( offset != null )
-			memcacheId = memcacheId + "&offset=" + offset;
+			memcacheId += "&offset=" + offset;
 		if( cursor != null )
-			memcacheId = memcacheId + "&cursor=" + cursor;
+			memcacheId += "&cursor=" + cursor;
 
 		// Fetching cached response from Memcache
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
