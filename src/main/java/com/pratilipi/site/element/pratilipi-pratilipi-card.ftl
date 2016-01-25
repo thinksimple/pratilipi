@@ -22,18 +22,8 @@
 		<tr>
 			<td style="vertical-align:bottom">
 				<div style="margin:3px 10px;text-transform:uppercase">
-					<button type="button">${ _strings.read }</button>
+					<button class="btn btn-default" type="button">${ _strings.read }</button>
 				</div>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<hr/>
-				<p class="three-cols" style="text-align:center">
-					<span>${ pratilipi.readCount } ${ _strings.pratilipi_count_reads }</span> <br/>
-					<span>${ pratilipi.fbLikeShareCount } ${ _strings.pratilipi_count_likes }</span> <br/>
-					<span>${ pratilipi.reviewCount } ${ _strings.pratilipi_count_reviews }</span> <br/>
-				</p>
 			</td>
 		</tr>
 	</table>
