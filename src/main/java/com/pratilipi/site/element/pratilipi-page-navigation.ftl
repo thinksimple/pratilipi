@@ -38,17 +38,17 @@
 </#if>
 
 <#if pratilipiListSearchQuery?? >
-	<#assign redirect1="?${pratilipiListSearchQuery}&page=${rating1}" >
-	<#assign redirect2="?${pratilipiListSearchQuery}&page=${rating2}" >
-	<#assign redirect3="?${pratilipiListSearchQuery}&page=${rating3}" >
-	<#assign redirect4="?${pratilipiListSearchQuery}&page=${rating4}" >
-	<#assign redirect5="?${pratilipiListSearchQuery}&page=${rating5}" >
+	<#assign redirect1="?${pratilipiListSearchQuery}&page=" + rating1 >
+	<#assign redirect2="?${pratilipiListSearchQuery}&page=" + rating2 >
+	<#assign redirect3="?${pratilipiListSearchQuery}&page=" + rating3 >
+	<#assign redirect4="?${pratilipiListSearchQuery}&page=" + rating4 >
+	<#assign redirect5="?${pratilipiListSearchQuery}&page=" + rating5 >
 <#else>
-	<#assign redirect1="?page=${rating1}" >
-	<#assign redirect2="?page=${rating2}" >
-	<#assign redirect3="?page=${rating3}" >
-	<#assign redirect4="?page=${rating4}" >
-	<#assign redirect5="?page=${rating5}" >
+	<#assign redirect1="?page=" + rating1 >
+	<#assign redirect2="?page=" + rating2 >
+	<#assign redirect3="?page=" + rating3 >
+	<#assign redirect4="?page=" + rating4 >
+	<#assign redirect5="?page=" + rating5 >
 </#if>
 	
 <div style="padding-top:25px; padding-bottom:25px;">
