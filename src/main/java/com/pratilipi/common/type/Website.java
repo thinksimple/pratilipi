@@ -9,6 +9,7 @@ public enum Website {
 	MARATHI		(   "marathi.pratilipi.com", "mr.pratilipi.com", Language.MARATHI,	 Language.MARATHI ),
 	MALAYALAM	( "malayalam.pratilipi.com", "ml.pratilipi.com", Language.MALAYALAM, Language.MALAYALAM ),
 	BENGALI		(   "bengali.pratilipi.com", "bn.pratilipi.com", Language.BENGALI,	 Language.BENGALI ),
+	GAMMA		(     "gamma.pratilipi.com", "ga.pratilipi.com", Language.TAMIL,	 Language.TAMIL ),
 	;
 	
 	

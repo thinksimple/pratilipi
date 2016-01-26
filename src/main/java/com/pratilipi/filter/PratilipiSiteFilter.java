@@ -29,7 +29,7 @@ public class PratilipiSiteFilter implements Filter {
 			+ "|"
 			+ "(m|ta|hi)\\.pratilipi\\.com"
 			+ "|"
-			+ "gamma\\.pratilipi\\.com"
+			+ "(gamma|ga)\\.pratilipi\\.com"
 			+ "|"
 			+ "mark-6\\.prod-pratilipi\\.appspot\\.com"
 			+ "|"
