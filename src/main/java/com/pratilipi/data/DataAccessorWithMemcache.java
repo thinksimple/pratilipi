@@ -579,14 +579,13 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	@Override
 	public List<Category> getCategoryList( Language language ) {
-		String memcacheId = PREFIX_CATEGORY_LIST + language.getCode();
+		String memcacheId = PREFIX_CATEGORY_LIST + language.getCode()
+				+ "/" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 5 ) );
 		List<Category> categoryList = memcache.get( memcacheId );
 		if( categoryList == null ) {
 			categoryList = dataAccessor.getCategoryList( language );
 			if( categoryList != null )
-				memcache.put( memcacheId,
-						new ArrayList<>( categoryList ),
-						TimeUnit.MILLISECONDS.convert( 15, TimeUnit.MINUTES ) );
+				memcache.put( memcacheId, new ArrayList<>( categoryList ) );
 		}
 		return categoryList;
 	}

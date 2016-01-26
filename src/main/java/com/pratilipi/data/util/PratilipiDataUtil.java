@@ -418,6 +418,7 @@ public class PratilipiDataUtil {
 			memcacheId += "&offset=" + offset;
 		if( cursor != null )
 			memcacheId += "&cursor=" + cursor;
+		memcacheId += "/" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 5 ) );
 
 		// Fetching cached response from Memcache
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
@@ -440,7 +441,7 @@ public class PratilipiDataUtil {
 					pratilipiIdListCursorTuple.getCursor(),
 					pratilipiIdListCursorTuple.getNumberFound() );
 			// Caching response object in Memcache
-			l2Cache.put( memcacheId, pratilipiDataListCursorTuple, TimeUnit.MINUTES.toMillis( 15 ) );
+			l2Cache.put( memcacheId, pratilipiDataListCursorTuple );
 		}
 
 		return pratilipiDataListCursorTuple;
