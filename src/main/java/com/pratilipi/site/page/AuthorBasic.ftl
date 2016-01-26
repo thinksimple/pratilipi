@@ -8,14 +8,6 @@
 	<body>
 		<div class="container">
 			<#include "../element/pratilipi-header.ftl">
-			<#include "../element/pratilipi-user-login.ftl">
-			
-			<#include "../element/pratilipi-user-register.ftl">
-			<#include "../element/pratilipi-user-password-reset.ftl">
-			<#include "../element/pratilipi-user-password-update.ftl">
-			<#include "../element/pratilipi-user-password-update-email.ftl">
-	<#--	<#include "../element/pratilipi-user-verification.ftl">		-->
-			
 			<#include "../element/pratilipi-author.ftl">
 			
 	<#--	<#list pratilipiList as pratilipi>

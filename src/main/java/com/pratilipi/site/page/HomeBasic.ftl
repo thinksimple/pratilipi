@@ -8,15 +8,11 @@
 	<body>
 		<div class="container">
 			<#include "../element/pratilipi-header.ftl">
-			<#include "../element/pratilipi-user-login.ftl">
-			
-			<#include "../element/pratilipi-user-register.ftl">
-			<#include "../element/pratilipi-user-password-reset.ftl">
-			<#include "../element/pratilipi-user-password-update.ftl">
-			<#include "../element/pratilipi-user-password-update-email.ftl">
-	<#--	<#include "../element/pratilipi-user-verification.ftl">		-->
-			
+
 			<#list sections as section>
+				<div class="box" style="padding: 12px 10px;">
+					<h2 style="color: #D0021B;">${ section["title"] }</h2>
+				</div>
 				<#list section["pratilipiList"] as pratilipi>
 					<#include "../element/pratilipi-pratilipi-card.ftl">
 				</#list>
