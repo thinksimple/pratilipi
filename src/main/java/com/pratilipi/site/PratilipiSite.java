@@ -80,9 +80,9 @@ public class PratilipiSite extends HttpServlet {
 		// Common resource list
 		List<String> resourceList = new LinkedList<>();
 		if( basicMode ) {
-			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 			resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
+			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 		} else {
 			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 			resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
@@ -113,8 +113,8 @@ public class PratilipiSite extends HttpServlet {
 			String templateName = null;
 			
 			if( uri.equals( "/" ) ) {
-				dataModel = createDataModelForHomePage( filterLanguage );
-				templateName = templateFilePrefix + "Home.ftl";
+				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
+				templateName = templateFilePrefix + ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode );
@@ -263,7 +263,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	
-	private Map<String, Object> createDataModelForHomePage( Language lang )
+	private Map<String, Object> createDataModelForHomePage( boolean basicMode, Language lang )
 			throws InsufficientAccessException {
 
 		Gson gson = new Gson();
@@ -296,7 +296,10 @@ public class PratilipiSite extends HttpServlet {
 		}
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "sectionsJson", gson.toJson( sections ) );
+		if( basicMode )
+			dataModel.put( "sections", sections );
+		else
+			dataModel.put( "sectionsJson", gson.toJson( sections ) );
 		return dataModel;
 		
 	}
@@ -317,14 +320,12 @@ public class PratilipiSite extends HttpServlet {
 		if( basicMode ) {
 			dataModel.put( "title", createAuthorPageTitle( authorData ) );
 			dataModel.put( "author", authorData );
-			dataModel.put( "pratilipiList", pratilipiDataListCursorTuple.getDataList() );
-			if( pratilipiDataListCursorTuple.getDataList().size() == 20
-					&& pratilipiDataListCursorTuple.getCursor() != null )
-				dataModel.put( "searchQuery", pratilipiFilter.toUrlEncodedString() );
+			dataModel.put( "publishedPratilipiList", pratilipiDataListCursorTuple.getDataList() );
+			if( pratilipiDataListCursorTuple.getDataList().size() == 20 && pratilipiDataListCursorTuple.getCursor() != null )
+				dataModel.put( "publishedPratilipiListSearchQuery", pratilipiFilter.toUrlEncodedString() );
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "title", createAuthorPageTitle( authorData ) );
-			dataModel.put( "author", authorData );
 			dataModel.put( "authorJson", gson.toJson( authorData ) );
 			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ) );
 			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
@@ -342,29 +343,31 @@ public class PratilipiSite extends HttpServlet {
 		if( ! PratilipiDataUtil.hasAccessToReadPratilipiContent( pratilipi ) )
 			throw new InsufficientAccessException();
 		
+		Gson gson = new Gson();
+		
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
 		
+		GenericPratilipiResponse pratilipiResponse =
+				gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class );
+		GenericUserPratilipiResponse userPratilipiResponse =
+				gson.fromJson( gson.toJson( userPratilipiData ), GenericUserPratilipiResponse.class );
+		
 		DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
-				UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, 20 );
+				UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, basicMode ? 40 : 20 );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		if( basicMode ) {
 			dataModel.put( "title", createPratilipiPageTitle( pratilipiData ) );
-			dataModel.put( "pratilipi", pratilipiData );
-			dataModel.put( "userpratilipi", userPratilipiData );
+			dataModel.put( "pratilipi", pratilipiResponse );
+			dataModel.put( "userpratilipi", userPratilipiResponse );
 			dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
 		} else {
-			Gson gson = new Gson();
-			
-			GenericPratilipiResponse gpr = gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class );
-			
 			dataModel.put( "title", createPratilipiPageTitle( pratilipiData ) );
 			dataModel.put( "pratilipi", pratilipiData );
-			dataModel.put( "pratilipiJson", gson.toJson( gpr ).toString() );
-			dataModel.put( "userpratilipiJson", gson.toJson( gson.fromJson( gson.toJson( userPratilipiData ), GenericUserPratilipiResponse.class ) ).toString() );
-//			dataModel.put( "recommendedJsonList", gson.toJson( pratilipiDataList ).toString() );
+			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
+			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
 			dataModel.put( "reviewListJson", gson.toJson( reviewListCursorTuple.getDataList() ).toString() );
 			dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
 		}
