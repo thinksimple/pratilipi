@@ -46,8 +46,10 @@
 				}
 				
 				// Make Ajax call
-				console.log( email );
-				console.log( password );
+				$.post('/api/user/login', { email: email, password : password }, 
+					function( returnedData ){
+						console.log( returnedData );
+				});
 				
 			}
     	</script>
