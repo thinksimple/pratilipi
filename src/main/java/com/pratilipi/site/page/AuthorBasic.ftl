@@ -19,7 +19,7 @@
 			
 			<#if publishedPratilipiListSearchQuery?? >
 				<div style="text-align: center;">
-					<a class="btn btn-primary red" href="/search?${ publishedPratilipiListSearchQuery }">
+					<a class="btn btn-default red" href="/search?${ publishedPratilipiListSearchQuery }">
 						All Books by Author
 					</a>
 				</div>

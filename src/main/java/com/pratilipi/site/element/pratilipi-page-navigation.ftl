@@ -38,28 +38,49 @@
 </#if>
 
 <#if pratilipiListSearchQuery?? >
-	<#assign redirect1="?${pratilipiListSearchQuery}&page=" + rating1 >
-	<#assign redirect2="?${pratilipiListSearchQuery}&page=" + rating2 >
-	<#assign redirect3="?${pratilipiListSearchQuery}&page=" + rating3 >
-	<#assign redirect4="?${pratilipiListSearchQuery}&page=" + rating4 >
-	<#assign redirect5="?${pratilipiListSearchQuery}&page=" + rating5 >
+	<#if rating1?? >
+		<#assign redirect1= "?${ pratilipiListSearchQuery }&page=${ rating1 }" >
+	</#if>
+	<#if rating2?? >
+		<#assign redirect2= "?${ pratilipiListSearchQuery }&page=${ rating2 }" >
+	</#if>
+	<#if rating3?? >
+		<#assign redirect3= "?${ pratilipiListSearchQuery }&page=${ rating3 }" >
+	</#if>
+	<#if rating4?? >
+		<#assign redirect4= "?${ pratilipiListSearchQuery }&page=${ rating4 }" >
+	</#if>
+	<#if rating5?? >
+		<#assign redirect5= "?${ pratilipiListSearchQuery }&page=${ rating5 }" >
+	</#if>
 <#else>
-	<#assign redirect1="?page=" + rating1 >
-	<#assign redirect2="?page=" + rating2 >
-	<#assign redirect3="?page=" + rating3 >
-	<#assign redirect4="?page=" + rating4 >
-	<#assign redirect5="?page=" + rating5 >
+	<#if rating1?? >
+		<#assign redirect1= "?page=${ rating1 }" >
+	</#if>
+	<#if rating2?? >
+		<#assign redirect2= "?page=${ rating2 }" >
+	</#if>
+	<#if rating3?? >
+		<#assign redirect3= "?page=${ rating3 }" >
+	</#if>
+	<#if rating4?? >
+		<#assign redirect4= "?page=${ rating4 }" >
+	</#if>
+	<#if rating5?? >
+		<#assign redirect5= "?page=${ rating5 }" >
+	</#if>
 </#if>
 	
 <div style="padding-top:25px; padding-bottom:25px;">
 	<div class="row" style=" text-align: center;">
 	    
-	    <#if rating1 == pratilipiListPageCurr>
-	    	<div class="col-xs-2 col-xs-offset-1"><a style="color: #D0021B; font-size: 18px;" href="${ redirect1 }">${ rating1 }</a></div>
-		<#else>
-			<div class="col-xs-2 col-xs-offset-1"><a href="${ redirect1 }">${ rating1 }</a></div>
-		</#if>
-	    
+	    <#if rating1?? >
+		    <#if rating1 == pratilipiListPageCurr>
+		    	<div class="col-xs-2 col-xs-offset-1"><a style="color: #D0021B; font-size: 18px;" href="${ redirect1 }">${ rating1 }</a></div>
+			<#else>
+				<div class="col-xs-2 col-xs-offset-1"><a href="${ redirect1 }">${ rating1 }</a></div>
+			</#if>
+	    </#if>
 	    
     	<#if rating2?? >
     		<#if rating2 == pratilipiListPageCurr>
