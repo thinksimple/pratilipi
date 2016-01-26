@@ -19,8 +19,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
@@ -278,7 +276,7 @@ public class PratilipiSite extends HttpServlet {
 		Gson gson = new Gson();
 		
 		String[] listNames = { "featured", "fiction", "magazines" };
-		ArrayList<JsonObject> sections = new ArrayList<>( listNames.length );
+		ArrayList<Map<String, Object>> sections = new ArrayList<>( listNames.length );
 		
 		for( String listName : listNames ) {
 			
@@ -297,9 +295,9 @@ public class PratilipiSite extends HttpServlet {
 			if( pratilipiDataListCursorTuple.getDataList().size() == 0 )
 				continue;
 			
-			JsonObject section = new JsonObject();
-			section.addProperty( "title", title );
-			section.add( "pratilipiList", gson.toJsonTree( toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
+			Map<String, Object> section = new HashMap<String, Object>();
+			section.put( "title", title );
+			section.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
 			sections.add( section );
 			
 		}

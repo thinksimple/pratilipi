@@ -569,7 +569,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override
 	public Category getCategory( Long id ) {
 		Category category = memcache.get( PREFIX_CATEGORY + id );
-		if( category == null ){
+		if( category == null ) {
 			category = dataAccessor.getCategory( id );
 			if( category != null )
 				memcache.put( PREFIX_CATEGORY + id, category );
@@ -580,7 +580,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override
 	public List<Category> getCategoryList( Language language ) {
 		String memcacheId = PREFIX_CATEGORY_LIST + language.getCode()
-				+ "/" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 5 ) );
+				+ "?" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 5 ) );
 		List<Category> categoryList = memcache.get( memcacheId );
 		if( categoryList == null ) {
 			categoryList = dataAccessor.getCategoryList( language );
