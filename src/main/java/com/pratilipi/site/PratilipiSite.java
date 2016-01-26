@@ -169,6 +169,21 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
 			
+			} else if( uri.equals( "/register" ) ) {
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Register" );
+				templateName = templateFilePrefix + ( basicMode ? "RegisterBasic.ftl" : "Register.ftl" );
+				
+			} else if( uri.equals( "/login" ) ) {
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Login" );
+				templateName = templateFilePrefix + ( basicMode ? "LoginBasic.ftl" : "Login.ftl" );
+				
+			} else if( uri.equals( "/logout" ) ) {
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Logout" );
+				templateName = templateFilePrefix + ( basicMode ? "LogoutBasic.ftl" : "Logout.ftl" );
+				
 			} else {
 				dataModel = new HashMap<String, Object>();
 				templateName = templateFilePrefix + "error/PageNotFound.ftl";
@@ -199,7 +214,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "userId", userData.getId() );
 		dataModel.put( "user", userResponse );
 		if( basicMode ) {
-			dataModel.put( "requestUrl", request.getRequestURI() );
+			dataModel.put( "requestUrl", "http://" + request.getServerName() + request.getRequestURI() );
 		} else {
 			dataModel.put( "userJson", new Gson().toJson( userResponse ) );
 		}
