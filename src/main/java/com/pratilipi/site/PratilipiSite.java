@@ -107,10 +107,10 @@ public class PratilipiSite extends HttpServlet {
 		
 		// Data Model for FreeMarker
 		Map<String, Object> dataModel = null;
+		String templateName = null;
 		String html = "";
 		
 		try {
-			String templateName = null;
 			
 			if( uri.equals( "/" ) ) {
 				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
@@ -164,7 +164,7 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, filterLanguage, request ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
-			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), filterLanguage ) ) != null ) {
+			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), displayLanguage ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
 				
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
@@ -174,41 +174,43 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = new HashMap<String, Object>();
 				templateName = templateFilePrefix + "error/PageNotFound.ftl";
 				response.setStatus( HttpServletResponse.SC_NOT_FOUND );
-
 			}
 
+		} catch( InsufficientAccessException e ) {
+			dataModel = new HashMap<String, Object>();
+			templateName = templateFilePrefix + "error/AuthorizationError.ftl";
+			response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
+
+		} catch( InvalidArgumentException | UnexpectedServerException e ) {
+			dataModel = new HashMap<String, Object>();
+			templateName = templateFilePrefix + "error/ServerError.ftl";
+			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+		}
+
+		
+		try {
 			// Adding common data to the Data Model
-			dataModel.put( "userJson", new Gson().toJson( new GenericUserResponse( UserDataUtil.getCurrentUser() ) ) );
-			dataModel.put( "lang", displayLanguage != null ? displayLanguage.getCode() : Language.ENGLISH.getCode() );
+			if( basicMode )
+				dataModel.put( "user", new GenericUserResponse( UserDataUtil.getCurrentUser() ) );
+			else
+				dataModel.put( "userJson", new Gson().toJson( new GenericUserResponse( UserDataUtil.getCurrentUser() ) ) );
+			dataModel.put( "lang", displayLanguage.getCode() );
 			dataModel.put( "_strings", LanguageUtil.getStrings(
-					languageFilePrefix + (displayLanguage != null ? displayLanguage.getCode() : Language.ENGLISH.getCode()),
+					languageFilePrefix + displayLanguage.getCode(),
 					languageFilePrefix + Language.ENGLISH.getCode() ) );
 			dataModel.put( "resourceList", resourceList );
 			
 			// The magic
 			html = FreeMarkerUtil.processTemplate( dataModel, templateName );
 
-		} catch( InsufficientAccessException e ) {
-			response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
-			try {
-				html = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "error/AuthorizationError.ftl" );
-			} catch( UnexpectedServerException ex ) { }
-
-		} catch( IOException | InvalidArgumentException | UnexpectedServerException e ) {
-			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
-			try {
-				html = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "error/ServerError.ftl" );
-			} catch( UnexpectedServerException ex ) { }
+			// Dispatching response
+			response.setCharacterEncoding( "UTF-8" );
+			response.getWriter().write( html );
+			response.getWriter().close();
+		} catch( IOException | UnexpectedServerException e ) {
+			logger.log( Level.SEVERE, "Exception occured while processing template.", e );
 		}
-
-		try {
-		// Dispatching response
-		response.setCharacterEncoding( "UTF-8" );
-		response.getWriter().write( html );
-		response.getWriter().close();
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "", e );
-		}
+		
 	}
 	
 	
@@ -290,7 +292,7 @@ public class PratilipiSite extends HttpServlet {
 			
 			JsonObject section = new JsonObject();
 			section.addProperty( "title", title );
-			section.add( "pratilipiList", gson.toJsonTree( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
+			section.add( "pratilipiList", gson.toJsonTree( toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
 			sections.add( section );
 			
 		}
@@ -304,7 +306,8 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
-	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode ) throws InsufficientAccessException {
+	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode )
+			throws InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
@@ -420,13 +423,13 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		if( basicMode ) {
-			dataModel.put( "pratilipiList", toResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
+			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
 			dataModel.put( "pratilipiListSearchQuery", searchQuery );
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
 			if( pratilipiDataListCursorTuple.getNumberFound() != null )
 				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) pratilipiDataListCursorTuple.getNumberFound() ) / pageSize ) );
 		} else {
-			dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
+			dataModel.put( "pratilipiListJson", gson.toJson( toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
 			dataModel.put( "pratilipiListSearchQuery", searchQuery );
 			dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
 			dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
@@ -435,15 +438,16 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
-	private Map<String, Object> createDataModelForListPage( PratilipiType type, boolean basicMode, Language lang, HttpServletRequest request )
+	private Map<String, Object> createDataModelForListPage( PratilipiType type,
+			boolean basicMode, Language lang, HttpServletRequest request )
 			throws InsufficientAccessException {
 		
 		return createDataModelForListPage( type, null, basicMode, lang, request );
-		
 	}
 
-	private Map<String, Object> createDataModelForListPage( String listName, boolean basicMode, Language lang, HttpServletRequest request )
-				throws InsufficientAccessException {
+	private Map<String, Object> createDataModelForListPage( String listName,
+			boolean basicMode, Language lang, HttpServletRequest request )
+			throws InsufficientAccessException {
 
 		return createDataModelForListPage( null, listName, basicMode, lang, request );
 		
@@ -482,12 +486,12 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", title );
 		if( basicMode ) {
-			dataModel.put( "pratilipiList", toResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
+			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
 			if( pratilipiDataListCursorTuple.getNumberFound() != null )
 				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) pratilipiDataListCursorTuple.getNumberFound() ) / pageSize ) );
 		} else {
-			dataModel.put( "pratilipiListJson", gson.toJson( toResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
+			dataModel.put( "pratilipiListJson", gson.toJson( toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
 			dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
 			dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
 		}
@@ -524,32 +528,11 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 
-	private List<GetPratilipiListResponse.Pratilipi> toResponseObject( List<PratilipiData> pratilipiDataList ) {
+	private List<GetPratilipiListResponse.Pratilipi> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
 		List<GetPratilipiListResponse.Pratilipi> pratilipiList = new ArrayList<>( pratilipiDataList.size() );
 		for( PratilipiData pratilipiData : pratilipiDataList )
 			pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
 		return pratilipiList;
-	}
-	
-	
-	public <T> T getData( String fileName, Class<T> clazz )
-			throws UnexpectedServerException {
-		
-		// Fetching content (json) from data file
-		String jsonStr = "";
-		try {
-			File file = new File( getClass().getResource( dataFilePrefix + fileName ).toURI() );
-			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
-			while( it.hasNext() )
-				jsonStr += it.nextLine() + '\n';
-			LineIterator.closeQuietly( it );
-		} catch( URISyntaxException | IOException e ) {
-			logger.log( Level.SEVERE, "Exception while reading from data file.", e );
-			throw new UnexpectedServerException();
-		}
-
-		// The magic
-		return new Gson().fromJson( jsonStr, clazz );
 	}
 	
 }

@@ -12,13 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pratilipi.common.type.Language;
-import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
-import com.pratilipi.data.type.Pratilipi;
 
 public class UxModeFilter implements Filter {
 
