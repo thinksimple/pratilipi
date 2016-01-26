@@ -22,7 +22,7 @@
 			</form>    
 		</div>
 		<div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
-			<a style="margin-top: 10px;" class="pratilipi-white-button pull-right" href="/login">${ _strings.user_sign_in }</a>
+			<a style="margin-top: 10px;" class="btn btn-default red pull-right" href="/login">${ _strings.user_sign_in }</a>
 		</div>
 		
 		
@@ -35,7 +35,7 @@
 			<a href="/">
 				<img style= "max-width: 90px;" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/Pratilipi-Text.png" />
 			</a>
-			<a style="margin-top: 10px;" class="pratilipi-white-button pull-right" href="/login">${ _strings.user_sign_in }</a>
+			<a style="margin-top: 10px;" class="btn btn-default red pull-right" href="/login">${ _strings.user_sign_in }</a>
 		</div>
 		<div class="col-xs-12 hidden-sm hidden-md hidden-lg" style="margin-top: 5px; padding: 10px;">
 			<form method="get" action="/search">

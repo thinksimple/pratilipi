@@ -7,7 +7,7 @@
 			<h1>${ pratilipi.title!pratilipi.titleEn }</h1>
 			<#if pratilipi.author?? >
 				<h2><a href="${ pratilipi.author.pageUrlAlias!pratilipi.author.pageUrl }">
-					${ pratilipi.author.fullName!pratilipi.author.fullNameEn }
+					${ pratilipi.author.name }
 				</a></h2>
 			</#if>
 			
