@@ -29,9 +29,16 @@
 				return re.test(email);
 			}
 			function login() {
-			
+				
+				var name = $( '#inputName' ).val();
 				var email = $( '#inputEmail' ).val();
 				var password = $( '#inputPassword' ).val();
+				
+				if( name == null || name.trim() == "" ) {
+					// Throw message - Please Enter Name
+					alert( "Please Enter your Name" );
+					return;
+				}
 				
 				if( email == null || email.trim() == "" ) {
 					// Throw message - Please Enter Email
@@ -56,15 +63,16 @@
 				$.ajax({
 				
 					type: 'post',
-					url: '/api/user/login',
+					url: '/api/user/register',
 
-					data: { 
+					data: {
+						'name': name,
 						'email': email, 
 						'password': password
 					},
 					
 					success: function( response ) {
-						window.location.href = getUrlParameters().ret; 
+						window.location.href = window.location.host; 
 					},
 					
 					error: function () {
@@ -81,10 +89,16 @@
 			
 			<div class="box" style="min-height: 370px;">
 	            <div style="margin: 20px auto; text-align: center;">
-	                <p class="lead">${ _strings.user_sign_in_to_pratilipi }</p>
+	                <p class="lead">${ _strings.user_sign_up_for_pratilipi }</p>
 	            </div>
 	            
-	            <form id="userLoginForm" class="form-horizontal" action="javascript:void(0);">
+	            <form id="userRegisterForm" class="form-horizontal" action="javascript:void(0);">
+	            	<div class="form-group">
+	                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+	                    <div class="col-sm-10">
+	                        <input name="name" type="text" class="form-control" id="inputName" placeholder="${ _strings.user_full_name }">
+	                    </div>
+	                </div>
 	                <div class="form-group">
 	                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 	                    <div class="col-sm-10">
@@ -101,8 +115,6 @@
 	                	<button class="btn btn-default" onclick="login()">${ _strings.user_sign_in }</button>
 	                </div>
 	            </form>
-	            
-	            <a class="red text-center" href="/register">${ _strings.user_sign_up_for_pratilipi }</a>
 	            
 	        </div>
 	        
