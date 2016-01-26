@@ -63,7 +63,8 @@ public class PratilipiSite extends HttpServlet {
 	private static final String languageFilePrefix = "WEB-INF/classes/com/pratilipi/site/i18n/language.";
 	
 	
-	public void doGet( HttpServletRequest request, HttpServletResponse response ) {
+	public void doGet( HttpServletRequest request, HttpServletResponse response ) 
+			throws IOException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -108,7 +109,6 @@ public class PratilipiSite extends HttpServlet {
 		// Data Model for FreeMarker
 		Map<String, Object> dataModel = null;
 		String templateName = null;
-		String html = "";
 		
 		try {
 			
@@ -188,28 +188,35 @@ public class PratilipiSite extends HttpServlet {
 		}
 
 		
-		try {
-			// Adding common data to the Data Model
-			if( basicMode )
-				dataModel.put( "user", new GenericUserResponse( UserDataUtil.getCurrentUser() ) );
-			else
-				dataModel.put( "userJson", new Gson().toJson( new GenericUserResponse( UserDataUtil.getCurrentUser() ) ) );
-			dataModel.put( "lang", displayLanguage.getCode() );
-			dataModel.put( "_strings", LanguageUtil.getStrings(
-					languageFilePrefix + displayLanguage.getCode(),
-					languageFilePrefix + Language.ENGLISH.getCode() ) );
-			dataModel.put( "resourceList", resourceList );
-			
-			// The magic
-			html = FreeMarkerUtil.processTemplate( dataModel, templateName );
+		// Adding common data to the Data Model
+		if( basicMode )
+			dataModel.put( "user", new GenericUserResponse( UserDataUtil.getCurrentUser() ) );
+		else
+			dataModel.put( "userJson", new Gson().toJson( new GenericUserResponse( UserDataUtil.getCurrentUser() ) ) );
+		dataModel.put( "lang", displayLanguage.getCode() );
+		dataModel.put( "_strings", LanguageUtil.getStrings(
+				languageFilePrefix + displayLanguage.getCode(),
+				languageFilePrefix + Language.ENGLISH.getCode() ) );
+		dataModel.put( "resourceList", resourceList );
 
-			// Dispatching response
-			response.setCharacterEncoding( "UTF-8" );
-			response.getWriter().write( html );
-			response.getWriter().close();
-		} catch( IOException | UnexpectedServerException e ) {
-			logger.log( Level.SEVERE, "Exception occured while processing template.", e );
+		
+		// Generating response html
+		String html = null;
+		for( int i = 0; i < 2 && html == null; i++ ) {
+			try {
+				// The magic
+				html = FreeMarkerUtil.processTemplate( dataModel, templateName );
+			} catch( UnexpectedServerException e ) {
+				templateName = templateFilePrefix + "error/ServerError.ftl";
+				logger.log( Level.SEVERE, "Exception occured while processing template.", e );
+			}
 		}
+		
+		
+		// Dispatching response
+		response.setCharacterEncoding( "UTF-8" );
+		response.getWriter().write( html );
+		response.getWriter().close();
 		
 	}
 	
