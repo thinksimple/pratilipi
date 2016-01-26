@@ -17,7 +17,7 @@
 	<#--	<#include "../element/pratilipi-user-verification.ftl">		-->
 			
 			<#list sections as section>
-				<#list pratilipiList as pratilipi>
+				<#list section["pratilipiList"] as pratilipi>
 					<#include "../element/pratilipi-pratilipi-card.ftl">
 				</#list>
 			</#list>
