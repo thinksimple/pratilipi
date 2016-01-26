@@ -19,6 +19,7 @@
 				<#list section["pratilipiList"] as pratilipi>
 					<#include "../element/pratilipi-pratilipi-card.ftl">
 				</#list>
+				<br/>
 			</#list>
 			
 			<#include "../element/pratilipi-navigation.ftl">

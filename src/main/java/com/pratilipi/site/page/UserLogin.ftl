@@ -21,9 +21,35 @@
     	</style>
     	
     	<script>
-    		function login() {
-    			// Make AJAX call
-    		}
+    		function validateEmail( email ) {
+				var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				return re.test(email);
+			}
+			function login() {
+		
+				var email = $( '#inputLoginEmail' ).val();
+				var password = $( '#inputLoginPassword' ).val();
+				
+				if( email == null || email.trim() == "" ) {
+					// Throw message - Please Enter Email
+					return;
+				}
+				
+				if( password == null || password.trim() == "" ) {
+					// Throw message - Please Enter Password
+					return;
+				}
+				
+				if( ! validateEmail( email ) ) {
+					// Throw message - Email is not valid
+					return;
+				}
+				
+				// Make Ajax call
+				console.log( email );
+				console.log( password );
+				
+			}
     	</script>
 	</head>
 
@@ -40,21 +66,18 @@
 	                <div class="form-group">
 	                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 	                    <div class="col-sm-10">
-	                        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="Email">
+	                        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="${ _strings.user_email }">
 	                    </div>
 	                </div>
 	                <div class="form-group">
 	                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
 	                    <div class="col-sm-10">
-	                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+	                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="${ _strings.user_password }">
 	                    </div>
 	                </div>
-	                <div class="form-group">
-	                    <div class="col-sm-offset-2 col-sm-10">
-	                        
-	                    </div>
+	                <div class="form-group" style="margin-left: 1px;">
+	                	<button class="btn btn-default" onclick="login()">${ _strings.user_sign_in }</button>
 	                </div>
-	                <button class="btn btn-default" onclick="login()">Sign in</button>
 	            </form>
 	            
 	        </div>
