@@ -32,7 +32,7 @@
 			</div>
 			
 			<div style="padding-top: 20px; padding-bottom: 20px;">
-				<a class="btn btn-default red" href="http://www.pratilipi.com/read?id=${ pratilipi.id?c }">${ _strings.read }</a>
+				<a class="btn btn-default red" href="http://www.pratilipi.com/read?id=${ pratilipi.id?c }&ret=${ requestUrl }">${ _strings.read }</a>
 			</div>
 			
 		</div>

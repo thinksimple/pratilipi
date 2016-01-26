@@ -20,37 +20,57 @@
 	        }
     	</style>
     	
-    	<script>
+    	<script type="text/javascript">
+    		function getUrlParameters() {
+				return JSON.parse('{"' + decodeURI( location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}' );
+			}
     		function validateEmail( email ) {
 				var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 				return re.test(email);
 			}
 			function login() {
-		
-				var email = $( '#inputLoginEmail' ).val();
-				var password = $( '#inputLoginPassword' ).val();
+			
+				var email = $( '#inputEmail' ).val();
+				var password = $( '#inputPassword' ).val();
 				
 				if( email == null || email.trim() == "" ) {
 					// Throw message - Please Enter Email
+					alert( "Please Enter your Email" );
 					return;
 				}
 				
 				if( password == null || password.trim() == "" ) {
 					// Throw message - Please Enter Password
+					alert( "Please Enter your Password" );
 					return;
 				}
 				
 				if( ! validateEmail( email ) ) {
 					// Throw message - Email is not valid
+					alert( "Please Enter a valid Email" );
 					return;
 				}
 				
 				// Make Ajax call
-				$.post('/api/user/login', { email: email, password : password }, 
-					function( returnedData ){
-						console.log( returnedData );
-				});
+
+				$.ajax({
 				
+					type: 'post',
+					url: '/api/user/login',
+
+					data: { 
+						'email': email, 
+						'password': password
+					},
+					
+					success: function( response ) {
+						window.location.href = getUrlParameters().ret; 
+					},
+					
+					error: function () {
+						alert( "Invalid Credentials!" );
+					}
+				});
 			}
     	</script>
 	</head>

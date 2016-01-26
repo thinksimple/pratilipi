@@ -8,7 +8,7 @@
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<#if review.reviewTitle?? >
-				<h4 style="color: #D0021B;">${ review.reviewTitle }</h4>
+				<h3 style="color: #D0021B;">${ review.reviewTitle }</h3>
 			</#if>
 			<div style="text-align: justify;">${ review.review }</div>
 		</div>
