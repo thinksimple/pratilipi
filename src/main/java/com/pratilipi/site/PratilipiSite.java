@@ -278,7 +278,7 @@ public class PratilipiSite extends HttpServlet {
 		Gson gson = new Gson();
 		
 		String[] listNames = { "featured", "fiction", "magazines" };
-		JsonArray sections = new JsonArray();
+		ArrayList<JsonObject> sections = new ArrayList<>( listNames.length );
 		
 		for( String listName : listNames ) {
 			
@@ -305,7 +305,7 @@ public class PratilipiSite extends HttpServlet {
 		}
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", "Read Hindi, Gujarati and Tamil Stories, Poems and Books" );
+		dataModel.put( "title", "Read Tamil Stories, Poems and Books" );
 		if( basicMode )
 			dataModel.put( "sections", sections );
 		else
