@@ -84,6 +84,7 @@
 	            
 	        </div>
 	        
+	        <#include "../element/pratilipi-navigation.ftl">
 			<#include "../element/pratilipi-footer.ftl">
 		</div>
 	</body>
