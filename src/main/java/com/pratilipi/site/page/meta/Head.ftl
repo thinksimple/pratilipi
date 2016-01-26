@@ -13,3 +13,5 @@
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css">
+
+<#include "GoogleAnalytics.ftl">

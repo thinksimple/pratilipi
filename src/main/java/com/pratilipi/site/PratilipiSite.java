@@ -40,6 +40,7 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
@@ -187,17 +188,21 @@ public class PratilipiSite extends HttpServlet {
 
 		
 		// Adding common data to the Data Model
-		if( basicMode ) {
-			dataModel.put( "user", new GenericUserResponse( UserDataUtil.getCurrentUser() ) );
-			dataModel.put( "requestUrl", request.getRequestURI() );
-		} else {
-			dataModel.put( "userJson", new Gson().toJson( new GenericUserResponse( UserDataUtil.getCurrentUser() ) ) );
-		}
+		UserData userData = UserDataUtil.getCurrentUser();
+		GenericUserResponse userResponse = new GenericUserResponse( userData );
+		
 		dataModel.put( "lang", displayLanguage.getCode() );
 		dataModel.put( "_strings", LanguageUtil.getStrings(
 				languageFilePrefix + displayLanguage.getCode(),
 				languageFilePrefix + Language.ENGLISH.getCode() ) );
 		dataModel.put( "resourceList", resourceList );
+		dataModel.put( "userId", userData.getId() );
+		if( basicMode ) {
+			dataModel.put( "user", userResponse );
+			dataModel.put( "requestUrl", request.getRequestURI() );
+		} else {
+			dataModel.put( "userJson", new Gson().toJson( userResponse ) );
+		}
 
 		
 		// Generating response html
