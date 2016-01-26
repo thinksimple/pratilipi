@@ -21,14 +21,11 @@
     	</style>
     	
     	<script type="text/javascript">
-    		function getUrlParameters() {
-				return JSON.parse('{"' + decodeURI( location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}' );
-			}
     		function validateEmail( email ) {
 				var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 				return re.test(email);
 			}
-			function login() {
+			function register() {
 				
 				var name = $( '#inputName' ).val();
 				var email = $( '#inputEmail' ).val();
@@ -72,7 +69,7 @@
 					},
 					
 					success: function( response ) {
-						window.location.href = window.location.host; 
+						window.location.href = "/"; 
 					},
 					
 					error: function () {
@@ -89,7 +86,7 @@
 			
 			<div class="box" style="min-height: 370px;">
 	            <div style="margin: 20px auto; text-align: center;">
-	                <p class="lead">${ _strings.user_sign_up_for_pratilipi }</p>
+	                <h3 style="text-align: center; font-size: 20px;">${ _strings.user_sign_up_for_pratilipi }</h3>
 	            </div>
 	            
 	            <form id="userRegisterForm" class="form-horizontal" action="javascript:void(0);">
@@ -111,11 +108,17 @@
 	                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="${ _strings.user_password }">
 	                    </div>
 	                </div>
-	                <div class="form-group" style="margin-left: 1px;">
-	                	<button class="btn btn-default" onclick="login()">${ _strings.user_sign_in }</button>
+	                <div class="form-group" style="margin: 0 auto; text-align: center;">
+	                	<button class="btn btn-default" onclick="register()">${ _strings.user_sign_up }</button>
 	                </div>
 	            </form>
-	            
+	            <p style="display: block; margin: 15px 15px 30px 15px;">
+					${ _strings.register_part_1 }
+					<a style="color: #107FE5; white-space: nowrap; font-size: 16px;" href="/privacy-policy">privacy policy</a>
+					&nbsp;${ _strings.register_part_2 }&nbsp;
+					<a style="color: #107FE5; white-space: nowrap; font-size: 16px;" href="/terms-of-service">terms of service</a>
+					&nbsp;${ _strings.register_part_3 }
+				</p>
 	        </div>
 	        
 	        <#include "../element/pratilipi-navigation.ftl">

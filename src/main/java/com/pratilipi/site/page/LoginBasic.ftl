@@ -81,7 +81,7 @@
 			
 			<div class="box" style="min-height: 370px;">
 	            <div style="margin: 20px auto; text-align: center;">
-	                <p class="lead">${ _strings.user_sign_in_to_pratilipi }</p>
+	                <h3 style="text-align: center; font-size: 20px;">${ _strings.user_sign_in_to_pratilipi }</h3>
 	            </div>
 	            
 	            <form id="userLoginForm" class="form-horizontal" action="javascript:void(0);">
@@ -97,12 +97,14 @@
 	                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="${ _strings.user_password }">
 	                    </div>
 	                </div>
-	                <div class="form-group" style="margin-left: 1px;">
+	                <div class="form-group" style="margin: 25px auto; text-align: center;">
 	                	<button class="btn btn-default" onclick="login()">${ _strings.user_sign_in }</button>
 	                </div>
 	            </form>
 	            
-	            <a class="red text-center" href="/register">${ _strings.user_sign_up_for_pratilipi }</a>
+	            <div style="text-align: center;">
+	            	<a href="/register">${ _strings.user_sign_up_for_pratilipi }</a>
+	            </div>
 	            
 	        </div>
 	        
