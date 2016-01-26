@@ -71,11 +71,11 @@
 				},
 				{
 					"text" : "புனைவிலி ",
-					"url" : "/nonfiction"
+					"url" : "/non-fiction"
 				},
 				{
 					"text" : "கவிதைத்தொகுப்பு ",
-					"url" : "/poemcollection"
+					"url" : "/poem-collection"
 				},
 				{
 					"text" : "நகைச்சுவை ",
@@ -87,7 +87,7 @@
 				},
 				{
 					"text" : "தன்மேம்பாடு  ",
-					"url" : "/selfhelp"
+					"url" : "/self-help"
 				},
 				{
 					"text" : "அனுபவம்",
