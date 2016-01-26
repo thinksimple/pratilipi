@@ -35,7 +35,8 @@ public class PratilipiBackupApi extends GenericApi {
 	
 	private static final String CSV_HEADER = "PratilipiId,AuthorId,"
 			+ "Title,TitleEN,Language,HasSummary,"
-			+ "Type,ContentType,State,HasCover,ListingDate";
+			+ "Type,ContentType,State,HasCover,ListingDate,"
+			+ "ReadCount";
 	private static final String CSV_SEPARATOR = ",";
 	private static final String LINE_SEPARATOR = "\n";
 
@@ -82,6 +83,7 @@ public class PratilipiBackupApi extends GenericApi {
 							.append( CSV_SEPARATOR ).append( pratilipi.getState() )
 							.append( CSV_SEPARATOR ).append( pratilipi.hasCustomCover() )
 							.append( CSV_SEPARATOR ).append( csvDateFormat.format( pratilipi.getListingDate() ) )
+							.append( CSV_SEPARATOR ).append( pratilipi.getReadCount() )
 							.append( LINE_SEPARATOR );
 				
 			}

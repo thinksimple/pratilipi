@@ -59,7 +59,7 @@ public class UxModeFilter implements Filter {
 			Page page = dataAccessor.getPage( requestUri );
 			if( page != null && page.getUriAlias() != null && requestUri.equals( page.getUri() ) ) {
 				response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-				response.setHeader( "Location", page.getUri() );
+				response.setHeader( "Location", page.getUriAlias() );
 				return;
 			}
 			
