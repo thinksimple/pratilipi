@@ -26,7 +26,7 @@ public class FacebookApi {
 	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
 	
 	
-	private static String getAppId() {
+	public static String getAppId() {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Map<String, String> facebookCredentials = dataAccessor.getAppProperty( AppProperty.FACEBOOK_CREDENTIALS ).getValue();
 		return facebookCredentials.get( "appId" );

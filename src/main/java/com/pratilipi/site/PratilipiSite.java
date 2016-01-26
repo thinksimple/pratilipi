@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +33,8 @@ import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.type.RequestParameter;
+import com.pratilipi.common.type.Website;
+import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.LanguageUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -122,6 +126,7 @@ public class PratilipiSite extends HttpServlet {
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode );
+				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
 				templateName = templateFilePrefix + ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
 				
 			} else if( page != null && page.getType() == PageType.READ ) {
@@ -291,6 +296,45 @@ public class PratilipiSite extends HttpServlet {
 		return listTitle;
 	}
 
+	
+	private List<String> createFbOpenGraphTags( Long pratilipiId ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
+
+		String ogFbAppId = FacebookApi.getAppId();
+		String ogLocale = pratilipi.getLanguage().getCode() + "_IN";
+		String ogType = "books.book";
+		String ogAuthor = "http://" + Website.ALL_LANGUAGE.getHostName() + ( author == null ? "/team-pratilipi" : pratilipiData.getAuthor().getPageUrl() );
+		String ogBooksIsbn = pratilipi.getId().toString();
+		String ogUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri();
+		String ogTitle = createPratilipiPageTitle( pratilipiData );
+		String ogImage = pratilipiData.getCoverImageUrl();
+		String ogDescription = "";
+		if( pratilipi.getType() == PratilipiType.BOOK && pratilipi.getSummary() != null ) {
+			ogDescription = pratilipi.getSummary();
+			Pattern htmlPattern = Pattern.compile( "<[^>]+>" );
+			Matcher matcher = htmlPattern.matcher( pratilipi.getSummary() );
+			while( matcher.find() )
+				ogDescription = ogDescription.replace( matcher.group(), "" );
+		}
+		
+		List<String> fbOgTags = new LinkedList<String>();
+		fbOgTags.add( "<meta property='fb:app_id' content='" + ogFbAppId + "' />" );
+		fbOgTags.add( "<meta property='og:locale' content='" + ogLocale + "' />" );
+		fbOgTags.add( "<meta property='og:type' content='" + ogType + "' />" );
+		fbOgTags.add( "<meta property='books:author' content='" + ogAuthor + "' />" );
+		fbOgTags.add( "<meta property='books:isbn' content='" + ogBooksIsbn + "' />" );
+		fbOgTags.add( "<meta property='og:url' content='" + ogUrl + "' />" );
+		fbOgTags.add( "<meta property='og:title' content='" + ogTitle + "' />" );
+		fbOgTags.add( "<meta property='og:image' content='" + ogImage + "' />" );
+		fbOgTags.add( "<meta property='og:description' content='" + ogDescription + "' />" );
+		return fbOgTags;
+	}
+	
 	
 	private Map<String, Object> createDataModelForHomePage( boolean basicMode, Language lang )
 			throws InsufficientAccessException {
