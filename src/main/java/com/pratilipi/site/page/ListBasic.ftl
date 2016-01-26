@@ -3,12 +3,6 @@
 
 	<head>
 		<#include "meta/HeadBasic.ftl">
-		
-		<script>
-			function getUrlParameters() {
-				return JSON.parse('{"' + decodeURI( location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}' );
-			}			
-		</script>
 	</head>
 
 	<body>
