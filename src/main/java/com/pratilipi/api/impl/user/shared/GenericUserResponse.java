@@ -2,11 +2,8 @@ package com.pratilipi.api.impl.user.shared;
 
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.UserState;
-import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
-import com.pratilipi.data.type.Page;
 
-@SuppressWarnings("unused")
 public class GenericUserResponse extends GenericResponse {
 	
 	private String displayName;
@@ -27,6 +24,33 @@ public class GenericUserResponse extends GenericResponse {
 		this.isGuest = userData.getState() == UserState.GUEST;
 		this.isEmailVerified = userData.getState() == UserState.ACTIVE;
 		this.profilePageUrl = userData.getProfilePageUrl();
+	}
+	
+	
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public UserState getState() {
+		return state;
+	}
+
+
+	public Boolean getIsGuest() {
+		return isGuest;
+	}
+
+	public Boolean getIsEmailVerified() {
+		return isEmailVerified;
+	}
+
+
+	public String getProfilePageUrl() {
+		return profilePageUrl;
 	}
 	
 }
