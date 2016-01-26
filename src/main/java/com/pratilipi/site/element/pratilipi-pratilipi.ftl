@@ -31,7 +31,9 @@
 				<span>&nbsp;&minus;&nbsp;${ pratilipi.readCount }</span>
 			</div>
 			
-			<a class="btn btn-default red" href="http://www.pratilipi.com/read?id=${ pratilipi.id?c }">${ _strings.read }</a>
+			<div style="padding-top: 20px; padding-bottom: 20px;">
+				<a class="btn btn-default red" href="http://www.pratilipi.com/read?id=${ pratilipi.id?c }">${ _strings.read }</a>
+			</div>
 			
 		</div>
 	</div>
