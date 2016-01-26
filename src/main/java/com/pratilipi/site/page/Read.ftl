@@ -2,25 +2,11 @@
 <html lang="${lang}">
 
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-		<#-- Page Title & Favicon -->
-		<link rel="shortcut icon" type="image/png" href="/favicon.png">
-
-		<#-- Third-Party Library -->
-		<#list resourceList as resource>
-			${ resource }
-		</#list>
+		<#include "meta/Head.ftl">
 
 		<#-- Polymer 1.0 Custom Elements -->
 		<link rel='import' href='/elements.${lang}/pratilipi-user.html'>
 		<link rel='import' href='/elements.${lang}/pratilipi-reader.html'>
-
-		<#-- Custom Stylesheet -->
-		<link type="text/css" rel="stylesheet" href="/resources/style.css?20151209">
-		
 	</head>
 
 	<body>

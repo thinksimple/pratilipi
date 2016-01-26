@@ -12,4 +12,4 @@
 </#list>
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style-basic.css">
+<link type="text/css" rel="stylesheet" href="/resources/style-basic.css?20151208">
