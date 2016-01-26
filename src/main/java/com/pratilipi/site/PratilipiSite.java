@@ -187,10 +187,12 @@ public class PratilipiSite extends HttpServlet {
 
 		
 		// Adding common data to the Data Model
-		if( basicMode )
+		if( basicMode ) {
 			dataModel.put( "user", new GenericUserResponse( UserDataUtil.getCurrentUser() ) );
-		else
+			dataModel.put( "requestUrl", request.getRequestURI() );
+		} else {
 			dataModel.put( "userJson", new Gson().toJson( new GenericUserResponse( UserDataUtil.getCurrentUser() ) ) );
+		}
 		dataModel.put( "lang", displayLanguage.getCode() );
 		dataModel.put( "_strings", LanguageUtil.getStrings(
 				languageFilePrefix + displayLanguage.getCode(),
@@ -326,15 +328,14 @@ public class PratilipiSite extends HttpServlet {
 				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", createAuthorPageTitle( authorData ) );
 		if( basicMode ) {
-			dataModel.put( "title", createAuthorPageTitle( authorData ) );
 			dataModel.put( "author", authorData );
 			dataModel.put( "publishedPratilipiList", pratilipiDataListCursorTuple.getDataList() );
 			if( pratilipiDataListCursorTuple.getDataList().size() == 20 && pratilipiDataListCursorTuple.getCursor() != null )
 				dataModel.put( "publishedPratilipiListSearchQuery", pratilipiFilter.toUrlEncodedString() );
 		} else {
 			Gson gson = new Gson();
-			dataModel.put( "title", createAuthorPageTitle( authorData ) );
 			dataModel.put( "authorJson", gson.toJson( authorData ) );
 			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ) );
 			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
@@ -367,13 +368,12 @@ public class PratilipiSite extends HttpServlet {
 				UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, basicMode ? 40 : 20 );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", createPratilipiPageTitle( pratilipiData ) );
 		if( basicMode ) {
-			dataModel.put( "title", createPratilipiPageTitle( pratilipiData ) );
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "userpratilipi", userPratilipiResponse );
 			dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
 		} else {
-			dataModel.put( "title", createPratilipiPageTitle( pratilipiData ) );
 			dataModel.put( "pratilipi", pratilipiData );
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
 			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
@@ -428,6 +428,7 @@ public class PratilipiSite extends HttpServlet {
 		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", "Search" );
 		if( basicMode ) {
 			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
 			dataModel.put( "pratilipiListSearchQuery", searchQuery );
