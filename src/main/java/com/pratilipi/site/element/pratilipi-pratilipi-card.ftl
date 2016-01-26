@@ -22,7 +22,7 @@
 		<tr>
 			<td style="vertical-align:bottom">
 				<div style="margin:3px 10px;text-transform:uppercase">
-					<button class="btn btn-default red" type="button" onclick="redirectToReader( ${ pratilipi.id?c } )">${ _strings.read }</button>
+					<a class="btn btn-default red" href="http://www.pratilipi.com/read?id=${ pratilipi.id?c }">${ _strings.read }</a>
 				</div>
 			</td>
 		</tr>

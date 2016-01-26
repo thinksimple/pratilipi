@@ -10,6 +10,9 @@
 			<#include "../element/pratilipi-header.ftl">
 			<#include "../element/pratilipi-author.ftl">
 			
+			<div class="box" style="padding: 12px 10px;">
+				<h2 style="color: #D0021B;">${ _strings.author_published_works }</h2>
+			</div>
 			<#list publishedPratilipiList as pratilipi>
 				<#include "../element/pratilipi-pratilipi-card.ftl">
 			</#list>
