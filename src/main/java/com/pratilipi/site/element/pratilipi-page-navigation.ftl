@@ -40,22 +40,43 @@
 <div style="padding-top:25px; padding-bottom:25px;">
 	<div class="row" style=" text-align: center;">
 	    
-	    <div class="col-xs-2 col-xs-offset-1"><a href="?page=${ rating1 }">${ rating1 }</a></div>
+	    <#if rating1 == pratilipiListPageCurr>
+	    	<div class="col-xs-2 col-xs-offset-1"><a style="color: #333; font-size: 16px;" href="?page=${ rating1 }">${ rating1 }</a></div>
+		<#else>
+			<div class="col-xs-2 col-xs-offset-1"><a href="?page=${ rating1 }">${ rating1 }</a></div>
+		</#if>
+	    
 	    
     	<#if rating2?? >
-			<div class="col-xs-2"><a href="?page=${ rating2 }">${ rating2 }</a></div>
+    		<#if rating2 == pratilipiListPageCurr>
+    			<div class="col-xs-2"><a style="color: #333; font-size: 16px;" href="?page=${ rating2 }">${ rating2 }</a></div>
+    		<#else>
+    			<div class="col-xs-2"><a href="?page=${ rating2 }">${ rating2 }</a></div>
+    		</#if>
 		</#if>
 	    
 	    <#if rating3?? >
-		    <div class="col-xs-2"><a href="?page=${ rating3 }">${ rating3 }</a></div>
+	    	<#if rating3 == pratilipiListPageCurr>
+    			<div class="col-xs-2"><a style="color: #333; font-size: 16px;" href="?page=${ rating3 }">${ rating3 }</a></div>
+    		<#else>
+    			<div class="col-xs-2"><a href="?page=${ rating3 }">${ rating3 }</a></div>
+    		</#if>
 	    </#if>
 	    
 	    <#if rating4?? >
-	    	<div class="col-xs-2"><a href="?page=${ rating4 }">${ rating4 }</a></div>
+	    	<#if rating4 == pratilipiListPageCurr>
+    			<div class="col-xs-2"><a style="color: #333; font-size: 16px;" href="?page=${ rating4 }">${ rating4 }</a></div>
+    		<#else>
+    			<div class="col-xs-2"><a href="?page=${ rating4 }">${ rating4 }</a></div>
+    		</#if>
 	    </#if>
 	    
 	    <#if rating5?? >
-	    	<div class="col-xs-2"><a href="?page=${ rating5 }">${ rating5 }</a></div>
+	    	<#if rating5 == pratilipiListPageCurr>
+    			<div class="col-xs-2"><a style="color: #333; font-size: 16px;" href="?page=${ rating5 }">${ rating5 }</a></div>
+    		<#else>
+    			<div class="col-xs-2"><a href="?page=${ rating5 }">${ rating5 }</a></div>
+    		</#if>
 	    </#if>
 	    
 	</div>
