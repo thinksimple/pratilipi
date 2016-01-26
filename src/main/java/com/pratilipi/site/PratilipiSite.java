@@ -197,8 +197,8 @@ public class PratilipiSite extends HttpServlet {
 				languageFilePrefix + Language.ENGLISH.getCode() ) );
 		dataModel.put( "resourceList", resourceList );
 		dataModel.put( "userId", userData.getId() );
+		dataModel.put( "user", userResponse );
 		if( basicMode ) {
-			dataModel.put( "user", userResponse );
 			dataModel.put( "requestUrl", request.getRequestURI() );
 		} else {
 			dataModel.put( "userJson", new Gson().toJson( userResponse ) );
