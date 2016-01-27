@@ -122,7 +122,7 @@ public class UxModeFilter implements Filter {
 				 */
 				basicBrowser = true; // Polymer 1.0 is not supported !
 				
-			} else if( userAgent.contains( "Chrome" ) && !userAgent.contains( "(Chrome)" ) ) { // Google Chrome
+			} else if( userAgent.contains( "Chrome" ) && ! userAgent.contains( "(Chrome)" ) ) { // Google Chrome
 				/*
 				 * Google Chrome on Microsoft Windows 8.1
 				 *   "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36"
