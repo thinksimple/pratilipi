@@ -37,17 +37,6 @@
 			height: 30px;
 		}
 		
-		.buttons-widescreen {
-			position: absolute; 
-			display: inline-block; 
-			top: 210px;
-		}
-		
-		.buttons-mobile {
-			position: relative; 
-			display: inline-block; 
-		}
-		
 		#more, #less {
 			color: #333;
 		}
@@ -129,12 +118,12 @@
 					
 					<h6 style="margin-top: 10px;">{{ type }}</h6>
 					
-					<table style="margin-top: 10px; margin-bottom: 20px;">
+					<table style="margin-top: 10px; margin-bottom: 5px;">
 						<tr> <th>${ _strings.pratilipi_listing_date } :</th> 	<td>{{ listingDate }}</td> </tr>
 						<tr> <th>${ _strings.pratilipi_count_reads } :</th> 	<td>{{ pratilipi.readCount }}</td> </tr>
 					</table>
 					
-					<div id="buttons">
+					<div style="position: relative; display: inline-block;">
 						<button on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</button>
 						<!-- <button class="pratilipi-grey-button">Add to your Library</button> -->
 						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
@@ -271,9 +260,6 @@
 					jQuery( '#pratilipi-row' ).addClass( 'row-widescreen' );
 					jQuery( '#pratilipi-col-left' ).addClass( 'col-left-widescreen' );
 					jQuery( '#pratilipi-col-right' ).addClass( 'col-right-widescreen' );
-					
-					jQuery( '#buttons' ).removeClass( 'buttons-mobile' );
-					jQuery( '#buttons' ).addClass( 'buttons-widescreen' );
 				}
 				else {
 					this.mobile = true;
@@ -284,9 +270,6 @@
 					jQuery( '#pratilipi-row' ).addClass( 'row-mobile' );
 					jQuery( '#pratilipi-col-left' ).addClass( 'col-left-mobile' );
 					jQuery( '#pratilipi-col-right' ).addClass( 'col-right-mobile' );
-					
-					jQuery( '#buttons' ).removeClass( 'buttons-widescreen' );
-					jQuery( '#buttons' ).addClass( 'buttons-mobile' );
 				}
 				
 			},
