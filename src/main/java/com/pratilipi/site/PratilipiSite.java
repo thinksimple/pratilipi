@@ -86,11 +86,9 @@ public class PratilipiSite extends HttpServlet {
 		if( basicMode ) {
 			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 			resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
-			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 		} else {
 			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 			resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
-			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 			resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
@@ -191,7 +189,10 @@ public class PratilipiSite extends HttpServlet {
 				
 			} else {
 				dataModel = new HashMap<String, Object>();
-				templateName = templateFilePrefix + "error/PageNotFound.ftl";
+				if( basicMode )
+					templateName = templateFilePrefix + "error/PageNotFoundBasic.ftl";
+				else
+					templateName = templateFilePrefix + "error/PageNotFound.ftl";
 				response.setStatus( HttpServletResponse.SC_NOT_FOUND );
 			}
 
