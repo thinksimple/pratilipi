@@ -15,7 +15,7 @@
 				</#if>
 				<div style="margin:10px">
 					<#assign rating=pratilipi.averageRating >
-					<#include "pratilipi-rating.ftl" > (${rating})
+					<#include "pratilipi-rating.ftl" >
 				</div>
 			</td>
 		</tr>

@@ -14,7 +14,7 @@
 			
 			<div style="padding-top: 25px;">
 				<#assign rating=pratilipi.averageRating >
-				<#include "pratilipi-rating.ftl" > (${rating})
+				<#include "pratilipi-rating.ftl" >
 				<br/>
 				<br/>
 				<h4>${ pratilipi.type }</h4>
