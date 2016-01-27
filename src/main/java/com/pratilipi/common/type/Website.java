@@ -2,14 +2,16 @@ package com.pratilipi.common.type;
 
 public enum Website {
 
-	ALL_LANGUAGE(       "www.pratilipi.com",  "m.pratilipi.com", Language.ENGLISH,	 null ),
-	HINDI		(     "hindi.pratilipi.com", "hi.pratilipi.com", Language.HINDI,	 Language.HINDI ),
-	GUJARATI	(  "gujarati.pratilipi.com", "gu.pratilipi.com", Language.GUJARATI,	 Language.GUJARATI ),
-	TAMIL		(     "tamil.pratilipi.com", "ta.pratilipi.com", Language.TAMIL,	 Language.TAMIL ),
-	MARATHI		(   "marathi.pratilipi.com", "mr.pratilipi.com", Language.MARATHI,	 Language.MARATHI ),
-	MALAYALAM	( "malayalam.pratilipi.com", "ml.pratilipi.com", Language.MALAYALAM, Language.MALAYALAM ),
-	BENGALI		(   "bengali.pratilipi.com", "bn.pratilipi.com", Language.BENGALI,	 Language.BENGALI ),
-	GAMMA		(     "gamma.pratilipi.com", "ga.pratilipi.com", Language.TAMIL,	 Language.TAMIL ),
+	ALL_LANGUAGE	(            "www.pratilipi.com",        "m.pratilipi.com", Language.ENGLISH,	null ),
+	HINDI			(          "hindi.pratilipi.com",       "hi.pratilipi.com", Language.HINDI,		Language.HINDI ),
+	GUJARATI		(       "gujarati.pratilipi.com",       "gu.pratilipi.com", Language.GUJARATI,	Language.GUJARATI ),
+	TAMIL			(          "tamil.pratilipi.com",       "ta.pratilipi.com", Language.TAMIL,		Language.TAMIL ),
+	MARATHI			(        "marathi.pratilipi.com",       "mr.pratilipi.com", Language.MARATHI,	Language.MARATHI ),
+	MALAYALAM		(      "malayalam.pratilipi.com",       "ml.pratilipi.com", Language.MALAYALAM,	Language.MALAYALAM ),
+	BENGALI			(        "bengali.pratilipi.com",       "bn.pratilipi.com", Language.BENGALI,	Language.BENGALI ),
+	GAMMA_HINDI		(    "hindi.gamma.pratilipi.com", "hi.gamma.pratilipi.com", Language.HINDI,		Language.HINDI ),
+	GAMMA_GUJARATI	( "gujarati.gamma.pratilipi.com", "gu.gamma.pratilipi.com", Language.GUJARATI,	Language.GUJARATI ),
+	GAMMA_TAMIL		(    "tamil.gamma.pratilipi.com", "ta.gamma.pratilipi.com", Language.TAMIL,		Language.TAMIL ),
 	;
 	
 	
