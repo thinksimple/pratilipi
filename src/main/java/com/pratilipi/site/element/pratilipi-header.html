@@ -264,7 +264,7 @@
 					
 			},
 			
-			ready: function() {
+			attached: function() {
 			    var reParam = new RegExp( '(?:[\?&]|&)q=([^&]+)', 'i' );
 			    var match = window.location.search.match( reParam ) ;
 			    if( match && match.length > 1 )
