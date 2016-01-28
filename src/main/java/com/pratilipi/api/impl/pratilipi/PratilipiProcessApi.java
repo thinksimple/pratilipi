@@ -140,7 +140,10 @@ public class PratilipiProcessApi extends GenericApi {
 						.addParam( "updateStats", "true" );
 				taskList.add( task );
 			}
-			TaskQueueFactory.getAuthorOfflineTaskQueue().addAll( taskList );
+			if( request.getPratilipiId() != null && authorIdList.size() != 0 )
+				TaskQueueFactory.getAuthorTaskQueue().add( taskList.get( 0 ) );
+			else // Batch created by cron
+				TaskQueueFactory.getAuthorOfflineTaskQueue().addAll( taskList );
 			logger.log( Level.INFO, "Added " + taskList.size() + " AuthorProcessApi.updateStats tasks." );
 
 		}

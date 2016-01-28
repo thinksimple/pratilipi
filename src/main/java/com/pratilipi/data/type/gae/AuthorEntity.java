@@ -321,7 +321,7 @@ public class AuthorEntity implements Author {
 
 	@Override
 	public Date getLastUpdated() {
-		return lastUpdated == null ? registrationDate : lastUpdated;
+		return lastUpdated;
 	}
 
 	@Override
