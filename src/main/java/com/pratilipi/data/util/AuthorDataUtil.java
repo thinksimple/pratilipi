@@ -394,27 +394,45 @@ public class AuthorDataUtil {
 		Author author = dataAccessor.getAuthor( authorId );
 		Page page = dataAccessor.getPage( PageType.AUTHOR, authorId );
 		
-		if( page == null ) {
+		boolean isNew = page == null;
+		
+		if( isNew ) {
 			page = dataAccessor.newPage();
 			page.setType( PageType.AUTHOR );
 			page.setUri( PageType.AUTHOR.getUrlPrefix() + authorId );
 			page.setPrimaryContentId( authorId );
 			page.setCreationDate( new Date() );
-			page = dataAccessor.createOrUpdatePage( page );
+		}
+
+		
+		if( author.getState() == AuthorState.DELETED ) {
+			
+			if( page.getUriAlias() == null ) {
+				if( ! isNew )
+					return false;
+			} else {
+				page.setUriAlias( null );
+			}
+			
+		} else {
+		
+			String uriAlias = UriAliasUtil.generateUriAlias(
+					page.getUriAlias(),
+					"/", author.getFirstNameEn(), author.getLastNameEn(), author.getPenNameEn() );
+	
+			if( ! isNew ) {
+				if( uriAlias == page.getUriAlias()
+						|| ( uriAlias != null && uriAlias.equals( page.getUriAlias() ) )
+						|| ( page.getUriAlias() != null && page.getUriAlias().equals( uriAlias ) ) )
+					return false;
+			}
+			
+			logger.log( Level.INFO, "Updating Author Page Url: '" + page.getUriAlias() + "' -> '" + uriAlias + "'" );
+		
+			page.setUriAlias( uriAlias );
+		
 		}
 		
-		String uriAlias = UriAliasUtil.generateUriAlias(
-				page.getUriAlias(),
-				"/", author.getFirstNameEn(), author.getLastNameEn(), author.getPenNameEn() );
-
-		if( uriAlias == page.getUriAlias()
-				|| ( uriAlias != null && uriAlias.equals( page.getUriAlias() ) )
-				|| ( page.getUriAlias() != null && page.getUriAlias().equals( uriAlias ) ) )
-			return false;
-		
-		logger.log( Level.INFO, "Updating Author Page Url: '" + page.getUriAlias() + "' -> '" + uriAlias + "'" );
-		
-		page.setUriAlias( uriAlias );
 		page = dataAccessor.createOrUpdatePage( page );
 		return true;
 		
