@@ -3,7 +3,7 @@
 	<head>
 		<#-- Page Description -->
 		<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
-		<#include "meta/Head.ftl">
+		<#include "../meta/Head.ftl">
 	</head>
 	<body class="fullbleed layout vertical">
 		<template is="dom-bind">
