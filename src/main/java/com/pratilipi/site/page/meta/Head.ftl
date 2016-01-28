@@ -11,7 +11,15 @@
 	${ resource }
 </#list>
 
+<#-- Polymer 1.0 Custom Elements -->
+<link rel='import' href='/elements.${lang}/pratilipi-user.html?20160128'>
+<link rel='import' href='/elements.${lang}/pratilipi-header.html?20160128'>
+<link rel='import' href='/elements.${lang}/pratilipi-edit-account.html?20160128'>
+<link rel='import' href='/elements.${lang}/pratilipi-write.html?20160128'>
+<link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160128'>
+<link rel='import' href='/elements.${lang}/pratilipi-footer.html?20160128'>
+
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css">
+<link type="text/css" rel="stylesheet" href="/resources/style.min.css">
 
 <#include "GoogleAnalytics.ftl">
