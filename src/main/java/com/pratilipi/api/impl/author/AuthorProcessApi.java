@@ -46,7 +46,38 @@ public class AuthorProcessApi extends GenericApi {
 	@Get
 	public GenericResponse getAuthorProcess( GenericRequest request ) {
 		
-		createValidateDataTasks();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// Fetching AppProperty
+		String appPropertyId = "Api.AuthorProcess.ValidateData";
+		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
+		if( appProperty == null ) {
+			appProperty = dataAccessor.newAppProperty( appPropertyId );
+			appProperty.setValue( new Date( 0 ) );
+		}
+
+		// Fetching list of author ids.
+		AuthorFilter authorFilter = new AuthorFilter();
+		authorFilter.setMinLastUpdate( (Date) appProperty.getValue(), false );
+		List<Long> authorIdList = dataAccessor.getAuthorIdList( authorFilter, null, 10000 ).getDataList();
+
+		// Creating one task per author id.
+		List<Task> taskList = new ArrayList<>( authorIdList.size() );
+		for( Long authorId : authorIdList ) {
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/author/process" )
+					.addParam( "authorId", authorId.toString() )
+					.addParam( "validateData", "true" );
+			taskList.add( task );
+		}
+		TaskQueueFactory.getAuthorOfflineTaskQueue().addAll( taskList );
+		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
+
+		// Updating AppProperty.
+		if( authorIdList.size() > 0 ) {
+			appProperty.setValue( dataAccessor.getAuthor( authorIdList.get( authorIdList.size() - 1 ) ).getLastUpdated() );
+			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
+		}
 		
 		return new GenericResponse();
 		
@@ -61,8 +92,8 @@ public class AuthorProcessApi extends GenericApi {
 		
 		if( request.processData() ) {
 			boolean changed = AuthorDataUtil.createOrUpdateAuthorPageUrl( request.getAuthorId() );
+//			AuthorDataUtil.createOrUpdateAuthorDashboardPageUrl( request.getAuthorId() );
 			if( changed ) {
-//				AuthorDataUtil.createOrUpdateAuthorDashboardPageUrl( request.getAuthorId() );
 				// TODO: Update all Pratilipi's PageUrl ( where AUTHOR_ID == request.getAuthorId() )
 			}
 			AuthorDataUtil.updateAuthorSearchIndex( request.getAuthorId() );
@@ -80,49 +111,16 @@ public class AuthorProcessApi extends GenericApi {
 		return new GenericResponse();
 	}
 
-	private void createValidateDataTasks() {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		// Fetching AppProperty
-		String appPropertyId = "Api.AuthorProcess.ValidateData";
-		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
-		if( appProperty == null ) {
-			appProperty = dataAccessor.newAppProperty( appPropertyId );
-			appProperty.setValue( new Date( 0 ) );
-		}
-
-		// Fetching list of author ids.
-		AuthorFilter authorFilter = new AuthorFilter();
-		authorFilter.setMinLastUpdate( (Date) appProperty.getValue(), false );
-		List<Long> authorIdList = dataAccessor.getAuthorIdList( authorFilter, null, null ).getDataList();
-
-		// Creating one task per author id.
-		List<Task> taskList = new ArrayList<>( authorIdList.size() );
-		for( Long authorId : authorIdList ) {
-			Task task = TaskQueueFactory.newTask()
-					.setUrl( "/author/process" )
-					.addParam( "authorId", authorId.toString() )
-					.addParam( "validateData", "true" );
-			taskList.add( task );
-		}
-		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
-		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
-
-		// Updating AppProperty.
-		if( authorIdList.size() > 0 ) {
-			appProperty.setValue( dataAccessor.getAuthor( authorIdList.get( authorIdList.size() - 1 ) ).getLastUpdated() );
-			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
-		}
-		
-	}
-	
 	private void validateAuthorData( Long authorId ) throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		Author author = dataAccessor.getAuthor( authorId );
 		Page page = dataAccessor.getPage( PageType.AUTHOR, authorId );
+
+		
+		if( author.getLastUpdated() == null )
+			throw new InvalidArgumentException( "LastUpdate date is missing." );
 
 		
 		// Must have a page entity linked.
