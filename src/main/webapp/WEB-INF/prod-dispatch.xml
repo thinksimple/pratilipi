@@ -49,9 +49,4 @@
 		<module>gamma</module>
 	</dispatch>
 
-	<dispatch>
-		<url>ga.pratilipi.com/*</url>
-		<module>gamma</module>
-	</dispatch>
-
 </dispatch-entries>

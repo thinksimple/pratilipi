@@ -30,4 +30,6 @@ then
 	
 	# Update devo-pratilipi/worker
 	mvn appengine:update -Dapp.id=devo-pratilipi -Dapp.module=worker
+	
+	rm src/main/webapp/WEB-INF/queue.xml
 fi
