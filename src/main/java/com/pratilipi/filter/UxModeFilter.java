@@ -173,7 +173,11 @@ public class UxModeFilter implements Filter {
 			// Redirecting requests coming from basic browsers to BasicMode
 			if( basicBrowser && ! basicMode && website != null ) {
 				response.setStatus( HttpServletResponse.SC_MOVED_TEMPORARILY );
-				response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + website.getMobileHostName() + requestUri + "?" + request.getQueryString() );
+				String queryString = request.getQueryString();
+				if( queryString == null || queryString.isEmpty() )
+					response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + website.getMobileHostName() + requestUri );
+				else
+					response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + website.getMobileHostName() + requestUri + "?" + request.getQueryString() );
 				return;
 			}
 			
