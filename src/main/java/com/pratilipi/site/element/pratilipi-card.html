@@ -20,32 +20,18 @@
 			};
 		}
 		
+		paper-menu-button {
+			position: absolute; 
+			top: 0px; 
+			right: 0px;
+		}
+		
+		paper-icon-button {
+			color: #333;
+		}
+		
 		paper-item {
 			cursor: pointer;
-		}
-		
-		.ellipsed, .ellipsed:hover, .ellipsed:focus {
-			text-overflow: ellipsis;
-			overflow: hidden;
-			white-space: nowrap;
-			color: #D0021B;
-		}
-		
-		.card-heading, .card-heading:hover, .card-heading:focus {
-			font-size: 16px;
-			line-height: 18px;
-			color: #D0021B;
-		}
-		
-		.media {
-			overflow: visible;
-			min-width: 100%;
-			padding: 10px;
-		}
-		
-		.media-left img {
-			width: 100px;
-			height: 150px;
 		}
 		
 	</style>
@@ -53,22 +39,22 @@
 
 	<template>
 		<paper-card>
-				<div class="media">
+				<div class="media pratilipi-card-media">
 					
 					<div class="media-left">
 						<a href="{{ pratilipi.pageUrl }}">
-							<img class="media-object" src="{{ pratilipiCoverImage }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.title }}"/>
+							<img class="media-object pratilipi-card-image pratilipi-shadow" src="{{ pratilipiCoverImage }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.title }}"/>
 						</a>
 					</div>
 					
 				  	<div class="media-body">
 				  		<div class="contain-title">
-				  		 	<h4 style="text-align: left;" class="ellipsed" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}"><a class="card-heading" href="{{ pratilipi.pageUrl }}">{{ title }}</a></h4>
+				  		 	<h4 class="ellipsed" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}"><a class="pratilipi-card-heading" href="{{ pratilipi.pageUrl }}">{{ title }}</a></h4>
 						</div>
 						
 						<template is="dom-if" if="{{ !draftsActive }}">
 							<h6>
-								<a style="font-size: 12px; color: #434343; line-height: 20px;" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a>
+								<a class="pratilipi-card-author" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a>
 							</h6>
 						</template>
 						
@@ -77,8 +63,8 @@
 						</pratilipi-rating>
 						
 						<template is="dom-if" if="{{ draftsActive }}">
-							<paper-menu-button style="position: absolute; top: 0px; right: 0px;" horizontal-align="right" class="pull-right">
-								<paper-icon-button style="color: #333;" class="dropdown-trigger" icon="more-vert" noink="true"></paper-icon-button>
+							<paper-menu-button horizontal-align="right" class="pull-right">
+								<paper-icon-button class="dropdown-trigger" icon="more-vert" noink="true"></paper-icon-button>
 									<paper-menu class="dropdown-content">
 										<paper-item on-click="redirectToReader">${ _strings.read }</paper-item>
 									</paper-menu>
@@ -86,8 +72,8 @@
 						</template>
 
 						<template is="dom-if" if="{{ publishedActive }}">
-							<paper-menu-button style="position: absolute; top: 0px; right: 0px;" horizontal-align="right" class="pull-right">
-								<paper-icon-button style="color: #333;" class="dropdown-trigger" icon="more-vert" noink="true"></paper-icon-button>
+							<paper-menu-button horizontal-align="right" class="pull-right">
+								<paper-icon-button class="dropdown-trigger" icon="more-vert" noink="true"></paper-icon-button>
 									<paper-menu class="dropdown-content">
 										<paper-item on-click="redirectToWriter">${ _strings.pratilipi_edit_content }</paper-item>
 				                    	<paper-item on-click="moveToDrafts">${ _strings.pratilipi_move_to_drafts }</paper-item>
@@ -155,7 +141,7 @@
 			
 			_onIronResize: function() {
 				// titleWidth = width occupied by the title.
-				var titleWidth = jQuery( this.querySelector( '.card-heading' ) ).width();
+				var titleWidth = jQuery( this.querySelector( '.pratilipi-card-heading' ) ).width();
 				// maxWidth = width of the card - image - padding.
 				var maxWidth = jQuery( this ).width() - 130;
 				

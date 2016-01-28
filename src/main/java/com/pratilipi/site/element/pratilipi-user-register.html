@@ -10,6 +10,10 @@
 			};
 		}
 		
+		iron-icon {
+			margin-right: 5px;
+		}
+		
 	</style>
 
 	<template>
@@ -17,8 +21,8 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h6 style="margin: 0px; padding: 0px; font-weight: 700;">${ _strings.user_sign_up_for_pratilipi }</h6>
-						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
+						<h6 class="modal-heading">${ _strings.user_sign_up_for_pratilipi }</h6>
+						<span class="modal-close-button"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					<div class="modal-body" on-keyup="onSubmit">
 						<pratilipi-facebook-login></pratilipi-facebook-login>
@@ -31,13 +35,13 @@
 							</div>
 							
 							<paper-input class="pratilipi-blue" label="${ _strings.user_full_name }" value="{{ params.name::input }}">
-								<iron-icon style="margin-right: 5px;" icon="account-box" prefix></iron-icon>
+								<iron-icon icon="account-box" prefix></iron-icon>
 							</paper-input>
 							<paper-input class="pratilipi-blue" label="${ _strings.user_email }" value="{{ params.email::input }}">
-								<iron-icon style="margin-right: 5px;" icon="mail" prefix></iron-icon>
+								<iron-icon icon="mail" prefix></iron-icon>
 							</paper-input>
 							<paper-input class="pratilipi-blue" label="${ _strings.user_password }" type="password" value="{{ params.password::input }}">
-								<iron-icon style="margin-right: 5px;" icon="lock" prefix></iron-icon>
+								<iron-icon icon="lock" prefix></iron-icon>
 							</paper-input>
 							
 							<div class="text-center">

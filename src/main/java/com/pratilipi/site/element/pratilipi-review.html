@@ -12,6 +12,14 @@
 			width: 100%;
 			padding: 10px;
 		}
+		
+		iron-icon, user-dp {
+			width: 64px; 
+			height: 64px; 
+			display: block; 
+			margin: 10px auto;
+			color: #989898;
+		}
 
 	</style>
 
@@ -22,38 +30,19 @@
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="text-align: center; padding-top: 7px;">
 					<small><pratilipi-rating value="{{ review.rating }}" /></small>
 		   			<template is="dom-if" if="{{ reviewUserImageUrl }}">
-		   				<img class="img-circle" style="max-width: 64px; max-height: 64px; display: block; margin: 0 auto;" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>
+		   				<img class="img-circle user-dp" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>
 		   			</template>
 		   			<template is="dom-if" if="{{ !review.userImageUrl }}">
-		   				<iron-icon icon="account-circle" style="display: block; margin: 10px auto; color: #989898; width: 64px; height: 64px"></iron-icon>
+		   				<iron-icon icon="account-circle"></iron-icon>
 		   			</template>
 		   			<span>{{ review.userName }}</span>
 				</div>
 				<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-					<h4 style="color: #D0021B;">{{ review.reviewTitle }}</h4>
+					<h4 class="pratilipi-red">{{ review.reviewTitle }}</h4>
 					<div class="review" style="text-align: justify;">{{ review.review }}</div>
 				</div>
 			</div>
 		</paper-card>
-		
-		<!-- <div class="row" style="padding: 0px 0px 10px 0px; margin: 0px;">
-			<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3" style="text-align: center;">
-				{ review.reviewcount } Reviews
-			</div>
-			<div class="col-xs-8 col-sm-9 col-md-9 col-lg-9" style="dislay: inline-block;">
-				${ _strings.review_helpful }
-				<div style="white-space: nowrap; display: inline-block;">
-					<a>
-						<iron-icon icon="thumb-up"></iron-icon>
-						<span>Yes</span>
-					</a>
-					<a>
-						<iron-icon icon="thumb-down"></iron-icon>
-						<span>No</span>
-					</a>
-				</div>
-			</div>
-		</div> -->
 	</template>
 	
 

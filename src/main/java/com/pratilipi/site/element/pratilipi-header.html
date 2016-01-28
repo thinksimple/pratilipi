@@ -62,7 +62,7 @@
 		<paper-card>
 			<div class="parent-container"> 
 				<div class="container">
-					<table style="min-width: 100%; white-space: nowrap;">
+					<table style="min-width: 100%;">
 						<tr>
 							<td align="left" width="65px">
 								<a href="/">
@@ -108,8 +108,8 @@
 								<template is="dom-if" if="{{ !user.isGuest }}">
 									<div class="dropdown">
 										<button style="width: 90px;" class="pratilipi-white-button dropdown-toggle" type="button" data-toggle="dropdown">
-											<span style="float: left; width: 70px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; display: inline-block;">{{ user.displayName }}</span>
-										<span class="caret"></span></button>
+											<span style="width: 70px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; display: inline-block;">{{ user.displayName }}&nbsp;&nbsp;<span class="caret"></span></span>
+										</button>
 										<ul class="dropdown-menu pull-right">
 											<li>
 												<a style="padding: 5px; margin: 0;" href="#">

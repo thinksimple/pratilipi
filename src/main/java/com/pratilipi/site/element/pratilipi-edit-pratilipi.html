@@ -6,12 +6,6 @@
 			display: block;
 		}
 		
-		.popup-heading span {
-			font-size: 14px;
-			color: #333;
-			display: inline-block;
-		}
-		
 		paper-input.edit, paper-textarea.edit {
 			--paper-input-container-focus-color: #107FE5;
 			display: block;
@@ -31,6 +25,8 @@
 		}
 		
 		paper-menu {
+			white-space: nowrap; 
+			width: auto;
 			--paper-menu-color: #333;
 			--paper-menu-focused-item: {
 				color: #107FE5;
@@ -44,8 +40,8 @@
 				<div class="modal-content">
 			
 					<div class="modal-header">
-						<h6 style="margin: 0px; padding: 0px; font-weight: 700;">${ _strings.edit_pratilipi_heading }</h6>
-						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
+						<h6 class="modal-heading">${ _strings.edit_pratilipi_heading }</h6>
+						<span class="modal-close-button"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					
 					<div class="modal-body" on-keyup="onSubmit">
@@ -54,7 +50,7 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 								<paper-dropdown-menu id="pratilipiType" noink label="${ _strings.edit_pratilipi_type }">
-									<paper-menu selected="[[ selected ]]" class="dropdown-content" noink style="white-space: nowrap; width: auto;">
+									<paper-menu selected="[[ selected ]]" class="dropdown-content" noink>
 										<paper-item>Book</paper-item>
 										<paper-item>Poem</paper-item>
 										<paper-item>Story</paper-item>
@@ -71,8 +67,8 @@
 								</paper-dropdown-menu>
 							</div>
 						</div>
-						<div style="margin-top: 15px; margin-bottom: 5px;">
-							<span style="font-size: 14px;">${ _strings.edit_pratilipi_summary }</span>
+						<div class="margin-top-bottom">
+							<span class="edit-summary-text">${ _strings.edit_pratilipi_summary }</span>
 						</div>
 						<script language="javascript" type="text/javascript">tinymce.init({ selector:'#pratilipiSummary', editor_selector : "pratilipiSummary", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 						<paper-textarea class="edit" id="pratilipiSummary" value="{{ summary::input }}"></paper-textarea>

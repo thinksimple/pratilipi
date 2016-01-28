@@ -37,7 +37,7 @@
 					<img class="media-object" src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
 				</div>
 				<div class="media-body">
-					<h4 style="color: #D0021B;">{{ pratilipi.title }}</h4>
+					<h4 class="pratilipi-red">{{ pratilipi.title }}</h4>
 					<h6>{{ pratilipi.author.name }}</h6>
 					
 					<div style="margin-top: 15px;">
@@ -48,7 +48,7 @@
 				</div>
 			</div>
 			
-			<div style="margin: 25px auto;" on-keyup="onSubmit">
+			<div class="pratilipi-center-div" on-keyup="onSubmit">
 				<paper-input label="${ _strings.review_title }" value="{{ params.reviewTitle::input }}"></paper-input>
 				<paper-textarea label="${ _strings.review_content }" value="{{ params.review::input }}"></paper-textarea>
 			</div>
@@ -65,16 +65,15 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h6 style="margin: 0px; padding: 0px; font-weight: 700;">${ _strings.review_delete_review }</h6>
-						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
+						<h6 class="modal-heading">${ _strings.review_delete_review }</h6>
+						<span class="modal-close-button"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					<div class="modal-body">
 						${ _strings.review_delete_review_confirm }
 					</div>
 					<div class="modal-footer">
-						<button id="deleteReviewButton" style="float: left; outline: none;" class="btn btn-danger" on-click="deleteReview">${ _strings.review_delete_okay }</button>
-						<div style="display: inline-block; min-width: 40px;" ></div>
-						<button style="float: right; outline: none;" class="btn btn-primary" on-click="closeDeleteReview">${ _strings.review_delete_cancel }</button>
+						<button id="deleteReviewButton" class="btn btn-danger pull-left" on-click="deleteReview">${ _strings.review_delete_okay }</button>
+						<button class="btn btn-primary pull-right" on-click="closeDeleteReview">${ _strings.review_delete_cancel }</button>
 					</div>
 				</div>
 			</div>

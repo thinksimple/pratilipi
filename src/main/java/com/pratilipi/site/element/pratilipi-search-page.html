@@ -11,21 +11,22 @@
 				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 				<pratilipi-write></pratilipi-write>
 			</div>
-			<div class="fit" style="margin-top: 5px;">
+			<div class="fit margin-top-bottom">
 				<div class="parent-container">
 					<div class="container">
 						<pratilipi-navigation
 							class='pull-left hidden-xs hidden-sm'
 							></pratilipi-navigation>
-						<pratilipi-card-grid
-							id='SearchResult'
-							heading='${ _strings.search_results }'
-							style='overflow:hidden'
-							pratilipi-list='[[ pratilipiList ]]'
-							search-query='[[ searchQuery ]]'
-							filter='[[ filter ]]'
-							cursor='[[ cursor ]]'
-							></pratilipi-card-grid>
+						<div style="overflow:hidden">
+							<pratilipi-card-grid
+								id='SearchResult'
+								heading='${ _strings.search_results }'
+								pratilipi-list='[[ pratilipiList ]]'
+								search-query='[[ searchQuery ]]'
+								filter='[[ filter ]]'
+								cursor='[[ cursor ]]'
+								></pratilipi-card-grid>
+						</div>
 						<br class="pratilipi-break"/>
 					</div>
 				</div>

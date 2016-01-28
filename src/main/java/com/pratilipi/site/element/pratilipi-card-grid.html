@@ -20,6 +20,14 @@
 			--iron-icon-width: 64px;
 		}
 		
+		paper-spinner.pratilipi-spinner {
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
+		
+		/* Specific to card-grid */
 		.row {
 			margin-right: 0px;
 			margin-left: -10px;
@@ -30,19 +38,12 @@
 			padding-right: 0px;
 		}
 		
-		paper-spinner.pratilipi-spinner {
-			--paper-spinner-layer-1-color: #D0021B;
-			--paper-spinner-layer-2-color: #107FE5;
-			--paper-spinner-layer-3-color: #D0021B;
-			--paper-spinner-layer-4-color: #107FE5;
-		}
-		
 	</style>
 
 	
 	<template>
 		<template is="dom-if" if="{{ heading }}">
-			<div class="secondary-500 pratilipi-shadow" style="color: #D0021B; font-size: 22px; font-weight: 300; padding: 15px; background: #EEEEEE;">{{ heading }}</div>
+			<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading">{{ heading }}</div>
 			<br class="pratilipi-break"/>
 		</template>
 		
@@ -71,7 +72,7 @@
 			</template>
 		</div>
 		<template is="dom-if" if="{{ isLoading }}">
-			<paper-spinner style="margin: 15px auto; display: block;" class="pratilipi-spinner" active></paper-spinner>
+			<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
 		</template>
 		
 		<iron-ajax

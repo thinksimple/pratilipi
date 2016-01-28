@@ -6,12 +6,6 @@
 			display: block;
 		}
 		
-		.popup-heading span {
-			font-size: 14px;
-			color: #333;
-			display: inline-block;
-		}
-		
 		paper-input.edit, paper-textarea.edit {
 			--paper-input-container-focus-color: #107FE5;
 			display: block;
@@ -31,6 +25,8 @@
 		}
 		
 		paper-menu {
+			white-space: nowrap; 
+			width: auto;
 			--paper-menu-color: #333;
 			--paper-menu-focused-item: {
 				color: #107FE5;
@@ -44,8 +40,8 @@
 				<div class="modal-content">
 			
 					<div class="modal-header">
-						<h6 style="margin: 0px; padding: 0px; font-weight: 700;">${ _strings.edit_author_heading }</h6>
-						<span style="float: right; margin-top: -25px; margin-right: -10px;"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
+						<h6 class="modal-heading">${ _strings.edit_author_heading }</h6>
+						<span class="modal-close-button"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
 					</div>
 					
 					<div class="modal-body" on-keyup="onSubmit">
@@ -80,7 +76,7 @@
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<paper-dropdown-menu id="authorLanguage" noink label="${ _strings.edit_author_language }">
-									<paper-menu noink selected="[[ selected ]]" class="dropdown-content" style="white-space: nowrap; width: auto;">
+									<paper-menu noink selected="[[ selected ]]" class="dropdown-content">
 										<paper-item>Bengali</paper-item>
 										<paper-item>Gujarati</paper-item>
 										<paper-item>Hindi</paper-item>
@@ -91,8 +87,8 @@
 								</paper-dropdown-menu>
 							</div>
 						</div>
-						<div style="margin-top: 15px; margin-bottom: 5px;">
-							<span style="font-size: 14px;">${ _strings.edit_author_summary }</span>
+						<div class="margin-top-bottom">
+							<span class="edit-summary-text">${ _strings.edit_author_summary }</span>
 						</div>
 						<script language="javascript" type="text/javascript">tinymce.init({ selector:'#authorSummary', editor_selector : "authorSummary", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 						<paper-textarea class="edit" id="authorSummary" value="{{ summary::input }}"></paper-textarea>

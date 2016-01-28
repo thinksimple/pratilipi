@@ -11,12 +11,10 @@
 			@apply(--layout-center);
 		}
 		
-		paper-card .link {
-			font-size: 16px;
-		}
-		
-		.img-circle {
-			width: 32px;
+		/* Override */
+		.link {
+			font-size: 15px;
+			line-height: 32px;
 		}
 		
 	</style>
@@ -25,21 +23,21 @@
 	<template>
 			<paper-card>
 				<div class="parent-container"> 
-					<div class="row" class="pratilipi-footer">
-						<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7" style="padding: 10px 10px 10px 20px;">
+					<div class="row pratilipi-footer">
+						<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 footer-div">
 							<!-- <a class="pratilipi-light-blue-button">Download App !</a>
 							&nbsp;&nbsp; -->
-							<a class="link" style="line-height: 32px;" href="mailto:contact@pratilipi.com">contact@pratilipi.com</a>
+							<a class="link" href="mailto:contact@pratilipi.com">contact@pratilipi.com</a>
 							&nbsp;&nbsp;
-							<a style="white-space: nowrap;" class="link" href="tel:+919789316700">+91 9789316700</a>
+							<a class="link" href="tel:+919789316700">+91 9789316700</a>
 						</div>
-						<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 10px 10px 10px 20px;">
+						<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 footer-div">
 							${ _strings.footer_follow_us_on_social_media }&nbsp;
-							<div style="white-space: nowrap; display: inline-block;">
-								<a href="${ _strings.facebook_page }"><img class="img-circle" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/FB-fLogo.png" /></a>&nbsp;
-								<a href="${ _strings.twitter_page }"><img class="img-circle" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/TwitterLogo.png" /></a>&nbsp;
-								<a href="${ _strings.googleplus_page }"><img class="img-circle" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/google_plus_64.png" /></a>&nbsp;
-								<a href="${ _strings.linkedin_page }"><img class="img-circle" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/linkedin_64.png" /></a>
+							<div class="footer-icon-holder">
+								<a href="${ _strings.facebook_page }"><img class="img-circle footer-icon" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/FB-fLogo.png" /></a>&nbsp;
+								<a href="${ _strings.twitter_page }"><img class="img-circle footer-icon" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/TwitterLogo.png" /></a>&nbsp;
+								<a href="${ _strings.googleplus_page }"><img class="img-circle footer-icon" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/google_plus_64.png" /></a>&nbsp;
+								<a href="${ _strings.linkedin_page }"><img class="img-circle footer-icon" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/linkedin_64.png" /></a>
 							</div>
 						</div>
 					</div>
@@ -48,16 +46,16 @@
 			
 			<br class="pratilipi-break"/>
 			
-			<div class="parent-container" style="margin-bottom: 10px;">
+			<div class="parent-container margin-top-bottom">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
-						<a style="white-space: nowrap;" class="link" href="/about/pratilipi">${ _strings.footer_about_us }</a>
+						<a class="link" href="/about/pratilipi">${ _strings.footer_about_us }</a>
 						&nbsp;&nbsp;&nbsp;
-						<a style="white-space: nowrap;" class="link" href="/work-with-us">${ _strings.footer_work_with_us }</a>
+						<a class="link" href="/work-with-us">${ _strings.footer_work_with_us }</a>
 						&nbsp;&nbsp;&nbsp;
-						<a style="white-space: nowrap;" class="link" href="/privacy-policy">${ _strings.footer_privacy_policy }</a>
+						<a class="link" href="/privacy-policy">${ _strings.footer_privacy_policy }</a>
 						&nbsp;&nbsp;&nbsp;
-						<a style="white-space: nowrap;" class="link" href="/terms-of-service">${ _strings.footer_terms_of_service }</a>
+						<a class="link" href="/terms-of-service">${ _strings.footer_terms_of_service }</a>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
 						<span class="link">&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</span>
