@@ -119,6 +119,9 @@
 					<a style="color: #107FE5; white-space: nowrap; font-size: 16px;" href="/terms-of-service">terms of service</a>
 					&nbsp;${ _strings.register_part_3 }
 				</p>
+				<div style="text-align: center;">
+	            	<a href="/">${ _strings.back }</a>
+	            </div>
 	        </div>
 	        
 	        <#include "../element/pratilipi-navigation.ftl">

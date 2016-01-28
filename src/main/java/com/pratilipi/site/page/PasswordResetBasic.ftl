@@ -54,7 +54,7 @@
 					},
 					
 					success: function( response ) {
-						alert( "${ _strings.password_reset_request_success }" )
+						alert( "${ _strings.password_reset_request_success }" );
 						window.location.href = "/"; 
 					},
 					
