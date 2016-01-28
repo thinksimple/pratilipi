@@ -189,21 +189,18 @@ public class PratilipiSite extends HttpServlet {
 				
 			} else {
 				dataModel = new HashMap<String, Object>();
-				if( basicMode )
-					templateName = templateFilePrefix + "error/PageNotFoundBasic.ftl";
-				else
-					templateName = templateFilePrefix + "error/PageNotFound.ftl";
+				templateName = templateFilePrefix + ( basicMode ? "error/PageNotFoundBasic.ftl" : "error/PageNotFound.ftl" );
 				response.setStatus( HttpServletResponse.SC_NOT_FOUND );
 			}
 
 		} catch( InsufficientAccessException e ) {
 			dataModel = new HashMap<String, Object>();
-			templateName = templateFilePrefix + "error/AuthorizationError.ftl";
+			templateName = templateFilePrefix + ( basicMode ? "error/AuthorizationErrorBasic.ftl" : "error/AuthorizationError.ftl" );
 			response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
 
 		} catch( InvalidArgumentException | UnexpectedServerException e ) {
 			dataModel = new HashMap<String, Object>();
-			templateName = templateFilePrefix + "error/ServerError.ftl";
+			templateName = templateFilePrefix + ( basicMode ? "error/ServerErrorBasic.ftl" : "error/ServerError.ftl" );
 			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 		}
 
@@ -234,10 +231,7 @@ public class PratilipiSite extends HttpServlet {
 				html = FreeMarkerUtil.processTemplate( dataModel, templateName );
 			} catch( UnexpectedServerException e ) {
 				logger.log( Level.SEVERE, "Exception occured while processing template.", e );
-				if( basicMode )
-					templateName = templateFilePrefix + "error/ServerErrorBasic.ftl";
-				else
-					templateName = templateFilePrefix + "error/ServerError.ftl";
+				templateName = templateFilePrefix + ( basicMode ? "error/ServerErrorBasic.ftl" : "error/ServerError.ftl" );
 			}
 		}
 		
