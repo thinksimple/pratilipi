@@ -234,7 +234,10 @@ public class PratilipiSite extends HttpServlet {
 				html = FreeMarkerUtil.processTemplate( dataModel, templateName );
 			} catch( UnexpectedServerException e ) {
 				logger.log( Level.SEVERE, "Exception occured while processing template.", e );
-				templateName = templateFilePrefix + "error/ServerError.ftl";
+				if( basicMode )
+					templateName = templateFilePrefix + "error/ServerErrorBasic.ftl";
+				else
+					templateName = templateFilePrefix + "error/ServerError.ftl";
 			}
 		}
 		
