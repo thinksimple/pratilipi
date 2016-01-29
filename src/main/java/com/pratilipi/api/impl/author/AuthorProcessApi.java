@@ -20,6 +20,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -91,6 +92,42 @@ public class AuthorProcessApi extends GenericApi {
 			validateAuthorData( request.getAuthorId() );
 		
 		if( request.processData() ) {
+
+			
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			Author author = dataAccessor.getAuthor( request.getAuthorId() );
+			
+			// If Author email is set to null, set its value back from linked User entity.
+			if( author.getUserId() != null && author.getEmail() == null ) {
+				User user = dataAccessor.getUser( author.getUserId() );
+				if( user.getEmail() != null ) {
+					author.setEmail( user.getEmail() );
+					author = dataAccessor.createOrUpdateAuthor( author );
+				}
+			// If no User entity is linked and a User entity exist with the same email id, unset the email in Author entity.
+			} else if( author.getUserId() == null && author.getEmail() != null ) {
+				User user = dataAccessor.getUserByEmail( author.getEmail() );
+				if( user != null ) {
+					author.setEmail( null );
+					author = dataAccessor.createOrUpdateAuthor( author );
+				}
+			// If Author email is same as some other user's email, revert it else update it to linked User entity.
+			} else if( author.getUserId() != null && author.getEmail() != null ) {
+				User user = dataAccessor.getUser( author.getUserId() );
+				User user2 = dataAccessor.getUserByEmail( author.getEmail() );
+				// Update email in User entity.
+				if( user2 == null ) {
+					user.setEmail( author.getEmail() );
+					if( user.getState() == UserState.ACTIVE )
+						user.setState( UserState.REGISTERED );
+					user = dataAccessor.createOrUpdateUser( user );
+				// Revert email
+				} else if( user2 != null && ! user2.getId().equals( author.getUserId() ) ) {
+					author.setEmail( user.getEmail() );
+					author = dataAccessor.createOrUpdateAuthor( author );
+				}
+			}
+			
 			boolean changed = AuthorDataUtil.createOrUpdateAuthorPageUrl( request.getAuthorId() );
 //			AuthorDataUtil.createOrUpdateAuthorDashboardPageUrl( request.getAuthorId() );
 			if( changed ) {
@@ -98,6 +135,7 @@ public class AuthorProcessApi extends GenericApi {
 			}
 			AuthorDataUtil.updateAuthorSearchIndex( request.getAuthorId() );
 			PratilipiDataUtil.updatePratilipiSearchIndex( null, request.getAuthorId() );
+			
 		}
 		
 		if( request.processImage() ) { }
