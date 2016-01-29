@@ -157,12 +157,6 @@ public class AuthorProcessApi extends GenericApi {
 		Page page = dataAccessor.getPage( PageType.AUTHOR, authorId );
 
 		
-		if( author.getLastUpdated() == null ) {
-			author.setLastUpdated( author.getRegistrationDate() );
-			author = dataAccessor.createOrUpdateAuthor( author );
-		}
-
-		
 		// Must have a page entity linked.
 		if( page == null )
 			throw new InvalidArgumentException( "Page entity is missing." );
