@@ -24,7 +24,6 @@
 	<!-- Create language specific copies of Site Elements -->
 	<target name="i18n">
 		<java fork="true" failonerror="yes" classname="com.pratilipi.common.util.SiteElementUtil">
-			<arg line="${src.dir}/com/pratilipi/site/i18n/language."/>
 			<arg line="${src.dir}/com/pratilipi/site/element"/>
 			<arg line="${src.dir}/com/pratilipi/site/element/data"/>
 			<arg line="com.pratilipi.site.element.data"/>
