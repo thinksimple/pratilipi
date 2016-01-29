@@ -189,17 +189,20 @@ public class PratilipiSite extends HttpServlet {
 				
 			} else {
 				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Page Not Found !" );
 				templateName = templateFilePrefix + ( basicMode ? "error/PageNotFoundBasic.ftl" : "error/PageNotFound.ftl" );
 				response.setStatus( HttpServletResponse.SC_NOT_FOUND );
 			}
 
 		} catch( InsufficientAccessException e ) {
 			dataModel = new HashMap<String, Object>();
+			dataModel.put( "title", "Unauthorized Access !" );
 			templateName = templateFilePrefix + ( basicMode ? "error/AuthorizationErrorBasic.ftl" : "error/AuthorizationError.ftl" );
 			response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
 
 		} catch( InvalidArgumentException | UnexpectedServerException e ) {
 			dataModel = new HashMap<String, Object>();
+			dataModel.put( "title", "Server Error !" );
 			templateName = templateFilePrefix + ( basicMode ? "error/ServerErrorBasic.ftl" : "error/ServerError.ftl" );
 			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 		}
