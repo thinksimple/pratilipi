@@ -36,7 +36,6 @@ import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
-import com.pratilipi.common.util.LanguageUtil;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.data.DataAccessor;
@@ -54,6 +53,7 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
 import com.pratilipi.filter.UxModeFilter;
+import com.pratilipi.i18n.I18n;
 
 @SuppressWarnings("serial")
 public class PratilipiSite extends HttpServlet {
@@ -63,7 +63,6 @@ public class PratilipiSite extends HttpServlet {
 
 	private static final String templateFilePrefix = "com/pratilipi/site/page/";
 	private static final String dataFilePrefix = "page/data/";
-	private static final String languageFilePrefix = "WEB-INF/classes/com/pratilipi/site/i18n/language.";
 	
 	
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) 
@@ -213,9 +212,7 @@ public class PratilipiSite extends HttpServlet {
 		GenericUserResponse userResponse = new GenericUserResponse( userData );
 		
 		dataModel.put( "lang", displayLanguage.getCode() );
-		dataModel.put( "_strings", LanguageUtil.getStrings(
-				languageFilePrefix + displayLanguage.getCode(),
-				languageFilePrefix + Language.ENGLISH.getCode() ) );
+		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
 		dataModel.put( "resourceList", resourceList );
 		dataModel.put( "userId", userData.getId() );
 		dataModel.put( "user", userResponse );

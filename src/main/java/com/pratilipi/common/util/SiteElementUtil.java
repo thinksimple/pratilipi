@@ -14,6 +14,7 @@ import org.apache.commons.io.LineIterator;
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.i18n.I18n;
 
 public class SiteElementUtil {
 
@@ -24,11 +25,10 @@ public class SiteElementUtil {
 			UnexpectedServerException, URISyntaxException,
 			ClassNotFoundException {
 
-		String languageFilePrefix = args[0];
-		String elementFolderName = args[1];
-		String elementDataFolder = args[2];
-		String elementDataModelPackage = args[3];
-		String i18nElementFolderNamePrefix = args[4];
+		String elementFolderName = args[0];
+		String elementDataFolder = args[1];
+		String elementDataModelPackage = args[2];
+		String i18nElementFolderNamePrefix = args[3];
 		
 		
 		for( Language language : Language.values() ) {
@@ -47,7 +47,7 @@ public class SiteElementUtil {
 				dataModel.put( "language", language );
 				dataModel.put( "domain", language.getHostName() );
 				dataModel.put( "fbAppId", "293990794105516" );
-				dataModel.put( "_strings", LanguageUtil.getStrings( languageFilePrefix + language.getCode(), languageFilePrefix + defaultLang ) );
+				dataModel.put( "_strings", I18n.getStrings( language ) );
 				dataModel.put( "data", getElementData( elementName, language.getCode(), elementDataFolder, elementDataModelPackage ) );
 
 				// I18n element file output stream
