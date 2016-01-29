@@ -207,8 +207,18 @@ public class AuthorDataUtil {
 		Author author = dataAccessor.getAuthorByUserId( userData.getId() );
 		if( author != null && author.getState() != AuthorState.DELETED )
 			return author.getId();
-		else
-			author = dataAccessor.newAuthor();
+		
+		if( userData.getEmail() != null ) {
+			author = dataAccessor.getAuthorByEmailId( userData.getEmail() );
+			if( author != null && author.getState() != AuthorState.DELETED && author.getUserId() == null ) {
+				author.setUserId( userData.getId() );
+				author = dataAccessor.createOrUpdateAuthor( author );
+				return author.getId();
+			}
+		}
+
+		
+		author = dataAccessor.newAuthor();
 		
 		
 		Gson gson = new Gson();
