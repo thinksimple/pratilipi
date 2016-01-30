@@ -28,7 +28,7 @@
 										<p>Sorry! We can't allow you to view this page.</p>
 										<p>You can still search for your favorite content in the search bar on top<br>
 											or head over to the home page.</p> <br>
-										<a class="pratilipi-light-blue-button" href="http://tamil.pratilipi.com">Home</a>
+										<a class="pratilipi-light-blue-button" href="/">Home</a>
 					    			</div>
 								</div>
 							</paper-card>

@@ -48,14 +48,12 @@
 					</div>
 					
 				  	<div class="media-body">
-				  		<div class="contain-title">
-				  		 	<h4 class="ellipsed" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}"><a class="pratilipi-card-heading" href="{{ pratilipi.pageUrl }}">{{ title }}</a></h4>
+				  		<div class="contain-title ellipsed pratilipi-red" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">
+				  		 	<a class="pratilipi-card-heading pratilipi-red" href="{{ pratilipi.pageUrl }}">{{ title }}</a>
 						</div>
 						
 						<template is="dom-if" if="{{ !draftsActive }}">
-							<h6>
-								<a class="pratilipi-card-author" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a>
-							</h6>
+							<h6><a class="pratilipi-card-author" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a></h6>
 						</template>
 						
 						<pratilipi-rating value="{{ pratilipi.averageRating }}">

@@ -367,18 +367,21 @@ a.pratilipi-orange-button:hover, a.pratilipi-orange-button:focus {
 	padding: 10px;
 }
 
+.contain-title {
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
 .ellipsed, .ellipsed:hover, .ellipsed:focus {
 	text-align: left;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
-	color: #D0021B;
 }
 
 .pratilipi-card-heading, .pratilipi-card-heading:hover, .pratilipi-card-heading:focus {
 	font-size: 16px;
-	line-height: 18px;
-	color: #D0021B;
+	color: inherit;
 }
 
 .pratilipi-card-author, .pratilipi-card-author:hover, .pratilipi-card-author:focus {

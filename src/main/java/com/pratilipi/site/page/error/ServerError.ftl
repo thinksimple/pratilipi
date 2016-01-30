@@ -28,7 +28,7 @@
 										<p>Sorry! Looks like something is wrong with our server.</p>
 										<p>Please try again after a few minutes, or use the search bar to find<br>
 										great content, or just head over to the Pratilipi homePage.</p> <br>
-										<a class="pratilipi-light-blue-button" href="http://tamil.pratilipi.com">Home</a>
+										<a class="pratilipi-light-blue-button" href="/">Home</a>
 					    			</div>
 								</div>
 							</paper-card>
