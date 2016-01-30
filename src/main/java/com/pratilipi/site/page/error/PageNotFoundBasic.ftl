@@ -5,12 +5,12 @@
 		<#-- Page Description -->
 		<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 		
-		<#include "meta/HeadBasic.ftl">
+		<#include "../meta/HeadBasic.ftl">
 	</head>
 
 	<body>
 		<div class="container">
-			<#include "../element/pratilipi-header.ftl">
+			<#include "../../element/pratilipi-header.ftl">
 
 			<div class="box">
 				<div class="media" style="padding: 20px;">
@@ -29,8 +29,8 @@
 				</div>
 			</div>
 			
-			<#include "../element/pratilipi-navigation.ftl">
-			<#include "../element/pratilipi-footer.ftl">
+			<#include "../../element/pratilipi-navigation.ftl">
+			<#include "../../element/pratilipi-footer.ftl">
 		</div>
 	</body>
 	
