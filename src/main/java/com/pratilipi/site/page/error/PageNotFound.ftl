@@ -13,7 +13,7 @@
 					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
 					<pratilipi-header user='[[ user ]]'></pratilipi-header>
 					<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
-					<pratilipi-write></pratilipi-write>
+					<pratilipi-write pratilipi-types='${ pratilipiTypesJson }'></pratilipi-write>
 				</div>
 				<div class="fit" style="margin-top: 5px;">
 					<div class="parent-container">

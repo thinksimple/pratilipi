@@ -65,13 +65,13 @@
 						<paper-input class="write" label="${ _strings.write_title_en }" value="{{ titleEn::input }}"></paper-input>
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<paper-dropdown-menu noink="true" label="${ _strings.write_type }" value="{{ pratilipiType }}">
-									<paper-menu noink="true" class="dropdown-content" style="white-space: nowrap; width: auto;">
-										<paper-item>Book</paper-item>
-										<paper-item>Poem</paper-item>
-										<paper-item>Story</paper-item>
-										<paper-item>Article</paper-item>
-										<paper-item>Magazine</paper-item>
+								<paper-dropdown-menu id="selectPratilipiType" noink label="${ _strings.write_type }" value="{{ pratilipiType }}">
+									<paper-menu noink class="dropdown-content" style="white-space: nowrap; width: auto;">
+										<paper-item value="BOOK">{{ pratilipiTypes.BOOK.name }}</paper-item>
+										<paper-item value="POEM">{{ pratilipiTypes.POEM.name }}</paper-item>
+										<paper-item value="STORY">{{ pratilipiTypes.STORY.name }}</paper-item>
+										<paper-item value="ARTICLE">{{ pratilipiTypes.ARTICLE.name }}</paper-item>
+										<paper-item value="MAGAZINE">{{ pratilipiTypes.MAGAZINE.name }}</paper-item>
 									</paper-menu>
 								</paper-dropdown-menu>
 							</div>
@@ -137,9 +137,14 @@
  				summary: { type: String, value: "" },
  				
  				pratilipiType: { type: String },
+ 				pratilipiTypes: { types: Object },
  				language: { type: String },
  				
  				message: { type: String }
+			},
+			
+			attached: function() {
+				this.pratilipiTypes = jQuery.parseJSON( this.pratilipiTypes );
 			},
 			
 			setAuthorId: function( authorId ) {
@@ -182,10 +187,11 @@
 					this.message = "Please select the type.";
 					return;
 				}
-				
+
 				if( tinyMCE.activeEditor != null )
 					this.summary = tinyMCE.get( 'writeSummary' ).getContent();
 				
+				this.pratilipiType = this.$.selectPratilipiType.selectedItem.getAttribute( "value" );
 				this.language = this.$.language.selectedItemLabel.toUpperCase();
 				
 				this.message = "Please Wait...";

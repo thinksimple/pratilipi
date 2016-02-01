@@ -10,7 +10,7 @@
 				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 				<pratilipi-header user='[[ user ]]'></pratilipi-header>
 				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
-				<pratilipi-write></pratilipi-write>
+				<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
 			</div>
 			<div class="fit margin-top-bottom">
 				<div class="parent-container">
@@ -22,6 +22,7 @@
 							<pratilipi-pratilipi
 									pratilipi='{{ pratilipi }}'
 									pratilipi-data='[[ pratilipiData ]]'
+									pratilipi-types='[[ pratilipiTypes ]]'
 									></pratilipi-pratilipi>
 							<div style="min-height: 5px;"></div>
 							<pratilipi-userpratilipi
@@ -68,7 +69,8 @@
 				userpratilipiData: { type: Object },
 				
 				reviewList: { type: Array },
-				cursor: { type: String }
+				cursor: { type: String },
+				pratilipiTypes: { types: Object }
 			},
 			
 			_userChanged: function() {

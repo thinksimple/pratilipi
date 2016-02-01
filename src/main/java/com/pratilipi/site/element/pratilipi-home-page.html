@@ -9,7 +9,7 @@
 				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 				<pratilipi-header user='[[ user ]]'></pratilipi-header>
 				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
-				<pratilipi-write></pratilipi-write>
+				<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
 			</div>
 			<div class="fit margin-top-bottom">
 				<div class="parent-container">
@@ -43,7 +43,8 @@
 
 			properties: {
 				userData: { type: Object },
-				sectionsList: { type: Array }
+				sectionsList: { type: Array },
+				pratilipiTypes: { types: Object }
 			}
 			
 		});

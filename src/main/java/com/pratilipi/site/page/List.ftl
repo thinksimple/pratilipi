@@ -12,7 +12,8 @@
 			heading='${ title }'
 			pratilipi-list='${ pratilipiListJson }'
 			filter='${ pratilipiListFilterJson! }'
-			cursor='${ pratilipiListCursor! }'></pratilipi-list-page>
+			cursor='${ pratilipiListCursor! }'
+			pratilipi-types='${ pratilipiTypesJson }'></pratilipi-list-page>
 	</body>
 
 </html>

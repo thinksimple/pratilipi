@@ -116,7 +116,7 @@
 							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
 					</pratilipi-rating>
 					
-					<h6 style="margin-top: 10px;">{{ type }}</h6>
+					<h6 style="margin-top: 10px; font-weight: bold;">{{ type }}</h6>
 					
 					<table style="margin-top: 10px; margin-bottom: 5px;">
 						<tr> <th>${ _strings.pratilipi_listing_date } :</th> 	<td>{{ listingDate }}</td> </tr>
@@ -212,10 +212,6 @@
 			return [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ');
 		}
 	
-		function capitalizeFirstLetter( string ) {
-			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
-		}
-	
 		Polymer({
 
 			is: 'pratilipi-pratilipi',
@@ -231,6 +227,7 @@
 			properties: {
 				pratilipi: { type:Object, notify: true },
 				pratilipiData: { type: Object },
+				pratilipiTypes: { types: Object },
 				
 				mobile: { type: Boolean },
 				imageUploaded: { type: Boolean, value: false }
@@ -294,7 +291,7 @@
 				else
 					this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "&" + "width=150";
 				
-				this.type = capitalizeFirstLetter( pratilipi.type );
+				this.type = this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name;
 				this.listingDate = convertDate( pratilipi.listingDateMillis );
 				if( pratilipi.state == "DRAFTED" )
 					this.changeState = "${ _strings.pratilipi_publish_it }";
@@ -306,6 +303,7 @@
 			},
 			
 			attached: function() {
+				this.pratilipiTypes = jQuery.parseJSON( this.pratilipiTypes );
 				this.updatePratilipi( this.pratilipiData );
 			},
 			

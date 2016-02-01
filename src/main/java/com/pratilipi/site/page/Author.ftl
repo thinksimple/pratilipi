@@ -12,7 +12,8 @@
 			author-data='${ authorJson }'
 			pratilipi-list='${ publishedPratilipiListJson }'
 			filter='${ publishedPratilipiListFilterJson! }'
-			cursor='${ publishedPratilipiListCursor! }'></pratilipi-author-page>
+			cursor='${ publishedPratilipiListCursor! }'
+			pratilipi-types='${ pratilipiTypesJson }'></pratilipi-author-page>
 	</body>
 	
 </html>

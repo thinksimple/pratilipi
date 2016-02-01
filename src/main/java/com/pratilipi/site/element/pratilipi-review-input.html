@@ -1,5 +1,4 @@
 <link rel="import" href="pratilipi-rating-input.html">
-<link rel="import" href="pratilipi-review.html">
 
 <dom-module id="pratilipi-review-input">
 
@@ -126,7 +125,7 @@
 				
 				this.set( 'params', this.userpratilipi );
 
-				if( this.userpratilipi.rating != null )
+				if( this.userpratilipi != null && this.userpratilipi.rating != null )
 					this.querySelector( 'pratilipi-rating-input' ).setRating( this.userpratilipi.rating );
 				else
 					this.querySelector( 'pratilipi-rating-input' ).setRating( 0 );

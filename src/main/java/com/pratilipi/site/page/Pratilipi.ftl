@@ -14,7 +14,8 @@
 				userpratilipi-data='${ userpratilipiJson! }'
 				
 				review-list='${ reviewListJson }'
-				cursor='${ reviewListCursor! }'></pratilipi-pratilipi-page>
+				cursor='${ reviewListCursor! }'
+				pratilipi-types='${ pratilipiTypesJson }'></pratilipi-pratilipi-page>
 	</body>
 	
 </html>

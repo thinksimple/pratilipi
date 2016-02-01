@@ -12,6 +12,7 @@
 			pratilipi-list='${ pratilipiListJson }'
 			search-query='${ pratilipiListSearchQuery! }'
 			filter='${ pratilipiListFilterJson }'
-			cursor='${ pratilipiListCursor! }'></pratilipi-search-page>
+			cursor='${ pratilipiListCursor! }'
+			pratilipi-types='${ pratilipiTypesJson }'></pratilipi-search-page>
 	</body>
 </html>
