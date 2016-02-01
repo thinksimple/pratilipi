@@ -20,10 +20,21 @@ public enum PratilipiType {
 	}
 	
 	
+	public String getStringId() {
+		return "_pratilipi_type_" + name.toLowerCase();
+	}
+	
+	public String getPluralStringId() {
+		return "_pratilipi_type_" + namePlural.toLowerCase();
+	}
+
+	
+	@Deprecated
 	public String getName() {
 		return name;
 	}
 	
+	@Deprecated
 	public String getNamePlural() {
 		return namePlural;
 	}

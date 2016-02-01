@@ -29,7 +29,6 @@ public class I18n {
 		if( strings == null ) {
 			strings = language == Language.ENGLISH ? new HashMap<String, String>() : getStrings( Language.ENGLISH );
 			try {
-				System.out.println( I18n.class.getResource( "language.en" ) );
 				File langFile = new File( I18n.class.getResource( "language." + language.getCode() ).toURI() );
 				LineIterator it = FileUtils.lineIterator( langFile, "UTF-8" );
 				while( it.hasNext() ) {
