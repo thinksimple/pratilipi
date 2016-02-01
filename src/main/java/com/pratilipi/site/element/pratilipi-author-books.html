@@ -37,29 +37,29 @@
 		
 		<br class="pratilipi-break" />
 		
-		<template is="dom-if" if="{{ draftsActive }}">
+		<template is="dom-if" if="[[ draftsActive ]]">
 			<pratilipi-card-grid
 			id='draftedBooksByAuthor'
-			author-id='{{ author.authorId }}'
+			author-id='[[ author.authorId ]]'
 			include-add-card="true"
-			drafts-active="{{ draftsActive }}"
-			published-active="{{ publishedActive }}"
-			pratilipi-list='{{ draftedList }}'
+			drafts-active="[[ draftsActive ]]"
+			published-active="[[ publishedActive ]]"
+			pratilipi-list='[[ draftedList ]]'
 			></pratilipi-card-grid>
 		</template>
 		
-		<template is="dom-if" if="{{ publishedActive }}">
+		<template is="dom-if" if="[[ publishedActive ]]">
 			<pratilipi-card-grid
 			id='publishedBooksByAuthor'
-			author-id='{{ author.authorId }}'
+			author-id='[[ author.authorId ]]'
 			include-add-card="true"
-			drafts-active="{{ draftsActive }}"
-			published-active="{{ publishedActive }}"
-			pratilipi-list='{{ publishedList }}'
+			drafts-active="[[ draftsActive ]]"
+			published-active="[[ publishedActive ]]"
+			pratilipi-list='[[ publishedList ]]'
 			></pratilipi-card-grid>
 		</template>
 		
-		<template is="dom-if" if="{{ _checkSpinner }}">
+		<template is="dom-if" if="[[ _checkSpinner ]]">
 			<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>	
 		</template>
 		
@@ -129,11 +129,13 @@
 			addToDraftedList: function( draftedContent ) {
 				this.unshift( 'draftedList', draftedContent );
 				this.$.draftedBooksByAuthor.render();
+				window.dispatchEvent( new Event( 'resize' ) );
 			},
 			
 			addToPublishedList: function( publishedContent ) {
 				this.unshift( 'publishedList', publishedContent );
 				this.$.publishedBooksByAuthor.render();
+				window.dispatchEvent( new Event( 'resize' ) );
 			},
 			
 			removeFromDraftedList: function( draftedContent ) {
@@ -149,6 +151,7 @@
 					this.splice( 'draftedList', index, 1 );
 				
 				this.$.draftedBooksByAuthor.render();
+				window.dispatchEvent( new Event( 'resize' ) );
 
 			},
 			
@@ -165,6 +168,7 @@
 					this.splice( 'publishedList', index, 1 );
 				
 				this.$.publishedBooksByAuthor.render();
+				window.dispatchEvent( new Event( 'resize' ) );
 					
 			},
 			
