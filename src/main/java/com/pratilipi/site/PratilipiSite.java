@@ -255,6 +255,15 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	
+	private String createPageTitle( String contentTitle, String contentTitleEn, Language lang ) {
+		return ( contentTitle == null ? "" : contentTitle + " - " )
+				+ I18n.getString( "pratilipi", lang )
+				+ " | "
+				+ ( contentTitleEn == null ? "" : contentTitleEn + " - " )
+				+ I18n.getString( "pratilipi", Language.ENGLISH );
+	}
+	
+	
 	private String createAuthorPageTitle( AuthorData authorData ) {
 		if( authorData == null )
 			return null;
@@ -291,7 +300,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	
-	private String createListPageTitle( String listName, Language lang ) {
+	private String getListTitle( String listName, Language lang ) {
 		String listTitle = null;
 		try {
 			String fileName = "list." + lang.getCode() + "." + listName;
@@ -355,7 +364,7 @@ public class PratilipiSite extends HttpServlet {
 		
 		for( String listName : listNames ) {
 			
-			String title = createListPageTitle( listName, lang );
+			String title = getListTitle( listName, lang );
 			if( title == null )
 				continue;
 			
@@ -460,9 +469,9 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "reviewListPageCurr", reviewPageCurr );
 				if( pratilipi.getReviewCount() != 0 )
 					dataModel.put( "reviewListPageMax", (int) Math.ceil( ( (double) pratilipi.getReviewCount() ) / reviewPageSize ) );
-				dataModel.put( "reviewParam", request.getParameter( RequestParameter.PRATILIPI_REVIEW.getName() ) );
+				dataModel.put( "reviewParam", reviewParam );
 			} else if( reviewParam.trim().equals( "write" ) ) {
-				dataModel.put( "reviewParam", request.getParameter( RequestParameter.PRATILIPI_REVIEW.getName() ) );
+				dataModel.put( "reviewParam", reviewParam );
 			}
 		} else {
 			DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
@@ -557,12 +566,28 @@ public class PratilipiSite extends HttpServlet {
 			boolean basicMode, Language lang, HttpServletRequest request )
 			throws InsufficientAccessException {
 
-		String title = listName == null
-				? I18n.getString( type.getPluralStringId(), lang )
-				: createListPageTitle( listName, lang );
-		if( title == null )
-			return null;
-			
+		String listTitle = null;
+		String listTitleEn = null;
+
+		if( listName == null ) {
+			listTitle = I18n.getString( type.getPluralStringId(), lang );
+			listTitleEn = I18n.getString( type.getPluralStringId(), Language.ENGLISH );
+		} else {
+			String title = getListTitle( listName, lang );
+			if( title == null )
+				return null;
+			if( title.indexOf( '|' ) == -1 ) {
+				listTitle = title.trim();
+				listTitleEn = null;
+			} else {
+				listTitle = title.substring( 0, title.indexOf( '|' ) ).trim();
+				listTitleEn = title.substring( title.indexOf( '|' ) + 1 ).trim();
+			}
+		}
+		
+		String title = createPageTitle( listTitle, listTitleEn, lang );
+		
+		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( lang );
 		pratilipiFilter.setType( type );
@@ -581,16 +606,17 @@ public class PratilipiSite extends HttpServlet {
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, ( pageCurr - 1 ) * pageSize, pageSize );
 
-		Gson gson = new Gson();
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", title );
+		dataModel.put( "pratilipiListTitle", listTitle );
 		if( basicMode ) {
 			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
 			if( pratilipiDataListCursorTuple.getNumberFound() != null )
 				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) pratilipiDataListCursorTuple.getNumberFound() ) / pageSize ) );
 		} else {
+			Gson gson = new Gson();
 			dataModel.put( "pratilipiListJson", gson.toJson( toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
 			dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
 			dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );

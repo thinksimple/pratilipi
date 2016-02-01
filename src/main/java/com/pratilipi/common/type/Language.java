@@ -28,6 +28,10 @@ public enum Language {
 	}
 	
 	
+	public String getStringId() {
+		return "_language_" + code;
+	}
+	
 	public String getCode() {
 		return code;
 	}
