@@ -528,7 +528,7 @@ public class PratilipiSite extends HttpServlet {
 			throws InsufficientAccessException {
 
 		String title = listName == null
-				? type.getNamePlural()
+				? I18n.getString( type.getPluralStringId(), lang )
 				: createListPageTitle( listName, lang );
 		if( title == null )
 			return null;
