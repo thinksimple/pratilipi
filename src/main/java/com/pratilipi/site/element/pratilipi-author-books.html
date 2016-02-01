@@ -128,10 +128,12 @@
 			
 			addToDraftedList: function( draftedContent ) {
 				this.unshift( 'draftedList', draftedContent );
+				this.$.draftedBooksByAuthor.render();
 			},
 			
 			addToPublishedList: function( publishedContent ) {
 				this.unshift( 'publishedList', publishedContent );
+				this.$.publishedBooksByAuthor.render();
 			},
 			
 			removeFromDraftedList: function( draftedContent ) {
@@ -145,6 +147,8 @@
 				
 				if( index != -1 )
 					this.splice( 'draftedList', index, 1 );
+				
+				this.$.draftedBooksByAuthor.render();
 
 			},
 			
@@ -159,6 +163,8 @@
 
 				if( index != -1 )
 					this.splice( 'publishedList', index, 1 );
+				
+				this.$.publishedBooksByAuthor.render();
 					
 			},
 			
