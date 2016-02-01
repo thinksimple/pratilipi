@@ -458,7 +458,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public DataListCursorTuple<UserPratilipi> getPratilipiReviewList(
-			Long pratilipiId, String cursor, Integer resultCount ) {
+			Long pratilipiId, String cursor, Integer offset, Integer resultCount ) {
 
 		List<UserPratilipi> userPratilipiList = new LinkedList<>();
 

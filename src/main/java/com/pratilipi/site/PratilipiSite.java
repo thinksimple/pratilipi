@@ -215,7 +215,7 @@ public class PratilipiSite extends HttpServlet {
 		for( PratilipiType pratilipiType : PratilipiType.values() ) {
 			Map<String, String> pratilipiTypeMap = new HashMap<>();
 			pratilipiTypeMap.put( "name", I18n.getString( pratilipiType.getStringId(), displayLanguage ) );
-			pratilipiTypeMap.put( "namePlural", I18n.getString( pratilipiType.getStringId(), displayLanguage ) );
+			pratilipiTypeMap.put( "namePlural", I18n.getString( pratilipiType.getPluralStringId(), displayLanguage ) );
 			pratilipiTypes.put( pratilipiType, pratilipiTypeMap );
 		}
 		
@@ -431,27 +431,46 @@ public class PratilipiSite extends HttpServlet {
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
-		
+
 		GenericPratilipiResponse pratilipiResponse =
 				gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class );
 		GenericUserPratilipiResponse userPratilipiResponse =
 				gson.fromJson( gson.toJson( userPratilipiData ), GenericUserPratilipiResponse.class );
 		
-		DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
-				UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, basicMode ? 40 : 20 );
-		
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createPratilipiPageTitle( pratilipiData ) );
 		if( basicMode ) {
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "userpratilipi", userPratilipiResponse );
-			dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
-			dataModel.put( "reviewParam", request.getParameter( RequestParameter.PRATILIPI_REVIEW.getName() ) );
+			String reviewParam = request.getParameter( RequestParameter.PRATILIPI_REVIEW.getName() );
+			if( reviewParam == null || reviewParam.trim().isEmpty() ) {
+				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
+						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 10 );
+				dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
+			} else if( reviewParam.trim().equals( "list" ) ) {
+				int reviewPageCurr = 1;
+				int reviewPageSize = 20;
+				String pageNoStr = request.getParameter( RequestParameter.PAGE_NUMBER.getName() );
+				if( pageNoStr != null && ! pageNoStr.trim().isEmpty() )
+					reviewPageCurr = Integer.parseInt( pageNoStr );
+				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
+						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, ( reviewPageCurr - 1 ) * reviewPageSize, reviewPageSize );
+				dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
+				dataModel.put( "reviewListPageCurr", reviewPageCurr );
+				if( pratilipi.getReviewCount() != 0 )
+					dataModel.put( "reviewListPageMax", (int) Math.ceil( ( (double) pratilipi.getReviewCount() ) / reviewPageSize ) );
+				dataModel.put( "reviewParam", request.getParameter( RequestParameter.PRATILIPI_REVIEW.getName() ) );
+			} else if( reviewParam.trim().equals( "write" ) ) {
+				dataModel.put( "reviewParam", request.getParameter( RequestParameter.PRATILIPI_REVIEW.getName() ) );
+			}
 		} else {
-			dataModel.put( "pratilipi", pratilipiData );
+			DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
+					UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 20 );
+			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
 			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
-			dataModel.put( "reviewListJson", gson.toJson( reviewListCursorTuple.getDataList() ).toString() );
+			dataModel.put( "reviewListJson", gson.toJson( reviewListCursorTuple.getDataList() ) );
 			dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
 		}
 		return dataModel;

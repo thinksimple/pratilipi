@@ -478,7 +478,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			gaeQueryBuilder.setCursor( cursorStr );
 			
 			if( offset != null && resultCount != null )
-				gaeQueryBuilder.setRange( offset, resultCount );
+				gaeQueryBuilder.setRange( offset, offset + resultCount );
 			else if( resultCount != null )
 				gaeQueryBuilder.setRange( 0, resultCount );
 				
@@ -700,7 +700,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public DataListCursorTuple<UserPratilipi> getPratilipiReviewList(
-			Long pratilipiId, String cursorStr, Integer resultCount ) {
+			Long pratilipiId, String cursorStr, Integer offset, Integer resultCount ) {
 		
 		GaeQueryBuilder queryBuilder =
 				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) )
@@ -710,7 +710,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		if( cursorStr != null )
 			queryBuilder.setCursor( cursorStr );
-		if( resultCount != null )
+		
+		if( offset != null && resultCount != null )
+			queryBuilder.setRange( offset, offset + resultCount );
+		else if( resultCount != null )
 			queryBuilder.setRange( 0, resultCount );
 		
 		Query query = queryBuilder.build();

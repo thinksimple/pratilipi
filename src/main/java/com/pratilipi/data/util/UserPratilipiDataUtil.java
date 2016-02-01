@@ -102,10 +102,17 @@ public class UserPratilipiDataUtil {
 	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList(
 			Long pratilipiId, String cursor, Integer resultCount ) {
 		
+		return getPratilipiReviewList( pratilipiId, cursor, null, resultCount );
+		
+	}
+	
+	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList(
+			Long pratilipiId, String cursor, Integer offset, Integer resultCount ) {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		DataListCursorTuple<UserPratilipi> userPratilipiListCursorTuple =
-				dataAccessor.getPratilipiReviewList( pratilipiId, cursor, resultCount );
+				dataAccessor.getPratilipiReviewList( pratilipiId, cursor, offset, resultCount );
 		List<UserPratilipi> userPratilipiList = userPratilipiListCursorTuple.getDataList();
 		
 		return new DataListCursorTuple<UserPratilipiData>(

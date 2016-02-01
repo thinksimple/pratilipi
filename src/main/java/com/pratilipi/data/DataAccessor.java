@@ -90,7 +90,7 @@ public interface DataAccessor {
 	// USER_PRATILIPI Table
 	UserPratilipi newUserPratilipi();
 	UserPratilipi getUserPratilipi( Long userId, Long pratilipiId );
-	DataListCursorTuple<UserPratilipi> getPratilipiReviewList( Long pratilipiId, String cursor, Integer resultCount );
+	DataListCursorTuple<UserPratilipi> getPratilipiReviewList( Long pratilipiId, String cursor, Integer offset, Integer resultCount );
 	DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursor, Integer resultCount );
 	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
 	
