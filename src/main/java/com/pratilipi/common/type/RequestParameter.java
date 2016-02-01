@@ -4,7 +4,8 @@ public enum RequestParameter {
 	
 	ACCESS_TOKEN ( "accessToken" ),
 	PAGE_NUMBER( "page" ),
-	SEARCH_QUERY( "q" )
+	SEARCH_QUERY( "q" ),
+	PRATILIPI_REVIEW( "review" )
 	;
 	
 	

@@ -210,6 +210,14 @@ public class PratilipiSite extends HttpServlet {
 		// Adding common data to the Data Model
 		UserData userData = UserDataUtil.getCurrentUser();
 		GenericUserResponse userResponse = new GenericUserResponse( userData );
+
+		Map<PratilipiType, Map<String, String>> pratilipiTypes = new HashMap<>();
+		for( PratilipiType pratilipiType : PratilipiType.values() ) {
+			Map<String, String> pratilipiTypeMap = new HashMap<>();
+			pratilipiTypeMap.put( "name", I18n.getString( pratilipiType.getStringId(), displayLanguage ) );
+			pratilipiTypeMap.put( "namePlural", I18n.getString( pratilipiType.getStringId(), displayLanguage ) );
+			pratilipiTypes.put( pratilipiType, pratilipiTypeMap );
+		}
 		
 		dataModel.put( "lang", displayLanguage.getCode() );
 		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
@@ -218,8 +226,11 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "user", userResponse );
 		if( basicMode ) {
 			dataModel.put( "requestUrl", "http://" + request.getServerName() + request.getRequestURI() );
+			dataModel.put( "pratilipiTypes", pratilipiTypes );
 		} else {
-			dataModel.put( "userJson", new Gson().toJson( userResponse ) );
+			Gson gson = new Gson();
+			dataModel.put( "userJson", gson.toJson( userResponse ) );
+			dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
 		}
 
 		
