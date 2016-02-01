@@ -9,13 +9,18 @@
 		<div class="container">
 			<#include "../element/pratilipi-header.ftl">
 			<#include "../element/pratilipi-pratilipi.ftl">
-			<div class="box" style="padding: 12px 10px;">
-				<h2 style="color: #D0021B;">${ _strings.review_heading }</h2>
-			</div>
-			<#include "../element/pratilipi-review-input.ftl">
-			<#list reviewList as review>
-				<#include "../element/pratilipi-review.ftl">
-			</#list>
+
+			<#-- Show review-input iff writeReview == true. Else, show review-list -->
+			<#if writeReview?? >
+				<#if writeReview == true>
+					<#include "../element/pratilipi-review-input.ftl">
+				<#else>
+					<#include "../element/pratilipi-review-list.ftl">
+				</#if>
+			<#else>
+				<#include "../element/pratilipi-review-list.ftl">
+			</#if>
+
 			<#include "../element/pratilipi-navigation.ftl">
 			<#include "../element/pratilipi-footer.ftl">
 		</div>

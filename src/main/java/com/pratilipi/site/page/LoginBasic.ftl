@@ -106,6 +106,10 @@
 	            	<a href="/register">${ _strings.user_sign_up_for_pratilipi }</a>
 	            </div>
 	            
+	            <div style="text-align: center;">
+	            	<a class="btn btn-default red" href="/resetpassword">${ _strings.user_forgot_password }</a>
+	            </div>
+
 	        </div>
 	        
 	        <#include "../element/pratilipi-navigation.ftl">
