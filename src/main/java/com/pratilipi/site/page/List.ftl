@@ -9,7 +9,7 @@
 	<body>
 		<pratilipi-list-page 
 			user-data='${ userJson }'
-			heading='${ title }'
+			heading='${ pratilipiListTitle }'
 			pratilipi-list='${ pratilipiListJson }'
 			filter='${ pratilipiListFilterJson! }'
 			cursor='${ pratilipiListCursor! }'
