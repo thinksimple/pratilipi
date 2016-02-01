@@ -368,6 +368,9 @@ public class PratilipiSite extends HttpServlet {
 			if( title == null )
 				continue;
 			
+			if( title.indexOf( '|' ) != -1 )
+				title = title.substring( 0, title.indexOf( '|' ) ).trim();
+			
 			PratilipiFilter pratilipiFilter = new PratilipiFilter();
 			pratilipiFilter.setLanguage( lang );
 			pratilipiFilter.setListName( listName );

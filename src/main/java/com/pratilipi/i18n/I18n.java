@@ -24,10 +24,13 @@ public class I18n {
 		return getStrings( language ).get( stringId );
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static Map<String, String> getStrings( Language language ) {
 		Map<String, String> strings = LANG_STRINGS_MAP.get( language );
 		if( strings == null ) {
-			strings = language == Language.ENGLISH ? new HashMap<String, String>() : getStrings( Language.ENGLISH );
+			strings = language == Language.ENGLISH
+					? new HashMap<String, String>()
+					: (Map<String, String>) ( (HashMap<String, String>) getStrings( Language.ENGLISH ) ).clone();
 			try {
 				File langFile = new File( I18n.class.getResource( "language." + language.getCode() ).toURI() );
 				LineIterator it = FileUtils.lineIterator( langFile, "UTF-8" );
