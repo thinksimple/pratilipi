@@ -122,7 +122,7 @@ public class PratilipiSite extends HttpServlet {
 			
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
-				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode );
+				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode, request );
 				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
 				templateName = templateFilePrefix + ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
 				
@@ -407,7 +407,7 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
-	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId, boolean basicMode )
+	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId, boolean basicMode, HttpServletRequest request )
 			throws InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -435,6 +435,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "userpratilipi", userPratilipiResponse );
 			dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
+			dataModel.put( "reviewParam", request.getParameter( RequestParameter.PRATILIPI_REVIEW.getName() ) );
 		} else {
 			dataModel.put( "pratilipi", pratilipiData );
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
