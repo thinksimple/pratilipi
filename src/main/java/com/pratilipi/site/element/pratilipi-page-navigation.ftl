@@ -1,116 +1,116 @@
 
-<#if pratilipiListPageMax lte 5 >
-	<#if pratilipiListPageMax gte 1 >
-		<#assign rating1=1 >
+<#if maxPage lte 5 >
+	<#if maxPage gte 1 >
+		<#assign nav1=1 >
 	</#if>
-	<#if pratilipiListPageMax gte 2 >
-		<#assign rating2=2 >
+	<#if maxPage gte 2 >
+		<#assign nav2=2 >
 	</#if>
-	<#if pratilipiListPageMax gte 3 >
-		<#assign rating3=3 >
+	<#if maxPage gte 3 >
+		<#assign nav3=3 >
 	</#if>
-	<#if pratilipiListPageMax gte 4 >
-		<#assign rating4=4 >
+	<#if maxPage gte 4 >
+		<#assign nav4=4 >
 	</#if>
-	<#if pratilipiListPageMax == 5 >
-		<#assign rating5=5 >
+	<#if maxPage == 5 >
+		<#assign nav5=5 >
 	</#if>
 <#else>
-	<#if pratilipiListPageCurr lte 2 >
-		<#assign rating1=1 >
-		<#assign rating2=2 >
-		<#assign rating3=3 >
-		<#assign rating4=4 >
-		<#assign rating5=5 >
-	<#elseif pratilipiListPageCurr gte pratilipiListPageMax-1 >
-		<#assign rating1=pratilipiListPageMax-4 >
-		<#assign rating2=pratilipiListPageMax-3 >
-		<#assign rating3=pratilipiListPageMax-2 >
-		<#assign rating4=pratilipiListPageMax-1 >
-		<#assign rating5=pratilipiListPageMax >
+	<#if currentPage lte 2 >
+		<#assign nav1=1 >
+		<#assign nav2=2 >
+		<#assign nav3=3 >
+		<#assign nav4=4 >
+		<#assign nav5=5 >
+	<#elseif currentPage gte maxPage-1 >
+		<#assign nav1=maxPage-4 >
+		<#assign nav2=maxPage-3 >
+		<#assign nav3=maxPage-2 >
+		<#assign nav4=maxPage-1 >
+		<#assign nav5=maxPage >
 	<#else>
-		<#assign rating1=pratilipiListPageCurr-2 >
-		<#assign rating2=pratilipiListPageCurr-1 >
-		<#assign rating3=pratilipiListPageCurr >
-		<#assign rating4=pratilipiListPageCurr+1 >
-		<#assign rating5=pratilipiListPageCurr+2 >
+		<#assign nav1=currentPage-2 >
+		<#assign nav2=currentPage-1 >
+		<#assign nav3=currentPage >
+		<#assign nav4=currentPage+1 >
+		<#assign nav5=currentPage+2 >
 	</#if>
 </#if>
 
 <#if pratilipiListSearchQuery?? >
-	<#if rating1?? >
-		<#assign redirect1= "?${ pratilipiListSearchQuery }&page=${ rating1 }" >
+	<#if nav1?? >
+		<#assign redirect1= "?${ pratilipiListSearchQuery }&page=${ nav1 }" >
 	</#if>
-	<#if rating2?? >
-		<#assign redirect2= "?${ pratilipiListSearchQuery }&page=${ rating2 }" >
+	<#if nav2?? >
+		<#assign redirect2= "?${ pratilipiListSearchQuery }&page=${ nav2 }" >
 	</#if>
-	<#if rating3?? >
-		<#assign redirect3= "?${ pratilipiListSearchQuery }&page=${ rating3 }" >
+	<#if nav3?? >
+		<#assign redirect3= "?${ pratilipiListSearchQuery }&page=${ nav3 }" >
 	</#if>
-	<#if rating4?? >
-		<#assign redirect4= "?${ pratilipiListSearchQuery }&page=${ rating4 }" >
+	<#if nav4?? >
+		<#assign redirect4= "?${ pratilipiListSearchQuery }&page=${ nav4 }" >
 	</#if>
-	<#if rating5?? >
-		<#assign redirect5= "?${ pratilipiListSearchQuery }&page=${ rating5 }" >
+	<#if nav5?? >
+		<#assign redirect5= "?${ pratilipiListSearchQuery }&page=${ nav5 }" >
 	</#if>
 <#else>
-	<#if rating1?? >
-		<#assign redirect1= "?page=${ rating1 }" >
+	<#if nav1?? >
+		<#assign redirect1= "?page=${ nav1 }" >
 	</#if>
-	<#if rating2?? >
-		<#assign redirect2= "?page=${ rating2 }" >
+	<#if nav2?? >
+		<#assign redirect2= "?page=${ nav2 }" >
 	</#if>
-	<#if rating3?? >
-		<#assign redirect3= "?page=${ rating3 }" >
+	<#if nav3?? >
+		<#assign redirect3= "?page=${ nav3 }" >
 	</#if>
-	<#if rating4?? >
-		<#assign redirect4= "?page=${ rating4 }" >
+	<#if nav4?? >
+		<#assign redirect4= "?page=${ nav4 }" >
 	</#if>
-	<#if rating5?? >
-		<#assign redirect5= "?page=${ rating5 }" >
+	<#if nav5?? >
+		<#assign redirect5= "?page=${ nav5 }" >
 	</#if>
 </#if>
 	
 <div style="padding-top:25px; padding-bottom:25px;">
 	<div class="row" style=" text-align: center;">
 	    
-	    <#if rating1?? >
-		    <#if rating1 == pratilipiListPageCurr>
-		    	<div class="col-xs-2 col-xs-offset-1"><a style="color: #D0021B; font-size: 18px;" href="${ redirect1 }">${ rating1 }</a></div>
+	    <#if nav1?? >
+		    <#if nav1 == currentPage>
+		    	<div class="col-xs-2 col-xs-offset-1"><a style="color: #D0021B; font-size: 18px;" href="${ redirect1 }">${ nav1 }</a></div>
 			<#else>
-				<div class="col-xs-2 col-xs-offset-1"><a href="${ redirect1 }">${ rating1 }</a></div>
+				<div class="col-xs-2 col-xs-offset-1"><a href="${ redirect1 }">${ nav1 }</a></div>
 			</#if>
 	    </#if>
 	    
-    	<#if rating2?? >
-    		<#if rating2 == pratilipiListPageCurr>
-    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect2 }">${ rating2 }</a></div>
+    	<#if nav2?? >
+    		<#if nav2 == currentPage>
+    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect2 }">${ nav2 }</a></div>
     		<#else>
-    			<div class="col-xs-2"><a href="${ redirect2 }">${ rating2 }</a></div>
+    			<div class="col-xs-2"><a href="${ redirect2 }">${ nav2 }</a></div>
     		</#if>
 		</#if>
 	    
-	    <#if rating3?? >
-	    	<#if rating3 == pratilipiListPageCurr>
-    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect3 }">${ rating3 }</a></div>
+	    <#if nav3?? >
+	    	<#if nav3 == currentPage>
+    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect3 }">${ nav3 }</a></div>
     		<#else>
-    			<div class="col-xs-2"><a href="${ redirect3 }">${ rating3 }</a></div>
+    			<div class="col-xs-2"><a href="${ redirect3 }">${ nav3 }</a></div>
     		</#if>
 	    </#if>
 	    
-	    <#if rating4?? >
-	    	<#if rating4 == pratilipiListPageCurr>
-    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect4 }">${ rating4 }</a></div>
+	    <#if nav4?? >
+	    	<#if nav4 == currentPage>
+    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect4 }">${ nav4 }</a></div>
     		<#else>
-    			<div class="col-xs-2"><a href="${ redirect4 }">${ rating4 }</a></div>
+    			<div class="col-xs-2"><a href="${ redirect4 }">${ nav4 }</a></div>
     		</#if>
 	    </#if>
 	    
-	    <#if rating5?? >
-	    	<#if rating5 == pratilipiListPageCurr>
-    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect5 }">${ rating5 }</a></div>
+	    <#if nav5?? >
+	    	<#if nav5 == currentPage>
+    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect5 }">${ nav5 }</a></div>
     		<#else>
-    			<div class="col-xs-2"><a href="${ redirect5 }">${ rating5 }</a></div>
+    			<div class="col-xs-2"><a href="${ redirect5 }">${ nav5 }</a></div>
     		</#if>
 	    </#if>
 	    

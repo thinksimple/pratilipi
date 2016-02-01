@@ -13,6 +13,8 @@
 				<#include "../element/pratilipi-pratilipi-card.ftl">
 			</#list>
 			
+			<#assign currentPage = pratilipiListPageCurr>
+			<#assign maxPage = pratilipiListPageMax >
 			<#include "../element/pratilipi-page-navigation.ftl">
 			
 			<#include "../element/pratilipi-navigation.ftl">

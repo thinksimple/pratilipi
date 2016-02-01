@@ -9,6 +9,7 @@
 				<img class="img-circle" style="max-width: 64px; max-height: 64px; display: block; margin: 0 auto;" src="${ review.userImageUrl }" alt="${ review.userName }" title="${ review.userName }"/>
 			</div>
    			<span>${ review.userName }</span>
+   			<br/>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<#if review.reviewTitle?? >
