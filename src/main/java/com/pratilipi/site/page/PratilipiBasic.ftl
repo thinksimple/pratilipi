@@ -10,12 +10,21 @@
 			<#include "../element/pratilipi-header.ftl">
 			<#include "../element/pratilipi-pratilipi.ftl">
 
-			<#-- Show review-input iff writeReview == true. Else, show review-list -->
-			<#if writeReview?? >
-				<#if writeReview == true>
+			<#-- Show review-input if review == write. Else if review == list, show complete review-list with page numbers
+					If review = null, show pratilipi page and few reviews. -->
+			<#if review?? >
+				<#if review == "write">
 					<#include "../element/pratilipi-review-input.ftl">
-				<#else>
+				<#elseif review == "list">
 					<#include "../element/pratilipi-review-list.ftl">
+					
+					<#-- Add page navigation -->
+					<#-- 
+					<#assign currentPage = reviewListPageCurr>
+					<#assign maxPage = reviewListPageMax>
+					<#assign prefix = "?review=list&" >
+					<#include "../element/pratilipi-page-navigation.ftl">
+					-->
 				</#if>
 			<#else>
 				<#include "../element/pratilipi-review-list.ftl">

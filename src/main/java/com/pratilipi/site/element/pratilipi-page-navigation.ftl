@@ -37,38 +37,20 @@
 	</#if>
 </#if>
 
-<#if pratilipiListSearchQuery?? >
-	<#if nav1?? >
-		<#assign redirect1= "?${ pratilipiListSearchQuery }&page=${ nav1 }" >
-	</#if>
-	<#if nav2?? >
-		<#assign redirect2= "?${ pratilipiListSearchQuery }&page=${ nav2 }" >
-	</#if>
-	<#if nav3?? >
-		<#assign redirect3= "?${ pratilipiListSearchQuery }&page=${ nav3 }" >
-	</#if>
-	<#if nav4?? >
-		<#assign redirect4= "?${ pratilipiListSearchQuery }&page=${ nav4 }" >
-	</#if>
-	<#if nav5?? >
-		<#assign redirect5= "?${ pratilipiListSearchQuery }&page=${ nav5 }" >
-	</#if>
-<#else>
-	<#if nav1?? >
-		<#assign redirect1= "?page=${ nav1 }" >
-	</#if>
-	<#if nav2?? >
-		<#assign redirect2= "?page=${ nav2 }" >
-	</#if>
-	<#if nav3?? >
-		<#assign redirect3= "?page=${ nav3 }" >
-	</#if>
-	<#if nav4?? >
-		<#assign redirect4= "?page=${ nav4 }" >
-	</#if>
-	<#if nav5?? >
-		<#assign redirect5= "?page=${ nav5 }" >
-	</#if>
+<#if nav1?? >
+	<#assign redirect1= "${ prefix }page=${ nav1 }" >
+</#if>
+<#if nav2?? >
+	<#assign redirect2= "${ prefix }page=${ nav2 }" >
+</#if>
+<#if nav3?? >
+	<#assign redirect3= "${ prefix }page=${ nav3 }" >
+</#if>
+<#if nav4?? >
+	<#assign redirect4= "${ prefix }page=${ nav4 }" >
+</#if>
+<#if nav5?? >
+	<#assign redirect5= "${ prefix }page=${ nav5 }" >
 </#if>
 	
 <div style="padding-top:25px; padding-bottom:25px;">

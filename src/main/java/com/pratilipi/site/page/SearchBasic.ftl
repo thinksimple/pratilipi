@@ -12,9 +12,11 @@
 			<#list pratilipiList as pratilipi>
 				<#include "../element/pratilipi-pratilipi-card.ftl">
 			</#list>
-			
+
+			<#-- Add page navigation -->
 			<#assign currentPage = pratilipiListPageCurr>
-			<#assign maxPage = pratilipiListPageMax >
+			<#assign maxPage = pratilipiListPageMax>
+			<#assign prefix = "?${ pratilipiListSearchQuery }&" >
 			<#include "../element/pratilipi-page-navigation.ftl">
 			
 			<#include "../element/pratilipi-navigation.ftl">
