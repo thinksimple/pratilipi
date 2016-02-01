@@ -16,7 +16,7 @@
 			<#-- Add page navigation -->
 			<#assign currentPage = pratilipiListPageCurr>
 			<#assign maxPage = pratilipiListPageMax>
-			<#assign prefix = "?${ pratilipiListSearchQuery }&" >
+			<#assign prefix = "?q=${ pratilipiListSearchQuery }&" >
 			<#include "../element/pratilipi-page-navigation.ftl">
 			
 			<#include "../element/pratilipi-navigation.ftl">
