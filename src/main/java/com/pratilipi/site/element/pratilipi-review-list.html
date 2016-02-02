@@ -247,6 +247,11 @@
 				this.isLoading = false;
 			},
 			
+			attached: function() {
+				if( this.reviewList.length < 20 )
+					this.isFinished = true;
+			}
+			
 		});
 
 	</script>

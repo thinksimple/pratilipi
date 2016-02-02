@@ -200,6 +200,11 @@
 				this.isLoading = false;
 			},
 			
+			attached: function() {
+				if( this.pratilipiList.length < 20 )
+					this.isFinished = true;
+			},
+			
 			_write: function() {
 				document.querySelector( 'pratilipi-write' ).setAuthorId( this.authorId );
 				document.querySelector( 'pratilipi-write' ).open();

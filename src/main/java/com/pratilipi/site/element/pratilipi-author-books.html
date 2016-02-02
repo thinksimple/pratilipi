@@ -59,7 +59,7 @@
 			></pratilipi-card-grid>
 		</template>
 		
-		<template is="dom-if" if="[[ _checkSpinner ]]">
+		<template is="dom-if" if="{{ _checkSpinner() }}">
 			<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>	
 		</template>
 		
