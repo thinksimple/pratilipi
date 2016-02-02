@@ -20,12 +20,12 @@
 			<div style="padding-top: 15px; padding-bottom: 15px;">
 				<img class="img-circle" style="max-width: 64px; max-height: 64px; display: block; margin: 0 auto;" src="${ review.userImageUrl }" alt="${ review.userName }" title="${ review.userName }"/>
 			</div>
-			<#if review.getReviewDate()?? >
-   				<span>${ review.userName }</span>
+			<span>${ review.userName }</span>
+   			<br/>
+   			<#if review.getReviewDate()?? >
+   				<div style="margin: 10px auto;" id="reviewDate${ review.getId() }"></div>
+   				<br/>
    			</#if>
-   			<br/>
-   			<div style="margin: 10px auto;" id="reviewDate${ review.getId() }"></div>
-   			<br/>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<#if review.reviewTitle?? >
