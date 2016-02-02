@@ -128,8 +128,8 @@ public class UserPratilipiData {
 		return hasReviewState;
 	}
 
-	public Date getReviewDate() {
-		return reviewDateMillis == null ? null : new Date( reviewDateMillis );
+	public Long getReviewDate() {
+		return reviewDateMillis == null ? null : reviewDateMillis;
 	}
 
 	public void setReviewDate( Date reviewDate ) {

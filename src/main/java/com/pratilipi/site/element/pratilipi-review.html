@@ -36,6 +36,8 @@
 		   				<iron-icon icon="account-circle"></iron-icon>
 		   			</template>
 		   			<span>{{ review.userName }}</span>
+		   			<br/>
+		   			<span>{{ reviewDateMillis }}</span>
 				</div>
 				<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 					<h4 class="pratilipi-red">{{ review.reviewTitle }}</h4>
@@ -47,6 +49,13 @@
 	
 
 	<script>
+	
+	function convertDate( date ) {
+		var d = new Date( date );
+		function day(d) { return (d < 10) ? '0' + d : d; }
+		function month(m) { var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return months[m]; }
+		return [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ');
+	}
 
 		Polymer({
 
@@ -70,6 +79,9 @@
 					else
 						this.reviewUserImageUrl = this.review.userImageUrl + "&" + "width=64";
 				}
+				
+				if( this.review.reviewDateMillis )
+					this.reviewDateMillis = convertDate( this.review.reviewDateMillis );
 			}
 
 		});
