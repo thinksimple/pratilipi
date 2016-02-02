@@ -1,3 +1,13 @@
+<script>
+	$( document ).ready( function() {
+		var d = new Date( ${ review.getReviewDate()?c } );
+		function day(d) { return (d < 10) ? '0' + d : d; }
+		function month(m) { var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return months[m]; }
+		$( '.reviewDate' ).html( [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ') );
+	});
+</script>
+
+
 <div class="box" style="padding: 10px 20px; margin-bottom: 10px;">
 	<div class="row" style="padding: 10px;">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="text-align: center; padding-top: 7px;">
@@ -10,7 +20,7 @@
 			</div>
    			<span>${ review.userName }</span>
    			<br/>
-   			<span>${ review.getReviewDate()?number_to_date }</span>
+   			<div style="margin: 10px auto;" class="reviewDate"></div>
    			<br/>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
