@@ -23,6 +23,7 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.GoogleAnalyticsApi;
@@ -48,6 +49,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class PratilipiDataUtil {
@@ -779,6 +781,39 @@ public class PratilipiDataUtil {
 		
 		return updatedPratilipiIds;
 	}	
+	
+	public static void updateUserPratilipiStats( Long pratilipiId ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		if( pratilipi.getState() != PratilipiState.PUBLISHED )
+			return;
+		
+		DataListCursorTuple<UserPratilipi> userPratilipiDataListCursorTuple =
+				dataAccessor.getUserPratilipiList( null, pratilipiId, null, 1000 );
+		long reviewCount = 0;
+		long ratingCount = 0;
+		long totalRating = 0;
+		for( UserPratilipi userPratilipi : userPratilipiDataListCursorTuple.getDataList() ) {
+			if( userPratilipi.getReviewState() == UserReviewState.PUBLISHED )
+				reviewCount++;
+			if( userPratilipi.getRating() > 0 ) {
+				ratingCount++;
+				totalRating += userPratilipi.getRating();
+			}
+		}
+		
+		if( pratilipi.getReviewCount() == reviewCount
+				&& pratilipi.getRatingCount() == ratingCount
+				&& pratilipi.getTotalRating() == totalRating )
+			return;
+		
+		pratilipi.setReviewCount( reviewCount );
+		pratilipi.setRatingCount( ratingCount );
+		pratilipi.setTotalRating( totalRating );
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+		
+	}
 	
 	public static void updatePratilipiSearchIndex( Long pratilipiId, Long authorId )
 			throws InvalidArgumentException, UnexpectedServerException {

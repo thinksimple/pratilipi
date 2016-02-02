@@ -148,6 +148,12 @@ public class PratilipiProcessApi extends GenericApi {
 
 		}
 		
+		
+		if( request.updateUserPratilipiStats() ) {
+			for( long pratilipiId : pratilipiIdList )
+				PratilipiDataUtil.updateUserPratilipiStats( pratilipiId );
+		}
+		
 		return new GenericResponse();
 		
 	}

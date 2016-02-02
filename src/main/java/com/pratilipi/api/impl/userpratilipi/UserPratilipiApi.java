@@ -11,6 +11,8 @@ import com.pratilipi.api.impl.userpratilipi.shared.PostUserPratilipiRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/userpratilipi" )
@@ -35,6 +37,12 @@ public class UserPratilipiApi extends GenericApi {
 
 		UserPratilipiData userPratilipiData = gson.fromJson( gson.toJson( request ), UserPratilipiData.class );
 		userPratilipiData = UserPratilipiDataUtil.saveUserPratilipi( userPratilipiData );
+
+		Task task = TaskQueueFactory.newTask()
+				.setUrl( "/pratilipi/process" )
+				.addParam( "pratilipiId", request.getPratilipiId().toString() )
+				.addParam( "updateUserPratilipiStats", "true" );
+		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 		
 		return gson.fromJson( gson.toJson( userPratilipiData ), GenericUserPratilipiResponse.class );
 		
