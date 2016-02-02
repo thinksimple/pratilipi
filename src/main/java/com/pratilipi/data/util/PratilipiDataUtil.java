@@ -797,7 +797,7 @@ public class PratilipiDataUtil {
 		for( UserPratilipi userPratilipi : userPratilipiDataListCursorTuple.getDataList() ) {
 			if( userPratilipi.getReviewState() == UserReviewState.PUBLISHED )
 				reviewCount++;
-			if( userPratilipi.getRating() > 0 ) {
+			if( userPratilipi.getRating() != null && userPratilipi.getRating() > 0 ) {
 				ratingCount++;
 				totalRating += userPratilipi.getRating();
 			}
