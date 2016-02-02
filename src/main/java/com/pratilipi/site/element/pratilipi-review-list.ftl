@@ -23,7 +23,7 @@
 		
 		<#-- Check and run a loop to remove his review from review List -->
 		<#list reviewList as review>
-			<#if review.userPratilipiId != userpratilipi.userPratilipiId>
+			<#if review.getId() != userpratilipi.userPratilipiId>
 				<#include "../element/pratilipi-review.ftl">
 			</#if>
 		</#list>
