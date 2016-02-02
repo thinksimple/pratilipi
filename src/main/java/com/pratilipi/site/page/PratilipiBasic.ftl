@@ -23,7 +23,9 @@
 			
 			<#-- 2. Author reviewing his own book -->
 			<#if reviewParam == "write" && userpratilipi?? && userpratilipi.hasAccessToReview == false >
-				<div>Sorry! You are not Authorized to write a review for this book!</div>
+				<div class="box" style="padding: 20px auto; text-align: center;">
+					Sorry! You are not Authorized to write review for this book! You can review this book from logging in from a different account!
+				</div>
 				<#assign reviewParam = "hide">
 			</#if>
 
@@ -45,7 +47,7 @@
 				<#include "../element/pratilipi-review-list.ftl">
 				<#if pratilipi.reviewCount?? >
 					<#if pratilipi.reviewCount gt 10>
-						<a class="btn btn-default red" href="?review=list">See all reviews</a>
+						<a style="display: block; width: 100%;" class="btn btn-default red" href="?review=list">See all reviews</a>
 					</#if>
 				</#if>
 			</#if>

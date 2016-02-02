@@ -58,8 +58,16 @@
 						window.location.href = "/"; 
 					},
 					
-					error: function () {
-						alert( "Invalid Email!" );
+					error: function( response ) {
+						var message = jQuery.parseJSON( response.responseText );
+						var status = response.status;
+
+						if( message["email"] != null ) 
+							alert( "Error " + status + " : " + message["email"] );
+						else if( message["message"] != null )
+							alert( "Error " + status + " : " + message["message"] ); 
+						else
+							alert( "Invalid Email!" );
 					}
 				});
 			}

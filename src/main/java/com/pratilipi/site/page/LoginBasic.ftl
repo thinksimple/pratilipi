@@ -22,7 +22,15 @@
     	
     	<script type="text/javascript">
     		function getUrlParameters() {
-				return JSON.parse('{"' + decodeURI( location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}' );
+				var str = decodeURI( location.search.substring(1) ), 
+					res = str.split("&"), 
+					retObj = {};
+				for( var i = 0; i < res.length; i++ ){
+					var key = res[i].substring( 0, res[i].indexOf( '=' ) );
+					var value = res[i].substring( res[i].indexOf( '=' ) + 1 );
+					retObj[ key ] = value;
+				}
+				return retObj;
 			}
     		function validateEmail( email ) {
 				var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -67,11 +75,24 @@
 					},
 					
 					success: function( response ) {
-						window.location.href = getUrlParameters().ret; 
+						if( getUrlParameters().ret != null )
+							window.location.href = getUrlParameters().ret;
+						else
+							window.location.href = "/"; 
 					},
 					
-					error: function () {
-						alert( "Invalid Credentials!" );
+					error: function( response ) {
+						var message = jQuery.parseJSON( response.responseText );
+						var status = response.status;
+
+						if( message["email"] != null ) 
+							alert( "Error " + status + " : " + message["email"] );
+						else if( message["password"] != null ) 
+							alert( "Error " + status + " : " + message["password"] );
+						else if( message["message"] != null )
+							alert( "Error " + status + " : " + message["message"] ); 
+						else
+							alert( "Invalid Credentials" );
 					}
 				});
 			}
@@ -109,7 +130,7 @@
 	            	<button class="btn btn-default red" onclick="register()">${ _strings.user_sign_up_for_pratilipi }</button>
 	            </div>
 	            
-	            <div style="text-align: center; margin-top: 25px;">
+	            <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
 	            	<a class="btn btn-default red" href="/resetpassword">${ _strings.user_forgot_password }</a>
 	            </div>
 

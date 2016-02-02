@@ -37,7 +37,12 @@
 	</#if>
 
 <#else> <#-- Userpratilipi is null i.e. guest user -->
-	<#list reviewList as review>
-		<#include "../element/pratilipi-review.ftl">
-	</#list>
+	<#if reviewList??>
+		<#list reviewList as review>
+			<#include "../element/pratilipi-review.ftl">
+		</#list>
+	<#else>
+		<a style="display: block; width: 100%;" class="btn btn-default red" href="?review=list">See all reviews</a>
+	</#if>
+	
 </#if>
