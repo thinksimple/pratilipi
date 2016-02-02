@@ -3,11 +3,12 @@
 	<h2 style="color: #D0021B; display: inline-block;">${ _strings.review_heading }</h2>
 	<#if userpratilipi?? >
 		<#if userpratilipi.hasAccessToReview == true>
-			<#if userpratilipi.review?? >
-				<a href="?writeReview=true" style="display: inline-block" class="btn btn-default red" onclick="writeReview()">${ _strings.review_edit_review }</a>
-			<#else>
-				<a href="?writeReview=true" style="display: inline-block" class="btn btn-default red" onclick="writeReview()">${ _strings.review_write_a_review }</a>
-			</#if>
+				<a href="?review=write" style="display: inline-block" class="btn btn-default red">
+				<#if userpratilipi.review?? >
+					${ _strings.review_edit_review }
+				<#else>
+					${ _strings.review_write_a_review }
+				</#if></a>
 		</#if>
 	</#if>				
 </div>
