@@ -4,7 +4,7 @@
 			<img src="${ pratilipi.getCoverImageUrl( 100 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
 		</div>
 		<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10" style="text-align: center;">
-			<h1>${ pratilipi.title!pratilipi.titleEn }</h1>
+			<h1 class="red">${ pratilipi.title!pratilipi.titleEn }</h1>
 			<#if pratilipi.author?? >
 				<h2><a href="${ pratilipi.author.pageUrlAlias!pratilipi.author.pageUrl }">
 					${ pratilipi.author.name }

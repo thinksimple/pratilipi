@@ -21,6 +21,9 @@
     	</style>
     	
     	<script type="text/javascript">
+    		function getUrlParameters() {
+				return JSON.parse('{"' + decodeURI( location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}' );
+			}
     		function validateEmail( email ) {
 				var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 				return re.test(email);
@@ -69,7 +72,7 @@
 					},
 					
 					success: function( response ) {
-						window.location.href = "/"; 
+						window.location.href = getUrlParameters().ret; 
 					},
 					
 					error: function () {

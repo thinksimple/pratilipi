@@ -28,6 +28,9 @@
 				var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 				return re.test(email);
 			}
+			function register() {
+				window.location.href = "/register" + "?ret=" + getUrlParameters().ret;
+			}
 			function login() {
 			
 				var email = $( '#inputEmail' ).val();
@@ -103,7 +106,7 @@
 	            </form>
 	            
 	            <div style="text-align: center;">
-	            	<a href="/register">${ _strings.user_sign_up_for_pratilipi }</a>
+	            	<button onclick="register()">${ _strings.user_sign_up_for_pratilipi }</button>
 	            </div>
 	            
 	            <div style="text-align: center; margin-top: 25px;">

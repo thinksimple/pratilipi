@@ -26,7 +26,7 @@
 			},
 			
 			success: function( response ) {
-				window.location.href = "/${ pratilipi.pageUrl }"; 
+				window.location.href = "${ pratilipi.pageUrl }"; 
 			},
 			
 			error: function () {
