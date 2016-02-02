@@ -101,8 +101,7 @@
 	            			type="text" 
 	            			class="form-control" 
 	            			id="inputReview" rows="10" 
-	            			<#if userpratilipi.review??>value="${ userpratilipi.review }"</#if>
-	            			placeholder="Review"></textarea>
+	            			placeholder="Review"><#if userpratilipi.review??>${ userpratilipi.review }</#if></textarea>
 	        </div>
 	    </div>
 	    <div class="form-group" style="margin: 25px auto; text-align: center;">
