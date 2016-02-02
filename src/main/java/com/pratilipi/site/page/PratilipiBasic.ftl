@@ -11,7 +11,7 @@
 			
 			
 			<#-- review param is null -->
-			<#if reviewParam == null>
+			<#if !reviewParam??>
 				<#assign reviewParam = "pratilipi">
 			</#if>
 			
