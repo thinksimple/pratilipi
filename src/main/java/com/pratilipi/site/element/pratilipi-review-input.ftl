@@ -19,7 +19,7 @@
 			url: '/api/userpratilipi',
 
 			data: { 
-				'pratilipiId': ${ pratilipi.id }, 
+				'pratilipiId': ${ pratilipi.id?c }, 
 				'rating': rating,
 				'reviewTitle': reviewTitle,
 				'review' : review
