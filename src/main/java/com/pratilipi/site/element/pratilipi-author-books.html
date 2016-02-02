@@ -184,7 +184,6 @@
 				this.publishedActive = false;
 				
 				// Render the card grid
-				this.$.draftedBooksByAuthor.render();
 				window.dispatchEvent( new Event( 'resize' ) );
 
 				// Load Drafted Contents
@@ -207,7 +206,6 @@
 				this.draftsActive = false;
 				
 				// Render the card grid
-				this.$.publishedBooksByAuthor.render();
 				window.dispatchEvent( new Event( 'resize' ) );
 
 				// Load Published Contents
