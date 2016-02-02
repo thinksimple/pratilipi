@@ -128,14 +128,10 @@
 			
 			addToDraftedList: function( draftedContent ) {
 				this.unshift( 'draftedList', draftedContent );
-				this.$.draftedBooksByAuthor.render();
-				window.dispatchEvent( new Event( 'resize' ) );
 			},
 			
 			addToPublishedList: function( publishedContent ) {
 				this.unshift( 'publishedList', publishedContent );
-				this.$.publishedBooksByAuthor.render();
-				window.dispatchEvent( new Event( 'resize' ) );
 			},
 			
 			removeFromDraftedList: function( draftedContent ) {
@@ -149,9 +145,6 @@
 				
 				if( index != -1 )
 					this.splice( 'draftedList', index, 1 );
-				
-				this.$.draftedBooksByAuthor.render();
-				window.dispatchEvent( new Event( 'resize' ) );
 
 			},
 			
@@ -166,9 +159,6 @@
 
 				if( index != -1 )
 					this.splice( 'publishedList', index, 1 );
-				
-				this.$.publishedBooksByAuthor.render();
-				window.dispatchEvent( new Event( 'resize' ) );
 					
 			},
 			
@@ -192,6 +182,10 @@
 				// Set Boolean flags
 				this.draftsActive = true;
 				this.publishedActive = false;
+				
+				// Render the card grid
+				this.$.draftedBooksByAuthor.render();
+				window.dispatchEvent( new Event( 'resize' ) );
 
 				// Load Drafted Contents
 				this.loadDraftedContents();
@@ -211,6 +205,10 @@
 				// Set Boolean flags
 				this.publishedActive = true;
 				this.draftsActive = false;
+				
+				// Render the card grid
+				this.$.publishedBooksByAuthor.render();
+				window.dispatchEvent( new Event( 'resize' ) );
 
 				// Load Published Contents
 				this.loadPublishedContents();
