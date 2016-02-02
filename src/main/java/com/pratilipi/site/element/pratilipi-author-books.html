@@ -37,8 +37,7 @@
 		
 		<br class="pratilipi-break" />
 		
-		<template is="dom-if" if="[[ draftsActive ]]">
-			<pratilipi-card-grid
+		<pratilipi-card-grid
 			id='draftedBooksByAuthor'
 			author-id='[[ author.authorId ]]'
 			include-add-card="true"
@@ -46,10 +45,8 @@
 			published-active="[[ publishedActive ]]"
 			pratilipi-list='[[ draftedList ]]'
 			></pratilipi-card-grid>
-		</template>
 		
-		<template is="dom-if" if="[[ publishedActive ]]">
-			<pratilipi-card-grid
+		<pratilipi-card-grid
 			id='publishedBooksByAuthor'
 			author-id='[[ author.authorId ]]'
 			include-add-card="true"
@@ -57,7 +54,6 @@
 			published-active="[[ publishedActive ]]"
 			pratilipi-list='[[ publishedList ]]'
 			></pratilipi-card-grid>
-		</template>
 		
 		<template is="dom-if" if="{{ _checkSpinner() }}">
 			<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>	
@@ -184,6 +180,8 @@
 				this.publishedActive = false;
 				
 				// Render the card grid
+				jQuery( '#draftedBooksByAuthor' ).css( "display", "block" );
+				jQuery( '#publishedBooksByAuthor' ).css( "display", "none" );
 				window.dispatchEvent( new Event( 'resize' ) );
 
 				// Load Drafted Contents
@@ -206,6 +204,8 @@
 				this.draftsActive = false;
 				
 				// Render the card grid
+				jQuery( '#draftedBooksByAuthor' ).css( "display", "none" );
+				jQuery( '#publishedBooksByAuthor' ).css( "display", "block" );
 				window.dispatchEvent( new Event( 'resize' ) );
 
 				// Load Published Contents
