@@ -1,7 +1,5 @@
 package com.pratilipi.api.impl.userpratilipi.shared;
 
-import java.util.Date;
-
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.UserReviewState;
 
@@ -53,8 +51,8 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 		return reviewState;
 	}
 	
-	public Date getReviewDateMills() {
-		return reviewDateMills == null ? null : new Date( reviewDateMills );
+	public Long getReviewDate() {
+		return reviewDateMills == null ? null : reviewDateMills;
 	}
 	
 	

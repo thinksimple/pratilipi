@@ -1,11 +1,13 @@
-<script>
-	$( document ).ready( function() {
-		var d = new Date( ${ review.getReviewDate()?c } );
-		function day(d) { return (d < 10) ? '0' + d : d; }
-		function month(m) { var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return months[m]; }
-		$( '#reviewDate${ review.getId() }' ).html( [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ') );
-	});
-</script>
+<#if review.getReviewDate()?? >
+	<script>
+		$( document ).ready( function() {
+			var d = new Date( ${ review.getReviewDate()?c } );
+			function day(d) { return (d < 10) ? '0' + d : d; }
+			function month(m) { var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return months[m]; }
+			$( '#reviewDate${ review.getId() }' ).html( [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ') );
+		});
+	</script>
+</#if>
 
 
 <div class="box" style="padding: 10px 20px; margin-bottom: 10px;">
@@ -18,7 +20,9 @@
 			<div style="padding-top: 15px; padding-bottom: 15px;">
 				<img class="img-circle" style="max-width: 64px; max-height: 64px; display: block; margin: 0 auto;" src="${ review.userImageUrl }" alt="${ review.userName }" title="${ review.userName }"/>
 			</div>
-   			<span>${ review.userName }</span>
+			<#if review.getReviewDate()?? >
+   				<span>${ review.userName }</span>
+   			</#if>
    			<br/>
    			<div style="margin: 10px auto;" id="reviewDate${ review.getId() }"></div>
    			<br/>
