@@ -461,11 +461,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "userpratilipi", userPratilipiResponse );
 			String reviewParam = request.getParameter( RequestParameter.PRATILIPI_REVIEW.getName() );
-			if( reviewParam == null || reviewParam.trim().isEmpty() ) {
-				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
-						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 10 );
-				dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
-			} else if( reviewParam.trim().equals( "list" ) ) {
+			if( reviewParam != null && reviewParam.trim().equals( "list" ) ) {
 				int reviewPageCurr = 1;
 				int reviewPageSize = 20;
 				String pageNoStr = request.getParameter( RequestParameter.PAGE_NUMBER.getName() );
@@ -478,8 +474,12 @@ public class PratilipiSite extends HttpServlet {
 				if( pratilipi.getReviewCount() != 0 )
 					dataModel.put( "reviewListPageMax", (int) Math.ceil( ( (double) pratilipi.getReviewCount() ) / reviewPageSize ) );
 				dataModel.put( "reviewParam", reviewParam );
-			} else if( reviewParam.trim().equals( "write" ) ) {
+			} else if( reviewParam != null && reviewParam.trim().equals( "write" ) && userPratilipiData != null && userPratilipiData.hasAccessToReview() ) {
 				dataModel.put( "reviewParam", reviewParam );
+			} else { // if( reviewParam == null || reviewParam.trim().isEmpty() ) {
+				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
+						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 10 );
+				dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
 			}
 		} else {
 			DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
