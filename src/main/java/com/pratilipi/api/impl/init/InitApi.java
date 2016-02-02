@@ -92,36 +92,10 @@ public class InitApi extends GenericApi {
 		_backfillUserStateAndSignUpSource();
 		_backfillPratilipiLanguage();
 		
-		_backfillUserReviewState();
-		_publishUserReview();
-		
 		return new GenericResponse();
 		
 	}
 	
-	private void _backfillPratilipiLanguage() {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		PersistenceManager pm = dataAccessor.getPersistenceManager();
-		
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
-		gaeQueryBuilder.addFilter( "language", null, Operator.IS_NULL );
-		gaeQueryBuilder.setRange( 0, 25 );
-		Query query = gaeQueryBuilder.build();
-		
-		List<Pratilipi> pratilipiList = (List<Pratilipi>) query.execute();
-		
-		int count = 0;
-		for( Pratilipi pratilipi : pratilipiList ) {
-			pratilipi.getLanguage();
-			dataAccessor.createOrUpdatePratilipi( pratilipi );
-			count++;
-		}
-
-		logger.log( Level.WARNING, "Backfilled languge for " + count + " Pratilipis." );
-
-	}
-
 	private void _backfillUserStateAndSignUpSource() {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -132,6 +106,7 @@ public class InitApi extends GenericApi {
 		gaeQueryBuilder.setRange( 0, 25 );
 		Query query = gaeQueryBuilder.build();
 		
+		@SuppressWarnings("unchecked")
 		List<User> userList = (List<User>) query.execute();
 		
 		int count = 0;
@@ -146,66 +121,28 @@ public class InitApi extends GenericApi {
 
 	}
 
-	private void _backfillUserReviewState() {
+	@SuppressWarnings("deprecation")
+	private void _backfillPratilipiLanguage() {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
-		gaeQueryBuilder.addFilter( "reviewDate", null, Operator.NOT_NULL );
-		gaeQueryBuilder.addFilter( "reviewState", null, Operator.IS_NULL );
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
+		gaeQueryBuilder.addFilter( "language", null, Operator.IS_NULL );
 		gaeQueryBuilder.setRange( 0, 25 );
 		Query query = gaeQueryBuilder.build();
 		
-		List<UserPratilipi> userPratilipiList = (List<UserPratilipi>) query.execute();
+		@SuppressWarnings("unchecked")
+		List<Pratilipi> pratilipiList = (List<Pratilipi>) query.execute();
 		
 		int count = 0;
-		for( UserPratilipi userPratilipi : userPratilipiList ) {
-			userPratilipi.getReviewState();
-			dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
-			count++;
-		}
-		
-		logger.log( Level.WARNING, "Backfilled reviewState for " + count + " user reviews." );
-
-	}
-
-	private void _publishUserReview() {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		PersistenceManager pm = dataAccessor.getPersistenceManager();
-		
-		
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
-		gaeQueryBuilder.addFilter( "reviewState", UserReviewState.PENDING_APPROVAL );
-		gaeQueryBuilder.setRange( 0, 25 );
-		Query query = gaeQueryBuilder.build();
-		
-		List<UserPratilipi> userPratilipiList = (List<UserPratilipi>) query.execute( UserReviewState.PENDING_APPROVAL );
-		
-		int count = 0;
-		for( UserPratilipi userPratilipi : userPratilipiList ) {
-			userPratilipi.setReviewState( UserReviewState.PUBLISHED );
-			dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+		for( Pratilipi pratilipi : pratilipiList ) {
+			pratilipi.getLanguage();
+			dataAccessor.createOrUpdatePratilipi( pratilipi );
 			count++;
 		}
 
-		
-		gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
-		gaeQueryBuilder.addFilter( "reviewState", UserReviewState.SUBMITTED );
-		gaeQueryBuilder.setRange( 0, 25 );
-		query = gaeQueryBuilder.build();
-		
-		userPratilipiList = (List<UserPratilipi>) query.execute( UserReviewState.SUBMITTED );
-		
-		for( UserPratilipi userPratilipi : userPratilipiList ) {
-			userPratilipi.setReviewState( UserReviewState.PUBLISHED );
-			dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
-			count++;
-		}
-
-		
-		logger.log( Level.WARNING, "Published " + count + " user reviews." );
+		logger.log( Level.WARNING, "Backfilled languge for " + count + " Pratilipis." );
 
 	}
 
