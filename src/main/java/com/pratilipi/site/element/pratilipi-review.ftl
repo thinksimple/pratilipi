@@ -3,7 +3,7 @@
 		var d = new Date( ${ review.getReviewDate()?c } );
 		function day(d) { return (d < 10) ? '0' + d : d; }
 		function month(m) { var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return months[m]; }
-		$( '.reviewDate' ).html( [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ') );
+		$( '#reviewDate${ review.getId() }' ).html( [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ') );
 	});
 </script>
 
@@ -20,7 +20,7 @@
 			</div>
    			<span>${ review.userName }</span>
    			<br/>
-   			<div style="margin: 10px auto;" class="reviewDate"></div>
+   			<div style="margin: 10px auto;" id="reviewDate${ review.getId() }"></div>
    			<br/>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
