@@ -153,7 +153,7 @@ public class UserPratilipiDataUtil {
 
 		if( userPratilipiData.hasReview() ) {
 			userPratilipi.setReview( userPratilipiData.getReview() );
-			userPratilipi.setReviewState( UserReviewState.SUBMITTED );
+			userPratilipi.setReviewState( UserReviewState.PUBLISHED );
 			userPratilipi.setReviewDate( new Date() );
 		}
 
