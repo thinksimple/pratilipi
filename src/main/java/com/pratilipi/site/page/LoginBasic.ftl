@@ -106,7 +106,7 @@
 	            </form>
 	            
 	            <div style="text-align: center;">
-	            	<button onclick="register()">${ _strings.user_sign_up_for_pratilipi }</button>
+	            	<button class="btn btn-default red" onclick="register()">${ _strings.user_sign_up_for_pratilipi }</button>
 	            </div>
 	            
 	            <div style="text-align: center; margin-top: 25px;">
