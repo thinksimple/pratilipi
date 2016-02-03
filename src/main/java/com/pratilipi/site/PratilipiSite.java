@@ -225,10 +225,14 @@ public class PratilipiSite extends HttpServlet {
 			pratilipiTypes.put( pratilipiType, pratilipiTypeMap );
 		}
 		
+		dataModel.put( "ga_userId", userData.getId().toString() );
+		dataModel.put( "ga_website", UxModeFilter.getWebsite().toString() );
+		dataModel.put( "ga_websiteMode", UxModeFilter.isBasicMode() ? "Basic" : "Standard" );
+		dataModel.put( "ga_websiteVersion", "Mark-6" );
+		
 		dataModel.put( "lang", displayLanguage.getCode() );
 		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
 		dataModel.put( "resourceList", resourceList );
-		dataModel.put( "userId", userData.getId() );
 		dataModel.put( "user", userResponse );
 		if( basicMode ) {
 			dataModel.put( "requestUrl", "http://" + request.getServerName() + request.getRequestURI() );
@@ -470,7 +474,7 @@ public class PratilipiSite extends HttpServlet {
 					reviewPageCurr = Integer.parseInt( pageNoStr );
 				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
 						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, ( reviewPageCurr - 1 ) * reviewPageSize, reviewPageSize );
-				dataModel.put( "reviewList", toGenericReviewResponse( reviewListCursorTuple.getDataList() ) );
+				dataModel.put( "reviewList", toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) );
 				dataModel.put( "reviewListPageCurr", reviewPageCurr );
 				if( pratilipi.getReviewCount() != 0 )
 					dataModel.put( "reviewListPageMax", (int) Math.ceil( ( (double) pratilipi.getReviewCount() ) / reviewPageSize ) );
@@ -480,7 +484,7 @@ public class PratilipiSite extends HttpServlet {
 			} else { // if( reviewParam == null || reviewParam.trim().isEmpty() ) {
 				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
 						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 10 );
-				dataModel.put( "reviewList", toGenericReviewResponse( reviewListCursorTuple.getDataList() ) );
+				dataModel.put( "reviewList", toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) );
 			}
 		} else {
 			DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
@@ -670,7 +674,7 @@ public class PratilipiSite extends HttpServlet {
 		return pratilipiList;
 	}
 
-	private List<GenericReviewResponse> toGenericReviewResponse( List<UserPratilipiData> userPratilipiList ) {
+	private List<GenericReviewResponse> toGenericReviewResponseList( List<UserPratilipiData> userPratilipiList ) {
 		List<GenericReviewResponse> reviewList = new ArrayList<>( userPratilipiList.size() );
 		for( UserPratilipiData userPratilipiData : userPratilipiList )
 			reviewList.add( new GenericReviewResponse( userPratilipiData ) );

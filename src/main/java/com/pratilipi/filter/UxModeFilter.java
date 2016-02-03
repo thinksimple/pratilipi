@@ -23,8 +23,7 @@ public class UxModeFilter implements Filter {
 	
 	private static final ThreadLocal<Boolean> threadLocalBasicMode = new ThreadLocal<Boolean>();
 	
-	private static final ThreadLocal<Language> threadLocalDisplayLanguage = new ThreadLocal<Language>();
-	private static final ThreadLocal<Language> threadLocalFilterLanguage = new ThreadLocal<Language>();
+	private static final ThreadLocal<Website> threadLocalWebsite = new ThreadLocal<Website>();
 
 	
 	@Override
@@ -43,8 +42,7 @@ public class UxModeFilter implements Filter {
 		if( isAndroidApp ) {
 
 			threadLocalBasicMode.set( false );
-			threadLocalDisplayLanguage.set( Language.ENGLISH );
-			threadLocalFilterLanguage.set( null );
+			threadLocalWebsite.set( null );
 		
 		} else {
 		
@@ -66,9 +64,7 @@ public class UxModeFilter implements Filter {
 			
 			// Defaults - for all test environments
 			boolean basicMode = false;
-			Website website = null;
-			Language displayLanguage = Language.TAMIL;
-			Language filterLanguage = Language.TAMIL;
+			Website website = Website.TAMIL;
 
 			
 			// Figuring out Mode and Languages from a pre-configured list
@@ -76,13 +72,10 @@ public class UxModeFilter implements Filter {
 				if( hostName.equals( web.getHostName() ) ) {
 					basicMode = false;
 					website = web;
-					displayLanguage = web.getDisplayLanguage();
-					filterLanguage = web.getFilterLanguage();
 					break;
 				} else if( hostName.equals( web.getMobileHostName() ) ) {
 					basicMode = true;
-					displayLanguage = web.getDisplayLanguage();
-					filterLanguage = web.getFilterLanguage();
+					website = web;
 					break;
 				}
 			}
@@ -206,16 +199,14 @@ public class UxModeFilter implements Filter {
 			
 			
 			threadLocalBasicMode.set( basicMode );
-			threadLocalDisplayLanguage.set( displayLanguage );
-			threadLocalFilterLanguage.set( filterLanguage );
+			threadLocalWebsite.set( website );
 
 		}
 		
 		chain.doFilter( req, resp );
 
 		threadLocalBasicMode.remove();
-		threadLocalDisplayLanguage.remove();
-		threadLocalFilterLanguage.remove();
+		threadLocalWebsite.remove();
 		
 	}
 
@@ -229,15 +220,22 @@ public class UxModeFilter implements Filter {
 
 	@Deprecated
 	public static Language getUserLanguage() {
-		return threadLocalDisplayLanguage.get();
+		Website website = threadLocalWebsite.get();
+		return website == null ? null : website.getDisplayLanguage();
+	}
+
+	public static Website getWebsite() {
+		return threadLocalWebsite.get();
 	}
 
 	public static Language getDisplayLanguage() {
-		return threadLocalDisplayLanguage.get();
+		Website website = threadLocalWebsite.get();
+		return website == null ? null : website.getDisplayLanguage();
 	}
 
 	public static Language getFilterLanguage() {
-		return threadLocalFilterLanguage.get();
+		Website website = threadLocalWebsite.get();
+		return website == null ? null : website.getFilterLanguage();
 	}
 
 }

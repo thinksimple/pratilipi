@@ -10,13 +10,17 @@
 	<#if user.state == 'GUEST'>
 		ga('create', 'UA-53742841-2', 'pratilipi.com');
 		ga('require', 'displayfeatures');
-		ga('send', 'pageview');
 	<#else>
 		ga('create', 'UA-53742841-2', 'pratilipi.com');
 		ga('require', 'displayfeatures');
 		ga('set', 'userId', '${ userId?c }');
-		ga('set', 'dimension1', '${ userId?c }');
-		ga('send', 'pageview');
+		ga('set', 'dimension1', '${ ga_userId }');
 	</#if>
+	
+	ga('set', 'dimension2', '${ ga_website }');
+	ga('set', 'dimension3', '${ ga_websiteMode }');
+	ga('set', 'dimension4', '${ ga_websiteVersion }');
+	
+	ga('send', 'pageview');
 	
 </script>
