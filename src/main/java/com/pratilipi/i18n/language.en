@@ -1,19 +1,6 @@
-_pratilipi_type_book		= Book
-_pratilipi_type_books		= Books
-_pratilipi_type_poem		= Poem
-_pratilipi_type_poems		= Poems
-_pratilipi_type_story		= Story
-_pratilipi_type_stories		= Stories
-_pratilipi_type_article		= Article
-_pratilipi_type_articles	= Articles
-_pratilipi_type_magazine	= Magazine
-_pratilipi_type_magazines	= Magazines
-
-
 # Do NOT edit
 
 pratilipi					= Pratilipi
-pratilipi_logo_url			= /resources/en/pratilipi-logo.png
 
 home_page_title				= Read Hindi, Gujarati and Tamil Stories, Poems and Books
 website_language			= Tamil 
@@ -36,6 +23,21 @@ language_mr					= Marathi
 lanugage_ml					= Malayalam
 language_bn					= Bengali
 language_en					= English
+
+
+
+# Pratilipi Types
+
+_pratilipi_type_book		= Book
+_pratilipi_type_books		= Books
+_pratilipi_type_poem		= Poem
+_pratilipi_type_poems		= Poems
+_pratilipi_type_story		= Story
+_pratilipi_type_stories		= Stories
+_pratilipi_type_article		= Article
+_pratilipi_type_articles	= Articles
+_pratilipi_type_magazine	= Magazine
+_pratilipi_type_magazines	= Magazines
 
 
 

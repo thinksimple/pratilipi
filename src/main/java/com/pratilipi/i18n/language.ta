@@ -1,19 +1,6 @@
-_pratilipi_type_book		= புத்தகம்
-_pratilipi_type_books		= புத்தகங்கள்
-_pratilipi_type_poem		= கவிதை
-_pratilipi_type_poems		= கவிதைகள்
-_pratilipi_type_story		= கதை
-_pratilipi_type_stories		= கதைகள்
-_pratilipi_type_article		= கட்டுரை
-_pratilipi_type_articles	= கட்டுரைகள்
-_pratilipi_type_magazine	= இதழ்
-_pratilipi_type_magazines	= இதழ்கள்
-
-
 # Do NOT edit
 
 pratilipi					= ப்ரதிலிபி
-pratilipi_logo_url			= /resources/ta/pratilipi-tamil-logo.png
 
 home_page_title				= தமிழ் கதைகள், புத்தகங்கள் , விதைகள், கட்டுரைகள், ஆகியவற்றை படிக்க
 website_language			= Tamil 
@@ -36,6 +23,21 @@ language_mr					= Marathi
 lanugage_ml					= Malayalam
 language_bn					= Bengali
 language_en					= English
+
+
+
+# Pratilipi Types
+
+_pratilipi_type_book		= புத்தகம்
+_pratilipi_type_books		= புத்தகங்கள்
+_pratilipi_type_poem		= கவிதை
+_pratilipi_type_poems		= கவிதைகள்
+_pratilipi_type_story		= கதை
+_pratilipi_type_stories		= கதைகள்
+_pratilipi_type_article		= கட்டுரை
+_pratilipi_type_articles	= கட்டுரைகள்
+_pratilipi_type_magazine	= இதழ்
+_pratilipi_type_magazines	= இதழ்கள்
 
 
 
