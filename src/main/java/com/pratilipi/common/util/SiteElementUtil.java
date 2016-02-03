@@ -45,6 +45,7 @@ public class SiteElementUtil {
 				// Data model required for i18n element generation
 				Map<String, Object> dataModel = new HashMap<>();
 				dataModel.put( "language", language );
+				dataModel.put( "lang", language.getCode() );
 				dataModel.put( "domain", language.getHostName() );
 				dataModel.put( "fbAppId", "293990794105516" );
 				dataModel.put( "_strings", I18n.getStrings( language ) );

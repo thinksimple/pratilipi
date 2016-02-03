@@ -9,8 +9,7 @@ public enum ThirdPartyResource {
 	ANGULARJS( "<script src='/third-party/angular-1.4.8/angular.min.js'></script>"),
 
 	BOOTSTRAP( "<script src='/third-party/bootstrap-3.3.4/js/bootstrap.min.js'></script>"
-			 + "<link rel='stylesheet' href='/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>"
-			 + "<link rel='stylesheet' href='/third-party/bootstrap-3.3.4/bootstrap-social/bootstrap-social.css'>" ),
+			 + "<link rel='stylesheet' href='/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>" ),
 
 	FONT_AWESOME( "<link rel='stylesheet' href='/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>" ),
 
