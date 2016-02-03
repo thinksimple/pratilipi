@@ -12,17 +12,14 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.GaeQueryBuilder;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
-import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
-import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )

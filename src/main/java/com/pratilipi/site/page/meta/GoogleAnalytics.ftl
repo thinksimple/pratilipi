@@ -13,10 +13,10 @@
 	<#else>
 		ga('create', 'UA-53742841-2', 'pratilipi.com');
 		ga('require', 'displayfeatures');
-		ga('set', 'userId', '${ userId?c }');
-		ga('set', 'dimension1', '${ ga_userId }');
+		ga('set', 'userId', '${ ga_userId }');
 	</#if>
 	
+	ga('set', 'dimension1', '${ ga_userId }');
 	ga('set', 'dimension2', '${ ga_website }');
 	ga('set', 'dimension3', '${ ga_websiteMode }');
 	ga('set', 'dimension4', '${ ga_websiteVersion }');
