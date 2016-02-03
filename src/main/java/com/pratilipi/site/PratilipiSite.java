@@ -492,7 +492,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
 			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
-			dataModel.put( "reviewListJson", gson.toJson( reviewListCursorTuple.getDataList() ) );
+			dataModel.put( "reviewListJson", gson.toJson( toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) ) );
 			dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
 		}
 		return dataModel;

@@ -269,8 +269,12 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		Page page = memcache.get( PREFIX_PAGE + uri );
 		if( page == null ) {
 			page = dataAccessor.getPage( uri );
-			if( page != null )
-				memcache.put( PREFIX_PAGE + uri, page );
+			if( page == null ) { // Hack: This is will save lot of DB queries.
+				page = dataAccessor.newPage();
+				page.setType( PageType.GENERIC );
+				page.setUri( uri );
+			}
+			memcache.put( PREFIX_PAGE + uri, page );
 		}
 		return page;
 	}
