@@ -30,7 +30,7 @@ public class GenericReviewResponse extends GenericResponse {
 		this.rating = userPratilipiData.getRating();
 		this.reviewTitle = userPratilipiData.getReviewTitle();
 		this.review = userPratilipiData.getReview();
-		this.reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate();
+		this.reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate().getTime();
 		
 	}
 	
