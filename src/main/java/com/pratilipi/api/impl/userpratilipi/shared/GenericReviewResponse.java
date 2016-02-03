@@ -27,6 +27,7 @@ public class GenericReviewResponse extends GenericResponse {
 		
 		this.userPratilipiId = userPratilipiData.getId();
 		this.userName = userPratilipiData.getUserName();
+		this.userImageUrl = userPratilipiData.getUserImageUrl();
 		this.rating = userPratilipiData.getRating();
 		this.reviewTitle = userPratilipiData.getReviewTitle();
 		this.review = userPratilipiData.getReview();
