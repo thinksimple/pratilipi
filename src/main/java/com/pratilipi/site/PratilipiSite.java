@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
+import com.pratilipi.api.impl.userpratilipi.shared.GenericReviewResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -469,7 +470,7 @@ public class PratilipiSite extends HttpServlet {
 					reviewPageCurr = Integer.parseInt( pageNoStr );
 				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
 						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, ( reviewPageCurr - 1 ) * reviewPageSize, reviewPageSize );
-				dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
+				dataModel.put( "reviewList", toGenericReviewResponse( reviewListCursorTuple.getDataList() ) );
 				dataModel.put( "reviewListPageCurr", reviewPageCurr );
 				if( pratilipi.getReviewCount() != 0 )
 					dataModel.put( "reviewListPageMax", (int) Math.ceil( ( (double) pratilipi.getReviewCount() ) / reviewPageSize ) );
@@ -479,7 +480,7 @@ public class PratilipiSite extends HttpServlet {
 			} else { // if( reviewParam == null || reviewParam.trim().isEmpty() ) {
 				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
 						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 10 );
-				dataModel.put( "reviewList", reviewListCursorTuple.getDataList() );
+				dataModel.put( "reviewList", toGenericReviewResponse( reviewListCursorTuple.getDataList() ) );
 			}
 		} else {
 			DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
@@ -667,6 +668,13 @@ public class PratilipiSite extends HttpServlet {
 		for( PratilipiData pratilipiData : pratilipiDataList )
 			pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
 		return pratilipiList;
+	}
+
+	private List<GenericReviewResponse> toGenericReviewResponse( List<UserPratilipiData> userPratilipiList ) {
+		List<GenericReviewResponse> reviewList = new ArrayList<>( userPratilipiList.size() );
+		for( UserPratilipiData userPratilipiData : userPratilipiList )
+			reviewList.add( new GenericReviewResponse( userPratilipiData ) );
+		return reviewList;
 	}
 	
 }

@@ -57,7 +57,7 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 		return reviewDateMillis == null ? null : new Date( reviewDateMillis );
 	}
 	
-	public Long getReviewDateMills() {
+	public Long getReviewDateMillis() {
 		return reviewDateMillis == null ? null : reviewDateMillis;
 	}
 	
