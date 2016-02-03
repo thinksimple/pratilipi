@@ -14,10 +14,10 @@
 	</div>
 	
 	<div style="white-space: nowrap; display: block; text-align: center;">
-		<a href="${ _strings.facebook_page }"><img class="img-circle" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/FB-fLogo.png" /></a>&nbsp;
-		<a href="${ _strings.twitter_page }"><img class="img-circle" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/TwitterLogo.png" /></a>&nbsp;
-		<a href="${ _strings.googleplus_page }"><img class="img-circle" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/google_plus_64.png" /></a>&nbsp;
-		<a href="${ _strings.linkedin_page }"><img class="img-circle" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/linkedin_64.png" /></a>
+		<a href="${ _strings.facebook_page }"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png" /></a>&nbsp;
+		<a href="${ _strings.twitter_page }"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/twitter.png" /></a>&nbsp;
+		<a href="${ _strings.googleplus_page }"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/google_plus.png" /></a>&nbsp;
+		<a href="${ _strings.linkedin_page }"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/linkedin.png" /></a>
 	</div>
 	<br />
 	<div class="row">
