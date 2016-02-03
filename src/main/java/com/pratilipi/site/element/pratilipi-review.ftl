@@ -17,19 +17,20 @@
 				<#assign rating=review.rating >
 				<#include "pratilipi-rating.ftl" >
 			</#if>
-			<div style="padding-top: 15px; padding-bottom: 15px;">
-				<img class="img-circle" style="max-width: 64px; max-height: 64px; display: block; margin: 0 auto;" src="${ review.userImageUrl }" alt="${ review.userName }" title="${ review.userName }"/>
-			</div>
-			<span>${ review.userName }</span>
-   			<br/>
+			<#if review.getUserImageUrl()?? >
+				<div style="padding-top: 15px; padding-bottom: 15px;">
+					<img class="img-circle" style="max-width: 64px; max-height: 64px; display: block; margin: 0 auto;" src="${ review.getUserImageUrl() }" alt="${ review.getUserName() }" title="${ review.getUserName() }"/>
+				</div>
+			</#if>
+			<div><span>${ review.getUserName() }</span></div>
    			<#if review.getReviewDateMillis()?? >
    				<div style="margin: 10px auto;" id="reviewDate${ review.getId() }"></div>
    				<br/>
    			</#if>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-			<#if review.reviewTitle?? >
-				<h3 style="color: #D0021B; margin-left: 0px; margin-top: 10px; margin-bottom: 10px;">${ review.reviewTitle }</h3>
+			<#if review.getReviewTitle()?? >
+				<h3 style="color: #D0021B; margin-left: 0px; margin-top: 10px; margin-bottom: 10px;">${ review.getReviewTitle() }</h3>
 			</#if>
 			<div style="text-align: justify;">${ review.review }</div>
 		</div>

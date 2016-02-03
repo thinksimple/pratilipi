@@ -35,4 +35,37 @@ public class GenericReviewResponse extends GenericResponse {
 		
 	}
 	
+	
+	public String getId() {
+		return userPratilipiId;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	
+	public String getUserImageUrl() {
+		return userImageUrl;
+	}
+	
+	public Integer getRating() {
+		return rating;
+	}
+	
+	public String getReviewTitle() {
+		return reviewTitle;
+	}
+	
+	public String getReview() {
+		return review;
+	}
+	
+	public Date getReviewDate() {
+		return reviewDateMillis == null ? null : new Date( reviewDateMillis );
+	}
+	
+	public Long getReviewDateMillis() {
+		return reviewDateMillis == null ? null : reviewDateMillis;
+	}
+	
 }
