@@ -55,9 +55,9 @@
 			pratilipi-list='[[ publishedList ]]'
 			></pratilipi-card-grid>
 		
-		<template is="dom-if" if="{{ _checkSpinner() }}">
+		<div id="author-books-spinner">
 			<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>	
-		</template>
+		</div>
 		
 		<iron-ajax
 				id="AjaxGetDraftedList"
@@ -101,15 +101,6 @@
 			attached: function() {
 				this.draftsClicked();
 				this.loadPublishedContents();
-			},
-			
-			_checkSpinner: function() {
-				if( this.draftsActive && this.draftedListCursor != null )
-					return true;
-				else if( this.publishedActive && this.publishedListCursor != null )
-					return true;
-				else
-					return false;
 			},
 			
 			clearDraftedList: function() {
@@ -214,9 +205,16 @@
 			},
 			
 			loadDraftedContents: function() {
-				
-				if( this.draftedListCursor == null ) 
+
+				if( this.draftedListCursor == null ) {
+					if( this.draftsActive ) {
+						// Disable the spinner
+						jQuery( '#author-books-spinner' ).css( "display", "none" );
+					}
 					return;
+				}
+				// Make the spinner active
+				jQuery( '#author-books-spinner' ).css( "display", "block" );
 				
 				// Make AJAX Call
 				var draftedList = this.$.AjaxGetDraftedList;
@@ -228,9 +226,17 @@
 			},
 			
 			loadPublishedContents: function() {
-				
-				if( this.publishedListCursor == null )
+
+				if( this.publishedListCursor == null ) {
+					if( this.publishedActive ) {
+						// Disable the spinner
+						jQuery( '#author-books-spinner' ).css( "display", "none" );
+					}
 					return;
+				}
+				
+				// Make the spinner active
+				jQuery( '#author-books-spinner' ).css( "display", "block" );
 				
 				// Make AJAX Call
 				var publishedList = this.$.AjaxGetPublishedList;
@@ -264,6 +270,11 @@
 				else if( event.detail.response.cursor != null )
 					this.draftedListCursor = event.detail.response.cursor;
 				
+				if( this.draftsActive ) {
+					// Disable the spinner
+					jQuery( '#author-books-spinner' ).css( "display", "none" );
+				}
+				
 				this.loadDraftedContents();
 				
 			},
@@ -291,6 +302,11 @@
 				else if( event.detail.response.cursor != null )
 					this.publishedListCursor = event.detail.response.cursor;
 				
+				if( this.publishedActive ) {
+					// Disable the spinner
+					jQuery( '#author-books-spinner' ).css( "display", "none" );
+				}
+				
 				this.loadPublishedContents();
 				
 			},
@@ -299,9 +315,9 @@
 				if( event.detail.request.xhr.status == 401 ) {
 					return;
 				}
-				/* this.async( function() {
+				this.async( function() {
 					this.loadDraftedContents();
-				}, 10000 ); */
+				}, 10000 );
 			},
 			
 			_handleAjaxGetPublishedListError: function( event ) {
