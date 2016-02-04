@@ -426,7 +426,7 @@ public class PratilipiDataUtil {
 			memcacheId += "&offset=" + offset;
 		if( cursor != null )
 			memcacheId += "&cursor=" + cursor;
-		memcacheId += "?" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 5 ) );
+		memcacheId += "?" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 10 ) );
 
 		// Fetching cached response from Memcache
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
