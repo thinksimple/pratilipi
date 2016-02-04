@@ -139,6 +139,7 @@ public class AccessTokenFilter implements Filter {
 
 	private void setCookieValue( String cookieName, String cookieValue, HttpServletResponse response ) {
 		Cookie cookie = new Cookie( cookieName, cookieValue );
+		cookie.setDomain( "pratilipi.com" );
 		cookie.setPath( "/" );
 		response.addCookie( cookie );
 	}
