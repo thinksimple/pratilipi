@@ -2,6 +2,7 @@ package com.pratilipi.data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 
@@ -61,6 +62,7 @@ public interface DataAccessor {
 	Page getPage( Long id );
 	Page getPage( String uri );
 	Page getPage( PageType pageType, Long primaryContentId );
+	Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList );
 	Page createOrUpdatePage( Page page );
 
 	// PRATILIPI Table

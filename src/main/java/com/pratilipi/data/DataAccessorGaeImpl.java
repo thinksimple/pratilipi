@@ -393,6 +393,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList ) {
+		Map<Long, Page> keyValueMap = new HashMap<>( primaryContentIdList.size() );
+		for( Long primaryContentId : primaryContentIdList )
+			keyValueMap.put( primaryContentId, getPage( pageType, primaryContentId ) );
+		return keyValueMap;
+	}
+
+	@Override
 	public Page createOrUpdatePage( Page page ) {
 		return createOrUpdateEntity( page );
 	}

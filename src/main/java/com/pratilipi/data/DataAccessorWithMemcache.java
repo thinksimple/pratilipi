@@ -269,7 +269,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		Page page = memcache.get( PREFIX_PAGE + uri );
 		if( page == null ) {
 			page = dataAccessor.getPage( uri );
-			if( page == null ) { // Hack: This is will save lot of DB queries.
+			if( page == null ) { // Hack: This will save lot of DB queries.
 				page = dataAccessor.newPage();
 				page.setType( PageType.GENERIC );
 				page.setUri( uri );
@@ -281,13 +281,53 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	@Override
 	public Page getPage( PageType pageType, Long primaryContentId ) {
-		Page page = memcache.get( PREFIX_PAGE + pageType + "::" + primaryContentId );
+		Page page = memcache.get( createPageEntityMemcacheId( pageType, primaryContentId ) );
 		if( page == null ) {
 			page = dataAccessor.getPage( pageType, primaryContentId );
 			if( page != null )
-				memcache.put( PREFIX_PAGE + pageType + "::" + primaryContentId, page );
+				memcache.put( createPageEntityMemcacheId( pageType, primaryContentId ), page );
 		}
 		return page;
+	}
+	
+	@Override
+	public Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList ) {
+		
+		Map<Long, Page> keyValueMap = new HashMap<>();
+		if( primaryContentIdList.size() == 0 )
+			return keyValueMap;
+		
+		List<String> memcacheIdList = new ArrayList<>( primaryContentIdList.size() );
+		for( Long primaryContentId : primaryContentIdList )
+			memcacheIdList.add( createPageEntityMemcacheId( pageType, primaryContentId ) );
+
+		// Fetching entities from Memcache.
+		Map<String, Page> keyValueMap1 = memcache.getAll( memcacheIdList );
+		
+		List<Long> missingPrimaryContentIdList = new LinkedList<>();
+		for( Long primaryContentId : primaryContentIdList ) {
+			String memcacheId = createPageEntityMemcacheId( pageType, primaryContentId );
+			if( keyValueMap1.get( memcacheId ) == null )
+				missingPrimaryContentIdList.add( primaryContentId );
+			else
+				keyValueMap.put( primaryContentId, keyValueMap1.get( memcacheId ) );
+		}
+		
+		// Fetching remaining entities from DataStore
+		Map<Long, Page> keyValueMap2 = dataAccessor.getPages( pageType, missingPrimaryContentIdList );
+		
+		for( Long primaryContentId : missingPrimaryContentIdList ) {
+			Page page = keyValueMap2.get( primaryContentId );
+			memcache.put( createPageEntityMemcacheId( pageType, primaryContentId ), page );
+			keyValueMap.put( primaryContentId, page );
+		}
+		
+		return keyValueMap;
+		
+	}
+
+	private String createPageEntityMemcacheId( PageType pageType, Long primaryContentId ) {
+		return PREFIX_PAGE + pageType + "::" + primaryContentId;
 	}
 	
 	@Override

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 
@@ -272,7 +273,13 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 		return null;
 	}
-	
+
+	@Override
+	public Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList ) {
+		// TODO: Implementation
+		return null;
+	}
+
 	@Override
 	public Page createOrUpdatePage( Page page ) {
 		PAGE_TABLE.add( page );
