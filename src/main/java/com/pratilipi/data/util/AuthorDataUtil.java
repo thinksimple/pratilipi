@@ -3,6 +3,7 @@ package com.pratilipi.data.util;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -103,17 +104,25 @@ public class AuthorDataUtil {
 	
 	
 	public static AuthorData createAuthorData( Author author ) {
-		return createAuthorData( author, false, false );
+		return createAuthorData( author, null, false, false );
+	}
+	
+	public static AuthorData createAuthorData( Author author, Page authorPage ) {
+		return createAuthorData( author, authorPage, false, false );
 	}
 	
 	public static AuthorData createAuthorData( Author author, boolean includeAll, boolean includeMetaData ) {
+		return createAuthorData( author, null, includeAll, includeMetaData );
+	}
+	
+	public static AuthorData createAuthorData( Author author, Page authorPage, boolean includeAll, boolean includeMetaData ) {
 
 		if( author == null )
 			return null;
 
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
+		if( authorPage == null )
+			authorPage = DataAccessorFactory.getDataAccessor().getPage( PageType.AUTHOR, author.getId() );
 		
 		
 		AuthorData authorData = new AuthorData();
@@ -174,10 +183,13 @@ public class AuthorDataUtil {
 		
 	}
 	
-	public static List<AuthorData> createAuthorDataList( List<Author> authorList ) {
-		List<AuthorData> authorDataList = new ArrayList<>( authorList.size() );
+	public static List<AuthorData> createAuthorDataList( List<Long> authorIdList ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<Author> authorList = dataAccessor.getAuthorList( authorIdList );
+		Map<Long, Page> authorPages = dataAccessor.getPages( PageType.AUTHOR, authorIdList );
+		List<AuthorData> authorDataList = new ArrayList<>( authorIdList.size() );
 		for( Author author : authorList )
-			authorDataList.add( createAuthorData( author ) );
+			authorDataList.add( createAuthorData( author, authorPages.get( author.getId() ) ) );
 		return authorDataList;
 	}
 	
@@ -189,13 +201,13 @@ public class AuthorDataUtil {
 		if( ! hasAccessToListAuthorData( authorFilter.getLanguage() ) )
 			throw new InsufficientAccessException();
 		
-		DataListCursorTuple<Author> authorListCursorTuple = DataAccessorFactory
+		DataListCursorTuple<Long> authorIdListCursorTuple = DataAccessorFactory
 				.getDataAccessor()
-				.getAuthorList( authorFilter, cursor, resultCount );
+				.getAuthorIdList( authorFilter, cursor, resultCount );
 		
-		List<AuthorData> authorDataList = createAuthorDataList( authorListCursorTuple.getDataList() );
+		List<AuthorData> authorDataList = createAuthorDataList( authorIdListCursorTuple.getDataList() );
 		
-		return new DataListCursorTuple<AuthorData>( authorDataList, authorListCursorTuple.getCursor() );
+		return new DataListCursorTuple<AuthorData>( authorDataList, authorIdListCursorTuple.getCursor() );
 		
 	}
 	

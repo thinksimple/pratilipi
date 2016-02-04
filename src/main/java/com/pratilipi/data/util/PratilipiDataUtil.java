@@ -271,13 +271,18 @@ public class PratilipiDataUtil {
 	
 
 	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author ) {
-		return createPratilipiData( pratilipi, author, false );
+		return createPratilipiData( pratilipi, null, author, false );
 	}
 	
 	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, boolean includeMetaData ) {
+		return createPratilipiData( pratilipi, null, author, includeMetaData );
+	}
+	
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Page pratilipiPage, Author author, boolean includeMetaData ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipi.getId() );
+		if( pratilipiPage == null )
+			pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipi.getId() );
 		Page readPage = null; // dataAccessor.getPage( PageType.READ, pratilipi.getId() ); TODO: Uncomment this once data in DataStore is fixed.
 		Page writePage = null; // dataAccessor.getPage( PageType.WRITE, pratilipi.getId() ); TODO: Uncomment this once data in DataStore is fixed.
 		
@@ -336,6 +341,7 @@ public class PratilipiDataUtil {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
+		Map<Long, Page> pratilipiPages = dataAccessor.getPages( PageType.PRATILIPI, pratilipiIdList );
 		
 		Map<Long, AuthorData> authorIdToDataMap = null;
 		if( includeAuthorData ) {
@@ -344,15 +350,15 @@ public class PratilipiDataUtil {
 				if( pratilipi.getAuthorId() != null && ! authorIdList.contains( pratilipi.getAuthorId() ) )
 					authorIdList.add( pratilipi.getAuthorId() );
 			
-			List<Author> authorList = dataAccessor.getAuthorList( authorIdList );
-			authorIdToDataMap = new HashMap<>( authorList.size() );
-			for( Author author : authorList )
-				authorIdToDataMap.put( author.getId(), AuthorDataUtil.createAuthorData( author ) );	
+			List<AuthorData> authorDataList = AuthorDataUtil.createAuthorDataList( authorIdList );
+			authorIdToDataMap = new HashMap<>( authorDataList.size() );
+			for( AuthorData authorData : authorDataList )
+				authorIdToDataMap.put( authorData.getId(), authorData );	
 		}
 
 		List<PratilipiData> pratilipiDataList = new ArrayList<>( pratilipiList.size() );
 		for( Pratilipi pratilipi : pratilipiList ) {
-			PratilipiData pratilipiData = createPratilipiData( pratilipi, null, includeMetaData );
+			PratilipiData pratilipiData = createPratilipiData( pratilipi, pratilipiPages.get( pratilipi.getId() ), null, includeMetaData );
 			if( includeAuthorData && pratilipi.getAuthorId() != null )
 				pratilipiData.setAuthor( authorIdToDataMap.get( pratilipi.getAuthorId() ) );
 			pratilipiData.setRelevance( calculateRelevance( pratilipi, dataAccessor.getAuthor( pratilipi.getAuthorId() ) ) );
