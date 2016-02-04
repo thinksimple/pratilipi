@@ -59,7 +59,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 					.setExpression( SortExpression.SCORE_FIELD_NAME )
 					.setDirection( SortExpression.SortDirection.DESCENDING )
 					.setDefaultValueNumeric( 0.0 ) );
-			sortOptions = sortOptionsBuilder.setLimit( 10000 ).build();
+			sortOptions = sortOptionsBuilder.setLimit( 1000 ).build(); // Max allowed: 10000
 		}
 		
 		QueryOptions.Builder queryOptionsBuilder = QueryOptions.newBuilder()
@@ -161,7 +161,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 					.setDefaultValueNumeric( 0.0 ) );
 		}
 		
-		SortOptions sortOptions = sortOptionsBuilder.setLimit( 10000 ).build();
+		SortOptions sortOptions = sortOptionsBuilder.setLimit( 1000 ).build();
 
 		
 		String searchQuery = pratilipiFilter.getType() == null
