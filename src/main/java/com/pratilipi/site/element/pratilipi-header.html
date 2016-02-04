@@ -83,9 +83,9 @@
 							</template>
 							
 							<td width="auto">
-								<form method="get" action="/search" style="margin: -20px 15px auto 10px;" id="form" on-submit="onSubmit">
+								<form id="searchForm" action="javascript:void(0);" style="margin: -20px 15px auto 10px;" on-keyup="onSubmit">
 									<template is="dom-if" if="{{ !mobile }}">
-										<paper-input name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
+										<paper-input id="searchInput" name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
 											<paper-icon-button class="search-icon" suffix icon="search" noink="true" on-click="onSubmit"></paper-icon-button>
 											<template is="dom-if" if="{{ !medium }}">
 												<paper-icon-button class="menu-icon" prefix icon="menu" noink="true" on-click="showMenu"></paper-icon-button>
@@ -93,7 +93,7 @@
 										</paper-input>
 									</template>
 									<template is="dom-if" if="{{ mobile }}">
-										<paper-input name="q" class="search" type="search" placeholder="${ _strings.search }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search }'" value="{{ query::input }}">
+										<paper-input id="searchInput" name="q" class="search" type="search" placeholder="${ _strings.search }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search }'" value="{{ query::input }}">
 											<paper-icon-button class="search-icon" suffix icon="search" noink="true" on-click="onSubmit"></paper-icon-button>
 											<paper-icon-button class="menu-icon" prefix icon="menu" noink="true" on-click="showMenu"></paper-icon-button>
 										</paper-input>
@@ -264,25 +264,22 @@
 					
 			},
 			
-			attached: function() {
-			    var reParam = new RegExp( '(?:[\?&]|&)q=([^&]+)', 'i' );
-			    var match = window.location.search.match( reParam ) ;
-			    if( match && match.length > 1 )
-			    	this.query = decodeURIComponent( match[ 1 ] ).split("+").join(" ");;
-			},
-			
 			onSubmit: function( event ) {
-				var searchResult = jQuery( '#SearchResult' )[0];
-				if( searchResult != null ) {
-					jQuery( searchResult ).attr( 'search-query', this.query.trim() );
-					searchResult.reset();
-					event.preventDefault();
-				} else if( this.query == undefined || this.query.trim() == '' ) {
-					event.preventDefault();
-				} else {
-					this.query = this.query.trim();
+				
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+					return;
+				
+				var str = decodeURI( window.location.pathname );
+				
+				// Already in search page
+				if( str == "/search" ) {
+					document.querySelector( 'pratilipi-card-grid' ).setSearchQuery( jQuery( "#searchInput" ).val() );
 				}
-				document.getElementById( "form" ).submit();
+				else {
+					jQuery( "#searchForm" ).prop( "action", "search" );
+					jQuery( "#searchForm" ).submit();
+				}
+				
 			},
 
 		});

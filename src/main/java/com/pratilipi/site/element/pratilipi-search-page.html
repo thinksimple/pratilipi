@@ -6,7 +6,7 @@
 		<paper-header-panel on-content-scroll="scrollHandler" class="flex fullbleed layout vertical" mode="waterfall">
 			<div class="paper-header">
 				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
-				<pratilipi-header user='[[ user ]]'></pratilipi-header>
+				<pratilipi-header user='[[ user ]]' query='[[ searchQuery ]]'></pratilipi-header>
 				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 				<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
 			</div>
@@ -49,7 +49,7 @@
 			},
 			
 			scrollHandler: function( event ) {
-				this.querySelector( 'pratilipi-card-grid' ).loadMore( event.detail.target.scrollTop ); 
+				this.querySelector( 'pratilipi-card-grid' ).loadMore( event.detail.target.scrollTop );
 			}
 		
 		});

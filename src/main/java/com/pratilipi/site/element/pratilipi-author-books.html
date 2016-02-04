@@ -173,7 +173,6 @@
 				// Render the card grid
 				jQuery( '#draftedBooksByAuthor' ).css( "display", "block" );
 				jQuery( '#publishedBooksByAuthor' ).css( "display", "none" );
-				window.dispatchEvent( new Event( 'resize' ) );
 
 				// Load Drafted Contents
 				this.loadDraftedContents();
@@ -197,7 +196,6 @@
 				// Render the card grid
 				jQuery( '#draftedBooksByAuthor' ).css( "display", "none" );
 				jQuery( '#publishedBooksByAuthor' ).css( "display", "block" );
-				window.dispatchEvent( new Event( 'resize' ) );
 
 				// Load Published Contents
 				this.loadPublishedContents();

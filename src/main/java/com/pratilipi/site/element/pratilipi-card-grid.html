@@ -112,9 +112,9 @@
 				publishedActive: { type: Boolean, value: false }
 			},
 			
-			setPratilipiList: function( pratilipiList ) {
-				this.set( 'pratilipiList', pratilipiList );
-				this.$.repeatPratilipiList.render();
+			setSearchQuery: function( query ) {
+				this.set( 'searchQuery', query );
+				this.reset();
 			},
 			
 			reset: function() {
@@ -124,7 +124,7 @@
 				if( ajaxGet.lastRequest )
 					ajaxGet.lastRequest.abort();
 				
-				this.setPratilipiList( [] );
+				this.set( "pratilipiList", [] );
 				
 				// Setting the flags and clearing the cursor.
 				this.cursor = null;
