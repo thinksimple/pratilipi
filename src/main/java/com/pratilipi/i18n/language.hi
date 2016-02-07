@@ -1,35 +1,247 @@
-pratilipi		= प्रतिलिपि
-pratilipi_logo	= Pratilipi Logo
+# Do NOT edit
 
-home_page_title = Read Hindi, Gujarati and Tamil Stories, Poems and Books
-website_language = Hindi
+pratilipi					= ப்ரதிலிபி
 
-sign_in				  = साइन इन
-sign_in_with_facebook = फेसबुक साइन इन
+home_page_title				= தமிழ் கதைகள், புத்தகங்கள் , விதைகள், கட்டுரைகள், ஆகியவற்றை படிக்க
+website_language			= Tamil 
 
-choose_language = Choose Language
-language_all	= All Languages
-language_hi		= Hindi
-language_gu		= Gujarati
-language_ta		= Tamil
-
-rating  = रेटिंग
-ratings	= रेटिंग्स
-
-search 			= Search
-search_bar_help	= Search for books, stories, poems and more ...
+facebook_page				= https://www.facebook.com/pages/ப்ரதிலிபி/448203822022932
+twitter_page				= https://twitter.com/TeamPratilipi
+googleplus_page				= https://plus.google.com/+PratilipiTeam
+linkedin_page				= https://www.linkedin.com/company/pratilipi
 
 
 
-show_more = show more
-show_less = show less
+# Language
+
+language_choose_language	= மொழித்தேர்வு
+language_all				= அனைத்தும்
+language_hi					= Hindi
+language_gu					= Gujarati
+language_ta					= தமிழ்
+language_mr					= Marathi
+lanugage_ml					= Malayalam
+language_bn					= Bengali
+language_en					= English
 
 
-# Author related
 
-author_about = मेरा परिचय
+# Pratilipi Types
 
-write = Write
-published = Published
-pratilipi_summary = Summary
-review_helpful = Was this review helpful?
+_pratilipi_type_book		= புத்தகம்
+_pratilipi_type_books		= புத்தகங்கள்
+_pratilipi_type_poem		= கவிதை
+_pratilipi_type_poems		= கவிதைகள்
+_pratilipi_type_story		= கதை
+_pratilipi_type_stories		= கதைகள்
+_pratilipi_type_article		= கட்டுரை
+_pratilipi_type_articles	= கட்டுரைகள்
+_pratilipi_type_magazine	= இதழ்
+_pratilipi_type_magazines	= இதழ்கள்
+
+
+
+# Author
+
+author_about				= எழுத்தாளரைப் பற்றி
+author_language				= மொழி	
+author_since				= எழுத ஆரம்பித்தது	
+
+author_count_works			= எழுதியவை	
+author_count_reads			= படித்தவர்கள்	
+author_count_likes			= விருப்பங்கள்	
+
+author_edit_profile			= சுயவிவரத்தை திருத்த	
+
+author_drafts				= வரைவுகள்	
+author_published_works		= பதிப்பித்துள்ள படைப்புகள்
+author_add_new_content		= புதிய படைப்பை சேர்க்க	
+
+
+
+# Pratilipi
+
+pratilipi_type				= வகை	
+pratilipi_listing_date		= சேர்க்கப்பட்டது	
+pratilipi_published			= பதிப்பிக்கப்பட்டது	
+pratilipi_published_year	= பதிப்பு 
+pratilipi_summary			= படைப்பைப் பற்றி
+
+pratilipi_edit_info			= விவரத்தை திருத்த		
+pratilipi_edit_content		= படைப்பைத் திருத்த
+
+pratilipi_count_reads		= படித்தவர்கள்	
+pratilipi_count_reviews		= விமர்சனங்கள்	
+pratilipi_count_likes		= விருப்பங்கள்	
+
+pratilipi_move_to_drafts	= வரைவுகளுக்கு அனுப்ப
+pratilipi_publish_it		= பதிப்பிக்க
+
+
+
+# Rating
+
+rating_rating				= மதிப்பீடு 
+rating_ratings				= மதிப்பீடகள்
+rating_rate_this			= மதிப்பிடுக!
+rating_your_rating			= உங்கள் மதிப்பீடு!
+
+rating_1_star				= 1
+rating_2_star				= 2
+rating_3_star				= 3
+rating_4_star				= 4
+rating_5_star				= 5
+
+
+
+# Review
+
+review_heading				= விமர்சனங்கள் 
+review_write_a_review		= விமர்சனம் எழுத 
+review_title				= விமர்சனத் தலைப்பு 
+review_title_help			= எ.கா - அருமையான கதை!  
+review_content				= உங்கள் விமர்சனம் 
+review_content_help			= உங்கள் கருத்துக்களைப் பதிவிடுக. இக்கதையில் / புத்தகத்தில் / கவிதையில் / கட்டுரையில் எது உங்களை மிகவும் கவர்ந்தது? உங்களுக்கு பிடிக்காதது? உங்கள் விமர்சனம் எழுத்தாளருக்கும், மற்ற வாசகர்களுக்கு மிக உதவியாக இருக்கும். 
+review_submit_review		= சமர்ப்பிக்க
+review_edit_review			= விமர்சனத்தை திருத்த
+review_delete_review		= விமர்சனத்தை அழிக்க
+review_delete_review_confirm	= விமர்சனத்தை உறுதியாக அழிக்கவேண்டுமா?
+review_delete_okay			= அழி
+review_delete_cancel		= வேண்டாம்
+review_helpful				= இந்த விமர்சனம் உதவியாக இருந்ததா?  
+
+
+
+# Search
+
+search 						= தேட
+search_bar_help				= தேட - கவிதை, கதை, புத்தகம், கட்டுரை மற்றும் பல  ...
+search_results				= தேடல் முடிவுகள்
+
+
+
+# Write
+
+write_heading				= படைப்பை சேர்க்க                                                                                                                                                                                                                                                                                     
+write_help					= ப்ரதிலிபியில் அனைவரும் எழுதலாம். உங்கள் படைப்புகளை நீங்களே வெளியிட்டுக் கொள்ளலாம். இது எல்லா வகையான எழுத்திற்கும், எழுத்தாளர்களுக்குமான தளம்.
+write_title					= தலைப்பு *
+write_title_en				= தலைப்பு (ஆங்கிலத்தில்)
+write_type					= வகை *
+write_language				= மொழித்தேர்வு
+write_summary				= படைப்பைப் பற்றி (விருப்பமிருப்பின்)
+write_create_new_content	= புதிய படைப்பை உருவாக்க
+
+
+
+# Common User Popups
+
+user_sign_in				= உள்நுழைக
+user_to_sign_in				= உள்நுழைய 
+user_sign_in_with_facebook	= முகநூல்  மூலம் உள்நுழைய 
+user_sign_in_to_pratilipi	= ப்ரதிலிபியில் உள்நுழைக
+user_sign_out				= வெளியேற  
+
+user_sign_up				= தளத்தில்  பதிவு செய்க !
+user_sign_up_for_pratilipi	= ப்ரதிலிபியில் பதிவு செய்க !
+
+user_forgot_password		= கடவுச்சொல் நினைவில் இல்லை? 
+user_reset_password			= கடவுச்சொல்லை மாற்ற
+user_reset_password_help	=  இத்தளத்தில் பதிவு செய்யப் பயன்படுத்திய மின்னஞ்சல் முகவரியை வழங்கவும். அம்முகவரியில் கடவுச்சொல் மாற்றுவதற்கான இணைப்பை அனுப்பிவைக்கிறோம்.
+
+user_current_password		= தற்போதைய கடவுச்சொல்
+user_new_password			= புதிய கடவுச்சொல்
+
+user_full_name				= முழுப்பெயர்
+user_email					= மின்னஞ்சல் முகவரி 
+user_password				= கடவுச்சொல்
+user_confirm_password		= கடவுச்சொலை மீண்டும் பதிவு செய்க
+
+user_my_profile				= என் பக்கம்
+user_my_account				= என் கணக்கு
+
+user_is_new					= புதியவர்?	
+user_is_registered			= உறுப்பினர்?	
+user_email_verification		= மின்னஞ்சல் சரிபார்ப்பு	
+
+
+
+# My Account popup
+
+edit_account_heading		= என் கணக்கை திருத்த	
+edit_account_verify_email	= மின்னஞ்சலை சரிபார்க்க	
+edit_account_email_verified	= மின்னஞ்சல் சரிபார்க்கப்பட்டது	
+edit_account_change_password	= கடவுச்சொல்லை மாற்ற	
+
+
+
+# Footer
+
+footer_follow_us_on_social_media	= சமூக வலைதளங்களில் தொடர	
+footer_about_us				= எங்களைப் பற்றி	
+footer_work_with_us			= எங்களுடன் இணைய	
+footer_blog					= வலைப்பதிவு	
+footer_privacy_policy		= Privacy Policy
+footer_terms_of_service		= Terms Of Service
+
+
+
+# Common Words
+
+okay						= சரி	
+cancel						= இல்லை	
+save_changes				= மாற்றங்களை சேமிக்க	
+show_more					= மேலும் 
+show_less					= சுருக்கு 
+read						= படிக்க
+write						= எழுத
+free						= இலவசம் !
+saving						= பதிவேற்றபடுகிறது ...
+working						= காத்திருக்க...
+update						= மாற்று
+share						= பகிர 
+menu						= Menu
+back						= Back
+
+# Success Messages
+
+password_reset_request_success		= உங்கள்  முகவரிக்கு மின்னஞ்சல் அனுப்பியுள்ளோம்! 
+user_login_success					= வெற்றி !
+user_register_success				= வெற்றி !
+password_change_success				= கடவுச்சொல் மாற்றப்பட்டது!
+verification_email_sent_success		= மின்னஞ்சல் அனுப்பப்பட்டது !
+user_verified_success				= சரி பார்க்கப்பட்டது !
+content_created_success				= வெற்றி !
+updated_author_info_success			= வெற்றி !
+updated_pratilipi_info_success		= வெற்றி !
+
+# Author Edit Popup
+
+edit_author_heading				= உங்கள் விவரத்தை திருத்த	
+edit_author_first_name			= பெயர் (தமிழில்)
+edit_author_last_name			= 
+edit_author_first_name_en		= பெயர் (ஆங்கிலத்தில்)
+edit_author_last_name_en		= 
+edit_author_pen_name			= புனைப்பெயர்  ( தமிழில் )
+edit_author_pen_name_en			= புனைப்பெயர்  ( ஆங்கிலத்தில்) 
+edit_author_birthday_ddmmyyyy	= பிறந்த நாள் (dd-mm-yyyy)
+edit_author_language			= மொழித்தேர்வு
+edit_author_summary				= உங்களைப் பற்றி ( விருப்பமிருப்பின் )
+edit_author_save_changes		= மாற்றங்களை சேமிக்க
+
+# Pratilipi Edit Popup
+
+edit_pratilipi_heading			= விவரத்தை திருத்த
+edit_pratilipi_title			= பெயர் *
+edit_pratilipi_title_en			= பெயர் (ஆங்கிலத்தில்)
+edit_pratilipi_type				= வகை *
+edit_pratilipi_language			= மொழி
+edit_pratilipi_summary			= படைப்பைப் பற்றி  (விருப்பமிருப்பின்) :
+edit_pratilipi_save_changes		= மாற்றங்களை சேமிக்க
+
+
+
+# Register Form
+
+register_part_1					= இத்தளத்தில் பதிவு செய்வதன்மூலம், எங்களின் 
+register_part_2					= மற்றும்
+register_part_3					= க்கு ஒப்புக்கொள்கிறீர்கள்.
