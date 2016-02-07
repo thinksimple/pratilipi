@@ -1,11 +1,11 @@
 # Do NOT edit
 
-pratilipi					= ப்ரதிலிபி
+pratilipi					= प्रतिलिपि
 
-home_page_title				= தமிழ் கதைகள், புத்தகங்கள் , விதைகள், கட்டுரைகள், ஆகியவற்றை படிக்க
-website_language			= Tamil 
+home_page_title				= पढ़ें हिंदी कहानियाँ, कवितायें, उपन्यास और बहुत कुछ
+website_language			= हिन्दी
 
-facebook_page				= https://www.facebook.com/pages/ப்ரதிலிபி/448203822022932
+facebook_page				= https://www.facebook.com/Pratilipidotcom/
 twitter_page				= https://twitter.com/TeamPratilipi
 googleplus_page				= https://plus.google.com/+PratilipiTeam
 linkedin_page				= https://www.linkedin.com/company/pratilipi
@@ -14,9 +14,9 @@ linkedin_page				= https://www.linkedin.com/company/pratilipi
 
 # Language
 
-language_choose_language	= மொழித்தேர்வு
+language_choose_language	= भाषा पसंद करें 
 language_all				= அனைத்தும்
-language_hi					= Hindi
+language_hi					= हिन्दी
 language_gu					= Gujarati
 language_ta					= தமிழ்
 language_mr					= Marathi
@@ -28,105 +28,105 @@ language_en					= English
 
 # Pratilipi Types
 
-_pratilipi_type_book		= புத்தகம்
-_pratilipi_type_books		= புத்தகங்கள்
-_pratilipi_type_poem		= கவிதை
-_pratilipi_type_poems		= கவிதைகள்
-_pratilipi_type_story		= கதை
-_pratilipi_type_stories		= கதைகள்
-_pratilipi_type_article		= கட்டுரை
-_pratilipi_type_articles	= கட்டுரைகள்
-_pratilipi_type_magazine	= இதழ்
-_pratilipi_type_magazines	= இதழ்கள்
+_pratilipi_type_book		= पुस्तक
+_pratilipi_type_books		= पुस्तकें 
+_pratilipi_type_poem		= कविता 
+_pratilipi_type_poems		= कविताएँ 
+_pratilipi_type_story		= कहानी 
+_pratilipi_type_stories	= कहानियाँ 
+_pratilipi_type_article		= लेख
+_pratilipi_type_articles	= लेख
+_pratilipi_type_magazine	= पत्रिका 
+_pratilipi_type_magazines	= पत्रिका 
 
 
 
 # Author
 
-author_about				= எழுத்தாளரைப் பற்றி
-author_language				= மொழி	
-author_since				= எழுத ஆரம்பித்தது	
+author_about				= संक्षिप्त परिचय
+author_language				= भाषा	
+author_since				= प्रतिलिपि के साथ   
 
-author_count_works			= எழுதியவை	
-author_count_reads			= படித்தவர்கள்	
-author_count_likes			= விருப்பங்கள்	
+author_count_works			= प्रकाशित साहित्य 
+author_count_reads			= पाठकों ने पढ़ा  	
+author_count_likes			= ने पसंद किया 	
 
-author_edit_profile			= சுயவிவரத்தை திருத்த	
+author_edit_profile			= प्रोफ़ाइल संपादित करें
 
-author_drafts				= வரைவுகள்	
-author_published_works		= பதிப்பித்துள்ள படைப்புகள்
-author_add_new_content		= புதிய படைப்பை சேர்க்க	
+author_drafts				= अप्रकाशित रचनायें
+author_published_works		= प्रकाशित रचनायें
+author_add_new_content		= नयी रचना लिखिए 
 
 
 
 # Pratilipi
 
-pratilipi_type				= வகை	
-pratilipi_listing_date		= சேர்க்கப்பட்டது	
-pratilipi_published			= பதிப்பிக்கப்பட்டது	
-pratilipi_published_year	= பதிப்பு 
-pratilipi_summary			= படைப்பைப் பற்றி
+pratilipi_type				= विधा
+pratilipi_listing_date		= प्रकाशन दिनांक	
+pratilipi_published			= प्रकाशित	
+pratilipi_published_year	= प्रकाशन साल 
+pratilipi_summary			= सारांश लिखिए 
 
-pratilipi_edit_info			= விவரத்தை திருத்த		
-pratilipi_edit_content		= படைப்பைத் திருத்த
+pratilipi_edit_info			= संबंधित जानकारी संपादित करें	
+pratilipi_edit_content		= रचना सम्पादित करें 
 
-pratilipi_count_reads		= படித்தவர்கள்	
-pratilipi_count_reviews		= விமர்சனங்கள்	
-pratilipi_count_likes		= விருப்பங்கள்	
+pratilipi_count_reads		= पाठक संख्या	
+pratilipi_count_reviews		= कुल टिप्पणीयाँ
+pratilipi_count_likes		= कुल लाइक्स	
 
-pratilipi_move_to_drafts	= வரைவுகளுக்கு அனுப்ப
-pratilipi_publish_it		= பதிப்பிக்க
+pratilipi_move_to_drafts	= अप्रकाशित करें
+pratilipi_publish_it		= प्रकाशित करें
 
 
 
 # Rating
 
-rating_rating				= மதிப்பீடு 
-rating_ratings				= மதிப்பீடகள்
-rating_rate_this			= மதிப்பிடுக!
-rating_your_rating			= உங்கள் மதிப்பீடு!
+rating_rating				= रेटिंग
+rating_ratings				= रेटिंग
+rating_rate_this			= रेटिंग दें
+rating_your_rating			= आपकी रेटिंग
 
-rating_1_star				= 1
-rating_2_star				= 2
-rating_3_star				= 3
-rating_4_star				= 4
-rating_5_star				= 5
+rating_1_star				= १
+rating_2_star				= २
+rating_3_star				= ३
+rating_4_star				= ४
+rating_5_star				= ५ 
 
 
 
 # Review
 
-review_heading				= விமர்சனங்கள் 
-review_write_a_review		= விமர்சனம் எழுத 
-review_title				= விமர்சனத் தலைப்பு 
-review_title_help			= எ.கா - அருமையான கதை!  
-review_content				= உங்கள் விமர்சனம் 
-review_content_help			= உங்கள் கருத்துக்களைப் பதிவிடுக. இக்கதையில் / புத்தகத்தில் / கவிதையில் / கட்டுரையில் எது உங்களை மிகவும் கவர்ந்தது? உங்களுக்கு பிடிக்காதது? உங்கள் விமர்சனம் எழுத்தாளருக்கும், மற்ற வாசகர்களுக்கு மிக உதவியாக இருக்கும். 
-review_submit_review		= சமர்ப்பிக்க
-review_edit_review			= விமர்சனத்தை திருத்த
-review_delete_review		= விமர்சனத்தை அழிக்க
-review_delete_review_confirm	= விமர்சனத்தை உறுதியாக அழிக்கவேண்டுமா?
-review_delete_okay			= அழி
-review_delete_cancel		= வேண்டாம்
-review_helpful				= இந்த விமர்சனம் உதவியாக இருந்ததா?  
+review_heading				= टिप्पणीयाँ 
+review_write_a_review		= टिप्पणी लिखें 
+review_title				= टिप्पणी का शीर्षक  
+review_title_help			= उदाहरण के लिए – एक अद्भुत कहानी या एक सामान्य कहानी 
+review_content				= आपकी टिपण्णी 
+review_content_help			= 
+review_submit_review	= दर्ज करें 
+review_edit_review			=  संपादित करें 
+review_delete_review		= टिप्पणी हटायें 
+review_delete_review_confirm	= टिप्पणी हटाने की पुष्टि करें 
+review_delete_okay			= ओके
+review_delete_cancel		= कैंसिल
+review_helpful				= क्या यह टिप्पणी सहायरूप थी?
 
 
 
 # Search
 
-search 						= தேட
-search_bar_help				= தேட - கவிதை, கதை, புத்தகம், கட்டுரை மற்றும் பல  ...
-search_results				= தேடல் முடிவுகள்
+search 						= खोजिए
+search_bar_help				= लेखक का नाम यां कहानी,कविता,पुस्तक का शीर्षक टाइप करें 
+search_results				= खोज के परिणाम
 
 
 
 # Write
 
-write_heading				= படைப்பை சேர்க்க                                                                                                                                                                                                                                                                                     
-write_help					= ப்ரதிலிபியில் அனைவரும் எழுதலாம். உங்கள் படைப்புகளை நீங்களே வெளியிட்டுக் கொள்ளலாம். இது எல்லா வகையான எழுத்திற்கும், எழுத்தாளர்களுக்குமான தளம்.
-write_title					= தலைப்பு *
-write_title_en				= தலைப்பு (ஆங்கிலத்தில்)
-write_type					= வகை *
+write_heading				= लिखिए                                                                                                                                                                                                                                                                                   
+write_help					= कहानी, कविता, लेख, पुस्तक आदी स्वयं प्रकाशित करे 
+write_title					= यहाँ शीर्षक दर्ज कीजिए 
+write_title_en				= शीर्षक अंग्रेजी में  
+write_type					= विधा
 write_language				= மொழித்தேர்வு
 write_summary				= படைப்பைப் பற்றி (விருப்பமிருப்பின்)
 write_create_new_content	= புதிய படைப்பை உருவாக்க
