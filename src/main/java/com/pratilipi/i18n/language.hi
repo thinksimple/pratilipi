@@ -127,37 +127,37 @@ write_help					= कहानी, कविता, लेख, पुस्तक
 write_title					= यहाँ शीर्षक दर्ज कीजिए 
 write_title_en				= शीर्षक अंग्रेजी में  
 write_type					= विधा
-write_language				= மொழித்தேர்வு
-write_summary				= படைப்பைப் பற்றி (விருப்பமிருப்பின்)
-write_create_new_content	= புதிய படைப்பை உருவாக்க
+write_language				= भाषा 
+write_summary				= संक्षिप्त सारांश दर्ज करें 
+write_create_new_content	= आगे बढ़ीए
 
 
 
 # Common User Popups
 
-user_sign_in				= உள்நுழைக
-user_to_sign_in				= உள்நுழைய 
-user_sign_in_with_facebook	= முகநூல்  மூலம் உள்நுழைய 
-user_sign_in_to_pratilipi	= ப்ரதிலிபியில் உள்நுழைக
-user_sign_out				= வெளியேற  
+user_sign_in				= साइन इन कीजिए 
+user_to_sign_in				= प्रारंभ कीजिए 
+user_sign_in_with_facebook	= फेसबुक के साथ साइन इन करेें
+user_sign_in_to_pratilipi	= प्रतिलिपि में साइन इन करें
+user_sign_out				= साइन आउट करें 
 
-user_sign_up				= தளத்தில்  பதிவு செய்க !
-user_sign_up_for_pratilipi	= ப்ரதிலிபியில் பதிவு செய்க !
+user_sign_up				= नया अकाउंट बनाइये 
+user_sign_up_for_pratilipi	= प्रतिलिपि  पर नया अकाउंट बनाइये
 
-user_forgot_password		= கடவுச்சொல் நினைவில் இல்லை? 
-user_reset_password			= கடவுச்சொல்லை மாற்ற
-user_reset_password_help	=  இத்தளத்தில் பதிவு செய்யப் பயன்படுத்திய மின்னஞ்சல் முகவரியை வழங்கவும். அம்முகவரியில் கடவுச்சொல் மாற்றுவதற்கான இணைப்பை அனுப்பிவைக்கிறோம்.
+user_forgot_password		= यदि आप पासवर्ड भूल गए हो?
+user_reset_password			= नया पासवर्ड बनायें
+user_reset_password_help	= इस साइट पर रजिस्टर करने के लिए इस्तेमाल किया ईमेल पता प्रदान करें। 
 
-user_current_password		= தற்போதைய கடவுச்சொல்
-user_new_password			= புதிய கடவுச்சொல்
+user_current_password		= वर्तमान पासवर्ड
+user_new_password			= नया पासवर्ड
 
-user_full_name				= முழுப்பெயர்
-user_email					= மின்னஞ்சல் முகவரி 
-user_password				= கடவுச்சொல்
-user_confirm_password		= கடவுச்சொலை மீண்டும் பதிவு செய்க
+user_full_name				= पूरा नाम दर्ज करें 
+user_email					= ईमेल प्रदान करे 
+user_password				= पासवर्ड
+user_confirm_password		= पासवर्ड की पुष्टि करें
 
-user_my_profile				= என் பக்கம்
-user_my_account				= என் கணக்கு
+user_my_profile				= आपकी प्रोफाइल 
+user_my_account				= आपका  अकाउंट 
 
 user_is_new					= புதியவர்?	
 user_is_registered			= உறுப்பினர்?	
