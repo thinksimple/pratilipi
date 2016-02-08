@@ -275,7 +275,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 			}
 			memcache.put( PREFIX_PAGE + uri, page );
 		}
-		return page;
+		return page.getId() == null ? null : page;
 	}
 	
 	@Override

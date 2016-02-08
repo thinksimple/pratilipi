@@ -35,7 +35,7 @@ public class UriAliasUtil {
 				return aUriAlias;
 
 			Page page = dataAccessor.getPage( aUriAlias );
-			if( page == null || page.getType() == null )
+			if( page == null )
 				return aUriAlias;
 		}
 
