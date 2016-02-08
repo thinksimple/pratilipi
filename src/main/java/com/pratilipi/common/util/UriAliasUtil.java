@@ -7,6 +7,7 @@ import com.pratilipi.data.type.Page;
 public class UriAliasUtil {
 
 	public static String generateUriAlias( String oldUriAlias, String uriPrefix, String... keywords ) {
+		
 		String uriAlias = uriPrefix;
 		for( String keyword : keywords )
 			if( keyword != null )
@@ -29,12 +30,12 @@ public class UriAliasUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		for( int i = 0; ; i++ ) {
-			String aUriAlias = i == 0 ? uriAlias :  uriAlias + "-" + i;
+			String aUriAlias = i == 0 ? uriAlias : uriAlias + "-" + i;
 			if( oldUriAlias != null && oldUriAlias.equals( aUriAlias ) )
 				return aUriAlias;
 
 			Page page = dataAccessor.getPage( aUriAlias );
-			if( page == null )
+			if( page == null || page.getType() == null )
 				return aUriAlias;
 		}
 
