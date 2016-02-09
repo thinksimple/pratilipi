@@ -159,7 +159,7 @@
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
 				
-				isactive: { type: Boolean, value: false },
+				isactive: { type: Boolean, value: false, observer: "checkForZeroResults" },
 				
 				reviewAvailable: { type: Boolean, value: false },
 				userReviewDeleted: { type: Boolean, value: false },
@@ -222,7 +222,7 @@
 			},
 			
 			checkForZeroResults: function() {
-				if( this.reviewList.length > 0 || this.reviewAvailable )
+				if( this.reviewList.length > 0 || this.reviewAvailable || this.isactive )
 					this.zeroReviewResults = false;
 				else
 					this.zeroReviewResults = true;
