@@ -75,6 +75,11 @@
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
 			<h3 class="pratilipi-red">${ _strings.review_heading }</h3>
+			
+			<template is="dom-if" if="{{ user.isGuest }}">
+				<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
+			</template>
+			
 			<template is="dom-if" if="{{ userpratilipi.hasAccessToReview }}">
 				<template is="dom-if" if="{{ !isactive }}">
 				
@@ -157,7 +162,8 @@
 				isactive: { type: Boolean, value: false },
 				
 				reviewAvailable: { type: Boolean, value: false },
-				userReviewDeleted: { type: Boolean, value: false }
+				userReviewDeleted: { type: Boolean, value: false },
+				reviewButtonClicked: { type: Boolean, value: false }
 			},
 			
 			_userChanged: function() {
@@ -165,6 +171,11 @@
 				if( this.user.isGuest && this.userReviewDeleted ) {
 					this.userReviewDeleted = false;
 					this.reset();
+				}
+				
+				if( ! this.user.isGuest && this.reviewButtonClicked ) {
+					this.reviewButtonClicked = false;
+					this.showReviewInput();
 				}
 					
 			},
@@ -192,12 +203,15 @@
 					/* this.$.repeatReviewList.render(); */
 				}
 				
+				this.checkForZeroResults();
+				
 			},
 			
 			showReviewInput: function() {
-				if( this.user.isGuest )
+				if( this.user.isGuest ) {
 					document.querySelector( 'pratilipi-user' ).logIn();
-				else {
+					this.reviewButtonClicked = true;
+				} else {
 					this.isactive = true;
 					this.querySelector( 'pratilipi-review-input' ).open();
 				}
@@ -208,12 +222,10 @@
 			},
 			
 			checkForZeroResults: function() {
-				if( this.reviewList.length != 0 )
+				if( this.reviewList.length > 0 || this.reviewAvailable )
 					this.zeroReviewResults = false;
-				else if( this.userpratilipi == null || this.userpratilipi.review == null )
-					this.zeroReviewResults = true;
 				else
-					this.zeroReviewResults = false;
+					this.zeroReviewResults = true;
 			},
 			
 			reset: function() {
