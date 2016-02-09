@@ -42,11 +42,29 @@
 
 	
 	<template>
+		
+		<!-- Card Grid Heading  -->
 		<template is="dom-if" if="{{ heading }}">
 			<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">{{ heading }}</div>
 			<br class="pratilipi-break"/>
 		</template>
 		
+		<!-- No Books found in case of no results -->
+		<template is="dom-if" if="[[ zeroSearchResults ]]">
+			<paper-card style="width: 100%; text-align: center; padding: 75px 15px; margin-bottom: 10px;">
+				<iron-icon icon="icons:search" style="color: #545454; width: 100px; height: 100px;"></iron-icon>
+				<h3 style="color: #545454; margin-top: 30px;">Sorry! No Search Results found for "{{ searchQuery }}". Try searching for different search query!</h3>
+			</paper-card>
+		</template>
+		
+		<template is="dom-if" if="[[ zeroAuthorBooks ]]">
+			<paper-card style="width: 100%; text-align: center; padding: 75px 15px; margin-bottom: 10px;">
+				<iron-icon icon="icons:report" style="color: #545454; width: 100px; height: 100px;"></iron-icon>
+				<h3 style="color: #545454; margin-top: 30px;">Sorry! This Author doesn't have any books published!</h3>
+			</paper-card>
+		</template>
+		
+		<!-- List of Books -->
 		<div class="row">
 			<template is="dom-if" if="{{ includeAddCard }}">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -71,10 +89,14 @@
 				</div>
 			</template>
 		</div>
+		
+		<!-- Spinner when Loading more books -->
 		<template is="dom-if" if="{{ isLoading }}">
 			<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
 		</template>
 		
+		
+		<!-- Show More Button in case of network call failure -->
 		<template is="dom-if" if="{{ includeShowMoreButton }}">
 			<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">Show More Books</button>
 		</template>
@@ -114,12 +136,31 @@
 				includeShowMoreButton: { type: Boolean, value: false },
 				
 				draftsActive: { type: Boolean, value: false },
-				publishedActive: { type: Boolean, value: false }
+				publishedActive: { type: Boolean, value: false },
+				
+				zeroSearchResults: { type: Boolean, value: false },
+				zeroAuthorBooks: { type: Boolean, value: false }
 			},
 			
 			setSearchQuery: function( query ) {
 				this.set( 'searchQuery', query );
 				this.reset();
+			},
+			
+			checkForZeroResults: function() {
+				
+				if( this.pratilipiList.length != 0 ) {
+					this.zeroSearchResults = false;
+					this.zeroAuthorBooks = false;
+					return;
+				}
+				
+				if( this.searchQuery != null )
+					this.zeroSearchResults = true;
+				
+				if( ! this.includeAddCard && this.$.AjaxGet.params.authorId != null )
+					this.zeroAuthorBooks = true;
+				
 			},
 			
 			reset: function() {
@@ -204,6 +245,8 @@
 				}
 				else
 					this.cursor = request.detail.response.cursor;
+				
+				this.checkForZeroResults();
 
 			},
 
@@ -215,6 +258,7 @@
 			attached: function() {
 				if( this.pratilipiList.length < 20 )
 					this.isFinished = true;
+				this.checkForZeroResults();
 			},
 			
 			_write: function() {
