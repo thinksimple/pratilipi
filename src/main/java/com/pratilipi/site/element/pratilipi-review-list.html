@@ -49,6 +49,25 @@
 			--paper-spinner-layer-3-color: #D0021B;
 			--paper-spinner-layer-4-color: #107FE5;
 		}
+		
+		paper-card.zero-results {
+			width: 100%; 
+			text-align: center; 
+			padding: 75px 15px; 
+			margin-bottom: 10px;
+		}
+		
+		iron-icon.zero-results-icon {
+			color: #545454; 
+			width: 100px; 
+			height: 100px;
+		}
+		
+		h3.zero-results-h3 {
+			color: #545454; 
+			margin-top: 30px; 
+			line-height: 32px;
+		}
 
 	</style>
 
@@ -80,6 +99,14 @@
 				userpratilipi="[[ userpratilipi ]]"
 				isactive="{{ isactive }}"
 				></pratilipi-review-input>
+				
+		<!-- No Reviews found in case of no results -->
+		<template is="dom-if" if="[[ zeroReviewResults ]]">
+			<paper-card class="zero-results">
+				<iron-icon icon="icons:search" class="zero-results-icon"></iron-icon>
+				<h3 class="zero-results-h3">Sorry! No Reviews found for this content. You can be the first reviewer!</h3>
+			</paper-card>
+		</template>
 		
 		<div>
 			<template is="dom-if" if="{{ reviewAvailable }}">
@@ -91,6 +118,7 @@
 					<pratilipi-review review="[[ item ]]"></pratilipi-review>
 			</template>
 		</div>
+		
 		<template is="dom-if" if="{{ isLoading }}">
 			<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
 		</template>
@@ -120,6 +148,7 @@
 				userpratilipi: { type: Object, observer:"_userPratilipiChanged" },
 				
 				reviewList: { type: Array, value: [], notify: true },
+				zeroReviewResults: { type: Boolean, value: false },
 				cursor: { type: String, value: null },
 
 				isLoading: { type: Boolean, value: false },
@@ -176,6 +205,15 @@
 			
 			openDeleteReview: function() {
 				this.querySelector( 'pratilipi-review-input' ).openDeleteReview();
+			},
+			
+			checkForZeroResults: function() {
+				if( this.reviewList.length != 0 )
+					this.zeroReviewResults = false;
+				else if( this.userpratilipi == null || this.userpratilipi.review == null )
+					this.zeroReviewResults = true;
+				else
+					this.zeroReviewResults = false;
 			},
 			
 			reset: function() {
@@ -240,6 +278,8 @@
 					this.isFinished = true;
 				else
 					this.cursor = event.detail.response.cursor;
+				
+				this.checkForZeroResults();
 
 			},
 
@@ -250,6 +290,7 @@
 			attached: function() {
 				if( this.reviewList.length < 20 )
 					this.isFinished = true;
+				this.checkForZeroResults();
 			}
 			
 		});

@@ -8,16 +8,35 @@
 			display: block;
 		}
 		
-		paper-card.add {
+		paper-card.add-card {
 			width: 100%;
 			height: 200px;
 			background: #E0E0E0;
 			--paper-card-header: { display: none };
 		}
 		
+		paper-card.zero-results {
+			width: 100%; 
+			text-align: center; 
+			padding: 75px 15px; 
+			margin-bottom: 10px;
+		}
+		
 		iron-icon {
 			--iron-icon-height: 64px;
 			--iron-icon-width: 64px;
+		}
+		
+		iron-icon.zero-results-icon {
+			color: #545454; 
+			width: 100px; 
+			height: 100px;
+		}
+		
+		h3.zero-results-h3 {
+			color: #545454; 
+			margin-top: 30px; 
+			line-height: 32px;
 		}
 		
 		paper-spinner.pratilipi-spinner {
@@ -51,16 +70,16 @@
 		
 		<!-- No Books found in case of no results -->
 		<template is="dom-if" if="[[ zeroSearchResults ]]">
-			<paper-card style="width: 100%; text-align: center; padding: 75px 15px; margin-bottom: 10px;">
-				<iron-icon icon="icons:search" style="color: #545454; width: 100px; height: 100px;"></iron-icon>
-				<h3 style="color: #545454; margin-top: 30px;">Sorry! No Search Results found for "{{ searchQuery }}". Try searching for different search query!</h3>
+			<paper-card class="zero-results">
+				<iron-icon icon="icons:search" class="zero-results-icon"></iron-icon>
+				<h3 class="zero-results-h3">Sorry! No Search Results found for your search query. Try searching for different search query!</h3>
 			</paper-card>
 		</template>
 		
 		<template is="dom-if" if="[[ zeroAuthorBooks ]]">
-			<paper-card style="width: 100%; text-align: center; padding: 75px 15px; margin-bottom: 10px;">
-				<iron-icon icon="icons:report" style="color: #545454; width: 100px; height: 100px;"></iron-icon>
-				<h3 style="color: #545454; margin-top: 30px;">Sorry! This Author doesn't have any books published!</h3>
+			<paper-card class="zero-results">
+				<iron-icon icon="icons:info-outline" class="zero-results-icon"></iron-icon>
+				<h3 class="zero-results-h3">Sorry! This Author doesn't have any books published!</h3>
 			</paper-card>
 		</template>
 		
@@ -68,7 +87,7 @@
 		<div class="row">
 			<template is="dom-if" if="{{ includeAddCard }}">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-					<paper-card class="add">
+					<paper-card class="add-card">
 						<div style="text-align: center; margin-top: 50px;">
 							<a on-click="_write">
 								<iron-icon icon="add-circle"></iron-icon>
@@ -176,6 +195,8 @@
 				this.cursor = null;
 				this.isLoading = true;
 				this.isFinished = false;
+				this.zeroSearchResults = false;
+				this.zeroAuthorBooks = false;
 
 				// Set params and make ajax GET call. Filters already set when element initialised.
 				if( this.searchQuery != null )
