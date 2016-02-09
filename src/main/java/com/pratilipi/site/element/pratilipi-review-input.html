@@ -153,7 +153,7 @@
 			},
 			
 			deleteReview: function() {
-				// TODO: Change state and make Post call.
+				// Change state and make Post call.
 				jQuery( '#deleteReviewButton' ).prop( 'disabled', true );
 				var body = { pratilipiId: this.pratilipi.pratilipiId, reviewState: "DELETED" };
 				this.$.AjaxPostDeleteReview.body = jQuery.param( body );

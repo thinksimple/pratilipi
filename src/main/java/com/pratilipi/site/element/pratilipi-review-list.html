@@ -161,7 +161,7 @@
 				
 				isactive: { type: Boolean, value: false, observer: "checkForZeroResults" },
 				
-				reviewAvailable: { type: Boolean, value: false },
+				reviewAvailable: { type: Boolean, value: false, observer: "checkForZeroResults" },
 				userReviewDeleted: { type: Boolean, value: false },
 				reviewButtonClicked: { type: Boolean, value: false }
 			},
@@ -202,8 +202,6 @@
 					this.userReviewDeleted = true;
 					/* this.$.repeatReviewList.render(); */
 				}
-				
-				this.checkForZeroResults();
 				
 			},
 			

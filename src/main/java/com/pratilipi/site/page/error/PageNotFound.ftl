@@ -18,27 +18,30 @@
 				<div class="fit" style="margin-top: 5px;">
 					<div class="parent-container">
 						<div class="container">
-							<paper-card>
-								<div class="media" style="padding: 20px;">
-									<div class="media-left">
-										<img src="/stylesheets/PageNotFound.png" alt="Img">
+							<pratilipi-navigation
+								class='pull-left hidden-xs hidden-sm'
+								></pratilipi-navigation>
+							<div style="overflow:hidden">
+								<paper-card style="padding-bottom: 100px; margin-bottom: 10px;">
+									<div class="media" style="padding: 20px;">
+										<div class="media-left">
+											<img src="/stylesheets/PageNotFound.png" alt="Img">
+										</div>
+							
+										<div class="media-body" style="padding-left: 35px;">
+											<h4><b>Error 404</b></h4>
+											<h2>Page not found.</h2>
+											<p>The page you are looking for isn't here.</p>
+											<p>You can still search for your favorite content in the search bar on top<br>
+											or head over to the home page.</p> <br>
+											<a class="pratilipi-light-blue-button" href="/">Home</a>
+						    			</div>
 									</div>
-						
-									<div class="media-body" style="padding-left: 35px;">
-										<h4><b>Error 404</b></h4>
-										<h2>Page not found.</h2>
-										<p>The page you are looking for isn't here.</p>
-										<p>You can still search for your favorite content in the search bar on top<br>
-										or head over to the home page.</p> <br>
-										<a class="pratilipi-light-blue-button" href="/">Home</a>
-					    			</div>
-								</div>
-							</paper-card>
+								</paper-card>
+							</div>
 						</div>
 					</div>
-					<div style="position: absolute; bottom: 0px; width: 100%;">
-						<pratilipi-footer></pratilipi-footer>
-					</div>
+					<pratilipi-footer></pratilipi-footer>
 				</div>
 			</paper-header-panel>
 		</template>
