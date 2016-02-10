@@ -77,19 +77,19 @@
 			<h3 class="pratilipi-red">${ _strings.review_heading }</h3>
 			
 			<template is="dom-if" if="{{ user.isGuest }}">
-				<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
+				<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
 			</template>
 			
 			<template is="dom-if" if="{{ userpratilipi.hasAccessToReview }}">
 				<template is="dom-if" if="{{ !isactive }}">
 				
 					<template is="dom-if" if="{{ !reviewAvailable }}">
-						<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
+						<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
 					</template>
 					
 					<template is="dom-if" if="{{ reviewAvailable }}">
 						<div style="white-space: nowrap; display: inline-block;">
-							<a class="pratilipi-grey-button" role="button" href="#ReviewInput" on-click="showReviewInput">${ _strings.review_edit_review }</a>
+							<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_edit_review }</a>
 							<a class="pratilipi-grey-button" role="button" on-click="openDeleteReview">${ _strings.review_delete_review }</a>
 						</div>
 					</template>
@@ -184,7 +184,7 @@
 				}
 
 				// Checking if user has review
-				if( this.userpratilipi == null || this.userpratilipi.review == null || this.userpratilipi.review == "" 
+				if( this.userpratilipi == null || this.userpratilipi.review == null || this.userpratilipi.review.trim() == "" 
 						|| this.reviewList == null || this.userpratilipi.reviewState == "BLOCKED" 
 						|| this.userpratilipi.reviewState == "DELETED" ) {
 					this.reviewAvailable = false;
@@ -215,9 +215,11 @@
 				if( this.user.isGuest ) {
 					document.querySelector( 'pratilipi-user' ).logIn();
 					this.reviewButtonClicked = true;
-				} else if( this.userpratilipi.hasAccessToReview ) {
+				} else if( this.userpratilipi != null && this.userpratilipi.hasAccessToReview ) {
 					this.isactive = true;
 					this.querySelector( 'pratilipi-review-input' ).open();
+				} else {
+					alert( "Sorry! You are not authorized to review for this content!" );
 				}
 			},
 			
