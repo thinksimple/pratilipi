@@ -49,7 +49,11 @@
 			
 			<div class="pratilipi-center-div" on-keyup="onSubmit">
 				<paper-input label="${ _strings.review_title }" value="{{ params.reviewTitle::input }}"></paper-input>
-				<paper-textarea label="${ _strings.review_content }" value="{{ params.review::input }}"></paper-textarea>
+				<div style="margin-top: 20px; margin-bottom: 5px;">
+					<span style="font-size: 14px;">${ _strings.review_content }</span>
+				</div>
+				<script language="javascript" type="text/javascript">tinymce.init({ selector:'#reviewInput', editor_selector : "reviewInput", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+				<paper-textarea class="write" id="reviewInput" value="{{ params.review::input }}"></paper-textarea>
 			</div>
 			
 			<div style="margin-bottom: 20px;">
@@ -129,6 +133,9 @@
 					this.querySelector( 'pratilipi-rating-input' ).setRating( this.userpratilipi.rating );
 				else
 					this.querySelector( 'pratilipi-rating-input' ).setRating( 0 );
+				
+				if( this.params == null || this.params.review == null )
+					this.params.review = "";
 			},
 			
 			open: function() {
@@ -188,10 +195,8 @@
 					
 				this.params.rating = this.ratingValue;
 				
-				/* if( this.params.review == null || this.params.review.trim() === "" ) {
-					this.message = "Please enter the review.";
-					return;
-				} */
+				if( tinyMCE.activeEditor != null )
+					this.params.review = tinyMCE.get( 'reviewInput' ).getContent();
 				
 				var requestObject = {
 					pratilipiId : this.pratilipi.pratilipiId,

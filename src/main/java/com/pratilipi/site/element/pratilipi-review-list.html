@@ -173,14 +173,17 @@
 					this.reset();
 				}
 				
+			},
+			
+			_userPratilipiChanged: function() {
+
+				// Guest user clicked on "Write Review Button" and logged in.
 				if( ! this.user.isGuest && this.reviewButtonClicked ) {
 					this.reviewButtonClicked = false;
 					this.showReviewInput();
 				}
-					
-			},
-			
-			_userPratilipiChanged: function() {
+
+				// Checking if user has review
 				if( this.userpratilipi == null || this.userpratilipi.review == null || this.reviewList == null ||
 						this.userpratilipi.reviewState == "BLOCKED" || this.userpratilipi.reviewState == "DELETED" ) {
 					this.reviewAvailable = false;
@@ -189,6 +192,8 @@
 
 				this.reviewAvailable = true;
 				
+				
+				// Removing user's review from review list.
 				var index = -1;
 				for( var i = 0; i < this.reviewList.length; i++ ) {
 					if( this.userpratilipi.userPratilipiId == this.reviewList[i].userPratilipiId ) {
@@ -209,7 +214,7 @@
 				if( this.user.isGuest ) {
 					document.querySelector( 'pratilipi-user' ).logIn();
 					this.reviewButtonClicked = true;
-				} else {
+				} else if( this.userpratilipi.hasAccessToReview ) {
 					this.isactive = true;
 					this.querySelector( 'pratilipi-review-input' ).open();
 				}
