@@ -182,6 +182,14 @@
 		</div>
 		
 		<iron-ajax
+				id="AjaxGet"
+				url="/api/pratilipi"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				></iron-ajax>
+		<iron-ajax
 				id="AjaxPost"
 				url="/api/pratilipi"
 				method="POST"
@@ -225,6 +233,7 @@
 			},
 			
 			properties: {
+				user: { type: Object, observer: "_userChanged" },
 				pratilipi: { type:Object, notify: true },
 				pratilipiData: { type: Object },
 				pratilipiTypes: { types: Object },
@@ -345,6 +354,19 @@
 					document.getElementById( "less" ).style.display = "none";
 				else
 					document.getElementById( "less" ).style.display = "block";
+			},
+			
+			_userChanged: function() {
+				if( this.pratilipi == null )
+					return;
+
+				var ajaxGet = this.$.AjaxGet;
+				ajaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
+				ajaxGet.generateRequest();
+			},
+			
+			_handleAjaxGetResponse: function( event ) {
+				this.updatePratilipi( event.detail.response );
 			},
 			
 			changePratilipiState: function() {

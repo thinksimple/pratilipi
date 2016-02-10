@@ -20,6 +20,7 @@
 								></pratilipi-navigation>
 						<div style="overflow:hidden">
 							<pratilipi-pratilipi
+									user='[[ user ]]'
 									pratilipi='{{ pratilipi }}'
 									pratilipi-data='[[ pratilipiData ]]'
 									pratilipi-types='[[ pratilipiTypes ]]'
@@ -46,14 +47,6 @@
 				<pratilipi-footer></pratilipi-footer>
 			</div>
 		</paper-header-panel>
-		<iron-ajax
-				id="AjaxGet"
-				url="/api/pratilipi"
-				method="GET"
-				content-type="application/json"
-				handle-as="json"
-				on-response="_handleAjaxGetResponse"
-				></iron-ajax>
 	</template>
 
 	<script>
@@ -63,7 +56,7 @@
 			is: 'pratilipi-pratilipi-page',
 			
 			properties: {
-				userData: { type: Object, observer: "_userChanged" },
+				userData: { type: Object },
 				pratilipiId: { type: Number },
 				pratilipiData: { type: Object },
 				userpratilipiData: { type: Object },
@@ -71,19 +64,6 @@
 				reviewList: { type: Array },
 				cursor: { type: String },
 				pratilipiTypes: { types: Object }
-			},
-			
-			_userChanged: function() {
-				if( this.pratilipi == null )
-					return;
-				
-				var ajaxGet = this.$.AjaxGet;
-				ajaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
-				ajaxGet.generateRequest();
-			},
-			
-			_handleAjaxGetResponse: function( event ) {
-				this.querySelector( 'pratilipi-pratilipi' ).updatePratilipi( event.detail.response );
 			},
 			
 			scrollHandler: function( event ) {
