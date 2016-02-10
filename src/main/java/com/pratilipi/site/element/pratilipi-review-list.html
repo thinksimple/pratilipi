@@ -178,14 +178,15 @@
 			_userPratilipiChanged: function() {
 
 				// Guest user clicked on "Write Review Button" and logged in.
-				if( ! this.user.isGuest && this.reviewButtonClicked ) {
+				if( this.user != null && ! this.user.isGuest && this.reviewButtonClicked ) {
 					this.reviewButtonClicked = false;
 					this.showReviewInput();
 				}
 
 				// Checking if user has review
-				if( this.userpratilipi == null || this.userpratilipi.review == null || this.reviewList == null ||
-						this.userpratilipi.reviewState == "BLOCKED" || this.userpratilipi.reviewState == "DELETED" ) {
+				if( this.userpratilipi == null || this.userpratilipi.review == null || this.userpratilipi.review == "" 
+						|| this.reviewList == null || this.userpratilipi.reviewState == "BLOCKED" 
+						|| this.userpratilipi.reviewState == "DELETED" ) {
 					this.reviewAvailable = false;
 					return;
 				}
