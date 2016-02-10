@@ -43,19 +43,21 @@ _pratilipi_type_magazines	= இதழ்கள்
 
 # Author
 
-author_about				= எழுத்தாளரைப் பற்றி
-author_language				= மொழி	
-author_since				= எழுத ஆரம்பித்தது	
+author_about					= எழுத்தாளரைப் பற்றி
+author_language					= மொழி	
+author_since					= எழுத ஆரம்பித்தது	
 
-author_count_works			= எழுதியவை	
-author_count_reads			= படித்தவர்கள்	
-author_count_likes			= விருப்பங்கள்	
+author_count_works				= எழுதியவை	
+author_count_reads				= படித்தவர்கள்	
+author_count_likes				= விருப்பங்கள்	
 
-author_edit_profile			= சுயவிவரத்தை திருத்த	
+author_edit_profile				= சுயவிவரத்தை திருத்த	
 
-author_drafts				= வரைவுகள்	
-author_published_works		= பதிப்பித்துள்ள படைப்புகள்
-author_add_new_content		= புதிய படைப்பை சேர்க்க	
+author_drafts					= வரைவுகள்	
+author_published_works			= பதிப்பித்துள்ள படைப்புகள்
+author_add_new_content			= புதிய படைப்பை சேர்க்க	
+
+author_no_contents_published	= Sorry! This Author doesn't have any books published!
 
 
 
@@ -76,6 +78,8 @@ pratilipi_count_likes		= விருப்பங்கள்
 
 pratilipi_move_to_drafts	= வரைவுகளுக்கு அனுப்ப
 pratilipi_publish_it		= பதிப்பிக்க
+
+pratilipi_no_reviews		= Sorry! No Reviews found for this content!
 
 
 
@@ -117,6 +121,7 @@ review_helpful				= இந்த விமர்சனம் உதவியா�
 search 						= தேட
 search_bar_help				= தேட - கவிதை, கதை, புத்தகம், கட்டுரை மற்றும் பல  ...
 search_results				= தேடல் முடிவுகள்
+search_no_results_found		= Sorry! No Search Results found for your search query. Try searching for different search query!
 
 
 
@@ -201,6 +206,8 @@ update						= மாற்று
 share						= பகிர 
 menu						= Menu
 back						= Back
+load_more_contents			= Load More Contents
+
 
 # Success Messages
 

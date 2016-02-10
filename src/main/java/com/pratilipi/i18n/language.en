@@ -43,19 +43,21 @@ _pratilipi_type_magazines	= Magazines
 
 # Author
 
-author_about				= About the Author
-author_language				= Language
-author_since				= Author Since
+author_about					= About the Author
+author_language					= Language
+author_since					= Author Since
 
-author_count_works			= WORKS
-author_count_reads			= READS
-author_count_likes			= LIKES
+author_count_works				= WORKS
+author_count_reads				= READS
+author_count_likes				= LIKES
 
-author_edit_profile			= Edit My Profile
+author_edit_profile				= Edit My Profile
 
-author_drafts				= Drafts
-author_published_works		= Published Works
-author_add_new_content		= Add New Content
+author_drafts					= Drafts
+author_published_works			= Published Works
+author_add_new_content			= Add New Content
+
+author_no_contents_published	= Sorry! This Author doesn't have any books published!
 
 
 
@@ -76,6 +78,8 @@ pratilipi_count_likes		= LIKES
 
 pratilipi_move_to_drafts	= Move to Drafts
 pratilipi_publish_it		= Publish it!
+
+pratilipi_no_reviews		= Sorry! No Reviews found for this content!
 
 
 
@@ -117,6 +121,7 @@ review_helpful				= Was this review helpful?
 search 						= Search
 search_bar_help				= Search for books, stories, poems and more ...
 search_results				= Search Results
+search_no_results_found		= Sorry! No Search Results found for your search query. Try searching for different search query!
 
 
 
@@ -201,6 +206,8 @@ update						= Update
 share						= Share
 menu						= Menu
 back						= Back
+load_more_contents			= Load More Contents
+
 
 # Success Messages
 

@@ -72,14 +72,14 @@
 		<template is="dom-if" if="[[ zeroSearchResults ]]">
 			<paper-card class="zero-results">
 				<iron-icon icon="icons:search" class="zero-results-icon"></iron-icon>
-				<h3 class="zero-results-h3">Sorry! No Search Results found for your search query. Try searching for different search query!</h3>
+				<h3 class="zero-results-h3">${ _strings.search_no_results_found }</h3>
 			</paper-card>
 		</template>
 		
 		<template is="dom-if" if="[[ zeroAuthorBooks ]]">
 			<paper-card class="zero-results">
 				<iron-icon icon="icons:info-outline" class="zero-results-icon"></iron-icon>
-				<h3 class="zero-results-h3">Sorry! This Author doesn't have any books published!</h3>
+				<h3 class="zero-results-h3">${ _strings.author_no_contents_published }</h3>
 			</paper-card>
 		</template>
 		
@@ -117,7 +117,7 @@
 		
 		<!-- Show More Button in case of network call failure -->
 		<template is="dom-if" if="{{ includeShowMoreButton }}">
-			<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">Show More Books</button>
+			<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">${ _strings.load_more_contents }</button>
 		</template>
 		
 		<iron-ajax
