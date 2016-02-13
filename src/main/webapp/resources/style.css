@@ -13,6 +13,10 @@ body {
 	line-height: 24px; 
 }
 
+paper-scroll-header-panel {
+	height: 100%;
+}
+
 
 /* container classes */
 .parent-container {
@@ -424,4 +428,16 @@ a.pratilipi-orange-button:hover, a.pratilipi-orange-button:focus {
 .footer-icon-holder {
 	white-space: nowrap; 
 	display: inline-block;
+}
+
+/* Scroll to Top button */
+.scroll-top-button {
+	position: fixed; 
+	bottom: 10%; 
+	right: 5%;
+}
+
+.scroll-top-button img {
+	width: 48px; 
+	height: 48px;
 }
