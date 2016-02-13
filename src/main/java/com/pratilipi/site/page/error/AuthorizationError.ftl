@@ -5,14 +5,14 @@
 		<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 		<#include "../meta/Head.ftl">
 	</head>
-	<body class="fullbleed layout vertical">
+	<body>
 		<dom-module id="pratilipi-authorization-error">
 			<template>
 				<paper-scroll-header-panel on-content-scroll="scrollHandler" id="paperScrollHeaderPanel" header-height="75">
 					<div class="paper-header">
 						<pratilipi-header user='[[ user ]]'></pratilipi-header>
 					</div>
-					<div class="fit margin-top-bottom">
+					<div class="margin-top-bottom">
 						<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
 						<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 						<pratilipi-write pratilipi-types='${ pratilipiTypesJson }'></pratilipi-write>
