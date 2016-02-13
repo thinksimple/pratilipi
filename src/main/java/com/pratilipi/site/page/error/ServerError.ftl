@@ -6,42 +6,75 @@
 		<#include "../meta/Head.ftl">
 	</head>
 	<body class="fullbleed layout vertical">
-		<template is="dom-bind">
-			<paper-header-panel class="flex" mode="waterfall">
-				<div class="paper-header">
-					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
-					<pratilipi-header user='[[ user ]]'></pratilipi-header>
-					<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
-					<pratilipi-write pratilipi-types='${ pratilipiTypesJson }'></pratilipi-write>
-				</div>
-				<div class="fit" style="margin-top: 5px;">
-					<div class="parent-container">
-						<div class="container">
-							<pratilipi-navigation
-								class='pull-left hidden-xs hidden-sm'
-								></pratilipi-navigation>
-							<div style="overflow:hidden">
-								<paper-card style="padding-bottom: 100px; margin-bottom: 10px;">
-									<div class="media" style="padding: 20px;">
-										<div class="media-left">
-											<img src="/stylesheets/Server.png" alt="Img">
+		<dom-module id="pratilipi-server-error">
+			<template>
+				<paper-scroll-header-panel on-content-scroll="scrollHandler" id="paperScrollHeaderPanel" header-height="75">
+					<div class="paper-header">
+						<pratilipi-header user='[[ user ]]'></pratilipi-header>
+					</div>
+					<div class="fit margin-top-bottom">
+						<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
+						<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
+						<pratilipi-write pratilipi-types='${ pratilipiTypesJson }'></pratilipi-write>
+						<div class="parent-container">
+							<div class="container">
+								<pratilipi-navigation
+									class='pull-left hidden-xs hidden-sm'
+									></pratilipi-navigation>
+								<div style="overflow:hidden">
+									<paper-card style="padding-bottom: 100px; margin-bottom: 10px;">
+										<div class="media" style="padding: 20px;">
+											<div class="media-left">
+												<img src="/stylesheets/Server.png" alt="Img">
+											</div>
+											<div class="media-body" style="padding-left: 35px;">
+												<h4><b>Error!</b></h4>
+												<h2>Server Error.</h2>
+												<p>Sorry! Looks like something is wrong with our server.</p>
+												<p>Please try again after a few minutes, or use the search bar to find<br>
+												great content, or just head over to the Pratilipi homePage.</p> <br>
+												<a class="pratilipi-light-blue-button" href="/">Home</a>
+							    			</div>
 										</div>
-										<div class="media-body" style="padding-left: 35px;">
-											<h4><b>Error!</b></h4>
-											<h2>Server Error.</h2>
-											<p>Sorry! Looks like something is wrong with our server.</p>
-											<p>Please try again after a few minutes, or use the search bar to find<br>
-											great content, or just head over to the Pratilipi homePage.</p> <br>
-											<a class="pratilipi-light-blue-button" href="/">Home</a>
-						    			</div>
-									</div>
-								</paper-card>
+									</paper-card>
+								</div>
 							</div>
 						</div>
+						<pratilipi-footer></pratilipi-footer>
+						<template is="dom-if" if="{{ displayScrollTopButton }}">
+							<div class="scroll-top-button">
+								<a on-click="scrollToTop"><img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/arrow_up_transparent_64.png"/></a>
+							</div>
+						</template>
 					</div>
-					<pratilipi-footer></pratilipi-footer>
-				</div>
-			</paper-header-panel>
-		</template>
+				</paper-scroll-header-panel>
+			</template>
+			<script>
+				HTMLImports.whenReady(function () {
+					Polymer({
+						is: 'pratilipi-server-error',
+						
+						properties: {
+							lastScrollTop: { type: Number, value: 0 },
+							displayScrollTopButton: { type: Boolean, value: false }
+						},
+						
+						scrollToTop: function() {
+							this.$.paperScrollHeaderPanel.scrollToTop( true );
+						},
+						
+						scrollHandler: function( event ) {
+							var st = event.detail.target.scrollTop;
+							if( st > this.lastScrollTop || st == 0 )
+								this.displayScrollTopButton = false;
+							else
+								this.displayScrollTopButton = true;
+							this.lastScrollTop = st;
+						}
+					});
+				});
+			</script>
+		</dom-module>
+		<pratilipi-server-error></pratilipi-server-error>
 	</body>
 </html>
