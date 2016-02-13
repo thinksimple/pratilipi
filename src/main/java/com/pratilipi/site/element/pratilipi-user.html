@@ -87,6 +87,7 @@
 			_handleAjaxGetResponse: function(  request ) {
 				if( ! request.detail.response ) {
 					// TODO: show error
+					this._handleAjaxGetError();
 					return;
 				}
 				
@@ -95,6 +96,7 @@
 
 			_handleAjaxGetError: function() {
 				// TODO: show error
+				alert( "Logout failed! Please try again!" );
 			},
 
 			attached: function() {
