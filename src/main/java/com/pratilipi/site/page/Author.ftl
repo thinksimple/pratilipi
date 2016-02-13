@@ -3,7 +3,7 @@
 
 	<head>
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-author-page.html?20160203'>
+		<link rel='import' href='/elements.${lang}/pratilipi-author-page.html?20160213'>
 	</head>
 
 	<body>
