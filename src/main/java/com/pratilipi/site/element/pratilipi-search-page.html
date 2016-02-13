@@ -3,14 +3,14 @@
 <dom-module id="pratilipi-search-page">
 	
 	<template>
-		<paper-header-panel on-content-scroll="scrollHandler" class="flex fullbleed layout vertical" mode="waterfall">
+		<paper-scroll-header-panel on-content-scroll="scrollHandler" id="paperScrollHeaderPanel" header-height="75">
 			<div class="paper-header">
-				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 				<pratilipi-header user='[[ user ]]' query='[[ searchQuery ]]'></pratilipi-header>
-				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
-				<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
 			</div>
 			<div class="fit margin-top-bottom">
+				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
+				<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
 				<div class="parent-container">
 					<div class="container">
 						<pratilipi-navigation
@@ -25,13 +25,18 @@
 								filter='[[ filter ]]'
 								cursor='[[ cursor ]]'
 								></pratilipi-card-grid>
+							<br class="pratilipi-break"/>
 						</div>
-						<br class="pratilipi-break"/>
 					</div>
 				</div>
 				<pratilipi-footer></pratilipi-footer>
+				<template is="dom-if" if="{{ displayScrollTopButton }}">
+					<div class="scroll-top-button">
+						<a on-click="scrollToTop"><img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/arrow_up_transparent_64.png"/></a>
+					</div>
+				</template>
 			</div>
-		</paper-header-panel>
+		</paper-scroll-header-panel>
 	</template>
 
 	<script>
@@ -45,11 +50,25 @@
 				pratilipiTypes: { types: Object },
 				searchQuery: { type: String },
 				filter: { type: Object },
-				cursor: { type: String }
+				cursor: { type: String },
+				lastScrollTop: { type: Number, value: 0 },
+				displayScrollTopButton: { type: Boolean, value: false }
+			},
+			
+			scrollToTop: function() {
+				this.$.paperScrollHeaderPanel.scrollToTop( true );
 			},
 			
 			scrollHandler: function( event ) {
-				this.querySelector( 'pratilipi-card-grid' ).loadMore( event.detail.target.scrollTop );
+				var st = event.detail.target.scrollTop;
+				if( st > this.lastScrollTop || st == 0 ) {
+					this.displayScrollTopButton = false;
+					this.querySelector( 'pratilipi-card-grid' ).loadMore( st );
+				}
+				else {
+					this.displayScrollTopButton = true;
+				}
+				this.lastScrollTop = st;
 			}
 		
 		});
