@@ -168,7 +168,7 @@
 		
 		<!-- Navigation & Search bar for extra-small & small screens. -->
 		<div class="hidden-md hidden-lg">
-			<pratilipi-navigation-drawer with-backdrop></pratilipi-navigation-drawer>
+			<pratilipi-navigation-drawer with-backdrop on-iron-overlay-opened="patchOverlay"></pratilipi-navigation-drawer>
 		</div>
 		
 	</template>
@@ -198,6 +198,11 @@
 				mobile: { type: Boolean },
 				container: { type: Boolean },
 				medium: { type: Boolean }
+			},
+			
+			patchOverlay: function(e) {
+				if( e.target.withBackdrop )
+					e.target.parentNode.insertBefore( e.target._backdrop, e.target );
 			},
 			
 			myAccount: function() {
