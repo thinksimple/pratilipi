@@ -21,32 +21,9 @@
 <link rel='import' href='/elements.${lang}/pratilipi-footer.html?20160213'>
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css?20160213">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?20160215">
 
 <#include "GoogleAnalytics.ftl">
-
-<style>
-	main {
-		padding-top: 75px;
-	}
-
-	header {
-		height: 75px;
-		position: fixed;
-		z-index: 10;
-		top: 0;
-		transition: top 0.15s;
-		width: 100%;
-	}
-
-	.nav-up {
-		top: -75px;
-	}
-
-	.modal {
-		overflow-y: scroll!important;
-	}
-</style>
 
 <script defer>
 
@@ -57,6 +34,8 @@
 	
 	$( window ).scroll( function( event ) {
 		didScroll = true;
+		if( $(this).scrollTop() < navbarHeight )
+			hasScrolled();
 	});
 
 	

@@ -13,10 +13,26 @@ body {
 	line-height: 24px; 
 }
 
-paper-scroll-header-panel {
-	height: 100%;
+main {
+	padding-top: 75px;
 }
 
+header {
+	height: 75px;
+	position: fixed;
+	z-index: 10;
+	top: 0;
+	transition: top 0.15s;
+	width: 100%;
+}
+
+.nav-up {
+	top: -75px;
+}
+
+.modal {
+	overflow-y: scroll!important;
+}
 
 /* container classes */
 .parent-container {
