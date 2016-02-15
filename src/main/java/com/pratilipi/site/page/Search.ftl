@@ -3,7 +3,21 @@
 
 	<head>
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-search-page.html?20160213'>
+		<link rel='import' href='/elements.${lang}/pratilipi-search-page.html?20160215'>
+		
+		<script>
+			var didScroll;
+			$( window ).scroll( function( event ) {
+				didScroll = true;
+			});
+			
+			setInterval( function() {
+				if( didScroll ) {
+					document.querySelector( 'pratilipi-search-page' ).scrollHandler( $(this).scrollTop() );
+					didScroll = false;
+				}
+			}, 30);
+		</script>
 	</head>
 
 	<body>

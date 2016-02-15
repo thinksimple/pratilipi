@@ -5,52 +5,50 @@
 <dom-module id="pratilipi-author-page">
 
 	<template>
-		<paper-scroll-header-panel on-content-scroll="scrollHandler" id="paperScrollHeaderPanel" header-height="75">
-			<div class="paper-header">
-				<pratilipi-header user='[[ user ]]'></pratilipi-header>
-			</div>
-			<div class="margin-top-bottom">
-				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
-				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
-				<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
-				<div class="parent-container">
-					<div class="container">
-						<pratilipi-navigation
-								class='pull-left hidden-xs hidden-sm'
-								></pratilipi-navigation>
-						<div style="overflow:hidden">
-							<pratilipi-author
-									user='[[ user ]]'
-									author='{{ author }}'
-									author-data='[[ authorData ]]'
-									></pratilipi-author>
-							<div style="min-height: 5px;"></div>
-							<template is="dom-if" if="[[ ! author.hasAccessToUpdate ]]">
-								<pratilipi-card-grid
-									id='PublishedWorks'
-									heading='${ _strings.author_published_works }' 
-									pratilipi-list='[[ pratilipiList ]]'
-									filter='[[ filter ]]'
-									cursor='[[ cursor ]]'
-									></pratilipi-card-grid>
-							</template>
-							<template is="dom-if" if="[[ author.hasAccessToUpdate ]]">
-								<pratilipi-author-books 
-									author='[[ author ]]'
-									></pratilipi-author-books>
-							</template>
-							<br class="pratilipi-break"/>
-						</div>
+		<header class="nav-down">
+    		<pratilipi-header user='[[ user ]]'></pratilipi-header>
+		</header>
+		<main>
+			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
+			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+			<div class="parent-container margin-top-bottom">
+				<div class="container">
+					<pratilipi-navigation
+							class='pull-left hidden-xs hidden-sm'
+							></pratilipi-navigation>
+					<div style="overflow:hidden">
+						<pratilipi-author
+								user='[[ user ]]'
+								author='{{ author }}'
+								author-data='[[ authorData ]]'
+								></pratilipi-author>
+						<div style="min-height: 5px;"></div>
+						<template is="dom-if" if="[[ ! author.hasAccessToUpdate ]]">
+							<pratilipi-card-grid
+								id='PublishedWorks'
+								heading='${ _strings.author_published_works }' 
+								pratilipi-list='[[ pratilipiList ]]'
+								filter='[[ filter ]]'
+								cursor='[[ cursor ]]'
+								></pratilipi-card-grid>
+						</template>
+						<template is="dom-if" if="[[ author.hasAccessToUpdate ]]">
+							<pratilipi-author-books 
+								author='[[ author ]]'
+								></pratilipi-author-books>
+						</template>
+						<br class="pratilipi-break"/>
 					</div>
 				</div>
-				<pratilipi-footer></pratilipi-footer>
-				<template is="dom-if" if="{{ displayScrollTopButton }}">
-					<div class="scroll-top-button">
-						<a on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
-					</div>
-				</template>
 			</div>
-		</paper-scroll-header-panel>
+		</main>
+		<footer>
+   			<pratilipi-footer></pratilipi-footer>
+		</footer>
+		<div class="scroll-top-button">
+			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
+		</div>
 	</template>
 
 	<script>
@@ -68,24 +66,27 @@
 				filter: { type: Object },
 				cursor: { type: String },
 				lastScrollTop: { type: Number, value: 0 },
-				displayScrollTopButton: { type: Boolean, value: false }
+			},
+			
+			ready: function() {
+				jQuery( '#scrollToTop' ).css( "display", "none" );
 			},
 			
 			scrollToTop: function() {
-				this.$.paperScrollHeaderPanel.scrollToTop( true );
+				$( 'html, body' ).animate( { scrollTop : 0 },800 );
 			},
 			
-			scrollHandler: function( event ) {
-				var st = event.detail.target.scrollTop;
-				if( st > this.lastScrollTop || st == 0 ) {
-					this.displayScrollTopButton = false;
+			scrollHandler: function( st ) {
+				if( st > this.lastScrollTop || st < 100 ) {
+					jQuery( '#scrollToTop' ).fadeOut();
 					if( this.author != null && ! this.author.hasAccessToUpdate )
 						this.querySelector( 'pratilipi-card-grid' ).loadMore( st );
 				}
-				else {
-					this.displayScrollTopButton = true;
-				}
+				else
+					jQuery( '#scrollToTop' ).fadeIn();
+			
 				this.lastScrollTop = st;
+			
 			}
 
 		});

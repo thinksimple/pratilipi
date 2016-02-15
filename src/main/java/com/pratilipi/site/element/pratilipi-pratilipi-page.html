@@ -5,53 +5,51 @@
 <dom-module id="pratilipi-pratilipi-page">
 
 	<template>
-		<paper-scroll-header-panel on-content-scroll="scrollHandler" id="paperScrollHeaderPanel" header-height="75">
-			<div class="paper-header">
-				<pratilipi-header user='[[ user ]]'></pratilipi-header>
-			</div>
-			<div class="margin-top-bottom">
-				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
-				<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
-				<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
-				<div class="parent-container">
-					<div class="container">
-						<pratilipi-navigation
-								class='pull-left hidden-xs hidden-sm'
-								></pratilipi-navigation>
-						<div style="overflow:hidden">
-							<pratilipi-pratilipi
-									user='[[ user ]]'
-									pratilipi='{{ pratilipi }}'
-									pratilipi-data='[[ pratilipiData ]]'
-									pratilipi-types='[[ pratilipiTypes ]]'
-									></pratilipi-pratilipi>
-							<div style="min-height: 5px;"></div>
-							<pratilipi-userpratilipi
-									user='[[ user ]]'
-									pratilipi-id='[[ pratilipiId ]]'
-									userpratilipi='{{ userpratilipi }}'
-									userpratilipi-data='[[ userpratilipiData ]]'
-									></pratilipi-userpratilipi>
-							<pratilipi-review-list
-									id="ReviewSection"
-									user="[[ user ]]"
-									pratilipi='[[ pratilipi ]]'
-									userpratilipi='[[ userpratilipi ]]'
-									review-list='[[ reviewList ]]'
-									cursor='[[ cursor ]]'
-									></pratilipi-review-list>
-							<br class="pratilipi-break" />
-						</div>
+		<header class="nav-down">
+    		<pratilipi-header user='[[ user ]]'></pratilipi-header>
+		</header>
+		<main>
+			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
+			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+			<div class="parent-container margin-top-bottom">
+				<div class="container">
+					<pratilipi-navigation
+							class='pull-left hidden-xs hidden-sm'
+							></pratilipi-navigation>
+					<div style="overflow:hidden">
+						<pratilipi-pratilipi
+								user='[[ user ]]'
+								pratilipi='{{ pratilipi }}'
+								pratilipi-data='[[ pratilipiData ]]'
+								pratilipi-types='[[ pratilipiTypes ]]'
+								></pratilipi-pratilipi>
+						<div style="min-height: 5px;"></div>
+						<pratilipi-userpratilipi
+								user='[[ user ]]'
+								pratilipi-id='[[ pratilipiId ]]'
+								userpratilipi='{{ userpratilipi }}'
+								userpratilipi-data='[[ userpratilipiData ]]'
+								></pratilipi-userpratilipi>
+						<pratilipi-review-list
+								id="ReviewSection"
+								user="[[ user ]]"
+								pratilipi='[[ pratilipi ]]'
+								userpratilipi='[[ userpratilipi ]]'
+								review-list='[[ reviewList ]]'
+								cursor='[[ cursor ]]'
+								></pratilipi-review-list>
+						<br class="pratilipi-break" />
 					</div>
 				</div>
-				<pratilipi-footer></pratilipi-footer>
-				<template is="dom-if" if="{{ displayScrollTopButton }}">
-					<div class="scroll-top-button">
-						<a on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
-					</div>
-				</template>
 			</div>
-		</paper-scroll-header-panel>
+		</main>
+		<footer>
+    		<pratilipi-footer></pratilipi-footer>
+		</footer>
+		<div class="scroll-top-button">
+			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
+		</div>
 	</template>
 
 	<script>
@@ -70,21 +68,23 @@
 				cursor: { type: String },
 				pratilipiTypes: { types: Object },
 				lastScrollTop: { type: Number, value: 0 },
-				displayScrollTopButton: { type: Boolean, value: false }
 			},
 			
 			scrollToTop: function() {
-				this.$.paperScrollHeaderPanel.scrollToTop( true );
+				$( 'html, body' ).animate( { scrollTop : 0 },800 );
 			},
 			
-			scrollHandler: function( event ) {
-				var st = event.detail.target.scrollTop;
-				if( st > this.lastScrollTop || st == 0 ) {
-					this.displayScrollTopButton = false;
+			ready: function() {
+				jQuery( '#scrollToTop' ).css( "display", "none" );
+			},
+			
+			scrollHandler: function( st ) {
+				if( st > this.lastScrollTop || st < 100 ) {
+					jQuery( '#scrollToTop' ).fadeOut();
 					this.querySelector( 'pratilipi-review-list' ).loadMore( st );
 				}
 				else {
-					this.displayScrollTopButton = true;
+					jQuery( '#scrollToTop' ).fadeIn();
 				}
 				this.lastScrollTop = st;
 			}
