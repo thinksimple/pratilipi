@@ -29,7 +29,7 @@
 					<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
 					<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 					<pratilipi-write pratilipi-types='${ pratilipiTypesJson }'></pratilipi-write>
-					<div class="parent-container">
+					<div class="parent-container margin-top-bottom">
 						<div class="container">
 							<pratilipi-navigation
 								class='pull-left hidden-xs hidden-sm'
