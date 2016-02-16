@@ -13,17 +13,11 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.EventData;
-import com.pratilipi.data.client.PratilipiData;
-import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.util.EventDataUtil;
-import com.pratilipi.data.util.PratilipiDataUtil;
-import com.pratilipi.filter.AccessTokenFilter;
-import com.pratilipi.taskqueue.Task;
-import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
-@Bind( uri = "/pratilipi" )
+@Bind( uri = "/event" )
 public class EventApi extends GenericApi {
 	
 	@Get

@@ -34,10 +34,10 @@ public class EventDataUtil {
 
 		// User with EVENT_UPDATE access can update any event.
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), event.getLanguage(), AccessType.PRATILIPI_UPDATE ) ) {
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), event.getLanguage(), AccessType.EVENT_UPDATE ) ) {
 			if( eventData == null || ! eventData.hasLanguage() || eventData.getLanguage() == event.getLanguage() )
 				return true;
-			else if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), eventData.getLanguage(), AccessType.PRATILIPI_UPDATE ) )
+			else if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), eventData.getLanguage(), AccessType.EVENT_UPDATE ) )
 				return true;
 		}
 		
@@ -46,8 +46,8 @@ public class EventDataUtil {
 	}
 	
 	
-	public static String createEventBannerUrl( Event pratilipi ) {
-		return "/event/banner" + "?eventId=" + pratilipi.getId(); // + "&version=" + pratilipi.getLastUpdated().getTime();
+	public static String createEventBannerUrl( Event event ) {
+		return "/event/banner" + "?eventId=" + event.getId() + "&version=" + event.getLastUpdated().getTime();
 	}
 
 	
