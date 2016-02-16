@@ -35,4 +35,8 @@ public interface Event {
 	
 	void setCreationDate( Date creationDate );
 	
+	Date getLastUpdated();
+
+	void setLastUpdated( Date lastUpdated );
+	
 }

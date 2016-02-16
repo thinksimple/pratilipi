@@ -16,6 +16,9 @@ public enum AccessType {
 	AUTHOR_LIST	 ( "List Author" ),
 	AUTHOR_ADD	 ( "Add Author" ),
 	AUTHOR_UPDATE( "Update Author" ),
+	
+	EVENT_ADD	( "Add Event" ),
+	EVENT_UPDATE( "Update Event" ),
 	;
 
 	

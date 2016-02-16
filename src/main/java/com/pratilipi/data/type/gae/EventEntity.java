@@ -28,6 +28,7 @@ public class EventEntity implements Event {
 	private List<Long> PRATILIPI_IDS;
 	
 	private Date CREATION_DATE;
+	private Date LAST_UPDATED;
 
 	
 	@Override
@@ -116,6 +117,16 @@ public class EventEntity implements Event {
 	@Override
 	public void setCreationDate( Date creationDate ) {
 		this.CREATION_DATE = creationDate;
+	}
+
+	@Override
+	public Date getLastUpdated() {
+		return LAST_UPDATED;
+	}
+
+	@Override
+	public void setLastUpdated( Date lastUpdated ) {
+		this.LAST_UPDATED = lastUpdated;
 	}
 
 }

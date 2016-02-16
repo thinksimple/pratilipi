@@ -4,6 +4,7 @@ import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorImageApi;
+import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
@@ -31,10 +32,13 @@ public class PratilipiService extends GenericService {
 		ApiRegistry.register( UserVerificationApi.class );
 		ApiRegistry.register( UserPasswordUpdateApi.class );
 		
-		ApiRegistry.register( AuthorApi.class );
 		ApiRegistry.register( PratilipiApi.class );
 		ApiRegistry.register( PratilipiListApi.class );
 		ApiRegistry.register( PratilipiContentApi.class );
+		
+		ApiRegistry.register( AuthorApi.class );
+		
+		ApiRegistry.register( EventApi.class );
 		
 		ApiRegistry.register( UserPratilipiApi.class );
 		ApiRegistry.register( UserPratilipiReviewListApi.class );
