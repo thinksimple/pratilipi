@@ -442,6 +442,9 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	@Override
 	public Author getAuthor( Long id ) {
+		if( id == null )
+			return null;
+		
 		Author author = memcache.get( PREFIX_AUTHOR + id );
 		if( author == null ) {
 			author = dataAccessor.getAuthor( id );

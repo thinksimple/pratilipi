@@ -722,7 +722,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Event getEvent( Long id ) {
-		return id == null ? null : getEntityOfy( EventEntity.class, id );
+		return getEntityOfy( EventEntity.class, id );
 	}
 	
 	@Override

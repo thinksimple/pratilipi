@@ -27,7 +27,6 @@ public class MemcacheGaeImpl implements Memcache {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <K, T extends Serializable> T get( K key ) {
-		if( key == null ) return null;
 		try {
 			Cache cache = CacheManager.getInstance().getCacheFactory()
 					.createCache( Collections.emptyMap() );
