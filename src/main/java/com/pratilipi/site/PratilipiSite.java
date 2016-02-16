@@ -95,7 +95,6 @@ public class PratilipiSite extends HttpServlet {
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_OVERLAY_BEHAVIOR.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_PAPER_SCROLL_HEADER_PANEL.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_CARD.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_DROPDOWN_MENU.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_PAPER_ICON_BUTTON.getTag() );
