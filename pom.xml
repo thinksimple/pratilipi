@@ -13,7 +13,7 @@
 		<app.module>gamma</app.module>
 		<app.version>mark-6</app.version>
 		<app.setDefault>false</app.setDefault>
-		<gae.version>1.9.23</gae.version>
+		<gae.version>1.9.32</gae.version>
 		<gcloud.plugin.version>1.9.17</gcloud.plugin.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,8 +40,14 @@
 			<version>${gae.version}</version>
 		</dependency>
 		
-		
-	   	<!-- DataNucleus for GAE -->
+		<!-- Objectify -->
+		<dependency>
+			<groupId>com.googlecode.objectify</groupId>
+			<artifactId>objectify</artifactId>
+			<version>5.1.10</version>
+		</dependency>
+
+		<!-- DataNucleus for GAE -->
 		<dependency>
 			<groupId>javax.jdo</groupId>
 			<artifactId>jdo-api</artifactId>
