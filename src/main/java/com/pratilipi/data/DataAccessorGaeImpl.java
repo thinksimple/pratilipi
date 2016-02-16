@@ -25,6 +25,8 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
@@ -38,6 +40,7 @@ import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Category;
+import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
@@ -48,6 +51,7 @@ import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.CategoryEntity;
+import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiCategoryEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -68,6 +72,13 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	private final PersistenceManager pm;
 	
 	
+	// Registering Entities
+	
+	static {
+		ObjectifyService.register( EventEntity.class );
+	}
+	
+	
 	// Constructor
 
 	public DataAccessorGaeImpl() {
@@ -80,7 +91,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	
-	// Helper Methods
+	// JDO Helper Methods
 	
 	private <T> T getEntity( Class<T> clazz, Object id ) {
 		T entity = (T) pm.getObjectById( clazz, id );
@@ -106,6 +117,21 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	private <T> void deleteEntity( Class<T> clazz, Object id ) {
 		T entity = (T) pm.getObjectById( clazz, id );
 		pm.deletePersistent( entity );
+	}
+
+	
+	// Objectify Helper Methods
+	
+	private <T> T getEntityOfy( Class<T> clazz, Long id ) {
+		return id == null ? null : ObjectifyService.ofy().load().key( Key.create( clazz, id ) ).now();
+	}
+	
+	private <T> Key<T> createOrUpdateEntitiesOfy( T entity ) {
+		return ObjectifyService.ofy().save().entity( entity ).now();
+	}
+	
+	private Map<Key<Object>,Object> createOrUpdateEntitiesOfy( Object... entities ) {
+		return ObjectifyService.ofy().save().entities( entities ).now();
 	}
 
 	
@@ -686,6 +712,26 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return (Author) createOrUpdateEntities( author, auditLog )[ 0 ];
 	}
 
+	
+	// EVENT Table
+	
+	@Override
+	public Event newEvent() {
+		return new EventEntity();
+	}
+
+	@Override
+	public Event getEvent( Long id ) {
+		return id == null ? null : getEntityOfy( EventEntity.class, id );
+	}
+	
+	@Override
+	public Event createOrUpdateEvent( Event event ) {
+		Key<Event> key = createOrUpdateEntitiesOfy( event );
+		( (EventEntity) event ).setId( key.getId() );
+		return event;
+	}
+	
 	
 	// USER_PRATILIPI Table
 	

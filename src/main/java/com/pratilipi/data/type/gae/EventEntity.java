@@ -1,104 +1,105 @@
 package com.pratilipi.data.type.gae;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Text;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.Event;
 
-@PersistenceCapable( table = "EVENT" )
+@Cache
+@Entity( name = "EVENT" )
 public class EventEntity implements Event {
 
-	private static final long serialVersionUID = 5281080286713072853L;
-
+	// Intentionally Leaving all fields UnIndexed
 	
-	@PrimaryKey
-	@Persistent( column = "EVENT_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
-	private Long id;
+	@Id
+	private Long EVENT_ID;
 
-	@Persistent( column = "NAME" )
-	private String name;
-	
-	@Persistent( column = "NAME_EN" )
-	private String nameEn;
+	private String NAME;
+	private String NAME_EN;
 
-
-	@Persistent( column = "LANGUAGE" )
-	private Language language;
-
+	private Language LANGUAGE;
 	@Deprecated
-	@Persistent( column = "LANGUAGE_ID" )
-	private Long languageId;
-
+	private Long LANGUAGE_ID;
+	private String SUMMARY;
+	private List<Long> PRATILIPI_IDS;
 	
-	@Persistent( column = "SUMMARY" )
-	private Text summary;
-	
-	@Persistent( column = "CREATION_DATE" )
-	private Date creationDate;
-
+	private Date CREATION_DATE;
 
 	
 	@Override
 	public Long getId() {
-		return id;
+		return EVENT_ID;
+	}
+	
+	public void setId( Long id ) {
+		this.EVENT_ID = id;
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return NAME;
 	}
 
 	@Override
 	public void setName( String name ) {
-		this.name = name;
+		this.NAME = name;
 	}
 
 	@Override
 	public String getNameEn() {
-		return nameEn;
+		return NAME_EN;
 	}
 
 	@Override
 	public void setNameEn( String nameEn ) {
-		this.nameEn = nameEn;
+		this.NAME_EN = nameEn;
 	}
 
 	
 	@Override
 	public Language getLanguage() {
-		return language;
+		return LANGUAGE;
 	}
 
 	@Override
 	public void setLanguage( Language language ) {
-		this.language = language;
+		this.LANGUAGE = language;
 	}
 
 
 	@Override
 	public String getSummary() {
-		return summary == null ? null : summary.getValue();
+		return SUMMARY;
 	}
 
 	@Override
 	public void setSummary( String summary ) {
-		this.summary = summary == null ? null : new Text( summary );
+		this.SUMMARY = summary;
+	}
+
+	@Override
+	public List<Long> getPratilipiIdList() {
+		return PRATILIPI_IDS;
 	}
 	
 	@Override
+	public void setPratilipiIdList( List<Long> pratilipiIdList ) {
+		this.PRATILIPI_IDS = pratilipiIdList;
+	}
+	
+	
+	@Override
 	public Date getCreationDate() {
-		return creationDate;
+		return CREATION_DATE;
 	}
 	
 	@Override
 	public void setCreationDate( Date creationDate ) {
-		this.creationDate = creationDate;
+		this.CREATION_DATE = creationDate;
 	}
 
 }

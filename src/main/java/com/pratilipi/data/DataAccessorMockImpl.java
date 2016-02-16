@@ -28,6 +28,7 @@ import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Category;
+import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
@@ -37,6 +38,7 @@ import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
+import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserEntity;
@@ -447,6 +449,24 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return createOrUpdateAuthor( author );
 	}
 
+	
+	// EVENT Table
+	
+	@Override
+	public Event newEvent() {
+		return new EventEntity();
+	}
+
+	@Override
+	public Event getEvent( Long id ) {
+		return null;
+	}
+	
+	@Override
+	public Event createOrUpdateEvent( Event event ) {
+		return null;
+	}
+	
 	
 	// USER_PRATILIPI Table
 	

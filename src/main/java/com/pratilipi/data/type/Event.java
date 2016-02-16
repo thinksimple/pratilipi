@@ -1,11 +1,11 @@
 package com.pratilipi.data.type;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.pratilipi.common.type.Language;
 
-public interface Event extends Serializable {
+public interface Event {
 
 	Long getId();
 	
@@ -26,7 +26,11 @@ public interface Event extends Serializable {
 
 	void setSummary( String summary );
 
+	List<Long> getPratilipiIdList();
+	
+	void setPratilipiIdList( List<Long> pratilipiIdList );
 
+		
 	Date getCreationDate();
 	
 	void setCreationDate( Date creationDate );

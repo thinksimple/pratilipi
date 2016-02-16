@@ -21,6 +21,7 @@ import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Category;
+import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
@@ -441,9 +442,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	@Override
 	public Author getAuthor( Long id ) {
-		if( id == null )
-			return null;
-		
 		Author author = memcache.get( PREFIX_AUTHOR + id );
 		if( author == null ) {
 			author = dataAccessor.getAuthor( id );
@@ -561,6 +559,26 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return author;
 	}
 
+	
+	// EVENT Table
+	
+	@Override
+	public Event newEvent() {
+		return dataAccessor.newEvent();
+	}
+
+	@Override
+	public Event getEvent( Long id ) {
+		// Counting on Objectify Global and Session cache
+		return dataAccessor.getEvent( id );
+	}
+	
+	@Override
+	public Event createOrUpdateEvent( Event event ) {
+		// Counting on Objectify Global and Session cache
+		return dataAccessor.createOrUpdateEvent( event );
+	}
+	
 	
 	// USER_PRATILIPI Table
 	

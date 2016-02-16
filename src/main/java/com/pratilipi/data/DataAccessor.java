@@ -15,6 +15,7 @@ import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Category;
+import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
@@ -87,6 +88,11 @@ public interface DataAccessor {
 	@Deprecated
 	Author createOrUpdateAuthor( Author author );
 	Author createOrUpdateAuthor( Author author, AuditLog auditLog );
+
+	// EVENT Table
+	Event newEvent();
+	Event getEvent( Long id );
+	Event createOrUpdateEvent( Event event );
 
 	
 	// USER_PRATILIPI Table
