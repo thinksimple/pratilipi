@@ -1,62 +1,52 @@
 <dom-module id="pratilipi-user-login">
 
 	<style>
-
 		paper-input.pratilipi-blue {
+			padding-left: 20px;
+			padding-right: 20px;
+			--paper-input-container-color: #107FE5;
 			--paper-input-container-focus-color: #107FE5;
+			--paper-input-container-input-color: #333;
 			--paper-input-container-label: {
 				font-size: 15px;
 				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+				text-align: left;
 			};
 		}
-		
-		iron-icon {
-			margin-right: 5px;
-		}
-		
+		.modal-fullscreen .modal-dialog .modal-content {max-width: 400px;}
 	</style>
 
 	<template>
-		
-		<div class="modal fade" id="pratilipiUserLogin" role="dialog">
+		<div class="modal modal-fullscreen fade" id="pratilipiUserLogin" role="dialog">
 			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h6 class="modal-heading">${ _strings.user_sign_in_to_pratilipi }</h6>
-						<span class="modal-close-button"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
+				<div class="modal-content" on-keyup="onSubmit">
+					<div class="modal-fullscreen-close-button">
+						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
 					</div>
-					<div class="modal-body" on-keyup="onSubmit">
-						<pratilipi-facebook-login></pratilipi-facebook-login>
-						<div style="margin: 20px 10px;">
-							<div style="height: 2px; background-color: #f5f5f5; text-align: center;">
-								<span style="background-color: white; position: relative; top: -1em;">
-									&nbsp;&nbsp;OR&nbsp;&nbsp;
-								</span>
-							</div>
-							<paper-input class="pratilipi-blue" label="${ _strings.user_email }" value="{{ email::input }}">
-								 <iron-icon icon="mail" prefix></iron-icon>
-							</paper-input>
-							<paper-input class="pratilipi-blue" label="${ _strings.user_password }" type="password" value="{{ password::input }}">
-								<iron-icon icon="lock" prefix></iron-icon>
-							</paper-input>
-							<div class="text-center">
-								<span class="text-center">{{ message }}</span>
-							 	<br/>
-								<br style="line-height: 10px;"/>
-								<button id="loginButton" class="pratilipi-dark-blue-button" on-click="onSubmit">${ _strings.user_sign_in }</button>
-							</div>
-						</div>
+					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+					<pratilipi-facebook-login></pratilipi-facebook-login>
+					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
+					<h6 class="modal-fullscreen-heading">${ _strings.user_sign_in_to_pratilipi }</h6>
+					<paper-input class="pratilipi-blue" label="${ _strings.user_email }" value="{{ email::input }}">
+						 <iron-icon icon="mail" prefix></iron-icon>
+					</paper-input>
+					<paper-input class="pratilipi-blue" label="${ _strings.user_password }" type="password" value="{{ password::input }}">
+						<iron-icon icon="lock" prefix></iron-icon>
+					</paper-input>
+					<div class="display-message-div">
+						<p>{{ message }}</p>
 					</div>
-					<div class="modal-footer">
-						<div class="row">
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
-								<a style="font-size: 13px; font-weight: 300; left; color: #D0021B;" href="#" on-click="resetPassword">${ _strings.user_forgot_password }</a>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
-								<span style="font-size: 12px; font-weight: 300; color: #9B9B9B;">${ _strings.user_is_new }</span>
-								<a style="font-size: 13px; font-weight: 300; color: #107FE5;" href="#" on-click="register">${ _strings.user_sign_up_for_pratilipi }</a>
-							</div>
-						</div>
+					<button id="loginButton" class="pratilipi-blue-button" on-click="onSubmit">${ _strings.user_sign_in }</button>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 center text-center">
+						<a class="pratilipi-red" on-click="resetPassword">${ _strings.user_forgot_password }</a>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 center text-center">
+						<span class="text-muted">${ _strings.user_is_new }</span>
+						<a class="pratilipi-blue" on-click="register">${ _strings.user_sign_up_for_pratilipi }</a>
 					</div>
 				</div>
 			</div>
@@ -71,7 +61,6 @@
 				on-response="_handleAjaxPostResponse"
 				on-error="_handleAjaxPostError"
 				></iron-ajax>
-		
 	</template>
 	
 	
@@ -97,7 +86,7 @@
 			
 			open: function() {
 				this.async( function() {
-					jQuery( "#pratilipiUserLogin" ).modal();
+					jQuery( "#pratilipiUserLogin" ).modal( {backdrop: 'static'} );
 				});
 			},
 			
