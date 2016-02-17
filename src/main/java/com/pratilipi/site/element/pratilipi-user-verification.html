@@ -2,19 +2,16 @@
 
 	<template>
 		
-		<div class="modal fade" id=pratilipiUserVerification role="dialog">
+		<div class="modal modal-fullscreen fade" id=pratilipiUserVerification role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
-						<h6 class="modal-heading">${ _strings.user_email_verification }</h6>
-						<span class="modal-close-button"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
+					<div class="modal-fullscreen-close-button">
+						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
 					</div>
-					<div class="modal-body">
-						<div class="text-center">
-							<span class="text-center">{{ message }}</span>
-						</div>
-					</div>
-					<div class="modal-footer">
+					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+					<h6 class="modal-fullscreen-heading">${ _strings.user_email_verification }</h6>
+					<div class="display-message-div">
+						<p style="margin-top: 50px; font-size: 20px;">{{ message }}</p>
 					</div>
 				</div>
 			</div>
@@ -55,7 +52,7 @@
 			
 			open: function() {
 				this.async( function() {
-					jQuery( "#pratilipiUserVerification" ).modal();
+					jQuery( "#pratilipiUserVerification" ).modal( {backdrop: 'static'} );
 				});
 			},
 			
