@@ -23,7 +23,7 @@ public class PratilipiCoverApi extends GenericApi {
 	public GenericFileDownloadResponse getPratilipiCover( GetPratilipiCoverRequest request )
 			throws UnexpectedServerException {
 
-		BlobEntry blobEntry = (BlobEntry) PratilipiDataUtil.getPratilipiCover(
+		BlobEntry blobEntry = PratilipiDataUtil.getPratilipiCover(
 				request.getPratilipiId(),
 				request.getWidth() );
 		

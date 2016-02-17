@@ -3,6 +3,7 @@ package com.pratilipi.service;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
 import com.pratilipi.api.impl.author.AuthorImageApi;
+import com.pratilipi.api.impl.event.EventBannerApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
 import com.pratilipi.api.impl.user.UserLoginFacebookApi;
 
@@ -15,6 +16,8 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( PratilipiCoverApi.class );	// *.pratilipi.com & AWS CloudFront
 		
 		ApiRegistry.register( AuthorImageApi.class );		// *.pratilipi.com & AWS CloudFront
+
+		ApiRegistry.register( EventBannerApi.class );		// *.pratilipi.com & AWS CloudFront
 	}
 	
 }

@@ -115,6 +115,10 @@ public class EventData {
 		return bannerImageUrl;
 	}
 
+	public String getBannerImageUrl( int width ) {
+		return bannerImageUrl + "&width=" + width;
+	}
+
 	public void setBannerImageUrl( String bannerImageUrl ) {
 		this.bannerImageUrl = bannerImageUrl;
 	}

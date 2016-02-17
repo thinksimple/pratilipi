@@ -10,8 +10,11 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.util.ImageUtil;
+import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UriAliasUtil;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -19,6 +22,7 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.EventData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
+import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -61,7 +65,10 @@ public class EventDataUtil {
 	
 	
 	public static String createEventBannerUrl( Event event ) {
-		return "/event/banner" + "?eventId=" + event.getId() + "&version=" + event.getLastUpdated().getTime();
+		String url = "/event/banner" + "?eventId=" + event.getId() + "&version=" + event.getLastUpdated().getTime();
+		if( SystemProperty.CDN != null )
+			url = SystemProperty.CDN.replace( "*", event.getId() % 10 + "" ) + url;
+		return url;
 	}
 
 	
@@ -148,6 +155,18 @@ public class EventDataUtil {
 			createOrUpdateEventPageUrl( event.getId() );
 
 		return createEventData( event );
+		
+	}
+	
+	
+	public static BlobEntry getEventBanner( Long eventId, Integer width )
+			throws UnexpectedServerException {
+
+		String fileName = BANNER_FOLDER + "/" + eventId;
+		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
+		if( width != null )
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
+		return blobEntry;
 		
 	}
 	
