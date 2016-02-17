@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.data.client.EventData;
 
 public class GenericEventResponse extends GenericResponse {
 	
@@ -21,6 +22,19 @@ public class GenericEventResponse extends GenericResponse {
 	
 	private Boolean hasAccessToUpdate;
 
+	
+	public GenericEventResponse( EventData eventData ) {
+		this.eventId = eventData.getId();
+		this.name = eventData.getName();
+		this.nameEn = eventData.getNameEn();
+		this.language = eventData.getLanguage();
+		this.summary = eventData.getSummary();
+		this.pratilipiIdList = eventData.getPratilipiIdList();
+		this.pratilipiUrlList = eventData.getPratilipiUrlList();
+		this.bannerImageUrl = eventData.getBannerImageUrl();
+		this.hasAccessToUpdate = eventData.hasAccessToUpdate();
+	}
+	
 	
 	public Long getId() {
 		return eventId;
