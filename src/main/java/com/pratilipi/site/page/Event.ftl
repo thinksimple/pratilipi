@@ -16,7 +16,7 @@
 			
 			setInterval( function() {
 				if( didScroll ) {
-					document.querySelector( 'pratilipi-home-page' ).scrollHandler( $(this).scrollTop() );
+					document.querySelector( 'pratilipi-event-page' ).scrollHandler( $(this).scrollTop() );
 					didScroll = false;
 				}
 			}, 30);

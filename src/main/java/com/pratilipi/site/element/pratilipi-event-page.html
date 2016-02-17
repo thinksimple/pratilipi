@@ -1,6 +1,24 @@
 <link rel='import' href='pratilipi-card-grid.html?20160213'>
 
 <dom-module id="pratilipi-event-page">
+	
+	<style>
+		.secondary-500 {
+			margin-bottom: 5px;
+		}
+		paper-card.event-banner {
+			width: 100%;
+			padding: 0px;
+			margin-bottom: 10px;
+			--paper-card-header: { display: none };
+		}
+		paper-card.event-description {
+			width: 100%;
+			padding: 15px 20px;
+			margin-bottom: 10px;
+			--paper-card-header: { display: none };
+		}
+	</style>
 
 	<template>
 		<header class="nav-down">
@@ -16,14 +34,17 @@
 							class='pull-left hidden-xs hidden-sm'
 							></pratilipi-navigation>
 					<div style="overflow:hidden">
-						<img src="{{ event.bannerImageUrl }}" />
-						<p>{{ event.description }}</p>
-						<br class="pratilipi-break"/>
+						<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">{{ event.name }}</div>
+						<paper-card class="event-banner">
+							<img style="width: 100%;" src="{{ event.bannerImageUrl }}" />
+						</paper-card>
+						<paper-card class="event-description">
+							<div id="pratilipi-event-description"></div>
+						</paper-card>
 						<pratilipi-card-grid
-							heading='[[ item.title ]]'
-							pratilipi-list='[[ item.pratilipiList ]]'
+							heading='[[ event.name ]]'
+							pratilipi-list='[[ pratilipiList ]]'
 							></pratilipi-card-grid>
-						<br class="pratilipi-break"/>
 					</div>
 				</div>
 			</div>
@@ -56,6 +77,11 @@
 			
 			ready: function() {
 				jQuery( '#scrollToTop' ).css( "display", "none" );
+			},
+			
+			attached: function() {
+				var jSummary = jQuery( "#pratilipi-event-description" );
+				jSummary.html( this.event.description );
 			},
 			
 			scrollHandler: function( st ) {
