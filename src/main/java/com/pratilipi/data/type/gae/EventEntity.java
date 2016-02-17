@@ -1,5 +1,6 @@
 package com.pratilipi.data.type.gae;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -105,7 +106,7 @@ public class EventEntity implements Event {
 
 	@Override
 	public List<Long> getPratilipiIdList() {
-		return PRATILIPI_IDS;
+		return PRATILIPI_IDS == null ? new ArrayList<Long>( 0 ) : PRATILIPI_IDS;
 	}
 	
 	@Override
