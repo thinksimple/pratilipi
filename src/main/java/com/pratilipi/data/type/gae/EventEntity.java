@@ -126,7 +126,7 @@ public class EventEntity implements Event {
 
 	@Override
 	public Date getLastUpdated() {
-		return LAST_UPDATED;
+		return LAST_UPDATED == null ? CREATION_DATE : LAST_UPDATED;
 	}
 
 	@Override
