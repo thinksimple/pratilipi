@@ -140,7 +140,7 @@ public class EventDataUtil {
 		auditLog.setEventDataNew( gson.toJson( event ) );
 		
 		
-//		event = dataAccessor.createOrUpdateEvent( event, auditLog );
+//		event = dataAccessor.createOrUpdateEvent( event, auditLog ); TODO: Invoke this method instead
 		event = dataAccessor.createOrUpdateEvent( event );
 		
 		if( isNew )

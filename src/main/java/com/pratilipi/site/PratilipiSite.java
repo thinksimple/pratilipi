@@ -21,6 +21,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
@@ -43,13 +44,16 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.AuthorData;
+import com.pratilipi.data.client.EventData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.AuthorDataUtil;
+import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
@@ -126,6 +130,10 @@ public class PratilipiSite extends HttpServlet {
 				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
 				templateName = templateFilePrefix + ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
 				
+			} else if( page != null && page.getType() == PageType.EVENT ) {
+				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode );
+				templateName = templateFilePrefix + ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
+			
 			} else if( page != null && page.getType() == PageType.READ ) {
 				if( basicMode ) {
 					
@@ -299,6 +307,19 @@ public class PratilipiSite extends HttpServlet {
 			return pratilipiData.getTitleEn() + title;
 		else if( pratilipiData.getTitle() != null && pratilipiData.getTitleEn() != null )
 			return pratilipiData.getTitle() + " / " + pratilipiData.getTitleEn() + title;
+		return null;
+	}
+
+	private String createEventPageTitle( EventData eventData ) {
+		if( eventData == null )
+			return null;
+		
+		if( eventData.getName() != null && eventData.getNameEn() == null )
+			return eventData.getName();
+		else if( eventData.getName() == null && eventData.getNameEn() != null )
+			return eventData.getNameEn();
+		else if( eventData.getName() != null && eventData.getNameEn() != null )
+			return eventData.getName() + " / " + eventData.getNameEn();
 		return null;
 	}
 
@@ -493,6 +514,31 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
 			dataModel.put( "reviewListJson", gson.toJson( toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) ) );
 			dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
+		}
+		return dataModel;
+		
+	}
+	
+	public Map<String, Object> createDataModelForEventPage( Long eventId, boolean basicMode )
+			throws InsufficientAccessException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Event event = dataAccessor.getEvent( eventId );
+		EventData eventData = EventDataUtil.createEventData( event );
+
+		Gson gson = new Gson();
+		
+		GenericEventResponse eventResponse = new GenericEventResponse( eventData );
+		List<PratilipiData> pratilipiDataList = PratilipiDataUtil.createPratilipiDataList( event.getPratilipiIdList(), true );
+		
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", createEventPageTitle( eventData ) );
+		if( basicMode ) {
+			dataModel.put( "event", eventData );
+			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataList ) );
+		} else {
+			dataModel.put( "eventJson", gson.toJson( eventResponse ) );
+			dataModel.put( "pratilipiListJson", gson.toJson( toListResponseObject( pratilipiDataList ) ) );
 		}
 		return dataModel;
 		
