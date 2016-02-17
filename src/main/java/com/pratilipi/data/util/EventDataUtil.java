@@ -71,7 +71,7 @@ public class EventDataUtil {
 		eventData.setName( event.getName() );
 		eventData.setNameEn( event.getNameEn() );
 		eventData.setLanguage( event.getLanguage() );
-		eventData.setSummary( event.getSummary() );
+		eventData.setDescription( event.getDescription() );
 		eventData.setPratilipiIdList( event.getPratilipiIdList() );
 		if( event.getPratilipiIdList() != null ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -116,14 +116,14 @@ public class EventDataUtil {
 			event.setName( eventData.getNameEn() );
 		if( eventData.hasLanguage() )
 			event.setLanguage( eventData.getLanguage() );
-		if( eventData.hasSummary() )
-			event.setSummary( eventData.getSummary() );
+		if( eventData.hasDescription() )
+			event.setDescription( eventData.getDescription() );
 		if( eventData.hasPratilipiUrlList() ) {
 			if( eventData.getPratilipiUrlList() == null ) {
 				eventData.setPratilipiIdList( null );
 			} else {
 				List<Long> pratilipiIdList = new LinkedList<>();
-				Map<String, Page> map = dataAccessor.getPages( eventData.getPratilipiUrlList() );
+				Map<String,Page> map = dataAccessor.getPages( eventData.getPratilipiUrlList() );
 				for( String pratilipiUrl : eventData.getPratilipiUrlList() ) {
 					Page page = map.get( pratilipiUrl );
 					if( page != null && page.getType() == PageType.PRATILIPI )
@@ -140,7 +140,8 @@ public class EventDataUtil {
 		auditLog.setEventDataNew( gson.toJson( event ) );
 		
 		
-//		event = dataAccessor.createOrUpdateEvent( event, auditLog ); TODO: Invoke this method instead
+//		TODO: Invoke this method instead
+//		event = dataAccessor.createOrUpdateEvent( event, auditLog );
 		event = dataAccessor.createOrUpdateEvent( event );
 		
 		if( isNew )

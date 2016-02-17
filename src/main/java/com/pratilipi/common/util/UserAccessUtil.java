@@ -4,18 +4,23 @@ import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.Language;
 
 public class UserAccessUtil {
+	
+	private static final AccessType[] ADMIN_ACCESS = {
+			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META,
+			AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE,
+			AccessType.EVENT_ADD, AccessType.EVENT_UPDATE };
 
 	private enum Role {
 
 		GUEST			( null ),
 		MEMBER			( null,					AccessType.PRATILIPI_ADD_REVIEW ),
 
-		ADMIN_BENGALI	( Language.BENGALI,		AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META, AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
-		ADMIN_HINDI		( Language.HINDI,		AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META, AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
-		ADMIN_GUJARATI	( Language.GUJARATI,	AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META, AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
-		ADMIN_MALAYALAM	( Language.MALAYALAM,	AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META, AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
-		ADMIN_MARATHI	( Language.MARATHI,		AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META, AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
-		ADMIN_TAMIL		( Language.TAMIL,		AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META, AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE ),
+		ADMIN_BENGALI	( Language.BENGALI,		ADMIN_ACCESS ),
+		ADMIN_HINDI		( Language.HINDI,		ADMIN_ACCESS ),
+		ADMIN_GUJARATI	( Language.GUJARATI,	ADMIN_ACCESS ),
+		ADMIN_MALAYALAM	( Language.MALAYALAM,	ADMIN_ACCESS ),
+		ADMIN_MARATHI	( Language.MARATHI,		ADMIN_ACCESS ),
+		ADMIN_TAMIL		( Language.TAMIL,		ADMIN_ACCESS ),
 		
 		ADMINISTRATOR	( null,					AccessType.values() );
 
@@ -24,9 +29,9 @@ public class UserAccessUtil {
 		private AccessType[] accessTypes;
 		
 		
-		private Role( Language language, AccessType ...accessType ) {
+		private Role( Language language, AccessType ...accessTypes ) {
 			this.language = language;
-			this.accessTypes = accessType;
+			this.accessTypes = accessTypes;
 		}
 
 		

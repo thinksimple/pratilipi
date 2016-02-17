@@ -272,6 +272,10 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	
+	private String createPageTitle( String contentTitle, String contentTitleEn ) {
+		return createPageTitle( contentTitle, contentTitleEn, UxModeFilter.getDisplayLanguage() );
+	}
+	
 	private String createPageTitle( String contentTitle, String contentTitleEn, Language lang ) {
 		return ( contentTitle == null ? "" : contentTitle + " - " )
 				+ I18n.getString( "pratilipi", lang )
@@ -280,19 +284,6 @@ public class PratilipiSite extends HttpServlet {
 				+ I18n.getString( "pratilipi", Language.ENGLISH );
 	}
 	
-	
-	private String createAuthorPageTitle( AuthorData authorData ) {
-		if( authorData == null )
-			return null;
-		
-		if( authorData.getName() != null && authorData.getNameEn() == null )
-			return authorData.getName();
-		else if( authorData.getName() == null && authorData.getNameEn() != null )
-			return authorData.getNameEn();
-		else if( authorData.getName() != null && authorData.getNameEn() != null )
-			return authorData.getName() + " / " + authorData.getNameEn();
-		return null;
-	}
 	
 	private String createPratilipiPageTitle( PratilipiData pratilipiData ) {
 		if( pratilipiData == null )
@@ -309,17 +300,17 @@ public class PratilipiSite extends HttpServlet {
 			return pratilipiData.getTitle() + " / " + pratilipiData.getTitleEn() + title;
 		return null;
 	}
-
-	private String createEventPageTitle( EventData eventData ) {
-		if( eventData == null )
+	
+	private String createAuthorPageTitle( AuthorData authorData ) {
+		if( authorData == null )
 			return null;
 		
-		if( eventData.getName() != null && eventData.getNameEn() == null )
-			return eventData.getName();
-		else if( eventData.getName() == null && eventData.getNameEn() != null )
-			return eventData.getNameEn();
-		else if( eventData.getName() != null && eventData.getNameEn() != null )
-			return eventData.getName() + " / " + eventData.getNameEn();
+		if( authorData.getName() != null && authorData.getNameEn() == null )
+			return authorData.getName();
+		else if( authorData.getName() == null && authorData.getNameEn() != null )
+			return authorData.getNameEn();
+		else if( authorData.getName() != null && authorData.getNameEn() != null )
+			return authorData.getName() + " / " + authorData.getNameEn();
 		return null;
 	}
 
@@ -429,37 +420,6 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
-	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode )
-			throws InsufficientAccessException {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = dataAccessor.getAuthor( authorId );
-		AuthorData authorData = AuthorDataUtil.createAuthorData( author, true, false );
-
-		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setAuthorId( authorId );
-		pratilipiFilter.setState( PratilipiState.PUBLISHED );
-		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
-		
-		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createAuthorPageTitle( authorData ) );
-		if( basicMode ) {
-			dataModel.put( "author", authorData );
-			dataModel.put( "publishedPratilipiList", pratilipiDataListCursorTuple.getDataList() );
-			if( pratilipiDataListCursorTuple.getDataList().size() == 20 && pratilipiDataListCursorTuple.getCursor() != null )
-				dataModel.put( "publishedPratilipiListSearchQuery", pratilipiFilter.toUrlEncodedString() );
-		} else {
-			Gson gson = new Gson();
-			dataModel.put( "authorJson", gson.toJson( authorData ) );
-			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ) );
-			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
-			dataModel.put( "publishedPratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
-		}
-		return dataModel;
-		
-	}
-
 	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId, boolean basicMode, HttpServletRequest request )
 			throws InsufficientAccessException {
 		
@@ -519,6 +479,37 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
+	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode )
+			throws InsufficientAccessException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( authorId );
+		AuthorData authorData = AuthorDataUtil.createAuthorData( author, true, false );
+
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setAuthorId( authorId );
+		pratilipiFilter.setState( PratilipiState.PUBLISHED );
+		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
+				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
+		
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", createAuthorPageTitle( authorData ) );
+		if( basicMode ) {
+			dataModel.put( "author", authorData );
+			dataModel.put( "publishedPratilipiList", pratilipiDataListCursorTuple.getDataList() );
+			if( pratilipiDataListCursorTuple.getDataList().size() == 20 && pratilipiDataListCursorTuple.getCursor() != null )
+				dataModel.put( "publishedPratilipiListSearchQuery", pratilipiFilter.toUrlEncodedString() );
+		} else {
+			Gson gson = new Gson();
+			dataModel.put( "authorJson", gson.toJson( authorData ) );
+			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ) );
+			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
+			dataModel.put( "publishedPratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+		}
+		return dataModel;
+		
+	}
+
 	public Map<String, Object> createDataModelForEventPage( Long eventId, boolean basicMode )
 			throws InsufficientAccessException {
 		
@@ -532,7 +523,7 @@ public class PratilipiSite extends HttpServlet {
 		List<PratilipiData> pratilipiDataList = PratilipiDataUtil.createPratilipiDataList( event.getPratilipiIdList(), true );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createEventPageTitle( eventData ) );
+		dataModel.put( "title", createPageTitle( eventData.getName(), eventData.getNameEn() ) );
 		if( basicMode ) {
 			dataModel.put( "event", eventData );
 			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataList ) );

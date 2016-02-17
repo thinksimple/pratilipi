@@ -17,8 +17,8 @@ public class EventData {
 	private Language language;
 	private boolean hasLanguage;
 	
-	private String summary;
-	private boolean hasSummary;
+	private String description;
+	private boolean hasDescription;
 	
 	private List<Long> pratilipiIdList;
 
@@ -77,17 +77,17 @@ public class EventData {
 		return hasLanguage;
 	}
 	
-	public String getSummary() {
-		return summary;
+	public String getDescription() {
+		return description;
 	}
 	
-	public void setSummary( String summary ) {
-		this.summary = summary;
-		this.hasSummary = true;
+	public void setDescription( String description ) {
+		this.description = description;
+		this.hasDescription = true;
 	}
 
-	public boolean hasSummary() {
-		return hasSummary;
+	public boolean hasDescription() {
+		return hasDescription;
 	}
 	
 	public List<Long> getPratilipiIdList() {

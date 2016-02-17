@@ -28,8 +28,7 @@ public class EventApi extends GenericApi {
 		
 		EventData eventData = EventDataUtil.createEventData( event );
 
-		Gson gson = new Gson();
-		return gson.fromJson( gson.toJson( eventData ), GenericEventResponse.class );
+		return new GenericEventResponse( eventData );
 		
 	}
 
@@ -43,7 +42,7 @@ public class EventApi extends GenericApi {
 		
 		eventData = EventDataUtil.saveEventData( eventData );
 
-		return gson.fromJson( gson.toJson( eventData ), GenericEventResponse.class );
+		return new GenericEventResponse( eventData );
 		
 	}		
 

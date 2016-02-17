@@ -22,9 +22,9 @@ public interface Event {
 	
 	void setLanguage( Language language );
 	
-	String getSummary();
+	String getDescription();
 
-	void setSummary( String summary );
+	void setDescription( String description );
 
 	List<Long> getPratilipiIdList();
 	

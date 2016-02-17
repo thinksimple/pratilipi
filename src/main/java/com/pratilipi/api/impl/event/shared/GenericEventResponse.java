@@ -14,7 +14,7 @@ public class GenericEventResponse extends GenericResponse {
 	private String nameEn;
 	
 	private Language language;
-	private String summary;
+	private String description;
 	private List<Long> pratilipiIdList;
 	private List<String> pratilipiUrlList;
 	
@@ -28,7 +28,7 @@ public class GenericEventResponse extends GenericResponse {
 		this.name = eventData.getName();
 		this.nameEn = eventData.getNameEn();
 		this.language = eventData.getLanguage();
-		this.summary = eventData.getSummary();
+		this.description = eventData.getDescription();
 		this.pratilipiIdList = eventData.getPratilipiIdList();
 		this.pratilipiUrlList = eventData.getPratilipiUrlList();
 		this.bannerImageUrl = eventData.getBannerImageUrl();
@@ -55,7 +55,7 @@ public class GenericEventResponse extends GenericResponse {
 	}
 	
 	public String getSummary() {
-		return summary;
+		return description;
 	}
 
 	public List<Long> getPratilipiIdList() {

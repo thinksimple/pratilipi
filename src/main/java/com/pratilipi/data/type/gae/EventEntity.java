@@ -24,8 +24,13 @@ public class EventEntity implements Event {
 	private Language LANGUAGE;
 	@Deprecated
 	private Long LANGUAGE_ID;
-	private String SUMMARY;
+	private String DESCRIPTION;
 	private List<Long> PRATILIPI_IDS;
+	
+	@Deprecated
+	private Date START_DATE;
+	@Deprecated
+	private Date END_DATE;
 	
 	private Date CREATION_DATE;
 	private Date LAST_UPDATED;
@@ -89,13 +94,13 @@ public class EventEntity implements Event {
 
 
 	@Override
-	public String getSummary() {
-		return SUMMARY;
+	public String getDescription() {
+		return DESCRIPTION;
 	}
 
 	@Override
-	public void setSummary( String summary ) {
-		this.SUMMARY = summary;
+	public void setDescription( String description ) {
+		this.DESCRIPTION = description;
 	}
 
 	@Override
