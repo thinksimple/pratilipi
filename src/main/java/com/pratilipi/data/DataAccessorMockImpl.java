@@ -277,6 +277,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public Map<String, Page> getPages( List<String> uriList ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+	@Override
 	public Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList ) {
 		// TODO: Implementation
 		return null;

@@ -60,7 +60,7 @@ public class EventData {
 		this.hasNameEn = true;
 	}
 	
-	public boolean hasTitleEn() {
+	public boolean hasNameEn() {
 		return hasNameEn;
 	}
 

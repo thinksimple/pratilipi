@@ -289,6 +289,42 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	@Override
+	public Map<String, Page> getPages( List<String> uriList ) {
+		
+		Map<String, Page> keyValueMap = new HashMap<>( uriList.size() );
+		if( uriList.size() == 0 )
+			return keyValueMap;
+		
+		List<String> memcacheIdList = new ArrayList<>( uriList.size() );
+		for( String uri : uriList )
+			memcacheIdList.add( createPageEntityMemcacheId( uri ) );
+
+		// Fetching entities from Memcache.
+		Map<String, Page> keyValueMap1 = memcache.getAll( memcacheIdList );
+		
+		List<String> missingUriList = new LinkedList<>();
+		for( String uri : uriList ) {
+			String memcacheId = createPageEntityMemcacheId( uri );
+			if( keyValueMap1.get( memcacheId ) == null )
+				missingUriList.add( uri );
+			else
+				keyValueMap.put( uri, keyValueMap1.get( memcacheId ) );
+		}
+		
+		// Fetching remaining entities from DataStore
+		Map<String, Page> keyValueMap2 = dataAccessor.getPages( missingUriList );
+		
+		for( String uri : missingUriList ) {
+			Page page = keyValueMap2.get( uri );
+			memcache.put( createPageEntityMemcacheId( uri ), page );
+			keyValueMap.put( uri, page );
+		}
+		
+		return keyValueMap;
+		
+	}
+	
+	@Override
 	public Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList ) {
 		
 		Map<Long, Page> keyValueMap = new HashMap<>();
@@ -324,6 +360,10 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		
 	}
 
+	private String createPageEntityMemcacheId( String uri ) {
+		return PREFIX_PAGE + uri;
+	}
+	
 	private String createPageEntityMemcacheId( PageType pageType, Long primaryContentId ) {
 		return PREFIX_PAGE + pageType + "::" + primaryContentId;
 	}

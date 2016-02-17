@@ -419,6 +419,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Map<String, Page> getPages( List<String> uriList ) {
+		Map<String, Page> keyValueMap = new HashMap<>( uriList.size() );
+		for( String uri : uriList )
+			keyValueMap.put( uri, getPage( uri ) );
+		return keyValueMap;
+	}
+
+	@Override
 	public Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList ) {
 		Map<Long, Page> keyValueMap = new HashMap<>( primaryContentIdList.size() );
 		for( Long primaryContentId : primaryContentIdList )

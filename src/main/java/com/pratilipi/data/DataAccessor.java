@@ -63,6 +63,7 @@ public interface DataAccessor {
 	Page getPage( Long id );
 	Page getPage( String uri );
 	Page getPage( PageType pageType, Long primaryContentId );
+	Map<String, Page> getPages( List<String> uriList );
 	Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList );
 	Page createOrUpdatePage( Page page );
 
