@@ -9,7 +9,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.PageType;
@@ -96,7 +99,10 @@ public class EventDataUtil {
 		return eventData;
 	}
 	
-	public static EventData saveEventData( EventData eventData ) throws InsufficientAccessException {
+	public static EventData saveEventData( EventData eventData )
+			throws InvalidArgumentException, InsufficientAccessException {
+		
+		_validateEventDataForSave( eventData );
 		
 		boolean isNew = eventData.getId() == null;
 		
@@ -156,6 +162,25 @@ public class EventDataUtil {
 
 		return createEventData( event );
 		
+	}
+	
+	private static void _validateEventDataForSave( EventData eventData )
+			throws InvalidArgumentException {
+		
+		boolean isNew = eventData.getId() == null;
+		
+		JsonObject errorMessages = new JsonObject();
+
+		// New event must have language.
+		if( isNew && ( ! eventData.hasLanguage() || eventData.getLanguage() == null ) )
+			errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+		// Language can not be un-set or set to null.
+		else if( ! isNew && eventData.hasLanguage() && eventData.getLanguage() == null )
+			errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+
+		if( errorMessages.entrySet().size() > 0 )
+			throw new InvalidArgumentException( errorMessages );
+
 	}
 	
 	
