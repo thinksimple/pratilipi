@@ -3,11 +3,18 @@ package com.pratilipi.api.impl.event;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.event.shared.GetEventBannerRequest;
+import com.pratilipi.api.impl.event.shared.PostEventBannerRequest;
 import com.pratilipi.api.shared.GenericFileDownloadResponse;
+import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.util.EventDataUtil;
+import com.pratilipi.data.util.PratilipiDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/event/banner" )
@@ -28,4 +35,20 @@ public class EventBannerApi extends GenericApi {
 		
 	}
 
+	@Post
+	public GenericResponse post( PostEventBannerRequest request )
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+
+		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );
+		blobEntry.setData( request.getData() );
+		blobEntry.setMimeType( request.getMimeType() );
+		
+		EventDataUtil.saveEventBanner(
+				request.getEventId(),
+				blobEntry );
+
+		return new GenericResponse();
+		
+	}
+	
 }

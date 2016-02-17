@@ -17,6 +17,7 @@ import com.pratilipi.common.util.ImageUtil;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UriAliasUtil;
 import com.pratilipi.common.util.UserAccessUtil;
+import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.EventData;
@@ -151,8 +152,7 @@ public class EventDataUtil {
 //		event = dataAccessor.createOrUpdateEvent( event, auditLog );
 		event = dataAccessor.createOrUpdateEvent( event );
 		
-		if( isNew )
-			createOrUpdateEventPageUrl( event.getId() );
+		createOrUpdateEventPageUrl( event.getId() );
 
 		return createEventData( event );
 		
@@ -167,6 +167,40 @@ public class EventDataUtil {
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
 		return blobEntry;
+		
+	}
+	
+	public static void saveEventBanner( Long eventId, BlobEntry blobEntry )
+			throws InsufficientAccessException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Event event = dataAccessor.getEvent( eventId );
+
+		if( ! hasAccessToUpdateEventData( event, null ) )
+			throw new InsufficientAccessException();
+
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		blobEntry.setName( BANNER_FOLDER + "/" + eventId );
+		blobAccessor.createOrUpdateBlob( blobEntry );
+		
+		
+		Gson gson = new Gson();
+
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setAccessType( AccessType.EVENT_UPDATE );
+		auditLog.setEventDataOld( gson.toJson( event ) );
+
+		event.setLastUpdated( new Date() );
+
+		auditLog.setEventDataNew( gson.toJson( event ) );
+		auditLog.setEventComment( "Uploaded banner image." );
+		
+//		TODO: Invoke this method instead
+//		event = dataAccessor.createOrUpdatePratilipi( event, auditLog );
+		event = dataAccessor.createOrUpdateEvent( event );
 		
 	}
 	
