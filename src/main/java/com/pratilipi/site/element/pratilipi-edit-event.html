@@ -1,0 +1,146 @@
+<dom-module id="pratilipi-edit-event">
+	
+	<style>
+	
+		paper-input.edit, paper-textarea.edit {
+			--paper-input-container-focus-color: #107FE5;
+			display: block;
+			--paper-input-container-label: {
+				font-size: 15px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
+		}
+		
+		.modal-fullscreen .modal-dialog .modal-content {max-width: 1000px;padding-left: 20px; padding-right: 20px;}
+		
+		textarea {
+			margin: 20px auto;
+			width: 100%;
+			height: 300px;
+		}
+	</style>
+	
+	<template>
+		<div class="modal modal-fullscreen fade" id="pratilipiEditEvent" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-fullscreen-close-button">
+					<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
+				</div>
+				<div class="modal-content" on-keyup="onSubmit">
+					<h5 class="modal-fullscreen-heading">{{ event.name }}</h5>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<paper-input class="edit" label="Name" value="{{ params.name::input }}"></paper-input>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<paper-input class="edit" label="Name in English" value="{{ params.nameEn::input }}"></paper-input>
+						</div>
+					</div>
+					<br/>
+					<span class="edit-summary-text">Event Description :</span>
+					<script language="javascript" type="text/javascript">tinymce.init({ selector:'#eventDescription', editor_selector : "eventDescription", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+					<paper-textarea class="edit" id="eventDescription" value="{{ description::input }}"></paper-textarea>
+					
+					<textarea id="urlList" value="{{ urlList }}"></textarea>
+					<div class="display-message-div">
+						<p>{{ message }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="eventEditButton" class="pratilipi-dark-blue-button pull-right" type="button" on-click="onSubmit">${ _strings.edit_author_save_changes }</button>
+			</div>
+			
+		</div>
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/event"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
+	</template>
+	
+	<script>
+		Polymer({
+	
+			is: 'pratilipi-edit-event',
+			
+			properties: {
+				event: { type: Object },
+				params: { type: Object, value: {} },
+				
+				description: { type: String }
+			},
+			
+			ready: function() {
+				if( this.event == null )
+					return;
+				
+				this.set( 'params', this.event );
+				
+				this.description = this.params.description == null ? "" : this.params.description;
+				
+			},
+			
+			open: function() {
+				this.async( function() {
+					jQuery( "#pratilipiEditEvent" ).modal( {backdrop: 'static'} );
+				});
+			},
+			
+			close: function() {
+				jQuery( "#pratilipiEditEvent" ).modal( 'hide' );
+			},
+			
+			onSubmit: function( event ) {
+				
+				this.message = "";
+				
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+					return;
+				
+				if( tinyMCE.activeEditor != null )
+					this.params.description = tinyMCE.get( 'eventDescription' ).getContent();
+				else
+					this.params.description = this.description;
+				
+				this.message = "Please Wait...";
+				jQuery( '#eventEditButton' ).prop( 'disabled', true );				
+				
+				/* this.$.AjaxPost.body = ( jQuery.param( this.params ) );
+
+				this.$.AjaxPost.generateRequest(); */
+				
+			},
+			
+			_handleAjaxPostResponse: function( event ) {
+				
+				this.message = "Updated";
+				
+				var event = event.detail.response;
+
+				document.querySelector( 'pratilipi-event' ).updateEvent( event );
+				location.reload();
+				
+				this.async( function() {
+					jQuery( '#eventEditButton' ).prop( 'disabled', false );
+					this.message = null;
+					this.close();
+				}, 1000 );
+			},
+			
+			_handleAjaxPostError: function( event ) {
+				jQuery( '#eventEditButton' ).prop( 'disabled', false );
+				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
+					this.message = event.detail.request.xhr.response.message;
+				else
+					this.message = "Some Error occured! Please try Again."
+			}
+			
+		});
+	</script>
+	
+</dom-module>

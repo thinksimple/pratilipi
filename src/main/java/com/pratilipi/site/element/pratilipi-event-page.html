@@ -1,4 +1,5 @@
 <link rel='import' href='pratilipi-card-grid.html?20160213'>
+<link rel='import' href='pratilipi-edit-event.html?20160203'>
 
 <dom-module id="pratilipi-event-page">
 	
@@ -18,6 +19,9 @@
 			margin-bottom: 10px;
 			--paper-card-header: { display: none };
 		}
+		paper-icon-button {
+			color: #00ab6b;
+		}
 	</style>
 
 	<template>
@@ -28,23 +32,32 @@
 			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+			<pratilipi-edit-event event="[[ event ]]"></pratilipi-edit-event>
 			<div class="parent-container margin-top-bottom">
 				<div class="container">
 					<pratilipi-navigation
 							class='pull-left hidden-xs hidden-sm'
 							></pratilipi-navigation>
 					<div style="overflow:hidden">
-						<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">{{ event.name }}</div>
+						<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+							{{ event.name }}
+							<template is="dom-if" if="{{ event.hasAccessToUpdate }}">
+								<paper-icon-button on-click="editEvent" icon="create" noink></paper-icon-button>
+								<paper-icon-button class="pull-right" on-click="createNewEvent" icon="add-circle" noink></paper-icon-button>
+							</template>
+						</div>
 						<paper-card class="event-banner">
 							<img style="width: 100%;" src="{{ event.bannerImageUrl }}" />
 						</paper-card>
 						<paper-card class="event-description">
 							<div id="pratilipi-event-description"></div>
 						</paper-card>
-						<pratilipi-card-grid
-							heading='[[ event.name ]]'
-							pratilipi-list='[[ pratilipiList ]]'
+						<template is="dom-if" if="{{ showPratilipiList }}">
+							<pratilipi-card-grid
+								heading='[[ event.name ]]'
+								pratilipi-list='[[ pratilipiList ]]'
 							></pratilipi-card-grid>
+						</template>
 					</div>
 				</div>
 			</div>
@@ -68,7 +81,16 @@
 				event: { type: Object },
 				pratilipiList: { type: Array },
 				pratilipiTypes: { types: Object },
+				showPratilipiList: { type: Boolean, value: true },
 				lastScrollTop: { type: Number, value: 0 },
+			},
+			
+			updateEvent: function( event ) {
+				this.set( 'event', event );
+			},
+			
+			editEvent: function() {
+				this.querySelector( 'pratilipi-edit-event' ).open();
 			},
 			
 			scrollToTop: function() {
@@ -82,6 +104,9 @@
 			attached: function() {
 				var jSummary = jQuery( "#pratilipi-event-description" );
 				jSummary.html( this.event.description );
+				
+				if( this.pratilipiList == null || this.pratilipiList.length == 0 )
+					this.showPratilipiList = false;
 			},
 			
 			scrollHandler: function( st ) {
