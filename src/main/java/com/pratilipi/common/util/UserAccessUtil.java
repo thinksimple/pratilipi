@@ -15,6 +15,7 @@ public class UserAccessUtil {
 		GUEST			( null ),
 		MEMBER			( null,					AccessType.PRATILIPI_ADD_REVIEW ),
 
+		ADMIN			( null,					AccessType.PRATILIPI_LIST ),
 		ADMIN_BENGALI	( Language.BENGALI,		ADMIN_ACCESS ),
 		ADMIN_HINDI		( Language.HINDI,		ADMIN_ACCESS ),
 		ADMIN_GUJARATI	( Language.GUJARATI,	ADMIN_ACCESS ),
@@ -54,22 +55,22 @@ public class UserAccessUtil {
 				return new Role[] { Role.GUEST };
 				
 			case "6243664397336576": // moumita@
-				return new Role[] { Role.MEMBER, Role.ADMIN_BENGALI };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI };
 			case "5644707593977856": // nimisha@
-				return new Role[] { Role.MEMBER, Role.ADMIN_GUJARATI };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_GUJARATI };
 			case "4790800105865216": // veena@
-				return new Role[] { Role.MEMBER, Role.ADMIN_HINDI };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_HINDI };
 			case "4900189601005568": // vrushali@
-				return new Role[] { Role.MEMBER, Role.ADMIN_MARATHI };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MARATHI };
 			case "5664902681198592": // shally@
-				return new Role[] { Role.MEMBER, Role.ADMIN_BENGALI, Role.ADMIN_HINDI, Role.ADMIN_GUJARATI, Role.ADMIN_MARATHI };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_HINDI, Role.ADMIN_GUJARATI, Role.ADMIN_MARATHI };
 
 			case "4900071594262528": // dileepan@
-				return new Role[] { Role.MEMBER, Role.ADMIN_TAMIL };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TAMIL };
 			case "5674672871964672": // krithiha@
-				return new Role[] { Role.MEMBER, Role.ADMIN_TAMIL };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TAMIL };
 			case "5991416564023296": // sankar@
-				return new Role[] { Role.MEMBER, Role.ADMIN_MALAYALAM, Role.ADMIN_TAMIL };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MALAYALAM, Role.ADMIN_TAMIL };
 			
 			case "5705241014042624": // prashant@
 				return new Role[] { Role.MEMBER, Role.ADMINISTRATOR };
