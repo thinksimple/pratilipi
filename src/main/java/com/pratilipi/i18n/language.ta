@@ -148,6 +148,7 @@ user_sign_out				= வெளியேற
 
 user_sign_up				= தளத்தில்  பதிவு செய்க !
 user_sign_up_for_pratilipi	= ப்ரதிலிபியில் பதிவு செய்க !
+user_sign_up_with_facebook	= முகநூல்  மூலம் உள்நுழைய
 
 user_forgot_password		= கடவுச்சொல் நினைவில் இல்லை? 
 user_reset_password			= கடவுச்சொல்லை மாற்ற

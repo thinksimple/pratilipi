@@ -1,9 +1,11 @@
-pratilipi					= પ્રતિલિપિ 
+# Do NOT edit
 
-home_page_title				= વાંચો ગુજરાતી વાર્તાઓ, કવિતાઓ, નવલકથાઓ, પુસ્તકો અને બીજું ઘણું 
+pratilipi					= પ્રતિલિપિ
+
+home_page_title				= વાંચો ગુજરાતી વાર્તાઓ, કવિતાઓ, નવલકથાઓ, પુસ્તકો અને બીજું ઘણું
 website_language			= ગુજરાતી 
 
-facebook_page				= https://www.facebook.com/Pratilipidotcom/
+facebook_page				= https://www.facebook.com/Pratilipidotcom
 twitter_page				= https://twitter.com/TeamPratilipi
 googleplus_page				= https://plus.google.com/+PratilipiTeam
 linkedin_page				= https://www.linkedin.com/company/pratilipi
@@ -43,18 +45,22 @@ _pratilipi_type_magazines	= સામયિકો
 
 author_about			= સંક્ષિપ્ત પરિચય 
 author_language		= ભાષા 
-author_since			= પ્રતિલિપિ સાથે    
+author_since			= પ્રતિલિપિ સાથે
+
 author_count_works		= પ્રકાશિત સાહિત્ય  
 author_count_reads		= વાચક સંખ્યા   	
-author_count_likes		= વાચકોની પસંદ સંખ્યા 	
+author_count_likes		= વાચકોની પસંદ સંખ્યા
 
 author_edit_profile		= પ્રોફાઈલ સુધારો
+
 author_drafts			= અપ્રકાશિત રચનાઓ 
 author_published_works	= પ્રકાશિત રચનાઓ 
 author_add_new_content	= નવી રચના લખો 
 
 
+author_no_contents_published	= Sorry! This Author doesn't have any books published!
 
+    
 # Pratilipi
 
 pratilipi_type			= સાહિત્ય પ્રકાર 
@@ -62,14 +68,18 @@ pratilipi_listing_date		= પ્રકાશનની તારીખ
 pratilipi_published		=પ્રકાશિત 	
 pratilipi_published_year	= પ્રકાશન વર્ષ  
 pratilipi_summary		= સારાંશ લખો 
+
 pratilipi_edit_info		= માહિતીમાં સુધારો કરો  	
 pratilipi_edit_content		= રચનામાં સુધારો કરો  
+
 pratilipi_count_reads		= વાચક સંખ્યા 
 pratilipi_count_reviews		= કુલ ટીપ્પણી 
 pratilipi_count_likes		= કુલ લાઈક્સ 	
 
 pratilipi_move_to_drafts	= અપ્રકાશિત કરો 
 pratilipi_publish_it		= પ્રકાશિત કરો 
+
+pratilipi_no_reviews		= Sorry! No Reviews found for this content!
 
 
 
@@ -110,13 +120,14 @@ review_helpful			= શું આ ટીપ્પણી મદદરૂપ રહ
 
 search 			= શોધો 
 search_bar_help	= લેખકનું નામ અથવા વાર્તા, કવિતા, પુસ્તકનું શીર્ષક ટાઈપ કરો  
-search_results		= શોધના પરિણામો  
+search_results		= શોધના પરિણામો
+search_no_results_found		= Sorry! No Search Results found for your search query. Try searching for different search query!  
 
 
 
 # Write
 
-write_heading		= લખો                                                                                                                                                                                                                                                                                   
+write_heading		= લખો
 write_help		= વાર્તા,કવિતા,લેખ,પુસ્તક વગેરે સ્વયં પ્રકાશિત કરો  
 write_title		= અહી શીર્ષક લખો  
 write_title_en		= શીર્ષક અંગ્રેજીમાં   
@@ -130,19 +141,22 @@ write_create_new_content	= આગળ વધો
 # Common User Popups
 
 user_sign_in	= સાઈન ઇન કરો 
-
 user_to_sign_in	    = સાઈન ઇન કરો
 user_sign_in_with_facebook	= ફેસબુક સાથે સાઈન ઇન કરો 
 user_sign_in_to_pratilipi	= પ્રતિલિપિમાં સાઈન ઇન કરો
-user_sign_out			= સાઈન આઉટ કરો  
+user_sign_out			= સાઈન આઉટ કરો
+  
 user_sign_up			= નવું અકાઉન્ટ બનાવો  
-user_sign_up_for_pratilipi	= પ્રતિલિપિ પર નવું અકાઉન્ટ બનાવો  
+user_sign_up_for_pratilipi	= પ્રતિલિપિ પર નવું અકાઉન્ટ બનાવો
+user_sign_up_with_facebook	= Sign Up with Facebook
+  
 user_forgot_password		= પાસવર્ડ યાદ નથી?
 user_reset_password		= નવો પાસવર્ડ બનાવો 
 user_reset_password_help	= આ સાઈટ પર રજીસ્ટર કરવા માટે ઉપયોગમાં લીધેલ ઈ-મેલ આઈડી પ્રદાન કરો 
 
 user_current_password		= વર્તમાન પાસવર્ડ 
-user_new_password		= નવો પાસવર્ડ 
+user_new_password		= નવો પાસવર્ડ
+ 
 user_full_name			= પૂરું નામ લખો
 user_email			= ઈ-મેલ આઈડી પ્રદાન કરો  
 user_password			= પાસવર્ડ 
@@ -150,6 +164,7 @@ user_confirm_password	= પાસવર્ડની ખાતરી કરો
 
 user_my_profile		= મારી પ્રોફાઈલ  
 user_my_account		= સેટિંગ  
+
 user_is_new			= ઉપયોગકર્તા નવા છે -	
 user_is_registered		= ઉપયોગકર્તા અગાઉથી અકાઉન્ટ ધરાવે છે - 
 user_email_verification		= આપને મોકલેલ ઈ-મેલની ચકાસણી કરો 		
@@ -172,7 +187,6 @@ footer_about_us			= અમારા વિશે
 footer_work_with_us			= અમારી સાથે કામ કરો 
 footer_blog				= બ્લોગ 
 footer_privacy_policy	       = ગોપનીયતા નીતિ
-
 footer_terms_of_service		= સેવાની શરતો
 
 
@@ -193,7 +207,10 @@ update				= અપડેટ
 share				= શેર કરો   
 menu				= સૂચિ
 back				= પાછા જાઓ 
-close       = બંધ કરો 
+load_more_contents			= Load More Contents
+
+
+
 
 # Success Messages
 
@@ -230,3 +247,23 @@ edit_pratilipi_type			= સાહિત્ય પ્રકાર
 edit_pratilipi_language		=ભાષા  
 edit_pratilipi_summary			= રચનાનો સારાંશ
 edit_pratilipi_save_changes		= બદલાવને સુરક્ષિત કરો
+
+
+
+# Register Form
+
+register_part_1					= By registering, you agree to the 
+register_part_2					= and
+register_part_3					= .
+
+
+# Event Page
+
+event_entries			= Event Entries
+event_name				= Event Name
+event_name_en			= Event Name in English
+event_description		= Event Description
+event_entries_url_list	= Entries URL List
+event_save_changes		= Save Changes
+
+

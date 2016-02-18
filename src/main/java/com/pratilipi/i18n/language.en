@@ -148,6 +148,7 @@ user_sign_out				= Sign Out
 
 user_sign_up				= Sign Up !
 user_sign_up_for_pratilipi	= Sign Up for Pratilipi
+user_sign_up_with_facebook	= Sign Up with Facebook
 
 user_forgot_password		= Forgot Password ?
 user_reset_password			= Reset Password
@@ -207,6 +208,8 @@ share						= Share
 menu						= Menu
 back						= Back
 load_more_contents			= Load More Contents
+
+
 
 
 # Success Messages
