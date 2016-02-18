@@ -6,6 +6,31 @@
 		<module>www</module>
 	</dispatch>
 	
+	<dispatch>
+		<url>*/read*</url>
+		<module>www</module>
+	</dispatch>
+
+	<dispatch>
+		<url>*/write*</url>
+		<module>www</module>
+	</dispatch>
+
+	<dispatch>
+		<url>*/api.pratilipi/*</url>
+		<module>www</module>
+	</dispatch>
+
+	<dispatch>
+		<url>*/polymer/*</url>
+		<module>www</module>
+	</dispatch>
+
+	<dispatch>
+		<url>*/theme.pratilipi/*</url>
+		<module>www</module>
+	</dispatch>
+
 
 	<dispatch>
 		<url>*/api/user/login/facebook*</url>
@@ -23,7 +48,7 @@
 	</dispatch>
 
 
-	<dispatch>
+	<!-- dispatch>
 		<url>www.pratilipi.com/*</url>
 		<module>www</module>
 	</dispatch>
@@ -47,6 +72,6 @@
 	<dispatch>
 		<url>gamma.pratilipi.com/*</url>
 		<module>gamma</module>
-	</dispatch>
+	</dispatch -->
 
 </dispatch-entries>
