@@ -26,6 +26,9 @@
 			</#if>
 			
 			<#if pratilipiList ??>
+				<div class="box" style="padding: 12px 10px;">
+					<h2 style="color: #D0021B;">${ _strings.event_entries }</h2>
+				</div>
 				<#list pratilipiList as pratilipi>
 					<#include "../element/pratilipi-pratilipi-card.ftl">
 				</#list>
