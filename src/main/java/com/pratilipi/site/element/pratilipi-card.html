@@ -175,10 +175,12 @@
 				else
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
 				
-				window.dispatchEvent( new Event( 'resize' ) );
 				this.async( function() {
 					window.dispatchEvent( new Event( 'resize' ) );
-				}, 1000 );
+				}, 50 );
+				this.async( function() {
+					window.dispatchEvent( new Event( 'resize' ) );
+				}, 500 );
 			},
 			
 			publishNow: function() {
