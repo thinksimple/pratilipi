@@ -17,7 +17,9 @@
 				<h2 style="color: #D0021B;">${ event.name }</h2>
 			</div>
 			
-			<img style="width: 100%; height: 100%;" src="${ event.getBannerImageUrl( 1000 ) }"/>
+			<div style="padding: 0px;" class="box">
+				<img style="width: 100%; height: 100%;" src="${ event.getBannerImageUrl( 1000 ) }"/>
+			</div>
 			
 			<#if event.description ??>
 				<div class="box" style="padding: 12px 20px;">${ event.description }</div>

@@ -47,7 +47,7 @@
 							</template>
 						</div>
 						<paper-card class="event-banner">
-							<img style="width: 100%;" src="{{ event.bannerImageUrl }}" />
+							<img style="width: 100%;" src="{{ eventBannerImageUrl }}" />
 						</paper-card>
 						<paper-card class="event-description">
 							<div id="pratilipi-event-description"></div>
@@ -107,6 +107,13 @@
 				
 				if( this.pratilipiList == null || this.pratilipiList.length == 0 )
 					this.showPratilipiList = false;
+				
+				if( this.event.bannerImageUrl.indexOf( '?' ) == -1 )
+					this.eventBannerImageUrl = this.event.bannerImageUrl + "?" + "width=1000";
+				else
+					this.eventBannerImageUrl = this.event.bannerImageUrl + "&" + "width=1000";
+				
+				
 			},
 			
 			scrollHandler: function( st ) {
