@@ -148,12 +148,11 @@
 			},
 			
 			redirectToReader: function() {
-				if( this.pratilipi.readPageUrl != null ) 
-					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
+				window.location.href = this.pratilipi.readPageUrl;
 			},
 			
 			redirectToWriter: function() {
-				window.location.href = "http://www.pratilipi.com/write?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.href + "&accessToken=" + getCookie( "access_token" );
+				window.location.href = this.pratilipi.writePageUrl;
 			},
 			
 			attached: function() {

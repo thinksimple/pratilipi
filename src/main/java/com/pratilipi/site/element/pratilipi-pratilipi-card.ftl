@@ -22,7 +22,7 @@
 		<tr>
 			<td style="vertical-align:bottom">
 				<div style="margin:3px 10px;text-transform:uppercase">
-					<a class="btn btn-default red" href="http://www.pratilipi.com/read?id=${ pratilipi.id?c }&ret=${ requestUrl }">${ _strings.read }</a>
+					<a class="btn btn-default red" href="${ pratilipi.readPageUrl }">${ _strings.read }</a>
 				</div>
 			</td>
 		</tr>
