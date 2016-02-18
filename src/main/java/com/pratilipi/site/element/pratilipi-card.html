@@ -165,6 +165,9 @@
 			},
 			
 			init: function() {
+				if( this.pratilipi == null )
+					return;
+				
 				if( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "?" + "width=100";
 				else
