@@ -12,7 +12,7 @@
 </#list>
 
 <#-- Polymer 1.0 Custom Elements -->
-<link rel='import' href='/elements.${lang}/pratilipi-user.html?20160214'>
+<link rel='import' href='/elements.${lang}/pratilipi-user.html?20160218'>
 <link rel='import' href='/elements.${lang}/pratilipi-header.html?20160215'>
 <link rel='import' href='/elements.${lang}/pratilipi-edit-account.html?20160203'>
 <link rel='import' href='/elements.${lang}/pratilipi-write.html?20160203'>
@@ -21,7 +21,7 @@
 <link rel='import' href='/elements.${lang}/pratilipi-footer.html?20160216'>
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css?2016021503">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?20160218">
 
 <#include "GoogleAnalytics.ftl">
 
