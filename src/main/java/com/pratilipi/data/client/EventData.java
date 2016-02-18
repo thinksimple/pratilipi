@@ -25,6 +25,7 @@ public class EventData {
 	private List<String> pratilipiUrlList;
 	private boolean hasPratilipiUrlList;
 
+	private String pageUrl;
 	private String bannerImageUrl;
 	
 	private Boolean hasAccessToUpdate;
@@ -111,6 +112,14 @@ public class EventData {
 		return hasPratilipiUrlList;
 	}
 	
+	public String getPageUrl() {
+		return pageUrl;
+	}
+
+	public void setPageUrl( String pageUrl ) {
+		this.pageUrl = pageUrl;
+	}
+
 	public String getBannerImageUrl() {
 		return bannerImageUrl;
 	}

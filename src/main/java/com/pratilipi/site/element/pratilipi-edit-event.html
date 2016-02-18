@@ -143,11 +143,13 @@
 				
 				var params = { 	"name" : this.name,
 								"nameEn" : this.nameEn,
-								"description" : JSON.stringify( this.description ),
 								"language" : this.language };
 				
 				if( this.eventId != null )
 					params.eventId = this.eventId;
+				
+				params.description = JSON.stringify( this.description );
+				params.description = params.description.substring( 1, params.description.length - 1 );
 				
 				if( this.pratilipiUrlList != null && this.pratilipiUrlList.trim() != "" )
 					params.pratilipiUrlList = "[" + this.pratilipiUrlList.split( "\n" ).toString() + "]";

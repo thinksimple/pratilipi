@@ -77,6 +77,10 @@ public class EventDataUtil {
 
 	
 	public static EventData createEventData( Event event ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Page eventPage = dataAccessor.getPage( PageType.EVENT, event.getId() );
+
 		EventData eventData = new EventData();
 		eventData.setId( event.getId() );
 		eventData.setName( event.getName() );
@@ -85,7 +89,6 @@ public class EventDataUtil {
 		eventData.setDescription( event.getDescription() );
 		eventData.setPratilipiIdList( event.getPratilipiIdList() );
 		if( event.getPratilipiIdList() != null ) {
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			Map<Long,Page> map = dataAccessor.getPages( PageType.PRATILIPI, event.getPratilipiIdList() );
 			List<String> pratilipiUrlList = new ArrayList<>( event.getPratilipiIdList().size() );
 			for( Long pratilipiId : event.getPratilipiIdList() ) {
@@ -94,9 +97,11 @@ public class EventDataUtil {
 			}
 			eventData.setPratilipiUrlList( pratilipiUrlList );
 		}
+		eventData.setPageUrl( eventPage.getUriAlias() == null ? eventPage.getUri() : eventPage.getUriAlias() );
 		eventData.setBannerImageUrl( createEventBannerUrl( event ) );
 		eventData.setAccessToUpdate( hasAccessToUpdateEventData( event, null ) );
 		return eventData;
+		
 	}
 	
 	public static EventData saveEventData( EventData eventData )
@@ -127,7 +132,7 @@ public class EventDataUtil {
 		if( eventData.hasName() )
 			event.setName( eventData.getName() );
 		if( eventData.hasNameEn() )
-			event.setName( eventData.getNameEn() );
+			event.setNameEn( eventData.getNameEn() );
 		if( eventData.hasLanguage() )
 			event.setLanguage( eventData.getLanguage() );
 		if( eventData.hasDescription() )
