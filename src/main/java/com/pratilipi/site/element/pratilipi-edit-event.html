@@ -149,7 +149,7 @@
 				if( this.eventId != null )
 					params.eventId = this.eventId;
 				
-				if( this.pratilipiUrlList != null || this.pratilipiUrlList.trim() != "" )
+				if( this.pratilipiUrlList != null && this.pratilipiUrlList.trim() != "" )
 					params.pratilipiUrlList = "[" + this.pratilipiUrlList.split( "\n" ).toString() + "]";
 				else
 					params.pratilipiUrlList = "[]";

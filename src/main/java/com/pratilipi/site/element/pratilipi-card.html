@@ -52,7 +52,7 @@
 				  		 	<a class="pratilipi-card-heading pratilipi-red" href="{{ pratilipi.pageUrl }}">{{ title }}</a>
 						</div>
 						
-						<template is="dom-if" if="{{ !draftsActive }}">
+						<template is="dom-if" if="{{ pratilipi.author }}">
 							<h6><a class="pratilipi-card-author" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a></h6>
 						</template>
 						
@@ -158,22 +158,23 @@
 			
 			attached: function() {
 				this.init();
-				$('[data-toggle="tooltip"]').tooltip();
-				jQuery( this.querySelector( '.contain-title' ) ).width( jQuery( this ).width() - 130 );
 				this.async( function() {
 					window.dispatchEvent( new Event( 'resize' ) );
 				}, 2000 );
 			},
 			
 			init: function() {
-				this.title = this.pratilipi.title;
-				this.async( function() {
-					window.dispatchEvent( new Event( 'resize' ) );
-				}, 1000 );
 				if( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "?" + "width=100";
 				else
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
+				
+				this.title = this.pratilipi.title;
+				$('[data-toggle="tooltip"]').tooltip();
+				jQuery( this.querySelector( '.contain-title' ) ).width( jQuery( this ).width() - 130 );
+				this.async( function() {
+					window.dispatchEvent( new Event( 'resize' ) );
+				}, 1000 );
 			},
 			
 			publishNow: function() {
