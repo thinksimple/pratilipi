@@ -20,8 +20,8 @@ public class PostEventRequest extends GenericRequest {
 	private Language language;
 	private boolean hasLanguage;
 
-	private String summary;
-	private boolean hasSummary;
+	private String description;
+	private boolean hasDescription;
 	
 	private List<String> pratilipiUrlList;
 	private boolean hasPratilipiUrlList;
@@ -55,12 +55,12 @@ public class PostEventRequest extends GenericRequest {
 		return hasLanguage;
 	}
 	
-	public String getSummary() {
-		return summary;
+	public String getDescription() {
+		return description;
 	}
 	
-	public boolean hasSummary() {
-		return hasSummary;
+	public boolean hasDescription() {
+		return hasDescription;
 	}
 	
 	public List<String> getPratilipiUrlList() {
