@@ -7,8 +7,7 @@ public class UserAccessUtil {
 	
 	private static final AccessType[] ADMIN_ACCESS = {
 			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META,
-			AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE,
-			AccessType.EVENT_ADD, AccessType.EVENT_UPDATE };
+			AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE };
 
 	private enum Role {
 
