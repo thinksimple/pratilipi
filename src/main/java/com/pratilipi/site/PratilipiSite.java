@@ -120,16 +120,16 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
 				templateName = templateFilePrefix + ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
 			
+			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
+				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
+				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
+				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode, request );
+				templateName = templateFilePrefix + ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
+				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 			
-			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
-				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode, request );
-				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
-				templateName = templateFilePrefix + ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
-				
 			} else if( page != null && page.getType() == PageType.EVENT ) {
 				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "EventBasic.ftl" : "Event.ftl" );

@@ -247,12 +247,11 @@
 			},
 			
 			openWriterPanel: function() {
-				window.location = "http://www.pratilipi.com/write?id=" + this.pratilipi.pratilipiId + "&ret=" + "http://" + window.location.host + this.pratilipi.pageUrl + "&accessToken=" + getCookie( "access_token" );
+				window.location = this.pratilipi.writePageUrl;;
 			},
 			
 			redirectToReader: function() {
-				if( this.pratilipi.readPageUrl != null ) 
-					window.location.href = "http://www.pratilipi.com/read?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.href;
+				window.location.href = this.pratilipi.readPageUrl;
 			},
 			
 			_onIronResize: function() {
