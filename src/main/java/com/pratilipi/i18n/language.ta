@@ -254,3 +254,14 @@ edit_pratilipi_save_changes		= மாற்றங்களை சேமிக்
 register_part_1					= இத்தளத்தில் பதிவு செய்வதன்மூலம், எங்களின் 
 register_part_2					= மற்றும்
 register_part_3					= க்கு ஒப்புக்கொள்கிறீர்கள்.
+
+
+# Event Page
+
+event_entries			= Event Entries
+event_name				= Event Name
+event_name_en			= Event Name in English
+event_description		= Event Description
+event_entries_url_list	= Entries URL List
+event_save_changes		= Save Changes
+

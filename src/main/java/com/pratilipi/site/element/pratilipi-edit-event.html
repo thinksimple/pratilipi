@@ -30,18 +30,18 @@
 					<h5 class="modal-fullscreen-heading">{{ event.name }}</h5>
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<paper-input class="edit" label="Name" value="{{ name::input }}"></paper-input>
+							<paper-input class="edit" label="${ _strings.event_name }" value="{{ name::input }}"></paper-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<paper-input class="edit" label="Name in English" value="{{ nameEn::input }}"></paper-input>
+							<paper-input class="edit" label="${ _strings.event_name_en }" value="{{ nameEn::input }}"></paper-input>
 						</div>
 					</div>
 					<br/>
-					<span class="edit-summary-text">Event Description :</span>
+					<span class="edit-summary-text">${ _strings.event_description }</span>
 					<script language="javascript" type="text/javascript">tinymce.init({ selector:'#eventDescription', editor_selector : "eventDescription", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 					<paper-textarea class="edit" id="eventDescription" value="{{ description::input }}"></paper-textarea>
 					<br/>
-					<span class="edit-summary-text">Url List :</span>
+					<span class="edit-summary-text">${ _strings.event_entries_url_list }</span>
 					<textarea id="urlList" value="{{ pratilipiUrlList::input }}"></textarea>
 					<div class="display-message-div">
 						<p>{{ message }}</p>
@@ -49,7 +49,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="eventEditButton" class="pratilipi-dark-blue-button pull-right" type="button" on-click="onSubmit">Okay</button>
+				<button id="eventEditButton" class="pratilipi-dark-blue-button pull-right" type="button" on-click="onSubmit">${ _strings.event_save_changes }</button>
 			</div>
 			
 		</div>

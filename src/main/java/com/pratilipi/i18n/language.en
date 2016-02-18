@@ -3,7 +3,7 @@
 pratilipi					= Pratilipi
 
 home_page_title				= Read Hindi, Gujarati and Tamil Stories, Poems and Books
-website_language			= Tamil 
+website_language			= English 
 
 facebook_page				= https://www.facebook.com/Pratilipidotcom
 twitter_page				= https://twitter.com/TeamPratilipi
@@ -144,7 +144,7 @@ user_sign_in				= Sign In
 user_to_sign_in				= To Sign In
 user_sign_in_with_facebook	= Sign In with Facebook
 user_sign_in_to_pratilipi	= Sign in to Pratilipi
-user_sign_out				= வSign Out
+user_sign_out				= Sign Out
 
 user_sign_up				= Sign Up !
 user_sign_up_for_pratilipi	= Sign Up for Pratilipi
@@ -223,7 +223,7 @@ updated_pratilipi_info_success		= Success !
 
 # Author Edit Popup
 
-edit_author_heading				= சுயவிவரத்தை திருத்த	
+edit_author_heading				= Edit Author Information	
 edit_author_first_name			= First Name( Tamil )
 edit_author_last_name			= Last Name( Tamil )
 edit_author_first_name_en		= First Name( English )
@@ -237,7 +237,7 @@ edit_author_save_changes		= Save Changes
 
 # Pratilipi Edit Popup
 
-edit_pratilipi_heading			= விவரத்தை திருத்த
+edit_pratilipi_heading			= Edit Content Information
 edit_pratilipi_title			= Title *
 edit_pratilipi_title_en			= Title (English)
 edit_pratilipi_type				= Select Type *
@@ -252,3 +252,14 @@ edit_pratilipi_save_changes		= Save Changes
 register_part_1					= By registering, you agree to the 
 register_part_2					= and
 register_part_3					= .
+
+
+# Event Page
+
+event_entries			= Event Entries
+event_name				= Event Name
+event_name_en			= Event Name in English
+event_description		= Event Description
+event_entries_url_list	= Entries URL List
+event_save_changes		= Save Changes
+
