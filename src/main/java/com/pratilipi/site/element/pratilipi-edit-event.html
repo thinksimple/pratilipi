@@ -23,7 +23,7 @@
 	<template>
 		<div class="modal modal-fullscreen fade" id="pratilipiEditEvent" role="dialog">
 			<div class="modal-dialog" role="document">
-				<div class="modal-content" on-keyup="onSubmit">
+				<div class="modal-content">
 					<div class="modal-fullscreen-close-button">
 						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
 					</div>
@@ -121,11 +121,6 @@
 			
 			onSubmit: function( event ) {
 				
-				this.message = "";
-				
-				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
-					return;
-				
 				if( this.name == null || this.name.trim() == "" ) {
 					this.message = "Please enter the name.";
 					return;
@@ -155,11 +150,12 @@
 				
 				if( this.pratilipiUrlList != null || this.pratilipiUrlList.trim() != "" )
 					params.pratilipiUrlList = this.pratilipiUrlList.split( "\n" );
-				
+				else
+					params.pratilipiUrlList = [];
 				
 				this.message = "Please Wait...";
 				jQuery( '#eventEditButton' ).prop( 'disabled', true );
-				this.$.AjaxPost.body = ( jQuery.param( this.params ) );
+				this.$.AjaxPost.body = ( jQuery.param( params ) );
 				this.$.AjaxPost.generateRequest();
 				
 			},
