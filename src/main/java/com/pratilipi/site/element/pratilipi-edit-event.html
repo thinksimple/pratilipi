@@ -30,25 +30,25 @@
 					<h5 class="modal-fullscreen-heading">{{ event.name }}</h5>
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<paper-input class="edit" label="Name" value="{{ params.name::input }}"></paper-input>
+							<paper-input class="edit" label="Name" value="{{ name::input }}"></paper-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<paper-input class="edit" label="Name in English" value="{{ params.nameEn::input }}"></paper-input>
+							<paper-input class="edit" label="Name in English" value="{{ nameEn::input }}"></paper-input>
 						</div>
 					</div>
 					<br/>
 					<span class="edit-summary-text">Event Description :</span>
 					<script language="javascript" type="text/javascript">tinymce.init({ selector:'#eventDescription', editor_selector : "eventDescription", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 					<paper-textarea class="edit" id="eventDescription" value="{{ description::input }}"></paper-textarea>
-					
-					<textarea id="urlList" value="{{ urlList }}"></textarea>
+					<span class="edit-summary-text">Url List :</span>
+					<textarea id="urlList" value="{{ pratilipiUrlList::input }}"></textarea>
 					<div class="display-message-div">
 						<p>{{ message }}</p>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="eventEditButton" class="pratilipi-dark-blue-button pull-right" type="button" on-click="onSubmit">${ _strings.edit_author_save_changes }</button>
+				<button id="eventEditButton" class="pratilipi-dark-blue-button pull-right" type="button" on-click="onSubmit">Okay</button>
 			</div>
 			
 		</div>
@@ -69,20 +69,44 @@
 			is: 'pratilipi-edit-event',
 			
 			properties: {
-				event: { type: Object },
-				params: { type: Object, value: {} },
-				
-				description: { type: String }
+				event: { type: Object, observer: "_eventChanged" },
+
+				eventId: { type: Number },
+				name: { type: String },
+				nameEn: { type: String },
+				language: { type: String, value: "${ _strings.website_language }" },
+				description: { type: String },
+				pratilipiUrlList: { type: String }
 			},
 			
-			ready: function() {
-				if( this.event == null )
-					return;
+			_eventChanged: function() {
+				this.eventId = ( this.event == null || this.event.eventId == null ) ? null : this.event.eventId;
+				this.name = ( this.event == null ||  this.event.name == null ) ? null : this.event.name;
+				this.nameEn = ( this.event == null ||  this.event.nameEn == null ) ? null : this.event.nameEn;
+				this.language = ( this.event == null ||  this.event.language == null ) ? this.language : this.event.language;
 				
-				this.set( 'params', this.event );
+				if( this.event == null || this.event.description == null || this.event.description.trim == "" ) {
+					this.description = null;
+					tinyMCE.get( 'eventDescription' ).setContent( "" );
+				} else {
+					this.description = this.event.description;
+					tinyMCE.get( 'eventDescription' ).setContent( this.event.description );
+				}
 				
-				this.description = this.params.description == null ? "" : this.params.description;
-				
+				if( this.event == null || this.event.pratilipiUrlList == null || this.event.pratilipiUrlList.length == 0 )
+					this.pratilipiUrlList = null;
+				else 
+					this.pratilipiUrlList = this.event.pratilipiUrlList.join( "\n" );
+			},
+			
+			editCurrentEvent: function( event ) {
+				this.set( 'event', event );
+				this.open();
+			},
+			
+			createNewEvent: function() {
+				this.set( 'event', null );
+				this.open();
 			},
 			
 			open: function() {
@@ -102,17 +126,41 @@
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
 					return;
 				
+				if( this.name == null || this.name.trim() == "" ) {
+					this.message = "Please enter the name.";
+					return;
+				}
+				
+				if( this.nameEn == null || this.nameEn.trim() == "" ) {
+					this.message = "Please enter the nameEn.";
+					return;
+				}
+				
 				if( tinyMCE.activeEditor != null )
-					this.params.description = tinyMCE.get( 'eventDescription' ).getContent();
-				else
-					this.params.description = this.description;
+					this.description = tinyMCE.get( 'eventDescription' ).getContent();
+				
+				
+				if( this.description == null || this.description.trim() == "" ) {
+					this.message = "Please enter the description.";
+					return;
+				}
+				
+				var params = { 	"name" : this.name,
+								"nameEn" : this.nameEn,
+								"description" : this.description,
+								"language" : this.language };
+				
+				if( this.eventId != null )
+					params.eventId = this.eventId;
+				
+				if( this.pratilipiUrlList != null || this.pratilipiUrlList.trim() != "" )
+					params.pratilipiUrlList = this.pratilipiUrlList.split( "\n" );
+				
 				
 				this.message = "Please Wait...";
-				jQuery( '#eventEditButton' ).prop( 'disabled', true );				
-				
-				/* this.$.AjaxPost.body = ( jQuery.param( this.params ) );
-
-				this.$.AjaxPost.generateRequest(); */
+				jQuery( '#eventEditButton' ).prop( 'disabled', true );
+				this.$.AjaxPost.body = ( jQuery.param( this.params ) );
+				this.$.AjaxPost.generateRequest();
 				
 			},
 			
@@ -122,8 +170,7 @@
 				
 				var event = event.detail.response;
 
-				document.querySelector( 'pratilipi-event' ).updateEvent( event );
-				location.reload();
+				document.querySelector( 'pratilipi-event-page' ).updateEvent( event );
 				
 				this.async( function() {
 					jQuery( '#eventEditButton' ).prop( 'disabled', false );

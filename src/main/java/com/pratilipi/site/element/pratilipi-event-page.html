@@ -32,7 +32,7 @@
 			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
-			<pratilipi-edit-event event="[[ event ]]"></pratilipi-edit-event>
+			<pratilipi-edit-event></pratilipi-edit-event>
 			<div class="parent-container margin-top-bottom">
 				<div class="container">
 					<pratilipi-navigation
@@ -90,7 +90,11 @@
 			},
 			
 			editEvent: function() {
-				this.querySelector( 'pratilipi-edit-event' ).open();
+				this.querySelector( 'pratilipi-edit-event' ).editCurrentEvent( this.event );
+			},
+			
+			createNewEvent: function() {
+				this.querySelector( 'pratilipi-edit-event' ).createNewEvent();
 			},
 			
 			scrollToTop: function() {
