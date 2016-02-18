@@ -151,14 +151,19 @@
 				params.description = JSON.stringify( this.description );
 				params.description = params.description.substring( 1, params.description.length - 1 );
 				
+				var pratilipiUrlList = [];
+				
 				if( this.pratilipiUrlList != null && this.pratilipiUrlList.trim() != "" )
-					params.pratilipiUrlList = "[" + this.pratilipiUrlList.split( "\n" ).toString() + "]";
+					pratilipiUrlList = this.pratilipiUrlList.split( "\n" );
+
+				if( pratilipiUrlList.length > 0 )
+					params.pratilipiUrlList = "[\"" + pratilipiUrlList.join( "\",\"" ) + "\"]";
 				else
 					params.pratilipiUrlList = "[]";
 				
 				this.message = "Please Wait...";
 				jQuery( '#eventEditButton' ).prop( 'disabled', true );
-				this.$.AjaxPost.body = ( jQuery.param( params ) );
+				this.$.AjaxPost.body = jQuery.param( params );
 				this.$.AjaxPost.generateRequest();
 			},
 			

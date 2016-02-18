@@ -1,5 +1,4 @@
-<link rel='import' href='pratilipi-card-grid.html?20160213'>
-<link rel='import' href='pratilipi-edit-event.html?20160218'>
+<link rel='import' href='pratilipi-edit-event.html?2016021802'>
 
 <dom-module id="pratilipi-event-page">
 	
@@ -103,9 +102,6 @@
 			
 			ready: function() {
 				jQuery( '#scrollToTop' ).css( "display", "none" );
-			},
-			
-			attached: function() {
 				var jSummary = jQuery( "#pratilipi-event-description" );
 				jSummary.html( this.event.description );
 				
