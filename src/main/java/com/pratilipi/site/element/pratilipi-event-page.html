@@ -86,6 +86,8 @@
 			
 			updateEvent: function( event ) {
 				this.set( 'event', event );
+				if( event.pageUrl != null && event.pageUrl != window.location.pathname )
+					window.location.href = event.pageUrl;
 			},
 			
 			editEvent: function() {
