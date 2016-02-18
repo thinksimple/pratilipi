@@ -25,17 +25,19 @@ public class PratilipiSiteFilter implements Filter {
 	private final Pattern validHostSubdomainRegEx = Pattern.compile(
 			"www\\.(tamil)\\.pratilipi\\.com" );
 	private final Pattern validHostRegEx = Pattern.compile(
-			"(www|tamil)\\.pratilipi\\.com"
+			"(www|tamil)\\.pratilipi\\.com" // Prod (Standard)
 			+ "|"
-			+ "(m|ta)\\.pratilipi\\.com"
+			+ "(m|ta)\\.pratilipi\\.com" // Prod (Basic)
 			+ "|"
-			+ "(hindi|gujarati|tamil)\\.gamma\\.pratilipi\\.com"
+			+ "(hindi|gujarati|tamil|english)\\.gamma\\.pratilipi\\.com" // Gamma (Standard)
 			+ "|"
-			+ "(hi|gu|ta)\\.gamma\\.pratilipi\\.com"
+			+ "(hi|gu|ta|en)\\.gamma\\.pratilipi\\.com" // Gamma (Basic)
 			+ "|"
-			+ "mark-6\\.prod-pratilipi\\.appspot\\.com"
+			+ "(hindi|gujarati|tamil|english)\\.devo-pratilipi\\.appspot\\.com" // Devo (Standard)
 			+ "|"
-			+ "mark-6\\.(raghu\\.)?devo-pratilipi\\.appspot\\.com"
+			+ "(hi|gu|ta|en)\\.devo-pratilipi\\.appspot\\.com" // Devo (Basic)
+			+ "|"
+			+ "(raghu)\\.devo-pratilipi\\.appspot\\.com" // Devo (Raghu)
 			+ "|"
 			+ "localhost|127.0.0.1" );
 	private final Map<String, String> redirections = new HashMap<>();

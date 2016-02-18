@@ -9,9 +9,16 @@ public enum Website {
 	MARATHI			(        "marathi.pratilipi.com",       "mr.pratilipi.com", Language.MARATHI,	Language.MARATHI ),
 	MALAYALAM		(      "malayalam.pratilipi.com",       "ml.pratilipi.com", Language.MALAYALAM,	Language.MALAYALAM ),
 	BENGALI			(        "bengali.pratilipi.com",       "bn.pratilipi.com", Language.BENGALI,	Language.BENGALI ),
-	GAMMA_HINDI		(    "hindi.gamma.pratilipi.com", "hi.gamma.pratilipi.com", Language.HINDI,		Language.HINDI ),
-	GAMMA_GUJARATI	( "gujarati.gamma.pratilipi.com", "gu.gamma.pratilipi.com", Language.GUJARATI,	Language.GUJARATI ),
-	GAMMA_TAMIL		(    "tamil.gamma.pratilipi.com", "ta.gamma.pratilipi.com", Language.TAMIL,		Language.TAMIL ),
+	
+	GAMMA_ALL_LANGUAGE	(      "www.gamma.pratilipi.com",  "m.gamma.pratilipi.com", Language.ENGLISH,	null ),
+	GAMMA_HINDI			(    "hindi.gamma.pratilipi.com", "hi.gamma.pratilipi.com", Language.HINDI,		Language.HINDI ),
+	GAMMA_GUJARATI		( "gujarati.gamma.pratilipi.com", "gu.gamma.pratilipi.com", Language.GUJARATI,	Language.GUJARATI ),
+	GAMMA_TAMIL			(    "tamil.gamma.pratilipi.com", "ta.gamma.pratilipi.com", Language.TAMIL,		Language.TAMIL ),
+
+	DEVO_ALL_LANGUAGE	(      "www.devo-pratilipi.appspot.com",  "m.devo-pratilipi.appspot.com", Language.ENGLISH,		null ),
+	DEVO_HINDI			(    "hindi.devo-pratilipi.appspot.com", "hi.devo-pratilipi.appspot.com", Language.HINDI,		Language.HINDI ),
+	DEVO_GUJARATI		( "gujarati.devo-pratilipi.appspot.com", "gu.devo-pratilipi.appspot.com", Language.GUJARATI,	Language.GUJARATI ),
+	DEVO_TAMIL			(    "tamil.devo-pratilipi.appspot.com", "ta.devo-pratilipi.appspot.com", Language.TAMIL,		Language.TAMIL ),
 	;
 	
 	
