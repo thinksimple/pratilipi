@@ -125,7 +125,7 @@
 			properties: {
 				pratilipi: { type: Object, observer: "init" },
 				
-				draftsActive: { type: Boolean, value: false },
+				draftsActive: { type: Boolean, value: false, observer: "init" },
 				publishedActive: { type: Boolean, value: false }
 			},
 			
@@ -158,6 +158,7 @@
 			
 			attached: function() {
 				this.init();
+				$('[data-toggle="tooltip"]').tooltip();
 				this.async( function() {
 					window.dispatchEvent( new Event( 'resize' ) );
 				}, 2000 );
@@ -170,7 +171,6 @@
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
 				
 				this.title = this.pratilipi.title;
-				$('[data-toggle="tooltip"]').tooltip();
 				jQuery( this.querySelector( '.contain-title' ) ).width( jQuery( this ).width() - 130 );
 				this.async( function() {
 					window.dispatchEvent( new Event( 'resize' ) );
