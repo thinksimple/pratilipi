@@ -7,13 +7,6 @@
 		
 		<#include "meta/HeadBasic.ftl">
 		
-		<script>
-			$( document ).ready( function() {
-				var jSummary = jQuery( "#pratilipi-event-description" );
-				jSummary.html( ${ event.description } );
-			});
-		</script>
-		
 	</head>
 
 	<body>
@@ -27,7 +20,7 @@
 			<img style="width: 100%; height: 100%;" src="${ event.getBannerImageUrl( 1000 ) }"/>
 			
 			<#if event.description ??>
-				<div id="pratilipi-event-description" class="box" style="padding: 12px 20px;"></div>
+				<div class="box" style="padding: 12px 20px;">${ event.description }</div>
 			</#if>
 			
 			<#if pratilipiList ??>
