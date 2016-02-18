@@ -1,10 +1,7 @@
+pratilipi					= પ્રતિલિપિ 
 
-# Do NOT edit
-
-pratilipi					= प्रतिलिपि
-
-home_page_title				= पढ़ें हिंदी कहानियाँ, कवितायें, उपन्यास और बहुत कुछ
-website_language			= हिन्दी
+home_page_title				= વાંચો ગુજરાતી વાર્તાઓ, કવિતાઓ, નવલકથાઓ, પુસ્તકો અને બીજું ઘણું 
+website_language			= ગુજરાતી 
 
 facebook_page				= https://www.facebook.com/Pratilipidotcom/
 twitter_page				= https://twitter.com/TeamPratilipi
@@ -15,235 +12,221 @@ linkedin_page				= https://www.linkedin.com/company/pratilipi
 
 # Language
 
-language_choose_language	= भाषा पसंद करें 
-language_all				= அனைத்தும்
-language_hi					= हिन्दी
-language_gu					= Gujarati
-language_ta					= தமிழ்
-language_mr					= Marathi
-lanugage_ml					= Malayalam
-language_bn					= Bengali
-language_en					= English
+language_choose_language	                = ભાષા પસંદ કરો 
+language_all				        = ભાષાઓ 
+language_hi					= હિન્દી 
+language_gu					= ગુજરાતી 
+language_ta					= તમિલ 
+language_mr					= મરાઠી
+lanugage_ml					= મલયાલમ 
+language_bn					= બંગાળી 
+language_en					= અંગ્રેજી 
 
 
 
 # Pratilipi Types
 
-_pratilipi_type_book		= पुस्तक
-_pratilipi_type_books		= पुस्तकें 
-_pratilipi_type_poem		= कविता 
-_pratilipi_type_poems		= कविताएँ 
-_pratilipi_type_story		= कहानी 
-_pratilipi_type_stories	= कहानियाँ 
-_pratilipi_type_article		= लेख
-_pratilipi_type_articles	= लेख
-_pratilipi_type_magazine	= पत्रिका 
-_pratilipi_type_magazines	= पत्रिका 
+_pratilipi_type_book		= પુસ્તક 
+_pratilipi_type_books		= પુસ્તકો 
+_pratilipi_type_poem		= કવિતા  
+_pratilipi_type_poems		= કવિતાઓ 
+_pratilipi_type_story		= વાર્તા 
+_pratilipi_type_stories	         = વાર્તાઓ 
+_pratilipi_type_article		= લેખ 
+_pratilipi_type_articles	        = લેખો 
+_pratilipi_type_magazine	= સામયિક
+_pratilipi_type_magazines	= સામયિકો  
 
 
 
 # Author
 
-author_about				= संक्षिप्त परिचय
-author_language				= भाषा	
-author_since				= प्रतिलिपि के साथ   
+author_about			= સંક્ષિપ્ત પરિચય 
+author_language		= ભાષા 
+author_since			= પ્રતિલિપિ સાથે    
+author_count_works		= પ્રકાશિત સાહિત્ય  
+author_count_reads		= વાચક સંખ્યા   	
+author_count_likes		= વાચકોની પસંદ સંખ્યા 	
 
-author_count_works			= प्रकाशित साहित्य 
-author_count_reads			= पाठकों ने पढ़ा  	
-author_count_likes			= ने पसंद किया 	
-
-author_edit_profile			= प्रोफ़ाइल संपादित करें
-
-author_drafts				= अप्रकाशित रचनायें
-author_published_works		= प्रकाशित रचनायें
-author_add_new_content		= नयी रचना लिखिए 
+author_edit_profile		= પ્રોફાઈલ સુધારો
+author_drafts			= અપ્રકાશિત રચનાઓ 
+author_published_works	= પ્રકાશિત રચનાઓ 
+author_add_new_content	= નવી રચના લખો 
 
 
 
 # Pratilipi
 
-pratilipi_type				= विधा
-pratilipi_listing_date		= प्रकाशन दिनांक	
-pratilipi_published			= प्रकाशित	
-pratilipi_published_year	= प्रकाशन साल 
-pratilipi_summary			= सारांश लिखिए 
+pratilipi_type			= સાહિત્ય પ્રકાર 
+pratilipi_listing_date		= પ્રકાશનની તારીખ 	
+pratilipi_published		=પ્રકાશિત 	
+pratilipi_published_year	= પ્રકાશન વર્ષ  
+pratilipi_summary		= સારાંશ લખો 
+pratilipi_edit_info		= માહિતીમાં સુધારો કરો  	
+pratilipi_edit_content		= રચનામાં સુધારો કરો  
+pratilipi_count_reads		= વાચક સંખ્યા 
+pratilipi_count_reviews		= કુલ ટીપ્પણી 
+pratilipi_count_likes		= કુલ લાઈક્સ 	
 
-pratilipi_edit_info			= संबंधित जानकारी संपादित करें	
-pratilipi_edit_content		= रचना सम्पादित करें 
-
-pratilipi_count_reads		= पाठक संख्या	
-pratilipi_count_reviews		= कुल टिप्पणीयाँ
-pratilipi_count_likes		= कुल लाइक्स	
-
-pratilipi_move_to_drafts	= अप्रकाशित करें
-pratilipi_publish_it		= प्रकाशित करें
+pratilipi_move_to_drafts	= અપ્રકાશિત કરો 
+pratilipi_publish_it		= પ્રકાશિત કરો 
 
 
 
 # Rating
 
-rating_rating				= रेटिंग
-rating_ratings				= रेटिंग
-rating_rate_this			= रेटिंग दें
-rating_your_rating			= आपकी रेटिंग
+rating_rating		  = રેટિંગ 
+rating_ratings		= રેટિંગ 
+rating_rate_this	= રેટિંગ આપો 
+rating_your_rating	= આપનું રેટિંગ 
 
-rating_1_star				= १
-rating_2_star				= २
-rating_3_star				= ३
-rating_4_star				= ४
-rating_5_star				= ५ 
+rating_1_star		= ૧ 
+rating_2_star		= ૨ 
+rating_3_star		= ૩
+rating_4_star		= ૪
+rating_5_star		= ૫ 
 
 
 
 # Review
 
-review_heading				= टिप्पणीयाँ 
-review_write_a_review		= टिप्पणी लिखें 
-review_title				= टिप्पणी का शीर्षक  
-review_title_help			= उदाहरण के लिए – एक अद्भुत कहानी या एक सामान्य कहानी 
-review_content				= आपकी टिपण्णी 
-review_content_help			= 
-review_submit_review	= दर्ज करें 
-review_edit_review			=  संपादित करें 
-review_delete_review		= टिप्पणी हटायें 
-review_delete_review_confirm	= टिप्पणी हटाने की पुष्टि करें 
-review_delete_okay			= ओके
-review_delete_cancel		= कैंसिल
-review_helpful				= क्या यह टिप्पणी सहायरूप थी?
+review_heading			    = ટીપ્પણીઓ  
+review_write_a_review		= ટીપ્પણી લખો
+review_title			      = ટીપ્પણીનું શીર્ષક   
+review_title_help		    = દા.ત. - એક અદભૂત વાર્તા કે એક સામાન્ય વાર્તા
+review_content		      = તમારી ટીપ્પણી 
+review_content_help		= દા.ત. - વાર્તાનું બંધારણ સુંદર ઢબે થયેલ છે...
+review_submit_review	  = દર્જ કરો  
+review_edit_review		  = બદલાવ કરો 
+review_delete_review		= ટીપ્પણીને રદ કરો  
+review_delete_review_confirm	= ટીપ્પણી રદ કરવાની ખાતરી કરો 
+review_delete_okay	   	= ઓકે 
+review_delete_cancel		= રદ કરો  
+review_helpful			= શું આ ટીપ્પણી મદદરૂપ રહી?
 
 
 
 # Search
 
-search 						= खोजिए
-search_bar_help				= लेखक का नाम यां कहानी,कविता,पुस्तक का शीर्षक टाइप करें 
-search_results				= खोज के परिणाम
+search 			= શોધો 
+search_bar_help	= લેખકનું નામ અથવા વાર્તા, કવિતા, પુસ્તકનું શીર્ષક ટાઈપ કરો  
+search_results		= શોધના પરિણામો  
 
 
 
 # Write
 
-write_heading				= लिखिए                                                                                                                                                                                                                                                                                   
-write_help					= कहानी, कविता, लेख, पुस्तक आदी स्वयं प्रकाशित करे 
-write_title					= यहाँ शीर्षक दर्ज कीजिए 
-write_title_en				= शीर्षक अंग्रेजी में  
-write_type					= विधा
-write_language				= भाषा 
-write_summary				= संक्षिप्त सारांश दर्ज करें 
-write_create_new_content	= आगे बढ़ीए
+write_heading		= લખો                                                                                                                                                                                                                                                                                   
+write_help		= વાર્તા,કવિતા,લેખ,પુસ્તક વગેરે સ્વયં પ્રકાશિત કરો  
+write_title		= અહી શીર્ષક લખો  
+write_title_en		= શીર્ષક અંગ્રેજીમાં   
+write_type		= સાહિત્ય પ્રકાર 
+write_language		= ભાષા 
+write_summary		= ટૂંકમાં સારાંશ લખો
+write_create_new_content	= આગળ વધો 
 
 
 
 # Common User Popups
 
-user_sign_in				= साइन इन कीजिए 
-user_to_sign_in				= प्रारंभ कीजिए 
-user_sign_in_with_facebook	= फेसबुक के साथ साइन इन करेें
-user_sign_in_to_pratilipi	= प्रतिलिपि में साइन इन करें
-user_sign_out				= साइन आउट करें 
+user_sign_in	= સાઈન ઇન કરો 
 
-user_sign_up				= नया अकाउंट बनाइये 
-user_sign_up_for_pratilipi	= प्रतिलिपि  पर नया अकाउंट बनाइये
+user_to_sign_in	    = સાઈન ઇન કરો
+user_sign_in_with_facebook	= ફેસબુક સાથે સાઈન ઇન કરો 
+user_sign_in_to_pratilipi	= પ્રતિલિપિમાં સાઈન ઇન કરો
+user_sign_out			= સાઈન આઉટ કરો  
+user_sign_up			= નવું અકાઉન્ટ બનાવો  
+user_sign_up_for_pratilipi	= પ્રતિલિપિ પર નવું અકાઉન્ટ બનાવો  
+user_forgot_password		= પાસવર્ડ યાદ નથી?
+user_reset_password		= નવો પાસવર્ડ બનાવો 
+user_reset_password_help	= આ સાઈટ પર રજીસ્ટર કરવા માટે ઉપયોગમાં લીધેલ ઈ-મેલ આઈડી પ્રદાન કરો 
 
-user_forgot_password		= यदि आप पासवर्ड भूल गए हो?
-user_reset_password			= नया पासवर्ड बनायें
-user_reset_password_help	= इस साइट पर रजिस्टर करने के लिए इस्तेमाल किया ईमेल पता प्रदान करें। 
+user_current_password		= વર્તમાન પાસવર્ડ 
+user_new_password		= નવો પાસવર્ડ 
+user_full_name			= પૂરું નામ લખો
+user_email			= ઈ-મેલ આઈડી પ્રદાન કરો  
+user_password			= પાસવર્ડ 
+user_confirm_password	= પાસવર્ડની ખાતરી કરો 
 
-user_current_password		= वर्तमान पासवर्ड
-user_new_password			= नया पासवर्ड
-
-user_full_name				= पूरा नाम दर्ज करें 
-user_email					= ईमेल प्रदान करे 
-user_password				= पासवर्ड
-user_confirm_password		= पासवर्ड की पुष्टि करें
-
-user_my_profile				= आपकी प्रोफाइल 
-user_my_account				= आपका  अकाउंट 
-
-user_is_new					= उपयोगकर्ता नये है	
-user_is_registered			= उपयोगकर्ता पंजीकृत है
-user_email_verification		= आपको भेजे गए ईमेल की पुष्टि करें		
+user_my_profile		= મારી પ્રોફાઈલ  
+user_my_account		= સેટિંગ  
+user_is_new			= ઉપયોગકર્તા નવા છે -	
+user_is_registered		= ઉપયોગકર્તા અગાઉથી અકાઉન્ટ ધરાવે છે - 
+user_email_verification		= આપને મોકલેલ ઈ-મેલની ચકાસણી કરો 		
 
 
 
 # My Account popup
 
-edit_account_heading		= आपका अकाउंट 
-edit_account_verify_email	= आपको भेजे गए ईमेल की पुष्टि करें	
-edit_account_email_verified	= ईमेल की पुष्टि कर दी गई है 
-edit_account_change_password	= पासवर्ड बदलें
+edit_account_heading		= પ્રોફાઈલમાં બદલાવ ઈચ્છો છો? 
+edit_account_verify_email	= ઈ-મેલની ચકાસણી કરો 	
+edit_account_email_verified	= ઈ-મેલની ચકાસણી થઇ ગઈ છે 
+edit_account_change_password=  પાસવર્ડ બદલો 
 
 
 
 # Footer
 
-footer_follow_us_on_social_media	= सोशल मीडिया	 पर हमें फोलो करें 
-footer_about_us				= हमारे बारे में
-footer_work_with_us			= हमारे साथ काम करें
-footer_blog					= ब्लॉग 
-footer_privacy_policy		= गोपनीयता नीति
-footer_terms_of_service		= सेवा की शर्तें
+footer_follow_us_on_social_media	= સોશિયલ મિડિયા પર અમને ફોલો કરો  
+footer_about_us			= અમારા વિશે
+footer_work_with_us			= અમારી સાથે કામ કરો 
+footer_blog				= બ્લોગ 
+footer_privacy_policy	       = ગોપનીયતા નીતિ
+
+footer_terms_of_service		= સેવાની શરતો
 
 
 
 # Common Words
 
-okay						= स्वीकृत करें 
-cancel						= कैंसिल करें 
-save_changes				= परिवर्तन सुरक्षित करें	
-show_more					= और देखें 
-show_less					= कम देखें  
-read						= पढ़िए 
-write						= लिखिए 
-free						= निःशुल्क
-saving						= सेव करने की प्रक्रिया जारी है 
-working						= कृपया बने रहें  
-update						= अपडेट 
-share						= साझा कीजिए  
-menu						= श्रेणी 
-back						= वापस जाएँं 
-close           = बंद कीजिए 
+okay			= ઓકે  
+cancel			= રદ કરો  
+save_changes		= બદલાવ સુરક્ષિત કરો 
+show_more		= વધુ જુઓ 
+show_less		= ઓછું જુઓ   
+read			= વાંચો  
+write			= લખો  
+free			= વિનામૂલ્યે 
+saving		         = સુરક્ષિત કરવાની પ્રક્રિયા ચાલુ છે
+working			= કૃપા કરી સાથે રહો, પ્રક્રિયા ચાલુ છે
+update				= અપડેટ  
+share				= શેર કરો   
+menu				= સૂચિ
+back				= પાછા જાઓ 
+close       = બંધ કરો 
 
 # Success Messages
 
-password_reset_request_success		= पासवर्ड रीसेट सफल  हुआ
-user_login_success					= लॉग –इन सफल  हुआ
-user_register_success				= पंजीकरण सफल हुआ
-password_change_success				= पासवर्ड परिवर्तन सफल हुआ
-verification_email_sent_success		= पुष्टि हेतु ईमेल सफलता पूर्वक भेजा गया!
-user_verified_success				= उपयोगकर्ता पुष्टि सफल हुई !
-content_created_success				= रचना प्रकाशन सफल
-updated_author_info_success			= लेखक परिचय संपादन सफल हुआ 
-updated_pratilipi_info_success		= रचना संबंधित जानकारी का संपादन सफल हुआ 
+password_reset_request_success		= પાસવર્ડ રીસેટ સફળ થયું
+user_login_success				= લોગ-ઈન પ્રવેશ સફળ થયો
+user_register_success				= રજીસ્ટ્રેશન સફળ થયું
+password_change_success			= પાસવર્ડમાં સુધારો સફળ થયો
+verification_email_sent_success		= ચકાસણી હેતુ મેઈલ સફળતા પૂર્વક મોકલી દેવામાં આવેલ છે.
+user_verified_success				= ઉપયોગકર્તા ચકાસણી સફળ થઈ
+content_created_success			= રચના પ્રકાશન સફળ થયું 
+updated_author_info_success			= લેખક પરિચયમાં ફેરફાર સફળ થયો
+updated_pratilipi_info_success	= રચના સંબંધિત માહિતીમાં ફેરફાર સફળ થયો  
 
 # Author Edit Popup
 
-edit_author_heading				= लेखक परिचय संपादित करें 
-edit_author_first_name			= पहला नाम बदलें
-edit_author_last_name			= अंतिम नाम बदलें
-edit_author_first_name_en		= पहला नाम (अंग्रेजी में)
-edit_author_last_name_en		= अंतिम नाम (अंग्रेजी में)ं  
-edit_author_pen_name			= उपनाम
-edit_author_pen_name_en			= उपनाम (अंग्रेजी में)
-edit_author_birthday_ddmmyyyy	= जन्मतिथि (dd-mm-yyyy)
-edit_author_language			=  भाषा 
-edit_author_summary				= संक्षिप्त परिचय 
-edit_author_save_changes		= बदलाव सुरक्षित करें 
+edit_author_heading				= લેખક પરિચય સુધારો
+edit_author_first_name			= પહેલું નામ બદલો
+edit_author_last_name			= અંતિમ નામ બદલો
+edit_author_first_name_en		= પહેલું નામ (અંગ્રેજીમાં)
+edit_author_last_name_en		= અંતિમ નામ (અંગ્રેજીમાં)
+edit_author_pen_name			= ઉપનામ
+edit_author_pen_name_en		= ઉપનામ (અંગ્રેજીમાં)
+edit_author_birthday_ddmmyyyy	= જન્મતિથિ (dd-mm--yyyy)
+edit_author_language			= ભાષા  
+edit_author_summary			= ટૂંકમાં પરિચય
+edit_author_save_changes		= બદલાવ સુરક્ષિત કરો
 
 # Pratilipi Edit Popup
 
-edit_pratilipi_heading			= रचना की जानकारी में बदलाव करें 
-edit_pratilipi_title			= शीर्षक
-edit_pratilipi_title_en			= शीर्षक (अंग्रेजी में )
-edit_pratilipi_type				= विधा 
-edit_pratilipi_language			= भाषा 
-edit_pratilipi_summary			= रचना  का सारांश 
-edit_pratilipi_save_changes		= बदलाव को सुरक्षित करें 
-
-
-
-# Register Form
-
-register_part_1					= 
-register_part_2					= 
-register_part_3					= 
+edit_pratilipi_heading			= રચના વિશેની માહિતીમાં ફેરફાર કરો
+edit_pratilipi_title			= શીર્ષક 
+edit_pratilipi_title_en		= શીર્ષક (અંગ્રેજીમાં)
+edit_pratilipi_type			= સાહિત્ય પ્રકાર  
+edit_pratilipi_language		=ભાષા  
+edit_pratilipi_summary			= રચનાનો સારાંશ
+edit_pratilipi_save_changes		= બદલાવને સુરક્ષિત કરો
