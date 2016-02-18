@@ -40,6 +40,7 @@
 					<span class="edit-summary-text">Event Description :</span>
 					<script language="javascript" type="text/javascript">tinymce.init({ selector:'#eventDescription', editor_selector : "eventDescription", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 					<paper-textarea class="edit" id="eventDescription" value="{{ description::input }}"></paper-textarea>
+					<br/>
 					<span class="edit-summary-text">Url List :</span>
 					<textarea id="urlList" value="{{ pratilipiUrlList::input }}"></textarea>
 					<div class="display-message-div">
@@ -149,15 +150,14 @@
 					params.eventId = this.eventId;
 				
 				if( this.pratilipiUrlList != null || this.pratilipiUrlList.trim() != "" )
-					params.pratilipiUrlList = this.pratilipiUrlList.split( "\n" );
+					params.pratilipiUrlList = "[" + this.pratilipiUrlList.split( "\n" ).toString() + "]";
 				else
-					params.pratilipiUrlList = [];
+					params.pratilipiUrlList = "[]";
 				
 				this.message = "Please Wait...";
 				jQuery( '#eventEditButton' ).prop( 'disabled', true );
 				this.$.AjaxPost.body = ( jQuery.param( params ) );
 				this.$.AjaxPost.generateRequest();
-				
 			},
 			
 			_handleAjaxPostResponse: function( event ) {
