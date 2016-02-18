@@ -10,7 +10,7 @@
 		<script>
 			$( document ).ready( function() {
 				var jSummary = jQuery( "#pratilipi-event-description" );
-				jSummary.html( this.event.description );
+				jSummary.html( ${ event.description } );
 			});
 		</script>
 		
@@ -30,10 +30,11 @@
 				<div id="pratilipi-event-description" class="box" style="padding: 12px 20px;"></div>
 			</#if>
 			
-			
-			<#list pratilipiList as pratilipi>
-				<#include "../element/pratilipi-pratilipi-card.ftl">
-			</#list>
+			<#if pratilipiList ??>
+				<#list pratilipiList as pratilipi>
+					<#include "../element/pratilipi-pratilipi-card.ftl">
+				</#list>
+			</#if>
 						
 			<#include "../element/pratilipi-navigation.ftl">
 			<#include "../element/pratilipi-footer.ftl">
