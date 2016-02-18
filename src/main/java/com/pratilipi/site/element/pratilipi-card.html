@@ -159,6 +159,8 @@
 			attached: function() {
 				this.init();
 				$('[data-toggle="tooltip"]').tooltip();
+				this.title = this.pratilipi.title;
+				jQuery( this.querySelector( '.contain-title' ) ).width( jQuery( this ).width() - 130 );
 				this.async( function() {
 					window.dispatchEvent( new Event( 'resize' ) );
 				}, 2000 );
@@ -173,8 +175,7 @@
 				else
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
 				
-				this.title = this.pratilipi.title;
-				jQuery( this.querySelector( '.contain-title' ) ).width( jQuery( this ).width() - 130 );
+				window.dispatchEvent( new Event( 'resize' ) );
 				this.async( function() {
 					window.dispatchEvent( new Event( 'resize' ) );
 				}, 1000 );
