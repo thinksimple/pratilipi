@@ -99,6 +99,11 @@ public abstract class GenericApi extends HttpServlet {
 			queryParamsStr.setCharAt( queryParamsStr.length() - 1, '}' );
 		else
 			queryParamsStr.append( "}" );
+
+		
+		logger.log( Level.INFO, "Request Payload: " + queryParamsStr );
+
+		
 		JsonObject queryParamsJson = gson.fromJson( queryParamsStr.toString(), JsonElement.class ).getAsJsonObject();
 
 		// Creating JsonObject from request body (JSON)
@@ -118,7 +123,7 @@ public abstract class GenericApi extends HttpServlet {
 		}
 		
 		
-		logger.log( Level.INFO, "Request Payload: " + requestPayloadJson );
+		logger.log( Level.INFO, "Enhanced Request Payload: " + requestPayloadJson );
 		
 		
 		// Invoking get/put method for API response
