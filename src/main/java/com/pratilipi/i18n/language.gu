@@ -58,7 +58,7 @@ author_published_works	= પ્રકાશિત રચનાઓ
 author_add_new_content	= નવી રચના લખો 
 
 
-author_no_contents_published	= Sorry! This Author doesn't have any books published!
+author_no_contents_published	= માફ કરશો. આ રચનાકારના ખાતામાં સાહિત્ય પ્રકાશન થયેલ નથી.
 
     
 # Pratilipi
@@ -79,7 +79,7 @@ pratilipi_count_likes		= કુલ લાઈક્સ
 pratilipi_move_to_drafts	= અપ્રકાશિત કરો 
 pratilipi_publish_it		= પ્રકાશિત કરો 
 
-pratilipi_no_reviews		= Sorry! No Reviews found for this content!
+pratilipi_no_reviews		= આપ પ્રથમ સમીક્ષક બની ને લેખકનો ઉત્સાહ વધારી શકો છો. 
 
 
 
@@ -121,7 +121,7 @@ review_helpful			= શું આ ટીપ્પણી મદદરૂપ રહ
 search 			= શોધો 
 search_bar_help	= લેખકનું નામ અથવા વાર્તા, કવિતા, પુસ્તકનું શીર્ષક ટાઈપ કરો  
 search_results		= શોધના પરિણામો
-search_no_results_found		= Sorry! No Search Results found for your search query. Try searching for different search query!  
+search_no_results_found		= માફ કરશો, આપે કરેલ શોધનું પરિણામ શૂન્ય છે. પ્રતિલિપિ પર અન્ય રોમાંસ, હોરર અને રહસ્યકથાઓ માણો.  
 
 
 
