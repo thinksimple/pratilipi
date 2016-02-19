@@ -265,6 +265,7 @@ public class PratilipiSite extends HttpServlet {
 		
 		
 		// Dispatching response
+		response.setContentType( "text/html" );
 		response.setCharacterEncoding( "UTF-8" );
 		response.getWriter().write( html );
 		response.getWriter().close();
@@ -559,6 +560,8 @@ public class PratilipiSite extends HttpServlet {
 			throws InsufficientAccessException {
 		
 		String searchQuery = request.getParameter( RequestParameter.SEARCH_QUERY.getName() );
+		if( searchQuery.trim().isEmpty() )
+			searchQuery = null;
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( lang );
