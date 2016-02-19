@@ -32,7 +32,7 @@
 			<form method="get" action="/search">
 				<div class="form-group">
 					<div class="input-group">
-						<input type="text" class="form-control" name="q" style="display: table-cell; width:100%;" maxlength="120" />
+						<input type="text" class="form-control" name="q" style="display: table-cell; width:100%;" maxlength="120" <#if pratilipiListSearchQuery?? >value="${ pratilipiListSearchQuery }"</#if> />
 						<div style="background: #D0021B;" class="input-group-addon"><button class="search-button" type="submit">${ _strings.search }</button></div>
 					</div>
 				</div>
@@ -72,7 +72,7 @@
 			<form method="get" action="/search">
 				<div class="form-group">
 					<div class="input-group">
-						<input type="text" class="form-control" name="q" style="width:100%;" maxlength="120" />
+						<input type="text" class="form-control" name="q" style="width:100%;" maxlength="120" <#if pratilipiListSearchQuery?? >value="${ pratilipiListSearchQuery }"</#if> />
 						<div style="background: #D0021B;" class="input-group-addon"><button class="search-button" type="submit">${ _strings.search }</button></div>
 					</div>
 				</div>
