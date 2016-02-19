@@ -414,7 +414,9 @@ public class PratilipiDataUtil {
 		
 		// Processing search query
 		if( searchQuery != null )
-			searchQuery = searchQuery.toLowerCase().trim().replaceAll( "[\\s]+", " OR " );
+			searchQuery = searchQuery.toLowerCase().trim()
+					.replaceAll( ",", "" )
+					.replaceAll( "[\\s]+", " OR " );
 
 		// Creating memcache id
 		String memcacheId = PratilipiDataUtil.class.getSimpleName() + "-" + pratilipiFilter.toUrlEncodedString();
