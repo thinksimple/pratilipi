@@ -26,6 +26,7 @@ public class GetPratilipiListResponse extends GenericResponse {
 		private String pageUrl;
 		private String coverImageUrl;
 		private String readPageUrl;
+		private String writePageUrl;
 	
 		private PratilipiContentType contentType;
 
@@ -49,6 +50,7 @@ public class GetPratilipiListResponse extends GenericResponse {
 			this.pageUrl = pratilipi.getPageUrl();
 			this.coverImageUrl = pratilipi.getCoverImageUrl();
 			this.readPageUrl = pratilipi.getReadPageUrl();
+			this.writePageUrl = pratilipi.getWritePageUrl();
 			if( UxModeFilter.isAndroidApp() )
 				this.contentType = pratilipi.getContentType();
 			if( UxModeFilter.isAndroidApp() )
