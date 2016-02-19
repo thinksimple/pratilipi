@@ -560,7 +560,7 @@ public class PratilipiSite extends HttpServlet {
 			throws InsufficientAccessException {
 		
 		String searchQuery = request.getParameter( RequestParameter.SEARCH_QUERY.getName() );
-		if( searchQuery.trim().isEmpty() )
+		if( searchQuery != null && searchQuery.trim().isEmpty() )
 			searchQuery = null;
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
