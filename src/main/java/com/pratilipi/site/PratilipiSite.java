@@ -577,7 +577,7 @@ public class PratilipiSite extends HttpServlet {
 		}
 		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-				PratilipiDataUtil.getPratilipiDataList( searchQuery, pratilipiFilter, null, pageSize );
+				PratilipiDataUtil.getPratilipiDataList( searchQuery, pratilipiFilter, null, (pageCurr - 1) * pageSize, pageSize );
 
 		Gson gson = new Gson();
 
