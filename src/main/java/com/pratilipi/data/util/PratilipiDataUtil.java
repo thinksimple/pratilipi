@@ -415,7 +415,7 @@ public class PratilipiDataUtil {
 		// Processing search query
 		if( searchQuery != null )
 			searchQuery = searchQuery.toLowerCase().trim()
-					.replaceAll( ",", "" )
+					.replaceAll( ",|or", "" )
 					.replaceAll( "[\\s]+", " OR " );
 
 		// Creating memcache id
