@@ -277,7 +277,7 @@
 			},
 			
 			attached: function() {
-				if( this.pratilipiList.length < 20 )
+				if( this.pratilipiList.length < 20 || this.cursor == "" )
 					this.isFinished = true;
 				this.checkForZeroResults();
 			},
