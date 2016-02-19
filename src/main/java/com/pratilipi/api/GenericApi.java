@@ -228,6 +228,7 @@ public abstract class GenericApi extends HttpServlet {
 			
 		} else if( apiResponse instanceof GenericResponse ) {
 			
+			response.setContentType( "text/html" );
 			response.setCharacterEncoding( "UTF-8" );
 			PrintWriter writer = response.getWriter();
 			writer.println( new Gson().toJson( apiResponse ) );
@@ -235,6 +236,7 @@ public abstract class GenericApi extends HttpServlet {
 		
 		} else if( apiResponse instanceof Throwable ) {
 			
+			response.setContentType( "text/html" );
 			response.setCharacterEncoding( "UTF-8" );
 			PrintWriter writer = response.getWriter();
 
