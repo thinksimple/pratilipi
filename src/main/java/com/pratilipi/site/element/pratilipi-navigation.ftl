@@ -60,10 +60,10 @@
 			<a href="/literature">இலக்கியம்</a>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 navigation">
-			<a href="/nonfiction">புனைவிலி</a>
+			<a href="/non-fiction">புனைவிலி</a>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 navigation">
-			<a href="/poemcollection">கவிதைத்தொகுப்பு</a>
+			<a href="/poem-collection">கவிதைத்தொகுப்பு</a>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 navigation">
 			<a href="/humour">நகைச்சுவை</a>
@@ -72,7 +72,7 @@
 			<a href="/children">குழந்தைகள்</a>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 navigation">
-			<a href="/selfhelp">தன்மேம்பாடு</a>
+			<a href="/self-help">தன்மேம்பாடு</a>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 navigation">
 			<a href="/experience">அனுபவம்</a>
