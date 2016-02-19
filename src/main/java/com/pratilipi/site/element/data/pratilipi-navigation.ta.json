@@ -12,6 +12,14 @@
 					"url" : "/new"
 				},
 				{
+					"text" : "ஞயம்பட வரை",
+					"url" : "/event/gnayam-pada-varai"
+				},
+				{
+					"text" : "காதல் போட்டி",
+					"url" : "/event/kondaadapadaadha-kaadhalgal"
+				},
+				{
 					"text" : "புத்தகங்கள்",
 					"url" : "/books"
 				},
