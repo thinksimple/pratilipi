@@ -32,6 +32,19 @@
 	</dispatch>
 
 
+	<!-- Remove this when www is mapped to default module -->
+	<dispatch>
+		<url>*/pratilipi-cover/*</url>
+		<module>default</module>
+	</dispatch>
+
+	<!-- Remove this when www is mapped to default module -->
+	<dispatch>
+		<url>*/author-image/*</url>
+		<module>default</module>
+	</dispatch>
+
+
 	<dispatch>
 		<url>*/api/*</url>
 		<module>api</module>

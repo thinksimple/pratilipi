@@ -88,7 +88,15 @@ public class PratilipiSiteFilter implements Filter {
 		String userAgent = request.getHeader( "user-agent" );
 
 		
-		if( validHostSubdomainRegEx.matcher( host ).matches() ) { // Redirecting to <lang>.pratilipi.com
+		if( requestUri.equals( "/_ah/warmup" ) || requestUri.equals( "/_ah/start" ) || requestUri.equals( "/_ah/stop" ) ) {
+			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
+	
+			
+		} else if( userAgent != null && userAgent.startsWith( "libwww-perl" ) ) {
+			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
+	
+		
+		} else if( validHostSubdomainRegEx.matcher( host ).matches() ) { // Redirecting to <lang>.pratilipi.com
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			String queryString = request.getQueryString();
 			if( queryString == null || queryString.isEmpty() )
@@ -139,14 +147,6 @@ public class PratilipiSiteFilter implements Filter {
 		} else if( oldPratilipiReaderUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi reader url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			response.setHeader( "Location", requestUri.replaceFirst( "/(book|poem|story|article|pratilipi)/", "?id=" ) );
-
-		
-		} else if( requestUri.equals( "/_ah/start" ) || requestUri.equals( "/_ah/stop" ) ) {
-			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
-
-			
-		} else if( userAgent != null && userAgent.startsWith( "libwww-perl" ) ) {
-			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
 
 		
 		} else {
