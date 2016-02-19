@@ -5,7 +5,7 @@
 		<url>*/oauth*</url>
 		<module>www</module>
 	</dispatch>
-	
+
 	<dispatch>
 		<url>*/read*</url>
 		<module>www</module>
@@ -33,17 +33,7 @@
 
 
 	<dispatch>
-		<url>*/api/user/login/facebook*</url>
-		<module>api</module>
-	</dispatch>
-
-	<dispatch>
-		<url>*/api/author/image</url>
-		<module>api</module>
-	</dispatch>
-
-	<dispatch>
-		<url>*/api/pratilipi/cover</url>
+		<url>*/api/*</url>
 		<module>api</module>
 	</dispatch>
 

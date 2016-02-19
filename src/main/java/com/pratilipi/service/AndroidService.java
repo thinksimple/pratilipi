@@ -21,6 +21,7 @@ import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 public class AndroidService extends GenericService {
 	
 	static {
+		
 		ApiRegistry.register( UserAccessTokenApi.class );
 		ApiRegistry.register( UserLoginApi.class );
 		ApiRegistry.register( UserLoginFacebookApi.class );
@@ -39,6 +40,7 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( UserPratilipiReviewListApi.class );
 		
 		ApiRegistry.register( CategoryListApi.class );
+		
 	}
 	
 }
