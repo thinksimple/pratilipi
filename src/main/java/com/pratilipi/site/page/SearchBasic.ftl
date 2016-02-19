@@ -19,9 +19,12 @@
 			
 			<#if pratilipiListSearchQuery?? >
 				<#assign prefix = "?q=${ pratilipiListSearchQuery }&" >
-				<#include "../element/pratilipi-page-navigation.ftl">
+			<#else>
+				<#assign prefix = "?" >
 			</#if>
-			
+
+			<#include "../element/pratilipi-page-navigation.ftl">
+
 			<#include "../element/pratilipi-navigation.ftl">
 			<#include "../element/pratilipi-footer.ftl">
 		</div>
