@@ -3,7 +3,7 @@
 
 	<head>
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi-page.html?20160215'>
+		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi-page.html?20160219'>
 
 		<script>
 			var didScroll;

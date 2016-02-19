@@ -148,11 +148,11 @@
 			},
 			
 			redirectToReader: function() {
-				window.location.href = this.pratilipi.readPageUrl;
+				window.location.href = this.pratilipi.readPageUrl + "&ret=" + window.location.pathname;
 			},
 			
 			redirectToWriter: function() {
-				window.location.href = this.pratilipi.writePageUrl;
+				window.location.href = this.pratilipi.writePageUrl + "&ret=" + window.location.pathname;
 			},
 			
 			attached: function() {
@@ -176,7 +176,10 @@
 				
 				this.async( function() {
 					window.dispatchEvent( new Event( 'resize' ) );
-				}, 50 );
+				}, 30 );
+				this.async( function() {
+					window.dispatchEvent( new Event( 'resize' ) );
+				}, 60 );
 				this.async( function() {
 					window.dispatchEvent( new Event( 'resize' ) );
 				}, 500 );

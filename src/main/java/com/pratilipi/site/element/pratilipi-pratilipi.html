@@ -236,11 +236,11 @@
 			},
 			
 			openWriterPanel: function() {
-				window.location = this.pratilipi.writePageUrl;;
+				window.location.href = this.pratilipi.writePageUrl + "&ret=" + window.location.pathname;
 			},
 			
 			redirectToReader: function() {
-				window.location.href = this.pratilipi.readPageUrl;
+				window.location.href = this.pratilipi.readPageUrl + "&ret=" + window.location.pathname;
 			},
 			
 			_onIronResize: function() {
