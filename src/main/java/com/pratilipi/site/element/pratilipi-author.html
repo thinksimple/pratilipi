@@ -14,6 +14,10 @@
 			--paper-card-header: { display: none };
 		}
 		
+		h6.author-works {
+			font-weight: 700;
+		}
+		
 		.col-right-mobile table {
 			margin: 0 auto;
 			text-align: left;
@@ -21,8 +25,14 @@
 		}
 		
 		.col-right-widescreen table td, .col-right-widescreen table th, .col-right-mobile table td, .col-right-mobile table th {
-			width: 66%;
+			white-space: nowrap;
+			font-weight: 700;
+			color: #333;
 			height: 30px;
+		}
+		
+		.col-right-widescreen table td, .col-right-mobile table td {
+			padding-left: 10px;
 		}
 		
 		.less {
@@ -124,13 +134,13 @@
 			<!-- Works, Reads and Likes -->
 			<div class="row" style="text-align: center; padding: 10px;">
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h6>${ _strings.author_count_works }&nbsp;&minus;&nbsp;{{ author.contentPublished }}</h6>
+					<h6 class="author-works">${ _strings.author_count_works }&nbsp;&minus;&nbsp;{{ author.contentPublished }}</h6>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h6>${ _strings.author_count_reads }&nbsp;&minus;&nbsp;{{ author.totalReadCount }}</h6>
+					<h6 class="author-works">${ _strings.author_count_reads }&nbsp;&minus;&nbsp;{{ author.totalReadCount }}</h6>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h6>${ _strings.author_count_likes }&nbsp;&minus;&nbsp;{{ author.totalFbLikeShareCount }}</h6>
+					<h6 class="author-works">${ _strings.author_count_likes }&nbsp;&minus;&nbsp;{{ author.totalFbLikeShareCount }}</h6>
 				</div>
 			</div>
 			
