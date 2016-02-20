@@ -22,7 +22,7 @@
 <link rel='import' href='/elements.${lang}/pratilipi-footer.html?20160216'>
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css?20160218">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?20160220">
 
 <#include "GoogleAnalytics.ftl">
 
