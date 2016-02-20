@@ -26,6 +26,10 @@
 	<filter>
 		<filter-name>UxModeFilter</filter-name>
 		<filter-class>com.pratilipi.filter.UxModeFilter</filter-class>
+		<init-param>
+			<param-name>Module</param-name>
+			<param-value>WebApp</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>UxModeFilter</filter-name>
