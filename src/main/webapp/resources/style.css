@@ -333,11 +333,11 @@ a.pratilipi-orange-button:hover, a.pratilipi-orange-button:focus {
 	text-decoration: none;
 }
 
-.pratilipi-new-blue-button:hover {
+a.pratilipi-new-blue-button:hover {
 	text-decoration: none;
 }
 
-.link, .link:focus, .link:hover {
+.link, a.link:focus, a.link:hover {
 	font-size: 14px;
 	color: #333;
 	line-height: 17px;
@@ -346,14 +346,14 @@ a.pratilipi-orange-button:hover, a.pratilipi-orange-button:focus {
 
 
 /* Active or Inactive */
-.active, .active:focus, .active:hover {
+.active, a.active:focus, a.active:hover {
 	font-size: 18px;
 	color: #D0021B;
 	line-height: 20px;
 	outline: none;
 }
 
-.inactive, .inactive:focus, .inactive:hover {
+.inactive, a.inactive:focus, a.inactive:hover {
 	font-size: 15px;
 	color: #989898;
 	line-height: 20px;
@@ -408,19 +408,19 @@ a.pratilipi-orange-button:hover, a.pratilipi-orange-button:focus {
 	padding-bottom: 1px;
 }
 
-.ellipsed, .ellipsed:hover, .ellipsed:focus {
+.ellipsed, a.ellipsed:hover, a.ellipsed:focus {
 	text-align: left;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
 }
 
-.pratilipi-card-heading, .pratilipi-card-heading:hover, .pratilipi-card-heading:focus {
+.pratilipi-card-heading, a.pratilipi-card-heading:hover, a.pratilipi-card-heading:focus {
 	font-size: 16px;
 	color: inherit;
 }
 
-.pratilipi-card-author, .pratilipi-card-author:hover, .pratilipi-card-author:focus {
+.pratilipi-card-author, a.pratilipi-card-author:hover, a.pratilipi-card-author:focus {
 	font-size: 12px; 
 	color: #434343; 
 	line-height: 20px;

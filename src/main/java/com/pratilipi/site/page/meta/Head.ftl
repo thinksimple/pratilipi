@@ -19,10 +19,10 @@
 <link rel='import' href='/elements.${lang}/pratilipi-navigation-drawer.html'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160203'>
 <link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160220'>
-<link rel='import' href='/elements.${lang}/pratilipi-footer.html?20160216'>
+<link rel='import' href='/elements.${lang}/pratilipi-footer.html?20160220'>
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css?20160220">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?2016022002">
 
 <#include "GoogleAnalytics.ftl">
 
@@ -45,12 +45,14 @@
 			hasScrolled();
 			didScroll = false;
 		}
-	}, 100);
+	}, 30);
 
 	
 	function hasScrolled() {
 		
 		var st = $(this).scrollTop();
+		
+		document.querySelector( '${ mainPage }' ).scrollHandler( st );
 
 		if( Math.abs( lastScrollTop - st ) <= delta )
 				return;

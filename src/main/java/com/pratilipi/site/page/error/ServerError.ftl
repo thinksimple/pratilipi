@@ -3,20 +3,8 @@
 	<head>
 		<#-- Page Description -->
 		<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
+		<#assign mainPage="pratilipi-server-error">
 		<#include "../meta/Head.ftl">
-		<script>
-			var didScroll;
-			$( window ).scroll( function( event ) {
-				didScroll = true;
-			});
-			
-			setInterval( function() {
-				if( didScroll ) {
-					document.querySelector( 'pratilipi-server-error' ).scrollHandler( $(this).scrollTop() );
-					didScroll = false;
-				}
-			}, 30);
-		</script>
 	</head>
 	<body>
 		<dom-module id="pratilipi-server-error">

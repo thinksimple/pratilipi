@@ -2,20 +2,8 @@
 <html lang="${lang}">
 
 	<head>
+		<#assign mainPage="pratilipi-static-page">
 		<#include "meta/Head.ftl">
-		<script>
-			var didScroll;
-			$( window ).scroll( function( event ) {
-				didScroll = true;
-			});
-			
-			setInterval( function() {
-				if( didScroll ) {
-					document.querySelector( 'pratilipi-static-page' ).scrollHandler( $(this).scrollTop() );
-					didScroll = false;
-				}
-			}, 30);
-		</script>
 	</head>
 	
 	<body>

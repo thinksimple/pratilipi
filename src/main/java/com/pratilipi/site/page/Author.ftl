@@ -2,22 +2,9 @@
 <html lang="${lang}">
 
 	<head>
+		<#assign mainPage="pratilipi-author-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-author-page.html?2016022003'>
-
-		<script>
-			var didScroll;
-			$( window ).scroll( function( event ) {
-				didScroll = true;
-			});
-			
-			setInterval( function() {
-				if( didScroll ) {
-					document.querySelector( 'pratilipi-author-page' ).scrollHandler( $(this).scrollTop() );
-					didScroll = false;
-				}
-			}, 30);
-		</script>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2016022003'>
 	</head>
 
 	<body>
