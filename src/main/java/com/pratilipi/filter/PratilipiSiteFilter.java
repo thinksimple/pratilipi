@@ -25,9 +25,9 @@ public class PratilipiSiteFilter implements Filter {
 	private final Pattern validHostSubdomainRegEx = Pattern.compile(
 			"www\\.(tamil)\\.pratilipi\\.com" );
 	private final Pattern validHostRegEx = Pattern.compile(
-			"(www|tamil)\\.pratilipi\\.com" // Prod (Standard)
+			"(www|gujarati|tamil)\\.pratilipi\\.com" // Prod (Standard)
 			+ "|"
-			+ "(m|ta)\\.pratilipi\\.com" // Prod (Basic)
+			+ "(m|gu|ta)\\.pratilipi\\.com" // Prod (Basic)
 			+ "|"
 			+ "(www|hindi|gujarati|tamil)\\.gamma\\.pratilipi\\.com" // Gamma (Standard)
 			+ "|"
