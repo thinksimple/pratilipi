@@ -53,7 +53,9 @@
 						</div>
 						
 						<template is="dom-if" if="{{ pratilipi.author }}">
-							<h6><a class="pratilipi-card-author" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a></h6>
+							<template is="dom-if" if="{{ !draftsActive }}">
+								<h6><a class="pratilipi-card-author" href="{{ pratilipi.author.pageUrl }}">{{ pratilipi.author.name }}</a></h6>
+							</template>
 						</template>
 						
 						<pratilipi-rating value="{{ pratilipi.averageRating }}">
@@ -179,10 +181,7 @@
 				}, 30 );
 				this.async( function() {
 					window.dispatchEvent( new Event( 'resize' ) );
-				}, 60 );
-				this.async( function() {
-					window.dispatchEvent( new Event( 'resize' ) );
-				}, 500 );
+				}, 150 );
 			},
 			
 			publishNow: function() {
