@@ -18,7 +18,7 @@
 <link rel='import' href='/elements.${lang}/pratilipi-write.html?20160203'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation-drawer.html'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160203'>
-<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160220'>
+<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160224'>
 <link rel='import' href='/elements.${lang}/pratilipi-footer.html?20160220'>
 
 <#-- Custom Stylesheet -->
@@ -26,27 +26,39 @@
 
 <#include "GoogleAnalytics.ftl">
 
-<script async>
-
+<script>
+	var didScroll;
 	var lastScrollTop = 0;
-	var delta = 5;
+	var delta = 10;
 	var navbarHeight = 75;
 	
 	$( window ).scroll( function( event ) {
+		didScroll = true;
+	});
 
+	
+	setInterval( function() {
+		if( didScroll ) {
+			hasScrolled();
+			document.querySelector( '${ mainPage }' ).scrollHandler( st );
+			didScroll = false;
+		}
+	}, 30);
+
+	
+	function hasScrolled() {
+		
 		var st = $(this).scrollTop();
-
+		
 		if( Math.abs( lastScrollTop - st ) <= delta )
 				return;
-
+		
 		if( st > lastScrollTop && st > navbarHeight )
 			$( 'header' ).removeClass( 'nav-down' ).addClass( 'nav-up' );
 		else if( st + $(window).height() < $(document).height() || st < navbarHeight )
 			$( 'header' ).removeClass( 'nav-up' ).addClass( 'nav-down' );
-			
-		document.querySelector( '${ mainPage }' ).scrollHandler( st );
+		
 		lastScrollTop = st;
-
-	});
+	}
 
 </script>

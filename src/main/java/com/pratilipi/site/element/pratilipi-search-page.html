@@ -59,14 +59,17 @@
 			},
 			
 			scrollHandler: function( st ) {
-				if( st > this.lastScrollTop || st < 100 ) {
+				if( st > this.lastScrollTop || st < 100 )
 					jQuery( '#scrollToTop' ).fadeOut();
-					this.querySelector( 'pratilipi-card-grid' ).loadMore( st );
-				}
-				else {
+				else
 					jQuery( '#scrollToTop' ).fadeIn();
-				}
+
+				this.async( function() {
+					this.querySelector( 'pratilipi-card-grid' ).loadMore();
+				});
+
 				this.lastScrollTop = st;
+				
 			}
 		
 		});

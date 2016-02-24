@@ -210,7 +210,7 @@
 				
 			},
 			
-			loadMore: function( scrollTop ) {
+			loadMore: function() {
 				
 				if( !this.isLoading && !this.isFinished )
 					this.includeShowMoreButton = true;
@@ -220,11 +220,11 @@
 					return;
 
 				// Check for window height.
-				var reqHeight = scrollTop
-						- jQuery( this ).context.offsetTop
+				var reqHeight = jQuery( window ).scrollTop()
+						- jQuery( this ).position().top
 						+ jQuery( window ).height()
 						+ 3 * jQuery( window ).height();
-		
+
 				if( jQuery( this ).outerHeight( true ) >= reqHeight )
 					return;
 				
