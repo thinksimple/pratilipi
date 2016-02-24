@@ -5,11 +5,13 @@
 	<style>
 	
 		:host {
-			display: block;
+			display: inline-block;
+			width: 100%;
 		}
 		
 		paper-card {
 			height: 200px;
+			width: 100%;
 			--paper-card-header: { display: none };
 		}
 		
@@ -48,8 +50,8 @@
 					</div>
 					
 				  	<div class="media-body">
-				  		<div class="contain-title ellipsed pratilipi-red" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}">
-				  		 	<a class="pratilipi-card-heading pratilipi-red" href="{{ pratilipi.pageUrl }}">{{ title }}</a>
+				  		<div class="contain-title ellipsed pratilipi-red">
+				  		 	<a class="pratilipi-card-heading pratilipi-red" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}" href="{{ pratilipi.pageUrl }}">{{ title }}</a>
 						</div>
 						
 						<template is="dom-if" if="{{ pratilipi.author }}">
@@ -131,24 +133,6 @@
 				publishedActive: { type: Boolean, value: false }
 			},
 			
-			behaviors: [
-				Polymer.IronResizableBehavior
-			],
-			
-			listeners: {
-				'iron-resize': '_onIronResize'
-			},
-			
-			_onIronResize: function() {
-				// titleWidth = width occupied by the title.
-				var titleWidth = jQuery( this.querySelector( '.pratilipi-card-heading' ) ).width();
-				// maxWidth = width of the card - image - padding.
-				var maxWidth = jQuery( this ).width() - 130;
-				
-				// Setting the minimum of two to the card heading.
-				jQuery( this.querySelector( '.contain-title' ) ).width( Math.min( titleWidth, maxWidth ) );
-			},
-			
 			redirectToReader: function() {
 				window.location.href = this.pratilipi.readPageUrl + "&ret=" + window.location.pathname;
 			},
@@ -159,12 +143,16 @@
 			
 			attached: function() {
 				this.init();
+				
 				$('[data-toggle="tooltip"]').tooltip();
+				$("[data-placement=top]").hover(function(){
+    				$( '.tooltip' ).css( 'left','130px' )
+    				$( '.tooltip' ).css( 'white-space','normal' )
+				});
+				
 				this.title = this.pratilipi.title;
-				jQuery( this.querySelector( '.contain-title' ) ).width( jQuery( this ).width() - 130 );
-				this.async( function() {
-					window.dispatchEvent( new Event( 'resize' ) );
-				}, 2000 );
+				var maxWidth = jQuery( this ).width() - 130;
+				jQuery( this.querySelector( '.ellipsed' ) ).width( maxWidth );
 			},
 			
 			init: function() {
@@ -176,12 +164,6 @@
 				else
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
 				
-				this.async( function() {
-					window.dispatchEvent( new Event( 'resize' ) );
-				}, 30 );
-				this.async( function() {
-					window.dispatchEvent( new Event( 'resize' ) );
-				}, 150 );
 			},
 			
 			publishNow: function() {
