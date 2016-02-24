@@ -65,9 +65,7 @@
 				else
 					jQuery( '#scrollToTop' ).fadeIn();
 
-				this.async( function() {
-					this.querySelector( 'pratilipi-card-grid' ).loadMore();
-				});
+				this.querySelector( 'pratilipi-card-grid' ).loadMore();
 
 				this.lastScrollTop = st;
 				

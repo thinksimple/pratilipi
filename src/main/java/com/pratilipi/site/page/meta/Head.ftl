@@ -18,11 +18,11 @@
 <link rel='import' href='/elements.${lang}/pratilipi-write.html?20160203'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation-drawer.html'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160203'>
-<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160224'>
-<link rel='import' href='/elements.${lang}/pratilipi-footer.html?20160220'>
+<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?2016022402'>
+<link rel='import' href='/elements.${lang}/pratilipi-footer.html?2016022012'>
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css?2016022002">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?2016022004">
 
 <#include "GoogleAnalytics.ftl">
 

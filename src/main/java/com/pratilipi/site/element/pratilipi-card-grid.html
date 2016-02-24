@@ -206,7 +206,7 @@
 					ajaxGet.params.state = "PUBLISHED";
 				
 				ajaxGet.params.cursor = this.cursor;
-				ajaxGet.generateRequest();
+				this.async( function() { ajaxGet.generateRequest(); });
 				
 			},
 			
@@ -243,8 +243,7 @@
 					ajaxGet.params.state = "PUBLISHED";
 				
 				ajaxGet.params.cursor = this.cursor;
-				ajaxGet.generateRequest();
-				
+				this.async( function() { ajaxGet.generateRequest(); });
 			},
 			
 			_handleAjaxGetResponse: function( request ) {
