@@ -58,7 +58,10 @@
 				jQuery( '#scrollToTop' ).css( "display", "none" );
 			},
 			
-			scrollHandler: function( st ) {
+			scrollHandler: function() {
+
+				var st = $(this).scrollTop();
+				
 				if( st > this.lastScrollTop || st < 100 )
 					jQuery( '#scrollToTop' ).fadeOut();
 				else

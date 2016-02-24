@@ -40,7 +40,7 @@
 	setInterval( function() {
 		if( didScroll ) {
 			hasScrolled();
-			document.querySelector( '${ mainPage }' ).scrollHandler( st );
+			document.querySelector( '${ mainPage }' ).scrollHandler();
 			didScroll = false;
 		}
 	}, 30);
