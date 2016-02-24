@@ -40,7 +40,7 @@
 		<pratilipi-card-grid
 			id='draftedBooksByAuthor'
 			author-id='[[ author.authorId ]]'
-			include-add-card="true"
+			include-add-card
 			drafts-active="[[ draftsActive ]]"
 			published-active="[[ publishedActive ]]"
 			pratilipi-list='[[ draftedList ]]'
@@ -49,7 +49,7 @@
 		<pratilipi-card-grid
 			id='publishedBooksByAuthor'
 			author-id='[[ author.authorId ]]'
-			include-add-card="true"
+			include-add-card
 			drafts-active="[[ draftsActive ]]"
 			published-active="[[ publishedActive ]]"
 			pratilipi-list='[[ publishedList ]]'
@@ -262,8 +262,7 @@
 					return;
 				}
 				
-				for( var i = 0; i < draftedList.length; i++ )
-					this.push( 'draftedList', draftedList[i] );
+				this.$.draftedBooksByAuthor.pushToPratilipiList( draftedList );
 				
 				if( draftedList.length < 20 || event.detail.response.cursor == null )
 					this.draftedListCursor = null;
@@ -294,8 +293,7 @@
 					return;
 				}
 					
-				for( var i = 0; i < publishedList.length; i++ )
-					this.push( 'publishedList', publishedList[i] );
+				this.$.publishedBooksByAuthor.pushToPratilipiList( publishedList );
 				
 				if( publishedList.length < 20 || event.detail.response.cursor == null )
 					this.publishedListCursor = null;

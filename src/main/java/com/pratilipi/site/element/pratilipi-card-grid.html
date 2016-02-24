@@ -166,6 +166,11 @@
 				this.reset();
 			},
 			
+			pushToPratilipiList: function( pratilipiList ) {
+				for( var i = 0; i < pratilipiList.length; i++ )
+					this.push( 'pratilipiList', pratilipiList[i] );
+			},
+
 			checkForZeroResults: function() {
 				
 				if( this.pratilipiList.length != 0 ) {
@@ -256,8 +261,7 @@
 					return;
 				
 				var pratilipiList = request.detail.response.pratilipiList;
-				for( var i = 0; i < pratilipiList.length; i++ )
-					this.push( 'pratilipiList', pratilipiList[i] );
+				this.pushToPratilipiList( pratilipiList );
 
 				if( request.detail.response.cursor == null || pratilipiList.length < 20 ) {
 					this.includeShowMoreButton = false;
