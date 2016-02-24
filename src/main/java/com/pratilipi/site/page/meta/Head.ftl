@@ -26,43 +26,27 @@
 
 <#include "GoogleAnalytics.ftl">
 
-<script defer>
+<script async>
 
-	var didScroll;
 	var lastScrollTop = 0;
-	var delta = 10;
+	var delta = 5;
 	var navbarHeight = 75;
 	
 	$( window ).scroll( function( event ) {
-		didScroll = true;
-		if( $(this).scrollTop() < navbarHeight )
-			hasScrolled();
-	});
 
-	
-	setInterval( function() {
-		if( didScroll ) {
-			hasScrolled();
-			didScroll = false;
-		}
-	}, 30);
-
-	
-	function hasScrolled() {
-		
 		var st = $(this).scrollTop();
-		
-		document.querySelector( '${ mainPage }' ).scrollHandler( st );
 
 		if( Math.abs( lastScrollTop - st ) <= delta )
 				return;
-		
+
 		if( st > lastScrollTop && st > navbarHeight )
 			$( 'header' ).removeClass( 'nav-down' ).addClass( 'nav-up' );
-		else if( st + $(window).height() < $(document).height() )
+		else if( st + $(window).height() < $(document).height() || st < navbarHeight )
 			$( 'header' ).removeClass( 'nav-up' ).addClass( 'nav-down' );
-		
+			
+		document.querySelector( '${ mainPage }' ).scrollHandler( st );
 		lastScrollTop = st;
-	}
+
+	});
 
 </script>
