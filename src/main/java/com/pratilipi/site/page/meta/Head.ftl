@@ -40,7 +40,6 @@
 	setInterval( function() {
 		if( didScroll ) {
 			hasScrolled();
-			document.querySelector( '${ mainPage }' ).scrollHandler();
 			didScroll = false;
 		}
 	}, 30);
@@ -61,4 +60,10 @@
 		lastScrollTop = st;
 	}
 
+</script>
+
+<script>
+	$( window ).scroll( function( event ) {
+		document.querySelector( '${ mainPage }' ).scrollHandler( $(this).scrollTop() );
+	});
 </script>
