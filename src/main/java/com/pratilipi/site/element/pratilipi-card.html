@@ -51,7 +51,7 @@
 					
 				  	<div class="media-body">
 				  		<div class="contain-title ellipsed pratilipi-red">
-				  		 	<a class="pratilipi-card-heading pratilipi-red" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}" href="{{ pratilipi.pageUrl }}">{{ title }}</a>
+				  		 	<a class="pratilipi-card-heading pratilipi-red" data-toggle="tooltip" data-placement="top" title="{{ pratilipi.title }}" href="{{ pratilipi.pageUrl }}">{{ pratilipi.title }}</a>
 						</div>
 						
 						<template is="dom-if" if="{{ pratilipi.author }}">
@@ -110,17 +110,6 @@
 
 
 	<script>
-	
-		function getCookie( cname ) {
-			var name = cname + "=";
-			var ca = document.cookie.split( ';' );
-			for( var i = 0; i < ca.length; i++ ) {
-				var c = ca[i];
-				while ( c.charAt(0)==' ' ) c = c.substring( 1 );
-				if( c.indexOf( name ) == 0 ) return c.substring( name.length,c.length );
-			}
-			return "";
-		}
 
 		Polymer({
 
@@ -129,7 +118,7 @@
 			properties: {
 				pratilipi: { type: Object, observer: "init" },
 				
-				draftsActive: { type: Boolean, value: false, observer: "init" },
+				draftsActive: { type: Boolean, value: false },
 				publishedActive: { type: Boolean, value: false }
 			},
 			
@@ -143,26 +132,20 @@
 			
 			attached: function() {
 				this.init();
-				
 				$('[data-toggle="tooltip"]').tooltip();
 				$("[data-placement=top]").hover(function(){
     				$( '.tooltip' ).css( 'left','130px' )
     				$( '.tooltip' ).css( 'white-space','normal' )
 				});
-				
-				this.title = this.pratilipi.title;
-				var maxWidth = jQuery( this ).width() - 130;
-				jQuery( this.querySelector( '.ellipsed' ) ).width( maxWidth );
 			},
 			
 			init: function() {
-				if( this.pratilipi == null )
-					return;
-				
 				if( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "?" + "width=100";
 				else
 					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
+				
+				jQuery( this.querySelector( '.ellipsed' ) ).width( jQuery( this ).width() - 130 );
 				
 			},
 			
