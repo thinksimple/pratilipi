@@ -32,38 +32,15 @@
 	var delta = 10;
 	var navbarHeight = 75;
 	
-	$( window ).scroll( function( event ) {
-		didScroll = true;
-	});
-
-	
-	setInterval( function() {
-		if( didScroll ) {
-			hasScrolled();
-			didScroll = false;
-		}
-	}, 30);
-
-	
-	function hasScrolled() {
-		
+	window.onscroll = function() {
 		var st = $(this).scrollTop();
-		
+		document.querySelector( '${ mainPage }' ).scrollHandler( st );
 		if( Math.abs( lastScrollTop - st ) <= delta )
 				return;
-		
 		if( st > lastScrollTop && st > navbarHeight )
 			$( 'header' ).removeClass( 'nav-down' ).addClass( 'nav-up' );
 		else if( st + $(window).height() < $(document).height() || st < navbarHeight )
 			$( 'header' ).removeClass( 'nav-up' ).addClass( 'nav-down' );
-		
-		lastScrollTop = st;
-	}
-
-</script>
-
-<script>
-	$( window ).scroll( function( event ) {
-		document.querySelector( '${ mainPage }' ).scrollHandler( $(this).scrollTop() );
-	});
+		lastScrollTop = st; 
+	};
 </script>
