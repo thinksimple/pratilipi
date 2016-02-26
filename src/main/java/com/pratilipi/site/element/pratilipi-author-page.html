@@ -1,5 +1,5 @@
 <link rel='import' href='pratilipi-author.html?2016022002'>
-<link rel='import' href='pratilipi-author-books.html?2016022602' />
+<link rel='import' href='pratilipi-author-books.html?2016022603' />
 
 <dom-module id="pratilipi-author-page">
 
@@ -79,7 +79,7 @@
 				if( st > this.lastScrollTop || st < 100 ) {
 					jQuery( '#scrollToTop' ).fadeOut();
 					if( this.author != null && ! this.author.hasAccessToUpdate )
-						this.querySelector( 'pratilipi-card-grid' ).loadMore( st );
+						this.querySelector( 'pratilipi-card-grid' ).loadMore();
 				}
 				else
 					jQuery( '#scrollToTop' ).fadeIn();

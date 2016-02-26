@@ -257,11 +257,6 @@
 				
 				var draftedList = event.detail.response.pratilipiList;
 				
-				if( draftedList.length == 0 ) {
-					this.draftedListCursor = null;
-					return;
-				}
-				
 				for( var i = 0; i < draftedList.length; i++ )
 					this.push( 'draftedList', draftedList[i] );
 				
@@ -289,11 +284,6 @@
 				
 				var publishedList = event.detail.response.pratilipiList;
 				
-				if( publishedList.length == 0 ) {
-					this.publishedListCursor = null;
-					return;
-				}
-					
 				for( var i = 0; i < publishedList.length; i++ )
 					this.push( 'publishedList', publishedList[i] );
 				
