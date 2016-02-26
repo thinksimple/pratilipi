@@ -100,6 +100,9 @@
 			
 			attached: function() {
 				this.draftsClicked();
+				this.async( function() {
+					this.loadPublishedContents();
+				});
 			},
 			
 			clearDraftedList: function() {
