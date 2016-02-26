@@ -170,8 +170,8 @@
 				this.publishedActive = false;
 				
 				// Render the card grid
-				jQuery( '#draftedBooksByAuthor' ).css( "display", "block" );
-				jQuery( '#publishedBooksByAuthor' ).css( "display", "none" );
+				document.getElementById( "draftedBooksByAuthor" ).style.display = "block";
+				document.getElementById( "publishedBooksByAuthor" ).style.display = "none";
 
 				// Load Drafted Contents
 				this.loadDraftedContents();
@@ -193,8 +193,8 @@
 				this.draftsActive = false;
 				
 				// Render the card grid
-				jQuery( '#draftedBooksByAuthor' ).css( "display", "none" );
-				jQuery( '#publishedBooksByAuthor' ).css( "display", "block" );
+				document.getElementById( "publishedBooksByAuthor" ).style.display = "block";
+				document.getElementById( "draftedBooksByAuthor" ).style.display = "none";
 
 				// Load Published Contents
 				this.loadPublishedContents();
