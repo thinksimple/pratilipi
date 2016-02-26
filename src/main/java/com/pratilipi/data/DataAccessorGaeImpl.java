@@ -673,6 +673,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		GaeQueryBuilder gaeQueryBuilder =
 				new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
 		
+		if( authorFilter.getLanguage() != null )
+			gaeQueryBuilder.addFilter( "language", authorFilter.getLanguage() );
+
 		if( authorFilter.getMinLastUpdated() != null ) {
 			gaeQueryBuilder.addFilter( "lastUpdated",
 					authorFilter.getMinLastUpdated(),
