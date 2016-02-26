@@ -3,7 +3,8 @@
 pratilipi					= પ્રતિલિપિ
 
 home_page_title				= વાંચો ગુજરાતી વાર્તાઓ, કવિતાઓ, નવલકથાઓ, પુસ્તકો અને બીજું ઘણું
-website_language			= gujarati 
+website_language			= gujarati
+website_language_vernacular	= ગુજરાતી
 
 facebook_page				= https://www.facebook.com/Pratilipidotcom
 twitter_page				= https://twitter.com/TeamPratilipi
