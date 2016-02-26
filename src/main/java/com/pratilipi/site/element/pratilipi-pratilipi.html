@@ -1,4 +1,3 @@
-<link rel="import" href="pratilipi-edit-pratilipi.html?20160203" />
 <link rel="import" href="pratilipi-rating.html" />
 <link rel="import" href="pratilipi-social.html" />
 
@@ -85,7 +84,6 @@
 	                    	<paper-item on-click="openWriterPanel">${ _strings.pratilipi_edit_content }</paper-item>
 						</paper-menu>
 				</paper-menu-button>
-				<pratilipi-edit-pratilipi pratilipi="[[ pratilipi ]]"></pratilipi-edit-pratilipi>
 			</template>
 			
 			<!-- For wide-screens and mobile screens-->
@@ -238,7 +236,7 @@
 			},
 			
 			openPratilipiEdit: function() {
-				this.querySelector( 'pratilipi-edit-pratilipi' ).open();
+				document.querySelector( 'pratilipi-write' ).editExistingPratilipi( this.pratilipi );
 			},
 			
 			openWriterPanel: function() {

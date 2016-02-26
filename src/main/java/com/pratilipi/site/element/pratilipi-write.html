@@ -96,8 +96,8 @@
 							</paper-input>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-							<paper-dropdown-menu id="selectPratilipiType" noink label="${ _strings.write_type }" value="{{ pratilipiType }}">
-								<paper-menu noink class="dropdown-content" style="white-space: nowrap; width: auto;">
+							<paper-dropdown-menu id="selectPratilipiType" noink label="${ _strings.write_type }" value="{{ type }}" vertical-align="bottom" horizontal-align="left">
+								<paper-menu noink class="dropdown-content" selected="[[ selected ]]" style="white-space: nowrap; width: auto;">
 									<paper-item value="BOOK">{{ pratilipiTypes.BOOK.name }}</paper-item>
 									<paper-item value="POEM">{{ pratilipiTypes.POEM.name }}</paper-item>
 									<paper-item value="STORY">{{ pratilipiTypes.STORY.name }}</paper-item>
@@ -107,7 +107,7 @@
 							</paper-dropdown-menu>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-							<paper-input id="language" class="pratilipi-blue" always-float-label noink disabled label="${ _strings.write_language }" value="${ _strings.website_language_vernacular }"></paper-input>
+							<paper-input id="language" class="pratilipi-blue" always-float-label noink disabled label="${ _strings.write_language }" value="{{ languageVernacular }}"></paper-input>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div style="margin-top: 25px; margin-bottom: 5px;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.write_summary }</span></div>
@@ -148,7 +148,7 @@
 				title: { type: String },
 				titleEn: { type: String },
  				summary: { type: String },
- 				pratilipiType: { type: String },
+ 				type: { type: String },
  				language: { type: String },
  				
  				// Specific to modal
@@ -157,6 +157,7 @@
 				modalTitle: { type: String },
 				modalButtonText: { type: String },
 				pratilipiTypes: { types: Object },
+				selected: { type: Number },
  				message: { type: String }
 			},
 			
@@ -183,6 +184,10 @@
 				// Setting the boolean flags
 				this.editPratilipi = true;
 				this.createPratilipi = false;
+				
+				// Specific to Modal
+				this.modalTitle = pratilipi.title + " - " + "${ _strings.edit_pratilipi_heading }";
+				this.modalButtonText = "${ _strings.edit_pratilipi_save_changes }";
 
 				// Setting data
 				this.authorId = null;
@@ -191,14 +196,37 @@
 			},
 			
 			process: function( pratilipi ) {
+				this.message = null;
 				this.title = pratilipi.title == null ? null : pratilipi.title;
 				this.titleEn = pratilipi.titleEn == null ? null : pratilipi.titleEn;
 				this.summary = pratilipi.summary == null ? "" : pratilipi.summary;
 				if( tinyMCE != null && tinyMCE.activeEditor != null )
 					tinyMCE.get( 'writeSummary' ).setContent( this.summary );
-				this.pratilipiType = pratilipi.type == null ? null : pratilipi.type;
-				this.language = "${ _strings.website_language }";
-				this.message = null;
+				
+				var languageVernacular = {
+					"HINDI" : "${ _strings.language_hi }",
+					"GUJARATI" : "${ _strings.language_gu }",
+					"TAMIL" : "${ _strings.language_ta }",
+					"MARATHI" : "${ _strings.language_mr }",
+					"MALAYALAM" : "${ _strings.language_ml }",
+					"BENGALI" : "${ _strings.language_bn }"
+				};
+				this.language = pratilipi.language == null ? ( "${ _strings.website_language }" ).toUpperCase() : pratilipi.language.toUpperCase();
+				this.languageVernacular = languageVernacular[ this.language ];
+				
+				this.type = pratilipi.type == null ? null : pratilipi.type;
+				if( this.type != null ) {
+					if( this.type.toUpperCase() === "BOOK" )
+						this.selected = 0;
+					else if( this.type.toUpperCase() === "POEM" )
+						this.selected = 1;
+					else if( this.type.toUpperCase() === "STORY" )
+						this.selected = 2;
+					else if( this.type.toUpperCase() === "ARTICLE" )
+						this.selected = 3;
+					else if( this.type.toUpperCase() === "MAGAZINE" )
+						this.selected = 4;
+				}
 			},
 			
 			clearAndClose: function() {
@@ -206,7 +234,7 @@
 				this.title = null;
 				this.titleEn = null;
 				this.summary = null;
-				this.pratilipiType = null;
+				this.type = null;
 				this.language = null;
  				this.createPratilipi = false;
  				this.editPratilipi = false;
@@ -233,12 +261,12 @@
 					return;
 				}
 				
-				if( this.pratilipiType == null ) {
+				if( this.type == null ) {
 					this.message = "Please select the type.";
 					return;
 				}
 
-				this.pratilipiType = this.$.selectPratilipiType.selectedItem.getAttribute( "value" );
+				this.type = this.$.selectPratilipiType.selectedItem.getAttribute( "value" );
 
 				if( tinyMCE.activeEditor != null )
 					this.summary = tinyMCE.get( 'writeSummary' ).getContent();
@@ -249,7 +277,7 @@
 				this.message = "${ _strings.working }";
 				
 				var body = "title=" + this.title + "&" + 
-				 "type=" + this.pratilipiType.toUpperCase() + "&" +
+				 "type=" + this.type.toUpperCase() + "&" +
 				 "language=" + this.language.toUpperCase() + "&" + 
 				 "state=" + "DRAFTED" ;
 				
