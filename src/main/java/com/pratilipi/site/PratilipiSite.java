@@ -151,26 +151,48 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
 				
-			} else if( uri.equals( "/books" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, filterLanguage, request );
-				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
-			} else if( uri.equals( "/stories" ) ) {
+			
+			// Gujarati website specific links
+			
+			} else if( filterLanguage == Language.GUJARATI && uri.equals( "/short-stories" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 			
-			} else if( uri.equals( "/poems" ) ) {
+			} else if( filterLanguage == Language.GUJARATI && uri.equals( "/poetry" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
-			} else if( uri.equals( "/articles" ) ) {
+			} else if( filterLanguage == Language.GUJARATI && uri.equals( "/non-fiction" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+
+				
+				
+			// Tamil website specific links
+			
+			} else if( filterLanguage == Language.TAMIL && uri.equals( "/books" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+				
+			} else if( filterLanguage == Language.TAMIL && uri.equals( "/stories" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+			
+			} else if( filterLanguage == Language.TAMIL && uri.equals( "/poems" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+				
+			} else if( filterLanguage == Language.TAMIL && uri.equals( "/articles" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
-			} else if( uri.equals( "/magazines" ) ) {
+			} else if( filterLanguage == Language.TAMIL && uri.equals( "/magazines" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-			
+
+				
+				
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, filterLanguage, request ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
