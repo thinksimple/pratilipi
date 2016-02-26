@@ -36,6 +36,7 @@ import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
+import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -222,6 +223,16 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "title", "Reset Password" );
 				templateName = templateFilePrefix + ( basicMode ? "PasswordResetBasic.ftl" : "PasswordReset.ftl" );
 				
+				
+				
+			// Internal links
+				
+			} else if( ! basicMode && uri.equals( "/authors" ) ) {
+				dataModel = createDataModelForAuthorsPage( filterLanguage );
+				templateName = templateFilePrefix + "AuthorList.ftl";
+			
+			
+			
 			} else {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Page Not Found !" );
@@ -261,6 +272,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "ga_websiteVersion", "Mark-6" );
 		
 		dataModel.put( "lang", displayLanguage.getCode() );
+		dataModel.put( "language", displayLanguage );
 		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
 		dataModel.put( "resourceList", resourceList );
 		dataModel.put( "user", userResponse );
@@ -534,6 +546,26 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
+	public Map<String, Object> createDataModelForAuthorsPage( Language lang )
+			throws InsufficientAccessException {
+		
+		AuthorFilter authorFilter = new AuthorFilter();
+		authorFilter.setLanguage( lang );
+		
+		DataListCursorTuple<AuthorData> authorDataListCursorTuple =
+				AuthorDataUtil.getAuthorDataList( authorFilter, null, 20 );
+		
+		Gson gson = new Gson();
+		
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", "Authors" );
+		dataModel.put( "authorListJson", gson.toJson( authorDataListCursorTuple.getDataList() ) );
+		dataModel.put( "authorListFilterJson", gson.toJson( authorFilter ) );
+		dataModel.put( "authorListCursor", authorDataListCursorTuple.getCursor() );
+		return dataModel;
+		
+	}
+	
 	public Map<String, Object> createDataModelForEventPage( Long eventId, boolean basicMode )
 			throws InsufficientAccessException {
 		
