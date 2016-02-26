@@ -12,27 +12,40 @@
 			display: inline-block;
 		}
 		
-		paper-input.write, paper-textarea.write {
-			--paper-input-container-focus-color: #107FE5;
+		paper-input.pratilipi-blue, paper-textarea.pratilipi-blue {
 			display: block;
+			--paper-input-container-color: #107FE5;
+			--paper-input-container-focus-color: #107FE5;
+			--paper-input-container-input-color: #333;
+			--paper-input-container-input: {
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
 			--paper-input-container-label: {
 				font-size: 15px;
 				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+				text-align: left;
+			};
+			--paper-input-container-disabled: {
+				opacity: 0.9;
 			};
 		}
 		
 		paper-dropdown-menu {
+			width: 100%;
 			--paper-dropdown-menu-focus-color: #107FE5;
-			width: 100%;
-			--paper-dropdown-menu-ripple: {
-				left: auto;
-				right: auto;
+			--paper-dropdown-menu-input-color: #333;
+			--paper-input-container-input: {
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
 			};
-		}
-		
-		paper-dropdown-menu paper-menu-button {
-			width: 100%;
-			padding: 0;
+			--paper-input-container-underline: {
+				background: #107FE5;
+			};
+			--paper-input-container-label: {
+				font-size: 15px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+				text-align: left;
+				color: #107FE5;
+			};
 		}
 		
 		paper-menu {
@@ -43,61 +56,71 @@
 			};
 		}
 		
+		paper-menu paper-item {
+			font-size: 15px;
+			font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			color: #333;
+			white-space: nowrap;
+		}
+		
+		.row {padding-left: 10px;padding-right: 10px;}
+		.modal-fullscreen .modal-dialog .modal-content {max-width: 768px;}
+		.pull-center {display:block;margin-left:auto;margin-right:auto;text-align:center;}
+		
 		
 	</style>
 	
 
 	<template>
-		<div class="modal fade" id="pratilipiWrite" role="dialog">
-			<div class="modal-dialog modal-lg" role="document">
+		<div class="modal modal-fullscreen fade" id="pratilipiWrite" role="dialog">
+			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					
-					<div class="modal-header">
-						<h6 class="modal-heading">${ _strings.write_heading }</h6>
-						<span class="modal-close-button"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
+					<div class="modal-fullscreen-close-button">
+						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
 					</div>
-					
-					<div class="modal-body" on-keyup="onSubmit">
-						<p class="text-muted">
-							${ _strings.write_help }
-						</p>
-						<paper-input class="write" label="${ _strings.write_title }" value="{{ title::input }}"></paper-input>
-						<paper-input class="write" label="${ _strings.write_title_en }" value="{{ titleEn::input }}"></paper-input>
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<paper-dropdown-menu id="selectPratilipiType" noink label="${ _strings.write_type }" value="{{ pratilipiType }}">
-									<paper-menu noink class="dropdown-content" style="white-space: nowrap; width: auto;">
-										<paper-item value="BOOK">{{ pratilipiTypes.BOOK.name }}</paper-item>
-										<paper-item value="POEM">{{ pratilipiTypes.POEM.name }}</paper-item>
-										<paper-item value="STORY">{{ pratilipiTypes.STORY.name }}</paper-item>
-										<paper-item value="ARTICLE">{{ pratilipiTypes.ARTICLE.name }}</paper-item>
-										<paper-item value="MAGAZINE">{{ pratilipiTypes.MAGAZINE.name }}</paper-item>
-									</paper-menu>
-								</paper-dropdown-menu>
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<paper-dropdown-menu id="language" always-float-label noink disabled label="${ _strings.write_language }">
-									<paper-menu noink="true" selected="0" class="dropdown-content" style="white-space: nowrap; width: auto;">
-										<paper-item>${ _strings.website_language }</paper-item>
-									</paper-menu>
-								</paper-dropdown-menu>
-							</div>
+					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+					<template is="dom-if" if="{{ createPratilipi }}">
+						<p class="text-muted text-center">${ _strings.write_help }</p>
+						<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
+					</template>					
+					<div class="row">
+						<h6 class="modal-fullscreen-heading">{{ modalTitle }}</h6>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<paper-input class="pratilipi-blue" label="${ _strings.write_title }" value="{{ title::input }}">
+								<iron-icon icon="icons:description" prefix></iron-icon>
+							</paper-input>
 						</div>
-						<div style="margin-top: 15px; margin-bottom: 5px;">
-							<span style="font-size: 14px;">${ _strings.write_summary }</span>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<paper-input class="pratilipi-blue" label="${ _strings.write_title_en }" value="{{ titleEn::input }}">
+								<iron-icon icon="icons:description" prefix></iron-icon>
+							</paper-input>
 						</div>
-						<script language="javascript" type="text/javascript">tinymce.init({ selector:'#writeSummary', editor_selector : "writeSummary", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
-						<paper-textarea class="write" id="writeSummary" value="{{ summary::input }}"></paper-textarea>
-						<div class="text-center" style="min-height: 20px;">
-							<span>{{ message }}</span>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<paper-dropdown-menu id="selectPratilipiType" noink label="${ _strings.write_type }" value="{{ pratilipiType }}">
+								<paper-menu noink class="dropdown-content" style="white-space: nowrap; width: auto;">
+									<paper-item value="BOOK">{{ pratilipiTypes.BOOK.name }}</paper-item>
+									<paper-item value="POEM">{{ pratilipiTypes.POEM.name }}</paper-item>
+									<paper-item value="STORY">{{ pratilipiTypes.STORY.name }}</paper-item>
+									<paper-item value="ARTICLE">{{ pratilipiTypes.ARTICLE.name }}</paper-item>
+									<paper-item value="MAGAZINE">{{ pratilipiTypes.MAGAZINE.name }}</paper-item>
+								</paper-menu>
+							</paper-dropdown-menu>
 						</div>
-					</div>
-					
-					<div class="modal-footer">
-						<button id="pratilipiWriteButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">${ _strings.write_create_new_content }</button>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<paper-input id="language" class="pratilipi-blue" always-float-label noink disabled label="${ _strings.write_language }" value="${ _strings.website_language_vernacular }"></paper-input>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div style="margin-top: 25px; margin-bottom: 5px;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.write_summary }</span></div>
+							<script language="javascript" type="text/javascript">tinymce.init({ selector:'#writeSummary', editor_selector : "writeSummary", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+							<paper-textarea class="pratilipi-blue" id="writeSummary" value="{{ summary::input }}"></paper-textarea>
+						</div>
 					</div>
 					
 				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="display-message-div"><p>{{ message }}</p></div>
+				<button id="pratilipiWriteButton" style="position: fixed; bottom: 15px; right: 15px;" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">{{ modalButtonText }}</button>
 			</div>
 		</div>
 		
@@ -113,33 +136,27 @@
 	</template>
 	
 	<script>
-	
-		function getCookie( cname ) {
-			var name = cname + "=";
-			var ca = document.cookie.split( ';' );
-			for( var i = 0; i < ca.length; i++ ) {
-				var c = ca[i];
-				while ( c.charAt(0)==' ' ) c = c.substring( 1 );
-				if( c.indexOf( name ) == 0 ) return c.substring( name.length,c.length );
-			}
-			return "";
-		}
-
 		Polymer({
 
  			is: 'pratilipi-write',
  			
 			properties: {
+				// Specific to admins
 				authorId: { type: String },
-					
+				
+				// Specific to input fields
 				title: { type: String },
 				titleEn: { type: String },
- 				summary: { type: String, value: "" },
- 				
+ 				summary: { type: String },
  				pratilipiType: { type: String },
- 				pratilipiTypes: { types: Object },
  				language: { type: String },
  				
+ 				// Specific to modal
+ 				createPratilipi: { type: Boolean },
+ 				editPratilipi: { type: Boolean },
+				modalTitle: { type: String },
+				modalButtonText: { type: String },
+				pratilipiTypes: { types: Object },
  				message: { type: String }
 			},
 			
@@ -147,8 +164,56 @@
 				this.pratilipiTypes = jQuery.parseJSON( this.pratilipiTypes );
 			},
 			
-			setAuthorId: function( authorId ) {
-				this.authorId = authorId;
+			createNewPratilipi: function( authorId ) {
+				// Setting the boolean flags
+				this.createPratilipi = true;
+				this.editPratilipi = false;
+				
+				// Specific to Modal
+				this.modalTitle = "${ _strings.write_heading }";
+				this.modalButtonText = "${ _strings.write_create_new_content }";
+
+				// Setting data
+				this.authorId = authorId == null ? null : authorId;
+				this.process( {} );
+				this.open();
+			},
+			
+			editExistingPratilipi: function( pratilipi ) {
+				// Setting the boolean flags
+				this.editPratilipi = true;
+				this.createPratilipi = false;
+
+				// Setting data
+				this.authorId = null;
+				this.process( pratilipi );
+				this.open();
+			},
+			
+			process: function( pratilipi ) {
+				this.title = pratilipi.title == null ? null : pratilipi.title;
+				this.titleEn = pratilipi.titleEn == null ? null : pratilipi.titleEn;
+				this.summary = pratilipi.summary == null ? "" : pratilipi.summary;
+				if( tinyMCE != null && tinyMCE.activeEditor != null )
+					tinyMCE.get( 'writeSummary' ).setContent( this.summary );
+				this.pratilipiType = pratilipi.type == null ? null : pratilipi.type;
+				this.language = "${ _strings.website_language }";
+				this.message = null;
+			},
+			
+			clearAndClose: function() {
+				this.authorId = null;
+				this.title = null;
+				this.titleEn = null;
+				this.summary = null;
+				this.pratilipiType = null;
+				this.language = null;
+ 				this.createPratilipi = false;
+ 				this.editPratilipi = false;
+ 				this.modalTitle = null;
+ 				this.modalButtonText = null;
+ 				this.message = null;
+ 				this.close();
 			},
 			
 			open: function() {
@@ -161,22 +226,7 @@
 				jQuery( "#pratilipiWrite" ).modal( 'hide' );	
 			},
 			
-			clear: function() {
-				this.authorId = null;
-				this.title = null;
-				this.titleEn = null;
-				this.summary = "";
-				this.pratilipiType = null;
-				this.language = null;
-				this.message = null;
-			},
-			
 			onSubmit: function( event ) {
-				
-				this.message = "";
-
-				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
-					return;
 				
 				if( this.title == null || this.title.trim() == "" ) {
 					this.message = "Please fill in the Title.";
@@ -188,14 +238,15 @@
 					return;
 				}
 
+				this.pratilipiType = this.$.selectPratilipiType.selectedItem.getAttribute( "value" );
+
 				if( tinyMCE.activeEditor != null )
 					this.summary = tinyMCE.get( 'writeSummary' ).getContent();
 				
-				this.pratilipiType = this.$.selectPratilipiType.selectedItem.getAttribute( "value" );
-				this.language = this.$.language.selectedItemLabel.toUpperCase();
+				this.summary = JSON.stringify( this.summary );
+				this.summary = this.summary.substring( 1, this.summary.length - 1 );
 				
-				this.message = "Please Wait...";
-				
+				this.message = "${ _strings.working }";
 				
 				var body = "title=" + this.title + "&" + 
 				 "type=" + this.pratilipiType.toUpperCase() + "&" +
@@ -212,8 +263,8 @@
 					body = body + "&" + "authorId=" + this.authorId;
 				
 				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', true );
-				this.$.AjaxPost.body = ( body );
 				
+				this.$.AjaxPost.body = body;
 				this.$.AjaxPost.generateRequest();
 				
 			},
@@ -221,14 +272,26 @@
 			_handleAjaxPostResponse: function( event ) {
 				
 				var pratilipi = event.detail.response;
-				this.message = "${ _strings.content_created_success }";
 				
-				this.async( function() {
-					jQuery( '#pratilipiWriteButton' ).prop( 'disabled', false );
-					// Redirect to writer with return option to pratilipi page and access token
-					window.location = "http://www.pratilipi.com/write?id=" + pratilipi.pratilipiId + "&ret=" + "http://" + window.location.host + pratilipi.pageUrl + "&accessToken=" + getCookie( "access_token" );
-					this.clear();
-				}, 1000 );
+				if( this.createPratilipi )
+					this.message = "${ _strings.content_created_success }";
+				else if( this.editPratilipi ) 
+					this.message = "${ _strings.updated_pratilipi_info_success }";
+					
+				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', false );
+				
+				if( this.createPratilipi ) {
+					// Redirect to writer with return option to pratilipi page
+					this.async( function() {
+						this.clearAndClose();
+						window.location.href = pratilipi.writePageUrl + "&ret=" + window.location.pathname;
+					}, 1000 );
+				} else if( this.editPratilipi ) {
+					document.querySelector( 'pratilipi-pratilipi' ).updatePratilipi( pratilipi );
+					this.async( function() {
+						this.clearAndClose();
+					}, 1000 );
+				}
 			},
 			
 			_handleAjaxPostError: function( event ) {
