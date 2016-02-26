@@ -88,10 +88,12 @@
 				
 				if( this.event == null || this.event.description == null || this.event.description.trim == "" ) {
 					this.description = null;
-					tinyMCE.get( 'eventDescription' ).setContent( "" );
+					if( tinyMCE != null && tinyMCE.activeEditor != null )
+						tinyMCE.get( 'eventDescription' ).setContent( "" );
 				} else {
 					this.description = this.event.description;
-					tinyMCE.get( 'eventDescription' ).setContent( this.event.description );
+					if( tinyMCE != null && tinyMCE.activeEditor != null )
+						tinyMCE.get( 'eventDescription' ).setContent( this.event.description );
 				}
 				
 				if( this.event == null || this.event.pratilipiUrlList == null || this.event.pratilipiUrlList.length == 0 )
