@@ -15,9 +15,41 @@
 	            border-radius: 1px;
 	        }
 	        .form-horizontal {
-	            max-width: 100%;
+	        	max-width: 600px;
+	            margin-left: auto;
+	            margin-right: auto;
 	            padding: 20px;
 	        }
+	        div.social-wrap button {
+				padding-left: 20px;
+				padding-right: 0px;
+				margin-left: auto;
+				margin-right: auto;
+				height: 35px;
+				background: none;
+				border: none;
+				display: block;
+				background-size: 25px 25px, cover;
+				background-position: 10px center, center center;
+				background-repeat: no-repeat, repeat;
+				border-radius: 4px;
+				color: white;
+				font-size: 14px;
+				margin-bottom: 15px;
+				width: 275px;
+				border-bottom: 2px solid transparent;
+				border-left: 1px solid transparent;
+				border-right: 1px solid transparent;
+				box-shadow: 0 4px 2px -2px gray;
+				text-shadow: rgba(0, 0, 0, .4) -1px -1px 0;
+			}
+	
+			div.social-wrap > .facebook {
+				background: url(http://0.ptlp.co/resource-all/icon/facebook-login/facebook_transparent_icon_25x25.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4c74c4), color-stop(100%, #3b5998));
+				background-size: 25px 25px, cover;
+				background-position: 10px center, center center;
+				background-repeat: no-repeat, repeat;
+			}
     	</style>
     	
     	<script type="text/javascript">
@@ -103,6 +135,36 @@
 					}
 				});
 			}
+			function facebookLogin() {
+				FB.login( function( response ) {
+					$.ajax({
+				
+						type: 'post',
+						url: '/api/user/login/facebook',
+	
+						data: { 
+							'fbUserAccessToken': response.authResponse.accessToken
+						},
+						
+						success: function( response ) {
+							if( getUrlParameters().ret != null )
+								window.location.href = getUrlParameters().ret;
+							else
+								window.location.href = "/"; 
+						},
+						
+						error: function( response ) {
+							var message = jQuery.parseJSON( response.responseText );
+							var status = response.status;
+	
+							if( message["message"] != null )
+								alert( "Error " + status + " : " + message["message"] ); 
+							else
+								alert( "Invalid Credentials" );
+						}
+					});
+				}, { scope: 'public_profile,email,user_birthday' } );
+			}
     	</script>
 	</head>
 
@@ -114,6 +176,10 @@
 	            <div style="margin: 20px auto; text-align: center;">
 	                <h3 style="text-align: center; font-size: 20px;">${ _strings.user_sign_up_for_pratilipi }</h3>
 	            </div>
+	            
+	            <div class="social-wrap" style="margin-top: 30px;">
+					<button class="facebook" onclick="facebookLogin()">${ _strings.user_sign_in_with_facebook }</button>
+				</div>
 	            
 	            <form id="userRegisterForm" class="form-horizontal" action="javascript:void(0);">
 	            	<div class="form-group">
@@ -138,14 +204,14 @@
 	                	<button class="btn btn-default" onclick="register()">${ _strings.user_sign_up }</button>
 	                </div>
 	            </form>
-	            <p style="display: block; margin: 15px 15px 30px 15px;">
+	            <p style="display: block; margin: 15px auto 30px auto; max-width: 600px;">
 					${ _strings.register_part_1 }
 					<a style="color: #107FE5; white-space: nowrap; font-size: 16px;" href="/privacy-policy">privacy policy</a>
 					&nbsp;${ _strings.register_part_2 }&nbsp;
 					<a style="color: #107FE5; white-space: nowrap; font-size: 16px;" href="/terms-of-service">terms of service</a>
 					&nbsp;${ _strings.register_part_3 }
 				</p>
-				<div style="text-align: center;">
+				<div style="text-align: center; margin-bottom: 20px;">
 	            	<a href="/">${ _strings.back }</a>
 	            </div>
 	        </div>
