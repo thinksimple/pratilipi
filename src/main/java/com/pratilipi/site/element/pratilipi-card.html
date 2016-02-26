@@ -116,7 +116,7 @@
 			is: 'pratilipi-card',
 			
 			properties: {
-				pratilipi: { type: Object, observer: "init" },
+				pratilipi: { type: Object },
 				
 				draftsActive: { type: Boolean, value: false, observer: "init" },
 				publishedActive: { type: Boolean, value: false }
@@ -131,7 +131,13 @@
 			},
 			
 			attached: function() {
-				this.init();
+				
+				if( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
+					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "?" + "width=100";
+				else
+					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
+				
+				jQuery( this.querySelector( '.ellipsed' ) ).width( jQuery( this ).width() - 130 );
 				$('[data-toggle="tooltip"]').tooltip();
 				$("[data-placement=top]").hover(function(){
     				$( '.tooltip' ).css( 'left','130px' )
@@ -143,13 +149,9 @@
 				if( this.pratilipi == null )
 					return;
 
-				if( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
-					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "?" + "width=100";
-				else
-					this.pratilipiCoverImage = this.pratilipi.coverImageUrl + "&" + "width=100";
-				
-				jQuery( this.querySelector( '.ellipsed' ) ).width( jQuery( this ).width() - 130 );
-				
+				this.async( function() {
+					jQuery( this.querySelector( '.ellipsed' ) ).width( jQuery( this ).width() - 130 );
+				}, 30 );
 			},
 			
 			publishNow: function() {
