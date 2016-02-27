@@ -29,13 +29,13 @@ public class PratilipiSiteFilter implements Filter {
 			+ "|"
 			+ "(m|gu|ta)\\.pratilipi\\.com" // Prod (Basic)
 			+ "|"
-			+ "(www|hindi|gujarati|tamil)\\.gamma\\.pratilipi\\.com" // Gamma (Standard)
+			+ "(www|hindi|gujarati|tamil|marathi|malayalam|bengali)\\.gamma\\.pratilipi\\.com" // Gamma (Standard)
 			+ "|"
-			+ "(m|hi|gu|ta)\\.gamma\\.pratilipi\\.com" // Gamma (Basic)
+			+ "(m|hi|gu|ta|mr|ml|bn)\\.gamma\\.pratilipi\\.com" // Gamma (Basic)
 			+ "|"
-			+ "(www|hindi|gujarati|tamil)\\.devo-pratilipi\\.appspot\\.com" // Devo (Standard)
+			+ "(www|hindi|gujarati|tamil|marathi|malayalam|bengali)\\.devo-pratilipi\\.appspot\\.com" // Devo (Standard)
 			+ "|"
-			+ "(m|hi|gu|ta)\\.devo-pratilipi\\.appspot\\.com" // Devo (Basic)
+			+ "(m|hi|gu|ta|mr|ml|bn)\\.devo-pratilipi\\.appspot\\.com" // Devo (Basic)
 			+ "|"
 			+ "(raghu)\\.devo-pratilipi\\.appspot\\.com" // Devo (Raghu)
 			+ "|"
