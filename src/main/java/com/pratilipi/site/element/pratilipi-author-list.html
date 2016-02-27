@@ -30,6 +30,13 @@
 			height: 48px;
 		}
 		
+		paper-spinner.pratilipi-spinner {
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
+		
 	</style>
 
 	<template>
@@ -49,13 +56,13 @@
 						[[ item.sno ]]
 					</div>
 					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-						<img class="img-circle" src="[[ item.imageUrl ]]">
+						<a href="[[ item.pageUrl ]]"><img class="img-circle" src="[[ item.imageUrl ]]"></a>
 					</div>
 					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text">
-						[[ item.fullName ]]
+						<a href="[[ item.pageUrl ]]">[[ item.fullName ]]</a>
 					</div>
 					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text">
-						[[ item.fullNameEn ]]
+						<a href="[[ item.pageUrl ]]">[[ item.fullNameEn ]]</a>
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text">
 						[[ item.email ]]
@@ -70,7 +77,13 @@
 			</div>
 		</template>
 		<br class="pratilipi-break"/>
-	
+		<template is="dom-if" if="{{ isLoading }}">
+			<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
+		</template>
+		<template is="dom-if" if="{{ includeShowMoreButton }}">
+			<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">${ _strings.load_more_contents }</button>
+		</template>
+
 		<iron-ajax
 				id="AjaxGet"
 				url="/api/author/list"
@@ -102,7 +115,8 @@
 				filter: { type: Object },
 				cursor: { type: String },
 				isLoading: { type: Boolean, value: false },
-				isFinished: { type: Boolean, value: false }
+				isFinished: { type: Boolean, value: false },
+				includeShowMoreButton: { type: Boolean, value: false }
 			},
 			
 			process: function( authorList ) {
@@ -135,14 +149,61 @@
 			
 			ready: function() {
 				this.process( this.authorList );
+				if( this.authorList.length < 20 || this.cursor.trim() == "" )
+					this.isFinished = true;
+			},
+			
+			loadMore: function() {
+				
+				if( !this.isLoading && !this.isFinished )
+					this.includeShowMoreButton = true;
+				
+				// Return if there is an active call or cursor = null.
+				if( this.isLoading || this.isFinished || this.cursor == null || this.cursor == "" )
+					return;
+
+				// Check for window height.
+				var reqHeight = jQuery( window ).scrollTop()
+						- jQuery( this ).position().top
+						+ jQuery( window ).height()
+						+ 3 * jQuery( window ).height();
+
+				if( jQuery( this ).outerHeight( true ) >= reqHeight )
+					return;
+				
+				
+				// Spinner Active and disable show more button.
+				this.isLoading = true;
+				this.includeShowMoreButton = false;
+				
+				// Set params and make ajax GET call. Filters already set when element initialised.
+				var ajaxGet = this.$.AjaxGet;
+				ajaxGet.params.cursor = this.cursor;
+				ajaxGet.generateRequest();
 			},
 			
 			_handleAjaxGetResponse: function( event ) {
+				// Disable spinner
+				this.isLoading = false;
 				
+				// Call didn't succeed.
+				if( ! request.detail.response )
+					return;
+				
+				var authorList = request.detail.response.authorList;
+				this.process( authorList );
+
+				if( request.detail.response.cursor == null || authorList.length < 20 ) {
+					this.includeShowMoreButton = false;
+					this.isFinished = true;
+				}
+				else
+					this.cursor = request.detail.response.cursor;
 			},
 			
 			_handleAjaxGetError: function( event ) {
-				
+				this.isLoading = false;
+				this.includeShowMoreButton = true;
 			}
 			
 		});
