@@ -20,6 +20,7 @@
 						<div class="container">
 							<pratilipi-navigation
 								class='pull-left hidden-xs hidden-sm'
+								navigation-list='${ navigationList }'
 								></pratilipi-navigation>
 							<div class='secondary-500' style='padding:20px; overflow:hidden'>
 								<h3>${ title }</h3>

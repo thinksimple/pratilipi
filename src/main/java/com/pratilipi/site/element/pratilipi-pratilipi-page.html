@@ -16,6 +16,7 @@
 				<div class="container">
 					<pratilipi-navigation
 							class='pull-left hidden-xs hidden-sm'
+							navigation-list='[[ navigationList ]]'
 							></pratilipi-navigation>
 					<div style="overflow:hidden">
 						<pratilipi-pratilipi
@@ -66,6 +67,7 @@
 				
 				reviewList: { type: Array },
 				cursor: { type: String },
+				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				lastScrollTop: { type: Number, value: 0 },
 			},

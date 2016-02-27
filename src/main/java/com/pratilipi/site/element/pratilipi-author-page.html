@@ -15,6 +15,7 @@
 				<div class="container">
 					<pratilipi-navigation
 							class='pull-left hidden-xs hidden-sm'
+							navigation-list='[[ navigationList ]]'
 							></pratilipi-navigation>
 					<div style="overflow:hidden">
 						<pratilipi-author
@@ -61,6 +62,7 @@
 				authorData: { type:Object },
 				
 				pratilipiList: { type: Array },
+				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				filter: { type: Object },
 				cursor: { type: String },

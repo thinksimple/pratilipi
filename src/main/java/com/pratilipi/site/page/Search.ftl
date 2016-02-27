@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-search-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2016022404'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160227'>
 	</head>
 
 	<body>
@@ -14,6 +14,7 @@
 			search-query='${ pratilipiListSearchQuery! }'
 			filter='${ pratilipiListFilterJson }'
 			cursor='${ pratilipiListCursor! }'
-			pratilipi-types='${ pratilipiTypesJson }'></pratilipi-search-page>
+			pratilipi-types='${ pratilipiTypesJson }'
+			navigation-list='${ navigationList }'></pratilipi-search-page>
 	</body>
 </html>

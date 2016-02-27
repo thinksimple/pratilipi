@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-pratilipi-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160226'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160227'>
 	</head>
 	
 	<body>
@@ -16,7 +16,8 @@
 				
 				review-list='${ reviewListJson }'
 				cursor='${ reviewListCursor! }'
-				pratilipi-types='${ pratilipiTypesJson }'></pratilipi-pratilipi-page>
+				pratilipi-types='${ pratilipiTypesJson }'
+				navigation-list='${ navigationList }'></pratilipi-pratilipi-page>
 	</body>
 	
 </html>

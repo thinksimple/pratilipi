@@ -20,6 +20,7 @@
 						<div class="container">
 							<pratilipi-navigation
 								class='pull-left hidden-xs hidden-sm'
+								navigation-list='${ navigationList }'
 								></pratilipi-navigation>
 							<div style="overflow:hidden">
 								<paper-card style="padding-bottom: 100px; margin-bottom: 10px;">
