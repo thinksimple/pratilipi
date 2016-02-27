@@ -51,6 +51,7 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Event;
+import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.AuthorDataUtil;
@@ -266,6 +267,9 @@ public class PratilipiSite extends HttpServlet {
 			pratilipiTypes.put( pratilipiType, pratilipiTypeMap );
 		}
 		
+		List<Navigation> navigationList = dataAccessor.getNavigationList( filterLanguage );
+		
+		
 		dataModel.put( "ga_userId", userData.getId().toString() );
 		dataModel.put( "ga_website", UxModeFilter.getWebsite().toString() );
 		dataModel.put( "ga_websiteMode", UxModeFilter.isBasicMode() ? "Basic" : "Standard" );
@@ -279,10 +283,12 @@ public class PratilipiSite extends HttpServlet {
 		if( basicMode ) {
 			dataModel.put( "requestUrl", "http://" + request.getServerName() + request.getRequestURI() );
 			dataModel.put( "pratilipiTypes", pratilipiTypes );
+			dataModel.put( "navigationList", navigationList );
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "userJson", gson.toJson( userResponse ) );
 			dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
+			dataModel.put( "navigationList", gson.toJson( navigationList ) );
 		}
 
 		
