@@ -158,23 +158,23 @@ public class PratilipiSite extends HttpServlet {
 			// Master website specific links
 			
 			} else if( filterLanguage == null && uri.equals( "/books" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( filterLanguage == null && uri.equals( "/stories" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 			
 			} else if( filterLanguage == null && uri.equals( "/poems" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( filterLanguage == null && uri.equals( "/articles" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( filterLanguage == null && uri.equals( "/magazines" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 
 			
@@ -182,15 +182,15 @@ public class PratilipiSite extends HttpServlet {
 			// Gujarati website specific links
 			
 			} else if( filterLanguage == Language.GUJARATI && uri.equals( "/short-stories" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 			
 			} else if( filterLanguage == Language.GUJARATI && uri.equals( "/poetry" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( filterLanguage == Language.GUJARATI && uri.equals( "/non-fiction" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 
 				
@@ -198,28 +198,28 @@ public class PratilipiSite extends HttpServlet {
 			// Tamil website specific links
 			
 			} else if( filterLanguage == Language.TAMIL && uri.equals( "/books" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( filterLanguage == Language.TAMIL && uri.equals( "/stories" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 			
 			} else if( filterLanguage == Language.TAMIL && uri.equals( "/poems" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( filterLanguage == Language.TAMIL && uri.equals( "/articles" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( filterLanguage == Language.TAMIL && uri.equals( "/magazines" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, filterLanguage, request );
+				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 
 				
 				
-			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, filterLanguage, request ) ) != null ) {
+			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), displayLanguage ) ) != null ) {
@@ -685,32 +685,32 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	private Map<String, Object> createDataModelForListPage( PratilipiType type,
-			boolean basicMode, Language lang, HttpServletRequest request )
-			throws InsufficientAccessException {
+			boolean basicMode, Language displayLanguage, Language filterLanguage,
+			HttpServletRequest request ) throws InsufficientAccessException {
 		
-		return createDataModelForListPage( type, null, basicMode, lang, request );
+		return createDataModelForListPage( type, null, basicMode, displayLanguage, filterLanguage, request );
 	}
 
 	private Map<String, Object> createDataModelForListPage( String listName,
-			boolean basicMode, Language lang, HttpServletRequest request )
-			throws InsufficientAccessException {
+			boolean basicMode, Language displayLanguage, Language filterLanguage,
+			HttpServletRequest request ) throws InsufficientAccessException {
 
-		return createDataModelForListPage( null, listName, basicMode, lang, request );
+		return createDataModelForListPage( null, listName, basicMode, displayLanguage, filterLanguage, request );
 		
 	}
 	
 	private Map<String, Object> createDataModelForListPage( PratilipiType type, String listName,
-			boolean basicMode, Language lang, HttpServletRequest request )
-			throws InsufficientAccessException {
+			boolean basicMode, Language displayLanugage, Language filterLanguage,
+			HttpServletRequest request ) throws InsufficientAccessException {
 
 		String listTitle = null;
 		String listTitleEn = null;
 
 		if( listName == null ) {
-			listTitle = I18n.getString( type.getPluralStringId(), lang );
-			listTitleEn = I18n.getString( type.getPluralStringId(), Language.ENGLISH );
+			listTitle = I18n.getString( type.getPluralStringId(), displayLanugage );
+			listTitleEn = displayLanugage == Language.ENGLISH ? null : I18n.getString( type.getPluralStringId(), Language.ENGLISH );
 		} else {
-			String title = getListTitle( listName, lang );
+			String title = getListTitle( listName, filterLanguage );
 			if( title == null )
 				return null;
 			if( title.indexOf( '|' ) == -1 ) {
@@ -722,11 +722,11 @@ public class PratilipiSite extends HttpServlet {
 			}
 		}
 		
-		String title = createPageTitle( listTitle, listTitleEn, lang );
+		String title = createPageTitle( listTitle, listTitleEn, displayLanugage );
 		
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setLanguage( lang );
+		pratilipiFilter.setLanguage( filterLanguage );
 		pratilipiFilter.setType( type );
 		pratilipiFilter.setListName( listName );
 		pratilipiFilter.setState( PratilipiState.PUBLISHED );
