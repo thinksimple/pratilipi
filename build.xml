@@ -11,7 +11,7 @@
 	<target name="copy">
 		<copy todir="${build.dir}/WEB-INF/classes" flatten="false">
 			<fileset dir="${src.dir}" includes="META-INF/jdoconfig.xml"/>
-			<fileset dir="${src.dir}" includes="**/data/curated/category.*"/>
+			<fileset dir="${src.dir}" includes="**/data/curated/*"/>
 			<fileset dir="${src.dir}" includes="**/i18n/language.*"/>
 			<fileset dir="${src.dir}" includes="**/*.ftl"/>
 			<fileset dir="${src.dir}" includes="**/*.html"/>
@@ -25,8 +25,6 @@
 	<target name="i18n">
 		<java fork="true" failonerror="yes" classname="com.pratilipi.common.util.SiteElementUtil">
 			<arg line="${src.dir}/com/pratilipi/site/element"/>
-			<arg line="${src.dir}/com/pratilipi/site/element/data"/>
-			<arg line="com.pratilipi.site.element.data"/>
 			<arg line="${build.dir}/elements."/>
 			<classpath>
 				<path location="${build.dir}/WEB-INF/classes"/>
