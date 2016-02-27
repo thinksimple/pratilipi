@@ -20,6 +20,7 @@ import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.mock.AccessTokenMock;
 import com.pratilipi.data.mock.AppPropertyMock;
 import com.pratilipi.data.mock.AuthorMock;
+import com.pratilipi.data.mock.EventMock;
 import com.pratilipi.data.mock.PratilipiMock;
 import com.pratilipi.data.mock.UserMock;
 import com.pratilipi.data.mock.UserPratilipiMock;
@@ -29,6 +30,7 @@ import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
+import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
@@ -465,12 +467,22 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public Event getEvent( Long id ) {
+		for( Event event : EventMock.EVENT_TABLE )
+			if( event.getId().equals( id ) )
+				return event;
 		return null;
 	}
 	
 	@Override
 	public Event createOrUpdateEvent( Event event ) {
-		return null;
+		if( event.getId() == null ) {
+			long id = 1L;
+			for( Event e : EventMock.EVENT_TABLE )
+				if( id <= e.getId() )
+					id = e.getId() + 1;
+			( (EventEntity) event ).setId( id );
+		}
+		return event;
 	}
 	
 	
@@ -525,8 +537,17 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return userPratilipi;
 	}
 	
+
+	// NAVIGATION Table
 	
-	//CATEGORY Table
+	@Override
+	public List<Navigation> getNavigationList( Language language ) {
+		// TODO Auto-generated method stub
+		return new ArrayList<Navigation>( 0 );
+	}
+
+	
+	// CATEGORY Table
 	
 	@Override
 	public Category getCategory(Long categoryId) {

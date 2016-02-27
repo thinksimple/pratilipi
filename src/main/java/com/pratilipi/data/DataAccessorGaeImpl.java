@@ -41,6 +41,7 @@ import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
+import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
@@ -52,6 +53,7 @@ import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.CategoryEntity;
 import com.pratilipi.data.type.gae.EventEntity;
+import com.pratilipi.data.type.gae.NavigationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiCategoryEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -63,6 +65,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	private static final Logger logger =
 			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
 	
+	private static final String NAVIGATION_DATA_FILE_PREFIX = "curated/navigation.";
 	private static final String CATEGORY_DATA_FILE_PREFIX = "curated/category.";
 	private static final String CURATED_DATA_FOLDER = "curated";
 	
@@ -827,8 +830,60 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( userPratilipi );
 	}
 	
+	
+	// NAVIGATION Table
+	
+	@Override
+	public List<Navigation> getNavigationList( Language language ) {
 
-	//CATEGORY Table
+		List<Navigation> categoryList = new LinkedList<>();
+
+		try {
+			File file = new File( DataAccessor.class.getResource( NAVIGATION_DATA_FILE_PREFIX + language.getCode() ).toURI() );
+			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+			
+			Navigation navigation = new NavigationEntity();
+			while( it.hasNext() ) {
+				String line = it.nextLine().trim();
+				
+				if( navigation.getTitle() == null && line.isEmpty() )
+					continue;
+				
+				if( navigation.getTitle() == null && ! line.isEmpty() )
+					navigation.setTitle( line );
+				
+				if( navigation.getTitle() != null && line.isEmpty() ) {
+					categoryList.add( navigation );
+					navigation = new NavigationEntity();
+				}
+				
+				if( navigation.getTitle() != null && ! line.isEmpty() ) {
+					Navigation.Link link = null;
+					if( line.indexOf( ' ' ) == -1 )
+						link = new Navigation.Link( line, line );
+					else
+						link = new Navigation.Link( 
+								line.substring( line.indexOf( ' ' ) + 1 ).trim(),
+								line.substring( 0, line.indexOf( ' ' ) )
+						);
+					navigation.addLink( link );
+				}
+			}
+			
+			if( navigation.getTitle() != null )
+				categoryList.add( navigation );
+			
+			LineIterator.closeQuietly( it );
+		} catch( URISyntaxException | NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch " + language.getNameEn() + " navigation list.", e );
+		}
+		
+		return categoryList;
+	
+	}
+
+
+	// CATEGORY Table
 	
 	@Override
 	public Category getCategory( Long id ) {

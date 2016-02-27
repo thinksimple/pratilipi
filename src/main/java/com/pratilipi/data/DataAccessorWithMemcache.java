@@ -22,6 +22,7 @@ import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
+import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
@@ -37,6 +38,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private static final String PREFIX_PRATILIPI = "Pratilipi-";
 	private static final String PREFIX_AUTHOR = "Author-";
 	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
+	private static final String PREFIX_NAVIGATION_LIST = "NavigationList-";
 	private static final String PREFIX_CATEGORY = "Category-";
 	private static final String PREFIX_CATEGORY_LIST = "CategoryList-";
 	private static final String PREFIX_PRATILIPI_CATEGORY_LIST = "PratilipiCategoryList-";
@@ -665,7 +667,23 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return userPratilipi;
 	}
 	
+	
+	// NAVIGATION Table
+	
+	@Override
+	public List<Navigation> getNavigationList( Language language ) {
+		String memcacheId = PREFIX_NAVIGATION_LIST + language.getCode()
+				+ "?" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 5 ) );
+		List<Navigation> navigationList = memcache.get( memcacheId );
+		if( navigationList == null ) {
+			navigationList = dataAccessor.getNavigationList( language );
+			if( navigationList != null )
+				memcache.put( memcacheId, new ArrayList<>( navigationList ) );
+		}
+		return navigationList;
+	}
 
+	
 	// CATEGORY Table
 	
 	@Override

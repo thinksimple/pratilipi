@@ -16,6 +16,7 @@ import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
+import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
@@ -104,7 +105,11 @@ public interface DataAccessor {
 	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
 	
 	
-	//CATEGORY Table
+	// NAVIGATION Table
+	List<Navigation> getNavigationList( Language language );
+	
+	
+	// CATEGORY Table
 	Category getCategory( Long categoryId );
 	List<Category> getCategoryList( Language language );
 	
