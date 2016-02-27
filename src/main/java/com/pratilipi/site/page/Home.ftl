@@ -14,7 +14,8 @@
 		<pratilipi-home-page 
 			user-data='${ userJson }'
 			sections-list='${ sectionsJson }'
-			pratilipi-types='${ pratilipiTypesJson }'></pratilipi-home-page>
+			pratilipi-types='${ pratilipiTypesJson }'
+			navigation-list='${ navigationList }'></pratilipi-home-page>
 	</body>
 
 </html>
