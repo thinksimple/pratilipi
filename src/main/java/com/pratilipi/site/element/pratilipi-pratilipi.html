@@ -300,7 +300,29 @@
 					this.changeState = "${ _strings.pratilipi_move_to_drafts }";
 				else
 					jQuery( '#changeStateButton' ).hide();
-				this.processSummary();
+
+
+				// Not displaying Summary if..
+				if( pratilipi.summary == null || pratilipi.summary.trim() == "" ) { 
+					document.getElementById( "pratilipi-summary" ).style.display = "none";
+				} else {
+					jQuery( '#pratilipi-summary-text' ).removeClass( 'less' );
+					jQuery( '#pratilipi-summary-text' ).removeClass( 'more' );
+					this.summary = pratilipi.summary;
+					var jSummary = jQuery( "#pratilipi-summary-text" );
+					jSummary.html( this.summary );
+					var height = jSummary.height();
+					
+					if( height > 190 ) {
+						jQuery( '#pratilipi-summary-text' ).addClass( 'less' );
+						document.getElementById( "less" ).style.display = "none";
+						document.getElementById( "more" ).style.display = "block";
+					} else {
+						document.getElementById( "less" ).style.display = "none";
+						document.getElementById( "more" ).style.display = "none";
+					}
+				}
+				
 			},
 			
 			attached: function() {
@@ -308,30 +330,6 @@
 				this.updatePratilipi( this.pratilipiData );
 			},
 			
-			processSummary: function() {
-				// Not displaying Summary if..
-				if( this.pratilipi.summary == null || this.pratilipi.summary.trim() == "" ) { 
-					document.getElementById( "pratilipi-summary" ).style.display = "none";
-					return;
-				}
-				
-				jQuery( '#pratilipi-summary-text' ).removeClass( 'less' );
-				jQuery( '#pratilipi-summary-text' ).removeClass( 'more' );
-				
-				this.summary = this.pratilipi.summary;
-				var jSummary = jQuery( "#pratilipi-summary-text" );
-				jSummary.html( this.pratilipi.summary );
-				var height = jSummary.height();
-				
-				if( height > 190 ) {
-					jQuery( '#pratilipi-summary-text' ).addClass( 'less' );
-					document.getElementById( "less" ).style.display = "none";
-					document.getElementById( "more" ).style.display = "block";
-				} else {
-					document.getElementById( "less" ).style.display = "none";
-					document.getElementById( "more" ).style.display = "none";
-				}
-			},
 			
 			_toggleSnippet: function() {
 				jQuery( '#pratilipi-summary-text' ).toggleClass( 'less' );
