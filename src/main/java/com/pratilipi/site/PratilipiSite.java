@@ -291,7 +291,9 @@ public class PratilipiSite extends HttpServlet {
 			pratilipiTypes.put( pratilipiType, pratilipiTypeMap );
 		}
 		
-		List<Navigation> navigationList = dataAccessor.getNavigationList( filterLanguage );
+		List<Navigation> navigationList = dataAccessor.getNavigationList(
+				filterLanguage == null ? Language.ENGLISH : filterLanguage
+		);
 		
 		
 		dataModel.put( "ga_userId", userData.getId().toString() );
