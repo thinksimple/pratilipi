@@ -5,10 +5,12 @@ import java.util.List;
 
 public interface Navigation extends Serializable {
 
-	class Link {
+	class Link implements Serializable {
 		
-		String name;
-		String url;
+		private static final long serialVersionUID = -5964869848319539644L;
+		
+		private String name;
+		private String url;
 		
 		public Link( String name, String url ) {
 			this.name = name;
