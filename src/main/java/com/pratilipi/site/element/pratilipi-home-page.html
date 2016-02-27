@@ -14,6 +14,7 @@
 				<div class="container">
 					<pratilipi-navigation
 							class='pull-left hidden-xs hidden-sm'
+							navigation-list='[[ navigationList ]]'
 							></pratilipi-navigation>
 					<div style="overflow:hidden">
 						<pratilipi-${ _strings.website_language }-carousel></pratilipi-${ _strings.website_language }-carousel>
@@ -46,6 +47,7 @@
 			properties: {
 				userData: { type: Object },
 				sectionsList: { type: Array },
+				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				lastScrollTop: { type: Number, value: 0 },
 			},
