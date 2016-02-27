@@ -836,7 +836,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public List<Navigation> getNavigationList( Language language ) {
 
-		List<Navigation> categoryList = new LinkedList<>();
+		List<Navigation> navigationList = new LinkedList<>();
 
 		try {
 			File file = new File( DataAccessor.class.getResource( NAVIGATION_DATA_FILE_PREFIX + language.getCode() ).toURI() );
@@ -849,15 +849,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				if( navigation.getTitle() == null && line.isEmpty() )
 					continue;
 				
-				if( navigation.getTitle() == null && ! line.isEmpty() )
+				else if( navigation.getTitle() == null && ! line.isEmpty() )
 					navigation.setTitle( line );
 				
-				if( navigation.getTitle() != null && line.isEmpty() ) {
-					categoryList.add( navigation );
+				else if( navigation.getTitle() != null && line.isEmpty() ) {
+					navigationList.add( navigation );
 					navigation = new NavigationEntity();
 				}
 				
-				if( navigation.getTitle() != null && ! line.isEmpty() ) {
+				else if( navigation.getTitle() != null && ! line.isEmpty() ) {
 					Navigation.Link link = null;
 					if( line.indexOf( ' ' ) == -1 )
 						link = new Navigation.Link( line, line );
@@ -871,14 +871,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			}
 			
 			if( navigation.getTitle() != null )
-				categoryList.add( navigation );
+				navigationList.add( navigation );
 			
 			LineIterator.closeQuietly( it );
 		} catch( URISyntaxException | NullPointerException | IOException e ) {
 			logger.log( Level.SEVERE, "Failed to fetch " + language.getNameEn() + " navigation list.", e );
 		}
 		
-		return categoryList;
+		return navigationList;
 	
 	}
 
