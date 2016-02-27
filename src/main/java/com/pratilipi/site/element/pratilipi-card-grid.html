@@ -286,8 +286,7 @@
 			},
 			
 			_write: function() {
-				document.querySelector( 'pratilipi-write' ).setAuthorId( this.authorId );
-				document.querySelector( 'pratilipi-write' ).open();
+				document.querySelector( 'pratilipi-write' ).createNewPratilipi( this.authorId );
 			}
 
 		});

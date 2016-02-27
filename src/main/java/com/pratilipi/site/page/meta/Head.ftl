@@ -18,7 +18,7 @@
 <link rel='import' href='/elements.${lang}/pratilipi-write.html?2016022602'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation-drawer.html'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160203'>
-<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160226'>
+<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160227'>
 <link rel='import' href='/elements.${lang}/pratilipi-footer.html?2016022026'>
 
 <#-- Custom Stylesheet -->
