@@ -1,0 +1,53 @@
+<dom-module id="pratilipi-author-list">
+
+	<style>
+		
+		:host {
+			display: block;
+		}
+		
+	</style>
+
+	<template>
+	
+		<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">List Of Authors</div>
+		<br class="pratilipi-break"/>
+	
+		<iron-ajax
+				id="AjaxGet"
+				url="/api/author/list"
+				method="GET"
+				params="[[ filter ]]"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				on-error="_handleAjaxGetError"
+				></iron-ajax>
+	</template>
+		
+
+	<script>
+		Polymer({
+
+			is: 'pratilipi-author-list',
+
+			properties: {
+				authorList: { type: Array },
+				filter: { type: Object },
+				cursor: { type: String },
+				isLoading: { type: Boolean, value: false },
+				isFinished: { type: Boolean, value: false }
+			},
+			
+			_handleAjaxGetResponse: function( event ) {
+				
+			},
+			
+			_handleAjaxGetError: function( event ) {
+				
+			}
+			
+		});
+	</script>
+
+</dom-module>

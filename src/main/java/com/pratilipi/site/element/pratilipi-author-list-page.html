@@ -1,0 +1,70 @@
+<link rel="import" href="pratilipi-author-list.html" />
+
+<dom-module id="pratilipi-author-list-page">
+
+	<template>
+		<header class="nav-down">
+    		<pratilipi-header user='[[ user ]]'></pratilipi-header>
+		</header>
+		<main>
+			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
+			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+			<div class="parent-container margin-top-bottom">
+				<div class="container">
+					<pratilipi-navigation
+							class='pull-left hidden-xs hidden-sm'
+							></pratilipi-navigation>
+					<div style="overflow:hidden">
+						<pratilipi-author-list
+							author-list='[[ pratilipiList ]]'
+							filter='[[ filter ]]'
+							cursor='[[ cursor ]]'></pratilipi-author-list>
+						<br class="pratilipi-break">
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer>
+    		<pratilipi-footer></pratilipi-footer>
+		</footer>
+		<div class="scroll-top-button">
+			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
+		</div>
+	</template>
+		
+
+	<script>
+		Polymer({
+
+			is: 'pratilipi-author-list-page',
+
+			properties: {
+				userData: { type: Object },
+				authorList: { type: Array },
+				pratilipiTypes: { types: Object },
+				filter: { type: Object },
+				cursor: { type: String },
+				lastScrollTop: { type: Number, value: 0 },
+			},
+			
+			scrollToTop: function() {
+				$( 'html, body' ).animate( { scrollTop : 0 },800 );
+			},
+			
+			ready: function() {
+				jQuery( '#scrollToTop' ).css( "display", "none" );
+			},
+			
+			scrollHandler: function( st ) {
+				if( st > this.lastScrollTop || st < 100 )
+					jQuery( '#scrollToTop' ).fadeOut();
+				else
+					jQuery( '#scrollToTop' ).fadeIn();
+				this.lastScrollTop = st;
+			}
+			
+		});
+	</script>
+
+</dom-module>
