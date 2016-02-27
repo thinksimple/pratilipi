@@ -36,6 +36,13 @@ public class EventEntity implements Event {
 	private Date CREATION_DATE;
 	private Date LAST_UPDATED;
 
+
+	public EventEntity() {}
+
+	public EventEntity( Long id ) {
+		this.EVENT_ID = id;
+	}
+
 	
 	@Override
 	public Long getId() {
