@@ -10,19 +10,12 @@
 			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
-			<div class="parent-container margin-top-bottom">
-				<div class="container">
-					<pratilipi-navigation
-							class='pull-left hidden-xs hidden-sm'
-							></pratilipi-navigation>
-					<div style="overflow:hidden">
-						<pratilipi-author-list
-							author-list='[[ pratilipiList ]]'
-							filter='[[ filter ]]'
-							cursor='[[ cursor ]]'></pratilipi-author-list>
-						<br class="pratilipi-break">
-					</div>
-				</div>
+			<div class="margin-top-bottom">
+				<pratilipi-author-list
+					author-list='[[ authorList ]]'
+					filter='[[ filter ]]'
+					cursor='[[ cursor ]]'></pratilipi-author-list>
+				<br class="pratilipi-break">
 			</div>
 		</main>
 		<footer>
