@@ -441,9 +441,11 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	
-	private Map<String, Object> createDataModelForHomePage( boolean basicMode, Language lang )
+	private Map<String, Object> createDataModelForHomePage( boolean basicMode, Language filterLanguage )
 			throws InsufficientAccessException {
 
+		Language listLanguage = filterLanguage == null ? Language.ENGLISH : filterLanguage;
+		
 		Gson gson = new Gson();
 		
 		String[] listNames = { "featured", "fiction", "magazines" };
@@ -451,7 +453,7 @@ public class PratilipiSite extends HttpServlet {
 		
 		for( String listName : listNames ) {
 			
-			String title = getListTitle( listName, lang );
+			String title = getListTitle( listName, listLanguage );
 			if( title == null )
 				continue;
 			
@@ -459,7 +461,7 @@ public class PratilipiSite extends HttpServlet {
 				title = title.substring( 0, title.indexOf( '|' ) ).trim();
 			
 			PratilipiFilter pratilipiFilter = new PratilipiFilter();
-			pratilipiFilter.setLanguage( lang );
+			pratilipiFilter.setLanguage( listLanguage );
 			pratilipiFilter.setListName( listName );
 			pratilipiFilter.setState( PratilipiState.PUBLISHED );
 			
