@@ -155,6 +155,30 @@ public class PratilipiSite extends HttpServlet {
 				
 				
 			
+			// Master website specific links
+			
+			} else if( filterLanguage == null && uri.equals( "/books" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+				
+			} else if( filterLanguage == null && uri.equals( "/stories" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+			
+			} else if( filterLanguage == null && uri.equals( "/poems" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+				
+			} else if( filterLanguage == null && uri.equals( "/articles" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+				
+			} else if( filterLanguage == null && uri.equals( "/magazines" ) ) {
+				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, filterLanguage, request );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+
+			
+			
 			// Gujarati website specific links
 			
 			} else if( filterLanguage == Language.GUJARATI && uri.equals( "/short-stories" ) ) {
