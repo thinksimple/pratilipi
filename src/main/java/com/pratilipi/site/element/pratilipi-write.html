@@ -150,6 +150,7 @@
  				summary: { type: String },
  				type: { type: String },
  				language: { type: String },
+ 				state: { type: String },
  				
  				// Specific to modal
  				createPratilipi: { type: Boolean },
@@ -199,7 +200,9 @@
 				this.message = null;
 				this.title = pratilipi.title == null ? null : pratilipi.title;
 				this.titleEn = pratilipi.titleEn == null ? null : pratilipi.titleEn;
+				this.state = pratilipi.state == null ? "DRAFTED" : pratilipi.state;
 				this.summary = pratilipi.summary == null ? "" : pratilipi.summary;
+
 				if( tinyMCE != null && tinyMCE.activeEditor != null )
 					tinyMCE.get( 'writeSummary' ).setContent( this.summary );
 				
@@ -238,6 +241,7 @@
 				this.summary = null;
 				this.type = null;
 				this.language = null;
+				this.state = null;
  				this.createPratilipi = false;
  				this.editPratilipi = false;
  				this.modalTitle = null;
@@ -270,7 +274,7 @@
 
 				this.type = this.$.selectPratilipiType.selectedItem.getAttribute( "value" );
 
-				if( tinyMCE.activeEditor != null )
+				if( tinyMCE != null && tinyMCE.activeEditor != null )
 					this.summary = tinyMCE.get( 'writeSummary' ).getContent();
 				
 				this.summary = JSON.stringify( this.summary );
@@ -281,7 +285,7 @@
 				var body = "title=" + this.title + "&" + 
 				 "type=" + this.type.toUpperCase() + "&" +
 				 "language=" + this.language.toUpperCase() + "&" + 
-				 "state=" + "DRAFTED" ;
+				 "state=" + this.state;
 				
 				if( this.titleEn != null && this.titleEn.trim() != "" )
 					body = body + "&" + "titleEn=" + this.titleEn;
