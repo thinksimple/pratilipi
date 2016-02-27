@@ -1,6 +1,7 @@
 package com.pratilipi.data.mock;
 
 import static com.pratilipi.data.mock.AuthorMock.*;
+import static com.pratilipi.data.mock.EventMock.*;
 import static com.pratilipi.data.mock.PratilipiMock.*;
 
 import java.util.LinkedList;
@@ -19,6 +20,10 @@ public class PageMock {
 	public static final Page hiAuthor_1_Page = new PageEntity( 101L );
 	public static final Page guAuthor_1_Page = new PageEntity( 102L );
 	public static final Page taAuthor_1_Page = new PageEntity( 103L );
+	
+	public static final Page hiEvent_1_Page = new PageEntity( 201L );
+	public static final Page guEvent_1_Page = new PageEntity( 202L );
+	public static final Page taEvent_1_Page = new PageEntity( 203L );
 	
 	public static final Page hiPratilipi_1_Page = new PageEntity( 10101L );
 	public static final Page hiPratilipi_2_Page = new PageEntity( 10102L );
@@ -51,6 +56,10 @@ public class PageMock {
 		PAGE_TABLE.add( hiAuthor_1_Page );
 		PAGE_TABLE.add( guAuthor_1_Page );
 		PAGE_TABLE.add( taAuthor_1_Page );
+
+		PAGE_TABLE.add( hiEvent_1_Page );
+		PAGE_TABLE.add( guEvent_1_Page );
+		PAGE_TABLE.add( taEvent_1_Page );
 
 		PAGE_TABLE.add( hiPratilipi_1_Page );
 		PAGE_TABLE.add( hiPratilipi_2_Page );
@@ -97,6 +106,22 @@ public class PageMock {
 		taAuthor_1_Page.setUri( PageType.AUTHOR.getUrlPrefix() + taAuthor_1.getId() );
 		taAuthor_1_Page.setUriAlias( "/tamil-author-1" );
 		taAuthor_1_Page.setPrimaryContentId( taAuthor_1.getId() );
+
+		
+		hiEvent_1_Page.setType( PageType.EVENT );
+		hiEvent_1_Page.setUri( PageType.EVENT.getUrlPrefix() + hiEvent_1.getId() );
+		hiEvent_1_Page.setUriAlias( "/event/hindi-event-1" );
+		hiEvent_1_Page.setPrimaryContentId( hiEvent_1.getId() );
+
+		guEvent_1_Page.setType( PageType.EVENT );
+		guEvent_1_Page.setUri( PageType.EVENT.getUrlPrefix() + guEvent_1.getId() );
+		guEvent_1_Page.setUriAlias( "/event/gujarati-event-1" );
+		guEvent_1_Page.setPrimaryContentId( guEvent_1.getId() );
+
+		taEvent_1_Page.setType( PageType.EVENT );
+		taEvent_1_Page.setUri( PageType.EVENT.getUrlPrefix() + taEvent_1.getId() );
+		taEvent_1_Page.setUriAlias( "/event/tamil-event-1" );
+		taEvent_1_Page.setPrimaryContentId( taEvent_1.getId() );
 
 		
 		hiPratilipi_1_Page.setType( PageType.PRATILIPI );
