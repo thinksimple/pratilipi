@@ -153,7 +153,7 @@ user_sign_up_with_facebook	= Sign Up with Facebook
   
 user_forgot_password		= પાસવર્ડ યાદ નથી?
 user_reset_password		= નવો પાસવર્ડ બનાવો 
-user_reset_password_help	= આ સાઈટ પર રજીસ્ટર કરવા માટે ઉપયોગમાં લીધેલ ઈ-મેલ આઈડી પ્રદાન કરો 
+user_reset_password_help	= આ સાઈટ પર રજીસ્ટર કરવા માટે ઉપયોગમાં લીધેલ ઈ-મેલ આઈડી પ્રદાન કરો,  જ્યાં પાસવર્ડ રીસેટ કરવાનો ઈ-મેલ આપને પ્રાપ્ત થશે.   
 
 user_current_password		= વર્તમાન પાસવર્ડ 
 user_new_password		= નવો પાસવર્ડ
@@ -208,7 +208,7 @@ update				= અપડેટ
 share				= શેર કરો   
 menu				= સૂચિ
 back				= પાછા જાઓ 
-load_more_contents			= Load More Contents
+load_more_contents			= વધુ રચનાઓ  તરફ 
 
 
 
@@ -253,18 +253,18 @@ edit_pratilipi_save_changes		= બદલાવને સુરક્ષિત �
 
 # Register Form
 
-register_part_1					= By registering, you agree to the 
-register_part_2					= and
+register_part_1					= અહી રજીસ્ટર થઇ આપ સહમત થઇ રહ્યા છો    
+register_part_2					= અને 
 register_part_3					= .
 
 
 # Event Page
 
-event_entries			= Event Entries
-event_name				= Event Name
-event_name_en			= Event Name in English
-event_description		= Event Description
-event_entries_url_list	= Entries URL List
-event_save_changes		= Save Changes
+event_entries			= ઇવેન્ટ એન્ટ્રી 
+event_name				= ઇવેન્ટ શીર્ષક 
+event_name_en			= ઇવેન્ટનું શીર્ષક અંગ્રેજીમાં 
+event_description		= ઇવેન્ટ વિશે 
+event_entries_url_list	= એન્ટ્રીનું URL લીસ્ટ
+event_save_changes		= બદલાવ સફળ કરો 
 
 
