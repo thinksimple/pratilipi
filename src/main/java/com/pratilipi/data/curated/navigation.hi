@@ -10,4 +10,4 @@ Navigation 2
 /search?q=stories   Stories
 /search?q=poems     Poems
 /search?q=articles  Stories
-/search?q=magazines	Magazines
+/search?q=magazines Magazines
