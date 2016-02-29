@@ -14,7 +14,7 @@
 
 			<div class="box" style="padding: 20px; overflow: hidden;">
 				<h3>${ title }</h3>
-				<div>${ content }</div>
+				<div style="text-align: justify;">${ content }</div>
 			</div>
 			
 			<#include "../element/pratilipi-navigation.ftl">
