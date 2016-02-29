@@ -52,7 +52,7 @@
 				<div style="margin-top: 20px; margin-bottom: 5px;">
 					<span style="font-size: 14px;">${ _strings.review_content }</span>
 				</div>
-				<script language="javascript" type="text/javascript">tinymce.init({ selector:'#reviewInput', editor_selector : "reviewInput", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+				<script language="javascript" type="text/javascript">tinymce.init({ selector:'#reviewInput', editor_selector : "reviewInput", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 				<paper-textarea class="review" id="reviewInput" value="{{ review::input }}"></paper-textarea>
 			</div>
 			

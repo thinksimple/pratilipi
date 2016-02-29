@@ -111,7 +111,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div style="margin-top: 25px; margin-bottom: 5px;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.write_summary }</span></div>
-							<script language="javascript" type="text/javascript">tinymce.init({ selector:'#writeSummary', editor_selector : "writeSummary", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+							<script language="javascript" type="text/javascript">tinymce.init({ selector:'#writeSummary', editor_selector : "writeSummary", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 							<paper-textarea class="pratilipi-blue" id="writeSummary" value="{{ summary::input }}"></paper-textarea>
 						</div>
 					</div>

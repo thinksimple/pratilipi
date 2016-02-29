@@ -90,7 +90,7 @@
 						<div class="margin-top-bottom">
 							<span class="edit-summary-text">${ _strings.edit_author_summary }</span>
 						</div>
-						<script language="javascript" type="text/javascript">tinymce.init({ selector:'#authorSummary', editor_selector : "authorSummary", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+						<script language="javascript" type="text/javascript">tinymce.init({ selector:'#authorSummary', editor_selector : "authorSummary", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 						<paper-textarea class="edit" id="authorSummary" value="{{ summary::input }}"></paper-textarea>
 						<div class="text-center" style="min-height: 20px;">
 							<span>{{ message }}</span>

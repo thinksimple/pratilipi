@@ -38,7 +38,7 @@
 					</div>
 					<br/>
 					<span class="edit-summary-text">${ _strings.event_description }</span>
-					<script language="javascript" type="text/javascript">tinymce.init({ selector:'#eventDescription', editor_selector : "eventDescription", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: 'ta', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
+					<script language="javascript" type="text/javascript">tinymce.init({ selector:'#eventDescription', editor_selector : "eventDescription", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 					<paper-textarea class="edit" id="eventDescription" value="{{ description::input }}"></paper-textarea>
 					<br/>
 					<span class="edit-summary-text">${ _strings.event_entries_url_list }</span>
