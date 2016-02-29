@@ -352,12 +352,6 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	
-	private String createHomePageTitle() {
-		return createPageTitle(
-				I18n.getString( "home_page_title", UxModeFilter.getDisplayLanguage() ),
-				I18n.getString( "home_page_title", Language.ENGLISH ) );
-	}
-	
 	private String createPratilipiPageTitle( PratilipiData pratilipiData ) {
 		if( pratilipiData == null )
 			return null;
@@ -488,7 +482,7 @@ public class PratilipiSite extends HttpServlet {
 		}
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createHomePageTitle() );
+		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", UxModeFilter.getDisplayLanguage() ), null ) );
 		if( basicMode )
 			dataModel.put( "sections", sections );
 		else
