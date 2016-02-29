@@ -22,13 +22,6 @@
 <link rel='import' href='/elements.${lang}/pratilipi-footer.html?2016022026'>
 
 
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,400italic,700,700italic' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="//storage.googleapis.com/code.getmdl.io/1.0.1/material.teal-red.min.css" />
-<script src="//storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>
-
-
-
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?2016022004">
 
