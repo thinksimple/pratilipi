@@ -63,21 +63,22 @@ public class AccessTokenFilter implements Filter {
 
 		if( autoGenerate ) { // Used by gamma, default & api modules.
 		
-			if( accessTokenId == null || accessTokenId.isEmpty() )
-				accessTokenId = getCookieValue( RequestCookie.ACCESS_TOKEN.getName(), request );
-
-			if( accessTokenId == null || accessTokenId.isEmpty() ) {
+			String accessTokenCookie = getCookieValue( RequestCookie.ACCESS_TOKEN.getName(), request );
+			
+			if( ( accessTokenId == null || accessTokenId.isEmpty() ) && ( accessTokenCookie == null || accessTokenCookie.isEmpty() ) ) {
 				accessToken = AccessTokenDataUtil.newUserAccessToken();
 			} else {
 				try {
-					accessToken = AccessTokenDataUtil.renewUserAccessToken( accessTokenId );
+					accessToken = accessTokenId != null && ! accessTokenCookie.isEmpty()
+							? AccessTokenDataUtil.renewUserAccessToken( accessTokenId )
+							: AccessTokenDataUtil.renewUserAccessToken( accessTokenCookie );
 				} catch( InvalidArgumentException e ) {
 					logger.log( Level.SEVERE, "", e );
 					accessToken = AccessTokenDataUtil.newUserAccessToken();
 				}
 			}
 
-			if( ! accessToken.getId().equals( accessTokenId ) ) {
+			if( ! accessToken.getId().equals( accessTokenCookie ) ) {
 				accessTokenId = accessToken.getId();
 				setCookieValue( RequestCookie.ACCESS_TOKEN.getName(), accessTokenId, response );
 			}
