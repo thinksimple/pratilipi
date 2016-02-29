@@ -345,13 +345,18 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	private String createPageTitle( String contentTitle, String contentTitleEn, Language lang ) {
-		return ( contentTitle == null ? "" : contentTitle + " - " )
-				+ I18n.getString( "pratilipi", lang )
-				+ " | "
-				+ ( contentTitleEn == null ? "" : contentTitleEn + " - " )
-				+ I18n.getString( "pratilipi", Language.ENGLISH );
+		String pageTitle = ( contentTitle == null ? "" : contentTitle + " - " ) + I18n.getString( "pratilipi", lang );
+		if( lang != Language.ENGLISH )
+			pageTitle += " | " + ( contentTitleEn == null ? "" : contentTitleEn + " - " ) + I18n.getString( "pratilipi", Language.ENGLISH );
+		return pageTitle;
 	}
 	
+	
+	private String createHomePageTitle() {
+		return createPageTitle(
+				I18n.getString( "home_page_title", UxModeFilter.getDisplayLanguage() ),
+				I18n.getString( "home_page_title", Language.ENGLISH ) );
+	}
 	
 	private String createPratilipiPageTitle( PratilipiData pratilipiData ) {
 		if( pratilipiData == null )
@@ -483,7 +488,7 @@ public class PratilipiSite extends HttpServlet {
 		}
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", "Read Tamil Stories, Poems and Books" );
+		dataModel.put( "title", createHomePageTitle() );
 		if( basicMode )
 			dataModel.put( "sections", sections );
 		else
