@@ -18,18 +18,14 @@
 			margin-bottom: 10px;
 			--paper-card-header: { display: none };
 		}
-		paper-icon-button {
-			color: #00ab6b;
-		}
-		input {
-			position:absolute; 
-			top:-1000px;
+		paper-icon-button, iron-icon {
+			color: #107FE5;
 		}
 	</style>
 
 	<template>
 		<header class="nav-down">
-    		<pratilipi-header user='[[ user ]]'></pratilipi-header>
+			<pratilipi-header user='[[ user ]]'></pratilipi-header>
 		</header>
 		<main>
 			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
@@ -50,22 +46,34 @@
 								<paper-icon-button class="pull-right" on-click="createNewEvent" icon="add-circle" noink></paper-icon-button>
 							</template>
 						</div>
+
 						<paper-card class="event-banner">
-							<img style="width: 100%;" src="{{ eventBannerImageUrl }}" />
+							<template is="dom-if" if="{{ !event.hasAccessToUpdate }}">
+								<img style="width: 100%;" src="{{ eventBannerImageUrl }}" alt="{{ event.name }}" />
+							</template>
+							
 							<template is="dom-if" if="{{ event.hasAccessToUpdate }}">
-								<div style="position: absolute; bottom: 10px; right: 15px;">
+								<div style="position: absolute; top: -1000px;">
 									<form id="uploadImage" method="post" enctype="multipart/form-data" action="/api/event/banner?eventId={{ event.eventId }}" target="upload_target">
 										<input id="uploadImageInput" type="file" on-change="uploadImage" name="{{ event.eventId }}" accept="image/*">
-										<paper-icon-button style="color: #000; width: 54px; height: 54px;" type="button" on-click="_chooseFile" icon="cloud-upload" noink></paper-icon-button>
 									</form>
-									
 									<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
+								</div>
+								<div class="pratilipi-file-upload">
+									<figure>
+										<img src="{{ eventBannerImageUrl }}" alt="{{ event.name }}" />
+										<figcaption on-click="_chooseFile">
+											<iron-icon style="top: 45%; width: 64px; height: 64px;" icon="icons:file-upload"></iron-icon>
+										</figcaption>
+									</figure>
 								</div>
 							</template>
 						</paper-card>
+
 						<paper-card class="event-description">
 							<div id="pratilipi-event-description"></div>
 						</paper-card>
+
 						<template is="dom-if" if="{{ showPratilipiList }}">
 							<pratilipi-card-grid
 								heading='${ _strings.event_entries }'
@@ -77,7 +85,7 @@
 			</div>
 		</main>
 		<footer>
-    		<pratilipi-footer></pratilipi-footer>
+			<pratilipi-footer></pratilipi-footer>
 		</footer>
 		<div class="scroll-top-button">
 			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>

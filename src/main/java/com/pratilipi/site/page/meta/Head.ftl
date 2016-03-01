@@ -23,7 +23,7 @@
 
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css?2016022004">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?201603">
 
 <#include "GoogleAnalytics.ftl">
 
