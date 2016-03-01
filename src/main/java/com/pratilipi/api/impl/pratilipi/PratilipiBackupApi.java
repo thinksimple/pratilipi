@@ -5,7 +5,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +17,6 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.author.shared.GetPratilipiBackupRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.GsonIstDateAdapter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.BlobAccessor;
@@ -26,7 +24,6 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.type.BlobEntry;
-import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 
 @SuppressWarnings("serial")
@@ -70,11 +67,8 @@ public class PratilipiBackupApi extends GenericApi {
 		while( true ) {
 			DataListCursorTuple<Long> pratilipiIdListCursorTupe = dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, 1000 );
 			List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdListCursorTupe.getDataList() );
-			Map<Long, Page> pratilipiPages = dataAccessor.getPages( PageType.PRATILIPI, pratilipiIdListCursorTupe.getDataList() );
 
 			for( Pratilipi pratilipi : pratilipiList ) {
-				Page pratilipiPage = pratilipiPages.get( pratilipi.getId() );
-				
                 backup.append( gson.toJson( pratilipi ) + LINE_SEPARATOR );
 
 				if( request.generateCsv() )
@@ -93,7 +87,6 @@ public class PratilipiBackupApi extends GenericApi {
 							.append( CSV_SEPARATOR ).append( pratilipi.getRatingCount() )
 							.append( CSV_SEPARATOR ).append( pratilipi.getTotalRating() )
 							.append( CSV_SEPARATOR ).append( pratilipi.getReadCount() )
-							.append( CSV_SEPARATOR ).append( pratilipiPage.getUriAlias() == null ? pratilipiPage.getUri() : pratilipiPage.getUriAlias() )
 							.append( LINE_SEPARATOR );
 				
 			}
