@@ -36,7 +36,7 @@ public class PratilipiBackupApi extends GenericApi {
 	private static final String CSV_HEADER = "PratilipiId,AuthorId,"
 			+ "Title,TitleEN,Language,HasSummary,"
 			+ "Type,ContentType,State,HasCover,ListingDate,"
-			+ "ReviewCount, RatingCount, TotalRating, ReadCount, PageUrl";
+			+ "ReviewCount, RatingCount, TotalRating, ReadCount";
 	private static final String CSV_SEPARATOR = ",";
 	private static final String LINE_SEPARATOR = "\n";
 
@@ -65,8 +65,8 @@ public class PratilipiBackupApi extends GenericApi {
 		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new GsonIstDateAdapter() ).create();
 		
 		while( true ) {
-			DataListCursorTuple<Long> pratilipiIdListCursorTupe = dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, 1000 );
-			List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdListCursorTupe.getDataList() );
+			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe = dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
+			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
 
 			for( Pratilipi pratilipi : pratilipiList ) {
                 backup.append( gson.toJson( pratilipi ) + LINE_SEPARATOR );
@@ -96,7 +96,7 @@ public class PratilipiBackupApi extends GenericApi {
 			if( pratilipiList.size() < 1000 )
 				break;
 			else
-				cursor = pratilipiIdListCursorTupe.getCursor();
+				cursor = pratilipiListCursorTupe.getCursor();
 		}
 		
 
