@@ -63,14 +63,9 @@
 	
 	<template>
 		<paper-card>
-			<!-- <template is="dom-if" if="{{ author.hasAccessToUpdate }}">
-				<paper-icon-button style="color: #333;" class="pull-right" icon="create" noink="true" on-click="openAuthorEdit"></paper-icon-button>
-				<pratilipi-edit-author author="{{ author }}"></pratilipi-edit-author>
-			</template> -->
-				
 			<!-- For wide-screens and mobile screens-->
 			<div id="row">
-	    		<div id="col-left" style=" max-width: 220px; padding: 20px 0px 0px 10px;">
+	    		<div id="col-left" style="padding: 20px 0px 0px 10px;">
     				<template is="dom-if" if="{{ !author.hasAccessToUpdate }}">
 						<img class="pratilipi-shadow" src="{{ authorImageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
 					</template>

@@ -66,11 +66,6 @@
 			font-size: 14px;
 		}
 		
-		input {
-			position:absolute; 
-			top:-100px;
-		}
-		
 	</style>
 
 	<template>
@@ -88,25 +83,29 @@
 			
 			<!-- For wide-screens and mobile screens-->
 			<div id="pratilipi-row">
-	    		<div id="pratilipi-col-left" style=" max-width: 170px; padding-bottom: 10px;">
-	    			<div style="padding: 20px 0px 0px 10px;">
-	    				<img style="width: 150px; height: 225px;" class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
-	    					
-	    					<template is="dom-if" if="{{ !mobile }}">
-	    						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
-		    						<form id="uploadImage" method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId={{ pratilipi.pratilipiId }}" target="upload_target">
-										<input id="uploadImageInput" type="file" on-change="uploadImage" name="{{ pratilipi.pratilipiId }}" accept="image/*">
-										<paper-icon-button style="color: #000; width: 54px; height: 54px; position: absolute; top: 190px; left: 100px;" type="button" on-click="_chooseFile" icon="cloud-upload" noink></paper-icon-button>
-									</form>
-									
-									<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
-		    					</template>
-	    					</template>
-								
-						<div style="padding: 10px 5px; margin-bottom: 15px;">
-		    				<pratilipi-social show-like-count share-url="[[ pratilipiData.pageUrl ]]"></pratilipi-social>
-		    			</div>
-		    		</div>
+	    		<div id="pratilipi-col-left" style="padding: 20px 0px 10px 10px;">
+	    			<template is="dom-if" if="{{ !pratilipi.hasAccessToUpdate }}">
+						<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+					</template>
+					<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
+						<div style="position: absolute; top: -1000px;">
+							<form id="uploadImage" method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId={{ pratilipi.pratilipiId }}" target="upload_target">
+								<input id="uploadImageInput" type="file" on-change="uploadImage" name="{{ pratilipi.pratilipiId }}" accept="image/*">
+							</form>
+							<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
+						</div>
+						<div class="pratilipi-file-upload">
+							<figure>
+								<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+								<figcaption on-click="_chooseFile">
+									<iron-icon style="top: 40%; width: 48px; height: 48px;" icon="icons:file-upload"></iron-icon>
+								</figcaption>
+							</figure>
+						</div>
+					</template>
+					<div style="padding: 10px 5px; margin-bottom: 15px;">
+	    				<pratilipi-social show-like-count share-url="[[ pratilipiData.pageUrl ]]"></pratilipi-social>
+	    			</div>
 	    		</div>
 	    		<div id="pratilipi-col-right" style="padding: 20px;">
 					<h3 style="margin-top: 0px; color: #D0021B;">{{ title }}</h3>
@@ -137,22 +136,6 @@
 					
 	    		</div>
 	    	</div>
-	    	
-			<!-- <hr style="border: 1px solid #E5E5E5; margin: 0; padding: 0;"/>
-			
-			<!-- Works, Reads and Likes -->
-			<!-- <div class="row" style="text-align: center; padding: 10px;">
-				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h6>${ _strings.pratilipi_count_reads }&nbsp;&minus;&nbsp;{{ pratilipi.readCount }}</h6>
-				</div>
-				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h6>${ _strings.pratilipi_count_reviews }&nbsp;&minus;&nbsp;{{ pratilipi.reviewCount }}</h6>
-				</div>
-				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<h6>${ _strings.pratilipi_count_likes }&nbsp;&minus;&nbsp;{{ pratilipi.fbLikeShareCount }}</h6>
-				</div>
-			</div> -->
-			
 		</paper-card>
 		
 		<br class="pratilipi-break" />
