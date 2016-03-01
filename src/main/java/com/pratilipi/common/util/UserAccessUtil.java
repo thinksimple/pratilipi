@@ -6,7 +6,7 @@ import com.pratilipi.common.type.Language;
 public class UserAccessUtil {
 	
 	private static final AccessType[] ADMIN_ACCESS = {
-			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META,
+			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META, AccessType.PRATILIPI_READ_CONTENT,
 			AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE,
 			AccessType.EVENT_ADD, AccessType.EVENT_UPDATE };
 
@@ -77,7 +77,7 @@ public class UserAccessUtil {
 			case "6196244602945536": // raghu@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TAMIL };
 			case "5705241014042624": // prashant@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_GUJARATI };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_HINDI };
 			
 			default:
 				return new Role[] { Role.MEMBER };
