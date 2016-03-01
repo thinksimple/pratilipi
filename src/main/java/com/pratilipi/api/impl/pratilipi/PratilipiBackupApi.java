@@ -23,8 +23,9 @@ import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.BlobEntry;
-import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.util.PratilipiDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/backup" )
@@ -36,7 +37,7 @@ public class PratilipiBackupApi extends GenericApi {
 	private static final String CSV_HEADER = "PratilipiId,AuthorId,"
 			+ "Title,TitleEN,Language,HasSummary,"
 			+ "Type,ContentType,State,HasCover,ListingDate,"
-			+ "ReviewCount, RatingCount, TotalRating, ReadCount";
+			+ "ReviewCount, RatingCount, AverageRating, ReadCount, PageUrl";
 	private static final String CSV_SEPARATOR = ",";
 	private static final String LINE_SEPARATOR = "\n";
 
@@ -65,10 +66,10 @@ public class PratilipiBackupApi extends GenericApi {
 		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new GsonIstDateAdapter() ).create();
 		
 		while( true ) {
-			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe = dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
-			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
+			DataListCursorTuple<Long> pratilipiIdListCursorTupe = dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, 1000 );
+			List<PratilipiData> pratilipiList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdListCursorTupe.getDataList(), false );
 
-			for( Pratilipi pratilipi : pratilipiList ) {
+			for( PratilipiData pratilipi : pratilipiList ) {
                 backup.append( gson.toJson( pratilipi ) + LINE_SEPARATOR );
 
 				if( request.generateCsv() )
@@ -81,12 +82,13 @@ public class PratilipiBackupApi extends GenericApi {
 							.append( CSV_SEPARATOR ).append( pratilipi.getType() )
 							.append( CSV_SEPARATOR ).append( pratilipi.getContentType() )
 							.append( CSV_SEPARATOR ).append( pratilipi.getState() )
-							.append( CSV_SEPARATOR ).append( pratilipi.hasCustomCover() )
+							.append( CSV_SEPARATOR ).append( pratilipi.getCoverImageUrl().indexOf( "pratilipiId" ) != -1 )
 							.append( CSV_SEPARATOR ).append( csvDateFormat.format( pratilipi.getListingDate() ) )
 							.append( CSV_SEPARATOR ).append( pratilipi.getReviewCount() )
 							.append( CSV_SEPARATOR ).append( pratilipi.getRatingCount() )
-							.append( CSV_SEPARATOR ).append( pratilipi.getTotalRating() )
+							.append( CSV_SEPARATOR ).append( pratilipi.getAverageRating() )
 							.append( CSV_SEPARATOR ).append( pratilipi.getReadCount() )
+							.append( CSV_SEPARATOR ).append( pratilipi.getPageUrl() )
 							.append( LINE_SEPARATOR );
 				
 			}
@@ -96,7 +98,7 @@ public class PratilipiBackupApi extends GenericApi {
 			if( pratilipiList.size() < 1000 )
 				break;
 			else
-				cursor = pratilipiListCursorTupe.getCursor();
+				cursor = pratilipiIdListCursorTupe.getCursor();
 		}
 		
 
