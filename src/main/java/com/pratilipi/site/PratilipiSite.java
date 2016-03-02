@@ -450,7 +450,7 @@ public class PratilipiSite extends HttpServlet {
 		Gson gson = new Gson();
 		
 		String[] listNames = filterLanguage == Language.GUJARATI
-				? new String[] { "romance", "horror", "hasya-killol", "swa-vikas", "rahasyamay-ane-romanchak", "navi-prakashit-rachnao" }
+				? new String[] { "vartavaibhav", "womansday-vishesh", "top-authors", "recipeno-rasthal", "rahasyamay-ane-romanchak", "navalkatha" }
 				: new String[] { "featured", "fiction", "magazines" };
 		ArrayList<Map<String, Object>> sections = new ArrayList<>( listNames.length );
 		

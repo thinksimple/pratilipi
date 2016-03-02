@@ -65,8 +65,8 @@ public class PratilipiBackupApi extends GenericApi {
 		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new GsonIstDateAdapter() ).create();
 		
 		while( true ) {
-			DataListCursorTuple<Pratilipi> pratilipiListCursorTupe = dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
-			List<Pratilipi> pratilipiList = pratilipiListCursorTupe.getDataList();
+			DataListCursorTuple<Pratilipi> pratilipiListCursorTuple = dataAccessor.getPratilipiList( pratilipiFilter, cursor, 1000 );
+			List<Pratilipi> pratilipiList = pratilipiListCursorTuple.getDataList();
 
 			for( Pratilipi pratilipi : pratilipiList ) {
                 backup.append( gson.toJson( pratilipi ) + LINE_SEPARATOR );
@@ -96,7 +96,7 @@ public class PratilipiBackupApi extends GenericApi {
 			if( pratilipiList.size() < 1000 )
 				break;
 			else
-				cursor = pratilipiListCursorTupe.getCursor();
+				cursor = pratilipiListCursorTuple.getCursor();
 		}
 		
 

@@ -65,6 +65,8 @@ public class PratilipiSiteFilter implements Filter {
 		redirections.put( "/give-away/Utkrasht_Sahitya_1.pdf", "/" );
 		redirections.put( "/give-away/Chandrakanta.pdf", "/book/5673309542809600" );
 
+		redirections.put( "/event/kk", "/event/kondaadapadaadha-kaadhalgal" );
+
 		redirections.put( "/about", "/about/pratilipi" );
 		redirections.put( "/career", "/JoinTheGang" );
 	}
