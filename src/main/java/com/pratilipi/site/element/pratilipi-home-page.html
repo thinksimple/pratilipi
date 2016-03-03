@@ -1,4 +1,4 @@
-<link rel='import' href='pratilipi-${ _strings.website_language }-carousel.html?20160204'>
+<link rel='import' href='pratilipi-${ language?lower_case }-carousel.html?20160204'>
 
 <dom-module id="pratilipi-home-page">
 
@@ -17,7 +17,7 @@
 							navigation-list='[[ navigationList ]]'
 							></pratilipi-navigation>
 					<div style="overflow:hidden">
-						<pratilipi-${ _strings.website_language }-carousel></pratilipi-${ _strings.website_language }-carousel>
+						<pratilipi-${ language?lower_case }-carousel></pratilipi-${ language?lower_case }-carousel>
 						<br class="pratilipi-break"/>
 						<template is="dom-repeat" items="[[ sectionsList ]]">
 							<pratilipi-card-grid

@@ -12,7 +12,7 @@
 			display: inline-block;
 		}
 		
-		paper-input.pratilipi-blue, paper-textarea.pratilipi-blue {
+		paper-textarea.pratilipi-blue {
 			display: block;
 			--paper-input-container-color: #107FE5;
 			--paper-input-container-focus-color: #107FE5;
@@ -24,9 +24,6 @@
 				font-size: 15px;
 				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
 				text-align: left;
-			};
-			--paper-input-container-disabled: {
-				opacity: 0.9;
 			};
 		}
 		
@@ -86,14 +83,10 @@
 					<div class="row">
 						<h6 class="modal-fullscreen-heading">{{ modalTitle }}</h6>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<paper-input class="pratilipi-blue" label="${ _strings.write_title }" value="{{ title::input }}">
-								<iron-icon icon="icons:description" prefix></iron-icon>
-							</paper-input>
+							<pratilipi-input label="${ _strings.write_title }" value="{{ title::input }}" icon="icons:description"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<paper-input class="pratilipi-blue" label="${ _strings.write_title_en }" value="{{ titleEn::input }}">
-								<iron-icon icon="icons:description" prefix></iron-icon>
-							</paper-input>
+							<pratilipi-input label="${ _strings.write_title_en }" value="{{ titleEn::input }}" icon="icons:description"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<paper-dropdown-menu id="selectPratilipiType" noink label="${ _strings.write_type }" value="{{ type }}" vertical-align="bottom" horizontal-align="left">
@@ -107,7 +100,7 @@
 							</paper-dropdown-menu>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-							<paper-input id="language" class="pratilipi-blue" always-float-label noink disabled label="${ _strings.write_language }" value="{{ languageVernacular }}"></paper-input>
+							<pratilipi-input disabled label="${ _strings.write_language }" value="{{ languageVernacular }}"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div style="margin-top: 25px; margin-bottom: 5px;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.write_summary }</span></div>
@@ -214,7 +207,7 @@
 					"MALAYALAM" : "${ _strings.language_ml }",
 					"BENGALI" : "${ _strings.language_bn }"
 				};
-				this.language = pratilipi.language == null ? ( "${ _strings.website_language }" ).toUpperCase() : pratilipi.language.toUpperCase();
+				this.language = pratilipi.language == null ? ( "${ language }" ).toUpperCase() : pratilipi.language.toUpperCase();
 				this.languageVernacular = languageVernacular[ this.language ];
 				
 				this.type = pratilipi.type == null ? null : pratilipi.type;
