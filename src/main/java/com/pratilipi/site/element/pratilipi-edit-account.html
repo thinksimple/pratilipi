@@ -1,11 +1,7 @@
 <dom-module id="pratilipi-edit-account">
 
 	<style>
-		paper-input {
-			--paper-input-container-disabled: {
-				opacity: 0.9;
-			};
-		}
+		.modal-fullscreen .modal-dialog .modal-content {max-width: 600px;padding-top: 125px;}
 		iron-icon {
 			color: #107FE5; 
 			width: 32px; 
@@ -14,36 +10,30 @@
 	</style>
 
 	<template>
-		<div class="modal fade" id="pratilipiEditAccount" role="dialog">
+		<div class="modal modal-fullscreen fade" id="pratilipiEditAccount" role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					
-					<div class="modal-header">
-						<h6 class="modal-heading">${ _strings.edit_account_heading }</h6>
-						<span class="modal-close-button"><paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button></span>
+					<div class="modal-fullscreen-close-button">
+						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
 					</div>
-					
-					<div class="modal-body">
-						<paper-input noink always-float-label disabled label="${ _strings.user_email }" value="{{ user.email }}" ></paper-input>
-						
-						<div class="row">
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
-								<template is="dom-if" if="{{ ! user.isEmailVerified }}">
-									<button class="pratilipi-new-blue-button pratilipi-center-div" on-click="verifyEmail">${ _strings.edit_account_verify_email }</button>
-								</template>
-								<template is="dom-if" if="{{ user.isEmailVerified }}">
-									<div class="pratilipi-center-div">
-										<span style="font-size: 14px;"><iron-icon icon="icons:verified-user"></iron-icon>${ _strings.edit_account_email_verified }</span>
-									</div>
-								</template>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								<button class="pratilipi-new-blue-button pratilipi-center-div" on-click="changePassword">${ _strings.edit_account_change_password }</button>
-							</div>
+					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+					<h6 class="modal-fullscreen-heading">${ _strings.edit_account_heading }</h6>
+					<pratilipi-input disabled label="${ _strings.user_email }" value="{{ user.email }}" ></pratilipi-input>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
+							<template is="dom-if" if="{{ ! user.isEmailVerified }}">
+								<button class="pratilipi-new-blue-button pratilipi-center-div" on-click="verifyEmail">${ _strings.edit_account_verify_email }</button>
+							</template>
+							<template is="dom-if" if="{{ user.isEmailVerified }}">
+								<div class="pratilipi-center-div">
+									<span style="font-size: 14px;"><iron-icon icon="icons:verified-user"></iron-icon>${ _strings.edit_account_email_verified }</span>
+								</div>
+							</template>
 						</div>
-						
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<button class="pratilipi-new-blue-button pratilipi-center-div" on-click="changePassword">${ _strings.edit_account_change_password }</button>
+						</div>
 					</div>
-					
 				</div>
 			</div>
 		</div>

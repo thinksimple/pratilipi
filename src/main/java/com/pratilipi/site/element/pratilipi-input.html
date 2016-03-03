@@ -31,6 +31,7 @@
 					 label="{{ label }}" 
 					 value="{{ value::input }}"
 					 type="{{ type }}"
+					 disabled="{{ disabled }}"
 					 on-click="_click"
 					 on-focus="_focus" 
 					 on-blur="_blur">
@@ -50,6 +51,7 @@
 			properties: {
 				label: { type: String },
 				value: { type: String, notify: true },
+				disabled: { type: Boolean, value: false },
 				icon: { type: String, value: null },
 				type: { type: String, value: "text" },
 				required: { type: Boolean, value: false }
