@@ -531,12 +531,6 @@ a.pratilipi-new-blue-button:hover {
 	padding-bottom: 10px;
 }
 
-paper-input.pratilipi-blue iron-icon {
-	color: #107FE5;
-	margin-right: 5px;
-}
-
-
 /* Specific to pratilipi-edit and author-edit summary heading */
 .edit-summary-text {
 	font-size: 14px; 

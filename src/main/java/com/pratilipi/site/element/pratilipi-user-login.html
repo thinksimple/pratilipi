@@ -1,18 +1,6 @@
 <dom-module id="pratilipi-user-login">
 
 	<style>
-		paper-input.pratilipi-blue {
-			padding-left: 20px;
-			padding-right: 20px;
-			--paper-input-container-color: #107FE5;
-			--paper-input-container-focus-color: #107FE5;
-			--paper-input-container-input-color: #333;
-			--paper-input-container-label: {
-				font-size: 15px;
-				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
-				text-align: left;
-			};
-		}
 		.modal-fullscreen .modal-dialog .modal-content {max-width: 400px;}
 	</style>
 
@@ -27,12 +15,8 @@
 					<pratilipi-facebook-login></pratilipi-facebook-login>
 					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
 					<h6 class="modal-fullscreen-heading">${ _strings.user_sign_in_to_pratilipi }</h6>
-					<paper-input class="pratilipi-blue" label="${ _strings.user_email }" value="{{ email::input }}">
-						 <iron-icon icon="mail" prefix></iron-icon>
-					</paper-input>
-					<paper-input class="pratilipi-blue" label="${ _strings.user_password }" type="password" value="{{ password::input }}">
-						<iron-icon icon="lock" prefix></iron-icon>
-					</paper-input>
+					<pratilipi-input label="${ _strings.user_email }" value="{{ email::input }}" icon="icons:mail"></pratilipi-input>
+					<pratilipi-input label="${ _strings.user_password }" value="{{ password::input }}" icon="icons:lock" type="password"></pratilipi-input>
 					<div class="display-message-div">
 						<p>{{ message }}</p>
 					</div>

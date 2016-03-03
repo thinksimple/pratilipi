@@ -1,0 +1,76 @@
+<dom-module id="pratilipi-input">
+
+	<style>
+		paper-input.pratilipi-blue {
+			--paper-input-container-color: #107FE5;
+			--paper-input-container-focus-color: #107FE5;
+			--paper-input-container-input-color: #333;
+			--paper-input-container-input: {
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
+			--paper-input-container-label: {
+				font-size: 15px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+				text-align: left;
+			};
+			--paper-input-container-disabled: {
+				opacity: 0.9;
+			};
+		}
+		paper-input.pratilipi-blue iron-icon {
+			color: #107FE5;
+			margin-right: 5px;
+		}
+	</style>
+
+
+	<template>
+		<paper-input name="pratilipiInput" 
+					 id="pratilipiInput" 
+					 class="pratilipi-blue" 
+					 label="{{ label }}" 
+					 value="{{ value::input }}"
+					 type="{{ type }}"
+					 on-click="_click"
+					 on-focus="_focus" 
+					 on-blur="_blur">
+			<template is="dom-if" if="{{ icon }}">
+				<iron-icon icon="{{ icon }}" prefix></iron-icon>
+			</template>
+		</paper-input>
+	</template>
+
+
+	<script>
+
+		Polymer({
+			
+			is: 'pratilipi-input',
+			
+			properties: {
+				label: { type: String },
+				value: { type: String, notify: true },
+				icon: { type: String, value: null },
+				type: { type: String, value: "text" },
+				required: { type: Boolean, value: false }
+			},
+			
+			_focus: function() {
+				this.$.pratilipiInput.alwaysFloatLabel = true;
+			},
+			
+			_click: function () {
+				if( this.$.pratilipiInput.focused )
+					this._focus();
+			},
+
+			_blur: function() {
+				if( this.$.pratilipiInput.focused )
+					this.$.pratilipiInput.alwaysFloatLabel = false;
+			}
+
+		});
+
+	</script>
+
+</dom-module>

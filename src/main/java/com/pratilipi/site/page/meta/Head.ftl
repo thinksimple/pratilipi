@@ -20,10 +20,11 @@
 <link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160227'>
 <link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160227'>
 <link rel='import' href='/elements.${lang}/pratilipi-footer.html?2016022026'>
+<link rel='import' href='/elements.${lang}/pratilipi-input.html'>
 
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css?201603">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?20160303">
 
 <#include "GoogleAnalytics.ftl">
 
