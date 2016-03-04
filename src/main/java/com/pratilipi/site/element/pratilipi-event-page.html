@@ -62,12 +62,12 @@
 									<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
 								</div>
 								<div class="pratilipi-file-upload">
-									<figure>
-										<img src="{{ eventBannerImageUrl }}" alt="{{ event.name }}" />
-										<figcaption on-click="_chooseFile">
-											<iron-icon style="top: 45%; width: 64px; height: 64px;" icon="icons:file-upload"></iron-icon>
-										</figcaption>
-									</figure>
+									<img style="width: 100%;" src="{{ eventBannerImageUrl }}" alt="{{ event.name }}"/>
+									<iron-icon icon="icons:cloud-upload"></iron-icon>
+									<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
+										<iron-icon icon="icons:cloud-upload"></iron-icon>
+										<strong>Upload Photo</strong>
+									</div>
 								</div>
 							</template>
 						</paper-card>
