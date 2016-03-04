@@ -57,6 +57,10 @@
 			font-weight: 400;
 			font-size: 14px;
 		}
+		
+		.pratilipi-file-upload {
+			width: 200px;
+		}
 
 	</style>
 	
@@ -65,32 +69,32 @@
 		<paper-card>
 			<!-- For wide-screens and mobile screens-->
 			<div id="row">
-	    		<div id="col-left" style="padding: 20px 0px 0px 10px;">
-    				<template is="dom-if" if="{{ !author.hasAccessToUpdate }}">
+				<div id="col-left" style="padding: 20px 0px 0px 10px;">
+					<template is="dom-if" if="{{ !author.hasAccessToUpdate }}">
 						<img class="pratilipi-shadow" src="{{ authorImageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
 					</template>
-    				<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
-    					<div style="position: absolute; top: -1000px;">
+					<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
+						<div style="position: absolute; top: -1000px;">
 							<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId={{ author.authorId }}" target="upload_target">
 								<input id="uploadAuthorImageInput" type="file" on-change="uploadImage" name="{{ author.authorId }}" accept="image/*">
 							</form>
 							<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
 						</div>
 						<div class="pratilipi-file-upload">
-							<figure>
-								<img class="pratilipi-shadow" src="{{ authorImageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
-								<figcaption on-click="_chooseFile">
-									<iron-icon style="top: 25%; width: 64px; height: 64px;" icon="icons:file-upload"></iron-icon>
-								</figcaption>
-							</figure>
+							<img class="pratilipi-shadow" src="{{ authorImageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
+							<iron-icon icon="icons:cloud-upload"></iron-icon>
+							<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
+								<iron-icon icon="icons:cloud-upload"></iron-icon>
+									<strong>Upload Photo</strong>
+							</div>
 						</div>
 					</template>
-	    			<div style="width: 150px; margin: 0px auto 15px auto; display: block; padding: 15px 0px;">
-	    				<pratilipi-social share-url="[[ authorData.pageUrl ]]"></pratilipi-social>
-	    			</div>
+					<div style="width: 150px; margin: 0px auto 15px auto; display: block; padding: 15px 0px;">
+						<pratilipi-social share-url="[[ authorData.pageUrl ]]"></pratilipi-social>
+					</div>
 				</div>
-	    		<div id="col-right" style="padding: 20px;">
-	    			<h3 style="margin-top: 0px; color: #D0021B;">{{ name }}</h3>
+				<div id="col-right" style="padding: 20px;">
+					<h3 style="margin-top: 0px; color: #D0021B;">{{ name }}</h3>
 
 					<template is="dom-if" if="{{ penName }}">
 						<h6 style="margin: 0px;">"<span>{{ penName }}</span>"</h6>
@@ -115,8 +119,8 @@
 						</template>
 						<pratilipi-edit-author author="[[ author ]]"></pratilipi-edit-author>
 					</template>
-	    		</div>
-	    		<br/>
+				</div>
+				<br/>
 			</div>
 			
 			<hr style="border: 1px solid #E5E5E5; margin: 0; padding: 0;"/>
