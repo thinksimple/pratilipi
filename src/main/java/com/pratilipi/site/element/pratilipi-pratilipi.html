@@ -66,6 +66,10 @@
 			font-size: 14px;
 		}
 		
+		.pratilipi-file-upload {
+			width: 150px;
+		}
+		
 	</style>
 
 	<template>
@@ -76,15 +80,15 @@
 					<paper-icon-button style="color: #333;" class="dropdown-trigger" icon="more-vert" noink></paper-icon-button>
 						<paper-menu class="dropdown-content">
 							<paper-item on-click="openPratilipiEdit">${ _strings.pratilipi_edit_info }</paper-item>
-	                    	<paper-item on-click="openWriterPanel">${ _strings.pratilipi_edit_content }</paper-item>
+							<paper-item on-click="openWriterPanel">${ _strings.pratilipi_edit_content }</paper-item>
 						</paper-menu>
 				</paper-menu-button>
 			</template>
 			
 			<!-- For wide-screens and mobile screens-->
 			<div id="pratilipi-row">
-	    		<div id="pratilipi-col-left" style="padding: 20px 0px 10px 10px;">
-	    			<template is="dom-if" if="{{ !pratilipi.hasAccessToUpdate }}">
+				<div id="pratilipi-col-left" style="padding: 20px 0px 10px 10px;">
+					<template is="dom-if" if="{{ !pratilipi.hasAccessToUpdate }}">
 						<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
 					</template>
 					<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
@@ -95,19 +99,19 @@
 							<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
 						</div>
 						<div class="pratilipi-file-upload">
-							<figure>
-								<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
-								<figcaption on-click="_chooseFile">
-									<iron-icon style="top: 40%; width: 48px; height: 48px;" icon="icons:file-upload"></iron-icon>
-								</figcaption>
-							</figure>
+							<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+							<iron-icon icon="icons:cloud-upload"></iron-icon>
+							<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
+								<iron-icon icon="icons:cloud-upload"></iron-icon>
+								<strong>Upload Photo</strong>
+							</div>
 						</div>
 					</template>
 					<div style="width: 150px; margin: 0px auto 15px auto; display: block; padding: 15px 0px;">
 						<pratilipi-social show-like-count share-url="[[ pratilipiData.pageUrl ]]"></pratilipi-social>
 					</div>
-	    		</div>
-	    		<div id="pratilipi-col-right" style="padding: 20px;">
+				</div>
+				<div id="pratilipi-col-right" style="padding: 20px;">
 					<h3 style="margin-top: 0px; color: #D0021B;">{{ title }}</h3>
 					<template is="dom-if" if="{{ pratilipi.author }}">
 						<a href="{{ pratilipi.author.pageUrl }}">
@@ -134,8 +138,8 @@
 						</template>
 					</div>
 					
-	    		</div>
-	    	</div>
+				</div>
+			</div>
 		</paper-card>
 		
 		<br class="pratilipi-break" />
