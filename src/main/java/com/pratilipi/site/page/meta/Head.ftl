@@ -12,10 +12,10 @@
 </#list>
 
 <#-- Polymer 1.0 Custom Elements -->
-<link rel='import' href='/elements.${lang}/pratilipi-user.html?20160218'>
+<link rel='import' href='/elements.${lang}/pratilipi-user.html?201603'>
 <link rel='import' href='/elements.${lang}/pratilipi-header.html?20160226'>
 <link rel='import' href='/elements.${lang}/pratilipi-edit-account.html?201603'>
-<link rel='import' href='/elements.${lang}/pratilipi-write.html?2016022702'>
+<link rel='import' href='/elements.${lang}/pratilipi-write.html?201603'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation-drawer.html'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160227'>
 <link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160227'>
