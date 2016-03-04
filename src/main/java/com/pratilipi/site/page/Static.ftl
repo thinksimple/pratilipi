@@ -22,6 +22,8 @@
 								class='pull-left hidden-xs hidden-sm'
 								navigation-list='${ navigationList }'
 								></pratilipi-navigation>
+							<#-- Navigation & Search bar for extra-small & small screens. -->
+							<pratilipi-navigation-drawer with-backdrop navigation-list='${ navigationList }'></pratilipi-navigation-drawer>
 							<div class='secondary-500' style='padding:20px; overflow:hidden'>
 								<h3>${ title }</h3>
 								<div style="text-align: justify;">${ content }</div>

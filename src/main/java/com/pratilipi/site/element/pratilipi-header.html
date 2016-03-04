@@ -166,12 +166,6 @@
 				</template>
 			</div>
 		</paper-card>
-		
-		<!-- Navigation & Search bar for extra-small & small screens. -->
-		<div class="hidden-md hidden-lg">
-			<pratilipi-navigation-drawer with-backdrop></pratilipi-navigation-drawer>
-		</div>
-		
 	</template>
 
 
@@ -233,7 +227,7 @@
 			},
 			
 			showMenu: function() {
-				this.querySelector( 'pratilipi-navigation-drawer' ).show();
+				document.querySelector( 'pratilipi-navigation-drawer' ).show();
 			},
 			
 			logInButtonClicked: function() {

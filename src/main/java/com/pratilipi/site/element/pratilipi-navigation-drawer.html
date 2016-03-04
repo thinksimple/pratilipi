@@ -15,7 +15,7 @@
 	
 
 	<template>
-		<pratilipi-navigation></pratilipi-navigation>
+		<pratilipi-navigation navigation-list='[[ navigationList ]]'></pratilipi-navigation>
 	</template>
 
 
@@ -28,6 +28,10 @@
 			behaviors: [
 				Polymer.IronOverlayBehavior
 			],
+			
+			properties: {
+				navigationList: { type: Array },
+			},
 			
 			show: function() {
 				this.open();
