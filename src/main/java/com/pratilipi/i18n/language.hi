@@ -262,5 +262,5 @@ event_entries			= इवेंट एंट्री
 event_name				= इवेंट शीर्षक 
 event_name_en			= इवेंट शीर्षक अंग्रेजी में 
 event_description		= इवेंट के बारे में 
-event_entries_url_list	= एंट्री का युआरएल लिस्ट 
+event_entries_url_list	=एंट्री का युआरएल लिस्ट 
 event_save_changes		= बदलाव को सुरक्षित करें 
