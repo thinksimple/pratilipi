@@ -119,7 +119,7 @@
 						</a>
 					</template>
 					
-					<pratilipi-rating value="{{ pratilipi.averageRating }}">
+					<pratilipi-rating style="cursor: pointer;" on-click="showReviewInput" value="{{ pratilipi.averageRating }}">
 							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
 					</pratilipi-rating>
 					
@@ -220,6 +220,10 @@
 				
 				mobile: { type: Boolean },
 				imageUploaded: { type: Boolean, value: false }
+			},
+			
+			showReviewInput: function() {
+				document.querySelector( 'pratilipi-review-list' ).showReviewInput();
 			},
 			
 			openPratilipiEdit: function() {

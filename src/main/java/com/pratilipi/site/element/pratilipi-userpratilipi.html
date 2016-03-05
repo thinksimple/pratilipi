@@ -37,7 +37,7 @@
 			_userChangeObserver: function() {
 				if( this.user.isGuest ) {
 					this.setUserPratilipi( {} );
-				} else {
+				} else if( this.userpratilipi == null || jQuery.isEmptyObject( this.userpratilipi ) ) {
 					var ajaxGet = this.$.AjaxGet;
 					ajaxGet.params.pratilipiId = this.pratilipiId;
 					ajaxGet.generateRequest();

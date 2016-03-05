@@ -1,5 +1,5 @@
 <link rel="import" href="pratilipi-review.html?20160213" />
-<link rel="import" href="pratilipi-review-input.html?20160213" />
+<link rel="import" href="pratilipi-review-input.html?2016021302" />
 
 <dom-module id="pratilipi-review-list">
 
@@ -56,25 +56,20 @@
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
 			<h3 class="pratilipi-red">${ _strings.review_heading }</h3>
-			
+
 			<template is="dom-if" if="{{ user.isGuest }}">
 				<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
 			</template>
-			
+
 			<template is="dom-if" if="{{ userpratilipi.hasAccessToReview }}">
-				<template is="dom-if" if="{{ !isactive }}">
-				
-					<template is="dom-if" if="{{ !reviewAvailable }}">
-						<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
-					</template>
-					
-					<template is="dom-if" if="{{ reviewAvailable }}">
-						<div style="white-space: nowrap; display: inline-block;">
-							<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_edit_review }</a>
-							<a class="pratilipi-grey-button" role="button" on-click="openDeleteReview">${ _strings.review_delete_review }</a>
-						</div>
-					</template>
-					
+				<template is="dom-if" if="{{ !reviewAvailable }}">
+					<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
+				</template>
+				<template is="dom-if" if="{{ reviewAvailable }}">
+					<div style="white-space: nowrap; display: inline-block;">
+						<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_edit_review }</a>
+						<a class="pratilipi-grey-button" role="button" on-click="openDeleteReview">${ _strings.review_delete_review }</a>
+					</div>
 				</template>
 			</template>
 		</div>
@@ -82,33 +77,29 @@
 		<pratilipi-review-input
 				id="ReviewInput"
 				pratilipi="[[ pratilipi ]]"
-				userpratilipi="[[ userpratilipi ]]"
-				isactive="{{ isactive }}"
 				></pratilipi-review-input>
-				
+
 		<!-- No Reviews found in case of no results -->
 		<template is="dom-if" if="[[ zeroReviewResults ]]">
 			<paper-card class="zero-results">
-				<iron-icon icon="icons:search" class="zero-results-icon"></iron-icon>
+				<iron-icon icon="icons:info-outline" class="zero-results-icon"></iron-icon>
 				<h3 class="zero-results-h3">${ _strings.pratilipi_no_reviews }</h3>
 			</paper-card>
 		</template>
-		
+
 		<div>
 			<template is="dom-if" if="{{ reviewAvailable }}">
-				<template is="dom-if" if="{{ !isactive }}">
-					<pratilipi-review review="{{ userpratilipi }}"></pratilipi-review>
-				</template>
+				<pratilipi-review review="{{ userpratilipi }}"></pratilipi-review>
 			</template>
 			<template is="dom-repeat" id="repeatReviewList" items="[[reviewList]]">
 					<pratilipi-review review="[[ item ]]"></pratilipi-review>
 			</template>
 		</div>
-		
+
 		<template is="dom-if" if="{{ isLoading }}">
 			<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
 		</template>
-		
+
 		<iron-ajax
 				id="AjaxGet"
 				url="/api/userpratilipi/review/list"
@@ -140,8 +131,6 @@
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
 				
-				isactive: { type: Boolean, value: false, observer: "checkForZeroResults" },
-				
 				reviewAvailable: { type: Boolean, value: false, observer: "checkForZeroResults" },
 				userReviewDeleted: { type: Boolean, value: false },
 				reviewButtonClicked: { type: Boolean, value: false }
@@ -165,9 +154,9 @@
 				}
 
 				// Checking if user has review
-				if( this.userpratilipi == null || this.userpratilipi.review == null || this.userpratilipi.review.trim() == "" 
-						|| this.reviewList == null || this.userpratilipi.reviewState == "BLOCKED" 
-						|| this.userpratilipi.reviewState == "DELETED" ) {
+				if( this.userpratilipi == null || this.userpratilipi.reviewState == "BLOCKED" || this.userpratilipi.reviewState == "DELETED" 
+						|| ( ( this.userpratilipi.reviewTitle == null || this.userpratilipi.reviewTitle == "" ) 
+								&& ( this.userpratilipi.review == null || this.userpratilipi.review == "" ) ) ) {
 					this.reviewAvailable = false;
 					return;
 				}
@@ -197,19 +186,18 @@
 					document.querySelector( 'pratilipi-user' ).logIn();
 					this.reviewButtonClicked = true;
 				} else if( this.userpratilipi != null && this.userpratilipi.hasAccessToReview ) {
-					this.isactive = true;
-					this.querySelector( 'pratilipi-review-input' ).open();
+					this.querySelector( 'pratilipi-review-input' ).openReviewInput( this.userpratilipi );
 				} else {
 					alert( "Sorry! You are not authorized to review for this content!" );
 				}
 			},
 			
 			openDeleteReview: function() {
-				this.querySelector( 'pratilipi-review-input' ).openDeleteReview();
+				this.querySelector( 'pratilipi-review-input' ).openDeleteReview( this.userpratilipi.pratilipiId );
 			},
 			
 			checkForZeroResults: function() {
-				if( this.reviewList.length > 0 || this.reviewAvailable || this.isactive )
+				if( this.reviewList.length > 0 || this.reviewAvailable )
 					this.zeroReviewResults = false;
 				else
 					this.zeroReviewResults = true;
