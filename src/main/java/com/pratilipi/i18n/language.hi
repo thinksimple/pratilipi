@@ -15,14 +15,15 @@ linkedin_page				= https://www.linkedin.com/company/pratilipi
 # Language
 
 language_choose_language	= भाषा पसंद करें 
-language_all				= அனைத்தும்
+language_all				= भाषाएँ 
 language_hi					= हिन्दी
-language_gu					= Gujarati
-language_ta					= தமிழ்
-language_mr					= Marathi
-lanugage_ml					= Malayalam
-language_bn					= Bengali
-language_en					= English
+language_gu					= गुजराती 
+language_ta					= तमिल 
+language_mr					= मराठी 
+lanugage_ml					= मलयालम 
+language_bn					= बांग्ला
+language_en					= अंग्रेजी 
+
 
 
 
