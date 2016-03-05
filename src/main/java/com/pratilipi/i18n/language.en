@@ -223,6 +223,7 @@ user_verified_success				= Verified Successfully !
 content_created_success				= Success !
 updated_author_info_success			= Success !
 updated_pratilipi_info_success		= Success !
+updated_review						= Success !
 
 # Author Edit Popup
 

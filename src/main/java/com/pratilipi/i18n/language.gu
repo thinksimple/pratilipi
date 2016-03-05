@@ -221,7 +221,8 @@ verification_email_sent_success		= ચકાસણી હેતુ મેઈલ 
 user_verified_success				= ઉપયોગકર્તા ચકાસણી સફળ થઈ
 content_created_success			= રચના પ્રકાશન સફળ થયું 
 updated_author_info_success			= લેખક પરિચયમાં ફેરફાર સફળ થયો
-updated_pratilipi_info_success	= રચના સંબંધિત માહિતીમાં ફેરફાર સફળ થયો  
+updated_pratilipi_info_success	= રચના સંબંધિત માહિતીમાં ફેરફાર સફળ થયો
+updated_review						= Success !  
 
 # Author Edit Popup
 
