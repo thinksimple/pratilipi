@@ -100,7 +100,9 @@
 			<div id="pratilipi-row">
 				<div id="pratilipi-col-left" style="padding: 20px 0px 10px 10px;">
 					<template is="dom-if" if="{{ !pratilipi.hasAccessToUpdate }}">
-						<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+						<div style="width: 150px; height: 225px; margin: 0 auto;" class="pratilipi-shadow">
+							<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+						</div>
 					</template>
 					<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
 						<div style="position: absolute; top: -1000px;">
@@ -110,14 +112,14 @@
 							<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
 						</div>
 						<div class="pratilipi-file-upload">
-							<template is="dom-if" if="{{ !imageUploaded }}">
-								<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
-							</template>
-							<template is="dom-if" if="{{ imageUploaded }}">
-								<div style="width: 150px; height: 225px;" class="pratilipi-shadow">
+							<div style="width: 150px; height: 225px;" class="pratilipi-shadow">
+								<template is="dom-if" if="{{ !imageUploaded }}">
+									<img src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+								</template>
+								<template is="dom-if" if="{{ imageUploaded }}">
 									<paper-spinner class="pratilipi-spinner" active></paper-spinner>
-								</div>
-							</template>
+								</template>
+							</div>
 							<iron-icon icon="icons:cloud-upload"></iron-icon>
 							<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
 								<iron-icon icon="icons:cloud-upload"></iron-icon>
