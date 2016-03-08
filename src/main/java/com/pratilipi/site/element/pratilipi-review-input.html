@@ -40,16 +40,16 @@
 					<h6 class="modal-fullscreen-heading">{{ pratilipi.title }} - ${ _strings.review_write_a_review }</h6>
 					<p class="text-muted text-center">${ _strings.review_content_help }</p>
 					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
-					<div class="row-widescreen">
-						<div class="col-left-widescreen" style="max-width: 175px;">
+					<div id="pratilipi-review-row">
+						<div id="pratilipi-review-col-left" style="max-width: 175px;">
 							<img style="max-width: 175px;" class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
 							<h6 style="font-weight: 700; text-align: center;" class="text-muted">{{ pratilipi.title }}</h6>
 							<h6 style="font-weight: 400; text-align: center;" class="text-muted">{{ pratilipi.author.name }}</h6>
 						</div>
-						<div style="margin-left: 25px;" class="col-right-widescreen">
+						<div style="padding-left: 15px; padding-right: 15px;" id="pratilipi-review-col-right">
 							<pratilipi-rating-input value="{{ rating }}"></pratilipi-rating-input>
 							<pratilipi-input label="${ _strings.review_title }" value="{{ reviewTitle::input }}" icon="icons:description"></pratilipi-input>
-							<div style="margin-top: 25px; margin-bottom: 5px;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.review_content }</span></div>
+							<div style="margin-top: 25px; margin-bottom: 5px; text-align: left;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.review_content }</span></div>
 							<script language="javascript" type="text/javascript">tinymce.init({ selector:'#reviewInput', editor_selector : "reviewInput", height: "200", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 							<paper-textarea class="review" id="reviewInput" value="{{ review::input }}"></paper-textarea>
 							<div class="display-message-div">
@@ -113,6 +113,36 @@
 				message: { type: String }
 			},
 			
+			behaviors: [		
+				Polymer.IronResizableBehavior		
+			],
+			
+			listeners: {
+				'iron-resize': '_onIronResize'
+			},
+			
+			_onIronResize: function() {
+				var windowsize = this.clientWidth;
+				if( windowsize > 600 ) {
+					jQuery( '#pratilipi-review-row' ).removeClass( 'row-mobile' );
+					jQuery( '#pratilipi-review-col-left' ).removeClass( 'col-left-mobile' );
+					jQuery( '#pratilipi-review-col-right' ).removeClass( 'col-right-mobile' );
+					
+					jQuery( '#pratilipi-review-row' ).addClass( 'row-widescreen' );
+					jQuery( '#pratilipi-review-col-left' ).addClass( 'col-left-widescreen' );
+					jQuery( '#pratilipi-review-col-right' ).addClass( 'col-right-widescreen' );
+				}
+				else {
+					jQuery( '#pratilipi-review-row' ).removeClass( 'row-widescreen' );
+					jQuery( '#pratilipi-review-col-left' ).removeClass( 'col-left-widescreen' );
+					jQuery( '#pratilipi-review-col-right' ).removeClass( 'col-right-widescreen' );
+					
+					jQuery( '#pratilipi-review-row' ).addClass( 'row-mobile' );
+					jQuery( '#pratilipi-review-col-left' ).addClass( 'col-left-mobile' );
+					jQuery( '#pratilipi-review-col-right' ).addClass( 'col-right-mobile' );
+				}
+			},
+			
 			attached: function() {
 				this.pratilipiCoverImageUrl = this.pratilipi.coverImageUrl + "&" + "width=175";
 			},
@@ -166,7 +196,7 @@
 					this.review = tinyMCE.get( 'reviewInput' ).getContent();
 				
 				this.review = JSON.stringify( this.review );
-				this.review = this.summary.substring( 1, this.review.length - 1 );
+				this.review = this.review.substring( 1, this.review.length - 1 );
 				
 				var body = {
 					pratilipiId : this.pratilipiId,
