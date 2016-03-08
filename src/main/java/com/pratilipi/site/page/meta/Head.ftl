@@ -20,7 +20,7 @@
 <link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160227'>
 <link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160227'>
 <link rel='import' href='/elements.${lang}/pratilipi-footer.html?2016022026'>
-<link rel='import' href='/elements.${lang}/pratilipi-input.html'>
+<link rel='import' href='/elements.${lang}/pratilipi-input.html?201603'>
 
 
 <#-- Custom Stylesheet -->
