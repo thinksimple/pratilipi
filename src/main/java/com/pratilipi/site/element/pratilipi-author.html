@@ -61,6 +61,17 @@
 		.pratilipi-file-upload {
 			width: 200px;
 		}
+		
+		paper-spinner.pratilipi-spinner {
+			display: block;
+			position: absolute;
+			top: 40%;
+			left: 42%;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
 
 	</style>
 	
@@ -81,7 +92,14 @@
 							<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
 						</div>
 						<div class="pratilipi-file-upload">
-							<img class="pratilipi-shadow" src="{{ authorImageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
+							<template is="dom-if" if="{{ !imageUploaded }}">
+								<img class="pratilipi-shadow" src="{{ authorImageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
+							</template>
+							<template is="dom-if" if="{{ imageUploaded }}">
+								<div style="width: 200px; height: 200px;" class="pratilipi-shadow">
+									<paper-spinner class="pratilipi-spinner" active></paper-spinner>
+								</div>
+							</template>
 							<iron-icon icon="icons:cloud-upload"></iron-icon>
 							<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
 								<iron-icon icon="icons:cloud-upload"></iron-icon>
@@ -328,10 +346,10 @@
 			
 			_onchangeiframe: function() {
 				if( this.imageUploaded ) {
-					this.imageUploaded = false;
 					this.async( function() {
 						this.authorImageUrl = this.authorImageUrl + "&" + "version=" + new Date().getTime();
-					}, 500 );
+						this.imageUploaded = false;
+					}, 50 );
 				}
 			},
 			

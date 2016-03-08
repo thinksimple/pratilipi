@@ -409,9 +409,9 @@
 			
 			_onchangeiframe: function() {
 				if( this.imageUploaded ) {
-					this.imageUploaded = false;
 					this.async( function() {
 						this.pratilipiCoverImageUrl = this.pratilipiCoverImageUrl + "&" + "version=" + new Date().getTime();
+						this.imageUploaded = false;
 					}, 50 );
 				}
 			},
