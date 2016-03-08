@@ -70,6 +70,17 @@
 			width: 150px;
 		}
 		
+		paper-spinner.pratilipi-spinner {
+			display: block;
+			position: absolute;
+			top: 40%;
+			left: 40%;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
+		
 	</style>
 
 	<template>
@@ -99,7 +110,14 @@
 							<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
 						</div>
 						<div class="pratilipi-file-upload">
-							<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+							<template is="dom-if" if="{{ !imageUploaded }}">
+								<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+							</template>
+							<template is="dom-if" if="{{ imageUploaded }}">
+								<div style="width: 150px; height: 225px;" class="pratilipi-shadow">
+									<paper-spinner class="pratilipi-spinner" active></paper-spinner>
+								</div>
+							</template>
 							<iron-icon icon="icons:cloud-upload"></iron-icon>
 							<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
 								<iron-icon icon="icons:cloud-upload"></iron-icon>
@@ -394,7 +412,7 @@
 					this.imageUploaded = false;
 					this.async( function() {
 						this.pratilipiCoverImageUrl = this.pratilipiCoverImageUrl + "&" + "version=" + new Date().getTime();
-					}, 500 );
+					}, 50 );
 				}
 			},
 			
