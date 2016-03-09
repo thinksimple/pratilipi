@@ -134,20 +134,20 @@
 				<div id="pratilipi-col-right" style="padding: 20px;">
 					<h3 style="margin-top: 0px; color: #D0021B;">{{ title }}</h3>
 					<template is="dom-if" if="{{ pratilipi.author }}">
-						<a href="{{ pratilipi.author.pageUrl }}">
-							<h6>{{ pratilipi.author.name }}</h6>
-						</a>
+						<div style="display: block;">
+							<a style="display: inline-block;" href="{{ pratilipi.author.pageUrl }}"><h6>{{ pratilipi.author.name }}</h6></a>
+						</div>
 					</template>
 					
-					<pratilipi-rating style="cursor: pointer;" on-click="showReviewInput" value="{{ pratilipi.averageRating }}">
+					<pratilipi-rating style="cursor: pointer; display: inline-block;" on-click="showReviewInput" value="{{ pratilipi.averageRating }}">
 							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
 					</pratilipi-rating>
 					
 					<h6 style="margin-top: 10px; font-weight: bold;">{{ type }}</h6>
 					
-					<table style="margin-top: 10px; margin-bottom: 5px;">
-						<tr> <th>${ _strings.pratilipi_listing_date } :</th> 	<td>{{ listingDate }}</td> </tr>
-						<tr> <th>${ _strings.pratilipi_count_reads } :</th> 	<td>{{ pratilipi.readCount }}</td> </tr>
+					<table style="margin-top: 15px; margin-bottom: 25px;">
+						<tr> <th>${ _strings.pratilipi_listing_date }</th><td>:</td><td>{{ listingDate }}</td> </tr>
+						<tr> <th>${ _strings.pratilipi_count_reads }</th><td>:</td><td>{{ pratilipi.readCount }}</td> </tr>
 					</table>
 					
 					<div style="position: relative; display: inline-block;">
