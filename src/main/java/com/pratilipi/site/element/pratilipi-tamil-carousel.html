@@ -26,12 +26,16 @@
 					<li data-target="#carousel" data-slide-to="1"></li>
 					<li data-target="#carousel" data-slide-to="2"></li>
 					<li data-target="#carousel" data-slide-to="3"></li>
+					<li data-target="#carousel" data-slide-to="4"></li>
 				</ol>
 				
 				<!-- Items -->
 				<div class="carousel-inner">
 					<div class="item active">
 						<a on-click="write"><img src="{{ image1 }}" /></a>
+					</div>
+					<div class="item">
+						<a href="/event/yaadhumaagi-nindraal" target="_blank"><img src="{{ image5 }}" /></a>
 					</div>
 					<div class="item">
 						<a href="/event/kondaadapadaadha-kaadhalgal" target="_blank"><img src="{{ image2 }}" /></a>
@@ -71,7 +75,8 @@
 			image1: { type: Image },
 			image2: { type: Image },
 			image3: { type: Image },
-			image4: { type: Image }
+			image4: { type: Image },
+			image5: { type: Image }
 		},
 		
 		_onIronResize: function() {
@@ -83,11 +88,13 @@
 				this.image2 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-02.jpg";
 				this.image3 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-03.jpg";
 				this.image4 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-04.jpg";
+				this.image5 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-05.jpg";
 			} else {
 				this.image1 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-01-small.jpg";
 				this.image2 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-02-small.jpg";
 				this.image3 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-03-small.jpg";
 				this.image4 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-04-small.jpg";
+				this.image5 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-05-small.jpg";
 			}
 		},
 		
