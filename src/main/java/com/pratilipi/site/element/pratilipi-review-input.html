@@ -215,10 +215,13 @@
 				} else {
 					this.message = "${ _strings.updated_review }";
 					document.querySelector( 'pratilipi-userpratilipi' ).setUserPratilipi( event.detail.response );
-					jQuery( '#editReviewButton' ).prop( 'disabled', false );
-					jQuery( '#deleteReviewButton' ).prop( 'disabled', false );
-					this.closeReviewInput();
-					this.closeDeleteReview();
+					this.async( function() {
+						this.message = null;
+						jQuery( '#editReviewButton' ).prop( 'disabled', false );
+						jQuery( '#deleteReviewButton' ).prop( 'disabled', false );
+						this.closeReviewInput();
+						this.closeDeleteReview();
+					}, 1000 );
 				}
 			},
 
@@ -228,6 +231,7 @@
 				if( event.detail.request.xhr.status == 400 ) {
 					this.message = event.detail.request.xhr.response;
 				} else if( event.detail.request.xhr.status == 401 ) {
+					this.message = null;
 					this.closeReviewInput();
 					this.closeDeleteReview();
 					document.querySelector( 'pratilipi-user' ).logIn();
