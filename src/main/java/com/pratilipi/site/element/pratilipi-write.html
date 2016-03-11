@@ -308,7 +308,7 @@
 					// Redirect to writer with return option to pratilipi page
 					this.async( function() {
 						this.clearAndClose();
-						window.location.href = pratilipi.writePageUrl + "&ret=" + window.location.pathname;
+						window.location.href = pratilipi.writePageUrl + "&ret=" + pratilipi.pageUrl;
 					}, 1000 );
 				} else if( this.editPratilipi ) {
 					document.querySelector( 'pratilipi-pratilipi' ).updatePratilipi( pratilipi );
