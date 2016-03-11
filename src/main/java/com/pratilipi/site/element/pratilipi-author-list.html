@@ -31,6 +31,7 @@
 		<template is="dom-if" if="{{ includeShowMoreButton }}">
 			<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">${ _strings.load_more_contents }</button>
 		</template>
+		<pratilipi-edit-author></pratilipi-edit-author>
 			
 		<dom-module id="pratilipi-author-snippet">
 			<style>
@@ -72,7 +73,6 @@
 						</div>
 					</div>
 				</paper-card>
-				<pratilipi-edit-author></pratilipi-edit-author>
 				<iron-ajax
 					id="AjaxGet"
 					url="/api/author"
