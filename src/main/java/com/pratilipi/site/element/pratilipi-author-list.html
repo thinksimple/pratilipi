@@ -1,36 +1,10 @@
+<link rel="import" href="pratilipi-edit-author.html?20160311" />
 <dom-module id="pratilipi-author-list">
 
 	<style>
 		
 		:host {
 			display: block;
-		}
-		
-		.custom-style {
-			background: #FFF;
-			border-bottom: 1px solid #DDD;
-			padding: 16px 22px;
-			-webkit-font-smoothing: antialiased;
-			box-sizing: border-box;
-			will-change: transform;
-			transform: translate3d(0px, 0px, 0px);
-		}
-		
-		.text {
-			text-align: center;
-			margin-top: 12px;
-		}
-		
-		.pratilipi-red {
-			font-size: 16px;
-		}
-		
-		.img-circle {
-			width: 48px;
-			height: 48px;
-			display: block;
-			margin-left: auto;
-			margin-right: auto;
 		}
 		
 		paper-spinner.pratilipi-spinner {
@@ -47,41 +21,8 @@
 	</style>
 
 	<template>
-		<div class="custom-style row">
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text pratilipi-red">S.No</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text pratilipi-red">Picture</div>
-			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text pratilipi-red">Full Name</div>
-			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text pratilipi-red">Full Name En</div>
-			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text pratilipi-red">Email</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text pratilipi-red">Contents Published</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text pratilipi-red">Registered On</div>
-		</div>
-		<template is="dom-repeat" id="repeatAuthorList" items="[[ modifiedAuthorList ]]">
-			<div class="custom-style">
-				<div class="row">
-					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text">
-						[[ item.sno ]]
-					</div>
-					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-						<a href="[[ item.pageUrl ]]"><img class="img-circle" src="[[ item.imageUrl ]]"></a>
-					</div>
-					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text">
-						<a href="[[ item.pageUrl ]]">[[ item.fullName ]]</a>
-					</div>
-					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text">
-						<a href="[[ item.pageUrl ]]">[[ item.fullNameEn ]]</a>
-					</div>
-					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text">
-						[[ item.email ]]
-					</div>
-					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text">
-						[[ item.contentPublished ]]
-					</div>
-					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text">
-						[[ item.registrationDateMillis ]]
-					</div>
-				</div>
-			</div>
+		<template is="dom-repeat" id="repeatAuthorList" items="{{ modifiedAuthorList }}">
+			<pratilipi-author-snippet author="{{ item }}"></pratilipi-author-snippet>
 		</template>
 		<br class="pratilipi-break"/>
 		<template is="dom-if" if="{{ isLoading }}">
@@ -90,6 +31,74 @@
 		<template is="dom-if" if="{{ includeShowMoreButton }}">
 			<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">${ _strings.load_more_contents }</button>
 		</template>
+			
+		<dom-module id="pratilipi-author-snippet">
+			<style>
+				paper-card.custom-style {
+					display: block;
+					background: #FFF;
+					border-bottom: 1px solid #DDD;
+					padding: 16px 22px;
+					-webkit-font-smoothing: antialiased;
+					box-sizing: border-box;
+					will-change: transform;
+					transform: translate3d(0px, 0px, 0px);
+				}
+				.center {
+					text-align: center;
+					margin: 0 auto;
+				}
+				th {
+					width: 200px;
+				}
+			</style>
+			<template>
+				<paper-card class="parent-container custom-style">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 center">
+							<a class="pratilipi-red" on-click="editAuthor">{{ author.sno }}. {{ author.displayName }}</a>
+							<div style="width: 150px; height: 150px; margin-top: 10px;" class="center">
+								<a href="[[ author.pageUrl ]]"><img class="img-circle pratilipi-shadow" src="[[ author.imageUrl ]]"></a>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+							<table class="table table-striped table-bordered table-hover">
+								<tr><th>Full Name</th><td>{{ author.fullName }}</td></tr>
+								<tr><th>Full Name English</th><td>{{ author.fullNameEn }}</td></tr>
+								<tr><th>Email</th><td>{{ author.email }}</td></tr>
+								<tr><th>Content Published</th><td>{{ author.contentPublished }}</td></tr>
+								<tr><th>Registered On</th><td>{{ author.registrationDateMillis }}</td></tr>
+							</table>
+						</div>
+					</div>
+				</paper-card>
+				<pratilipi-edit-author></pratilipi-edit-author>
+				<iron-ajax
+					id="AjaxGet"
+					url="/api/author"
+					method="GET"
+					content-type="application/json"
+					handle-as="json"
+					on-response="_handleAjaxGetResponse"
+					></iron-ajax>
+			</template>
+			<script>
+			Polymer({
+				is: 'pratilipi-author-snippet',
+				properties: {
+					author: { type: Object, notify: true }
+				},
+				editAuthor: function() {
+					var ajaxGet = this.$.AjaxGet;
+					ajaxGet.params.authorId = this.author.authorId;
+					ajaxGet.generateRequest();
+				},
+				_handleAjaxGetResponse: function( event ) {
+					document.querySelector( 'pratilipi-edit-author' ).createOrEditAuthor( event.detail.response );
+				}
+			});
+			</script>
+		</dom-module>
 
 		<iron-ajax
 				id="AjaxGet"
@@ -132,19 +141,17 @@
 					
 					
 					if( authorList[i][ "imageUrl" ].indexOf( '?' ) == -1 )
-						authorList[i][ "imageUrl" ] = authorList[i][ "imageUrl" ] + "?" + "width=48";
+						authorList[i][ "imageUrl" ] = authorList[i][ "imageUrl" ] + "?" + "width=150";
 					else
-						authorList[i][ "imageUrl" ] = authorList[i][ "imageUrl" ] + "&" + "width=48";
+						authorList[i][ "imageUrl" ] = authorList[i][ "imageUrl" ] + "&" + "width=150";
 					
-					if( authorList[i][ "fullName" ] == null )
-						authorList[i][ "fullName" ] = "N.A";
-					
-					if( authorList[i][ "fullNameEn" ] == null )
-						authorList[i][ "fullNameEn" ] = "N.A";
-					
-					if( authorList[i][ "email" ] == null )
-						authorList[i][ "email" ] = "N.A";
-					
+					if( authorList[i][ "fullName" ] != null )
+						authorList[i][ "displayName" ] = authorList[i][ "fullName" ];
+					else if( authorList[i][ "fullNameEn" ] != null )
+						authorList[i][ "displayName" ] = authorList[i][ "fullNameEn" ];
+					else
+						authorList[i][ "displayName" ] = "Name Not Available!";
+
 					if( authorList[i][ "contentPublished" ] == null )
 						authorList[i][ "contentPublished" ] = 0;
 					
