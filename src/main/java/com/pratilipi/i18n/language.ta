@@ -52,7 +52,7 @@ author_count_reads				= படித்தவர்கள்
 author_count_likes				= விருப்பங்கள்	
 
 author_edit_profile				= சுயவிவரத்தை திருத்த	
-author_update_image				= Upload Photo
+author_update_image				= புகைப்படம்
 
 author_drafts					= வரைவுகள்	
 author_published_works			= பதிப்பித்துள்ள படைப்புகள்
@@ -72,7 +72,7 @@ pratilipi_summary			= படைப்பைப் பற்றி
 
 pratilipi_edit_info			= விவரத்தை திருத்த		
 pratilipi_edit_content		= படைப்பைத் திருத்த
-pratilipi_update_cover		= Upload Photo
+pratilipi_update_cover		= புகைப்படம்
 
 pratilipi_count_reads		= படித்தவர்கள்	
 pratilipi_count_reviews		= விமர்சனங்கள்	
@@ -271,20 +271,20 @@ event_save_changes		= மாற்றங்களை சேமிக்க
 
 
 # Gender
-gender_male			= Male
-gender_female		= Female
-gender_other		= Other
+gender_male			= ஆண்
+gender_female		= பெண்
+gender_other		= வேறு
 
 # Months
-month_jan	= January
-month_feb	= February
-month_mar	= March
-month_apr	= April
-month_may	= May
-month_jun	= June
-month_jul	= July
-month_aug	= August
-month_sep	= September
-month_oct	= October
-month_nov	= November
-month_dec	= December
+month_jan	= ஜனவரி
+month_feb	= பிப்ரவரி
+month_mar	= மார்ச்
+month_apr	= ஏப்ரல்
+month_may	= மே
+month_jun	= ஜூன்
+month_jul	= ஜூலை
+month_aug	= ஆகஸ்ட்
+month_sep	= செப்டெம்பர்
+month_oct	= அக்டோபர்
+month_nov	= நவம்பர்'
+month_dec	= டிசம்பர்
