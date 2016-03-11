@@ -51,6 +51,7 @@ author_count_reads		= વાચક સંખ્યા
 author_count_likes		= વાચકોની પસંદ સંખ્યા
 
 author_edit_profile		= પ્રોફાઈલ સુધારો
+author_update_image		= Upload Photo
 
 author_drafts			= અપ્રકાશિત રચનાઓ 
 author_published_works	= પ્રકાશિત રચનાઓ 
@@ -70,6 +71,7 @@ pratilipi_summary		= સારાંશ લખો
 
 pratilipi_edit_info		= માહિતીમાં સુધારો કરો  	
 pratilipi_edit_content		= રચનામાં સુધારો કરો  
+pratilipi_update_cover		= Upload Photo
 
 pratilipi_count_reads		= વાચક સંખ્યા 
 pratilipi_count_reviews		= કુલ ટીપ્પણી 
@@ -266,4 +268,9 @@ event_description		= ઇવેન્ટ વિશે
 event_entries_url_list	= એન્ટ્રીનું URL લીસ્ટ
 event_save_changes		= બદલાવ સફળ કરો 
 
+
+# Gender
+gender_male			= Male
+gender_female		= Female
+gender_other		= Other
 

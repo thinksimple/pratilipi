@@ -52,6 +52,7 @@ author_count_reads				= படித்தவர்கள்
 author_count_likes				= விருப்பங்கள்	
 
 author_edit_profile				= சுயவிவரத்தை திருத்த	
+author_update_image				= Upload Photo
 
 author_drafts					= வரைவுகள்	
 author_published_works			= பதிப்பித்துள்ள படைப்புகள்
@@ -71,6 +72,7 @@ pratilipi_summary			= படைப்பைப் பற்றி
 
 pratilipi_edit_info			= விவரத்தை திருத்த		
 pratilipi_edit_content		= படைப்பைத் திருத்த
+pratilipi_update_cover		= Upload Photo
 
 pratilipi_count_reads		= படித்தவர்கள்	
 pratilipi_count_reviews		= விமர்சனங்கள்	
@@ -266,4 +268,10 @@ event_name_en			= Event Name in English
 event_description		= Event Description
 event_entries_url_list	= Entries URL List
 event_save_changes		= மாற்றங்களை சேமிக்க 
+
+
+# Gender
+gender_male			= Male
+gender_female		= Female
+gender_other		= Other
 
