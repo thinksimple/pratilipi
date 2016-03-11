@@ -1,4 +1,4 @@
-<link rel="import" href="pratilipi-edit-author.html?20160128" />
+<link rel="import" href="pratilipi-edit-author.html?201603" />
 <link rel="import" href="pratilipi-social.html" />
 
 <dom-module id="pratilipi-author">
@@ -223,7 +223,7 @@
 			},
 			
 			openAuthorEdit: function() {
-				this.querySelector( 'pratilipi-edit-author' ).open();
+				this.querySelector( 'pratilipi-edit-author' ).createOrEditAuthor( this.author );
 			},
 			
 			process: function( data ) {

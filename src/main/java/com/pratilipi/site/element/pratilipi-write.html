@@ -201,7 +201,7 @@
 					"MALAYALAM" : "${ _strings.language_ml }",
 					"BENGALI" : "${ _strings.language_bn }"
 				};
-				this.language = pratilipi.language == null ? ( "${ language }" ).toUpperCase() : pratilipi.language.toUpperCase();
+				this.language = pratilipi.language == null ? "${ language?upper_case }" : pratilipi.language.toUpperCase();
 				this.languageVernacular = languageVernacular[ this.language ];
 				
 				this.type = pratilipi.type == null ? null : pratilipi.type;
@@ -269,23 +269,26 @@
 				
 				this.message = "${ _strings.working }";
 				
-				var body = "title=" + this.title + "&" + 
-				 "type=" + this.type.toUpperCase() + "&" +
-				 "language=" + this.language.toUpperCase() + "&" + 
-				 "state=" + this.state;
+				var body = {
+						title: this.title,
+						type: this.type.toUpperCase(),
+						language: this.language.toUpperCase(),
+						state: this.state
+						
+				};
 				
-				if( this.titleEn != null && this.titleEn.trim() != "" )
-					body = body + "&" + "titleEn=" + this.titleEn;
+				if( this.titleEn != null )
+					body.titleEn = this.titleEn;
 				
-				if( this.summary.trim() != "" )
-					body = body + "&" + "summary=" + this.summary;
+				if( this.summary != null )
+					body.summary = this.summary;
 				
 				if( this.authorId != null )
-					body = body + "&" + "authorId=" + this.authorId;
+					body.authorId = this.authorId;
 				
 				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', true );
 				
-				this.$.AjaxPost.body = body;
+				this.$.AjaxPost.body = jQuery.param( body );
 				this.$.AjaxPost.generateRequest();
 				
 			},
