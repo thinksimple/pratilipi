@@ -102,9 +102,9 @@
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 							<paper-dropdown-menu id="authorGender" noink label="Gender" value="{{ gender::input }}">
 								<paper-menu noink selected="[[ selectedGender ]]" class="dropdown-content" style="white-space: nowrap; width: auto;">
-									<paper-item value="MALE">Male</paper-item>
-									<paper-item value="FEMALE">Female</paper-item>
-									<paper-item value="OTHER">Other</paper-item>
+									<paper-item value="MALE">${ _strings.gender_male }</paper-item>
+									<paper-item value="FEMALE">${ _strings.gender_female }</paper-item>
+									<paper-item value="OTHER">${ _strings.gender_other }</paper-item>
 								</paper-menu>
 							</paper-dropdown-menu>
 						</div>
@@ -316,7 +316,6 @@
 				var author = event.detail.response;
 
 				document.querySelector( 'pratilipi-author' ).updateAuthor( author );
-				location.reload();
 				
 				this.async( function() {
 					jQuery( '#authorEditButton' ).prop( 'disabled', false );
