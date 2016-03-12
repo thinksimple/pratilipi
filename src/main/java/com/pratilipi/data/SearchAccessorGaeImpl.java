@@ -24,6 +24,7 @@ import com.google.appengine.api.search.SortExpression;
 import com.google.appengine.api.search.SortOptions;
 import com.google.appengine.api.search.StatusCode;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
@@ -282,6 +283,63 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	// AUTHOR Data
 	
 	@Override
+	public DataListCursorTuple<Long> searchAuthor( String query, AuthorFilter authorFilter, String cursorStr, Integer offset, Integer resultCount ) {
+		
+		SortOptions.Builder sortOptionsBuilder = SortOptions.newBuilder();
+
+		if( authorFilter.getOrderByContentPublished() != null ) {
+			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
+					.setExpression( "contentPublished" )
+					.setDirection( authorFilter.getOrderByContentPublished()
+							? SortExpression.SortDirection.ASCENDING
+							: SortExpression.SortDirection.DESCENDING )
+					.setDefaultValueNumeric( 0.0 ) );
+
+		} else if( query != null && ! query.isEmpty() ) {
+			sortOptionsBuilder.setMatchScorer( MatchScorer.newBuilder() );
+			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
+					.setExpression( SortExpression.SCORE_FIELD_NAME )
+					.setDirection( SortExpression.SortDirection.DESCENDING )
+					.setDefaultValueNumeric( 0.0 ) );
+			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
+					.setExpression( "contentPublished" )
+					.setDirection( SortExpression.SortDirection.DESCENDING )
+					.setDefaultValueNumeric( 0.0 ) );
+			
+		} else {
+			sortOptionsBuilder.addSortExpression( SortExpression.newBuilder()
+					.setExpression( "contentPublished" )
+					.setDirection( SortExpression.SortDirection.DESCENDING )
+					.setDefaultValueNumeric( 0.0 ) );
+		}
+		
+		SortOptions sortOptions = sortOptionsBuilder.setLimit( 1000 ).build();
+
+		
+		String searchQuery = "docType:Author";
+
+		if( authorFilter.getLanguage() != null )
+			searchQuery = searchQuery + " AND language:" + authorFilter.getLanguage().getNameEn();
+
+		if( query != null && ! query.isEmpty() )
+			searchQuery = "( " + query + " ) AND " + searchQuery;
+
+		
+		Results<ScoredDocument> result = search( searchQuery, sortOptions, cursorStr, offset, resultCount, "docId" );
+		
+		List<Long> authorIdList = new ArrayList<>( result.getNumberReturned() ); 
+		for( ScoredDocument document : result )
+			authorIdList.add( Long.parseLong( document.getOnlyField( "docId" ).getAtom() ) );
+		
+		Cursor cursor = result.getCursor();
+		
+		return new DataListCursorTuple<Long>(
+				authorIdList,
+				cursor == null ? null : cursor.toWebSafeString(),
+				result.getNumberFound() );
+	}
+	
+	@Override
 	public void indexAuthorData( AuthorData authorData ) throws UnexpectedServerException {
 		indexDocument( createDocument( authorData ) );
 	}
@@ -314,6 +372,8 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
 
 				.addField( Field.newBuilder().setName( "summary" ).setHTML( authorData.getSummary() ) )
+
+				.addField( Field.newBuilder().setName( "contentPublished" ).setNumber( authorData.getContentPublished() ) )
 
 				.build();
 	}
