@@ -2,13 +2,14 @@ package com.pratilipi.common.type;
 
 public enum Website {
 
-	ALL_LANGUAGE	(            "www.pratilipi.com",        "m.pratilipi.com", Language.ENGLISH,	null ),
-	HINDI			(          "hindi.pratilipi.com",       "hi.pratilipi.com", Language.HINDI,		Language.HINDI ),
-	GUJARATI		(       "gujarati.pratilipi.com",       "gu.pratilipi.com", Language.GUJARATI,	Language.GUJARATI ),
-	TAMIL			(          "tamil.pratilipi.com",       "ta.pratilipi.com", Language.TAMIL,		Language.TAMIL ),
-	MARATHI			(        "marathi.pratilipi.com",       "mr.pratilipi.com", Language.MARATHI,	Language.MARATHI ),
-	MALAYALAM		(      "malayalam.pratilipi.com",       "ml.pratilipi.com", Language.MALAYALAM,	Language.MALAYALAM ),
-	BENGALI			(        "bengali.pratilipi.com",       "bn.pratilipi.com", Language.BENGALI,	Language.BENGALI ),
+	ALL_LANGUAGE	(            "www.pratilipi.com",  "m.pratilipi.com", Language.ENGLISH,		null ),
+	HINDI			(          "hindi.pratilipi.com", "hi.pratilipi.com", Language.HINDI,		Language.HINDI ),
+	GUJARATI		(       "gujarati.pratilipi.com", "gu.pratilipi.com", Language.GUJARATI,	Language.GUJARATI ),
+	TAMIL			(          "tamil.pratilipi.com", "ta.pratilipi.com", Language.TAMIL,		Language.TAMIL ),
+	MARATHI			(        "marathi.pratilipi.com", "mr.pratilipi.com", Language.MARATHI,		Language.MARATHI ),
+	MALAYALAM		(      "malayalam.pratilipi.com", "ml.pratilipi.com", Language.MALAYALAM,	Language.MALAYALAM ),
+	BENGALI			(        "bengali.pratilipi.com", "bn.pratilipi.com", Language.BENGALI,		Language.BENGALI ),
+	KANNADA			(        "kannada.pratilipi.com", "kn.pratilipi.com", Language.KANNADA,		Language.KANNADA ),
 	
 	GAMMA_ALL_LANGUAGE	(       "www.gamma.pratilipi.com",  "m.gamma.pratilipi.com", Language.ENGLISH,		null ),
 	GAMMA_HINDI			(     "hindi.gamma.pratilipi.com", "hi.gamma.pratilipi.com", Language.HINDI,		Language.HINDI ),
@@ -17,6 +18,7 @@ public enum Website {
 	GAMMA_MARATHI		(   "marathi.gamma.pratilipi.com", "mr.gamma.pratilipi.com", Language.MARATHI,		Language.MARATHI ),
 	GAMMA_MALAYALAM		( "malayalam.gamma.pratilipi.com", "ml.gamma.pratilipi.com", Language.MALAYALAM,	Language.MALAYALAM ),
 	GAMMA_BENGALI		(   "bengali.gamma.pratilipi.com", "bn.gamma.pratilipi.com", Language.BENGALI,		Language.BENGALI ),
+	GAMMA_KANNADA		(   "kannada.gamma.pratilipi.com", "kn.gamma.pratilipi.com", Language.KANNADA,		Language.KANNADA ),
 
 	DEVO_ALL_LANGUAGE	(       "www.devo-pratilipi.appspot.com",  "m.devo-pratilipi.appspot.com", Language.ENGLISH,	null ),
 	DEVO_HINDI			(     "hindi.devo-pratilipi.appspot.com", "hi.devo-pratilipi.appspot.com", Language.HINDI,		Language.HINDI ),
