@@ -239,8 +239,8 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				
 				.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) );
 				
-				if( keywords != null && ! keywords.isEmpty() )
-					docBuilder.addField( Field.newBuilder().setName( "keywords" ).setText( keywords ) );
+		if( keywords != null && ! keywords.isEmpty() )
+			docBuilder.addField( Field.newBuilder().setName( "keywords" ).setText( keywords ) );
 				
 				// 4x weightage to PratilipiType
 		docBuilder.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
@@ -348,34 +348,36 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 		
 		String docId = "AuthorData:" + authorData.getId();
 		
-		return Document.newBuilder()
+		Builder docBuilder = Document.newBuilder()
 				.setId( docId )
 				.addField( Field.newBuilder().setName( "docId" ).setAtom( authorData.getId().toString() ) )
-				.addField( Field.newBuilder().setName( "docType" ).setAtom( "Author" ) )
+				.addField( Field.newBuilder().setName( "docType" ).setAtom( "Author" ) );
 
-				 // 4x weightage to Language
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
-				.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+		// 4x weightage to Language
+		if( authorData.getLanguage() != null )
+			docBuilder.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+					.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+					.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+					.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getName() ) )
+					.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+					.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+					.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) )
+					.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) );
 				
-				// 3x weightage to Author Name
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
+		// 3x weightage to Author Name
+		docBuilder.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
 				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
 				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
 				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
 				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
+				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) );
 
-				.addField( Field.newBuilder().setName( "summary" ).setHTML( authorData.getSummary() ) )
+		docBuilder.addField( Field.newBuilder().setName( "summary" ).setHTML( authorData.getSummary() ) );
 
-				.addField( Field.newBuilder().setName( "contentPublished" ).setNumber( authorData.getContentPublished() ) )
+		docBuilder.addField( Field.newBuilder().setName( "contentPublished" ).setNumber( authorData.getContentPublished() ) );
 
-				.build();
+		return docBuilder.build();
+		
 	}
 	
 	@Override
