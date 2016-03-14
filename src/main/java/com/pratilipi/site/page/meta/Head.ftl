@@ -15,7 +15,7 @@
 <link rel='import' href='/elements.${lang}/pratilipi-user.html?20160312'>
 <link rel='import' href='/elements.${lang}/pratilipi-header.html?201603'>
 <link rel='import' href='/elements.${lang}/pratilipi-edit-account.html?201603'>
-<link rel='import' href='/elements.${lang}/pratilipi-write.html?2016031102'>
+<link rel='import' href='/elements.${lang}/pratilipi-write.html?20160314'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation-drawer.html?03'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160227'>
 <link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?201603'>

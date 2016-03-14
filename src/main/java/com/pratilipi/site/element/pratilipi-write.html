@@ -132,6 +132,7 @@
 				authorId: { type: String },
 				
 				// Specific to input fields
+				pratilipiId: { type: String },
 				title: { type: String },
 				titleEn: { type: String },
  				summary: { type: String },
@@ -185,6 +186,7 @@
 			
 			process: function( pratilipi ) {
 				this.message = null;
+				this.pratilipiId = pratilipi.pratilipiId == null ? null : pratilipi.pratilipiId;
 				this.title = pratilipi.title == null ? null : pratilipi.title;
 				this.titleEn = pratilipi.titleEn == null ? null : pratilipi.titleEn;
 				this.state = pratilipi.state == null ? "DRAFTED" : pratilipi.state;
@@ -274,8 +276,10 @@
 						type: this.type.toUpperCase(),
 						language: this.language.toUpperCase(),
 						state: this.state
-						
 				};
+				
+				if( this.pratilipiId != null )
+					body.pratilipiId = this.pratilipiId;
 				
 				if( this.titleEn != null )
 					body.titleEn = this.titleEn;
