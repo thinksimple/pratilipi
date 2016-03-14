@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
@@ -84,6 +85,16 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 	
 	// AUTHOR Data
 	
+	@Override
+	public DataListCursorTuple<Long> searchAuthor( String query, AuthorFilter authorFilter, String cursorStr, Integer offset, Integer resultCount ) {
+		
+		List<Long> authorIdList = new LinkedList<>();
+		
+		// TODO: Implementation
+		
+		return new DataListCursorTuple<Long>( authorIdList, null );
+	}
+
 	@Override
 	public void indexAuthorData( AuthorData authorData ) throws UnexpectedServerException {
 		// TODO: Implementation
