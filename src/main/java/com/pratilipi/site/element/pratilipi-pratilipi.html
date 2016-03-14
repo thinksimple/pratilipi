@@ -301,6 +301,9 @@
 				this.title = pratilipi.title;
 				this.titleEn = pratilipi.titleEn;
 				
+				if( window.location.pathname != pratilipi.pageUrl )
+					window.location.href = pratilipi.pageUrl;
+				
 				if( pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
 					this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "?" + "width=150";
 				else
