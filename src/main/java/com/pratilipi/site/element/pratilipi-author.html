@@ -252,6 +252,9 @@
 				else
 					this.penName = null;
 				
+				if( window.location.pathname != author.pageUrl )
+					window.location.href = author.pageUrl;
+				
 				if( author.imageUrl.indexOf( '?' ) == -1 )
 					this.authorImageUrl = author.imageUrl + "?" + "width=200";
 				else
