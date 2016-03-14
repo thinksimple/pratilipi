@@ -323,6 +323,7 @@
 				if( pratilipi.summary == null || pratilipi.summary.trim() == "" ) { 
 					document.getElementById( "pratilipi-summary" ).style.display = "none";
 				} else {
+					document.getElementById( "pratilipi-summary" ).style.display = "block";
 					jQuery( '#pratilipi-summary-text' ).removeClass( 'less' );
 					jQuery( '#pratilipi-summary-text' ).removeClass( 'more' );
 					this.summary = pratilipi.summary;

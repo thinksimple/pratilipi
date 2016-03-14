@@ -262,36 +262,33 @@
 				
 				this.language = capitalizeFirstLetter( author.language );
 				this.date = convertDate( author.registrationDateMillis );
-				this.processSummary();
+				
+				this.summary = author.summary;
+				if( this.summary == null || this.summary.trim() == "" ) { 
+					document.getElementById( "author-summary" ).style.display = "none";
+				} else {
+					document.getElementById( "author-summary" ).style.display = "block";
+					jQuery( '#author-summary-text' ).removeClass( 'less' );
+					jQuery( '#author-summary-text' ).removeClass( 'more' );
+					
+					var jSummary = jQuery( document.getElementById( "author-summary-text" ) );
+					jSummary.html( this.summary ) 
+					
+					var height = jQuery( "#author-summary-text" ).height();
+					
+					if( height > 220 ) {
+						jQuery( '#author-summary-text' ).addClass( 'less' );
+						document.getElementById( "less" ).style.display = "none";
+						document.getElementById( "more" ).style.display = "block";
+					} else {
+						document.getElementById( "less" ).style.display = "none";
+						document.getElementById( "more" ).style.display = "none";
+					}
+				}
 			},
 			
 			attached: function() {
 				this.updateAuthor( this.authorData );
-			},
-			
-			processSummary: function() {
-				if( this.author.summary == null || this.author.summary.trim() == "" ) { 
-					document.getElementById( "author-summary" ).style.display = "none";
-					return;
-				}
-				
-				jQuery( '#author-summary-text' ).removeClass( 'less' );
-				jQuery( '#author-summary-text' ).removeClass( 'more' );
-				
-				this.summary = this.author.summary;
-				var jSummary = jQuery( document.getElementById( "author-summary-text" ) );
-				jSummary.html( this.author.summary ) 
-				
-				var height = jQuery( "#author-summary-text" ).height();
-				
-				if( height > 220 ) {
-					jQuery( '#author-summary-text' ).addClass( 'less' );
-					document.getElementById( "less" ).style.display = "none";
-					document.getElementById( "more" ).style.display = "block";
-				} else {
-					document.getElementById( "less" ).style.display = "none";
-					document.getElementById( "more" ).style.display = "none";
-				}
 			},
 			
 			_toggleSnippet: function() {
