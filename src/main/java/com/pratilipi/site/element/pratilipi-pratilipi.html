@@ -236,7 +236,7 @@
 			},
 			
 			properties: {
-				user: { type: Object, observer: "_userChanged" },
+				user: { type: Object, observer: "_loadPratilipi" },
 				pratilipi: { type:Object, notify: true },
 				pratilipiData: { type: Object },
 				pratilipiTypes: { types: Object },
@@ -364,7 +364,7 @@
 					document.getElementById( "less" ).style.display = "block";
 			},
 			
-			_userChanged: function() {
+			_loadPratilipi: function() {
 				if( this.pratilipi == null )
 					return;
 
@@ -375,6 +375,10 @@
 			
 			_handleAjaxGetResponse: function( event ) {
 				this.updatePratilipi( event.detail.response );
+				// In case of image upload.
+				this.async( function() {
+					this.imageUploaded = false;
+				}, 50 );
 			},
 			
 			changePratilipiState: function() {
@@ -417,12 +421,8 @@
 			},
 			
 			_onchangeiframe: function() {
-				if( this.imageUploaded ) {
-					this.async( function() {
-						this.pratilipiCoverImageUrl = this.pratilipiCoverImageUrl + "&" + "version=" + new Date().getTime();
-						this.imageUploaded = false;
-					}, 50 );
-				}
+				if( this.imageUploaded )
+					this._loadPratilipi();
 			},
 			
 			uploadImage: function() {
