@@ -217,7 +217,7 @@
 			},
 			
 			properties: {
-				user: { type: Object, observer: "_userChanged" },
+				user: { type: Object, observer: "_loadAuthor" },
 				author: { type: Object, notify: true },
 				authorData: { type: Object },
 				
@@ -331,7 +331,7 @@
 				
 			},
 			
-			_userChanged: function() {
+			_loadAuthor: function() {
 				// Exploiting the fact that Author will be undefined before DOM is attached.
 				if( this.author == null )
 					return;
@@ -343,6 +343,10 @@
 			
 			_handleAjaxGetResponse: function( event ) {
 				this.updateAuthor( event.detail.response );
+				// In case of image upload.
+				this.async( function() {
+					this.imageUploaded = false;
+				}, 30 );
 			},
 			
 			_chooseFile: function() {
@@ -350,12 +354,8 @@
 			},
 			
 			_onchangeiframe: function() {
-				if( this.imageUploaded ) {
-					this.async( function() {
-						this.authorImageUrl = this.authorImageUrl + "&" + "version=" + new Date().getTime();
-						this.imageUploaded = false;
-					}, 50 );
-				}
+				if( this.imageUploaded )
+					this._loadAuthor();
 			},
 			
 			uploadImage: function() {
