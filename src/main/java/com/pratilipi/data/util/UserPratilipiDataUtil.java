@@ -60,7 +60,7 @@ public class UserPratilipiDataUtil {
 		
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
 		userPratilipiData.setId( userPratilipi.getId() );
-		userPratilipiData.setUserId( userPratilipi.getPratilipiId() );
+		userPratilipiData.setUserId( userPratilipi.getUserId() );
 		userPratilipiData.setUserName( userData.getDisplayName() );
 		userPratilipiData.setUserImageUrl( userData.getProfileImageUrl() );
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
