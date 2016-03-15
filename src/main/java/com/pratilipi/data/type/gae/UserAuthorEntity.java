@@ -71,7 +71,7 @@ public class UserAuthorEntity extends GenericOfyEntity implements UserAuthor {
 	
 	
 	public Boolean isFollowing() {
-		return FOLLOWING;
+		return FOLLOWING == null ? false : FOLLOWING;
 	}
 	
 	public void setFollowing( Boolean isFollowing ) {
