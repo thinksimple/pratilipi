@@ -61,6 +61,7 @@ public class UserAuthorDataUtil {
 			userAuthor = dataAccessor.newUserAuthor();
 			userAuthor.setUserId( userId );
 			userAuthor.setAuthorId( authorId );
+			userAuthor.setFollowing( false );
 		}
 		
 		return createUserAuthorData( userAuthor );
