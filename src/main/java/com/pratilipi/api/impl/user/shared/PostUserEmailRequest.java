@@ -18,6 +18,11 @@ public class PostUserEmailRequest extends GenericRequest {
 	private Boolean sendPasswordResetMail;
 	
 	private Boolean sendBirthdayMail;
+	
+	private Boolean sendAuthorMail;
+	
+	private Long authorId;
+	private String message;
 
 	
 	public Long getUserId() {
@@ -44,4 +49,16 @@ public class PostUserEmailRequest extends GenericRequest {
 		return sendBirthdayMail == null ? false : sendBirthdayMail;
 	}
 	
+	public boolean sendAuthorMail() {
+		return sendAuthorMail == null ? false : sendAuthorMail;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public Long getAuthorId() {
+		return authorId;
+	}
+
 }

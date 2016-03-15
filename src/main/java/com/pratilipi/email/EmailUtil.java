@@ -32,8 +32,8 @@ public class EmailUtil {
 
 	private final static Properties properties = new Properties();
 	private final static Session session = Session.getDefaultInstance( properties, null );
-
-
+	
+	
 	public static void sendMail( String name, String email, String templateName,
 			Language language ) throws UnexpectedServerException {
 		

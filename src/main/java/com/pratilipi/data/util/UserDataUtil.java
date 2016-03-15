@@ -529,4 +529,31 @@ public class UserDataUtil {
 
 	}
 	
+	public static void sendAuthorMail( Long userId, Long authorId, String message ) 
+			throws InvalidArgumentException, UnexpectedServerException {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUser( userId );
+		Page userPage = dataAccessor.getPage( PageType.AUTHOR, dataAccessor.getAuthorByUserId( userId ).getId() );
+		Author author = dataAccessor.getAuthor( authorId );
+		
+		if( user == null || user.getState() == UserState.REFERRAL || user.getState() == UserState.DELETED )
+			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
+		else if( user.getState() == UserState.BLOCKED )
+			throw new InvalidArgumentException( GenericRequest.ERR_ACCOUNT_BLOCKED );
+		
+		if( author == null || author.getEmail() == null || author.getEmail().isEmpty() )
+			throw new InvalidArgumentException( "Author doesn't have email Id." );
+		
+		String authorName = AuthorDataUtil.createAuthorData( author ).getFullName();
+		
+		Map<String, String> dataModel = new HashMap<String, String>();
+		
+		dataModel.put( "userName", createUserData( user ).getDisplayName() );
+		dataModel.put( "recipientName", authorName );
+		dataModel.put( "message", message );
+		dataModel.put( "userPageUrl", author.getLanguage().getHostName() + userPage.getUriAlias() );
+		
+		EmailUtil.sendMail( authorName, author.getEmail(), "mail-author", Language.ENGLISH, dataModel );
+	}
+	
 }
