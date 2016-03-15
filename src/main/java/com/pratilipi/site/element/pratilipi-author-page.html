@@ -24,6 +24,7 @@
 								user='[[ user ]]'
 								author='{{ author }}'
 								author-data='[[ authorData ]]'
+								user-author-data='[[ userAuthorData ]]'
 								></pratilipi-author>
 						<div style="min-height: 5px;"></div>
 						<template is="dom-if" if="[[ ! author.hasAccessToUpdate ]]">
@@ -62,6 +63,7 @@
 			properties: {
 				userData: { type: Object },
 				authorData: { type:Object },
+				userAuthorData: { type:Object },
 				
 				pratilipiList: { type: Array },
 				navigationList: { type: Array },

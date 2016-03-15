@@ -754,28 +754,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	
-	// USER_AUTHOR Table
-	
-	@Override
-	public UserAuthor newUserAuthor() {
-		return new UserAuthorEntity();
-	}
-	
-	@Override
-	public UserAuthor getUserAuthor( Long userId, Long authorId ) {
-		if( userId == null || userId.equals( 0L ) || authorId == null || authorId.equals( 0L ) )
-			return null;
-		return getEntityOfy( UserAuthorEntity.class, userId + "-" + authorId );
-	}
-
-	@Override
-	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
-		UserAuthorEntity userAuthorEntity = (UserAuthorEntity) userAuthor;
-		userAuthorEntity.setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
-		return createOrUpdateEntityOfy( userAuthorEntity );
-	}
-	
-	
 	// USER_PRATILIPI Table
 	
 	@Override
@@ -857,6 +835,28 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
 		return createOrUpdateEntity( userPratilipi );
+	}
+	
+	
+	// USER_AUTHOR Table
+	
+	@Override
+	public UserAuthor newUserAuthor() {
+		return new UserAuthorEntity();
+	}
+	
+	@Override
+	public UserAuthor getUserAuthor( Long userId, Long authorId ) {
+		if( userId == null || userId.equals( 0L ) || authorId == null || authorId.equals( 0L ) )
+			return null;
+		return getEntityOfy( UserAuthorEntity.class, userId + "-" + authorId );
+	}
+
+	@Override
+	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
+		UserAuthorEntity userAuthorEntity = (UserAuthorEntity) userAuthor;
+		userAuthorEntity.setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
+		return createOrUpdateEntityOfy( userAuthorEntity );
 	}
 	
 	

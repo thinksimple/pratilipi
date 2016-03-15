@@ -50,6 +50,24 @@ public class UserAuthorDataUtil {
 	}
 
 	
+	public static UserAuthorData getUserAuthor( Long userId, Long authorId ) {
+
+		if( userId == null || userId.equals( 0L ) || authorId == null || authorId.equals( 0L ) )
+			return null;
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		UserAuthor userAuthor = dataAccessor.getUserAuthor( userId, authorId );
+		if( userAuthor == null ) {
+			userAuthor = dataAccessor.newUserAuthor();
+			userAuthor.setUserId( userId );
+			userAuthor.setAuthorId( authorId );
+		}
+		
+		return createUserAuthorData( userAuthor );
+		
+	}
+
+	
 	public static UserAuthorData saveUserAuthor( UserAuthorData userAuthorData )
 			throws InvalidArgumentException, InsufficientAccessException {
 

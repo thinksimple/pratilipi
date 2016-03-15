@@ -11,6 +11,7 @@
 		<pratilipi-author-page 
 			user-data='${ userJson }'
 			author-data='${ authorJson }'
+			user-author-data='${ userAuthorJson! }'
 			pratilipi-list='${ publishedPratilipiListJson }'
 			filter='${ publishedPratilipiListFilterJson! }'
 			cursor='${ publishedPratilipiListCursor! }'

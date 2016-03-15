@@ -47,6 +47,7 @@ import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.EventData;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.client.UserAuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
@@ -57,8 +58,10 @@ import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.data.util.UserAuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
+import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.i18n.I18n;
 
@@ -556,6 +559,7 @@ public class PratilipiSite extends HttpServlet {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author, true, false );
+		UserAuthorData userAuthorData = UserAuthorDataUtil.getUserAuthor( AccessTokenFilter.getAccessToken().getUserId(), authorId );
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setAuthorId( authorId );
@@ -573,6 +577,7 @@ public class PratilipiSite extends HttpServlet {
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "authorJson", gson.toJson( authorData ) );
+			dataModel.put( "userAuthorJson", gson.toJson( userAuthorData ) );
 			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ) );
 			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
 			dataModel.put( "publishedPratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );

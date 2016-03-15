@@ -126,6 +126,8 @@
 						<tr> <th>${ _strings.author_since } :</th> 	<td>{{ date }}</td> </tr>
 					</table>
 
+					<button class="pratilipi-light-blue-button" on-click="followOrUnfollow">{{ followOrUnfollow }}</button>
+
 					<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
 						<template is="dom-if" if="{{ !mobile }}">
 							<div style="position: absolute; top: 180px;">
@@ -186,6 +188,16 @@
 				on-response="_handleAjaxGetResponse"
 				></iron-ajax>
 		
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/userauthor/follow"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
+		
 	</template>
 	
 	<script>
@@ -220,6 +232,7 @@
 				user: { type: Object, observer: "_loadAuthor" },
 				author: { type: Object, notify: true },
 				authorData: { type: Object },
+				userAuthorData: { type: Object },
 				
 				mobile: { type: Boolean },
 				imageUploaded: { type: Boolean, value: false }
@@ -227,6 +240,15 @@
 			
 			openAuthorEdit: function() {
 				this.querySelector( 'pratilipi-edit-author' ).createOrEditAuthor( this.author );
+			},
+			
+			followOrUnfollow: function() {
+				userAuthorData.following = ! userAuthorData.following;
+				this.followOrUnfollow = userauthor.following ? "Unfollow" : "Follow";
+				var ajaxPost = this.$.AjaxPost;
+				ajaxPost.params.authorId = this.userAuthorData.authorId;
+				ajaxPost.params.following = userAuthorData.following;
+				ajaxPost.generateRequest();
 			},
 			
 			process: function( data ) {
@@ -285,10 +307,12 @@
 						document.getElementById( "more" ).style.display = "none";
 					}
 				}
+				
 			},
 			
 			attached: function() {
 				this.updateAuthor( this.authorData );
+				this.followOrUnfollow = userauthor.following ? "Unfollow" : "Follow";
 			},
 			
 			_toggleSnippet: function() {
