@@ -1,4 +1,5 @@
 <link rel="import" href="pratilipi-edit-author.html?2016031102" />
+<link rel="import" href="pratilipi-author-mail.html" />
 <link rel="import" href="pratilipi-social.html" />
 
 <dom-module id="pratilipi-author">
@@ -141,6 +142,7 @@
 							</div>
 						</template>
 						<pratilipi-edit-author></pratilipi-edit-author>
+						<pratilipi-author-mail></pratilipi-author-mail>
 					</template>
 				</div>
 				<br/>
@@ -243,8 +245,11 @@
 				this.querySelector( 'pratilipi-edit-author' ).createOrEditAuthor( this.author );
 			},
 			
-			openAuthorMail: function(){
-				this.querySelector( 'pratilipi-author-mail' ).sendAuthorMail( this.author );
+			openAuthorMail: function() {
+				if( this.user.isGuest )
+					document.querySelector( 'pratilipi-user' ).logIn();
+				else
+					this.querySelector( 'pratilipi-author-mail' ).sendAuthorMail( this.author );
 			},
 			
 			followOrUnfollow: function() {
