@@ -22,7 +22,7 @@ public class UserAuthorDataUtil {
 
 	
 	public static boolean hasAccessToAddOrUpdateUserAuthorData( UserAuthorData userAuthorData ) {
-		return userAuthorData.equals( AccessTokenFilter.getAccessToken().getUserId() );
+		return userAuthorData.getUserId().equals( AccessTokenFilter.getAccessToken().getUserId() );
 	}
 	
 
