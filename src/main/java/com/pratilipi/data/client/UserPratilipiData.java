@@ -29,6 +29,9 @@ public class UserPratilipiData {
 	private UserReviewState reviewState;
 	private boolean hasReviewState;
 	
+	private Boolean addedToLib;
+	private boolean hasAddedToLib;
+
 	private Long reviewDateMillis;
 	
 	private Boolean hasAccessToReview;
@@ -142,6 +145,18 @@ public class UserPratilipiData {
 	
 	public void setAccessToReview( Boolean hasAccessToReview ) {
 		this.hasAccessToReview = hasAccessToReview;
+	}
+
+	public Boolean isAddedToLib() {
+		return addedToLib;
+	}
+
+	public void setAddedToLib(Boolean addedToLib) {
+		this.addedToLib = addedToLib;
+	}
+
+	public boolean hasAddedToLib() {
+		return hasAddedToLib;
 	}
 	
 }

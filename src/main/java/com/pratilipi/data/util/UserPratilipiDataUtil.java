@@ -68,6 +68,7 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setReviewState( userPratilipi.getReviewState() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 		userPratilipiData.setAccessToReview( hasAccessToAddUserPratilipiData( userPratilipi.getPratilipiId() ) );
+		userPratilipiData.setAddedToLib( userPratilipi.isAddedToLib() == null ? false : userPratilipi.isAddedToLib() );
 		
 		return userPratilipiData;
 		
@@ -124,8 +125,8 @@ public class UserPratilipiDataUtil {
 	public static UserPratilipiData saveUserPratilipi( UserPratilipiData userPratilipiData )
 			throws InsufficientAccessException {
 
-		if( ! hasAccessToAddUserPratilipiData( userPratilipiData.getPratilipiId() ) )
-			throw new InsufficientAccessException();
+//		if( ! hasAccessToAddUserPratilipiData( userPratilipiData.getPratilipiId() ) )
+//			throw new InsufficientAccessException();
 
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -139,7 +140,7 @@ public class UserPratilipiDataUtil {
 			userPratilipi.setPratilipiId( userPratilipiData.getPratilipiId() );
 		}
 		
-		if( ! userPratilipiData.hasRating() && ! userPratilipiData.hasReview() && ! userPratilipiData.hasReviewState() )
+		if( ! userPratilipiData.hasRating() && ! userPratilipiData.hasReview() && ! userPratilipiData.hasReviewState() && ! userPratilipiData.hasAddedToLib() )
 			return createUserPratilipiData( userPratilipi );
 
 		
@@ -160,6 +161,9 @@ public class UserPratilipiDataUtil {
 		if( userPratilipiData.hasReviewState() )
 			userPratilipi.setReviewState( userPratilipiData.getReviewState() );
 
+		if( userPratilipiData.hasAddedToLib() )
+			userPratilipi.setAddedToLib( userPratilipiData.isAddedToLib() );
+		
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		
 		return createUserPratilipiData( userPratilipi );

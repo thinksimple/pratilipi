@@ -10,6 +10,15 @@
 				on-response="_handleAjaxGetResponse"
 				on-error="_handleAjaxGetError"
 				></iron-ajax>
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/userpratilipi"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
 	</template>
 	
 
@@ -32,6 +41,22 @@
 			
 			ready: function() {
 				this.setUserPratilipi( this.userpratilipiData );
+			},
+			
+			addToLibrary: function( pratilipiId ) {
+				this.$.AjaxPost.body = ( "pratilipiId=" + pratilipiId + "&" + "addedToLib=true" );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			_handleAjaxPostResponse: function( event ) {
+				if( event.detail.xhr.status != 200 )
+					this._handleAjaxPostError( event );
+				else
+					this.setUserPratilipi( event.detail.response );
+			},
+			
+			_handleAjaxPostError: function( event ) {
+				alert( "Sorry, Some error happened while adding to library! Please try again." );
 			},
 			
 			_userChangeObserver: function() {

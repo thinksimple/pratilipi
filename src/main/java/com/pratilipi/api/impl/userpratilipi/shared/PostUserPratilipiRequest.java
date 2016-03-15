@@ -24,6 +24,9 @@ public class PostUserPratilipiRequest extends GenericRequest {
 	private UserReviewState reviewState;
 	private boolean hasReviewState;
 
+	private Boolean addedToLib;
+	private boolean hasAddedToLib;
+
 	
 	public Long getPratilipiId() {
 		return pratilipiId;
