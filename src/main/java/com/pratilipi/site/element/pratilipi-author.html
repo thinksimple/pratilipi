@@ -244,7 +244,7 @@
 			
 			followOrUnfollow: function() {
 				this.userAuthorData.following = ! this.userAuthorData.following;
-				this.followOrUnfollowLabel = this.userauthor.following ? "Unfollow" : "Follow";
+				this.followOrUnfollowLabel = this.userAuthorData.following ? "Unfollow" : "Follow";
 				var ajaxPost = this.$.AjaxPost;
 				ajaxPost.params.authorId = this.userAuthorData.authorId;
 				ajaxPost.params.following = this.userAuthorData.following;
@@ -312,7 +312,7 @@
 			
 			attached: function() {
 				this.updateAuthor( this.authorData );
-				this.followOrUnfollowLabel = this.userauthor.following ? "Unfollow" : "Follow";
+				this.followOrUnfollowLabel = this.userAuthorData.following ? "Unfollow" : "Follow";
 			},
 			
 			_toggleSnippet: function() {
