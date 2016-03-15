@@ -125,8 +125,8 @@ public class UserPratilipiDataUtil {
 	public static UserPratilipiData saveUserPratilipi( UserPratilipiData userPratilipiData )
 			throws InsufficientAccessException {
 
-//		if( ! hasAccessToAddUserPratilipiData( userPratilipiData.getPratilipiId() ) )
-//			throw new InsufficientAccessException();
+		if( ! hasAccessToAddUserPratilipiData( userPratilipiData.getPratilipiId() ) )
+			throw new InsufficientAccessException();
 
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
