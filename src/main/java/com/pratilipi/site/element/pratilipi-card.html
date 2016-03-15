@@ -91,7 +91,9 @@
 							</template>
 							<template is="dom-if" if="{{ ! draftsActive }}">
 								<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</a>
-								<iron-icon style="color: #107FE5; cursor: pointer;" icon="icons:chrome-reader-mode" on-click="addToLibrary"></iron-icon>
+								<template is="dom-if" if="{{ !hideAddToLibraryButton }}">
+									<iron-icon style="color: #107FE5; cursor: pointer;" icon="icons:chrome-reader-mode" on-click="addToLibrary"></iron-icon>
+								</template>
 							</template>
 						</div>
 						
@@ -129,7 +131,8 @@
 				pratilipi: { type: Object },
 				
 				draftsActive: { type: Boolean, value: false, observer: "init" },
-				publishedActive: { type: Boolean, value: false }
+				publishedActive: { type: Boolean, value: false },
+				hideAddToLibraryButton: { type: Boolean, value: false }
 			},
 			
 			redirectToReader: function() {
