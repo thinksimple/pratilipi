@@ -2,11 +2,9 @@ package com.pratilipi.data.util;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.UserReviewState;
@@ -24,10 +22,6 @@ import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class UserPratilipiDataUtil {
-	
-	private static final Logger logger =
-			Logger.getLogger( UserPratilipiDataUtil.class.getName() );
-
 	
 	public static boolean hasAccessToAddUserPratilipiData( Long pratilipiId ) {
 
@@ -142,9 +136,6 @@ public class UserPratilipiDataUtil {
 			userPratilipi.setPratilipiId( userPratilipiData.getPratilipiId() );
 		}
 		
-		logger.log( Level.INFO, "userPratilipi = " + new Gson().toJson( userPratilipi ) );
-		logger.log( Level.INFO, "userPratilipiData.hasAddedToLibrary = " + userPratilipiData.hasAddedToLib() );
-		
 		if( ! userPratilipiData.hasRating() && ! userPratilipiData.hasReview() && ! userPratilipiData.hasReviewState() && ! userPratilipiData.hasAddedToLib() )
 			return createUserPratilipiData( userPratilipi );
 
@@ -169,12 +160,21 @@ public class UserPratilipiDataUtil {
 		if( userPratilipiData.hasAddedToLib() )
 			userPratilipi.setAddedToLib( userPratilipiData.isAddedToLib() );
 		
-		logger.log( Level.INFO, "Added to User's Library - " + userPratilipi.isAddedToLib() );
-		
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		
 		return createUserPratilipiData( userPratilipi );
 		
+	}
+	
+	public static List<Long> getUserLibraryPratilipiList( Long userId ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataListCursorTuple<UserPratilipi> userPratilipiListCursorTuple = dataAccessor.getUserPratilipiList( userId, null, null, null );
+		List<UserPratilipi> userPratilipiList = userPratilipiListCursorTuple.getDataList();
+		List<Long> pratilipiIdList = new LinkedList<Long>();
+		for( UserPratilipi userPratilipi : userPratilipiList )
+			if( userPratilipi.isAddedToLib() )
+				pratilipiIdList.add( userPratilipi.getPratilipiId() );
+		return pratilipiIdList;
 	}
 	
 }
