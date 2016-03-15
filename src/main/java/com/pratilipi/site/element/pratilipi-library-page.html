@@ -31,15 +31,6 @@
 		<div class="scroll-top-button">
 			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
 		</div>
-		<iron-ajax
-			id="AjaxGet"
-			url="/api/userpratilipi/list"
-			method="GET"
-			content-type="application/json"
-			handle-as="json"
-			on-response="_handleAjaxGetResponse"
-			on-error="_handleAjaxGetError"
-			></iron-ajax>
 	</template>
 				
 		
@@ -60,19 +51,6 @@
 			_userChanged: function() {
 				if( this.user.isGuest )
 					window.location.href = "/";
-				else
-					this.$.AjaxGet.generateRequest();
-			},
-			
-			_handleAjaxGetResponse: function( event ) {
-				this.set( 'pratilipiList', [] );
-				var pratilipiList = event.detail.response;
-				for( var i = 0; i < pratilipiList.length; i++ )
-					this.push( 'pratilipiList', pratilipiList[i] );
-			},
-			
-			_handleAjaxGetError: function( event ) {
-				window.location.href = "/";
 			},
 			
 			scrollToTop: function() {
