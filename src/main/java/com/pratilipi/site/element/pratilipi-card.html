@@ -91,7 +91,7 @@
 							</template>
 							<template is="dom-if" if="{{ ! draftsActive }}">
 								<a on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</a>
-								<a on-click="addToLibrary" class="pratilipi-light-blue-button">Add To Library</a>
+								<iron-icon style="color: #107FE5; cursor: pointer;" icon="icons:chrome-reader-mode" on-click="addToLibrary"></iron-icon>
 							</template>
 						</div>
 						
@@ -106,6 +106,15 @@
 				handle-as="json"
 				on-response="_handleAjaxPostResponse"
 				on-error="_handleAjaxPostError"
+				></iron-ajax>
+		<iron-ajax
+				id="userpratilipiPost"
+				url="/api/userpratilipi"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleUserPratilipiPostResponse"
+				on-error="_handleUserPratilipiPostError"
 				></iron-ajax>
 	</template>
 
@@ -129,6 +138,19 @@
 			
 			redirectToWriter: function() {
 				window.location.href = this.pratilipi.writePageUrl + "&ret=" + window.location.pathname;
+			},
+			
+			addToLibrary: function() {
+				this.$.userpratilipiPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=true" );
+				this.$.userpratilipiPost.generateRequest();
+			},
+			
+			_handleUserPratilipiPostResponse: function( event ) {
+				alert( "Success!" );
+			},
+			
+			_handleUserPratilipiPostError: function( event ) {
+				alert( "Error at server, please try again!" );
 			},
 			
 			attached: function() {
