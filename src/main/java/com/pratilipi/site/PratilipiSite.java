@@ -183,7 +183,9 @@ public class PratilipiSite extends HttpServlet {
 
 			} else if( uri.equals( "/library" ) ) {
 				List<Long> pratilipiIdList = UserPratilipiDataUtil.getUserLibraryPratilipiList( AccessTokenFilter.getAccessToken().getUserId() );
-				List<PratilipiData> pratilipiDataList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
+				List<PratilipiData> pratilipiDataList = new LinkedList<PratilipiData>();
+				if( pratilipiIdList != null && pratilipiIdList.size() > 0 )
+					pratilipiDataList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "My Library" );
 				dataModel.put( "pratilipiListJson", new Gson().toJson( pratilipiDataList ) );
