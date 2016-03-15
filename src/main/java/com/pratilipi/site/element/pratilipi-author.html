@@ -126,7 +126,7 @@
 						<tr> <th>${ _strings.author_since } :</th> 	<td>{{ date }}</td> </tr>
 					</table>
 
-					<button class="pratilipi-light-blue-button" on-click="followOrUnfollow">{{ followOrUnfollow }}</button>
+					<button class="pratilipi-light-blue-button" on-click="followOrUnfollow">{{ followOrUnfollowLabel }}</button>
 
 					<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
 						<template is="dom-if" if="{{ !mobile }}">
@@ -244,7 +244,7 @@
 			
 			followOrUnfollow: function() {
 				userAuthorData.following = ! userAuthorData.following;
-				this.followOrUnfollow = userauthor.following ? "Unfollow" : "Follow";
+				this.followOrUnfollowLabel = userauthor.following ? "Unfollow" : "Follow";
 				var ajaxPost = this.$.AjaxPost;
 				ajaxPost.params.authorId = this.userAuthorData.authorId;
 				ajaxPost.params.following = userAuthorData.following;
@@ -312,7 +312,7 @@
 			
 			attached: function() {
 				this.updateAuthor( this.authorData );
-				this.followOrUnfollow = userauthor.following ? "Unfollow" : "Follow";
+				this.followOrUnfollowLabel = userauthor.following ? "Unfollow" : "Follow";
 			},
 			
 			_toggleSnippet: function() {
