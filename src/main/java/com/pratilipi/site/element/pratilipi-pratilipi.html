@@ -152,11 +152,11 @@
 					
 					<div style="position: relative; display: inline-block;">
 						<button on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</button>
-						<template is="dom-if" if="{{ !userpratilipi.isAddedtoLib }}">
+						<template is="dom-if" if="{{ !userpratilipi.addedToLib }}">
 							<button on-click="addToLibrary" class="pratilipi-grey-button">Add to your Library</button>
 						</template>
-						<template is="dom-if" if="{{ userpratilipi.isAddedtoLib }}">
-							<span style="font-size: 14px;"><iron-icon icon="icons:check-circle"></iron-icon>Added To Library</span>
+						<template is="dom-if" if="{{ userpratilipi.addedToLib }}">
+							<button on-click="removeFromLibrary" class="pratilipi-grey-button">Remove to your Library</button>
 						</template>
 						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
 							<button id="changeStateButton" on-click="changePratilipiState" class="pratilipi-light-blue-button">{{ changeState }}</button>
@@ -272,6 +272,10 @@
 				} else {
 					document.querySelector( 'pratilipi-userpratilipi' ).addToLibrary( this.pratilipi.pratilipiId );
 				}
+			},
+			
+			removeFromLibrary: function() {
+				document.querySelector( 'pratilipi-userpratilipi' ).removeFromLibrary( this.pratilipi.pratilipiId );
 			},
 			
 			_onIronResize: function() {

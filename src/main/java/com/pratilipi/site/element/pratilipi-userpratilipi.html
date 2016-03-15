@@ -48,6 +48,11 @@
 				this.$.AjaxPost.generateRequest();
 			},
 			
+			removeFromLibrary: function( pratilipiId ) {
+				this.$.AjaxPost.body = ( "pratilipiId=" + pratilipiId + "&" + "addedToLib=false" );
+				this.$.AjaxPost.generateRequest();
+			},
+			
 			_handleAjaxPostResponse: function( event ) {
 				if( event.detail.xhr.status != 200 )
 					this._handleAjaxPostError( event );
