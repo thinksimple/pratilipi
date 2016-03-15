@@ -1,5 +1,4 @@
 <link rel="import" href="pratilipi-edit-author.html?2016031102" />
-<link rel="import" href="pratilipi-author-mail.html" />
 <link rel="import" href="pratilipi-social.html" />
 
 <dom-module id="pratilipi-author">
@@ -129,7 +128,6 @@
 
 					<button class="pratilipi-light-blue-button" on-click="followOrUnfollow">{{ followOrUnfollowLabel }}</button>
 					<button class="pratilipi-light-blue-button" on-click="openAuthorMail">Mail Author</button>
-					<pratilipi-edit-author></pratilipi-edit-author>
 					
 					<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
 						<template is="dom-if" if="{{ !mobile }}">
@@ -142,7 +140,6 @@
 								<button class="pratilipi-light-blue-button" on-click="openAuthorEdit">${ _strings.author_edit_profile }</button>
 							</div>
 						</template>
-						<pratilipi-author-mail></pratilipi-author-mail>
 					</template>
 				</div>
 				<br/>
@@ -181,6 +178,8 @@
 			</paper-card>
 			<br class="pratilipi-break"/>
 		</div>
+		
+		<pratilipi-edit-author></pratilipi-edit-author>
 		
 		<iron-ajax
 				id="AjaxGet"
@@ -249,7 +248,7 @@
 				if( this.user.isGuest )
 					document.querySelector( 'pratilipi-user' ).logIn();
 				else
-					this.querySelector( 'pratilipi-author-mail' ).sendAuthorMail( this.author );
+					document.querySelector( 'pratilipi-author-mail' ).sendAuthorMail( this.author );
 			},
 			
 			followOrUnfollow: function() {

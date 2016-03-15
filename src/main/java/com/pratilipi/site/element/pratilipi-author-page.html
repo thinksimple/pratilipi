@@ -1,5 +1,6 @@
-<link rel='import' href='pratilipi-author.html?2016031503'>
+<link rel='import' href='pratilipi-author.html?2016031504'>
 <link rel='import' href='pratilipi-author-books.html?2016022603' />
+<link rel="import" href="pratilipi-author-mail.html?2016031504" />
 
 <dom-module id="pratilipi-author-page">
 
@@ -26,6 +27,7 @@
 								author-data='[[ authorData ]]'
 								user-author-data='[[ userAuthorData ]]'
 								></pratilipi-author>
+						<pratilipi-author-mail></pratilipi-author-mail>
 						<div style="min-height: 5px;"></div>
 						<template is="dom-if" if="[[ ! author.hasAccessToUpdate ]]">
 							<pratilipi-card-grid

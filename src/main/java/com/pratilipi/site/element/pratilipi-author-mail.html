@@ -19,11 +19,11 @@
 					</div>
 					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
 					<h6 class="modal-fullscreen-heading">Send Mail To {{ authorName }}</h6>
-					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
+					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 20px; margin-bottom: 20px;"></div>
 					<script language="javascript" type="text/javascript">tinymce.init({ selector:'#authorMail', editor_selector : "authorMail", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 					<paper-textarea class="pratilipi-blue" id="authorMail" value="{{ body::input }}"></paper-textarea>
 					<div class="display-message-div"><p>{{ message }}</p></div>
-					<button id="pratilipiAuthorMailButton" style="position: fixed; bottom: 15px; right: 15px;" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">{{ modalButtonText }}</button>					
+					<button id="pratilipiAuthorMailButton" style="margin: 0 auto; display: block;" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">Send Mail</button>					
 				</div>
 			</div>
 		</div>
@@ -49,6 +49,10 @@
 				authorId: { type: String },
 				body: { type: String },
 				message: { type: String }
+			},
+			
+			ready: function() {
+				console.log( "Attached" );
 			},
 			
 			sendAuthorMail: function( author ) {
@@ -96,7 +100,7 @@
 				this.message = "${ _strings.working }";
 				
 				var ajaxBody = "authorId=" + this.authorId + "&"
-							 + "message=" + this.message 
+							 + "message=" + this.body 
 							 + "&" + "sendAuthorMail=true";
 				
 				this.$.AjaxPost.body = ajaxBody;
@@ -118,6 +122,7 @@
 			
 			_handleAjaxPostError: function( event ) {
 				jQuery( '#pratilipiAuthorMailButton' ).prop( 'disabled', false );
+				this.message = "Failed to send Mail. Try once again!";
 			}
 			
 		});
