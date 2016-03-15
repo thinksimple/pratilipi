@@ -182,9 +182,11 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 
 			} else if( uri.equals( "/library" ) ) {
+				List<Long> pratilipiIdList = UserPratilipiDataUtil.getUserLibraryPratilipiList( AccessTokenFilter.getAccessToken().getUserId() );
+				List<PratilipiData> pratilipiDataList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "My Library" );
-				dataModel.put( "pratilipiListJson", new Gson().toJson( UserLibraryApi.getUserPratilipiList( null ) ) );
+				dataModel.put( "pratilipiListJson", new Gson().toJson( pratilipiDataList ) );
 				templateName = templateFilePrefix + ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
 			
 			// Gujarati website specific links

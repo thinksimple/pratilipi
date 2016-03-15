@@ -167,6 +167,10 @@ public class UserPratilipiDataUtil {
 	}
 	
 	public static List<Long> getUserLibraryPratilipiList( Long userId ) {
+		
+		if( userId.equals( 0L ) )
+			return null;
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		DataListCursorTuple<UserPratilipi> userPratilipiListCursorTuple = dataAccessor.getUserPratilipiList( userId, null, null, null );
 		
