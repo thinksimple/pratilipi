@@ -243,11 +243,11 @@
 			},
 			
 			followOrUnfollow: function() {
-				userAuthorData.following = ! userAuthorData.following;
-				this.followOrUnfollowLabel = userauthor.following ? "Unfollow" : "Follow";
+				this.userAuthorData.following = ! this.userAuthorData.following;
+				this.followOrUnfollowLabel = this.userauthor.following ? "Unfollow" : "Follow";
 				var ajaxPost = this.$.AjaxPost;
 				ajaxPost.params.authorId = this.userAuthorData.authorId;
-				ajaxPost.params.following = userAuthorData.following;
+				ajaxPost.params.following = this.userAuthorData.following;
 				ajaxPost.generateRequest();
 			},
 			
@@ -312,7 +312,7 @@
 			
 			attached: function() {
 				this.updateAuthor( this.authorData );
-				this.followOrUnfollowLabel = userauthor.following ? "Unfollow" : "Follow";
+				this.followOrUnfollowLabel = this.userauthor.following ? "Unfollow" : "Follow";
 			},
 			
 			_toggleSnippet: function() {
