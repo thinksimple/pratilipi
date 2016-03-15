@@ -11,7 +11,7 @@
 		<pratilipi-list-page 
 			user-data='${ userJson }'
 			heading='${ pratilipiListTitle }'
-			pratilipi-list='${ pratilipiListJson }'
+			pratilipi-list='${ pratilipiListJson! }'
 			filter='${ pratilipiListFilterJson! }'
 			cursor='${ pratilipiListCursor! }'
 			pratilipi-types='${ pratilipiTypesJson }'

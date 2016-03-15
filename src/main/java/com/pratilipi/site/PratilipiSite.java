@@ -25,6 +25,7 @@ import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
+import com.pratilipi.api.impl.userpratilipi.UserLibraryApi;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericReviewResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -180,7 +181,12 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 
-			
+			} else if( uri.equals( "/library" ) ) {
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "My Library" );
+				dataModel.put( "pratilipiListTitle", "My Library" );
+				dataModel.put( "pratilipiListJson", new Gson().toJson( UserLibraryApi.getUserPratilipiList( null ) ) );
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 			
 			// Gujarati website specific links
 			

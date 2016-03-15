@@ -113,7 +113,7 @@
 										</button>
 										<ul class="dropdown-menu pull-right">
 											<li>
-												<a style="padding: 5px; margin: 0;" href="#">
+												<a style="padding: 5px; margin: 0;">
 													<paper-item on-click="myProfile">
 														<paper-icon-item><iron-icon style="color: #107FE5;" icon="description"></iron-icon></paper-icon-item>
 														&nbsp;&nbsp;
@@ -122,11 +122,20 @@
 												</a>
 											</li>
 											<li>
-												<a style="padding: 5px; margin: 0;" href="#">
+												<a style="padding: 5px; margin: 0;">
 													<paper-item on-click="myAccount">
 														<paper-icon-item><iron-icon style="color: #107FE5;" icon="account-circle"></iron-icon></paper-icon-item>
 														&nbsp;&nbsp;
 														<paper-item-body>${ _strings.user_my_account }</paper-item-body>
+													</paper-item>
+												</a>
+											</li>
+											<li>
+												<a style="padding: 5px; margin: 0;" href="/library">
+													<paper-item>
+														<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:chrome-reader-mode"></iron-icon></paper-icon-item>
+														&nbsp;&nbsp;
+														<paper-item-body>My Library</paper-item-body>
 													</paper-item>
 												</a>
 											</li>

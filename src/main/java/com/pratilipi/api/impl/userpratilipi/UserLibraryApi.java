@@ -1,10 +1,7 @@
 package com.pratilipi.api.impl.userpratilipi;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -20,25 +17,18 @@ import com.pratilipi.filter.AccessTokenFilter;
 @Bind( uri = "/userpratilipi/list" )
 public class UserLibraryApi extends GenericApi {
 	
-	private static final Logger logger =
-			Logger.getLogger( UserLibraryApi.class.getName() );
-	
 	@Get
-	public GetPratilipiListResponse getUserPratilipiList( GenericRequest request ) 
+	public static GetPratilipiListResponse getUserPratilipiList( GenericRequest request ) 
 			throws InsufficientAccessException {
 		
-		logger.log( Level.INFO, "Generating User Library..." );
 		Long userId = AccessTokenFilter.getAccessToken().getUserId();
-		logger.log( Level.INFO, "userId = " + userId );
 		if( userId.equals( 0L ) )
 			return new GetPratilipiListResponse( null, null );
 		
 		List<Long> pratilipiIdList = UserPratilipiDataUtil.getUserLibraryPratilipiList( userId );
 		if( pratilipiIdList == null || pratilipiIdList.size() == 0 )
 			return new GetPratilipiListResponse( null, null );
-		logger.log( Level.INFO, "pratilipiIdList = " + new Gson().toJson( pratilipiIdList ) ) ;
 		List<PratilipiData> pratilipiList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
-		logger.log( Level.INFO, "pratilipiList = " + new Gson().toJson( pratilipiList ) ) ;
 		return new GetPratilipiListResponse( pratilipiList, null );
 	}
 }
