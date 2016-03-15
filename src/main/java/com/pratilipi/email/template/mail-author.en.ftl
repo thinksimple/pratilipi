@@ -34,7 +34,7 @@
 										<table style="max-width: 600px; margin: 30px auto;">
 											<tr>
 												<td>
-													"${ message }"
+													<div>${ message }</div>
 												</td>
 											</tr>
 										</table>

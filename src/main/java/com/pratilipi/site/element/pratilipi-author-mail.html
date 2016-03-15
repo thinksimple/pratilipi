@@ -51,10 +51,6 @@
 				message: { type: String }
 			},
 			
-			ready: function() {
-				console.log( "Attached" );
-			},
-			
 			sendAuthorMail: function( author ) {
 				if( author.authorId == null )
 					alert( "Sorry, can't send mail to the author!" );
@@ -109,11 +105,6 @@
 			
 			_handleAjaxPostResponse: function( event ) {
 				jQuery( '#pratilipiAuthorMailButton' ).prop( 'disabled', false );
-				if( event.detail.request.xhr.status != 200 ) {
-					this._handleAjaxPostError();
-					return;
-				}
-				
 				this.message = "Mail Sent successfully!";
 				this.async( function() {
 					this.clearAndClose();
