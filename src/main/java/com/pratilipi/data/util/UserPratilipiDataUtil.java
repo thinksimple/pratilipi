@@ -169,11 +169,17 @@ public class UserPratilipiDataUtil {
 	public static List<Long> getUserLibraryPratilipiList( Long userId ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		DataListCursorTuple<UserPratilipi> userPratilipiListCursorTuple = dataAccessor.getUserPratilipiList( userId, null, null, null );
+		
+		if( userPratilipiListCursorTuple == null || userPratilipiListCursorTuple.getDataList().size() == 0 )
+			return null;
+		
 		List<UserPratilipi> userPratilipiList = userPratilipiListCursorTuple.getDataList();
+		
 		List<Long> pratilipiIdList = new LinkedList<Long>();
 		for( UserPratilipi userPratilipi : userPratilipiList )
-			if( userPratilipi.isAddedToLib() )
+			if( userPratilipi.isAddedToLib() != null && userPratilipi.isAddedToLib() )
 				pratilipiIdList.add( userPratilipi.getPratilipiId() );
+		
 		return pratilipiIdList;
 	}
 	

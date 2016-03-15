@@ -31,9 +31,11 @@ public class UserLibraryApi extends GenericApi {
 		Long userId = AccessTokenFilter.getAccessToken().getUserId();
 		logger.log( Level.INFO, "userId = " + userId );
 		if( userId.equals( 0L ) )
-			return null;
+			return new GetPratilipiListResponse( null, null );
 		
 		List<Long> pratilipiIdList = UserPratilipiDataUtil.getUserLibraryPratilipiList( userId );
+		if( pratilipiIdList == null || pratilipiIdList.size() == 0 )
+			return new GetPratilipiListResponse( null, null );
 		logger.log( Level.INFO, "pratilipiIdList = " + new Gson().toJson( pratilipiIdList ) ) ;
 		List<PratilipiData> pratilipiList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
 		logger.log( Level.INFO, "pratilipiList = " + new Gson().toJson( pratilipiList ) ) ;
