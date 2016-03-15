@@ -127,6 +127,7 @@
 					</table>
 
 					<button class="pratilipi-light-blue-button" on-click="followOrUnfollow">{{ followOrUnfollowLabel }}</button>
+					<button class="pratilipi-light-blue-button" on-click="openAuthorMail">Mail Author</button>
 
 					<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
 						<template is="dom-if" if="{{ !mobile }}">
@@ -240,6 +241,10 @@
 			
 			openAuthorEdit: function() {
 				this.querySelector( 'pratilipi-edit-author' ).createOrEditAuthor( this.author );
+			},
+			
+			openAuthorMail: function(){
+				this.querySelector( 'pratilipi-author-mail' ).sendAuthorMail( this.author );
 			},
 			
 			followOrUnfollow: function() {
