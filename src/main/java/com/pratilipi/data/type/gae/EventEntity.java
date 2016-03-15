@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -12,7 +13,7 @@ import com.pratilipi.data.type.Event;
 
 @Cache
 @Entity( name = "EVENT" )
-public class EventEntity implements Event {
+public class EventEntity extends GenericOfyEntity implements Event {
 
 	// Intentionally Leaving all fields UnIndexed
 	
@@ -52,6 +53,12 @@ public class EventEntity implements Event {
 	public void setId( Long id ) {
 		this.EVENT_ID = id;
 	}
+	
+	@Override
+	public <T extends GenericOfyEntity> void setKey( Key<T> key ) {
+		this.EVENT_ID = key.getId();
+	}
+	
 
 	@Override
 	public String getName() {

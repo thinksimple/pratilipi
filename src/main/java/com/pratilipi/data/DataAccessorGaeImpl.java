@@ -46,6 +46,7 @@ import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
@@ -53,10 +54,12 @@ import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.CategoryEntity;
 import com.pratilipi.data.type.gae.EventEntity;
+import com.pratilipi.data.type.gae.GenericOfyEntity;
 import com.pratilipi.data.type.gae.NavigationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiCategoryEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
+import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
@@ -129,8 +132,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return id == null ? null : ObjectifyService.ofy().load().key( Key.create( clazz, id ) ).now();
 	}
 	
-	private <T> Key<T> createOrUpdateEntitiesOfy( T entity ) {
-		return ObjectifyService.ofy().save().entity( entity ).now();
+	private <T> T getEntityOfy( Class<T> clazz, String id ) {
+		return id == null ? null : ObjectifyService.ofy().load().key( Key.create( clazz, id ) ).now();
+	}
+	
+	private <T extends GenericOfyEntity> T createOrUpdateEntityOfy( T entity ) {
+		Key<T> key = ObjectifyService.ofy().save().entity( entity ).now();
+		entity.setKey( key );
+		return entity;
 	}
 	
 	private Map<Key<Object>,Object> createOrUpdateEntitiesOfy( Object... entities ) {
@@ -741,9 +750,29 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Event createOrUpdateEvent( Event event ) {
-		Key<Event> key = createOrUpdateEntitiesOfy( event );
-		( (EventEntity) event ).setId( key.getId() );
-		return event;
+		return createOrUpdateEntityOfy( (EventEntity) event );
+	}
+	
+	
+	// USER_AUTHOR Table
+	
+	@Override
+	public UserAuthor newUserAuthor() {
+		return new UserAuthorEntity();
+	}
+	
+	@Override
+	public UserAuthor getUserAuthor( Long userId, Long authorId ) {
+		if( userId == null || userId.equals( 0L ) || authorId == null || authorId.equals( 0L ) )
+			return null;
+		return getEntityOfy( UserAuthorEntity.class, userId + "-" + authorId );
+	}
+
+	@Override
+	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
+		UserAuthorEntity userAuthorEntity = (UserAuthorEntity) userAuthor;
+		userAuthorEntity.setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
+		return createOrUpdateEntityOfy( userAuthorEntity );
 	}
 	
 	

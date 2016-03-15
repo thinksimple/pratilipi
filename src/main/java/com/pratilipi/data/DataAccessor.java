@@ -21,6 +21,7 @@ import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
 
 public interface DataAccessor {
@@ -104,6 +105,11 @@ public interface DataAccessor {
 	DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursor, Integer resultCount );
 	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
 	
+	// USER_AUTHOR Table
+	UserAuthor newUserAuthor();
+	UserAuthor getUserAuthor( Long userId, Long authorId );
+	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor );
+
 	
 	// NAVIGATION Table
 	List<Navigation> getNavigationList( Language language );

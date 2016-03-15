@@ -35,6 +35,7 @@ import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
@@ -43,6 +44,7 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
+import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
@@ -535,6 +537,26 @@ public class DataAccessorMockImpl implements DataAccessor {
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
 		UserPratilipiMock.USER_PRATILIPI_TABLE.add( userPratilipi );
 		return userPratilipi;
+	}
+	
+
+	// USER_PRATILIPI Table
+	
+	@Override
+	public UserAuthor newUserAuthor() {
+		return new UserAuthorEntity();
+	}
+	
+	@Override
+	public UserAuthor getUserAuthor( Long userId, Long pratilipiId ) {
+		// TODO: Implementation
+		return null;
+	}
+
+	@Override
+	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
+		// TODO: Implementation
+		return userAuthor;
 	}
 	
 

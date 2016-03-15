@@ -27,6 +27,7 @@ import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
 
 public class DataAccessorWithMemcache implements DataAccessor {
@@ -665,6 +666,26 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		memcache.put( PREFIX_USER_PRATILIPI + userPratilipi.getId(), userPratilipi );
 		return userPratilipi;
+	}
+	
+	
+	// USER_AUTHOR Table
+	
+	@Override
+	public UserAuthor newUserAuthor() {
+		return dataAccessor.newUserAuthor();
+	}
+	
+	@Override
+	public UserAuthor getUserAuthor( Long userId, Long authorId ) {
+		// Counting on Objectify Global and Session cache
+		return dataAccessor.getUserAuthor( userId, authorId );
+	}
+
+	@Override
+	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
+		// Counting on Objectify Global and Session cache
+		return dataAccessor.createOrUpdateUserAuthor( userAuthor );
 	}
 	
 	
