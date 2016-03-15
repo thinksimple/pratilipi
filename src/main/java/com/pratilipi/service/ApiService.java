@@ -52,7 +52,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( UserPratilipiReviewListApi.class );	// *.pratilipi.com
 		
 		ApiRegistry.register( UserAuthorFollowApi.class );			// *.pratilipi.com
-		// ApiRegistry.register( UserLibraryApi.class );				// *.pratilipi.com
+		ApiRegistry.register( UserLibraryApi.class );				// *.pratilipi.com
 
 	}
 	
