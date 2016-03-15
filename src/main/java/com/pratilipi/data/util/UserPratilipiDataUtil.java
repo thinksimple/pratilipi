@@ -3,8 +3,10 @@ package com.pratilipi.data.util;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.UserReviewState;
@@ -140,6 +142,9 @@ public class UserPratilipiDataUtil {
 			userPratilipi.setPratilipiId( userPratilipiData.getPratilipiId() );
 		}
 		
+		logger.log( Level.INFO, "userPratilipi = " + new Gson().toJson( userPratilipi ) );
+		logger.log( Level.INFO, "userPratilipiData.hasAddedToLibrary = " + userPratilipiData.hasAddedToLib() );
+		
 		if( ! userPratilipiData.hasRating() && ! userPratilipiData.hasReview() && ! userPratilipiData.hasReviewState() && ! userPratilipiData.hasAddedToLib() )
 			return createUserPratilipiData( userPratilipi );
 
@@ -163,6 +168,8 @@ public class UserPratilipiDataUtil {
 
 		if( userPratilipiData.hasAddedToLib() )
 			userPratilipi.setAddedToLib( userPratilipiData.isAddedToLib() );
+		
+		logger.log( Level.INFO, "Added to User's Library - " + userPratilipi.isAddedToLib() );
 		
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
 		
