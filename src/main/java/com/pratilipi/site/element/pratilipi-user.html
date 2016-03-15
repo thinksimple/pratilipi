@@ -43,6 +43,10 @@
 				userData: { type: Object }
 			},
 			
+			getCurrentUser: function() {
+				return this.user;
+			},
+			
 			updateUser: function( user ) {
 				this.set( 'user', user );
 			},

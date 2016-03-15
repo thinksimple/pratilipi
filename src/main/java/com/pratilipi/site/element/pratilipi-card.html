@@ -141,8 +141,13 @@
 			},
 			
 			addToLibrary: function() {
-				this.$.userpratilipiPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=true" );
-				this.$.userpratilipiPost.generateRequest();
+				if( document.querySelector( 'pratilipi-user' ).getCurrentUser().isGuest ) {
+					document.querySelector( 'pratilipi-user' ).logIn();
+				} else {
+					this.$.userpratilipiPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=true" );
+					this.$.userpratilipiPost.generateRequest();
+				}
+				
 			},
 			
 			_handleUserPratilipiPostResponse: function( event ) {
