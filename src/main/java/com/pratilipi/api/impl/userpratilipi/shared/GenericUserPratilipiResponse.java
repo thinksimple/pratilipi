@@ -18,7 +18,7 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	private UserReviewState reviewState;
 	private Long reviewDateMillis;
 	private Boolean hasAccessToReview;
-	private Boolean isAddedtoLib;
+	private Boolean addedToLib;
 	
 	
 	public String getId() {
@@ -68,11 +68,11 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	}
 
 	public Boolean isAddedtoLib() {
-		return isAddedtoLib;
+		return addedToLib;
 	}
 
-	public void setIsAddedtoLib(Boolean isAddedtoLib) {
-		this.isAddedtoLib = isAddedtoLib;
+	public void setAddedtoLib( Boolean addedToLib ) {
+		this.addedToLib = addedToLib;
 	}
 	
 }
