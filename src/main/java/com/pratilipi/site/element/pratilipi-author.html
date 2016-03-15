@@ -129,7 +129,8 @@
 
 					<button class="pratilipi-light-blue-button" on-click="followOrUnfollow">{{ followOrUnfollowLabel }}</button>
 					<button class="pratilipi-light-blue-button" on-click="openAuthorMail">Mail Author</button>
-
+					<pratilipi-edit-author></pratilipi-edit-author>
+					
 					<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
 						<template is="dom-if" if="{{ !mobile }}">
 							<div style="position: absolute; top: 180px;">
@@ -141,7 +142,6 @@
 								<button class="pratilipi-light-blue-button" on-click="openAuthorEdit">${ _strings.author_edit_profile }</button>
 							</div>
 						</template>
-						<pratilipi-edit-author></pratilipi-edit-author>
 						<pratilipi-author-mail></pratilipi-author-mail>
 					</template>
 				</div>
