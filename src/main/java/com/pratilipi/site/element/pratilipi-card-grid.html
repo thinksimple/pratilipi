@@ -1,4 +1,4 @@
-<link rel="import" href="pratilipi-card.html?2016031502" />
+<link rel="import" href="pratilipi-card.html?20160316" />
 
 <dom-module id="pratilipi-card-grid">
 
@@ -103,6 +103,7 @@
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<pratilipi-card 
 						hide-add-to-library-button="{{ hideAddToLibraryButton }}"
+						show-remove-from-library-button="{{ showRemoveFromLibraryButton }}"
 						pratilipi="[[ item ]]"
 						drafts-active="[[ draftsActive ]]"
 						published-active="[[ publishedActive ]]"></pratilipi-card>
@@ -162,6 +163,7 @@
 				zeroAuthorBooks: { type: Boolean, value: false },
 				
 				hideAddToLibraryButton: { type: Boolean, value: false },
+				showRemoveFromLibraryButton: { type: Boolean, value: false }
 			},
 			
 			setSearchQuery: function( query ) {

@@ -94,6 +94,9 @@
 								<template is="dom-if" if="{{ !hideAddToLibraryButton }}">
 									<iron-icon style="color: #107FE5; cursor: pointer;" icon="icons:chrome-reader-mode" on-click="addToLibrary"></iron-icon>
 								</template>
+								<template is="dom-if" if="{{ showRemoveFromLibraryButton }}">
+									<iron-icon style="color: #D0021B; cursor: pointer;" icon="icons:create" on-click="removeFromLibrary"></iron-icon>
+								</template>
 							</template>
 						</div>
 						
@@ -132,7 +135,8 @@
 				
 				draftsActive: { type: Boolean, value: false, observer: "init" },
 				publishedActive: { type: Boolean, value: false },
-				hideAddToLibraryButton: { type: Boolean, value: false }
+				hideAddToLibraryButton: { type: Boolean, value: false },
+				showRemoveFromLibraryButton: { type: Boolean, value: false }
 			},
 			
 			redirectToReader: function() {
@@ -153,8 +157,17 @@
 				
 			},
 			
+			removeFromLibrary: function() {
+				this.$.userpratilipiPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=false" );
+				this.$.userpratilipiPost.generateRequest();
+			},
+			
 			_handleUserPratilipiPostResponse: function( event ) {
 				alert( "Success!" );
+				// If remove option
+				if( this.showRemoveFromLibraryButton )
+					document.querySelector( 'pratilipi-library-page' ).removePratilipiById( this.pratilipi.pratilipiId );
+				
 			},
 			
 			_handleUserPratilipiPostError: function( event ) {

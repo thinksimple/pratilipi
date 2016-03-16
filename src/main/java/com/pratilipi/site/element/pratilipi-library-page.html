@@ -18,6 +18,7 @@
 					<div style="overflow: hidden">
 						<pratilipi-card-grid
 							hide-add-to-library-button
+							show-remove-from-library-button
 							heading='My Library'
 							pratilipi-list='[[ pratilipiList ]]'
 							></pratilipi-card-grid>
@@ -47,6 +48,19 @@
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				lastScrollTop: { type: Number, value: 0 },
+			},
+			
+			removePratilipiById: function( pratilipiId ) {
+				var index = -1;
+				for( var i = 0; i < this.pratilipiList.length; i++ ) {
+					if( this.pratilipiList[i].pratilipiId == pratilipiId ) {
+						index = i;
+						break;
+					}
+				}
+				
+				if( index != -1 )
+					this.splice( 'pratilipiList', index, 1 );
 			},
 			
 			_userChanged: function() {
