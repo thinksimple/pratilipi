@@ -65,6 +65,8 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Persistent( column = "ADDED_TO_LIB" )
 	private Boolean addedToLib;
 	
+	@Persistent( column = "ADDED_TO_LIB_DATE" )
+	private Date addedToLibDate;
 
 	
 	public UserPratilipiEntity() {}
@@ -199,6 +201,16 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Override
 	public void setAddedToLib( Boolean addedToLib ) {
 		this.addedToLib = addedToLib;
+	}
+
+	@Override
+	public Date getAddedToLibDate() {
+		return addedToLibDate;
+	}
+	
+	@Override
+	public void setAddedToLibDate( Date addedToLibDate ) {
+		this.addedToLibDate = addedToLibDate;
 	}
 
 }
