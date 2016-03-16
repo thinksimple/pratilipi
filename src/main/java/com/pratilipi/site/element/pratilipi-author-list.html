@@ -213,18 +213,18 @@
 				this.isLoading = false;
 				
 				// Call didn't succeed.
-				if( ! request.detail.response )
+				if( ! event.detail.response )
 					return;
 				
-				var authorList = request.detail.response.authorList;
+				var authorList = event.detail.response.authorList;
 				this.process( authorList );
 
-				if( request.detail.response.cursor == null || authorList.length < 20 ) {
+				if( event.detail.response.cursor == null || authorList.length < 20 ) {
 					this.includeShowMoreButton = false;
 					this.isFinished = true;
 				}
 				else
-					this.cursor = request.detail.response.cursor;
+					this.cursor = event.detail.response.cursor;
 			},
 			
 			_handleAjaxGetError: function( event ) {
