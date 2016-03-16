@@ -854,6 +854,34 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursorStr, Integer resultCount ) {
+
+		GaeQueryBuilder queryBuilder =
+				new GaeQueryBuilder( pm.newQuery( UserAuthorEntity.class ) );
+		
+		if( userId != null )
+			queryBuilder.addFilter( "userId", userId );
+		if( authorId != null )
+			queryBuilder.addFilter( "authorId", authorId );
+		if( cursorStr != null )
+			queryBuilder.setCursor( cursorStr );
+		if( resultCount != null )
+			queryBuilder.setRange( 0, resultCount );
+		
+		Query query = queryBuilder.build();
+		
+		@SuppressWarnings("unchecked")
+		List<UserAuthor> userPratilipiList =
+				(List<UserAuthor>) query.executeWithMap( queryBuilder.getParamNameValueMap() );
+		Cursor cursor = JDOCursorHelper.getCursor( userPratilipiList );
+		
+		return new DataListCursorTuple<UserAuthor>(
+				(List<UserAuthor>) pm.detachCopyAll( userPratilipiList ),
+				cursor == null ? null : cursor.toWebSafeString() );
+		
+	}
+
+	@Override
 	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
 		UserAuthorEntity userAuthorEntity = (UserAuthorEntity) userAuthor;
 		userAuthorEntity.setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );

@@ -683,6 +683,12 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 
 	@Override
+	public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursorStr, Integer resultCount ) {
+		// Counting on Objectify Global and Session cache
+		return dataAccessor.getUserAuthorList( userId, authorId, cursorStr, resultCount );
+	}
+
+	@Override
 	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
 		// Counting on Objectify Global and Session cache
 		return dataAccessor.createOrUpdateUserAuthor( userAuthor );
