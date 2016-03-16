@@ -83,6 +83,9 @@ public class AuthorEntity implements Author {
 	private Date lastUpdated;
 
 	
+	@Persistent( column = "FOLLOW_COUNT" )
+	private Long followCount;
+
 	@Persistent( column = "CONTENT_PUBLISHED" )
 	private Integer contentPublished;
 	
@@ -329,6 +332,16 @@ public class AuthorEntity implements Author {
 		this.lastUpdated = lastUpdated;
 	}
 	
+	
+	@Override
+	public Long getFollowCount() {
+		return followCount == null ? 0 : followCount;
+	}
+	
+	@Override
+	public void setFollowCount( Long followCount ) {
+		this.followCount = followCount;
+	}
 	
 	@Override
 	public Integer getContentPublished() {

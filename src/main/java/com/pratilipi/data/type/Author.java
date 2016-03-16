@@ -81,6 +81,10 @@ public interface Author extends Serializable {
 	void setLastUpdated( Date lastUpdated );
 
 	
+	Long getFollowCount();
+	
+	void setFollowCount( Long followCount );
+		
 	Integer getContentPublished();
 	
 	void setContentPublished( Integer contentPublished );
