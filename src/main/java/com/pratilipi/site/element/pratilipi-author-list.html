@@ -140,6 +140,7 @@
 				cursor: { type: String },
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
+				sno: { type: Number, value: 1 },
 				includeShowMoreButton: { type: Boolean, value: false }
 			},
 			
@@ -149,7 +150,7 @@
 			
 			process: function( authorList ) {
 				for( var i = 0; i < authorList.length; i++ ) {
-					authorList[i][ "sno" ] = i+1;
+					authorList[i][ "sno" ] = this.sno++;
 					
 					
 					if( authorList[i][ "imageUrl" ].indexOf( '?' ) == -1 )
