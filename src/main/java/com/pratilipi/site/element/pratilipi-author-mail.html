@@ -66,7 +66,7 @@
 			clearAndClose: function() {
 				this.authorName = null;
 				this.authorId = null;
-				this.body = null;
+				this.body = "";
 				this.message = null;
 				if( tinyMCE != null && tinyMCE.activeEditor != null )
 					this.body = tinyMCE.get( 'authorMail' ).setContent( this.body );

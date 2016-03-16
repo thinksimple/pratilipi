@@ -95,7 +95,7 @@
 									<iron-icon style="color: #107FE5; cursor: pointer;" icon="icons:chrome-reader-mode" on-click="addToLibrary"></iron-icon>
 								</template>
 								<template is="dom-if" if="{{ showRemoveFromLibraryButton }}">
-									<iron-icon style="color: #D0021B; cursor: pointer;" icon="icons:create" on-click="removeFromLibrary"></iron-icon>
+									<iron-icon style="color: #D0021B; cursor: pointer;" icon="icons:delete" on-click="removeFromLibrary"></iron-icon>
 								</template>
 							</template>
 						</div>
@@ -162,12 +162,11 @@
 				this.$.userpratilipiPost.generateRequest();
 			},
 			
-			_handleUserPratilipiPostResponse: function( event ) {
-				alert( "Success!" );
+			_handleUserPratilipiPostResponse: function( event ) {				
 				// If remove option
 				if( this.showRemoveFromLibraryButton )
 					document.querySelector( 'pratilipi-library-page' ).removePratilipiById( this.pratilipi.pratilipiId );
-				
+				alert( "Success!" );
 			},
 			
 			_handleUserPratilipiPostError: function( event ) {
