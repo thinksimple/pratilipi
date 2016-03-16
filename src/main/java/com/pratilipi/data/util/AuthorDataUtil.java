@@ -202,8 +202,8 @@ public class AuthorDataUtil {
 			throw new InsufficientAccessException();
 		
 		DataListCursorTuple<Long> authorIdListCursorTuple = DataAccessorFactory
-				.getDataAccessor()
-				.getAuthorIdList( authorFilter, cursor, resultCount );
+				.getSearchAccessor()
+				.searchAuthor( null, authorFilter, cursor, 0, resultCount );
 		
 		List<AuthorData> authorDataList = createAuthorDataList( authorIdListCursorTuple.getDataList() );
 		
