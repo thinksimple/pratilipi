@@ -532,8 +532,12 @@ public class UserDataUtil {
 	public static void sendAuthorMail( Long userId, Long authorId, String message ) 
 			throws InvalidArgumentException, UnexpectedServerException {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		// User's data
 		User user = dataAccessor.getUser( userId );
-		Page userPage = dataAccessor.getPage( PageType.AUTHOR, dataAccessor.getAuthorByUserId( userId ).getId() );
+		Author userAuthor = dataAccessor.getAuthorByUserId( userId );
+		Page userPage = dataAccessor.getPage( PageType.AUTHOR, userAuthor.getId() );
+		
+		// Author's data
 		Author author = dataAccessor.getAuthor( authorId );
 		
 		if( user == null || user.getState() == UserState.REFERRAL || user.getState() == UserState.DELETED )
@@ -551,7 +555,7 @@ public class UserDataUtil {
 		dataModel.put( "userName", createUserData( user ).getDisplayName() );
 		dataModel.put( "recipientName", authorName );
 		dataModel.put( "message", message );
-		dataModel.put( "userPageUrl", author.getLanguage().getHostName() + userPage.getUriAlias() );
+		dataModel.put( "userPageUrl", userAuthor.getLanguage().getHostName() + userPage.getUriAlias() );
 		
 		EmailUtil.sendMail( authorName, author.getEmail(), "mail-author", Language.ENGLISH, dataModel );
 	}
