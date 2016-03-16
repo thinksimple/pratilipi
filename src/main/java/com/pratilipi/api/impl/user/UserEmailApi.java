@@ -11,7 +11,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.util.UserDataUtil;
-import com.pratilipi.filter.AccessTokenFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/user/email" )
@@ -48,10 +47,6 @@ public class UserEmailApi extends GenericApi {
 
 		if( request.sendPasswordResetMail() )
 			UserDataUtil.sendPasswordResetMail( request.getEmail() );
-		
-		if( request.sendAuthorMail() )
-			UserDataUtil.sendAuthorMail( AccessTokenFilter.getAccessToken().getUserId(),
-										 request.getAuthorId(), request.getMessage() );
 		
 		if( request.sendBirthdayMail() )
 			throw new InvalidArgumentException( "Feature not yet supported !" );

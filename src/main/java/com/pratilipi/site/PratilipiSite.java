@@ -25,7 +25,6 @@ import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
-import com.pratilipi.api.impl.userpratilipi.UserLibraryApi;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericReviewResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;

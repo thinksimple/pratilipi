@@ -19,7 +19,6 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
-import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
@@ -31,7 +30,6 @@ import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.User;
-import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
@@ -90,28 +88,8 @@ public class AuthorProcessApi extends GenericApi {
 	public GenericResponse postAuthorProcess( AuthorProcessPostRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 
-		if( request.validateData() ) {
+		if( request.validateData() )
 			validateAuthorData( request.getAuthorId() );
-			
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			Author author = dataAccessor.getAuthor( request.getAuthorId() );
-			if( author.getFollowCount() == 0 ) {
-				UserAuthor userAuthor = dataAccessor.newUserAuthor();
-				if( author.getLanguage() == Language.HINDI )
-					userAuthor.setUserId( 5664902681198592L );
-				else if( author.getLanguage() == Language.GUJARATI )
-					userAuthor.setUserId( 5664902681198592L );
-				else if( author.getLanguage() == Language.TAMIL )
-					userAuthor.setUserId( 5991416564023296L );
-				if( userAuthor.getUserId() != null ) {
-					userAuthor.setAuthorId( author.getId() );
-					userAuthor.setFollowing( true );
-					userAuthor.setFollowingSince( new Date() );
-					dataAccessor.createOrUpdateUserAuthor( userAuthor );
-				}
-			}
-			
-		}
 		
 		if( request.processData() ) {
 			

@@ -197,7 +197,7 @@ public class UserPratilipiEntity implements UserPratilipi {
 	}
 
 	@Override
-	public void setAddedToLib(Boolean addedToLib) {
+	public void setAddedToLib( Boolean addedToLib ) {
 		this.addedToLib = addedToLib;
 	}
 

@@ -22,7 +22,6 @@ public class UserAuthorEntity extends GenericOfyEntity implements UserAuthor {
 
 	private Boolean FOLLOWING;
 	private Date FOLLOWING_SINCE;
-
 	
 	
 	public UserAuthorEntity() {}
