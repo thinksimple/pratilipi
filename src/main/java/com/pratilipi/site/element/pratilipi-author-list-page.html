@@ -50,8 +50,10 @@
 			},
 			
 			scrollHandler: function( st ) {
-				if( st > this.lastScrollTop || st < 100 )
+				if( st > this.lastScrollTop || st < 100 ) {
 					jQuery( '#scrollToTop' ).fadeOut();
+					this.querySelector( 'pratilipi-author-list' ).loadMore();
+				}
 				else
 					jQuery( '#scrollToTop' ).fadeIn();
 				this.lastScrollTop = st;

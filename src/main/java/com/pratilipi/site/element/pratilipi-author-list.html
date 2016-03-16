@@ -177,7 +177,6 @@
 				this.process( this.authorList );
 				if( this.authorList.length < 20 || this.cursor.trim() == "" )
 					this.isFinished = true;
-				console.log( this.isFinished );
 			},
 			
 			loadMore: function() {
@@ -202,8 +201,6 @@
 				// Spinner Active and disable show more button.
 				this.isLoading = true;
 				this.includeShowMoreButton = false;
-				
-				console.log( "Making call" );
 				
 				// Set params and make ajax GET call. Filters already set when element initialised.
 				var ajaxGet = this.$.AjaxGet;
