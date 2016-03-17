@@ -2,12 +2,20 @@
 /sarvadhik-pathako-ki-pasand  सर्वाधिक पाठकों की पसंद
 /premchand-sahitya           प्रेमचंद साहित्य
 /nayi-prakashit-rachnaye    नई प्रकाशित रचनाएं
-/lekhani-February-ank       लेखनी फरवरी अंक 
-/search?q=magazines  पत्रिकाएं
+/classic                    क्लासिक 
+/search?q=magazines         पत्रिकाएं
 
-Navigation 2
-/search?q=books     Books
-/search?q=stories   Stories
-/search?q=poems     Poems
-/search?q=articles  Articles
-/search?q=magazines Magazines
+श्रेणी 
+/lovestories             प्रेम कथाएं
+/suspense-aur-thriller   सस्पेंस और थ्रिलर
+/horror                  हॉरर 
+/search?q=stories        अन्य कहानियां 
+/upanyas                 उपन्यास
+/hasya-vyangya           हास्य – व्यंग्य 
+/search?q=poems          काव्य – वाटिका 
+/search?q=articles       लेख
+/jivani-evam-atmakatha   जीवनी एवं आत्मकथा 
+/cinema                  सिनेमा 
+/mythology               प्राचीन साहित्य 
+/yatra-vrutant           यात्रा – वृत्तांत 
+/self-help               स्व - विकास 
