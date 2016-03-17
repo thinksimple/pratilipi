@@ -10,12 +10,14 @@ import java.util.concurrent.TimeUnit;
 
 import javax.jdo.PersistenceManager;
 
+import com.google.appengine.repackaged.com.google.common.geometry.S2EdgeIndex.DataEdgeIterator;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
@@ -654,6 +656,14 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return dataAccessor.getPratilipiReviewList( pratilipiId, cursor, offset, resultCount );
 	}
 
+	@Override
+	public DataListCursorTuple<Long> getPratilipiIdList(
+			UserPratilipiFilter pratilipiFilter, String cursorStr,
+			Integer offset, Integer resultCount ) {
+		
+		return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, offset, resultCount );
+	}
+	
 	@Override
 	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
 			Long pratilipiId, String cursorStr, Integer resultCount ) {

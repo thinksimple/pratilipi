@@ -17,6 +17,7 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.mock.AccessTokenMock;
 import com.pratilipi.data.mock.AppPropertyMock;
 import com.pratilipi.data.mock.AuthorMock;
@@ -517,6 +518,15 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public DataListCursorTuple<Long> getPratilipiIdList(
+			UserPratilipiFilter pratilipiFilter, String cursorStr,
+			Integer offset, Integer resultCount ) {
+
+		// TODO: Implementation
+		return null;
+	}
+	
+	@Override
 	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
 			Long pratilipiId, String cursorStr, Integer resultCount ) {
 		
@@ -540,7 +550,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 
-	// USER_PRATILIPI Table
+	// USER_AUTHOR Table
 	
 	@Override
 	public UserAuthor newUserAuthor() {

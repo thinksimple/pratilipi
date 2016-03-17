@@ -34,6 +34,7 @@ import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
@@ -804,6 +805,46 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				cursor == null ? null : cursor.toWebSafeString() );
 	}
 
+	@Override
+	public DataListCursorTuple<Long> getPratilipiIdList(
+			UserPratilipiFilter pratilipiFilter, String cursorStr,
+			Integer offset, Integer resultCount ) {
+		
+		GaeQueryBuilder queryBuilder =
+				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
+		
+		if( pratilipiFilter.getUserId() != null )
+			queryBuilder.addFilter( "userId", pratilipiFilter.getUserId() );
+		if( pratilipiFilter.getPratilipiId() != null )
+			queryBuilder.addFilter( "pratilipiId", pratilipiFilter.getPratilipiId() );
+		if( pratilipiFilter.getAddedToLib() != null )
+			queryBuilder.addFilter( "addedToLib", pratilipiFilter.getAddedToLib() );
+
+		if( pratilipiFilter.getAddedToLib() != null )
+			queryBuilder.addOrdering( "addedToLib", pratilipiFilter.getAddedToLib() );
+
+		queryBuilder.setCursor( cursorStr );
+		
+		if( offset != null && resultCount != null )
+			queryBuilder.setRange( offset, offset + resultCount );
+		else if( resultCount != null )
+			queryBuilder.setRange( 0, resultCount );
+		
+		queryBuilder.setResult( "pratilipiId" );
+		
+		Query query = queryBuilder.build();
+		
+		@SuppressWarnings("unchecked")
+		List<Long> pratilipiIdList =
+				(List<Long>) query.executeWithMap( queryBuilder.getParamNameValueMap() );
+		Cursor cursor = JDOCursorHelper.getCursor( pratilipiIdList );
+		
+		return new DataListCursorTuple<Long>(
+				pratilipiIdList,
+				cursor == null ? null : cursor.toWebSafeString() );
+		
+	}
+	
 	@Override
 	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
 			Long pratilipiId, String cursorStr, Integer resultCount ) {

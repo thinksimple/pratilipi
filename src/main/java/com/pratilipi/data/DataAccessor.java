@@ -10,6 +10,7 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
@@ -102,6 +103,7 @@ public interface DataAccessor {
 	UserPratilipi newUserPratilipi();
 	UserPratilipi getUserPratilipi( Long userId, Long pratilipiId );
 	DataListCursorTuple<UserPratilipi> getPratilipiReviewList( Long pratilipiId, String cursor, Integer offset, Integer resultCount );
+	DataListCursorTuple<Long> getPratilipiIdList( UserPratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount );
 	DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursor, Integer resultCount );
 	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
 	
