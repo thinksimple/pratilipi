@@ -117,6 +117,7 @@
 									<paper-item value="MALAYALAM">${ _strings.language_ml }</paper-item>
 									<paper-item value="MARATHI">${ _strings.language_mr }</paper-item>
 									<paper-item value="TAMIL">${ _strings.language_ta }</paper-item>
+									<paper-item value="TELUGU">${ _strings.language_te }</paper-item>
 								</paper-menu>
 							</paper-dropdown-menu>
 						</div>
@@ -226,6 +227,8 @@
 					this.selected = 4;
 				else if( this.language === "TAMIL" )
 					this.selected = 5;
+				else if( this.language === "TELUGU" )
+					this.selected = 6;
 				
 				// paper-dropdown-menu for language
 				this.gender = author.gender == null ? null : author.gender.toUpperCase();
