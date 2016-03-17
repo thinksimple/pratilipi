@@ -279,9 +279,6 @@
 				if( this.$.authorGender.selectedItem )
 					this.gender = this.$.authorGender.selectedItem.getAttribute( "value" );
 				
-				if( this.dateOfBirth != null )
-					this.dateOfBirth = this.processDateOfBirth( this.dateOfBirth );
-				
 				var body = {};
 				
 				if( this.authorId != null )
@@ -301,7 +298,7 @@
 				if( this.gender != null )
 					body.gender = this.gender;
 				if( this.dateOfBirth != null )
-					body.dateOfBirth = this.dateOfBirth;
+					body.dateOfBirth = this.processDateOfBirth( this.dateOfBirth );
 				if( this.language != null )
 					body.language = this.language;
 				if( this.summary != null )

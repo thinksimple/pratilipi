@@ -1,4 +1,4 @@
-<link rel="import" href="pratilipi-edit-author.html?2016031102" />
+<link rel="import" href="pratilipi-edit-author.html?20160317" />
 <dom-module id="pratilipi-author-list">
 
 	<style>
@@ -22,6 +22,25 @@
 
 	<template>
 		<div class="parent-container">
+			<!-- <paper-card class="container custom-style" style="margin-bottom: 5px;">
+				<div class="row">
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<pratilipi-input type="search" label="Search Authors" value="{{ authorSearchQuery::input }}" icon="icons:search"></pratilipi-input>
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
+						Content Published
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
+						Name
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
+						Recently Added
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
+						Read Count
+					</div>
+				</div>
+			</paper-card> -->
 			<template is="dom-repeat" id="repeatAuthorList" items="{{ modifiedAuthorList }}">
 				<pratilipi-author-snippet author="{{ item }}"></pratilipi-author-snippet>
 			</template>
