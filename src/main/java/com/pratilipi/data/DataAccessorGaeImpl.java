@@ -820,8 +820,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( pratilipiFilter.getAddedToLib() != null )
 			queryBuilder.addFilter( "addedToLib", pratilipiFilter.getAddedToLib() );
 
-		if( pratilipiFilter.getAddedToLib() != null )
-			queryBuilder.addOrdering( "addedToLib", pratilipiFilter.getAddedToLib() );
+		if( pratilipiFilter.getOrderByAddedToLibDate() != null )
+			queryBuilder.addOrdering( "addedToLib", pratilipiFilter.getOrderByAddedToLibDate() );
 
 		queryBuilder.setCursor( cursorStr );
 		

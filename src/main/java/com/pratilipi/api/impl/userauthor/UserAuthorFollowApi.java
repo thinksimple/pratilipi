@@ -16,10 +16,10 @@ import com.pratilipi.filter.AccessTokenFilter;
 public class UserAuthorFollowApi extends GenericApi {
 
 	@Post
-	public GenericResponse get( PostUserAuthorFollowRequest request )
+	public GenericResponse post( PostUserAuthorFollowRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
-		UserAuthorData userAuthorData =  new UserAuthorData();
+		UserAuthorData userAuthorData = new UserAuthorData();
 		userAuthorData.setUserId( AccessTokenFilter.getAccessToken().getUserId() );
 		userAuthorData.setAuthorId( request.getAuthorId() );
 		userAuthorData.setFollowing( request.getFollowing() );

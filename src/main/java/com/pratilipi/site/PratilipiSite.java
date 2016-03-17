@@ -126,6 +126,11 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
 				templateName = templateFilePrefix + ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
 			
+			} else if( uri.equals( "/library" ) ) {
+				dataModel = createDataModelForLibraryPage( basicMode, filterLanguage );
+				templateName = templateFilePrefix + ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
+
+
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
 				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
@@ -156,7 +161,6 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
 				
-				
 			
 			// Master website specific links
 			
@@ -180,15 +184,6 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 
-			} else if( uri.equals( "/library" ) ) {
-				List<Long> pratilipiIdList = UserPratilipiDataUtil.getUserLibraryPratilipiList( AccessTokenFilter.getAccessToken().getUserId() );
-				List<PratilipiData> pratilipiDataList = new LinkedList<PratilipiData>();
-				if( pratilipiIdList != null && pratilipiIdList.size() > 0 )
-					pratilipiDataList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "My Library" );
-				dataModel.put( "pratilipiListJson", new Gson().toJson( pratilipiDataList ) );
-				templateName = templateFilePrefix + ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
 			
 			// Gujarati website specific links
 			
@@ -502,6 +497,25 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
+	private Map<String, Object> createDataModelForLibraryPage( boolean basicMode, Language filterLanguage ) {
+		
+		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
+				= UserPratilipiDataUtil.getUserPratilipiLibrary( AccessTokenFilter.getAccessToken().getUserId(), null, null, null );
+		
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", "My Library" );
+		if( basicMode ) {
+			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
+		} else {
+			Gson gson = new Gson();
+			dataModel.put( "pratilipiListJson", gson.toJson( toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
+			dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+		}
+		return dataModel;
+		
+	}
+
+	
 	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId, boolean basicMode, HttpServletRequest request )
 			throws InsufficientAccessException {
 		
@@ -701,7 +715,7 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 		
 	}
-
+	
 	private Map<String, Object> createDataModelForListPage( PratilipiType type,
 			boolean basicMode, Language displayLanguage, Language filterLanguage,
 			HttpServletRequest request ) throws InsufficientAccessException {

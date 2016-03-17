@@ -2,16 +2,17 @@ package com.pratilipi.data.util;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.util.UserAccessUtil;
+import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.AccessToken;
@@ -96,6 +97,24 @@ public class UserPratilipiDataUtil {
 		
 	}
 	
+	public static DataListCursorTuple<PratilipiData> getUserPratilipiLibrary(
+			Long userId, String cursor, Integer offset, Integer resultCount ) {
+		
+		UserPratilipiFilter userPratilipiFilter = new UserPratilipiFilter();
+		userPratilipiFilter.setUserId( userId );
+		userPratilipiFilter.setAddedToLib( true );
+		userPratilipiFilter.setOrderByAddedToLibDate( false );
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
+				dataAccessor.getPratilipiIdList( userPratilipiFilter, cursor, offset, resultCount );
+		
+		return new DataListCursorTuple<PratilipiData>(
+				PratilipiDataUtil.createPratilipiDataList( pratilipiIdListCursorTuple.getDataList(), true ),
+				pratilipiIdListCursorTuple.getCursor() );
+		
+	}
+	
 	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList(
 			Long pratilipiId, String cursor, Integer resultCount ) {
 		
@@ -164,27 +183,6 @@ public class UserPratilipiDataUtil {
 		
 		return createUserPratilipiData( userPratilipi );
 		
-	}
-	
-	public static List<Long> getUserLibraryPratilipiList( Long userId ) {
-		
-		if( userId.equals( 0L ) )
-			return null;
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		DataListCursorTuple<UserPratilipi> userPratilipiListCursorTuple = dataAccessor.getUserPratilipiList( userId, null, null, null );
-		
-		if( userPratilipiListCursorTuple == null || userPratilipiListCursorTuple.getDataList().size() == 0 )
-			return null;
-		
-		List<UserPratilipi> userPratilipiList = userPratilipiListCursorTuple.getDataList();
-		
-		List<Long> pratilipiIdList = new LinkedList<Long>();
-		for( UserPratilipi userPratilipi : userPratilipiList )
-			if( userPratilipi.isAddedToLib() != null && userPratilipi.isAddedToLib() )
-				pratilipiIdList.add( userPratilipi.getPratilipiId() );
-		
-		return pratilipiIdList;
 	}
 	
 }

@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.jdo.PersistenceManager;
 
-import com.google.appengine.repackaged.com.google.common.geometry.S2EdgeIndex.DataEdgeIterator;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
