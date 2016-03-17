@@ -2,7 +2,7 @@ package com.pratilipi.api.impl.userpratilipi.shared;
 
 import com.pratilipi.api.shared.GenericRequest;
 
-public class GetUserPratilipiLibraryRequest extends GenericRequest {
+public class GetUserPratilipiLibraryListRequest extends GenericRequest {
 
 	private String cursor;
 	private Integer resultCount;
