@@ -317,7 +317,9 @@
 				var author = event.detail.response;
 				
 				if( this.authorId != null ) {
-					document.querySelector( 'pratilipi-author' ).updateAuthor( author );
+					// Case : Update from /authors page.
+					if( document.querySelector( 'pratilipi-author' ) != null )
+						document.querySelector( 'pratilipi-author' ).updateAuthor( author );
 					this.async( function() {
 						jQuery( '#authorEditButton' ).prop( 'disabled', false );
 						this.message = null;
