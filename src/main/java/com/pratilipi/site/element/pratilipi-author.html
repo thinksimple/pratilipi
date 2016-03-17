@@ -126,10 +126,11 @@
 						<tr> <th>${ _strings.author_since } :</th> 	<td>{{ date }}</td> </tr>
 					</table>
 
-					<button class="pratilipi-light-blue-button" on-click="followOrUnfollow">{{ followOrUnfollowLabel }}</button>
-					<button class="pratilipi-light-blue-button" on-click="openAuthorMail">Mail Author</button>
+					<!-- <button class="pratilipi-light-blue-button" on-click="followOrUnfollow">{{ followOrUnfollowLabel }}</button>
+					<button class="pratilipi-light-blue-button" on-click="openAuthorMail">Mail Author</button> -->
 					
 					<template is="dom-if" if="{{ author.hasAccessToUpdate }}">
+						<pratilipi-edit-author></pratilipi-edit-author>
 						<template is="dom-if" if="{{ !mobile }}">
 							<div style="position: absolute; top: 180px;">
 								<button class="pratilipi-light-blue-button" on-click="openAuthorEdit">${ _strings.author_edit_profile }</button>
@@ -179,8 +180,6 @@
 			<br class="pratilipi-break"/>
 		</div>
 		
-		<pratilipi-edit-author></pratilipi-edit-author>
-		
 		<iron-ajax
 				id="AjaxGet"
 				url="/api/author"
@@ -190,7 +189,7 @@
 				on-response="_handleAjaxGetResponse"
 				></iron-ajax>
 		
-		<iron-ajax
+		<!-- <iron-ajax
 				id="AjaxPost"
 				url="/api/userauthor/follow"
 				method="POST"
@@ -198,7 +197,7 @@
 				handle-as="json"
 				on-response="_handleAjaxPostResponse"
 				on-error="_handleAjaxPostError"
-				></iron-ajax>
+				></iron-ajax> -->
 		
 	</template>
 	
@@ -244,7 +243,7 @@
 				this.querySelector( 'pratilipi-edit-author' ).createOrEditAuthor( this.author );
 			},
 			
-			openAuthorMail: function() {
+			/* openAuthorMail: function() {
 				if( this.user.isGuest )
 					document.querySelector( 'pratilipi-user' ).logIn();
 				else
@@ -258,7 +257,7 @@
 				ajaxPost.params.authorId = this.userAuthorData.authorId;
 				ajaxPost.params.following = this.userAuthorData.following;
 				ajaxPost.generateRequest();
-			},
+			}, */
 			
 			process: function( data ) {
 				if( data.name == null && data.nameEn != null )
@@ -321,7 +320,7 @@
 			
 			attached: function() {
 				this.updateAuthor( this.authorData );
-				this.followOrUnfollowLabel = this.userAuthorData.following ? "Unfollow" : "Follow";
+				/* this.followOrUnfollowLabel = this.userAuthorData.following ? "Unfollow" : "Follow"; */
 			},
 			
 			_toggleSnippet: function() {
