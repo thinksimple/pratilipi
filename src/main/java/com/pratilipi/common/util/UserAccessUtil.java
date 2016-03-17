@@ -22,6 +22,7 @@ public class UserAccessUtil {
 		ADMIN_MALAYALAM	( Language.MALAYALAM,	ADMIN_ACCESS ),
 		ADMIN_MARATHI	( Language.MARATHI,		ADMIN_ACCESS ),
 		ADMIN_TAMIL		( Language.TAMIL,		ADMIN_ACCESS ),
+		ADMIN_TELUGU	( Language.TELUGU,		ADMIN_ACCESS ),
 		
 		ADMINISTRATOR	( null,					AccessType.values() );
 
@@ -78,6 +79,12 @@ public class UserAccessUtil {
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TAMIL };
 			case "5705241014042624": // prashant@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_HINDI };
+				
+			case "5156503382130688" : // babu@
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TELUGU };
+				
+			case "5666355716030464" : // vaisakh@
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MALAYALAM };
 			
 			default:
 				return new Role[] { Role.MEMBER };
