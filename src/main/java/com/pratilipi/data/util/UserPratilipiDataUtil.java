@@ -65,7 +65,7 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setReviewState( userPratilipi.getReviewState() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 		userPratilipiData.setAccessToReview( hasAccessToAddUserPratilipiData( userPratilipi.getPratilipiId() ) );
-		userPratilipiData.setAddedToLib( userPratilipi.isAddedToLib() == null ? false : userPratilipi.isAddedToLib() );
+		userPratilipiData.setAddedToLib( userPratilipi.isAddedToLib() );
 		
 		return userPratilipiData;
 		

@@ -151,8 +151,9 @@ public class UserPratilipiData {
 		return addedToLib;
 	}
 
-	public void setAddedToLib(Boolean addedToLib) {
+	public void setAddedToLib( Boolean addedToLib ) {
 		this.addedToLib = addedToLib;
+		this.hasAddedToLib = true;
 	}
 
 	public boolean hasAddedToLib() {

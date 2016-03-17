@@ -18,7 +18,6 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
-import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.data.DataAccessor;
@@ -527,37 +526,6 @@ public class UserDataUtil {
 		user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
 		dataAccessor.createOrUpdateUser( user );
 
-	}
-	
-	public static void sendAuthorMail( Long userId, Long authorId, String message ) 
-			throws InvalidArgumentException, UnexpectedServerException {
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		// User's data
-		User user = dataAccessor.getUser( userId );
-		Author userAuthor = dataAccessor.getAuthorByUserId( userId );
-		Page userPage = dataAccessor.getPage( PageType.AUTHOR, userAuthor.getId() );
-		
-		// Author's data
-		Author author = dataAccessor.getAuthor( authorId );
-		
-		if( user == null || user.getState() == UserState.REFERRAL || user.getState() == UserState.DELETED )
-			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
-		else if( user.getState() == UserState.BLOCKED )
-			throw new InvalidArgumentException( GenericRequest.ERR_ACCOUNT_BLOCKED );
-		
-		if( author == null || author.getEmail() == null || author.getEmail().isEmpty() )
-			throw new InvalidArgumentException( "Author doesn't have email Id." );
-		
-		String authorName = AuthorDataUtil.createAuthorData( author ).getFullName();
-		
-		Map<String, String> dataModel = new HashMap<String, String>();
-		
-		dataModel.put( "userName", createUserData( user ).getDisplayName() );
-		dataModel.put( "recipientName", authorName );
-		dataModel.put( "message", message );
-		dataModel.put( "userPageUrl", userAuthor.getLanguage().getHostName() + userPage.getUriAlias() );
-		
-		EmailUtil.sendMail( authorName, author.getEmail(), "mail-author", Language.ENGLISH, dataModel );
 	}
 	
 }

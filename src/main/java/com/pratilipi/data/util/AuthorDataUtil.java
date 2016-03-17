@@ -203,7 +203,7 @@ public class AuthorDataUtil {
 		
 		DataListCursorTuple<Long> authorIdListCursorTuple = DataAccessorFactory
 				.getSearchAccessor()
-				.searchAuthor( null, authorFilter, cursor, 0, resultCount );
+				.searchAuthor( null, authorFilter, cursor, null, resultCount );
 		
 		List<AuthorData> authorDataList = createAuthorDataList( authorIdListCursorTuple.getDataList() );
 		

@@ -657,10 +657,10 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	@Override
 	public DataListCursorTuple<Long> getPratilipiIdList(
-			UserPratilipiFilter pratilipiFilter, String cursorStr,
+			UserPratilipiFilter userPratilipiFilter, String cursorStr,
 			Integer offset, Integer resultCount ) {
 		
-		return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, offset, resultCount );
+		return dataAccessor.getPratilipiIdList( userPratilipiFilter, cursorStr, offset, resultCount );
 	}
 	
 	@Override

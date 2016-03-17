@@ -519,7 +519,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public DataListCursorTuple<Long> getPratilipiIdList(
-			UserPratilipiFilter pratilipiFilter, String cursorStr,
+			UserPratilipiFilter userPratilipiFilter, String cursorStr,
 			Integer offset, Integer resultCount ) {
 
 		// TODO: Implementation

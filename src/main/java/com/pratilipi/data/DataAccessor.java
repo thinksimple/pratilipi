@@ -103,7 +103,7 @@ public interface DataAccessor {
 	UserPratilipi newUserPratilipi();
 	UserPratilipi getUserPratilipi( Long userId, Long pratilipiId );
 	DataListCursorTuple<UserPratilipi> getPratilipiReviewList( Long pratilipiId, String cursor, Integer offset, Integer resultCount );
-	DataListCursorTuple<Long> getPratilipiIdList( UserPratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount );
+	DataListCursorTuple<Long> getPratilipiIdList( UserPratilipiFilter userPratilipiFilter, String cursorStr, Integer offset, Integer resultCount );
 	DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursor, Integer resultCount );
 	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
 	

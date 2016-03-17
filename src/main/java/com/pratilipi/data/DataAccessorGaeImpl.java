@@ -807,21 +807,21 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public DataListCursorTuple<Long> getPratilipiIdList(
-			UserPratilipiFilter pratilipiFilter, String cursorStr,
+			UserPratilipiFilter userPratilipiFilter, String cursorStr,
 			Integer offset, Integer resultCount ) {
 		
 		GaeQueryBuilder queryBuilder =
 				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
 		
-		if( pratilipiFilter.getUserId() != null )
-			queryBuilder.addFilter( "userId", pratilipiFilter.getUserId() );
-		if( pratilipiFilter.getPratilipiId() != null )
-			queryBuilder.addFilter( "pratilipiId", pratilipiFilter.getPratilipiId() );
-		if( pratilipiFilter.getAddedToLib() != null )
-			queryBuilder.addFilter( "addedToLib", pratilipiFilter.getAddedToLib() );
+		if( userPratilipiFilter.getUserId() != null )
+			queryBuilder.addFilter( "userId", userPratilipiFilter.getUserId() );
+		if( userPratilipiFilter.getPratilipiId() != null )
+			queryBuilder.addFilter( "pratilipiId", userPratilipiFilter.getPratilipiId() );
+		if( userPratilipiFilter.getAddedToLib() != null )
+			queryBuilder.addFilter( "addedToLib", userPratilipiFilter.getAddedToLib() );
 
-		if( pratilipiFilter.getOrderByAddedToLibDate() != null )
-			queryBuilder.addOrdering( "addedToLib", pratilipiFilter.getOrderByAddedToLibDate() );
+		if( userPratilipiFilter.getOrderByAddedToLibDate() != null )
+			queryBuilder.addOrdering( "addedToLib", userPratilipiFilter.getOrderByAddedToLibDate() );
 
 		queryBuilder.setCursor( cursorStr );
 		

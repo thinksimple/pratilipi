@@ -195,7 +195,7 @@ public class UserPratilipiEntity implements UserPratilipi {
 
 	@Override
 	public Boolean isAddedToLib() {
-		return this.addedToLib;
+		return addedToLib == null ? false : addedToLib;
 	}
 
 	@Override
