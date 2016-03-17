@@ -176,6 +176,7 @@ public class UserPratilipiDataUtil {
 		if( userPratilipiData.hasReviewState() )
 			userPratilipi.setReviewState( userPratilipiData.getReviewState() );
 
+		
 		if( userPratilipiData.hasAddedToLib() )
 			userPratilipi.setAddedToLib( userPratilipiData.isAddedToLib() );
 		

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.UserReviewState;
+import com.pratilipi.data.client.UserPratilipiData;
 
 public class GenericUserPratilipiResponse extends GenericResponse {
 
@@ -17,8 +18,28 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	private String review;
 	private UserReviewState reviewState;
 	private Long reviewDateMillis;
-	private Boolean hasAccessToReview;
 	private Boolean addedToLib;
+	
+	private Boolean hasAccessToReview;
+	
+	
+	private GenericUserPratilipiResponse() {}
+	
+	public GenericUserPratilipiResponse( UserPratilipiData userPratilipiData ) {
+		userPratilipiId = userPratilipiData.getId();
+		userName = userPratilipiData.getUserName();
+		userImageUrl = userPratilipiData.getUserImageUrl();
+		pratilipiId = userPratilipiData.getPratilipiId();
+		
+		rating = userPratilipiData.getRating();
+		reviewTitle = userPratilipiData.getReviewTitle();
+		review = userPratilipiData.getReview();
+		reviewState = userPratilipiData.getReviewState();
+		reviewDateMillis = userPratilipiData.getReviewDate().getTime();
+		addedToLib = userPratilipiData.isAddedToLib();
+		
+		hasAccessToReview = userPratilipiData.hasAccessToReview();
+	}
 	
 	
 	public String getId() {
@@ -62,11 +83,6 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 		return reviewDateMillis == null ? null : reviewDateMillis;
 	}
 	
-	
-	public Boolean getHasAccessToReview() {
-		return hasAccessToReview;
-	}
-
 	public Boolean isAddedtoLib() {
 		return addedToLib;
 	}
@@ -74,5 +90,10 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	public void setAddedtoLib( Boolean addedToLib ) {
 		this.addedToLib = addedToLib;
 	}
+
 	
+	public Boolean getHasAccessToReview() {
+		return hasAccessToReview;
+	}
+
 }
