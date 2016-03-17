@@ -289,3 +289,8 @@ month_sep	= September
 month_oct	= October
 month_nov	= November
 month_dec	= December
+
+# Library
+my_library			= My Library
+add_to_library		= Add to Library
+remove_from_library	= Remove from Library
