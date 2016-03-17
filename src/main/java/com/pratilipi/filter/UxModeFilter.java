@@ -146,7 +146,7 @@ public class UxModeFilter implements Filter {
 					 */
 					String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Firefox" ) + 8 );
 					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
-					basicBrowser = version <= 30; // Not sure whether Polymer 1.0 is supported or not
+					basicBrowser = version <= 19; // Not sure whether Polymer 1.0 is supported or not
 					
 				} else if( userAgent.contains( "Trident/7" ) && userAgent.contains( "rv:11" ) ) { // Microsoft Internet Explorer 11
 					/*
