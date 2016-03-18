@@ -11,6 +11,7 @@ import com.pratilipi.api.impl.author.shared.PostAuthorRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.AuthorData;
@@ -43,6 +44,7 @@ public class AuthorApi extends GenericApi {
 		Gson gson = new Gson();
 
 		AuthorData authorData = gson.fromJson( gson.toJson( request ), AuthorData.class );
+		authorData.setState( AuthorState.ACTIVE );
 		authorData = AuthorDataUtil.saveAuthorData( authorData );
 		
 		Task task = TaskQueueFactory.newTask()
