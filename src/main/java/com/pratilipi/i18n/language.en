@@ -231,11 +231,11 @@ updated_review						= Success !
 # Author Edit Popup
 
 edit_author_heading				= Edit Author Information	
-edit_author_first_name			= First Name( Tamil )
-edit_author_last_name			= Last Name( Tamil )
+edit_author_first_name			= First Name( Vernacular )
+edit_author_last_name			= Last Name( Vernacular )
 edit_author_first_name_en		= First Name( English )
 edit_author_last_name_en		= Last Name( English )
-edit_author_pen_name			= Pen Name ( Tamil )
+edit_author_pen_name			= Pen Name ( Vernacular )
 edit_author_pen_name_en			= Pen Name ( English )
 edit_author_birthday_ddmmyyyy	= Birthday (dd-mm-yyyy)
 edit_author_language			= Select Language
