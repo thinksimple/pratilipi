@@ -50,7 +50,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( EventBannerApi.class );				// *.pratilipi.com
 		
 		ApiRegistry.register( UserPratilipiApi.class );				// *.pratilipi.com
-		ApiRegistry.register( UserPratilipiLibraryApi.class );		// *.pratilipi.com
+//		ApiRegistry.register( UserPratilipiLibraryApi.class );		// *.pratilipi.com
 		ApiRegistry.register( UserPratilipiLibraryListApi.class );		// *.pratilipi.com
 		ApiRegistry.register( UserPratilipiReviewListApi.class );	// *.pratilipi.com
 		
