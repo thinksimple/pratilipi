@@ -49,7 +49,7 @@
 			</template>
 			<br class="pratilipi-break"/>
 			<template is="dom-if" if="{{ isLoading }}">
-				<paper-spinner class="container pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
+				<div class="container"><paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner></div>
 			</template>
 			<template is="dom-if" if="{{ includeShowMoreButton }}">
 				<button class="container pratilipi-new-blue-button" on-click="loadMore">Load more Authors</button>
