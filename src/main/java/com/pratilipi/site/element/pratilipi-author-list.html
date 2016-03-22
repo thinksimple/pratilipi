@@ -25,7 +25,10 @@
 			<paper-card class="container custom-style" style="margin-bottom: 5px;">
 				<div class="row">
 					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-						<pratilipi-input type="search" label="Search Authors" value="{{ searchQuery::input }}" icon="icons:search" on-keyup="searchForAuthor"></pratilipi-input>
+						<paper-input type="search" label="Search Authors" value="{{ searchQuery::input }}" on-keyup="searchForAuthor">
+							<iron-icon icon="icons:search" prefix></iron-icon>
+							<iron-icon style="cursor: pointer;" icon="icons:close" suffix on-click="clearSearchQuery"></iron-icon>
+						</paper-input>
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
 						<!-- Content Published -->
@@ -46,10 +49,10 @@
 			</template>
 			<br class="pratilipi-break"/>
 			<template is="dom-if" if="{{ isLoading }}">
-				<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
+				<paper-spinner class="container pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
 			</template>
 			<template is="dom-if" if="{{ includeShowMoreButton }}">
-				<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">${ _strings.load_more_contents }</button>
+				<button class="container pratilipi-new-blue-button" on-click="loadMore">Load more Authors</button>
 			</template>
 			<pratilipi-edit-author></pratilipi-edit-author>
 		</div>
@@ -168,12 +171,18 @@
 				this.set( 'modifiedAuthorList', [] );
 			},
 			
+			clearSearchQuery: function() {
+				this.set( 'searchQuery', "" );
+				this._searchForAuthor();
+			},
+			
 			searchForAuthor: function( event ) {
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
 					return;
-				else if( this.searchQuery == null || this.searchQuery.trim() == "" )
-					return;
-				
+				this._searchForAuthor();
+			},
+			
+			_searchForAuthor: function() {
 				// Spinner Active and disable show more button and set flags.
 				this.clearAuthorList();
 				this.cursor="";
