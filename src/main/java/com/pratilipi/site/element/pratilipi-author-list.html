@@ -22,25 +22,25 @@
 
 	<template>
 		<div class="parent-container">
-			<!-- <paper-card class="container custom-style" style="margin-bottom: 5px;">
+			<paper-card class="container custom-style" style="margin-bottom: 5px;">
 				<div class="row">
 					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-						<pratilipi-input type="search" label="Search Authors" value="{{ authorSearchQuery::input }}" icon="icons:search"></pratilipi-input>
+						<pratilipi-input type="search" label="Search Authors" value="{{ searchQuery::input }}" icon="icons:search" on-keyup="searchForAuthor"></pratilipi-input>
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
-						Content Published
+						<!-- Content Published -->
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
-						Name
+						<!-- Name -->
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
-						Recently Added
+						<!-- Recently Added -->
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
-						Read Count
+						<!-- Read Count -->
 					</div>
 				</div>
-			</paper-card> -->
+			</paper-card>
 			<template is="dom-repeat" id="repeatAuthorList" items="{{ modifiedAuthorList }}">
 				<pratilipi-author-snippet author="{{ item }}"></pratilipi-author-snippet>
 			</template>
@@ -156,11 +156,40 @@
 				authorList: { type: Array },
 				modifiedAuthorList: { type: Array, value: [] },
 				filter: { type: Object },
+				searchQuery: { type: Object },
 				cursor: { type: String },
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
 				sno: { type: Number, value: 1 },
 				includeShowMoreButton: { type: Boolean, value: false }
+			},
+			
+			clearAuthorList: function() {
+				this.set( 'modifiedAuthorList', [] );
+			},
+			
+			searchForAuthor: function( event ) {
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+					return;
+				else if( this.searchQuery == null || this.searchQuery.trim() == "" )
+					return;
+				
+				// Spinner Active and disable show more button and set flags.
+				this.clearAuthorList();
+				this.cursor="";
+				this.isLoading = true;
+				this.isFinished = false;
+				this.includeShowMoreButton = false;
+				this.sno = 1;
+				
+				var ajaxGet = this.$.AjaxGet;
+				if( ajaxGet.lastRequest )
+					ajaxGet.lastRequest.abort();
+				
+				// Set params and make ajax GET call. Filters already set when element initialised.
+				ajaxGet.params.searchQuery = this.searchQuery;
+				ajaxGet.params.cursor = this.cursor;
+				ajaxGet.generateRequest();
 			},
 			
 			createAuthor: function() {
