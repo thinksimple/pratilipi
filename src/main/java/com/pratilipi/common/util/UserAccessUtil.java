@@ -6,7 +6,8 @@ import com.pratilipi.common.type.Language;
 public class UserAccessUtil {
 	
 	private static final AccessType[] ADMIN_ACCESS = {
-			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE, AccessType.PRATILIPI_READ_META, AccessType.PRATILIPI_READ_CONTENT,
+			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE,
+			AccessType.PRATILIPI_READ_META, AccessType.PRATILIPI_READ_CONTENT,
 			AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE,
 			AccessType.EVENT_ADD, AccessType.EVENT_UPDATE };
 
@@ -17,8 +18,9 @@ public class UserAccessUtil {
 
 		ADMIN			( null,					AccessType.PRATILIPI_LIST ),
 		ADMIN_BENGALI	( Language.BENGALI,		ADMIN_ACCESS ),
-		ADMIN_HINDI		( Language.HINDI,		ADMIN_ACCESS ),
 		ADMIN_GUJARATI	( Language.GUJARATI,	ADMIN_ACCESS ),
+		ADMIN_HINDI		( Language.HINDI,		ADMIN_ACCESS ),
+		ADMIN_KANNADA	( Language.KANNADA,		ADMIN_ACCESS ),
 		ADMIN_MALAYALAM	( Language.MALAYALAM,	ADMIN_ACCESS ),
 		ADMIN_MARATHI	( Language.MARATHI,		ADMIN_ACCESS ),
 		ADMIN_TAMIL		( Language.TAMIL,		ADMIN_ACCESS ),
@@ -64,27 +66,25 @@ public class UserAccessUtil {
 			case "4900189601005568": // vrushali@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MARATHI };
 			case "5664902681198592": // shally@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_HINDI, Role.ADMIN_GUJARATI, Role.ADMIN_MARATHI };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI };
 			case "5743817900687360": // jitesh@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_HINDI, Role.ADMIN_GUJARATI, Role.ADMIN_MARATHI };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI };
 
+			case "5666355716030464" : // vaisakh@
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MALAYALAM };
 			case "4900071594262528": // dileepan@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TAMIL };
 			case "5674672871964672": // krithiha@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TAMIL };
+			case "5156503382130688" : // babu@
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TELUGU };
 			case "5991416564023296": // sankar@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MALAYALAM, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
 
 			case "6196244602945536": // raghu@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MALAYALAM, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
 			case "5705241014042624": // prashant@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_HINDI };
-				
-			case "5156503382130688" : // babu@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TELUGU };
-				
-			case "5666355716030464" : // vaisakh@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MALAYALAM };
 			
 			default:
 				return new Role[] { Role.MEMBER };
