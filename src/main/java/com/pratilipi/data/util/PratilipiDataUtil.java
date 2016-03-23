@@ -403,14 +403,9 @@ public class PratilipiDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Memcache l2Cache = DataAccessorFactory.getL2CacheAccessor();
 
-		boolean skipCache = false;
-		// Skip cache for cases when User is listing his own works.
-		if( pratilipiFilter.getAuthorId() != null && ! AccessTokenFilter.getAccessToken().getUserId().equals( 0L ) ) {
-			Author author = dataAccessor.getAuthor( pratilipiFilter.getAuthorId() );
-			Long userId = author.getUserId();
-			if( userId != null && userId.equals( AccessTokenFilter.getAccessToken().getUserId() ) )
-				skipCache = true;
-		}
+		// Skip cache for cases when User has access to update the Author.
+		boolean skipCache = pratilipiFilter.getAuthorId() != null
+				&& AuthorDataUtil.hasAccessToUpdateAuthorData( dataAccessor.getAuthor( pratilipiFilter.getAuthorId() ), null );
 		
 		// Processing search query
 		if( searchQuery != null )
@@ -434,7 +429,7 @@ public class PratilipiDataUtil {
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
 				= skipCache ? null : (DataListCursorTuple<PratilipiData>) l2Cache.get( memcacheId );
 
-		if( pratilipiDataListCursorTuple == null ) {
+		if( pratilipiDataListCursorTuple == null || pratilipiDataListCursorTuple.getDataList().size() == 0 ) {
 			// Fetching Pratilipi id list from DataStore/SearchIndex
 			DataListCursorTuple<Long> pratilipiIdListCursorTuple =
 					pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED
@@ -451,7 +446,9 @@ public class PratilipiDataUtil {
 					pratilipiIdListCursorTuple.getCursor(),
 					pratilipiIdListCursorTuple.getNumberFound() );
 			// Caching response object in Memcache
-			l2Cache.put( memcacheId, pratilipiDataListCursorTuple );
+			// Need to have this check because sometimes GAE fails to read existent file(s)
+			if( pratilipiFilter.getListName() != null && pratilipiIdListCursorTuple.getNumberFound() == 0 )
+				l2Cache.put( memcacheId, pratilipiDataListCursorTuple );
 		}
 
 		return pratilipiDataListCursorTuple;
