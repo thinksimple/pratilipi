@@ -36,7 +36,7 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 		reviewTitle = userPratilipiData.getReviewTitle();
 		review = userPratilipiData.getReview();
 		reviewState = userPratilipiData.getReviewState();
-		reviewDateMillis = userPratilipiData.getReviewDate().getTime();
+		reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate().getTime();
 		addedToLib = userPratilipiData.isAddedToLib();
 		
 		hasAccessToReview = userPratilipiData.hasAccessToReview();
