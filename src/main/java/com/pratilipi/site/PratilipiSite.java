@@ -478,6 +478,7 @@ public class PratilipiSite extends HttpServlet {
 			
 			Map<String, Object> section = new HashMap<String, Object>();
 			section.put( "title", title );
+			section.put( "listPageUrl", "/" + listName );
 			section.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
 			sections.add( section );
 			
