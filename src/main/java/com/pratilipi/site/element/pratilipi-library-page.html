@@ -1,4 +1,30 @@
 <dom-module id="pratilipi-library-page">
+	<style>
+		paper-card.zero-results {
+			width: 100%; 
+			text-align: center; 
+			padding: 75px 15px; 
+			margin-bottom: 10px;
+		}
+		iron-icon.zero-results-icon {
+			color: #545454; 
+			width: 100px; 
+			height: 100px;
+		}
+		
+		h3.zero-results-h3 {
+			color: #545454; 
+			margin-top: 30px; 
+			line-height: 32px;
+		}
+		paper-spinner.pratilipi-spinner {
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
+	</style>
+	
 	<template>
 		<header class="nav-down">
     		<pratilipi-header user='[[ user ]]'></pratilipi-header>
@@ -16,13 +42,28 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow: hidden">
+						<!-- In case of No results -->
+						<template is="dom-if" if="[[ zeroAuthorBooks ]]">
+							<paper-card class="zero-results">
+								<iron-icon icon="icons:info-outline" class="zero-results-icon"></iron-icon>
+								<h3 class="zero-results-h3">No Items in your Library.</h3>
+							</paper-card>
+						</template>
 						<pratilipi-card-grid
 							hide-add-to-library-button
 							show-remove-from-library-button
-							heading='My Library'
+							heading='${ _strings.my_library }'
 							pratilipi-list='[[ pratilipiList ]]'
 							></pratilipi-card-grid>
 						<br class="pratilipi-break"/>
+						<!-- Spinner when Loading more books -->
+						<template is="dom-if" if="{{ isLoading }}">
+							<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
+						</template>
+						<!-- Show More Button in case of network call failure -->
+						<template is="dom-if" if="{{ includeShowMoreButton }}">
+							<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">${ _strings.load_more_contents }</button>
+						</template>
 					</div>
 				</div>
 			</div>
@@ -33,6 +74,15 @@
 		<div class="scroll-top-button">
 			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
 		</div>
+		<iron-ajax
+				id="AjaxGet"
+				url="/api/userpratilipi/library/list"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				on-error="_handleAjaxGetError"
+				></iron-ajax>
 	</template>
 				
 		
@@ -48,19 +98,12 @@
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				lastScrollTop: { type: Number, value: 0 },
-			},
-			
-			removePratilipiById: function( pratilipiId ) {
-				var index = -1;
-				for( var i = 0; i < this.pratilipiList.length; i++ ) {
-					if( this.pratilipiList[i].pratilipiId == pratilipiId ) {
-						index = i;
-						break;
-					}
-				}
 				
-				if( index != -1 )
-					this.splice( 'pratilipiList', index, 1 );
+				cursor: { type: String },
+				isLoading: { type: Boolean, value: false },
+				isFinished: { type: Boolean, value: false },
+				includeShowMoreButton: { type: Boolean, value: false },
+				zeroLibraryBooks: { type: Boolean, value: false },
 			},
 			
 			_userChanged: function() {
@@ -76,16 +119,100 @@
 				jQuery( '#scrollToTop' ).css( "display", "none" );
 			},
 			
+			checkForZeroResults: function() {
+				this.zeroLibraryBooks = this.pratilipiList.length > 0 ? false : true;
+			},
+			
+			attached: function() {
+				if( this.pratilipiList.length < 20 || this.cursor == "" )
+					this.isFinished = true;
+				this.checkForZeroResults();
+			},
+			
 			scrollHandler: function( st ) {
 				if( st > this.lastScrollTop || st < 100 ) {
 					jQuery( '#scrollToTop' ).fadeOut();
-					this.querySelector( 'pratilipi-card-grid' ).loadMore( st );
+					this.loadMore( st );
 				}
 				else {
 					jQuery( '#scrollToTop' ).fadeIn();
 				}
 				this.lastScrollTop = st;
-			}
+			},
+			
+			loadMore: function( st ) {
+				if( !this.isLoading && !this.isFinished )
+					this.includeShowMoreButton = true;
+				
+				// Return if there is an active call or cursor = null.
+				if( this.isLoading || this.isFinished || this.cursor == null || this.cursor == "" )
+					return;
+
+				// Check for window height.
+				var reqHeight = jQuery( window ).scrollTop()
+						- jQuery( this ).position().top
+						+ jQuery( window ).height()
+						+ 2 * jQuery( window ).height();
+
+				if( jQuery( this ).outerHeight( true ) >= reqHeight )
+					return;
+				
+				
+				// Spinner Active and disable show more button.
+				this.isLoading = true;
+				this.includeShowMoreButton = false;
+				
+				// Set params and make ajax GET call. Filters already set when element initialised.
+				this.$.AjaxGet.params.cursor = this.cursor;
+				this.$.AjaxGet.generateRequest();
+			},
+			
+			_handleAjaxGetResponse: function( request ) {
+				
+				// Disable spinner
+				this.isLoading = false;
+				
+				// Call didn't succeed.
+				if( ! request.detail.response )
+					return;
+				
+				var pratilipiList = request.detail.response.pratilipiList;
+				this.pushToPratilipiList( pratilipiList );
+
+				if( request.detail.response.cursor == null || pratilipiList.length < 20 ) {
+					this.includeShowMoreButton = false;
+					this.isFinished = true;
+				}
+				else
+					this.cursor = request.detail.response.cursor;
+				
+				this.checkForZeroResults();
+
+			},
+			
+			_handleAjaxGetError: function() {
+				this.isLoading = false;
+				this.includeShowMoreButton = true;
+			},
+			
+			pushToPratilipiList: function( pratilipiList ) {
+				for( var i = 0; i < pratilipiList.length; i++ )
+					this.push( 'pratilipiList', pratilipiList[i] );
+			},
+			
+			removePratilipiById: function( pratilipiId ) {
+				var index = -1;
+				for( var i = 0; i < this.pratilipiList.length; i++ ) {
+					if( this.pratilipiList[i].pratilipiId == pratilipiId ) {
+						index = i;
+						break;
+					}
+				}
+				
+				if( index != -1 )
+					this.splice( 'pratilipiList', index, 1 );
+			},
+			
 			
 		});
 	</script>
