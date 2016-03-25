@@ -155,12 +155,12 @@
 						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
 							<button id="changeStateButton" on-click="changePratilipiState" class="pratilipi-light-blue-button">{{ changeState }}</button>
 						</template>
-						<!-- <template is="dom-if" if="{{ !userpratilipi.addedToLib }}">
+						<template is="dom-if" if="{{ !userpratilipi.addedToLib }}">
 							<button on-click="addToLibrary" class="pratilipi-grey-button">${ _strings.add_to_library }</button>
 						</template>
 						<template is="dom-if" if="{{ userpratilipi.addedToLib }}">
 							<button on-click="removeFromLibrary" class="pratilipi-grey-button">${ _strings.remove_from_library }</button>
-						</template> -->
+						</template>
 					</div>
 					
 				</div>
