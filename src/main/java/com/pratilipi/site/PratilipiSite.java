@@ -201,26 +201,6 @@ public class PratilipiSite extends HttpServlet {
 
 				
 				
-			// Tamil website specific links
-			
-			} else if( filterLanguage == Language.TAMIL && uri.equals( "/books" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, displayLanguage, filterLanguage, request );
-				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-				
-			} else if( filterLanguage == Language.TAMIL && uri.equals( "/stories" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, displayLanguage, filterLanguage, request );
-				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-			
-			} else if( filterLanguage == Language.TAMIL && uri.equals( "/articles" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, displayLanguage, filterLanguage, request );
-				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-				
-			} else if( filterLanguage == Language.TAMIL && uri.equals( "/magazines" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, displayLanguage, filterLanguage, request );
-				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-
-				
-				
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
