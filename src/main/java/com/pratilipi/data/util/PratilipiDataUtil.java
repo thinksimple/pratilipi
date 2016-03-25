@@ -447,7 +447,7 @@ public class PratilipiDataUtil {
 					pratilipiIdListCursorTuple.getNumberFound() );
 			// Caching response object in Memcache
 			// Need to have this check because sometimes GAE fails to read existent file(s)
-			if( pratilipiFilter.getListName() != null && pratilipiIdListCursorTuple.getNumberFound() == 0 )
+			if( pratilipiFilter.getListName() == null || pratilipiIdListCursorTuple.getNumberFound() != 0 )
 				l2Cache.put( memcacheId, pratilipiDataListCursorTuple );
 		}
 
