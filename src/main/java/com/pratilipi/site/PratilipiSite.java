@@ -211,10 +211,6 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 			
-			} else if( filterLanguage == Language.TAMIL && uri.equals( "/poems" ) ) {
-				dataModel = createDataModelForListPage( PratilipiType.POEM, basicMode, displayLanguage, filterLanguage, request );
-				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-				
 			} else if( filterLanguage == Language.TAMIL && uri.equals( "/articles" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );

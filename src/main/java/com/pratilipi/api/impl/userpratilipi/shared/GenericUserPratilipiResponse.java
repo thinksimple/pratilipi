@@ -23,6 +23,7 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	private Boolean hasAccessToReview;
 	
 	
+	@SuppressWarnings("unused")
 	private GenericUserPratilipiResponse() {}
 	
 	public GenericUserPratilipiResponse( UserPratilipiData userPratilipiData ) {
