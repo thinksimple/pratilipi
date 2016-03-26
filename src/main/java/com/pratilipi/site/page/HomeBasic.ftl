@@ -15,13 +15,13 @@
 			<#list sections as section>
 				<div class="box" style="padding: 12px 10px;">
 					<h2 style="color: #D0021B;">${ section["title"] }</h2>
+					<#if section["listPageUrl"]??>
+						<a href="${ section["listPageUrl"] }" class="link pull-right pratilipi-blue">${ _strings.view_more }</a>
+					</#if>
 				</div>
 				<#list section["pratilipiList"] as pratilipi>
 					<#include "../element/pratilipi-pratilipi-card.ftl">
 				</#list>
-				<#if section["listPageUrl"]??>
-					<a href="${ section["listPageUrl"] }" class="link pull-right">${ _strings.view_more }</a>
-				</#if>
 				<br/>
 			</#list>
 			
