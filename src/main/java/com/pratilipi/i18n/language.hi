@@ -213,7 +213,9 @@ share						= साझा कीजिए
 menu						= श्रेणी 
 back						= वापस जाएँं 
 close           = बंद कीजिए 
-load_more_contents			= और  देखें 
+load_more_contents			= और  देखें
+view_more					= View More
+ 
 
 # Success Messages
 

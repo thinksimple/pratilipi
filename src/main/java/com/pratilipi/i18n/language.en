@@ -116,6 +116,7 @@ review_delete_review_confirm	= Are you sure to delete your review?
 review_delete_okay			= Yes, Delete review!
 review_delete_cancel		= No, Don't!
 review_helpful				= Was this review helpful?
+review_see_all_reviews		= See All Reviews
 
 
 
@@ -211,7 +212,7 @@ share						= Share
 menu						= Menu
 back						= Back
 load_more_contents			= Load More Contents
-
+view_more					= View More
 
 
 

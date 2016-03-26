@@ -64,7 +64,15 @@
 		
 		<!-- Card Grid Heading  -->
 		<template is="dom-if" if="{{ heading }}">
-			<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">{{ heading }}</div>
+			<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+				<template is="dom-if" if="[[ !headingUrl ]]">
+					{{ heading }}
+				</template>
+				<template is="dom-if" if="{{ headingUrl }}">
+					<a class="pratilipi-red" style="font-size: 22px;" href="{{ headingUrl }}">{{ heading }}</a>
+					<a href="{{ headingUrl }}" class="link pull-right pratilipi-blue">${ _strings.view_more }</a>
+				</template>
+			</div>
 			<br class="pratilipi-break"/>
 		</template>
 		
@@ -145,6 +153,7 @@
 			properties: {
 				authorId: { type: String, value: null },
 				heading: { type: String },
+				headingUrl: { type: String, value: null },
 				pratilipiList: { type: Array, notify: true },
 				searchQuery: { type: String },
 				filter: { type: Object },
