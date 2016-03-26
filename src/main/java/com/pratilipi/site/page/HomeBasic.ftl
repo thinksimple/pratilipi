@@ -14,7 +14,7 @@
 
 			<#list sections as section>
 				<div class="box" style="padding: 12px 10px;">
-					<h2 style="color: #D0021B;">${ section["title"] }</h2>
+					<h2 style="color: #D0021B; display: inline-block;">${ section["title"] }</h2>
 					<#if section["listPageUrl"]??>
 						<a href="${ section["listPageUrl"] }" class="link pull-right pratilipi-blue">${ _strings.view_more }</a>
 					</#if>
