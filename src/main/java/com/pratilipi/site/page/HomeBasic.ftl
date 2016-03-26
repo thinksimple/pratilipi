@@ -19,6 +19,9 @@
 				<#list section["pratilipiList"] as pratilipi>
 					<#include "../element/pratilipi-pratilipi-card.ftl">
 				</#list>
+				<#if section["listPageUrl"]??>
+					<a href="${ section["listPageUrl"] }" class="link pull-right">${ _strings.view_more }</a>
+				</#if>
 				<br/>
 			</#list>
 			
