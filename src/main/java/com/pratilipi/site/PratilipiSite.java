@@ -143,7 +143,10 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "navigationList", navigationList );
 				templateName = templateFilePrefix + "NavigationBasic.ftl";
-
+			
+			} else if( basicMode && uri.equals( "/updatepassword" ) ) { // BasicMode only
+				dataModel = new HashMap<String, Object>();
+				templateName = templateFilePrefix + "PasswordUpdateBasic.ftl";
 				
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
