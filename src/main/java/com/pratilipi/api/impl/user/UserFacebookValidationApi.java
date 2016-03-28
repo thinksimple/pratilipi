@@ -15,7 +15,7 @@ import com.pratilipi.data.util.UserDataUtil;
 public class UserFacebookValidationApi extends GenericApi {
 	
 	@Post
-	public static GenericResponse validateRequest( PostUserFacebookValidationRequest request )
+	public GenericResponse post( PostUserFacebookValidationRequest request )
 			throws UnexpectedServerException {
 		
 		if( ! FacebookApi.validateUserAccessToken( request.getFbAccessToken() ) ) 

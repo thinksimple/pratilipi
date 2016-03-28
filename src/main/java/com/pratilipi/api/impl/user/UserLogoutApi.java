@@ -13,7 +13,7 @@ import com.pratilipi.data.util.UserDataUtil;
 public class UserLogoutApi extends GenericApi {
 
 	@Get
-	public GenericUserResponse logout( GenericRequest request )
+	public GenericUserResponse post( GenericRequest request )
 			throws InvalidArgumentException {
 		
 		return new GenericUserResponse( UserDataUtil.logoutUser() );

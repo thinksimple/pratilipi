@@ -16,7 +16,7 @@ public class UserAccessUtil {
 		GUEST			( null ),
 		MEMBER			( null,					AccessType.PRATILIPI_ADD_REVIEW ),
 
-		ADMIN			( null,					AccessType.PRATILIPI_LIST ),
+		ADMIN			( null,					AccessType.USER_ADD, AccessType.PRATILIPI_LIST ),
 		ADMIN_BENGALI	( Language.BENGALI,		ADMIN_ACCESS ),
 		ADMIN_GUJARATI	( Language.GUJARATI,	ADMIN_ACCESS ),
 		ADMIN_HINDI		( Language.HINDI,		ADMIN_ACCESS ),

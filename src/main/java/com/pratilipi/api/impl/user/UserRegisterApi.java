@@ -20,7 +20,7 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 public class UserRegisterApi extends GenericApi {
 
 	@Post
-	public GenericUserResponse put( PostUserRegisterRequest request )
+	public GenericUserResponse post( PostUserRegisterRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		String firstName = request.getName().trim();

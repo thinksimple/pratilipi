@@ -16,7 +16,7 @@ import com.pratilipi.data.util.UserDataUtil;
 public class UserLoginApi extends GenericApi {
 
 	@Post
-	public GenericUserResponse login( PostUserLoginRequest request )
+	public GenericUserResponse post( PostUserLoginRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		UserData userData = UserDataUtil.loginUser(

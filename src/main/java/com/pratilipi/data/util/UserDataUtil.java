@@ -16,10 +16,12 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.PasswordUtil;
+import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
@@ -39,6 +41,35 @@ public class UserDataUtil {
 
 	private static final Long USER_ID_SYSTEM = 5636632866717696L;
 
+	
+	public static boolean hasAccessToAddUserData( UserData userData ) {
+		return UserAccessUtil.hasUserAccess(
+				AccessTokenFilter.getAccessToken().getUserId(),
+				null,
+				AccessType.USER_ADD );
+	}
+
+	public static boolean hasAccessToUpdateUserData( User user, UserData userData ) {
+
+		// Case 1: Only REFERRAL/REGISTERED/ACTIVE User Profiles can be updated.
+		if( user.getState() != UserState.REFERRAL
+				&& user.getState() != UserState.REGISTERED
+				&& user.getState() != UserState.ACTIVE )
+			return false;
+
+		// Case 2: User with USER_UPDATE access can update any User profile.
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.USER_UPDATE ) )
+			return true;
+		
+		// Case 4: User can update his/her own User profile.
+		if( accessToken.getUserId().equals( user.getId() ) )
+			return true;
+		
+		return false;
+		
+	}
+	
 	
 	public static UserSignUpSource getUserSignUpSource( boolean isFbLogin, boolean isGpLogin ) {
 
@@ -141,6 +172,75 @@ public class UserDataUtil {
 			return createUserData( DataAccessorFactory.getDataAccessor().getUser( accessToken.getUserId() ) );
 	}
 
+	
+	public static UserData saveUserData( UserData userData )
+			throws InvalidArgumentException, InsufficientAccessException {
+		
+		_validateUserDataForSave( userData );
+		
+		boolean isNew = userData.getId() == null;
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = isNew ? dataAccessor.newUser() : dataAccessor.getUser( userData.getId() );
+
+		if ( isNew && ! hasAccessToAddUserData( userData ) )
+			throw new InsufficientAccessException();
+		if( ! isNew && ! hasAccessToUpdateUserData( user, userData ) )
+			throw new InsufficientAccessException();
+
+		
+		Gson gson = new Gson();
+
+		
+		AuditLog auditLog = dataAccessor.newAuditLog();
+		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
+		auditLog.setAccessType( isNew ? AccessType.USER_ADD : AccessType.USER_UPDATE );
+		auditLog.setEventDataOld( gson.toJson( user ) );
+
+		
+		if( userData.hasEmail() )
+			user.setEmail( userData.getEmail() );
+		if( userData.hasPhone() )
+			user.setPhone( userData.getPhone() );
+
+		if( isNew ) { // Assuming only AEEs have USER_ADD access.
+			user.setState( UserState.REFERRAL );
+			user.setCampaign( UserCampaign.AEE_TEAM );
+			user.setReferrer( AccessTokenFilter.getAccessToken().getUserId().toString() );
+			user.setSignUpDate( new Date() );
+			user.setSignUpSource( getUserSignUpSource( false, false ) );
+		}
+		
+		user.setLastUpdated( new Date() );
+
+		
+		auditLog.setEventDataNew( gson.toJson( user ) );
+		
+		
+		user = dataAccessor.createOrUpdateUser( user, auditLog );
+		
+		return createUserData( user );
+	}
+	
+	private static void _validateUserDataForSave( UserData userData )
+			throws InvalidArgumentException {
+		
+		boolean isNew = userData.getId() == null;
+		
+		JsonObject errorMessages = new JsonObject();
+
+		// New user profile must have email.
+		if( isNew && ( ! userData.hasEmail() || userData.getEmail() == null ) )
+			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_INVALID );
+		// Email can not be un-set or set to null.
+		else if( ! isNew && userData.hasEmail() && userData.getEmail() == null )
+			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_INVALID );
+
+		if( errorMessages.entrySet().size() > 0 )
+			throw new InvalidArgumentException( errorMessages );
+
+	}
+	
 	
 	public static UserData registerUser( String firstName, String lastName,
 			String email, String password, UserSignUpSource signUpSource )

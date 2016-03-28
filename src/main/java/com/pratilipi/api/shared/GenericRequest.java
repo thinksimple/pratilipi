@@ -21,6 +21,7 @@ public class GenericRequest {
 	protected static final String REGEX_PASSWORD = "\\S{6,128}";
 	protected static final String REGEX_URI = "(/[A-Za-z0-9-]+)+";
 	protected static final String REGEX_EMAIL = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.-][A-Za-z0-9]+)*\\.[A-Za-z]{2,4}";
+	protected static final String REGEX_PHONE = "[0-9]{10}";
 
 	public static final String ERR_INSUFFICIENT_ARGS = "One or more required arguments are missing.";
 	
@@ -31,6 +32,7 @@ public class GenericRequest {
 	
 	public static final String ERR_EMAIL_REQUIRED			= "Email is required.";
 	public static final String ERR_EMAIL_INVALID			= "Invalid email.";
+	public static final String ERR_PHONE_INVALID			= "Invalid phone number.";
 	public static final String ERR_EMAIL_NOT_REGISTERED		= "Email not registered.";
 	public static final String ERR_EMAIL_REGISTERED_WITH_FB = "You have registered with us via Facebook. Kindly login with Facebook.";
 	public static final String ERR_EMAIL_REGISTERED_ALREADY = "Email is already registered.";

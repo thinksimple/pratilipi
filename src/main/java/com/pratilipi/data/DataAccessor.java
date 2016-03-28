@@ -84,6 +84,7 @@ public interface DataAccessor {
 	// AUTHOR Table
 	Author newAuthor();
 	Author getAuthor( Long id );
+	@Deprecated
 	Author getAuthorByEmailId( String email );
 	Author getAuthorByUserId( Long userId );
 	List<Author> getAuthorList( List<Long> idList );

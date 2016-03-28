@@ -25,7 +25,7 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 public class UserLoginFacebookApi extends GenericApi {
 	
 	@Post
-	public static GenericUserResponse facebookLogin( PostUserLoginFacebookRequest request )
+	public GenericUserResponse post( PostUserLoginFacebookRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		UserData userData = UserDataUtil.loginUser(

@@ -24,8 +24,12 @@ public class UserData {
 	
 	
 	private String email;
-	private transient boolean hasEmail;
+	private boolean hasEmail;
 
+	private String phone;
+	private boolean hasPhone;
+
+	
 	private UserState state;
 
 	
@@ -116,6 +120,19 @@ public class UserData {
 		return hasEmail;
 	}
 
+	public String getPhone() {
+		return phone.trim();
+	}
+
+	public void setPhone( String phone ) {
+		this.phone = phone;
+		this.hasPhone = true;
+	}
+	
+	public boolean hasPhone() {
+		return hasPhone;
+	}
+	
 	
 	public UserState getState() {
 		return state;

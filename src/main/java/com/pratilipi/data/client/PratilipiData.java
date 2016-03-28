@@ -69,6 +69,7 @@ public class PratilipiData implements Serializable {
 	private Long fbLikeShareCount;
 	
 	
+	private Boolean addedToLib;
 	private Boolean hasAccessToUpdate;
 
 
@@ -329,6 +330,14 @@ public class PratilipiData implements Serializable {
 	}
 	
 
+	public boolean isAddedToLib() {
+		return addedToLib == null ? false : addedToLib;
+	}
+	
+	public void setAddedToLib( Boolean addedToLib ) {
+		this.addedToLib = addedToLib;
+	}
+	
 	public boolean hasAccessToUpdate() {
 		return hasAccessToUpdate == null ? false : hasAccessToUpdate;
 	}

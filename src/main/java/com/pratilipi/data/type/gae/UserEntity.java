@@ -82,6 +82,9 @@ public class UserEntity implements User {
 	@Persistent( column = "SIGN_UP_SOURCE" )
 	private UserSignUpSource signUpSource;
 	
+	@Persistent( column = "LAST_UPDATED" )
+	private Date lastUpdated;
+
 	
 	public UserEntity() {}
 	
@@ -306,4 +309,14 @@ public class UserEntity implements User {
 		this.signUpSource = signUpSource;
 	}
 		
+	@Override
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+	
+	@Override
+	public void setLastUpdated( Date lastUpdated ) {
+		this.lastUpdated = lastUpdated;
+	}
+	
 }

@@ -15,7 +15,7 @@ import com.pratilipi.data.util.UserDataUtil;
 public class UserVerificationApi extends GenericApi {
 	
 	@Post
-	public GenericUserResponse put( PostUserVerificationRequest request )
+	public GenericUserResponse post( PostUserVerificationRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		UserDataUtil.verifyUserEmail(

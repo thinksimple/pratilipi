@@ -43,7 +43,7 @@ public class UserProcessApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse getUserProcess( GenericRequest request ) {
+	public GenericResponse get( GenericRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		PersistenceManager pm = dataAccessor.getPersistenceManager();
@@ -87,7 +87,7 @@ public class UserProcessApi extends GenericApi {
 	}
 	
 	@Post
-	public GenericResponse postUserProcess( PostUserProcessRequest request )
+	public GenericResponse post( PostUserProcessRequest request )
 			throws InvalidArgumentException {
 
 		if( request.validateData() ) {

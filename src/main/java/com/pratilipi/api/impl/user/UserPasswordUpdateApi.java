@@ -16,7 +16,7 @@ import com.pratilipi.data.util.UserDataUtil;
 public class UserPasswordUpdateApi extends GenericApi {
 	
 	@Post
-	public static GenericUserResponse post( PostUserPasswordUpdateRequest request )
+	public GenericUserResponse post( PostUserPasswordUpdateRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		UserData userData;

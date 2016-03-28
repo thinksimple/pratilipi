@@ -87,4 +87,8 @@ public interface User extends Serializable {
 	
 	void setSignUpSource( UserSignUpSource signUpSource );
 	
+	Date getLastUpdated();
+	
+	void setLastUpdated( Date lastUpdated );
+	
 }

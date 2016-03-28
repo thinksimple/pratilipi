@@ -219,18 +219,8 @@ public class AuthorDataUtil {
 		Author author = dataAccessor.getAuthorByUserId( userData.getId() );
 		if( author != null && author.getState() != AuthorState.DELETED )
 			return author.getId();
-		
-		if( userData.getEmail() != null ) {
-			author = dataAccessor.getAuthorByEmailId( userData.getEmail() );
-			if( author != null && author.getState() != AuthorState.DELETED && author.getUserId() == null ) {
-				author.setUserId( userData.getId() );
-				author = dataAccessor.createOrUpdateAuthor( author );
-				return author.getId();
-			}
-		}
-
-		
-		author = dataAccessor.newAuthor();
+		else
+			author = dataAccessor.newAuthor();
 		
 		
 		Gson gson = new Gson();
@@ -246,7 +236,6 @@ public class AuthorDataUtil {
 		author.setLastName( userData.getLastName() );
 		author.setGender( userData.getGender() );
 		author.setDateOfBirth( userData.getDateOfBirth() );
-		author.setEmail( userData.getEmail() ); // For backward compatibility with Mark-4
 		author.setLanguage( language );
 		author.setState( AuthorState.ACTIVE );
 		author.setRegistrationDate( userData.getSignUpDate() );

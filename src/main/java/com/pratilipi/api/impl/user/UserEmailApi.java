@@ -17,7 +17,7 @@ import com.pratilipi.data.util.UserDataUtil;
 public class UserEmailApi extends GenericApi {
 	
 	@Post
-	public static GenericResponse putUserEmail( PostUserEmailRequest request )
+	public GenericResponse post( PostUserEmailRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		JsonObject errorMessages = new JsonObject();
