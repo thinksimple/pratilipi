@@ -137,15 +137,18 @@ public class PratilipiSite extends HttpServlet {
 
 			} else if( basicMode && uri.equals( "/account" ) ) { // BasicMode only
 				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "My Account" );
 				templateName = templateFilePrefix + "AccountBasic.ftl";
 			
 			} else if( basicMode && uri.equals( "/navigation" ) ) { // BasicMode only
 				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Menu" );
 				dataModel.put( "navigationList", navigationList );
 				templateName = templateFilePrefix + "NavigationBasic.ftl";
 			
 			} else if( basicMode && uri.equals( "/updatepassword" ) ) { // BasicMode only
 				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Update Password" );
 				templateName = templateFilePrefix + "PasswordUpdateBasic.ftl";
 				
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
