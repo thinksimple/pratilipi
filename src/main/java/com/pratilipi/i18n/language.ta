@@ -294,3 +294,4 @@ month_dec	= டிசம்பர்
 my_library			= என் நூலகம்
 add_to_library		= என் நூலகத்தில் சேர்க்க 
 remove_from_library	= என் நூலகத்திலிருந்து  அழிக்க  
+empty_library		= Sorry, there are no books in your library, you can add books from content page.

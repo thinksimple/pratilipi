@@ -293,3 +293,4 @@ month_dec	= December
 my_library			= My Library
 add_to_library		= Add to Library
 remove_from_library	= Remove from Library
+empty_library		= Sorry, there are no books in your library, you can add books from content page.
