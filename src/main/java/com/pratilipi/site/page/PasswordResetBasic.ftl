@@ -75,36 +75,37 @@
 	</head>
 
 	<body>
-		<div class="container">
-			<#include "../element/pratilipi-header.ftl">
-			
-			<div class="box" style="min-height: 370px;">
-	            <div style="margin: 20px auto; text-align: center;">
-	                <h3 style="text-align: center; font-size: 20px;">${ _strings.user_forgot_password }</h3>
-	            </div>
-	            
-	            <p class="text-muted">${ _strings.user_reset_password_help }</p>
-	            <form id="userPasswordResetForm" class="form-horizontal" action="javascript:void(0);">
-	                <div class="form-group">
-	                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-	                    <div class="col-sm-10">
-	                        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="${ _strings.user_email }">
-	                    </div>
-	                </div>
-	                <div class="form-group" style="margin: 25px auto; text-align: center;">
-	                	<button class="btn btn-default red" onclick="resetPassword()">${ _strings.user_reset_password }</button>
-	                </div>
-	            </form>
-	            
-	            <div style="text-align: center;">
-	            	<a href="/">${ _strings.back }</a>
-	            </div>
-	            
-	        </div>
-	        
-	        <#include "../element/pratilipi-navigation.ftl">
-			<#include "../element/pratilipi-footer.ftl">
+		<#include "../element/pratilipi-header.ftl">
+		<div class="parent-container">
+			<div class="container">
+
+				<div class="secondary-500 pratilipi-shadow box" style="min-height: 370px;">
+		            <div style="margin: 20px auto; text-align: center;">
+		                <h4 style="text-align: center;">${ _strings.user_forgot_password }</h4>
+		            </div>
+		            
+		            <p class="text-muted">${ _strings.user_reset_password_help }</p>
+		            <form id="userPasswordResetForm" class="form-horizontal" action="javascript:void(0);">
+		                <div class="form-group">
+		                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+		                    <div class="col-sm-10">
+		                        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="${ _strings.user_email }">
+		                    </div>
+		                </div>
+		                <div class="form-group" style="margin: 25px auto; text-align: center;">
+		                	<button class="pratilipi-dark-blue-button" onclick="resetPassword()">${ _strings.user_reset_password }</button>
+		                </div>
+		            </form>
+		            
+		            <div style="text-align: center;">
+		            	<a class="link" href="/">${ _strings.back }</a>
+		            </div>
+		            
+		        </div>
+				
+			</div>
 		</div>
+		<#include "../element/pratilipi-footer.ftl">
 	</body>
 	
 </html>

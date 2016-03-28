@@ -53,48 +53,46 @@
 	<#assign redirect5= "${ prefix }page=${ nav5 }" >
 </#if>
 	
-<div style="padding-top:25px; padding-bottom:25px;">
-	<div class="row" style=" text-align: center;">
-	    
-	    <#if nav1?? >
-		    <#if nav1 == currentPage>
-		    	<div class="col-xs-2 col-xs-offset-1"><a style="color: #D0021B; font-size: 18px;" href="${ redirect1 }">${ nav1 }</a></div>
-			<#else>
-				<div class="col-xs-2 col-xs-offset-1"><a href="${ redirect1 }">${ nav1 }</a></div>
+<#-- Don't display page navigation if maxPage == 1  -->
+<#if maxPage gt 1 >
+	<div class="secondary-500 pratilipi-shadow box" style="padding-top:25px; padding-bottom:25px;">
+		<div class="row" style=" text-align: center;">
+		    
+		    <#if nav1?? >
+		    	<div class="col-xs-2 col-xs-offset-1">
+		    		<a <#if nav1 == currentPage>style="font-size: 18px;" class="pratilipi-blue"</#if>  
+		    			href="${ redirect1 }">${ nav1 }</a>
+		    	</div>
+		    </#if>
+		    
+	    	<#if nav2?? >
+    			<div class="col-xs-2">
+    				<a <#if nav2 == currentPage>style="font-size: 18px;" class="pratilipi-blue"</#if> 
+    				 href="${ redirect2 }">${ nav2 }</a>
+    			</div>
 			</#if>
-	    </#if>
-	    
-    	<#if nav2?? >
-    		<#if nav2 == currentPage>
-    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect2 }">${ nav2 }</a></div>
-    		<#else>
-    			<div class="col-xs-2"><a href="${ redirect2 }">${ nav2 }</a></div>
-    		</#if>
-		</#if>
-	    
-	    <#if nav3?? >
-	    	<#if nav3 == currentPage>
-    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect3 }">${ nav3 }</a></div>
-    		<#else>
-    			<div class="col-xs-2"><a href="${ redirect3 }">${ nav3 }</a></div>
-    		</#if>
-	    </#if>
-	    
-	    <#if nav4?? >
-	    	<#if nav4 == currentPage>
-    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect4 }">${ nav4 }</a></div>
-    		<#else>
-    			<div class="col-xs-2"><a href="${ redirect4 }">${ nav4 }</a></div>
-    		</#if>
-	    </#if>
-	    
-	    <#if nav5?? >
-	    	<#if nav5 == currentPage>
-    			<div class="col-xs-2"><a style="color: #D0021B; font-size: 18px;" href="${ redirect5 }">${ nav5 }</a></div>
-    		<#else>
-    			<div class="col-xs-2"><a href="${ redirect5 }">${ nav5 }</a></div>
-    		</#if>
-	    </#if>
-	    
+		    
+		    <#if nav3?? >
+		    	<div class="col-xs-2">
+    				<a <#if nav3 == currentPage>style="font-size: 18px;" class="pratilipi-blue"</#if> 
+    				 href="${ redirect3 }">${ nav3 }</a>
+    			</div>
+		    </#if>
+		    
+		    <#if nav4?? >
+		    	<div class="col-xs-2">
+    				<a <#if nav4 == currentPage>style="font-size: 18px;" class="pratilipi-blue"</#if> 
+    				 href="${ redirect4 }">${ nav4 }</a>
+    			</div>
+		    </#if>
+		    
+		    <#if nav5?? >
+		    	<div class="col-xs-2">
+    				<a <#if nav5 == currentPage>style="font-size: 18px;" class="pratilipi-blue"</#if> 
+    				 href="${ redirect5 }">${ nav5 }</a>
+    			</div>
+		    </#if>
+		    
+		</div>
 	</div>
-</div>
+</#if>

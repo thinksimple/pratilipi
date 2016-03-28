@@ -1,37 +1,34 @@
-<div class="box">
-	<div class="row">
-		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="margin: 20px auto; text-align: center;">
-			<img style="height: 100px; width: 100px;" src="${ author.getImageUrl( 100 ) }" alt="${ author.fullName!author.fullNameEn }" title="${ author.fullNameEn!author.fullName }" />
-		</div>
-		<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10" style="text-align: center;">
-			<h1>${ author.name!author.nameEn }</h1>
-			<#if author.penName?? || author.penNameEn?? >
-				<h2>"${ author.penName!author.penNameEn }"</h2>
-			</#if>
-			<div style="margin:5px 0px 5px 5px">
-				<h4>${ _strings.author_since }</h4>
-				<span>${ author.registrationDate?date }</span>
-			</div>
-		</div>
+<div class="secondary-500 pratilipi-shadow box text-center">
+	<h2 class="pratilipi-red">${ author.name!author.nameEn }</h2>
+	<#if author.penName?? || author.penNameEn?? >
+		<h4>"${ author.penName!author.penNameEn }"</h4>
+	</#if>
+	<div style="width: 200px; height: 200px; margin: 15px auto;" class="pratilipi-shadow">
+		<img src="${ author.getImageUrl( 200 ) }" alt="${ author.fullName!author.fullNameEn }" title="${ author.fullNameEn!author.fullName }" />
 	</div>
+	
+	<h5 style="margin: 12px auto;">${ _strings.author_since }&nbsp;&minus;&nbsp;${ author.registrationDate?date }</h5>
+	
 	<hr/>
 	<div class="row" style="padding: 0px; margin-bottom: 10px;">
-		<div style="text-align: center; padding: 10px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<h4>${ _strings.author_count_works }</h4>&nbsp;&minus;&nbsp;<span class="red" style="font-size:20px;font-weight:bold">${ author.contentPublished }</span>
+		<div style="text-align: center; padding: 5px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+			<h5>${ _strings.author_count_works }&nbsp;&minus;&nbsp;${ author.contentPublished }</h5>
 		</div>
-		<div style="text-align: center; padding: 10px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<h4>${ _strings.author_count_reads }</h4>&nbsp;&minus;&nbsp;<span class="red" style="font-size:20px;font-weight:bold">${ author.totalReadCount }</span>
+		<div style="text-align: center; padding: 5px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+			<h5>${ _strings.author_count_reads }&nbsp;&minus;&nbsp;${ author.totalReadCount }</h5>
 		</div>
-		<div style="text-align: center; padding: 10px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<h4>${ _strings.author_count_likes }</h4>&nbsp;&minus;&nbsp;<span class="red" style="font-size:20px;font-weight:bold">${ author.totalFbLikeShareCount }</span>
+		<div style="text-align: center; padding: 5px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+			<h5>${ _strings.author_count_likes }&nbsp;&minus;&nbsp;${ author.totalFbLikeShareCount }</h5>
 		</div>
 	</div>
 </div>
 
 
 <#if author.summary?? >
-	<div class="box">
-		<h2>${ _strings.author_about }</h2>
-		<p>${ author.summary }</p>
+	<div class="secondary-500 pratilipi-shadow box">
+		<h2 style="margin-top: 10px; margin-bottom: 15px;" class="pratilipi-red text-center">${ _strings.author_about }</h2>
+		<div style="text-align: justify;">${ author.summary }</div>
 	</div>
 </#if>
+
+<div style="min-height: 7px;"></div>

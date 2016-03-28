@@ -6,15 +6,11 @@
 	}
 </style>
 
-<div class="box" style="padding-top:25px; padding-bottom:25px;">
+<div class="secondary-500 pratilipi-shadow box" style="padding: 25px 10px;">
 	<#list navigationList as navigation>
-		<h3 style="color: #D0021B; text-align: center;">${ navigation.getTitle() }</h3>
-		<div class="row" style="text-align: center;">
+		<h3 class="pratilipi-red">${ navigation.getTitle() }</h3>
 			<#list navigation.linkList as Link>
-				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 navigation">
-					<a href="${ Link.getUrl() }">${ Link.getName() }</a>
-				</div>
+				<a class="navigation" href="${ Link.getUrl() }">${ Link.getName() }</a>
 			</#list>
-		</div>
 	</#list>
 </div>

@@ -5,12 +5,6 @@
 		var reviewTitle = $( '#inputReviewTitle' ).val();
 		var review = $( '#inputReview' ).val();
 
-		if( review == null || review.trim() == "" ) {
-			// Throw message - Please Enter review
-			alert( "Please Enter your review!" );
-			return;
-		}
-		
 		// Make Ajax call
 
 		$.ajax({
@@ -29,26 +23,32 @@
 				window.location.href = "${ pratilipi.pageUrl }"; 
 			},
 			
-			error: function () {
-				alert( "Invalid Input!" );
+			error: function ( response ) {
+				var message = jQuery.parseJSON( response.responseText );
+				alert( message["message"] );
 			}
 		});
 	}
 </script>
 
 
-<div class="box" style="min-height: 370px;">
+<div class="secondary-500 pratilipi-shadow box text-center" style="min-height: 370px;">
 
-	<div class="media" style="margin: 20px auto;">
-		<div class="media-left">
-			<img class="media-object" src="${ pratilipi.getCoverImageUrl( 100 ) }" alt="${ pratilipi.title }" title="${ pratilipi.titleEn }"/>
+		<h3 style="margin-top: 10px; margin-bottom: 15px;" class="pratilipi-red">${ _strings.review_write_a_review }</h3>
+		<p class="text-muted">${ _strings.review_content_help }</p>
+
+		<div style="width: 150px; height: 225px; margin: 15px auto;" class="pratilipi-shadow">
+			<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
 		</div>
-		<div class="media-body">
-			<h3 style="margin-left: 0px; color: #D0021B;">${ pratilipi.title }</h3>
-			<h4 style="margin-left: 0px;">${ pratilipi.author.name }</h4>
+		<h3 class="pratilipi-red">${ pratilipi.title!pratilipi.titleEn }</h3>
+		<#if pratilipi.author?? >
+			<a href="${ pratilipi.author.pageUrlAlias!pratilipi.author.pageUrl }"><h5>${ pratilipi.author.name }</h5></a>
+		</#if>
+		<div style="margin: 15px auto;">
+			<#assign rating=pratilipi.averageRating >
+			<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
 		</div>
-	</div>
-	
+
 	<form id="reviewInputForm" class="form-horizontal" action="javascript:void(0);">
 		<div class="form-group">
 			<label for="inputRating" class="col-sm-2 control-label">${ _strings.rating_your_rating }</label>
@@ -105,7 +105,8 @@
 	        </div>
 	    </div>
 	    <div class="form-group" style="margin: 25px auto; text-align: center;">
-	    	<button class="btn btn-default" onclick="submitReview()">${ _strings.review_submit_review }</button>
+	    	<button class="pratilipi-dark-blue-button" onclick="submitReview()">${ _strings.review_submit_review }</button>
 	    </div>
 	</form>
 </div>
+

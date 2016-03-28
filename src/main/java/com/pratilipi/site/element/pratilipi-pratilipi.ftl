@@ -1,47 +1,35 @@
-<div class="box">
-	<div class="row">
-		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="margin: 20px auto; text-align: center;">
-			<img src="${ pratilipi.getCoverImageUrl( 100 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
-		</div>
-		<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10" style="text-align: center;">
-			<h1 class="red">${ pratilipi.title!pratilipi.titleEn }</h1>
-			<#if pratilipi.author?? >
-				<h2><a href="${ pratilipi.author.pageUrlAlias!pratilipi.author.pageUrl }">
-					${ pratilipi.author.name }
-				</a></h2>
-			</#if>
-			
-			
-			<div style="padding-top: 25px;">
-				<#assign rating=pratilipi.averageRating >
-				<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
-				<br/>
-				<br/>
-				<h4>${ pratilipi.type }</h4>
-			</div>
-			
-			<div style="margin:25px 0px 5px 5px">
-				<#if pratilipi.listingDateMillis?? >
-					<h4>${ _strings.pratilipi_listing_date }</h4>
-					<span>&nbsp;&minus;&nbsp;${ pratilipi.listingDateMillis }</span>
-					<br/>
-				</#if>
-				
-				<h4>${ _strings.pratilipi_count_reads }</h4>
-				<span>&nbsp;&minus;&nbsp;${ pratilipi.readCount }</span>
-			</div>
-			
-			<div style="padding-top: 20px; padding-bottom: 20px;">
-				<a class="btn btn-default red" href="${ pratilipi.readPageUrl }&ret=${ requestUrl }">${ _strings.read }</a>
-			</div>
-			
-		</div>
+<div class="secondary-500 pratilipi-shadow box text-center">
+	<h2 class="pratilipi-red">${ pratilipi.title!pratilipi.titleEn }</h2>
+	
+	<#if pratilipi.author?? >
+		<a href="${ pratilipi.author.pageUrlAlias!pratilipi.author.pageUrl }"><h4>${ pratilipi.author.name }</h4></a>
+	</#if>
+	
+	<div style="width: 150px; height: 225px; margin: 15px auto;" class="pratilipi-shadow">
+		<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
 	</div>
+	
+	<#assign rating=pratilipi.averageRating >
+	<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
+	
+	<h6 style="margin-top: 10px;">${ pratilipi.type }</h6>
+	
+	<div style="margin:25px 0px 5px 0px">
+		<#if pratilipi.listingDateMillis?? ><h5>${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;${ pratilipi.listingDateMillis }</h5></#if>
+		<h5>${ _strings.pratilipi_count_reads }&nbsp;&minus;&nbsp;${ pratilipi.readCount }</h5>
+	</div>
+	
+	<div style="padding-top: 20px; padding-bottom: 20px;">
+		<a class="pratilipi-light-blue-button" href="${ pratilipi.readPageUrl }&ret=${ requestUrl }">${ _strings.read }</a>
+	</div>
+			
 </div>
 
 <#if pratilipi.summary?? >
-	<div class="box">
-		<h2>${ _strings.pratilipi_summary }</h2>
-		<p>${ pratilipi.summary }</p>
+	<div class="secondary-500 pratilipi-shadow box">
+		<h2 style="margin-top: 10px; margin-bottom: 15px;" class="pratilipi-red text-center">${ _strings.pratilipi_summary }</h2>
+		<div style="text-align: justify;">${ pratilipi.summary }</div>
 	</div>
 </#if>
+
+<div style="min-height: 7px;"></div>

@@ -69,7 +69,16 @@
 				return re.test(email);
 			}
 			function register() {
-				window.location.href = "/register" + "?ret=" + getUrlParameters().ret;
+				if( getUrlParameters().ret != null )
+					window.location.href = "/register" + "?ret=" + getUrlParameters().ret;
+				else
+					window.location.href = "/register" + "?ret=/";
+			}
+			function forgotPassword() {
+				if( getUrlParameters().ret != null )
+					window.location.href = "/resetpassword" + "?ret=" + getUrlParameters().ret;
+				else
+					window.location.href = "/resetpassword" + "?ret=/";
 			}
 			function login() {
 			
@@ -163,49 +172,49 @@
 	</head>
 
 	<body>
-		<div class="container">
-			<#include "../element/pratilipi-header.ftl">
-			
-			<div class="box" style="min-height: 370px;">
-	            <div style="margin: 20px auto; text-align: center;">
-	                <h3 style="text-align: center; font-size: 20px;">${ _strings.user_sign_in_to_pratilipi }</h3>
-	            </div>
-	            
-	            <div class="social-wrap" style="margin-top: 30px;">
-					<button class="facebook" onclick="facebookLogin()">${ _strings.user_sign_in_with_facebook }</button>
-				</div>
-
-	            <form id="userLoginForm" class="form-horizontal" action="javascript:void(0);">
-	                <div class="form-group">
-	                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-	                    <div class="col-sm-10">
-	                        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="${ _strings.user_email }">
-	                    </div>
-	                </div>
-	                <div class="form-group">
-	                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-	                    <div class="col-sm-10">
-	                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="${ _strings.user_password }">
-	                    </div>
-	                </div>
-	                <div class="form-group" style="margin: 25px auto; text-align: center;">
-	                	<button class="btn btn-default" onclick="login()">${ _strings.user_sign_in }</button>
-	                </div>
-	            </form>
-	            
-	            <div style="text-align: center;">
-	            	<button class="btn btn-default red" onclick="register()">${ _strings.user_sign_up_for_pratilipi }</button>
-	            </div>
-	            
-	            <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
-	            	<a class="btn btn-default red" href="/resetpassword">${ _strings.user_forgot_password }</a>
-	            </div>
-
-	        </div>
-	        
-	        <#include "../element/pratilipi-navigation.ftl">
-			<#include "../element/pratilipi-footer.ftl">
+		<#include "../element/pratilipi-header.ftl">
+		<div class="parent-container">
+			<div class="container">
+				<div class="secondary-500 pratilipi-shadow box" style="min-height: 370px;">
+		            <div style="margin: 20px auto; text-align: center;">
+		                <h4 style="text-align: center;">${ _strings.user_sign_in_to_pratilipi }</h4>
+		            </div>
+		            
+		            <div class="social-wrap" style="margin-top: 30px;">
+						<button class="facebook" onclick="facebookLogin()">${ _strings.user_sign_in_with_facebook }</button>
+					</div>
+	
+		            <form id="userLoginForm" class="form-horizontal" action="javascript:void(0);">
+		                <div class="form-group">
+		                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+		                    <div class="col-sm-10">
+		                        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="${ _strings.user_email }">
+		                    </div>
+		                </div>
+		                <div class="form-group">
+		                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+		                    <div class="col-sm-10">
+		                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="${ _strings.user_password }">
+		                    </div>
+		                </div>
+		                <div class="form-group" style="margin: 25px auto; text-align: center;">
+		                	<button class="pratilipi-dark-blue-button" onclick="login()">${ _strings.user_sign_in }</button>
+		                </div>
+		            </form>
+		            
+		            <div style="text-align: center;">
+		            	<button class="pratilipi-new-blue-button" onclick="register()">${ _strings.user_sign_up_for_pratilipi }</button>
+		            </div>
+		            
+		            <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
+		            	<button class="pratilipi-new-blue-button" onclick="forgotPassword()">${ _strings.user_forgot_password }</button>
+		            </div>
+	
+		        </div>
+		        
+			</div>
 		</div>
+		<#include "../element/pratilipi-footer.ftl">
 	</body>
 	
 </html>

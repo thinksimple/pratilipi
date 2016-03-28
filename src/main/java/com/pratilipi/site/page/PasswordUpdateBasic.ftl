@@ -77,47 +77,48 @@
 	</head>
 
 	<body>
-		<div class="container">
-			<#include "../element/pratilipi-header.ftl">
-			
-			<div class="box" style="min-height: 370px;">
-	            <div style="margin: 20px auto; text-align: center;">
-	                <h3 style="text-align: center; font-size: 20px;">${ _strings.user_reset_password }</h3>
-	            </div>
-	            
-	            <form id="userPasswordUpdateForm" class="form-horizontal" action="javascript:void(0);">
-	                <div class="form-group">
-	                    <label for="inputPassword" class="col-sm-2 control-label">Current password</label>
-	                    <div class="col-sm-10">
-	                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="${ _strings.user_current_password }">
-	                    </div>
-	                </div>
-	                <div class="form-group">
-	                    <label for="inputNewPassword" class="col-sm-2 control-label">New password</label>
-	                    <div class="col-sm-10">
-	                        <input name="newPassword" type="password" class="form-control" id="inputNewPassword" placeholder="${ _strings.user_new_password }">
-	                    </div>
-	                </div>
-	                <div class="form-group">
-	                    <label for="inputNewPassword2" class="col-sm-2 control-label">Confirm password</label>
-	                    <div class="col-sm-10">
-	                        <input name="newPassword2" type="password" class="form-control" id="inputNewPassword2" placeholder="${ _strings.user_confirm_password }">
-	                    </div>
-	                </div>
-	                <div class="form-group" style="margin: 25px auto; text-align: center;">
-	                	<button class="btn btn-default red" onclick="updatePassword()">${ _strings.user_reset_password }</button>
-	                </div>
-	            </form>
-	            
-	            <div style="text-align: center;">
-	            	<a href="/">${ _strings.back }</a>
-	            </div>
-	            
-	        </div>
-	        
-	        <#include "../element/pratilipi-navigation.ftl">
-			<#include "../element/pratilipi-footer.ftl">
+		<#include "../element/pratilipi-header.ftl">
+		<div class="parent-container">
+			<div class="container">
+				
+				<div class="secondary-500 pratilipi-shadow box" style="min-height: 370px;">
+		            <div style="margin: 20px auto; text-align: center;">
+		                <h3 style="text-align: center; font-size: 20px;">${ _strings.user_reset_password }</h3>
+		            </div>
+		            
+		            <form id="userPasswordUpdateForm" class="form-horizontal" action="javascript:void(0);">
+		                <div class="form-group">
+		                    <label for="inputPassword" class="col-sm-2 control-label">Current password</label>
+		                    <div class="col-sm-10">
+		                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="${ _strings.user_current_password }">
+		                    </div>
+		                </div>
+		                <div class="form-group">
+		                    <label for="inputNewPassword" class="col-sm-2 control-label">New password</label>
+		                    <div class="col-sm-10">
+		                        <input name="newPassword" type="password" class="form-control" id="inputNewPassword" placeholder="${ _strings.user_new_password }">
+		                    </div>
+		                </div>
+		                <div class="form-group">
+		                    <label for="inputNewPassword2" class="col-sm-2 control-label">Confirm password</label>
+		                    <div class="col-sm-10">
+		                        <input name="newPassword2" type="password" class="form-control" id="inputNewPassword2" placeholder="${ _strings.user_confirm_password }">
+		                    </div>
+		                </div>
+		                <div class="form-group" style="margin: 25px auto; text-align: center;">
+		                	<button class="pratilipi-dark-blue-button" onclick="updatePassword()">${ _strings.user_reset_password }</button>
+		                </div>
+		            </form>
+		            
+		            <div style="text-align: center;">
+		            	<a href="/">${ _strings.back }</a>
+		            </div>
+		            
+		        </div>
+				
+			</div>
 		</div>
+		<#include "../element/pratilipi-footer.ftl">
 	</body>
 	
 </html>

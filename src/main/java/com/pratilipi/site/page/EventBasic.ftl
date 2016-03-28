@@ -10,33 +10,32 @@
 	</head>
 
 	<body>
-		<div class="container">
-			<#include "../element/pratilipi-header.ftl">
-
-			<div class="box" style="padding: 12px 10px;">
-				<h2 style="color: #D0021B;">${ event.name }</h2>
-			</div>
-			
-			<div style="padding: 0px;" class="box">
-				<img style="width: 100%; height: 100%;" src="${ event.getBannerImageUrl( 1000 ) }"/>
-			</div>
-			
-			<#if event.description ??>
-				<div class="box" style="padding: 12px 20px;">${ event.description }</div>
-			</#if>
-			
-			<#if pratilipiList ??>
-				<div class="box" style="padding: 12px 10px;">
-					<h2 style="color: #D0021B;">${ _strings.event_entries }</h2>
+		<#include "../element/pratilipi-header.ftl">
+			<div class="parent-container">
+				<div class="container">
+					<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 10px;">
+						<h2 class="pratilipi-red">${ event.name }</h2>
+					</div>
+					
+					<div style="padding: 0px;" class="pratilipi-shadow">
+						<img style="width: 100%; height: 100%;" src="${ event.getBannerImageUrl( 600 ) }"/>
+					</div>
+					
+					<#if event.description ??>
+						<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 20px;">${ event.description }</div>
+					</#if>
+					
+					<#if pratilipiList ??>
+						<div class="box" style="padding: 12px 10px;">
+							<h2 class="pratilipi-red">${ _strings.event_entries }</h2>
+						</div>
+						<#list pratilipiList as pratilipi>
+							<#include "../element/pratilipi-pratilipi-card.ftl">
+						</#list>
+					</#if>
 				</div>
-				<#list pratilipiList as pratilipi>
-					<#include "../element/pratilipi-pratilipi-card.ftl">
-				</#list>
-			</#if>
-						
-			<#include "../element/pratilipi-navigation.ftl">
+			</div>		
 			<#include "../element/pratilipi-footer.ftl">
-		</div>
 	</body>
 	
 </html>

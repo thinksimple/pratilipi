@@ -9,17 +9,18 @@
 	</head>
 
 	<body>
-		<div class="container">
-			<#include "../element/pratilipi-header.ftl">
-
-			<div class="box" style="padding: 20px; overflow: hidden;">
-				<h3>${ title }</h3>
-				<div style="text-align: justify;">${ content }</div>
+		<#include "../element/pratilipi-header.ftl">
+		<div class="parent-container">
+			<div class="container">
+	
+				<div class="secondary-500 pratilipi-shadow box" style="padding: 20px; overflow: hidden;">
+					<h3>${ title }</h3>
+					<div style="text-align: justify;">${ content }</div>
+				</div>
+				
 			</div>
-			
-			<#include "../element/pratilipi-navigation.ftl">
-			<#include "../element/pratilipi-footer.ftl">
 		</div>
+		<#include "../element/pratilipi-footer.ftl">
 	</body>
 	
 </html>

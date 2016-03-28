@@ -1,30 +1,23 @@
-<div class="box" style="padding:10px">
-	<table>
-		<tr>
-			<td rowspan="2" style="height:120px;width:80px;">
-				<a href="${ pratilipi.pageUrl }">
-					<img src="${ pratilipi.getCoverImageUrl( 80 ) }" alt="${ pratilipi.title }" title="${ pratilipi.title }" />
-				</a>
-			</td>
-			<td>
-				<h3><a style="text-decoration: none; color: #D0021B;" href="${ pratilipi.pageUrl }">${ pratilipi.title }</a></h3>
-				<#if pratilipi.author?? >
-					<h4 style="margin-left: 10px;"><a style="text-decoration: none;" href="${ pratilipi.author.pageUrl }">
-						${ pratilipi.author.name }
-					</a></h4>
-				</#if>
-				<div style="margin:10px">
-					<#assign rating=pratilipi.averageRating >
-					<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td style="vertical-align:bottom">
-				<div style="margin:3px 10px;text-transform:uppercase">
-					<a class="btn btn-default red" href="${ pratilipi.readPageUrl }&ret=${ requestUrl }">${ _strings.read }</a>
-				</div>
-			</td>
-		</tr>
-	</table>
+<div class="secondary-500 pratilipi-shadow box" style="padding:10px">
+	<div class="media">
+		<div class="media-left">
+			<div style="width: 100px; height: 150px; margin-left: 5px;" class="pratilipi-shadow">
+				<img src="${ pratilipi.getCoverImageUrl( 100 ) }" alt="${ pratilipi.title }" title="${ pratilipi.title }" />
+			</div>
+		</div>
+		<div class="media-body">
+			<a href="${ pratilipi.pageUrl }"><h4 class="pratilipi-red">${ pratilipi.title }</h4></a>
+			<#if pratilipi.author?? >
+				<a href="${ pratilipi.author.pageUrl }"><h6 style="margin-top:15px;">${ pratilipi.author.name }</h6></a>
+			</#if>
+			<div style="margin: 10px 0px;">
+				<#assign rating=pratilipi.averageRating >
+				<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
+			</div>
+			<#if !pratilipi.author?? ><div style="min-height: 25px;"></div></#if>
+			<div style="margin:25px 0px 10px 0px;">
+				<a class="pratilipi-light-blue-button" href="${ pratilipi.readPageUrl }&ret=${ requestUrl }">${ _strings.read }</a>
+			</div>
+		</div>
+	</div>
 </div>

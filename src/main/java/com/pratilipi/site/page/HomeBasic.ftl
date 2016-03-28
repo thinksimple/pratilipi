@@ -9,25 +9,24 @@
 	</head>
 
 	<body>
-		<div class="container">
 			<#include "../element/pratilipi-header.ftl">
-
-			<#list sections as section>
-				<div class="box" style="padding: 12px 10px;">
-					<h2 style="color: #D0021B; display: inline-block;">${ section["title"] }</h2>
-					<#if section["listPageUrl"]??>
-						<a href="${ section["listPageUrl"] }" class="link pull-right pratilipi-blue">${ _strings.view_more }</a>
-					</#if>
+			<div class="parent-container">
+				<div class="container">
+					<#list sections as section>
+						<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 10px;">
+							<h2 class="pratilipi-red" style="display: inline-block;">${ section["title"] }</h2>
+							<#if section["listPageUrl"]??>
+								<a href="${ section["listPageUrl"] }" class="link pull-right pratilipi-blue">${ _strings.view_more }</a>
+							</#if>
+						</div>
+						<#list section["pratilipiList"] as pratilipi>
+							<#include "../element/pratilipi-pratilipi-card.ftl">
+						</#list>
+						<div style="min-height: 10px;"></div>
+					</#list>
 				</div>
-				<#list section["pratilipiList"] as pratilipi>
-					<#include "../element/pratilipi-pratilipi-card.ftl">
-				</#list>
-				<br/>
-			</#list>
-			
-			<#include "../element/pratilipi-navigation.ftl">
+			</div>
 			<#include "../element/pratilipi-footer.ftl">
-		</div>
 	</body>
 	
 </html>

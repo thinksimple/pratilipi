@@ -9,28 +9,29 @@
 	</head>
 
 	<body>
-		<div class="container">
-			<#include "../../element/pratilipi-header.ftl">
-
-			<div class="box">
-				<div class="media" style="padding: 20px;">
-					<div class="media-left">
-						<img src="/stylesheets/Server.png" alt="Img">
+		<#include "../../element/pratilipi-header.ftl">
+		<div class="parent-container">
+			<div class="container">
+	
+				<div class="secondary-500 pratilipi-shadow box">
+					<div class="media" style="padding: 20px;">
+						<div class="media-left">
+							<img src="/stylesheets/Server.png" alt="Img">
+						</div>
+						<div class="media-body" style="padding-left: 20px;">
+							<h4><b>Error!</b></h4>
+							<h2>Server Error.</h2>
+							<p>Sorry! Looks like something is wrong with our server.</p>
+							<p>Please try again after a few minutes, or use the search bar to find<br>
+							great content, or just head over to the Pratilipi homePage.</p> <br>
+							<a class="btn btn-default red" href="/">Home</a>
+		    			</div>
 					</div>
-					<div class="media-body" style="padding-left: 20px;">
-						<h4><b>Error!</b></h4>
-						<h2>Server Error.</h2>
-						<p>Sorry! Looks like something is wrong with our server.</p>
-						<p>Please try again after a few minutes, or use the search bar to find<br>
-						great content, or just head over to the Pratilipi homePage.</p> <br>
-						<a class="btn btn-default red" href="/">Home</a>
-	    			</div>
 				</div>
+				
 			</div>
-			
-			<#include "../../element/pratilipi-navigation.ftl">
-			<#include "../../element/pratilipi-footer.ftl">
 		</div>
+		<#include "../../element/pratilipi-footer.ftl">
 	</body>
 	
 </html>
