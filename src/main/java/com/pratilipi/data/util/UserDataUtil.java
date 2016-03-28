@@ -62,7 +62,7 @@ public class UserDataUtil {
 		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.USER_UPDATE ) )
 			return true;
 		
-		// Case 4: User can update his/her own User profile.
+		// Case 3: User can update his/her own User profile.
 		if( accessToken.getUserId().equals( user.getId() ) )
 			return true;
 		

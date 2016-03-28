@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -20,17 +17,12 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.PageType;
-import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.GaeQueryBuilder;
-import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
-import com.pratilipi.data.type.User;
-import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.taskqueue.Task;
@@ -93,40 +85,6 @@ public class AuthorProcessApi extends GenericApi {
 		
 		if( request.processData() ) {
 			
-			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			Author author = dataAccessor.getAuthor( request.getAuthorId() );
-			
-			// If Author email is set to null, set its value back from linked User entity.
-			if( author.getUserId() != null && author.getEmail() == null ) {
-				User user = dataAccessor.getUser( author.getUserId() );
-				if( user.getEmail() != null ) {
-					author.setEmail( user.getEmail() );
-					author = dataAccessor.createOrUpdateAuthor( author );
-				}
-			// If no User entity is linked and a User entity exist with the same email id, unset the email in Author entity.
-			} else if( author.getUserId() == null && author.getEmail() != null ) {
-				User user = dataAccessor.getUserByEmail( author.getEmail() );
-				if( user != null ) {
-					author.setEmail( null );
-					author = dataAccessor.createOrUpdateAuthor( author );
-				}
-			// If Author email is same as some other user's email, revert it else update it to linked User entity.
-			} else if( author.getUserId() != null && author.getEmail() != null ) {
-				User user = dataAccessor.getUser( author.getUserId() );
-				User user2 = dataAccessor.getUserByEmail( author.getEmail() );
-				// Update email in User entity.
-				if( user2 == null ) {
-					user.setEmail( author.getEmail() );
-					if( user.getState() == UserState.ACTIVE )
-						user.setState( UserState.REGISTERED );
-					user = dataAccessor.createOrUpdateUser( user );
-				// Revert email
-				} else if( user2 != null && ! user2.getId().equals( author.getUserId() ) ) {
-					author.setEmail( user.getEmail() );
-					author = dataAccessor.createOrUpdateAuthor( author );
-				}
-			}
-			
 			boolean changed = AuthorDataUtil.createOrUpdateAuthorPageUrl( request.getAuthorId() );
 //			AuthorDataUtil.createOrUpdateAuthorDashboardPageUrl( request.getAuthorId() );
 			if( changed ) {
@@ -151,7 +109,6 @@ public class AuthorProcessApi extends GenericApi {
 	private void validateAuthorData( Long authorId ) throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		Author author = dataAccessor.getAuthor( authorId );
 		Page page = dataAccessor.getPage( PageType.AUTHOR, authorId );
 
@@ -174,29 +131,9 @@ public class AuthorProcessApi extends GenericApi {
 			throw new InvalidArgumentException( "Author name is missing." );
 
 		
-		// Email, if present, must be trimmed and converted to lower case.
-		if( author.getEmail() != null && ! author.getEmail().equals( author.getEmail().trim().toLowerCase() ) )
-			throw new InvalidArgumentException( "Email is either not trimmed or not converted to lower case." );
-
-		// Email must be same as email in User entity.
-		if( author.getUserId() != null ) {
-			User user = dataAccessor.getUser( author.getUserId() );
-			if( ( author.getEmail() == null && user.getEmail() != null ) || ( author.getEmail() != null && ! author.getEmail().equals( user.getEmail() ) ) )
-				throw new InvalidArgumentException( "Author email doesn't match with the email in User entity." );
-		}
-		
-		// Only one non-DELETED author entity can exist per email id.
-		if( author.getEmail() != null ) {
-			GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-			gaeQueryBuilder.addFilter( "email", author.getEmail() );
-			gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
-			gaeQueryBuilder.addOrdering( "state", true );
-			gaeQueryBuilder.addOrdering( "registrationDate", true );
-			Query query = gaeQueryBuilder.build();
-			List<Author> authorList = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-			if( authorList.size() > 1 )
-				throw new InvalidArgumentException( authorList.size() + " Author entities found for email " + author.getEmail() + " ." );
-		}
+		// Author profile, if not for a dead person, must have a linked User Profile.
+		if( author.getEmail() != null && author.getUserId() == null )
+			throw new InvalidArgumentException( "Author with email " + author.getEmail() + " doesn't have an user profile." );		
 		
 	}
 	

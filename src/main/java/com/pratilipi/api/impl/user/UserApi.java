@@ -7,7 +7,6 @@ import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.user.shared.PostUserRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
@@ -19,7 +18,7 @@ public class UserApi extends GenericApi {
 
 	@Post
 	public GenericUserResponse post( PostUserRequest request )
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException {
 
 		UserData userData = new UserData( request.getId() );
 		if( request.hasEmail() )
@@ -44,7 +43,9 @@ public class UserApi extends GenericApi {
 			userData.setLastName( lastName );
 			
 			// Create Author profile for the User.
-			AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
+			Long authorId = AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
+			
+			userData.setProfilePageUrl( "/author/" + authorId );
 			
 		}
 		
