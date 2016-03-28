@@ -23,11 +23,11 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 public class PratilipiSiteFilter implements Filter {
 	
 	private final Pattern validHostSubdomainRegEx = Pattern.compile(
-			"www\\.(tamil)\\.pratilipi\\.com" );
+			"www\\.(hindi|gujarati|tamil)\\.pratilipi\\.com" );
 	private final Pattern validHostRegEx = Pattern.compile(
-			"(www|gujarati|tamil)\\.pratilipi\\.com" // Prod (Standard)
+			"(www|hindi|gujarati|tamil)\\.pratilipi\\.com" // Prod (Standard)
 			+ "|"
-			+ "(m|gu|ta)\\.pratilipi\\.com" // Prod (Basic)
+			+ "(m|hi|gu|ta)\\.pratilipi\\.com" // Prod (Basic)
 			+ "|"
 			+ "(www|hindi|gujarati|tamil|marathi|malayalam|bengali|kannada|telugu)\\.gamma\\.pratilipi\\.com" // Gamma (Standard)
 			+ "|"

@@ -431,9 +431,13 @@ public class PratilipiSite extends HttpServlet {
 		
 		Gson gson = new Gson();
 		
-		String[] listNames = filterLanguage == Language.GUJARATI
-				? new String[] { "vartavaibhav", "womansday-vishesh", "top-authors", "recipeno-rasthal", "rahasyamay-ane-romanchak", "navalkatha" }
-				: new String[] { "featured", "fiction", "magazines" };
+		String[] listNames = new String[] {};
+		if( filterLanguage == Language.HINDI )
+			listNames = new String[] { "ankahi-dastan", "romanchak-duniya", "shrestha-sahitya", "chakmak-chhoti-duniya", "swad-ka-tadka" };
+		else if( filterLanguage == Language.GUJARATI )
+			listNames = new String[] { "vartavaibhav", "womansday-vishesh", "top-authors", "recipeno-rasthal", "rahasyamay-ane-romanchak", "navalkatha" };
+		else if( filterLanguage == Language.TAMIL )
+			listNames = new String[] { "featured", "fiction", "magazines" };
 		ArrayList<Map<String, Object>> sections = new ArrayList<>( listNames.length );
 		
 		for( String listName : listNames ) {
