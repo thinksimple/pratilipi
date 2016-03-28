@@ -75,7 +75,7 @@ public class PratilipiSite extends HttpServlet {
 	private static final String dataFilePrefix = "page/data/";
 	
 	
-	public void doGet( HttpServletRequest request, HttpServletResponse response ) 
+	public void doGet( HttpServletRequest request, HttpServletResponse response )
 			throws IOException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -88,6 +88,11 @@ public class PratilipiSite extends HttpServlet {
 		boolean basicMode = UxModeFilter.isBasicMode();
 		Language displayLanguage = UxModeFilter.getDisplayLanguage();
 		Language filterLanguage = UxModeFilter.getFilterLanguage();
+
+		// Navigation List
+		List<Navigation> navigationList = dataAccessor.getNavigationList(
+				filterLanguage == null ? Language.ENGLISH : filterLanguage
+		);
 
 		
 		// Common resource list
@@ -130,7 +135,16 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForLibraryPage( basicMode, filterLanguage );
 				templateName = templateFilePrefix + ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
 
+			} else if( basicMode && uri.equals( "/account" ) ) { // BasicMode only
+				dataModel = new HashMap<String, Object>();
+				templateName = templateFilePrefix + "AccountBasic.ftl";
+			
+			} else if( basicMode && uri.equals( "/navigation" ) ) { // BasicMode only
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "navigationList", navigationList );
+				templateName = templateFilePrefix + "NavigationBasic.ftl";
 
+				
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
 				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
@@ -273,10 +287,6 @@ public class PratilipiSite extends HttpServlet {
 			pratilipiTypes.put( pratilipiType, pratilipiTypeMap );
 		}
 		
-		List<Navigation> navigationList = dataAccessor.getNavigationList(
-				filterLanguage == null ? Language.ENGLISH : filterLanguage
-		);
-		
 		
 		dataModel.put( "ga_userId", userData.getId().toString() );
 		dataModel.put( "ga_website", UxModeFilter.getWebsite().toString() );
@@ -291,7 +301,6 @@ public class PratilipiSite extends HttpServlet {
 		if( basicMode ) {
 			dataModel.put( "requestUrl", "http://" + request.getServerName() + request.getRequestURI() );
 			dataModel.put( "pratilipiTypes", pratilipiTypes );
-			dataModel.put( "navigationList", navigationList );
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "userJson", gson.toJson( userResponse ) );
