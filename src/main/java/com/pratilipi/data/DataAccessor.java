@@ -69,6 +69,7 @@ public interface DataAccessor {
 	Map<String, Page> getPages( List<String> uriList );
 	Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList );
 	Page createOrUpdatePage( Page page );
+	void deletePage( Page page );
 
 	// PRATILIPI Table
 	Pratilipi newPratilipi();

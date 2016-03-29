@@ -453,6 +453,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( page );
 	}
 	
+	public void deletePage( Page page ) {
+		deleteEntity( PageEntity.class, page.getId() );
+	}
+	
 	
 	// PRATILIPI Table
 

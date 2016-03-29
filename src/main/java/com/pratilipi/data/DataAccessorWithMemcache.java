@@ -384,6 +384,18 @@ public class DataAccessorWithMemcache implements DataAccessor {
 			memcache.put( PREFIX_PAGE + page.getType() + "::" + page.getPrimaryContentId(), page );
 		return page;
 	}
+	
+	@Override
+	public void deletePage( Page page ) {
+		dataAccessor.deletePage( page );
+		memcache.remove( PREFIX_PAGE + page.getId() );
+		if( page.getUri() != null )
+			memcache.remove( PREFIX_PAGE + page.getUri() );
+		if( page.getUriAlias() != null )
+			memcache.remove( PREFIX_PAGE + page.getUriAlias() );
+		if( page.getPrimaryContentId() != null )
+			memcache.remove( PREFIX_PAGE + page.getType() + "::" + page.getPrimaryContentId() );
+	}
 
 
 	// PRATILIPI Table
