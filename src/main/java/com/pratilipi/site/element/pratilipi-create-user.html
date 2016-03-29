@@ -122,8 +122,9 @@
 			
 			_apiError: function( event ) {
 				jQuery( '#createUserButton' ).prop( 'disabled', false );
+				console.log( event );
 				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
-					this.message = event.detail.request.xhr.response.message;
+					this.message = event.detail.request.xhr.response.email != null ? event.detail.request.xhr.response.email : event.detail.request.xhr.response.message;
 				else
 					this.message = "Some Error occured! Please try Again."
 			}
