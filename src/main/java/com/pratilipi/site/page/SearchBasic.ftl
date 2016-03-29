@@ -12,7 +12,7 @@
 				<form style="margin-top: 15px;" method="get" action="/search">
 					<div class="form-group">
 						<div class="input-group">
-							<input type="text" class="form-control" name="q" style="display: table-cell; width:100%;" maxlength="120" <#if pratilipiListSearchQuery?? >value="${ pratilipiListSearchQuery }"</#if> />
+							<input type="text" class="form-control" name="q" placeholder="${ _strings.search }" style="display: table-cell; width:100%;" maxlength="120" <#if pratilipiListSearchQuery?? >value="${ pratilipiListSearchQuery }"</#if> />
 							<div style="background: #f5f5f5" class="input-group-addon"><button class="search-button" type="submit">
 								<img style="width: 16px; height: 16px;" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/search.svg" />
 							</button></div>
