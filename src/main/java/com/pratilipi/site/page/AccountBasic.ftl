@@ -29,8 +29,8 @@
 					url: '/api/user/logout',
 					success: function( response ) {
 						if( getUrlParameters().ret != null && 
-							getUrlParameters().ret.substring( getUrlParameters().ret.lastIndexOf('/') ) != "library" && 
-							getUrlParameters().ret.substring( getUrlParameters().ret.lastIndexOf('/') ) != "account"  )
+							getUrlParameters().ret.substring( getUrlParameters().ret.lastIndexOf('/') ) != "library#" && 
+							getUrlParameters().ret.substring( getUrlParameters().ret.lastIndexOf('/') ) != "account#"  )
 							window.location.href = getUrlParameters().ret;
 						else
 							window.location.href = "/";
