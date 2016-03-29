@@ -1,8 +1,8 @@
 <div class="box secondary-500 pratilipi-shadow text-center" style="padding: 25px 30px; margin-top: 10px; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC;">
 	
-	<a class="link" href="mailto:contact@pratilipi.com">contact@pratilipi.com</a>
+	<a class="link" href="mailto:${ _strings.footer_contact_email }">${ _strings.footer_contact_email }</a>
 	<br/>
-	<a class="link" href="tel:+919789316700">+91 9789316700</a>
+	<a class="link" href="tel:+91${ _strings.footer_contact_10_digit_number }">+91 ${ _strings.footer_contact_10_digit_number }</a>
 
 	<div style="display: block; margin: 30px auto 0px auto;">
 		${ _strings.footer_follow_us_on_social_media }
