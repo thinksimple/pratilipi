@@ -22,6 +22,7 @@ import com.pratilipi.data.mock.AccessTokenMock;
 import com.pratilipi.data.mock.AppPropertyMock;
 import com.pratilipi.data.mock.AuthorMock;
 import com.pratilipi.data.mock.EventMock;
+import com.pratilipi.data.mock.PageMock;
 import com.pratilipi.data.mock.PratilipiMock;
 import com.pratilipi.data.mock.UserMock;
 import com.pratilipi.data.mock.UserPratilipiMock;
@@ -374,6 +375,10 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return createOrUpdatePratilipi( pratilipi );
 	}
 
+	public void deletePage( Page page ) {
+		PAGE_TABLE.remove( page );
+	}
+	
 	
 	// AUTHOR Table
 	
