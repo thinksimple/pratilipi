@@ -7,7 +7,7 @@
 				url: '/api/userpratilipi/library',
 	
 				data: { 
-					'pratilipiId': ${ pratilipi.getId() }, 
+					'pratilipiId': ${ pratilipi.getId()?c }, 
 					'addedToLib': <#if userpratilipi.isAddedtoLib()>false<#else>true</#if>
 				},
 				
@@ -57,7 +57,7 @@
 		<a class="pratilipi-light-blue-button" href="${ pratilipi.readPageUrl }&ret=${ requestUrl }">${ _strings.read }</a>
 		<#if userpratilipi.isAddedtoLib()??>
 			<br />
-			<button type="button" class="pratilipi-grey-button" onclick="addToOrRemoveFromLibrary()">
+			<button style="margin-top: 15px;" type="button" class="pratilipi-grey-button" onclick="addToOrRemoveFromLibrary()">
 				<#if !userpratilipi.isAddedtoLib()>${ _strings.add_to_library }<#else>${ _strings.remove_from_library }</#if>
 			</button>
 		</#if>
