@@ -17,14 +17,18 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.UserCampaign;
+import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
+import com.pratilipi.data.type.User;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -132,8 +136,36 @@ public class AuthorProcessApi extends GenericApi {
 
 		
 		// Author profile, if not for a dead person, must have a linked User Profile.
-		if( author.getEmail() != null && author.getUserId() == null )
-			throw new InvalidArgumentException( "Author with email " + author.getEmail() + " doesn't have an user profile." );		
+		if( author.getEmail() != null && author.getUserId() == null ) {
+			
+			if( ! author.getEmail().endsWith( "@pratilipi.com" ) ) {
+				
+				User user = dataAccessor.getUserByEmail( author.getEmail() );
+				if( user != null )
+					throw new InvalidArgumentException( "User with email " + author.getEmail() + " already exists." );
+				
+				user = dataAccessor.newUser();
+				user.setEmail( author.getEmail() );
+				user.setState( UserState.REFERRAL );
+				user.setCampaign( UserCampaign.AEE_TEAM );
+				user.setSignUpDate( author.getRegistrationDate() );
+				user.setSignUpSource( UserDataUtil.getUserSignUpSource( false, false ) );
+				user.setLastUpdated( new Date() );
+				
+				user = dataAccessor.createOrUpdateUser( user );
+
+				logger.log( Level.INFO, "Created user for email " + author.getEmail() + " with user id " + user.getId() + " ." );
+				
+				author.setUserId( user.getId() );
+				author = dataAccessor.createOrUpdateAuthor( author );
+				
+			} else {
+				
+				logger.log( Level.INFO, "Skipping author with email " + author.getEmail() + " ." );
+				
+			}
+		
+		}
 		
 	}
 	
