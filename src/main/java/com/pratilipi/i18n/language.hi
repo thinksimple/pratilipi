@@ -74,7 +74,7 @@ pratilipi_summary			= सारांश लिखिए
 
 pratilipi_edit_info			= संबंधित जानकारी संपादित करें	
 pratilipi_edit_content		= रचना सम्पादित करें 
-pratilipi_update_cover		= Upload Photo
+pratilipi_update_cover		= फोटो उपलब्ध कीजिए 
 
 pratilipi_count_reads		= पाठक संख्या	
 pratilipi_count_reviews		= कुल टिप्पणीयाँ
@@ -118,7 +118,7 @@ review_delete_review_confirm	= टिप्पणी हटाने की प�
 review_delete_okay			= ओके
 review_delete_cancel		= कैंसिल
 review_helpful				= क्या यह टिप्पणी सहायरूप थी?
-review_see_all_reviews		= See All Reviews
+review_see_all_reviews		= सारी टिप्पणियाँ देखें  
 
 
 
@@ -210,12 +210,12 @@ free						= निःशुल्क
 saving						= सेव करने की प्रक्रिया जारी है 
 working						= कृपया बने रहें  
 update						= अपडेट 
-share						= साझा कीजिए  
+share						= शेर  
 menu						= श्रेणी 
 back						= वापस जाएँं 
 close           = बंद कीजिए 
 load_more_contents			= और  देखें
-view_more					= View More
+view_more					= और देखें 
  
 
 # Success Messages
@@ -291,7 +291,7 @@ month_nov	= November
 month_dec	= December
 
 # Library
-my_library			= My Library
-add_to_library		= Add to Library
-remove_from_library	= Remove from Library
-empty_library		= Sorry, there are no books in your library, you can add books from content page.
+my_library			= मेरी लाइब्रेरी 
+add_to_library		= लाइब्रेरी में जोड़े 
+remove_from_library	= लाइब्रेरी से हटाए 
+empty_library		= माफ़ कीजिए, आपकी लाइब्रेरी में फ़िलहाल कुछ भी उपलब्ध नहीं है । आप रोमांचक कहानियां यहाँ जोड़ सकते है । 
