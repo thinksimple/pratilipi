@@ -160,6 +160,8 @@ public class AuthorProcessApi extends GenericApi {
 		// Count of Pratilipi Entities in each language.
 		Map<Language, Integer> langCount = new HashMap<>();
 		for( Pratilipi pratilipi : pratilipiList ) {
+			if( pratilipi.getState() != PratilipiState.PUBLISHED )
+				continue;
 			Integer count = langCount.get( pratilipi.getLanguage() );
 			count = count == null ? 1 : count++;
 			langCount.put( pratilipi.getLanguage(), count );
