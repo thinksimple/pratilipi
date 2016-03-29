@@ -49,7 +49,7 @@
 			<div class="container">
 				<div class="secondary-500 pratilipi-shadow box">
 					<h3 style="margin-bottom: 20px;" class="text-center">${ _strings.user_my_account }</h3>
-					<#if user.email><h5 class="text-center">${ user.email }</h5></#if>
+					<#if user.email??><h5 class="text-center">${ user.email }</h5></#if>
 					<#--
 					<#if user.isEmailVerified == true>
 						<h6 class="text-center">${ _strings.edit_account_email_verified }</h6>
