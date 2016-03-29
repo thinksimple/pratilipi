@@ -1,4 +1,4 @@
-<#if userpratilipi.addedToLib ??>
+<#if userpratilipi.isAddedtoLib() ??>
 	<script>
 		function addToOrRemoveFromLibrary() {
 			$.ajax({
@@ -8,7 +8,7 @@
 	
 				data: { 
 					'pratilipiId': ${ pratilipi.getId() }, 
-					'addedToLib': <#if userpratilipi.addedToLib>false<#else>true</#if>
+					'addedToLib': <#if userpratilipi.isAddedtoLib()>false<#else>true</#if>
 				},
 				
 				success: function( response ) {
@@ -55,10 +55,10 @@
 	
 	<div style="padding-top: 20px; padding-bottom: 20px;">
 		<a class="pratilipi-light-blue-button" href="${ pratilipi.readPageUrl }&ret=${ requestUrl }">${ _strings.read }</a>
-		<#if userpratilipi.addedToLib??>
+		<#if userpratilipi.isAddedtoLib()??>
 			<br />
 			<button type="button" class="pratilipi-grey-button" onclick="addToOrRemoveFromLibrary()">
-				<#if !userpratilipi.addedToLib>${ _strings.add_to_library }<#else>${ _strings.remove_from_library }</#if>
+				<#if !userpratilipi.isAddedtoLib()>${ _strings.add_to_library }<#else>${ _strings.remove_from_library }</#if>
 			</button>
 		</#if>
 	</div>
