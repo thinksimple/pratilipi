@@ -168,8 +168,8 @@ user_email					= ईमेल प्रदान करे
 user_password				= पासवर्ड
 user_confirm_password		= पासवर्ड की पुष्टि करें
 
-user_my_profile				= आपकी प्रोफाइल 
-user_my_account				= आपका  अकाउंट 
+user_my_profile				= मेरी प्रोफ़ाइल  
+user_my_account				= सेटिंग्स 
 
 user_is_new					= उपयोगकर्ता नये है	
 user_is_registered			= उपयोगकर्ता पंजीकृत है
