@@ -2,9 +2,14 @@ package com.pratilipi.api.impl.author;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -16,19 +21,21 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
-import com.pratilipi.common.type.UserCampaign;
-import com.pratilipi.common.type.UserState;
+import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.GaeQueryBuilder;
+import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
-import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
-import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -113,60 +120,61 @@ public class AuthorProcessApi extends GenericApi {
 	private void validateAuthorData( Long authorId ) throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		Author author = dataAccessor.getAuthor( authorId );
 		Page page = dataAccessor.getPage( PageType.AUTHOR, authorId );
 
 		
-		// Must have a page entity linked.
-		if( page == null )
-			throw new InvalidArgumentException( "Page entity is missing." );
+		// DELETED Author can not have a Page entity linked.
+		if( author.getState() == AuthorState.DELETED && page != null )
+			throw new InvalidArgumentException( "DELETED Author has a non-deleted Page entity." );
+			
+		// Non-DELETED Author must have a page entity linked.
+		if( author.getState() != AuthorState.DELETED && page == null )
+			throw new InvalidArgumentException( "Page entity is missing for the Author." );
 		
-		// Page entity linked with DELETED Author must not have uriAlias.
+		
+		// Pratilipi Entities linked with the Author.
+		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
+		gaeQueryBuilder.addFilter( "authorId", authorId );
+		gaeQueryBuilder.addFilter( "state", PratilipiState.DELETED, Operator.NOT_EQUALS );
+		gaeQueryBuilder.addOrdering( "state", true );
+		Query query = gaeQueryBuilder.build();
+		List<Pratilipi> pratilipiList = (List<Pratilipi>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );;
+
+		// DELETED Author cannot have non-DELETED Pratilipi entities linked.
 		if( author.getState() == AuthorState.DELETED ) {
-			if( page.getUriAlias() != null )
-				throw new InvalidArgumentException( "Author entity is DELETED but uriAlias in Page entity is not null." );
-			// TODO: DELETED Author cannot have non-DELETED Pratilipi entities linked.
+			if( pratilipiList.size() != 0 )
+				throw new InvalidArgumentException( "DELETED Author has " + pratilipiList.size() + " non-deleted Pratilipi Entities linked." );
 			return;
 		}
 
+		// Author having Pratilipi entites linked, can not have his/her language set to null.
+		if( author.getLanguage() == null && pratilipiList.size() != 0 )
+			throw new InvalidArgumentException( "Author has " + pratilipiList.size() + " non-deleted Pratilipi Entities linked but his/her language is not set." );
+		
+		
+		// Count of Pratilipi Entities in each language.
+		Map<Language, Integer> langCount = new HashMap<>();
+		for( Pratilipi pratilipi : pratilipiList ) {
+			Integer count = langCount.get( pratilipi.getLanguage() );
+			count = count == null ? 1 : count++;
+			langCount.put( pratilipi.getLanguage(), count );
+		}
+
+
+		// Author, having Pratilipi entites in just one language, must have the same set as his/her profile langauge.
+		if( langCount.keySet().size() == 1 ) {
+			Language language = langCount.keySet().iterator().next();
+			if( author.getLanguage() != language )
+				throw new InvalidArgumentException( "Author has " + author.getLanguage() + " as his/her profile langauge but all his/her content pieces are in " + language + "." );
+		}
+			
 		
 		// At least one of four name fields must be set.
 		if( author.getFirstName() == null && author.getLastName() == null && author.getFirstNameEn() == null && author.getLastNameEn() == null )
 			throw new InvalidArgumentException( "Author name is missing." );
 
-		
-		// Author profile, if not for a dead person, must have a linked User Profile.
-		if( author.getEmail() != null && author.getUserId() == null ) {
-			
-			if( ! author.getEmail().endsWith( "@pratilipi.com" ) ) {
-				
-				User user = dataAccessor.getUserByEmail( author.getEmail() );
-				if( user != null )
-					throw new InvalidArgumentException( "User with email " + author.getEmail() + " already exists." );
-				
-				user = dataAccessor.newUser();
-				user.setEmail( author.getEmail() );
-				user.setState( UserState.REFERRAL );
-				user.setCampaign( UserCampaign.AEE_TEAM );
-				user.setSignUpDate( author.getRegistrationDate() );
-				user.setSignUpSource( UserDataUtil.getUserSignUpSource( false, false ) );
-				user.setLastUpdated( new Date() );
-				
-				user = dataAccessor.createOrUpdateUser( user );
-
-				logger.log( Level.INFO, "Created user for email " + author.getEmail() + " with user id " + user.getId() + " ." );
-				
-				author.setUserId( user.getId() );
-				author = dataAccessor.createOrUpdateAuthor( author );
-				
-			} else {
-				
-				logger.log( Level.INFO, "Skipping author with email " + author.getEmail() + " ." );
-				
-			}
-		
-		}
-		
 	}
 	
 }

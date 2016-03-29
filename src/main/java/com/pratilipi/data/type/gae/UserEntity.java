@@ -311,7 +311,7 @@ public class UserEntity implements User {
 		
 	@Override
 	public Date getLastUpdated() {
-		return lastUpdated;
+		return lastUpdated == null ? signUpDate : lastUpdated;
 	}
 	
 	@Override
