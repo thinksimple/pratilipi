@@ -1,4 +1,5 @@
 <link rel="import" href="pratilipi-edit-author.html?2016031702" />
+<link rel="import" href="pratilipi-create-user.html" />
 <dom-module id="pratilipi-author-list">
 
 	<style>
@@ -54,6 +55,7 @@
 			<template is="dom-if" if="{{ includeShowMoreButton }}">
 				<button class="container pratilipi-new-blue-button" on-click="loadMore">Load more Authors</button>
 			</template>
+			<pratilipi-create-user></pratilipi-create-user>
 			<pratilipi-edit-author></pratilipi-edit-author>
 		</div>
 		
@@ -202,7 +204,7 @@
 			},
 			
 			createAuthor: function() {
-				this.querySelector( 'pratilipi-edit-author' ).createOrEditAuthor();
+				this.querySelector( 'pratilipi-create-user' ).open();
 			},
 			
 			process: function( authorList ) {

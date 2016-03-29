@@ -1,0 +1,134 @@
+<dom-module id="pratilipi-create-user">
+	
+	<style>
+	
+		:host {
+			display: block;
+		}
+		.modal-fullscreen .modal-dialog .modal-content {max-width: 600px;padding-top:5px;}
+	</style>
+	
+	<template>
+		<div class="modal modal-fullscreen fade" id="pratilipiCreateUser" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content" on-keyup="onSubmit">
+				
+					<div class="modal-fullscreen-close-button">
+						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
+					</div>
+					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+					<h6 class="modal-fullscreen-heading">Create new Author</h6>
+					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
+					<pratilipi-input label="${ _strings.user_full_name }" value="{{ name::input }}" icon="icons:account-box"></pratilipi-input>
+					<pratilipi-input label="${ _strings.user_email }" value="{{ email::input }}" icon="icons:mail" type="email"></pratilipi-input>
+					<pratilipi-input label="10 digit Phone Number" value="{{ phone::input }}" icon="icons:settings-phone" type="tel"></pratilipi-input>
+					<div class="display-message-div"><p>{{ message }}</p></div>
+					<button id="createUserButton" class="pratilipi-blue-button" type="button" on-click="onSubmit">Create Author</button>
+				</div>
+			</div>
+		</div>
+		<iron-ajax
+				id="AuthorApi"
+				url="/api/author"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_apiResponse"
+				on-error="_apiError"
+				></iron-ajax>
+		<iron-ajax
+				id="UserApi"
+				url="/api/user"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_apiResponse"
+				on-error="_apiError"
+				></iron-ajax>
+	</template>
+	
+	<script>
+		Polymer({
+	
+			is: 'pratilipi-create-user',
+			
+			properties: {
+				// Specific to input fields
+				userId: { type: String },
+				name: { type: String },
+				email: { type: String },
+				phone: { type: String },
+				
+ 				message: { type: String }
+			},
+			
+			open: function() {
+				this.async( function() {
+					jQuery( "#pratilipiCreateUser" ).modal();
+				});
+			},
+			
+			close: function() {
+				jQuery( "#pratilipiCreateUser" ).modal( 'hide' );
+			},
+			
+			onSubmit: function( event ) {
+				
+				this.message = null;
+				
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+					return;
+				
+				if( this.name == null || this.name.trim() == "" ) {
+					this.message = "Please Enter the name!";
+					return;
+				}
+				
+				if( this.phone != null && this.phone.trim() != "" && ( isNaN( this.phone ) || this.phone.length != 10 ) ) {
+					console.log( this.phone );
+					this.message = "Invalid Number";
+					return;
+				}
+				
+				var ajaxPost = ( this.email != null && this.email.trim() != "" )
+						|| ( this.phone != null && this.phone.trim() != "" ) ? this.$.UserApi : this.$.AuthorApi;
+				
+				var body = { name: this.name, language: "${ language?upper_case }" };
+				
+				if( this.email != null && this.email.trim() != "" )
+					body.email = this.email;
+				
+				if( this.phone != null && this.phone.trim() != "" )
+					body.phone = this.phone;
+				
+				this.message = "${ _strings.working }";
+				jQuery( '#createUserButton' ).prop( 'disabled', true );
+				ajaxPost.body = jQuery.param( body );
+				ajaxPost.generateRequest();
+			},
+			
+			_apiResponse: function( event ) {
+				
+				this.message = "${ _strings.updated_author_info_success }";
+				var response = event.detail.response;
+				
+				this.async( function() {
+					jQuery( '#createUserButton' ).prop( 'disabled', false );
+					this.message = null;
+					this.close();
+					window.location.href = response.pageUrl == null ? response.pageUrl : response.profilePageUrl;
+				}, 1000 );
+			},
+			
+			_apiError: function( event ) {
+				jQuery( '#createUserButton' ).prop( 'disabled', false );
+				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
+					this.message = event.detail.request.xhr.response.message;
+				else
+					this.message = "Some Error occured! Please try Again."
+			}
+			
+		});
+	</script>
+	
+</dom-module>
