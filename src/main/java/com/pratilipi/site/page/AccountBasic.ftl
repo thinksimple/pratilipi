@@ -8,7 +8,6 @@
 				text-align: center;
 				margin-top: 15px;
 				margin-bottom: 20px;
-				color: #107FE5;
 			}
 		</style>
 		<script type="text/javascript">
@@ -29,7 +28,9 @@
 					type: 'get',
 					url: '/api/user/logout',
 					success: function( response ) {
-						if( getUrlParameters().ret != null )
+						if( getUrlParameters().ret != null && 
+							getUrlParameters().ret.substring( getUrlParameters().ret.lastIndexOf('/') ) != "library" && 
+							getUrlParameters().ret.substring( getUrlParameters().ret.lastIndexOf('/') ) != "account"  )
 							window.location.href = getUrlParameters().ret;
 						else
 							window.location.href = "/";
@@ -48,7 +49,7 @@
 			<div class="container">
 				<div class="secondary-500 pratilipi-shadow box">
 					<h3 style="margin-bottom: 20px;" class="text-center">${ _strings.user_my_account }</h3>
-					<h5 class="text-center">${ user.email }</h5>
+					<#if user.email><h5 class="text-center">${ user.email }</h5></#if>
 					<#--
 					<#if user.isEmailVerified == true>
 						<h6 class="text-center">${ _strings.edit_account_email_verified }</h6>
