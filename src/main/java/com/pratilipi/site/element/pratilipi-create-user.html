@@ -18,6 +18,7 @@
 					</div>
 					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
 					<h6 class="modal-fullscreen-heading">Create new Author</h6>
+					<p class="text-muted text-center">Phone numbers without email id's will be discarded.</p>
 					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
 					<pratilipi-input label="${ _strings.user_full_name }" value="{{ name::input }}" icon="icons:account-box"></pratilipi-input>
 					<pratilipi-input label="${ _strings.user_email }" value="{{ email::input }}" icon="icons:mail" type="email"></pratilipi-input>
@@ -85,21 +86,19 @@
 				}
 				
 				if( this.phone != null && this.phone.trim() != "" && ( isNaN( this.phone ) || this.phone.length != 10 ) ) {
-					console.log( this.phone );
 					this.message = "Invalid Number";
 					return;
 				}
 				
-				var ajaxPost = ( this.email != null && this.email.trim() != "" )
-						|| ( this.phone != null && this.phone.trim() != "" ) ? this.$.UserApi : this.$.AuthorApi;
+				var ajaxPost = ( this.email != null && this.email.trim() != "" ) ? this.$.UserApi : this.$.AuthorApi;
 				
-				var body = { name: this.name, language: "${ language?upper_case }" };
+				var body = { name: this.name.trim(), language: "${ language?upper_case }" };
 				
 				if( this.email != null && this.email.trim() != "" )
-					body.email = this.email;
+					body.email = this.email.trim();
 				
 				if( this.phone != null && this.phone.trim() != "" )
-					body.phone = this.phone;
+					body.phone = this.phone.trim();
 				
 				this.message = "${ _strings.working }";
 				jQuery( '#createUserButton' ).prop( 'disabled', true );
@@ -122,7 +121,6 @@
 			
 			_apiError: function( event ) {
 				jQuery( '#createUserButton' ).prop( 'disabled', false );
-				console.log( event );
 				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
 					this.message = event.detail.request.xhr.response.email != null ? event.detail.request.xhr.response.email : event.detail.request.xhr.response.message;
 				else
