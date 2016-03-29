@@ -126,9 +126,12 @@ public class AuthorProcessApi extends GenericApi {
 
 		
 		// DELETED Author can not have a Page entity linked.
-		if( author.getState() == AuthorState.DELETED && page != null )
-			throw new InvalidArgumentException( "DELETED Author has a non-deleted Page entity." );
-			
+		if( author.getState() == AuthorState.DELETED && page != null ) {
+//			throw new InvalidArgumentException( "DELETED Author has a non-deleted Page entity." );
+			logger.log( Level.INFO, "Deleting Page entity of type " + page.getType() + " and primary content id " + page.getPrimaryContentId() );
+			dataAccessor.deletePage( page );
+		}
+	
 		// Non-DELETED Author must have a page entity linked.
 		if( author.getState() != AuthorState.DELETED && page == null )
 			throw new InvalidArgumentException( "Page entity is missing for the Author." );
