@@ -12,13 +12,27 @@
 			}
 		</style>
 		<script type="text/javascript">
+			function getUrlParameters() {
+				var str = decodeURI( location.search.substring(1) ), 
+					res = str.split("&"), 
+					retObj = {};
+				for( var i = 0; i < res.length; i++ ){
+					var key = res[i].substring( 0, res[i].indexOf( '=' ) );
+					var value = res[i].substring( res[i].indexOf( '=' ) + 1 );
+					retObj[ key ] = value;
+				}
+				return retObj;
+			}
 			function logout() {
 				// Make Ajax call
 				$.ajax({
 					type: 'get',
 					url: '/api/user/logout',
 					success: function( response ) {
-						location.reload(); 
+						if( getUrlParameters().ret != null )
+							window.location.href = getUrlParameters().ret;
+						else
+							window.location.href = "/";
 					},
 					error: function () {
 						alert( "Logout Failed!" );
@@ -42,7 +56,7 @@
 					-->
 					<hr/>
 					<a href="${ user.profilePageUrl }"><h6 class="account">${ _strings.user_my_profile }</h6></a>
-					<a href="/updatepassword?ret=${ requestUrl }"><h6 class="account">${ _strings.edit_account_change_password }</h6></a>
+					<a href="/updatepassword"><h6 class="account">${ _strings.edit_account_change_password }</h6></a>
 					<#--
 					<#if user.isEmailVerified != true>
 						<a href="/verifyemail?ret=${ requestUrl }"><h6 class="account">${ _strings.edit_account_verify_email }</h6></a>

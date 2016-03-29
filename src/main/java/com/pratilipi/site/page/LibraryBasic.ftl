@@ -13,7 +13,7 @@
 					<h2 class="pratilipi-red">${ _strings.my_library }</h2>
 				</div>
 	
-				<#if publishedPratilipiList?has_content>
+				<#if pratilipiList?has_content>
 					<#list pratilipiList as pratilipi>
 						<#include "../element/pratilipi-pratilipi-card.ftl">
 					</#list>
