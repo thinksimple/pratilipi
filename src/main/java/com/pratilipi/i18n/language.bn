@@ -1,0 +1,301 @@
+# Do NOT edit
+
+pratilipi					= প্রতিলিপি
+
+home_page_title				= পড়ুন বাংলা গল্প,কবিতা,উপন্যাস এবং আরও অনেক কিছুबहुत कुछ
+website_language			= বাংলা
+
+facebook_page				= https://www.facebook.com/Pratilipidotcom/
+twitter_page				= https://twitter.com/TeamPratilipi
+googleplus_page				= https://plus.google.com/+PratilipiTeam
+linkedin_page				= https://www.linkedin.com/company/pratilipi
+
+
+
+# Language
+
+language_choose_language	= ভাষা পছন্দ করুন
+language_all				=  ভাষা 
+language_hi					= হিন্দী
+language_gu					= গুজরাটী
+language_ta					= তামিল
+language_mr					= মারাঠী
+lanugage_ml					=  মালায়ালাম
+language_bn					= বাংলা
+language_en					= ইংরাজী
+language_te					= তেলুগু
+
+
+
+
+# Pratilipi Types
+
+_pratilipi_type_book		=   গ্রন্থ
+_pratilipi_type_books		=   গ্রন্থসমূহ
+_pratilipi_type_poem		=   কবিতা
+_pratilipi_type_poems		=   কবিতাগুচ্ছ
+_pratilipi_type_story		=   গল্প
+_pratilipi_type_stories	=   গল্পসমূহ
+_pratilipi_type_article	= প্রবন্ধ
+_pratilipi_type_articles	 =   প্রবন্ধসমূহ
+_pratilipi_type_magazine	=   পত্রিকা
+_pratilipi_type_magazines	=   পত্রিকাসমূহ
+ा 
+
+
+
+# Author
+
+author_about				=  সংক্ষিপ্ত পরিচয়
+author_language		  =  ভাষা
+author_since				=  প্রতিলিপির সঙ্গে
+
+author_count_works			=  প্রকাশিত সাহিত্য
+author_count_reads			=  পাঠক দ্বারা পঠিত
+author_count_likes			=  পছন্দ করেছেন
+author_edit_profile			=  প্রোফাইল সম্পাদনা
+author_update_image				= Upload Photo
+
+author_drafts			=  অপ্রকাশিত রচনাসমূহ
+author_published_works		=  প্রকাশিত রচনাসমূহ
+author_add_new_content		=  নতুন রচনা লিখুন
+
+author_no_contents_published	= हम माफ़ी चाहते है, यह रचनाकार के अकाउंट में अभी तक प्रकाशन कार्य शुरू नहीं हुआ है |
+
+
+
+# Pratilipi
+
+pratilipi_type		=   প্রকার
+pratilipi_listing_date		=   প্রকাশনার তারিখ
+pratilipi_published		=   প্রকাশিত
+pratilipi_published_year	=   প্রকাশনার সাল
+pratilipi_summary		=   সারাংশ লিখুন
+
+pratilipi_edit_info		=   সম্বন্ধিত জ্ঞাতব্য সম্পাদিত করুন    
+pratilipi_edit_content		=   রচনা সম্পাদনা করুন
+pratilipi_update_cover		= फोटो उपलब्ध कीजिए
+pratilipi_count_reads		=   পাঠক সংখ্যা
+pratilipi_count_reviews		=   মোট রিভিউ
+pratilipi_count_likes		=   মোট লাইক্স
+
+pratilipi_move_to_drafts	=   অপ্রকাশিত করুন
+pratilipi_publish_it		=   প্রকাশিত করুন
+
+pratilipi_no_reviews		= आपकी समीक्षा दर्ज कर आप प्रथम समीक्षक बन सकते है | 
+
+
+
+# Rating
+
+rating_rating	=   রেটিং
+rating_ratings	=   রেটিং
+rating_rate_this		=  রেটিং দিন
+rating_your_rating	=  আপনার রেটিং
+
+rating_1_star	=  ১
+rating_2_star	=  ২
+rating_3_star	=  ৩
+rating_4_star	=  ৪
+rating_5_star	=  ৫
+
+
+
+
+# Review
+
+review_heading =  রিভিউসমূহ
+review_write_a_review	 =  রিভিউ দিন
+review_title	=  রিভিউ শীর্ষক
+review_title_help	=  উদাহরণস্বরূপ – এক অদ্ভুত কাহিনী বা এক সাধারণ কাহিনী
+review_content	 = আপনার রিভিউ
+review_content_help	=     
+review_submit_review	=  জমা দিন
+review_edit_review	=  সম্পাদিত করুন
+review_delete_review	= ডিলিট  রিভিউ 
+review_delete_review_confirm	=  ডিলিট রিভিউ অনুমোদন করুন
+review_delete_okay	= ওকে
+review_delete_cancel	= ক্যান্সেল
+review_helpful	 =  এই রিভিউ কি সহায়ক ছিল?
+review_see_all_reviews		= सारी टिप्पणियाँ देखें  
+
+
+
+# Search
+
+search 	=  খুঁজুন
+search_bar_help =  লেখকের নাম বা কাহিনী,কবিতা,পুস্তকের শিরোনাম টাইপ করুন
+search_results	=  সার্চ রেজাল্ট
+search_no_results_found = हम माफ़ी चाहते है, आपके द्वारा की गई खोज का परिणाम प्रतिलिप पर फ़िलहाल उपलब्ध नहीं है | अन्य रोमांचक और रहस्य कथाएँ आप पढ़ सकते है |
+
+
+
+# Write
+
+write_heading	= লিখুন                                                                                                                                                                                                                                                                        
+write_help	= কাহিনী,কবিতা,প্রবন্ধ,গ্রন্থ ইত্যাদি স্বয়ং প্রকাশিত করুন
+write_title	=  এখানে শিরোনাম লিখুন
+write_title_en	=  শিরোনাম ইংরাজীতে
+write_type	=  প্রকার
+write_language	 =  ভাষা
+write_summary	 =  সংক্ষিপ্ত সারাংশ লিখুন
+write_create_new_content	=  নতুন রচনা সৃষ্টি
+
+
+
+
+# Common User Popups
+
+user_sign_in			= সাইন ইন করুন
+user_to_sign_in			= আরম্ভ  করুন
+user_sign_in_with_facebook	= ফেসবুকের সাথে সাইন ইন করুন
+user_sign_in_to_pratilipi	= প্রতিলিপিতে সাইন ইন করুন
+user_sign_out			= সাইন আউট করুন
+
+user_sign_up			= নতুন একাউন্ট বানান
+user_sign_up_for_pratilipi	=  প্রতিলিপিতে নতুন একাউন্ট বানান
+
+user_forgot_password	=  যদি আপনি পাসওয়ার্ড ভুলে গিয়ে থাকেন?
+user_reset_password	=  নতুন পাসওয়ার্ড বানান
+user_reset_password_help	= এই সাইটে রেজিস্টার করার জন্য ব্যবহার করা ইমেল প্রদান করুন। 
+
+user_current_password		=  বর্তমান পাসওয়ার্ড
+user_new_password	=  নতুন পাসওয়ার্ড
+
+user_full_name	   =  সম্পূর্ণ নাম লিখুন
+user_email	=  ইমেল প্রদান করুন
+user_password		=  পাসওয়ার্ড
+user_confirm_password    =  পাসওয়ার্ড অনুমোদন করুন
+
+user_my_profile	= আপনার প্রোফাইল
+user_my_account	= सेटिंग
+user_is_new		= ব্যবহারকারী নতুন
+user_is_registered	= ব্যবহারকারী রেজিস্টার্ড
+user_email_verification		= আপনাকে পাঠানো ইমেল অনুমোদন করুন
+
+
+
+
+
+# My Account popup
+
+edit_account_heading		=  আপনার একাউন্ট
+edit_account_verify_email	=  আপনাকে পাঠানো ইমেলের অনুমোদন করুন
+edit_account_email_verified	=  ইমেলের অনুমোদন করা হয়েছে
+edit_account_change_password	=  পাসওয়ার্ড বদল করুন
+
+
+# Footer
+
+footer_follow_us_on_social_media	=  সোশাল মিডিয়াতে আমাদের ফলো করুন
+footer_about_us		=  আমাদের সম্পর্কে
+footer_work_with_us		=  আমাদের সাথে কাজ করুন
+footer_blog			=  ব্লগ
+footer_privacy_policy		=  গোপনীয়তা নীতি
+footer_terms_of_service	=  পরিষেবার শর্ত
+footer_contact_email		= contact@pratilipi.com
+footer_contact_10_digit_number		= 9789316700
+
+
+
+# Common Words
+
+okay						= স্বীকৃত করুন
+cancel						=  ক্যান্সেল করুন
+save_changes				= পরিবর্তন সুরক্ষিত করুন
+show_more					=  আরও দেখুন
+show_less					=  কম দেখুন
+read						=  পড়ুন
+write						=  লিখুন
+free						= করমুক্ত
+saving						=  সেভ করার পদ্ধতি চলছে
+working						=  প্রক্রিয়া চলছে
+update						=  অপডেট
+share						=  শেয়ার করুন
+menu						=  শ্রেণী
+back						=  ব্যাক করুন
+close           =  বন্ধ করুন
+load_more_contents			= और  देखें
+view_more					= और देखें 
+ 
+
+# Success Messages
+
+password_reset_request_success	 = পাসওয়ার্ড রিসেট সফল হয়েছে
+user_login_success			=  লগ-ইন সফল
+user_register_success			=  রেজিস্টার সফল
+password_change_success		=  পাসওয়ার্ড  পরিবর্তন সফল
+verification_email_sent_success	= অনুমোদনের জন্য ইমেল সফলতাপূর্বক পাঠানো হয়েছে
+user_verified_success			= ব্যবহারকারীর অনুমোদন সফল
+content_created_success		= রচনা প্রকাশ সফল
+updated_author_info_success		=  লেখক পরিচয় সম্পাদন সফল
+updated_pratilipi_info_success		=  রচনা সম্বন্ধিত জিজ্ঞাস্য সফল
+
+
+# Author Edit Popup
+
+edit_author_heading		=  সম্পদিত করুন
+edit_author_first_name		= প্রথম নাম পরিবর্তন
+edit_author_last_name		= অন্তিম নাম পরিবর্তন
+edit_author_first_name_en	= প্রথম নাম (ইংরাজীতে)
+edit_author_last_name_en	= অন্তিম নাম
+edit_author_pen_name		= পদবী
+edit_author_pen_name_en	= পদবী (ইংরাজীতে)
+edit_author_birthday_ddmmyyyy	= জন্মতিথি (dd-mm-yyyy)    
+edit_author_language		= ভাষা
+edit_author_summary		= সংক্ষিপ্ত পরিচয়
+edit_author_save_changes		= পরিবর্তন সেভ করুন
+
+
+# Pratilipi Edit Popup
+
+edit_pratilipi_heading			=  হেডিং পরিবর্তন
+edit_pratilipi_title			=  শীর্ষক
+edit_pratilipi_title_en			= শীর্ষক ( ইংরাজী তে )
+edit_pratilipi_type			=  প্রকার
+edit_pratilipi_language			=  ভাষা
+edit_pratilipi_summary			=  রচনার সারাংশ
+edit_pratilipi_save_changes		=  পরিবর্তন সুরক্ষিত করুন
+ें 
+
+
+
+# Register Form
+
+register_part_1					= 
+register_part_2					= 
+register_part_3					= 
+
+# Event Page
+
+event_entries			= इवेंट एंट्री 
+event_name				= इवेंट शीर्षक 
+event_name_en			= इवेंट शीर्षक अंग्रेजी में 
+event_description		= इवेंट के बारे में 
+event_entries_url_list	=एंट्री का युआरएल लिस्ट 
+event_save_changes		= बदलाव को सुरक्षित करें
+
+# Gender
+gender_male			= Male
+gender_female		= Female
+gender_other		= Other
+
+ # Months
+month_jan	= January
+month_feb	= February
+month_mar	= March
+month_apr	= April
+month_may	= May
+month_jun	= June
+month_jul	= July
+month_aug	= August
+month_sep	= September
+month_oct	= October
+month_nov	= November
+month_dec	= December
+
+# Library
+my_library			= मेरी लाइब्रेरी 
+add_to_library		= लाइब्रेरी में जोड़े 
+remove_from_library	= लाइब्रेरी से हटाए 
+empty_library		= माफ़ कीजिए, आपकी लाइब्रेरी में फ़िलहाल कुछ भी उपलब्ध नहीं है । आप रोमांचक कहानियां यहाँ जोड़ सकते है । 
