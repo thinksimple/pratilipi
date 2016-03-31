@@ -46,7 +46,7 @@ public class I18n {
 				LineIterator.closeQuietly( it );
 				LANG_STRINGS_MAP.put( language, strings );
 			} catch( NullPointerException | URISyntaxException | IOException e ) {
-				logger.log( Level.SEVERE, "Exception while reading from language file.", e );
+				logger.log( Level.SEVERE, "Exception while reading from " + language + " language file.", e );
 			}
 		}
 		return strings;
