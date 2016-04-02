@@ -67,6 +67,14 @@
  				message: { type: String }
 			},
 			
+			createOrEditUser: function( user ) {
+				this.userId = user.userId == null ? null : user.userId;
+				this.name = user.name == null ? null : user.name;
+				this.email = user.email == null ? null : user.email;
+				this.phone = user.phone == null ? null : user.phone;
+				this.open();
+			},
+
 			open: function() {
 				this.async( function() {
 					jQuery( "#pratilipiCreateUser" ).modal();
@@ -77,35 +85,28 @@
 				jQuery( "#pratilipiCreateUser" ).modal( 'hide' );
 			},
 			
-			extractFacebookEmail: function( input ) {
+			extractFacebookEmail: function( facebookUrl ) {
 				
-				var facebookUrl = null;
-				
-				if( input != null && input.trim() != "" ) {
+				if( facebookUrl.lastIndexOf( '/' ) != -1 )
+					facebookUrl = facebookUrl.substring( facebookUrl.lastIndexOf( '/' ) + 1 );
 					
-					facebookUrl = input;
-					
-					if( facebookUrl.lastIndexOf( '/' ) != -1 )
-						facebookUrl = facebookUrl.substring( facebookUrl.lastIndexOf( '/' ) + 1 );
-					
-					// Special case
-					if( facebookUrl.indexOf( "profile.php" ) != -1 ) {
-						var params = facebookUrl.substring( facebookUrl.indexOf( "profile.php" ) + 12 ).split( "&" );
-						for( var i = 0 ; i < params.length; i ++ ) {
-							if( params[i].indexOf( "id=" ) != -1 ) {
-								facebookUrl = params[i].substring( params[i].indexOf( "id=" ) + 3 );
-								break;
-							}
+				// Special case
+				if( facebookUrl.indexOf( "profile.php" ) != -1 ) {
+					var params = facebookUrl.substring( facebookUrl.indexOf( "profile.php" ) + 12 ).split( "&" );
+					for( var i = 0 ; i < params.length; i ++ ) {
+						if( params[i].indexOf( "id=" ) != -1 ) {
+							facebookUrl = params[i].substring( params[i].indexOf( "id=" ) + 3 );
+							break;
 						}
-					} 
-					// Normal case
-					else if( facebookUrl.indexOf( '?' ) != -1 ) {
-						facebookUrl = facebookUrl.substring( 0, facebookUrl.indexOf( '?' ) );
 					}
+				} 
+				// Normal case
+				else if( facebookUrl.indexOf( '?' ) != -1 ) {
+					facebookUrl = facebookUrl.substring( 0, facebookUrl.indexOf( '?' ) );
 				}
-				
-				return facebookUrl != null && facebookUrl.trim() != '' ? 
-					( facebookUrl.toLowerCase().indexOf( "@facebook.com" ) != -1 ? facebookUrl : facebookUrl + "@facebook.com" ) : null; 
+
+			return facebookUrl != null && facebookUrl.trim() != '' ? facebookUrl + "@facebook.com" : null;
+
 			},
 			
 			onSubmit: function( event ) {
@@ -135,7 +136,15 @@
 					return;
 				}
 				
-				var facebookEmail = this.extractFacebookEmail( this.facebookUrl );
+				var facebookEmail = null;
+				if( this.facebookUrl != null && this.facebookUrl.trim() != "" ) {
+					if( this.facebookUrl.indexOf( "www.facebook.com" ) == -1 ) {
+						this.message = "Invalid facebook Url!";
+						return;
+					}
+					facebookEmail = this.extractFacebookEmail( this.facebookUrl );
+				}
+				
 				var email = null;
 				
 				if( this.email != null && this.email.trim() != "" )

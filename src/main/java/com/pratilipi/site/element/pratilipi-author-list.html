@@ -175,6 +175,8 @@
 			},
 			
 			clearSearchQuery: function() {
+				if( this.searchQuery.trim() == "" )
+					return;
 				this.set( 'searchQuery', "" );
 				this._searchForAuthor();
 			},
@@ -205,7 +207,7 @@
 			},
 			
 			createAuthor: function() {
-				this.querySelector( 'pratilipi-create-user' ).open();
+				this.querySelector( 'pratilipi-create-user' ).createOrEditUser( {} );
 			},
 			
 			process: function( authorList ) {
