@@ -153,9 +153,18 @@
 					email = facebookEmail;
 				
 				var ajaxPost = email != null ? this.$.UserApi : this.$.AuthorApi;
-				var body = { name: this.name.trim(), language: "${ language?upper_case }" };
+
+				var firstName = this.name.trim();
+				var lastName = null;
+				if( firstName.lastIndexOf( ' ' ) != -1 ) {
+					lastName = firstName.substring( firstName.lastIndexOf( ' ' ) + 1 );
+					firstName = firstName.substring( 0, firstName.lastIndexOf( ' ' ) );
+				}
+				var body = { name: this.name.trim(), firstName: firstName, language: "${ language?upper_case }" };
 				if( email != null )
 					body.email = email.trim();
+				if( lastName != null )
+					body.lastName = lastName;
 				if( this.phone != null && this.phone.trim() != "" )
 					body.phone = this.phone.trim();
 				
