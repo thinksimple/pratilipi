@@ -195,6 +195,7 @@
 				if( tinyMCE != null && tinyMCE.activeEditor != null )
 					this.review = tinyMCE.get( 'reviewInput' ).getContent();
 				
+				this.review = this.review.replace( /(style=("|\Z|')(.*?)("|\Z|'))|(class=("|\Z|')(.*?)("|\Z|'))|<style>.*?<\/style>/g, "" );
 				this.review = JSON.stringify( this.review );
 				this.review = this.review.substring( 1, this.review.length - 1 );
 				

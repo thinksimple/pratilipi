@@ -274,6 +274,7 @@
 				if( tinyMCE != null && tinyMCE.get( 'authorSummary' ) != null )
 					this.summary = tinyMCE.get( 'authorSummary' ).getContent();
 				
+				this.summary = this.summary.replace( /(style=("|\Z|')(.*?)("|\Z|'))|(class=("|\Z|')(.*?)("|\Z|'))|<style>.*?<\/style>/g, "" );
 				this.summary = JSON.stringify( this.summary );
 				this.summary = this.summary.substring( 1, this.summary.length - 1 );
 				

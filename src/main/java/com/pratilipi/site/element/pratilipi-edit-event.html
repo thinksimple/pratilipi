@@ -75,7 +75,7 @@
 				eventId: { type: Number },
 				name: { type: String },
 				nameEn: { type: String },
-				language: { type: String, value: "${ language }" },
+				language: { type: String, value: "${ language?upper_case }" },
 				description: { type: String },
 				pratilipiUrlList: { type: String }
 			},
@@ -150,6 +150,7 @@
 				if( this.eventId != null )
 					params.eventId = this.eventId;
 				
+				this.description = this.description.replace( /(style=("|\Z|')(.*?)("|\Z|'))|(class=("|\Z|')(.*?)("|\Z|'))|<style>.*?<\/style>/g, "" );
 				params.description = JSON.stringify( this.description );
 				params.description = params.description.substring( 1, params.description.length - 1 );
 				
