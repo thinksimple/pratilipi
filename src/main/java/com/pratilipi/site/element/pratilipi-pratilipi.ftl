@@ -1,36 +1,39 @@
-<#if userpratilipi.isAddedtoLib() ??>
-	<script>
-		function addToOrRemoveFromLibrary() {
-			$.ajax({
+<#if userpratilipi?? >
+	<#if userpratilipi.isAddedtoLib() ??>
+		<script>
+			function addToOrRemoveFromLibrary() {
+				$.ajax({
+						
+					type: 'post',
+					url: '/api/userpratilipi/library',
+		
+					data: { 
+						'pratilipiId': ${ pratilipi.getId()?c }, 
+						'addedToLib': <#if userpratilipi.isAddedtoLib()>false<#else>true</#if>
+					},
 					
-				type: 'post',
-				url: '/api/userpratilipi/library',
-	
-				data: { 
-					'pratilipiId': ${ pratilipi.getId()?c }, 
-					'addedToLib': <#if userpratilipi.isAddedtoLib()>false<#else>true</#if>
-				},
-				
-				success: function( response ) {
-					alert( "Success" );
-					location.reload(); 
-				},
-				
-				error: function( response ) {
-					var message = jQuery.parseJSON( response.responseText );
-					var status = response.status;
-	
-					if( message["message"] != null )
-						alert( "Error " + status + " : " + message["message"] );
-					else if( message["error"] != null )
-						alert( "Error " + status + " : " + message["error"] ); 
-					else
-						alert( "Some exception occured at the server! Please try again." );
-				}
-			});
-		}
-	</script>
+					success: function( response ) {
+						alert( "Success" );
+						location.reload(); 
+					},
+					
+					error: function( response ) {
+						var message = jQuery.parseJSON( response.responseText );
+						var status = response.status;
+		
+						if( message["message"] != null )
+							alert( "Error " + status + " : " + message["message"] );
+						else if( message["error"] != null )
+							alert( "Error " + status + " : " + message["error"] ); 
+						else
+							alert( "Some exception occured at the server! Please try again." );
+					}
+				});
+			}
+		</script>
+	</#if>
 </#if>
+
 
 <div class="secondary-500 pratilipi-shadow box text-center">
 	<h2 class="pratilipi-red">${ pratilipi.title!pratilipi.titleEn }</h2>
@@ -55,12 +58,12 @@
 	
 	<div style="padding-top: 20px; padding-bottom: 20px;">
 		<a class="pratilipi-light-blue-button" href="${ pratilipi.readPageUrl }&ret=${ requestUrl }">${ _strings.read }</a>
-		<#if userpratilipi.isAddedtoLib()??>
+		<#if userpratilipi?? ><#if userpratilipi.isAddedtoLib()??>
 			<br />
 			<button style="margin-top: 15px;" type="button" class="pratilipi-grey-button" onclick="addToOrRemoveFromLibrary()">
 				<#if !userpratilipi.isAddedtoLib()>${ _strings.add_to_library }<#else>${ _strings.remove_from_library }</#if>
 			</button>
-		</#if>
+		</#if></#if>
 	</div>
 			
 </div>
