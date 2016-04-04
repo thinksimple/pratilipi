@@ -22,7 +22,7 @@ language_mr					= મરાઠી
 language_ml					= મલયાલમ 
 language_bn					= બંગાળી 
 language_en					= અંગ્રેજી 
-language_te					= Telugu
+language_te					= તેલુગુ 
 
 
 
@@ -52,7 +52,7 @@ author_count_reads		= વાચક સંખ્યા
 author_count_likes		= વાચકોની પસંદ સંખ્યા
 
 author_edit_profile		= પ્રોફાઈલ સુધારો
-author_update_image		= Upload Photo
+author_update_image		= ફોટો અપલોડ કરો
 
 author_drafts			= અપ્રકાશિત રચનાઓ 
 author_published_works	= પ્રકાશિત રચનાઓ 
@@ -72,7 +72,7 @@ pratilipi_summary		= સારાંશ લખો
 
 pratilipi_edit_info		= માહિતીમાં સુધારો કરો  	
 pratilipi_edit_content		= રચનામાં સુધારો કરો  
-pratilipi_update_cover		= Upload Photo
+pratilipi_update_cover		= ફોટો અપલોડ કરો 
 
 pratilipi_count_reads		= વાચક સંખ્યા 
 pratilipi_count_reviews		= કુલ ટીપ્પણી 
@@ -115,7 +115,7 @@ review_delete_review_confirm	= ટીપ્પણી રદ કરવાની �
 review_delete_okay	   	= ઓકે 
 review_delete_cancel		= રદ કરો  
 review_helpful			= શું આ ટીપ્પણી મદદરૂપ રહી?
-review_see_all_reviews		= See All Reviews
+review_see_all_reviews		= બધા રિવ્યુઝ જુઓ 
 
 
 
@@ -151,7 +151,7 @@ user_sign_out			= સાઈન આઉટ કરો
   
 user_sign_up			= નવું અકાઉન્ટ બનાવો  
 user_sign_up_for_pratilipi	= પ્રતિલિપિ પર નવું અકાઉન્ટ બનાવો
-user_sign_up_with_facebook	= Sign Up with Facebook
+user_sign_up_with_facebook	= ફેસબુકથી સાઈન ઇન કરો 
   
 user_forgot_password		= પાસવર્ડ યાદ નથી?
 user_reset_password		= નવો પાસવર્ડ બનાવો 
@@ -192,7 +192,7 @@ footer_blog				= બ્લોગ
 footer_privacy_policy	       = ગોપનીયતા નીતિ
 footer_terms_of_service		= સેવાની શરતો
 footer_contact_email		= contact@pratilipi.com
-footer_contact_10_digit_number		= 9789316700
+footer_contact_10_digit_number		= (+91)9036295942
 
 
 
@@ -213,7 +213,7 @@ share				= શેર કરો
 menu				= સૂચિ
 back				= પાછા જાઓ 
 load_more_contents			= વધુ રચનાઓ  તરફ 
-view_more					= View More
+view_more					= વધુ જુઓ 
 
 
 
@@ -228,7 +228,7 @@ user_verified_success				= ઉપયોગકર્તા ચકાસણી સ
 content_created_success			= રચના પ્રકાશન સફળ થયું 
 updated_author_info_success			= લેખક પરિચયમાં ફેરફાર સફળ થયો
 updated_pratilipi_info_success	= રચના સંબંધિત માહિતીમાં ફેરફાર સફળ થયો
-updated_review						= Success !  
+updated_review						= સફળ !  
 
 # Author Edit Popup
 
@@ -274,26 +274,26 @@ event_save_changes		= બદલાવ સફળ કરો
 
 
 # Gender
-gender_male			= Male
-gender_female		= Female
-gender_other		= Other
+gender_male			= પુરુષ 
+gender_female		= સ્ત્રી 
+gender_other		= અન્ય 
 
 # Months
-month_jan	= January
-month_feb	= February
-month_mar	= March
-month_apr	= April
-month_may	= May
-month_jun	= June
-month_jul	= July
-month_aug	= August
-month_sep	= September
-month_oct	= October
-month_nov	= November
-month_dec	= December
+month_jan	= જાન્યુઆરી 
+month_feb	= ફેબ્રુઆરી 
+month_mar	= માર્ચ 
+month_apr	= એપ્રિલ 
+month_may	= મે
+month_jun	= જુન 
+month_jul	= જુલાઈ 
+month_aug	= ઓગસ્ટ 
+month_sep	= સપ્ટેમ્બર 
+month_oct	= ઓકટોબર 
+month_nov	= નવેમ્બર 
+month_dec	= ડીસેમ્બર 
 
 # Library
-my_library			= My Library
-add_to_library		= Add to Library
-remove_from_library	= Remove from Library
-empty_library		= Sorry, there are no books in your library, you can add books from content page.
+my_library			= મારી લાઈબ્રેરી 
+add_to_library		= લાઈબ્રેરીમાં ઉમેરો 
+remove_from_library	= લાઈબ્રેરીમાંથી કાઢી નાખો 
+empty_library		= તમારી લાઈબ્રેરીમાં પુસ્તકો નથી, રચનાઓ માંથી ઉમેરો 
