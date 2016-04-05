@@ -126,11 +126,8 @@ public class AuthorProcessApi extends GenericApi {
 
 		
 		// DELETED Author can not have a Page entity linked.
-		if( author.getState() == AuthorState.DELETED && page != null ) {
-//			throw new InvalidArgumentException( "DELETED Author has a non-deleted Page entity." );
-			logger.log( Level.INFO, "Deleting Page entity of type " + page.getType() + " and primary content id " + page.getPrimaryContentId() );
-			dataAccessor.deletePage( page );
-		}
+		if( author.getState() == AuthorState.DELETED && page != null )
+			throw new InvalidArgumentException( "DELETED Author has a non-deleted Page entity." );
 	
 		// Non-DELETED Author must have a page entity linked.
 		if( author.getState() != AuthorState.DELETED && page == null )
@@ -143,7 +140,7 @@ public class AuthorProcessApi extends GenericApi {
 		gaeQueryBuilder.addFilter( "state", PratilipiState.DELETED, Operator.NOT_EQUALS );
 		gaeQueryBuilder.addOrdering( "state", true );
 		Query query = gaeQueryBuilder.build();
-		List<Pratilipi> pratilipiList = (List<Pratilipi>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );;
+		List<Pratilipi> pratilipiList = (List<Pratilipi>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
 
 		// DELETED Author cannot have non-DELETED Pratilipi entities linked.
 		if( author.getState() == AuthorState.DELETED ) {
@@ -171,7 +168,7 @@ public class AuthorProcessApi extends GenericApi {
 		// Author, having Pratilipi entites in just one language, must have the same set as his/her profile langauge.
 		if( langCount.keySet().size() == 1 ) {
 			Language language = langCount.keySet().iterator().next();
-			if( author.getLanguage() != language )
+			if( langCount.get( language ) > 1 && author.getLanguage() != language )
 				throw new InvalidArgumentException( "Author has " + author.getLanguage() + " as his/her profile langauge but all his/her content pieces are in " + language + "." );
 		}
 			
