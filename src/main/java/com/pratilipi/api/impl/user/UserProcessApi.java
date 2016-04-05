@@ -18,16 +18,20 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.GaeQueryBuilder;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
+import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
+import com.pratilipi.data.util.AuthorDataUtil;
+import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -161,7 +165,19 @@ public class UserProcessApi extends GenericApi {
 			
 			if( authorList.size() == 0 ) {
 				
-				throw new InvalidArgumentException( "Could not find an Author entity linked." );
+				if( user.getSignUpSource() == UserSignUpSource.WEBSITE && user.getState() == UserState.REGISTERED ) {
+					UserData userData = UserDataUtil.createUserData( user );
+					userData.setFirstName( user.getFirstName() );
+					userData.setLastName( user.getLastName() );
+					AuthorDataUtil.createAuthorProfile( userData, null );
+					Task task = TaskQueueFactory.newTask()
+							.setUrl( "/user/email" )
+							.addParam( "userId", userData.getId().toString() )
+							.addParam( "sendWelcomeMail", "true" );
+					TaskQueueFactory.getUserTaskQueue().addAll( task );
+				} else {
+					throw new InvalidArgumentException( "Could not find an Author entity linked." );
+				}
 				
 			} else if( authorList.size() == 1 ) {
 				
