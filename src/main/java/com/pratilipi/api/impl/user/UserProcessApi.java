@@ -165,7 +165,8 @@ public class UserProcessApi extends GenericApi {
 			
 			if( authorList.size() == 0 ) {
 				
-				if( user.getSignUpSource() == UserSignUpSource.WEBSITE && ( user.getState() == UserState.REGISTERED || user.getState() == UserState.ACTIVE ) ) {
+				if( ( user.getSignUpSource() == UserSignUpSource.WEBSITE && user.getSignUpSource() == UserSignUpSource.WEBSITE_FACEBOOK )
+						&& ( user.getState() == UserState.REGISTERED || user.getState() == UserState.ACTIVE ) ) {
 					UserData userData = UserDataUtil.createUserData( user );
 					userData.setFirstName( user.getFirstName() );
 					userData.setLastName( user.getLastName() );
