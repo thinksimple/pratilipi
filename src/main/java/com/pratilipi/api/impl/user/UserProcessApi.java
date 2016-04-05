@@ -18,7 +18,6 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AuthorState;
-import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -103,6 +102,7 @@ public class UserProcessApi extends GenericApi {
 				if( author != null && author.getState() != AuthorState.DELETED )
 					throw new InvalidArgumentException( "DELETED User entity has a non-DELETED Author entity linked." );
 				// TODO: DELETED User entity can not have non-DELETED UserPratilipi entities.
+				// TODO: DELETED User entity can not have non-DELETED UserAuthor entities.
 				return new GenericResponse();
 			}
 
@@ -149,14 +149,6 @@ public class UserProcessApi extends GenericApi {
 					throw new InvalidArgumentException( list.size() + " non-DELETED User entities found for Facebook Id " + user.getFacebookId() + " ." );
 			}
 
-			// REFERRAL User entity can not have a non-DELETED Author entity linked.
-			if( user.getState() == UserState.REFERRAL ) {
-				Author author = dataAccessor.getAuthorByUserId( user.getId() );
-				if( author != null && author.getState() != AuthorState.DELETED )
-					throw new InvalidArgumentException( "REFERRAL User entity has a non-DELETED Author entity linked." );
-				return new GenericResponse();
-			}
-
 
 			// Author profile for the user.
 			GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
@@ -169,62 +161,15 @@ public class UserProcessApi extends GenericApi {
 			
 			if( authorList.size() == 0 ) {
 				
-				List<Author> authorList2 = null;
-				
-				// Try to find Author profile by his email
-				if( user.getEmail() != null ) {
-					gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-					gaeQueryBuilder.addFilter( "email", user.getEmail() );
-					gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
-					gaeQueryBuilder.addOrdering( "state", true );
-					gaeQueryBuilder.addOrdering( "registrationDate", true );
-					query = gaeQueryBuilder.build();
-					authorList2 = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-				}
-				
-				if( authorList2 == null || authorList2.size() == 0 ) {
-					
-/*					logger.log( Level.SEVERE, "Could not find an Author entity for this User. Creating a new one ..." );
-					UserData userData = UserDataUtil.createUserData( user );
-					userData.setFirstName( user.getFirstName() );
-					userData.setLastName( user.getLastName() );
-					userData.setGender( user.getGender() );
-					AuthorDataUtil.createAuthorProfile( userData, null );*/
-					
-					throw new InvalidArgumentException( "Could not find an Author entity linked." );
-					
-				} else if( authorList2.size() == 1 ) {
-					
-					Author author = authorList2.get( 0 );
-					if( author.getUserId() == null ) {
-/*						logger.log( Level.SEVERE, "Author entity is not linked for the User. Linking it ..." );
-						author.setUserId( user.getId() );
-						dataAccessor.createOrUpdateAuthor( author );*/
-						throw new InvalidArgumentException( "Author entity is not linked." );
-					} else {
-						throw new InvalidArgumentException( "Author entity, having email same as User's email, is linked to a different User entity." );
-					}
-				
-				} else { // if( userList.size() > 1 )
-					
-					throw new InvalidArgumentException( authorList.size() + " Author entities, having email same as User's email, found." );
-					
-				}
+				throw new InvalidArgumentException( "Could not find an Author entity linked." );
 				
 			} else if( authorList.size() == 1 ) {
 				
-				Author author = authorList.get( 0 );
-				if( ( user.getEmail() == null && author.getEmail() != null ) || ( user.getEmail() != null && ! user.getEmail().equals( author.getEmail() ) ) ) {
-					throw new InvalidArgumentException( "Email in User entity doesn't match with the email in linked Author entity." );
-				} else if( dataAccessor.getPage( PageType.AUTHOR, author.getId() ) == null ) {
-					throw new InvalidArgumentException( "Page entity is missing for the User/Author." );
-				} else {
-					// Do Nothing.
-				}
+				// Do Nothing.
 				
 			} else { // if( authorList.size() > 1 )
 				
-				throw new InvalidArgumentException( "User has " + authorList.size() + " Author entities linked." );
+				throw new InvalidArgumentException( "User has " + authorList.size() + " non-DELETED Author entities linked." );
 				
 			}
 
