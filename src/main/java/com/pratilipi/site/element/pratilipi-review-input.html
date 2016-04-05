@@ -151,7 +151,7 @@
 				this.pratilipiId = userpratilipi.pratilipiId == null ? null : userpratilipi.pratilipiId; 
 				this.rating = userpratilipi.rating == null ? null : userpratilipi.rating;
 				this.reviewTitle = userpratilipi.reviewTitle == null ? null : userpratilipi.reviewTitle;
-				this.review = userpratilipi.review == null ? "" : userpratilipi.review;
+				this.review = userpratilipi.review == null ? "" : processContentTinyMCE( userpratilipi.review );
 				if( tinyMCE != null && tinyMCE.get( 'reviewInput' ) != null )
 					tinyMCE.get( 'reviewInput' ).setContent( this.review );
 				this.reviewState = userpratilipi.reviewState == null ? null : userpratilipi.reviewState;
@@ -195,15 +195,11 @@
 				if( tinyMCE != null && tinyMCE.activeEditor != null )
 					this.review = tinyMCE.get( 'reviewInput' ).getContent();
 				
-				this.review = this.review.replace( /(style=("|\Z|')(.*?)("|\Z|'))|(class=("|\Z|')(.*?)("|\Z|'))|<style>.*?<\/style>/g, "" );
-				this.review = JSON.stringify( this.review );
-				this.review = this.review.substring( 1, this.review.length - 1 );
-				
 				var body = {
 					pratilipiId : this.pratilipiId,
 					rating : this.rating,
 					reviewTitle : this.reviewTitle,
-					review : this.review
+					review : processContentTinyMCE( this.review )
 			    };
 				
 				this.$.AjaxPost.body = jQuery.param( body );

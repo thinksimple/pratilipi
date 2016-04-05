@@ -15,7 +15,7 @@
 <link rel='import' href='/elements.${lang}/pratilipi-user.html?20160315'>
 <link rel='import' href='/elements.${lang}/pratilipi-header.html?20160325'>
 <link rel='import' href='/elements.${lang}/pratilipi-edit-account.html?201603'>
-<link rel='import' href='/elements.${lang}/pratilipi-write.html?20160402'>
+<link rel='import' href='/elements.${lang}/pratilipi-write.html?20160405'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation-drawer.html?03'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160227'>
 <link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160326'>
@@ -45,4 +45,18 @@
 			$( 'header' ).removeClass( 'nav-up' ).addClass( 'nav-down' );
 		lastScrollTop = st; 
 	};
+</script>
+<script>
+	function processContentTinyMCE( content ) {
+		content = content.replace( /style=\"text-align: left;\"/g, "TEXT-LEFT" );
+		content = content.replace( /style=\"text-align: right;\"/g, "TEXT-RIGHT" );
+		content = content.replace( /style=\"text-align: center;\"/g, "TEXT-CENTER" );
+		content = content.replace( /style=\"text-align: justify;\"/g, "TEXT-JUSTIFY" );
+		content = content.replace( /(style=("|\Z|')(.*?)("|\Z|'))|(class=("|\Z|')(.*?)("|\Z|'))|<style>.*?<\/style>/g, "" );
+		content = content.replace( /TEXT-LEFT/g,"style=\"text-align: left;\"" );
+		content = content.replace( /TEXT-RIGHT/g,"style=\"text-align: right;\"" );
+		content = content.replace( /TEXT-CENTER/g,"style=\"text-align: center;\"" );
+		content = content.replace( /TEXT-JUSTIFY/g,"style=\"text-align: justify;\"" );
+		return content;
+	}
 </script>

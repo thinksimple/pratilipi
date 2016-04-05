@@ -209,7 +209,7 @@
 				this.dateOfBirth = author.dateOfBirth == null ? null : this.setDateProcess( author.dateOfBirth );
 				
 				// TinyMCE editor - Author Summary
-				this.summary = author.summary == null ? "" : author.summary;				
+				this.summary = author.summary == null ? "" : processContentTinyMCE( author.summary );				
 				if( tinyMCE != null && tinyMCE.get( 'authorSummary' ) != null )
 					tinyMCE.get( 'authorSummary' ).setContent( this.summary );
 				
@@ -274,10 +274,6 @@
 				if( tinyMCE != null && tinyMCE.get( 'authorSummary' ) != null )
 					this.summary = tinyMCE.get( 'authorSummary' ).getContent();
 				
-				this.summary = this.summary.replace( /(style=("|\Z|')(.*?)("|\Z|'))|(class=("|\Z|')(.*?)("|\Z|'))|<style>.*?<\/style>/g, "" );
-				this.summary = JSON.stringify( this.summary );
-				this.summary = this.summary.substring( 1, this.summary.length - 1 );
-				
 				this.language = this.$.authorLanguage.selectedItem.getAttribute( "value" );
 				
 				if( this.$.authorGender.selectedItem )
@@ -306,7 +302,7 @@
 				if( this.language != null )
 					body.language = this.language;
 				if( this.summary != null )
-					body.summary = this.summary;
+					body.summary = processContentTinyMCE( this.summary );
 				
 				this.$.AjaxPost.body = jQuery.param( body );
 

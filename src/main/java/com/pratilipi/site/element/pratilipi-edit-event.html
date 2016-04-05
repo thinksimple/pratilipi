@@ -86,12 +86,12 @@
 				this.nameEn = ( this.event == null ||  this.event.nameEn == null ) ? null : this.event.nameEn;
 				this.language = ( this.event == null ||  this.event.language == null ) ? this.language : this.event.language;
 				
-				if( this.event == null || this.event.description == null || this.event.description.trim == "" ) {
+				if( this.event == null || this.event.description == null || this.event.description.trim() == "" ) {
 					this.description = null;
 					if( tinyMCE != null && tinyMCE.activeEditor != null )
 						tinyMCE.get( 'eventDescription' ).setContent( "" );
 				} else {
-					this.description = this.event.description;
+					this.description = processContentTinyMCE( this.event.description );
 					if( tinyMCE != null && tinyMCE.activeEditor != null )
 						tinyMCE.get( 'eventDescription' ).setContent( this.event.description );
 				}
@@ -145,14 +145,11 @@
 				
 				var params = { 	"name" : this.name,
 								"nameEn" : this.nameEn,
-								"language" : this.language };
+								"language" : this.language,
+								"description" : processContentTinyMCE( this.description ) };
 				
 				if( this.eventId != null )
 					params.eventId = this.eventId;
-				
-				this.description = this.description.replace( /(style=("|\Z|')(.*?)("|\Z|'))|(class=("|\Z|')(.*?)("|\Z|'))|<style>.*?<\/style>/g, "" );
-				params.description = JSON.stringify( this.description );
-				params.description = params.description.substring( 1, params.description.length - 1 );
 				
 				var pratilipiUrlList = [];
 				

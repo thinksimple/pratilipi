@@ -190,7 +190,7 @@
 				this.title = pratilipi.title == null ? null : pratilipi.title;
 				this.titleEn = pratilipi.titleEn == null ? null : pratilipi.titleEn;
 				this.state = pratilipi.state == null ? "DRAFTED" : pratilipi.state;
-				this.summary = pratilipi.summary == null ? "" : pratilipi.summary;
+				this.summary = pratilipi.summary == null ? "" : processContentTinyMCE( pratilipi.summary );
 
 				if( tinyMCE != null && tinyMCE.activeEditor != null )
 					tinyMCE.get( 'writeSummary' ).setContent( this.summary );
@@ -267,10 +267,6 @@
 				if( tinyMCE != null && tinyMCE.activeEditor != null )
 					this.summary = tinyMCE.get( 'writeSummary' ).getContent();
 				
-				this.summary = this.summary.replace( /(style=("|\Z|')(.*?)("|\Z|'))|(class=("|\Z|')(.*?)("|\Z|'))|<style>.*?<\/style>/g, "" );
-				this.summary = JSON.stringify( this.summary );
-				this.summary = this.summary.substring( 1, this.summary.length - 1 );
-				
 				this.message = "${ _strings.working }";
 				
 				var body = {
@@ -287,7 +283,7 @@
 					body.titleEn = this.titleEn;
 				
 				if( this.summary != null )
-					body.summary = this.summary;
+					body.summary = processContentTinyMCE( this.summary );
 				
 				if( this.authorId != null )
 					body.authorId = this.authorId;
