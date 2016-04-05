@@ -95,7 +95,6 @@ public class AuthorProcessApi extends GenericApi {
 			validateAuthorData( request.getAuthorId() );
 		
 		if( request.processData() ) {
-			
 			boolean changed = AuthorDataUtil.createOrUpdateAuthorPageUrl( request.getAuthorId() );
 //			AuthorDataUtil.createOrUpdateAuthorDashboardPageUrl( request.getAuthorId() );
 			if( changed ) {
@@ -103,11 +102,8 @@ public class AuthorProcessApi extends GenericApi {
 			}
 			AuthorDataUtil.updateAuthorSearchIndex( request.getAuthorId() );
 			PratilipiDataUtil.updatePratilipiSearchIndex( null, request.getAuthorId() );
-			
 		}
 		
-		if( request.processImage() ) { }
-
 		if( request.updateStats() ) {
 			boolean changed = AuthorDataUtil.updateAuthorStats( request.getAuthorId() );
 			if( changed )
