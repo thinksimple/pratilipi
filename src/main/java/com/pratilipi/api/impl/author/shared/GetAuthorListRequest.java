@@ -5,16 +5,20 @@ import com.pratilipi.common.type.Language;
 
 public class GetAuthorListRequest extends GenericRequest {
 
+	private String searchQuery;
 	private Language language;
 
 	private Boolean orderByContentPublished;
 
 	private String cursor;
-	
 	private Integer resultCount;
 	
 	
-	public Language getLanguage(){
+	public String getSearchQuery() {
+		return searchQuery;
+	}
+
+	public Language getLanguage() {
 		return language;
 	}
 	

@@ -25,6 +25,7 @@ public class AuthorListApi extends GenericApi {
 
 		DataListCursorTuple<AuthorData> authorListCursorTuple =
 				AuthorDataUtil.getAuthorDataList(
+						request.getSearchQuery(),
 						authorFilter,
 						request.getCursor(),
 						request.getResultCount() == null ? 20 : request.getResultCount() );

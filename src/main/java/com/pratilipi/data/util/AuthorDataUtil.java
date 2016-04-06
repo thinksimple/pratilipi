@@ -196,15 +196,22 @@ public class AuthorDataUtil {
 	
 
 	public static DataListCursorTuple<AuthorData> getAuthorDataList(
-			AuthorFilter authorFilter, String cursor, Integer resultCount )
+			String searchQuery, AuthorFilter authorFilter,
+			String cursor, Integer resultCount )
 			throws InsufficientAccessException {
 		
 		if( ! hasAccessToListAuthorData( authorFilter.getLanguage() ) )
 			throw new InsufficientAccessException();
 		
+		// Processing search query
+		if( searchQuery != null )
+			searchQuery = searchQuery.toLowerCase().trim()
+					.replaceAll( ",|\\sor\\s", " " )
+					.replaceAll( "[\\s]+", " OR " );
+
 		DataListCursorTuple<Long> authorIdListCursorTuple = DataAccessorFactory
 				.getSearchAccessor()
-				.searchAuthor( null, authorFilter, cursor, null, resultCount );
+				.searchAuthor( searchQuery, authorFilter, cursor, null, resultCount );
 		
 		List<AuthorData> authorDataList = createAuthorDataList( authorIdListCursorTuple.getDataList() );
 		
