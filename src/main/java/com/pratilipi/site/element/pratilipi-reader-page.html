@@ -1,0 +1,153 @@
+<link rel='import' href='pratilipi-reader-header.html'>
+<link rel='import' href='pratilipi-reader-navigation.html'>
+<link rel='import' href='pratilipi-reader-content.html'>
+<link rel='import' href='pratilipi-reader-footer.html'>
+
+<dom-module id="pratilipi-reader-page">
+
+	<template>
+		<header class="nav-down">
+    		<pratilipi-reader-header 
+    				pratilipi="{{ pratilipi }}"
+    				font-size="[[ fontSize ]]"></pratilipi-reader-header>
+		</header>
+		<main>
+			<pratilipi-reader-navigation
+					class='pull-right hidden-xs hidden-sm'
+					page-no="{{ pageNo }}"
+					></pratilipi-reader-navigation>
+			<div class="parent-container margin-top-bottom">
+				<div class="container">
+					<!-- Navigation & Search bar for extra-small & small screens. -->
+					<!-- <pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer> -->
+					<div style="overflow:hidden">
+						<pratilipi-reader-content
+							content="{{ content }}"
+							font-size="{{ fontSize }}"></pratilipi-reader-content> 
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer>
+    		<pratilipi-reader-footer
+    			page-no="{{ pageNo }}"
+    			page-count="{{ pageCount }}"
+    		></pratilipi-reader-footer>
+		</footer>
+		<div class="scroll-top-button">
+			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
+		</div>
+	</template>
+
+	<script>
+		function getCookie( name ) {
+			var nameEQ = name + "=";
+			var ca = document.cookie.split( ';' );
+			for( var i = 0; i < ca.length; i++ ) {
+				var c = ca[i];
+				while( c.charAt(0) == ' ' ) c = c.substring( 1, c.length );
+				if( c.indexOf( nameEQ ) == 0 ) return c.substring( nameEQ.length, c.length );
+			}
+			return null;
+		}
+		function setCookie( name, value ) {
+			var days = 14;  // Set cookies for 14 days
+			var date = new Date();
+			date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
+			var expires = "; expires=" + date.toGMTString();
+			document.cookie = name + "=" + value + expires + "; path=/";
+		}
+		function eraseCookie( name ) {
+			createCookie( name, "" ,-1 );
+		}
+		function getUrlParameter( key ) {
+		   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+		      return decodeURIComponent( key[1] );
+		   else
+			   return null;
+		}
+	
+		Polymer({
+
+			is: 'pratilipi-reader-page',
+			
+			properties: {
+				userData: { type: Object },
+				pratilipi: { type: Object },
+				fontSize: { type: Number, notify: true },
+				pageNo: { type: Number, value: 1, observer: "_pageNoChanged" },
+				pageCount: { type: Number },
+				content: { type: String },
+				contentMap: { type: Object },
+				lastScrollTop: { type: Number, value: 0 },
+			},
+			
+			setFontSize: function( fontSize ) {
+				fontSize = fontSize == null ? 14 : parseInt( fontSize );
+				this.set( "fontSize", fontSize );
+				setCookie( "fontSize", fontSize );
+			},
+			
+			increaseFontSize: function() {
+				var cutoff = 48;
+				if( this.fontSize + 2 <= cutoff )
+					this.setFontSize( this.fontSize + 2 );
+			},
+			
+			decreaseFontSize: function() {
+				var cutoff = 10;
+				if( this.fontSize - 2 >= cutoff )
+					this.setFontSize( this.fontSize - 2 );
+			},
+			
+			exitReader: function() {
+				if( getUrlParameter( "ret" ) != null ) 
+					window.location.href = getUrlParameter( "ret" );
+				else
+					window.location.href = "/pratilipi/" + this.pratilipi.pratilipiId;
+			},
+			
+			ready: function() {
+				jQuery( '#scrollToTop' ).css( "display", "none" );
+				this.setFontSize( getCookie( "fontSize" ) );
+			},
+			
+			_pageNoChanged: function() {
+				// Check in Map
+				// Else make api call
+			},
+			
+			_onResponse: function( event ) {
+				// Update content
+				// Populate map
+			},
+			
+			_onError: function( event ) {
+				// Show appropriate message
+				// Try again in 3 seconds
+			},
+			
+			_getValue: function() {
+				// Check in map and send response or null
+			},
+			
+			_setValue: function() {
+				// Set the value in map
+			},
+			
+			scrollToTop: function() {
+				$( 'html, body' ).animate( { scrollTop : 0 },800 );
+			},
+			
+			scrollHandler: function( st ) {
+				if( st > this.lastScrollTop || st < 100 )
+					jQuery( '#scrollToTop' ).fadeOut();
+				else
+					jQuery( '#scrollToTop' ).fadeIn();
+				this.lastScrollTop = st;
+			}
+			
+		});
+	</script>
+
+</dom-module>

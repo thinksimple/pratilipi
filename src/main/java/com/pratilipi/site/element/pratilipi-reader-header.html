@@ -1,0 +1,70 @@
+<dom-module id="pratilipi-reader-header">
+	
+	<style>
+		paper-card {
+			height: 75px;
+			width: 100%;
+			opacity: 0.96;
+			padding: 15px;
+			--paper-card-header: { display: none };
+		}
+		.container, .container div {
+			display: inline-block;
+		}
+		paper-icon-button {
+			width: 48px;
+			height: 48px;
+		}
+	</style>
+
+	<template>
+		<paper-card>
+			<table style="min-width: 100%;">
+				<tr>
+					<td align="left" width="65px">
+						<paper-icon-button icon="icons:arrow-back" on-click="exitReader"></paper-icon-button>
+					</td>
+					<td width="auto">
+						<h3>{{ pratilipi.title }} - {{ pratilipi.author.name }}</h3>
+					</td>
+					<td align="right" width="90px">
+						<paper-icon-button icon="icons:add" on-click="increaseFontSize"></paper-icon-button>
+						<paper-icon-button icon="icons:remove" on-click="decreaseFontSize"></paper-icon-button>
+						<paper-icon-button icon="icons:list" on-click="openNavigation"></paper-icon-button>
+					</td>
+				</tr>
+			</table>
+		</paper-card>	
+	</template>
+
+	<script>
+	
+		Polymer({
+
+			is: 'pratilipi-reader-header',
+			
+			properties: {
+				pratilipiData: { type: Object },
+				pratilipi: { type: Object, notify: true }
+			},
+			
+			increaseFontSize: function() {
+				document.querySelector( 'pratilipi-reader-page' ).increaseFontSize();
+			},
+			
+			decreaseFontSize: function() {
+				document.querySelector( 'pratilipi-reader-page' ).decreaseFontSize();
+			},
+			
+			openNavigation: function() {
+				document.querySelector( 'pratilipi-reader-navigation' ).toggleNavigation();
+			},
+			
+			exitReader: function() {
+				document.querySelector( 'pratilipi-reader-page' ).exitReader();
+			}
+			
+		});
+	</script>
+
+</dom-module>

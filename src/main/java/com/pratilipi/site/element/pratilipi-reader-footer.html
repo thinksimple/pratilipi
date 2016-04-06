@@ -1,0 +1,89 @@
+<dom-module id="pratilipi-reader-footer">
+
+	<style>
+		:host {
+			display: block;
+		}
+	</style>
+
+
+	<template>
+		<div class="parent-container margin-top-bottom">
+			<div class="horizontal layout center">
+				<paper-slider
+						class="flex" pin
+						min="0" max="{{ pageCount }}" value="{{ sliderValue }}"
+						disabled="{{ sliderDisabled }}"
+						on-change="setPageNo"></paper-slider>
+				<paper-fab
+						mini style="margin-right:10px"
+						icon="icons:chevron-left" title="Previous Page"
+						disabled="{{ prevButtonDisabled }}"
+						on-click="showPrevious"></paper-fab>
+				<paper-fab
+						mini style="margin-right:10px"
+						icon="icons:chevron-right" title="Next Page"
+						disabled="{{ nextButtonDisabled }}"
+						on-click="showNext"></paper-fab>
+	
+				<iron-a11y-keys
+						target="[[ a11yKeysTarget ]]"
+						keys="left up"
+						on-keys-pressed="showPrevious"></iron-a11y-keys>
+				<iron-a11y-keys
+						target="[[ a11yKeysTarget ]]"
+						keys="right down"
+						on-keys-pressed="showNext"></iron-a11y-keys>
+			</div>
+		</div>
+	</template>
+	
+	
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-reader-footer',
+			
+			properties: {
+				pageNo: { type:Number, observer:"_pageNoChanged" },
+				pageCount: { type:Number },
+				sliderValue: { type:Number },
+				sliderDisabled: { type:Boolean },
+				prevButtonDisabled: { type:Boolean },
+				nextButtonDisabled: { type:Boolean },
+				a11yKeysTarget: {
+					type: Object,
+					value: function() {
+						return window;
+					}
+				},
+			},
+			
+			_pageNoChanged: function( pageNo ) {
+				this.sliderValue = pageNo;
+				this.prevButtonDisabled = pageNo <= 0;
+				this.nextButtonDisabled = pageNo >= this.pageCount;
+			},
+
+			
+			// Invoked when user changes slider position
+			setPageNo: function( e ) {
+				this.fire( 'show-page', { pageNo:e.target.value } );
+			},
+			
+			// Invoked when user clicks/taps on previous button
+			showPrevious: function() {
+				this.set( 'pageNo', this.pageNo - 1 );
+			},
+			
+			// Invoked when user clicks/taps on next button
+			showNext: function() {
+				this.set( 'pageNo', this.pageNo + 1 );
+			}
+			
+		});
+
+	</script>
+
+</dom-module>

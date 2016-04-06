@@ -1,0 +1,56 @@
+<dom-module id="pratilipi-reader-content">
+
+	<style>
+		
+		:host {
+			display: block;
+			overflow: hidden;
+		}
+		
+		:host #pager {
+			padding: 20px 35px;
+			text-align: justify;
+			overflow-x: scroll;
+			line-height: 1.5em;
+			
+			-webkit-column-width: 500px; /* Chrome, Safari, Opera */
+			-moz-column-width: 500px; /* Firefox */
+			column-width: 500px;
+			
+			-webkit-column-gap: 20px; /* Chrome, Safari, Opera */
+			-moz-column-gap: 20px; /* Firefox */
+			column-gap: 20px;
+		}
+		
+	</style>
+	
+	
+	<template>
+	
+		<paper-card id="pager">
+			{{ content }}
+		</paper-card>
+				
+	</template>
+	
+	
+	<script>
+
+		Polymer({
+			
+			is: 'pratilipi-reader-content',
+			
+			properties: {
+				content: { type: String },
+				fontSize: { type: Number, observer: "_fontSizeObserver" }
+			},
+			
+			_fontSizeObserver: function() {
+				jQuery( "#pager" ).css( 'font-size', this.fontSize );
+			}
+
+		});
+
+	</script>
+
+</dom-module>
