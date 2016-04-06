@@ -28,6 +28,7 @@ import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.client.UserData;
 
 public class SearchAccessorGaeImpl implements SearchAccessor {
 
@@ -340,11 +341,11 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 	}
 	
 	@Override
-	public void indexAuthorData( AuthorData authorData ) throws UnexpectedServerException {
-		indexDocument( createDocument( authorData ) );
+	public void indexAuthorData( AuthorData authorData, UserData userData ) throws UnexpectedServerException {
+		indexDocument( createDocument( authorData, userData ) );
 	}
 
-	private Document createDocument( AuthorData authorData ) {
+	private Document createDocument( AuthorData authorData, UserData userData ) {
 		
 		String docId = "AuthorData:" + authorData.getId();
 		
@@ -365,17 +366,29 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 					.addField( Field.newBuilder().setName( "language" ).setText( authorData.getLanguage().getNameEn() ) );
 				
 		// 3x weightage to Author Name
-		docBuilder.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
-				.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) );
+		if( authorData.getFullName() != null )
+			docBuilder.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
+					.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) )
+					.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullName() ) );
+		if( authorData.getFullNameEn() != null )
+			docBuilder.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
+					.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) )
+					.addField( Field.newBuilder().setName( "name" ).setText( authorData.getFullNameEn() ) );
 
 		docBuilder.addField( Field.newBuilder().setName( "summary" ).setHTML( authorData.getSummary() ) );
 
 		docBuilder.addField( Field.newBuilder().setName( "contentPublished" ).setNumber( authorData.getContentPublished() ) );
+		docBuilder.addField( Field.newBuilder().setName( "totalReadCount" ).setNumber( authorData.getTotalReadCount() ) );
 
+		
+		if( userData != null )
+			docBuilder.addField( Field.newBuilder().setName( "userId" ).setAtom( userData.getId().toString() ) );
+		if( userData != null && userData.getEmail() != null )
+			docBuilder.addField( Field.newBuilder().setName( "email" ).setAtom( userData.getEmail() ) );
+		if( userData != null && userData.getPhone() != null )
+			docBuilder.addField( Field.newBuilder().setName( "phone" ).setAtom( userData.getPhone() ) );
+			
+		
 		return docBuilder.build();
 		
 	}

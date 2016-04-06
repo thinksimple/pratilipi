@@ -7,6 +7,7 @@ import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.client.UserData;
 
 public interface SearchAccessor {
 	
@@ -25,7 +26,7 @@ public interface SearchAccessor {
 	
 	DataListCursorTuple<Long> searchAuthor( String query, AuthorFilter authorFilter, String cursorStr, Integer offset, Integer resultCount );
 	
-	void indexAuthorData( AuthorData authorData ) throws UnexpectedServerException;
+	void indexAuthorData( AuthorData authorData, UserData userData ) throws UnexpectedServerException;
 	
 	
 	void deleteAuthorDataIndex( Long authorId );

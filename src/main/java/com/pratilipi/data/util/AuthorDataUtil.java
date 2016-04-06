@@ -37,6 +37,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class AuthorDataUtil {
@@ -531,10 +532,15 @@ public class AuthorDataUtil {
 		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
 
 		Author author = dataAccessor.getAuthor( authorId );
-		if( author.getState() == AuthorState.ACTIVE && author.getContentPublished() > 0 )
-			searchAccessor.indexAuthorData( createAuthorData( author, true, true ) );
-		else
+		if( author.getState() == AuthorState.ACTIVE ) {
+			User user = author.getUserId() == null ? null : dataAccessor.getUser( author.getUserId() );
+			searchAccessor.indexAuthorData(
+					createAuthorData( author, true, true ),
+					UserDataUtil.createUserData( user )
+			);
+		} else {
 			searchAccessor.deleteAuthorDataIndex( authorId );
+		}
 		
 	}
 	

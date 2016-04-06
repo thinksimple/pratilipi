@@ -10,7 +10,6 @@ public class PostPratilipiProcessRequest extends GenericRequest {
 	private List<Long> pratilipiIdList;
 
 	private Boolean processData;
-	private Boolean processCover;
 	private Boolean processContent;
 	private Boolean updateStats;
 	private Boolean updateUserPratilipiStats;
@@ -26,10 +25,6 @@ public class PostPratilipiProcessRequest extends GenericRequest {
 
 	public boolean processData() {
 		return processData == null ? false : processData;
-	}
-	
-	public boolean processCover() {
-		return processCover == null ? false : processCover;
 	}
 	
 	public boolean processContent() {

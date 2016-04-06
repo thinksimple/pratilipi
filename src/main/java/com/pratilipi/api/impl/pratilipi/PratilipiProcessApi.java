@@ -86,9 +86,6 @@ public class PratilipiProcessApi extends GenericApi {
 		}
 
 		
-		if( request.processCover() ) { }
-		
-		
 		if( request.processContent() ) {
 			for( Long pratilipiId : pratilipiIdList ) {
 				PratilipiDataUtil.updatePratilipiIndex( pratilipiId );

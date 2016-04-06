@@ -11,6 +11,7 @@ import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.client.UserData;
 
 public class SearchAccessorMockImpl implements SearchAccessor {
 
@@ -96,7 +97,7 @@ public class SearchAccessorMockImpl implements SearchAccessor {
 	}
 
 	@Override
-	public void indexAuthorData( AuthorData authorData ) throws UnexpectedServerException {
+	public void indexAuthorData( AuthorData authorData, UserData userData ) throws UnexpectedServerException {
 		// TODO: Implementation
 	}
 
