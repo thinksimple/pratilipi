@@ -80,12 +80,14 @@ public class PratilipiSite extends HttpServlet {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		// Page entity
+		// Page Entity
 		String uri = request.getRequestURI();
 		Page page = dataAccessor.getPage( uri );
 
-		// Language
+		// BasicMode
 		boolean basicMode = UxModeFilter.isBasicMode();
+		
+		// Language
 		Language displayLanguage = UxModeFilter.getDisplayLanguage();
 		Language filterLanguage = UxModeFilter.getFilterLanguage();
 
@@ -611,7 +613,7 @@ public class PratilipiSite extends HttpServlet {
 		authorFilter.setLanguage( lang );
 		
 		DataListCursorTuple<AuthorData> authorDataListCursorTuple =
-				AuthorDataUtil.getAuthorDataList( authorFilter, null, 20 );
+				AuthorDataUtil.getAuthorDataList( null, authorFilter, null, 20 );
 		
 		Gson gson = new Gson();
 		
