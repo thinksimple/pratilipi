@@ -165,23 +165,7 @@ public class UserProcessApi extends GenericApi {
 			
 			if( authorList.size() == 0 ) {
 				
-				if( ( user.getSignUpSource() == UserSignUpSource.WEBSITE || user.getSignUpSource() == UserSignUpSource.WEBSITE_FACEBOOK )
-						&& ( user.getState() == UserState.REGISTERED || user.getState() == UserState.ACTIVE ) ) {
-					UserData userData = UserDataUtil.createUserData( user );
-					userData.setFirstName( user.getFirstName() );
-					userData.setLastName( user.getLastName() );
-					AuthorDataUtil.createAuthorProfile( userData, null );
-					if( user.getEmail() != null ) {
-						Task task = TaskQueueFactory.newTask()
-								.setUrl( "/user/email" )
-								.addParam( "userId", userData.getId().toString() )
-								.addParam( "sendWelcomeMail", "true" );
-						TaskQueueFactory.getUserTaskQueue().addAll( task );
-					}
-					logger.log( Level.WARNING, "Created Author entity for user " + user.getId() + " with email " + user.getEmail());
-				} else {
-					throw new InvalidArgumentException( "Could not find an Author entity linked." );
-				}
+				throw new InvalidArgumentException( "Could not find an Author entity linked." );
 				
 			} else if( authorList.size() == 1 ) {
 				
