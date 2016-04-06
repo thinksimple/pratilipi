@@ -8,18 +8,12 @@
 		}
 		
 		:host #pager {
-			padding: 20px 35px;
 			text-align: justify;
 			overflow-x: scroll;
 			line-height: 1.5em;
-			
-			-webkit-column-width: 500px; /* Chrome, Safari, Opera */
-			-moz-column-width: 500px; /* Firefox */
-			column-width: 500px;
-			
-			-webkit-column-gap: 20px; /* Chrome, Safari, Opera */
-			-moz-column-gap: 20px; /* Firefox */
-			column-gap: 20px;
+			padding: 16px 22px;
+			-webkit-font-smoothing: antialiased;
+			width: 100%;
 		}
 		
 	</style>
@@ -41,8 +35,16 @@
 			is: 'pratilipi-reader-content',
 			
 			properties: {
-				content: { type: String },
+				content: { type: String, observer: "_onContentChange" },
 				fontSize: { type: Number, observer: "_fontSizeObserver" }
+			},
+			
+			attached: function() {
+				jQuery( "#pager" ).css( 'min-height', window.innerHeight + "px" );
+			},
+			
+			_onContentChange: function() {
+				jQuery( this.querySelector( '#pager' ) ).html( this.content );
 			},
 			
 			_fontSizeObserver: function() {

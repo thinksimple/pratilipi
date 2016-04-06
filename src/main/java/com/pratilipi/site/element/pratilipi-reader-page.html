@@ -10,16 +10,13 @@
     		<pratilipi-reader-header 
     				pratilipi="{{ pratilipi }}"
     				font-size="[[ fontSize ]]"></pratilipi-reader-header>
-		</header>
-		<main>
 			<pratilipi-reader-navigation
-					class='pull-right hidden-xs hidden-sm'
 					page-no="{{ pageNo }}"
 					></pratilipi-reader-navigation>
+		</header>
+		<main>
 			<div class="parent-container margin-top-bottom">
 				<div class="container">
-					<!-- Navigation & Search bar for extra-small & small screens. -->
-					<!-- <pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer> -->
 					<div style="overflow:hidden">
 						<pratilipi-reader-content
 							content="{{ content }}"
@@ -31,8 +28,7 @@
 		<footer>
     		<pratilipi-reader-footer
     			page-no="{{ pageNo }}"
-    			page-count="{{ pageCount }}"
-    		></pratilipi-reader-footer>
+    			page-count="{{ pageCount }}"></pratilipi-reader-footer>
 		</footer>
 		<div class="scroll-top-button">
 			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
@@ -50,8 +46,7 @@
 			}
 			return null;
 		}
-		function setCookie( name, value ) {
-			var days = 14;  // Set cookies for 14 days
+		function setCookie( name, value, days ) {
 			var date = new Date();
 			date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
 			var expires = "; expires=" + date.toGMTString();
@@ -78,14 +73,14 @@
 				pageNo: { type: Number, value: 1, observer: "_pageNoChanged" },
 				pageCount: { type: Number },
 				content: { type: String },
-				contentMap: { type: Object },
+				contentMap: { type: Object, value: {} },
 				lastScrollTop: { type: Number, value: 0 },
 			},
 			
 			setFontSize: function( fontSize ) {
 				fontSize = fontSize == null ? 14 : parseInt( fontSize );
 				this.set( "fontSize", fontSize );
-				setCookie( "fontSize", fontSize );
+				setCookie( "fontSize", fontSize, 15 );
 			},
 			
 			increaseFontSize: function() {
@@ -125,14 +120,6 @@
 			_onError: function( event ) {
 				// Show appropriate message
 				// Try again in 3 seconds
-			},
-			
-			_getValue: function() {
-				// Check in map and send response or null
-			},
-			
-			_setValue: function() {
-				// Set the value in map
 			},
 			
 			scrollToTop: function() {

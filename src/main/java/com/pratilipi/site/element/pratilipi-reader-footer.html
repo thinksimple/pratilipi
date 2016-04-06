@@ -9,12 +9,11 @@
 
 	<template>
 		<div class="parent-container margin-top-bottom">
-			<div class="horizontal layout center">
+			<div class="container horizontal layout center">
 				<paper-slider
 						class="flex" pin
-						min="0" max="{{ pageCount }}" value="{{ sliderValue }}"
-						disabled="{{ sliderDisabled }}"
-						on-change="setPageNo"></paper-slider>
+						min="1" max="{{ pageCount }}" value="{{ pageNo }}"
+						disabled="{{ sliderDisabled }}"></paper-slider>
 				<paper-fab
 						mini style="margin-right:10px"
 						icon="icons:chevron-left" title="Previous Page"
@@ -28,11 +27,11 @@
 	
 				<iron-a11y-keys
 						target="[[ a11yKeysTarget ]]"
-						keys="left up"
+						keys="left"
 						on-keys-pressed="showPrevious"></iron-a11y-keys>
 				<iron-a11y-keys
 						target="[[ a11yKeysTarget ]]"
-						keys="right down"
+						keys="right"
 						on-keys-pressed="showNext"></iron-a11y-keys>
 			</div>
 		</div>
@@ -46,9 +45,8 @@
 			is: 'pratilipi-reader-footer',
 			
 			properties: {
-				pageNo: { type:Number, observer:"_pageNoChanged" },
+				pageNo: { type:Number, notify: true, observer: "_pageNoChanged" },
 				pageCount: { type:Number },
-				sliderValue: { type:Number },
 				sliderDisabled: { type:Boolean },
 				prevButtonDisabled: { type:Boolean },
 				nextButtonDisabled: { type:Boolean },
@@ -60,26 +58,23 @@
 				},
 			},
 			
-			_pageNoChanged: function( pageNo ) {
-				this.sliderValue = pageNo;
-				this.prevButtonDisabled = pageNo <= 0;
-				this.nextButtonDisabled = pageNo >= this.pageCount;
+			_pageNoChanged: function() {
+				this.prevButtonDisabled = this.pageNo <= 1;
+				this.nextButtonDisabled = this.pageNo >= this.pageCount;
 			},
 
-			
-			// Invoked when user changes slider position
-			setPageNo: function( e ) {
-				this.fire( 'show-page', { pageNo:e.target.value } );
-			},
-			
-			// Invoked when user clicks/taps on previous button
 			showPrevious: function() {
-				this.set( 'pageNo', this.pageNo - 1 );
+				if( this.pageNo > 1 )
+					this.set( 'pageNo', this.pageNo - 1 );
 			},
 			
-			// Invoked when user clicks/taps on next button
 			showNext: function() {
-				this.set( 'pageNo', this.pageNo + 1 );
+				if( this.pageNo < this.pageCount )
+					this.set( 'pageNo', this.pageNo + 1 );
+			},
+			
+			ready: function() {
+				this.sliderDisabled = this.pageCount <= 1;
 			}
 			
 		});

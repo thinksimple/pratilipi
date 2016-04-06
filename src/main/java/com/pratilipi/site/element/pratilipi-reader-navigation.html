@@ -4,9 +4,11 @@
 		
 		:host {
 			display: block;
-			margin-top: 5px;
-			margin-left: 10px;
-			margin-right: 10px;
+			position: fixed;
+			right: 0;
+			z-index: 1040;
+			margin-left: 7px;
+			margin-right: 5px;
 		}
 		
 		#pratilipiReaderNavigation paper-card {
@@ -28,10 +30,6 @@
 		Polymer({
 			
 			is: 'pratilipi-reader-navigation',
-			
-			ready: function() {
-				this.toggleNavigation();
-			},
 			
 			toggleNavigation: function() {
 				this.$.pratilipiReaderNavigation.toggle();
