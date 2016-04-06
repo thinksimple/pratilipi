@@ -121,7 +121,7 @@ public class UserData {
 	}
 
 	public String getPhone() {
-		return phone.trim();
+		return phone == null ? null : phone.trim();
 	}
 
 	public void setPhone( String phone ) {
