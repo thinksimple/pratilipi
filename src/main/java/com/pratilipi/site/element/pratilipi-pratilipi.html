@@ -101,7 +101,7 @@
 				<div id="pratilipi-col-left" style="padding: 20px 0px 10px 10px;">
 					<template is="dom-if" if="{{ !pratilipi.hasAccessToUpdate }}">
 						<div style="width: 150px; height: 225px; margin: 0 auto;" class="pratilipi-shadow">
-							<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+							<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ title }}"/>
 						</div>
 					</template>
 					<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
@@ -114,7 +114,7 @@
 						<div class="pratilipi-file-upload">
 							<div style="width: 150px; height: 225px;" class="pratilipi-shadow">
 								<template is="dom-if" if="{{ !imageUploaded }}">
-									<img src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ titleEn }}"/>
+									<img src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ title }}"/>
 								</template>
 								<template is="dom-if" if="{{ imageUploaded }}">
 									<paper-spinner class="pratilipi-spinner" active></paper-spinner>
@@ -315,8 +315,8 @@
 			updatePratilipi: function( pratilipi ) {
 				this.set( 'pratilipi', this.process( pratilipi ) );
 				
-				this.title = pratilipi.title;
-				this.titleEn = pratilipi.titleEn;
+				this.title = ( pratilipi.title != null && pratilipi.title.trim() != "" ) ?
+						pratilipi.title : pratilipi.titleEn;
 				
 				if( window.location.pathname != pratilipi.pageUrl )
 					window.location.href = pratilipi.pageUrl;

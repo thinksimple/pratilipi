@@ -111,7 +111,7 @@
 					</div>
 				</div>
 				<div id="col-right" style="padding: 20px;">
-					<h3 style="margin-top: 0px; color: #D0021B;">{{ name }}</h3>
+					<h3 style="margin-top: 0px;" class="pratilipi-red">{{ name }}</h3>
 
 					<template is="dom-if" if="{{ penName }}">
 						<h6 style="margin: 0px;">"<span>{{ penName }}</span>"</h6>
@@ -210,10 +210,6 @@
 			return [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ');
 		}
 		
-		function capitalizeFirstLetter( string ) {
-			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
-		}
-	
 		Polymer({
 			
 			is: 'pratilipi-author',
@@ -240,27 +236,7 @@
 				this.querySelector( 'pratilipi-edit-author' ).createOrEditAuthor( this.author );
 			},
 			
-			/* openAuthorMail: function() {
-				if( this.user.isGuest )
-					document.querySelector( 'pratilipi-user' ).logIn();
-				else
-					document.querySelector( 'pratilipi-author-mail' ).sendAuthorMail( this.author );
-			},
-			
-			followOrUnfollow: function() {
-				this.userAuthorData.following = ! this.userAuthorData.following;
-				this.followOrUnfollowLabel = this.userAuthorData.following ? "Unfollow" : "Follow";
-				var ajaxPost = this.$.AjaxPost;
-				ajaxPost.params.authorId = this.userAuthorData.authorId;
-				ajaxPost.params.following = this.userAuthorData.following;
-				ajaxPost.generateRequest();
-			}, */
-			
 			process: function( data ) {
-				if( data.name == null && data.nameEn != null )
-					data.name = data.nameEn;
-				if( data.penName == null && data.penNameEn != null )
-					data.penName = data.penNameEn;
 				data.contentPublished = data.contentPublished == null ? 0 : data.contentPublished;
 				data.totalFbLikeShareCount = data.totalFbLikeShareCount == null ? 0 : data.totalFbLikeShareCount;
 				data.totalReadCount = data.totalReadCount == null ? 0 : data.totalReadCount;
@@ -271,10 +247,12 @@
 
 				this.set( 'author', this.process( author ) );
 				
-				this.name = author.name;
-				if( author.penName != null )
+				this.name = ( author.name != null && author.name.trim() != "" ) ?
+							author.name : author.nameEn;
+				
+				if( author.penName != null && author.penName.trim() != "" )
 					this.penName = author.penName;
-				else if( author.penNameEn != null )
+				else if( author.penNameEn != null && && author.penNameEn.trim() != "" )
 					this.penName = author.penNameEn;
 				else
 					this.penName = null;
@@ -287,7 +265,6 @@
 				else
 					this.authorImageUrl = author.imageUrl + "&" + "width=200";
 				
-				this.language = capitalizeFirstLetter( author.language );
 				this.date = convertDate( author.registrationDateMillis );
 				
 				this.summary = author.summary;
@@ -317,7 +294,6 @@
 			
 			attached: function() {
 				this.updateAuthor( this.authorData );
-				/* this.followOrUnfollowLabel = this.userAuthorData.following ? "Unfollow" : "Follow"; */
 			},
 			
 			_toggleSnippet: function() {
