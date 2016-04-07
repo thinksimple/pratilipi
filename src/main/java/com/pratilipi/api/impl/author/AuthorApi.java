@@ -44,7 +44,8 @@ public class AuthorApi extends GenericApi {
 		Gson gson = new Gson();
 
 		AuthorData authorData = gson.fromJson( gson.toJson( request ), AuthorData.class );
-		authorData.setState( AuthorState.ACTIVE );
+		if( request.getId() == null ) // New authors (added by AEEs) are ACTIVE by default
+			authorData.setState( AuthorState.ACTIVE );
 		authorData = AuthorDataUtil.saveAuthorData( authorData );
 		
 		Task task = TaskQueueFactory.newTask()

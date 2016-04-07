@@ -1,12 +1,16 @@
 package com.pratilipi.data.client;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.UserState;
 
-public class UserData {
+public class UserData implements Serializable {
 
+	private static final long serialVersionUID = 5175279997821871117L;
+
+	
 	private Long userId;
 
 	private String facebookId;
