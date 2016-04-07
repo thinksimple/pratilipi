@@ -186,16 +186,6 @@
 				on-response="_handleAjaxGetResponse"
 				></iron-ajax>
 		
-		<!-- <iron-ajax
-				id="AjaxPost"
-				url="/api/userauthor/follow"
-				method="POST"
-				content-type="application/x-www-form-urlencoded"
-				handle-as="json"
-				on-response="_handleAjaxPostResponse"
-				on-error="_handleAjaxPostError"
-				></iron-ajax> -->
-		
 	</template>
 	
 	<script>
@@ -252,7 +242,7 @@
 				
 				if( author.penName != null && author.penName.trim() != "" )
 					this.penName = author.penName;
-				else if( author.penNameEn != null && && author.penNameEn.trim() != "" )
+				else if( author.penNameEn != null && author.penNameEn.trim() != "" )
 					this.penName = author.penNameEn;
 				else
 					this.penName = null;
