@@ -198,9 +198,13 @@
 				var body = {
 					pratilipiId : this.pratilipiId,
 					rating : this.rating,
-					reviewTitle : this.reviewTitle,
-					review : processContentTinyMCE( this.review )
 			    };
+				
+				if( this.reviewTitle != null )
+					body.reviewTitle = this.reviewTitle;
+				
+				if( this.review != null )
+					body.review = processContentTinyMCE( this.review );
 				
 				this.$.AjaxPost.body = jQuery.param( body );
 				this.$.AjaxPost.generateRequest();
