@@ -30,7 +30,7 @@ public class AuthorApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( request.getAuthorId() );
-		AuthorData authorData = AuthorDataUtil.createAuthorData( author, true, false );
+		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
 		
 		Gson gson = new Gson();
 		return gson.fromJson( gson.toJson( authorData ), GenericAuthorResponse.class );

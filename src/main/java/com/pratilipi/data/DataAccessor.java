@@ -41,7 +41,7 @@ public interface DataAccessor {
 	User getUser( Long id );
 	User getUserByEmail( String email );
 	User getUserByFacebookId( String facebookId );
-	Map<Long, User> getUsers( List<Long> userIdList );
+	Map<Long, User> getUsers( List<Long> idList );
 	DataListCursorTuple<User> getUserList( String cursorStr, Integer resultCount );
 	User createOrUpdateUser( User user );
 	User createOrUpdateUser( User user, AuditLog auditLog );

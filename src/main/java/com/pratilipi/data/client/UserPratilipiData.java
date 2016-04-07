@@ -148,7 +148,7 @@ public class UserPratilipiData {
 	}
 
 	public Boolean isAddedToLib() {
-		return addedToLib;
+		return addedToLib == null ? false : addedToLib;
 	}
 
 	public void setAddedToLib( Boolean addedToLib ) {

@@ -14,6 +14,10 @@ public class AuthorData implements Serializable {
 
 	private Long authorId;
 
+	private Long userId;
+	
+	private UserData user;
+	
 	
 	private String firstName;
 	private boolean hasFirstName;
@@ -86,7 +90,23 @@ public class AuthorData implements Serializable {
 		this.authorId = id;
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
 
+	public void setUserId( Long userId ) {
+		this.userId = userId;
+	}
+
+	public UserData getUser() {
+		return user;
+	}
+
+	public void setUser( UserData user ) {
+		this.user = user;
+	}
+
+	
 	public String getFirstName() {
 		return firstName;
 	}

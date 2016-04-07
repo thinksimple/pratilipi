@@ -130,6 +130,9 @@ public class UserDataUtil {
 	
 	public static UserData createUserData( User user ) {
 		
+		if( user == null )
+			return null;
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		UserData userData = new UserData( user.getId() );

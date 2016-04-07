@@ -18,4 +18,5 @@ public class GetAuthorListResponse extends GenericResponse {
 		this.authorList = authorList;
 		this.cursor = cursor;
 	}
+	
 }

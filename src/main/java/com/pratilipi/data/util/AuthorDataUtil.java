@@ -105,18 +105,14 @@ public class AuthorDataUtil {
 	
 	
 	public static AuthorData createAuthorData( Author author ) {
-		return createAuthorData( author, null, false, false );
+		return createAuthorData( author, null, null );
 	}
 	
 	public static AuthorData createAuthorData( Author author, Page authorPage ) {
-		return createAuthorData( author, authorPage, false, false );
+		return createAuthorData( author, authorPage, null );
 	}
 	
-	public static AuthorData createAuthorData( Author author, boolean includeAll, boolean includeMetaData ) {
-		return createAuthorData( author, null, includeAll, includeMetaData );
-	}
-	
-	public static AuthorData createAuthorData( Author author, Page authorPage, boolean includeAll, boolean includeMetaData ) {
+	public static AuthorData createAuthorData( Author author, Page authorPage, User user ) {
 
 		if( author == null )
 			return null;
@@ -125,10 +121,16 @@ public class AuthorDataUtil {
 		if( authorPage == null )
 			authorPage = DataAccessorFactory.getDataAccessor().getPage( PageType.AUTHOR, author.getId() );
 		
+		UserData userData = user == null ? null : UserDataUtil.createUserData( user );
+
 		
 		AuthorData authorData = new AuthorData();
 		
 		authorData.setId( author.getId() );
+		if( userData != null ) {
+			authorData.setUserId( userData.getId() );
+			authorData.setUser( userData );
+		}
 
 		authorData.setFirstName( author.getFirstName() );
 		authorData.setLastName( author.getLastName() );
@@ -167,8 +169,7 @@ public class AuthorDataUtil {
 			authorData.setFullNameEn( authorData.getNameEn() + " '" + author.getPenNameEn() + "'" );
 
 		authorData.setLanguage( author.getLanguage() );
-		if( includeAll )
-			authorData.setSummary( author.getSummary() );
+		authorData.setSummary( author.getSummary() );
 		
 		authorData.setPageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
 		authorData.setImageUrl( createAuthorImageUrl( author ) );
@@ -178,20 +179,35 @@ public class AuthorDataUtil {
 		authorData.setTotalReadCount( author.getTotalReadCount() );
 		authorData.setTotalFbLikeShareCount( author.getTotalFbLikeShareCount() );
 		
-		authorData.setAccessToUpdate( hasAccessToUpdateAuthorData( author, null ));
+		authorData.setAccessToUpdate( hasAccessToUpdateAuthorData( author, null ) );
 		
 		return authorData;
 		
 	}
 	
 	public static List<AuthorData> createAuthorDataList( List<Long> authorIdList ) {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
 		List<Author> authorList = dataAccessor.getAuthorList( authorIdList );
+
+		List<Long> userIdList = new ArrayList<>( authorIdList.size() );
+		for( Author author : authorList )
+			if( author.getUserId() != null )
+				userIdList.add( author.getUserId() );
+		Map<Long, User> users = dataAccessor.getUsers( userIdList );
+		
 		Map<Long, Page> authorPages = dataAccessor.getPages( PageType.AUTHOR, authorIdList );
+		
 		List<AuthorData> authorDataList = new ArrayList<>( authorIdList.size() );
 		for( Author author : authorList )
-			authorDataList.add( createAuthorData( author, authorPages.get( author.getId() ) ) );
+			authorDataList.add( createAuthorData(
+					author,
+					authorPages.get( author.getId() ),
+					users.get( author.getUserId() ) ) );
+		
 		return authorDataList;
+		
 	}
 	
 
@@ -323,7 +339,7 @@ public class AuthorDataUtil {
 		if( isNew )
 			createOrUpdateAuthorPageUrl( author.getId() );
 
-		return createAuthorData( author, true, false );
+		return createAuthorData( author );
 		
 	}
 	
@@ -542,7 +558,7 @@ public class AuthorDataUtil {
 		if( author.getState() == AuthorState.ACTIVE ) {
 			User user = author.getUserId() == null ? null : dataAccessor.getUser( author.getUserId() );
 			searchAccessor.indexAuthorData(
-					createAuthorData( author, true, true ),
+					createAuthorData( author ),
 					UserDataUtil.createUserData( user )
 			);
 		} else {
