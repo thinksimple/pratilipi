@@ -7,6 +7,7 @@ import static com.pratilipi.data.mock.UserPratilipiMock.USER_PRATILIPI_TABLE;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -142,6 +143,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 				return user;
 				
 		return null;
+	}
+	
+	@Override
+	public Map<Long, User> getUsers( List<Long> idList ) {
+		// TODO: Implementation
+		return new HashMap<>( 0 );
 	}
 	
 	@Override

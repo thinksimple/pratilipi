@@ -223,6 +223,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public Map<Long, User> getUsers( List<Long> userIdList ) {
+		Map<Long, User> keyValueMap = new HashMap<>( userIdList.size() );
+		for( Long userId : userIdList )
+			keyValueMap.put( userId, getUser( userId ) );
+		return keyValueMap;
+	}
+	
+	@Override
 	public DataListCursorTuple<User> getUserList( String cursor, Integer resultCount ) {
 		return getUserList( cursor, resultCount, false );
 	}

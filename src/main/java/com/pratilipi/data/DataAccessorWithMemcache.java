@@ -128,6 +128,42 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	@Override
+	public Map<Long, User> getUsers( List<Long> idList ) {
+		
+		Map<Long, User> keyValueMap = new HashMap<>( idList.size() );
+		if( idList.size() == 0 )
+			return keyValueMap;
+		
+		List<String> memcacheIdList = new ArrayList<>( idList.size() );
+		for( Long id : idList )
+			memcacheIdList.add( PREFIX_USER + id );
+
+		// Fetching entities from Memcache.
+		Map<String, User> keyValueMap1 = memcache.getAll( memcacheIdList );
+		
+		List<Long> missingIdList = new LinkedList<>();
+		for( Long id : idList ) {
+			String memcacheId = PREFIX_USER + id;
+			if( keyValueMap1.get( memcacheId ) == null )
+				missingIdList.add( id );
+			else
+				keyValueMap.put( id, keyValueMap1.get( memcacheId ) );
+		}
+		
+		// Fetching remaining entities from DataStore
+		Map<Long, User> keyValueMap2 = dataAccessor.getUsers( missingIdList );
+		
+		for( Long id : missingIdList ) {
+			User user = keyValueMap2.get( id );
+			memcache.put( PREFIX_USER + id, user );
+			keyValueMap.put( id, user );
+		}
+		
+		return keyValueMap;
+		
+	}
+	
+	@Override
 	public DataListCursorTuple<User> getUserList( String cursor, Integer resultCount ) {
 		return dataAccessor.getUserList( cursor, resultCount );
 	}
