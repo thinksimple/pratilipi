@@ -60,9 +60,11 @@
 							</template>
 						</template>
 						
-						<pratilipi-rating value="{{ pratilipi.averageRating }}">
-							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
-						</pratilipi-rating>
+						<template is="dom-if" if="{{ showRating }}">
+							<pratilipi-rating value="{{ pratilipi.averageRating }}">
+								<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
+							</pratilipi-rating>
+						</template>
 						
 						<template is="dom-if" if="{{ draftsActive }}">
 							<paper-menu-button horizontal-align="right" class="pull-right">
@@ -186,6 +188,11 @@
     				$( '.tooltip' ).css( 'left','130px' )
     				$( '.tooltip' ).css( 'white-space','normal' )
 				});
+				
+				if( this.pratilipi.ratingCount != null && this.pratilipi.ratingCount > 0 )
+					this.showRating = true;
+				else
+					this.showRating = false;
 			},
 			
 			init: function() {
