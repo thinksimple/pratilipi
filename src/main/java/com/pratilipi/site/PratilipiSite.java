@@ -452,7 +452,7 @@ public class PratilipiSite extends HttpServlet {
 		if( filterLanguage == Language.HINDI )
 			listNames = new String[] { "ankahi-dastan", "romanchak-duniya", "shrestha-sahitya", "chakmak-chhoti-duniya", "swad-ka-tadka" };
 		else if( filterLanguage == Language.GUJARATI )
-			listNames = new String[] { "vartavaibhav", "womansday-vishesh", "top-authors", "recipeno-rasthal", "rahasyamay-ane-romanchak", "navalkatha" };
+			listNames = new String[] { "varta-vishwna-zarukhe", "unalane-aapo-maat", "navalkatha", "romance", "tachukadi-vato" };
 		else if( filterLanguage == Language.TAMIL )
 			listNames = new String[] { "featured", "fiction", "magazines" };
 		ArrayList<Map<String, Object>> sections = new ArrayList<>( listNames.length );
