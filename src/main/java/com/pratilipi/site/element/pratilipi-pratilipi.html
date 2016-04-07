@@ -132,16 +132,21 @@
 					</div>
 				</div>
 				<div id="pratilipi-col-right" style="padding: 20px;">
-					<h3 style="margin-top: 0px; color: #D0021B;">{{ title }}</h3>
+					<h3 style="margin-top: 0px;" class="pratilipi-red">{{ title }}</h3>
 					<template is="dom-if" if="{{ pratilipi.author }}">
 						<div style="display: block;">
 							<a style="display: inline-block;" href="{{ pratilipi.author.pageUrl }}"><h6>{{ pratilipi.author.name }}</h6></a>
 						</div>
 					</template>
 					
-					<pratilipi-rating style="cursor: pointer; display: inline-block;" on-click="showReviewInput" value="{{ pratilipi.averageRating }}">
+					<template is="dom-if" if="{{ zeroRating }}">
+						<a class="link" style="text-decoration: underline;" on-click="showReviewInput">${ _strings.rating_be_first_one }</a>
+					</template>
+					<template is="dom-if" if="{{ !zeroRating }}">
+						<pratilipi-rating style="cursor: pointer; display: inline-block;" on-click="showReviewInput" value="{{ pratilipi.averageRating }}">
 							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
-					</pratilipi-rating>
+						</pratilipi-rating>
+					</template>
 					
 					<h6 style="margin-top: 10px; font-weight: bold;">{{ type }}</h6>
 					
@@ -325,6 +330,11 @@
 					this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "?" + "width=150";
 				else
 					this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "&" + "width=150";
+				
+				if( pratilipi.ratingCount != null && pratilipi.ratingCount > 0  )
+					this.zeroRating = false;
+				else
+					this.zeroRating = true;
 				
 				this.type = this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name;
 				this.listingDate = convertDate( pratilipi.listingDateMillis );
