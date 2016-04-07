@@ -258,13 +258,9 @@
 			onSubmit: function( event ) {
 				
 				// For users
-				if( this.firstName == null || this.firstName.trim() == "" ) {
+				if( ( this.firstName == null || this.firstName.trim() == "" ) 
+					&& ( this.firstNameEn == null || this.firstNameEn.trim() == "" ) ) {
 					this.message = "Please enter the first name!";
-					return;
-				}
-				// For Admins - creating a new author
-				if( this.author == null && ( this.firstNameEn == null || this.firstNameEn.trim() == "" ) ) {
-					this.message = "Please enter the first name in English!";
 					return;
 				}
 				
