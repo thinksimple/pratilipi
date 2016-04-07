@@ -25,28 +25,26 @@
 
 	
 	<template>
-		<template is="dom-if" if="{{ !hideReview }}">
-			<paper-card>
-				<div class="row" style="padding: 10px;">
-					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="text-align: center; padding-top: 7px;">
-						<small><pratilipi-rating value="{{ review.rating }}" /></small>
-			   			<template is="dom-if" if="{{ reviewUserImageUrl }}">
-			   				<img class="img-circle user-dp" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>
-			   			</template>
-			   			<template is="dom-if" if="{{ !review.userImageUrl }}">
-			   				<iron-icon icon="account-circle"></iron-icon>
-			   			</template>
-			   			<span>{{ review.userName }}</span>
-			   			<br/>
-			   			<span>{{ reviewDateMillis }}</span>
-					</div>
-					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-						<h4 class="pratilipi-red">{{ review.reviewTitle }}</h4>
-						<div class="review" style="text-align: justify;"></div>
-					</div>
+		<paper-card id="reviewcard">
+			<div class="row" style="padding: 10px;">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="text-align: center; padding-top: 7px;">
+					<small><pratilipi-rating value="{{ review.rating }}" /></small>
+		   			<template is="dom-if" if="{{ reviewUserImageUrl }}">
+		   				<img class="img-circle user-dp" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>
+		   			</template>
+		   			<template is="dom-if" if="{{ !review.userImageUrl }}">
+		   				<iron-icon icon="account-circle"></iron-icon>
+		   			</template>
+		   			<span>{{ review.userName }}</span>
+		   			<br/>
+		   			<span>{{ reviewDateMillis }}</span>
 				</div>
-			</paper-card>
-		</template>
+				<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+					<h4 class="pratilipi-red">{{ review.reviewTitle }}</h4>
+					<div class="review" style="text-align: justify;"></div>
+				</div>
+			</div>
+		</paper-card>
 	</template>
 	
 
@@ -57,15 +55,14 @@
 			is: 'pratilipi-review',
 			
 			properties: {
-				review: { type: Object, observer: "ready" },
-				hideReview: { type: Boolean, value: false }
+				review: { type: Object, observer: "ready" }
 			},
 			
 			ready: function() {
 				
-				if( ( this.reviewTitle == null || this.reviewTitle.trim() == "" )
-						&& ( this.review == null || this.review.trim() == "" ) ) {
-					this.hideReview = true;
+				if( ( this.review.reviewTitle == null || this.review.reviewTitle.trim() == "" )
+						&& ( this.review.review == null || this.review.review.trim() == "" ) ) {
+					this.$.reviewcard.style.display =  'none';
 					return;
 				}
 					
