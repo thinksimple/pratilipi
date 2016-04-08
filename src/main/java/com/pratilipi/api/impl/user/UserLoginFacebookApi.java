@@ -52,6 +52,7 @@ public class UserLoginFacebookApi extends GenericApi {
 				Task welcomeMailTask = TaskQueueFactory.newTask()
 						.setUrl( "/user/email" )
 						.addParam( "userId", userData.getId().toString() )
+						.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
 						.addParam( "sendWelcomeMail", "true" );
 				taskList.add( welcomeMailTask );
 			}

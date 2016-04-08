@@ -2,6 +2,7 @@ package com.pratilipi.api.impl.user.shared;
 
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.common.type.Language;
 
 public class PostUserEmailRequest extends GenericRequest {
 	
@@ -10,6 +11,8 @@ public class PostUserEmailRequest extends GenericRequest {
 	
 	@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
 	private String email;
+	
+	private Language language;
 	
 	private Boolean sendWelcomeMail;
 	
@@ -26,6 +29,10 @@ public class PostUserEmailRequest extends GenericRequest {
 	
 	public String getEmail() {
 		return email;
+	}
+	
+	public Language getLanguage() {
+		return language;
 	}
 	
 	public boolean sendWelcomeMail() {

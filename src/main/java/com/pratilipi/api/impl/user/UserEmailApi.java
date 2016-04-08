@@ -36,7 +36,7 @@ public class UserEmailApi extends GenericApi {
 
 
 		if( request.sendWelcomeMail() )
-			UserDataUtil.sendWelcomeMail( request.getUserId() );
+			UserDataUtil.sendWelcomeMail( request.getUserId(), request.getLanguage() );
 		
 		if( request.sendEmailVerificationMail() ) {
 			if( request.getUserId() != null )

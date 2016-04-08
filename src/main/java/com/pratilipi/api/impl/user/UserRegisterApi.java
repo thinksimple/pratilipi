@@ -46,6 +46,7 @@ public class UserRegisterApi extends GenericApi {
 		Task task1 = TaskQueueFactory.newTask()
 				.setUrl( "/user/email" )
 				.addParam( "userId", userData.getId().toString() )
+				.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
 				.addParam( "sendWelcomeMail", "true" );
 		Task task2 = TaskQueueFactory.newTask()
 				.setUrl( "/user/email" )

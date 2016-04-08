@@ -11,6 +11,8 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.filter.UxModeFilter;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/user" )
@@ -46,6 +48,14 @@ public class UserApi extends GenericApi {
 			Long authorId = AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
 			
 			userData.setProfilePageUrl( "/author/" + authorId );
+			
+			
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/user/email" )
+					.addParam( "userId", userData.getId().toString() )
+					.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
+					.addParam( "sendWelcomeMail", "true" );
+			TaskQueueFactory.getUserTaskQueue().add( task );
 			
 		}
 		
