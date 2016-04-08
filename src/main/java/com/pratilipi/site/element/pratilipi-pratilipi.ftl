@@ -46,8 +46,15 @@
 		<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
 	</div>
 	
-	<#assign rating=pratilipi.averageRating >
-	<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
+	<#if pratilipi.ratingCount gt 0 >
+		<a href="?review=write">
+			<#assign rating=pratilipi.averageRating >
+			<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
+		</a>
+	<#else>
+		<a href="/login?ret=${ requestUrl }" class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
+	</#if>
+
 	
 	<h6 style="margin-top: 10px;">${ pratilipi.type }</h6>
 	
