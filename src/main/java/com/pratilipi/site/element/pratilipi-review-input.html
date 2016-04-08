@@ -215,6 +215,7 @@
 					this.message = "Could not connect to server !";
 				} else {
 					this.message = "${ _strings.updated_review }";
+					document.querySelector( 'pratilipi-pratilipi' ).updateUserRating( event.detail.response );
 					document.querySelector( 'pratilipi-userpratilipi' ).setUserPratilipi( event.detail.response );
 					this.async( function() {
 						this.message = null;

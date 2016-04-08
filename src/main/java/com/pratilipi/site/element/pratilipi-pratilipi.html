@@ -143,9 +143,9 @@
 						<a class="link" style="text-decoration: underline;" on-click="showReviewInput">${ _strings.rating_be_first_one }</a>
 					</template>
 					<template is="dom-if" if="{{ !zeroRating }}">
-						<pratilipi-rating style="cursor: pointer; display: inline-block;" on-click="showReviewInput" value="{{ pratilipi.averageRating }}">
+						<pratilipi-rating style="cursor: pointer; display: inline-block;" on-click="showReviewInput" value="{{ averageRating }}">
 							<span class="rating-text">&nbsp;
-								{{ pratilipi.ratingCount }}
+								{{ ratingCount }}
 								<iron-icon style="width: 16px; height: 16px;" icon="icons:supervisor-account"></iron-icon>
 							</span>
 						</pratilipi-rating>
@@ -155,7 +155,7 @@
 					
 					<table style="margin-top: 15px; margin-bottom: 25px;">
 						<tr> <th>${ _strings.pratilipi_listing_date }</th><td>:</td><td>{{ listingDate }}</td> </tr>
-						<tr> <th>${ _strings.pratilipi_count_reads }</th><td>:</td><td>{{ pratilipi.readCount }}</td> </tr>
+						<tr> <th>${ _strings.pratilipi_count_reads }</th><td>:</td><td>{{ readCount }}</td> </tr>
 					</table>
 					
 					<div style="position: relative; display: inline-block;">
@@ -250,19 +250,24 @@
 			},
 			
 			updateUserRating: function( userpratilipi ) {
-				var rating = 0;
-				if( userpratilipi.reviewState != "DELETED" && userpratilipi.reviewState != "BLOCKED" )
-					rating = userpratilipi.rating;
-				
-				// Update average rating and rating count
-				// user haven't rated the content before.
-				if( this.userpratilipi.rating == null || this.userpratilipi.rating == 0 ) {
-					this.set( 'averageRating', userpratilipi.rating );
+
+				if( userpratilipi.reviewState == "DELETED" || userpratilipi.reviewState == "BLOCKED" 
+						|| userpratilipi.rating == null || userpratilipi.rating == 0 )
+					return;
+
+				var rating = userpratilipi.rating;
+
+				var totalRating = this.pratilipi.averageRating * this.pratilipi.ratingCount;
+
+				if( this.userpratilipi.rating == null || this.userpratilipi.rating == 0 )
 					this.set( 'ratingCount', this.ratingCount + 1 );
-				} else { // user has rated the content before.
-					this.set( 'averageRating', ( ( this.userpratilipi.averageRating * this.userpratilipi.ratingCount ) 
-							- this.userpratilipi.rating + userpratilipi.rating ) / this.ratingCount );
-				}
+
+				this.set( 'averageRating', (  totalRating
+					- ( this.userpratilipi.rating != null ? this.userpratilipi.rating : 0 ) 
+					+ userpratilipi.rating ) / this.ratingCount );
+
+				this.set( 'zeroRating', false );
+
 			},
 			
 			showReviewInput: function() {
@@ -318,23 +323,20 @@
 				
 			},
 			
-			process: function( data ) {
-				data.averageRating = data.averageRating == null ? 0 : data.averageRating;
-				data.ratingCount = data.ratingCount == null ? 0 : data.ratingCount;
-				data.readCount = data.readCount == null ? 0 : data.readCount;
-				data.reviewCount = data.reviewCount == null ? 0 : data.reviewCount;
-				data.fbLikeShareCount = data.fbLikeShareCount == null ? 0 : data.fbLikeShareCount;
-				return data;
-			},
-			
 			updatePratilipi: function( pratilipi ) {
-				this.set( 'pratilipi', this.process( pratilipi ) );
+				
+				if( window.location.pathname != pratilipi.pageUrl )
+					window.location.href = pratilipi.pageUrl;
+				
+				
+				this.set( 'pratilipi', pratilipi );
 				
 				this.title = ( pratilipi.title != null && pratilipi.title.trim() != "" ) ?
 						pratilipi.title : pratilipi.titleEn;
 				
-				/* if( window.location.pathname != pratilipi.pageUrl )
-					window.location.href = pratilipi.pageUrl; */
+				this.averageRating = pratilipi.averageRating != null ? pratilipi.averageRating : 0 ;
+				this.ratingCount = pratilipi.ratingCount != null ? pratilipi.ratingCount : 0 ;
+				this.readCount = pratilipi.readCount != null ? pratilipi.readCount : 0 ;
 				
 				if( pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
 					this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "?" + "width=150";
