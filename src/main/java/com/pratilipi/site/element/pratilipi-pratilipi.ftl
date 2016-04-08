@@ -47,12 +47,12 @@
 	</div>
 	
 	<#if pratilipi.ratingCount gt 0 >
-		<a <#if user.isGuest == true>href="/login?ret=${ requestUrl }"<#else>href="?review=write"</#if> >
+		<a <#if user.isGuest == true>href="/login?ret=${ requestUrl }?review=write"<#else>href="?review=write"</#if> >
 			<#assign rating=pratilipi.averageRating >
 			<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
 		</a>
 	<#else>
-		<a <#if user.isGuest == true>href="/login?ret=${ requestUrl }"<#else>href="?review=write"</#if> class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
+		<a <#if user.isGuest == true>href="/login?ret=${ requestUrl }?review=write"<#else>href="?review=write"</#if> class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
 	</#if>
 
 	
