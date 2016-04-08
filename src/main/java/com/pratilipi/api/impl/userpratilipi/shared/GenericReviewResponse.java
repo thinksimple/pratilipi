@@ -14,6 +14,7 @@ public class GenericReviewResponse extends GenericResponse {
 	private String userPratilipiId;
 	private String userName;
 	private String userImageUrl;
+	private String userProfilePageUrl;
 
 	private Integer rating;
 	private String reviewTitle;
@@ -28,6 +29,7 @@ public class GenericReviewResponse extends GenericResponse {
 		this.userPratilipiId = userPratilipiData.getId();
 		this.userName = userPratilipiData.getUserName();
 		this.userImageUrl = userPratilipiData.getUserImageUrl();
+		this.userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
 		this.rating = userPratilipiData.getRating();
 		this.reviewTitle = userPratilipiData.getReviewTitle();
 		this.review = userPratilipiData.getReview();
@@ -48,6 +50,10 @@ public class GenericReviewResponse extends GenericResponse {
 		return userImageUrl;
 	}
 	
+	public String getUserProfilePageUrl() {
+		return userProfilePageUrl;
+	}
+
 	public Integer getRating() {
 		return rating;
 	}

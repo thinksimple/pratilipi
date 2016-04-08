@@ -58,6 +58,7 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setUserId( userPratilipi.getUserId() );
 		userPratilipiData.setUserName( userData.getDisplayName() );
 		userPratilipiData.setUserImageUrl( userData.getProfileImageUrl() );
+		userPratilipiData.setUserProfilePageUrl( userData.getProfileImageUrl() );
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 		userPratilipiData.setRating( userPratilipi.getRating() );
 		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );

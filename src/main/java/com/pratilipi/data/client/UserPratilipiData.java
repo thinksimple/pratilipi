@@ -14,6 +14,8 @@ public class UserPratilipiData {
 	
 	private String userImageUrl;
 	
+	private String userProfilePageUrl;
+
 	private Long pratilipiId;
 	
 	
@@ -68,6 +70,14 @@ public class UserPratilipiData {
 
 	public void setUserImageUrl( String userImageUrl ) {
 		this.userImageUrl = userImageUrl;
+	}
+
+	public String getUserProfilePageUrl() {
+		return userProfilePageUrl;
+	}
+
+	public void setUserProfilePageUrl( String userProfilePageUrl ) {
+		this.userProfilePageUrl = userProfilePageUrl;
 	}
 
 	public Long getPratilipiId() {
