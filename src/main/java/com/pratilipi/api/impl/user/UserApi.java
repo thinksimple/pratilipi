@@ -1,5 +1,8 @@
 package com.pratilipi.api.impl.user;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -7,6 +10,7 @@ import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.user.shared.PostUserRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
@@ -32,6 +36,9 @@ public class UserApi extends GenericApi {
 		userData = UserDataUtil.saveUserData( userData );
 		
 		
+		List<Task> taskList = new LinkedList<>();
+		
+		
 		if( request.getId() == null ) { // New user
 			
 			String firstName = request.getName().trim();
@@ -55,10 +62,23 @@ public class UserApi extends GenericApi {
 					.addParam( "userId", userData.getId().toString() )
 					.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
 					.addParam( "sendWelcomeMail", "true" );
-			TaskQueueFactory.getUserTaskQueue().add( task );
+			taskList.add( task );
 			
 		}
 		
+
+		// Send verification mail if user sate is REGISTERED
+		if( userData.getState() == UserState.REGISTERED ) {
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/user/email" )
+					.addParam( "userId", userData.getId().toString() )
+					.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
+					.addParam( "sendEmailVerificationMail", "true" );
+			taskList.add( task );
+		}
+		
+		
+		TaskQueueFactory.getUserTaskQueue().addAll( taskList );
 		
 		return new GenericUserResponse( userData );
 		

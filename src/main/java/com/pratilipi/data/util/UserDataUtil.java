@@ -205,6 +205,7 @@ public class UserDataUtil {
 			user.setEmail( userData.getEmail() );
 			if( user.getState() == UserState.ACTIVE )
 				user.setState( UserState.REGISTERED );
+			user.setVerificationToken( null );
 		}
 		if( userData.hasPhone() )
 			user.setPhone( userData.getPhone() );
@@ -246,7 +247,7 @@ public class UserDataUtil {
 		if( isNew && DataAccessorFactory.getDataAccessor().getUserByEmail( userData.getEmail() ) != null )
 			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
 		// Email, if provided, must not be registered with some other user.
-		else if( ! isNew && userData.hasEmail() && userData.getEmail() != null && ! DataAccessorFactory.getDataAccessor().getUserByEmail( userData.getEmail() ).equals( userData.getId() ) )
+		else if( ! isNew && userData.hasEmail() && userData.getEmail() != null && ! DataAccessorFactory.getDataAccessor().getUserByEmail( userData.getEmail() ).getId().equals( userData.getId() ) )
 			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
 		
 		if( errorMessages.entrySet().size() > 0 )
