@@ -62,7 +62,10 @@
 						
 						<template is="dom-if" if="{{ showRating }}">
 							<pratilipi-rating value="{{ pratilipi.averageRating }}">
-								<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
+								<span class="rating-text">&nbsp;
+									{{ pratilipi.ratingCount }}
+									<iron-icon style="width: 16px; height: 16px;" icon="icons:supervisor-account"></iron-icon>
+								</span>
 							</pratilipi-rating>
 						</template>
 						

@@ -144,7 +144,10 @@
 					</template>
 					<template is="dom-if" if="{{ !zeroRating }}">
 						<pratilipi-rating style="cursor: pointer; display: inline-block;" on-click="showReviewInput" value="{{ pratilipi.averageRating }}">
-							<span class="rating-text">&nbsp;({{ pratilipi.ratingCount }})</span>
+							<span class="rating-text">&nbsp;
+								{{ pratilipi.ratingCount }}
+								<iron-icon style="width: 16px; height: 16px;" icon="icons:supervisor-account"></iron-icon>
+							</span>
 						</pratilipi-rating>
 					</template>
 					
@@ -239,10 +242,27 @@
 				user: { type: Object, observer: "_loadPratilipi" },
 				pratilipi: { type:Object, notify: true },
 				pratilipiData: { type: Object },
+				userpratilipi: { type: Object },
 				pratilipiTypes: { types: Object },
 				
 				mobile: { type: Boolean },
 				imageUploaded: { type: Boolean, value: false }
+			},
+			
+			updateUserRating: function( userpratilipi ) {
+				var rating = 0;
+				if( userpratilipi.reviewState != "DELETED" && userpratilipi.reviewState != "BLOCKED" )
+					rating = userpratilipi.rating;
+				
+				// Update average rating and rating count
+				// user haven't rated the content before.
+				if( this.userpratilipi.rating == null || this.userpratilipi.rating == 0 ) {
+					this.set( 'averageRating', userpratilipi.rating );
+					this.set( 'ratingCount', this.ratingCount + 1 );
+				} else { // user has rated the content before.
+					this.set( 'averageRating', ( ( this.userpratilipi.averageRating * this.userpratilipi.ratingCount ) 
+							- this.userpratilipi.rating + userpratilipi.rating ) / this.ratingCount );
+				}
 			},
 			
 			showReviewInput: function() {
@@ -313,8 +333,8 @@
 				this.title = ( pratilipi.title != null && pratilipi.title.trim() != "" ) ?
 						pratilipi.title : pratilipi.titleEn;
 				
-				if( window.location.pathname != pratilipi.pageUrl )
-					window.location.href = pratilipi.pageUrl;
+				/* if( window.location.pathname != pratilipi.pageUrl )
+					window.location.href = pratilipi.pageUrl; */
 				
 				if( pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
 					this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "?" + "width=150";
