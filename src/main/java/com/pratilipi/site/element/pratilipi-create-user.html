@@ -199,7 +199,8 @@
 					jQuery( '#createUserButton' ).prop( 'disabled', false );
 					this.message = null;
 					this.close();
-					window.location.href = response.pageUrl != null ? response.pageUrl : response.profilePageUrl;
+					if( this.userId == null )
+						window.location.href = response.pageUrl != null ? response.pageUrl : response.profilePageUrl;
 				}, 1000 );
 			},
 			
