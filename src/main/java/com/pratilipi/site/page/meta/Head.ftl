@@ -12,8 +12,8 @@
 </#list>
 
 <#-- Polymer 1.0 Custom Elements -->
-<link rel='import' href='/elements.${lang}/pratilipi-user.html?20160315'>
-<link rel='import' href='/elements.${lang}/pratilipi-header.html?20160325'>
+<link rel='import' href='/elements.${lang}/pratilipi-user.html?20160408'>
+<link rel='import' href='/elements.${lang}/pratilipi-header.html?20160408'>
 <link rel='import' href='/elements.${lang}/pratilipi-edit-account.html?201603'>
 <link rel='import' href='/elements.${lang}/pratilipi-write.html?20160405'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation-drawer.html?03'>

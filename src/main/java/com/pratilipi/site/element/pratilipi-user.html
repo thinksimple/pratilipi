@@ -1,5 +1,5 @@
 <link rel="import" href="pratilipi-facebook-login.html?20160204" />
-<link rel="import" href="pratilipi-user-login.html?20160302" />
+<link rel="import" href="pratilipi-user-login.html?20160408" />
 <link rel="import" href="pratilipi-user-register.html?201603" />
 <link rel="import" href="pratilipi-user-password-reset.html?201603" />
 <link rel="import" href="pratilipi-user-password-update.html?201603" />
@@ -59,9 +59,9 @@
 				this.querySelector( 'pratilipi-user-verification' ).close();
 			},
 
-			logIn: function() {
+			logIn: function( requireAccess ) {
 				this.closeAllElements();
-				this.querySelector( 'pratilipi-user-login' ).open();
+				this.querySelector( 'pratilipi-user-login' ).open( requireAccess );
 			},
 			
 			register: function() {

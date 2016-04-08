@@ -173,6 +173,7 @@ user_my_account				= My Account
 user_is_new					= New?
 user_is_registered			= Already a Member?
 user_email_verification		= Email Verification
+user_require_access			= You need to log in to perform this action!
 
 
 

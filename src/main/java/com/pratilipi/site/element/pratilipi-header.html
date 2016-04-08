@@ -227,7 +227,7 @@
 			write: function() {
 				if( this.user.isGuest ) {
 					this.writeButtonActive = true;
-					document.querySelector( 'pratilipi-user' ).logIn();
+					document.querySelector( 'pratilipi-user' ).logIn( true );
 				}
 				else {
 					this.writeButtonActive = false;

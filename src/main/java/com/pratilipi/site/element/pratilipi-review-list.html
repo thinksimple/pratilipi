@@ -183,7 +183,7 @@
 			
 			showReviewInput: function() {
 				if( this.user.isGuest ) {
-					document.querySelector( 'pratilipi-user' ).logIn();
+					document.querySelector( 'pratilipi-user' ).logIn( true );
 					this.reviewButtonClicked = true;
 				} else if( this.userpratilipi != null && this.userpratilipi.hasAccessToReview ) {
 					this.querySelector( 'pratilipi-review-input' ).openReviewInput( this.userpratilipi );

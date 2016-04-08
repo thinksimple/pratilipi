@@ -12,6 +12,9 @@
 						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
 					</div>
 					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+					<template is="dom-if" if="{{ requireAccess }}">
+						<h6 class="text-center" style="margin-bottom: 20px;">${ _strings.user_require_access }</h6>
+					</template>
 					<pratilipi-facebook-login></pratilipi-facebook-login>
 					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
 					<h6 class="modal-fullscreen-heading">${ _strings.user_sign_in_to_pratilipi }</h6>
@@ -68,7 +71,8 @@
 				document.querySelector( 'pratilipi-user' ).resetPassword();
 			},
 			
-			open: function() {
+			open: function( requireAccess ) {
+				this.set( 'requireAccess', requireAccess );
 				this.async( function() {
 					jQuery( "#pratilipiUserLogin" ).modal( {backdrop: 'static'} );
 				});

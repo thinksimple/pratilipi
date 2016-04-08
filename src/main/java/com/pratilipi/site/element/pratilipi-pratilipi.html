@@ -288,7 +288,7 @@
 			
 			addToLibrary: function() {
 				if( this.user.isGuest ) {
-					document.querySelector( 'pratilipi-user' ).logIn();
+					document.querySelector( 'pratilipi-user' ).logIn( true );
 				} else {
 					document.querySelector( 'pratilipi-userpratilipi' ).addToLibrary( this.pratilipi.pratilipiId );
 				}
