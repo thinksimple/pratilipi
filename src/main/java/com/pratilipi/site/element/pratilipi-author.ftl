@@ -24,7 +24,7 @@
 </div>
 
 
-<#if author.summary?? >
+<#if author.summary?? && author.summary != "" >
 	<div class="secondary-500 pratilipi-shadow box">
 		<h2 style="margin-top: 10px; margin-bottom: 15px;" class="pratilipi-red text-center">${ _strings.author_about }</h2>
 		<div style="text-align: justify;">${ author.summary }</div>
