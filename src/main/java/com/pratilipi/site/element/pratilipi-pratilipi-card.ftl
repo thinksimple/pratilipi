@@ -10,10 +10,14 @@
 			<#if pratilipi.author?? >
 				<a href="${ pratilipi.author.pageUrl }"><h6 style="margin-top:15px;">${ pratilipi.author.name }</h6></a>
 			</#if>
-			<div style="margin: 10px 0px;">
-				<#assign rating=pratilipi.averageRating >
-				<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
-			</div>
+			<#if pratilipi.ratingCount?? && pratilipi.ratingCount gt 0 >
+				<div style="margin: 10px 0px;">
+					<#assign rating=pratilipi.averageRating >
+					<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
+				</div>
+			<#else>
+				<div style="min-height: 25px;"></div>
+			</#if>
 			<#if !pratilipi.author?? ><div style="min-height: 25px;"></div></#if>
 			<div style="margin:25px 0px 10px 0px;">
 				<a class="pratilipi-light-blue-button" href="${ pratilipi.readPageUrl }&ret=${ requestUrl }">${ _strings.read }</a>

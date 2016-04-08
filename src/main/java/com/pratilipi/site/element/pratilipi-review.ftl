@@ -10,7 +10,8 @@
 </#if>
 
 
-<#if review.reviewTitle != "" || review.review != "">
+<#if ( review.getReviewTitle()?? && review.getReviewTitle() != "" ) || 
+	 ( review.getReview()?? && review.getReview() != "" ) >
 	<div class="secondary-500 pratilipi-shadow box" style="padding: 10px 20px;">
 		<div class="row" style="padding: 10px;">
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="text-align: center; padding-top: 7px;">
