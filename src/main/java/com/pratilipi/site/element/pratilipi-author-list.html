@@ -30,16 +30,28 @@
 						</paper-input>
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
-						<!-- Content Published -->
+						<a class="link" on-click="_orderByContentPublished">
+							Content Published
+							<iron-icon icon="{{ orderByContentPublishedIcon }}"></iron-icon>
+						</a>
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
-						<!-- Name -->
+						<a class="link" on-click="_orderByRegistrationDate">
+							Date Added
+							<iron-icon icon="{{ orderByRegistrationDateIcon }}"></iron-icon>
+						</a>
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
-						<!-- Recently Added -->
+						<a class="link" on-click="_orderByReadCount">
+							Read Count
+							<iron-icon icon="{{ orderByReadCountIcon }}"></iron-icon>
+						</a>
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
-						<!-- Read Count -->
+						<a class="link" on-click="_orderByLastUpdated">
+							Last Updated
+							<iron-icon icon="{{ orderByLastUpdatedIcon }}"></iron-icon>
+						</a>
 					</div>
 				</div>
 			</paper-card>
@@ -164,11 +176,108 @@
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
 				sno: { type: Number, value: 1 },
-				includeShowMoreButton: { type: Boolean, value: false }
+				includeShowMoreButton: { type: Boolean, value: false },
+
+
+				// Boolean values
+				orderByContentPublished: { type: Boolean, value: null },
+				orderByRegistrationDate: { type: Boolean, value: null },
+				orderByReadCount: { type: Boolean, value: null },
+				orderByLastUpdated: { type: Boolean, value: null }
+
+			},
+			
+			_clearAllFlags: function() {
+				this.set( 'orderByContentPublished', null );
+				this.set( 'orderByRegistrationDate', null );
+				this.set( 'orderByReadCount', null );
+				this.set( 'orderByLastUpdated', null );
+				delete this.$.AjaxGet.params[ "orderByContentPublished" ];
+				delete this.$.AjaxGet.params[ "orderByRegistrationDate" ];
+				delete this.$.AjaxGet.params[ "orderByReadCount" ];
+				delete this.$.AjaxGet.params[ "orderByLastUpdated" ];
+				
+				this.orderByContentPublishedIcon = null;
+				this.orderByRegistrationDateIcon = null;
+				this.orderByReadCountIcon = null;
+				this.orderByLastUpdatedIcon = null;
+			},
+			
+			_orderByContentPublished: function() {
+				if( this.orderByContentPublished != null && this.orderByContentPublished ) {
+					this.set( 'orderByContentPublished', false );
+					this.orderByContentPublishedIcon = "icons:trending-down";
+				} else if( this.orderByContentPublished != null && !this.orderByContentPublished ) {
+					this._clearAllFlags();
+				} else {
+					this._clearAllFlags();
+					this.set( 'orderByContentPublished', true );
+					this.orderByContentPublishedIcon = "icons:trending-up";
+				}
+				if( this.orderByContentPublished != null )
+					this.$.AjaxGet.params.orderByContentPublished = this.orderByContentPublished;
+				this.clearAuthorList();
+				this.loadMore();
+			},
+			
+			_orderByRegistrationDate: function() {
+				if( this.orderByRegistrationDate != null && this.orderByRegistrationDate ) {
+					this.set( 'orderByRegistrationDate', false );
+					this.orderByRegistrationDateIcon = "icons:trending-down";
+				} else if( this.orderByRegistrationDate != null && !this.orderByRegistrationDate ) {
+					this._clearAllFlags();
+				} else {
+					this._clearAllFlags();
+					this.set( 'orderByRegistrationDate', true );
+					this.orderByRegistrationDateIcon = "icons:trending-up";
+				}
+				if( this.orderByRegistrationDate != null )
+					this.$.AjaxGet.params.orderByRegistrationDate = this.orderByRegistrationDate;
+				this.clearAuthorList();
+				this.loadMore();
+			},
+			
+			_orderByReadCount: function() {
+				if( this.orderByReadCount != null && this.orderByReadCount ) {
+					this.set( 'orderByReadCount', false );
+					this.orderByReadCountIcon = "icons:trending-down";
+				} else if( this.orderByReadCount != null && !this.orderByReadCount ) {
+					this._clearAllFlags();
+				} else {
+					this._clearAllFlags();
+					this.set( 'orderByReadCount', true );
+					this.orderByReadCountIcon = "icons:trending-up";
+				}
+				if( this.orderByReadCount != null )
+					this.$.AjaxGet.params.orderByReadCount = this.orderByReadCount;
+				this.clearAuthorList();
+				this.loadMore();
+			},
+			
+			_orderByLastUpdated: function() {
+				if( this.orderByLastUpdated != null && this.orderByLastUpdated ) {
+					this.set( 'orderByLastUpdated', false );
+					this.orderByLastUpdatedIcon = "icons:trending-down";
+				} else if( this.orderByLastUpdated != null && !this.orderByLastUpdated ) {
+					this._clearAllFlags();
+				} else {
+					this._clearAllFlags();
+					this.set( 'orderByLastUpdated', true );
+					this.orderByLastUpdatedIcon = "icons:trending-up";
+				}
+				if( this.orderByLastUpdated != null )
+					this.$.AjaxGet.params.orderByLastUpdated = this.orderByLastUpdated;
+				this.clearAuthorList();
+				this.loadMore();
 			},
 			
 			clearAuthorList: function() {
 				this.set( 'modifiedAuthorList', [] );
+				this.sno = 1;
+				this.cursor="";
+				this.isLoading = false;
+				this.isFinished = false;
+				this.includeShowMoreButton = false;
 			},
 			
 			clearSearchQuery: function() {
@@ -187,17 +296,14 @@
 			_searchForAuthor: function() {
 				// Spinner Active and disable show more button and set flags.
 				this.clearAuthorList();
-				this.cursor="";
-				this.isLoading = true;
-				this.isFinished = false;
-				this.includeShowMoreButton = false;
-				this.sno = 1;
 				
 				var ajaxGet = this.$.AjaxGet;
 				if( ajaxGet.lastRequest )
 					ajaxGet.lastRequest.abort();
 				
 				// Set params and make ajax GET call. Filters already set when element initialised.
+				this._clearAllFlags();
+				this.isLoading = true;
 				ajaxGet.params.searchQuery = this.searchQuery;
 				ajaxGet.params.cursor = this.cursor;
 				ajaxGet.generateRequest();
@@ -245,16 +351,16 @@
 					this.includeShowMoreButton = true;
 				
 				// Return if there is an active call or cursor = null.
-				if( this.isLoading || this.isFinished || this.cursor == null || this.cursor == "" )
+				if( this.isLoading || this.isFinished || this.cursor == null )
 					return;
-
+				
 				// Check for window height.
 				var reqHeight = jQuery( window ).scrollTop()
 						- jQuery( this ).position().top
 						+ jQuery( window ).height()
 						+ 3 * jQuery( window ).height();
 
-				if( jQuery( this ).outerHeight( true ) >= reqHeight )
+				if( jQuery( this ).outerHeight( true ) >= reqHeight && this.cursor != "" )
 					return;
 				
 				
