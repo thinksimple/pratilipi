@@ -1,6 +1,0 @@
-access_token		OAuth 2.0 access token
-
-reader_*			Reader PageContent module data
-visit_count		Number of time user has visited pratilipi.com
-page_count		Number of pages user has visited pratilipi.com
-user_language		Language of last book viewed by user
