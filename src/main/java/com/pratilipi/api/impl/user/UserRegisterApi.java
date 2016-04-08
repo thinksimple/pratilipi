@@ -51,6 +51,7 @@ public class UserRegisterApi extends GenericApi {
 		Task task2 = TaskQueueFactory.newTask()
 				.setUrl( "/user/email" )
 				.addParam( "userId", userData.getId().toString() )
+				.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
 				.addParam( "sendEmailVerificationMail", "true" );
 		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2 );
 

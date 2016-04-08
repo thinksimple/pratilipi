@@ -10,7 +10,9 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.data.util.UserDataUtil;
+import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/user/email" )
@@ -35,18 +37,23 @@ public class UserEmailApi extends GenericApi {
 			throw new InvalidArgumentException( errorMessages );
 
 
+		Language language = request.getLanguage() == null
+				? UxModeFilter.getDisplayLanguage() // User facing requests
+				: request.getLanguage(); // Offline requests
+		
+		
 		if( request.sendWelcomeMail() )
-			UserDataUtil.sendWelcomeMail( request.getUserId(), request.getLanguage() );
+			UserDataUtil.sendWelcomeMail( request.getUserId(), language );
 		
 		if( request.sendEmailVerificationMail() ) {
 			if( request.getUserId() != null )
-				UserDataUtil.sendEmailVerificationMail( request.getUserId() );
+				UserDataUtil.sendEmailVerificationMail( request.getUserId(), language );
 			else
-				UserDataUtil.sendEmailVerificationMail( request.getEmail() );
+				UserDataUtil.sendEmailVerificationMail( request.getEmail(), language );
 		}
 
 		if( request.sendPasswordResetMail() )
-			UserDataUtil.sendPasswordResetMail( request.getEmail() );
+			UserDataUtil.sendPasswordResetMail( request.getEmail(), language );
 		
 		if( request.sendBirthdayMail() )
 			throw new InvalidArgumentException( "Feature not yet supported !" );

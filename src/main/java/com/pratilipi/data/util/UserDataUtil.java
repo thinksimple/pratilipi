@@ -201,8 +201,11 @@ public class UserDataUtil {
 		auditLog.setEventDataOld( gson.toJson( user ) );
 
 		
-		if( userData.hasEmail() )
+		if( userData.hasEmail() && ! userData.getEmail().equals( user.getEmail() ) ) {
 			user.setEmail( userData.getEmail() );
+			if( user.getState() == UserState.ACTIVE )
+				user.setState( UserState.REGISTERED );
+		}
 		if( userData.hasPhone() )
 			user.setPhone( userData.getPhone() );
 
@@ -234,10 +237,10 @@ public class UserDataUtil {
 
 		// New user profile must have email.
 		if( isNew && ( ! userData.hasEmail() || userData.getEmail() == null ) )
-			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_INVALID );
+			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REQUIRED );
 		// Email can not be un-set or set to null.
 		else if( ! isNew && userData.hasEmail() && userData.getEmail() == null )
-			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_INVALID );
+			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REQUIRED );
 
 		// For new user, user email should be not registered already.
 		if( isNew && DataAccessorFactory.getDataAccessor().getUserByEmail( userData.getEmail() ) != null )
@@ -498,23 +501,23 @@ public class UserDataUtil {
 	}
 	
 	
-	public static void sendWelcomeMail( Long userId )
+	public static void sendWelcomeMail( Long userId, Language language )
 			throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
-		EmailUtil.sendMail( createUserData( user ).getDisplayName(), user.getEmail(), "welcome", Language.ENGLISH );
+		EmailUtil.sendMail( createUserData( user ).getDisplayName(), user.getEmail(), "welcome", language );
 		
 	}
 	
-	public static void sendEmailVerificationMail( Long userId )
+	public static void sendEmailVerificationMail( Long userId, Language language )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
-		_sendEmailVerificationMail( DataAccessorFactory.getDataAccessor().getUser( userId ) );
+		_sendEmailVerificationMail( DataAccessorFactory.getDataAccessor().getUser( userId ), language );
 		
 	}
 
-	public static void sendEmailVerificationMail( String emailId )
+	public static void sendEmailVerificationMail( String emailId, Language language )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		Long userId = AccessTokenFilter.getAccessToken().getUserId();
@@ -526,11 +529,11 @@ public class UserDataUtil {
 		if( user == null || ! user.getId().equals( userId ) )
 			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 		
-		_sendEmailVerificationMail( user );
+		_sendEmailVerificationMail( user, language );
 		
 	}
 
-	private static void _sendEmailVerificationMail( User user )
+	private static void _sendEmailVerificationMail( User user, Language language )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
 		String verificationToken = getNextToken( user.getVerificationToken() );
@@ -541,17 +544,17 @@ public class UserDataUtil {
 		}
 		
 		Map<String, String> dataModel = new HashMap<>();
-		String verificationLink = "http://" + Language.TAMIL.getHostName()
+		String verificationLink = "http://" + language.getHostName()
 				+ "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "verifyUser=" + Boolean.TRUE;
 		dataModel.put( "emailVerificationUrl", verificationLink );
 		
-		EmailUtil.sendMail( createUserData( user ).getDisplayName(), user.getEmail(), "verification", Language.ENGLISH, dataModel );
+		EmailUtil.sendMail( createUserData( user ).getDisplayName(), user.getEmail(), "verification", language, dataModel );
 		
 	}
 	
-	public static void sendPasswordResetMail( String email )
+	public static void sendPasswordResetMail( String email, Language language )
 			throws InvalidArgumentException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -563,13 +566,13 @@ public class UserDataUtil {
 		}
 		
 		Map<String, String> dataModel = new HashMap<>();
-		String passwordResetUrl = "http://" + Language.TAMIL.getHostName()
+		String passwordResetUrl = "http://" + language.getHostName()
 				+ "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "passwordReset=" + Boolean.TRUE;
 		dataModel.put( "passwordResetUrl", passwordResetUrl );
 		
-		EmailUtil.sendMail( createUserData( user ).getDisplayName(), user.getEmail(), "password-reset", Language.ENGLISH, dataModel );
+		EmailUtil.sendMail( createUserData( user ).getDisplayName(), user.getEmail(), "password-reset", language, dataModel );
 		
 	}
 

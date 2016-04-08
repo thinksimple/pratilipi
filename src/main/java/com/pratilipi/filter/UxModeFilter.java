@@ -66,7 +66,7 @@ public class UxModeFilter implements Filter {
 			
 			// Defaults - for all test environments
 			boolean basicMode = false;
-			Website website = Website.TAMIL;
+			Website website = null;
 
 			// Figuring out Mode and Languages from a pre-configured list
 			for( Website web : Website.values() ) {
