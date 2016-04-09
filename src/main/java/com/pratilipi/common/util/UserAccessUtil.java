@@ -16,7 +16,7 @@ public class UserAccessUtil {
 		GUEST			( null ),
 		MEMBER			( null,					AccessType.PRATILIPI_ADD_REVIEW ),
 
-		ADMIN			( null,					AccessType.USER_ADD, AccessType.PRATILIPI_LIST ),
+		ADMIN			( null,					AccessType.USER_ADD, AccessType.USER_UPDATE, AccessType.PRATILIPI_LIST ),
 		ADMIN_BENGALI	( Language.BENGALI,		ADMIN_ACCESS ),
 		ADMIN_GUJARATI	( Language.GUJARATI,	ADMIN_ACCESS ),
 		ADMIN_HINDI		( Language.HINDI,		ADMIN_ACCESS ),
@@ -65,9 +65,9 @@ public class UserAccessUtil {
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_HINDI };
 			case "4900189601005568": // vrushali@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MARATHI };
-			case "5664902681198592": // shally@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI };
 			case "5743817900687360": // jitesh@
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI };
+			case "5664902681198592": // shally@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI };
 
 			case "5666355716030464" : // vaisakh@
@@ -83,6 +83,8 @@ public class UserAccessUtil {
 
 			case "6196244602945536": // raghu@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MALAYALAM, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU, Role.ADMIN_GUJARATI };
+			case "5694768648552448": // abhishek@
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
 			case "5705241014042624": // prashant@
 				return new Role[] { Role.MEMBER, Role.ADMINISTRATOR };
 			
