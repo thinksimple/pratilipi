@@ -91,6 +91,7 @@ rating_rating		  = રેટિંગ
 rating_ratings		= રેટિંગ 
 rating_rate_this	= રેટિંગ આપો 
 rating_your_rating	= આપનું રેટિંગ 
+rating_be_first_one	= Be the first one to rate it!
 
 rating_1_star		= ૧ 
 rating_2_star		= ૨ 
@@ -171,7 +172,7 @@ user_my_account		= સેટિંગ
 user_is_new			= ઉપયોગકર્તા નવા છે -	
 user_is_registered		= ઉપયોગકર્તા અગાઉથી અકાઉન્ટ ધરાવે છે - 
 user_email_verification		= આપને મોકલેલ ઈ-મેલની ચકાસણી કરો 		
-
+user_require_access			= You need to log in to perform this action!
 
 
 # My Account popup

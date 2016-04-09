@@ -92,6 +92,7 @@ rating_rating				= மதிப்பீடு
 rating_ratings				= மதிப்பீடகள்
 rating_rate_this			= மதிப்பிடுக!
 rating_your_rating			= உங்கள் மதிப்பீடு!
+rating_be_first_one			= Be the first one to rate it!
 
 rating_1_star				= 1
 rating_2_star				= 2
@@ -172,7 +173,7 @@ user_my_account				= என் கணக்கு
 user_is_new					= புதியவர்?	
 user_is_registered			= உறுப்பினர்?	
 user_email_verification		= மின்னஞ்சல் சரிபார்ப்பு	
-
+user_require_access			= You need to log in to perform this action!
 
 
 # My Account popup

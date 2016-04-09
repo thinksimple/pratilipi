@@ -94,6 +94,7 @@ rating_rating				= रेटिंग
 rating_ratings				= रेटिंग
 rating_rate_this			= रेटिंग दें
 rating_your_rating			= आपकी रेटिंग
+rating_be_first_one			= Be the first one to rate it!
 
 rating_1_star				= १
 rating_2_star				= २
@@ -174,7 +175,7 @@ user_my_account				= सेटिंग्स
 user_is_new					= उपयोगकर्ता नये है	
 user_is_registered			= उपयोगकर्ता पंजीकृत है
 user_email_verification		= आपको भेजे गए ईमेल की पुष्टि करें		
-
+user_require_access			= You need to log in to perform this action!
 
 
 # My Account popup
