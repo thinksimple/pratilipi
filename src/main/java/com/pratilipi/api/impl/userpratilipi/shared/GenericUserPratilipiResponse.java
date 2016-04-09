@@ -11,6 +11,7 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	private String userPratilipiId;
 	private String userName;
 	private String userImageUrl;
+	private String userProfilePageUrl;
 	private Long pratilipiId;
 	
 	private Integer rating;
@@ -53,6 +54,10 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	
 	public String getUserImageUrl() {
 		return userImageUrl;
+	}
+
+	public String getUserProfilePageUrl() {
+		return userProfilePageUrl;
 	}
 	
 	public Long getPratilipiId() {
