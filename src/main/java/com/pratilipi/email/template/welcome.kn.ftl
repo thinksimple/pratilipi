@@ -62,7 +62,7 @@
 										<table align="center" cellspacing="0" cellpadding="0" table-layout="fixed;" style="margin: 0 auto;"> 
 											<tr>
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
-													<a href="http://www.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
+													<a href="http://kannada.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
 															Begin Exploring
 														</span>
