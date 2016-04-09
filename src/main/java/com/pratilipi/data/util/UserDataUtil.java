@@ -248,8 +248,11 @@ public class UserDataUtil {
 		if( isNew && DataAccessorFactory.getDataAccessor().getUserByEmail( userData.getEmail() ) != null )
 			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
 		// Email, if provided, must not be registered with some other user.
-		else if( ! isNew && userData.hasEmail() && userData.getEmail() != null && ! DataAccessorFactory.getDataAccessor().getUserByEmail( userData.getEmail() ).getId().equals( userData.getId() ) )
-			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
+		else if( ! isNew && userData.hasEmail() && userData.getEmail() != null ) {
+			User user = DataAccessorFactory.getDataAccessor().getUserByEmail( userData.getEmail() );
+			if( user != null && ! user.getId().equals( userData.getId() ) )
+				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
+		}
 		
 		if( errorMessages.entrySet().size() > 0 )
 			throw new InvalidArgumentException( errorMessages );
