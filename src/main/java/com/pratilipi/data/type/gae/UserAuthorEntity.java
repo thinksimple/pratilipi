@@ -6,6 +6,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.pratilipi.data.type.UserAuthor;
 
 @Cache
@@ -16,11 +17,15 @@ public class UserAuthorEntity extends GenericOfyEntity implements UserAuthor {
 
 	@Id
 	private String USER_AUTHOR_ID;
-	
+
+	@Index
 	private Long USER_ID;
+	@Index
 	private Long AUTHOR_ID;
 
+	@Index
 	private Boolean FOLLOWING;
+	@Index
 	private Date FOLLOWING_SINCE;
 	
 	

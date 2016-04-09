@@ -8,6 +8,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.Event;
 
@@ -15,14 +16,13 @@ import com.pratilipi.data.type.Event;
 @Entity( name = "EVENT" )
 public class EventEntity extends GenericOfyEntity implements Event {
 
-	// Intentionally Leaving all fields UnIndexed
-	
 	@Id
 	private Long EVENT_ID;
 
 	private String NAME;
 	private String NAME_EN;
 
+	@Index
 	private Language LANGUAGE;
 	@Deprecated
 	private Long LANGUAGE_ID;
@@ -34,7 +34,9 @@ public class EventEntity extends GenericOfyEntity implements Event {
 	@Deprecated
 	private Date END_DATE;
 	
+	@Index
 	private Date CREATION_DATE;
+	@Index
 	private Date LAST_UPDATED;
 
 
