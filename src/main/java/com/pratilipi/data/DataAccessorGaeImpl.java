@@ -751,7 +751,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				= ObjectifyService.ofy().load().type( EventEntity.class );
 		
 		if( language != null )
-			query = query.filter( "LANGUAGE = ", language );
+			query = query.filter( "LANGUAGE", language );
 		
 		query = query.order( "-CREATION_DATE" );
 		
