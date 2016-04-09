@@ -547,17 +547,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 
 	@Override
-	public Author getAuthorByEmailId( String email ) {
-		Author author = memcache.get( PREFIX_AUTHOR + email );
-		if( author == null ) {
-			author = dataAccessor.getAuthorByEmailId( email );
-			if( author != null )
-				memcache.put( PREFIX_AUTHOR + email, author );
-		}
-		return author;
-	}
-	
-	@Override
 	public Author getAuthorByUserId( Long userId ) {
 		Author author = memcache.get( PREFIX_AUTHOR + "USER::" + userId );
 		if( author == null ) {

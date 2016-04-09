@@ -635,24 +635,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Author getAuthorByEmailId( String email ) {
-		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
-				.addFilter( "email", email )
-				.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS )
-				.addOrdering( "state", true )
-				.addOrdering( "registrationDate", true )
-				.build();
-
-		@SuppressWarnings("unchecked")
-		List<Author> authorList = (List<Author>) query.execute( email, AuthorState.DELETED );
-
-		if( authorList.size() > 1 )
-			logger.log( Level.SEVERE, authorList.size() + " Authors found with Email Id " + email   + " ." );
-
-		return authorList.size() == 0 ? null : pm.detachCopy( authorList.get( 0 ) );
-	}
-
-	@Override
 	public Author getAuthorByUserId( Long userId ) {
 		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
 				.addFilter( "userId", userId )

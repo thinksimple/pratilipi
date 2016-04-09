@@ -42,6 +42,7 @@ public interface DataAccessor {
 	User getUserByEmail( String email );
 	User getUserByFacebookId( String facebookId );
 	Map<Long, User> getUsers( List<Long> idList );
+	@Deprecated
 	DataListCursorTuple<User> getUserList( String cursorStr, Integer resultCount );
 	User createOrUpdateUser( User user );
 	User createOrUpdateUser( User user, AuditLog auditLog );
@@ -86,8 +87,6 @@ public interface DataAccessor {
 	// AUTHOR Table
 	Author newAuthor();
 	Author getAuthor( Long id );
-	@Deprecated
-	Author getAuthorByEmailId( String email );
 	Author getAuthorByUserId( Long userId );
 	List<Author> getAuthorList( List<Long> idList );
 	DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount );

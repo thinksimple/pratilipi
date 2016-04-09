@@ -404,15 +404,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Author getAuthorByEmailId( String email ) {
-		for( Author author : AUTHOR_TABLE )
-			if( author.getEmail().equals( email ) )
-				return author;
-		
-		return null;
-	}
-
-	@Override
 	public Author getAuthorByUserId( Long userId ) {
 		for( Author author : AUTHOR_TABLE )
 			if( author.getUserId() != null && author.getUserId().equals( userId ) )

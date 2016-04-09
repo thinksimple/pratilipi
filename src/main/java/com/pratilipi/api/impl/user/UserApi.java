@@ -11,6 +11,7 @@ import com.pratilipi.api.impl.user.shared.PostUserRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.UserState;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
@@ -37,6 +38,7 @@ public class UserApi extends GenericApi {
 		
 		
 		List<Task> taskList = new LinkedList<>();
+		Long authorId = null;
 		
 		
 		if( request.getId() == null ) { // New user
@@ -52,17 +54,24 @@ public class UserApi extends GenericApi {
 			userData.setLastName( lastName );
 			
 			// Create Author profile for the User.
-			Long authorId = AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
+			authorId = AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
 			
 			userData.setProfilePageUrl( "/author/" + authorId );
 			
 			
+			// Send welcome mail to the user
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/user/email" )
 					.addParam( "userId", userData.getId().toString() )
 					.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
 					.addParam( "sendWelcomeMail", "true" );
 			taskList.add( task );
+			
+		} else {
+			
+			authorId = DataAccessorFactory.getDataAccessor()
+					.getAuthorByUserId( userData.getId() )
+					.getId();
 			
 		}
 		
@@ -79,6 +88,15 @@ public class UserApi extends GenericApi {
 		
 		
 		TaskQueueFactory.getUserTaskQueue().addAll( taskList );
+		
+		
+		// Process Author data
+		Task task = TaskQueueFactory.newTask()
+				.setUrl( "/author/process" )
+				.addParam( "authorId", authorId.toString() )
+				.addParam( "processData", "true" );
+		TaskQueueFactory.getAuthorTaskQueue().add( task );
+		
 		
 		return new GenericUserResponse( userData );
 		

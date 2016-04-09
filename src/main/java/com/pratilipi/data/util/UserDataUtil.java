@@ -227,6 +227,7 @@ public class UserDataUtil {
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
 		return createUserData( user );
+		
 	}
 	
 	private static void _validateUserDataForSave( UserData userData )
@@ -545,8 +546,7 @@ public class UserDataUtil {
 		}
 		
 		Map<String, String> dataModel = new HashMap<>();
-		String verificationLink = "http://" + language.getHostName()
-				+ "/" + "?" + "email=" + user.getEmail()
+		String verificationLink = "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "verifyUser=" + Boolean.TRUE;
 		dataModel.put( "emailVerificationUrl", verificationLink );
@@ -567,8 +567,7 @@ public class UserDataUtil {
 		}
 		
 		Map<String, String> dataModel = new HashMap<>();
-		String passwordResetUrl = "http://" + language.getHostName()
-				+ "/" + "?" + "email=" + user.getEmail()
+		String passwordResetUrl = "/" + "?" + "email=" + user.getEmail()
 				+ "&" + "token=" + verificationToken.substring( 0, verificationToken.indexOf( "|" ) )
 				+ "&" + "passwordReset=" + Boolean.TRUE;
 		dataModel.put( "passwordResetUrl", passwordResetUrl );
