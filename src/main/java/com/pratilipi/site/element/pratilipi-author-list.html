@@ -118,7 +118,14 @@
 								<tr><th>Content Published</th><td>{{ author.contentPublished }}</td></tr>
 								<tr><th>Registered On</th><td>{{ author.registrationDateMillis }}</td></tr>
 							</table>
-							<a class="link" on-click="editAuthor">Edit Author Info</a>&nbsp;|&nbsp;<a class="link" on-click="editUser">Edit Email and phone</a>
+							<a class="link" on-click="editAuthor">Edit Author Info</a>
+							&nbsp;|&nbsp;
+							<template is="dom-if" if="{{ author.user }}">
+								<a class="link" on-click="editUser">Edit Email and phone</a>
+							</template>
+							<template is="dom-if" if="{{ !author.user }}">
+								<span>This author doesn't have a user profile!</span>
+							</template>
 						</div>
 					</div>
 				</paper-card>
