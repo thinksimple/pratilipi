@@ -13,7 +13,7 @@
 	<body>
 		<pratilipi-event-list-page 
 			user-data='${ userJson }'
-			event-list='${ eventJson }'
+			event-list='${ eventListJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'></pratilipi-event-list-page>
     </body>
