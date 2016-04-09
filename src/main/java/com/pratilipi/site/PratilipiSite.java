@@ -154,7 +154,6 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "PasswordUpdateBasic.ftl";
 				
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
-				resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
 				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode, request );
 				templateName = templateFilePrefix + ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
@@ -168,11 +167,9 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.READ ) {
-				if( basicMode ) {
-					
-				} else {
+				if( !basicMode ) {
+					resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_A11Y_KEYS.getTag() );
-					resourceList.add( ThirdPartyResource.POLYMER_IRON_FLEX_LAYOUT.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
 				}
