@@ -2,6 +2,7 @@ package com.pratilipi.site;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
@@ -257,7 +259,11 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForAuthorsPage( filterLanguage );
 				templateName = templateFilePrefix + "AuthorList.ftl";
 			
-			
+			} else if( ! basicMode && uri.equals( "/events" ) ) {
+				dataModel = createDataModelForEventsPage( filterLanguage );
+				templateName = templateFilePrefix + "EventList.ftl";
+
+				
 			
 			} else {
 				dataModel = new HashMap<String, Object>();
@@ -388,11 +394,11 @@ public class PratilipiSite extends HttpServlet {
 		String listTitle = null;
 		try {
 			String fileName = "list." + lang.getCode() + "." + listName;
-			File file = new File( DataAccessor.class.getResource( "curated/" + fileName ).toURI() );
-			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+			InputStream inputStream = DataAccessor.class.getResource( "curated/" + fileName ).openStream();
+			LineIterator it = IOUtils.lineIterator( inputStream, "UTF-8" );
 			listTitle = it.nextLine().trim();
 			LineIterator.closeQuietly( it );
-		} catch( URISyntaxException | NullPointerException | IOException e ) {
+		} catch( NullPointerException | IOException e ) {
 			logger.log( Level.SEVERE, "Exception while reading from data file.", e );
 		}
 		return listTitle;
@@ -621,6 +627,13 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "authorListCursor", authorDataListCursorTuple.getCursor() );
 		return dataModel;
 		
+	}
+	
+	public Map<String, Object> createDataModelForEventsPage( Language lang ) {
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", "Events" );
+		dataModel.put( "eventListJson", new Gson().toJson( EventDataUtil.getEventDataList( lang ) ) );
+		return dataModel;
 	}
 	
 	public Map<String, Object> createDataModelForEventPage( Long eventId, boolean basicMode )
