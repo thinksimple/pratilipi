@@ -753,7 +753,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( language != null )
 			query = query.filter( "LANGUAGE = ", language );
 		
-		query = query.order( "~CREATION_DATE" );
+		query = query.order( "-CREATION_DATE" );
 		
 		return new ArrayList<Event>( query.list() );
 		
