@@ -745,6 +745,21 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public List<Event> getEventList( Language language ) {
+		
+		com.googlecode.objectify.cmd.Query<EventEntity> query
+				= ObjectifyService.ofy().load().type( EventEntity.class );
+		
+		if( language != null )
+			query.filter( "LANGUAGE = ", language );
+		
+		query.order( "~CREATION_DATE" );
+		
+		return new ArrayList<Event>( query.list() );
+		
+	}
+	
+	@Override
 	public Event createOrUpdateEvent( Event event ) {
 		return createOrUpdateEntityOfy( (EventEntity) event );
 	}

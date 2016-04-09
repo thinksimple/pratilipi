@@ -15,6 +15,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.ImageUtil;
 import com.pratilipi.common.util.SystemProperty;
@@ -103,6 +104,21 @@ public class EventDataUtil {
 		return eventData;
 		
 	}
+	
+	public static List<EventData> createEventDataList( List<Event> eventList ) {
+		List<EventData> eventDataList = new ArrayList<>();
+		for( Event event : eventList )
+			eventDataList.add( createEventData( event ) );
+		return eventDataList;
+	}
+	
+	public static List<EventData> getEventDataList( Language language ) {
+		List<Event> eventList = DataAccessorFactory
+				.getDataAccessor()
+				.getEventList( language );
+		return createEventDataList( eventList );
+	}
+	
 	
 	public static EventData saveEventData( EventData eventData )
 			throws InvalidArgumentException, InsufficientAccessException {

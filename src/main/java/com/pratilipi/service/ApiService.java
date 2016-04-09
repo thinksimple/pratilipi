@@ -7,6 +7,7 @@ import com.pratilipi.api.impl.author.AuthorImageApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventBannerApi;
+import com.pratilipi.api.impl.event.EventListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
@@ -48,6 +49,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( AuthorImageApi.class );				// *.pratilipi.com & AWS CloudFront
 		
 		ApiRegistry.register( EventApi.class );						// *.pratilipi.com
+		ApiRegistry.register( EventListApi.class );					// *.pratilipi.com
 		ApiRegistry.register( EventBannerApi.class );				// *.pratilipi.com
 		
 		ApiRegistry.register( UserApi.class );						// *.pratilipi.com

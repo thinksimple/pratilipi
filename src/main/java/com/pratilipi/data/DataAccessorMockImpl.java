@@ -491,6 +491,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return event;
 	}
 	
+	@Override
+	public List<Event> getEventList( Language language ) {
+		// TODO: Implementation
+		return new ArrayList<>( 0 );
+	}
+	
 	
 	// USER_PRATILIPI Table
 	

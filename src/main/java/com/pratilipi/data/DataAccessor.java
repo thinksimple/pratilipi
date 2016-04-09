@@ -98,6 +98,7 @@ public interface DataAccessor {
 	// EVENT Table
 	Event newEvent();
 	Event getEvent( Long id );
+	List<Event> getEventList( Language language );
 	Event createOrUpdateEvent( Event event );
 
 	

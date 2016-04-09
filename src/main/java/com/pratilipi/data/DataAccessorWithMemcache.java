@@ -644,24 +644,11 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 
 	
-	// EVENT Table
-	
-	@Override
-	public Event newEvent() {
-		return dataAccessor.newEvent();
-	}
-
-	@Override
-	public Event getEvent( Long id ) {
-		// Counting on Objectify Global and Session cache
-		return dataAccessor.getEvent( id );
-	}
-	
-	@Override
-	public Event createOrUpdateEvent( Event event ) {
-		// Counting on Objectify Global and Session cache
-		return dataAccessor.createOrUpdateEvent( event );
-	}
+	// EVENT Table - Counting on Objectify Global and Session cache
+	@Override public Event newEvent() { return dataAccessor.newEvent(); }
+	@Override public Event getEvent( Long id ) { return dataAccessor.getEvent( id ); }
+	@Override public List<Event> getEventList( Language language ) { return dataAccessor.getEventList( language ); }
+	@Override public Event createOrUpdateEvent( Event event ) { return dataAccessor.createOrUpdateEvent( event ); }
 	
 	
 	// USER_PRATILIPI Table
