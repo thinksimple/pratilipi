@@ -35,7 +35,7 @@
 										<table align="center" cellspacing="0" cellpadding="0" table-layout="fixed;" style="margin: 0 auto;"> 
 											<tr>
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
-													<a href="http://www.pratilipi.com${ emailVerificationUrl }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
+													<a href="http://telugu.pratilipi.com${ emailVerificationUrl }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
 															Verify Account
 														</span>
@@ -53,10 +53,10 @@
 													<center>
 														<div>
 															<small style="margin: 0.75em 0 0.75em 0;">Click the link below or copy - paste it on your browser if the button doesn't work.</small>
-															<a href="http://www.pratilipi.com${ emailVerificationUrl }" target="_blank" style="color: #4a4a4a; text-decoration: underline;">
+															<a href="http://telugu.pratilipi.com${ emailVerificationUrl }" target="_blank" style="color: #4a4a4a; text-decoration: underline;">
 																<br/>
 																<small>
-																	http://www.pratilipi.com${ emailVerificationUrl }
+																	http://telugu.pratilipi.com${ emailVerificationUrl }
 																</small>
 															</a>
 														</div>
