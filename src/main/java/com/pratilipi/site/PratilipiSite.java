@@ -259,11 +259,11 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForAuthorsPage( filterLanguage );
 				templateName = templateFilePrefix + "AuthorList.ftl";
 			
-			} else if( ! basicMode && uri.equals( "/events" ) ) {
-				dataModel = createDataModelForEventsPage( filterLanguage );
-				templateName = templateFilePrefix + "EventList.ftl";
+			} else if( uri.equals( "/events" ) ) {
+				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
+				templateName = templateFilePrefix + ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
 
-				
+			
 			
 			} else {
 				dataModel = new HashMap<String, Object>();
@@ -629,10 +629,13 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	public Map<String, Object> createDataModelForEventsPage( Language lang ) {
+	public Map<String, Object> createDataModelForEventsPage( Language lang, boolean basicMode ) {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Events" );
-		dataModel.put( "eventListJson", new Gson().toJson( EventDataUtil.getEventDataList( lang ) ) );
+		if( basicMode )
+			dataModel.put( "eventList", EventDataUtil.getEventDataList( lang ) );
+		else
+			dataModel.put( "eventListJson", new Gson().toJson( EventDataUtil.getEventDataList( lang ) ) );
 		return dataModel;
 	}
 	
