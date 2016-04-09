@@ -16,7 +16,7 @@ import com.pratilipi.data.util.EventDataUtil;
 public class EventListApi extends GenericApi {
 
 	@Get
-	public GetEventListResponse getAuthorList( GetEventListRequest request )
+	public GetEventListResponse get( GetEventListRequest request )
 			throws InsufficientAccessException {
 		
 		List<EventData> eventList =
