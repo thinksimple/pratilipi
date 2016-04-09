@@ -48,6 +48,7 @@
 </script>
 <script>
 	function processContentTinyMCE( content ) {
+		<#-- 
 		content = content.replace( /style=\"text-align: left;\"/g, "TEXT-LEFT" );
 		content = content.replace( /style=\"text-align: right;\"/g, "TEXT-RIGHT" );
 		content = content.replace( /style=\"text-align: center;\"/g, "TEXT-CENTER" );
@@ -57,6 +58,7 @@
 		content = content.replace( /TEXT-RIGHT/g,"style=\"text-align: right;\"" );
 		content = content.replace( /TEXT-CENTER/g,"style=\"text-align: center;\"" );
 		content = content.replace( /TEXT-JUSTIFY/g,"style=\"text-align: justify;\"" );
+		-->
 		return content;
 	}
 </script>
