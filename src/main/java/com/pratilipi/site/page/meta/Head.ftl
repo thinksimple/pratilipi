@@ -18,7 +18,7 @@
 <link rel='import' href='/elements.${lang}/pratilipi-write.html?20160405'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation-drawer.html?03'>
 <link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160227'>
-<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160408'>
+<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160411'>
 <link rel='import' href='/elements.${lang}/pratilipi-footer.html?201603'>
 <link rel='import' href='/elements.${lang}/pratilipi-input.html?201603'>
 
@@ -53,7 +53,7 @@
 		content = content.replace( /style=\"text-align: right;\"/g, "TEXT-RIGHT" );
 		content = content.replace( /style=\"text-align: center;\"/g, "TEXT-CENTER" );
 		content = content.replace( /style=\"text-align: justify;\"/g, "TEXT-JUSTIFY" );
-		content = content.replace( /(style=("|\Z|')(.*?)("|\Z|'))|(class=("|\Z|')(.*?)("|\Z|'))|<style>.*?<\/style>/g, "" );
+		content = content.replace( /(style=("|\Z)(.*?)("|\Z))|(class=("|\Z)(.*?)("|\Z))|<style>.*?<\/style>/g, "" );
 		content = content.replace( /TEXT-LEFT/g,"style=\"text-align: left;\"" );
 		content = content.replace( /TEXT-RIGHT/g,"style=\"text-align: right;\"" );
 		content = content.replace( /TEXT-CENTER/g,"style=\"text-align: center;\"" );
