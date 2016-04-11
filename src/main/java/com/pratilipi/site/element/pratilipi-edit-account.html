@@ -18,7 +18,14 @@
 					</div>
 					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
 					<h6 class="modal-fullscreen-heading">${ _strings.edit_account_heading }</h6>
-					<pratilipi-input disabled always-float-label label="${ _strings.user_email }" value="{{ user.email }}" ></pratilipi-input>
+					<div class="row">
+						<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+							<pratilipi-input disabled="{{ emailDisabled }}" label="${ _strings.user_email }" value="{{ email::input }}" ></pratilipi-input>
+						</div>
+						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+							<iron-icon icon="{{ icon }}" style="margin-top: 24px; width: 28px; height: 28px; cursor: pointer;" on-click="editEmail"></iron-icon>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
 							<template is="dom-if" if="{{ ! user.isEmailVerified }}">
@@ -37,6 +44,15 @@
 				</div>
 			</div>
 		</div>
+		<iron-ajax
+				id="UserApi"
+				url="/api/user"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_apiResponse"
+				on-error="_apiError"
+				></iron-ajax>
 	</template>
 	
 	<script>
@@ -45,7 +61,51 @@
 			is: 'pratilipi-edit-account',
 	
 			properties: {
-				user: { type: Object }
+				user: { type: Object, observer: "_userChanged" },
+				emailDisabled: { type: Boolean, value: true },
+				icon: { type: String, value: "icons:create" },
+				email: { type: String, value: "Email Not Available!" }
+			},
+			
+			_userChanged: function() {
+				this.set( "email", this.user.email );
+			},
+			
+			_disableEdit: function() {
+				this.set( 'emailDisabled', true );
+				this.set( 'icon', "icons:create" );
+			},
+			
+			editEmail: function() {
+				if( this.emailDisabled ) {
+					this.set( 'emailDisabled', false );
+					this.set( 'icon', "icons:save" );
+				} else {
+					if( this.email == this.user.email ) {
+						this._disableEdit();
+						return;
+					}
+					// Make Api call
+					var ajaxPost = this.$.UserApi;
+					ajaxPost.params.userId = this.user.userId;
+					ajaxPost.params.email = this.email;
+					ajaxPost.generateRequest();
+				}
+					
+			},
+			
+			_apiResponse: function() {
+				var user = event.detail.response;
+				document.querySelector( 'pratilipi-user' ).updateUser( user );
+				this._disableEdit();
+			},
+			
+			_apiError: function() {
+				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
+					alert( event.detail.request.xhr.response.email != null ? event.detail.request.xhr.response.email : event.detail.request.xhr.response.message );
+				else
+					alert( "Some Error occured! Please try Again." );
+				this._disableEdit();
 			},
 			
 			open: function() {
