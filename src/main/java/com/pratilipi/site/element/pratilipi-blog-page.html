@@ -1,0 +1,122 @@
+<!-- <link rel='import' href='pratilipi-edit-blog.html?20160405'> -->
+
+<dom-module id="pratilipi-blog-page">
+	
+	<style>
+		.secondary-500 {
+			margin-bottom: 5px;
+		}
+		paper-card.blog-banner {
+			width: 100%;
+			padding: 0px;
+			margin-bottom: 10px;
+			--paper-card-header: { display: none };
+		}
+		paper-card.blog-description {
+			width: 100%;
+			padding: 15px 20px;
+			margin-bottom: 10px;
+			--paper-card-header: { display: none };
+		}
+		paper-icon-button, iron-icon {
+			color: #107FE5;
+		}
+	</style>
+
+	<template>
+		<header class="nav-down">
+			<pratilipi-header user='[[ user ]]'></pratilipi-header>
+		</header>
+		<main>
+			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
+			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+			<pratilipi-edit-blog></pratilipi-edit-blog>
+			<div class="parent-container margin-top-bottom">
+				<div class="container">
+					<pratilipi-navigation
+							class='pull-left hidden-xs hidden-sm'
+							navigation-list='[[ navigationList ]]'
+							></pratilipi-navigation>
+					<!-- Navigation & Search bar for extra-small & small screens. -->
+					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
+					<div style="overflow:hidden">
+						<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+							{{ blog.name }}
+							<template is="dom-if" if="{{ blog.hasAccessToUpdate }}">
+								<paper-icon-button on-click="editblog" icon="create" noink></paper-icon-button>
+							</template>
+						</div>
+
+						<paper-card class="blog-description">
+							<div id="pratilipi-blog-description"></div>
+						</paper-card>
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<pratilipi-footer></pratilipi-footer>
+		</footer>
+		<div class="scroll-top-button">
+			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
+		</div>
+	</template>
+		
+
+	<script>
+		Polymer({
+
+			is: 'pratilipi-blog-page',
+
+			properties: {
+				userData: { type: Object },
+				blog: { type: Object },
+				navigationList: { type: Array },
+				pratilipiTypes: { types: Object },
+				showPratilipiList: { type: Boolean, value: true },
+				lastScrollTop: { type: Number, value: 0 },
+			},
+			
+			updateblog: function( blog ) {
+				this.set( 'blog', blog );
+				if( blog.pageUrl != null && blog.pageUrl != window.location.pathname )
+					window.location.href = blog.pageUrl;
+			},
+			
+			editblog: function() {
+				this.querySelector( 'pratilipi-edit-blog' ).editCurrentBlog( this.blog );
+			},
+			
+			scrollToTop: function() {
+				$( 'html, body' ).animate( { scrollTop : 0 },800 );
+			},
+			
+			ready: function() {
+				jQuery( '#scrollToTop' ).css( "display", "none" );
+				var jSummary = jQuery( "#pratilipi-blog-description" );
+				jSummary.html( this.blog.description );
+				
+				if( this.pratilipiList == null || this.pratilipiList.length == 0 )
+					this.showPratilipiList = false;
+				
+				if( this.blog.bannerImageUrl.indexOf( '?' ) == -1 )
+					this.blogBannerImageUrl = this.blog.bannerImageUrl + "?" + "width=1000";
+				else
+					this.blogBannerImageUrl = this.blog.bannerImageUrl + "&" + "width=1000";
+				
+				
+			},
+			
+			scrollHandler: function( st ) {
+				if( st > this.lastScrollTop || st < 100 )
+					jQuery( '#scrollToTop' ).fadeOut();
+				else
+					jQuery( '#scrollToTop' ).fadeIn();
+				this.lastScrollTop = st;
+			},
+			
+		});
+	</script>
+
+</dom-module>
