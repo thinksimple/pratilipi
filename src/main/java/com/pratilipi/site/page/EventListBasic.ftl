@@ -25,7 +25,7 @@
 									<a href="${ event.pageUrl }"><h4 class="pratilipi-red">${ event.name }</h4></a>
 									<div style="max-height: 120px; overflow: hidden; margin-top: 15px;" class="text-muted">${ event.description }</div>
 									<a class="pratilipi-blue" href="${ event.pageUrl }" style="position: absolute; right: 20px; top: 0px;">
-										More...
+										${ _strings.view_more }...
 									</a>
 								</div>
 							</div>
