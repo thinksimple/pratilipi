@@ -164,6 +164,9 @@ user_new_password			= புதிய கடவுச்சொல்
 
 user_full_name				= முழுப்பெயர்
 user_email					= மின்னஞ்சல் முகவரி 
+user_email_not_available	= Email Not Available!
+user_phone					= Phone
+user_phone_not_available	= Phone Number Not Available!
 user_password				= கடவுச்சொல்
 user_confirm_password		= கடவுச்சொலை மீண்டும் பதிவு செய்க
 

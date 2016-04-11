@@ -165,7 +165,10 @@ user_current_password		= वर्तमान पासवर्ड
 user_new_password			= नया पासवर्ड
 
 user_full_name				= पूरा नाम दर्ज करें 
-user_email					= ईमेल प्रदान करे 
+user_email					= ईमेल प्रदान करे
+user_email_not_available	= Email Not Available!
+user_phone					= Phone
+user_phone_not_available	= Phone Number Not Available! 
 user_password				= पासवर्ड
 user_confirm_password		= पासवर्ड की पुष्टि करें
 

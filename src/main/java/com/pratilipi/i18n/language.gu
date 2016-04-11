@@ -163,6 +163,9 @@ user_new_password		= નવો પાસવર્ડ
  
 user_full_name			= પૂરું નામ લખો
 user_email			= ઈ-મેલ આઈડી પ્રદાન કરો  
+user_email_not_available	= Email Not Available!
+user_phone					= Phone
+user_phone_not_available	= Phone Number Not Available!
 user_password			= પાસવર્ડ 
 user_confirm_password	= પાસવર્ડની ખાતરી કરો 
 
