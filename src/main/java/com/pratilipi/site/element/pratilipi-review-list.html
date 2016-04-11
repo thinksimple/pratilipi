@@ -125,7 +125,7 @@
 				userpratilipi: { type: Object, observer:"_userPratilipiChanged" },
 				
 				reviewList: { type: Array, value: [], notify: true },
-				zeroReviewResults: { type: Boolean, value: false },
+				zeroReviewResults: { type: Boolean, value: true },
 				cursor: { type: String, value: null },
 
 				isLoading: { type: Boolean, value: false },
@@ -197,10 +197,17 @@
 			},
 			
 			checkForZeroResults: function() {
-				if( this.reviewList.length > 0 || this.reviewAvailable )
+				if( this.reviewAvailable )
 					this.zeroReviewResults = false;
-				else
-					this.zeroReviewResults = true;
+				else {
+					for( var i = 0; i < this.reviewList; i ++ ) {
+						if( ( this.reviewList[i].reviewTitle != null && this.reviewList[i].reviewTitle.trim() != "" )
+								||	( this.reviewList[i].review != null && this.reviewList[i].review.trim() != "" )	) {
+							this.zeroReviewResults = false;
+							break;
+						}
+					}
+				}
 			},
 			
 			reset: function() {

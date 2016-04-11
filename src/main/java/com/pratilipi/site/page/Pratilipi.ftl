@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-pratilipi-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2016040805'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160411'>
 		<script>
 			function convertDate( date ) {
 				var d = new Date( date );
