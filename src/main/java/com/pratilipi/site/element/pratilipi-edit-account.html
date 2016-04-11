@@ -18,7 +18,7 @@
 					</div>
 					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
 					<h6 class="modal-fullscreen-heading">${ _strings.edit_account_heading }</h6>
-					<pratilipi-input disabled label="${ _strings.user_email }" value="{{ user.email }}" ></pratilipi-input>
+					<pratilipi-input disabled always-float-label label="${ _strings.user_email }" value="{{ user.email }}" ></pratilipi-input>
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
 							<template is="dom-if" if="{{ ! user.isEmailVerified }}">
