@@ -6,6 +6,7 @@ import com.pratilipi.data.client.UserData;
 
 public class GenericUserResponse extends GenericResponse {
 	
+	private Long userId;
 	private String displayName;
 	private String email;
 	private UserState state;
@@ -18,6 +19,7 @@ public class GenericUserResponse extends GenericResponse {
 
 	
 	public GenericUserResponse( UserData userData ) {
+		this.userId = userData.getId();
 		this.displayName = userData.getDisplayName();
 		this.email = userData.getEmail();
 		this.state = userData.getState();
@@ -26,6 +28,10 @@ public class GenericUserResponse extends GenericResponse {
 		this.profilePageUrl = userData.getProfilePageUrl();
 	}
 	
+	
+	public Long getUserId() {
+		return userId;
+	}
 	
 	public String getDisplayName() {
 		return displayName;
