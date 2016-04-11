@@ -20,10 +20,18 @@
 					<h6 class="modal-fullscreen-heading">${ _strings.edit_account_heading }</h6>
 					<div class="row">
 						<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
-							<pratilipi-input disabled="{{ emailDisabled }}" label="${ _strings.user_email }" value="{{ email::input }}" ></pratilipi-input>
+							<pratilipi-input type="email" disabled="{{ emailDisabled }}" label="${ _strings.user_email }" placeholder="${ _strings.user_email_not_available }" value="{{ email::input }}" ></pratilipi-input>
 						</div>
 						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-							<iron-icon icon="{{ icon }}" style="margin-top: 24px; width: 28px; height: 28px; cursor: pointer;" on-click="editEmail"></iron-icon>
+							<iron-icon icon="{{ emailIcon }}" style="margin-top: 24px; width: 28px; height: 28px; cursor: pointer;" on-click="editEmail"></iron-icon>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+							<pratilipi-input type="tel" disabled="{{ phoneDisabled }}" label="${ _strings.user_phone }" placeholder="${ _strings.user_phone_not_available }" value="{{ phone::input }}" ></pratilipi-input>
+						</div>
+						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+							<iron-icon icon="{{ phoneIcon }}" style="margin-top: 24px; width: 28px; height: 28px; cursor: pointer;" on-click="editPhone"></iron-icon>
 						</div>
 					</div>
 					<div class="row">
@@ -62,42 +70,79 @@
 	
 			properties: {
 				user: { type: Object, observer: "_userChanged" },
+
 				emailDisabled: { type: Boolean, value: true },
-				icon: { type: String, value: "icons:create" },
-				email: { type: String, value: "Email Not Available!" }
+				emailIcon: { type: String, value: "icons:create" },
+				email: { type: String },
+
+				phoneDisabled: { type: Boolean, value: true },
+				phoneIcon: { type: String, value: "icons:create" },
+				phone: { type: String }
 			},
 			
 			_userChanged: function() {
-				this.set( "email", this.user.email );
+				if( this.user.email != null )
+					this.set( "email", this.user.email );
+				if( this.user.phone != null )
+					this.set( "phone", this.user.phone );
 			},
 			
-			_disableEdit: function() {
+			_disableEditEmail: function() {
 				this.set( 'emailDisabled', true );
-				this.set( 'icon', "icons:create" );
+				this.set( 'emailIcon', "icons:create" );
+			},
+			
+			_disableEditPhone: function() {
+				this.set( 'phoneDisabled', true );
+				this.set( 'phoneIcon', "icons:create" );
 			},
 			
 			editEmail: function() {
 				if( this.emailDisabled ) {
 					this.set( 'emailDisabled', false );
-					this.set( 'icon', "icons:save" );
+					this.set( 'emailIcon', "icons:save" );
 				} else {
 					if( this.email == this.user.email ) {
-						this._disableEdit();
+						this._disableEditEmail();
 						return;
 					}
 					// Make Api call
 					var ajaxPost = this.$.UserApi;
 					ajaxPost.params.userId = this.user.userId;
+					delete ajaxPost.params[ "phone" ];
 					ajaxPost.params.email = this.email;
 					ajaxPost.generateRequest();
 				}
 					
 			},
 			
+			editPhone: function() {
+				if( this.phoneDisabled ) {
+					this.set( 'phoneDisabled', false );
+					this.set( 'phoneIcon', "icons:save" );
+				} else {
+					if( this.phone == this.user.phone ) {
+						this._disableEditPhone();
+						return;
+					}
+					// Make Api call
+					var ajaxPost = this.$.UserApi;
+					ajaxPost.params.userId = this.user.userId;
+					delete ajaxPost.params[ "email" ];
+					if ( isNaN( this.phone ) || this.phone.length != 10 ) {
+						alert( "Invalid Phone Number. Please enter the 10-digit phone Number!" );
+						return;
+					}
+					ajaxPost.params.phone = this.phone;
+					ajaxPost.generateRequest();
+				}
+			},
+			
 			_apiResponse: function() {
 				var user = event.detail.response;
 				document.querySelector( 'pratilipi-user' ).updateUser( user );
-				this._disableEdit();
+				this._disableEditEmail();
+				this._disableEditPhone();
 			},
 			
 			_apiError: function() {
@@ -105,7 +150,8 @@
 					alert( event.detail.request.xhr.response.email != null ? event.detail.request.xhr.response.email : event.detail.request.xhr.response.message );
 				else
 					alert( "Some Error occured! Please try Again." );
-				this._disableEdit();
+				this._disableEditEmail();
+				this._disableEditPhone();
 			},
 			
 			open: function() {
@@ -115,6 +161,9 @@
 			},
 			
 			close: function() {
+				this._userChanged();
+				this._disableEditEmail();
+				this._disableEditPhone();
 				jQuery( "#pratilipiEditAccount" ).modal( 'hide' );	
 			},
 			

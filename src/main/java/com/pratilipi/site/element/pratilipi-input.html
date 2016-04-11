@@ -30,6 +30,7 @@
 					 id="pratilipiInput" 
 					 class="pratilipi-blue" 
 					 label="{{ label }}" 
+					 placeholder="{{ placeholder }}"
 					 value="{{ value::input }}"
 					 type="{{ type }}"
 					 disabled="{{ disabled }}"
@@ -51,6 +52,7 @@
 			
 			properties: {
 				label: { type: String },
+				placeholder: { type: String },
 				value: { type: String, notify: true },
 				disabled: { type: Boolean, value: false },
 				icon: { type: String, value: null },
