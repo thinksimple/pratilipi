@@ -29,13 +29,13 @@
 	</#list>
 
 <#else> <#-- User Doesn't have review -->
-	<#assign reviewcount = 0 >
+	<#assign hasReview = false >
 	<#if reviewList?has_content>
 		<#list reviewList as review>
 			<#include "../element/pratilipi-review.ftl">
 		</#list>
 	</#if>
-	<#if !reviewList?has_content || reviewcount eq 0>
+	<#if !hasReview>
 		<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
 			<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
 					src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.pratilipi_no_reviews }" />
