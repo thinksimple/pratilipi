@@ -138,6 +138,7 @@ public class UserDataUtil {
 		UserData userData = new UserData( user.getId() );
 		userData.setFacebookId( user.getFacebookId() );
 		userData.setEmail( user.getEmail() );
+		userData.setPhone( user.getPhone() );
 		userData.setState( user.getState() );
 		userData.setSignUpDate( user.getSignUpDate() );
 		
