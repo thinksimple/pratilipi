@@ -78,10 +78,12 @@ public class EventDataUtil {
 
 	
 	public static EventData createEventData( Event event ) {
-
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page eventPage = dataAccessor.getPage( PageType.EVENT, event.getId() );
-
+		return createEventData( event, eventPage );
+	}
+	
+	public static EventData createEventData( Event event, Page eventPage ) {
 		EventData eventData = new EventData();
 		eventData.setId( event.getId() );
 		eventData.setName( event.getName() );
@@ -89,12 +91,15 @@ public class EventDataUtil {
 		eventData.setLanguage( event.getLanguage() );
 		eventData.setDescription( event.getDescription() );
 		eventData.setPratilipiIdList( event.getPratilipiIdList() );
-		if( event.getPratilipiIdList() != null ) {
-			Map<Long,Page> map = dataAccessor.getPages( PageType.PRATILIPI, event.getPratilipiIdList() );
+		if( event.getPratilipiIdList() == null || event.getPratilipiIdList().size() == 0 ) {
+			eventData.setPratilipiUrlList( new ArrayList<String>( 0 ) );
+		} else {
+			Map<Long,Page> pratilipiPages = DataAccessorFactory.getDataAccessor()
+					.getPages( PageType.PRATILIPI, event.getPratilipiIdList() );
 			List<String> pratilipiUrlList = new ArrayList<>( event.getPratilipiIdList().size() );
 			for( Long pratilipiId : event.getPratilipiIdList() ) {
-				Page page = map.get( pratilipiId );
-				pratilipiUrlList.add( page.getUriAlias() == null ? page.getUri() : page.getUriAlias() );
+				Page pratilipiPage = pratilipiPages.get( pratilipiId );
+				pratilipiUrlList.add( pratilipiPage.getUriAlias() == null ? pratilipiPage.getUri() : pratilipiPage.getUriAlias() );
 			}
 			eventData.setPratilipiUrlList( pratilipiUrlList );
 		}
@@ -102,15 +107,22 @@ public class EventDataUtil {
 		eventData.setBannerImageUrl( createEventBannerUrl( event ) );
 		eventData.setAccessToUpdate( hasAccessToUpdateEventData( event, null ) );
 		return eventData;
-		
 	}
 	
 	public static List<EventData> createEventDataList( List<Event> eventList ) {
+		List<Long> eventIdList = new ArrayList<>();
+		for( Event event : eventList )
+			eventIdList.add( event.getId() );
+	
+		Map<Long, Page> eventPages = DataAccessorFactory.getDataAccessor()
+				.getPages( PageType.EVENT, eventIdList );
+		
 		List<EventData> eventDataList = new ArrayList<>();
 		for( Event event : eventList )
-			eventDataList.add( createEventData( event ) );
+			eventDataList.add( createEventData( event, eventPages.get( event.getId() ) ) );
 		return eventDataList;
 	}
+	
 	
 	public static List<EventData> getEventDataList( Language language ) {
 		List<Event> eventList = DataAccessorFactory
