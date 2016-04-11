@@ -13,7 +13,7 @@
 	</#if>				
 </div>
 
-
+<#assign hasReview = false >
 <#if ( userpratilipi?? ) && ( userpratilipi.reviewTitle?? || userpratilipi.review?? ) > <#-- User has review -->
 	<#-- Show user review on top iff userpratilipi.reviewState != "DELETED" && userpratilipi.reviewState != "BLOCKED" -->
 	<#if userpratilipi.reviewState != "DELETED" && userpratilipi.reviewState != "BLOCKED">
@@ -29,18 +29,17 @@
 	</#list>
 
 <#else> <#-- User Doesn't have review -->
-	<#assign hasReview = false >
 	<#if reviewList?has_content>
 		<#list reviewList as review>
 			<#include "../element/pratilipi-review.ftl">
 		</#list>
 	</#if>
-	<#if !hasReview>
-		<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
-			<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
-					src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.pratilipi_no_reviews }" />
-			<div class="text-center">${ _strings.pratilipi_no_reviews }</div>
-		</div>
-	</#if>
-		
+</#if>
+
+<#if !hasReview>
+	<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
+		<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
+				src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.pratilipi_no_reviews }" />
+		<div class="text-center">${ _strings.pratilipi_no_reviews }</div>
+	</div>
 </#if>
