@@ -18,7 +18,7 @@
 		paper-card.zero-results {
 			width: 100%; 
 			text-align: center; 
-			padding: 75px 15px; 
+			padding: 50px 15px; 
 			margin-bottom: 10px;
 		}
 		
@@ -29,14 +29,15 @@
 		
 		iron-icon.zero-results-icon {
 			color: #545454; 
-			width: 100px; 
-			height: 100px;
+			width: 64px; 
+			height: 64px;
 		}
 		
-		h3.zero-results-h3 {
+		h5.zero-results-h5 {
 			color: #545454; 
-			margin-top: 30px; 
+			font-size: 18px;
 			line-height: 32px;
+			margin-top: 24px;
 		}
 		
 		paper-spinner.pratilipi-spinner {
@@ -82,14 +83,14 @@
 		<template is="dom-if" if="[[ zeroSearchResults ]]">
 			<paper-card class="zero-results">
 				<iron-icon icon="icons:search" class="zero-results-icon"></iron-icon>
-				<h3 class="zero-results-h3">${ _strings.search_no_results_found }</h3>
+				<h5 class="zero-results-h5">${ _strings.search_no_results_found }</h5>
 			</paper-card>
 		</template>
 		
 		<template is="dom-if" if="[[ zeroAuthorBooks ]]">
 			<paper-card class="zero-results">
 				<iron-icon icon="icons:info-outline" class="zero-results-icon"></iron-icon>
-				<h3 class="zero-results-h3">${ _strings.author_no_contents_published }</h3>
+				<h5 class="zero-results-h5">${ _strings.author_no_contents_published }</h5>
 			</paper-card>
 		</template>
 		
