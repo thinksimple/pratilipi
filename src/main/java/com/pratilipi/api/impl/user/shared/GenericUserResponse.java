@@ -9,6 +9,7 @@ public class GenericUserResponse extends GenericResponse {
 	private Long userId;
 	private String displayName;
 	private String email;
+	private String phone;
 	private UserState state;
 
 	@Deprecated
@@ -22,6 +23,7 @@ public class GenericUserResponse extends GenericResponse {
 		this.userId = userData.getId();
 		this.displayName = userData.getDisplayName();
 		this.email = userData.getEmail();
+		this.phone = userData.getPhone();
 		this.state = userData.getState();
 		this.isGuest = userData.getState() == UserState.GUEST;
 		this.isEmailVerified = userData.getState() == UserState.ACTIVE;
@@ -39,6 +41,10 @@ public class GenericUserResponse extends GenericResponse {
 
 	public String getEmail() {
 		return email;
+	}
+	
+	public String getPhone() {
+		return phone;
 	}
 
 	public UserState getState() {
