@@ -60,6 +60,10 @@ public class GenericRequest {
 	public static final String ERR_AUTHOR_STATE_REQUIRED = "State is required.";
 	public static final String ERR_AUTHOR_STATE_INVALID	 = "Invalid State.";
 
+	public static final String ERR_BLOG_ID_REQUIRED			 = "Blog id is required.";
+	
+	public static final String ERR_BLOG_POST_STATE_REQUIRED = "State is required.";
+
 	
 	public GenericRequest() {}
 
