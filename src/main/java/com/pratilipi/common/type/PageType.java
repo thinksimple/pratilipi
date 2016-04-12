@@ -12,6 +12,9 @@ public enum PageType {
 	AUTHOR_DASHBOARD( null ),
 	
 	EVENT( "/event/" ),
+	
+	BLOG( "/blog/" ),
+	BLOG_POST( "/blogpost/" ),
 	;
 	
 	
