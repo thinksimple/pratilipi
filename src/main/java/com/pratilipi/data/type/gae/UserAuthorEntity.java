@@ -13,8 +13,6 @@ import com.pratilipi.data.type.UserAuthor;
 @Entity( name = "USER_AUTHOR" )
 public class UserAuthorEntity extends GenericOfyEntity implements UserAuthor {
 
-	// Intentionally Leaving all fields UnIndexed
-
 	@Id
 	private String USER_AUTHOR_ID;
 

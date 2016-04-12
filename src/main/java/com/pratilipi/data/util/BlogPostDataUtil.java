@@ -50,7 +50,7 @@ public class BlogPostDataUtil {
 
 	public static boolean hasAccessToUpdateBlogPostData( BlogPost blogPost, BlogPostData blogPostData ) {
 
-		Blog blog = DataAccessorFactory.getDataAccessor().getBlog( blogPostData.getBlogId() );
+		Blog blog = DataAccessorFactory.getDataAccessor().getBlog( blogPost.getBlogId() );
 		
 		// User with BLOG_POST_UPDATE access can update any Blog Post.
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();

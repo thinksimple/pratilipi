@@ -1,46 +1,42 @@
-package com.pratilipi.data.client;
+package com.pratilipi.api.impl.blogpost.shared;
 
 import java.util.Date;
 
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.BlogPostState;
+import com.pratilipi.data.client.BlogPostData;
 import com.pratilipi.data.type.User;
 
-public class BlogPostData {
+public class GenericBlogPostResponse extends GenericResponse {
 	
 	private Long blogPostId;
-	
 	private Long blogId;
-	private boolean hasBlogId;
-	
 	
 	private String title;
-	private boolean hasTitle;
-	
 	private String titleEn;
-	private boolean hasTitleEn;
-	
 	private String content;
-	private boolean hasContent;
-	
 	
 	private BlogPostState state;
-	private boolean hasState;
-	
 	private User createdBy;
-	
 	private Long creationDateMillis;
 	private Long lasUpdatedMillis;
 	
-	
 	private String pageUrl;
-	
 	private Boolean hasAccessToUpdate;
 
 	
-	public BlogPostData() {}
-	
-	public BlogPostData( Long id ) {
-		this.blogPostId = id;
+	public GenericBlogPostResponse( BlogPostData blogPostData ) {
+		this.blogPostId = blogPostData.getId();
+		this.blogId = blogPostData.getBlogId();
+		this.title = blogPostData.getTitle();
+		this.titleEn = blogPostData.getTitleEn();
+		this.content = blogPostData.getContent();
+		this.state = blogPostData.getState();
+		this.createdBy = blogPostData.getCreatedBy();
+		this.creationDateMillis = blogPostData.getCreationDate().getTime();
+		this.lasUpdatedMillis = blogPostData.getLastUpdated().getTime();
+		this.pageUrl = blogPostData.getPageUrl();
+		this.hasAccessToUpdate = blogPostData.hasAccessToUpdate();
 	}
 	
 	
@@ -58,13 +54,8 @@ public class BlogPostData {
 
 	public void setBlogId( Long blogId ) {
 		this.blogId = blogId;
-		this.hasBlogId = true;
 	}
 
-	public boolean hasBlogId() {
-		return hasBlogId;
-	}
-	
 	
 	public String getTitle() {
 		return title;
@@ -72,37 +63,22 @@ public class BlogPostData {
 
 	public void setTitle( String title ) {
 		this.title = title;
-		this.hasTitle = true;
 	}
 	
-	public boolean hasTitle() {
-		return hasTitle;
-	}
-
 	public String getTitleEn() {
 		return titleEn;
 	}
 
 	public void setTitleEn( String titleEn ) {
 		this.titleEn = titleEn;
-		this.hasTitleEn = true;
 	}
 	
-	public boolean hasTitleEn() {
-		return hasTitleEn;
-	}
-
 	public String getContent() {
 		return content;
 	}
 	
 	public void setContent( String content ) {
 		this.content = content;
-		this.hasContent = true;
-	}
-
-	public boolean hasContent() {
-		return hasContent;
 	}
 
 	
@@ -110,13 +86,8 @@ public class BlogPostData {
 		return state;
 	}
 	
-	public void setState( BlogPostState state ) {
+	public void setBlogPostState( BlogPostState state ) {
 		this.state = state;
-		this.hasState = true;
-	}
-	
-	public boolean hasState() {
-		return hasState;
 	}
 	
 	public User getCreatedBy() {
@@ -143,6 +114,7 @@ public class BlogPostData {
 		this.lasUpdatedMillis = lastUpdated.getTime();
 	}
 	
+	
 	public String getPageUrl() {
 		return pageUrl;
 	}
@@ -158,5 +130,5 @@ public class BlogPostData {
 	public void setAccessToUpdate( Boolean hasAccessToUpdate ) {
 		this.hasAccessToUpdate = hasAccessToUpdate;
 	}
-
+	
 }
