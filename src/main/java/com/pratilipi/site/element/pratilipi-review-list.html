@@ -201,7 +201,7 @@
 				if( this.reviewAvailable )
 					this.zeroReviewResults = false;
 				else {
-					for( var i = 0; i < this.reviewList; i ++ ) {
+					for( var i = 0; i < this.reviewList.length; i ++ ) {
 						if( ( this.reviewList[i].reviewTitle != null && this.reviewList[i].reviewTitle.trim() != "" )
 								||	( this.reviewList[i].review != null && this.reviewList[i].review.trim() != "" )	) {
 							this.zeroReviewResults = false;

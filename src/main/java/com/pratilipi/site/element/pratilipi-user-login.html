@@ -121,11 +121,17 @@
 			_handleAjaxPostError: function( event ) {
 				this.message = null;
 				jQuery( '#loginButton' ).prop( 'disabled', false );
-				if( event.detail.request.xhr.status == 400 ) {
-					this.message = event.detail.request.xhr.response.email != null ? event.detail.request.xhr.response.email : "Invalid Email!"; 
-					this.message = event.detail.request.xhr.response.message != null ? event.detail.request.xhr.response.message : "Invalid Credentials!";
+				if( event.detail.request.xhr.status == 400 || event.detail.request.xhr.status == 401 || event.detail.request.xhr.status == 500 ) {
+					if( event.detail.request.xhr.response.email != null )
+						this.message = event.detail.request.xhr.response.email;
+					else if( event.detail.request.xhr.response.password != null )
+						this.message = event.detail.request.xhr.response.password;
+					else if( event.detail.request.xhr.response.message != null )
+						this.message = event.detail.request.xhr.response.message;
+					else
+						this.message = "Invalid Credentials!";
 				} else {
-					if( event.detail.request.xhr.response !== null )
+					if( event.detail.request.xhr.response != null )
 						this.message = event.detail.request.xhr.response.message;
 					else
 						this.message = "Some exception occured at the server, please try again!";
