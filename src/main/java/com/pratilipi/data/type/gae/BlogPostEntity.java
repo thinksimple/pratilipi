@@ -1,15 +1,13 @@
 package com.pratilipi.data.type.gae;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.data.type.BlogPost;
 
 @Cache
@@ -26,6 +24,12 @@ public class BlogPostEntity extends GenericOfyEntity implements BlogPost {
 	private String TITLE_EN;
 
 	private String CONTENT;
+
+	@Index
+	private BlogPostState STATE;
+	
+	@Index
+	private Long CREATED_BY; // USER.id
 	
 	@Index
 	private Date CREATION_DATE;
@@ -59,6 +63,7 @@ public class BlogPostEntity extends GenericOfyEntity implements BlogPost {
 		return BLOG_ID;
 	}
 	
+	@Override
 	public void setBlogId( Long blogId ) {
 		this.BLOG_ID = blogId;
 	}
@@ -95,6 +100,25 @@ public class BlogPostEntity extends GenericOfyEntity implements BlogPost {
 		this.CONTENT = content;
 	}
 
+	@Override
+	public BlogPostState getState() {
+		return STATE;
+	}
+	
+	@Override
+	public void setState( BlogPostState state ) {
+		this.STATE = state;
+	}
+	
+	@Override
+	public Long getCreatedBy() {
+		return CREATED_BY;
+	}
+	
+	@Override
+	public void setCreatedBy( Long userId ) {
+		this.CREATED_BY = userId;
+	}
 	
 	@Override
 	public Date getCreationDate() {
