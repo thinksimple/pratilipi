@@ -23,7 +23,6 @@ import com.pratilipi.data.mock.AccessTokenMock;
 import com.pratilipi.data.mock.AppPropertyMock;
 import com.pratilipi.data.mock.AuthorMock;
 import com.pratilipi.data.mock.EventMock;
-import com.pratilipi.data.mock.PageMock;
 import com.pratilipi.data.mock.PratilipiMock;
 import com.pratilipi.data.mock.UserMock;
 import com.pratilipi.data.mock.UserPratilipiMock;
@@ -31,6 +30,8 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Blog;
+import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Navigation;
@@ -44,6 +45,8 @@ import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
+import com.pratilipi.data.type.gae.BlogEntity;
+import com.pratilipi.data.type.gae.BlogPostEntity;
 import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -463,6 +466,48 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return createOrUpdateAuthor( author );
 	}
 
+	
+	// BLOG Table
+	
+	@Override
+	public Blog newBlog() {
+		return new BlogEntity();
+	}
+
+	@Override
+	public Blog getBlog( Long id ) {
+		return null; // TODO: Implementation
+	}
+	
+	@Override
+	public Blog createOrUpdateBlog( Blog blog ) {
+		return blog; // TODO: Implementation
+	}
+	
+	
+	// BLOG_POST Table
+	
+	@Override
+	public BlogPost newBlogPost() {
+		return new BlogPostEntity();
+	}
+
+	@Override
+	public BlogPost getBlogPost( Long id ) {
+		return null; // TODO: Implementation
+	}
+	
+	@Override
+	public DataListCursorTuple<BlogPost> getBlogPostList( Long blogId, String cursor, Integer offset, Integer resultCount ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+	@Override
+	public BlogPost createOrUpdateBlogPost( BlogPost blogPost ) {
+		return blogPost; // TODO: Implementation
+	}
+	
 	
 	// EVENT Table
 	

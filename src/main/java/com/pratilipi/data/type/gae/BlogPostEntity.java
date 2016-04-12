@@ -29,7 +29,7 @@ public class BlogPostEntity extends GenericOfyEntity implements BlogPost {
 	private BlogPostState STATE;
 	
 	@Index
-	private Long CREATED_BY; // USER.id
+	private Long CREATED_BY; // USER.USER_ID
 	
 	@Index
 	private Date CREATION_DATE;

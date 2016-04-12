@@ -15,6 +15,8 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Blog;
+import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Navigation;
@@ -101,6 +103,18 @@ public interface DataAccessor {
 	List<Event> getEventList( Language language );
 	Event createOrUpdateEvent( Event event );
 
+
+	// BLOG Table
+	Blog newBlog();
+	Blog getBlog( Long id );
+	Blog createOrUpdateBlog( Blog blog );
+	
+	// BLOG_POST Table
+	BlogPost newBlogPost();
+	BlogPost getBlogPost( Long id );
+	DataListCursorTuple<BlogPost> getBlogPostList( Long blogId, String cursor, Integer offset, Integer resultCount );
+	BlogPost createOrUpdateBlogPost( BlogPost blogPost );
+	
 	
 	// USER_PRATILIPI Table
 	UserPratilipi newUserPratilipi();

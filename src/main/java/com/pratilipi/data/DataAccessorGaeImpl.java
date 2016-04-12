@@ -2,6 +2,7 @@ package com.pratilipi.data;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.appengine.api.datastore.Cursor;
@@ -28,6 +30,7 @@ import com.google.gson.JsonSyntaxException;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserReviewState;
@@ -40,6 +43,8 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Blog;
+import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Navigation;
@@ -53,6 +58,8 @@ import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
+import com.pratilipi.data.type.gae.BlogEntity;
+import com.pratilipi.data.type.gae.BlogPostEntity;
 import com.pratilipi.data.type.gae.CategoryEntity;
 import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.GenericOfyEntity;
@@ -572,12 +579,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			try {
 				
 				String fileName = CURATED_DATA_FOLDER + "/list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
-				File file = new File( DataAccessor.class.getResource( fileName ).toURI() );
-				LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
-				it.hasNext(); // Skipping the first line having title.
-				while( it.hasNext() ) {
+				InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
+				List<String> uriList = IOUtils.readLines( DataAccessor.class.getResource( fileName ).openStream(), "UTF-8" );
+				inputStream.close();
+
+				uriList.remove( 0 );
+				for( String uri : uriList ) {
 					
-					String uri = it.nextLine().trim();
+					uri = uri.trim();
 					if( uri.isEmpty() )
 						continue;
 					
@@ -599,9 +608,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 					}
 					
 				}
-				LineIterator.closeQuietly( it );
 				
-			} catch( URISyntaxException | NullPointerException | JsonSyntaxException | IOException e ) {
+			} catch( NullPointerException | IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch " + pratilipiFilter.getListName() + " list for " + pratilipiFilter.getLanguage() + ".", e );
 			}
 
@@ -763,7 +771,72 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public Event createOrUpdateEvent( Event event ) {
 		return createOrUpdateEntityOfy( (EventEntity) event );
 	}
+
 	
+	// BLOG Table
+	
+	@Override
+	public Blog newBlog() {
+		return new BlogEntity();
+	}
+	
+	@Override
+	public Blog getBlog( Long id ) {
+		return getEntityOfy( BlogEntity.class, id );
+	}
+	
+	@Override
+	public Blog createOrUpdateBlog( Blog blog ) {
+		return createOrUpdateEntityOfy( (BlogEntity) blog );
+	}
+
+	
+	// BLOG_POST Table
+	
+	@Override
+	public BlogPost newBlogPost() {
+		return new BlogPostEntity();
+	}
+	
+	@Override
+	public BlogPost getBlogPost( Long id ) {
+		return getEntityOfy( BlogPostEntity.class, id );
+	}
+	
+	@Override
+	public DataListCursorTuple<BlogPost> getBlogPostList(
+			Long blogId, String cursor, Integer offset, Integer resultCount ) {
+
+		com.googlecode.objectify.cmd.Query<BlogPostEntity> query
+				= ObjectifyService.ofy().load().type( BlogPostEntity.class );
+		
+		query.filter( "BLOG_ID", blogId );
+		query.filter( "STATE != ", BlogPostState.DELETED );
+		
+		if( cursor != null )
+			query.startAt( Cursor.fromWebSafeString( cursor ) );
+		
+		if( offset != null && offset > 0 )
+			query.offset( offset );
+		
+		if( resultCount != null && resultCount > 0 )
+			query.limit( resultCount );
+		
+		query.order( "-CREATION_DATE" );
+		
+		query.iterator().getCursor().toWebSafeString();
+		
+		return new DataListCursorTuple<BlogPost>(
+				new ArrayList<BlogPost>( query.list() ),
+				query.iterator().getCursor().toWebSafeString() );
+		
+	}
+	
+	@Override
+	public BlogPost createOrUpdateBlogPost( BlogPost blogPost ) {
+		return createOrUpdateEntityOfy( (BlogPostEntity) blogPost );
+	}
+
 	
 	// USER_PRATILIPI Table
 	

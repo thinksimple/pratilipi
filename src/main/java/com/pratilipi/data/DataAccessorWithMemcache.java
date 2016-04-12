@@ -21,6 +21,8 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Blog;
+import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Navigation;
@@ -649,6 +651,17 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public Event getEvent( Long id ) { return dataAccessor.getEvent( id ); }
 	@Override public List<Event> getEventList( Language language ) { return dataAccessor.getEventList( language ); }
 	@Override public Event createOrUpdateEvent( Event event ) { return dataAccessor.createOrUpdateEvent( event ); }
+	
+	// BLOG Table - Counting on Objectify Global and Session cache
+	@Override public Blog newBlog() { return dataAccessor.newBlog(); }
+	@Override public Blog getBlog( Long id ) { return dataAccessor.getBlog( id ); }
+	@Override public Blog createOrUpdateBlog( Blog blog ) { return dataAccessor.createOrUpdateBlog( blog ); }
+
+	// BLOG_POST Table - Counting on Objectify Global and Session cache
+	@Override public BlogPost newBlogPost() { return dataAccessor.newBlogPost(); }
+	@Override public BlogPost getBlogPost( Long id ) { return dataAccessor.getBlogPost( id ); }
+	@Override public DataListCursorTuple<BlogPost> getBlogPostList( Long blogId, String cursor, Integer offset, Integer resultCount ) { return dataAccessor.getBlogPostList( blogId, cursor, offset, resultCount ); }
+	@Override public BlogPost createOrUpdateBlogPost( BlogPost blogPost ) { return dataAccessor.createOrUpdateBlogPost( blogPost ); }
 	
 	
 	// USER_PRATILIPI Table
