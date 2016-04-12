@@ -580,10 +580,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				
 				String fileName = CURATED_DATA_FOLDER + "/list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
 				InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
-				List<String> uriList = IOUtils.readLines( DataAccessor.class.getResource( fileName ).openStream(), "UTF-8" );
+				List<String> uriList = IOUtils.readLines( inputStream, "UTF-8" );
 				inputStream.close();
 
-				uriList.remove( 0 );
+				uriList.remove( 0 ); // Removing the first line having title.
 				for( String uri : uriList ) {
 					
 					uri = uri.trim();
