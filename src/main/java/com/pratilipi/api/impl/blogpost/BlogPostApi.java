@@ -9,6 +9,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.data.client.BlogPostData;
 import com.pratilipi.data.util.BlogPostDataUtil;
+import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/blogpost" )
@@ -23,6 +24,7 @@ public class BlogPostApi extends GenericApi {
 		blogPostData.setTitle( request.getTitle() );
 		blogPostData.setTitleEn( request.getTitleEn() );
 		blogPostData.setContent( request.getContent() );
+		blogPostData.setLanguage( UxModeFilter.getFilterLanguage() );
 		blogPostData.setState( request.getState() );
 		
 		blogPostData = BlogPostDataUtil.saveBlogPostData( blogPostData );

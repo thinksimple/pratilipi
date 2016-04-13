@@ -14,7 +14,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.BlogPostState;
-import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.UriAliasUtil;
@@ -38,16 +37,16 @@ public class BlogPostDataUtil {
 			Logger.getLogger( BlogPostDataUtil.class.getName() );
 
 
-	public static boolean hasAccessToListBlogPostData( Language language, BlogPostState blogPostState ) {
+	public static boolean hasAccessToListBlogPostData( BlogPostFilter blogPostFilter ) {
 		
 		// Case 1: User can list PUBLISHED BlogPosts.
-		if( blogPostState == BlogPostState.PUBLISHED )
+		if( blogPostFilter.getState() == BlogPostState.PUBLISHED )
 			return true;
 
 		
 		// Case 2: User with BLOG_POST_LIST access can list BlogPosts in any State.
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), language, AccessType.BLOG_POST_LIST ) )
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), blogPostFilter.getLanguage(), AccessType.BLOG_POST_LIST ) )
 			return true;
 
 		
