@@ -812,7 +812,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		com.googlecode.objectify.cmd.Query<BlogPostEntity> query
 				= ObjectifyService.ofy().load().type( BlogPostEntity.class );
 		
-		query.filter( "BLOG_ID", blogId );
+		query = query.filter( "BLOG_ID", blogId );
 		query.filter( "STATE != ", BlogPostState.DELETED );
 		
 		if( cursor != null )
