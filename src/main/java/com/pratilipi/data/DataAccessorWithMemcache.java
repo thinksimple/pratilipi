@@ -99,6 +99,8 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	@Override
 	public User getUser( Long id ) {
+		if( id == null )
+			return null;
 		User user = memcache.get( PREFIX_USER + id );
 		if( user == null ) {
 			user = dataAccessor.getUser( id );
