@@ -48,17 +48,16 @@
 </script>
 <script>
 	function processContentTinyMCE( content ) {
-		<#-- 
+		content = content.replace( /&nbsp;/g, " " );
 		content = content.replace( /style=\"text-align: left;\"/g, "TEXT-LEFT" );
 		content = content.replace( /style=\"text-align: right;\"/g, "TEXT-RIGHT" );
 		content = content.replace( /style=\"text-align: center;\"/g, "TEXT-CENTER" );
 		content = content.replace( /style=\"text-align: justify;\"/g, "TEXT-JUSTIFY" );
-		content = content.replace( /(style=("|\Z)(.*?)("|\Z))|(class=("|\Z)(.*?)("|\Z))|<style>.*?<\/style>/g, "" );
+		content = content.replace( /(style=("|\Z)(.*?)("|\Z))|(class=("|\Z)(.*?)("|\Z))|<style>.*?<\/style>|<span.*?>|<\/span>/g, "" );
 		content = content.replace( /TEXT-LEFT/g,"style=\"text-align: left;\"" );
 		content = content.replace( /TEXT-RIGHT/g,"style=\"text-align: right;\"" );
 		content = content.replace( /TEXT-CENTER/g,"style=\"text-align: center;\"" );
 		content = content.replace( /TEXT-JUSTIFY/g,"style=\"text-align: justify;\"" );
-		-->
 		content = JSON.stringify( content );
  		content = content.substring( 1, content.length - 1 );
 		return content;
