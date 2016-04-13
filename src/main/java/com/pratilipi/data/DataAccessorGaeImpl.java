@@ -808,7 +808,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public DataListCursorTuple<BlogPost> getBlogPostList(
-			BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount ) {
+			BlogPostFilter blogPostFilter, String cursorStr, Integer offset, Integer resultCount ) {
 
 		com.googlecode.objectify.cmd.Query<BlogPostEntity> query
 				= ObjectifyService.ofy().load().type( BlogPostEntity.class );
@@ -826,8 +826,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			query = query.order( "STATE" );
 		}
 		
-		if( cursor != null )
-			query = query.startAt( Cursor.fromWebSafeString( cursor ) );
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
 		
 		if( offset != null && offset > 0 )
 			query = query.offset( offset );
@@ -837,11 +837,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		query = query.order( "-CREATION_DATE" );
 		
-		cursor = query.iterator().getCursor().toWebSafeString();
+		Cursor cursor = query.iterator().getCursor();
 		
 		return new DataListCursorTuple<BlogPost>(
 				new ArrayList<BlogPost>( query.list() ),
-				cursor );
+				cursor == null ? null : cursor.toWebSafeString() );
 		
 	}
 	
