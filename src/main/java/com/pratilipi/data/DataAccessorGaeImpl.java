@@ -814,7 +814,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				= ObjectifyService.ofy().load().type( BlogPostEntity.class );
 		
 		if( blogPostFilter.getBlogId() != null )
-			query.filter( "BLOG_ID", blogPostFilter.getBlogId() );
+			query = query.filter( "BLOG_ID", blogPostFilter.getBlogId() );
 		
 		if( blogPostFilter.getLanguage() != null )
 			query.filter( "LANGUAGE", blogPostFilter.getLanguage() );
