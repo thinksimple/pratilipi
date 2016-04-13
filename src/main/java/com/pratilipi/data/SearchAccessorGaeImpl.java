@@ -186,7 +186,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 		for( ScoredDocument document : result )
 			pratilipiIdList.add( Long.parseLong( document.getOnlyField( "docId" ).getAtom() ) );
 		
-		Cursor cursor = result.getCursor();
+		Cursor cursor = resultCount == null || pratilipiIdList.size() < resultCount ? null : result.getCursor();
 		
 		return new DataListCursorTuple<Long>(
 				pratilipiIdList,
@@ -334,7 +334,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 		for( ScoredDocument document : result )
 			authorIdList.add( Long.parseLong( document.getOnlyField( "docId" ).getAtom() ) );
 		
-		Cursor cursor = result.getCursor();
+		Cursor cursor = resultCount == null || authorIdList.size() < resultCount ? null : result.getCursor();
 		
 		return new DataListCursorTuple<Long>(
 				authorIdList,

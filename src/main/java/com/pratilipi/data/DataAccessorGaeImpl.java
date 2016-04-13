@@ -616,7 +616,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				logger.log( Level.SEVERE, "Failed to fetch " + pratilipiFilter.getListName() + " list for " + pratilipiFilter.getLanguage() + ".", e );
 			}
 
-			return new DataListCursorTuple<T>( responseList, startIndex + responseList.size() + "", (long) numberFound );
+			cursorStr = resultCount == null || responseList.size() < resultCount ? null : startIndex + responseList.size() + "";
+			
+			return new DataListCursorTuple<T>( responseList, cursorStr, (long) numberFound );
 			
 		}
 		
