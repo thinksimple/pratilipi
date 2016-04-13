@@ -28,7 +28,7 @@ public class BlogPostData {
 	private UserData createdBy;
 	
 	private Long creationDateMillis;
-	private Long lasUpdatedMillis;
+	private Long lastUpdatedMillis;
 	
 	
 	private String pageUrl;
@@ -135,11 +135,11 @@ public class BlogPostData {
 	}
 	
 	public Date getLastUpdated() {
-		return new Date( lasUpdatedMillis );
+		return new Date( lastUpdatedMillis );
 	}
 	
 	public void setLastUpdated( Date lastUpdated ) {
-		this.lasUpdatedMillis = lastUpdated.getTime();
+		this.lastUpdatedMillis = lastUpdated.getTime();
 	}
 	
 	public String getPageUrl() {

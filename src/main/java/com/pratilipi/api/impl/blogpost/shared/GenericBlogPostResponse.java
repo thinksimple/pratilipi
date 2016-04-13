@@ -39,7 +39,7 @@ public class GenericBlogPostResponse extends GenericResponse {
 	private BlogPostState state;
 	private User createdBy;
 	private Long creationDateMillis;
-	private Long lasUpdatedMillis;
+	private Long lastUpdatedMillis;
 	
 	private String pageUrl;
 	private Boolean hasAccessToUpdate;
@@ -53,14 +53,16 @@ public class GenericBlogPostResponse extends GenericResponse {
 		this.content = blogPostData.getContent();
 		this.state = blogPostData.getState();
 		
-		User user = new User();
-		user.displayName = blogPostData.getCreatedBy().getDisplayName();
-		user.profilePageUrl = blogPostData.getCreatedBy().getProfilePageUrl();
-		user.profileImageUrl = blogPostData.getCreatedBy().getProfileImageUrl();
-		this.createdBy = user;
+		if( blogPostData.getCreatedBy() != null ) {
+			User user = new User();
+			user.displayName = blogPostData.getCreatedBy().getDisplayName();
+			user.profilePageUrl = blogPostData.getCreatedBy().getProfilePageUrl();
+			user.profileImageUrl = blogPostData.getCreatedBy().getProfileImageUrl();
+			this.createdBy = user;
+		}
 		
 		this.creationDateMillis = blogPostData.getCreationDate().getTime();
-		this.lasUpdatedMillis = blogPostData.getLastUpdated().getTime();
+		this.lastUpdatedMillis = blogPostData.getLastUpdated().getTime();
 		this.pageUrl = blogPostData.getPageUrl();
 		this.hasAccessToUpdate = blogPostData.hasAccessToUpdate();
 	}
@@ -133,11 +135,11 @@ public class GenericBlogPostResponse extends GenericResponse {
 	}
 	
 	public Date getLastUpdated() {
-		return new Date( lasUpdatedMillis );
+		return new Date( lastUpdatedMillis );
 	}
 	
 	public void setLastUpdated( Date lastUpdated ) {
-		this.lasUpdatedMillis = lastUpdated.getTime();
+		this.lastUpdatedMillis = lastUpdated.getTime();
 	}
 	
 	

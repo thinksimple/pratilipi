@@ -79,8 +79,10 @@ public class BlogPostDataUtil {
 		blogPostData.setState( blogPost.getState() );
 		
 		User user = DataAccessorFactory.getDataAccessor().getUser( blogPost.getCreatedBy() );
-		UserData userData = UserDataUtil.createUserData( user );
-		blogPostData.setCreatedBy( userData );
+		if( user != null ) {
+			UserData userData = UserDataUtil.createUserData( user );
+			blogPostData.setCreatedBy( userData );
+		}
 		
 		blogPostData.setCreationDate( blogPost.getCreationDate() );
 		blogPostData.setLastUpdated( blogPost.getLastUpdated() );
@@ -153,6 +155,8 @@ public class BlogPostDataUtil {
 		if( isNew ) {
 			blogPost.setCreatedBy( AccessTokenFilter.getAccessToken().getUserId() );
 			blogPost.setCreationDate( new Date() );
+		} else if( blogPost.getCreatedBy() == null ) {
+			blogPost.setCreatedBy( AccessTokenFilter.getAccessToken().getUserId() );
 		}
 		blogPost.setLastUpdated( new Date() );
 		
