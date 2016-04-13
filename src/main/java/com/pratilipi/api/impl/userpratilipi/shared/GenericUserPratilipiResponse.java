@@ -31,6 +31,8 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 		userPratilipiId = userPratilipiData.getId();
 		userName = userPratilipiData.getUserName();
 		userImageUrl = userPratilipiData.getUserImageUrl();
+		userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
+		
 		pratilipiId = userPratilipiData.getPratilipiId();
 		
 		rating = userPratilipiData.getRating();

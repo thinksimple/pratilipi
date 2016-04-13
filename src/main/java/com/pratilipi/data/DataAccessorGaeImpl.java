@@ -90,6 +90,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	static {
 		ObjectifyService.register( EventEntity.class );
+		ObjectifyService.register( BlogEntity.class );
+		ObjectifyService.register( BlogPostEntity.class );
 		ObjectifyService.register( UserAuthorEntity.class );
 	}
 	

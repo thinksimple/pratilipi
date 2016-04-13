@@ -5,9 +5,12 @@ import com.pratilipi.api.GenericService;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorImageApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
+import com.pratilipi.api.impl.blogpost.BlogPostApi;
+import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventBannerApi;
 import com.pratilipi.api.impl.event.EventListApi;
+import com.pratilipi.api.impl.init.InitApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
@@ -31,6 +34,8 @@ public class ApiService extends GenericService {
 	
 	static {
 		
+		ApiRegistry.register( InitApi.class );						// *.pratilipi.com
+		
 		ApiRegistry.register( UserLoginApi.class );					// *.pratilipi.com
 		ApiRegistry.register( UserLoginFacebookApi.class );			// *.pratilipi.com
 		ApiRegistry.register( UserEmailApi.class );					// *.pratilipi.com
@@ -51,6 +56,9 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( EventApi.class );						// *.pratilipi.com
 		ApiRegistry.register( EventListApi.class );					// *.pratilipi.com
 		ApiRegistry.register( EventBannerApi.class );				// *.pratilipi.com
+		
+		ApiRegistry.register( BlogPostApi.class );					// *.pratilipi.com
+		ApiRegistry.register( BlogPostListApi.class );				// *.pratilipi.com
 		
 		ApiRegistry.register( UserApi.class );						// *.pratilipi.com
 		ApiRegistry.register( UserPratilipiApi.class );				// *.pratilipi.com

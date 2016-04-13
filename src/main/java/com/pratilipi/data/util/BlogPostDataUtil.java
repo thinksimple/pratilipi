@@ -202,14 +202,14 @@ public class BlogPostDataUtil {
 		if( isNew ) {
 			blogPostPage = dataAccessor.newPage();
 			blogPostPage.setType( PageType.BLOG_POST );
-			blogPostPage.setUri( PageType.BLOG_POST.getUrlPrefix() + blogPost.getBlogId() );
-			blogPostPage.setPrimaryContentId( blogPost.getBlogId() );
+			blogPostPage.setUri( PageType.BLOG_POST.getUrlPrefix() + blogPost.getId() );
+			blogPostPage.setPrimaryContentId( blogPost.getId() );
 			blogPostPage.setCreationDate( new Date() );
 		}
 		
 		String uriAlias = UriAliasUtil.generateUriAlias(
 				blogPostPage.getUriAlias(),
-				blogPage.getUriAlias(),
+				blogPage.getUriAlias() + "/",
 				blogPost.getTitleEn() == null ? blogPost.getTitle() : blogPost.getTitleEn() );
 		
 		if( isNew && uriAlias == null ) {

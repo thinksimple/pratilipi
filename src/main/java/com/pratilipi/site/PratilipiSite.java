@@ -23,6 +23,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.pratilipi.api.impl.blogpost.shared.GenericBlogPostResponse;
 import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
@@ -47,17 +48,20 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.AuthorData;
+import com.pratilipi.data.client.BlogPostData;
 import com.pratilipi.data.client.EventData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserAuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.AuthorDataUtil;
+import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.UserAuthorDataUtil;
@@ -167,6 +171,10 @@ public class PratilipiSite extends HttpServlet {
 			} else if( page != null && page.getType() == PageType.EVENT ) {
 				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
+			
+			} else if( page != null && page.getType() == PageType.BLOG_POST ) {
+				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
+				templateName = templateFilePrefix + ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.READ ) {
 				if( !basicMode ) {
@@ -659,6 +667,28 @@ public class PratilipiSite extends HttpServlet {
 		} else {
 			dataModel.put( "eventJson", gson.toJson( eventResponse ) );
 			dataModel.put( "pratilipiListJson", gson.toJson( toListResponseObject( pratilipiDataList ) ) );
+		}
+		return dataModel;
+		
+	}
+	
+	public Map<String, Object> createDataModelForBlogPostPage( Long blogId, boolean basicMode )
+			throws InsufficientAccessException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		BlogPost event = dataAccessor.getBlogPost( blogId );
+		BlogPostData eventData = BlogPostDataUtil.createBlogPostData( event );
+
+		Gson gson = new Gson();
+		
+		GenericBlogPostResponse eventResponse = new GenericBlogPostResponse( eventData );
+		
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", createPageTitle( eventData.getTitle(), eventData.getTitleEn() ) );
+		if( basicMode ) {
+			dataModel.put( "blogPost", eventData );
+		} else {
+			dataModel.put( "blogPostJson", gson.toJson( eventResponse ) );
 		}
 		return dataModel;
 		
