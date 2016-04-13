@@ -242,7 +242,7 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				
 		if( keywords != null && ! keywords.isEmpty() )
 			docBuilder.addField( Field.newBuilder().setName( "keywords" ).setText(
-					keywords.length() > 524287 ? keywords.substring( 0, 524287 ) : keywords
+					keywords.length() > 262144 ? keywords.substring( 0, 262144 ) : keywords // 1048576/4 = 262144
 			) );
 				
 				// 4x weightage to PratilipiType
