@@ -49,6 +49,7 @@
 <script>
 	function processContentTinyMCE( content ) {
 		content = content.replace( /&nbsp;/g, " " );
+		<#--
 		content = content.replace( /style=\"text-align: left;\"/g, "TEXT-LEFT" );
 		content = content.replace( /style=\"text-align: right;\"/g, "TEXT-RIGHT" );
 		content = content.replace( /style=\"text-align: center;\"/g, "TEXT-CENTER" );
@@ -58,8 +59,19 @@
 		content = content.replace( /TEXT-RIGHT/g,"style=\"text-align: right;\"" );
 		content = content.replace( /TEXT-CENTER/g,"style=\"text-align: center;\"" );
 		content = content.replace( /TEXT-JUSTIFY/g,"style=\"text-align: justify;\"" );
+		-->
 		content = JSON.stringify( content );
  		content = content.substring( 1, content.length - 1 );
 		return content;
 	}
 </script>
+<#if lang=="gu">
+	<script type="text/javascript" id="inspectletjs">
+	window.__insp = window.__insp || [];
+	__insp.push(['wid', 497579642]);
+	(function() {
+	function ldinsp(){if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
+	setTimeout(ldinsp, 500); document.readyState != "complete" ? (window.attachEvent ? window.attachEvent('onload', ldinsp) : window.addEventListener('load', ldinsp, false)) : ldinsp();
+	})();
+	</script>
+</#if>
