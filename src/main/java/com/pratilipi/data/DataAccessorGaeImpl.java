@@ -817,25 +817,23 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			query = query.filter( "BLOG_ID", blogPostFilter.getBlogId() );
 		
 		if( blogPostFilter.getLanguage() != null )
-			query.filter( "LANGUAGE", blogPostFilter.getLanguage() );
+			query = query.filter( "LANGUAGE", blogPostFilter.getLanguage() );
 		
 		if( blogPostFilter.getState() != null )
-			query.filter( "STATE", blogPostFilter.getState() );
+			query = query.filter( "STATE", blogPostFilter.getState() );
 		else
-			query.filter( "STATE != ", BlogPostState.DELETED );
+			query = query.filter( "STATE != ", BlogPostState.DELETED );
 		
 		if( cursor != null )
-			query.startAt( Cursor.fromWebSafeString( cursor ) );
+			query = query.startAt( Cursor.fromWebSafeString( cursor ) );
 		
 		if( offset != null && offset > 0 )
-			query.offset( offset );
+			query = query.offset( offset );
 		
 		if( resultCount != null && resultCount > 0 )
-			query.limit( resultCount );
+			query = query.limit( resultCount );
 		
-		query.order( "-CREATION_DATE" );
-		
-		query.iterator().getCursor().toWebSafeString();
+		query = query.order( "-CREATION_DATE" );
 		
 		return new DataListCursorTuple<BlogPost>(
 				new ArrayList<BlogPost>( query.list() ),
