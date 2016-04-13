@@ -819,10 +819,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( blogPostFilter.getLanguage() != null )
 			query = query.filter( "LANGUAGE", blogPostFilter.getLanguage() );
 		
-		if( blogPostFilter.getState() != null )
+		if( blogPostFilter.getState() != null ) {
 			query = query.filter( "STATE", blogPostFilter.getState() );
-		else
+		} else {
 			query = query.filter( "STATE != ", BlogPostState.DELETED );
+			query = query.order( "STATE" );
+		}
 		
 		if( cursor != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursor ) );
