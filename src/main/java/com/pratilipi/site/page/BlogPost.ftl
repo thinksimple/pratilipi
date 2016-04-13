@@ -14,11 +14,8 @@
 		<pratilipi-blog-page 
 			user-data='${ userJson }'
 			blog='${ blogPostJson }'
-			pratilipi-list='${ pratilipiListJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'></pratilipi-blog-page>
-	
     </body>
-
 
 </html>
