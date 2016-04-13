@@ -837,9 +837,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		query = query.order( "-CREATION_DATE" );
 		
+		cursor = query.iterator().getCursor().toWebSafeString();
+		
 		return new DataListCursorTuple<BlogPost>(
 				new ArrayList<BlogPost>( query.list() ),
-				query.iterator().getCursor().toWebSafeString() );
+				cursor );
 		
 	}
 	
