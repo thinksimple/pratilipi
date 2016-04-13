@@ -92,6 +92,7 @@ rating_rating				= Rating
 rating_ratings				= Ratings
 rating_rate_this			= Rate This !
 rating_your_rating			= Your Rating
+rating_be_first_one			= Be the first one to rate it!
 
 rating_1_star				= Poor
 rating_2_star				= Fair
@@ -163,6 +164,9 @@ user_new_password			= New Password
 
 user_full_name				= Full Name
 user_email					= Email
+user_email_not_available	= Email Not Available!
+user_phone					= Phone
+user_phone_not_available	= Phone Number Not Available!
 user_password				= Password
 user_confirm_password		= Confirm Password
 
@@ -172,6 +176,7 @@ user_my_account				= My Account
 user_is_new					= New?
 user_is_registered			= Already a Member?
 user_email_verification		= Email Verification
+user_require_access			= You need to log in to perform this action!
 
 
 
