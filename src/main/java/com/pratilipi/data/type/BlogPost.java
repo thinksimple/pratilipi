@@ -3,6 +3,7 @@ package com.pratilipi.data.type;
 import java.util.Date;
 
 import com.pratilipi.common.type.BlogPostState;
+import com.pratilipi.common.type.Language;
 
 public interface BlogPost {
 
@@ -24,6 +25,10 @@ public interface BlogPost {
 	String getContent();
 
 	void setContent( String content );
+
+	Language getLanguage();
+	
+	void setLanguage( Language language );
 
 	BlogPostState getState();
 	

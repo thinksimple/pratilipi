@@ -15,6 +15,7 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
@@ -660,7 +661,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	// BLOG_POST Table - Counting on Objectify Global and Session cache
 	@Override public BlogPost newBlogPost() { return dataAccessor.newBlogPost(); }
 	@Override public BlogPost getBlogPost( Long id ) { return dataAccessor.getBlogPost( id ); }
-	@Override public DataListCursorTuple<BlogPost> getBlogPostList( Long blogId, String cursor, Integer offset, Integer resultCount ) { return dataAccessor.getBlogPostList( blogId, cursor, offset, resultCount ); }
+	@Override public DataListCursorTuple<BlogPost> getBlogPostList( BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount ) { return dataAccessor.getBlogPostList( blogPostFilter, cursor, offset, resultCount ); }
 	@Override public BlogPost createOrUpdateBlogPost( BlogPost blogPost ) { return dataAccessor.createOrUpdateBlogPost( blogPost ); }
 	
 	

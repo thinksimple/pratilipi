@@ -9,6 +9,7 @@ import javax.jdo.PersistenceManager;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
@@ -112,7 +113,7 @@ public interface DataAccessor {
 	// BLOG_POST Table
 	BlogPost newBlogPost();
 	BlogPost getBlogPost( Long id );
-	DataListCursorTuple<BlogPost> getBlogPostList( Long blogId, String cursor, Integer offset, Integer resultCount );
+	DataListCursorTuple<BlogPost> getBlogPostList( BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount );
 	BlogPost createOrUpdateBlogPost( BlogPost blogPost );
 	
 	

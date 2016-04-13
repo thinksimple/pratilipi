@@ -2,8 +2,6 @@ package com.pratilipi.data.type;
 
 import java.util.Date;
 
-import com.pratilipi.common.type.Language;
-
 public interface Blog {
 
 	Long getId();
@@ -12,14 +10,6 @@ public interface Blog {
 	String getTitle();
 	
 	void setTitle( String title );
-	
-	String getTitleEn();
-	
-	void setTitleEn( String titleEn );
-	
-	Language getLanguage();
-	
-	void setLanguage( Language language );
 	
 	
 	Date getCreationDate();

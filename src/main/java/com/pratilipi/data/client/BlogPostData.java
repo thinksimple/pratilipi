@@ -3,6 +3,7 @@ package com.pratilipi.data.client;
 import java.util.Date;
 
 import com.pratilipi.common.type.BlogPostState;
+import com.pratilipi.common.type.Language;
 
 public class BlogPostData {
 	
@@ -21,7 +22,9 @@ public class BlogPostData {
 	private String content;
 	private boolean hasContent;
 	
-	
+	private Language language;
+	private boolean hasLanguage;
+
 	private BlogPostState state;
 	private boolean hasState;
 	
@@ -104,6 +107,18 @@ public class BlogPostData {
 		return hasContent;
 	}
 
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage( Language language ) {
+		this.language = language;
+		this.hasLanguage = true;
+	}
+	
+	public boolean hasLanguage() {
+		return hasLanguage;
+	}
 	
 	public BlogPostState getState() {
 		return state;

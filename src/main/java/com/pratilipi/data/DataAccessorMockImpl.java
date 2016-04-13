@@ -17,6 +17,7 @@ import javax.jdo.PersistenceManager;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.mock.AccessTokenMock;
@@ -498,7 +499,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public DataListCursorTuple<BlogPost> getBlogPostList( Long blogId, String cursor, Integer offset, Integer resultCount ) {
+	public DataListCursorTuple<BlogPost> getBlogPostList( BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount ) {
 		// TODO: Implementation
 		return null;
 	}

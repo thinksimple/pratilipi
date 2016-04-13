@@ -20,6 +20,7 @@ public enum AccessType {
 	EVENT_ADD	( "Add Event" ),
 	EVENT_UPDATE( "Update Event" ),
 
+	BLOG_POST_LIST	( "List BlogPost" ),
 	BLOG_POST_ADD	( "Add BlogPost" ),
 	BLOG_POST_UPDATE( "Update BlogPost" ),
 	;

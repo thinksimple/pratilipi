@@ -36,6 +36,7 @@ import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
@@ -807,13 +808,21 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public DataListCursorTuple<BlogPost> getBlogPostList(
-			Long blogId, String cursor, Integer offset, Integer resultCount ) {
+			BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount ) {
 
 		com.googlecode.objectify.cmd.Query<BlogPostEntity> query
 				= ObjectifyService.ofy().load().type( BlogPostEntity.class );
 		
-		query = query.filter( "BLOG_ID", blogId );
-		query.filter( "STATE != ", BlogPostState.DELETED );
+		if( blogPostFilter.getBlogId() == null )
+			query.filter( "BLOG_ID", blogPostFilter.getBlogId() );
+		
+		if( blogPostFilter.getLanguage() == null )
+			query.filter( "LANGUAGE", blogPostFilter.getLanguage() );
+		
+		if( blogPostFilter.getState() != null )
+			query.filter( "STATE", blogPostFilter.getState() );
+		else
+			query.filter( "STATE != ", BlogPostState.DELETED );
 		
 		if( cursor != null )
 			query.startAt( Cursor.fromWebSafeString( cursor ) );

@@ -7,7 +7,6 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.Blog;
 
 @Cache
@@ -18,10 +17,6 @@ public class BlogEntity extends GenericOfyEntity implements Blog {
 	private Long BLOG_ID;
 
 	private String TITLE;
-	private String TITLE_EN;
-
-	@Index
-	private Language LANGUAGE;
 
 	@Index
 	private Date CREATION_DATE;
@@ -62,27 +57,7 @@ public class BlogEntity extends GenericOfyEntity implements Blog {
 		this.TITLE = title;
 	}
 
-	@Override
-	public String getTitleEn() {
-		return TITLE_EN;
-	}
 
-	@Override
-	public void setTitleEn( String titleEn ) {
-		this.TITLE_EN = titleEn;
-	}
-
-	@Override
-	public Language getLanguage() {
-		return LANGUAGE;
-	}
-
-	@Override
-	public void setLanguage( Language language ) {
-		this.LANGUAGE = language;
-	}
-
-	
 	@Override
 	public Date getCreationDate() {
 		return CREATION_DATE;

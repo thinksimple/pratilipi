@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.pratilipi.common.type.BlogPostState;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.BlogPost;
 
 @Cache
@@ -24,6 +25,9 @@ public class BlogPostEntity extends GenericOfyEntity implements BlogPost {
 	private String TITLE_EN;
 
 	private String CONTENT;
+
+	@Index
+	private Language LANGUAGE;
 
 	@Index
 	private BlogPostState STATE;
@@ -98,6 +102,16 @@ public class BlogPostEntity extends GenericOfyEntity implements BlogPost {
 	@Override
 	public void setContent( String content ) {
 		this.CONTENT = content;
+	}
+
+	@Override
+	public Language getLanguage() {
+		return LANGUAGE;
+	}
+
+	@Override
+	public void setLanguage( Language language ) {
+		this.LANGUAGE = language;
 	}
 
 	@Override

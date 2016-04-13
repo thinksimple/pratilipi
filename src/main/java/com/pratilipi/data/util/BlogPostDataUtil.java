@@ -14,7 +14,9 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.BlogPostState;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.UriAliasUtil;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -24,7 +26,6 @@ import com.pratilipi.data.client.BlogPostData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
-import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.User;
@@ -37,13 +38,28 @@ public class BlogPostDataUtil {
 			Logger.getLogger( BlogPostDataUtil.class.getName() );
 
 
-	public static boolean hasAccessToAddBlogPostData( BlogPostData blogPostData ) {
+	public static boolean hasAccessToListBlogPostData( Language language, BlogPostState blogPostState ) {
 		
-		Blog blog = DataAccessorFactory.getDataAccessor().getBlog( blogPostData.getBlogId() );
+		// Case 1: User can list PUBLISHED BlogPosts.
+		if( blogPostState == BlogPostState.PUBLISHED )
+			return true;
+
+		
+		// Case 2: User with BLOG_POST_LIST access can list BlogPosts in any State.
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), language, AccessType.BLOG_POST_LIST ) )
+			return true;
+
+		
+		return false;
+		
+	}
+
+	public static boolean hasAccessToAddBlogPostData( BlogPostData blogPostData ) {
 		
 		// User with BLOG_POST_ADD access can add a Blog Post.
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), blog.getLanguage(), AccessType.BLOG_POST_ADD ) )
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), blogPostData.getLanguage(), AccessType.BLOG_POST_ADD ) )
 			return true;
 		
 		return false;
@@ -52,12 +68,14 @@ public class BlogPostDataUtil {
 
 	public static boolean hasAccessToUpdateBlogPostData( BlogPost blogPost, BlogPostData blogPostData ) {
 
-		Blog blog = DataAccessorFactory.getDataAccessor().getBlog( blogPost.getBlogId() );
-		
 		// User with BLOG_POST_UPDATE access can update any Blog Post.
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), blog.getLanguage(), AccessType.BLOG_POST_UPDATE ) )
-			return true;
+		if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), blogPost.getLanguage(), AccessType.BLOG_POST_UPDATE ) ) {
+			if( blogPostData == null || ! blogPostData.hasLanguage() || blogPostData.getLanguage() == blogPost.getLanguage() )
+				return true;
+			else if( UserAccessUtil.hasUserAccess( accessToken.getUserId(), blogPostData.getLanguage(), AccessType.BLOG_POST_UPDATE ) )
+				return true;
+		}
 		
 		return false;
 		
@@ -76,6 +94,7 @@ public class BlogPostDataUtil {
 		blogPostData.setTitle( blogPost.getTitle() );
 		blogPostData.setTitleEn( blogPost.getTitleEn() );
 		blogPostData.setContent( blogPost.getContent() );
+		blogPostData.setLanguage( blogPost.getLanguage() );
 		blogPostData.setState( blogPost.getState() );
 		
 		User user = DataAccessorFactory.getDataAccessor().getUser( blogPost.getCreatedBy() );
@@ -107,10 +126,10 @@ public class BlogPostDataUtil {
 	}
 	
 	
-	public static DataListCursorTuple<BlogPostData> getBlogPostDataList( Long blogId, String cursor, Integer offset, Integer resultCount ) {
+	public static DataListCursorTuple<BlogPostData> getBlogPostDataList( BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount ) {
 		DataListCursorTuple<BlogPost> blogPostListCursorTuple = DataAccessorFactory
 				.getDataAccessor()
-				.getBlogPostList( blogId, cursor, offset, resultCount );
+				.getBlogPostList( blogPostFilter, cursor, offset, resultCount );
 		return new DataListCursorTuple<BlogPostData>(
 				createBlogPostDataList( blogPostListCursorTuple.getDataList() ),
 				blogPostListCursorTuple.getCursor() );
@@ -150,6 +169,8 @@ public class BlogPostDataUtil {
 			blogPost.setTitleEn( blogPostData.getTitleEn() );
 		if( blogPostData.hasContent() )
 			blogPost.setContent( blogPostData.getContent() );
+		if( blogPostData.hasLanguage() )
+			blogPost.setLanguage( blogPostData.getLanguage() );
 		if( blogPostData.hasState() )
 			blogPost.setState( blogPostData.getState() );
 		if( isNew ) {
@@ -187,6 +208,13 @@ public class BlogPostDataUtil {
 		// Blog id can not be un-set or set to null.
 		else if( ! isNew && blogPostData.hasBlogId() && blogPostData.getBlogId() == null )
 			errorMessages.addProperty( "blogId", GenericRequest.ERR_BLOG_ID_REQUIRED );
+
+		// New blogPost must have language.
+		if( isNew && ( ! blogPostData.hasLanguage() || blogPostData.getLanguage() == null ) )
+			errorMessages.addProperty( "language", GenericRequest.ERR_LANGUAGE_REQUIRED );
+		// Language can not be un-set or set to null.
+		else if( ! isNew && blogPostData.hasLanguage() && blogPostData.getLanguage() == null )
+			errorMessages.addProperty( "language", GenericRequest.ERR_LANGUAGE_REQUIRED );
 
 		// New blogPost must have state.
 		if( isNew && ( ! blogPostData.hasState() || blogPostData.getState() == null ) )
