@@ -13,7 +13,7 @@
 	<body>
 		<pratilipi-blog-page 
 			user-data='${ userJson }'
-			blog='${ blogJson }'
+			blog='${ blogPostJson }'
 			pratilipi-list='${ pratilipiListJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'></pratilipi-blog-page>
