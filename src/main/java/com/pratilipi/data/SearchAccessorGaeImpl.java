@@ -241,7 +241,9 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) );
 				
 		if( keywords != null && ! keywords.isEmpty() )
-			docBuilder.addField( Field.newBuilder().setName( "keywords" ).setText( keywords ) );
+			docBuilder.addField( Field.newBuilder().setName( "keywords" ).setText(
+					keywords.length() > 524287 ? keywords.substring( 0, 524287 ) : keywords
+			) );
 				
 				// 4x weightage to PratilipiType
 		docBuilder.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
