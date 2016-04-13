@@ -676,17 +676,17 @@ public class PratilipiSite extends HttpServlet {
 			throws InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		BlogPost event = dataAccessor.getBlogPost( blogId );
-		BlogPostData eventData = BlogPostDataUtil.createBlogPostData( event );
+		BlogPost blogPost = dataAccessor.getBlogPost( blogId );
+		BlogPostData blogPostData = BlogPostDataUtil.createBlogPostData( blogPost );
 
 		Gson gson = new Gson();
 		
-		GenericBlogPostResponse eventResponse = new GenericBlogPostResponse( eventData );
+		GenericBlogPostResponse eventResponse = new GenericBlogPostResponse( blogPostData );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createPageTitle( eventData.getTitle(), eventData.getTitleEn() ) );
+		dataModel.put( "title", createPageTitle( blogPostData.getTitle(), blogPostData.getTitleEn() ) );
 		if( basicMode ) {
-			dataModel.put( "blogPost", eventData );
+			dataModel.put( "blogPost", blogPostData );
 		} else {
 			dataModel.put( "blogPostJson", gson.toJson( eventResponse ) );
 		}

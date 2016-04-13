@@ -5,9 +5,29 @@ import java.util.Date;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.data.client.BlogPostData;
-import com.pratilipi.data.type.User;
 
 public class GenericBlogPostResponse extends GenericResponse {
+	
+	public static class User {
+		
+		private String displayName;
+		private String profilePageUrl;
+		private String profileImageUrl;
+
+		public String getDisplayName() {
+			return displayName;
+		}
+		
+		public String getProfilePageUrl() {
+			return profilePageUrl;
+		}
+		
+		public String getProfileImageUrl() {
+			return profileImageUrl;
+		}
+		
+	}
+	
 	
 	private Long blogPostId;
 	private Long blogId;
@@ -32,7 +52,13 @@ public class GenericBlogPostResponse extends GenericResponse {
 		this.titleEn = blogPostData.getTitleEn();
 		this.content = blogPostData.getContent();
 		this.state = blogPostData.getState();
-		this.createdBy = blogPostData.getCreatedBy();
+		
+		User user = new User();
+		user.displayName = blogPostData.getCreatedBy().getDisplayName();
+		user.profilePageUrl = blogPostData.getCreatedBy().getProfilePageUrl();
+		user.profileImageUrl = blogPostData.getCreatedBy().getProfileImageUrl();
+		this.createdBy = user;
+		
 		this.creationDateMillis = blogPostData.getCreationDate().getTime();
 		this.lasUpdatedMillis = blogPostData.getLastUpdated().getTime();
 		this.pageUrl = blogPostData.getPageUrl();

@@ -21,11 +21,13 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.BlogPostData;
+import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Page;
+import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
 
 
@@ -69,12 +71,19 @@ public class BlogPostDataUtil {
 	}
 	
 	public static BlogPostData createBlogPostData( BlogPost blogPost, Page blogPostPage ) {
-		BlogPostData blogPostData = new BlogPostData();
-		blogPostData.setId( blogPost.getId() );
+		BlogPostData blogPostData = new BlogPostData( blogPost.getId() );
 		blogPostData.setBlogId( blogPost.getBlogId() );
 		blogPostData.setTitle( blogPost.getTitle() );
 		blogPostData.setTitleEn( blogPost.getTitleEn() );
 		blogPostData.setContent( blogPost.getContent() );
+		blogPostData.setState( blogPost.getState() );
+		
+		User user = DataAccessorFactory.getDataAccessor().getUser( blogPost.getCreatedBy() );
+		UserData userData = UserDataUtil.createUserData( user );
+		blogPostData.setCreatedBy( userData );
+		
+		blogPostData.setCreationDate( blogPost.getCreationDate() );
+		blogPostData.setLastUpdated( blogPost.getLastUpdated() );
 		blogPostData.setPageUrl( blogPostPage.getUriAlias() == null ? blogPostPage.getUri() : blogPostPage.getUriAlias() );
 		blogPostData.setAccessToUpdate( hasAccessToUpdateBlogPostData( blogPost, null ) );
 		return blogPostData;

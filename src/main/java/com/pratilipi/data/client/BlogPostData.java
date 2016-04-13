@@ -3,7 +3,6 @@ package com.pratilipi.data.client;
 import java.util.Date;
 
 import com.pratilipi.common.type.BlogPostState;
-import com.pratilipi.data.type.User;
 
 public class BlogPostData {
 	
@@ -26,7 +25,7 @@ public class BlogPostData {
 	private BlogPostState state;
 	private boolean hasState;
 	
-	private User createdBy;
+	private UserData createdBy;
 	
 	private Long creationDateMillis;
 	private Long lasUpdatedMillis;
@@ -119,11 +118,11 @@ public class BlogPostData {
 		return hasState;
 	}
 	
-	public User getCreatedBy() {
+	public UserData getCreatedBy() {
 		return createdBy;
 	}
 	
-	public void setCreatedBy( User user ) {
+	public void setCreatedBy( UserData user ) {
 		this.createdBy = user;
 	}
 	
@@ -131,7 +130,7 @@ public class BlogPostData {
 		return new Date( creationDateMillis );
 	}
 	
-	public void setCrationDate( Date creationDate ) {
+	public void setCreationDate( Date creationDate ) {
 		this.creationDateMillis = creationDate.getTime();
 	}
 	
