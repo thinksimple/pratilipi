@@ -29,169 +29,170 @@ language_te					= Telugu
 
 # Pratilipi Types
 
-_pratilipi_type_book		= Book
-_pratilipi_type_books		= Books
-_pratilipi_type_poem		= Poem
-_pratilipi_type_poems		= Poems
-_pratilipi_type_story		= Story
-_pratilipi_type_stories		= Stories
-_pratilipi_type_article		= Article
-_pratilipi_type_articles	= Articles
-_pratilipi_type_magazine	= Magazine
-_pratilipi_type_magazines	= Magazines
+_pratilipi_type_book		= పుస్తకం
+_pratilipi_type_books		= పుస్తకాలు
+_pratilipi_type_poem		= కవిత
+_pratilipi_type_poems		= కవితలు
+_pratilipi_type_story		= కథ
+_pratilipi_type_stories		= కథలు
+_pratilipi_type_article		= వ్యాసం
+_pratilipi_type_articles	= వ్యాసాలు
+_pratilipi_type_magazine	= పత్రిక
+_pratilipi_type_magazines	= పత్రికలు
 
 
 
 # Author
 
-author_about					= About the Author
-author_language					= Language
-author_since					= Author Since
+author_about					= రచయిత గురించి
+author_language					= భాష
+author_since					= రచనలు ప్రారంభించిన కాలం
 
-author_count_works				= WORKS
-author_count_reads				= READS
-author_count_likes				= LIKES
+author_count_works				= రచనలు
+author_count_reads				= పాఠకులు
+author_count_likes				= నచ్చినవి
 
-author_edit_profile				= Edit My Profile
-author_update_image				= Upload Photo
+author_edit_profile				= నా ప్రొఫైల్ ఎడిట్ చేయండి
+author_update_image				= ఫోటో అప్లోడ్ చేయండి
 
-author_drafts					= Drafts
-author_published_works			= Published Works
-author_add_new_content			= Add New Content
+author_drafts					= డ్రాఫ్టులు
+author_published_works			= ప్రచురించబడిన రచనలు
+author_add_new_content			= కొత్త రచనను చేయండి
 
-author_no_contents_published	= Sorry! This Author doesn't have any books published!
+author_no_contents_published	= క్షమించండి! ఈ రచయిత ఖాతాలో ఎలాంటి రచనలు లేవు!  
 
 
 
 # Pratilipi
 
-pratilipi_type				= Type
-pratilipi_listing_date		= Listing Date
-pratilipi_published			= Published
-pratilipi_published_year	= Published Year
-pratilipi_summary			= Summary
+pratilipi_type				= వర్గం
+pratilipi_listing_date		= జమా చేసిన తేదీ 
+pratilipi_published			= ప్రచురించబడింది
+pratilipi_published_year	= ప్రచురించిన సంవత్సరం
+pratilipi_summary			= సంగ్రహం
 
-pratilipi_edit_info			= Edit Info
-pratilipi_edit_content		= Edit Content
-pratilipi_update_cover		= Upload Photo
+pratilipi_edit_info			= సమాచారాన్ని సరిచేయండి
+pratilipi_edit_content		= రచనను సరిచేయండి
+pratilipi_update_cover		= ఫోటో అప్లోడ్ చేయండి
 
-pratilipi_count_reads		= READS
-pratilipi_count_reviews		= REVIEWS
-pratilipi_count_likes		= LIKES
+pratilipi_count_reads		= ఫాఠకులు
+pratilipi_count_reviews		= సమీక్షలు
+pratilipi_count_likes		= నచ్చినవి
 
-pratilipi_move_to_drafts	= Move to Drafts
-pratilipi_publish_it		= Publish it!
+pratilipi_move_to_drafts	= డ్రాఫ్ట్సులోకి పంపించండి
+pratilipi_publish_it		= ప్రచురించండి!
 
-pratilipi_no_reviews		= Sorry! No Reviews found for this content!
+pratilipi_no_reviews		= క్షమించండి! ఈ రచనకు ఎలాంటి సమీక్షలు లేవు!
 
 
 
 # Rating
 
-rating_rating				= Rating 
-rating_ratings				= Ratings
-rating_rate_this			= Rate This !
-rating_your_rating			= Your Rating
+rating_rating				= రేటింగ్‌  
+rating_ratings				= రేటింగులు
+rating_rate_this			= రేటింగ్ ఇవ్వండి!
+rating_your_rating			= మీ రేటింగ్
 
-rating_1_star				= Poor
-rating_2_star				= Fair
-rating_3_star				= Good
-rating_4_star				= Very Good
-rating_5_star				= Excellent
+rating_1_star				= బాగాలేదు
+rating_2_star				= ఫర్వాలేదు
+rating_3_star				= బాగుంది 
+rating_4_star				= చాలా బాగుంది
+rating_5_star				= చాలా చాలా బాగుంది
 
 
 
 # Review
 
-review_heading				= Reviews 
-review_write_a_review		= Write a Review
-review_title				= Review Title
-review_title_help			= e.g., Great Story !
-review_content				= Your Review
-review_content_help			= Share your thoughts ! What made this work interesting ? What made it inspiring ? What did you learn from it ? You are helping others make a better choice !
-review_submit_review		= SUBMIT
-review_edit_review			= Edit Review
-review_delete_review		= Delete Review
-review_delete_review_confirm	= Are you sure to delete your review?
-review_delete_okay			= Yes, Delete review!
-review_delete_cancel		= No, Don't!
-review_helpful				= Was this review helpful?
-review_see_all_reviews		= See All Reviews
+review_heading				= సమీక్షలు 
+review_write_a_review		= సమీక్ష రాయండి
+review_title				= సమీక్ష శీర్షిక
+review_title_help			= ఉదా - చాలా మంచి కథ! 
+review_content				= మీ సమీక్ష
+review_content_help			= మీ ఆలోచనలను పంచుకోండి? ఈ రచన మీకు ఎందుకు ఆసక్తికరంగా అనిపించింది? ఏ ఏ అంశాలు మిమ్మల్ని ప్రభావితం చేశాయి? ఎలాంటి విషయాలు నేర్చుకున్నారు? ఈ విషయాలు తెలపడం వల్ల మీరు ఇతర పాఠకులు ఎంపిక చేసుకొనే రచనల విషయంలో సహాయపడగలరు! 
+review_submit_review		= సమర్పించండి 
+review_edit_review			= సమీక్షను సరిచేయండి 
+review_delete_review		= సమీక్షను తొలగించండి 
+review_delete_review_confirm	= మీరు ఈ సమీక్షను నిజంగానే తొలగించాలని భావిస్తున్నారా? 
+review_delete_okay			= అవును! ఈ సమీక్షను తొలగించండి! 
+review_delete_cancel		= వద్దు, తొలగించవద్దు! 
+review_helpful				= ఈ సమీక్ష మీకు ఉపయోగకరమని భావిస్తున్నారా? 
+review_see_all_reviews		= అన్ని సమీక్షలు చూడండి 
 
 
 
 # Search
 
-search 						= Search
-search_bar_help				= Search for books, stories, poems and more ...
-search_results				= Search Results
-search_no_results_found		= Sorry! No Search Results found for your search query. Try searching for different search query!
+search 						= వెతకండి 
+search_bar_help				= పుస్తకాలు, కథలు, కవితలు మొదలైన వాటి కొరకు వెతకండి...
+search_results				= ఫలితాలను వెతకండి 
+search_no_results_found		= క్షమించండి.. మీరు కోరిన ఫలితాలేవి అందుబాటులో లేవు. మరో మారు ప్రయత్నించండి! 
 
 
 
 # Write
 
-write_heading				= Add New Content
-write_help					= You can write on Pratilipi!
-write_title					= Title *
-write_title_en				= Title (English)
-write_type					= Select Type *
-write_language				= Language
-write_summary				= Summary (Optional)
-write_create_new_content	= Create New Content
+write_heading				= కొత్త రచనను జత చేయండి 
+write_help					= ప్రతిలిపిలో మీరు రచనలు చేయవచ్చు! 
+write_title					= శీర్షిక *
+write_title_en				= శీర్షిక (ఆంగ్లం)
+write_type					= వర్గాన్ని ఎంపిక చేయండి *
+write_language				= భాష
+write_summary				= సంగ్రహం (ఆప్షనల్)
+write_create_new_content	= కొత్త రచనను ప్రారంభించండి
 
 
 
 # Common User Popups
 
-user_sign_in				= Sign In
-user_to_sign_in				= To Sign In
-user_sign_in_with_facebook	= Sign In with Facebook
-user_sign_in_to_pratilipi	= Sign in to Pratilipi
-user_sign_out				= Sign Out
+user_sign_in				= సైన్ ఇన్
+user_to_sign_in				= ఇలా సైన్ ఇన్ అవ్వండి 
+user_sign_in_with_facebook	= ఫేస్‌బుక్‌తో సైన్ ఇన్ అవ్వండి
+user_sign_in_to_pratilipi	= ప్రతిలిపితో సైన్ ఇన్ అవ్వండి
+user_sign_out				= సైన్ అవుట్
 
-user_sign_up				= Sign Up !
-user_sign_up_for_pratilipi	= Sign Up for Pratilipi
-user_sign_up_with_facebook	= Sign Up with Facebook
+user_sign_up				= సైన్ అప్ !
+user_sign_up_for_pratilipi	= ప్రతిలిపికి సైన్ అప్ అవ్వండి
+user_sign_up_with_facebook	= ఫేస్‌బుక్‌తో సైన్ అప్ అవ్వండి
 
-user_forgot_password		= Forgot Password ?
-user_reset_password			= Reset Password
-user_reset_password_help	=  Please enter the email address you signed up with. We will send you a link to reset your password.
+user_forgot_password		= పాస్ వర్డు మర్చిపోయారా? 
+user_reset_password			= పాస్ వర్డు మార్చుకోండి
+user_reset_password_help	= మీరు సైన్ అప్ అయ్యే ఈమెయిలు చిరునామాను ఎంటర్ చేయండి. మేము మీ పాస్ వర్డు మార్చుకొనేందుకు లింక్ పంపిస్తాము.
+.  
 
-user_current_password		= Current Password
-user_new_password			= New Password
+user_current_password		= ప్రస్తుత పాస్ వర్డు
+user_new_password			= కొత్త పాస్ వర్డు
 
-user_full_name				= Full Name
-user_email					= Email
-user_password				= Password
-user_confirm_password		= Confirm Password
+user_full_name				= పూర్తి పేరు
+user_email					= ఈమెయిల్
+user_password				= పాస్ వర్డు
+user_confirm_password		= పాస్ వర్డును ధ్రువీకరించండి
 
-user_my_profile				= My Profile
-user_my_account				= My Account
+user_my_profile				= నా ప్రొఫైల్
+user_my_account				= నా ఖాతా
 
-user_is_new					= New?
-user_is_registered			= Already a Member?
-user_email_verification		= Email Verification
+user_is_new					= మీరు కొత్త సభ్యులా? 
+user_is_registered			= మీరు ఇంతకు క్రితమే సభ్యత్వం తీసుకున్నారా? 
+user_email_verification		= ఈమెయిల్ ధ్రువీకరణ
 
 
 
 # My Account popup
 
-edit_account_heading		= Edit My Account
-edit_account_verify_email	= Verify Email
-edit_account_email_verified	= Email Verified
-edit_account_change_password	= Change Password
+edit_account_heading		= నా ఖాతాలో మార్పులు చేయండి
+edit_account_verify_email	= ఈమెయిలును ధ్రువీకరించండి
+edit_account_email_verified	= ఈమెయిలు ధ్రువీకరించబడింది 
+edit_account_change_password	= పాస్ వర్డు మార్చండి
 
 
 
 # Footer
 
-footer_follow_us_on_social_media	= Follow us on Social Media
-footer_about_us				= About Us
-footer_work_with_us			= Work With Us
-footer_blog					= Blog
-footer_privacy_policy		= Privacy Policy
-footer_terms_of_service		= Terms
+footer_follow_us_on_social_media	= మమ్మల్ని సోషల్ మీడియాలో అనుసరించండి
+footer_about_us				= మా గురించి
+footer_work_with_us			= మాతో కలిసి పనిచేయండి 
+footer_blog					= బ్లాగు
+footer_privacy_policy		= ప్రైవసీ పాలసీ
+footer_terms_of_service		= నిబంధనలు
 footer_contact_email		= contact@pratilipi.com
 footer_contact_10_digit_number		= 9789316700
 
@@ -199,102 +200,102 @@ footer_contact_10_digit_number		= 9789316700
 
 # Common Words
 
-okay						= Okay
-cancel						= Cancel
-save_changes				= Save Changes
-show_more					= show more
-show_less					= show less
-read						= Read
-write						= Write
-free						= FREE !
-saving						= Saving ...
-working						= Working ...
-update						= Update
-share						= Share
-menu						= Menu
-back						= Back
-load_more_contents			= Load More Contents
-view_more					= View More
+okay						= సరే
+cancel						= రద్దు చేయండి
+save_changes				= మార్పులు సేవ్ చేయండి
+show_more					= సంపూర్ణంగా చూడండి
+show_less					= సంక్షిప్తంగా చూడండి
+read						= చదవండి
+write						= రాయండి
+free						= ఉచితం!
+saving						= సేవ్ అవుతోంది..
+working						= పని చేస్తోంది..
+update						= అప్ డేట్ చేయండి 
+share						= పంచుకోండి
+menu						= పట్టిక
+back						= వెనక్కి
+load_more_contents			= మరిన్ని రచనలు లోడ్ చేయండి
+view_more					= మరింత సమాచారం కోసం..
 
 
 
 # Success Messages
 
-password_reset_request_success		= A mail has been sent to your email Id! 
-user_login_success					= Success !
-user_register_success				= Success !
-password_change_success				= Password has been changed Successfully!
-verification_email_sent_success		= Email Sent Successfully !
-user_verified_success				= Verified Successfully !
-content_created_success				= Success !
-updated_author_info_success			= Success !
-updated_pratilipi_info_success		= Success !
-updated_review						= Success !
+password_reset_request_success		= మీ ఈమెయిల్ ఐడీకి మెయిల్ పంపించడం జరిగింది! 
+user_login_success					= విజయవంతంగా లాగిన్ అయ్యారు! 
+user_register_success				= విజయవంతంగా సభ్యత్వాన్ని పొందారు!
+password_change_success				= మీ పాస్ వర్డు మార్చబడింది!
+verification_email_sent_success		= ఈమెయిలు విజయవంతంగా పంపించబడింది!
+user_verified_success				= మీ ధ్రువీకరణ విజయవంతంగా పూర్తయ్యింది!
+content_created_success				= విజయవంతంగా పూర్తయ్యింది!
+updated_author_info_success			= విజయవంతంగా పూర్తయ్యింది!
+updated_pratilipi_info_success		= విజయవంతంగా పూర్తయ్యింది!
+updated_review						= విజయవంతంగా పూర్తయ్యింది!
 
 # Author Edit Popup
 
-edit_author_heading				= Edit Author Information	
-edit_author_first_name			= First Name( Vernacular )
-edit_author_last_name			= Last Name( Vernacular )
-edit_author_first_name_en		= First Name( English )
-edit_author_last_name_en		= Last Name( English )
-edit_author_pen_name			= Pen Name ( Vernacular )
-edit_author_pen_name_en			= Pen Name ( English )
-edit_author_birthday_ddmmyyyy	= Birthday (dd-mm-yyyy)
-edit_author_language			= Select Language
-edit_author_summary				= Summary ( Optional )
-edit_author_save_changes		= Save Changes
+edit_author_heading				= రచయిత సమాచారాన్ని ఎడిట్ చేయండి	
+edit_author_first_name			= పేరు (తెలుగులో)
+edit_author_last_name			= ఇంటి పేరు (తెలుగులో)
+edit_author_first_name_en		= పేరు (ఆంగ్లంలో)
+edit_author_last_name_en		= ఇంటి పేరు (ఆంగ్లంలో)
+edit_author_pen_name			= కలం పేరు (తెలుగులో)
+edit_author_pen_name_en			= కలం పేరు (ఆంగ్లంలో)
+edit_author_birthday_ddmmyyyy	= పుట్టిన రోజు (తేది-నెల-సంవత్సరం)
+edit_author_language			= భాషను ఎంచుకోండి
+edit_author_summary				= సంగ్రహం (ఆప్షనల్)
+edit_author_save_changes		= మార్పులను సేవ్ చేయండి
 
 # Pratilipi Edit Popup
 
-edit_pratilipi_heading			= Edit Content Information
-edit_pratilipi_title			= Title *
-edit_pratilipi_title_en			= Title (English)
-edit_pratilipi_type				= Select Type *
-edit_pratilipi_language			= Language
-edit_pratilipi_summary			= Summary (Optional) :
-edit_pratilipi_save_changes		= Save Changes
+edit_pratilipi_heading			= రచనకు సంబంధించిన సమాచారాన్ని ఎడిట్ చేయండి 
+edit_pratilipi_title			= శీర్షిక
+edit_pratilipi_title_en			= శీర్షిక (ఆంగ్లంలో)
+edit_pratilipi_type				= వర్గాన్ని ఎంచుకోండి *
+edit_pratilipi_language			= భాష
+edit_pratilipi_summary			= సంగ్రహం (ఆప్షనల్):
+edit_pratilipi_save_changes		= మార్పులను సేవ్ చేయండి
 
 
 
 # Register Form
 
-register_part_1					= By registering, you agree to the 
-register_part_2					= and
+register_part_1					= ఈ సభ్యత్వాన్ని తీసుకోవడం బట్టి మీరు, ఈ అంశాలకు అంగీకరిస్తూ
+register_part_2					= మరియు
 register_part_3					= .
 
 
 # Event Page
 
-event_entries			= Event Entries
-event_name				= Event Name
-event_name_en			= Event Name in English
-event_description		= Event Description
-event_entries_url_list	= Entries URL List
-event_save_changes		= Save Changes
+event_entries			= సాహితీ కార్యక్రమాల వివరాలు
+event_name				= సాహితీ కార్యక్రమం పేరు
+event_name_en			= సాహితీ కార్యక్రమం పేరు (ఆంగ్లంలో)
+event_description		= సాహితీ కార్యక్రమం గురించి
+event_entries_url_list	= ఎంట్రీల యూఆరెల్ జాబితా
+event_save_changes		= మార్పులను సేవ్ చేయండి
 
 
 # Gender
-gender_male			= Male
-gender_female		= Female
-gender_other		= Other
+gender_male			= పురుషుడు
+gender_female		= స్త్రీ
+gender_other		= ఇతరులు
 
 # Months
-month_jan	= January
-month_feb	= February
-month_mar	= March
-month_apr	= April
-month_may	= May
-month_jun	= June
-month_jul	= July
-month_aug	= August
-month_sep	= September
-month_oct	= October
-month_nov	= November
-month_dec	= December
+month_jan	= జనవరి
+month_feb	= ఫిబ్రవరి
+month_mar	= మార్చి
+month_apr	= ఏప్రిల్ 
+month_may	= మే
+month_jun	= జూన్
+month_jul	= జులై
+month_aug	= ఆగస్టు
+month_sep	= సెప్టెంబరు
+month_oct	= అక్టోబరు
+month_nov	= నవంబరు
+month_dec	= డిసెంబరు
 
 # Library
-my_library			= My Library
-add_to_library		= Add to Library
-remove_from_library	= Remove from Library
-empty_library		= Sorry, there are no books in your library, you can add books from content page.
+my_library			= నా గ్రంథాలయం
+add_to_library		= గ్రంథాలయానికి జత చేయండి
+remove_from_library	= గ్రంథాలయం నుండి తొలగించండి
+empty_library		= క్షమించండి, మీ గ్రంథాలయంలో ఎలాంటి పుస్తకాలు లేవు. మీరు రచనల పేజికి వెళ్ళి వాటిని జత చేసుకోవచ్చు. 
