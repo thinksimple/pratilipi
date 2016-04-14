@@ -632,20 +632,32 @@ public class PratilipiDataUtil {
 			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
 			
 			String index = null;
+			Integer pageCount = 0;
 			if( blobEntry != null ) {
 				String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 				
 				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
 				index = pratilipiContentUtil.generateIndex();
+				pageCount = pratilipiContentUtil.getPageCount();
 			}
 			
+			boolean isChanged = false; 
 			if( ( pratilipi.getIndex() == null && index != null )
 					|| ( pratilipi.getIndex() != null && index == null )
 					|| ( pratilipi.getIndex() != null && index != null && ! pratilipi.getIndex().equals( index ) ) ) {
-				
+
 				pratilipi.setIndex( index );
-				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
+				isChanged = true;
+				
 			}
+
+			if( pratilipi.getPageCount() == null || ! pratilipi.getPageCount().equals( pageCount ) ) {
+				pratilipi.setPageCount( pageCount );
+				isChanged = true;
+			}
+
+			if( isChanged )
+				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
 
 		} else {
 			throw new InvalidArgumentException( "Index generation for " + pratilipi.getContentType() + " content type is not yet supported." );
