@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.init;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +32,9 @@ public class OfyTestApi extends GenericApi {
 //		while( iterator.hasNext() )
 //			logger.log( Level.INFO, iterator.next().getId() + "" );
 
-		query.list();
+		List<BlogPostEntity> list = query.list();
+		for( BlogPostEntity post : list )
+			logger.log( Level.INFO, post.getId() + "" );
 		
 		logger.log( Level.INFO, "Cursor: " + iterator.getCursor() );
 		
