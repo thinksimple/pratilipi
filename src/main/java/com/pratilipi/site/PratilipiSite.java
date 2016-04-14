@@ -35,6 +35,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.type.RequestParameter;
@@ -183,7 +184,7 @@ public class PratilipiSite extends HttpServlet {
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
 				}
-				dataModel = createDataModelForReadPage( page.getPrimaryContentId(), basicMode );
+				dataModel = createDataModelForReadPage( page.getPrimaryContentId(), 1, basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 			
 			} else if( uri.equals( "/search" ) ) {
@@ -413,6 +414,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	
+	@SuppressWarnings("deprecation")
 	private List<String> createFbOpenGraphTags( Long pratilipiId ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -694,13 +696,20 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	public Map<String, Object> createDataModelForReadPage( Long pratilipiId, boolean basicMode )
-			throws InvalidArgumentException, UnexpectedServerException {
+	@SuppressWarnings("deprecation")
+	public Map<String, Object> createDataModelForReadPage( Long pratilipiId, Integer pageNo, boolean basicMode )
+			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
+		
+		Object content = PratilipiDataUtil.getPratilipiContent( pratilipiId, null, pageNo, PratilipiContentType.PRATILIPI );
+		
+		Gson gson = new Gson();
+		GenericPratilipiResponse pratilipiResponse =
+				gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		if( basicMode ) {
@@ -708,6 +717,11 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "pratilipi", pratilipiData );
 		} else {
 			dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
+			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
+			dataModel.put( "pageNo", pageNo );
+			dataModel.put( "pageCount", pratilipi.getPageCount() );
+			dataModel.put( "indexJson", gson.toJson( pratilipi.getIndex() ) );
+			dataModel.put( "contentHTML", content );
 		}
 		return dataModel;
 		
