@@ -46,6 +46,7 @@
 			
 			_onContentChange: function() {
 				jQuery( this.querySelector( '#pager' ) ).html( this.content );
+				$( 'html, body' ).animate( { scrollTop : 0 }, 500 );
 			},
 			
 			_fontSizeObserver: function() {

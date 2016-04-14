@@ -1,6 +1,6 @@
 <link rel='import' href='pratilipi-reader-header.html?2'>
 <link rel='import' href='pratilipi-reader-navigation.html?2'>
-<link rel='import' href='pratilipi-reader-content.html?2'>
+<link rel='import' href='pratilipi-reader-content.html?3'>
 <link rel='import' href='pratilipi-reader-footer.html?2'>
 
 <dom-module id="pratilipi-reader-page">
@@ -125,6 +125,14 @@
 					this.set( 'hideIndexButton', true );
 			},
 			
+			_precache: function() {
+				// Check pageNo
+				if( this.pageNo > 1 )
+					this._loadContent( this.pageNo - 1 );
+				if( this.pageNo < this.pageCount )
+					this._loadContent( this.pageNo + 1 );
+			},
+
 			_pageNoChanged: function() {
 				// Called before ready function
 				if( this.contentMap == null || jQuery.isEmptyObject( this.contentMap ) )
@@ -136,13 +144,13 @@
 					this._loadContent( this.pageNo );
 				
 				console.log( this.contentMap );
-				
-				//this._precache();								// Load Previous and next pages
+				this._precache();								// Load Previous and next pages
 				
 			},
 			
 			_loadContent: function( pageNo ) {
-				if( pageNo == null )
+
+				if( pageNo == null || this.contentMap[ pageNo ] != null )
 					return;
 				
 				var ajaxGet = this.$.AjaxGet;
@@ -160,7 +168,7 @@
 				this.contentMap[ response.pageNo ] = response.pageContent;
 				
 				// Update content if response page no == this page no
-				if( this.pageNo == response.pageNo )
+				if( this.pageNo == response.pageNo && this.content != response.pageContent )
 					this.set( 'content', response.pageContent );
 			},
 			
