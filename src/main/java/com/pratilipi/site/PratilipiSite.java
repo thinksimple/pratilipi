@@ -177,7 +177,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 			
-			} else if( uri.equals( "/read" ) ) {
+			} else if( uri.equals( "/reader" ) ) {
 				if( !basicMode ) {
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_A11Y_KEYS.getTag() );
