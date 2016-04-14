@@ -108,7 +108,6 @@
 					}
 					// Make Api call
 					var ajaxPost = this.$.UserApi;
-					ajaxPost.params.userId = this.user.userId;
 					delete ajaxPost.params[ "phone" ];
 					ajaxPost.params.email = this.email;
 					ajaxPost.generateRequest();
@@ -127,7 +126,6 @@
 					}
 					// Make Api call
 					var ajaxPost = this.$.UserApi;
-					ajaxPost.params.userId = this.user.userId;
 					delete ajaxPost.params[ "email" ];
 					if ( isNaN( this.phone ) || this.phone.length != 10 ) {
 						alert( "Invalid Phone Number. Please enter the 10-digit phone Number!" );
