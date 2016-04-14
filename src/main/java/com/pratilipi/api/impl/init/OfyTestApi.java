@@ -25,7 +25,7 @@ public class OfyTestApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetInitApiRequest request ) throws InvalidArgumentException, InsufficientAccessException {
 
-		Query<BlogPostEntity> query = ObjectifyService.ofy().load().type( BlogPostEntity.class );
+		Query<BlogPostEntity> query = ObjectifyService.ofy().load().type( BlogPostEntity.class ).limit( 20 );
 		QueryResultIterator<BlogPostEntity> iterator = query.iterator();
 		
 		while( iterator.hasNext() )
