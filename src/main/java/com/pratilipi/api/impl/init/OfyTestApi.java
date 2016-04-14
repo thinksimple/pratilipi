@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.init;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.appengine.api.datastore.QueryResultIterator;
@@ -26,6 +27,10 @@ public class OfyTestApi extends GenericApi {
 
 		Query<BlogEntity> query = ObjectifyService.ofy().load().type( BlogEntity.class );
 		QueryResultIterator<BlogEntity> iterator = query.iterator();
+		
+		while( iterator.hasNext() ) {
+			logger.log( Level.INFO, iterator.next().getId() + "" );
+		}
 		
 //		Blog blog = ObjectifyService.ofy().load().type( BlogEntity.class ).id( 5197509039226880L ).now();
 		
