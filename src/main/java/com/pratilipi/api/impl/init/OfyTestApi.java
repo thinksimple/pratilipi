@@ -24,6 +24,7 @@ public class OfyTestApi extends GenericApi {
 	public GenericResponse get( GetInitApiRequest request ) throws InvalidArgumentException, InsufficientAccessException {
 		
 		Blog blog = ObjectifyService.ofy().load().type( BlogEntity.class ).id( 5197509039226880L ).now();
+		Blog blog2 = ObjectifyService.ofy().load().type( BlogEntity.class ).id( 5197509039226880L ).now();
 		
 		return new GenericResponse();
 	}
