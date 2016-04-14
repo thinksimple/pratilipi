@@ -177,14 +177,14 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 			
-			} else if( page != null && page.getType() == PageType.READ ) {
+			} else if( uri.equals( "/read" ) ) {
 				if( !basicMode ) {
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_A11Y_KEYS.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
 				}
-				dataModel = createDataModelForReadPage( page.getPrimaryContentId(), 1, basicMode );
+				dataModel = createDataModelForReadPage( Long.parseLong( request.getParameter( "id" ) ), 1, basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 			
 			} else if( uri.equals( "/search" ) ) {
