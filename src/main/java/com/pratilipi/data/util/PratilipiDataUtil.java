@@ -920,13 +920,13 @@ public class PratilipiDataUtil {
 				return null;
 			
 			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( contentHtml );
-			Object content = pratilipiContentUtil.toPratilipiContentData();
-			if( content != null && chapterNo != null )
-				content = ( (PratilipiContentData) content ).getChapter( chapterNo );
-			if( content != null && pageNo != null )
-				content = ( (Chapter) content ).getPage( pageNo );
-			return content;
+//			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( contentHtml );
+//			Object content = pratilipiContentUtil.toPratilipiContentData();
+//			if( content != null && chapterNo != null )
+//				content = ( (PratilipiContentData) content ).getChapter( chapterNo );
+//			if( content != null && pageNo != null )
+//				content = ( (Chapter) content ).getPage( pageNo );
+			return contentHtml;
 
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			
