@@ -13,8 +13,7 @@ import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.data.type.Blog;
-import com.pratilipi.data.type.gae.BlogEntity;
+import com.pratilipi.data.type.gae.BlogPostEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/ofy" )
@@ -26,15 +25,12 @@ public class OfyTestApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetInitApiRequest request ) throws InvalidArgumentException, InsufficientAccessException {
 
-		Query<BlogEntity> query = ObjectifyService.ofy().load().type( BlogEntity.class );
-		QueryResultIterator<BlogEntity> iterator = query.iterator();
+		Query<BlogPostEntity> query = ObjectifyService.ofy().load().type( BlogPostEntity.class );
+		QueryResultIterator<BlogPostEntity> iterator = query.iterator();
 		
-		while( iterator.hasNext() ) {
+		while( iterator.hasNext() )
 			logger.log( Level.INFO, iterator.next().getId() + "" );
-		}
 		
-		Blog blog = ObjectifyService.ofy().load().type( BlogEntity.class ).id( 5197509039226880L ).now();
-
 		logger.log( Level.INFO, "Cursor: " + iterator.getCursor() );
 		
 		return new GenericResponse();
