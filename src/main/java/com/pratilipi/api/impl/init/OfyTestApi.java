@@ -28,8 +28,10 @@ public class OfyTestApi extends GenericApi {
 		Query<BlogPostEntity> query = ObjectifyService.ofy().load().type( BlogPostEntity.class ).limit( 20 );
 		QueryResultIterator<BlogPostEntity> iterator = query.iterator();
 		
-		while( iterator.hasNext() )
-			logger.log( Level.INFO, iterator.next().getId() + "" );
+//		while( iterator.hasNext() )
+//			logger.log( Level.INFO, iterator.next().getId() + "" );
+
+		query.list();
 		
 		logger.log( Level.INFO, "Cursor: " + iterator.getCursor() );
 		
