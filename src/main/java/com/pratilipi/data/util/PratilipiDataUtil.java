@@ -920,7 +920,11 @@ public class PratilipiDataUtil {
 				return null;
 			
 			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-//			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( contentHtml );
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( contentHtml );
+
+			if( contentHtml != null )
+				contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
+
 //			Object content = pratilipiContentUtil.toPratilipiContentData();
 //			if( content != null && chapterNo != null )
 //				content = ( (PratilipiContentData) content ).getChapter( chapterNo );
