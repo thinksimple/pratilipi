@@ -1,7 +1,7 @@
-<link rel='import' href='pratilipi-reader-header.html'>
-<link rel='import' href='pratilipi-reader-navigation.html'>
-<link rel='import' href='pratilipi-reader-content.html'>
-<link rel='import' href='pratilipi-reader-footer.html'>
+<link rel='import' href='pratilipi-reader-header.html?2'>
+<link rel='import' href='pratilipi-reader-navigation.html?2'>
+<link rel='import' href='pratilipi-reader-content.html?2'>
+<link rel='import' href='pratilipi-reader-footer.html?2'>
 
 <dom-module id="pratilipi-reader-page">
 
@@ -9,15 +9,17 @@
 		<header class="nav-down">
     		<pratilipi-reader-header 
     				pratilipi="{{ pratilipi }}"
-    				font-size="[[ fontSize ]]"></pratilipi-reader-header>
+    				font-size="[[ fontSize ]]"
+    				hide-index-button="[[ hideIndexButton ]]"></pratilipi-reader-header>
 			<pratilipi-reader-navigation
 					page-no="{{ pageNo }}"
+					index="{{ index }}"
 					></pratilipi-reader-navigation>
 		</header>
 		<main>
 			<div class="parent-container margin-top-bottom">
 				<div class="container">
-					<div style="overflow:hidden">
+					<div style="overflow:hidden;">
 						<pratilipi-reader-content
 							content="{{ content }}"
 							font-size="{{ fontSize }}"></pratilipi-reader-content> 
@@ -83,6 +85,8 @@
 				pageCount: { type: Number },
 				content: { type: String },
 				contentMap: { type: Object, value: {} },
+				index: { type: Array },
+				hideIndexButton: { type: Boolean, value: false },
 				lastScrollTop: { type: Number, value: 0 },
 			},
 			
@@ -115,6 +119,10 @@
 				jQuery( '#scrollToTop' ).css( "display", "none" );
 				this.setFontSize( getCookie( "fontSize" ) );
 				this.contentMap[ this.pageNo ] = this.content;
+				if( this.index != null )
+					this.index = jQuery.parseJSON( this.index );
+				else
+					this.set( 'hideIndexButton', true );
 			},
 			
 			_pageNoChanged: function() {

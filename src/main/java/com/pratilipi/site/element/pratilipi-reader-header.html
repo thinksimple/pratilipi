@@ -30,7 +30,9 @@
 					<td align="right" width="90px">
 						<paper-icon-button icon="icons:add" on-click="increaseFontSize"></paper-icon-button>
 						<paper-icon-button icon="icons:remove" on-click="decreaseFontSize"></paper-icon-button>
-						<paper-icon-button icon="icons:list" on-click="openNavigation"></paper-icon-button>
+						<template is="dom-if" if="{{ !hideIndexButton }}">
+							<paper-icon-button icon="icons:list" on-click="openNavigation"></paper-icon-button>
+						</template>
 					</td>
 				</tr>
 			</table>
@@ -45,7 +47,8 @@
 			
 			properties: {
 				pratilipiData: { type: Object },
-				pratilipi: { type: Object, notify: true }
+				pratilipi: { type: Object, notify: true },
+				hideIndexButton: { type: Boolean, value: false }
 			},
 			
 			increaseFontSize: function() {

@@ -13,6 +13,19 @@
 		
 		#pratilipiReaderNavigation paper-card {
 			padding: 10px 20px;
+			overflow: auto;
+		}
+		
+		.pratilipi-shadow {
+			padding: 15px 10px; 
+			margin-bottom: 15px; 
+			text-align: center; 
+			max-width: 275px;
+			border-top: 1px solid #DDD;
+		}
+		
+		a.pratilipi-black, a.pratilipi-black:hover, a.pratilipi-black:focus {
+			color: #333!important;
 		}
 		
 	</style>
@@ -20,7 +33,16 @@
 
 	<template>
 		<iron-collapse id="pratilipiReaderNavigation">
-			<paper-card>Content goes here...</paper-card>
+			<paper-card id="navigationPaperCard">
+				<template is="dom-repeat" items="{{ modifiedIndex }}">
+					<a class="pratilipi-black" on-click="test">
+						<div class="pratilipi-shadow">
+							[[ item.title ]]
+						</div>
+					</a>
+					<br class="pratilipi-break">
+				</template>
+			</paper-card>
 		</iron-collapse>
 	</template>
 	
@@ -31,10 +53,25 @@
 			
 			is: 'pratilipi-reader-navigation',
 			
+			properties: {
+				index: { type: Array },
+				modifiedIndex: { type: Array, value: [] }
+			},
+			
+			attached: function() {
+				for( var i = 0; i < this.index.length; i++ )
+					this.push( 'modifiedIndex', this.index[i] );
+				
+				jQuery( "#navigationPaperCard" ).css( "max-height", jQuery( window ).height() - 64 );
+			},
+			
 			toggleNavigation: function() {
 				this.$.pratilipiReaderNavigation.toggle();
 			},
+			
+			test: function() {
 
+			}
 			
 		});
 
