@@ -14,6 +14,7 @@
 				page-no='${ pageNo }'
 				page-count='${ pageCount }'
 				content='${ contentHTML }'
+				index='${ indexJson }'
 				></pratilipi-pratilipi-page>
 	</body>
 	
