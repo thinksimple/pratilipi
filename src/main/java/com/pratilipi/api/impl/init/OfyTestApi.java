@@ -2,6 +2,7 @@ package com.pratilipi.api.impl.init;
 
 import java.util.logging.Logger;
 
+import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -25,6 +26,9 @@ public class OfyTestApi extends GenericApi {
 		
 		Blog blog = ObjectifyService.ofy().load().type( BlogEntity.class ).id( 5197509039226880L ).now();
 		Blog blog2 = ObjectifyService.ofy().load().type( BlogEntity.class ).id( 5197509039226880L ).now();
+		Blog blog3 = ObjectifyService.ofy().load().type( BlogEntity.class ).id( 5197509039226880L ).now();
+		Blog blog4 = ObjectifyService.ofy().load().type( BlogEntity.class ).id( 5197509039226880L ).now();
+		Blog blog5 = ObjectifyService.ofy().load().type( BlogEntity.class ).id( 5197509039226880L ).now();
 		
 		return new GenericResponse();
 	}
