@@ -92,7 +92,7 @@ rating_rating				= மதிப்பீடு
 rating_ratings				= மதிப்பீடகள்
 rating_rate_this			= மதிப்பிடுக!
 rating_your_rating			= உங்கள் மதிப்பீடு!
-rating_be_first_one			= Be the first one to rate it!
+rating_be_first_one			= முதல் ஆளாக மதிப்பீடு வழங்க !
 
 rating_1_star				= 1
 rating_2_star				= 2
@@ -117,7 +117,7 @@ review_delete_review_confirm	= விமர்சனத்தை உறுதி
 review_delete_okay			= அழி
 review_delete_cancel		= வேண்டாம்
 review_helpful				= இந்த விமர்சனம் உதவியாக இருந்ததா?
-review_see_all_reviews		= See All Reviews  
+review_see_all_reviews		= அனைத்து விமர்சனங்களையும்   பார்க்க  
 
 
 
@@ -176,7 +176,7 @@ user_my_account				= என் கணக்கு
 user_is_new					= புதியவர்?	
 user_is_registered			= உறுப்பினர்?	
 user_email_verification		= மின்னஞ்சல் சரிபார்ப்பு	
-user_require_access			= You need to log in to perform this action!
+user_require_access			= இந்த செயலை செய்ய நீங்கள் லாக் இன் செய்ய வேண்டும்!
 
 
 # My Account popup
@@ -194,8 +194,8 @@ footer_follow_us_on_social_media	= சமூக வலைதளங்களி�
 footer_about_us				= எங்களைப் பற்றி	
 footer_work_with_us			= எங்களுடன் இணைய	
 footer_blog					= வலைப்பதிவு	
-footer_privacy_policy		= Privacy Policy
-footer_terms_of_service		= Terms Of Service
+footer_privacy_policy		= தனியுரிமை கொள்கை
+footer_terms_of_service		= சேவை விதிமுறைகள்
 footer_contact_email		= contact@pratilipi.com
 footer_contact_10_digit_number		= 9789316700
 
@@ -301,4 +301,4 @@ month_dec	= டிசம்பர்
 my_library			= என் நூலகம்
 add_to_library		= என் நூலகத்தில் சேர்க்க 
 remove_from_library	= என் நூலகத்திலிருந்து  அழிக்க  
-empty_library		= Sorry, there are no books in your library, you can add books from content page.
+empty_library		= மன்னிக்கவும், உங்களது நூலகத்தில் படைப்புகள் எதுவும் இல்லை,  பிடித்தமான படைப்புகளை சொடுக்கி அதன் பக்கத்திற்கு சென்று நூலகத்தில் சேர்க்கலாம்..
