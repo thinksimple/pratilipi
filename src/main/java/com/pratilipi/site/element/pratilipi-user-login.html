@@ -96,7 +96,8 @@
 				this.message = "Working ...";
 				jQuery( '#loginButton' ).prop( 'disabled', true );
 				
-				this.$.AjaxPost.body = ( "email=" + this.email + "&" + "password=" + this.password );
+				this.$.AjaxPost.body.email = this.email;
+				this.$.AjaxPost.body.password = this.password;
 				this.$.AjaxPost.generateRequest();
 			},
 			
