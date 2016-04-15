@@ -847,8 +847,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				? new ArrayList<BlogPost>()
 				: new ArrayList<BlogPost>( resultCount );
 		QueryResultIterator<BlogPostEntity> iterator = query.iterable().iterator();
-		while( iterator.hasNext() )
+		while( iterator.hasNext() ) {
+			logger.log( Level.INFO, "cusor: " + iterator.getCursor() );
 			blogPostList.add( iterator.next() );
+		}
 		
 		// Cursor
 		Cursor cursor = query.iterator().getCursor();
