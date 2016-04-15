@@ -27,10 +27,12 @@ public class OfyTestApi extends GenericApi {
 		Query<BlogPostEntity> query
 				= ObjectifyService.ofy().load().type( BlogPostEntity.class );
 		
-		query = query.order( "-CREATION_DATE" );
+		query = query.filter( "BLOG_ID", 5197509039226880L );
+//		query = query.order( "-CREATION_DATE" );
 		query = query.limit( 10 );
 		
 		logger.log( Level.INFO, "cusor: " + query.iterator().getCursor() );
+		logger.log( Level.INFO, query.list() + " results found." );
 		
 		return new GenericResponse();
 	}
