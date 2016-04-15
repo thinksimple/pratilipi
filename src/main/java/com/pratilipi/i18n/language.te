@@ -92,6 +92,7 @@ rating_rating				= రేటింగ్‌
 rating_ratings				= రేటింగులు
 rating_rate_this			= రేటింగ్ ఇవ్వండి!
 rating_your_rating			= మీ రేటింగ్
+rating_be_first_one			= Be the first one to rate it!
 
 rating_1_star				= బాగాలేదు
 rating_2_star				= ఫర్వాలేదు
@@ -173,6 +174,7 @@ user_my_account				= నా ఖాతా
 user_is_new					= మీరు కొత్త సభ్యులా? 
 user_is_registered			= మీరు ఇంతకు క్రితమే సభ్యత్వం తీసుకున్నారా? 
 user_email_verification		= ఈమెయిల్ ధ్రువీకరణ
+user_require_access			= You need to log in to perform this action!
 
 
 
