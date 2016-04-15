@@ -662,6 +662,7 @@ public class PratilipiDataUtil {
 		} else {
 			throw new InvalidArgumentException( "Index generation for " + pratilipi.getContentType() + " content type is not yet supported." );
 		}
+		
 	}
 	
 	public static void createOrUpdatePratilipiPageUrl( Long pratilipiId ) {

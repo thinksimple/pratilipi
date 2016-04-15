@@ -125,13 +125,17 @@ public class BlogPostDataUtil {
 	}
 	
 	
-	public static DataListCursorTuple<BlogPostData> getBlogPostDataList( BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount ) {
+	public static DataListCursorTuple<BlogPostData> getBlogPostDataList(
+			BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount ) {
+		
 		DataListCursorTuple<BlogPost> blogPostListCursorTuple = DataAccessorFactory
 				.getDataAccessor()
 				.getBlogPostList( blogPostFilter, cursor, offset, resultCount );
+		
 		return new DataListCursorTuple<BlogPostData>(
 				createBlogPostDataList( blogPostListCursorTuple.getDataList() ),
 				blogPostListCursorTuple.getCursor() );
+	
 	}
 	
 	

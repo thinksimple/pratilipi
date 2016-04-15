@@ -24,15 +24,12 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.QueryResultIterable;
-import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.type.AuthorState;
-import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserReviewState;
@@ -823,12 +820,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( blogPostFilter.getLanguage() != null )
 			query = query.filter( "LANGUAGE", blogPostFilter.getLanguage() );
 		
-		if( blogPostFilter.getState() != null ) {
+		if( blogPostFilter.getState() != null )
 			query = query.filter( "STATE", blogPostFilter.getState() );
-		} else {
-			query = query.filter( "STATE != ", BlogPostState.DELETED );
-			query = query.order( "STATE" );
-		}
 		
 		query = query.order( "-CREATION_DATE" );
 		
@@ -842,24 +835,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			query = query.limit( resultCount );
 		
 
-		// BlogPost List
-		List<BlogPost> blogPostList = resultCount == null
-				? new ArrayList<BlogPost>()
-				: new ArrayList<BlogPost>( resultCount );
-		QueryResultIterator<BlogPostEntity> iterator = query.iterable().iterator();
-		while( iterator.hasNext() ) {
-			logger.log( Level.INFO, "cusor: " + iterator.getCursor() );
-			blogPostList.add( iterator.next() );
-		}
-		
 		// Cursor
 		Cursor cursor = query.iterator().getCursor();
-		
-		
-		logger.log( Level.INFO, "cusor: " + cursor );
+
 		
 		return new DataListCursorTuple<BlogPost>(
-				blogPostList,
+				new ArrayList<BlogPost>( query.list() ),
 				cursor == null ? null : cursor.toWebSafeString() );
 		
 	}
