@@ -24,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.QueryResultIterable;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.google.gson.Gson;
@@ -837,19 +838,20 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( offset != null && offset > 0 )
 			query = query.offset( offset );
 		
-//		if( resultCount != null && resultCount > 0 )
-//			query = query.limit( resultCount );
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
 		
+
 		// BlogPost List
 		List<BlogPost> blogPostList = resultCount == null
 				? new ArrayList<BlogPost>()
 				: new ArrayList<BlogPost>( resultCount );
-		QueryResultIterator<BlogPostEntity> iterator = query.iterator();
-		while( iterator.hasNext() && blogPostList.size() < resultCount )
+		QueryResultIterator<BlogPostEntity> iterator = query.iterable().iterator();
+		while( iterator.hasNext() )
 			blogPostList.add( iterator.next() );
 		
 		// Cursor
-		Cursor cursor = iterator.getCursor();
+		Cursor cursor = query.iterator().getCursor();
 		
 		
 		logger.log( Level.INFO, "cusor: " + cursor );
