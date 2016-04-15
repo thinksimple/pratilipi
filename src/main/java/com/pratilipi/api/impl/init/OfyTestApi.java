@@ -12,6 +12,7 @@ import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.data.type.gae.BlogPostEntity;
 
 @SuppressWarnings("serial")
@@ -28,7 +29,9 @@ public class OfyTestApi extends GenericApi {
 				= ObjectifyService.ofy().load().type( BlogPostEntity.class );
 		
 		query = query.filter( "BLOG_ID", 5197509039226880L );
-//		query = query.order( "-CREATION_DATE" );
+		query = query.filter( "STATE != ", BlogPostState.DELETED );
+		query = query.order( "STATE" );
+		query = query.order( "-CREATION_DATE" );
 		query = query.limit( 10 );
 		
 		logger.log( Level.INFO, "cusor: " + query.iterator().getCursor() );
