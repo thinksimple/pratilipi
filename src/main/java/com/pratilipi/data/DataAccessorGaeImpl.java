@@ -836,7 +836,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 
 		// Cursor
-		Cursor cursor = query.iterator().getCursor();
+		Cursor cursor = null; // query.iterator().getCursor();
 
 		
 		return new DataListCursorTuple<BlogPost>(
