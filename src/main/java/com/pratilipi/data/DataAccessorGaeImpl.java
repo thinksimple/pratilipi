@@ -837,16 +837,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( offset != null && offset > 0 )
 			query = query.offset( offset );
 		
-		if( resultCount != null && resultCount > 0 )
-			query = query.limit( resultCount );
+//		if( resultCount != null && resultCount > 0 )
+//			query = query.limit( resultCount );
 		
-
 		// BlogPost List
 		List<BlogPost> blogPostList = resultCount == null
 				? new ArrayList<BlogPost>()
 				: new ArrayList<BlogPost>( resultCount );
 		QueryResultIterator<BlogPostEntity> iterator = query.iterator();
-		while( iterator.hasNext() )
+		while( iterator.hasNext() && blogPostList.size() < resultCount )
 			blogPostList.add( iterator.next() );
 		
 		// Cursor
