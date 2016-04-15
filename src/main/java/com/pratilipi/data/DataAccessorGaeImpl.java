@@ -829,6 +829,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			query = query.order( "STATE" );
 		}
 		
+		query = query.order( "-CREATION_DATE" );
+		
 		if( cursorStr != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
 		
@@ -838,11 +840,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( resultCount != null && resultCount > 0 )
 			query = query.limit( resultCount );
 		
-		query = query.order( "-CREATION_DATE" );
-		
 
 		// BlogPost List
-		List<BlogPost> blogPostList = new ArrayList<>( resultCount );
+		List<BlogPost> blogPostList = resultCount == null
+				? new ArrayList<BlogPost>()
+				: new ArrayList<BlogPost>( resultCount );
 		QueryResultIterator<BlogPostEntity> iterator = query.iterator();
 		while( iterator.hasNext() )
 			blogPostList.add( iterator.next() );
@@ -850,6 +852,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		// Cursor
 		Cursor cursor = iterator.getCursor();
 		
+		
+		logger.log( Level.INFO, "cusor: " + cursor );
 		
 		return new DataListCursorTuple<BlogPost>(
 				blogPostList,

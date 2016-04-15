@@ -128,7 +128,7 @@ public interface DataAccessor {
 	// USER_AUTHOR Table
 	UserAuthor newUserAuthor();
 	UserAuthor getUserAuthor( Long userId, Long authorId );
-	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursorStr, Integer resultCount );
+	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer resultCount );
 	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor );
 
 	

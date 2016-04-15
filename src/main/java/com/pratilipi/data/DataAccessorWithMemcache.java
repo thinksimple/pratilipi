@@ -718,30 +718,11 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	
-	// USER_AUTHOR Table
-	
-	@Override
-	public UserAuthor newUserAuthor() {
-		return dataAccessor.newUserAuthor();
-	}
-	
-	@Override
-	public UserAuthor getUserAuthor( Long userId, Long authorId ) {
-		// Counting on Objectify Global and Session cache
-		return dataAccessor.getUserAuthor( userId, authorId );
-	}
-
-	@Override
-	public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursorStr, Integer resultCount ) {
-		// Counting on Objectify Global and Session cache
-		return dataAccessor.getUserAuthorList( userId, authorId, cursorStr, resultCount );
-	}
-
-	@Override
-	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
-		// Counting on Objectify Global and Session cache
-		return dataAccessor.createOrUpdateUserAuthor( userAuthor );
-	}
+	// USER_AUTHOR Table - Counting on Objectify Global and Session cache
+	@Override public UserAuthor newUserAuthor() { return dataAccessor.newUserAuthor(); }
+	@Override public UserAuthor getUserAuthor( Long userId, Long authorId ) { return dataAccessor.getUserAuthor( userId, authorId ); }
+	@Override public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer resultCount ) { return dataAccessor.getUserAuthorList( userId, authorId, cursor, resultCount ); }
+	@Override public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) { return dataAccessor.createOrUpdateUserAuthor( userAuthor ); }
 	
 	
 	// NAVIGATION Table
