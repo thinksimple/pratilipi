@@ -14,16 +14,16 @@ linkedin_page				= https://www.linkedin.com/company/pratilipi
 
 # Language
 
-language_choose_language	= Choose Language
-language_all				= All Languages
-language_hi					= Hindi
-language_gu					= Gujarati
-language_ta					= Tamil
-language_mr					= Marathi
-language_ml					= Malayalam
-language_bn					= Bengali
-language_en					= English
-language_te					= Telugu
+language_choose_language	= భాషను ఎంచుకోండి
+language_all				= అన్ని భాషలు
+language_hi					= హిందీ
+language_gu					= గుజరాతీ
+language_ta					= తమిళం
+language_mr					= మరాఠీ
+language_ml					= మలయాళం
+language_bn					= బెంగాలీ
+language_en					= ఇంగ్లీష్
+language_te					= తెలుగు
 
 
 
@@ -92,7 +92,7 @@ rating_rating				= రేటింగ్‌
 rating_ratings				= రేటింగులు
 rating_rate_this			= రేటింగ్ ఇవ్వండి!
 rating_your_rating			= మీ రేటింగ్
-rating_be_first_one			= Be the first one to rate it!
+rating_be_first_one			= తొలిసారిగా మీరే రేటింగ్ ఇవ్వండి !
 
 rating_1_star				= బాగాలేదు
 rating_2_star				= ఫర్వాలేదు
@@ -174,7 +174,7 @@ user_my_account				= నా ఖాతా
 user_is_new					= మీరు కొత్త సభ్యులా? 
 user_is_registered			= మీరు ఇంతకు క్రితమే సభ్యత్వం తీసుకున్నారా? 
 user_email_verification		= ఈమెయిల్ ధ్రువీకరణ
-user_require_access			= You need to log in to perform this action!
+user_require_access			= ఈ పని పూర్తి చేయడానికి మీరు తప్పనిసరిగా లాగిన్ అవ్వాలి !
 
 
 
