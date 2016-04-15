@@ -41,6 +41,7 @@ import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -56,6 +57,7 @@ import com.pratilipi.data.client.UserAuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Navigation;
@@ -172,6 +174,10 @@ public class PratilipiSite extends HttpServlet {
 			} else if( page != null && page.getType() == PageType.EVENT ) {
 				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
+			
+			} else if( page != null && page.getType() == PageType.BLOG ) {
+				dataModel = createDataModelForBlogPage( page.getPrimaryContentId(), filterLanguage, basicMode );
+				templateName = templateFilePrefix + ( basicMode ? "BlogBasic.ftl" : "Blog.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.BLOG_POST ) {
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
@@ -676,6 +682,36 @@ public class PratilipiSite extends HttpServlet {
 		}
 		return dataModel;
 		
+	}
+	
+	public Map<String, Object> createDataModelForBlogPage( Long blogId, Language lang, boolean basicMode ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Blog blog = dataAccessor.getBlog( blogId );
+		
+		BlogPostFilter blogPostFilter = new BlogPostFilter();
+		blogPostFilter.setBlogId( blogId );
+		blogPostFilter.setLanguage( lang );
+		
+		DataListCursorTuple<BlogPostData> blogPostDataListCursorTuple
+				= BlogPostDataUtil.getBlogPostDataList( blogPostFilter, null, 0, 10 );
+
+		List<GenericBlogPostResponse> blogPostList
+				= new ArrayList<>( blogPostDataListCursorTuple.getDataList().size() );
+		for( BlogPostData blogPostData : blogPostDataListCursorTuple.getDataList() )
+			blogPostList.add( new GenericBlogPostResponse( blogPostData ) );
+		
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", blog.getTitle() );
+		if( basicMode ) {
+			dataModel.put( "blogPostList", blogPostList );
+		} else {
+			Gson gson = new Gson();
+			dataModel.put( "blogPostListJson", gson.toJson( blogPostList ) );
+			dataModel.put( "blogPostFilterJson", gson.toJson( blogPostFilter ) );
+			dataModel.put( "blogPostListCursor", blogPostDataListCursorTuple.getCursor() );
+		}
+		return dataModel;
 	}
 	
 	public Map<String, Object> createDataModelForBlogPostPage( Long blogId, boolean basicMode )
