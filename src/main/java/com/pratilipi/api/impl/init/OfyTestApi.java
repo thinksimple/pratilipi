@@ -1,8 +1,10 @@
 package com.pratilipi.api.impl.init;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -10,8 +12,7 @@ import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.data.type.Blog;
-import com.pratilipi.data.type.gae.BlogEntity;
+import com.pratilipi.data.type.gae.BlogPostEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/ofy" )
@@ -23,7 +24,13 @@ public class OfyTestApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetInitApiRequest request ) throws InvalidArgumentException, InsufficientAccessException {
 
-		Blog blog = ObjectifyService.ofy().load().type( BlogEntity.class ).id( 5683739602452481L ).now();
+		Query<BlogPostEntity> query
+				= ObjectifyService.ofy().load().type( BlogPostEntity.class );
+		
+		query = query.order( "-CREATION_DATE" );
+		query = query.limit( 10 );
+		
+		logger.log( Level.INFO, "cusor: " + query.iterator().getCursor() );
 		
 		return new GenericResponse();
 	}
