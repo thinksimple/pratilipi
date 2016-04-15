@@ -24,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -141,11 +142,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// Objectify Helper Methods
 	
 	private <T> T getEntityOfy( Class<T> clazz, Long id ) {
-		return id == null ? null : ObjectifyService.ofy().load().key( Key.create( clazz, id ) ).now();
+		return id == null ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
 	private <T> T getEntityOfy( Class<T> clazz, String id ) {
-		return id == null ? null : ObjectifyService.ofy().load().key( Key.create( clazz, id ) ).now();
+		return id == null ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
 	private <T extends GenericOfyEntity> T createOrUpdateEntityOfy( T entity ) {
@@ -839,10 +840,19 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		query = query.order( "-CREATION_DATE" );
 		
-		Cursor cursor = query.iterator().getCursor();
+
+		// BlogPost List
+		List<BlogPost> blogPostList = new ArrayList<>( resultCount );
+		QueryResultIterator<BlogPostEntity> iterator = query.iterator();
+		while( iterator.hasNext() )
+			blogPostList.add( iterator.next() );
+		
+		// Cursor
+		Cursor cursor = iterator.getCursor();
+		
 		
 		return new DataListCursorTuple<BlogPost>(
-				new ArrayList<BlogPost>( query.list() ),
+				blogPostList,
 				cursor == null ? null : cursor.toWebSafeString() );
 		
 	}

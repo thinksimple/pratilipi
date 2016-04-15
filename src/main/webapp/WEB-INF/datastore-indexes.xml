@@ -73,6 +73,13 @@
 		<property name="STATE" direction="asc"/>
 		<property name="CREATION_DATE" direction="desc"/>
 	</datastore-index>
+	
+	<datastore-index kind="BLOG_POST" ancestor="false" source="manual">
+		<property name="BLOG_ID" direction="asc"/>
+		<property name="LANGUAGE" direction="asc"/>
+		<property name="STATE" direction="asc"/>
+		<property name="CREATION_DATE" direction="desc"/>
+	</datastore-index>
     
     
 	<datastore-index kind="USER_PRATILIPI" ancestor="false" source="manual">
