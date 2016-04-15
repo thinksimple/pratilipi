@@ -164,9 +164,9 @@ user_new_password			= புதிய கடவுச்சொல்
 
 user_full_name				= முழுப்பெயர்
 user_email					= மின்னஞ்சல் முகவரி 
-user_email_not_available	= Email Not Available!
-user_phone					= Phone
-user_phone_not_available	= Phone Number Not Available!
+user_email_not_available	= ஈமெயில் ஐடி இல்லை!
+user_phone					= தொலைபேசி
+user_phone_not_available	= தொலைபேசி எண் இல்லை!
 user_password				= கடவுச்சொல்
 user_confirm_password		= கடவுச்சொலை மீண்டும் பதிவு செய்க
 
@@ -196,7 +196,7 @@ footer_work_with_us			= எங்களுடன் இணைய
 footer_blog					= வலைப்பதிவு	
 footer_privacy_policy		= தனியுரிமை கொள்கை
 footer_terms_of_service		= சேவை விதிமுறைகள்
-footer_contact_email		= tamil@pratilipi.com
+footer_contact_email		= contact@pratilipi.com
 footer_contact_10_digit_number		= 9789316700
 
 
