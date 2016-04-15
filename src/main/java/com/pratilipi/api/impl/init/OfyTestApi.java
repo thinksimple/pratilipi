@@ -1,10 +1,9 @@
 package com.pratilipi.api.impl.init;
 
-import java.util.logging.Level;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -12,7 +11,7 @@ import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.type.BlogPostState;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.gae.BlogPostEntity;
 
 @SuppressWarnings("serial")
@@ -25,17 +24,37 @@ public class OfyTestApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetInitApiRequest request ) throws InvalidArgumentException, InsufficientAccessException {
 
-		Query<BlogPostEntity> query
-				= ObjectifyService.ofy().load().type( BlogPostEntity.class );
+		Long[] ids = new Long[] { 5097310579064832L,
+				5722489978093568L,
+				5671063549640704L,
+				4757949029285888L,
+				5703597413105664L,
+				5677450516234240L,
+				6015661243367424L,
+				5761505479884800L,
+				5429848977702912L,
+				5284679938736128L,
+				5187492647010304L,
+				5212753337778176L,
+				5478636643680256L,
+				6672001628372992L,
+				5677424071147520L,
+				5767762198659072L,
+				5737275447050240L,
+				5769873309302784L,
+				5112572856500224L,
+				5680376676614144L,
+				5730377779904512L,
+				5650882632876032L,
+				5131432846426112L,
+				5735393697726464L,
+				5632984900173824L };
 		
-		query = query.filter( "BLOG_ID", 5197509039226880L );
-		query = query.filter( "STATE != ", BlogPostState.DELETED );
-		query = query.order( "STATE" );
-		query = query.order( "-CREATION_DATE" );
-		query = query.limit( 10 );
+		Map<Long, BlogPostEntity> blogPosts = ObjectifyService.ofy().load().type( BlogPostEntity.class ).ids( ids );
+		for( Long id : ids )
+			blogPosts.get( id ).setLanguage( Language.GUJARATI );
 		
-		logger.log( Level.INFO, "cusor: " + query.iterator().getCursor() );
-		logger.log( Level.INFO, query.list() + " results found." );
+		ObjectifyService.ofy().save().entities( blogPosts.values() ).now();
 		
 		return new GenericResponse();
 	}
