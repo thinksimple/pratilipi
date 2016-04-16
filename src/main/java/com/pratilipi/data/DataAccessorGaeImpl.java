@@ -542,11 +542,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	private String _createPageEntityMemcacheId( String uri ) {
-		return "Page-" + uri;
+		return "DataStore.Page-" + uri;
 	}
 	
 	private String _createPageEntityMemcacheId( PageType pageType, Long primaryContentId ) {
-		return "Page-" + pageType + "::" + primaryContentId;
+		return "DataStore.Page-" + pageType + "::" + primaryContentId;
 	}
 	
 	// PRATILIPI Table
