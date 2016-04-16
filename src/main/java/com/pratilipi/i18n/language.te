@@ -3,7 +3,7 @@
 pratilipi					= Pratilipi
 tinymce_language			= en
 
-home_page_title				= Read Hindi, Gujarati and Tamil Stories, Poems and Books
+home_page_title				= తెలుగు, తమిళం, మలయాళం, హిందీ, గుజరాతీ భాషల్లోని కథలు, పుస్తకాలు, కవితల్ని చదవండి
 
 facebook_page				= https://www.facebook.com/pratilipi.telugu
 twitter_page				= https://twitter.com/TeamPratilipi
@@ -155,7 +155,7 @@ user_sign_up				= సైన్ అప్ !
 user_sign_up_for_pratilipi	= ప్రతిలిపికి సైన్ అప్ అవ్వండి
 user_sign_up_with_facebook	= ఫేస్‌బుక్‌తో సైన్ అప్ అవ్వండి
 
-user_forgot_password		= పాస్ వర్డు మర్చిపోయారా? 
+user_forgot_password		= పాస్‌వర్డు మర్చిపోయారా? 
 user_reset_password			= పాస్ వర్డు మార్చుకోండి
 user_reset_password_help	= మీరు సైన్ అప్ అయ్యే ఈమెయిలు చిరునామాను ఎంటర్ చేయండి. మేము మీ పాస్ వర్డు మార్చుకొనేందుకు లింక్ పంపిస్తాము.
 .  
