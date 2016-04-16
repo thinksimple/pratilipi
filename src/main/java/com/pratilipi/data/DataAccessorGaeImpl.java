@@ -48,6 +48,7 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
+import com.pratilipi.data.type.GenericOfyType;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
@@ -63,7 +64,6 @@ import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
 import com.pratilipi.data.type.gae.CategoryEntity;
 import com.pratilipi.data.type.gae.EventEntity;
-import com.pratilipi.data.type.gae.GenericOfyEntity;
 import com.pratilipi.data.type.gae.NavigationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiCategoryEntity;
@@ -143,22 +143,26 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	// Objectify Helper Methods
 	
-	private <T> T getEntityOfy( Class<T> clazz, Long id ) {
+	private <T extends GenericOfyType> T getEntityOfy( Class<T> clazz, Long id ) {
 		return id == null ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
-	private <T> T getEntityOfy( Class<T> clazz, String id ) {
+	private <T extends GenericOfyType> T getEntityOfy( Class<T> clazz, String id ) {
 		return id == null ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
-	private <T extends GenericOfyEntity> T createOrUpdateEntityOfy( T entity ) {
+	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity ) {
 		Key<T> key = ObjectifyService.ofy().save().entity( entity ).now();
 		entity.setKey( key );
 		return entity;
 	}
 	
-	private Map<Key<Object>,Object> createOrUpdateEntitiesOfy( Object... entities ) {
+	private <T extends GenericOfyType> Map<Key<T>, T> createOrUpdateEntitiesOfy( T... entities ) {
 		return ObjectifyService.ofy().save().entities( entities ).now();
+	}
+
+	private <T extends GenericOfyType> void deleteEntityOfy( T entity ) {
+		ObjectifyService.ofy().delete().entity( entity ).now();
 	}
 
 	
@@ -521,7 +525,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Page createOrUpdatePage( Page page ) {
-		page = createOrUpdateEntity( page );
+		page = createOrUpdateEntityOfy( page );
 		if( page.getUri() != null )
 			memcache.put( _createPageEntityMemcacheId( page.getUri() ), page );
 		if( page.getUriAlias() != null )
@@ -532,7 +536,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	public void deletePage( Page page ) {
-		deleteEntity( PageEntity.class, page.getId() );
+		deleteEntityOfy( page );
 		if( page.getUri() != null )
 			memcache.remove( _createPageEntityMemcacheId( page.getUri() ) );
 		if( page.getUriAlias() != null )

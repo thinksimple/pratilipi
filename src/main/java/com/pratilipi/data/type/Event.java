@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.pratilipi.common.type.Language;
 
-public interface Event {
+public interface Event extends GenericOfyType {
 
 	Long getId();
 	

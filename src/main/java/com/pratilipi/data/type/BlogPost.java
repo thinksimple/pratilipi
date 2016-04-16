@@ -5,7 +5,7 @@ import java.util.Date;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
 
-public interface BlogPost {
+public interface BlogPost extends GenericOfyType {
 
 	Long getId();
 	

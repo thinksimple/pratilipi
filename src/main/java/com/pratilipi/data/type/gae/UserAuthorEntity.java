@@ -11,7 +11,7 @@ import com.pratilipi.data.type.UserAuthor;
 
 @Cache
 @Entity( name = "USER_AUTHOR" )
-public class UserAuthorEntity extends GenericOfyEntity implements UserAuthor {
+public class UserAuthorEntity implements UserAuthor {
 
 	@Id
 	private String USER_AUTHOR_ID;
@@ -46,7 +46,7 @@ public class UserAuthorEntity extends GenericOfyEntity implements UserAuthor {
 	}
 	
 	@Override
-	public <T extends GenericOfyEntity> void setKey( Key<T> key ) {
+	public <T> void setKey( Key<T> key ) {
 		this.USER_AUTHOR_ID = key.getName();
 	}
 	

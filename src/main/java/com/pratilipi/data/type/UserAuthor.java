@@ -2,7 +2,7 @@ package com.pratilipi.data.type;
 
 import java.util.Date;
 
-public interface UserAuthor {
+public interface UserAuthor extends GenericOfyType {
 
 	String getId();
 	

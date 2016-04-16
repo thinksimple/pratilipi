@@ -2,7 +2,7 @@ package com.pratilipi.data.type;
 
 import java.util.Date;
 
-public interface Blog {
+public interface Blog extends GenericOfyType {
 
 	Long getId();
 

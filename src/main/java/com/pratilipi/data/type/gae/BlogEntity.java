@@ -11,7 +11,7 @@ import com.pratilipi.data.type.Blog;
 
 @Cache
 @Entity( name = "BLOG" )
-public class BlogEntity extends GenericOfyEntity implements Blog {
+public class BlogEntity implements Blog {
 
 	@Id
 	private Long BLOG_ID;
@@ -42,7 +42,7 @@ public class BlogEntity extends GenericOfyEntity implements Blog {
 	}
 	
 	@Override
-	public <T extends GenericOfyEntity> void setKey( Key<T> key ) {
+	public <T> void setKey( Key<T> key ) {
 		this.BLOG_ID = key.getId();
 	}
 	

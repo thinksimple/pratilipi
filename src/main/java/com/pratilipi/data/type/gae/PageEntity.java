@@ -10,9 +10,10 @@ import com.googlecode.objectify.annotation.Index;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.data.type.Page;
 
+@SuppressWarnings("serial")
 @Cache
 @Entity( name = "PAGE" )
-public class PageEntity extends GenericOfyEntity implements Page {
+public class PageEntity implements Page {
 
 	@Id
 	private Long PAGE_ID;
@@ -50,7 +51,7 @@ public class PageEntity extends GenericOfyEntity implements Page {
 	}
 
 	@Override
-	public <T extends GenericOfyEntity> void setKey( Key<T> key ) {
+	public <T> void setKey( Key<T> key ) {
 		this.PAGE_ID = key.getId();
 	}
 

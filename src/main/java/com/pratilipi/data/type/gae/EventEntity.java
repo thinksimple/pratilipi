@@ -14,7 +14,7 @@ import com.pratilipi.data.type.Event;
 
 @Cache
 @Entity( name = "EVENT" )
-public class EventEntity extends GenericOfyEntity implements Event {
+public class EventEntity implements Event {
 
 	@Id
 	private Long EVENT_ID;
@@ -57,7 +57,7 @@ public class EventEntity extends GenericOfyEntity implements Event {
 	}
 	
 	@Override
-	public <T extends GenericOfyEntity> void setKey( Key<T> key ) {
+	public <T> void setKey( Key<T> key ) {
 		this.EVENT_ID = key.getId();
 	}
 	

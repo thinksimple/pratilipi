@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.pratilipi.common.type.PageType;
 
-public interface Page extends Serializable {
+public interface Page extends GenericOfyType, Serializable {
 
 	Long getId();
 
