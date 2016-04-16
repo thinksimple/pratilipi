@@ -455,7 +455,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( page == null ) {
 			page = ObjectifyService.ofy().load()
 					.type( PageEntity.class )
-					.filter( "TYPE", pageType )
+					.filter( "PAGE_TYPE", pageType )
 					.filter( "PRIMARY_CONTENT_ID", primaryContentId )
 					.order( "CREATION_DATE" )
 					.first().now();
