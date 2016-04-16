@@ -17,10 +17,15 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AppProperty;
+import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -34,16 +39,51 @@ public class PratilipiProcessApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse getPratilipiProcess( GenericRequest request ) throws UnexpectedServerException {
+	public GenericResponse getPratilipiProcess( GenericRequest request )
+			throws UnexpectedServerException {
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// Fetching AppProperty
+		String appPropertyId = "Api.PratilipiProcess.ValidateData";
+		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
+		if( appProperty == null ) {
+			appProperty = dataAccessor.newAppProperty( appPropertyId );
+			appProperty.setValue( new Date( 0 ) );
+		}
+
+		// Fetching list of Pratilipi ids.
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setMinLastUpdate( (Date) appProperty.getValue(), false );
+		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, 10000 ).getDataList();
+
+		// Creating one task per Pratilipi id.
+		List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
+		for( Long authorId : pratilipiIdList ) {
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/process" )
+					.addParam( "pratilipiId", authorId.toString() )
+					.addParam( "validateData", "true" );
+			taskList.add( task );
+		}
+		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
+		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
+
+		// Updating AppProperty.
+		if( pratilipiIdList.size() > 0 ) {
+			appProperty.setValue( dataAccessor.getAuthor( pratilipiIdList.get( pratilipiIdList.size() - 1 ) ).getLastUpdated() );
+			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
+		}
+		
+		
+		
+		pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setNextProcessDateEnd( new Date() );
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
+		pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
 		
 		int batchSize = 80;
-		List<Task> taskList = new ArrayList<>( (int) Math.ceil( ( (double) pratilipiIdList.size() ) / batchSize  ) );
+		taskList = new ArrayList<>( (int) Math.ceil( ( (double) pratilipiIdList.size() ) / batchSize  ) );
 		for( int i = 0; i < pratilipiIdList.size(); i = i + batchSize ) {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/pratilipi/process" )
@@ -74,6 +114,17 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		if( request.validateData() ) {
+			for( Long pratilipiId : pratilipiIdList ) {
+				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+				Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
+				if( pratilipi.getState() == PratilipiState.DELETED && pratilipiPage != null )
+					throw new InvalidArgumentException( "DELETED Pratilipi has non-deleted Page entity." );
+				if( pratilipi.getState() != PratilipiState.DELETED && pratilipiPage == null )
+					throw new InvalidArgumentException( "Page entity is missing for the Pratilipi." );
+			}
+		}
 		
 		
 		if( request.processData() ) {

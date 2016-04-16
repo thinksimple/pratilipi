@@ -18,6 +18,9 @@ public class PratilipiFilter implements Serializable {
 	private String listName;
 	private PratilipiState state;
 	
+	private Date minLastUpdated;
+	private Boolean minLastUpdatedInclusive;
+	
 	private Date nextProcessDateEnd;
 
 	private Boolean orderByReadCount;
@@ -64,6 +67,19 @@ public class PratilipiFilter implements Serializable {
 		this.state = state;
 	}
 
+	
+	public Date getMinLastUpdated() {
+		return minLastUpdated;
+	}
+
+	public boolean isMinLastUpdatedInclusive() {
+		return minLastUpdatedInclusive == null ? true : minLastUpdatedInclusive;
+	}
+	
+	public void setMinLastUpdate( Date minLastUpdated, boolean inclusive ) {
+		this.minLastUpdated = minLastUpdated;
+		this.minLastUpdatedInclusive = inclusive;
+	}
 	
 	public Date getNextProcessDateEnd() {
 		return nextProcessDateEnd;

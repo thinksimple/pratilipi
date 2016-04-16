@@ -617,6 +617,13 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			if( pratilipiFilter.getState() != null )
 				gaeQueryBuilder.addFilter( "state", pratilipiFilter.getState() );
 	
+			if( pratilipiFilter.getMinLastUpdated() != null ) {
+				gaeQueryBuilder.addFilter( "lastUpdated",
+						pratilipiFilter.getMinLastUpdated(),
+						pratilipiFilter.isMinLastUpdatedInclusive() ? Operator.GREATER_THAN_OR_EQUAL : Operator.GREATER_THAN );
+				gaeQueryBuilder.addOrdering( "lastUpdated", true );
+			}
+			
 			if( pratilipiFilter.getNextProcessDateEnd() != null ) {
 				gaeQueryBuilder.addFilter( "nextProcessDate", pratilipiFilter.getNextProcessDateEnd(), Operator.LESS_THAN_OR_EQUAL );
 				gaeQueryBuilder.addOrdering( "nextProcessDate", true );

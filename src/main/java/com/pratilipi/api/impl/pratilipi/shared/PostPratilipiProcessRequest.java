@@ -9,6 +9,7 @@ public class PostPratilipiProcessRequest extends GenericRequest {
 	private Long pratilipiId;
 	private List<Long> pratilipiIdList;
 
+	private Boolean validateData;
 	private Boolean processData;
 	private Boolean processContent;
 	private Boolean updateStats;
@@ -23,6 +24,11 @@ public class PostPratilipiProcessRequest extends GenericRequest {
 		return pratilipiIdList;
 	}
 
+
+	public boolean validateData() {
+		return validateData == null ? false : validateData;
+	}
+	
 	public boolean processData() {
 		return processData == null ? false : processData;
 	}
