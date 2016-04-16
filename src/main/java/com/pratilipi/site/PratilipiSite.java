@@ -478,6 +478,8 @@ public class PratilipiSite extends HttpServlet {
 			listNames = new String[] { "books", "stories", "articles" };
 		else if( filterLanguage == Language.MALAYALAM )
 			listNames = new String[] { "books", "stories", "poems" };
+		else if( filterLanguage == Language.BENGALI )
+			listNames = new String[] { "books", "premkahini", "aleek-kahini", "rahashyogalpo" };
 		ArrayList<Map<String, Object>> sections = new ArrayList<>( listNames.length );
 		
 		for( String listName : listNames ) {
