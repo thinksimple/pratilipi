@@ -92,6 +92,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// Registering Entities
 	
 	static {
+		ObjectifyService.register( PageEntity.class );
 		ObjectifyService.register( EventEntity.class );
 		ObjectifyService.register( BlogEntity.class );
 		ObjectifyService.register( BlogPostEntity.class );
@@ -435,8 +436,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				memcache.put( memcacheId, page );
 		}
 		
-		if( page == null ) // Hack: This will save lot of DB queries.
-			memcache.put( memcacheId, newPage() );
+		if( page == null ) { // Hack: This will save lots of DB queries.
+			page = newPage();
+			memcache.put( memcacheId, page );
+		}
 		
 		return page.getId() == null ? null : page;
 		
@@ -480,11 +483,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 		// Fetching missing entities from DataStore
 		for( String uri : uriList ) {
-			String memcacheId = _createPageEntityMemcacheId( uri );
-			if( keyValueMap.get( memcacheId ) != null )
-				pages.put( uri, keyValueMap.get( memcacheId ) );
-			else
-				pages.put( uri, getPage( uri ) );
+			Page page = keyValueMap.get( _createPageEntityMemcacheId( uri ) );
+			if( page == null )
+				page = getPage( uri );
+			pages.put( uri, page );
 		}
 		
 		return pages;
@@ -507,11 +509,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		// Fetching missing entities from DataStore
 		for( Long primaryContentId : primaryContentIdList ) {
-			String memcacheId = _createPageEntityMemcacheId( pageType, primaryContentId );
-			if( keyValueMap.get( memcacheId ) != null )
-				pages.put( primaryContentId, getPage( pageType, primaryContentId ) );
-			else
-				pages.put( primaryContentId, getPage( pageType, primaryContentId ) );
+			Page page = keyValueMap.get( _createPageEntityMemcacheId( pageType, primaryContentId ) );
+			if( page == null )
+				page = getPage( pageType, primaryContentId );
+			pages.put( primaryContentId, page );
 		}
 		
 		return pages;
