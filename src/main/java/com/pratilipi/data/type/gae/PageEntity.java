@@ -2,99 +2,107 @@ package com.pratilipi.data.type.gae;
 
 import java.util.Date;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.data.type.Page;
 
-@PersistenceCapable( table = "PAGE" )
-public class PageEntity implements Page {
+@Cache
+@Entity( name = "PAGE" )
+public class PageEntity extends GenericOfyEntity implements Page {
 
-	private static final long serialVersionUID = 6798007451769465807L;
-
-	@PrimaryKey
-	@Persistent( column = "PAGE_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
-	private Long id;
+	@Id
+	private Long PAGE_ID;
 	
-	@Persistent( column = "PAGE_TYPE" )
-	private PageType type;
+	@Index
+	private PageType PAGE_TYPE;
 
-	@Persistent( column = "URI" )
-	private String uri;
+	@Index
+	private String URI;
 
-	@Persistent( column = "URI_ALIAS" )
-	private String uriAlias;
+	@Index
+	private String URI_ALIAS;
 
-	@Persistent( column = "PRIMARY_CONTENT_ID" )
-	private Long primaryContentId;
+	@Index
+	private Long PRIMARY_CONTENT_ID;
 	
-	@Persistent( column = "CREATION_DATE" )
-	private Date creationDate;
+	@Index
+	private Date CREATION_DATE;
 	
 	
 	public PageEntity() {}
 	
 	public PageEntity( Long id ) {
-		this.id = id;
+		this.PAGE_ID = id;
 	}
 	
 	
 	@Override
 	public Long getId() {
-		return id;
+		return PAGE_ID;
+	}
+	
+	public void setId( Long id ) {
+		this.PAGE_ID = id;
 	}
 
 	@Override
+	public <T extends GenericOfyEntity> void setKey( Key<T> key ) {
+		this.PAGE_ID = key.getId();
+	}
+
+	
+	@Override
 	public PageType getType() {
-		return type;
+		return PAGE_TYPE;
 	}
 
 	@Override
 	public void setType( PageType type ) {
-		this.type = type;
+		this.PAGE_TYPE = type;
 	}
 
 	@Override
 	public String getUri() {
-		return uri;
+		return URI;
 	}
 
 	@Override
 	public void setUri( String uri ) {
-		this.uri = uri;
+		this.URI = uri;
 	}
 
 	@Override
 	public String getUriAlias() {
-		return uriAlias;
+		return URI_ALIAS;
 	}
 
 	@Override
 	public void setUriAlias( String uri ) {
-		this.uriAlias = uri;
+		this.URI_ALIAS = uri;
 	}
 
 	@Override
 	public Long getPrimaryContentId() {
-		return primaryContentId;
+		return PRIMARY_CONTENT_ID;
 	}
 
 	@Override
 	public void setPrimaryContentId( Long pageContentId ) {
-		this.primaryContentId = pageContentId;
+		this.PRIMARY_CONTENT_ID = pageContentId;
 	}
 
 	@Override
 	public Date getCreationDate() {
-		return creationDate;
+		return CREATION_DATE;
 	}
 
 	@Override
 	public void setCreationDate( Date creationDate ) {
-		this.creationDate = creationDate;
+		this.CREATION_DATE = creationDate;
 	}
 
 }

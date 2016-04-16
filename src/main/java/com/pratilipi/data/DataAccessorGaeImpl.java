@@ -77,6 +77,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	private static final Logger logger =
 			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
 	
+	private static final Memcache memcache = new MemcacheGaeImpl();
+
 	private static final String NAVIGATION_DATA_FILE_PREFIX = "curated/navigation.";
 	private static final String CATEGORY_DATA_FILE_PREFIX = "curated/category.";
 	private static final String CURATED_DATA_FOLDER = "curated";
@@ -403,78 +405,148 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Page getPage( Long id ) {
-		return getEntity( PageEntity.class, id );
+		return getEntityOfy( PageEntity.class, id );
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public Page getPage( String uri ) {
-		Query query = new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
-						.addFilter( "uriAlias", uri )
-						.addOrdering( "creationDate", true )
-						.build();
-
-		List<Page> pageList = (List<Page>) query.execute( uri );
-		if( pageList.size() > 1 )
-			logger.log( Level.SEVERE, "More than one page entities found for uri " + uri );
 		
-		if( pageList.size() != 0 )
-			return pm.detachCopy( pageList.get( 0 ) );
-
+		String memcacheId = _createPageEntityMemcacheId( uri );
 		
-		query = new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
-						.addFilter( "uri", uri )
-						.addOrdering( "creationDate", true )
-						.build();
+		Page page = memcache.get( memcacheId );
+		
+		if( page == null ) {
+			page = ObjectifyService.ofy().load()
+					.type( PageEntity.class )
+					.filter( "URI_ALIAS", uri )
+					.order( "CREATION_DATE" )
+					.first().now();
+			if( page != null )
+				memcache.put( memcacheId, page );
+		}
 
-		pageList = (List<Page>) query.execute( uri );
-		if( pageList.size() > 1 )
-			logger.log( Level.SEVERE, "More than one page entities found for uri alias " + uri );
-
-		return pageList.size() == 0 ? null : pm.detachCopy( pageList.get( 0 ) );
+		if( page == null ) {
+			page = ObjectifyService.ofy().load()
+					.type( PageEntity.class )
+					.filter( "URI", uri )
+					.order( "CREATION_DATE" )
+					.first().now();
+			if( page != null )
+				memcache.put( memcacheId, page );
+		}
+		
+		if( page == null ) // Hack: This will save lot of DB queries.
+			memcache.put( memcacheId, newPage() );
+		
+		return page.getId() == null ? null : page;
+		
 	}
 	
 	@Override
 	public Page getPage( PageType pageType, Long primaryContentId ) {
-		Query query =
-				new GaeQueryBuilder( pm.newQuery( PageEntity.class ) )
-						.addFilter( "type", pageType )
-						.addFilter( "primaryContentId", primaryContentId )
-						.addOrdering( "creationDate", true )
-						.build();
 		
-		@SuppressWarnings("unchecked")
-		List<Page> pageList = (List<Page>) query.execute( pageType, primaryContentId );
-		if( pageList.size() > 1 )
-			logger.log( Level.SEVERE, "More than one page entities found for PageType " + pageType + ", PageContent " + primaryContentId );
-		return pageList.size() == 0 ? null : pm.detachCopy( pageList.get( 0 ) );
+		String memcacheId = _createPageEntityMemcacheId( pageType, primaryContentId );
+		
+		Page page = memcache.get( memcacheId );
+		
+		if( page == null ) {
+			page = ObjectifyService.ofy().load()
+					.type( PageEntity.class )
+					.filter( "TYPE", pageType )
+					.filter( "PRIMARY_CONTENT_ID", primaryContentId )
+					.order( "CREATION_DATE" )
+					.first().now();
+			if( page != null )
+				memcache.put( memcacheId, page );
+		}
+		
+		return page;
+		
 	}
 	
 	@Override
 	public Map<String, Page> getPages( List<String> uriList ) {
-		Map<String, Page> keyValueMap = new HashMap<>( uriList.size() );
+		
+		Map<String, Page> pages = new HashMap<>( uriList.size() );
+		if( uriList.size() == 0 )
+			return pages;
+		
+		List<String> memcacheIdList = new ArrayList<>( uriList.size() );
 		for( String uri : uriList )
-			keyValueMap.put( uri, getPage( uri ) );
-		return keyValueMap;
+			memcacheIdList.add( _createPageEntityMemcacheId( uri ) );
+
+		// Fetching entities from Memcache.
+		Map<String, Page> keyValueMap = memcache.getAll( memcacheIdList );
+
+		// Fetching missing entities from DataStore
+		for( String uri : uriList ) {
+			String memcacheId = _createPageEntityMemcacheId( uri );
+			if( keyValueMap.get( memcacheId ) != null )
+				pages.put( uri, keyValueMap.get( memcacheId ) );
+			else
+				pages.put( uri, getPage( uri ) );
+		}
+		
+		return pages;
+		
 	}
 
 	@Override
 	public Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList ) {
-		Map<Long, Page> keyValueMap = new HashMap<>( primaryContentIdList.size() );
+
+		Map<Long, Page> pages = new HashMap<>( primaryContentIdList.size() );
+		if( primaryContentIdList.size() == 0 )
+			return pages;
+		
+		List<String> memcacheIdList = new ArrayList<>( primaryContentIdList.size() );
 		for( Long primaryContentId : primaryContentIdList )
-			keyValueMap.put( primaryContentId, getPage( pageType, primaryContentId ) );
-		return keyValueMap;
+			memcacheIdList.add( _createPageEntityMemcacheId( pageType, primaryContentId ) );
+
+		// Fetching entities from Memcache.
+		Map<String, Page> keyValueMap = memcache.getAll( memcacheIdList );
+		
+		// Fetching missing entities from DataStore
+		for( Long primaryContentId : primaryContentIdList ) {
+			String memcacheId = _createPageEntityMemcacheId( pageType, primaryContentId );
+			if( keyValueMap.get( memcacheId ) != null )
+				pages.put( primaryContentId, getPage( pageType, primaryContentId ) );
+			else
+				pages.put( primaryContentId, getPage( pageType, primaryContentId ) );
+		}
+		
+		return pages;
+		
 	}
 
 	@Override
 	public Page createOrUpdatePage( Page page ) {
-		return createOrUpdateEntity( page );
+		page = createOrUpdateEntity( page );
+		if( page.getUri() != null )
+			memcache.put( _createPageEntityMemcacheId( page.getUri() ), page );
+		if( page.getUriAlias() != null )
+			memcache.put( _createPageEntityMemcacheId( page.getUriAlias() ), page );
+		if( page.getPrimaryContentId() != null )
+			memcache.put( _createPageEntityMemcacheId( page.getType(), page.getPrimaryContentId() ), page );
+		return page;
 	}
 	
 	public void deletePage( Page page ) {
 		deleteEntity( PageEntity.class, page.getId() );
+		if( page.getUri() != null )
+			memcache.remove( _createPageEntityMemcacheId( page.getUri() ) );
+		if( page.getUriAlias() != null )
+			memcache.remove( _createPageEntityMemcacheId( page.getUriAlias() ) );
+		if( page.getPrimaryContentId() != null )
+			memcache.remove( _createPageEntityMemcacheId( page.getType(), page.getPrimaryContentId() ) );
 	}
 	
+	private String _createPageEntityMemcacheId( String uri ) {
+		return "Page-" + uri;
+	}
+	
+	private String _createPageEntityMemcacheId( PageType pageType, Long primaryContentId ) {
+		return "Page-" + pageType + "::" + primaryContentId;
+	}
 	
 	// PRATILIPI Table
 
@@ -843,6 +915,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		ArrayList<BlogPost> blogPostList = resultCount == null
 				? new ArrayList<BlogPost>()
 				: new ArrayList<BlogPost>( resultCount );
+		
 		while( iterator.hasNext() )
 			blogPostList.add( iterator.next() );
 
