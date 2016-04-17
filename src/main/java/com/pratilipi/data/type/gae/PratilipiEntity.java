@@ -2,416 +2,364 @@ package com.pratilipi.data.type.gae;
 
 import java.util.Date;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Text;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
+import com.googlecode.objectify.condition.IfTrue;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.data.type.Pratilipi;
 
-@PersistenceCapable( table = "PRATILIPI" )
+@SuppressWarnings("serial")
+@Cache
+@Entity( name = "PRATILIPI" )
 public class PratilipiEntity implements Pratilipi {
 
-	private static final long serialVersionUID = -3740558387788310210L;
-
-	@PrimaryKey
-	@Persistent( column = "PRATILIPI_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
-	private Long id;
+	@Id
+	private Long PRATILIPI_ID;
 	
-	@Persistent( column = "TITLE" )
-	private String title;
+	private String TITLE;
 	
-	@Persistent( column = "TITLE_EN" )
-	private String titleEn;
+	private String TITLE_EN;
 	
-	@Persistent( column = "LANGUAGE" )
-	private Language language;
+	@Index
+	private Language LANGUAGE;
 
 	@Deprecated
-	@Persistent( column = "LANGUAGE_ID" )
-	private Long languageId;
+	@Index
+	private Long LANGUAGE_ID;
 
-	@Persistent( column = "AUTHOR_ID" )
-	private Long authorId;
+	@Index
+	private Long AUTHOR_ID;
 	
 	@Deprecated
-	@Persistent( column = "PUBLISHER_ID" )
-	private Long publisherId;
+	@Index( IfNotNull.class )
+	private Long PUBLISHER_ID;
 
 	@Deprecated
-	@Persistent( column = "SUMMARY" )
-	private Text summary;
-
-	@Persistent( column = "PUBLICATION_YEAR" )
-	private Integer publicationYear;
+	private String SUMMARY;
 
 	
 	@Deprecated
-	@Persistent( column = "PUBLIC_DOMAIN" )
-	private Boolean publicDomain;
+	@Index( { IfNotNull.class, IfTrue.class } )
+	private Boolean PUBLIC_DOMAIN;
 	
-	@Persistent( column = "PRATILIPI_TYPE" )
-	private PratilipiType type;
+	@Index
+	private PratilipiType PRATILIPI_TYPE;
 	
-	@Persistent( column = "CONTENT_TYPE" )
-	private PratilipiContentType contentType;
+	@Index
+	private PratilipiContentType CONTENT_TYPE;
 	
-	@Persistent( column = "STATE" )
-	private PratilipiState state;
+	@Index
+	private PratilipiState STATE;
 	
-	@Persistent( column = "CUSTOM_COVER" )
-	private Boolean customCover;
+	@Index
+	private Boolean CUSTOM_COVER;
 
-	@Persistent( column = "LISTING_DATE" )
-	private Date listingDate;
+	@Index
+	private Date LISTING_DATE;
 
-	@Persistent( column = "LAST_UPDATED" )
-	private Date lastUpdated;
+	@Index
+	private Date LAST_UPDATED;
 
 	
 	@Deprecated
-	@Persistent( column = "INDEX" )
-	private Text index;
+	private String INDEX;
 	
-	@Persistent( column = "WORD_COUNT" )
-	private Long wordCount;
-
-	@Persistent( column = "PAGE_COUNT" )
-	private Integer pageCount;
+	@Index
+	private Integer PAGE_COUNT;
 	
 	
-	@Persistent( column = "REVIEW_COUNT" )
-	private Long reviewCount;
+	@Index
+	private Long REVIEW_COUNT;
 	
-	@Persistent( column = "RATING_COUNT" )
-	private Long ratingCount;
+	@Index
+	private Long RATING_COUNT;
 	
 	@Deprecated
-	@Persistent( column = "STAR_COUNT" )
-	private Long starCount;
+	private Long STAR_COUNT;
 
-	@Persistent( column = "TOTAL_RATING" )
-	private Long totalRating;
-
-	@Persistent( column = "RELEVANCE_OFFSET" )
-	private Long relevanceOffset;
+	@Index
+	private Long TOTAL_RATING;
 	
 
-	@Persistent( column = "READ_COUNT_OFFSET" )
-	private Long readCountOffset;
+	@Index
+	private Long READ_COUNT_OFFSET;
 	
-	@Persistent( column = "READ_COUNT" )
-	private Long readCount;
+	@Index
+	private Long READ_COUNT;
 	
-	@Persistent( column = "FB_LIKE_SHARE_COUNT_OFFSET" )
-	private Long fbLikeShareCountOffset;
+	@Index
+	private Long FB_LIKE_SHARE_COUNT_OFFSET;
 	
-	@Persistent( column = "FB_LIKE_SHARE_COUNT" )
-	private Long fbLikeShareCount;
+	@Index
+	private Long FB_LIKE_SHARE_COUNT;
 
 	
-	@Persistent( column = "LAST_PROCESS_DATE" )
-	private Date lastProcessDate;
+	@Index
+	private Date LAST_PROCESS_DATE;
 
-	@Persistent( column = "NEXT_PROCESS_DATE" )
-	private Date nextProcessDate;
+	@Index
+	private Date NEXT_PROCESS_DATE;
 
 	
 	
 	public PratilipiEntity() {}
 	
 	public PratilipiEntity( Long id ) {
-		this.id = id;
+		this.PRATILIPI_ID = id;
 	}
 
 	
 	@Override
 	public Long getId() {
-		return id;
+		return PRATILIPI_ID;
 	}
 
 	public void setId( Long id ) {
-		this.id = id;
+		this.PRATILIPI_ID = id;
 	}
 
 	@Override
+	public <T> void setKey( Key<T> key ) {
+		this.PRATILIPI_ID = key.getId();
+	}
+
+	
+	@Override
 	public String getTitle() {
-		return title;
+		return TITLE;
 	}
 
 	@Override
 	public void setTitle( String title ) {
-		this.title = title;
+		this.TITLE = title;
 	}
 
 	@Override
 	public String getTitleEn() {
-		return this.titleEn;
+		return this.TITLE_EN;
 	}
 
 	@Override
 	public void setTitleEn(String titleEn) {
-		this.titleEn = titleEn;
+		this.TITLE_EN = titleEn;
 	}
 	
 	@Override
 	public Language getLanguage() {
-		if( language == null ) {
-			if( languageId == 5130467284090880L || languageId == 5750790484393984L )
-				language = Language.HINDI;
-			else if( languageId == 5965057007550464L || languageId == 5746055551385600L )
-				language = Language.GUJARATI;
-			else if( languageId == 6319546696728576L || languageId == 5719238044024832L )
-				language = Language.TAMIL;
-			else if( languageId == 5173513199550464L )
-				language = Language.MARATHI;
-			else if( languageId == 5752669171875840L )
-				language = Language.MALAYALAM;
-			else if( languageId == 6235363433512960L )
-				language = Language.BENGALI;
-			else if( languageId == 6213615354904576L || languageId == 5688424874901504L )
-				language = Language.ENGLISH;
+		if( LANGUAGE == null ) {
+			if( LANGUAGE_ID == 5130467284090880L || LANGUAGE_ID == 5750790484393984L )
+				LANGUAGE = Language.HINDI;
+			else if( LANGUAGE_ID == 5965057007550464L || LANGUAGE_ID == 5746055551385600L )
+				LANGUAGE = Language.GUJARATI;
+			else if( LANGUAGE_ID == 6319546696728576L || LANGUAGE_ID == 5719238044024832L )
+				LANGUAGE = Language.TAMIL;
+			else if( LANGUAGE_ID == 5173513199550464L )
+				LANGUAGE = Language.MARATHI;
+			else if( LANGUAGE_ID == 5752669171875840L )
+				LANGUAGE = Language.MALAYALAM;
+			else if( LANGUAGE_ID == 6235363433512960L )
+				LANGUAGE = Language.BENGALI;
+			else if( LANGUAGE_ID == 6213615354904576L || LANGUAGE_ID == 5688424874901504L )
+				LANGUAGE = Language.ENGLISH;
 		}
-		return language;
+		return LANGUAGE;
 	}
 
 	@Override
 	public void setLanguage( Language language ) {
-		switch( language ) {
-			case HINDI:
-				languageId = 5130467284090880L;
-				break;
-			case GUJARATI:
-				languageId = 5965057007550464L;
-				break;
-			case TAMIL:
-				languageId = 6319546696728576L;
-				break;
-			case MARATHI:
-				languageId = 5173513199550464L;
-				break;
-			case MALAYALAM:
-				languageId = 5752669171875840L;
-				break;
-			case BENGALI:
-				languageId = 6235363433512960L;
-				break;
-			case ENGLISH:
-				languageId = 6213615354904576L;
-				break;
-		}
-		this.language = language;
+		this.LANGUAGE = language;
 	}
 
 	@Override
 	public Long getAuthorId() {
-		return authorId;
+		return AUTHOR_ID;
 	}
 
 	@Override
 	public void setAuthorId( Long authorId ) {
-		this.authorId = authorId;
+		this.AUTHOR_ID = authorId;
 	}
 	
 	@Override
 	public String getSummary() {
-		return summary == null ? null : summary.getValue();
+		return SUMMARY;
 	}
 
 	@Override
 	public void setSummary( String summary ) {
-		this.summary = summary == null ? null : new Text( summary );
+		this.SUMMARY = summary;
 	}
 	
-	@Override
-	public Integer getPublicationYear() {
-		return publicationYear;
-	}
-
-	@Override
-	public void setPublicationYear( Integer publicationYear ) {
-		this.publicationYear = publicationYear;
-	}
-
 	
 	@Override
 	public PratilipiType getType() {
-		return type;
+		return PRATILIPI_TYPE;
 	}
 	
 	@Override
 	public void setType( PratilipiType pratilipiType ) {
-		this.type = pratilipiType;
+		this.PRATILIPI_TYPE = pratilipiType;
 	}
 
 	@Override
 	public PratilipiContentType getContentType() {
-		return contentType;
+		return CONTENT_TYPE;
 	}
 	
 	@Override
 	public void setContentType( PratilipiContentType contentType ) {
-		this.contentType = contentType;
+		this.CONTENT_TYPE = contentType;
 	}
 	
 	@Override
 	public PratilipiState getState() {
-		return state;
+		return STATE;
 	}
 	
 	@Override
 	public void setState( PratilipiState state ) {
-		this.state = state;
+		this.STATE = state;
 	}
 	
 	@Override
 	public Boolean hasCustomCover() {
-		return customCover == null ? false : customCover;
+		return CUSTOM_COVER == null ? false : CUSTOM_COVER;
 	}
 
 	@Override
 	public void setCustomCover( Boolean customCover ) {
-		this.customCover = customCover;
+		this.CUSTOM_COVER = customCover;
 	}
 	
 	@Override
 	public Date getListingDate() {
-		return listingDate;
+		return LISTING_DATE;
 	}
 
 	@Override
 	public void setListingDate( Date listingDate ) {
-		this.listingDate = listingDate;
+		this.LISTING_DATE = listingDate;
 	}
 
 	@Override
 	public Date getLastUpdated() {
-		return lastUpdated;
+		return LAST_UPDATED;
 	}
 
 	@Override
 	public void setLastUpdated( Date lastUpdated ) {
-		this.lastUpdated = lastUpdated;
+		this.LAST_UPDATED = lastUpdated;
 	}
 
 	
 	@Override
 	public String getIndex() {
-		return index == null ? null : index.getValue();
+		return INDEX;
 	}
 
 	@Override
 	public void setIndex( String index ) {
-		this.index = index == null ? null : new Text( index );
-	}
-	
-	@Override
-	public Long getWordCount() {
-		return wordCount;
-	}
-
-	@Override
-	public void setWordCount( Long wordCount ) {
-		this.wordCount = wordCount;
+		this.INDEX = index;
 	}
 	
 	@Override
 	public Integer getPageCount() {
-		return pageCount == null ? 0 : pageCount;
+		return PAGE_COUNT == null ? 0 : PAGE_COUNT;
 	}
 
 	@Override
 	public void setPageCount( Integer pageCount ) {
-		this.pageCount = pageCount;
+		this.PAGE_COUNT = pageCount;
 	}
 	
 	
 	@Override
 	public Long getReviewCount() {
-		return reviewCount == null ? 0 : reviewCount;
+		return REVIEW_COUNT == null ? 0 : REVIEW_COUNT;
 	}
 
 	@Override
 	public void setReviewCount( Long reviewCount ) {
-		this.reviewCount = reviewCount;
+		this.REVIEW_COUNT = reviewCount;
 	}
 
 	@Override
 	public Long getRatingCount() {
-		return ratingCount == null ? 0 : ratingCount;
+		return RATING_COUNT == null ? 0 : RATING_COUNT;
 	}
 
 	@Override
 	public void setRatingCount( Long ratingCount ) {
-		this.ratingCount = ratingCount;
+		this.RATING_COUNT = ratingCount;
 	}
 	
 	@Override
 	public Long getTotalRating() {
-		if( totalRating == null )
-			totalRating = starCount;
-		return totalRating == null ? 0 : totalRating;
+		if( TOTAL_RATING == null )
+			TOTAL_RATING = STAR_COUNT;
+		return TOTAL_RATING == null ? 0 : TOTAL_RATING;
 	}
 
 	@Override
 	public void setTotalRating( Long totalRating ) {
-		this.starCount = totalRating;
-		this.totalRating = totalRating;
+		this.STAR_COUNT = totalRating;
+		this.TOTAL_RATING = totalRating;
 	}
 	
 	
 	@Override
 	public Long getReadCount() {
-		return readCount == null
-				? ( readCountOffset == null ? 0L : readCountOffset )
-				: ( readCountOffset == null ? readCount : readCount + readCountOffset );
+		return ( READ_COUNT_OFFSET == null ? 0L : READ_COUNT_OFFSET )
+				+ ( READ_COUNT == null ? 0L : READ_COUNT );
 	}
 
 	@Override
 	public void setReadCount( Long readCount ) {
-		this.readCount = readCount;
+		this.READ_COUNT = readCount;
 	}
 	
 	@Override
 	public Long getFbLikeShareCountOffset() {
-		return fbLikeShareCountOffset == null ? 0L : fbLikeShareCountOffset;
+		return FB_LIKE_SHARE_COUNT_OFFSET == null ? 0L : FB_LIKE_SHARE_COUNT_OFFSET;
 	}
 
 	@Override
 	public Long getFbLikeShareCount() {
-		return ( fbLikeShareCountOffset == null ? 0L : fbLikeShareCountOffset )
-				+ ( fbLikeShareCount == null ? 0L : fbLikeShareCount );
+		return ( FB_LIKE_SHARE_COUNT_OFFSET == null ? 0L : FB_LIKE_SHARE_COUNT_OFFSET )
+				+ ( FB_LIKE_SHARE_COUNT == null ? 0L : FB_LIKE_SHARE_COUNT );
 	}
 
 	@Override
 	public void setFbLikeShareCount( Long fbLikeShareCount ) {
-		this.fbLikeShareCount = fbLikeShareCount;
+		this.FB_LIKE_SHARE_COUNT = fbLikeShareCount;
 	}
 
 	
 	@Override
 	public Date getLastProcessDate() {
-		return lastProcessDate == null ? lastUpdated : lastProcessDate;
+		return LAST_PROCESS_DATE == null ? LAST_UPDATED : LAST_PROCESS_DATE;
 	}
 
 	@Override
 	public void setLastProcessDate( Date lastProcessDate ) {
-		this.lastProcessDate = lastProcessDate;
+		this.LAST_PROCESS_DATE = lastProcessDate;
 	}
 
 	@Override
 	public Date getNextProcessDate() {
-		return nextProcessDate;
+		return NEXT_PROCESS_DATE;
 	}
 
 	@Override
 	public void setNextProcessDate( Date nextProcessDate ) {
-		this.nextProcessDate = nextProcessDate;
+		this.NEXT_PROCESS_DATE = nextProcessDate;
 	}
 
 }

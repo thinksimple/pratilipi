@@ -39,8 +39,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private final static String PREFIX_APP_PROPERTY = "AppProperty-";
 	private final static String PREFIX_USER = "User-";
 	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
-	private final static String PREFIX_PAGE = "Page-";
-	private static final String PREFIX_PRATILIPI = "Pratilipi-";
 	private static final String PREFIX_AUTHOR = "Author-";
 	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
 	private static final String PREFIX_NAVIGATION_LIST = "NavigationList-";
@@ -270,29 +268,13 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	
 	// AUDIT_LOG Table
+	@Override public AuditLog newAuditLog() { return dataAccessor.newAuditLog(); }
+	@Override public AuditLog newAuditLogOfy() { return dataAccessor.newAuditLogOfy(); }
+	@Override public AuditLog createAuditLog( AuditLog auditLog ) {	return dataAccessor.createAuditLog( auditLog ); }
+	@Override public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) { return dataAccessor.getAuditLogList( cursorStr, resultCount ); }
+	@Override public DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursorStr, Integer resultCount) { return dataAccessor.getAuditLogList( accessId, cursorStr, resultCount ); }
 	
-	@Override
-	public AuditLog newAuditLog() {
-		return dataAccessor.newAuditLog();
-	}
-
-	@Override
-	public AuditLog createAuditLog( AuditLog auditLog ) {
-		return dataAccessor.createAuditLog( auditLog );
-	}
-	
-	@Override
-	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) {
-		return dataAccessor.getAuditLogList( cursorStr, resultCount );
-	}
-
-	@Override
-	public DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursorStr, Integer resultCount) {
-		return dataAccessor.getAuditLogList( accessId, cursorStr, resultCount );
-	}
-
-	
-	// PAGE Table - Counting on Objectify Global and Session cache
+	// PAGE Table
 	@Override public Page newPage() { return dataAccessor.newPage(); }
 	@Override public Page getPage( Long id ) { return dataAccessor.getPage( id ); }
 	@Override public Page getPage( String uri ) { return dataAccessor.getPage( uri ); }
@@ -302,96 +284,15 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public Page createOrUpdatePage( Page page ) { return dataAccessor.createOrUpdatePage( page ); }
 	@Override public void deletePage( Page page ) { dataAccessor.deletePage( page ); }
 
-
 	// PRATILIPI Table
-
-	@Override
-	public Pratilipi newPratilipi() {
-		return dataAccessor.newPratilipi();
-	}
-
-	@Override
-	public Pratilipi getPratilipi( Long id ) {
-		Pratilipi pratilipi = memcache.get( PREFIX_PRATILIPI + id );
-		if( pratilipi == null ) {
-			pratilipi = dataAccessor.getPratilipi( id );
-			if( pratilipi != null )
-				memcache.put( PREFIX_PRATILIPI + id, pratilipi );
-		}
-		return pratilipi;
-	}
-
-	@Override
-	public List<Pratilipi> getPratilipiList( List<Long> idList ) {
-		if( idList.size() == 0 )
-			return new ArrayList<>( 0 );
-		
-		
-		List<String> memcacheKeyList = new ArrayList<>( idList.size() );
-		for( Long id : idList )
-			memcacheKeyList.add( PREFIX_PRATILIPI + id );
-		Map<String, Pratilipi> memcacheKeyEntityMap = memcache.getAll( memcacheKeyList );
-
-		
-		List<Long> missingIdList = new LinkedList<>();
-		for( Long id : idList )
-			if( memcacheKeyEntityMap.get( PREFIX_PRATILIPI + id ) == null )
-				missingIdList.add( id );
-		List<Pratilipi> missingPratilipiList = dataAccessor.getPratilipiList( missingIdList );
-
-		
-		List<Pratilipi> pratilipiList = new ArrayList<>( idList.size() );
-		for( Long id : idList ) {
-			Pratilipi pratilipi = memcacheKeyEntityMap.get( PREFIX_PRATILIPI + id );
-			if( pratilipi == null ) {
-				pratilipi = missingPratilipiList.remove( 0 );
-				if( pratilipi != null )
-					memcache.put( PREFIX_PRATILIPI + id, pratilipi );
-			}
-			pratilipiList.add( pratilipi );
-		}
-		
-		
-		return pratilipiList;
-	}
-	
-	@Override
-	public DataListCursorTuple<Long> getPratilipiIdList(
-			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
-		
-		return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, resultCount );
-		
-	}
-
-	@Override
-	public DataListCursorTuple<Long> getPratilipiIdList(
-			PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) {
-		
-		return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, offset, resultCount );
-		
-	}
-	
-	@Override
-	public DataListCursorTuple<Pratilipi> getPratilipiList(
-			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
-
-		return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount );
-		
-	}
-	
-	@Override
-	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
-		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi );
-		memcache.put( PREFIX_PRATILIPI + pratilipi.getId(), pratilipi );
-		return pratilipi;
-	}
-	
-	@Override
-	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) {
-		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
-		memcache.put( PREFIX_PRATILIPI + pratilipi.getId(), pratilipi );
-		return pratilipi;
-	}
+	@Override public Pratilipi newPratilipi() { return dataAccessor.newPratilipi(); }
+	@Override public Pratilipi getPratilipi( Long id ) { return dataAccessor.getPratilipi( id ); }
+	@Override public List<Pratilipi> getPratilipiList( List<Long> idList ) { return dataAccessor.getPratilipiList( idList ); }
+	@Override public DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) { return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, resultCount ); }
+	@Override public DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) { return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, offset, resultCount ); }
+	@Override public DataListCursorTuple<Pratilipi> getPratilipiList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) { return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount ); }
+	@Override public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) { return dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog ); }
+	@Override public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, Page page, AuditLog auditLog ) { return dataAccessor.createOrUpdatePratilipi( pratilipi, page, auditLog ); }
 
 	
 	// AUTHOR Table
@@ -513,22 +414,24 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 
 	
-	// EVENT Table - Counting on Objectify Global and Session cache
+	// EVENT Table
 	@Override public Event newEvent() { return dataAccessor.newEvent(); }
 	@Override public Event getEvent( Long id ) { return dataAccessor.getEvent( id ); }
 	@Override public List<Event> getEventList( Language language ) { return dataAccessor.getEventList( language ); }
-	@Override public Event createOrUpdateEvent( Event event ) { return dataAccessor.createOrUpdateEvent( event ); }
+	@Override public Event createOrUpdateEvent( Event event, AuditLog auditLog ) { return dataAccessor.createOrUpdateEvent( event, auditLog ); }
+	@Override public Event createOrUpdateEvent( Event event, Page page, AuditLog auditLog ) { return dataAccessor.createOrUpdateEvent( event, page, auditLog ); }
 	
-	// BLOG Table - Counting on Objectify Global and Session cache
+	// BLOG Table
 	@Override public Blog newBlog() { return dataAccessor.newBlog(); }
 	@Override public Blog getBlog( Long id ) { return dataAccessor.getBlog( id ); }
-	@Override public Blog createOrUpdateBlog( Blog blog ) { return dataAccessor.createOrUpdateBlog( blog ); }
+	@Override public Blog createOrUpdateBlog( Blog blog, AuditLog auditLog ) { return dataAccessor.createOrUpdateBlog( blog, auditLog ); }
 
-	// BLOG_POST Table - Counting on Objectify Global and Session cache
+	// BLOG_POST Table
 	@Override public BlogPost newBlogPost() { return dataAccessor.newBlogPost(); }
 	@Override public BlogPost getBlogPost( Long id ) { return dataAccessor.getBlogPost( id ); }
 	@Override public DataListCursorTuple<BlogPost> getBlogPostList( BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount ) { return dataAccessor.getBlogPostList( blogPostFilter, cursor, offset, resultCount ); }
-	@Override public BlogPost createOrUpdateBlogPost( BlogPost blogPost ) { return dataAccessor.createOrUpdateBlogPost( blogPost ); }
+	@Override public BlogPost createOrUpdateBlogPost( BlogPost blogPost, AuditLog auditLog ) { return dataAccessor.createOrUpdateBlogPost( blogPost, auditLog ); }
+	@Override public BlogPost createOrUpdateBlogPost( BlogPost blogPost, Page page, AuditLog auditLog ) { return dataAccessor.createOrUpdateBlogPost( blogPost, page, auditLog ); }
 	
 	
 	// USER_PRATILIPI Table
@@ -582,11 +485,11 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	
-	// USER_AUTHOR Table - Counting on Objectify Global and Session cache
+	// USER_AUTHOR Table
 	@Override public UserAuthor newUserAuthor() { return dataAccessor.newUserAuthor(); }
 	@Override public UserAuthor getUserAuthor( Long userId, Long authorId ) { return dataAccessor.getUserAuthor( userId, authorId ); }
-	@Override public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer resultCount ) { return dataAccessor.getUserAuthorList( userId, authorId, cursor, resultCount ); }
-	@Override public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) { return dataAccessor.createOrUpdateUserAuthor( userAuthor ); }
+	@Override public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount ) { return dataAccessor.getUserAuthorList( userId, authorId, cursor, offset, resultCount ); }
+	@Override public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) { return dataAccessor.createOrUpdateUserAuthor( userAuthor, auditLog ); }
 	
 	
 	// NAVIGATION Table
@@ -656,4 +559,5 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		dataAccessor.destroy();
 	}
 
+	
 }

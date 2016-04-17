@@ -34,9 +34,6 @@ public class PratilipiData implements Serializable {
 	@Deprecated
 	private boolean hasSummary;
 	
-	private Integer publicationYear;
-	private boolean hasPublicationYear;
-	
 	
 	private String pageUrl;
 	private String coverImageUrl;
@@ -160,19 +157,6 @@ public class PratilipiData implements Serializable {
 
 	public boolean hasSummary() {
 		return hasSummary;
-	}
-	
-	public Integer getPublicationYear() {
-		return publicationYear;
-	}
-
-	public void setPublicationYear( Integer publicationYear ) {
-		this.publicationYear = publicationYear;
-		this.hasPublicationYear = true;
-	}
-
-	public boolean hasPublicationYear() {
-		return hasPublicationYear;
 	}
 	
 	

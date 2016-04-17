@@ -60,9 +60,14 @@ public interface DataAccessor {
 	void deleteAccessToken( AccessToken accessToken );
 
 	// AUDIT_LOG Table
+	AuditLog newAuditLogOfy();
+	@Deprecated
 	AuditLog newAuditLog();
+	@Deprecated
 	AuditLog createAuditLog( AuditLog auditLog );
+	@Deprecated
 	DataListCursorTuple<AuditLog> getAuditLogList( String cursor, Integer resultCount );
+	@Deprecated
 	DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursor, Integer resultCount );
 
 	
@@ -80,12 +85,12 @@ public interface DataAccessor {
 	Pratilipi newPratilipi();
 	Pratilipi getPratilipi( Long id );
 	List<Pratilipi> getPratilipiList( List<Long> idList );
+	@Deprecated
 	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount );
 	DataListCursorTuple<Pratilipi> getPratilipiList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
-	@Deprecated
-	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi );
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog );
+	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, Page page, AuditLog auditLog );
 	
 	// AUTHOR Table
 	Author newAuthor();
@@ -102,19 +107,21 @@ public interface DataAccessor {
 	Event newEvent();
 	Event getEvent( Long id );
 	List<Event> getEventList( Language language );
-	Event createOrUpdateEvent( Event event );
+	Event createOrUpdateEvent( Event event, AuditLog auditLog );
+	Event createOrUpdateEvent( Event event, Page page, AuditLog auditLog );
 
 
 	// BLOG Table
 	Blog newBlog();
 	Blog getBlog( Long id );
-	Blog createOrUpdateBlog( Blog blog );
+	Blog createOrUpdateBlog( Blog blog, AuditLog auditLog );
 	
 	// BLOG_POST Table
 	BlogPost newBlogPost();
 	BlogPost getBlogPost( Long id );
 	DataListCursorTuple<BlogPost> getBlogPostList( BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount );
-	BlogPost createOrUpdateBlogPost( BlogPost blogPost );
+	BlogPost createOrUpdateBlogPost( BlogPost blogPost, AuditLog auditLog );
+	BlogPost createOrUpdateBlogPost( BlogPost blogPost, Page page, AuditLog auditLog );
 	
 	
 	// USER_PRATILIPI Table
@@ -128,8 +135,8 @@ public interface DataAccessor {
 	// USER_AUTHOR Table
 	UserAuthor newUserAuthor();
 	UserAuthor getUserAuthor( Long userId, Long authorId );
-	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer resultCount );
-	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor );
+	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
+	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog );
 
 	
 	// NAVIGATION Table

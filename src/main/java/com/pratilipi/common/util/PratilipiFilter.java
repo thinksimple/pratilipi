@@ -21,7 +21,8 @@ public class PratilipiFilter implements Serializable {
 	private Date minLastUpdated;
 	private Boolean minLastUpdatedInclusive;
 	
-	private Date nextProcessDateEnd;
+	private Date maxNextProcessDate;
+	private Boolean maxNextProcessDateInclusive;
 
 	private Boolean orderByReadCount;
 	private Boolean orderByLastUpdated;
@@ -81,12 +82,17 @@ public class PratilipiFilter implements Serializable {
 		this.minLastUpdatedInclusive = inclusive;
 	}
 	
-	public Date getNextProcessDateEnd() {
-		return nextProcessDateEnd;
+	public Date getMaxNextProcessDate() {
+		return maxNextProcessDate;
 	}
 
-	public void setNextProcessDateEnd( Date nextProcessDateEnd ) {
-		this.nextProcessDateEnd = nextProcessDateEnd;
+	public boolean isMaxNextProcessDateInclusive() {
+		return maxNextProcessDateInclusive == null ? true : maxNextProcessDateInclusive;
+	}
+	
+	public void setMaxNextProcessDate( Date maxNextProcessDate, boolean inclusive ) {
+		this.maxNextProcessDate = maxNextProcessDate;
+		this.maxNextProcessDateInclusive = inclusive;
 	}
 	
 	public Boolean getOrderByReadCount() {
@@ -120,8 +126,8 @@ public class PratilipiFilter implements Serializable {
 			urlEncodedString += "&listName=" + listName;
 		if( state != null )
 			urlEncodedString += "&state=" + state;
-		if( nextProcessDateEnd != null )
-			urlEncodedString += "&nextProcessDateEnd=" + nextProcessDateEnd.getTime();
+		if( maxNextProcessDate != null )
+			urlEncodedString += "&nextProcessDateEnd=" + maxNextProcessDate.getTime();
 		if( orderByReadCount != null )
 			urlEncodedString += "&orderByReadCount=" + orderByReadCount;
 		if( orderByLastUpdated != null )

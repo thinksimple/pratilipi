@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.pratilipi.common.type.AccessType;
 
-public interface AuditLog extends Serializable {
+public interface AuditLog extends GenericOfyType, Serializable { // TODO: remove Serializable
 	
 	Long getId();
 

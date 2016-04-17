@@ -8,7 +8,7 @@ import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
-public interface Pratilipi extends Serializable {
+public interface Pratilipi extends GenericOfyType, Serializable {
 
 	Long getId();
 	
@@ -33,10 +33,6 @@ public interface Pratilipi extends Serializable {
 	
 	@Deprecated
 	void setSummary( String summary );
-
-	Integer getPublicationYear();
-	
-	void setPublicationYear( Integer publicationYear );
 
 
 	PratilipiType getType();
@@ -70,10 +66,6 @@ public interface Pratilipi extends Serializable {
 	@Deprecated
 	void setIndex( String index );
 	
-	Long getWordCount();
-	
-	void setWordCount( Long wordCount );
-
 	Integer getPageCount();
 	
 	void setPageCount( Integer pageCount );

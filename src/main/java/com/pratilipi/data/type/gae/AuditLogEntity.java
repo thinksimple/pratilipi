@@ -8,6 +8,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
+import com.googlecode.objectify.Key;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.data.type.AuditLog;
 
@@ -46,6 +47,11 @@ public class AuditLogEntity implements AuditLog {
 	@Override
 	public Long getId() {
 		return id;
+	}
+	
+	@Override
+	public <T> void setKey( Key<T> key ) {
+		this.id = key.getId();
 	}
 
 	@Override

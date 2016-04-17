@@ -59,6 +59,7 @@ import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
+import com.pratilipi.data.type.gae.AuditLogEntityOfy;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
@@ -92,7 +93,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// Registering Entities
 	
 	static {
+		ObjectifyService.register( AuditLogEntityOfy.class );
 		ObjectifyService.register( PageEntity.class );
+		ObjectifyService.register( PratilipiEntity.class );
 		ObjectifyService.register( EventEntity.class );
 		ObjectifyService.register( BlogEntity.class );
 		ObjectifyService.register( BlogPostEntity.class );
@@ -151,17 +154,24 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return id == null ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
+	private <P extends GenericOfyType,Q extends P> List<P> getEntityListOfy( Class<Q> clazz, List<Long> idList ) {
+		return new ArrayList<P>( ObjectifyService.ofy().load().type( clazz ).ids( idList ).values() );
+	}
+	
 	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity ) {
 		Key<T> key = ObjectifyService.ofy().save().entity( entity ).now();
 		entity.setKey( key );
 		return entity;
 	}
 	
-	private <T extends GenericOfyType> Map<Key<T>, T> createOrUpdateEntitiesOfy( T... entities ) {
-		return ObjectifyService.ofy().save().entities( entities ).now();
+	private GenericOfyType[] createOrUpdateEntityListOfy( GenericOfyType... entities ) {
+		Map<Key<GenericOfyType>, GenericOfyType> map = ObjectifyService.ofy().save().entities( entities ).now();
+		for( Key<GenericOfyType> key : map.keySet() )
+			map.get( key ).setKey( key );
+		return entities;
 	}
 
-	private <T extends GenericOfyType> void deleteEntityOfy( T entity ) {
+	private void deleteEntityOfy( GenericOfyType entity ) {
 		ObjectifyService.ofy().delete().entity( entity ).now();
 	}
 
@@ -354,6 +364,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	
 	// AUDIT_LOG Table
+	
+	@Override
+	public AuditLog newAuditLogOfy() {
+		return new AuditLogEntityOfy();
+	}
 	
 	@Override
 	public AuditLog newAuditLog() {
@@ -553,6 +568,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return "DataStore.Page-" + pageType + "::" + primaryContentId;
 	}
 	
+	
 	// PRATILIPI Table
 
 	@Override
@@ -562,19 +578,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Pratilipi getPratilipi( Long id ) {
-		try {
-			return getEntity( PratilipiEntity.class, id );
-		} catch( JDOObjectNotFoundException e ) {
-			return null;
-		}
+		return getEntityOfy( PratilipiEntity.class, id );
 	}
 
 	@Override
 	public List<Pratilipi> getPratilipiList( List<Long> idList ) {
-		List<Pratilipi> pratilipiList = new ArrayList<>( idList.size() );
-		for( Long id : idList )
-			pratilipiList.add( getPratilipi( id ) );
-		return pratilipiList;
+		return getEntityListOfy( PratilipiEntity.class, idList );
 	}
 	
 	@Override
@@ -600,69 +609,68 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@SuppressWarnings("unchecked")
 	private <T> DataListCursorTuple<T> getPratilipiList(
-			PratilipiFilter pratilipiFilter, String cursorStr, Integer offset,
-			Integer resultCount, boolean idOnly ) {
+			PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount, boolean idOnly ) {
 		
 		if( pratilipiFilter.getListName() == null ) {
 		
-			GaeQueryBuilder gaeQueryBuilder =
-					new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
+			com.googlecode.objectify.cmd.Query<PratilipiEntity> query
+					= ObjectifyService.ofy().load().type( PratilipiEntity.class );
 	
 			if( pratilipiFilter.getAuthorId() != null )
-				gaeQueryBuilder.addFilter( "authorId", pratilipiFilter.getAuthorId() );
+				query = query.filter( "AUTHOR_ID", pratilipiFilter.getAuthorId() );
 			if( pratilipiFilter.getLanguage() != null )
-				gaeQueryBuilder.addFilter( "language", pratilipiFilter.getLanguage() );
+				query = query.filter( "LANGUAGE", pratilipiFilter.getLanguage() );
 			if( pratilipiFilter.getType() != null )
-				gaeQueryBuilder.addFilter( "type", pratilipiFilter.getType() );
+				query = query.filter( "PRATILIPI_TYPE", pratilipiFilter.getType() );
 			if( pratilipiFilter.getState() != null )
-				gaeQueryBuilder.addFilter( "state", pratilipiFilter.getState() );
+				query = query.filter( "STATE", pratilipiFilter.getState() );
 	
 			if( pratilipiFilter.getMinLastUpdated() != null ) {
-				gaeQueryBuilder.addFilter( "lastUpdated",
-						pratilipiFilter.getMinLastUpdated(),
-						pratilipiFilter.isMinLastUpdatedInclusive() ? Operator.GREATER_THAN_OR_EQUAL : Operator.GREATER_THAN );
-				gaeQueryBuilder.addOrdering( "lastUpdated", true );
+				query = query.filter(
+						pratilipiFilter.isMinLastUpdatedInclusive() ? "LAST_UPDATED >= " : "LAST_UPDATED > ",
+						pratilipiFilter.getMinLastUpdated() );
+				query = query.order( "LAST_UPDATED" );
 			}
 			
-			if( pratilipiFilter.getNextProcessDateEnd() != null ) {
-				gaeQueryBuilder.addFilter( "nextProcessDate", pratilipiFilter.getNextProcessDateEnd(), Operator.LESS_THAN_OR_EQUAL );
-				gaeQueryBuilder.addOrdering( "nextProcessDate", true );
+			if( pratilipiFilter.getMaxNextProcessDate() != null ) {
+				query = query.filter(
+						pratilipiFilter.isMaxNextProcessDateInclusive() ? "NEXT_PROCESS_DATE <= " : "NEXT_PROCESS_DATE < ",
+						pratilipiFilter.getMaxNextProcessDate() );
+				query = query.order( "NEXT_PROCESS_DATE" );
 			}
 			
 			if( pratilipiFilter.getOrderByReadCount() != null )
-				gaeQueryBuilder.addOrdering( "readCount", pratilipiFilter.getOrderByReadCount() );
+				query = query.order( pratilipiFilter.getOrderByReadCount() ? "READ_COUNT" : "-READ_COUNT" );
 			if( pratilipiFilter.getOrderByLastUpdate() != null )
-				gaeQueryBuilder.addOrdering( "lastUpdated", pratilipiFilter.getOrderByLastUpdate() );
+				query = query.order( pratilipiFilter.getOrderByLastUpdate() ? "LAST_UPDATED" : "-LAST_UPDATED" );
 	
-			if( idOnly )
-				gaeQueryBuilder.setResult( "id" );
 			
-			gaeQueryBuilder.setCursor( cursorStr );
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
 			
-			if( offset != null && resultCount != null )
-				gaeQueryBuilder.setRange( offset, offset + resultCount );
-			else if( resultCount != null )
-				gaeQueryBuilder.setRange( 0, resultCount );
+			if( offset != null && offset > 0 )
+				query = query.offset( offset );
+			if( resultCount != null && resultCount > 0 )
+				query = query.limit( resultCount );
 				
 			
-			Query query = gaeQueryBuilder.build();
-	
+			List<T> responseList = resultCount == null ? new ArrayList<T>() : new ArrayList<T>( resultCount );
+			Cursor cursor = null;
+			if( idOnly ) {
+				QueryResultIterator <Key<PratilipiEntity>> iterator = query.keys().iterator();
+				while( iterator.hasNext() )
+					responseList.add( (T) (Long) iterator.next().getId() );
+				cursor = iterator.getCursor();
+			} else {
+				QueryResultIterator <PratilipiEntity> iterator = query.iterator();
+				while( iterator.hasNext() )
+					responseList.add( (T) iterator.next() );
+				cursor = iterator.getCursor();
+			}
 			
-			List<T> pratilipiEntityList =
-					(List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-			Cursor cursor = JDOCursorHelper.getCursor( pratilipiEntityList );
-			
-			return new DataListCursorTuple<T>(
-					idOnly ? pratilipiEntityList : (List<T>) pm.detachCopyAll( pratilipiEntityList ),
-					cursor == null ? null : cursor.toWebSafeString() );
+			return new DataListCursorTuple<T>( responseList, cursor == null ? null : cursor.toWebSafeString() );
 			
 		} else {
 			
-			int startIndex = cursorStr == null ? 0 : Integer.parseInt( cursorStr );
-			List<T> responseList = new LinkedList<>();
-			int numberFound = 0;
-			
-			int entitiesToSkip = startIndex + ( offset == null ? 0 : offset );
 			try {
 				
 				String fileName = CURATED_DATA_FOLDER + "/list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
@@ -670,52 +678,68 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				List<String> uriList = IOUtils.readLines( inputStream, "UTF-8" );
 				inputStream.close();
 
-				uriList.remove( 0 ); // Removing the first line having title.
-				for( String uri : uriList ) {
-					
-					uri = uri.trim();
-					if( uri.isEmpty() )
+				// Removing the first line having title.
+				uriList.remove( 0 );
+				
+				// Removing empty lines.
+				for( int i = 0; i < uriList.size(); i++ ) {
+					String uri = uriList.get( i ).trim();
+					if( uri.isEmpty() ) {
+						uriList.remove( i );
+						i--;
 						continue;
-					
-					Page page = getPage( uri );
-					if( page == null || page.getType() != PageType.PRATILIPI )
-						continue;
-					
-					numberFound++;
-					
-					if( entitiesToSkip > 0 ) {
-						entitiesToSkip--;
-						continue;
+					} else {
+						uriList.set( i, uri );
 					}
-					
-					if( responseList.size() != resultCount ) { // resultCount could be null
-						responseList.add( idOnly
-								? (T) page.getPrimaryContentId()
-								: (T) getPratilipi( page.getPrimaryContentId() ) );
-					}
-					
 				}
+
+				// Fetching Pratilipi pages.
+				Map<String, Page> pratilipiPages = getPages( uriList );
+				
+				// Pratilipi id list.
+				List<Long> pratilipiIdList = new ArrayList<>( uriList.size() );
+				for( int i = 0; i < uriList.size(); i++ ) {
+					Page page = pratilipiPages.get( uriList.get( i ) );
+					if( page != null && page.getType() == PageType.PRATILIPI )
+						pratilipiIdList.add( page.getPrimaryContentId() );
+				}
+
+				
+				offset = cursorStr == null ? 0 : Integer.parseInt( cursorStr )
+						+ ( offset == null || offset < 0 ? 0 : offset );
+				
+				offset = Math.min( offset, pratilipiIdList.size() );
+				
+				resultCount = resultCount == null || resultCount > pratilipiIdList.size() - offset
+						? pratilipiIdList.size() - offset : resultCount;
+				
+				
+				List<T> responseList = idOnly
+						? (List<T>) pratilipiIdList.subList( offset, offset + resultCount )
+						: (List<T>) getPratilipiList( pratilipiIdList.subList( offset, offset + resultCount ) );
+				
+				return new DataListCursorTuple<T>( responseList, offset + resultCount + "", (long) pratilipiIdList.size() );
 				
 			} catch( NullPointerException | IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch " + pratilipiFilter.getListName() + " list for " + pratilipiFilter.getLanguage() + ".", e );
+				return new DataListCursorTuple<T>( new ArrayList<T>( 0 ), "0", 0L );
 			}
 
-			cursorStr = resultCount == null || responseList.size() < resultCount ? null : startIndex + responseList.size() + "";
-			
-			return new DataListCursorTuple<T>( responseList, cursorStr, (long) numberFound );
-			
 		}
 		
 	}
 	
 	@Override
-	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
-		return createOrUpdateEntity( pratilipi );
-	}
-	
-	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) {
-		return (Pratilipi) createOrUpdateEntities( pratilipi, auditLog )[ 0 ];
+		return createOrUpdatePratilipi( pratilipi, null, auditLog );
+	}
+
+	@Override
+	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, Page page, AuditLog auditLog ) {
+		if( page == null )
+			return (Pratilipi) createOrUpdateEntityListOfy( pratilipi, auditLog )[ 0 ];
+		else
+			return (Pratilipi) createOrUpdateEntityListOfy( pratilipi, page, auditLog )[ 0 ];
 	}
 
 	
@@ -857,8 +881,16 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Event createOrUpdateEvent( Event event ) {
-		return createOrUpdateEntityOfy( (EventEntity) event );
+	public Event createOrUpdateEvent( Event event, AuditLog auditLog ) {
+		return createOrUpdateEvent( event, null, auditLog );
+	}
+	
+	@Override
+	public Event createOrUpdateEvent( Event event, Page page, AuditLog auditLog ) {
+		if( page == null )
+			return (Event) createOrUpdateEntityListOfy( event, auditLog )[0];
+		else
+			return (Event) createOrUpdateEntityListOfy( event, page, auditLog )[0];
 	}
 
 	
@@ -875,8 +907,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Blog createOrUpdateBlog( Blog blog ) {
-		return createOrUpdateEntityOfy( (BlogEntity) blog );
+	public Blog createOrUpdateBlog( Blog blog, AuditLog auditLog ) {
+		return (Blog) createOrUpdateEntityListOfy( blog, auditLog )[0];
 	}
 
 	
@@ -943,8 +975,17 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public BlogPost createOrUpdateBlogPost( BlogPost blogPost ) {
-		return createOrUpdateEntityOfy( (BlogPostEntity) blogPost );
+	public BlogPost createOrUpdateBlogPost( BlogPost blogPost, AuditLog auditLog ) {
+		return createOrUpdateBlogPost( blogPost, null, auditLog );
+	}
+	
+	@Override
+	public BlogPost createOrUpdateBlogPost( BlogPost blogPost, Page page, AuditLog auditLog ) {
+		if( page == null )
+			return (BlogPost) createOrUpdateEntityListOfy( blogPost, auditLog )[0];
+		else
+			return (BlogPost) createOrUpdateEntityListOfy( blogPost, auditLog )[0];
+
 	}
 
 	
@@ -1087,38 +1128,55 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursorStr, Integer resultCount ) {
+	public DataListCursorTuple<UserAuthor> getUserAuthorList(
+			Long userId, Long authorId, String cursorStr, Integer offset, Integer resultCount ) {
 
-		GaeQueryBuilder queryBuilder =
-				new GaeQueryBuilder( pm.newQuery( UserAuthorEntity.class ) );
-		
+		com.googlecode.objectify.cmd.Query<UserAuthorEntity> query
+				= ObjectifyService.ofy().load().type( UserAuthorEntity.class );
+				
 		if( userId != null )
-			queryBuilder.addFilter( "userId", userId );
+			query = query.filter( "USER_ID", userId );
+
 		if( authorId != null )
-			queryBuilder.addFilter( "authorId", authorId );
+			query = query.filter( "AUTHOR_ID", authorId );
+		
 		if( cursorStr != null )
-			queryBuilder.setCursor( cursorStr );
-		if( resultCount != null )
-			queryBuilder.setRange( 0, resultCount );
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
 		
-		Query query = queryBuilder.build();
+		if( offset != null && offset > 0 )
+			query = query.offset( offset );
 		
-		@SuppressWarnings("unchecked")
-		List<UserAuthor> userPratilipiList =
-				(List<UserAuthor>) query.executeWithMap( queryBuilder.getParamNameValueMap() );
-		Cursor cursor = JDOCursorHelper.getCursor( userPratilipiList );
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
+		
+		
+		QueryResultIterator<UserAuthorEntity> iterator = query.iterator();
+
+		
+		// BlogPost List
+		ArrayList<UserAuthor> userAuthorList = resultCount == null
+				? new ArrayList<UserAuthor>()
+				: new ArrayList<UserAuthor>( resultCount );
+		
+		while( iterator.hasNext() )
+			userAuthorList.add( iterator.next() );
+
+		
+		// Cursor
+		Cursor cursor = iterator.getCursor();
+
 		
 		return new DataListCursorTuple<UserAuthor>(
-				(List<UserAuthor>) pm.detachCopyAll( userPratilipiList ),
+				userAuthorList,
 				cursor == null ? null : cursor.toWebSafeString() );
 		
 	}
 
 	@Override
-	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
+	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) {
 		UserAuthorEntity userAuthorEntity = (UserAuthorEntity) userAuthor;
 		userAuthorEntity.setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
-		return createOrUpdateEntityOfy( userAuthorEntity );
+		return (UserAuthor) createOrUpdateEntityListOfy( userAuthorEntity, auditLog )[0];
 	}
 	
 	

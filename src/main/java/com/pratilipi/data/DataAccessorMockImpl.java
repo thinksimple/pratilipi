@@ -236,6 +236,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public AuditLog newAuditLogOfy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public AuditLog createAuditLog( AuditLog auditLog ) {
 		// TODO: Implementation
 		return null;
@@ -364,7 +370,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi ) {
+	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) {
 		
 		if( pratilipi.getId() != null )
 			return pratilipi;
@@ -382,8 +388,8 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) {
-		return createOrUpdatePratilipi( pratilipi );
+	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, Page page, AuditLog auditLog ) {
+		return createOrUpdatePratilipi( pratilipi, auditLog );
 	}
 
 	public void deletePage( Page page ) {
@@ -481,7 +487,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Blog createOrUpdateBlog( Blog blog ) {
+	public Blog createOrUpdateBlog( Blog blog, AuditLog auditLog ) {
 		return blog; // TODO: Implementation
 	}
 	
@@ -505,7 +511,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public BlogPost createOrUpdateBlogPost( BlogPost blogPost ) {
+	public BlogPost createOrUpdateBlogPost( BlogPost blogPost, AuditLog auditLog ) {
+		return blogPost; // TODO: Implementation
+	}
+	
+	@Override
+	public BlogPost createOrUpdateBlogPost( BlogPost blogPost, Page page, AuditLog auditLog ) {
 		return blogPost; // TODO: Implementation
 	}
 	
@@ -526,7 +537,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Event createOrUpdateEvent( Event event ) {
+	public Event createOrUpdateEvent( Event event, AuditLog auditLog ) {
 		if( event.getId() == null ) {
 			long id = 1L;
 			for( Event e : EventMock.EVENT_TABLE )
@@ -535,6 +546,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 			( (EventEntity) event ).setId( id );
 		}
 		return event;
+	}
+	
+	@Override
+	public Event createOrUpdateEvent( Event event, Page page, AuditLog auditLog ) {
+		return createOrUpdateEvent( event, auditLog );
 	}
 	
 	@Override
@@ -619,13 +635,13 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursorStr, Integer resultCount ) {
+	public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursorStr, Integer offset, Integer resultCount ) {
 		// TODO: Implementation
 		return null;
 	}
 
 	@Override
-	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
+	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) {
 		// TODO: Implementation
 		return userAuthor;
 	}
