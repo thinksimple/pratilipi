@@ -25,7 +25,6 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -59,10 +58,10 @@ public class PratilipiProcessApi extends GenericApi {
 
 		// Creating one task per Pratilipi id.
 		List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
-		for( Long authorId : pratilipiIdList ) {
+		for( Long pratilipiId : pratilipiIdList ) {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/pratilipi/process" )
-					.addParam( "pratilipiId", authorId.toString() )
+					.addParam( "pratilipiId", pratilipiId.toString() )
 					.addParam( "validateData", "true" );
 			taskList.add( task );
 		}
@@ -71,7 +70,7 @@ public class PratilipiProcessApi extends GenericApi {
 
 		// Updating AppProperty.
 		if( pratilipiIdList.size() > 0 ) {
-			appProperty.setValue( dataAccessor.getAuthor( pratilipiIdList.get( pratilipiIdList.size() - 1 ) ).getLastUpdated() );
+			appProperty.setValue( dataAccessor.getPratilipi( pratilipiIdList.get( pratilipiIdList.size() - 1 ) ).getLastUpdated() );
 			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		}
 		
