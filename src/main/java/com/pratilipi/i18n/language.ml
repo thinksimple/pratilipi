@@ -29,26 +29,26 @@ language_te					= Telugu
 
 # Pratilipi Types
 
-_pratilipi_type_book		= Book
-_pratilipi_type_books		= Books
-_pratilipi_type_poem		= Poem
-_pratilipi_type_poems		= Poems
-_pratilipi_type_story		= Story
-_pratilipi_type_stories		= Stories
-_pratilipi_type_article		= Article
-_pratilipi_type_articles	= Articles
-_pratilipi_type_magazine	= Magazine
-_pratilipi_type_magazines	= Magazines
+_pratilipi_type_book		= പുസ്തകം
+_pratilipi_type_books		= പുസ്തകങ്ങള്‍
+_pratilipi_type_poem		= കവിത
+_pratilipi_type_poems		= കവിതകള്‍
+_pratilipi_type_story		= കഥ
+_pratilipi_type_stories		= കഥകള്‍
+_pratilipi_type_article		= ലേഖനം
+_pratilipi_type_articles	= ലേഖനങ്ങള്‍
+_pratilipi_type_magazine	= ആനുകാലിക പ്രസിദ്ധീകരണം
+_pratilipi_type_magazines	= ആനുകാലിക പ്രസിദ്ധീകരണങ്ങള്‍
 
 
 
 # Author
 
 author_about					= About the Author
-author_language					= Language
+author_language					= ഭാഷ
 author_since					= Author Since
 
-author_count_works				= WORKS
+author_count_works				= കൃതികള്‍
 author_count_reads				= READS
 author_count_likes				= LIKES
 
@@ -56,10 +56,12 @@ author_edit_profile				= Edit My Profile
 author_update_image				= Upload Photo
 
 author_drafts					= Drafts
-author_published_works			= Published Works
-author_add_new_content			= Add New Content
+author_published_works			= പ്രസിദ്ധീകരിച്ച രചനകള്‍
+author_add_new_content			= പുതിയ രചനകള്‍ ചേര്‍ക്കൂ
 
-author_no_contents_published	= Sorry! This Author doesn't have any books published!
+
+
+author_no_contents_published	= ക്ഷമിക്കണം!  ഈ രചയിതാവ് രചനകള് ഒന്നും തന്നെ പ്രസിദ്ധീകരിച്ചിട്ടില്ല.
 
 
 
@@ -80,7 +82,7 @@ pratilipi_count_reviews		= REVIEWS
 pratilipi_count_likes		= LIKES
 
 pratilipi_move_to_drafts	= Move to Drafts
-pratilipi_publish_it		= Publish it!
+pratilipi_publish_it		= പ്രസിദ്ധീകരിക്കൂ...
 
 pratilipi_no_reviews		= Sorry! No Reviews found for this content!
 
@@ -123,7 +125,7 @@ review_see_all_reviews		= See All Reviews
 
 # Search
 
-search 						= Search
+search 						= തിരയൂ
 search_bar_help				= Search for books, stories, poems and more ...
 search_results				= Search Results
 search_no_results_found		= Sorry! No Search Results found for your search query. Try searching for different search query!
