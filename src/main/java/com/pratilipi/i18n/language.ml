@@ -3,7 +3,7 @@
 pratilipi					= Pratilipi
 tinymce_language			= en
 
-home_page_title				= Read Hindi, Gujarati and Tamil Stories, Poems and Books
+home_page_title				= മലയാളം പുസ്തകങ്ങള്‍,കഥകള്‍,കവിതക്‍ എന്നിവ ഇവിടെ വായിക്കൂ
 
 facebook_page				= https://www.facebook.com/Pratilipidotcom
 twitter_page				= https://twitter.com/TeamPratilipi
