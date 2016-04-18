@@ -25,14 +25,23 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow: hidden;">
-						<template is="dom-repeat" items="[[ blogList ]]">
+						<template is="dom-repeat" items="[[ blogpostList ]]">
 							<paper-card>
-								<a href="[[ blog.pageUrl ]]"><h4 class="pratilipi-red">[[ blog.name ]]</h4></a>
-								<a class="pratilipi-blue" href="[[ blog.pageUrl ]]">
+								<a href="[[ item.pageUrl ]]"><h4 class="pratilipi-red">[[ item.title ]]</h4></a>
+								<a class="pratilipi-blue" href="[[ item.pageUrl ]]">
 									<iron-icon icon="icons:open-in-new" style="position: absolute; right: 20px; top: 5px;"></iron-icon>
 								</a>
 							</paper-card>
 							<br class="pratilipi-break">
+						</template>
+						<!-- Spinner when Loading more books -->
+						<template is="dom-if" if="{{ isLoading }}">
+							<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
+						</template>
+						
+						<!-- Show More Button in case of network call failure -->
+						<template is="dom-if" if="{{ includeShowMoreButton }}">
+							<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">${ _strings.view_more }</button>
 						</template>
 					</div>
 				</div>
@@ -44,6 +53,16 @@
 		<div class="scroll-top-button">
 			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
 		</div>
+		<iron-ajax
+				id="AjaxGet"
+				url="/api/blogpost/list"
+				method="GET"
+				params="[[ filter ]]"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				on-error="_handleAjaxGetError"
+				></iron-ajax>
 	</template>
 		
 
@@ -54,10 +73,72 @@
 
 			properties: {
 				userData: { type: Object },
-				blogList: { type: Array },
+				blogpostList: { type: Array },
+				filter: { type: Object },
+				cursor: { type: String },
+				
+				isLoading: { type: Boolean, value: false },
+				isFinished: { type: Boolean, value: false },
+				includeShowMoreButton: { type: Boolean, value: true },
+				
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				lastScrollTop: { type: Number, value: 0 },
+			},
+			
+			loadMore: function() {
+				if( !this.isLoading && !this.isFinished )
+					this.includeShowMoreButton = true;
+				
+				// Return if there is an active call or cursor = null.
+				if( this.isLoading || this.isFinished || this.cursor == null )
+					return;
+
+				// Check for window height.
+				var reqHeight = jQuery( window ).scrollTop()
+						- jQuery( this ).position().top
+						+ jQuery( window ).height()
+						+ 2 * jQuery( window ).height();
+
+				if( jQuery( this ).outerHeight( true ) >= reqHeight )
+					return;
+				
+				
+				// Spinner Active and disable show more button.
+				this.isLoading = true;
+				this.includeShowMoreButton = false;
+				
+				// Set params and make ajax GET call. Filters already set when element initialised.
+				var ajaxGet = this.$.AjaxGet;
+				ajaxGet.params.cursor = this.cursor;
+				ajaxGet.generateRequest();
+			},
+			
+			_handleAjaxGetResponse: function( request ) {
+				
+				// Disable spinner
+				this.isLoading = false;
+				
+				// Call didn't succeed.
+				if( ! request.detail.response )
+					return;
+				
+				var blogpostList = request.detail.response.blogPostList;
+				for( var i = 0; i < blogpostList.length; i++ )
+					this.push( 'blogpostList', blogpostList[i] );
+
+				if( request.detail.response.cursor == null || blogpostList.length < 20 ) {
+					this.includeShowMoreButton = false;
+					this.isFinished = true;
+				}
+				else
+					this.cursor = request.detail.response.cursor;
+				
+			},
+
+			_handleAjaxGetError: function() {
+				this.isLoading = false;
+				this.includeShowMoreButton = true;
 			},
 			
 			scrollToTop: function() {
@@ -68,9 +149,16 @@
 				jQuery( '#scrollToTop' ).css( "display", "none" );
 			},
 			
+			attached: function() {
+				if( this.blogpostList.length < 20 || this.cursor == null || this.cursor.trim() == "" )
+					this.isFinished = true;
+			},
+			
 			scrollHandler: function( st ) {
-				if( st > this.lastScrollTop || st < 100 )
+				if( st > this.lastScrollTop || st < 100 ) {
 					jQuery( '#scrollToTop' ).fadeOut();
+					this.loadMore();
+				}
 				else
 					jQuery( '#scrollToTop' ).fadeIn();
 				this.lastScrollTop = st;

@@ -177,7 +177,7 @@ public class PratilipiSite extends HttpServlet {
 			
 			} else if( page != null && page.getType() == PageType.BLOG ) {
 				dataModel = createDataModelForBlogPage( page.getPrimaryContentId(), filterLanguage, basicMode );
-				templateName = templateFilePrefix + ( basicMode ? "BlogBasic.ftl" : "Blog.ftl" );
+				templateName = templateFilePrefix + ( basicMode ? "BlogPostListBasic.ftl" : "BlogPostList.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.BLOG_POST ) {
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );

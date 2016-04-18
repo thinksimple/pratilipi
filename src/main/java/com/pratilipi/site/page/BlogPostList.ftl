@@ -13,7 +13,9 @@
 	<body>
 		<pratilipi-blog-list-page 
 			user-data='${ userJson }'
-			blog-list='${ eventListJson }'
+			blogpost-list='${ blogPostListJson }'
+			filter='${ blogPostFilterJson }'
+			cursor='${ blogPostListCursor }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'></pratilipi-blog-list-page>
     </body>
