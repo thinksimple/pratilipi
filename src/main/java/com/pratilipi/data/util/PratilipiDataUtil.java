@@ -512,12 +512,17 @@ public class PratilipiDataUtil {
 		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 		
 		
-		pratilipi = dataAccessor.createOrUpdatePratilipi(
-				pratilipi,
-				_updatePratilipiPageUrl( pratilipi ),
-				auditLog );
-		
+		if( isNew ) {
+			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
+			dataAccessor.createOrUpdatePage( _updatePratilipiPageUrl( pratilipi ) );
+		} else {
+			pratilipi = dataAccessor.createOrUpdatePratilipi(
+					pratilipi,
+					_updatePratilipiPageUrl( pratilipi ),
+					auditLog );
+		}		
 
+		
 		return createPratilipiData(
 				pratilipi,
 				dataAccessor.getAuthor( pratilipi.getAuthorId() ),

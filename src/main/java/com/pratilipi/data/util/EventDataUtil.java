@@ -187,11 +187,15 @@ public class EventDataUtil {
 		auditLog.setEventDataNew( gson.toJson( event ) );
 		
 		
-		event = dataAccessor.createOrUpdateEvent(
-				event,
-				_updateEventPageUrl( event ),
-				auditLog );
-		
+		if( isNew ) {
+			event = dataAccessor.createOrUpdateEvent( event, auditLog );
+			dataAccessor.createOrUpdatePage( _updateEventPageUrl( event ) );
+		} else {
+			event = dataAccessor.createOrUpdateEvent(
+					event,
+					_updateEventPageUrl( event ),
+					auditLog );
+		}		
 
 		return createEventData( event );
 		
