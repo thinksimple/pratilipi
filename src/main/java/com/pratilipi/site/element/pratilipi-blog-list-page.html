@@ -26,14 +26,46 @@
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow: hidden;">
 						<template is="dom-repeat" items="[[ blogpostList ]]">
-							<paper-card>
-								<a href="[[ item.pageUrl ]]"><h4 class="pratilipi-red">[[ item.title ]]</h4></a>
-								<a class="pratilipi-blue" href="[[ item.pageUrl ]]">
-									<iron-icon icon="icons:open-in-new" style="position: absolute; right: 20px; top: 5px;"></iron-icon>
-								</a>
-							</paper-card>
-							<br class="pratilipi-break">
+							<pratilipi-bloglist-snippet blogpost="{{ item }}"
+								></pratilipi-bloglist-snippet>
+							<div style="min-height: 10px;"></div>
 						</template>
+						
+						<dom-module id="pratilipi-bloglist-snippet">
+							<template>
+								<paper-card style="max-height: 200px; overflow: hidden;">
+									<a class="pratilipi-blue" href="[[ blogpost.pageUrl ]]">
+										<iron-icon icon="icons:open-in-new" style="position: absolute; right: 20px; top: 20px;"></iron-icon>
+									</a>
+									<a href="[[ blogpost.pageUrl ]]">
+										<h4 style="display: inline-block;" class="pratilipi-red">[[ blogpost.title ]]</h4>
+									</a>
+									<template is="dom-if" if="{{ drafted }}">
+										<span style="display: inline-block; margin-left: 10px;">DRAFTED</span>
+									</template>
+									<div class="text-muted" id="blogpostContent"></div>
+								</paper-card>
+							</template>
+							<script>
+								Polymer({
+	
+									is: 'pratilipi-bloglist-snippet',
+	
+									properties: {
+										blogpost: { type: Object },
+										drafted: { type: Boolean, value: false }
+									},
+									
+									attached: function() {
+										jQuery( this.querySelector( '#blogpostContent' ) ).html( this.blogpost.content );
+										if( this.blogpost.state == "DRAFTED" )
+											this.drafted = true;
+									}
+									
+								});
+							</script>
+						</dom-module>
+							
 						<!-- Spinner when Loading more books -->
 						<template is="dom-if" if="{{ isLoading }}">
 							<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
@@ -79,7 +111,7 @@
 				
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
-				includeShowMoreButton: { type: Boolean, value: true },
+				includeShowMoreButton: { type: Boolean, value: false },
 				
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
