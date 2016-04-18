@@ -136,7 +136,8 @@ public interface DataAccessor {
 	UserAuthor newUserAuthor();
 	UserAuthor getUserAuthor( Long userId, Long authorId );
 	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
-	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog );
+	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor );
+//	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ); // TODO
 
 	
 	// NAVIGATION Table

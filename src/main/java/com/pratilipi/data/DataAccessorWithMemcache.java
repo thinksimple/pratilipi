@@ -489,7 +489,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public UserAuthor newUserAuthor() { return dataAccessor.newUserAuthor(); }
 	@Override public UserAuthor getUserAuthor( Long userId, Long authorId ) { return dataAccessor.getUserAuthor( userId, authorId ); }
 	@Override public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount ) { return dataAccessor.getUserAuthorList( userId, authorId, cursor, offset, resultCount ); }
-	@Override public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) { return dataAccessor.createOrUpdateUserAuthor( userAuthor, auditLog ); }
+	@Override public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) { return dataAccessor.createOrUpdateUserAuthor( userAuthor ); }
 	
 	
 	// NAVIGATION Table

@@ -984,7 +984,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( page == null )
 			return (BlogPost) createOrUpdateEntityListOfy( blogPost, auditLog )[0];
 		else
-			return (BlogPost) createOrUpdateEntityListOfy( blogPost, auditLog )[0];
+			return (BlogPost) createOrUpdateEntityListOfy( blogPost, page, auditLog )[0];
 
 	}
 
@@ -1173,10 +1173,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) {
+	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
 		UserAuthorEntity userAuthorEntity = (UserAuthorEntity) userAuthor;
 		userAuthorEntity.setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
-		return (UserAuthor) createOrUpdateEntityListOfy( userAuthorEntity, auditLog )[0];
+		return (UserAuthor) createOrUpdateEntityOfy( userAuthorEntity );
 	}
 	
 	

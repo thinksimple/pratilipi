@@ -641,7 +641,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) {
+	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
 		// TODO: Implementation
 		return userAuthor;
 	}
