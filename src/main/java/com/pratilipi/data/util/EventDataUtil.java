@@ -151,7 +151,7 @@ public class EventDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLog();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( isNew ? AccessType.EVENT_ADD : AccessType.EVENT_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( event ) );
@@ -187,11 +187,11 @@ public class EventDataUtil {
 		auditLog.setEventDataNew( gson.toJson( event ) );
 		
 		
-//		TODO: Invoke this method instead
-//		event = dataAccessor.createOrUpdateEvent( event, auditLog );
-		event = dataAccessor.createOrUpdateEvent( event );
+		event = dataAccessor.createOrUpdateEvent(
+				event,
+				_updateEventPageUrl( event ),
+				auditLog );
 		
-		createOrUpdateEventPageUrl( event.getId() );
 
 		return createEventData( event );
 		
@@ -246,7 +246,7 @@ public class EventDataUtil {
 		Gson gson = new Gson();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.EVENT_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( event ) );
@@ -256,26 +256,23 @@ public class EventDataUtil {
 		auditLog.setEventDataNew( gson.toJson( event ) );
 		auditLog.setEventComment( "Uploaded banner image." );
 		
-//		TODO: Invoke this method instead
-//		event = dataAccessor.createOrUpdatePratilipi( event, auditLog );
-		event = dataAccessor.createOrUpdateEvent( event );
+		event = dataAccessor.createOrUpdateEvent( event, auditLog );
 		
 	}
 	
 	
-	public static void createOrUpdateEventPageUrl( Long eventId ) {
+	private static Page _updateEventPageUrl( Event event ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Event event = dataAccessor.getEvent( eventId );
-		Page page = dataAccessor.getPage( PageType.EVENT, eventId );
+		Page page = dataAccessor.getPage( PageType.EVENT, event.getId() );
 
 		boolean isNew = page == null;
 		
 		if( isNew ) {
 			page = dataAccessor.newPage();
 			page.setType( PageType.EVENT );
-			page.setUri( PageType.EVENT.getUrlPrefix() + eventId );
-			page.setPrimaryContentId( eventId );
+			page.setUri( PageType.EVENT.getUrlPrefix() + event.getId() );
+			page.setPrimaryContentId( event.getId() );
 			page.setCreationDate( new Date() );
 		}
 		
@@ -289,14 +286,13 @@ public class EventDataUtil {
 		} else if( uriAlias == page.getUriAlias()
 				|| ( uriAlias != null && uriAlias.equals( page.getUriAlias() ) )
 				|| ( page.getUriAlias() != null && page.getUriAlias().equals( uriAlias ) ) ) {
-			// Do Nothing.
-			return;
+			return null; // Do Nothing.
 		} else {
 			logger.log( Level.INFO, "Updating Event Page Url: '" + page.getUriAlias() + "' -> '" + uriAlias + "'" );
 			page.setUriAlias( uriAlias );
 		}
 		
-		page = dataAccessor.createOrUpdatePage( page );
+		return page;
 	
 	}
 
