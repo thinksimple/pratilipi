@@ -1,11 +1,11 @@
 # Do NOT edit
 
-pratilipi					= Pratilipi
+pratilipi					= പ്രതിലിപി
 tinymce_language			= en
 
-home_page_title				= മലയാളം പുസ്തകങ്ങള്‍,കഥകള്‍,കവിതക്‍ എന്നിവ ഇവിടെ വായിക്കൂ
+home_page_title				= മലയാളം പുസ്തകങ്ങള്‍,കഥകള്‍,കവിതകള്‍ എന്നിവ ഇവിടെ വായിക്കൂ
 
-facebook_page				= https://www.facebook.com/Pratilipidotcom
+facebook_page				= https://www.facebook.com/pratilipimalayalam/
 twitter_page				= https://twitter.com/TeamPratilipi
 googleplus_page				= https://plus.google.com/+PratilipiTeam
 linkedin_page				= https://www.linkedin.com/company/pratilipi
@@ -14,16 +14,16 @@ linkedin_page				= https://www.linkedin.com/company/pratilipi
 
 # Language
 
-language_choose_language	= Choose Language
-language_all				= All Languages
-language_hi					= Hindi
-language_gu					= Gujarati
-language_ta					= Tamil
-language_mr					= Marathi
-language_ml					= Malayalam
-language_bn					= Bengali
-language_en					= English
-language_te					= Telugu
+language_choose_language	= ഭാഷ തെരഞ്ഞെടുക്കൂ
+language_all				= എല്ലാ ഭാഷകളും
+language_hi					= ഹിന്ദി
+language_gu					= ഗുജറാത്തി
+language_ta					= തമിഴ്
+language_mr					= മറാഠി
+language_ml					= മലയാളം
+language_bn					= ബംഗാളി
+language_en					= ഇംഗ്ലീഷ്
+language_te					= തെലുഗു
 
 
 
@@ -37,25 +37,25 @@ _pratilipi_type_story		= കഥ
 _pratilipi_type_stories		= കഥകള്‍
 _pratilipi_type_article		= ലേഖനം
 _pratilipi_type_articles	= ലേഖനങ്ങള്‍
-_pratilipi_type_magazine	= ആനുകാലിക പ്രസിദ്ധീകരണം
-_pratilipi_type_magazines	= ആനുകാലിക പ്രസിദ്ധീകരണങ്ങള്‍
+_pratilipi_type_magazine	= ആനുകാലികം
+_pratilipi_type_magazines	= ആനുകാലികങ്ങള്‍
 
 
 
 # Author
 
-author_about					= About the Author
+author_about					= രചയിതാവിനെക്കുറിച്ച്
 author_language					= ഭാഷ
-author_since					= Author Since
+author_since					= പ്രസിദ്ധീകരിക്കാന്‍ തുടങ്ങിയത്
 
 author_count_works				= കൃതികള്‍
-author_count_reads				= READS
-author_count_likes				= LIKES
+author_count_reads				= വായിച്ചവര്‍
+author_count_likes				= ലൈക്സ്‌
 
-author_edit_profile				= Edit My Profile
-author_update_image				= Upload Photo
+author_edit_profile				= എന്‍റെ പ്രൊഫൈല്‍ തിരുത്തൂ
+author_update_image				= ഫോട്ടോ അപ് ലോഡ്  ചെയ്യൂ
 
-author_drafts					= Drafts
+author_drafts					= ഡ്രാഫ്റ്റുകള്
 author_published_works			= പ്രസിദ്ധീകരിച്ച രചനകള്‍
 author_add_new_content			= പുതിയ രചനകള്‍ ചേര്‍ക്കൂ
 
@@ -67,68 +67,68 @@ author_no_contents_published	= ക്ഷമിക്കണം!  ഈ രചയി
 
 # Pratilipi
 
-pratilipi_type				= Type
-pratilipi_listing_date		= Listing Date
+pratilipi_type				= തരം
+pratilipi_listing_date		= ചേര്‍ത്ത ദിവസം
 pratilipi_published			= Published
-pratilipi_published_year	= Published Year
-pratilipi_summary			= Summary
+pratilipi_published_year	= പ്രസിദ്ധീകരിച്ച വര്‍ഷം
+pratilipi_summary			= സംഗ്രഹം
 
-pratilipi_edit_info			= Edit Info
-pratilipi_edit_content		= Edit Content
-pratilipi_update_cover		= Upload Photo
+pratilipi_edit_info			= വിവരങ്ങള്‍ തിരുത്തൂ
+pratilipi_edit_content		= രചന തിരുത്തൂ
+pratilipi_update_cover		= ഫോട്ടോ അപ് ലോഡ്  ചെയ്യൂ
+pratilipi_count_reads		= വായിച്ചവര്‍ 
+pratilipi_count_reviews		= റിവ്യൂസ് 
+pratilipi_count_likes		= ലൈക്സ്‌
 
-pratilipi_count_reads		= READS
-pratilipi_count_reviews		= REVIEWS
-pratilipi_count_likes		= LIKES
+pratilipi_move_to_drafts	= ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റൂ
+pratilipi_publish_it		= പ്രസിദ്ധീകരിക്കൂ.
 
-pratilipi_move_to_drafts	= Move to Drafts
-pratilipi_publish_it		= പ്രസിദ്ധീകരിക്കൂ...
-
-pratilipi_no_reviews		= Sorry! No Reviews found for this content!
+pratilipi_no_reviews		= ക്ഷമിക്കണം!! ഈ രചനയ്ക്ക് റിവ്യൂസ് ഒന്നും തന്നെ ഇല്ല!
 
 
 
 # Rating
 
-rating_rating				= Rating 
-rating_ratings				= Ratings
-rating_rate_this			= Rate This !
-rating_your_rating			= Your Rating
-rating_be_first_one			= Be the first one to rate it!
+rating_rating				= റേറ്റിംഗ് 
+rating_ratings				= റേറ്റിംഗ്സ്
+rating_rate_this			= ഇത് റേറ്റ് ചെയ്യൂ
+rating_your_rating			= താങ്കളുടെ റേറ്റിംഗ്
+rating_be_first_one			= ഇത് റേറ്റ് ചെയ്യുന ആദ്യത്തെ ആളാകൂ!
 
-rating_1_star				= Poor
-rating_2_star				= Fair
-rating_3_star				= Good
-rating_4_star				= Very Good
-rating_5_star				= Excellent
+rating_1_star				= മോശം
+rating_2_star				= കൊള്ളാം
+rating_3_star				= നല്ലത്‌
+rating_4_star				= വളരെ നല്ലത്‌
+rating_5_star				= മികച്ചത്
 
 
 
 # Review
 
-review_heading				= Reviews 
-review_write_a_review		= Write a Review
+review_heading				= റിവ്യൂസ് 
+review_write_a_review		= ഒരു റിവ്യൂ എഴുതൂ
 review_title				= Review Title
-review_title_help			= e.g., Great Story !
-review_content				= Your Review
+review_title_help			= ഉദാ: മികച്ച കഥ !
+review_content				= താങ്കളുടെ റിവ്യൂ
 review_content_help			= Share your thoughts ! What made this work interesting ? What made it inspiring ? What did you learn from it ? You are helping others make a better choice !
-review_submit_review		= SUBMIT
-review_edit_review			= Edit Review
-review_delete_review		= Delete Review
-review_delete_review_confirm	= Are you sure to delete your review?
-review_delete_okay			= Yes, Delete review!
-review_delete_cancel		= No, Don't!
-review_helpful				= Was this review helpful?
-review_see_all_reviews		= See All Reviews
+review_submit_review		= സമര്‍പ്പിക്കുക
+review_edit_review			= റിവ്യൂ തിരുത്തുക
+review_delete_review		= റിവ്യൂ നീക്കം ചെയ്യുക
+review_delete_review_confirm	= താങ്കളുടെ റിവ്യൂ ഉറപ്പായും നീക്കം ചെയ്യേണമോ?
+review_delete_okay			= അതെ,റിവ്യൂ നീക്കം ചെയ്യുക!
+review_delete_cancel		= വേണ്ട!
+review_helpful				= ഈ റിവ്യൂ ഉപകാരപ്രദമായിരുന്നുവോ?
+review_see_all_reviews		= എല്ലാ റിവ്യൂസും കാണുക
 
 
 
 # Search
 
 search 						= തിരയൂ
-search_bar_help				= Search for books, stories, poems and more ...
-search_results				= Search Results
-search_no_results_found		= Sorry! No Search Results found for your search query. Try searching for different search query!
+search_bar_help				= പുസ്തകങ്ങള്‍,കഥകള്‍,കവിതകള്‍ തുടങ്ങിയവയ്ക്കായി തിരയൂ ...
+search_results				= തിരച്ചിലിന്റെ ഫലം
+
+search_no_results_found		= ക്ഷമിക്കണം! താങ്കളുടെ തിരച്ചിലിന് യോജിക്കുന്ന ഫലങ്ങള്‍ ഒന്നും കണ്ടെത്താനായില്ല. ദയവായി തിരച്ചിലിന് മറ്റൊരു വാക്ക് ഉപയോഗിക്കുക!
 
 
 
