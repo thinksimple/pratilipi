@@ -135,7 +135,7 @@ public class InitApi extends GenericApi {
 		int count = 0;
 		for( Pratilipi pratilipi : pratilipiList ) {
 			pratilipi.getLanguage();
-			dataAccessor.createOrUpdatePratilipi( pratilipi );
+			// dataAccessor.createOrUpdatePratilipi( pratilipi );
 			count++;
 		}
 
