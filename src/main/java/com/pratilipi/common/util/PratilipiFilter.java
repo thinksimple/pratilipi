@@ -127,7 +127,7 @@ public class PratilipiFilter implements Serializable {
 		if( state != null )
 			urlEncodedString += "&state=" + state;
 		if( maxNextProcessDate != null )
-			urlEncodedString += "&nextProcessDateEnd=" + maxNextProcessDate.getTime();
+			urlEncodedString += "&maxNextProcessDate=" + maxNextProcessDate.getTime();
 		if( orderByReadCount != null )
 			urlEncodedString += "&orderByReadCount=" + orderByReadCount;
 		if( orderByLastUpdated != null )

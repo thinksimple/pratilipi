@@ -17,15 +17,21 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
+import com.pratilipi.data.type.AuditLog;
+import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -43,6 +49,10 @@ public class PratilipiProcessApi extends GenericApi {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
+		
+		// START: Creating ValidateData Tasks
+		
+		
 		// Fetching AppProperty
 		String appPropertyId = "Api.PratilipiProcess.ValidateData";
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
@@ -54,7 +64,7 @@ public class PratilipiProcessApi extends GenericApi {
 		// Fetching list of Pratilipi ids.
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setMinLastUpdate( (Date) appProperty.getValue(), false );
-		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, 10000 ).getDataList();
+		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, 0, 10000 ).getDataList();
 
 		// Creating one task per Pratilipi id.
 		List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
@@ -66,7 +76,7 @@ public class PratilipiProcessApi extends GenericApi {
 			taskList.add( task );
 		}
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
-		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
+		logger.log( Level.INFO, "Added " + taskList.size() + " ValidateData tasks." );
 
 		// Updating AppProperty.
 		if( pratilipiIdList.size() > 0 ) {
@@ -75,11 +85,16 @@ public class PratilipiProcessApi extends GenericApi {
 		}
 		
 		
+		// END: Creating ValidateData Tasks
+
+		
+		// START: Creating UpdateStats Tasks
+		
 		
 		pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setNextProcessDateEnd( new Date() );
+		pratilipiFilter.setMaxNextProcessDate( new Date(), true );
 		
-		pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
+		pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null, null ).getDataList();
 		
 		int batchSize = 80;
 		taskList = new ArrayList<>( (int) Math.ceil( ( (double) pratilipiIdList.size() ) / batchSize  ) );
@@ -92,8 +107,12 @@ public class PratilipiProcessApi extends GenericApi {
 		}
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
 		
-		logger.log( Level.INFO, "Created " + taskList.size() + " task(s) with " + pratilipiIdList.size() + " Pratilipi ids." );
+		logger.log( Level.INFO, "Added " + taskList.size() + " UpdateStats task(s) with " + pratilipiIdList.size() + " Pratilipi ids." );
 
+		
+		// END: Creating UpdateStats Tasks
+		
+		
 		return new GenericResponse();
 		
 	}
@@ -116,21 +135,31 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		if( request.validateData() ) {
 			for( Long pratilipiId : pratilipiIdList ) {
+
 				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 				Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
+				
+				if( pratilipi.getLanguage() == null )
+					throw new InvalidArgumentException( "Language is null." );
+				
+				if( pratilipi.getAuthorId() != null	&& author == null )
+					throw new InvalidArgumentException( "Invalid Author id." );
+				
+				if( author != null && author.getState() == AuthorState.DELETED )
+					throw new InvalidArgumentException( "Linked Author entity is DELETED." );
+				
 				if( pratilipi.getState() == PratilipiState.DELETED && pratilipiPage != null )
 					throw new InvalidArgumentException( "DELETED Pratilipi has non-deleted Page entity." );
+				
 				if( pratilipi.getState() != PratilipiState.DELETED && pratilipiPage == null )
 					throw new InvalidArgumentException( "Page entity is missing for the Pratilipi." );
+				
 			}
 		}
 		
 		
 		if( request.processData() ) {
-			for( Long pratilipiId : pratilipiIdList ) {
-				PratilipiDataUtil.createOrUpdatePratilipiPageUrl( pratilipiId );
-//				PratilipiDataUtil.createOrUpdatePratilipiReadPageUrl( pratilipiId );
-			}
 			PratilipiDataUtil.updatePratilipiSearchIndex( pratilipiIdList );
 			PratilipiDataUtil.updateFacebookScrape( pratilipiIdList );
 		}
@@ -138,11 +167,13 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		if( request.processContent() ) {
 			for( Long pratilipiId : pratilipiIdList ) {
+				
 				PratilipiDataUtil.updatePratilipiIndex( pratilipiId );
 				
 				boolean changed = PratilipiDataUtil.updatePratilipiKeywords( pratilipiId );
 				if( changed )
 					PratilipiDataUtil.updatePratilipiSearchIndex( pratilipiId, null );
+				
 			}
 		}
 		
@@ -158,6 +189,15 @@ public class PratilipiProcessApi extends GenericApi {
 			// Updating Pratilipi.nextProcessDate
 			for( Long pratilipiId : pratilipiIdList ) {
 				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+				
+				Gson gson = new Gson();
+
+				AccessToken accessToken = AccessTokenFilter.getAccessToken();
+				AuditLog auditLog = dataAccessor.newAuditLogOfy();
+				auditLog.setAccessId( accessToken.getId() );
+				auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
+				auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+				
 				if( updatedIdList.contains( pratilipiId ) ) {
 					pratilipi.setLastProcessDate( new Date() );
 					pratilipi.setNextProcessDate( new Date( new Date().getTime() + 900000L ) ); // Now + 15 Min
@@ -172,7 +212,10 @@ public class PratilipiProcessApi extends GenericApi {
 						nextUpdateAfterMillis = 86400000L;
 					pratilipi.setNextProcessDate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
 				}
-				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi ); // TODO: Batch this call
+				
+				auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+				
+				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog ); // TODO: Batch this call
 			}
 
 			// Batch updating search index.
@@ -204,5 +247,5 @@ public class PratilipiProcessApi extends GenericApi {
 		return new GenericResponse();
 		
 	}
-
+	
 }

@@ -158,7 +158,7 @@ public class BlogPostDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLog();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( isNew ? AccessType.BLOG_POST_ADD : AccessType.BLOG_POST_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( blogPost ) );
@@ -188,9 +188,7 @@ public class BlogPostDataUtil {
 		auditLog.setEventDataNew( gson.toJson( blogPost ) );
 		
 		
-//		TODO: Invoke this method instead
-//		blogPost = dataAccessor.createOrUpdateBlogPost( blogPost, auditLog );
-		blogPost = dataAccessor.createOrUpdateBlogPost( blogPost );
+		blogPost = dataAccessor.createOrUpdateBlogPost( blogPost, auditLog );
 		
 		_updateBlogPostPageUrl( blogPost );
 
