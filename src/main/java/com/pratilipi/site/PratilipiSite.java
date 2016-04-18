@@ -33,6 +33,7 @@ import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiContentType;
@@ -694,6 +695,7 @@ public class PratilipiSite extends HttpServlet {
 		BlogPostFilter blogPostFilter = new BlogPostFilter();
 		blogPostFilter.setBlogId( blogId );
 		blogPostFilter.setLanguage( lang );
+		blogPostFilter.setState( BlogPostState.PUBLISHED );
 		
 		DataListCursorTuple<BlogPostData> blogPostDataListCursorTuple
 				= BlogPostDataUtil.getBlogPostDataList( blogPostFilter, null, 0, 10 );
