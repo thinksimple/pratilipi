@@ -748,7 +748,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, Page page, AuditLog auditLog ) {
-		return createOrUpdateEntityOfy( pratilipi, page, auditLog );
+		pratilipi = createOrUpdateEntityOfy( pratilipi, page, auditLog );
+		// Hack for backward compatibility with Mark-4.
+		// TODO: Remove it as soon as mark-4 is deprecated.
+		memcache.remove( "Pratilipi-" + pratilipi.getId() );
+		return pratilipi;
 	}
 
 	
