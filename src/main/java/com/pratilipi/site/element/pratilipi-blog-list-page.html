@@ -33,7 +33,7 @@
 						
 						<dom-module id="pratilipi-bloglist-snippet">
 							<template>
-								<paper-card style="max-height: 200px; overflow: hidden;">
+								<paper-card style="padding: 16px 12px;">
 									<a class="pratilipi-blue" href="[[ blogpost.pageUrl ]]">
 										<iron-icon icon="icons:open-in-new" style="position: absolute; right: 20px; top: 20px;"></iron-icon>
 									</a>
@@ -43,7 +43,7 @@
 									<template is="dom-if" if="{{ drafted }}">
 										<span style="display: inline-block; margin-left: 10px;">DRAFTED</span>
 									</template>
-									<div class="text-muted" id="blogpostContent"></div>
+									<div class="text-muted" style="max-height: 160px; overflow: hidden;" id="blogpostContent"></div>
 								</paper-card>
 							</template>
 							<script>

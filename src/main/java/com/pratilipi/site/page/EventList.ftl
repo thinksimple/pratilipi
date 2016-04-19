@@ -7,7 +7,7 @@
 		
 		<#assign mainPage="pratilipi-event-list-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160419'>
 	</head>
 
 	<body>
