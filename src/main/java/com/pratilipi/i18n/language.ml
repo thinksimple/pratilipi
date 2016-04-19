@@ -206,9 +206,9 @@ footer_contact_10_digit_number		= 9036506463
 
 # Common Words
 
-okay						= Okay
-cancel						= Cancel
-save_changes				= Save Changes
+okay						= ശരി
+cancel						=വേണ്ടെന്നു വയ്ക്കുക
+save_changes				= മാറ്റങ്ങള്‍ സേവ് ചെയ്യുക
 show_more					= show more
 show_less					= show less
 read						= Read
