@@ -21,7 +21,7 @@
 				<div class="container">
 					<#list blogPostList as blogPost>
 						<div class="secondary-500 pratilipi-shadow box" style="padding: 16px 12px;">
-							<a style="position: absolute; right: 20px; top: 20px;" class="pratilipi-blue" href="${ blogPost.getPageUrl() }">
+							<a class="pratilipi-blue pull-right" href="${ blogPost.getPageUrl() }">
 								${ _strings.view_more }...
 							</a>
 							<a href="${ blogPost.getPageUrl() }">

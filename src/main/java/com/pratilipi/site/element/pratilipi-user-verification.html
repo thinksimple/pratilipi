@@ -74,10 +74,8 @@
 			verifyUser: function( email, verificationToken ) {
 				this.open();
 				this.message = "Working ...";
-				this.$.verifyEmail.body = ( 
-					"email=" + email + "&" + 
-					"verificationToken=" + verificationToken );
-				
+				var body = { email: email, verificationToken: verificationToken };
+				this.$.verifyEmail.body = jQuery.param( body );
 				this.$.verifyEmail.generateRequest();
 			},
 			

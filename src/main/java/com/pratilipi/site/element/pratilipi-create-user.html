@@ -135,10 +135,10 @@
 			
 			onSubmit: function( event ) {
 				
-				this.message = null;
-				
-				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 || jQuery( '#createUserButton' ).prop( 'disabled' ) )
 					return;
+
+				this.message = null;
 				
 				if( this.name == null || this.name.trim() == "" ) {
 					this.message = "Please Enter the name!";

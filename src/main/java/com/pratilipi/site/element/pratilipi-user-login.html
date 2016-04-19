@@ -83,11 +83,12 @@
 			},
 			
 			onSubmit: function( event ) {
-				this.message = null;
-				
-				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 )
+
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 || jQuery( '#loginButton' ).prop( 'disabled' ) )
 					return;
 				
+				this.message = null;
+
 				if( this.email == null || this.password == null || this.email.trim() == "" ) {
 					this.message = "Please fill in the details";
 					return;
