@@ -27,6 +27,9 @@
 							<a href="${ blogPost.getPageUrl() }">
 								<h4 style="display: inline-block;" class="pratilipi-red">${  blogPost.getTitle() }</h4>
 							</a>
+							<#if blogPost.getState() == "DRAFTED">
+								<span style="display: inline-block; margin-left: 5px;">DRAFTED</span>
+							</#if>
 							<div class="text-muted" style="max-height: 160px; overflow: hidden;">${ blogPost.getContent() }</div>
 						</div>
 					</#list>
