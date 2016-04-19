@@ -211,14 +211,14 @@ cancel						=വേണ്ടെന്നു വയ്ക്കുക
 save_changes				= മാറ്റങ്ങള്‍ സേവ് ചെയ്യുക
 show_more					= show more
 show_less					= show less
-read						= Read
-write						= Write
-free						= FREE !
-saving						= Saving ...
-working						= Working ...
+read						= വായിക്കൂ
+write						= എഴുതൂ
+free						= സൗജന്യം !
+saving						= സേവ് ചെയ്തുകൊണ്ടിരിക്കുന്നു. . .
+working						=പ്രവര്‍ത്തിച്ചുകൊണ്ടിരിക്കുന്നു. . .
 update						= Update
-share						= Share
-menu						= Menu
+share						= ഷെയര്‍
+menu						= മെനു
 back						= Back
 load_more_contents			= Load More Contents
 view_more					= View More
@@ -227,12 +227,12 @@ view_more					= View More
 
 # Success Messages
 
-password_reset_request_success		= A mail has been sent to your email Id! 
+password_reset_request_success		= താങ്കളുടെ ഇ മെയില്‍ ഐ ഡി യിലേക്ക് ഒരു മെയില്‍ അയച്ചിരിക്കുന്നു! 
 user_login_success					= Success !
 user_register_success				= Success !
-password_change_success				= Password has been changed Successfully!
-verification_email_sent_success		= Email Sent Successfully !
-user_verified_success				= Verified Successfully !
+password_change_success				= പാസ്സ്‌വേര്‍ഡ്‌ വിജയകരമായി മാറ്റിയിരിക്കുന്നു!
+verification_email_sent_success		= ഇ മെയില്‍ വിജയകരമായി അയച്ചിരിക്കുന്നു !
+user_verified_success				= വെരിഫിക്കേഷന്‍ വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
 content_created_success				= Success !
 updated_author_info_success			= Success !
 updated_pratilipi_info_success		= Success !
@@ -247,10 +247,10 @@ edit_author_first_name_en		= First Name( English )
 edit_author_last_name_en		= Last Name( English )
 edit_author_pen_name			= Pen Name ( Vernacular )
 edit_author_pen_name_en			= Pen Name ( English )
-edit_author_birthday_ddmmyyyy	= Birthday (dd-mm-yyyy)
+edit_author_birthday_ddmmyyyy	= ജനനത്തിയതി (dd-mm-yyyy)
 edit_author_language			= Select Language
-edit_author_summary				= Summary ( Optional )
-edit_author_save_changes		= Save Changes
+edit_author_summary				= സംഗ്രഹം (നിര്‍ബന്ധമില്ല)
+edit_author_save_changes		= മാറ്റങ്ങള്‍ സേവ് ചെയ്യുക
 
 # Pratilipi Edit Popup
 
@@ -259,8 +259,8 @@ edit_pratilipi_title			= Title *
 edit_pratilipi_title_en			= Title (English)
 edit_pratilipi_type				= Select Type *
 edit_pratilipi_language			= Language
-edit_pratilipi_summary			= Summary (Optional) :
-edit_pratilipi_save_changes		= Save Changes
+edit_pratilipi_summary			= സംഗ്രഹം (നിര്‍ബന്ധമില്ല) :
+edit_pratilipi_save_changes		= മാറ്റങ്ങള്‍ സേവ് ചെയ്യുക
 
 
 
