@@ -657,8 +657,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				query = query.order( pratilipiFilter.getOrderByLastUpdate() ? "LAST_UPDATED" : "-LAST_UPDATED" );
 	
 			
-			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
-			
+			if( cursorStr != null )
+				query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
 			if( offset != null && offset > 0 )
 				query = query.offset( offset );
 			if( resultCount != null && resultCount > 0 )
