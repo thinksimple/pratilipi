@@ -83,7 +83,7 @@ pratilipi_count_likes		= ലൈക്സ്‌
 pratilipi_move_to_drafts	= ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റൂ
 pratilipi_publish_it		= പ്രസിദ്ധീകരിക്കൂ.
 
-pratilipi_no_reviews		= ക്ഷമിക്കണം!! ഈ രചനയ്ക്ക് റിവ്യൂസ് ഒന്നും തന്നെ ഇല്ല!
+pratilipi_no_reviews		= ക്ഷമിക്കണം! ഈ രചനയ്ക്ക് റിവ്യൂസ് ഒന്നും തന്നെ ഇല്ല!
 
 
 
