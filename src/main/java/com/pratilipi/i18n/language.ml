@@ -141,7 +141,7 @@ write_title_en				= തലവാചകം (ഇംഗ്ലീഷില്‍)
 write_type					= തരം തിരഞ്ഞെടുക്കൂ
 write_language				= ഭാഷ
 write_summary				= സംഗ്രഹം (നിര്‍ബന്ധമില്ല)
-write_create_new_content	= Create New Content
+write_create_new_content	= പുതിയ രചന സൃഷ്ടിക്കൂ
 
 
 
