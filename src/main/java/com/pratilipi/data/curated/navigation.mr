@@ -1,13 +1,17 @@
-Navigation
-/search?q=books     Books
-/search?q=stories   Stories
-/search?q=poems     Poems
-/search?q=articles  Articles
-/search?q=magazines Magazines
+नवीन | navin
+/readers-top-choice     वाचकांची सर्वात जास्त आवड 
+/newly-published-content   नवीन साहित्य प्रकाशित 
+/sane-guruji-kathamala     साने गुरुजी कथामाला
+/patra-lekhan-spardha  पत्र लेखन स्पर्धा
 
-Navigation 2
-/search?q=books     Books
-/search?q=stories   Stories
-/search?q=poems     Poems
-/search?q=articles  Articles
-/search?q=magazines Magazines
+श्रेणी | shreni
+/lovestories    प्रेम कथा
+/horror   थरार कथा
+/search?q=poems  काव्य रिदम
+/search?q=articles  नॉन फिक्शन
+/search?q=stories  लघुकथा
+/baalkatha  बालकथा
+/hasyakatha  हास्यकथा
+/navalkatha  नवल कथा
+/rahasyakatha रहस्य कथा 
+/jivancharitra  जीवन चरित्र 
