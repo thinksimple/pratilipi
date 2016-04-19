@@ -92,6 +92,7 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		
 		pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setState( PratilipiState.PUBLISHED );
 		pratilipiFilter.setMaxNextProcessDate( new Date(), true );
 		
 		pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null, null ).getDataList();
@@ -143,7 +144,7 @@ public class PratilipiProcessApi extends GenericApi {
 				if( pratilipi.getLanguage() == null )
 					throw new InvalidArgumentException( "Language is null." );
 				
-				if( pratilipi.getAuthorId() != null	&& author == null )
+				if( pratilipi.getAuthorId() != null && author == null )
 					throw new InvalidArgumentException( "Invalid Author id." );
 				
 				if( author != null && author.getState() == AuthorState.DELETED )
@@ -179,7 +180,7 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		
 		if( request.updateStats() ) {
-
+			
 			// Batch updating Pratilipi stats.
 			List<Long> updatedIdList = PratilipiDataUtil.updatePratilipiStats( pratilipiIdList );
 			
