@@ -8,9 +8,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -25,15 +22,13 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.GaeQueryBuilder;
-import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.taskqueue.Task;
@@ -116,7 +111,6 @@ public class AuthorProcessApi extends GenericApi {
 	private void validateAuthorData( Long authorId ) throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		Author author = dataAccessor.getAuthor( authorId );
 		Page page = dataAccessor.getPage( PageType.AUTHOR, authorId );
 
@@ -131,12 +125,11 @@ public class AuthorProcessApi extends GenericApi {
 		
 		
 		// Pratilipi Entities linked with the Author.
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( PratilipiEntity.class ) );
-		gaeQueryBuilder.addFilter( "authorId", authorId );
-		gaeQueryBuilder.addFilter( "state", PratilipiState.DELETED, Operator.NOT_EQUALS );
-		gaeQueryBuilder.addOrdering( "state", true );
-		Query query = gaeQueryBuilder.build();
-		List<Pratilipi> pratilipiList = (List<Pratilipi>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setAuthorId( authorId );
+		pratilipiFilter.setState( PratilipiState.PUBLISHED );
+		
+		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiFilter, null, null ).getDataList();
 
 		// DELETED Author cannot have non-DELETED Pratilipi entities linked.
 		if( author.getState() == AuthorState.DELETED ) {
