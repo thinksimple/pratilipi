@@ -159,8 +159,7 @@ user_sign_up_with_facebook	= ഫേസ്ബുക്കിലൂടെ സൈ�
 
 user_forgot_password		= പാസ്സ്‌വേര്‍ഡ്‌ മറന്നുപോയോ?
 user_reset_password			= പാസ്സ്‌വേര്‍ഡ്‌ റീസെറ്റ് ചെയ്യൂ
-user_reset_password_help	=  Please enter the email address you signed up with. We will send you a link to reset your password.
-
+user_reset_password_help	=  താങ്കള്‍ സൈനപ്പ് ചെയ്ത ഇ മെയില്‍ അഡ്രസ്‌ നല്‍കുക. പാസ്സ്‌വേര്‍ഡ്‌ റീസെറ്റ്‌ ചെയ്യാന്‍ വേണ്ട ലിങ്ക് ഞങ്ങള്‍ അയച്ചു തരാം.
 user_current_password		= നിലവിലുള്ള പാസ്സ്‌വേര്‍ഡ്‌
 user_new_password			= പുതിയ പാസ്സ്‌വേര്‍ഡ്‌
 
@@ -240,7 +239,7 @@ updated_review						= Success !
 
 # Author Edit Popup
 
-edit_author_heading				= Edit Author Information	
+edit_author_heading				= രചയിതാവിനെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ തിരുത്തുക.	
 edit_author_first_name			= First Name( Vernacular )
 edit_author_last_name			= Last Name( Vernacular )
 edit_author_first_name_en		= First Name( English )
@@ -248,17 +247,17 @@ edit_author_last_name_en		= Last Name( English )
 edit_author_pen_name			= Pen Name ( Vernacular )
 edit_author_pen_name_en			= Pen Name ( English )
 edit_author_birthday_ddmmyyyy	= ജനനത്തിയതി (dd-mm-yyyy)
-edit_author_language			= Select Language
+edit_author_language			= ഭാഷ തിരഞ്ഞെടുക്കൂ
 edit_author_summary				= സംഗ്രഹം (നിര്‍ബന്ധമില്ല)
 edit_author_save_changes		= മാറ്റങ്ങള്‍ സേവ് ചെയ്യുക
 
 # Pratilipi Edit Popup
 
-edit_pratilipi_heading			= Edit Content Information
-edit_pratilipi_title			= Title *
-edit_pratilipi_title_en			= Title (English)
-edit_pratilipi_type				= Select Type *
-edit_pratilipi_language			= Language
+edit_pratilipi_heading			= രചനയെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ തിരുത്തുക.
+edit_pratilipi_title			= തലവാചകം
+edit_pratilipi_title_en			= തലവാചകം (ഇംഗ്ലീഷില്‍)
+edit_pratilipi_type				= തരം തിരഞ്ഞെടുക്കൂ
+edit_pratilipi_language			= ഭാഷ
 edit_pratilipi_summary			= സംഗ്രഹം (നിര്‍ബന്ധമില്ല) :
 edit_pratilipi_save_changes		= മാറ്റങ്ങള്‍ സേവ് ചെയ്യുക
 
@@ -278,7 +277,7 @@ event_name				= Event Name
 event_name_en			= Event Name in English
 event_description		= Event Description
 event_entries_url_list	= Entries URL List
-event_save_changes		= Save Changes
+event_save_changes		= മാറ്റങ്ങള്‍ സേവ് ചെയ്യുക
 
 
 # Gender
