@@ -164,11 +164,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return entity;
 	}
 	
-	private GenericOfyType[] createOrUpdateEntityListOfy( GenericOfyType... entities ) {
-		Map<Key<GenericOfyType>, GenericOfyType> map = ObjectifyService.ofy().save().entities( entities ).now();
+	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity, AuditLog auditLog ) {
+		return createOrUpdateEntityOfy( entity, null, auditLog );
+	}
+	
+	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity, Page page, AuditLog auditLog ) {
+		Map<Key<GenericOfyType>, GenericOfyType> map = page == null
+				? ObjectifyService.ofy().save().entities( entity, auditLog ).now()
+				: ObjectifyService.ofy().save().entities( entity, page, auditLog ).now();
 		for( Key<GenericOfyType> key : map.keySet() )
 			map.get( key ).setKey( key );
-		return entities;
+		_createOrUpdatePageMemcache( page ); // Updating additional page memcache ids
+		return entity;
 	}
 
 	private void deleteEntityOfy( GenericOfyType entity ) {
@@ -541,12 +548,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public Page createOrUpdatePage( Page page ) {
 		page = createOrUpdateEntityOfy( page );
-		if( page.getUri() != null )
-			memcache.put( _createPageEntityMemcacheId( page.getUri() ), page );
-		if( page.getUriAlias() != null )
-			memcache.put( _createPageEntityMemcacheId( page.getUriAlias() ), page );
-		if( page.getPrimaryContentId() != null )
-			memcache.put( _createPageEntityMemcacheId( page.getType(), page.getPrimaryContentId() ), page );
+		_createOrUpdatePageMemcache( page );
 		return page;
 	}
 	
@@ -558,6 +560,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			memcache.remove( _createPageEntityMemcacheId( page.getUriAlias() ) );
 		if( page.getPrimaryContentId() != null )
 			memcache.remove( _createPageEntityMemcacheId( page.getType(), page.getPrimaryContentId() ) );
+	}
+	
+	private void _createOrUpdatePageMemcache( Page page ) {
+		if( page.getUri() != null )
+			memcache.put( _createPageEntityMemcacheId( page.getUri() ), page );
+		if( page.getUriAlias() != null )
+			memcache.put( _createPageEntityMemcacheId( page.getUriAlias() ), page );
+		if( page.getPrimaryContentId() != null )
+			memcache.put( _createPageEntityMemcacheId( page.getType(), page.getPrimaryContentId() ), page );
 	}
 	
 	private String _createPageEntityMemcacheId( String uri ) {
@@ -736,10 +747,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, Page page, AuditLog auditLog ) {
-		if( page == null )
-			return (Pratilipi) createOrUpdateEntityListOfy( pratilipi, auditLog )[ 0 ];
-		else
-			return (Pratilipi) createOrUpdateEntityListOfy( pratilipi, page, auditLog )[ 0 ];
+		return createOrUpdateEntityOfy( pratilipi, page, auditLog );
 	}
 
 	
@@ -887,10 +895,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Event createOrUpdateEvent( Event event, Page page, AuditLog auditLog ) {
-		if( page == null )
-			return (Event) createOrUpdateEntityListOfy( event, auditLog )[0];
-		else
-			return (Event) createOrUpdateEntityListOfy( event, page, auditLog )[0];
+		return createOrUpdateEntityOfy( event, page, auditLog );
 	}
 
 	
@@ -908,7 +913,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Blog createOrUpdateBlog( Blog blog, AuditLog auditLog ) {
-		return (Blog) createOrUpdateEntityListOfy( blog, auditLog )[0];
+		return createOrUpdateEntityOfy( blog, auditLog );
 	}
 
 	
@@ -981,11 +986,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public BlogPost createOrUpdateBlogPost( BlogPost blogPost, Page page, AuditLog auditLog ) {
-		if( page == null )
-			return (BlogPost) createOrUpdateEntityListOfy( blogPost, auditLog )[0];
-		else
-			return (BlogPost) createOrUpdateEntityListOfy( blogPost, page, auditLog )[0];
-
+		return createOrUpdateEntityOfy( blogPost, page, auditLog );
 	}
 
 	
