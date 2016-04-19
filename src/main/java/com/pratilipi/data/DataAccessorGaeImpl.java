@@ -174,7 +174,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				: ObjectifyService.ofy().save().entities( entity, page, auditLog ).now();
 		for( Key<GenericOfyType> key : map.keySet() )
 			map.get( key ).setKey( key );
-		_createOrUpdatePageMemcache( page ); // Updating additional page memcache ids
+		if( page != null ) // Updating additional page memcache ids
+			_createOrUpdatePageMemcache( page );
 		return entity;
 	}
 
