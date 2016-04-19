@@ -93,7 +93,7 @@ rating_rating				= റേറ്റിംഗ്
 rating_ratings				= റേറ്റിംഗ്സ്
 rating_rate_this			= ഇത് റേറ്റ് ചെയ്യൂ
 rating_your_rating			= താങ്കളുടെ റേറ്റിംഗ്
-rating_be_first_one			= ഇത് റേറ്റ് ചെയ്യുന ആദ്യത്തെ ആളാകൂ!
+rating_be_first_one			= ഇത് റേറ്റ് ചെയ്യുന്ന ആദ്യത്തെ ആളാകൂ!
 
 rating_1_star				= മോശം
 rating_2_star				= കൊള്ളാം
@@ -107,7 +107,7 @@ rating_5_star				= മികച്ചത്
 
 review_heading				= റിവ്യൂസ് 
 review_write_a_review		= ഒരു റിവ്യൂ എഴുതൂ
-review_title				= Review Title
+review_title				= റിവ്യൂ ടൈറ്റില്‍
 review_title_help			= ഉദാ: മികച്ച കഥ !
 review_content				= താങ്കളുടെ റിവ്യൂ
 review_content_help			= താങ്കളുടെ അഭിപ്രായം പങ്കുവെയ്ക്കുക. എന്താണ് ഈ രചനയെ മികച്ചതാക്കിയത്? മറ്റു വായനക്കാരെ നല്ലൊരു രചന തിരഞ്ഞെടുക്കാന്‍ സഹായിക്കൂ!
@@ -136,71 +136,71 @@ search_no_results_found		= ക്ഷമിക്കണം! താങ്കളു
 
 write_heading				= Add New Content
 write_help					= You can write on Pratilipi!
-write_title					= Title *
-write_title_en				= Title (English)
-write_type					= Select Type *
-write_language				= Language
-write_summary				= Summary (Optional)
+write_title					= തലവാചകം
+write_title_en				= തലവാചകം (ഇംഗ്ലീഷില്‍)
+write_type					= തരം തിരഞ്ഞെടുക്കൂ
+write_language				= ഭാഷ
+write_summary				= സംഗ്രഹം (നിര്‍ബന്ധമില്ല)
 write_create_new_content	= Create New Content
 
 
 
 # Common User Popups
 
-user_sign_in				= Sign In
+user_sign_in				= സൈനിന്‍ ചെയ്യൂ
 user_to_sign_in				= To Sign In
-user_sign_in_with_facebook	= Sign In with Facebook
-user_sign_in_to_pratilipi	= Sign in to Pratilipi
-user_sign_out				= Sign Out
+user_sign_in_with_facebook	= ഫേസ്ബുക്കിലൂടെ സൈനിന്‍ ചെയ്യൂ
+user_sign_in_to_pratilipi	= പ്രതിലിപിയിലേക്ക് സൈനിന്‍ ചെയ്യൂ
+user_sign_out				= സൈന്‍ ഔട്ട്‌
 
-user_sign_up				= Sign Up !
-user_sign_up_for_pratilipi	= Sign Up for Pratilipi
-user_sign_up_with_facebook	= Sign Up with Facebook
+user_sign_up				= സൈനപ്പ് ചെയ്യൂ !
+user_sign_up_for_pratilipi	= പ്രതിലിപിയിലേക്ക് സൈനപ്പ് ചെയ്യൂ
+user_sign_up_with_facebook	= ഫേസ്ബുക്കിലൂടെ സൈനപ്പ് ചെയ്യൂ
 
-user_forgot_password		= Forgot Password ?
-user_reset_password			= Reset Password
+user_forgot_password		= പാസ്സ്‌വേര്‍ഡ്‌ മറന്നുപോയോ?
+user_reset_password			= പാസ്സ്‌വേര്‍ഡ്‌ റീസെറ്റ് ചെയ്യൂ
 user_reset_password_help	=  Please enter the email address you signed up with. We will send you a link to reset your password.
 
-user_current_password		= Current Password
-user_new_password			= New Password
+user_current_password		= നിലവിലുള്ള പാസ്സ്‌വേര്‍ഡ്‌
+user_new_password			= പുതിയ പാസ്സ്‌വേര്‍ഡ്‌
 
-user_full_name				= Full Name
-user_email					= Email
-user_email_not_available	= Email Not Available!
-user_phone					= Phone
-user_phone_not_available	= Phone Number Not Available!
-user_password				= Password
-user_confirm_password		= Confirm Password
+user_full_name				= മുഴുവന്‍ പേര്
+user_email					= ഇമെയില്‍ അഡ്രസ്സ്
+user_email_not_available	= ഈ ഇ മെയില്‍ നിലവിലില്ല!
+user_phone					= ഫോണ്‍ നമ്പര്‍
+user_phone_not_available	= ഈ ഫോണ്‍ നമ്പര്‍ നിലവിലില്ല!
+user_password				= പാസ്സ്‌വേര്‍ഡ്‌
+user_confirm_password		= പാസ്സ്‌വേര്‍ഡ്‌ ഒന്നു കൂടി ടൈപ്പ് ചെയ്യൂ
 
-user_my_profile				= My Profile
-user_my_account				= My Account
+user_my_profile				= എന്‍റെ പ്രൊഫൈല്‍
+user_my_account				= എന്‍റെ അക്കൗണ്ട്‌
 
 user_is_new					= New?
 user_is_registered			= Already a Member?
-user_email_verification		= Email Verification
-user_require_access			= You need to log in to perform this action!
+user_email_verification		= ഇ മെയില്‍ വെരിഫിക്കേഷന്‍
+user_require_access			= ഇത് ചെയ്യണമെങ്കില്‍ താങ്കള്‍ ലോഗ് ഇന്‍ ചെയ്യണം!
 
 
 
 # My Account popup
 
-edit_account_heading		= Edit My Account
-edit_account_verify_email	= Verify Email
-edit_account_email_verified	= Email Verified
-edit_account_change_password	= Change Password
+edit_account_heading		= എന്‍റെ അക്കൗണ്ട്‌ എഡിറ്റ്‌ ചെയ്യൂ
+edit_account_verify_email	= ഇമെയില്‍ വെരിഫൈ ചെയ്യൂ
+edit_account_email_verified	= ഇമെയില്‍ വെരിഫൈ ചെയ്ത് കഴിഞ്ഞു
+edit_account_change_password	= പാസ്സ്‌വേര്‍ഡ്‌ മാറ്റൂ
 
 
 
 # Footer
 
-footer_follow_us_on_social_media	= Follow us on Social Media
-footer_about_us				= About Us
+footer_follow_us_on_social_media	= ഞങ്ങളെ സോഷ്യല്‍ മീഡിയയില്‍ ഫോളോ ചെയ്യൂ
+footer_about_us				= ഞങ്ങളെക്കുറിച്ച്
 footer_work_with_us			= Work With Us
-footer_blog					= Blog
-footer_privacy_policy		= Privacy Policy
-footer_terms_of_service		= Terms
-footer_contact_email		= contact@pratilipi.com
-footer_contact_10_digit_number		= 9789316700
+footer_blog					= ബ്ലോഗ്‌
+footer_privacy_policy		= പ്രൈവസി പോളിസി
+footer_terms_of_service		= നിബന്ധനകള്‍
+footer_contact_email		= malayalam@pratilipi.com
+footer_contact_10_digit_number		= 9036506463
 
 
 
@@ -282,26 +282,26 @@ event_save_changes		= Save Changes
 
 
 # Gender
-gender_male			= Male
-gender_female		= Female
-gender_other		= Other
+gender_male			= പുരുഷന്‍
+gender_female		= സ്ത്രീ
+gender_other		= മറ്റുള്ളവ
 
 # Months
-month_jan	= January
-month_feb	= February
-month_mar	= March
-month_apr	= April
-month_may	= May
-month_jun	= June
-month_jul	= July
-month_aug	= August
-month_sep	= September
-month_oct	= October
-month_nov	= November
-month_dec	= December
+month_jan	= ജനുവരി
+month_feb	= ഫെബ്രുവരി
+month_mar	= മാര്‍ച്ച്
+month_apr	= ഏപ്രില്‍
+month_may	= മെയ്‌
+month_jun	= ജൂണ്‍
+month_jul	= ജൂലൈ
+month_aug	= ആഗസ്റ്റ്‌
+month_sep	= സെപ്റ്റംബര്‍
+month_oct	= ഒക്റ്റോബര്‍
+month_nov	= നവംബര്‍
+month_dec	= ഡിസംബര്‍
 
 # Library
-my_library			= My Library
-add_to_library		= Add to Library
-remove_from_library	= Remove from Library
+my_library			= എന്‍റെ വായനശാല
+add_to_library		= എന്‍റെ വായനശാലയിലേക്ക് കൂട്ടിച്ചേര്‍ക്കുക
+remove_from_library	= എന്‍റെ വായനശാലയില്‍ നിന്നും ഒഴിവാക്കുക
 empty_library		= Sorry, there are no books in your library, you can add books from content page.
