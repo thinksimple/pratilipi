@@ -227,15 +227,15 @@ view_more					= View More
 # Success Messages
 
 password_reset_request_success		= താങ്കളുടെ ഇ മെയില്‍ ഐ ഡി യിലേക്ക് ഒരു മെയില്‍ അയച്ചിരിക്കുന്നു! 
-user_login_success					= Success !
-user_register_success				= Success !
+user_login_success					= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
+user_register_success				=വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
 password_change_success				= പാസ്സ്‌വേര്‍ഡ്‌ വിജയകരമായി മാറ്റിയിരിക്കുന്നു!
 verification_email_sent_success		= ഇ മെയില്‍ വിജയകരമായി അയച്ചിരിക്കുന്നു !
 user_verified_success				= വെരിഫിക്കേഷന്‍ വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
-content_created_success				= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു ! !
-updated_author_info_success			= Success !
-updated_pratilipi_info_success		= Success !
-updated_review						= Success !
+content_created_success				= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു ! 
+updated_author_info_success			=വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
+updated_pratilipi_info_success		= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
+updated_review						= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
 
 # Author Edit Popup
 
