@@ -134,7 +134,7 @@ search_no_results_found		= ക്ഷമിക്കണം! താങ്കളു
 
 # Write
 
-write_heading				= Add New Content
+write_heading				= പുതിയ രചന ചേര്‍ക്കൂ
 write_help					= You can write on Pratilipi!
 write_title					= തലവാചകം
 write_title_en				= തലവാചകം (ഇംഗ്ലീഷില്‍)
@@ -174,8 +174,8 @@ user_confirm_password		= പാസ്സ്‌വേര്‍ഡ്‌ ഒന്
 user_my_profile				= എന്‍റെ പ്രൊഫൈല്‍
 user_my_account				= എന്‍റെ അക്കൗണ്ട്‌
 
-user_is_new					= New?
-user_is_registered			= Already a Member?
+user_is_new					= പുതിയ യൂസര്‍ ആണോ?
+user_is_registered			= പ്രതിലിപിയില്‍ നിലവിലുള്ള അംഗമാണോ?
 user_email_verification		= ഇ മെയില്‍ വെരിഫിക്കേഷന്‍
 user_require_access			= ഇത് ചെയ്യണമെങ്കില്‍ താങ്കള്‍ ലോഗ് ഇന്‍ ചെയ്യണം!
 
@@ -219,7 +219,7 @@ update						= Update
 share						= ഷെയര്‍
 menu						= മെനു
 back						= പുറകിലേക്ക് പോവുക
-load_more_contents			= Load More Contents
+load_more_contents			= കൂടുതല്‍ രചനകള്‍ കാണിക്കുക.
 view_more					= View More
 
 
