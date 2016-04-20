@@ -220,7 +220,7 @@ share						= ഷെയര്‍
 menu						= മെനു
 back						= പുറകിലേക്ക് പോവുക
 load_more_contents			= കൂടുതല്‍ രചനകള്‍ കാണിക്കുക.
-view_more					= View More
+view_more					= കൂടുതല്‍ കാണൂ
 
 
 
