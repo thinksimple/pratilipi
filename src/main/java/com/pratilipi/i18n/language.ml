@@ -149,7 +149,7 @@ write_create_new_content	= പുതിയ രചന സൃഷ്ടിക്ക
 
 user_sign_in				= സൈനിന്‍ ചെയ്യൂ
 user_to_sign_in				= To Sign In
-user_sign_in_with_facebook	= ഫേസ്ബുക്കിലൂടെ സൈനിന്‍ ചെയ്യൂ
+user_sign_in_with_facebook	= ഫേസ്ബുക്ക് സൈനിന്‍
 user_sign_in_to_pratilipi	= പ്രതിലിപിയിലേക്ക് സൈനിന്‍ ചെയ്യൂ
 user_sign_out				= സൈന്‍ ഔട്ട്‌
 
