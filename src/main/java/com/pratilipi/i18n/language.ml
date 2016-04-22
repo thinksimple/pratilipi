@@ -265,9 +265,9 @@ edit_pratilipi_save_changes		= മാറ്റങ്ങള്‍ സേവ് �
 
 # Register Form
 
-register_part_1					= By registering, you agree to the 
-register_part_2					= and
-register_part_3					= .
+register_part_1					= ഇത് ചെയ്യുന്നതോടെ താങ്കള്‍
+register_part_2					= യും
+register_part_3					= ഉം അംഗീകരിക്കുന്നു.
 
 
 # Event Page
