@@ -3,4 +3,4 @@ Categories
 /stories   Stories
 /poems     Poems
 /articles  Articles
-/sanjayan  Sanjayan
+/classic   ക്ലാസ്സിക്‌ 
