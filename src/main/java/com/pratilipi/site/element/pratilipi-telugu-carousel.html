@@ -34,6 +34,12 @@
 					<div class="item">
 						<a href="/love"><img src="{{ image2 }}" /></a>
 					</div>
+					<div class="item">
+						<a href="/children"><img src="{{ image3 }}" /></a>
+					</div>
+					<div class="item">
+						<a href="/women"><img src="{{ image4 }}" /></a>
+					</div>
 				</div> 
 				<a href="#carousel" class="left carousel-control" data-slide="prev">
 					<span class="glyphicon glyphicon-chevron-left"></span>
@@ -61,7 +67,9 @@
 		
 		properties: {
 			image1: { type: Image },
-			image2: { type: Image }
+			image2: { type: Image },
+			image3: { type: Image },
+			image4: { type: Image }
 		},
 		
 		_onIronResize: function() {
@@ -71,9 +79,13 @@
 			if( windowsize > 600 ) {
 				this.image1 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-03.jpg";
 				this.image2 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-04.jpg";
+				this.image3 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-05.jpg";
+				this.image4 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-06.jpg";
 			} else {
 				this.image1 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-03-small.jpg";
 				this.image2 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-04-small.jpg";
+				this.image3 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-05-small.jpg";
+				this.image4 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-06-small.jpg";
 			}
 		},
 		
