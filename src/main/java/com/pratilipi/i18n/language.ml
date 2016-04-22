@@ -148,7 +148,7 @@ write_create_new_content	= പുതിയ രചന സൃഷ്ടിക്ക
 # Common User Popups
 
 user_sign_in				= സൈനിന്‍ ചെയ്യൂ
-user_to_sign_in				= To Sign In
+user_to_sign_in				= സൈനിന്‍ ചെയ്യാന്‍
 user_sign_in_with_facebook	= ഫേസ്ബുക്ക് സൈനിന്‍
 user_sign_in_to_pratilipi	= പ്രതിലിപിയിലേക്ക് സൈനിന്‍ ചെയ്യൂ
 user_sign_out				= സൈന്‍ ഔട്ട്‌
@@ -192,9 +192,9 @@ edit_account_change_password	= പാസ്സ്‌വേര്‍ഡ്‌ മ
 
 # Footer
 
-footer_follow_us_on_social_media	= ഞങ്ങളെ സോഷ്യല്‍ മീഡിയയില്‍ ഫോളോ ചെയ്യൂ
+footer_follow_us_on_social_media	= സോഷ്യല്‍ മീഡിയയില്‍ ഫോളോ ചെയ്യൂ
 footer_about_us				= ഞങ്ങളെക്കുറിച്ച്
-footer_work_with_us			= Work With Us
+footer_work_with_us			= തൊഴിലവസരങ്ങള്‍
 footer_blog					= ബ്ലോഗ്‌
 footer_privacy_policy		= പ്രൈവസി പോളിസി
 footer_terms_of_service		= നിബന്ധനകള്‍
