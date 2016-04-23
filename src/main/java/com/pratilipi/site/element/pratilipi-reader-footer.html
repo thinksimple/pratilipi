@@ -59,8 +59,10 @@
 			},
 			
 			_pageNoChanged: function() {
+				if( this.pageCount == null || this.pageNo == null )
+					return;
 				this.prevButtonDisabled = this.pageNo <= 1;
-				this.nextButtonDisabled = this.pageNo >= this.pageCount;
+				this.nextButtonDisabled = ( this.pageCount <= 1 || this.pageNo >= this.pageCount );
 			},
 
 			showPrevious: function() {
@@ -75,6 +77,7 @@
 			
 			ready: function() {
 				this.sliderDisabled = this.pageCount <= 1;
+				this._pageNoChanged();
 			}
 			
 		});

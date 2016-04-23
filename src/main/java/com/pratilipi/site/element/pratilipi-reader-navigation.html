@@ -16,12 +16,11 @@
 			overflow: auto;
 		}
 		
-		.pratilipi-shadow {
+		.menu-item {
 			padding: 15px 10px; 
-			margin-bottom: 15px; 
 			text-align: center; 
 			max-width: 275px;
-			border-top: 1px solid #DDD;
+			border-bottom: 1px solid #DDD;
 		}
 		
 		a.pratilipi-black, a.pratilipi-black:hover, a.pratilipi-black:focus {
@@ -36,7 +35,7 @@
 			<paper-card id="navigationPaperCard">
 				<template is="dom-repeat" items="{{ modifiedIndex }}">
 					<a class="pratilipi-black" on-click="test">
-						<div class="pratilipi-shadow">
+						<div class="menu-item">
 							[[ item.title ]]
 						</div>
 					</a>

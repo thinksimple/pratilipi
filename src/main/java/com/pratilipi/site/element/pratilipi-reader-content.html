@@ -46,6 +46,7 @@
 			
 			_onContentChange: function() {
 				jQuery( this.querySelector( '#pager' ) ).html( this.content );
+				jQuery( "img" ).css( "max-width", "100%", "important" );
 				$( 'html, body' ).animate( { scrollTop : 0 }, 500 );
 			},
 			
