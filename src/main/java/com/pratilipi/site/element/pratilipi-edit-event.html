@@ -2,7 +2,7 @@
 	
 	<style>
 	
-		paper-input.edit, paper-textarea.edit {
+		paper-textarea.edit {
 			--paper-input-container-focus-color: #107FE5;
 			display: block;
 			--paper-input-container-label: {
@@ -30,15 +30,14 @@
 					<h5 class="modal-fullscreen-heading">{{ event.name }}</h5>
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<paper-input class="edit" label="${ _strings.event_name }" value="{{ name::input }}"></paper-input>
+							<pratilipi-input label="${ _strings.event_name }" value="{{ name::input }}"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<paper-input class="edit" label="${ _strings.event_name_en }" value="{{ nameEn::input }}"></paper-input>
+							<pratilipi-input label="${ _strings.event_name_en }" value="{{ nameEn::input }}"></pratilipi-input>
 						</div>
 					</div>
 					<br/>
 					<span class="edit-summary-text">${ _strings.event_description }</span>
-					<script language="javascript" type="text/javascript">tinymce.init({ selector:'#eventDescription', editor_selector : "eventDescription", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 					<paper-textarea class="edit" id="eventDescription" value="{{ description::input }}"></paper-textarea>
 					<br/>
 					<span class="edit-summary-text">${ _strings.event_entries_url_list }</span>
@@ -65,6 +64,9 @@
 	</template>
 	
 	<script>
+	HTMLImports.whenReady(function () {
+		tinymce.init({ selector:'#eventDescription', editor_selector : "eventDescription", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });
+	});
 		Polymer({
 	
 			is: 'pratilipi-edit-event',
@@ -88,11 +90,11 @@
 				
 				if( this.event == null || this.event.description == null || this.event.description.trim() == "" ) {
 					this.description = null;
-					if( tinyMCE != null && tinyMCE.activeEditor != null )
+					if( tinyMCE != null && tinyMCE.get( 'eventDescription' ) != null )
 						tinyMCE.get( 'eventDescription' ).setContent( "" );
 				} else {
 					this.description = processContentTinyMCE( this.event.description );
-					if( tinyMCE != null && tinyMCE.activeEditor != null )
+					if( tinyMCE != null && tinyMCE.get( 'eventDescription' ) != null )
 						tinyMCE.get( 'eventDescription' ).setContent( this.event.description );
 				}
 				
@@ -134,7 +136,7 @@
 					return;
 				}
 				
-				if( tinyMCE.activeEditor != null )
+				if( tinyMCE != null && tinyMCE.get( 'eventDescription' ) != null )
 					this.description = tinyMCE.get( 'eventDescription' ).getContent();
 				
 				

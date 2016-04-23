@@ -1,0 +1,176 @@
+<dom-module id="pratilipi-edit-blog">
+	
+	<style>
+	
+		.modal-fullscreen .modal-dialog .modal-content {max-width: 1000px;padding-left: 20px; padding-right: 20px;}
+		
+		paper-textarea.edit {
+			--paper-input-container-focus-color: #107FE5;
+			display: block;
+			--paper-input-container-label: {
+				font-size: 15px;
+				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			};
+		}
+		
+		textarea {
+			margin: 20px auto;
+			width: 100%;
+			height: 300px;
+		}
+	</style>
+	
+	<template>
+		<div class="modal modal-fullscreen fade" id="pratilipiEditBlog" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-fullscreen-close-button">
+						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
+					</div>
+					<h5 class="modal-fullscreen-heading">{{ modalTitle }}</h5>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<pratilipi-input label="Blog Title" value="{{ title::input }}"></pratilipi-input>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<pratilipi-input label="Blog Title (English)" value="{{ titleEn::input }}"></pratilipi-input>
+						</div>
+					</div>
+					<br/>
+					<paper-textarea class="edit" id="blogContent" value="{{ content::input }}"></paper-textarea>
+					<br/>
+					<div class="display-message-div">
+						<p>{{ message }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="blogEditButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">{{ modalButtonText }}</button>
+			</div>
+			
+		</div>
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/blog"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
+	</template>
+	<script>
+	HTMLImports.whenReady(function () {
+		tinymce.init({ selector:'#blogContent', editor_selector : "blogContent", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }' });
+	});
+		Polymer({
+	
+			is: 'pratilipi-edit-blog',
+			
+			properties: {
+				blogId: { type: String },
+				blogPostId: { type: String },
+				title: { type: String },
+				titleEn: { type: String },
+				content: { type: String },
+				state: { type: String },
+				
+				modalTitle: { type: String },
+				modalButtonText: { type: String }
+			},
+			
+			_process: function( blogPost ) {
+				this.blogPostId = blogPost.blogPostId == null ? null : blogPost.blogPostId;
+				this.title = blogPost.title == null ? null : blogPost.title;
+				this.titleEn = blogPost.titleEn == null ? null : blogPost.titleEn;
+				this.content = blogPost.content == null ? null : blogPost.content;
+				this.state = blogPost.state == null ? "DRAFTED" : blogPost.state;
+				
+				// Setting TinyMCE editor
+				if( tinyMCE != null && tinyMCE.get( 'blogContent' ) != null )
+					tinyMCE.get( 'blogContent' ).setContent( this.content == null ? "" : this.content );
+				
+				// Opening the modal
+				this.open();
+			},
+			
+			createNewBlog: function( blogId ) {
+				this.blogId = blogId;
+				this.modalTitle = "Create New Blog Post";
+				this.modalButtonText = "Create new Blog";
+				this._process( {} );
+			},
+			
+			editCurrentBlog: function( blogPost ) {
+				this.blogId = blogPost.blogId;
+				this.modalTitle = "Edit Blog Post - " + blogPost.title;
+				this.modalButtonText = "${ _strings.save_changes }";
+				this._process( blogPost );
+			},
+			
+			open: function() {
+				this.async( function() {
+					jQuery( "#pratilipiEditBlog" ).modal( {backdrop: 'static'} );
+				});
+			},
+			
+			close: function() {
+				jQuery( "#pratilipiEditBlog" ).modal( 'hide' );
+			},
+			
+			onSubmit: function( event ) {
+				
+				if( this.title == null || this.title.trim() == "" ) {
+					this.message = "Please enter the title!";
+					return;
+				}
+				
+				if( this.title == null || this.titleEn.trim() == "" ) {
+					this.message = "Please enter the title in English!";
+					return;
+				}
+				
+				if( tinyMCE != null && tinyMCE.get( 'blogContent' ) != null )
+					this.content = tinyMCE.get( 'blogContent' ).getContent();
+				
+				var params = { 	"blogId" : this.blogId,
+								"title" : this.title,
+								"titleEn" : this.titleEn,
+								"content" : processContentTinyMCE( this.content ) };
+				
+				if( this.blogPostId != null )
+					params.blogPostId = this.blogPostId;
+				
+				this.message = "Please Wait...";
+				jQuery( '#blogEditButton' ).prop( 'disabled', true );
+				this.$.AjaxPost.body = jQuery.param( params );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			_handleAjaxPostResponse: function( event ) {
+				
+				this.message = "Created / Updated Blog successfully!";
+				
+				var blog = event.detail.response;
+
+				document.querySelector( 'pratilipi-blog-page' ).updateBlog( blog );
+				
+				this.async( function() {
+					jQuery( '#blogEditButton' ).prop( 'disabled', false );
+					this.message = null;
+					this.close();
+				}, 1000 );
+			},
+			
+			_handleAjaxPostError: function( event ) {
+				jQuery( '#blogEditButton' ).prop( 'disabled', false );
+				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
+					this.message = event.detail.request.xhr.response.message;
+				else
+					this.message = "Some Error occured! Please try Again."
+			}
+			
+		});
+	</script>
+	
+</dom-module>

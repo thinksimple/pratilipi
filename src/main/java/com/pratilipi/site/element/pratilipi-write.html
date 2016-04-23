@@ -98,7 +98,6 @@
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div style="margin-top: 25px; margin-bottom: 5px;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.write_summary }</span></div>
-							<script language="javascript" type="text/javascript">tinymce.init({ selector:'#writeSummary', editor_selector : "writeSummary", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });</script>
 							<paper-textarea class="pratilipi-blue" id="writeSummary" value="{{ summary::input }}"></paper-textarea>
 						</div>
 					</div>
@@ -123,6 +122,9 @@
 	</template>
 	
 	<script>
+	HTMLImports.whenReady(function () {
+		tinymce.init({ selector:'#writeSummary', editor_selector : "writeSummary", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });
+	});
 		Polymer({
 
  			is: 'pratilipi-write',
@@ -192,7 +194,7 @@
 				this.state = pratilipi.state == null ? "DRAFTED" : pratilipi.state;
 				this.summary = pratilipi.summary == null ? "" : processContentTinyMCE( pratilipi.summary );
 
-				if( tinyMCE != null && tinyMCE.activeEditor != null )
+				if( tinyMCE != null && tinyMCE.get( 'writeSummary' ) != null )
 					tinyMCE.get( 'writeSummary' ).setContent( this.summary );
 				
 				var languageVernacular = {
@@ -264,7 +266,7 @@
 
 				this.type = this.$.selectPratilipiType.selectedItem.getAttribute( "value" );
 
-				if( tinyMCE != null && tinyMCE.activeEditor != null )
+				if( tinyMCE != null && tinyMCE.get( 'writeSummary' ) != null )
 					this.summary = tinyMCE.get( 'writeSummary' ).getContent();
 				
 				this.message = "${ _strings.working }";
