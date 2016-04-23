@@ -655,12 +655,18 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	public Map<String, Object> createDataModelForEventsPage( Language lang, boolean basicMode ) {
+		EventData eventData = new EventData();
+		eventData.setLanguage( lang );
+		
+		boolean hasAccessToAdd = EventDataUtil.hasAccessToAddEventData( eventData );
+		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Events" );
 		if( basicMode )
 			dataModel.put( "eventList", EventDataUtil.getEventDataList( lang ) );
 		else
 			dataModel.put( "eventListJson", new Gson().toJson( EventDataUtil.getEventDataList( lang ) ) );
+		dataModel.put( "hasAccessToAdd", hasAccessToAdd );
 		return dataModel;
 	}
 	
