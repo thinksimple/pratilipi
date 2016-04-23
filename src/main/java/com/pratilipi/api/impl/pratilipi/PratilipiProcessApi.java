@@ -147,7 +147,7 @@ public class PratilipiProcessApi extends GenericApi {
 				if( pratilipi.getAuthorId() != null && author == null )
 					throw new InvalidArgumentException( "Invalid Author id." );
 				
-				if( pratilipi.getState() != PratilipiState.DELETED && author != null && author.getState() == AuthorState.DELETED )
+				if( pratilipi.getState() == PratilipiState.PUBLISHED && author != null && author.getState() == AuthorState.DELETED )
 					throw new InvalidArgumentException( "Linked Author entity is DELETED." );
 				
 				if( pratilipi.getState() == PratilipiState.DELETED && pratilipiPage != null )
