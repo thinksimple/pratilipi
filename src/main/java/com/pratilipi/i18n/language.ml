@@ -135,7 +135,7 @@ search_no_results_found		= ക്ഷമിക്കണം! താങ്കളു
 # Write
 
 write_heading				= പുതിയ രചന ചേര്‍ക്കൂ
-write_help					= You can write on Pratilipi!
+write_help					= നിങ്ങള്‍ക്കും പ്രതിലിപിയില്‍ എഴുതാം!
 write_title					= തലവാചകം
 write_title_en				= തലവാചകം (ഇംഗ്ലീഷില്‍)
 write_type					= തരം തിരഞ്ഞെടുക്കൂ
@@ -154,7 +154,7 @@ user_sign_in_to_pratilipi	= പ്രതിലിപിയിലേക്ക് 
 user_sign_out				= സൈന്‍ ഔട്ട്‌
 
 user_sign_up				= സൈനപ്പ് ചെയ്യൂ !
-user_sign_up_for_pratilipi	= പ്രതിലിപിയിലേക്ക് സൈനപ്പ് ചെയ്യൂ
+user_sign_up_for_pratilipi	= സൈനപ്പ് ചെയ്യൂ !
 user_sign_up_with_facebook	= ഫേസ്ബുക്കിലൂടെ സൈനപ്പ് ചെയ്യൂ
 
 user_forgot_password		= പാസ്സ്‌വേര്‍ഡ്‌ മറന്നുപോയോ?
@@ -240,11 +240,11 @@ updated_review						= വിജയകരമായി പൂര്‍ത്തീ
 # Author Edit Popup
 
 edit_author_heading				= രചയിതാവിനെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ തിരുത്തുക.	
-edit_author_first_name			= First Name( Vernacular )
-edit_author_last_name			= Last Name( Vernacular )
-edit_author_first_name_en		= First Name( English )
-edit_author_last_name_en		= Last Name( English )
-edit_author_pen_name			= തൂലികാനാമം (മാതൃഭാഷയില്‍)
+edit_author_first_name			= പേര് (മലയാളത്തില്‍)
+edit_author_last_name			= 
+edit_author_first_name_en		= പേര് (ഇംഗ്ലീഷില്‍))
+edit_author_last_name_en		= 
+edit_author_pen_name			= തൂലികാനാമം (മലയാളത്തില്‍)
 edit_author_pen_name_en			= തൂലികാനാമം (ഇംഗ്ലീഷില്‍)
 edit_author_birthday_ddmmyyyy	= ജനനത്തിയതി (dd-mm-yyyy)
 edit_author_language			= ഭാഷ തിരഞ്ഞെടുക്കൂ
