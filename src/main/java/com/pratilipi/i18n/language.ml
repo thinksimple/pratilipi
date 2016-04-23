@@ -147,7 +147,7 @@ write_create_new_content	= പുതിയ രചന സൃഷ്ടിക്ക
 
 # Common User Popups
 
-user_sign_in				= സൈനിന്‍ ചെയ്യൂ
+user_sign_in				= സൈനിന്‍
 user_to_sign_in				= സൈനിന്‍ ചെയ്യാന്‍
 user_sign_in_with_facebook	= ഫേസ്ബുക്ക് സൈനിന്‍
 user_sign_in_to_pratilipi	= പ്രതിലിപിയിലേക്ക് സൈനിന്‍ ചെയ്യൂ
@@ -215,7 +215,7 @@ write						= എഴുതൂ
 free						= സൗജന്യം !
 saving						= സേവ് ചെയ്തുകൊണ്ടിരിക്കുന്നു. . .
 working						=പ്രവര്‍ത്തിച്ചുകൊണ്ടിരിക്കുന്നു. . .
-update						= Update
+update						= പുതുക്കുക
 share						= ഷെയര്‍
 menu						= മെനു
 back						= പുറകിലേക്ക് പോവുക
