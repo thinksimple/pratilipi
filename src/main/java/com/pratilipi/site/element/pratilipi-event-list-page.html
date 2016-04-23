@@ -1,3 +1,5 @@
+<link rel='import' href='pratilipi-edit-event.html?20160423'>
+
 <dom-module id="pratilipi-event-list-page">
 
 	<style>
@@ -25,6 +27,20 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow: hidden;">
+						<template is="dom-if" if="{{ hasAccessToAdd }}">
+							<pratilipi-edit-event></pratilipi-edit-event>
+							<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
+								<div style="text-align: center;">
+									<a on-click="createNewEvent">
+										<iron-icon style="width: 64px; height: 64px;" icon="add-circle"></iron-icon>
+									</a>
+									<a on-click="createNewEvent">
+										<h6 style="margin-top: 10px;">Create New Event</h6>
+									</a>
+								</div>
+							</paper-card>
+							<br class="pratilipi-break">
+						</template>
 						<template is="dom-repeat" items="[[ eventList ]]">
 							<pratilipi-event-snippet event="[[ item ]]"></pratilipi-event-snippet>
 							<br class="pratilipi-break">
@@ -86,9 +102,14 @@
 			properties: {
 				userData: { type: Object },
 				eventList: { type: Array },
+				hasAccessToAdd: { type: Boolean, value: false },
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				lastScrollTop: { type: Number, value: 0 },
+			},
+			
+			createNewEvent: function() {
+				this.querySelector( 'pratilipi-edit-event' ).createNewEvent();
 			},
 			
 			scrollToTop: function() {

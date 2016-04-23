@@ -1,4 +1,4 @@
-<link rel='import' href='pratilipi-edit-event.html?20160421'>
+<link rel='import' href='pratilipi-edit-event.html?20160423'>
 
 <dom-module id="pratilipi-event-page">
 	
@@ -45,7 +45,6 @@
 							{{ event.name }}
 							<template is="dom-if" if="{{ event.hasAccessToUpdate }}">
 								<paper-icon-button on-click="editEvent" icon="create" noink></paper-icon-button>
-								<paper-icon-button class="pull-right" on-click="createNewEvent" icon="add-circle" noink></paper-icon-button>
 							</template>
 						</div>
 
@@ -118,10 +117,6 @@
 			
 			editEvent: function() {
 				this.querySelector( 'pratilipi-edit-event' ).editCurrentEvent( this.event );
-			},
-			
-			createNewEvent: function() {
-				this.querySelector( 'pratilipi-edit-event' ).createNewEvent();
 			},
 			
 			scrollToTop: function() {
