@@ -19,32 +19,28 @@
 	
 	<template>
 		<paper-card>
-			<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+			<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
 				<!-- Menu -->
 				<ol class="carousel-indicators">
 					<li data-target="#carousel" data-slide-to="0" class="active"></li>
 					<li data-target="#carousel" data-slide-to="1"></li>
 					<li data-target="#carousel" data-slide-to="2"></li>
 					<li data-target="#carousel" data-slide-to="3"></li>
-					<li data-target="#carousel" data-slide-to="4"></li>
 				</ol>
 				
 				<!-- Items -->
 				<div class="carousel-inner">
 					<div class="item active">
-						<img src="{{ image1 }}" />
+						<a href="/search?q=stories"><img src="{{ image1 }}" /></a>
 					</div>
 					<div class="item">
 						<img src="{{ image2 }}" />
 					</div>
 					<div class="item">
-						<img src="{{ image3 }}" />
+						<a href="/event/ptr-lekhan-1"><img src="{{ image3 }}" /></a>
 					</div>
 					<div class="item">
-						<img src="{{ image4 }}" >
-					</div>
-					<div class="item">
-						<a href="http://www.pratilipi.com/event/april-tasavir-bole-chhe" target="_blank"><img src="{{ image5 }}" /></a>
+						<a href="/baalkatha"><img src="{{ image4 }}" ></a>
 					</div>
 				</div> 
 				<a href="#carousel" class="left carousel-control" data-slide="prev">
@@ -76,7 +72,6 @@
 			image2: { type: Image },
 			image3: { type: Image },
 			image4: { type: Image },
-			image5: { type: Image }
 		},
 		
 		_onIronResize: function() {
@@ -84,17 +79,15 @@
 			var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 			if( windowsize > 600 ) {
-				this.image1 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-05.jpg";
-				this.image2 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-06.jpg";
-				this.image3 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-07.jpg";
-				this.image4 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-08.jpg";
-				this.image5 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-09.jpg";
+				this.image1 = "http://0.ptlp.co/resource-mr/home-page-banner/pratilipi-marathi-carousel-01a.png";
+				this.image2 = "http://0.ptlp.co/resource-mr/home-page-banner/pratilipi-marathi-carousel-02a.png";
+				this.image3 = "http://0.ptlp.co/resource-mr/home-page-banner/pratilipi-marathi-carousel-03a.png";
+				this.image4 = "http://0.ptlp.co/resource-mr/home-page-banner/pratilipi-marathi-carousel-04a.png";
 			} else {
-				this.image1 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-05-small.jpg";
-				this.image2 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-06-small.jpg";
-				this.image3 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-07-small.jpg";
-				this.image4 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-08-small.jpg";
-				this.image5 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-09-small.jpg";
+				this.image1 = "http://0.ptlp.co/resource-mr/home-page-banner/pratilipi-marathi-carousel-01a-small.png";
+				this.image2 = "http://0.ptlp.co/resource-mr/home-page-banner/pratilipi-marathi-carousel-02a-small.png";
+				this.image3 = "http://0.ptlp.co/resource-mr/home-page-banner/pratilipi-marathi-carousel-03a-small.png";
+				this.image4 = "http://0.ptlp.co/resource-mr/home-page-banner/pratilipi-marathi-carousel-04a-small.png";
 			}
 		},
 		
