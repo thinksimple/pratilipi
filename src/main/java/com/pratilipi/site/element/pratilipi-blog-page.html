@@ -1,4 +1,4 @@
-<link rel='import' href='pratilipi-edit-blog.html?20160405'>
+<link rel='import' href='pratilipi-edit-blog.html?20160425'>
 
 <dom-module id="pratilipi-blog-page">
 	
@@ -36,7 +36,7 @@
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden">
 						<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
-							{{ blogpost.title }}
+							{{ title }}
 							<template is="dom-if" if="{{ blogpost.hasAccessToUpdate }}">
 								<paper-icon-button on-click="editBlogpost" icon="create" noink></paper-icon-button>
 							</template>
@@ -72,10 +72,18 @@
 				lastScrollTop: { type: Number, value: 0 },
 			},
 			
+			_processBlogPost: function() {
+				this.title = this.blogpost.title;
+				var jSummary = jQuery( "#pratilipi-blogpost-content" );
+				jSummary.html( this.blogpost.content );
+				jQuery( "img" ).css( "max-width", "100%", "important" );
+			},
+			
 			updateBlogpost: function( blogpost ) {
 				if( blogpost.pageUrl != null && blogpost.pageUrl != window.location.pathname )
 					window.location.href = blogpost.pageUrl;
 				this.set( 'blogpost', blogpost );
+				this._processBlogPost();
 			},
 			
 			editBlogpost: function() {
@@ -88,9 +96,7 @@
 			
 			ready: function() {
 				jQuery( '#scrollToTop' ).css( "display", "none" );
-				var jSummary = jQuery( "#pratilipi-blogpost-content" );
-				jSummary.html( this.blogpost.content );
-				jQuery( "img" ).css( "max-width", "100%", "important" );
+				this._processBlogPost();
 			},
 			
 			scrollHandler: function( st ) {

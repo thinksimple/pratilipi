@@ -51,7 +51,7 @@
 		</div>
 		<iron-ajax
 				id="AjaxPost"
-				url="/api/blog"
+				url="/api/blogpost"
 				method="POST"
 				content-type="application/x-www-form-urlencoded"
 				handle-as="json"
@@ -125,7 +125,7 @@
 					return;
 				}
 				
-				if( this.title == null || this.titleEn.trim() == "" ) {
+				if( this.titleEn == null || this.titleEn.trim() == "" ) {
 					this.message = "Please enter the title in English!";
 					return;
 				}
@@ -136,7 +136,8 @@
 				var params = { 	"blogId" : this.blogId,
 								"title" : this.title,
 								"titleEn" : this.titleEn,
-								"content" : processContentTinyMCE( this.content ) };
+								"content" : processContentTinyMCE( this.content ),
+								"state": this.state };
 				
 				if( this.blogPostId != null )
 					params.blogPostId = this.blogPostId;
