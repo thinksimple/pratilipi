@@ -63,14 +63,15 @@ public class GenericPratilipiResponse extends GenericResponse {
 	public GenericPratilipiResponse( PratilipiData pratilipiData ) {
 		this.pratilipiId = pratilipiData.getId();
 		
-		this.title = pratilipiData.getTitle();
-		this.titleEn = pratilipiData.getTitleEn();
+		this.title = pratilipiData.getTitle() != null ? pratilipiData.getTitle() : null;
+		this.titleEn = pratilipiData.getTitleEn() != null ? pratilipiData.getTitleEn() : null;
 		this.language = pratilipiData.getLanguage();
+		this.author = new Author();
 		this.author.name = pratilipiData.getAuthor().getName() != null ? 
 				pratilipiData.getAuthor().getName() : pratilipiData.getAuthor().getNameEn();
 		this.author.pageUrl = pratilipiData.getAuthor().getPageUrl();
 		
-		this.summary = pratilipiData.getSummary();
+		this.summary = pratilipiData.getSummary() != null ? pratilipiData.getSummary() : null;
 		this.publicationYear = pratilipiData.getListingDate().getYear();
 		
 		this.pageUrl = pratilipiData.getPageUrl();
