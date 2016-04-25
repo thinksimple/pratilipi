@@ -1,7 +1,6 @@
 package com.pratilipi.api.impl.init;
 
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import com.googlecode.objectify.ObjectifyService;
@@ -13,7 +12,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.data.type.gae.BlogPostEntity;
+import com.pratilipi.data.type.gae.EventEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/ofy" )
@@ -25,12 +24,12 @@ public class OfyTestApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetInitApiRequest request ) throws InvalidArgumentException, InsufficientAccessException {
 
-		List<BlogPostEntity> blogPostList = ObjectifyService.ofy().load().type( BlogPostEntity.class ).list();
-		for( BlogPostEntity blogPost : blogPostList )
-			if( blogPost.getLanguage() == null )
-				blogPost.setLanguage( Language.HINDI );
+		List<EventEntity> eventList = ObjectifyService.ofy().load().type( EventEntity.class ).filter( "LANGUAGE", Language.HINDI ).list();
+		for( EventEntity event : eventList )
+			if( event.getLanguage() == null )
+				event.setLanguage( Language.HINDI );
 		
-		ObjectifyService.ofy().save().entities( blogPostList ).now();
+		ObjectifyService.ofy().save().entities( eventList ).now();
 		
 		return new GenericResponse();
 	}
