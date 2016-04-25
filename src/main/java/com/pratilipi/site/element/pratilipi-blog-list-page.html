@@ -159,7 +159,7 @@
 				for( var i = 0; i < blogpostList.length; i++ )
 					this.push( 'blogpostList', blogpostList[i] );
 
-				if( request.detail.response.cursor == null || blogpostList.length < 20 ) {
+				if( request.detail.response.cursor == null || blogpostList.length < 10 ) {
 					this.includeShowMoreButton = false;
 					this.isFinished = true;
 				}
@@ -182,7 +182,7 @@
 			},
 			
 			attached: function() {
-				if( this.blogpostList.length < 20 || this.cursor == null || this.cursor.trim() == "" )
+				if( this.blogpostList.length < 10 || this.cursor == null || this.cursor.trim() == "" )
 					this.isFinished = true;
 			},
 			

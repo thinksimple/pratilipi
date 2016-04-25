@@ -7,7 +7,7 @@
 		
 		<#assign mainPage="pratilipi-blog-list-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160419'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160425'>
 	</head>
 
 	<body>

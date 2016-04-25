@@ -29,7 +29,7 @@ public class BlogPostListApi extends GenericApi {
 						blogPostFilter,
 						request.getCursor(),
 						0,
-						request.getResultCount() == null ? 20 : request.getResultCount() );
+						request.getResultCount() == null ? 10 : request.getResultCount() );
 		
 		return new GetBlogPostListResponse(
 				blogPostDataListCursorTuple.getDataList(),
