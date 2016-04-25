@@ -25,7 +25,7 @@ public class OfyTestApi extends GenericApi {
 	public GenericResponse get( GetInitApiRequest request ) throws InvalidArgumentException, InsufficientAccessException {
 
 		Long[] ids = new Long[] {
-				5254427646623744L,
+				5079071125929984L,
 				5206027842617344L,
 				5440671993298944L
 		};
