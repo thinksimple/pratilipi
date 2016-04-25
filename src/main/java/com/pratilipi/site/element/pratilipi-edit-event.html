@@ -44,13 +44,11 @@
 					<br/>
 					<span class="edit-summary-text">${ _strings.event_entries_url_list }</span>
 					<textarea id="urlList" value="{{ pratilipiUrlList::input }}"></textarea>
-					<div class="display-message-div">
-						<p>{{ message }}</p>
-					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="eventEditButton" class="pratilipi-dark-blue-button pull-right" type="button" on-click="onSubmit">{{ modalButtonText }}</button>
+				<div class="display-message-div"><p>{{ message }}</p></div>
+				<button id="eventEditButton" style="position: fixed; bottom: 15px; right: 15px;" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">{{ modalButtonText }}</button>
 			</div>
 			
 		</div>
@@ -74,12 +72,10 @@
 			is: 'pratilipi-edit-event',
 			
 			properties: {
-				event: { type: Object, observer: "_eventChanged" },
-
 				eventId: { type: Number },
 				name: { type: String },
 				nameEn: { type: String },
-				language: { type: String, value: "${ language?upper_case }" },
+				language: { type: String },
 				description: { type: String },
 				pratilipiUrlList: { type: String },
 
@@ -87,37 +83,31 @@
 				modalButtonText: { type: String }
 			},
 			
-			_eventChanged: function() {
-				this.eventId = ( this.event == null || this.event.eventId == null ) ? null : this.event.eventId;
-				this.name = ( this.event == null ||  this.event.name == null ) ? null : this.event.name;
-				this.nameEn = ( this.event == null ||  this.event.nameEn == null ) ? null : this.event.nameEn;
-				this.language = ( this.event == null ||  this.event.language == null ) ? this.language : this.event.language;
+			_process: function( event ) {
+				this.eventId = event.eventId == null ? null : event.eventId;
+				this.name = event.name == null ? null : event.name;
+				this.nameEn = event.nameEn == null ? null : event.nameEn;
+				this.language = event.language == null ? "${ language?upper_case }" : event.language;
+				this.description = event.description == null ? null : event.description;
 				
-				if( this.event == null || this.event.description == null || this.event.description.trim() == "" ) {
-					this.description = null;
-					if( tinyMCE != null && tinyMCE.get( 'eventDescription' ) != null )
-						tinyMCE.get( 'eventDescription' ).setContent( "" );
-				} else {
-					this.description = processContentTinyMCE( this.event.description );
-					if( tinyMCE != null && tinyMCE.get( 'eventDescription' ) != null )
-						tinyMCE.get( 'eventDescription' ).setContent( this.event.description );
-				}
+				if( tinyMCE != null && tinyMCE.get( 'eventDescription' ) != null )
+					tinyMCE.get( 'eventDescription' ).setContent( this.description != null ? this.description : "" );
 				
-				if( this.event == null || this.event.pratilipiUrlList == null || this.event.pratilipiUrlList.length == 0 )
+				if( event.pratilipiUrlList == null || event.pratilipiUrlList.length == 0 )
 					this.pratilipiUrlList = null;
 				else 
-					this.pratilipiUrlList = this.event.pratilipiUrlList.join( "\n" );
+					this.pratilipiUrlList = event.pratilipiUrlList.join( "\n" );
 			},
 			
 			editCurrentEvent: function( event ) {
-				this.set( 'event', event );
+				this._process( event );
 				this.modalTitle = event.title + " - " + "Edit Event";
 				this.modalButtonText = "${ _strings.event_save_changes }";
 				this.open();
 			},
 			
 			createNewEvent: function() {
-				this.set( 'event', null );
+				this._process( {} );
 				this.modalTitle = "Create New Event!";
 				this.modalButtonText = "Create New Event";
 				this.open();
@@ -180,14 +170,16 @@
 			
 			_handleAjaxPostResponse: function( event ) {
 				
-				this.message = "Updated";
+				this.message = "Created / Updated Event Successfully!";
 				
 				var event = event.detail.response;
-
-				document.querySelector( 'pratilipi-event-page' ).updateEvent( event );
 				
 				this.async( function() {
 					jQuery( '#eventEditButton' ).prop( 'disabled', false );
+					if( document.querySelector( 'pratilipi-event-page' ) != null )
+						document.querySelector( 'pratilipi-event-page' ).updateEvent( event );
+					else
+						window.location.href = event.pageUrl;
 					this.message = null;
 					this.close();
 				}, 1000 );

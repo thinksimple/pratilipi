@@ -1,4 +1,4 @@
-<link rel='import' href='pratilipi-edit-event.html?20160423'>
+<link rel='import' href='pratilipi-edit-event.html?20160425'>
 
 <dom-module id="pratilipi-event-page">
 	
@@ -109,10 +109,26 @@
 				lastScrollTop: { type: Number, value: 0 },
 			},
 			
+			_processEventPage: function() {
+				var jSummary = jQuery( "#pratilipi-event-description" );
+				jSummary.html( this.event.description );
+				
+				if( this.pratilipiList == null || this.pratilipiList.length == 0 )
+					this.showPratilipiList = false;
+				
+				if( this.event.bannerImageUrl.indexOf( '?' ) == -1 )
+					this.eventBannerImageUrl = this.event.bannerImageUrl + "?" + "width=1000";
+				else
+					this.eventBannerImageUrl = this.event.bannerImageUrl + "&" + "width=1000";
+			},
+
 			updateEvent: function( event ) {
-				this.set( 'event', event );
 				if( event.pageUrl != null && event.pageUrl != window.location.pathname )
 					window.location.href = event.pageUrl;
+				
+				this.set( 'event', event );
+				this.set( 'pratilipiList', event.pratilipiUrlList.join( "\n" ) );
+				this._processEventPage();
 			},
 			
 			editEvent: function() {
@@ -125,18 +141,7 @@
 			
 			ready: function() {
 				jQuery( '#scrollToTop' ).css( "display", "none" );
-				var jSummary = jQuery( "#pratilipi-event-description" );
-				jSummary.html( this.event.description );
-				
-				if( this.pratilipiList == null || this.pratilipiList.length == 0 )
-					this.showPratilipiList = false;
-				
-				if( this.event.bannerImageUrl.indexOf( '?' ) == -1 )
-					this.eventBannerImageUrl = this.event.bannerImageUrl + "?" + "width=1000";
-				else
-					this.eventBannerImageUrl = this.event.bannerImageUrl + "&" + "width=1000";
-				
-				
+				this._processEventPage();
 			},
 			
 			scrollHandler: function( st ) {
