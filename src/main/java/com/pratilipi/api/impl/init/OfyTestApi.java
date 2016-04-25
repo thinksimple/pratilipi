@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.init;
 
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -24,17 +25,12 @@ public class OfyTestApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetInitApiRequest request ) throws InvalidArgumentException, InsufficientAccessException {
 
-		Long[] ids = new Long[] {
-				5079071125929984L,
-				5206027842617344L,
-				5440671993298944L
-		};
+		List<BlogPostEntity> blogPostList = ObjectifyService.ofy().load().type( BlogPostEntity.class ).list();
+		for( BlogPostEntity blogPost : blogPostList )
+			if( blogPost.getLanguage() == null )
+				blogPost.setLanguage( Language.HINDI );
 		
-		Map<Long, BlogPostEntity> blogPosts = ObjectifyService.ofy().load().type( BlogPostEntity.class ).ids( ids );
-		for( Long id : ids )
-			blogPosts.get( id ).setLanguage( Language.TAMIL );
-		
-		ObjectifyService.ofy().save().entities( blogPosts.values() ).now();
+		ObjectifyService.ofy().save().entities( blogPostList ).now();
 		
 		return new GenericResponse();
 	}
