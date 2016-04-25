@@ -557,7 +557,8 @@ public class PratilipiSite extends HttpServlet {
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
 
 		GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
-		GenericUserPratilipiResponse userPratilipiResponse = new GenericUserPratilipiResponse( userPratilipiData );
+		GenericUserPratilipiResponse userPratilipiResponse = userPratilipiData == null
+				? null : new GenericUserPratilipiResponse( userPratilipiData );
 		
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();

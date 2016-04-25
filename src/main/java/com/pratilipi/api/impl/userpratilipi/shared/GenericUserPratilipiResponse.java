@@ -29,9 +29,6 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	
 	public GenericUserPratilipiResponse( UserPratilipiData userPratilipiData ) {
 
-		if( userPratilipiData == null )
-			return;
-
 		userPratilipiId = userPratilipiData.getId();
 		userName = userPratilipiData.getUserName();
 		userImageUrl = userPratilipiData.getUserImageUrl();
