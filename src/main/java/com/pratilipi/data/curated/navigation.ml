@@ -1,4 +1,4 @@
-Categories
+വിഭാഗങ്ങൾ 
 /books     പുസ്തകങ്ങൾ 
 /stories   കഥകൾ 
 /poems     കവിതകൾ 
