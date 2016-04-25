@@ -39,17 +39,16 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 		
 		pratilipiId = userPratilipiData.getPratilipiId();
 		
-		rating = userPratilipiData.getRating() != null ? userPratilipiData.getRating() : null;
-		reviewTitle = userPratilipiData.getReviewTitle() != null ?
-				userPratilipiData.getReviewTitle() : null;
-		review = userPratilipiData.getReview() != null ? 
-				userPratilipiData.getReview() : null;
-		reviewState = userPratilipiData.getReviewState() != null ?
-				userPratilipiData.getReviewState() : null;
-		reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate().getTime();
+		rating = userPratilipiData.getRating();
+		reviewTitle = userPratilipiData.getReviewTitle();
+		review = userPratilipiData.getReview();
+		reviewState = userPratilipiData.getReviewState();
+		if( userPratilipiData.getReviewDate() != null )
+			reviewDateMillis = userPratilipiData.getReviewDate().getTime();
 		addedToLib = userPratilipiData.isAddedToLib();
 		
 		hasAccessToReview = userPratilipiData.hasAccessToReview();
+		
 	}
 	
 	

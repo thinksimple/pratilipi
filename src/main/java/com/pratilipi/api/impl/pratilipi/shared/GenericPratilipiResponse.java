@@ -6,6 +6,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 
 public class GenericPratilipiResponse extends GenericResponse {
@@ -22,6 +23,16 @@ public class GenericPratilipiResponse extends GenericResponse {
 		public String getPageUrl() {
 			return pageUrl;
 		}
+	
+		
+		public Author( AuthorData authorData ) {
+			if( authorData != null ) {
+				name = authorData.getName() == null
+						? authorData.getNameEn()
+						: authorData.getName();
+				pageUrl = authorData.getPageUrl();
+			}
+		}
 		
 	}
 	
@@ -34,7 +45,6 @@ public class GenericPratilipiResponse extends GenericResponse {
 	private Author author;
 	@Deprecated
 	private String summary;
-	private Integer publicationYear;
 	
 	private String pageUrl;
 	private String coverImageUrl;
@@ -59,20 +69,15 @@ public class GenericPratilipiResponse extends GenericResponse {
 	@SuppressWarnings("unused")
 	private GenericPratilipiResponse() { }
 	
-	@SuppressWarnings("deprecation")
 	public GenericPratilipiResponse( PratilipiData pratilipiData ) {
+		
 		this.pratilipiId = pratilipiData.getId();
 		
-		this.title = pratilipiData.getTitle() != null ? pratilipiData.getTitle() : null;
-		this.titleEn = pratilipiData.getTitleEn() != null ? pratilipiData.getTitleEn() : null;
+		this.title = pratilipiData.getTitle();
+		this.titleEn = pratilipiData.getTitleEn();
 		this.language = pratilipiData.getLanguage();
-		this.author = new Author();
-		this.author.name = pratilipiData.getAuthor().getName() != null ? 
-				pratilipiData.getAuthor().getName() : pratilipiData.getAuthor().getNameEn();
-		this.author.pageUrl = pratilipiData.getAuthor().getPageUrl();
-		
-		this.summary = pratilipiData.getSummary() != null ? pratilipiData.getSummary() : null;
-		this.publicationYear = pratilipiData.getListingDate().getYear();
+		this.author = new Author( pratilipiData.getAuthor() );
+		this.summary = pratilipiData.getSummary();
 		
 		this.pageUrl = pratilipiData.getPageUrl();
 		this.coverImageUrl = pratilipiData.getCoverImageUrl();
@@ -83,20 +88,17 @@ public class GenericPratilipiResponse extends GenericResponse {
 		this.state = pratilipiData.getState();
 		
 		this.listingDateMillis = pratilipiData.getListingDate().getTime();
-		this.lastUpdatedMillis = pratilipiData.getLastUpdated() != null ?
-				pratilipiData.getLastUpdated().getTime() : null;
+		if( pratilipiData.getLastUpdated() != null )
+			this.lastUpdatedMillis = pratilipiData.getLastUpdated().getTime();
 		
-		this.reviewCount = pratilipiData.getReviewCount() != null ? 
-				pratilipiData.getReviewCount() : 0L ;
-		this.ratingCount = pratilipiData.getRatingCount() != null ? 
-				pratilipiData.getRatingCount() : 0L;
+		this.reviewCount = pratilipiData.getReviewCount();
+		this.ratingCount = pratilipiData.getRatingCount();
 		this.averageRating = pratilipiData.getAverageRating();
-		this.readCount = pratilipiData.getReadCount() != null ?
-				pratilipiData.getReadCount() : 0L;
-		this.fbLikeShareCount = pratilipiData.getFbLikeShareCount() != null ?
-				pratilipiData.getFbLikeShareCount() : 0L;
+		this.readCount = pratilipiData.getReadCount();
+		this.fbLikeShareCount = pratilipiData.getFbLikeShareCount();
 		
 		this.hasAccessToUpdate = pratilipiData.hasAccessToUpdate();
+		
 	}
 
 	
@@ -123,10 +125,6 @@ public class GenericPratilipiResponse extends GenericResponse {
 
 	public String getSummary() {
 		return summary;
-	}
-
-	public Integer getPublicationYear() {
-		return publicationYear;
 	}
 
 	
