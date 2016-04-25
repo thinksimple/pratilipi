@@ -39,13 +39,11 @@
 					<br/>
 					<paper-textarea class="edit" id="blogContent" value="{{ content::input }}"></paper-textarea>
 					<br/>
-					<div class="display-message-div">
-						<p>{{ message }}</p>
-					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="blogEditButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">{{ modalButtonText }}</button>
+				<div class="display-message-div"><p>{{ message }}</p></div>
+				<button id="blogEditButton" style="position: fixed; bottom: 15px; right: 15px;" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">{{ modalButtonText }}</button>
 			</div>
 			
 		</div>
@@ -125,22 +123,19 @@
 					return;
 				}
 				
-				if( this.titleEn == null || this.titleEn.trim() == "" ) {
-					this.message = "Please enter the title in English!";
-					return;
-				}
-				
 				if( tinyMCE != null && tinyMCE.get( 'blogContent' ) != null )
 					this.content = tinyMCE.get( 'blogContent' ).getContent();
 				
 				var params = { 	"blogId" : this.blogId,
 								"title" : this.title,
-								"titleEn" : this.titleEn,
 								"content" : processContentTinyMCE( this.content ),
 								"state": this.state };
 				
 				if( this.blogPostId != null )
 					params.blogPostId = this.blogPostId;
+				
+				if( this.titleEn != null )
+					params.titleEn = this.titleEn;
 				
 				this.message = "Please Wait...";
 				jQuery( '#blogEditButton' ).prop( 'disabled', true );
