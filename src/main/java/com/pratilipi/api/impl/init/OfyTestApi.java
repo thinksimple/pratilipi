@@ -24,35 +24,19 @@ public class OfyTestApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetInitApiRequest request ) throws InvalidArgumentException, InsufficientAccessException {
 
-		Long[] ids = new Long[] { 5097310579064832L,
-				5722489978093568L,
-				5671063549640704L,
-				4757949029285888L,
-				5703597413105664L,
-				5677450516234240L,
-				6015661243367424L,
-				5761505479884800L,
-				5429848977702912L,
-				5284679938736128L,
-				5187492647010304L,
-				5212753337778176L,
-				5478636643680256L,
-				6672001628372992L,
-				5677424071147520L,
-				5767762198659072L,
-				5737275447050240L,
-				5769873309302784L,
-				5112572856500224L,
-				5680376676614144L,
-				5730377779904512L,
-				5650882632876032L,
-				5131432846426112L,
-				5735393697726464L,
-				5632984900173824L };
+		Long[] ids = new Long[] {
+			5768084075839488L,
+			5183938337177600L,
+			5742503709900800L,
+			6572135489208320L,
+			5183769698893824L,
+			6555173560254464L,
+			5724344080662528L
+		};
 		
 		Map<Long, BlogPostEntity> blogPosts = ObjectifyService.ofy().load().type( BlogPostEntity.class ).ids( ids );
 		for( Long id : ids )
-			blogPosts.get( id ).setLanguage( Language.GUJARATI );
+			blogPosts.get( id ).setLanguage( Language.MARATHI );
 		
 		ObjectifyService.ofy().save().entities( blogPosts.values() ).now();
 		
