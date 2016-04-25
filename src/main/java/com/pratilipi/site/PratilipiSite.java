@@ -298,7 +298,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel = new HashMap<String, Object>();
 			dataModel.put( "title", "Server Error !" );
 			templateName = templateFilePrefix + ( basicMode ? "error/ServerErrorBasic.ftl" : "error/ServerError.ftl" );
-			response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+			response.setStatus( HttpServletResponse.SC_SERVICE_UNAVAILABLE );
 		}
 
 		
