@@ -28,6 +28,10 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	private GenericUserPratilipiResponse() {}
 	
 	public GenericUserPratilipiResponse( UserPratilipiData userPratilipiData ) {
+
+		if( userPratilipiData == null )
+			return;
+
 		userPratilipiId = userPratilipiData.getId();
 		userName = userPratilipiData.getUserName();
 		userImageUrl = userPratilipiData.getUserImageUrl();
@@ -35,10 +39,13 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 		
 		pratilipiId = userPratilipiData.getPratilipiId();
 		
-		rating = userPratilipiData.getRating();
-		reviewTitle = userPratilipiData.getReviewTitle();
-		review = userPratilipiData.getReview();
-		reviewState = userPratilipiData.getReviewState();
+		rating = userPratilipiData.getRating() != null ? userPratilipiData.getRating() : null;
+		reviewTitle = userPratilipiData.getReviewTitle() != null ?
+				userPratilipiData.getReviewTitle() : null;
+		review = userPratilipiData.getReview() != null ? 
+				userPratilipiData.getReview() : null;
+		reviewState = userPratilipiData.getReviewState() != null ?
+				userPratilipiData.getReviewState() : null;
 		reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate().getTime();
 		addedToLib = userPratilipiData.isAddedToLib();
 		
