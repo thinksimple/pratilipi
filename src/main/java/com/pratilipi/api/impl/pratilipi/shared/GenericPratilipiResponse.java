@@ -6,6 +6,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
+import com.pratilipi.data.client.PratilipiData;
 
 public class GenericPratilipiResponse extends GenericResponse {
 	
@@ -53,6 +54,48 @@ public class GenericPratilipiResponse extends GenericResponse {
 	private Long fbLikeShareCount;
 	
 	private Boolean hasAccessToUpdate;
+	
+	
+	@SuppressWarnings("unused")
+	private GenericPratilipiResponse() { }
+	
+	@SuppressWarnings("deprecation")
+	public GenericPratilipiResponse( PratilipiData pratilipiData ) {
+		this.pratilipiId = pratilipiData.getId();
+		
+		this.title = pratilipiData.getTitle();
+		this.titleEn = pratilipiData.getTitleEn();
+		this.language = pratilipiData.getLanguage();
+		this.author.name = pratilipiData.getAuthor().getName() != null ? 
+				pratilipiData.getAuthor().getName() : pratilipiData.getAuthor().getNameEn();
+		this.author.pageUrl = pratilipiData.getAuthor().getPageUrl();
+		
+		this.summary = pratilipiData.getSummary();
+		this.publicationYear = pratilipiData.getListingDate().getYear();
+		
+		this.pageUrl = pratilipiData.getPageUrl();
+		this.coverImageUrl = pratilipiData.getCoverImageUrl();
+		this.readPageUrl = pratilipiData.getReadPageUrl();
+		this.writePageUrl = pratilipiData.getWritePageUrl();
+		
+		this.type = pratilipiData.getType();
+		this.state = pratilipiData.getState();
+		
+		this.listingDateMillis = pratilipiData.getListingDate().getTime();
+		this.lastUpdatedMillis = pratilipiData.getLastUpdated().getTime();
+		
+		this.reviewCount = pratilipiData.getReviewCount() != null ? 
+				pratilipiData.getReviewCount() : 0L ;
+		this.ratingCount = pratilipiData.getRatingCount() != null ? 
+				pratilipiData.getRatingCount() : 0L;
+		this.averageRating = pratilipiData.getAverageRating();
+		this.readCount = pratilipiData.getReadCount() != null ?
+				pratilipiData.getReadCount() : 0L;
+		this.fbLikeShareCount = pratilipiData.getFbLikeShareCount() != null ?
+				pratilipiData.getFbLikeShareCount() : 0L;
+		
+		this.hasAccessToUpdate = pratilipiData.hasAccessToUpdate();
+	}
 
 	
 	public Long getId() {

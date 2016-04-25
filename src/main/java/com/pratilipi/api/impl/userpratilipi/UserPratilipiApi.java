@@ -24,8 +24,7 @@ public class UserPratilipiApi extends GenericApi {
 		UserPratilipiData userPratilipiData =
 				UserPratilipiDataUtil.getUserPratilipi( request.getPratilipiId() );
 
-		Gson gson = new Gson();
-		return gson.fromJson( gson.toJson( userPratilipiData ), GenericUserPratilipiResponse.class );
+		return new GenericUserPratilipiResponse( userPratilipiData );
 		
 	}		
 
@@ -44,7 +43,7 @@ public class UserPratilipiApi extends GenericApi {
 				.addParam( "updateUserPratilipiStats", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 		
-		return gson.fromJson( gson.toJson( userPratilipiData ), GenericUserPratilipiResponse.class );
+		return new GenericUserPratilipiResponse( userPratilipiData );
 		
 	}		
 

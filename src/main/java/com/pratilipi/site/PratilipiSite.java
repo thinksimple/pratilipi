@@ -556,10 +556,8 @@ public class PratilipiSite extends HttpServlet {
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
 
-		GenericPratilipiResponse pratilipiResponse =
-				gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class );
-		GenericUserPratilipiResponse userPratilipiResponse =
-				gson.fromJson( gson.toJson( userPratilipiData ), GenericUserPratilipiResponse.class );
+		GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
+		GenericUserPratilipiResponse userPratilipiResponse = new GenericUserPratilipiResponse( userPratilipiData );
 		
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();

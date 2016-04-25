@@ -35,8 +35,7 @@ public class PratilipiApi extends GenericApi {
 		
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
 
-		Gson gson = new Gson();
-		return gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class );
+		return new GenericPratilipiResponse( pratilipiData );
 		
 	}
 
@@ -75,7 +74,7 @@ public class PratilipiApi extends GenericApi {
 			TaskQueueFactory.getAuthorTaskQueue().add( authorTask );
 		}
 		
-		return gson.fromJson( gson.toJson( pratilipiData ), GenericPratilipiResponse.class );
+		return new GenericPratilipiResponse( pratilipiData );
 		
 	}		
 
