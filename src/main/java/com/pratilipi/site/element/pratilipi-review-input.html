@@ -198,8 +198,10 @@
 				
 				var body = {
 					pratilipiId : this.pratilipiId,
-					rating : this.rating,
 			    };
+				
+				if( this.rating != null )
+					body.rating = this.rating;
 				
 				if( this.reviewTitle != null )
 					body.reviewTitle = this.reviewTitle;

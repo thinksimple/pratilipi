@@ -105,7 +105,7 @@
 				pratilipiList: { type: Array },
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
-				showPratilipiList: { type: Boolean, value: true },
+				showPratilipiList: { type: Boolean },
 				lastScrollTop: { type: Number, value: 0 },
 			},
 			
@@ -114,7 +114,9 @@
 				jSummary.html( this.event.description );
 				
 				if( this.pratilipiList == null || this.pratilipiList.length == 0 )
-					this.showPratilipiList = false;
+					this.set( 'showPratilipiList', false );
+				else
+					this.set( 'showPratilipiList', true );
 				
 				if( this.event.bannerImageUrl.indexOf( '?' ) == -1 )
 					this.eventBannerImageUrl = this.event.bannerImageUrl + "?" + "width=1000";
@@ -127,7 +129,12 @@
 					window.location.href = event.pageUrl;
 				
 				this.set( 'event', event );
-				this.set( 'pratilipiList', event.pratilipiUrlList.join( "\n" ) );
+				this.set( 'pratilipiList', [] );
+
+				var pratilipiList = event.pratilipiUrlList.join( "\n" );
+				for( var i = 0; i < pratilipiList.length; i++ )
+					this.push( 'pratilipiList', pratilipiList[i] );
+
 				this._processEventPage();
 			},
 			

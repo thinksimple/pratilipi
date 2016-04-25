@@ -60,6 +60,7 @@
 		content = content.replace( /TEXT-CENTER/g,"style=\"text-align: center;\"" );
 		content = content.replace( /TEXT-JUSTIFY/g,"style=\"text-align: justify;\"" );
 		-->
+		content = content.replace( /\n/g, "<br/>" );
 		content = JSON.stringify( content );
  		content = content.substring( 1, content.length - 1 );
 		return content;
