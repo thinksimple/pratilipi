@@ -83,7 +83,8 @@ public class GenericPratilipiResponse extends GenericResponse {
 		this.state = pratilipiData.getState();
 		
 		this.listingDateMillis = pratilipiData.getListingDate().getTime();
-		this.lastUpdatedMillis = pratilipiData.getLastUpdated().getTime();
+		this.lastUpdatedMillis = pratilipiData.getLastUpdated() != null ?
+				pratilipiData.getLastUpdated().getTime() : null;
 		
 		this.reviewCount = pratilipiData.getReviewCount() != null ? 
 				pratilipiData.getReviewCount() : 0L ;

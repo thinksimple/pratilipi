@@ -156,6 +156,9 @@
 					<table style="margin-top: 15px; margin-bottom: 25px;">
 						<tr> <th>${ _strings.pratilipi_listing_date }</th><td>:</td><td>{{ listingDate }}</td> </tr>
 						<tr> <th>${ _strings.pratilipi_count_reads }</th><td>:</td><td>{{ readCount }}</td> </tr>
+						<template is="dom-if" if="{{ lastUpdatedDate }}">
+							<tr> <th>Last Updated</th><td>:</td><td>{{ lastUpdatedDate }}</td> </tr>
+						</template>
 					</table>
 					
 					<div style="position: relative; display: inline-block;">
@@ -350,6 +353,7 @@
 				
 				this.type = this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name;
 				this.listingDate = convertDate( pratilipi.listingDateMillis );
+				this.lastUpdatedDate = pratilipi.lastUpdatedMillis != null ? convertDate( pratilipi.lastUpdatedMillis ) : null; 
 				if( pratilipi.state == "DRAFTED" )
 					this.changeState = "${ _strings.pratilipi_publish_it }";
 				else if ( pratilipi.state == "PUBLISHED" )
