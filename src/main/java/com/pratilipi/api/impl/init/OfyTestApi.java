@@ -135,7 +135,7 @@ public class OfyTestApi extends GenericApi {
 		
 		Map<Long, BlogPostEntity> blogPosts = ObjectifyService.ofy().load().type( BlogPostEntity.class ).ids( ids );
 		for( Long id : ids )
-			blogPosts.get( id ).setLanguage( Language.MARATHI );
+			blogPosts.get( id ).setLanguage( Language.GUJARATI );
 		
 		ObjectifyService.ofy().save().entities( blogPosts.values() ).now();
 		
