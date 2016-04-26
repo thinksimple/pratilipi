@@ -84,8 +84,12 @@ public interface Pratilipi extends GenericOfyType, Serializable {
 	void setTotalRating( Long totalRating );
 
 	
+	Long getReadCountOffset();
+
+	void setReadCountOffset( Long readCountOffset );
+		
 	Long getReadCount();
-	
+
 	void setReadCount( Long readCount );
 	
 	Long getFbLikeShareCountOffset();

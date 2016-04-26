@@ -315,9 +315,18 @@ public class PratilipiEntity implements Pratilipi {
 	
 	
 	@Override
+	public Long getReadCountOffset() {
+		return READ_COUNT_OFFSET == null ? 0L : READ_COUNT_OFFSET;
+	}
+
+	@Override
+	public void setReadCountOffset( Long readCountOffset ) {
+		this.READ_COUNT_OFFSET = readCountOffset;
+	}
+	
+	@Override
 	public Long getReadCount() {
-		return ( READ_COUNT_OFFSET == null ? 0L : READ_COUNT_OFFSET )
-				+ ( READ_COUNT == null ? 0L : READ_COUNT );
+		return READ_COUNT == null ? 0L : READ_COUNT;
 	}
 
 	@Override
