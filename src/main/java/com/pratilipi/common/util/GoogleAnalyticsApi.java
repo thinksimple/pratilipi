@@ -29,31 +29,33 @@ public class GoogleAnalyticsApi {
 	
 	public static Map<Long, Long> getPratilipiReadCount( List<Long> pratilipiIdList ) throws UnexpectedServerException {
 		int idsPerRequest = 80;
-		Map <Long, Long> idCountMap = new HashMap<Long, Long>();
+		Map<Long, Long> idCountMap = new HashMap<Long, Long>();
 		
 		for( int i = 0; i < pratilipiIdList.size(); i = i + idsPerRequest ) {
 			String filters = "";
 			for( int j = 0; i + j < pratilipiIdList.size() && j < idsPerRequest; j++ )
-				filters = filters + "ga:eventCategory==Pratilipi:" + pratilipiIdList.get( i + j ) + ",";
+				filters = filters + "~^/read\\?id=" + pratilipiIdList.get( i + j ) + ".*,";
 			filters = filters.substring( 0, filters.length() - 1 );
-			filters = filters + ";ga:eventAction=~^ReadTimeSec:.*";
 			
 			try {
 				Get apiQuery = getAnalytics().data().ga()
 						.get( "ga:89762686",		// Table Id.
 								"2015-01-01",		// Start Date.
 								"today",			// End Date.
-								"ga:uniqueEvents" )	// Metrics.
-						.setDimensions( "ga:eventCategory,ga:eventAction" )
+								"ga:pageviews" )	// Metrics.
+						.setDimensions( "ga:pagePath" )
 						.setFilters( filters );
 				
 				GaData gaData = apiQuery.execute();
 				if( gaData.getRows() != null ) {
 					for( List<String> row : gaData.getRows() ) {
-						Long pratilipiId = Long.parseLong( row.get( 0 ).substring( 10 ) );
-						long readCount = Long.parseLong( row.get( 2 ) );
+						String pagePath = row.get( 0 );
+						if( pagePath.indexOf( '&' ) != -1 )
+							pagePath = pagePath.substring( 0, pagePath.indexOf( '&' ) );
+						Long pratilipiId = Long.parseLong( pagePath.substring( pagePath.indexOf( '=' ) + 1 ) );
+						long readCount = Long.parseLong( row.get( 1 ) );
 						if( idCountMap.containsKey( pratilipiId ) )
-							idCountMap.put( pratilipiId , Math.max( readCount, idCountMap.get( pratilipiId ) ) );
+							idCountMap.put( pratilipiId , readCount + idCountMap.get( pratilipiId ) );
 						else
 							idCountMap.put( pratilipiId , readCount );
 					}
