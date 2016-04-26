@@ -34,11 +34,17 @@
 				
 				<dom-module id="pratilipi-reader-navigation-entry">
 					<style>
+						a.heading, a.heading:hover, a.heading:focus {
+							font-weight: 600;
+						}
+						a.grey, a.grey:hover, a.grey:focus {
+							color: #707070;
+						}
 						a.black, a.black:hover, a.black:focus {
-							color: #333!important;
+							color: #333;
 						}
 						a.blue, a.blue:hover, a.blue:focus {
-							color: #107FE5!important;
+							color: #107FE5;
 						}
 						.menu-item {
 							padding: 12px 8px; 
@@ -48,7 +54,7 @@
 						}
 					</style>
 					<template>
-						<a id="entry" class="black" on-click="_entrySelected">
+						<a id="entry" on-click="_entrySelected">
 							<div class="menu-item">
 								[[ entry.title ]]
 							</div>
@@ -63,13 +69,22 @@
 								pageNo: { type: Number, observer: "_pageNoChanged" }
 							},
 							
+							attached: function() {
+								if( this.entry.level == 0 )
+									jQuery( this.querySelector( '#entry' ) ).addClass( "heading" );
+							},
+							
 							_pageNoChanged: function() {
 								if( this.pageNo == this.entry.pageNo ) {
 									jQuery( this.querySelector( '#entry' ) ).removeClass( "black" );
+									jQuery( this.querySelector( '#entry' ) ).removeClass( "grey" );
 									jQuery( this.querySelector( '#entry' ) ).addClass( "blue" );
 								} else {
 									jQuery( this.querySelector( '#entry' ) ).removeClass( "blue" );
-									jQuery( this.querySelector( '#entry' ) ).addClass( "black" );
+									if( this.entry.level == 0 )
+										jQuery( this.querySelector( '#entry' ) ).addClass( "black" );
+									else
+										jQuery( this.querySelector( '#entry' ) ).addClass( "grey" );
 								}
 							},
 							
@@ -102,7 +117,7 @@
 				for( var i = 0; i < this.index.length; i++ )
 					this.push( 'modifiedIndex', this.index[i] );
 				
-				jQuery( "#navigationPaperCard" ).css( "max-height", jQuery( window ).height() - 64 );
+				jQuery( "#navigationPaperCard" ).css( "max-height", jQuery( window ).height() - 90 );
 			},
 			
 			toggleNavigation: function() {

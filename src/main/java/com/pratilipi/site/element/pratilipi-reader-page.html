@@ -1,7 +1,7 @@
 <link rel='import' href='pratilipi-reader-header.html?2'>
-<link rel='import' href='pratilipi-reader-navigation.html?4'>
+<link rel='import' href='pratilipi-reader-navigation.html?5'>
 <link rel='import' href='pratilipi-reader-content.html?5'>
-<link rel='import' href='pratilipi-reader-footer.html?4'>
+<link rel='import' href='pratilipi-reader-footer.html?5'>
 
 <dom-module id="pratilipi-reader-page">
 
@@ -88,8 +88,16 @@
 				hideIndexButton: { type: Boolean, value: false },
 			},
 			
+			showPrevious: function() {
+				this.setPageNo( this.pageNo - 1 );
+			},
+			
+			showNext: function() {
+				this.setPageNo( this.pageNo + 1 );
+			},
+			
 			setPageNo: function( pageNo ) {
-				if( pageNo != this.pageNo )
+				if( pageNo != this.pageNo && pageNo >= 1 && pageNo <= this.pageCount )
 					this.set( 'pageNo', pageNo );
 			},
 
