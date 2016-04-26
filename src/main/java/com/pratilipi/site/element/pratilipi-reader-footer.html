@@ -4,22 +4,40 @@
 		:host {
 			display: block;
 		}
+		paper-slider.pratilipi-slider {
+			--paper-slider-active-color: #D0021B;
+			--paper-slider-knob-color: #107FE5;
+		}
+		paper-fab.pratilipi-red {
+			--paper-fab-background: #FFF;
+			--paper-fab-keyboard-focus-background: #FFF;
+		}
 	</style>
 
 
 	<template>
 		<div class="parent-container margin-top-bottom">
+			<div class="container" style="text-align: center;">
+				<paper-input type="number" 
+							style="display: inline-block; width: 75px;" 
+							value="{{ pageNoInput }}" 
+							on-change="_inputObserver">
+					<div suffix>/ {{ pageCount }}</div>
+				</paper-input>
+			</div>
 			<div class="horizontal layout center">
 				<paper-slider
-						class="flex" pin
+						class="flex pratilipi-slider"
 						min="1" max="{{ pageCount }}" value="{{ pageNo }}"
 						disabled="{{ sliderDisabled }}"></paper-slider>
 				<paper-fab
+						class="pratilipi-red"
 						mini style="margin-right:10px"
 						icon="icons:chevron-left" title="Previous Page"
 						disabled="{{ prevButtonDisabled }}"
 						on-click="showPrevious"></paper-fab>
 				<paper-fab
+						class="pratilipi-red"
 						mini style="margin-right:10px"
 						icon="icons:chevron-right" title="Next Page"
 						disabled="{{ nextButtonDisabled }}"
@@ -45,7 +63,8 @@
 			is: 'pratilipi-reader-footer',
 			
 			properties: {
-				pageNo: { type:Number, notify: true, observer: "_pageNoChanged" },
+				pageNo: { type:Number, observer: "_pageNoChanged" },
+				pageNoInput: { type: Number },
 				pageCount: { type:Number },
 				sliderDisabled: { type:Boolean },
 				prevButtonDisabled: { type:Boolean },
@@ -61,23 +80,32 @@
 			_pageNoChanged: function() {
 				if( this.pageCount == null || this.pageNo == null )
 					return;
+				
+				this.pageNoInput = this.pageNo;
 				this.prevButtonDisabled = this.pageNo <= 1;
 				this.nextButtonDisabled = ( this.pageCount <= 1 || this.pageNo >= this.pageCount );
 			},
 
 			showPrevious: function() {
 				if( this.pageNo > 1 )
-					this.set( 'pageNo', this.pageNo - 1 );
+					document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.pageNo - 1 );
 			},
 			
 			showNext: function() {
 				if( this.pageNo < this.pageCount )
-					this.set( 'pageNo', this.pageNo + 1 );
+					document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.pageNo + 1 );
 			},
 			
 			ready: function() {
 				this.sliderDisabled = this.pageCount <= 1;
 				this._pageNoChanged();
+			},
+			
+			_inputObserver: function() {
+				if( this.pageNoInput >= 1 && this.pageNoInput <= this.pageCount && this.pageNo != this.pageNoInput )
+					document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.pageNoInput );
+				else
+					this.pageNoInput = this.pageNo;
 			}
 			
 		});

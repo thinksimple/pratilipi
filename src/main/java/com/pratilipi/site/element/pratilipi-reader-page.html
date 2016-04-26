@@ -1,7 +1,7 @@
 <link rel='import' href='pratilipi-reader-header.html?2'>
 <link rel='import' href='pratilipi-reader-navigation.html?4'>
-<link rel='import' href='pratilipi-reader-content.html?4'>
-<link rel='import' href='pratilipi-reader-footer.html?3'>
+<link rel='import' href='pratilipi-reader-content.html?5'>
+<link rel='import' href='pratilipi-reader-footer.html?4'>
 
 <dom-module id="pratilipi-reader-page">
 
@@ -13,7 +13,7 @@
     				hide-index-button="[[ hideIndexButton ]]"></pratilipi-reader-header>
     		<template is="dom-if" if="{{ !hideIndexButton }}">
     			<pratilipi-reader-navigation
-					page-no="{{ pageNo }}"
+					page-no="[[ pageNo ]]"
 					index="{{ index }}"
 					></pratilipi-reader-navigation>
     		</template>
@@ -31,12 +31,9 @@
 		</main>
 		<footer>
     		<pratilipi-reader-footer
-    			page-no="{{ pageNo }}"
+    			page-no="[[ pageNo ]]"
     			page-count="{{ pageCount }}"></pratilipi-reader-footer>
 		</footer>
-		<div class="scroll-top-button">
-			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
-		</div>
 		<iron-ajax
 				id="AjaxGet"
 				url="/api/pratilipi/content"
@@ -83,17 +80,17 @@
 				userData: { type: Object },
 				pratilipi: { type: Object },
 				fontSize: { type: Number, notify: true },
-				pageNo: { type: Number, observer: "_pageNoChanged" },
+				pageNo: { type: Number, observer: "_pageNoChanged", notify: true },
 				pageCount: { type: Number },
 				content: { type: String },
 				contentMap: { type: Object, value: {} },
 				index: { types: Array, value: [] },
 				hideIndexButton: { type: Boolean, value: false },
-				lastScrollTop: { type: Number, value: 0 },
 			},
 			
 			setPageNo: function( pageNo ) {
-				this.set( 'pageNo', pageNo );
+				if( pageNo != this.pageNo )
+					this.set( 'pageNo', pageNo );
 			},
 
 			setFontSize: function( fontSize ) {
@@ -195,17 +192,7 @@
 				// Try again in 3 seconds
 			},
 			
-			scrollToTop: function() {
-				$( 'html, body' ).animate( { scrollTop : 0 },800 );
-			},
-			
-			scrollHandler: function( st ) {
-				if( st > this.lastScrollTop || st < 100 )
-					jQuery( '#scrollToTop' ).fadeOut();
-				else
-					jQuery( '#scrollToTop' ).fadeIn();
-				this.lastScrollTop = st;
-			}
+			scrollHandler: function( st ) {}
 			
 		});
 	</script>
