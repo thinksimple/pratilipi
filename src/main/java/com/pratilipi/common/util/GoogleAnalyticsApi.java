@@ -34,7 +34,7 @@ public class GoogleAnalyticsApi {
 		for( int i = 0; i < pratilipiIdList.size(); i = i + idsPerRequest ) {
 			String filters = "";
 			for( int j = 0; i + j < pratilipiIdList.size() && j < idsPerRequest; j++ )
-				filters = filters + "~^/read\\?id=" + pratilipiIdList.get( i + j ) + ".*,";
+				filters = filters + "ga:pagePath=~^/read\\?id=" + pratilipiIdList.get( i + j ) + ".*,";
 			filters = filters.substring( 0, filters.length() - 1 );
 			
 			try {
