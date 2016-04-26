@@ -12,19 +12,8 @@
 		}
 		
 		#pratilipiReaderNavigation paper-card {
-			padding: 10px 20px;
+			padding: 5px 10px;
 			overflow: auto;
-		}
-		
-		.menu-item {
-			padding: 15px 10px; 
-			text-align: center; 
-			max-width: 275px;
-			border-bottom: 1px solid #DDD;
-		}
-		
-		a.pratilipi-black, a.pratilipi-black:hover, a.pratilipi-black:focus {
-			color: #333!important;
 		}
 		
 	</style>
@@ -34,13 +23,64 @@
 		<iron-collapse id="pratilipiReaderNavigation">
 			<paper-card id="navigationPaperCard">
 				<template is="dom-repeat" items="{{ modifiedIndex }}">
-					<a class="pratilipi-black" on-click="test">
-						<div class="menu-item">
-							[[ item.title ]]
-						</div>
-					</a>
+					<pratilipi-reader-navigation-entry entry="{{ item }}" page-no="{{ pageNo }}"></pratilipi-reader-navigation-entry>
 					<br class="pratilipi-break">
 				</template>
+				
+				<a style="display: block; text-align: center; padding: 20px 15px; color: #000;" on-click="writeReview">
+					<iron-icon style="display: inline-block" icon="icons:create"></iron-icon>
+					${ _strings.review_write_a_review }
+				</a>
+				
+				<dom-module id="pratilipi-reader-navigation-entry">
+					<style>
+						a.black, a.black:hover, a.black:focus {
+							color: #333!important;
+						}
+						a.blue, a.blue:hover, a.blue:focus {
+							color: #107FE5!important;
+						}
+						.menu-item {
+							padding: 12px 8px; 
+							text-align: center; 
+							max-width: 275px;
+							border-bottom: 1px solid #DDD;
+						}
+					</style>
+					<template>
+						<a id="entry" class="black" on-click="_entrySelected">
+							<div class="menu-item">
+								[[ entry.title ]]
+							</div>
+						</a>
+					</template>
+					<script>
+						Polymer({
+							is: 'pratilipi-reader-navigation-entry',
+							
+							properties: {
+								entry: { type: Object },
+								pageNo: { type: Number, observer: "_pageNoChanged" }
+							},
+							
+							_pageNoChanged: function() {
+								if( this.pageNo == this.entry.pageNo ) {
+									jQuery( this.querySelector( '#entry' ) ).removeClass( "black" );
+									jQuery( this.querySelector( '#entry' ) ).addClass( "blue" );
+								} else {
+									jQuery( this.querySelector( '#entry' ) ).removeClass( "blue" );
+									jQuery( this.querySelector( '#entry' ) ).addClass( "black" );
+								}
+							},
+							
+							_entrySelected: function() {
+								document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.entry.pageNo );
+							} 
+						
+						});
+					</script>
+				</dom-module>
+				
 			</paper-card>
 		</iron-collapse>
 	</template>
@@ -54,6 +94,7 @@
 			
 			properties: {
 				index: { type: Array },
+				pageNo: { type: Number },
 				modifiedIndex: { type: Array, value: [] }
 			},
 			
@@ -68,8 +109,8 @@
 				this.$.pratilipiReaderNavigation.toggle();
 			},
 			
-			test: function() {
-
+			writeReview: function() {
+				document.querySelector( 'pratilipi-reader-page' ).writeReview();
 			}
 			
 		});

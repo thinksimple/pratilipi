@@ -1,5 +1,5 @@
 <link rel='import' href='pratilipi-reader-header.html?2'>
-<link rel='import' href='pratilipi-reader-navigation.html?3'>
+<link rel='import' href='pratilipi-reader-navigation.html?4'>
 <link rel='import' href='pratilipi-reader-content.html?4'>
 <link rel='import' href='pratilipi-reader-footer.html?3'>
 
@@ -92,6 +92,10 @@
 				lastScrollTop: { type: Number, value: 0 },
 			},
 			
+			setPageNo: function( pageNo ) {
+				this.set( 'pageNo', pageNo );
+			},
+
 			setFontSize: function( fontSize ) {
 				fontSize = fontSize == null ? 14 : parseInt( fontSize );
 				this.set( "fontSize", fontSize );
@@ -115,6 +119,10 @@
 					window.location.href = getUrlParameter( "ret" );
 				else
 					window.location.href = "/pratilipi/" + this.pratilipi.pratilipiId;
+			},
+			
+			writeReview: function() {
+				window.location.href = this.pratilipi.pageUrl + "&writeReview=true";
 			},
 			
 			ready: function() {
