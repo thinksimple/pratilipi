@@ -147,9 +147,9 @@
 				
 				this.message = "Created / Updated Blog successfully!";
 				
-				var blog = event.detail.response;
+				var blogpost = event.detail.response;
 
-				document.querySelector( 'pratilipi-blog-page' ).updateBlog( blog );
+				document.querySelector( 'pratilipi-blog-page' ).updateBlogpost( blogpost );
 				
 				this.async( function() {
 					jQuery( '#blogEditButton' ).prop( 'disabled', false );
