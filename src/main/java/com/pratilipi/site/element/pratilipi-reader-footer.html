@@ -7,6 +7,7 @@
 		paper-slider.pratilipi-slider {
 			--paper-slider-active-color: #D0021B;
 			--paper-slider-knob-color: #D0021B;
+			--paper-slider-knob-start-color: #D0021B;
 		}
 		paper-fab.pratilipi-red {
 			--paper-fab-background: #FFF;
@@ -29,8 +30,8 @@
 				<paper-slider
 						class="flex pratilipi-slider"
 						min="1" max="{{ pageCount }}"
-						value="{{ pageNoInput }}"
-						on-change="_inputObserver"
+						value="{{ pageNoSlider }}"
+						on-change="_sliderObserver"
 						disabled="{{ sliderDisabled }}"></paper-slider>
 				<paper-fab
 						class="pratilipi-red"
@@ -58,6 +59,7 @@
 			properties: {
 				pageNo: { type:Number, observer: "_pageNoChanged" },
 				pageNoInput: { type: Number },
+				pageNoSlider: { type: Number },
 				pageCount: { type:Number },
 				sliderDisabled: { type:Boolean },
 				prevButtonDisabled: { type:Boolean },
@@ -75,6 +77,7 @@
 					return;
 				
 				this.pageNoInput = this.pageNo;
+				this.pageNoSlider = this.pageNo;
 				this.prevButtonDisabled = this.pageNo <= 1;
 				this.nextButtonDisabled = ( this.pageCount <= 1 || this.pageNo >= this.pageCount );
 			},
@@ -97,6 +100,11 @@
 					document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.pageNoInput );
 				else
 					this.pageNoInput = this.pageNo;
+			},
+			
+			_sliderObserver: function() {
+				if( this.pageNo != this.pageNoSlider )
+					document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.pageNoSlider );
 			}
 			
 		});

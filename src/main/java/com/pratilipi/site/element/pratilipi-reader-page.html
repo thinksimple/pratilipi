@@ -1,7 +1,7 @@
 <link rel='import' href='pratilipi-reader-header.html?2'>
 <link rel='import' href='pratilipi-reader-navigation.html?5'>
 <link rel='import' href='pratilipi-reader-content.html?5'>
-<link rel='import' href='pratilipi-reader-footer.html?5'>
+<link rel='import' href='pratilipi-reader-footer.html?6'>
 
 <dom-module id="pratilipi-reader-page">
 
@@ -98,7 +98,7 @@
 			
 			setPageNo: function( pageNo ) {
 				if( pageNo != this.pageNo && pageNo >= 1 && pageNo <= this.pageCount )
-					this.set( 'pageNo', pageNo );
+					this.set( 'pageNo', parseInt( pageNo ) );
 			},
 
 			setFontSize: function( fontSize ) {
