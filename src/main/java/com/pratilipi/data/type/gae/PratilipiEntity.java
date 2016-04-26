@@ -15,11 +15,14 @@ import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.data.type.Pratilipi;
 
-@SuppressWarnings("serial")
 @Cache
 @Entity( name = "PRATILIPI" )
 public class PratilipiEntity implements Pratilipi {
 
+	// TODO: Required for backward compatibility with Mark-4
+	private static final long serialVersionUID = -3740558387788310210L;
+	
+	
 	@Id
 	private Long PRATILIPI_ID;
 	

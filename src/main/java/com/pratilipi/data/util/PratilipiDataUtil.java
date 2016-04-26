@@ -320,7 +320,7 @@ public class PratilipiDataUtil {
 				? 0F
 				: (float) ( (double) pratilipi.getTotalRating() / pratilipi.getRatingCount() ) );
 		pratilipiData.setRelevance( calculateRelevance( pratilipi, author ) );
-		pratilipiData.setReadCount( pratilipi.getReadCount() );
+		pratilipiData.setReadCount( pratilipi.getReadCountOffset() + pratilipi.getReadCount() );
 		pratilipiData.setFbLikeShareCount( pratilipi.getFbLikeShareCount() );
 
 		pratilipiData.setAccessToUpdate( hasAccessToUpdatePratilipiData( pratilipi, null ) );
