@@ -25,7 +25,10 @@
 						<paper-icon-button icon="icons:arrow-back" on-click="exitReader"></paper-icon-button>
 					</td>
 					<td width="auto">
-						<h3 style="margin-top: 8px;">{{ pratilipi.title }}</h3>
+						<h4 style="margin-top: 8px; display: inline-block;">{{ pratilipi.title }}</h4>
+						<template is="dom-if" if="{{ hasAccessToUpdate }}">
+							<paper-icon-button icon="icons:create" on-click="redirectToWriterPanel"></paper-icon-button>
+						</template>
 					</td>
 					<td align="right" width="90px">
 						<paper-icon-button icon="icons:add" on-click="increaseFontSize"></paper-icon-button>
@@ -48,7 +51,8 @@
 			properties: {
 				pratilipiData: { type: Object },
 				pratilipi: { type: Object, notify: true },
-				hideIndexButton: { type: Boolean, value: false }
+				hideIndexButton: { type: Boolean, value: false },
+				hasAccessToUpdate: { type: Boolean }
 			},
 			
 			increaseFontSize: function() {
@@ -61,6 +65,10 @@
 			
 			openNavigation: function() {
 				document.querySelector( 'pratilipi-reader-navigation' ).toggleNavigation();
+			},
+			
+			redirectToWriterPanel: function() {
+				document.querySelector( 'pratilipi-reader-page' ).redirectToWriterPanel();
 			},
 			
 			exitReader: function() {

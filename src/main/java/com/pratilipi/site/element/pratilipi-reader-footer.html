@@ -19,7 +19,8 @@
 	<template>
 		<div class="parent-container margin-top-bottom">
 			<div class="container" style="text-align: center;">
-				<paper-input type="number" 
+				<paper-input id="pageNoInputHolder"
+							type="number" 
 							style="display: inline-block; width: 75px;" 
 							value="{{ pageNoInput }}" 
 							on-change="_inputObserver">
@@ -66,12 +67,6 @@
 				sliderDisabled: { type:Boolean },
 				prevButtonDisabled: { type:Boolean },
 				nextButtonDisabled: { type:Boolean },
-				a11yKeysTarget: {
-					type: Object,
-					value: function() {
-						return window;
-					}
-				},
 			},
 			
 			_pageNoChanged: function() {
@@ -85,11 +80,11 @@
 			},
 
 			showPrevious: function() {
-				document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.pageNo - 1 );
+				document.querySelector( 'pratilipi-reader-page' ).showPrevious();
 			},
 			
 			showNext: function() {
-				document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.pageNo + 1 );
+				document.querySelector( 'pratilipi-reader-page' ).showNext();
 			},
 			
 			ready: function() {
@@ -107,6 +102,10 @@
 			_sliderObserver: function() {
 				if( this.pageNo != this.pageNoSlider )
 					document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.pageNoSlider );
+			},
+			
+			isInputFocused: function() {
+				return this.$.pageNoInputHolder.focused;
 			}
 			
 		});

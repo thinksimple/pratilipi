@@ -1,7 +1,7 @@
-<link rel='import' href='pratilipi-reader-header.html?27'>
+<link rel='import' href='pratilipi-reader-header.html?2702'>
 <link rel='import' href='pratilipi-reader-navigation.html?27'>
 <link rel='import' href='pratilipi-reader-content.html?27'>
-<link rel='import' href='pratilipi-reader-footer.html?27'>
+<link rel='import' href='pratilipi-reader-footer.html?2702'>
 
 <dom-module id="pratilipi-reader-page">
 
@@ -10,7 +10,8 @@
     		<pratilipi-reader-header 
     				pratilipi="{{ pratilipi }}"
     				font-size="[[ fontSize ]]"
-    				hide-index-button="[[ hideIndexButton ]]"></pratilipi-reader-header>
+    				hide-index-button="[[ hideIndexButton ]]"
+    				has-access-to-update="[[ pratilipi.hasAccessToUpdate ]]"></pratilipi-reader-header>
     		<template is="dom-if" if="{{ !hideIndexButton }}">
     			<pratilipi-reader-navigation
 					page-no="[[ pageNo ]]"
@@ -119,11 +120,15 @@
 					this.setFontSize( this.fontSize - 2 );
 			},
 			
+			redirectToWriterPanel: function() {
+				window.location.href = this.pratilipi.writePageUrl +
+					( this.pratilipi.writePageUrl.indexOf( "?" ) != -1 ? "&" : "?" ) + 
+					"ret=" +
+					( getUrlParameter( "ret" ) != null ? getUrlParameter( "ret" ) : this.pratilipi.pageUrl );
+			},
+			
 			exitReader: function() {
-				if( getUrlParameter( "ret" ) != null ) 
-					window.location.href = getUrlParameter( "ret" );
-				else
-					window.location.href = "/pratilipi/" + this.pratilipi.pratilipiId;
+				window.location.href = getUrlParameter( "ret" ) != null ? getUrlParameter( "ret" ) : this.pratilipi.pageUrl;
 			},
 			
 			writeReview: function() {
@@ -200,7 +205,25 @@
 				// Try again in 3 seconds
 			},
 			
-			scrollHandler: function( st ) {}
+			scrollHandler: function( st ) {},
+
+			keyupHandler: function( keyCode ) {
+				
+				if( keyCode == null )
+					return;
+				
+				if( this.querySelector( 'pratilipi-reader-footer' ).isInputFocused() )
+					return;
+				
+				// Left
+				if( parseInt( keyCode ) == 37 ) {
+					this.showPrevious();
+				}
+				// Right
+				else if( parseInt( keyCode ) == 39 ) { 
+					this.showNext();
+				}
+			}
 			
 		});
 	</script>
