@@ -176,7 +176,7 @@ public class AuthorDataUtil {
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
 		authorData.setContentPublished( author.getContentPublished() );
-		authorData.setTotalReadCount( author.getTotalReadCount() );
+		authorData.setTotalReadCount( author.getTotalReadCount() < 0L ? 0L : author.getTotalReadCount() );
 		authorData.setTotalFbLikeShareCount( author.getTotalFbLikeShareCount() );
 		
 		authorData.setAccessToUpdate( hasAccessToUpdateAuthorData( author, null ) );
