@@ -3,5 +3,5 @@
 /stories   കഥകൾ 
 /poems     കവിതകൾ 
 /articles  ലേഖനങ്ങൾ 
-/classic   ക്ലാസ്സിക്‌ 
+/classics  ക്ലാസ്സിക്സ്
 /women     സ്ത്രീ
