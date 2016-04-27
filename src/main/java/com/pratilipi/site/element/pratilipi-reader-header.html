@@ -25,21 +25,19 @@
 						<paper-icon-button icon="icons:arrow-back" on-click="exitReader"></paper-icon-button>
 					</td>
 					<td width="auto">
-						<h4 style="margin-top: 8px; display: inline-block;">{{ pratilipi.title }}</h4>
+						<h4 style="margin-top: 10px; display: inline-block;">{{ pratilipi.title }}</h4>
 						<template is="dom-if" if="{{ hasAccessToUpdate }}">
-							<paper-icon-button icon="icons:create" on-click="redirectToWriterPanel"></paper-icon-button>
+							<paper-icon-button style="width: 40px; height: 40px;" icon="icons:create" on-click="redirectToWriterPanel"></paper-icon-button>
 						</template>
 					</td>
 					<td align="right" width="90px">
 						<paper-icon-button icon="icons:add" on-click="increaseFontSize"></paper-icon-button>
 						<paper-icon-button icon="icons:remove" on-click="decreaseFontSize"></paper-icon-button>
-						<template is="dom-if" if="{{ !hideIndexButton }}">
-							<paper-icon-button icon="icons:list" on-click="openNavigation"></paper-icon-button>
-						</template>
+						<paper-icon-button icon="icons:list" on-click="openNavigation"></paper-icon-button>
 					</td>
 				</tr>
 			</table>
-		</paper-card>	
+		</paper-card>
 	</template>
 
 	<script>
@@ -51,7 +49,6 @@
 			properties: {
 				pratilipiData: { type: Object },
 				pratilipi: { type: Object, notify: true },
-				hideIndexButton: { type: Boolean, value: false },
 				hasAccessToUpdate: { type: Boolean }
 			},
 			

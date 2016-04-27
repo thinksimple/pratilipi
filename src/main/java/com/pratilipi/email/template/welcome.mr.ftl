@@ -43,7 +43,7 @@
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/write.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
 														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">Write</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">Join our community of more than 1,500 writers who are read by over 3 Lac readers every month!</p>
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">Join our community of more than 3,000 writers who are read by over 4.5 Lac readers every month!</p>
 													</div>
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/connect.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>

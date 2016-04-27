@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-reader-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2703'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2704'>
 		<script>
 			$(document).keyup( function(e) {
 				if( e.which == 37 || e.which == 39 )

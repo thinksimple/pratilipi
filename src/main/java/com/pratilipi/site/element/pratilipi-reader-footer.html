@@ -27,28 +27,30 @@
 					<div suffix>/ {{ pageCount }}</div>
 				</paper-input>
 			</div>
-			<div class="container">
-				<div class="horizontal layout center">
-					<paper-slider
-							class="flex pratilipi-slider"
-							min="1" max="{{ pageCount }}"
-							value="{{ pageNoSlider }}"
-							on-change="_sliderObserver"
-							disabled="{{ sliderDisabled }}"></paper-slider>
-					<paper-fab
-							class="pratilipi-red"
-							mini style="margin-right:10px"
-							icon="icons:chevron-left" title="Previous Page"
-							disabled="{{ prevButtonDisabled }}"
-							on-click="showPrevious"></paper-fab>
-					<paper-fab
-							class="pratilipi-red"
-							mini style="margin-right:10px"
-							icon="icons:chevron-right" title="Next Page"
-							disabled="{{ nextButtonDisabled }}"
-							on-click="showNext"></paper-fab>
+			<template is="dom-if" if="{{ showSlider }}">
+				<div class="container">
+					<div class="horizontal layout center">
+						<paper-slider
+								class="flex pratilipi-slider"
+								min="1" max="{{ pageCount }}"
+								value="{{ pageNoSlider }}"
+								on-change="_sliderObserver"
+								disabled="{{ sliderDisabled }}"></paper-slider>
+						<paper-fab
+								class="pratilipi-red"
+								mini style="margin-right:10px"
+								icon="icons:chevron-left" title="Previous Page"
+								disabled="{{ prevButtonDisabled }}"
+								on-click="showPrevious"></paper-fab>
+						<paper-fab
+								class="pratilipi-red"
+								mini style="margin-right:10px"
+								icon="icons:chevron-right" title="Next Page"
+								disabled="{{ nextButtonDisabled }}"
+								on-click="showNext"></paper-fab>
+					</div>
 				</div>
-			</div>
+			</template>
 		</div>
 	</template>
 	
@@ -64,6 +66,7 @@
 				pageNoInput: { type: Number },
 				pageNoSlider: { type: Number },
 				pageCount: { type:Number },
+				showSlider: { type: Boolean },
 				sliderDisabled: { type:Boolean },
 				prevButtonDisabled: { type:Boolean },
 				nextButtonDisabled: { type:Boolean },
@@ -89,6 +92,7 @@
 			
 			ready: function() {
 				this.sliderDisabled = this.pageCount <= 1;
+				this.set( 'showSlider', this.pageCount > 1 ? true : false );
 				this._pageNoChanged();
 			},
 			

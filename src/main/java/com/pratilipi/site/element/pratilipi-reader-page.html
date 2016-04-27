@@ -1,7 +1,7 @@
-<link rel='import' href='pratilipi-reader-header.html?2702'>
+<link rel='import' href='pratilipi-reader-header.html?2703'>
 <link rel='import' href='pratilipi-reader-navigation.html?2702'>
-<link rel='import' href='pratilipi-reader-content.html?27'>
-<link rel='import' href='pratilipi-reader-footer.html?2702'>
+<link rel='import' href='pratilipi-reader-content.html?2702'>
+<link rel='import' href='pratilipi-reader-footer.html?2703'>
 
 <dom-module id="pratilipi-reader-page">
 
@@ -10,14 +10,11 @@
     		<pratilipi-reader-header 
     				pratilipi="{{ pratilipi }}"
     				font-size="[[ fontSize ]]"
-    				hide-index-button="[[ hideIndexButton ]]"
     				has-access-to-update="[[ pratilipi.hasAccessToUpdate ]]"></pratilipi-reader-header>
-    		<template is="dom-if" if="{{ !hideIndexButton }}">
-    			<pratilipi-reader-navigation
-					page-no="[[ pageNo ]]"
-					index="{{ index }}"
-					></pratilipi-reader-navigation>
-    		</template>
+   			<pratilipi-reader-navigation
+				page-no="[[ pageNo ]]"
+				index="{{ index }}"
+				></pratilipi-reader-navigation>
 		</div>
 		<div style="margin-top: 70px;">
 			<div class="parent-container">
@@ -86,7 +83,6 @@
 				content: { type: String },
 				contentMap: { type: Object, value: {} },
 				index: { types: Array, value: [] },
-				hideIndexButton: { type: Boolean, value: false },
 			},
 			
 			showPrevious: function() {
@@ -147,8 +143,6 @@
 				if( typeof this.index == "string" )
 					this.index = JSON.parse( this.index );
 
-				if( this.index == null || this.index.length == 0 )
-					this.set( 'hideIndexButton', true );
 			},
 			
 			_precache: function() {
