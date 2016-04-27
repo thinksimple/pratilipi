@@ -1,12 +1,12 @@
-<link rel='import' href='pratilipi-reader-header.html?2'>
-<link rel='import' href='pratilipi-reader-navigation.html?5'>
-<link rel='import' href='pratilipi-reader-content.html?5'>
-<link rel='import' href='pratilipi-reader-footer.html?6'>
+<link rel='import' href='pratilipi-reader-header.html?27'>
+<link rel='import' href='pratilipi-reader-navigation.html?27'>
+<link rel='import' href='pratilipi-reader-content.html?27'>
+<link rel='import' href='pratilipi-reader-footer.html?27'>
 
 <dom-module id="pratilipi-reader-page">
 
 	<template>
-		<header class="nav-down">
+		<div style="position: fixed; z-index: 10; top: 0; width: 100%;">
     		<pratilipi-reader-header 
     				pratilipi="{{ pratilipi }}"
     				font-size="[[ fontSize ]]"
@@ -17,9 +17,9 @@
 					index="{{ index }}"
 					></pratilipi-reader-navigation>
     		</template>
-		</header>
-		<main>
-			<div class="parent-container margin-top-bottom">
+		</div>
+		<div style="margin-top: 70px;">
+			<div class="parent-container">
 				<div class="container">
 					<div style="overflow:hidden;">
 						<pratilipi-reader-content
@@ -28,7 +28,7 @@
 					</div>
 				</div>
 			</div>
-		</main>
+		</div>
 		<footer>
     		<pratilipi-reader-footer
     			page-no="[[ pageNo ]]"

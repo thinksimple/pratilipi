@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-reader-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?8'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?27'>
 		<#--
 			<script>
 				$(document).keyup( function(e) {

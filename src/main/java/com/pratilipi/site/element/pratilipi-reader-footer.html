@@ -26,25 +26,27 @@
 					<div suffix>/ {{ pageCount }}</div>
 				</paper-input>
 			</div>
-			<div class="horizontal layout center">
-				<paper-slider
-						class="flex pratilipi-slider"
-						min="1" max="{{ pageCount }}"
-						value="{{ pageNoSlider }}"
-						on-change="_sliderObserver"
-						disabled="{{ sliderDisabled }}"></paper-slider>
-				<paper-fab
-						class="pratilipi-red"
-						mini style="margin-right:10px"
-						icon="icons:chevron-left" title="Previous Page"
-						disabled="{{ prevButtonDisabled }}"
-						on-click="showPrevious"></paper-fab>
-				<paper-fab
-						class="pratilipi-red"
-						mini style="margin-right:10px"
-						icon="icons:chevron-right" title="Next Page"
-						disabled="{{ nextButtonDisabled }}"
-						on-click="showNext"></paper-fab>
+			<div class="container">
+				<div class="horizontal layout center">
+					<paper-slider
+							class="flex pratilipi-slider"
+							min="1" max="{{ pageCount }}"
+							value="{{ pageNoSlider }}"
+							on-change="_sliderObserver"
+							disabled="{{ sliderDisabled }}"></paper-slider>
+					<paper-fab
+							class="pratilipi-red"
+							mini style="margin-right:10px"
+							icon="icons:chevron-left" title="Previous Page"
+							disabled="{{ prevButtonDisabled }}"
+							on-click="showPrevious"></paper-fab>
+					<paper-fab
+							class="pratilipi-red"
+							mini style="margin-right:10px"
+							icon="icons:chevron-right" title="Next Page"
+							disabled="{{ nextButtonDisabled }}"
+							on-click="showNext"></paper-fab>
+				</div>
 			</div>
 		</div>
 	</template>
