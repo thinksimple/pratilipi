@@ -528,10 +528,11 @@ public class AuthorDataUtil {
 		long totalReadCount = 0;
 		long totalFbLikeShareCount = 0;
 		for( Pratilipi pratilipi : pratilipiList ) {
-			if( pratilipi.getState() == PratilipiState.PUBLISHED )
+			if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
 				contentPublished++;
-			totalReadCount = totalReadCount + pratilipi.getReadCount();
-			totalFbLikeShareCount = totalFbLikeShareCount + pratilipi.getFbLikeShareCount();
+				totalReadCount = totalReadCount + pratilipi.getReadCount() + pratilipi.getReadCountOffset();
+				totalFbLikeShareCount = totalFbLikeShareCount + pratilipi.getFbLikeShareCount();
+			}
 		}
 		
 		Author author = dataAccessor.getAuthor( authorId );
