@@ -24,6 +24,7 @@
 				<ol class="carousel-indicators">
 					<li data-target="#carousel" data-slide-to="0" class="active"></li>
 					<li data-target="#carousel" data-slide-to="1"></li>
+					<li data-target="#carousel" data-slide-to="2"></li>
 				</ol>
 				
 				<!-- Items -->
@@ -32,7 +33,10 @@
 						<a on-click="write"><img src="{{ image1 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/women" target="_blank"><img src="{{ image2 }}" /></a>
+						<a href="/women"><img src="{{ image2 }}" /></a>
+					</div>
+					<div class="item">
+						<a href="/classic"><img src="{{ image3 }}" /></a>
 					</div>
 				</div> 
 				<a href="#carousel" class="left carousel-control" data-slide="prev">
@@ -62,8 +66,8 @@
 		properties: {
 			image1: { type: Image },
 			image2: { type: Image },
-			/* image3: { type: Image },
-			image4: { type: Image },
+			image3: { type: Image },
+			/* image4: { type: Image },
 			image5: { type: Image } */
 		},
 		
@@ -74,14 +78,14 @@
 			if( windowsize > 600 ) {
 				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-01.jpg";
 				this.image2 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-02.jpg";
-				/* this.image3 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-03.jpg";
-				this.image4 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-04.jpg";
+				this.image3 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-03.png";
+				/* this.image4 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-04.jpg";
 				this.image5 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-05.jpg"; */
 			} else {
 				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-01-small.jpg";
 				this.image2 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-02-small.jpg";
-				/* this.image3 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-03-small.jpg";
-				this.image4 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-04-small.jpg";
+				this.image3 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-03-small.png";
+				/* this.image4 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-04-small.jpg";
 				this.image5 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-05-small.jpg"; */
 			}
 		},
