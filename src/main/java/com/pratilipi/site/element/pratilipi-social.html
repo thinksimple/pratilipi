@@ -22,13 +22,21 @@
 	
 	<template>
 		<div style="position: absolute; margin-left: 0px;">
+			<div class="fb-like" data-href="{{ shareUrl }}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
 			<template is="dom-if" if="{{ showLikeCount }}">
-				<div class="fb-like" data-href="{{ shareUrl }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+				<div style="display: inline-block;
+							height: 20px;
+							padding-left: 5px;
+							padding-right: 5px;
+							font-size: 11px;
+							font-family: helvetica, arial, sans-serif;
+							color: #141823;
+							border: 1px solid grey;
+							border-radius: 2px;
+							text-align: center;
+							vertical-align: bottom;
+							opacity: 0.6;"><div style="margin-top: -2px;">{{ likeCount }}</div></div>
 			</template>
-			<template is="dom-if" if="{{ !showLikeCount }}">
-				<div class="fb-like" data-href="{{ shareUrl }}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
-			</template>
-					
 	 	</div>
 	 	<div class="drop_menu" style="margin-left: 90px; position:  absolute;">
 			    <a class="link" href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -64,7 +72,8 @@
 			
 			properties: {
 				shareUrl: { type: String },
-				showLikeCount: { type: Boolean, value: false }
+				showLikeCount: { type: Boolean, value: false },
+				likeCount: { type: Number }
 			},
 			
 			ready: function() {
