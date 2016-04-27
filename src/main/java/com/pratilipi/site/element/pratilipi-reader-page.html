@@ -1,5 +1,5 @@
 <link rel='import' href='pratilipi-reader-header.html?2702'>
-<link rel='import' href='pratilipi-reader-navigation.html?27'>
+<link rel='import' href='pratilipi-reader-navigation.html?2702'>
 <link rel='import' href='pratilipi-reader-content.html?27'>
 <link rel='import' href='pratilipi-reader-footer.html?2702'>
 
@@ -147,7 +147,7 @@
 				if( typeof this.index == "string" )
 					this.index = JSON.parse( this.index );
 
-				if( this.index.length == 0 )
+				if( this.index == null || this.index.length == 0 )
 					this.set( 'hideIndexButton', true );
 			},
 			
