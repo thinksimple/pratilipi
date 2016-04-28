@@ -48,7 +48,7 @@
 			is: 'pratilipi-rating-input',
 
 			properties: {
-				value: { type: Number, value: 0, notify: true, observer: 'init' }
+				value: { type: Number, notify: true, observer: 'init' }
 			},
 			
 			init: function() {
@@ -78,7 +78,7 @@
 			},
 			
 			setRating: function( value ) {
-				this.set( 'value', value );
+				this.set( 'value', value != null ? value : 0 );
 				this.setStar( this.value );
 			},
 			
