@@ -3,7 +3,6 @@
 	<style>
 		
 		:host {
-			display: block;
 			position: fixed;
 			left: 0;
 			z-index: 1040;
@@ -27,11 +26,6 @@
 					<br class="pratilipi-break">
 				</template>
 				
-				<a style="display: block; text-align: center; padding: 20px 15px; color: #000;" on-click="writeReview">
-					<iron-icon style="display: inline-block" icon="icons:create"></iron-icon>
-					${ _strings.review_write_a_review }
-				</a>
-				
 				<dom-module id="pratilipi-reader-navigation-entry">
 					<style>
 						a.heading, a.heading:hover, a.heading:focus {
@@ -47,10 +41,8 @@
 							color: #107FE5;
 						}
 						.menu-item {
-							padding: 12px 8px; 
-							text-align: center; 
+							padding: 12px 18px; 
 							max-width: 275px;
-							border-bottom: 1px solid #DDD;
 						}
 					</style>
 					<template>
@@ -125,10 +117,11 @@
 				this.$.pratilipiReaderNavigation.toggle();
 			},
 			
-			writeReview: function() {
-				document.querySelector( 'pratilipi-reader-page' ).writeReview();
+			closeNavigation: function() {
+				if( this.$.pratilipiReaderNavigation.opened )
+					this.toggleNavigation();
 			}
-			
+						
 		});
 
 	</script>

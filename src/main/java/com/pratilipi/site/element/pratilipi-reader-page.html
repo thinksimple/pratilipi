@@ -1,12 +1,12 @@
-<link rel='import' href='pratilipi-reader-header.html?2016042902'>
-<link rel='import' href='pratilipi-reader-navigation.html?20160429'>
+<link rel='import' href='pratilipi-reader-header.html?2016042903'>
+<link rel='import' href='pratilipi-reader-navigation.html?2016042902'>
 <link rel='import' href='pratilipi-reader-content.html?20160429'>
 <link rel='import' href='pratilipi-reader-footer.html?20160429'>
 
 <dom-module id="pratilipi-reader-page">
 
 	<template>
-		<div style="position: fixed; z-index: 10; top: 0; width: 100%;">
+		<header>
     		<pratilipi-reader-header 
     				pratilipi="{{ pratilipi }}"
     				font-size="[[ fontSize ]]"
@@ -19,7 +19,7 @@
 					index="{{ index }}"
 					></pratilipi-reader-navigation>
 			</template>
-		</div>
+		</header>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<div style="margin-top: 70px;">
 			<div class="parent-container">
