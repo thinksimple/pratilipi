@@ -752,6 +752,7 @@ public class PratilipiSite extends HttpServlet {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		
@@ -770,6 +771,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "pageNo", pageNo );
 			dataModel.put( "pageCount", pratilipi.getPageCount() );
 			dataModel.put( "indexJson", gson.toJson( pratilipi.getIndex() ) );
+			dataModel.put( "addedToLib", userPratilipiData != null ? userPratilipiData.hasAddedToLib() : false );
 			dataModel.put( "contentHTML", content );
 		}
 		return dataModel;
