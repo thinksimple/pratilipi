@@ -25,16 +25,17 @@
 		<paper-card>
 			<table style="min-width: 100%;">
 				<tr>
-					<td align="left" width="65px">
+					<td align="left">
 						<paper-icon-button icon="icons:arrow-back" on-click="exitReader"></paper-icon-button>
+						<paper-icon-button icon="icons:list" on-click="openNavigation"></paper-icon-button>
 					</td>
-					<td width="auto">
-						<h4 style="margin-top: 10px; display: inline-block;">{{ pratilipi.title }}</h4>
-					</td>
-					<td align="right" width="150px">
-						<template is="dom-if" if="{{ hasAccessToUpdate }}">
-							<paper-icon-button icon="icons:create" on-click="redirectToWriterPanel"></paper-icon-button>
-						</template>
+					<td align="right">
+						
+						<!-- Increase and Decrease font-size buttons -->
+						<paper-icon-button icon="icons:add" on-click="increaseFontSize"></paper-icon-button>
+						<paper-icon-button icon="icons:remove" on-click="decreaseFontSize"></paper-icon-button>
+						
+						<!-- Library Section -->
 						<div class="dropdown" style="display: inline-block;">
 							<paper-icon-button icon="icons:chrome-reader-mode" data-toggle="dropdown"></paper-icon-button>
 							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
@@ -61,8 +62,8 @@
 									</li>
 								</template>
 								<li>
-									<a style="padding: 5px; margin: 0;" href="/library">
-										<paper-item>
+									<a style="padding: 5px; margin: 0;">
+										<paper-item on-click="goToLibrary">
 											<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:view-list"></iron-icon></paper-icon-item>
 											&nbsp;&nbsp;
 											<paper-item-body>${ _strings.my_library }</paper-item-body>
@@ -71,9 +72,61 @@
 								</li>
 							</ul>
 						</div>
-						<paper-icon-button icon="icons:add" on-click="increaseFontSize"></paper-icon-button>
-						<paper-icon-button icon="icons:remove" on-click="decreaseFontSize"></paper-icon-button>
-						<paper-icon-button icon="icons:list" on-click="openNavigation"></paper-icon-button>
+						
+						<!-- Share widget -->
+						
+						
+						<!-- Menu button -->
+						<div class="dropdown" style="display: inline-block;">
+							<paper-icon-button icon="icons:more-vert" data-toggle="dropdown"></paper-icon-button>
+							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
+								<li>
+									<paper-item style="padding: 5px 15px; margin: 0;">
+										<h5 class="pratilipi-red" style="text-align: center;">{{ title }}</h5>
+									</paper-item>
+								</li>
+								<template is="dom-if" if="{{ hasAccessToUpdate }}">
+									<li>
+										<a style="padding: 5px; margin: 0;">
+											<paper-item on-click="redirectToWriterPanel">
+												<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:create"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>${ _strings.pratilipi_edit_content }</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+								</template>
+								<template is="dom-if" if="{{ !hasAccessToUpdate }}">
+									<li>
+										<a style="padding: 5px; margin: 0;">
+											<paper-item on-click=writeReview>
+												<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:create"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>${ _strings.review_write_a_review }</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+								</template>
+								<li>
+									<a style="padding: 5px; margin: 0;" href="{{ pratilipi.author.pageUrl }}">
+										<paper-item>
+											<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:account-box"></iron-icon></paper-icon-item>
+											&nbsp;&nbsp;
+											<paper-item-body>${ _strings.reader_goto_author_profile }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
+								<li>
+									<a style="padding: 5px; margin: 0;" href="/">
+										<paper-item>
+											<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:home"></iron-icon></paper-icon-item>
+											&nbsp;&nbsp;
+											<paper-item-body>${ _strings.reader_goto_home_page }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
+							</ul>
+						</div>
 					</td>
 				</tr>
 			</table>
@@ -87,10 +140,14 @@
 			is: 'pratilipi-reader-header',
 			
 			properties: {
-				pratilipiData: { type: Object },
-				pratilipi: { type: Object, notify: true },
+				pratilipi: { type: Object },
 				hasAccessToUpdate: { type: Boolean },
 				addedToLib: { type: Boolean, value: false }
+			},
+			
+			ready: function() {
+				this.title = 	this.pratilipi.title != null && this.pratilipi.title.trim() != "" ?
+								this.pratilipi.title : this.pratilipi.titleEn;
 			},
 			
 			increaseFontSize: function() {
@@ -109,8 +166,16 @@
 				document.querySelector( 'pratilipi-reader-page' ).removeFromLibrary();
 			},
 			
+			goToLibrary: function() {
+				document.querySelector( 'pratilipi-reader-page' ).goToLibrary();
+			},
+			
 			openNavigation: function() {
 				document.querySelector( 'pratilipi-reader-navigation' ).toggleNavigation();
+			},
+			
+			writeReview: function() {
+				document.querySelector( 'pratilipi-reader-page' ).writeReview();
 			},
 			
 			redirectToWriterPanel: function() {

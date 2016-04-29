@@ -1,7 +1,7 @@
-<link rel='import' href='pratilipi-reader-header.html?201604'>
-<link rel='import' href='pratilipi-reader-navigation.html?2702'>
+<link rel='import' href='pratilipi-reader-header.html?20160429'>
+<link rel='import' href='pratilipi-reader-navigation.html?20160429'>
 <link rel='import' href='pratilipi-reader-content.html?2702'>
-<link rel='import' href='pratilipi-reader-footer.html?201604'>
+<link rel='import' href='pratilipi-reader-footer.html?20160429'>
 
 <dom-module id="pratilipi-reader-page">
 
@@ -20,7 +20,7 @@
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<div style="margin-top: 70px;">
 			<div class="parent-container">
-				<div class="container">
+				<div class="container" style="margin: 0 auto;">
 					<div style="overflow:hidden;">
 						<pratilipi-reader-content
 							content="{{ content }}"
@@ -98,7 +98,9 @@
 				
 				addedToLibrary: { type: String },
 				addedToLib: { type: Boolean },
-				addToLibClicked: { type: Boolean, value: false }
+				addToLibClicked: { type: Boolean, value: false },
+
+				goToLibraryBoolean: { type: Boolean, value: false }
 			},
 			
 			showPrevious: function() {
@@ -220,6 +222,8 @@
 				if( this.addToLibClicked ) {
 					this.addToLibClicked = false;
 					this.async( function() { this.addToLibrary(); }, 1500 );
+				} else if( this.goToLibraryBoolean ) {
+					this.goToLibrary();
 				}
 			},
 			
@@ -236,6 +240,15 @@
 			removeFromLibrary: function() {
 				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=false" );
 				this.$.AjaxPost.generateRequest();
+			},
+			
+			goToLibrary: function() {
+				if( this.user.isGuest ) {
+					this.goToLibraryBoolean = true;
+					document.querySelector( 'pratilipi-user' ).logIn( true );
+				} else {
+					window.location.href = "/library";
+				}
 			},
 			
 			_handleAjaxPostResponse: function( event ) {
