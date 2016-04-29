@@ -1,7 +1,7 @@
-<link rel='import' href='pratilipi-reader-header.html?2703'>
+<link rel='import' href='pratilipi-reader-header.html?201604'>
 <link rel='import' href='pratilipi-reader-navigation.html?2702'>
 <link rel='import' href='pratilipi-reader-content.html?2702'>
-<link rel='import' href='pratilipi-reader-footer.html?2703'>
+<link rel='import' href='pratilipi-reader-footer.html?201604'>
 
 <dom-module id="pratilipi-reader-page">
 
@@ -10,19 +10,21 @@
     		<pratilipi-reader-header 
     				pratilipi="{{ pratilipi }}"
     				font-size="[[ fontSize ]]"
-    				has-access-to-update="[[ pratilipi.hasAccessToUpdate ]]"></pratilipi-reader-header>
+    				has-access-to-update="[[ pratilipi.hasAccessToUpdate ]]"
+    				added-to-lib="[[ addedToLib ]]"></pratilipi-reader-header>
    			<pratilipi-reader-navigation
 				page-no="[[ pageNo ]]"
 				index="{{ index }}"
 				></pratilipi-reader-navigation>
 		</div>
+		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<div style="margin-top: 70px;">
 			<div class="parent-container">
 				<div class="container">
 					<div style="overflow:hidden;">
 						<pratilipi-reader-content
 							content="{{ content }}"
-							font-size="{{ fontSize }}"></pratilipi-reader-content> 
+							font-size="{{ fontSize }}"></pratilipi-reader-content>
 					</div>
 				</div>
 			</div>
@@ -40,6 +42,15 @@
 				handle-as="json"
 				on-response="_onResponse"
 				on-error="_onError"
+				></iron-ajax>
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/userpratilipi/library"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
 				></iron-ajax>
 	</template>
 
@@ -76,6 +87,7 @@
 			
 			properties: {
 				userData: { type: Object },
+				user: { type: Object, observer: "_userChanged" },
 				pratilipi: { type: Object },
 				fontSize: { type: Number, notify: true },
 				pageNo: { type: Number, observer: "_pageNoChanged", notify: true },
@@ -83,6 +95,10 @@
 				content: { type: String },
 				contentMap: { type: Object, value: {} },
 				index: { types: Array, value: [] },
+				
+				addedToLibrary: { type: String },
+				addedToLib: { type: Boolean },
+				addToLibClicked: { type: Boolean, value: false }
 			},
 			
 			showPrevious: function() {
@@ -143,6 +159,7 @@
 				if( typeof this.index == "string" )
 					this.index = JSON.parse( this.index );
 
+				this.set( 'addedToLib', this.addedToLibrary == "true" ? true : false );
 			},
 			
 			_precache: function() {
@@ -197,6 +214,41 @@
 				// Show appropriate message
 				/* alert( "Sorry! Some exception occured at the server! Try again" ); */
 				// Try again in 3 seconds
+			},
+			
+			_userChanged: function() {
+				if( this.addToLibClicked ) {
+					this.addToLibClicked = false;
+					this.async( function() { this.addToLibrary(); }, 1500 );
+				}
+			},
+			
+			addToLibrary: function() {
+				if( this.user.isGuest ) {
+					this.addToLibClicked = true;
+					document.querySelector( 'pratilipi-user' ).logIn( true );
+				} else {
+					this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=true" );
+					this.$.AjaxPost.generateRequest();
+				}
+			},
+			
+			removeFromLibrary: function() {
+				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=false" );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			_handleAjaxPostResponse: function( event ) {
+				if( event.detail.xhr.status != 200 )
+					this._handleAjaxPostError( event );
+				else {
+					this.set( 'addedToLib', Boolean( event.detail.response.addedToLib ) );
+					alert( "Success!" );
+				}
+			},
+			
+			_handleAjaxPostError: function( event ) {
+				alert( "Sorry, Some error happened while adding/removing to/from library! Please try again." );
 			},
 			
 			scrollHandler: function( st ) {},

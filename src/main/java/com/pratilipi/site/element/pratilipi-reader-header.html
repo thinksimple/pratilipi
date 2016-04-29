@@ -15,6 +15,10 @@
 			width: 45px;
 			height: 45px;
 		}
+		paper-item {
+			font-size: inherit;
+			font-family: inherit;
+		}
 	</style>
 
 	<template>
@@ -26,11 +30,47 @@
 					</td>
 					<td width="auto">
 						<h4 style="margin-top: 10px; display: inline-block;">{{ pratilipi.title }}</h4>
-						<template is="dom-if" if="{{ hasAccessToUpdate }}">
-							<paper-icon-button style="width: 40px; height: 40px;" icon="icons:create" on-click="redirectToWriterPanel"></paper-icon-button>
-						</template>
 					</td>
-					<td align="right" width="90px">
+					<td align="right" width="150px">
+						<template is="dom-if" if="{{ hasAccessToUpdate }}">
+							<paper-icon-button icon="icons:create" on-click="redirectToWriterPanel"></paper-icon-button>
+						</template>
+						<div class="dropdown" style="display: inline-block;">
+							<paper-icon-button icon="icons:chrome-reader-mode" data-toggle="dropdown"></paper-icon-button>
+							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
+								<template is="dom-if" if="{{ !addedToLib }}">
+									<li>
+										<a style="padding: 5px; margin: 0;">
+											<paper-item on-click="addToLibrary">
+												<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:add-circle"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>${ _strings.add_to_library }</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+								</template>
+								<template is="dom-if" if="{{ addedToLib }}">
+									<li>
+										<a style="padding: 5px; margin: 0;">
+											<paper-item on-click="removeFromLibrary">
+												<paper-icon-item><iron-icon style="color: #D0021B;" icon="icons:remove-circle"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>${ _strings.remove_from_library }</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+								</template>
+								<li>
+									<a style="padding: 5px; margin: 0;" href="/library">
+										<paper-item>
+											<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:view-list"></iron-icon></paper-icon-item>
+											&nbsp;&nbsp;
+											<paper-item-body>${ _strings.my_library }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
+							</ul>
+						</div>
 						<paper-icon-button icon="icons:add" on-click="increaseFontSize"></paper-icon-button>
 						<paper-icon-button icon="icons:remove" on-click="decreaseFontSize"></paper-icon-button>
 						<paper-icon-button icon="icons:list" on-click="openNavigation"></paper-icon-button>
@@ -49,7 +89,8 @@
 			properties: {
 				pratilipiData: { type: Object },
 				pratilipi: { type: Object, notify: true },
-				hasAccessToUpdate: { type: Boolean }
+				hasAccessToUpdate: { type: Boolean },
+				addedToLib: { type: Boolean, value: false }
 			},
 			
 			increaseFontSize: function() {
@@ -58,6 +99,14 @@
 			
 			decreaseFontSize: function() {
 				document.querySelector( 'pratilipi-reader-page' ).decreaseFontSize();
+			},
+			
+			addToLibrary: function() {
+				document.querySelector( 'pratilipi-reader-page' ).addToLibrary();
+			},
+			
+			removeFromLibrary: function() {
+				document.querySelector( 'pratilipi-reader-page' ).removeFromLibrary();
 			},
 			
 			openNavigation: function() {

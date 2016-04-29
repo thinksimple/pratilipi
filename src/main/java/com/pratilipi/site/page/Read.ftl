@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-reader-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2704'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?201604'>
 		<script>
 			$(document).keyup( function(e) {
 				if( e.which == 37 || e.which == 39 )
@@ -21,6 +21,7 @@
 				page-count='${ pageCount }'
 				content='${ contentHTML }'
 				index='${ indexJson }'
+				added-to-library=${ addedToLib?c }
 				></pratilipi-pratilipi-page>
 	</body>
 	

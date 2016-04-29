@@ -8,6 +8,7 @@
 			--paper-slider-active-color: #D0021B;
 			--paper-slider-knob-color: #D0021B;
 			--paper-slider-knob-start-color: #D0021B;
+			--paper-slider-pin-start-color: #D0021B;
 		}
 		paper-fab.pratilipi-red {
 			--paper-fab-background: #FFF;
@@ -19,6 +20,12 @@
 	<template>
 		<div class="parent-container margin-top-bottom">
 			<div class="container" style="text-align: center;">
+				<paper-fab	class="pratilipi-red"
+							style="display: inline-block; margin-right: 40px;"
+							mini
+							icon="icons:chevron-left" title="Previous Page"
+							disabled="{{ prevButtonDisabled }}"
+							on-click="showPrevious"></paper-fab>
 				<paper-input id="pageNoInputHolder"
 							type="number" 
 							style="display: inline-block; width: 75px;" 
@@ -26,28 +33,24 @@
 							on-change="_inputObserver">
 					<div suffix>/ {{ pageCount }}</div>
 				</paper-input>
+				<paper-fab	class="pratilipi-red"
+							style="display: inline-block;margin-left: 40px;"
+							mini
+							icon="icons:chevron-right" title="Next Page"
+							disabled="{{ nextButtonDisabled }}"
+							on-click="showNext"></paper-fab>
 			</div>
+			
 			<template is="dom-if" if="{{ showSlider }}">
 				<div class="container">
 					<div class="horizontal layout center">
 						<paper-slider
 								class="flex pratilipi-slider"
+								style="margin-top: 2px;"
 								min="1" max="{{ pageCount }}"
 								value="{{ pageNoSlider }}"
 								on-change="_sliderObserver"
 								disabled="{{ sliderDisabled }}"></paper-slider>
-						<paper-fab
-								class="pratilipi-red"
-								mini style="margin-right:10px"
-								icon="icons:chevron-left" title="Previous Page"
-								disabled="{{ prevButtonDisabled }}"
-								on-click="showPrevious"></paper-fab>
-						<paper-fab
-								class="pratilipi-red"
-								mini style="margin-right:10px"
-								icon="icons:chevron-right" title="Next Page"
-								disabled="{{ nextButtonDisabled }}"
-								on-click="showNext"></paper-fab>
 					</div>
 				</div>
 			</template>
