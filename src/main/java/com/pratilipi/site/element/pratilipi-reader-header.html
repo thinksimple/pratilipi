@@ -16,7 +16,7 @@
 			height: 45px;
 		}
 		paper-item {
-			font-size: inherit;
+			font-size: 13px;
 			font-family: inherit;
 		}
 	</style>
@@ -27,7 +27,9 @@
 				<tr>
 					<td align="left">
 						<paper-icon-button icon="icons:arrow-back" on-click="exitReader"></paper-icon-button>
-						<paper-icon-button icon="icons:list" on-click="openNavigation"></paper-icon-button>
+						<template is="dom-if" if="{{ !hideIndexButton }}">
+							<paper-icon-button icon="icons:view-list" on-click="openNavigation"></paper-icon-button>
+						</template>
 					</td>
 					<td align="right">
 						
@@ -43,7 +45,7 @@
 									<li>
 										<a style="padding: 5px; margin: 0;">
 											<paper-item on-click="addToLibrary">
-												<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:add-circle"></iron-icon></paper-icon-item>
+												<paper-icon-item><iron-icon icon="icons:add-circle"></iron-icon></paper-icon-item>
 												&nbsp;&nbsp;
 												<paper-item-body>${ _strings.add_to_library }</paper-item-body>
 											</paper-item>
@@ -54,7 +56,7 @@
 									<li>
 										<a style="padding: 5px; margin: 0;">
 											<paper-item on-click="removeFromLibrary">
-												<paper-icon-item><iron-icon style="color: #D0021B;" icon="icons:remove-circle"></iron-icon></paper-icon-item>
+												<paper-icon-item><iron-icon icon="icons:remove-circle"></iron-icon></paper-icon-item>
 												&nbsp;&nbsp;
 												<paper-item-body>${ _strings.remove_from_library }</paper-item-body>
 											</paper-item>
@@ -64,7 +66,7 @@
 								<li>
 									<a style="padding: 5px; margin: 0;">
 										<paper-item on-click="goToLibrary">
-											<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:view-list"></iron-icon></paper-icon-item>
+											<paper-icon-item><iron-icon icon="icons:list"></iron-icon></paper-icon-item>
 											&nbsp;&nbsp;
 											<paper-item-body>${ _strings.my_library }</paper-item-body>
 										</paper-item>
@@ -74,7 +76,38 @@
 						</div>
 						
 						<!-- Share widget -->
-						
+						<div class="dropdown" style="display: inline-block;">
+							<paper-icon-button icon="icons:supervisor-account" data-toggle="dropdown"></paper-icon-button>
+							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
+								<li>
+									<a style="padding: 5px; margin: 0;">
+										<paper-item on-click="shareOnFacebook">
+											<paper-icon-item style="width: 24px"><i class="fa fa-facebook fa-sm fb"></i></paper-icon-item>
+											&nbsp;&nbsp;
+											<paper-item-body>${ _strings.share_on_facebook }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
+								<li>
+									<a style="padding: 5px; margin: 0;">
+										<paper-item on-click="shareOnTwitter">
+											<paper-icon-item style="width: 24px"><i class="fa fa-twitter fa-sm tw"></i></paper-icon-item>
+											&nbsp;&nbsp;
+											<paper-item-body>${ _strings.share_on_twitter }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
+								<li>
+									<a style="padding: 5px; margin: 0;">
+										<paper-item on-click="shareOnGplus">
+											<paper-icon-item style="width: 24px"><i class="fa fa-google-plus fa-sm google"></i></paper-icon-item>
+											&nbsp;&nbsp;
+											<paper-item-body>${ _strings.share_on_gplus }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
+							</ul>
+						</div>
 						
 						<!-- Menu button -->
 						<div class="dropdown" style="display: inline-block;">
@@ -82,14 +115,14 @@
 							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
 								<li>
 									<paper-item style="padding: 5px 15px; margin: 0;">
-										<h5 class="pratilipi-red" style="text-align: center;">{{ title }}</h5>
+										<h6 class="pratilipi-red" style="text-align: center;">{{ title }}</h6>
 									</paper-item>
 								</li>
 								<template is="dom-if" if="{{ hasAccessToUpdate }}">
 									<li>
 										<a style="padding: 5px; margin: 0;">
 											<paper-item on-click="redirectToWriterPanel">
-												<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:create"></iron-icon></paper-icon-item>
+												<paper-icon-item><iron-icon icon="icons:create"></iron-icon></paper-icon-item>
 												&nbsp;&nbsp;
 												<paper-item-body>${ _strings.pratilipi_edit_content }</paper-item-body>
 											</paper-item>
@@ -100,7 +133,7 @@
 									<li>
 										<a style="padding: 5px; margin: 0;">
 											<paper-item on-click=writeReview>
-												<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:create"></iron-icon></paper-icon-item>
+												<paper-icon-item><iron-icon icon="icons:create"></iron-icon></paper-icon-item>
 												&nbsp;&nbsp;
 												<paper-item-body>${ _strings.review_write_a_review }</paper-item-body>
 											</paper-item>
@@ -110,7 +143,7 @@
 								<li>
 									<a style="padding: 5px; margin: 0;" href="{{ pratilipi.author.pageUrl }}">
 										<paper-item>
-											<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:account-box"></iron-icon></paper-icon-item>
+											<paper-icon-item><iron-icon icon="icons:account-box"></iron-icon></paper-icon-item>
 											&nbsp;&nbsp;
 											<paper-item-body>${ _strings.reader_goto_author_profile }</paper-item-body>
 										</paper-item>
@@ -119,7 +152,7 @@
 								<li>
 									<a style="padding: 5px; margin: 0;" href="/">
 										<paper-item>
-											<paper-icon-item><iron-icon style="color: #107FE5;" icon="icons:home"></iron-icon></paper-icon-item>
+											<paper-icon-item><iron-icon icon="icons:home"></iron-icon></paper-icon-item>
 											&nbsp;&nbsp;
 											<paper-item-body>${ _strings.reader_goto_home_page }</paper-item-body>
 										</paper-item>
@@ -142,12 +175,25 @@
 			properties: {
 				pratilipi: { type: Object },
 				hasAccessToUpdate: { type: Boolean },
-				addedToLib: { type: Boolean, value: false }
+				addedToLib: { type: Boolean, value: false },
+				hideIndexButton: { type: Boolean }
 			},
 			
 			ready: function() {
 				this.title = 	this.pratilipi.title != null && this.pratilipi.title.trim() != "" ?
 								this.pratilipi.title : this.pratilipi.titleEn;
+			},
+			
+			shareOnFacebook: function() {
+				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }/read?id=" + this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+			
+			shareOnTwitter: function() {
+				window.open( "http://twitter.com/share?url=" + "http://${ domain }/read?id=" + this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+			
+			shareOnGplus: function() {
+				window.open( "https://plus.google.com/share?url=" + "http://${ domain }/read?id=" + this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			increaseFontSize: function() {

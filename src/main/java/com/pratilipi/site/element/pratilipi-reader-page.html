@@ -1,6 +1,6 @@
-<link rel='import' href='pratilipi-reader-header.html?20160429'>
+<link rel='import' href='pratilipi-reader-header.html?2016042902'>
 <link rel='import' href='pratilipi-reader-navigation.html?20160429'>
-<link rel='import' href='pratilipi-reader-content.html?2702'>
+<link rel='import' href='pratilipi-reader-content.html?20160429'>
 <link rel='import' href='pratilipi-reader-footer.html?20160429'>
 
 <dom-module id="pratilipi-reader-page">
@@ -11,11 +11,14 @@
     				pratilipi="{{ pratilipi }}"
     				font-size="[[ fontSize ]]"
     				has-access-to-update="[[ pratilipi.hasAccessToUpdate ]]"
-    				added-to-lib="[[ addedToLib ]]"></pratilipi-reader-header>
-   			<pratilipi-reader-navigation
-				page-no="[[ pageNo ]]"
-				index="{{ index }}"
-				></pratilipi-reader-navigation>
+    				added-to-lib="[[ addedToLib ]]"
+    				hide-index-button="[[ hideIndexButton ]]"></pratilipi-reader-header>
+    		<template is="dom-if" if="{{ !hideIndexButton }}">
+	   			<pratilipi-reader-navigation
+					page-no="[[ pageNo ]]"
+					index="{{ index }}"
+					></pratilipi-reader-navigation>
+			</template>
 		</div>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<div style="margin-top: 70px;">
@@ -33,6 +36,7 @@
     		<pratilipi-reader-footer
     			page-no="[[ pageNo ]]"
     			page-count="{{ pageCount }}"></pratilipi-reader-footer>
+    		<pratilipi-footer></pratilipi-footer>
 		</footer>
 		<iron-ajax
 				id="AjaxGet"
@@ -100,7 +104,8 @@
 				addedToLib: { type: Boolean },
 				addToLibClicked: { type: Boolean, value: false },
 
-				goToLibraryBoolean: { type: Boolean, value: false }
+				goToLibraryBoolean: { type: Boolean, value: false },
+				hideIndexButton: { type: Boolean, value: false }
 			},
 			
 			showPrevious: function() {
@@ -160,6 +165,9 @@
 
 				if( typeof this.index == "string" )
 					this.index = JSON.parse( this.index );
+				
+				if( this.index == null || this.index.length == 0 )
+					this.set( 'hideIndexButton', true );
 
 				this.set( 'addedToLib', this.addedToLibrary == "true" ? true : false );
 			},
