@@ -26,9 +26,18 @@
 			<table style="min-width: 100%;">
 				<tr>
 					<td align="left">
+						<!-- Back Button -->
 						<paper-icon-button icon="icons:arrow-back" on-click="exitReader"></paper-icon-button>
+						<!-- Index Button if content has Index -->
 						<template is="dom-if" if="{{ !hideIndexButton }}">
-							<paper-icon-button icon="icons:view-list" on-click="openNavigation"></paper-icon-button>
+							<div class="dropdown" style="display: inline-block;">
+								<paper-icon-button icon="icons:view-list" data-toggle="dropdown"></paper-icon-button>
+								<ul class="dropdown-menu" style="margin-top: 13px; max-height: 600px; overflow: scroll;">
+									<template is="dom-repeat" items="{{ index }}">
+										<pratilipi-reader-navigation-entry entry="{{ item }}" page-no="{{ pageNo }}"></pratilipi-reader-navigation-entry>
+									</template>
+								</ul>
+							</div>
 						</template>
 					</td>
 					<td align="right">
@@ -39,7 +48,7 @@
 						
 						<!-- Library Section -->
 						<div class="dropdown" style="display: inline-block;">
-							<paper-icon-button icon="icons:chrome-reader-mode" data-toggle="dropdown" on-click="closeNavigation"></paper-icon-button>
+							<paper-icon-button icon="icons:chrome-reader-mode" data-toggle="dropdown"></paper-icon-button>
 							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
 								<template is="dom-if" if="{{ !addedToLib }}">
 									<li>
@@ -77,7 +86,7 @@
 						
 						<!-- Share widget -->
 						<div class="dropdown" style="display: inline-block;">
-							<paper-icon-button icon="icons:supervisor-account" data-toggle="dropdown" on-click="closeNavigation"></paper-icon-button>
+							<paper-icon-button icon="icons:supervisor-account" data-toggle="dropdown"></paper-icon-button>
 							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
 								<li>
 									<a style="padding: 5px; margin: 0;">
@@ -110,12 +119,12 @@
 						</div>
 						
 						<!-- Menu button -->
-						<div class="dropdown" style="display: inline-block;" on-click="closeNavigation">
+						<div class="dropdown" style="display: inline-block;">
 							<paper-icon-button icon="icons:more-vert" data-toggle="dropdown"></paper-icon-button>
 							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
 								<li>
 									<paper-item style="padding: 5px 15px; margin: 0;">
-										<h6 class="pratilipi-red" style="text-align: center;">{{ title }}</h6>
+										<h6 class="pratilipi-red text-center" style="text-align: center;">{{ title }}</h6>
 									</paper-item>
 								</li>
 								<template is="dom-if" if="{{ hasAccessToUpdate }}">
@@ -176,7 +185,9 @@
 				pratilipi: { type: Object },
 				hasAccessToUpdate: { type: Boolean },
 				addedToLib: { type: Boolean, value: false },
-				hideIndexButton: { type: Boolean }
+				hideIndexButton: { type: Boolean },
+				index: { type: Array },
+				pageNo: { type: Number }
 			},
 			
 			ready: function() {
@@ -239,4 +250,62 @@
 		});
 	</script>
 
+</dom-module>
+
+<dom-module id="pratilipi-reader-navigation-entry">
+	<style>
+		a.heading, a.heading:hover, a.heading:focus {
+			font-weight: 600;
+		}
+		a.grey, a.grey:hover, a.grey:focus {
+			color: #707070;
+		}
+		a.black, a.black:hover, a.black:focus {
+			color: #333;
+		}
+		a.blue, a.blue:hover, a.blue:focus {
+			color: #107FE5;
+		}
+	</style>
+	<template>
+		<a id="entry" on-click="_entrySelected">
+			<li style="margin: 24px 18px; max-width: 275px;">
+					[[ entry.title ]]
+			</li>
+		</a>
+	</template>
+	<script>
+		Polymer({
+			is: 'pratilipi-reader-navigation-entry',
+			
+			properties: {
+				entry: { type: Object },
+				pageNo: { type: Number, observer: "_pageNoChanged" }
+			},
+			
+			attached: function() {
+				if( this.entry.level == 0 )
+					jQuery( this.querySelector( '#entry' ) ).addClass( "heading" );
+			},
+			
+			_pageNoChanged: function() {
+				if( this.pageNo == this.entry.pageNo ) {
+					jQuery( this.querySelector( '#entry' ) ).removeClass( "black" );
+					jQuery( this.querySelector( '#entry' ) ).removeClass( "grey" );
+					jQuery( this.querySelector( '#entry' ) ).addClass( "blue" );
+				} else {
+					jQuery( this.querySelector( '#entry' ) ).removeClass( "blue" );
+					if( this.entry.level == 0 )
+						jQuery( this.querySelector( '#entry' ) ).addClass( "black" );
+					else
+						jQuery( this.querySelector( '#entry' ) ).addClass( "grey" );
+				}
+			},
+			
+			_entrySelected: function() {
+				document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.entry.pageNo );
+			} 
+		
+		});
+	</script>
 </dom-module>

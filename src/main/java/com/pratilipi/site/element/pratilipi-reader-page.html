@@ -1,5 +1,4 @@
-<link rel='import' href='pratilipi-reader-header.html?2016042903'>
-<link rel='import' href='pratilipi-reader-navigation.html?2016042902'>
+<link rel='import' href='pratilipi-reader-header.html?20160430'>
 <link rel='import' href='pratilipi-reader-content.html?20160429'>
 <link rel='import' href='pratilipi-reader-footer.html?20160429'>
 
@@ -12,13 +11,9 @@
     				font-size="[[ fontSize ]]"
     				has-access-to-update="[[ pratilipi.hasAccessToUpdate ]]"
     				added-to-lib="[[ addedToLib ]]"
-    				hide-index-button="[[ hideIndexButton ]]"></pratilipi-reader-header>
-    		<template is="dom-if" if="{{ !hideIndexButton }}">
-	   			<pratilipi-reader-navigation
-					page-no="[[ pageNo ]]"
-					index="{{ index }}"
-					></pratilipi-reader-navigation>
-			</template>
+    				hide-index-button="[[ hideIndexButton ]]"
+    				page-no="[[ pageNo ]]"
+    				index="{{ index }}"></pratilipi-reader-header>
 		</header>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<div style="margin-top: 70px;">
