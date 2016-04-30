@@ -1,0 +1,65 @@
+<dom-module id="pratilipi-alert">
+
+	<style>
+
+	</style>
+	
+	<template>
+		<div id="pratilipiAlert" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content" style="min-width: 600px;">
+					<div class="modal-body" style="padding: 15px 40px;">
+						<div style="margin-top: 50px; margin-bottom: 20px; text-align: center;">
+							<h6 style="line-height: 2em;" id="pratilipi-alert-message">{{ message }}</h6>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">${ _strings.okay }</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+
+	<script>
+
+	Polymer({
+
+		is: 'pratilipi-alert',
+		
+		properties: {
+			message: { type: String },
+			timeout: { type: Number },
+			successMessage: { type: Boolean }
+		},
+		
+		alert: function( message, successMessage, timeout ) {
+			this.message = message != null ? message : "Success!";
+			this.successMessage = successMessage != null ? successMessage : true;
+			this.timeout = timeout != null ? timeout : 2500;
+			this.open();
+		},
+		
+		open: function() {
+			if( this.successMessage )
+				jQuery( '#pratilipi-alert-message' ).removeClass( 'text-danger' );
+			else
+				jQuery( '#pratilipi-alert-message' ).addClass( 'text-danger' );
+			
+			this.async( function() {
+				jQuery( "#pratilipiAlert" ).modal();
+			});
+			
+			if( this.successMessage ) {
+				this.async( function() {
+					jQuery( "#pratilipiAlert" ).modal( 'hide' );
+				}, parseInt( this.timeout ) );
+			}
+			
+		}
+		
+	});
+
+	</script>
+
+</dom-module>

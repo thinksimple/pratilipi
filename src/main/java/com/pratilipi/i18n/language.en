@@ -301,7 +301,9 @@ month_dec	= December
 # Library
 my_library			= My Library
 add_to_library		= Add to Library
+added_to_library	= Success! You have added this content to your library!
 remove_from_library	= Remove from Library
+removed_from_library = You have removed the content from your library!
 empty_library		= Sorry, there are no books in your library, you can add books from content page.
 
 

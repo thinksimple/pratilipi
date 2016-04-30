@@ -1,6 +1,7 @@
 <link rel='import' href='pratilipi-reader-header.html?2016043002'>
 <link rel='import' href='pratilipi-reader-content.html?20160429'>
 <link rel='import' href='pratilipi-reader-footer.html?20160429'>
+<link rel="import" href="pratilipi-review-input.html?20160430" />
 
 <dom-module id="pratilipi-reader-page">
 
@@ -16,6 +17,8 @@
     				index="{{ index }}"></pratilipi-reader-header>
 		</header>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+		<pratilipi-alert></pratilipi-alert>
+		<pratilipi-review-input pratilipi="[[ pratilipi ]]"></pratilipi-review-input>
 		<div style="margin-top: 70px;">
 			<div class="parent-container">
 				<div class="container" style="margin: 0 auto;">
@@ -50,6 +53,15 @@
 				handle-as="json"
 				on-response="_handleAjaxPostResponse"
 				on-error="_handleAjaxPostError"
+				></iron-ajax>
+		<iron-ajax
+				id="GetUserPratilipi"
+				url="/api/userpratilipi"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_getUserPratilipiResponse"
+				on-error="_getUserPratilipiError"
 				></iron-ajax>
 	</template>
 
@@ -88,6 +100,7 @@
 				userData: { type: Object },
 				user: { type: Object, observer: "_userChanged" },
 				pratilipi: { type: Object },
+				userpratilipi: { type: Object },
 				fontSize: { type: Number, notify: true },
 				pageNo: { type: Number, observer: "_pageNoChanged", notify: true },
 				pageCount: { type: Number },
@@ -100,6 +113,7 @@
 				addToLibClicked: { type: Boolean, value: false },
 
 				goToLibraryBoolean: { type: Boolean, value: false },
+				reviewButtonClicked: { type: Boolean, value: false },
 				hideIndexButton: { type: Boolean, value: false }
 			},
 			
@@ -146,7 +160,16 @@
 			},
 			
 			writeReview: function() {
-				window.location.href = this.pratilipi.pageUrl + "?" + "writeReview=true";
+				if( this.user.isGuest ) {
+					this.reviewButtonClicked = true;
+					document.querySelector( 'pratilipi-user' ).logIn( true );
+				} else {
+					this.querySelector( 'pratilipi-review-input' ).openReviewInput( this.userpratilipi );
+				}
+			},
+			
+			updateUserPratilipi: function( userpratilipi ) {
+				this.set( 'userpratilipi', userpratilipi );
 			},
 			
 			ready: function() {
@@ -222,12 +245,31 @@
 			},
 			
 			_userChanged: function() {
+				
+				if( this.user.isGuest )
+					return;
+				
 				if( this.addToLibClicked ) {
 					this.addToLibClicked = false;
 					this.async( function() { this.addToLibrary(); }, 1500 );
 				} else if( this.goToLibraryBoolean ) {
 					this.goToLibrary();
+				} else if( this.reviewButtonClicked ) {
+					// Load UserPratilipi
+					var getUserPratilipi = this.$.GetUserPratilipi;
+					getUserPratilipi.params.pratilipiId = this.pratilipi.pratilipiId;
+					getUserPratilipi.generateRequest();
 				}
+			},
+			
+			_getUserPratilipiResponse: function( event ) {
+				this.reviewButtonClicked = false;
+				this.set( 'userpratilipi', event.detail.response );
+				this.writeReview();
+			},
+			
+			_getUserPratilipiError: function( event ) {
+				this.async( function() { this._userChanged(); }, 3000 );
 			},
 			
 			addToLibrary: function() {
@@ -259,12 +301,13 @@
 					this._handleAjaxPostError( event );
 				else {
 					this.set( 'addedToLib', Boolean( event.detail.response.addedToLib ) );
-					alert( "Success!" );
+					document.querySelector( 'pratilipi-alert' ).alert( event.detail.response.addedToLib ? 
+							"${ _strings.added_to_library }" : "${ _strings.removed_from_library }" );
 				}
 			},
 			
 			_handleAjaxPostError: function( event ) {
-				alert( "Sorry, Some error happened while adding/removing to/from library! Please try again." );
+				document.querySelector( 'pratilipi-alert' ).alert( "Sorry, Some error happened while adding/removing to/from library! Please try again.", false );
 			},
 			
 			scrollHandler: function( st ) {},

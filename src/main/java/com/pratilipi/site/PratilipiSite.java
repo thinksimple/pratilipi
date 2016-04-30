@@ -759,6 +759,8 @@ public class PratilipiSite extends HttpServlet {
 		
 		Gson gson = new Gson();
 		GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
+		GenericUserPratilipiResponse userPratilipiResponse = userPratilipiData != null ?
+						new GenericUserPratilipiResponse( userPratilipiData ) : null;
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		if( basicMode ) {
@@ -767,6 +769,7 @@ public class PratilipiSite extends HttpServlet {
 		} else {
 			dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
+			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
 			dataModel.put( "pageNo", pageNo );
 			dataModel.put( "pageCount", pratilipi.getPageCount() );
 			dataModel.put( "indexJson", gson.toJson( pratilipi.getIndex() ) );
