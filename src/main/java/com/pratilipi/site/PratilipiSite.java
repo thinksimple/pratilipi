@@ -186,7 +186,6 @@ public class PratilipiSite extends HttpServlet {
 			
 			} else if( uri.equals( "/pratilipireader" ) ) {
 				if( !basicMode ) {
-					resourceList.add( ThirdPartyResource.POLYMER_IRON_COLLAPSE.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
 				}

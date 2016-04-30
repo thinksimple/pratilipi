@@ -32,9 +32,13 @@
 						<template is="dom-if" if="{{ !hideIndexButton }}">
 							<div class="dropdown" style="display: inline-block;">
 								<paper-icon-button icon="icons:view-list" data-toggle="dropdown"></paper-icon-button>
-								<ul class="dropdown-menu" style="margin-top: 13px; max-height: 600px; overflow: scroll;">
-									<template is="dom-repeat" items="{{ index }}">
-										<pratilipi-reader-navigation-entry entry="{{ item }}" page-no="{{ pageNo }}"></pratilipi-reader-navigation-entry>
+								<ul class="dropdown-menu" style="margin-top: 13px; max-height: 500px; overflow: scroll; min-width: 256px;">
+									<template is="dom-repeat" items="{{ index }}" as="entry">
+										<li>
+											<a style="padding: 5px; margin: 0;" on-click="_entryClicked">
+												<pratilipi-reader-navigation-entry entry="{{ entry }}" page-no="{{ pageNo }}"></pratilipi-reader-navigation-entry>
+											</a>
+										</li>
 									</template>
 								</ul>
 							</div>
@@ -123,7 +127,7 @@
 							<paper-icon-button icon="icons:more-vert" data-toggle="dropdown"></paper-icon-button>
 							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
 								<li>
-									<paper-item style="padding: 5px 15px; margin: 0;">
+									<paper-item style="padding: 5px 15px; margin: 0; display: block;">
 										<h6 class="pratilipi-red text-center" style="text-align: center;">{{ title }}</h6>
 									</paper-item>
 								</li>
@@ -190,6 +194,11 @@
 				pageNo: { type: Number }
 			},
 			
+			_entryClicked: function( event ) {
+				var entry = event.model.entry;
+				document.querySelector( 'pratilipi-reader-page' ).setPageNo( entry.pageNo );
+			},
+			
 			ready: function() {
 				this.title = 	this.pratilipi.title != null && this.pratilipi.title.trim() != "" ?
 								this.pratilipi.title : this.pratilipi.titleEn;
@@ -254,25 +263,23 @@
 
 <dom-module id="pratilipi-reader-navigation-entry">
 	<style>
-		a.heading, a.heading:hover, a.heading:focus {
+		paper-item-body.heading {
 			font-weight: 600;
 		}
-		a.grey, a.grey:hover, a.grey:focus {
+		paper-item-body.grey {
 			color: #707070;
 		}
-		a.black, a.black:hover, a.black:focus {
+		paper-item-body.black {
 			color: #333;
 		}
-		a.blue, a.blue:hover, a.blue:focus {
+		paper-item-body.blue {
 			color: #107FE5;
 		}
 	</style>
 	<template>
-		<a id="entry" on-click="_entrySelected">
-			<li style="margin: 24px 18px; max-width: 275px;">
-					[[ entry.title ]]
-			</li>
-		</a>
+		<paper-item>
+			<paper-item-body id="entry">[[ entry.title ]]</paper-item-body>
+		</paper-item>
 	</template>
 	<script>
 		Polymer({
@@ -301,10 +308,6 @@
 						jQuery( this.querySelector( '#entry' ) ).addClass( "grey" );
 				}
 			},
-			
-			_entrySelected: function() {
-				document.querySelector( 'pratilipi-reader-page' ).setPageNo( this.entry.pageNo );
-			} 
 		
 		});
 	</script>
