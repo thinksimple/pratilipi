@@ -1,15 +1,6 @@
 <link rel='import' href='pratilipi-edit-event.html?20160425'>
 
 <dom-module id="pratilipi-event-list-page">
-
-	<style>
-		paper-card {
-			display: block;
-    		padding: 16px 5px;
-			--paper-card-header: { display: none };
-		}
-	</style>
-
 	<template>
 		<header class="nav-down">
     		<pratilipi-header user='[[ user ]]'></pratilipi-header>
@@ -45,42 +36,6 @@
 							<pratilipi-event-snippet event="[[ item ]]"></pratilipi-event-snippet>
 							<br class="pratilipi-break">
 						</template>
-						<dom-module id="pratilipi-event-snippet">
-							<template>
-								<paper-card>
-									<div class="row">
-										<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-											<a href="[[ event.pageUrl ]]">
-												<img style="width: 200px; height: 150px; margin: 5px auto; display: block;" src="[[ eventBannerImageUrl ]]" alt="[[ event.name ]]" class="pratilipi-shadow" />
-											</a>
-										</div>
-										<div style="padding-left: 30px; padding-right: 20px;" class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-											<a href="[[ event.pageUrl ]]"><h4 class="pratilipi-red">[[ event.name ]]</h4></a>
-											<div style="max-height: 120px; overflow: hidden;" id="description" class="text-muted"></div>
-											<a class="pratilipi-blue" href="[[ event.pageUrl ]]">
-												<iron-icon icon="icons:open-in-new" style="position: absolute; right: 20px; top: 5px;"></iron-icon>
-											</a>
-										</div>
-									</div>
-								</paper-card>
-							</template>
-							<script>
-								Polymer({
-									is: 'pratilipi-event-snippet',
-									properties: {
-										event: { type: Object }
-									},
-									ready: function() {
-										if( this.event.description != null )
-											jQuery( this.querySelector( '#description' ) ).html( this.event.description );
-										if( this.event.bannerImageUrl.indexOf( '?' ) == -1 )
-											this.eventBannerImageUrl = this.event.bannerImageUrl + "?" + "width=400";
-										else
-											this.eventBannerImageUrl = this.event.bannerImageUrl + "&" + "width=400";
-									}
-								});
-							</script>
-						</dom-module>
 					</div>
 				</div>
 			</div>
@@ -132,4 +87,55 @@
 		});
 	</script>
 
+</dom-module>
+<dom-module id="pratilipi-event-snippet">
+	<style>
+		paper-card {
+			display: block;
+    		padding: 16px 5px;
+			--paper-card-header: { display: none };
+		}
+		iron-icon {
+			position: absolute; 
+			right: 20px; 
+			top: 5px;
+			width: 24px;
+			height: 24px;
+		}
+		
+	</style>
+	<template>
+		<paper-card>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<a href="[[ event.pageUrl ]]">
+						<img style="width: 200px; height: 150px; margin: 5px auto; display: block;" src="[[ eventBannerImageUrl ]]" alt="[[ event.name ]]" class="pratilipi-shadow" />
+					</a>
+				</div>
+				<div style="padding-left: 30px; padding-right: 20px;" class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+					<a href="[[ event.pageUrl ]]"><h4 class="pratilipi-red">[[ event.name ]]</h4></a>
+					<div style="max-height: 120px; overflow: hidden;" id="description" class="text-muted"></div>
+					<a class="pratilipi-blue" href="[[ event.pageUrl ]]">
+						<iron-icon icon="icons:open-in-new"></iron-icon>
+					</a>
+				</div>
+			</div>
+		</paper-card>
+	</template>
+	<script>
+		Polymer({
+			is: 'pratilipi-event-snippet',
+			properties: {
+				event: { type: Object }
+			},
+			ready: function() {
+				if( this.event.description != null )
+					jQuery( this.querySelector( '#description' ) ).html( this.event.description );
+				if( this.event.bannerImageUrl.indexOf( '?' ) == -1 )
+					this.eventBannerImageUrl = this.event.bannerImageUrl + "?" + "width=400";
+				else
+					this.eventBannerImageUrl = this.event.bannerImageUrl + "&" + "width=400";
+			}
+		});
+	</script>
 </dom-module>

@@ -1,13 +1,5 @@
 <dom-module id="pratilipi-blog-list-page">
-
-	<style>
-		paper-card {
-			display: block;
-    		padding: 16px 5px;
-			--paper-card-header: { display: none };
-		}
-	</style>
-
+	
 	<template>
 		<header class="nav-down">
     		<pratilipi-header user='[[ user ]]'></pratilipi-header>
@@ -31,41 +23,6 @@
 							<div style="min-height: 10px;"></div>
 						</template>
 						
-						<dom-module id="pratilipi-bloglist-snippet">
-							<template>
-								<paper-card style="padding: 16px 12px;">
-									<a class="pratilipi-blue" href="[[ blogpost.pageUrl ]]">
-										<iron-icon icon="icons:open-in-new" style="position: absolute; right: 20px; top: 20px;"></iron-icon>
-									</a>
-									<a href="[[ blogpost.pageUrl ]]">
-										<h4 style="display: inline-block;" class="pratilipi-red">[[ blogpost.title ]]</h4>
-									</a>
-									<template is="dom-if" if="{{ drafted }}">
-										<span style="display: inline-block; margin-left: 10px;">DRAFTED</span>
-									</template>
-									<div class="text-muted" style="max-height: 160px; overflow: hidden;" id="blogpostContent"></div>
-								</paper-card>
-							</template>
-							<script>
-								Polymer({
-	
-									is: 'pratilipi-bloglist-snippet',
-	
-									properties: {
-										blogpost: { type: Object },
-										drafted: { type: Boolean, value: false }
-									},
-									
-									attached: function() {
-										jQuery( this.querySelector( '#blogpostContent' ) ).html( this.blogpost.content );
-										if( this.blogpost.state == "DRAFTED" )
-											this.drafted = true;
-									}
-									
-								});
-							</script>
-						</dom-module>
-							
 						<!-- Spinner when Loading more books -->
 						<template is="dom-if" if="{{ isLoading }}">
 							<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
@@ -199,4 +156,45 @@
 		});
 	</script>
 
+</dom-module>
+<dom-module id="pratilipi-bloglist-snippet">
+	<style>
+		paper-card {
+			display: block;
+    		padding: 16px 5px;
+			--paper-card-header: { display: none };
+		}
+	</style>
+	<template>
+		<paper-card style="padding: 16px 12px;">
+			<a class="pratilipi-blue" href="[[ blogpost.pageUrl ]]">
+				<iron-icon icon="icons:open-in-new" style="position: absolute; right: 20px; top: 20px;"></iron-icon>
+			</a>
+			<a href="[[ blogpost.pageUrl ]]">
+				<h4 style="display: inline-block;" class="pratilipi-red">[[ blogpost.title ]]</h4>
+			</a>
+			<template is="dom-if" if="{{ drafted }}">
+				<span style="display: inline-block; margin-left: 10px;">DRAFTED</span>
+			</template>
+			<div class="text-muted" style="max-height: 160px; overflow: hidden;" id="blogpostContent"></div>
+		</paper-card>
+	</template>
+	<script>
+		Polymer({
+
+			is: 'pratilipi-bloglist-snippet',
+
+			properties: {
+				blogpost: { type: Object },
+				drafted: { type: Boolean, value: false }
+			},
+			
+			attached: function() {
+				jQuery( this.querySelector( '#blogpostContent' ) ).html( this.blogpost.content );
+				if( this.blogpost.state == "DRAFTED" )
+					this.drafted = true;
+			}
+			
+		});
+	</script>
 </dom-module>
