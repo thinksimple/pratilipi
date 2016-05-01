@@ -1,6 +1,6 @@
 <link rel='import' href='pratilipi-userpratilipi.html?20160317'>
 <link rel='import' href='pratilipi-pratilipi.html?20160428'>
-<link rel='import' href='pratilipi-review-list.html?20160428'>
+<link rel='import' href='pratilipi-review-list.html?201605'>
 
 <dom-module id="pratilipi-pratilipi-page">
 
@@ -58,13 +58,6 @@
 
 	<script>
 	
-		function getUrlParameter( key ) {
-		   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
-		      return decodeURIComponent( key[1] );
-		   else
-			   return null;
-		}
-	
 		Polymer({
 
 			is: 'pratilipi-pratilipi-page',
@@ -88,11 +81,6 @@
 			
 			ready: function() {
 				jQuery( '#scrollToTop' ).css( "display", "none" );
-			},
-			
-			attached: function() {
-				if( getUrlParameter( 'writeReview' ) )
-					this.querySelector( 'pratilipi-review-list' ).showReviewInput();
 			},
 			
 			scrollHandler: function( st ) {

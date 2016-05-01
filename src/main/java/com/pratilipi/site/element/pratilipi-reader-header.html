@@ -25,18 +25,24 @@
 		<paper-card>
 			<table style="min-width: 100%;">
 				<tr>
+
 					<td align="left">
 						<!-- Back Button -->
 						<paper-icon-button icon="icons:arrow-back" on-click="exitReader"></paper-icon-button>
+						
 						<!-- Index Button if content has Index -->
 						<template is="dom-if" if="{{ !hideIndexButton }}">
 							<div class="dropdown" style="display: inline-block;">
 								<paper-icon-button icon="icons:view-list" data-toggle="dropdown"></paper-icon-button>
-								<ul class="dropdown-menu" style="margin-top: 13px; max-height: 500px; overflow: scroll; min-width: 256px;">
+								<ul	id="navigationdropdown"
+									class="dropdown-menu"
+									style="margin-top: 13px; overflow-y: scroll;">
 									<template is="dom-repeat" items="{{ index }}" as="entry">
 										<li>
-											<a style="padding: 5px; margin: 0;" on-click="_entryClicked">
-												<pratilipi-reader-navigation-entry entry="{{ entry }}" page-no="{{ pageNo }}"></pratilipi-reader-navigation-entry>
+											<a style="padding: 5px; margin: 0; white-space: normal;" on-click="_entryClicked">
+												<pratilipi-reader-navigation-entry 
+													entry="{{ entry }}" 
+													page-no="{{ pageNo }}"></pratilipi-reader-navigation-entry>
 											</a>
 										</li>
 									</template>
@@ -44,6 +50,7 @@
 							</div>
 						</template>
 					</td>
+					
 					<td align="right">
 						
 						<!-- Increase and Decrease font-size buttons -->
@@ -131,17 +138,6 @@
 										<h6 class="pratilipi-red text-center" style="text-align: center;">{{ title }}</h6>
 									</paper-item>
 								</li>
-								<template is="dom-if" if="{{ hasAccessToUpdate }}">
-									<li>
-										<a style="padding: 5px; margin: 0;">
-											<paper-item on-click="redirectToWriterPanel">
-												<paper-icon-item><iron-icon icon="icons:create"></iron-icon></paper-icon-item>
-												&nbsp;&nbsp;
-												<paper-item-body>${ _strings.pratilipi_edit_content }</paper-item-body>
-											</paper-item>
-										</a>
-									</li>
-								</template>
 								<template is="dom-if" if="{{ !hasAccessToUpdate }}">
 									<li>
 										<a style="padding: 5px; margin: 0;">
@@ -149,6 +145,17 @@
 												<paper-icon-item><iron-icon icon="icons:create"></iron-icon></paper-icon-item>
 												&nbsp;&nbsp;
 												<paper-item-body>${ _strings.review_write_a_review }</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+								</template>
+								<template is="dom-if" if="{{ showEditContent }}">
+									<li>
+										<a style="padding: 5px; margin: 0;">
+											<paper-item on-click="redirectToWriterPanel">
+												<paper-icon-item><iron-icon icon="icons:create"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>${ _strings.pratilipi_edit_content }</paper-item-body>
 											</paper-item>
 										</a>
 									</li>
@@ -174,6 +181,7 @@
 							</ul>
 						</div>
 					</td>
+
 				</tr>
 			</table>
 		</paper-card>
@@ -190,6 +198,7 @@
 				hasAccessToUpdate: { type: Boolean },
 				addedToLib: { type: Boolean, value: false },
 				hideIndexButton: { type: Boolean },
+				showEditContent: { type: Boolean, value: false },
 				index: { type: Array },
 				pageNo: { type: Number }
 			},
@@ -204,16 +213,31 @@
 								this.pratilipi.title : this.pratilipi.titleEn;
 			},
 			
+			attached: function() {
+				// Hide Edit Content button in Mobile
+				var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+				var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+				if( width > 600 && this.hasAccessToUpdate )
+					this.set( 'showEditContent', true );
+				
+				jQuery( "#navigationdropdown" ).css( 'max-height', Math.min( 500, height - 75 ) + "px", "important" );
+				jQuery( "#navigationdropdown" ).css( 'min-width', Math.min( 300, width - 20 ) + "px", "important" );
+				jQuery( "#navigationdropdown" ).css( 'max-width', ( width - 20 ) + "px", "important" );
+			},
+			
 			shareOnFacebook: function() {
-				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }/read?id=" + this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }/read?id=" + 
+						this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			shareOnTwitter: function() {
-				window.open( "http://twitter.com/share?url=" + "http://${ domain }/read?id=" + this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+				window.open( "http://twitter.com/share?url=" + "http://${ domain }/read?id=" + 
+						this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			shareOnGplus: function() {
-				window.open( "https://plus.google.com/share?url=" + "http://${ domain }/read?id=" + this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+				window.open( "https://plus.google.com/share?url=" + "http://${ domain }/read?id=" + 
+						this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			closeNavigation: function() {
@@ -263,6 +287,10 @@
 
 <dom-module id="pratilipi-reader-navigation-entry">
 	<style>
+		paper-item {
+			font-size: 14px;
+			font-family: inherit;
+		}
 		paper-item-body.heading {
 			font-weight: 600;
 		}
@@ -278,7 +306,7 @@
 	</style>
 	<template>
 		<paper-item>
-			<paper-item-body id="entry">[[ entry.title ]]</paper-item-body>
+			<paper-item-body style="white-space: normal;" id="entry">[[ entry.title ]]</paper-item-body>
 		</paper-item>
 	</template>
 	<script>
