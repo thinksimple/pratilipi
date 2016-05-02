@@ -1,7 +1,7 @@
-<link rel='import' href='pratilipi-reader-header.html?201605'>
-<link rel='import' href='pratilipi-reader-content.html?20160429'>
+<link rel='import' href='pratilipi-reader-header.html?20160502'>
+<link rel='import' href='pratilipi-reader-content.html?20160502'>
 <link rel='import' href='pratilipi-reader-footer.html?20160429'>
-<link rel="import" href="pratilipi-review-input.html?20160430" />
+<link rel="import" href="pratilipi-review-input.html?20160502" />
 
 <dom-module id="pratilipi-reader-page">
 
@@ -25,7 +25,8 @@
 					<div style="overflow:hidden;">
 						<pratilipi-reader-content
 							content="{{ content }}"
-							font-size="{{ fontSize }}"></pratilipi-reader-content>
+							font-size="{{ fontSize }}"
+							last-page="{{ lastPage }}"></pratilipi-reader-content>
 					</div>
 				</div>
 			</div>
@@ -114,7 +115,9 @@
 
 				goToLibraryBoolean: { type: Boolean, value: false },
 				reviewButtonClicked: { type: Boolean, value: false },
-				hideIndexButton: { type: Boolean, value: false }
+				hideIndexButton: { type: Boolean, value: false },
+
+				lastPage: { type: Boolean, value: false }
 			},
 			
 			showPrevious: function() {
@@ -168,6 +171,21 @@
 				}
 			},
 			
+			shareOnFacebook: function() {
+				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }/read?id=" + 
+						this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+			
+			shareOnTwitter: function() {
+				window.open( "http://twitter.com/share?url=" + "http://${ domain }/read?id=" + 
+						this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+			
+			shareOnGplus: function() {
+				window.open( "https://plus.google.com/share?url=" + "http://${ domain }/read?id=" + 
+						this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+			
 			updateUserPratilipi: function( userpratilipi ) {
 				this.set( 'userpratilipi', userpratilipi );
 			},
@@ -188,6 +206,7 @@
 					this.set( 'hideIndexButton', true );
 
 				this.set( 'addedToLib', this.addedToLibrary == "true" ? true : false );
+				this.set( 'lastPage', this.pageNo == this.pageCount ? true : false );
 			},
 			
 			_precache: function() {
@@ -202,6 +221,11 @@
 				// Called before ready function
 				if( this.contentMap == null || jQuery.isEmptyObject( this.contentMap ) )
 					return;
+				
+				if( !this.lastPage && this.pageNo == this.pageCount )
+					this.set( 'lastPage', true );
+				else if( this.lastPage && this.pageNo != this.pageCount )
+					this.set( 'lastPage', false );
 				
 				if( this.contentMap[ this.pageNo ] != null )	// Check in Map if exists
 					this.set( 'content', this.contentMap[ this.pageNo ] );

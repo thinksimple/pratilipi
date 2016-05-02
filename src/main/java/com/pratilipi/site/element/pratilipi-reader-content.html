@@ -8,12 +8,54 @@
 		}
 		
 		:host #pager {
-			text-align: justify;
 			margin-bottom: 5px;
-			line-height: 1.5em;
 			padding: 16px 22px;
-			-webkit-font-smoothing: antialiased;
 			width: 100%;
+		}
+		
+		:host #pager #reader-content {
+			text-align: justify;
+			-webkit-font-smoothing: antialiased;
+			line-height: 1.5em;
+		}
+
+		/* Bootstrap override */
+		.alert-success {
+			color: #333;
+			background-color: #ffffff;
+			border-color: #333;
+		}
+
+		.alert-success .alert-link,.alert-success .alert-link:hover, .alert-success .alert-link:focus {
+			color: #107FE5;
+			font-weight: inherit;
+		}
+
+		.hvr-bounce-in {
+			vertical-align: middle;
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);
+			box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+			-moz-osx-font-smoothing: grayscale;
+			-webkit-transition-duration: 0.5s;
+			transition-duration: 0.5s;
+			max-width: 95%; 
+			margin: 30px auto; 
+		}
+
+
+		.hvr-bounce-in:hover, .hvr-bounce-in:focus, .hvr-bounce-in:active {
+			-webkit-transform: scale(1.05);
+			transform: scale(1.05);
+			-webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+			transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+		}
+
+		.fa {
+			margin-left: 20px;
+			cursor: pointer;
 		}
 		
 	</style>
@@ -22,7 +64,20 @@
 	<template>
 	
 		<paper-card id="pager">
-			{{ content }}
+			<div id="reader-content">
+				{{ content }}
+			</div>
+			<template is="dom-if" if="{{ lastPage }}">
+				<div id="reader-alert-box" class="alert alert-success hvr-bounce-in" role="alert">
+					<div style="display: inline-block;">Enjoyed Reading the book? You can 
+						<a class="pratilipi-blue" on-click="writeReview">write a review</a>
+						 or share it on:
+						<i class="fa fa-facebook fa-lg fb" on-click="shareOnFacebook"></i>
+						<i class="fa fa-twitter fa-lg tw" on-click="shareOnTwitter"></i>
+						<i class="fa fa-google-plus fa-lg google" on-click="shareOnGplus"></i>
+					</div>
+				</div>
+			</template>
 		</paper-card>
 				
 	</template>
@@ -36,7 +91,8 @@
 			
 			properties: {
 				content: { type: String, observer: "_onContentChange" },
-				fontSize: { type: Number, observer: "_fontSizeObserver" }
+				fontSize: { type: Number, observer: "_fontSizeObserver" },
+				lastPage: { type: Boolean }
 			},
 			
 			attached: function() {
@@ -44,16 +100,32 @@
 			},
 			
 			_onContentChange: function() {
-				jQuery( this.querySelector( '#pager' ) ).html( this.content );
+				jQuery( this.querySelector( '#reader-content' ) ).html( this.content );
 				jQuery( "img" ).css( "max-width", "100%", "important" );
 				$( 'html, body' ).animate( { scrollTop : 0 }, 500 );
 			},
 			
 			_fontSizeObserver: function() {
-				jQuery( "#pager" ).css( 'font-size', this.fontSize, "important" );
-				jQuery( "#pager h2" ).css( 'font-size', this.fontSize + 4, "important" );
-				jQuery( "#pager h1" ).css( 'font-size', this.fontSize + 8, "important" );
-			}
+				jQuery( "#reader-content" ).css( 'font-size', this.fontSize, "important" );
+				jQuery( "#reader-content h2" ).css( 'font-size', this.fontSize + 4, "important" );
+				jQuery( "#reader-content h1" ).css( 'font-size', this.fontSize + 8, "important" );
+			},
+			
+			writeReview: function() {
+				document.querySelector( 'pratilipi-reader-page' ).writeReview();
+			},
+			
+			shareOnFacebook: function() {
+				document.querySelector( 'pratilipi-reader-page' ).shareOnFacebook();
+			},
+			
+			shareOnTwitter: function() {
+				document.querySelector( 'pratilipi-reader-page' ).shareOnTwitter();
+			},
+			
+			shareOnGplus: function() {
+				document.querySelector( 'pratilipi-reader-page' ).shareOnGplus();
+			},
 
 		});
 

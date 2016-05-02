@@ -19,6 +19,21 @@
 			font-size: 13px;
 			font-family: inherit;
 		}
+
+		.open paper-icon-button:after {
+			top: 34px;
+			left: 50%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+			border-color: rgba(194, 225, 245, 0);
+			border-bottom-color: #d3d3d3;
+			border-width: 8px;
+			margin-left: -8px;
+		}
 	</style>
 
 	<template>
@@ -226,18 +241,15 @@
 			},
 			
 			shareOnFacebook: function() {
-				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }/read?id=" + 
-						this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+				document.querySelector( 'pratilipi-reader-page' ).shareOnFacebook();
 			},
 			
 			shareOnTwitter: function() {
-				window.open( "http://twitter.com/share?url=" + "http://${ domain }/read?id=" + 
-						this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+				document.querySelector( 'pratilipi-reader-page' ).shareOnTwitter();
 			},
 			
 			shareOnGplus: function() {
-				window.open( "https://plus.google.com/share?url=" + "http://${ domain }/read?id=" + 
-						this.pratilipi.pratilipiId, "share", "width=1100,height=500,left=70px,top=60px" );
+				document.querySelector( 'pratilipi-reader-page' ).shareOnGplus();
 			},
 			
 			closeNavigation: function() {
