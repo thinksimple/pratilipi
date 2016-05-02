@@ -39,17 +39,19 @@ public class OfyTestApi extends GenericApi {
 		
 		Gson gson = new Gson();
 		
-		for( Pratilipi pratilipi : pratilipiList ) {
-			AuditLog auditLog = dataAccessor.newAuditLogOfy();
-			auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-			auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
-			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
-			
-			pratilipi.setAuthorId( 5734588399747072L );
-			
-			auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-
-			dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
+		if( pratilipiList.size() == 4 ) {
+			for( Pratilipi pratilipi : pratilipiList ) {
+				AuditLog auditLog = dataAccessor.newAuditLogOfy();
+				auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
+				auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
+				auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+				
+				pratilipi.setAuthorId( 5734588399747072L );
+				
+				auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+	
+				dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
+			}
 		}
 		
 		return new GenericResponse();
