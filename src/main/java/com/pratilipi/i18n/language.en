@@ -314,3 +314,11 @@ reader_goto_home_page	= Go to Home Page
 share_on_facebook		= Share on Facebook
 share_on_twitter		= Share on Twitter
 share_on_gplus			= Share on Google Plus
+increase_font_size		= Increase font size
+decrease_font_size		= Decrease font size
+
+
+# Enjoyed Reading the content? You can write a review or share it on :
+reader_enjoyed_reading_part1	= Enjoyed reading the content? You can 
+reader_enjoyed_review_book		= write a review
+reader_enjoyed_reading_part2	= or share it on :

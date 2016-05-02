@@ -188,6 +188,9 @@ public class PratilipiSite extends HttpServlet {
 				if( !basicMode ) {
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
+					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_SOCIAL.getTag() );
+					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_AV.getTag() );
+					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_EDITOR.getTag() );
 				}
 				dataModel = createDataModelForReadPage( Long.parseLong( request.getParameter( "id" ) ), 1, basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );

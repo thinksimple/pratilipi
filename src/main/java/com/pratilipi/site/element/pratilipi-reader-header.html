@@ -19,7 +19,9 @@
 			font-size: 13px;
 			font-family: inherit;
 		}
-
+		.dropdown-menu{
+			margin-top: 13px;
+		}
 		.open paper-icon-button:after {
 			top: 34px;
 			left: 50%;
@@ -51,7 +53,7 @@
 								<paper-icon-button icon="icons:view-list" data-toggle="dropdown"></paper-icon-button>
 								<ul	id="navigationdropdown"
 									class="dropdown-menu"
-									style="margin-top: 13px; overflow-y: scroll;">
+									style="overflow-y: scroll;">
 									<template is="dom-repeat" items="{{ index }}" as="entry">
 										<li>
 											<a style="padding: 5px; margin: 0; white-space: normal;" on-click="_entryClicked">
@@ -69,13 +71,34 @@
 					<td align="right">
 						
 						<!-- Increase and Decrease font-size buttons -->
-						<paper-icon-button icon="icons:add" on-click="increaseFontSize"></paper-icon-button>
-						<paper-icon-button icon="icons:remove" on-click="decreaseFontSize"></paper-icon-button>
+						<div class="dropdown" style="display: inline-block;">
+							<paper-icon-button icon="editor:format-size" data-toggle="dropdown"></paper-icon-button>
+							<ul class="dropdown-menu pull-right">
+								<li>
+									<a style="padding: 5px; margin: 0;">
+										<paper-item on-click="increaseFontSize">
+											<paper-icon-item><iron-icon icon="icons:add"></iron-icon></paper-icon-item>
+											&nbsp;&nbsp;
+											<paper-item-body>${ _strings.increase_font_size }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
+								<li>
+									<a style="padding: 5px; margin: 0;">
+										<paper-item on-click="decreaseFontSize">
+											<paper-icon-item><iron-icon icon="icons:remove"></iron-icon></paper-icon-item>
+											&nbsp;&nbsp;
+											<paper-item-body>${ _strings.decrease_font_size }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
+							</ul>
+						</div>
 						
 						<!-- Library Section -->
 						<div class="dropdown" style="display: inline-block;">
-							<paper-icon-button icon="icons:chrome-reader-mode" data-toggle="dropdown"></paper-icon-button>
-							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
+							<paper-icon-button icon="icons:book" data-toggle="dropdown"></paper-icon-button>
+							<ul class="dropdown-menu pull-right">
 								<template is="dom-if" if="{{ !addedToLib }}">
 									<li>
 										<a style="padding: 5px; margin: 0;">
@@ -101,7 +124,7 @@
 								<li>
 									<a style="padding: 5px; margin: 0;">
 										<paper-item on-click="goToLibrary">
-											<paper-icon-item><iron-icon icon="icons:list"></iron-icon></paper-icon-item>
+											<paper-icon-item><iron-icon icon="av:library-books"></iron-icon></paper-icon-item>
 											&nbsp;&nbsp;
 											<paper-item-body>${ _strings.my_library }</paper-item-body>
 										</paper-item>
@@ -112,8 +135,8 @@
 						
 						<!-- Share widget -->
 						<div class="dropdown" style="display: inline-block;">
-							<paper-icon-button icon="icons:supervisor-account" data-toggle="dropdown"></paper-icon-button>
-							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
+							<paper-icon-button icon="social:share" data-toggle="dropdown"></paper-icon-button>
+							<ul class="dropdown-menu pull-right">
 								<li>
 									<a style="padding: 5px; margin: 0;">
 										<paper-item on-click="shareOnFacebook">
@@ -147,7 +170,7 @@
 						<!-- Menu button -->
 						<div class="dropdown" style="display: inline-block;">
 							<paper-icon-button icon="icons:more-vert" data-toggle="dropdown"></paper-icon-button>
-							<ul class="dropdown-menu pull-right" style="margin-top: 13px;">
+							<ul class="dropdown-menu pull-right">
 								<li>
 									<paper-item style="padding: 5px 15px; margin: 0; display: block;">
 										<h6 class="pratilipi-red text-center" style="text-align: center;">{{ title }}</h6>
