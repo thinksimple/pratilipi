@@ -768,7 +768,12 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		if( basicMode ) {
 			dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
-			dataModel.put( "pratilipi", pratilipiData );
+			dataModel.put( "pratilipi", pratilipiResponse );
+			dataModel.put( "userpratilipi", userPratilipiResponse );
+			dataModel.put( "pageNo", pageNo );
+			dataModel.put( "pageCount", pratilipi.getPageCount() );
+			dataModel.put( "index", gson.fromJson( pratilipi.getIndex(), Object.class ) );
+			dataModel.put( "content", content );
 		} else {
 			dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
