@@ -39,7 +39,7 @@
 					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
 					<h6 class="modal-fullscreen-heading">{{ pratilipi.title }} - ${ _strings.review_write_a_review }</h6>
 					<p class="text-muted text-center">${ _strings.review_content_help }</p>
-					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
+					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 20px; margin-bottom: 10px;"></div>
 					<div id="pratilipi-review-row">
 						<div id="pratilipi-review-col-left" style="max-width: 175px;">
 							<img style="max-width: 175px;" class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
@@ -48,16 +48,16 @@
 						</div>
 						<div style="padding-left: 15px; padding-right: 15px;" id="pratilipi-review-col-right">
 							<pratilipi-rating-input value="{{ rating }}"></pratilipi-rating-input>
-							<pratilipi-input label="${ _strings.review_title }" value="{{ reviewTitle::input }}" icon="icons:description"></pratilipi-input>
-							<div style="margin-top: 25px; margin-bottom: 5px; text-align: left;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.review_content }</span></div>
+							<!-- <pratilipi-input label="${ _strings.review_title }" value="{{ reviewTitle::input }}" icon="icons:description"></pratilipi-input> -->
+							<div style="margin-top: 10px; margin-bottom: 5px; text-align: left;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.review_content }</span></div>
 							<paper-textarea class="review" id="reviewInput" value="{{ review::input }}"></paper-textarea>
-							<div class="display-message-div">
-								<p>{{ message }}</p>
-							</div>
-							<button id="editReviewButton" class="pratilipi-blue-button" on-click="createOrEditReview">${ _strings.review_submit_review }</button>
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="display-message-div"><p>{{ message }}</p></div>
+				<button id="editReviewButton" style="position: fixed; bottom: 15px; right: 15px;" class="pratilipi-dark-blue-button" type="button" on-click="createOrEditReview">${ _strings.review_submit_review }</button>
 			</div>
 		</div>
 		
@@ -106,7 +106,7 @@
 				// Userpratilipi
 				pratilipiId: { type: String },
 				rating: { type: Number },
-				reviewTitle: { type: String },
+				/* reviewTitle: { type: String }, */
 				review: { type: String },
 				reviewState: { type: String },
 				
@@ -151,7 +151,7 @@
 			process: function( userpratilipi ) {
 				this.pratilipiId = userpratilipi.pratilipiId == null ? this.pratilipi.pratilipiId : userpratilipi.pratilipiId; 
 				this.rating = userpratilipi.rating == null ? null : userpratilipi.rating;
-				this.reviewTitle = userpratilipi.reviewTitle == null ? null : userpratilipi.reviewTitle;
+				/* this.reviewTitle = userpratilipi.reviewTitle == null ? null : userpratilipi.reviewTitle; */
 				this.review = userpratilipi.review == null ? "" : processContentTinyMCE( userpratilipi.review );
 				if( tinyMCE != null && tinyMCE.get( 'reviewInput' ) != null )
 					tinyMCE.get( 'reviewInput' ).setContent( this.review );
@@ -203,8 +203,8 @@
 				if( this.rating != null )
 					body.rating = this.rating;
 				
-				if( this.reviewTitle != null )
-					body.reviewTitle = this.reviewTitle;
+				/* if( this.reviewTitle != null )
+					body.reviewTitle = this.reviewTitle; */
 				
 				if( this.review != null )
 					body.review = processContentTinyMCE( this.review );

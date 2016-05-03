@@ -15,7 +15,7 @@
 			data: { 
 				'pratilipiId': ${ pratilipi.id?c }, 
 				'rating': rating,
-				'reviewTitle': reviewTitle,
+				<#-- 'reviewTitle': reviewTitle, -->
 				'review' : review
 			},
 			
@@ -83,17 +83,20 @@
 			</div>
 		</div>
 		
-	    <div class="form-group">
-	        <label for="inputReviewTitle" class="col-sm-2 control-label">${ _strings.review_title }</label>
-	        <div class="col-sm-10">
-	            <input 	name="reviewTitle" 
+		<#--
+		    <div class="form-group">
+		        <label for="inputReviewTitle" class="col-sm-2 control-label">${ _strings.review_title }</label>
+		        <div class="col-sm-10">
+	            	<input 	name="reviewTitle" 
 	            		type="text" 
 	            		class="form-control" 
 	            		id="inputReviewTitle"
 	            		<#if userpratilipi.reviewTitle??>value="${ userpratilipi.reviewTitle }"</#if> 
-	            		placeholder="Review Title" >
-	        </div>
-	    </div>
+	            		placeholder="Review Title" > 
+		        </div>
+		    </div>
+	    -->
+	    
 	    <div class="form-group">
 	        <label for="inputReview" class="col-sm-2 control-label">${ _strings.review_content }</label>
 	        <div class="col-sm-10">
