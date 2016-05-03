@@ -44,12 +44,8 @@
 		<#if pratilipi.author?? >
 			<a href="${ pratilipi.author.pageUrlAlias!pratilipi.author.pageUrl }"><h5>${ pratilipi.author.name }</h5></a>
 		</#if>
-		<div style="margin: 15px auto;">
-			<#assign rating=pratilipi.averageRating >
-			<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
-		</div>
 
-	<form id="reviewInputForm" class="form-horizontal" action="javascript:void(0);">
+	<form id="reviewInputForm" class="form-horizontal" action="javascript:void(0);" style="margin-top: 32px;">
 		<div class="form-group">
 			<label for="inputRating" class="col-sm-2 control-label">${ _strings.rating_your_rating }</label>
 			<div class="col-sm-10">

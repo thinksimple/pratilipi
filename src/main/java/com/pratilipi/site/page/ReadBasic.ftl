@@ -6,7 +6,9 @@
 	</head>
 
 	<body>
-		<#include "../element/pratilipi-header.ftl">
+		<#include "../element/pratilipi-reader-header.ftl">
+		<#include "../element/pratilipi-reader-content.ftl">
+		<#include "../element/pratilipi-reader-footer.ftl">
 		<#include "../element/pratilipi-footer.ftl">
 	</body>
 	

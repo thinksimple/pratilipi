@@ -101,7 +101,7 @@
 			
 			_onContentChange: function() {
 				jQuery( this.querySelector( '#reader-content' ) ).html( this.content );
-				jQuery( "img" ).css( "max-width", "100%", "important" );
+				jQuery( "#reader-content img" ).css( "max-width", "100%", "important" );
 				$( 'html, body' ).animate( { scrollTop : 0 }, 500 );
 			},
 			
