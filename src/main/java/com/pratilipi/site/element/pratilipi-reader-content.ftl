@@ -26,7 +26,7 @@
 
 <script>
 	$( document ).ready(function() {
-		$( "#reader-content" ).css( 'min-height', window.innerHeight + "px" );
+		$( "#reader-content" ).css( 'min-height', ( window.innerHeight - 64 ) + "px" );
 	});
 </script>
 	

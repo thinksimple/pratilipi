@@ -41,6 +41,54 @@
 				window.location.href = redirectUrl;
 
 			}
+			function loadPrevious() {
+				gotoPage( ${ pageNo - 1 } );
+			}
+			function loadNext() {
+				gotoPage( ${ pageNo + 1 } );
+			}
+			function exitReader() {
+				window.location.href = getUrlParameter( "ret" ) != null ? getUrlParameter( "ret" ) : "${ pratilipi.getPageUrl() }";
+			}
+			$( document ).ready(function() {
+				if( getUrlParameter( "addToLib" ) == "true" )
+					addToLibrary();
+			});
+			function addToOrRemoveFromLibrary( flag ) {
+				$.ajax({
+						
+					type: 'post',
+					url: '/api/userpratilipi/library',
+		
+					data: { 
+						'pratilipiId': ${ pratilipi.getId()?c }, 
+						'addedToLib': flag
+					},
+					
+					success: function( response ) {
+						alert( "Success" );
+						location.reload(); 
+					},
+					
+					error: function( response ) {
+						var message = jQuery.parseJSON( response.responseText );
+						var status = response.status;
+		
+						if( message["message"] != null )
+							alert( "Error " + status + " : " + message["message"] );
+						else if( message["error"] != null )
+							alert( "Error " + status + " : " + message["error"] ); 
+						else
+							alert( "Some exception occured at the server! Please try again." );
+					}
+				});
+			}
+			function addToLibrary() {
+				addToOrRemoveFromLibrary( true );
+			}
+			function removeFromLibrary() {
+				addToOrRemoveFromLibrary( false );
+			}
 		</script>
 	</head>
 
