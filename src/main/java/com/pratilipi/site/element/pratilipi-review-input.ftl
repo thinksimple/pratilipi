@@ -1,5 +1,11 @@
 
 <script type="text/javascript">
+	function getUrlParameter( key ) {
+	   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+	      return decodeURIComponent( key[1] );
+	   else
+		   return null;
+	}
 	function submitReview() {
 		var rating = $( '#inputRating' ).val();
 		var reviewTitle = $( '#inputReviewTitle' ).val();
@@ -20,7 +26,10 @@
 			},
 			
 			success: function( response ) {
-				window.location.href = "${ pratilipi.pageUrl }"; 
+				if( getUrlParameter( "ret" ) == null )
+					window.location.href = "${ pratilipi.pageUrl }";
+				else
+					window.location.href = getUrlParameter( "ret" );
 			},
 			
 			error: function ( response ) {

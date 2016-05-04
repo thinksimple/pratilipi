@@ -5,7 +5,7 @@
 				<#-- Back Button -->
 				<a onClick="exitReader()" style="cursor: pointer;">back</a>
 				<#-- Index Button if content has Index -->
-				<a onClick="gotoNavigation()" style="cursor: pointer">nav</a>
+				<a href="?action=index">nav</a>
 			</td>
 			<td align="right">
 				<#-- Increase and Decrease font-size buttons -->
@@ -14,7 +14,7 @@
 
 				<#-- Library Section -->
 				<#if user.isGuest == true>
-					<a href="/login?ret=/read?id=${ pratilipi.getId()?c }&addToLib=true">addToLib</a>
+					<a href="/login?ret=/read?id=${ pratilipi.getId()?c }%26addToLib=true">addToLib</a>
 				<#else>
 					<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
 						<#if userpratilipi.isAddedtoLib() == true>
@@ -30,7 +30,7 @@
 
 				<#-- Menu button -->
 				<a href="${ pratilipi.getPageUrl() }">${ pratilipi.getTitle()!pratilipi.getTitleEn() }</a>
-				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="${ pratilipi.getPageUrl() }?review=write"</#if> >writeReview</a>
+				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }"<#else>href="${ pratilipi.getPageUrl() }?review=write%26ret=ret=/read?id=${ pratilipi.getId()?c }"</#if> >writeReview</a>
 				<a href="${ pratilipi.getAuthor().getPageUrl() }">${ _strings.reader_goto_author_profile }</a>
 				<a href="/">${ _strings.reader_goto_home_page }</a>
 			</td>

@@ -33,7 +33,7 @@
 			function gotoPage( pageNo ) {
 				var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
 									( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
-									"pageNo=" + pageNo;
+									"pageNo=" + parseInt( pageNo, 10);
 
 				if( getUrlParameter( "ret" ) != null )
 					redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" ); 
@@ -96,7 +96,16 @@
 		<#include "../element/pratilipi-reader-header.ftl">
 		<div class="parent-container">
 			<div class="container">
-				<#include "../element/pratilipi-reader-content.ftl">
+				<#if action == "read">
+					<#include "../element/pratilipi-reader-content.ftl">
+				<#elseif action == "index">
+					<#include "../element/pratilipi-reader-navigation.ftl">
+				<#elseif action == "social">
+					<#include "../element/pratilipi-reader-social.ftl">
+				<#elseif action == "setting">
+					<#include "../element/pratilipi-reader-setting.ftl">
+				</#if>
+				
 			</div>
 		</div>
 		<#include "../element/pratilipi-reader-footer.ftl">

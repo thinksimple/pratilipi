@@ -199,7 +199,9 @@ public class PratilipiSite extends HttpServlet {
 
 				dataModel = createDataModelForReadPage( Long.parseLong( request.getParameter( "id" ) ), pageNo, basicMode );
 				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
+				String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "read";
 				dataModel.put( "fontSize", fontSize != null ? Integer.parseInt( fontSize ) : 14 );
+				dataModel.put( "action", action );
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 			
 			} else if( uri.equals( "/search" ) ) {
@@ -781,7 +783,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "userpratilipi", userPratilipiResponse );
 			dataModel.put( "pageNo", pageNo );
 			dataModel.put( "pageCount", pratilipi.getPageCount() );
-			dataModel.put( "index", gson.fromJson( pratilipi.getIndex(), Object.class ) );
+			dataModel.put( "indexList", gson.fromJson( pratilipi.getIndex(), Object.class ) );
 			dataModel.put( "content", content );
 		} else {
 			dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
