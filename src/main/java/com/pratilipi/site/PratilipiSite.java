@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +39,7 @@ import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
+import com.pratilipi.common.type.RequestCookie;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.AuthorFilter;
@@ -193,18 +193,13 @@ public class PratilipiSite extends HttpServlet {
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_AV.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_EDITOR.getTag() );
 				}
-				dataModel = createDataModelForReadPage( Long.parseLong( request.getParameter( "id" ) ), 1, basicMode );
-				Integer fontSize = null; 
-				Cookie[] cookies = request.getCookies();
-				if( cookies != null ) {
-					for( int i = 0; i < cookies.length; i++ ) {
-						if( cookies[i].getName().equals( "fontSize" ) ){
-							fontSize = Integer.parseInt( cookies[i].getValue() );
-							break;
-						}
-					}
-				}
-				dataModel.put( "fontSize", fontSize != null ? fontSize : 14 );
+
+				Integer pageNo = request.getParameter( "pageNo" ) != null ? 
+						Integer.parseInt( request.getParameter( "pageNo" ) ) : 1;
+
+				dataModel = createDataModelForReadPage( Long.parseLong( request.getParameter( "id" ) ), pageNo, basicMode );
+				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
+				dataModel.put( "fontSize", fontSize != null ? Integer.parseInt( fontSize ) : 14 );
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 			
 			} else if( uri.equals( "/search" ) ) {

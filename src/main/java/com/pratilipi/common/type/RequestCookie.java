@@ -3,6 +3,8 @@ package com.pratilipi.common.type;
 public enum RequestCookie {
 	
 	ACCESS_TOKEN ( "access_token" ),
+	FONT_SIZE ( "fontSize" ),
+	PAGE_NO ( "pageNo" )
 	;
 	
 	

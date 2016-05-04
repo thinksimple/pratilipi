@@ -128,7 +128,7 @@ public class AccessTokenFilter implements Filter {
 		return threadLocalAccessToken.get();
 	}
 	
-	private String getCookieValue( String cookieName, HttpServletRequest request ) {
+	public static String getCookieValue( String cookieName, HttpServletRequest request ) {
 		Cookie[] cookies = request.getCookies();
 		if( cookies == null ) return null;
 		for( Cookie cookie : cookies ) {
