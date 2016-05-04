@@ -41,6 +41,16 @@
 				window.location.href = redirectUrl;
 
 			}
+			function gotoNavigation() {
+				var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
+									( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
+									"action=index";
+
+				if( getUrlParameter( "ret" ) != null )
+					redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" ); 
+
+				window.location.href = redirectUrl;
+			}
 			function loadPrevious() {
 				gotoPage( ${ pageNo - 1 } );
 			}
@@ -96,19 +106,21 @@
 		<#include "../element/pratilipi-reader-header.ftl">
 		<div class="parent-container">
 			<div class="container">
-				<#if action == "read">
-					<#include "../element/pratilipi-reader-content.ftl">
-				<#elseif action == "index">
+				<#if action == "index">
 					<#include "../element/pratilipi-reader-navigation.ftl">
 				<#elseif action == "social">
 					<#include "../element/pratilipi-reader-social.ftl">
 				<#elseif action == "setting">
 					<#include "../element/pratilipi-reader-setting.ftl">
+				<#else>
+					<#include "../element/pratilipi-reader-content.ftl">
 				</#if>
 				
 			</div>
 		</div>
-		<#include "../element/pratilipi-reader-footer.ftl">
+		<#if action != "index" && action != "social" && action != "setting">
+			<#include "../element/pratilipi-reader-footer.ftl">
+		</#if>
 		<#include "../element/pratilipi-footer.ftl">
 	</body>
 	

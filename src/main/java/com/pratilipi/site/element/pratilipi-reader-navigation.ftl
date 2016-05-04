@@ -21,7 +21,9 @@
 
 <div class="secondary-500 pratilipi-shadow box">
 	<#list indexList as index>
-		<a class="navigation" 
+		<#assign level=index.level?number>
+		<#assign page=index.pageNo?number>
+		<a class="navigation<#if level == 0> heading <#if page==pageNo> blue <#else> black </#if></#if>    <#if level == 1><#if page==pageNo> blue <#else> grey </#if></#if>" 
 			style="cursor: pointer;"
 			onCLick="gotoPage( ${ index.pageNo } )">${ index.title }</a>
 	</#list>

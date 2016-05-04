@@ -5,7 +5,7 @@
 				<#-- Back Button -->
 				<a onClick="exitReader()" style="cursor: pointer;">back</a>
 				<#-- Index Button if content has Index -->
-				<a href="?action=index">nav</a>
+				<a onClick="gotoNavigation()" style="cursor: pointer;">nav</a>
 			</td>
 			<td align="right">
 				<#-- Increase and Decrease font-size buttons -->
