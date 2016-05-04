@@ -16,22 +16,17 @@
 				<#if user.isGuest == true>
 					<a href="/login?ret=/read?id=${ pratilipi.getId()?c }&addToLib=true">addToLib</a>
 				<#else>
-					<#if !userpratilipi?? || !userpratilipi.isAddedtoLib()?? || userpratilipi.isAddedToLib == false>
+					<#if !userpratilipi?? || !userpratilipi.isAddedtoLib()?? || userpratilipi.isAddedToLib() == false>
 						<a style="cursor: pointer;" onClick="addToLibrary()">addToLib</a>
 					<#else>
 						<a style="cursor: pointer;" onCLick="removeFromLibrary()">remFromLib</a>
 					</#if>
 				</#if>
-
 				<a href="/library">goToLib</a>
 
 				<#-- Menu button -->
 				<a href="${ pratilipi.getPageUrl() }">${ pratilipi.getTitle()!pratilipi.getTitleEn() }</a>
-
-				<#-- User Logged in -->
-				<a style="cursor: pointer;" href="${ pratilipi.getPageUrl() }?review=write">writeReview</a>
-				<#-- User Not Logged in -->
-
+				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="${ pratilipi.getPageUrl() }?review=write"</#if> >writeReview</a>
 				<a href="${ pratilipi.getAuthor().getPageUrl() }">${ _strings.reader_goto_author_profile }</a>
 				<a href="/">${ _strings.reader_goto_home_page }</a>
 			</td>
