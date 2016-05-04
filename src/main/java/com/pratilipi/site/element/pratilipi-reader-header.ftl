@@ -16,10 +16,14 @@
 				<#if user.isGuest == true>
 					<a href="/login?ret=/read?id=${ pratilipi.getId()?c }&addToLib=true">addToLib</a>
 				<#else>
-					<#if !userpratilipi?? || !userpratilipi.isAddedtoLib()?? || userpratilipi.isAddedToLib() == false>
-						<a style="cursor: pointer;" onClick="addToLibrary()">addToLib</a>
+					<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
+						<#if userpratilipi.isAddedtoLib() == true>
+							<a style="cursor: pointer;" onCLick="removeFromLibrary()">remFromLib</a>							
+						<#else>
+							<a style="cursor: pointer;" onClick="addToLibrary()">addToLib</a>
+						</#if>
 					<#else>
-						<a style="cursor: pointer;" onCLick="removeFromLibrary()">remFromLib</a>
+						<a style="cursor: pointer;" onClick="addToLibrary()">addToLib</a>
 					</#if>
 				</#if>
 				<a href="/library">goToLib</a>
