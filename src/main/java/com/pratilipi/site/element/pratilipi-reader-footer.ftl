@@ -2,15 +2,10 @@
 <script>
 	function pageNoChanged() {
 		var pageNo = document.getElementById( 'pageNoInput' ).value;
-		if( pageNo >=1 && pageNo <= ${ pageCount } ) {
-			// Redirect to that page.
-			window.location.href = "${ pratilipi.getReadPageUrl() }" +
-			( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
-			"pageNo=" + pageNo;
-		} else {
-			// Set the value to page Number
+		if( pageNo >=1 && pageNo <= ${ pageCount } )
+			gotoPage( pageNo );
+		else
 			document.getElementById( 'pageNoInput' ).value = ${ pageNo };
-		}
 	}
 	$( document ).ready(function() {
 		$( "#pageNoInput" ).after( " / ${ pageCount }" );

@@ -765,6 +765,8 @@ public class PratilipiSite extends HttpServlet {
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		
+		pageNo = pageNo < 1 ? 1 : pageNo;
+		pageNo = pageNo > pratilipi.getPageCount() ? pratilipi.getPageCount() : pageNo;
 		Object content = PratilipiDataUtil.getPratilipiContent( pratilipiId, null, pageNo, PratilipiContentType.PRATILIPI );
 		
 		Gson gson = new Gson();

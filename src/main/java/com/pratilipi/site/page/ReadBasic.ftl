@@ -4,6 +4,12 @@
 	<head>
 		<#include "meta/HeadBasic.ftl">
 		<script>
+			function getUrlParameter( key ) {
+			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+			      return decodeURIComponent( key[1] );
+			   else
+				   return null;
+			}
 			function setCookie( name, value, days ) {
 				var date = new Date();
 				date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
@@ -23,6 +29,17 @@
 					setCookie( "fontSize", ${ fontSize - 2 } );
 					window.location.reload();
 				}
+			}
+			function gotoPage( pageNo ) {
+				var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
+									( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
+									"pageNo=" + pageNo;
+
+				if( getUrlParameter( "ret" ) != null )
+					redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" ); 
+
+				window.location.href = redirectUrl;
+
 			}
 		</script>
 	</head>

@@ -4,6 +4,7 @@
 		text-align: justify;
 		-webkit-font-smoothing: antialiased;
 		line-height: 1.6em!important;
+		overflow: hidden;
 	}
 	
 	#reader-content h1, #reader-content h2 {
@@ -22,6 +23,12 @@
 	}
 		
 </style>
+
+<script>
+	$( document ).ready(function() {
+		$( "#reader-content" ).css( 'min-height', window.innerHeight + "px" );
+	});
+</script>
 	
 <div class="secondary-500 pratilipi-shadow box" style="margin-bottom: 5px; padding: 16px 22px; width: 100%;">
 	<div id="reader-content">
