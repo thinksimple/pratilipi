@@ -113,7 +113,7 @@
 					
 					success: function( response ) {
 						if( getUrlParameters().ret != null )
-							window.location.href = getUrlParameters().ret;
+							window.location.href = getUrlParameters().ret.replace( "%26", "&" );
 						else
 							window.location.href = "/";
 					},

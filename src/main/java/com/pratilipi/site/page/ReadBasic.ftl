@@ -4,6 +4,10 @@
 	<head>
 		<#include "meta/HeadBasic.ftl">
 		<script>
+			$( document ).ready(function() {
+				if( getUrlParameter( "addToLib" ) == "true" )
+					addToLibrary();
+			});
 			function getUrlParameter( key ) {
 			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
 			      return decodeURIComponent( key[1] );
@@ -44,10 +48,7 @@
 			function gotoNavigation() {
 				var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
 									( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
-									"action=index";
-
-				if( getUrlParameter( "ret" ) != null )
-					redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" ); 
+									"action=index" + "&" + "pageNo=${ pageNo }";
 
 				window.location.href = redirectUrl;
 			}
@@ -60,10 +61,6 @@
 			function exitReader() {
 				window.location.href = getUrlParameter( "ret" ) != null ? getUrlParameter( "ret" ) : "${ pratilipi.getPageUrl() }";
 			}
-			$( document ).ready(function() {
-				if( getUrlParameter( "addToLib" ) == "true" )
-					addToLibrary();
-			});
 			function addToOrRemoveFromLibrary( flag ) {
 				$.ajax({
 						
@@ -99,11 +96,22 @@
 			function removeFromLibrary() {
 				addToOrRemoveFromLibrary( false );
 			}
+			function shareOnFacebook() {
+				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ website_host }/read?id=${ pratilipi.getId()?c }", "share", "width=600,height=500,left=70px,top=60px" );
+			}
+			function shareOnTwitter() {
+				window.open( "http://twitter.com/share?url=" + "http://${ website_host }/read?id=${ pratilipi.getId()?c }", "share", "width=500,height=600,left=70px,top=60px" );
+			}
+			function shareOnGplus() {
+				window.open( "https://plus.google.com/share?url=" + "http://${ website_host }/read?id=${ pratilipi.getId()?c }", "share", "width=500,height=600,left=70px,top=60px" );
+			}
 		</script>
 	</head>
 
 	<body>
-		<#include "../element/pratilipi-reader-header.ftl">
+		<#if action != "index" && action != "social" && action != "setting">
+			<#include "../element/pratilipi-reader-header.ftl">
+		</#if>
 		<div class="parent-container">
 			<div class="container">
 				<#if action == "index">

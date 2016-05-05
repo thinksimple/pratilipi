@@ -19,6 +19,10 @@
 	}
 </style>
 
+<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px; height: 64px;">
+	<a style="cursor: pointer; position: absolute; right: 10px;" onClick="history.back();return false;">close</a>
+</div>
+
 <div class="secondary-500 pratilipi-shadow box">
 	<#list indexList as index>
 		<#assign level=index.level?number>

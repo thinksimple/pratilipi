@@ -21,7 +21,17 @@
 	#reader-content h1 {
 		font-size: ${ fontSize + 8 }px!important;
 	}
-		
+	/* Bootstrap override */
+	.alert-success {
+		color: #333;
+		background-color: #ffffff;
+		border-color: #333;
+	}
+
+	.alert-success .alert-link,.alert-success .alert-link:hover, .alert-success .alert-link:focus {
+		color: #107FE5;
+		font-weight: inherit;
+	}
 </style>
 
 <script>
@@ -34,4 +44,15 @@
 	<div id="reader-content">
 		${ content }
 	</div>
+	<#if pageNo == pageCount>
+		<div class="alert alert-success role="alert">
+			<div style="display: inline-block;">${ _strings.reader_enjoyed_reading_part1 }  
+				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }"<#else>href="${ pratilipi.getPageUrl() }?review=write%26ret=ret=/read?id=${ pratilipi.getId()?c }"</#if> >writeReview</a>
+				 ${ _strings.reader_enjoyed_reading_part2 }
+				<a style="cursor: pointer;" onCLick="shareOnFacebook()">fb</a>
+				<a style="cursor: pointer;" onCLick="shareOnTwitter()">tw</a>
+				<a style="cursor: pointer;" onCLick="shareOnGplus()">gp</a>
+			</div>
+		</div>
+	</#if>
 </div>

@@ -332,6 +332,8 @@ public class PratilipiSite extends HttpServlet {
 		
 		dataModel.put( "lang", displayLanguage.getCode() );
 		dataModel.put( "language", displayLanguage );
+		dataModel.put( "website_host", UxModeFilter.getWebsite().getHostName() );
+		dataModel.put( "website_mobile_host", UxModeFilter.getWebsite().getMobileHostName() );
 		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
 		dataModel.put( "resourceList", resourceList );
 		dataModel.put( "user", userResponse );

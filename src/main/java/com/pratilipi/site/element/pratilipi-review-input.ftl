@@ -29,7 +29,7 @@
 				if( getUrlParameter( "ret" ) == null )
 					window.location.href = "${ pratilipi.pageUrl }";
 				else
-					window.location.href = getUrlParameter( "ret" );
+					window.location.href = getUrlParameter( "ret" ).replace( "%26", "&" );
 			},
 			
 			error: function ( response ) {

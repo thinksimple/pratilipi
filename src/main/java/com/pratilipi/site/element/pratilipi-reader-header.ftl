@@ -28,6 +28,11 @@
 				</#if>
 				<a href="/library">goToLib</a>
 
+				<#-- Share buttons -->
+				<a style="cursor: pointer;" onCLick="shareOnFacebook()">fb</a>
+				<a style="cursor: pointer;" onCLick="shareOnTwitter()">tw</a>
+				<a style="cursor: pointer;" onCLick="shareOnGplus()">gp</a>
+
 				<#-- Menu button -->
 				<a href="${ pratilipi.getPageUrl() }">${ pratilipi.getTitle()!pratilipi.getTitleEn() }</a>
 				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }"<#else>href="${ pratilipi.getPageUrl() }?review=write%26ret=ret=/read?id=${ pratilipi.getId()?c }"</#if> >writeReview</a>

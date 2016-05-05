@@ -75,10 +75,7 @@
 					window.location.href = "/register" + "?ret=/";
 			}
 			function forgotPassword() {
-				if( getUrlParameters().ret != null )
-					window.location.href = "/resetpassword" + "?ret=" + getUrlParameters().ret;
-				else
-					window.location.href = "/resetpassword" + "?ret=/";
+				window.location.href = "/resetpassword";
 			}
 			function login() {
 			
@@ -117,7 +114,7 @@
 					
 					success: function( response ) {
 						if( getUrlParameters().ret != null )
-							window.location.href = getUrlParameters().ret;
+							window.location.href = getUrlParameters().ret.replace( "%26", "&" );
 						else
 							window.location.href = "/"; 
 					},
