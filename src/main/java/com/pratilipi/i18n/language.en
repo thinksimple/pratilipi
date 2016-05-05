@@ -309,6 +309,7 @@ empty_library		= Sorry, there are no books in your library, you can add books fr
 
 
 # Reader
+reader_goto_content_page	= Go to Content Page
 reader_goto_author_profile = Go to Author's page
 reader_goto_home_page	= Go to Home Page
 share_on_facebook		= Share on Facebook
