@@ -18,8 +18,8 @@
 					   return null;
 				}
 				function gotoPage( pageNo ) {
-					var redirectUrl =	"/${ pageUrl }/${ pratilipi.getId()?c }" +
-										( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
+					var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
+										<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
 										"pageNo=" + parseInt( pageNo, 10);
 	
 					if( getUrlParameter( "ret" ) != null )
@@ -29,22 +29,22 @@
 	
 				}
 				function gotoNavigation() {
-					var redirectUrl =	"/${ pageUrl }/${ pratilipi.getId()?c }" +
-										( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
+					var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
+										<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
 										"action=index" + "&" + "pageNo=${ pageNo }";
 	
 					window.location.href = redirectUrl;
 				}
 				function gotoShare() {
-					var redirectUrl =	"/${ pageUrl }/${ pratilipi.getId()?c }" +
-										( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
+					var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
+										<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
 										"action=share" + "&" + "pageNo=${ pageNo }";
 	
 					window.location.href = redirectUrl;
 				}
 				function gotoSetting() {
-					var redirectUrl =	"/${ pageUrl }/${ pratilipi.getId()?c }" +
-										( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
+					var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
+										<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
 										"action=setting" + "&" + "pageNo=${ pageNo }";
 	
 					window.location.href = redirectUrl;
