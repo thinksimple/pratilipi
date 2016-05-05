@@ -29,7 +29,7 @@
 							<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
 							
 				if( getUrlParameter( "ret" ) != null )
-					url = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" );
+					url = url + "&" + "ret=" + getUrlParameter( "ret" );
 
 				return url;
 			}
