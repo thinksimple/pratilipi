@@ -40,7 +40,8 @@ public class GoogleAnalyticsApi {
 								date,				// End Date.
 								"ga:pageviews" )	// Metrics.
 						.setDimensions( "ga:pagePath" )
-						.setMaxResults( uriViewsMap.size() + 1 );
+						.setStartIndex( uriViewsMap.size() + 1 )
+						.setMaxResults( 10000 );
 				
 				GaData gaData = apiQuery.execute();
 				if( gaData.getRows() != null ) {
