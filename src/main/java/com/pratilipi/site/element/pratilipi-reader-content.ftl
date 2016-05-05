@@ -47,7 +47,7 @@
 	<#if pageNo == pageCount>
 		<div class="alert alert-success role="alert">
 			<div style="display: inline-block;">${ _strings.reader_enjoyed_reading_part1 }  
-				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }"<#else>href="${ pratilipi.getPageUrl() }?review=write%26ret=ret=/read?id=${ pratilipi.getId()?c }"</#if> >writeReview</a>
+				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >writeReview</a>
 				 ${ _strings.reader_enjoyed_reading_part2 }
 				<a style="cursor: pointer;" onCLick="shareOnFacebook()">fb</a>
 				<a style="cursor: pointer;" onCLick="shareOnTwitter()">tw</a>

@@ -35,7 +35,7 @@
 
 				<#-- Menu button -->
 				<a href="${ pratilipi.getPageUrl() }">${ pratilipi.getTitle()!pratilipi.getTitleEn() }</a>
-				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }"<#else>href="${ pratilipi.getPageUrl() }?review=write%26ret=ret=/read?id=${ pratilipi.getId()?c }"</#if> >writeReview</a>
+				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >writeReview</a>
 				<a href="${ pratilipi.getAuthor().getPageUrl() }">${ _strings.reader_goto_author_profile }</a>
 				<a href="/">${ _strings.reader_goto_home_page }</a>
 			</td>
