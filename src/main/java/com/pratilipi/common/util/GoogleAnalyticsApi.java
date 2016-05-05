@@ -13,6 +13,10 @@ import com.google.api.services.analytics.Analytics.Data.Ga.Get;
 import com.google.api.services.analytics.AnalyticsScopes;
 import com.google.api.services.analytics.model.GaData;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.PageType;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.Page;
 
 public class GoogleAnalyticsApi {
 	
@@ -26,6 +30,40 @@ public class GoogleAnalyticsApi {
 		return GoogleApi.getAnalytics( scopes );
 	}
 	
+	public static Map<String, Integer> getPageViews( String date )
+			throws UnexpectedServerException {
+		
+		Map<String, Integer> uriViewsMap = new HashMap<String, Integer>();
+		
+		while( true ) {
+			try {
+				
+				Get apiQuery = getAnalytics().data().ga()
+						.get( "ga:96325104",		// Table Id.
+								date,				// Start Date.
+								date,				// End Date.
+								"ga:pageviews" )	// Metrics.
+						.setDimensions( "ga:pagePath" )
+						.setMaxResults( uriViewsMap.size() + 1 );
+				
+				GaData gaData = apiQuery.execute();
+				if( gaData.getRows() != null ) {
+					for( List<String> row : gaData.getRows() )
+						uriViewsMap.put( row.get( 0 ), Integer.parseInt( row.get( 1 ) ) );
+				}
+				
+				if( uriViewsMap.size() > gaData.getTotalResults() )
+					break;
+				
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to fetch data from Google Analytics.", e );
+				throw new UnexpectedServerException();
+			}
+		}
+		
+		return uriViewsMap;
+		
+	}
 	
 	public static Map<Long, Long> getPratilipiReadCount( List<Long> pratilipiIdList ) throws UnexpectedServerException {
 		int idsPerRequest = 80;
