@@ -62,6 +62,7 @@ public class OfyTestApi extends GenericApi {
 		
 		try {
 			blobEntry.setData( gson.toJson( newPageViewsMap ).getBytes( "UTF-8" ) );
+			blobAccessor.createOrUpdateBlob( blobEntry );
 		} catch( UnsupportedEncodingException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
