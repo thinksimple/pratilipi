@@ -6,48 +6,46 @@
 	<head>
 		<#include "meta/HeadBasic.ftl">
 		<script>
+			function getUrlParameter( key ) {
+			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+			      return decodeURIComponent( key[1] );
+			   else
+				   return null;
+			}
+			function gotoPage( pageNo ) {
+				var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
+									<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
+									"pageNo=" + parseInt( pageNo, 10);
+
+				if( getUrlParameter( "ret" ) != null )
+					redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" ); 
+
+				window.location.href = redirectUrl;
+
+			}
+			function getUrl() {
+				var url =	"/${ pageUrl }?" + "id=${ pratilipi.getId()?c }" + "&" + "pageNo=${ pageNo }";
+							
+							<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
+							
+				if( getUrlParameter( "ret" ) != null )
+					url = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" );
+
+				return url;
+			}
 			<#if action != "index" && action != "share" && action != "setting">
 				$( document ).ready(function() {
 					if( getUrlParameter( "addToLib" ) == "true" )
 						addToLibrary();
 				});
-				function getUrlParameter( key ) {
-				   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
-				      return decodeURIComponent( key[1] );
-				   else
-					   return null;
-				}
-				function gotoPage( pageNo ) {
-					var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
-										<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
-										"pageNo=" + parseInt( pageNo, 10);
-	
-					if( getUrlParameter( "ret" ) != null )
-						redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" ); 
-	
-					window.location.href = redirectUrl;
-	
-				}
 				function gotoNavigation() {
-					var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
-										<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
-										"action=index" + "&" + "pageNo=${ pageNo }";
-	
-					window.location.href = redirectUrl;
+					window.location.href = getUrl() + "&action=index";
 				}
 				function gotoShare() {
-					var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
-										<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
-										"action=share" + "&" + "pageNo=${ pageNo }";
-	
-					window.location.href = redirectUrl;
+					window.location.href = getUrl() + "&action=share";
 				}
 				function gotoSetting() {
-					var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
-										<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
-										"action=setting" + "&" + "pageNo=${ pageNo }";
-	
-					window.location.href = redirectUrl;
+					window.location.href = getUrl() + "&action=setting";
 				}
 				function loadPrevious() {
 					gotoPage( ${ pageNo - 1 } );
@@ -71,14 +69,14 @@
 					var cutoff = 32;
 					if( ${ fontSize + 2 } <= cutoff ) {
 						setCookie( "fontSize", ${ fontSize + 2 } );
-						window.history.back();
+						window.location.href = getUrl();
 					}
 				}
 				function decreaseFontSize() {
 					var cutoff = 12;
 					if( ${ fontSize - 2 } >= cutoff ) {
 						setCookie( "fontSize", ${ fontSize - 2 } );
-						window.history.back();
+						window.location.href = getUrl();
 					}
 				}
 				function addToOrRemoveFromLibrary( flag ) {
@@ -94,7 +92,7 @@
 						
 						success: function( response ) {
 							alert( "Success" );
-							window.history.back();
+							window.location.href = getUrl();
 						},
 						
 						error: function( response ) {
