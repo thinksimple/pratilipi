@@ -12,10 +12,10 @@
 	});
 </script>
 
-<div class="div-center text-center">
+<div class="div-center text-center" style="padding: 15px;">
 	<#if pageNo gt 1>
 		<a onClick="loadPrevious()" style="display: inline-block; cursor: pointer;">
-			<img style="width: 24px; height: 24px; display: inline-block" src="http://0.ptlp.co/resource-all/icon/svg/arrow-left.svg"/>
+			<img style="width: 24px; height: 24px; display: inline-block; margin-right: 16px;" src="http://0.ptlp.co/resource-all/icon/svg/arrow-left.svg"/>
 		</a>
 	</#if>
 	<div style="border: 1px solid #000; width: 98px; line-height: 1.4; display: inline-block; text-align: left;">
@@ -23,7 +23,7 @@
 	</div>
 	<#if pageNo lt pageCount>
 		<a onClick="loadNext()" style="display: inline-block; cursor: pointer;">
-			<img style="width: 24px; height: 24px; display: inline-block" src="http://0.ptlp.co/resource-all/icon/svg/arrow-right.svg"/>
+			<img style="width: 24px; height: 24px; display: inline-block; margin-left: 16px;" src="http://0.ptlp.co/resource-all/icon/svg/arrow-right.svg"/>
 		</a>
 	</#if>
 </div>

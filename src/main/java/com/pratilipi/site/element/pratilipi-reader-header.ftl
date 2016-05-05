@@ -17,7 +17,7 @@
 				<a onClick="exitReader()" style="cursor: pointer;"><img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/first.svg"/></a>
 				<#-- Index Button if content has Index -->
 				<#if indexList?? && indexList?has_content>
-					<a onClick="gotoNavigation()" style="cursor: pointer; width: 20px; height: 20px;"><img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/list.svg"/></a>
+					<a onClick="gotoNavigation()" style="cursor: pointer;"><img class="reader-icon" style="width: 20px; height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/list.svg"/></a>
 				</#if>
 			</td>
 			<td align="right">
