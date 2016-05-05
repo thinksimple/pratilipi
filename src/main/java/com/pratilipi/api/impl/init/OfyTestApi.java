@@ -47,7 +47,7 @@ public class OfyTestApi extends GenericApi {
 		
 		while( date.getTime() < new Date().getTime() ) {
 			
-			DateFormat formatter = new SimpleDateFormat( "yyyy-dd-MM" );
+			DateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd" );
 			formatter.setTimeZone( TimeZone.getTimeZone( "IST" ) );
 			String dateStr = formatter.format( new Date( date.getTime() - TimeUnit.MINUTES.toMillis( 15 ) ) );
 
