@@ -52,6 +52,20 @@
 
 				window.location.href = redirectUrl;
 			}
+			function gotoShare() {
+				var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
+									( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
+									"action=share" + "&" + "pageNo=${ pageNo }";
+
+				window.location.href = redirectUrl;
+			}
+			function gotoSetting() {
+				var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
+									( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
+									"action=setting" + "&" + "pageNo=${ pageNo }";
+
+				window.location.href = redirectUrl;
+			}
 			function loadPrevious() {
 				gotoPage( ${ pageNo - 1 } );
 			}
@@ -113,7 +127,9 @@
 			<#include "../element/pratilipi-reader-header.ftl">
 		<#else>
 			<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px; height: 64px;">
-				<a style="cursor: pointer; position: absolute; right: 10px;" onClick="history.back();return false;">close</a>
+				<a style="cursor: pointer; position: absolute; right: 10px;" onClick="history.back();return false;">
+					<img style="width: 24px; height: 24px;" src="http://0.ptlp.co/resource-all/icon/svg/cancel-circle.svg"/>
+				</a>
 			</div>
 		</#if>
 		<div class="parent-container">
