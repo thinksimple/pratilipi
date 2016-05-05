@@ -26,7 +26,7 @@ public class OfyTestApi extends GenericApi {
 	public GetOfyResponse get( GetOfyRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		DateFormat formatter = new SimpleDateFormat( "yyyy-dd-mm HH:mm:ss z" );    
+		DateFormat formatter = new SimpleDateFormat( "yyyy-dd-MM HH:mm:ss z" );    
 		formatter.setTimeZone( TimeZone.getTimeZone( "IST" ) );
 		String dateStr = formatter.format( new Date() );
 		
