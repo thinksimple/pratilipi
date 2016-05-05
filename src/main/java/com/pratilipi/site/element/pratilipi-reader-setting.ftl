@@ -63,7 +63,7 @@
 		</#if>
 	</#if>
 	
-	<a class="menu-item" href="/library">
+	<a class="menu-item" <#if user.isGuest == true>href="/login?ret=/library"<#else>href="/library"</#if>>
 		<img src="http://0.ptlp.co/resource-all/icon/svg/books.svg"/>
 		<span>${ _strings.my_library }</span>
 	</a>

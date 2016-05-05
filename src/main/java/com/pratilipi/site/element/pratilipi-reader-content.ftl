@@ -63,15 +63,17 @@
 				</div>
 				<div class="text-center div-center">
 					<h6 style="margin: 15px;display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
-					<a style="cursor: pointer;" onCLick="shareOnFacebook()">
-						<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/facebook2.svg">
-					</a>
-					<a style="cursor: pointer;" onCLick="shareOnTwitter()">
-						<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/twitter.svg">
-					</a>
-					<a style="cursor: pointer;" onCLick="shareOnGplus()">
-						<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/google-plus2.svg">
-					</a>
+					<div style="white-space: nowrap; display: inline-block;">
+						<a style="cursor: pointer;" onCLick="shareOnFacebook()">
+							<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/facebook2.svg">
+						</a>
+						<a style="cursor: pointer;" onCLick="shareOnTwitter()">
+							<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/twitter.svg">
+						</a>
+						<a style="cursor: pointer;" onCLick="shareOnGplus()">
+							<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/google-plus2.svg">
+						</a>
+					</div>
 				</div>
 		</div>
 	</#if>
