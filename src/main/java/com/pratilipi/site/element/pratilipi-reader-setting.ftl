@@ -29,7 +29,7 @@
 	</a>
 	
 	<#-- Write Review -->
-	<a class="menu-item" <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >
+	<a class="menu-item" <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >
 		<img src="http://0.ptlp.co/resource-all/icon/svg/pencil.svg"/>
 		<span>${ _strings.review_write_a_review }</span>
 	</a>
@@ -38,7 +38,7 @@
 	
 	<#-- Library Section -->
 	<#if user.isGuest == true>
-		<a class="menu-item" href="/login?ret=/read?id=${ pratilipi.getId()?c }%26addToLib=true">
+		<a class="menu-item" href="/login?ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26addToLib=true">
 			<img src="http://0.ptlp.co/resource-all/icon/svg/folder-plus.svg"/>
 			<span>${ _strings.add_to_library }</span>
 		</a>

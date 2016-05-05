@@ -1,3 +1,5 @@
+<#assign pageUrl="pratilipireader">
+
 <!DOCTYPE html>
 <html lang="${lang}">
 
@@ -16,7 +18,7 @@
 					   return null;
 				}
 				function gotoPage( pageNo ) {
-					var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
+					var redirectUrl =	"/${ pageUrl }/${ pratilipi.getId()?c }" +
 										( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
 										"pageNo=" + parseInt( pageNo, 10);
 	
@@ -27,21 +29,21 @@
 	
 				}
 				function gotoNavigation() {
-					var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
+					var redirectUrl =	"/${ pageUrl }/${ pratilipi.getId()?c }" +
 										( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
 										"action=index" + "&" + "pageNo=${ pageNo }";
 	
 					window.location.href = redirectUrl;
 				}
 				function gotoShare() {
-					var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
+					var redirectUrl =	"/${ pageUrl }/${ pratilipi.getId()?c }" +
 										( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
 										"action=share" + "&" + "pageNo=${ pageNo }";
 	
 					window.location.href = redirectUrl;
 				}
 				function gotoSetting() {
-					var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
+					var redirectUrl =	"/${ pageUrl }/${ pratilipi.getId()?c }" +
 										( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
 										"action=setting" + "&" + "pageNo=${ pageNo }";
 	
@@ -118,13 +120,13 @@
 
 			<#if action == "share" || pageNo == pageCount>
 				function shareOnFacebook() {
-					window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ website_host }/read?id=${ pratilipi.getId()?c }", "share", "width=600,height=500,left=70px,top=60px" );
+					window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ website_host }/${ pageUrl }?id=${ pratilipi.getId()?c }", "share", "width=600,height=500,left=70px,top=60px" );
 				}
 				function shareOnTwitter() {
-					window.open( "http://twitter.com/share?url=" + "http://${ website_host }/read?id=${ pratilipi.getId()?c }", "share", "width=500,height=600,left=70px,top=60px" );
+					window.open( "http://twitter.com/share?url=" + "http://${ website_host }/${ pageUrl }?id=${ pratilipi.getId()?c }", "share", "width=500,height=600,left=70px,top=60px" );
 				}
 				function shareOnGplus() {
-					window.open( "https://plus.google.com/share?url=" + "http://${ website_host }/read?id=${ pratilipi.getId()?c }", "share", "width=500,height=600,left=70px,top=60px" );
+					window.open( "https://plus.google.com/share?url=" + "http://${ website_host }/${ pageUrl }?id=${ pratilipi.getId()?c }", "share", "width=500,height=600,left=70px,top=60px" );
 				}
 			</#if>
 		</script>
