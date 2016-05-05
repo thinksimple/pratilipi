@@ -114,7 +114,7 @@
 				function removeFromLibrary() {
 					addToOrRemoveFromLibrary( false );
 				}
-			<#/if>
+			</#if>
 
 			<#if action == "share">
 				function shareOnFacebook() {
