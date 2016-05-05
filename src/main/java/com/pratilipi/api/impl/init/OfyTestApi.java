@@ -44,6 +44,7 @@ public class OfyTestApi extends GenericApi {
 		BlobEntry blobEntry = blobAccessor.getBlob( fileName );
 		if( blobEntry == null ) {
 			blobEntry = blobAccessor.newBlob( fileName );
+			blobEntry.setMimeType( "application/json" );
 			oldPageViewsMap = new HashMap<>();
 		} else {
 			oldPageViewsMap = gson.fromJson(
@@ -56,7 +57,7 @@ public class OfyTestApi extends GenericApi {
 		diffPageViewsMap = new HashMap<>();
 		for( Entry<String, Integer> entry : newPageViewsMap.entrySet() ) {
 			if( oldPageViewsMap.get( entry.getKey() ) == null ||
-					oldPageViewsMap.get( entry.getKey() ).equals( entry.getValue() ) )
+					! oldPageViewsMap.get( entry.getKey() ).equals( entry.getValue() ) )
 				diffPageViewsMap.put( entry.getKey(), entry.getValue() );
 		}
 		
