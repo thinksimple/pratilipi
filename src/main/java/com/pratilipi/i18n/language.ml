@@ -306,6 +306,7 @@ remove_from_library	= എന്‍റെ വായനശാലയില്‍ �
 empty_library		= ക്ഷമിക്കണം! താങ്കളുടെ വായനശാലയില്‍ രചനകള്‍ ഒന്നും തന്നെ ഇല്ല, താങ്കള്‍ക്ക് വേണ്ട രചനയുടെ പേജില്‍ പോയി വായനശാലയിലേക്ക് ചേര്‍ക്കാവുന്നതാണ്.
 
 # Reader
+reader_goto_content_page	= Go to Content Page
 reader_goto_author_profile = Go to Author's page
 reader_goto_home_page	= Go to Home Page
 share_on_facebook		= Share on Facebook
@@ -315,7 +316,7 @@ increase_font_size		= Increase font size
 decrease_font_size		= Decrease font size
 
 
-# Enjoyed Reading the content? You can write a review or share it on :
-reader_enjoyed_reading_part1	= Enjoyed reading the content? You can 
-reader_enjoyed_review_book		= write a review
-reader_enjoyed_reading_part2	= or share it on :
+# Enjoyed Reading the content? Write a review or Share it on
+reader_enjoyed_reading_part1	= Enjoyed reading the content? 
+reader_enjoyed_review_book		= Write a review
+reader_enjoyed_reading_part2	= Share it on
