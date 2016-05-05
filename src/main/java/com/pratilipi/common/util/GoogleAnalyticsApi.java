@@ -13,10 +13,6 @@ import com.google.api.services.analytics.Analytics.Data.Ga.Get;
 import com.google.api.services.analytics.AnalyticsScopes;
 import com.google.api.services.analytics.model.GaData;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.PageType;
-import com.pratilipi.data.DataAccessor;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.Page;
 
 public class GoogleAnalyticsApi {
 	
@@ -52,7 +48,7 @@ public class GoogleAnalyticsApi {
 						uriViewsMap.put( row.get( 0 ), Integer.parseInt( row.get( 1 ) ) );
 				}
 				
-				if( uriViewsMap.size() > gaData.getTotalResults() )
+				if( uriViewsMap.size() == gaData.getTotalResults() )
 					break;
 				
 			} catch( IOException e ) {
