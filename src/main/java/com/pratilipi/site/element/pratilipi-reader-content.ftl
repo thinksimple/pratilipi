@@ -55,9 +55,12 @@
 	<#if pageNo == pageCount>
 		<div class="alert alert-success" role="alert">
 				<h3 class="text-center" style="margin-top: 24px;">${ _strings.reader_enjoyed_reading_part1 }</h3>
-				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >
-					<h6 class="text-center" style="margin: 15px;">${ _strings.reader_enjoyed_review_book }</h6>
-				</a>
+				<div class="text-center div-center">
+					<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >
+						<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_review_book }</h6>
+						<img style="margin-left: 0px;" src="http://0.ptlp.co/resource-all/icon/svg/pencil.svg">
+					</a>
+				</div>
 				<div class="text-center div-center">
 					<h6 style="margin: 15px;display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
 					<a style="cursor: pointer;" onCLick="shareOnFacebook()">

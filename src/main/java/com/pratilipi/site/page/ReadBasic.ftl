@@ -116,7 +116,7 @@
 				}
 			</#if>
 
-			<#if action == "share">
+			<#if action == "share" || pageNo == pageCount>
 				function shareOnFacebook() {
 					window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ website_host }/read?id=${ pratilipi.getId()?c }", "share", "width=600,height=500,left=70px,top=60px" );
 				}
@@ -136,7 +136,7 @@
 		<#else>
 			<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px; height: 64px;">
 				<a style="cursor: pointer; position: absolute; right: 16px; top: 20px;" onClick="history.back();return false;">
-					<img style="width: 24px; height: 24px;" src="http://0.ptlp.co/resource-all/icon/svg/cancel-circle.svg"/>
+					<img style="width: 24px; height: 24px;" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg"/>
 				</a>
 			</div>
 		</#if>
