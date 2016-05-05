@@ -61,13 +61,15 @@ public class OfyTestApi extends GenericApi {
 				diffPageViewsMap.put( entry.getKey(), entry.getValue() );
 		}
 		
-		try {
-			blobEntry.setData( gson.toJson( newPageViewsMap ).getBytes( "UTF-8" ) );
-			blobAccessor.createOrUpdateBlob( blobEntry );
-		} catch( UnsupportedEncodingException e ) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new UnexpectedServerException();
+		if( diffPageViewsMap.size() > 0 ) {
+			try {
+				blobEntry.setData( gson.toJson( newPageViewsMap ).getBytes( "UTF-8" ) );
+				blobAccessor.createOrUpdateBlob( blobEntry );
+			} catch( UnsupportedEncodingException e ) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new UnexpectedServerException();
+			}
 		}
 		
 		return new GetOfyResponse( diffPageViewsMap.size() );
