@@ -1,12 +1,13 @@
 <style>
 	.menu-item {
-		padding-top: 10px;
-		padding-bottom: 10px;
+		margin:32px 16px;
 		display: block;
 		text-align: left;
 	}
 	.menu-item img {
 		margin-right: 12px;
+		width: 20px;
+		height: 20px;
 	}
 	.menu-item span {
 		font-size: 14px;

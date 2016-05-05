@@ -1,12 +1,13 @@
 <style>
 	.menu-item {
-		padding-top: 10px;
-		padding-bottom: 10px;
+		margin:32px 16px;
 		display: block;
 		text-align: left;
 	}
 	.menu-item img {
 		margin-right: 12px;
+		width: 20px;
+		height: 20px;
 	}
 	.menu-item span {
 		font-size: 14px;
@@ -15,7 +16,7 @@
 
 <div class="secondary-500 pratilipi-shadow box">
 	
-	<h3 class="pratilipi-red text-center">${ pratilipi.getTitle()!pratilipi.getTitleEn() }</h3>
+	<h3 style="margin-top: 20px;" class="pratilipi-red text-center">${ pratilipi.getTitle()!pratilipi.getTitleEn() }</h3>
 	
 	<#-- Increase and Decrease font-size buttons -->
 	<a class="menu-item" style="cursor: pointer;" onCLick="increaseFontSize()">
@@ -33,6 +34,7 @@
 		<span>${ _strings.review_write_a_review }</span>
 	</a>
 	
+	<div style="min-height: 10px;"></div>
 	
 	<#-- Library Section -->
 	<#if user.isGuest == true>
@@ -65,6 +67,8 @@
 		<img src="http://0.ptlp.co/resource-all/icon/svg/books.svg"/>
 		<span>${ _strings.my_library }</span>
 	</a>
+	
+	<div style="min-height: 10px;"></div>
 	
 	<#-- Redirects -->
 	<a class="menu-item" href="${ pratilipi.getPageUrl() }">

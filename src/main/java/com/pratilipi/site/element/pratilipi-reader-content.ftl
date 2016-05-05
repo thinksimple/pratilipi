@@ -21,13 +21,21 @@
 	#reader-content h1 {
 		font-size: ${ fontSize + 8 }px!important;
 	}
+	.reader-icon-alert {
+		width: 24px;
+		height: 24px;
+		margin-left: 10px;
+	}
+	
 	/* Bootstrap override */
+	.alert {
+		margin: 64px auto;
+	}
 	.alert-success {
 		color: #333;
 		background-color: #ffffff;
 		border-color: #333;
 	}
-
 	.alert-success .alert-link,.alert-success .alert-link:hover, .alert-success .alert-link:focus {
 		color: #107FE5;
 		font-weight: inherit;
@@ -45,14 +53,23 @@
 		${ content }
 	</div>
 	<#if pageNo == pageCount>
-		<div class="alert alert-success role="alert">
-			<div style="display: inline-block;">${ _strings.reader_enjoyed_reading_part1 }  
-				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >writeReview</a>
-				 ${ _strings.reader_enjoyed_reading_part2 }
-				<a style="cursor: pointer;" onCLick="shareOnFacebook()">fb</a>
-				<a style="cursor: pointer;" onCLick="shareOnTwitter()">tw</a>
-				<a style="cursor: pointer;" onCLick="shareOnGplus()">gp</a>
-			</div>
+		<div class="alert alert-success" role="alert">
+				<h3 class="text-center" style="margin-top: 24px;">${ _strings.reader_enjoyed_reading_part1 }</h3>
+				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/read?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >
+					<h6 class="text-center" style="margin: 15px;">${ _strings.reader_enjoyed_review_book }</h6>
+				</a>
+				<div class="text-center div-center">
+					<h6 style="margin: 15px;display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
+					<a style="cursor: pointer;" onCLick="shareOnFacebook()">
+						<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/facebook2.svg">
+					</a>
+					<a style="cursor: pointer;" onCLick="shareOnTwitter()">
+						<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/twitter.svg">
+					</a>
+					<a style="cursor: pointer;" onCLick="shareOnGplus()">
+						<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/google-plus2.svg">
+					</a>
+				</div>
 		</div>
 	</#if>
 </div>

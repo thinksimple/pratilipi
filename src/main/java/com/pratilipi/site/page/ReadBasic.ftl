@@ -4,23 +4,17 @@
 	<head>
 		<#include "meta/HeadBasic.ftl">
 		<script>
-			function getUrlParameter( key ) {
-			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
-			      return decodeURIComponent( key[1] );
-			   else
-				   return null;
-			}
-			function setCookie( name, value, days ) {
-				var date = new Date();
-				date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
-				var expires = "; expires=" + date.toGMTString();
-				document.cookie = name + "=" + value + expires + "; path=/";
-			}
 			<#if action != "index" && action != "share" && action != "setting">
 				$( document ).ready(function() {
 					if( getUrlParameter( "addToLib" ) == "true" )
 						addToLibrary();
 				});
+				function getUrlParameter( key ) {
+				   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+				      return decodeURIComponent( key[1] );
+				   else
+					   return null;
+				}
 				function gotoPage( pageNo ) {
 					var redirectUrl =	"${ pratilipi.getReadPageUrl() }" +
 										( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + 
@@ -65,6 +59,12 @@
 			</#if>
 			
 			<#if action == "setting">
+				function setCookie( name, value, days ) {
+					var date = new Date();
+					date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
+					var expires = "; expires=" + date.toGMTString();
+					document.cookie = name + "=" + value + expires + "; path=/";
+				}
 				function increaseFontSize() {
 					var cutoff = 32;
 					if( ${ fontSize + 2 } <= cutoff ) {
@@ -92,7 +92,7 @@
 						
 						success: function( response ) {
 							alert( "Success" );
-							location.reload(); 
+							window.history.back();
 						},
 						
 						error: function( response ) {
