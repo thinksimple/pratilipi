@@ -9,13 +9,13 @@ import com.pratilipi.data.client.EventData;
 @SuppressWarnings("unused")
 public class GetOfyResponse extends GenericResponse {
 
-	private Integer count;
+	private String msg;
 
 	
 	private GetOfyResponse() {}
 	
-	public GetOfyResponse( Integer count ) {
-		this.count = count;
+	public GetOfyResponse( String msg ) {
+		this.msg = msg;
 	}
 	
 }
