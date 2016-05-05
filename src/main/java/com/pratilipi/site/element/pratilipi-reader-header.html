@@ -45,7 +45,9 @@
 
 					<td align="left">
 						<!-- Back Button -->
-						<paper-icon-button icon="icons:arrow-back" on-click="exitReader"></paper-icon-button>
+						<!-- <paper-icon-button icon="icons:arrow-back" on-click="exitReader"></paper-icon-button> -->
+						<!-- Pratilipi Logo -->
+						<img style="max-width: 48px; position: relative;" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
 						
 						<!-- Index Button if content has Index -->
 						<template is="dom-if" if="{{ !hideIndexButton }}">
@@ -172,8 +174,8 @@
 							<paper-icon-button icon="icons:more-vert" data-toggle="dropdown"></paper-icon-button>
 							<ul class="dropdown-menu pull-right">
 								<li>
-									<paper-item style="padding: 5px 15px; margin: 0; display: block;">
-										<h6 class="pratilipi-red text-center" style="text-align: center;">{{ title }}</h6>
+									<paper-item style="padding: 5px 15px; margin: 0; display: block; white-space: normal;">
+										<h6 class="pratilipi-red text-center" style="text-align: center; white-space: normal;">{{ title }}</h6>
 									</paper-item>
 								</li>
 								<template is="dom-if" if="{{ !hasAccessToUpdate }}">
@@ -198,6 +200,15 @@
 										</a>
 									</li>
 								</template>
+								<li>
+									<a style="padding: 5px; margin: 0;" href="{{ pratilipi.pageUrl }}">
+										<paper-item>
+											<paper-icon-item><iron-icon icon="icons:chrome-reader-mode"></iron-icon></paper-icon-item>
+											&nbsp;&nbsp;
+											<paper-item-body>${ _strings.reader_goto_content_page }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
 								<li>
 									<a style="padding: 5px; margin: 0;" href="{{ pratilipi.author.pageUrl }}">
 										<paper-item>

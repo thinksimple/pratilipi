@@ -69,12 +69,20 @@
 			</div>
 			<template is="dom-if" if="{{ lastPage }}">
 				<div id="reader-alert-box" class="alert alert-success hvr-bounce-in" role="alert">
-					<div style="display: inline-block;">${ _strings.reader_enjoyed_reading_part1 }  
-						<a class="pratilipi-blue" on-click="writeReview">${ _strings.reader_enjoyed_review_book }</a>
-						 ${ _strings.reader_enjoyed_reading_part2 }
-						<i class="fa fa-facebook fa-lg fb" on-click="shareOnFacebook"></i>
-						<i class="fa fa-twitter fa-lg tw" on-click="shareOnTwitter"></i>
-						<i class="fa fa-google-plus fa-lg google" on-click="shareOnGplus"></i>
+					<h3 class="text-center" style="margin-top: 24px;">${ _strings.reader_enjoyed_reading_part1 }</h3>
+					<div class="text-center" style="margin: 0 auto;">
+						<a class="pratilipi-blue" on-click="writeReview">
+							<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_review_book }</h6>
+							<iron-icon icon="icons:create" style="margin-left: 0px; display: inline-block;"></iron-icon>
+						</a>
+					</div>
+					<div class="text-center" style="margin: 0 auto;">
+						<h6 style="margin: 15px; display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
+						<div style="white-space: nowrap; display: inline-block;">  
+							<i class="fa fa-facebook fa-lg fb" on-click="shareOnFacebook"></i>
+							<i class="fa fa-twitter fa-lg tw" on-click="shareOnTwitter"></i>
+							<i class="fa fa-google-plus fa-lg google" on-click="shareOnGplus"></i>
+						</div>
 					</div>
 				</div>
 			</template>
