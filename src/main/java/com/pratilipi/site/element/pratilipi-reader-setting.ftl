@@ -28,13 +28,7 @@
 		<span>${ _strings.decrease_font_size }</span>
 	</a>
 	
-	<#-- Write Review -->
-	<a class="menu-item" <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >
-		<img src="http://0.ptlp.co/resource-all/icon/svg/pencil.svg"/>
-		<span>${ _strings.review_write_a_review }</span>
-	</a>
-	
-	<div style="min-height: 10px;"></div>
+	<div style="min-height: 1px;"></div>
 	
 	<#-- Library Section -->
 	<#if user.isGuest == true>
@@ -68,7 +62,7 @@
 		<span>${ _strings.my_library }</span>
 	</a>
 	
-	<div style="min-height: 10px;"></div>
+	<div style="min-height: 1px;"></div>
 	
 	<#-- Redirects -->
 	<a class="menu-item" href="${ pratilipi.getPageUrl() }">

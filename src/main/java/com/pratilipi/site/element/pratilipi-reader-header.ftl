@@ -21,10 +21,18 @@
 				</#if>
 			</td>
 			<td align="right">
+				<#-- Write Review -->
+				<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >
+					<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/pencil.svg"/>
+				</a>
 				<#-- Share buttons -->
-				<a onClick="gotoShare()" style="cursor: pointer;"><img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"/></a>
+				<a onClick="gotoShare()" style="cursor: pointer;">
+					<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"/>
+				</a>
 				<#-- Menu button -->
-				<a onClick="gotoSetting()" style="cursor: pointer;"><img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/cog.svg"/></a>
+				<a onClick="gotoSetting()" style="cursor: pointer;">
+					<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/cog.svg"/>
+				</a>
 			</td>
 		</tr>
 	</table>
