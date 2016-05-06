@@ -130,8 +130,8 @@ public class PratilipiProcessApi extends GenericApi {
 
 		
 		appProperty.setValue( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) > new Date().getTime()
-				? new Date( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) )
-				: new Date() );
+				? new Date()
+				: new Date( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) ) );
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		
 		
