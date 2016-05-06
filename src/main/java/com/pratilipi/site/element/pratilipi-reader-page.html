@@ -243,7 +243,7 @@
 					}
 				} else if( this.contentType == "IMAGE" ) {
 					if( this.contentMap[ this.pageNo ] == null )	// Populate in Map if it doesn't exist
-						this.contentMap[ response.pageNo ] = "<img src='/api/pratilipi/content?pratilipiId=" + 
+						this.contentMap[ this.pageNo ] = "<img src='/api/pratilipi/content?pratilipiId=" + 
 																this.pratilipi.pratilipiId + "&" + 
 																"pageNo=" + this.pageNo + 
 																"&" + "chapterNo=" + this.pageNo + "1' />";
