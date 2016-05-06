@@ -38,7 +38,9 @@ public class PratilipiDocUtil {
 		
 		Gson gson = new Gson();
 		
-		String dateStr = year + "-" + month + "-" + day;
+		String dateStr = year
+				+ ( month < 10 ? "-0" + month : "-" + month )
+				+ ( day < 10 ? "-0" + day : "-" + day );
 		
 		String fileName = "pratilipi-google-analytics/page-views/" + dateStr;
 		BlobEntry blobEntry = blobAccessor.getBlob( fileName );
