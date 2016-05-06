@@ -781,10 +781,10 @@ public class PratilipiDataUtil {
 		long readCountOffset = 0L;
 		for( int month = 1; month <= 12; month++ )
 			for( int day = 1; day <= 31; day++ )
-				readCountOffset = gaDoc.getPageViews( 2015, month, day );
+				readCountOffset += gaDoc.getPageViews( 2015, month, day );
 		for( int month = 1; month <= 4; month++ )
 			for( int day = 1; day <= 31; day++ )
-				readCountOffset = gaDoc.getPageViews( 2016, month, day );
+				readCountOffset += gaDoc.getPageViews( 2016, month, day );
 		
 		long readCount = gaDoc.getTotalReadPageViews();
 		long fbLikeShareCount = FacebookApi.getUrlShareCount( "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri() );
