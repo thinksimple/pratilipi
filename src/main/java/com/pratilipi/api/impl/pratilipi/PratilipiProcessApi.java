@@ -152,6 +152,7 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
+		
 		if( request.validateData() ) {
 			for( Long pratilipiId : pratilipiIdList ) {
 
@@ -198,18 +199,22 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		
 		if( request.updateStats() ) {
-			Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( request.getPratilipiId() );
-			if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
-				PratilipiDataUtil.updatePratilipiStats( request.getPratilipiId() );
-				PratilipiDataUtil.updatePratilipiSearchIndex( request.getPratilipiId(), null );
-				if( pratilipi.getAuthorId() != null ) { // Creating tasks to update author entities
-					Task task = TaskQueueFactory.newTask()
-							.setUrl( "/author/process" )
-							.addParam( "authorId", pratilipi.getAuthorId().toString() )
-							.addParam( "updateStats", "true" );
-					TaskQueueFactory.getAuthorOfflineTaskQueue().add( task );
+			List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
+			for( long pratilipiId : pratilipiIdList ) {
+				Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( pratilipiId );
+				if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
+					PratilipiDataUtil.updatePratilipiStats( pratilipiId );
+					if( pratilipi.getAuthorId() != null ) { // Creating tasks to update author entities
+						Task task = TaskQueueFactory.newTask()
+								.setUrl( "/author/process" )
+								.addParam( "authorId", pratilipi.getAuthorId().toString() )
+								.addParam( "updateStats", "true" );
+						taskList.add( task );
+					}
 				}
 			}
+			PratilipiDataUtil.updatePratilipiSearchIndex( pratilipiIdList );
+			TaskQueueFactory.getAuthorOfflineTaskQueue().addAll( taskList );
 		}
 		
 		
