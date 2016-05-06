@@ -79,6 +79,8 @@ public class UserAccessUtil {
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TAMIL };
 			case "5156503382130688" : // babu@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TELUGU };
+			case "5715256422694912": // aruna@
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_KANNADA };
 			case "5991416564023296": // sankar@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
 
