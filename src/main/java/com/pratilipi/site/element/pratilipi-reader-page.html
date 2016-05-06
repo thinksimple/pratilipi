@@ -1,5 +1,5 @@
-<link rel='import' href='pratilipi-reader-header.html?20160505'>
-<link rel='import' href='pratilipi-reader-content.html?20160505'>
+<link rel='import' href='pratilipi-reader-header.html?20160506'>
+<link rel='import' href='pratilipi-reader-content.html?20160506'>
 <link rel='import' href='pratilipi-reader-footer.html?20160429'>
 <link rel="import" href="pratilipi-review-input.html?20160505" />
 
@@ -23,10 +23,12 @@
 			<div class="parent-container">
 				<div class="container" style="margin: 0 auto;">
 					<div style="overflow:hidden;">
+						<!-- In case of type == PRATILIPI -->
 						<pratilipi-reader-content
 							content="{{ content }}"
 							font-size="{{ fontSize }}"
 							last-page="{{ lastPage }}"></pratilipi-reader-content>
+						<!-- In case of type == IMAGE -->
 					</div>
 				</div>
 			</div>
