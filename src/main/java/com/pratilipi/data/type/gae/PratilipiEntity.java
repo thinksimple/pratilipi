@@ -104,13 +104,6 @@ public class PratilipiEntity implements Pratilipi {
 	private Long FB_LIKE_SHARE_COUNT;
 
 	
-	@Index
-	private Date LAST_PROCESS_DATE;
-
-	@Index
-	private Date NEXT_PROCESS_DATE;
-
-	
 	
 	public PratilipiEntity() {}
 	
@@ -344,34 +337,12 @@ public class PratilipiEntity implements Pratilipi {
 
 	@Override
 	public Long getFbLikeShareCount() {
-		return ( FB_LIKE_SHARE_COUNT_OFFSET == null ? 0L : FB_LIKE_SHARE_COUNT_OFFSET )
-				+ ( FB_LIKE_SHARE_COUNT == null ? 0L : FB_LIKE_SHARE_COUNT );
+		return FB_LIKE_SHARE_COUNT == null ? 0L : FB_LIKE_SHARE_COUNT;
 	}
 
 	@Override
 	public void setFbLikeShareCount( Long fbLikeShareCount ) {
 		this.FB_LIKE_SHARE_COUNT = fbLikeShareCount;
 	}
-
 	
-	@Override
-	public Date getLastProcessDate() {
-		return LAST_PROCESS_DATE == null ? LAST_UPDATED : LAST_PROCESS_DATE;
-	}
-
-	@Override
-	public void setLastProcessDate( Date lastProcessDate ) {
-		this.LAST_PROCESS_DATE = lastProcessDate;
-	}
-
-	@Override
-	public Date getNextProcessDate() {
-		return NEXT_PROCESS_DATE;
-	}
-
-	@Override
-	public void setNextProcessDate( Date nextProcessDate ) {
-		this.NEXT_PROCESS_DATE = nextProcessDate;
-	}
-
 }

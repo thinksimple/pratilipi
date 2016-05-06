@@ -98,13 +98,4 @@ public interface Pratilipi extends GenericOfyType, Serializable {
 
 	void setFbLikeShareCount( Long fbLikeShareCount );
 
-	
-	Date getLastProcessDate();
-
-	void setLastProcessDate( Date lastProcessDate );
-
-	Date getNextProcessDate();
-
-	void setNextProcessDate( Date nextProcessDate );
-
 }
