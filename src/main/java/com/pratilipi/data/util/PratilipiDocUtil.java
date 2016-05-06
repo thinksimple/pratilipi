@@ -75,7 +75,7 @@ public class PratilipiDocUtil {
 			
 			String uri = entry.getKey();
 			
-			if( ! uri.startsWith( "/read" ) ) { // Summary Page
+			if( ! uri.startsWith( "/read?id=" ) ) { // Summary Page
 				
 				if( uri.indexOf( '?' ) != -1 )
 					uri = uri.substring( 0, uri.indexOf( '?' ) );
