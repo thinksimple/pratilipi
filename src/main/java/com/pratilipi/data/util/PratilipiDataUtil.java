@@ -778,13 +778,28 @@ public class PratilipiDataUtil {
 		PratilipiGoogleAnalyticsDoc gaDoc = docAccessor.getPratilipiGoogleAnalyticsDoc( pratilipiId );
 		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
 		
+		long readCountOffset = 0L;
+		for( int month = 1; month <= 12; month++ )
+			for( int day = 1; day <= 31; day++ )
+				readCountOffset = gaDoc.getPageViews( 2015, month, day );
+		for( int month = 1; month <= 4; month++ )
+			for( int day = 1; day <= 31; day++ )
+				readCountOffset = gaDoc.getPageViews( 2016, month, day );
+		
 		long readCount = gaDoc.getTotalReadPageViews();
 		long fbLikeShareCount = FacebookApi.getUrlShareCount( "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri() );
 		
 		
+		if( pratilipi.getReadCountOffset() > readCountOffset ) {
+			logger.log( Level.SEVERE, "Read count offset for " + pratilipiId
+					+ " decreased from " + pratilipi.getReadCountOffset()
+					+ " to " + readCountOffset + "." );
+			throw new UnexpectedServerException();
+		}
+
 		if( pratilipi.getReadCount() > readCount ) {
 			logger.log( Level.SEVERE, "Read count for " + pratilipiId
-					+ " decreased from " + pratilipi.getReadCountOffset()
+					+ " decreased from " + pratilipi.getReadCount()
 					+ " to " + readCount + "." );
 			throw new UnexpectedServerException();
 		}
@@ -796,7 +811,9 @@ public class PratilipiDataUtil {
 			throw new UnexpectedServerException();
 		}
 		
-		if( pratilipi.getRatingCount() == readCount && pratilipi.getFbLikeShareCount() == fbLikeShareCount )
+		if( pratilipi.getReadCountOffset() == readCountOffset
+				&& pratilipi.getReadCount() == readCount
+				&& pratilipi.getFbLikeShareCount() == fbLikeShareCount )
 			return;
 		
 		
@@ -808,6 +825,7 @@ public class PratilipiDataUtil {
 		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
 		
+		pratilipi.setReadCountOffset( readCountOffset );
 		pratilipi.setReadCount( readCount );
 		pratilipi.setFbLikeShareCount( fbLikeShareCount );
 		
