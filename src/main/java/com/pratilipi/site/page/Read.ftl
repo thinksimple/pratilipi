@@ -5,12 +5,7 @@
 		<#assign mainPage="pratilipi-reader-page">
 		<#include "meta/Head.ftl">
 		<link rel='import' href='/elements.${lang}/${ mainPage }.html?1'>
-
-		<#if contentType == "PRATILIPI">
-			<link rel='import' href='/elements.${lang}/pratilipi-reader-content.html?20160506'>
-		<#elseif contentType == "IMAGE">
-			<link rel='import' href='/elements.${lang}/pratilipi-reader-image-content.html?1'>
-		</#if>
+		<link rel='import' href='/elements.${lang}/pratilipi-reader-content.html?2016050604'>
 
 		<script>
 			$(document).keyup( function(e) {

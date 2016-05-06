@@ -22,19 +22,10 @@
 			<div class="parent-container">
 				<div class="container" style="margin: 0 auto;">
 					<div style="overflow:hidden;">
-						<!-- In case of type == PRATILIPI -->
-						<template is="dom-if" if="{{ pratilipiContent }}">
-							<pratilipi-reader-content
-								content="{{ content }}"
-								font-size="{{ fontSize }}"
-								last-page="{{ lastPage }}"></pratilipi-reader-content>
-						</template>
-						<!-- In case of type == IMAGE -->
-						<template is="dom-if" if="{{ imageContent }}">
-							<pratilipi-reader-image-content
-								content="{{ content }}"
-								last-page="{{ lastPage }}"></pratilipi-reader-image-content>
-						</template>
+						<pratilipi-reader-content
+							content="{{ content }}"
+							font-size="{{ fontSize }}"
+							last-page="{{ lastPage }}"></pratilipi-reader-content>
 					</div>
 				</div>
 			</div>
@@ -51,15 +42,6 @@
 				method="GET"
 				content-type="application/json"
 				handle-as="json"
-				on-response="_onResponse"
-				on-error="_onError"
-				></iron-ajax>
-		<iron-ajax
-				id="AjaxGetImage"
-				url="/api/pratilipi/content"
-				method="GET"
-				content-type="application/json"
-				handle-as="blob"
 				on-response="_onResponse"
 				on-error="_onError"
 				></iron-ajax>
@@ -136,8 +118,6 @@
 				lastPage: { type: Boolean },
 				
 				contentType: { type: String },
-				pratilipiContent: { type: Boolean },
-				imageContent: { type: Boolean }
 			},
 			
 			showPrevious: function() {
@@ -225,20 +205,23 @@
 				if( this.index == null || this.index.length == 0 )
 					this.set( 'hideIndexButton', true );
 
-				this._precache();
-
 				this.set( 'addedToLib', this.userpratilipi != null ? this.userpratilipi.addedToLib : false );
 				this.set( 'lastPage', this.pageNo == this.pageCount ? true : false );
-				this.set( 'pratilipiContent', this.contentType == "PRATILIPI" ? true : false );
-				this.set( 'imageContent', this.contentType == "IMAGE" ? true : false );
+
+				this._precache();
 			},
 			
 			_precache: function() {
-				// Check pageNo
-				if( this.pageNo > 1 )
-					this._loadContent( this.pageNo - 1 );
-				if( this.pageNo < this.pageCount )
-					this._loadContent( this.pageNo + 1 );
+				if( this.contentType == "PRATILIPI" ) {
+					// Check pageNo
+					if( this.pageNo > 1 )
+						this._loadContent( this.pageNo - 1 );
+					if( this.pageNo < this.pageCount )
+						this._loadContent( this.pageNo + 1 );
+				} else if( this.contentType == "IMAGE" ) {
+					// Prefetch images
+				}
+				
 			},
 
 			_pageNoChanged: function() {
@@ -251,12 +234,22 @@
 				else if( this.lastPage && this.pageNo != this.pageCount )
 					this.set( 'lastPage', false );
 				
-				if( this.contentMap[ this.pageNo ] != null )	// Check in Map if exists
+				if( this.contentType == "PRATILIPI" ) {
+					if( this.contentMap[ this.pageNo ] != null )	// Check in Map if exists
+						this.set( 'content', this.contentMap[ this.pageNo ] );
+					else {											// Else make api call
+						this.set( 'content', "<paper-spinner class=\"pratilipi-spinner-center\" active></paper-spinner>" );
+						this._loadContent( this.pageNo );
+					}
+				} else if( this.contentType == "IMAGE" ) {
+					if( this.contentMap[ this.pageNo ] == null )	// Populate in Map if it doesn't exist
+						this.contentMap[ response.pageNo ] = "<img src='/api/pratilipi/content?pratilipiId=" + 
+																this.pratilipi.pratilipiId + "&" + 
+																"pageNo=" + this.pageNo + 
+																"&" + "chapterNo=" + this.pageNo + "1' />";
+
 					this.set( 'content', this.contentMap[ this.pageNo ] );
-				else {											// Else make api call
-					this.set( 'content', "<paper-spinner class=\"pratilipi-spinner-center\" active></paper-spinner>" );
-					this._loadContent( this.pageNo );
-				}								
+				}
 				
 				this._precache();								// Load Previous and next pages
 				
@@ -267,7 +260,7 @@
 				if( pageNo == null || this.contentMap[ pageNo ] != null )
 					return;
 				
-				var ajaxGet = this.contentType == "PRATILIPI" ? this.$.AjaxGet : this.$.AjaxGetImage;
+				var ajaxGet = this.$.AjaxGet;
 				ajaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
 				ajaxGet.params.chapterNo = pageNo;
 				ajaxGet.params.pageNo = pageNo;
