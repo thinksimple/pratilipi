@@ -1,9 +1,12 @@
 package com.pratilipi.api.impl.pratilipi;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +34,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.data.util.PratilipiDocUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -91,25 +95,45 @@ public class PratilipiProcessApi extends GenericApi {
 		// START: Creating UpdateStats Tasks
 		
 		
-		pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setState( PratilipiState.PUBLISHED );
-		pratilipiFilter.setMaxNextProcessDate( new Date(), true );
+		appPropertyId = "Api.PratilipiProcess.UpdateStats";
+		appProperty = dataAccessor.getAppProperty( appPropertyId );
+		if( appProperty == null ) {
+			appProperty = dataAccessor.newAppProperty( appPropertyId );
+			appProperty.setValue( new Date( 1420051500000L ) ); // 01 Jan 2015, 12:15 AM IST
+		}
 		
-		pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null, null ).getDataList();
+		Date date = (Date) appProperty.getValue();
 		
-		int batchSize = 80;
-		taskList = new ArrayList<>( (int) Math.ceil( ( (double) pratilipiIdList.size() ) / batchSize  ) );
-		for( int i = 0; i < pratilipiIdList.size(); i = i + batchSize ) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeZone( TimeZone.getTimeZone( "IST" ) );
+		cal.setTime( new Date( date.getTime() - TimeUnit.MINUTES.toMillis( 15 ) ) );
+		
+		int year = cal.get( Calendar.YEAR );
+		int month = cal.get( Calendar.MONTH ) + 1;
+		int day = cal.get( Calendar.DAY_OF_MONTH );
+
+		
+		List<Long> updatedPratilipiIdList = 
+				PratilipiDocUtil.updatePratilipiGoogleAnalyticsPageViews( year, month, day );
+		
+		
+		taskList = new ArrayList<>(updatedPratilipiIdList.size() );
+		for( Long pratilipiId : updatedPratilipiIdList ) {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/pratilipi/process" )
-					.addParam( "pratilipiIdList", new Gson().toJson( pratilipiIdList.subList( i, i + batchSize < pratilipiIdList.size() ? i + batchSize : pratilipiIdList.size() ) ) )
+					.addParam( "pratilipiId", pratilipiId.toString() )
 					.addParam( "updateStats", "true" );
 			taskList.add( task );
 		}
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
-		
 		logger.log( Level.INFO, "Added " + taskList.size() + " UpdateStats task(s) with " + pratilipiIdList.size() + " Pratilipi ids." );
 
+		
+		appProperty.setValue( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) > new Date().getTime()
+				? new Date( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) )
+				: new Date() );
+		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
+		
 		
 		// END: Creating UpdateStats Tasks
 		

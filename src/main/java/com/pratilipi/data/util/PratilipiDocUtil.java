@@ -103,10 +103,7 @@ public class PratilipiDocUtil {
 		}
 		
 		
-		ArrayList<Long> updatedPratilipiIdList = new ArrayList<>( pageViewsMap.size() );
-		
 		for( Entry<Long, Integer> entry : pageViewsMap.entrySet() ) {
-			updatedPratilipiIdList.add( entry.getKey() );
 			if( readPageViewsMap.get( entry.getKey() ) == null ) {
 				updatePratilipiGoogleAnalyticsPageViews( entry.getKey(), year, month, day, entry.getValue(), 0 );
 			} else {
@@ -115,10 +112,8 @@ public class PratilipiDocUtil {
 			}
 		}
 		
-		for( Entry<Long, Integer> entry : readPageViewsMap.entrySet() ) {
-			updatedPratilipiIdList.add( entry.getKey() );
+		for( Entry<Long, Integer> entry : readPageViewsMap.entrySet() )
 			updatePratilipiGoogleAnalyticsPageViews( entry.getKey(), year, month, day, 0, readPageViewsMap.get( entry.getKey() ) );
-		}
 		
 		
 		if( diffPageViewsMap.size() > 0 ) {
@@ -131,6 +126,10 @@ public class PratilipiDocUtil {
 			}
 		}
 
+		
+		ArrayList<Long> updatedPratilipiIdList = new ArrayList<>( pageViewsMap.size() + readPageViewsMap.size() );
+		updatedPratilipiIdList.addAll( pageViewsMap.keySet() );
+		updatedPratilipiIdList.addAll( readPageViewsMap.keySet() );
 		
 		return updatedPratilipiIdList;
 		
