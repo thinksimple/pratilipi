@@ -26,7 +26,6 @@ import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
-import com.pratilipi.common.util.GoogleAnalyticsApi;
 import com.pratilipi.common.util.ImageUtil;
 import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -37,6 +36,7 @@ import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.Memcache;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.client.AuthorData;
@@ -47,6 +47,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.filter.AccessTokenFilter;
 
@@ -767,65 +768,49 @@ public class PratilipiDataUtil {
 		return true;
 	}
 	
-	public static List<Long> updatePratilipiStats( List<Long> pratilipiIdList )
+	public static void updatePratilipiStats( Long pratilipiId )
 			throws UnexpectedServerException {
 		
-		Map<Long, Long> idReadCountMap = GoogleAnalyticsApi.getPratilipiReadCount( pratilipiIdList );		
-		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<String> urlList = new ArrayList<>( pratilipiIdList.size() );
-		for( Long pratilipiId : pratilipiIdList ) {
-			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-			String fbLikeShareUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri();
-			urlList.add( fbLikeShareUrl );
-		}
-		Map<String, Long> urlShareCountMap = FacebookApi.getUrlShareCount( urlList );
-
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		
-		List<Long> updatedPratilipiIds = new ArrayList<>( pratilipiIdList.size() );
-		for( Long pratilipiId : pratilipiIdList ) {
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		PratilipiGoogleAnalyticsDoc gaDoc = docAccessor.getPratilipiGoogleAnalyticsDoc( pratilipiId );
+		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
+		
+		long readCount = gaDoc.getTotalReadPageViews();
+		long fbLikeShareCount = FacebookApi.getUrlShareCount( "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri() );
+		
+		
+		Gson gson = new Gson();
 
-			long readCount = idReadCountMap.get( pratilipiId ) == null ? 0L : idReadCountMap.get( pratilipiId );
-			
-			Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-			String fbLikeShareUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri();
-			long fbLikeShareCount = urlShareCountMap.get( fbLikeShareUrl ) == null ? 0L : urlShareCountMap.get( fbLikeShareUrl );
-			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			
-			Gson gson = new Gson();
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
+		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+		
+		if( pratilipi.getReadCount() > readCount ) {
+			logger.log( Level.SEVERE, "Read count for " + pratilipiId
+					+ " decreased from " + pratilipi.getReadCountOffset()
+					+ " to " + readCount + "." );
+			throw new UnexpectedServerException();
+		}
 
-			AccessToken accessToken = AccessTokenFilter.getAccessToken();
-			AuditLog auditLog = dataAccessor.newAuditLogOfy();
-			auditLog.setAccessId( accessToken.getId() );
-			auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
-			
-			if( pratilipi.getReadCount() > readCount ) {
-				logger.log( Level.SEVERE, "Read count for " + pratilipiId + " decreased from " + pratilipi.getReadCount() + " to " + readCount + ". Skipping Update." );
-				continue;
-			}
+		if( pratilipi.getFbLikeShareCount() > fbLikeShareCount ) {
+			logger.log( Level.SEVERE, "Facebook LikeShare count for " + pratilipiId
+					+ " decreased from " + pratilipi.getFbLikeShareCount()
+					+ " to " + fbLikeShareCount + "." );
+			throw new UnexpectedServerException();
+		}
 
-			if( pratilipi.getFbLikeShareCount() > pratilipi.getFbLikeShareCountOffset() + fbLikeShareCount ) {
-				logger.log( Level.SEVERE, "Facebook LikeShare count for " + pratilipiId
-						+ " decreased from " + pratilipi.getFbLikeShareCount()
-						+ " to " + ( pratilipi.getFbLikeShareCountOffset() + fbLikeShareCount ) + ". Skipping Update." );
-				continue;
-			}
+		pratilipi.setReadCount( readCount );
+		pratilipi.setFbLikeShareCount( fbLikeShareCount );
+		
+		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 
-			if( pratilipi.getReadCount() == readCount && pratilipi.getFbLikeShareCount() == fbLikeShareCount )
-				continue;
-			
-			pratilipi.setReadCount( readCount );
-			pratilipi.setFbLikeShareCount( fbLikeShareCount );
-			
-			auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-
-			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 	
-			updatedPratilipiIds.add( pratilipiId ); 
-		}
-		
-		return updatedPratilipiIds;
 	}	
 	
 	public static void updateUserPratilipiStats( Long pratilipiId ) {

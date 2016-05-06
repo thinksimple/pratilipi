@@ -3,14 +3,12 @@ package com.pratilipi.api.impl.pratilipi;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -20,22 +18,18 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
-import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.PratilipiDocUtil;
-import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -126,7 +120,7 @@ public class PratilipiProcessApi extends GenericApi {
 			taskList.add( task );
 		}
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
-		logger.log( Level.INFO, "Added " + taskList.size() + " UpdateStats task(s) with " + pratilipiIdList.size() + " Pratilipi ids." );
+		logger.log( Level.INFO, "Added " + taskList.size() + " UpdateStats task(s)." );
 
 		
 		appProperty.setValue( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) > new Date().getTime()
@@ -204,63 +198,18 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		
 		if( request.updateStats() ) {
-			
-			// Batch updating Pratilipi stats.
-			List<Long> updatedIdList = PratilipiDataUtil.updatePratilipiStats( pratilipiIdList );
-			
-			// List of Author ids to be updated.
-			List<Long> authorIdList = new LinkedList<Long>();
-
-			// Updating Pratilipi.nextProcessDate
-			for( Long pratilipiId : pratilipiIdList ) {
-				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-				
-				Gson gson = new Gson();
-
-				AccessToken accessToken = AccessTokenFilter.getAccessToken();
-				AuditLog auditLog = dataAccessor.newAuditLogOfy();
-				auditLog.setAccessId( accessToken.getId() );
-				auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-				auditLog.setEventDataOld( gson.toJson( pratilipi ) );
-				
-				if( updatedIdList.contains( pratilipiId ) ) {
-					pratilipi.setLastProcessDate( new Date() );
-					pratilipi.setNextProcessDate( new Date( new Date().getTime() + 900000L ) ); // Now + 15 Min
-					if( pratilipi.getAuthorId() != null )
-						if( ! authorIdList.contains( pratilipi.getAuthorId() ) )
-							authorIdList.add( pratilipi.getAuthorId() );
-				} else {
-					Long nextUpdateAfterMillis = 2 * ( new Date().getTime() - pratilipi.getLastProcessDate().getTime() );
-					if( nextUpdateAfterMillis < 900000L ) // 15 Min
-						nextUpdateAfterMillis = 900000L;
-					else if( nextUpdateAfterMillis > 86400000L ) // 1 Day
-						nextUpdateAfterMillis = 86400000L;
-					pratilipi.setNextProcessDate( new Date( new Date().getTime() + nextUpdateAfterMillis ) );
+			Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( request.getPratilipiId() );
+			if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
+				PratilipiDataUtil.updatePratilipiStats( request.getPratilipiId() );
+				PratilipiDataUtil.updatePratilipiSearchIndex( request.getPratilipiId(), null );
+				if( pratilipi.getAuthorId() != null ) { // Creating tasks to update author entities
+					Task task = TaskQueueFactory.newTask()
+							.setUrl( "/author/process" )
+							.addParam( "authorId", pratilipi.getAuthorId().toString() )
+							.addParam( "updateStats", "true" );
+					TaskQueueFactory.getAuthorOfflineTaskQueue().addAll( task );
 				}
-				
-				auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-				
-				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog ); // TODO: Batch this call
 			}
-
-			// Batch updating search index.
-			PratilipiDataUtil.updatePratilipiSearchIndex( updatedIdList );
-
-			// Creating tasks to update author entities.
-			List<Task> taskList = new ArrayList<>( authorIdList.size() );
-			for( Long authorId : authorIdList ) {
-				Task task = TaskQueueFactory.newTask()
-						.setUrl( "/author/process" )
-						.addParam( "authorId", authorId.toString() )
-						.addParam( "updateStats", "true" );
-				taskList.add( task );
-			}
-			if( request.getPratilipiId() != null && authorIdList.size() != 0 )
-				TaskQueueFactory.getAuthorTaskQueue().add( taskList.get( 0 ) );
-			else // Batch created by cron
-				TaskQueueFactory.getAuthorOfflineTaskQueue().addAll( taskList );
-			logger.log( Level.INFO, "Added " + taskList.size() + " AuthorProcessApi.updateStats tasks." );
-
 		}
 		
 		

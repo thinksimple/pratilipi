@@ -48,11 +48,6 @@
 		<property name="STATE" direction="asc"/>
 	</datastore-index>
 
-	<datastore-index kind="PRATILIPI" ancestor="false" source="manual">
-		<property name="STATE" direction="asc"/>
-		<property name="NEXT_PROCESS_DATE" direction="asc"/>
-	</datastore-index>
-    
     
     <datastore-index kind="AUTHOR" ancestor="false" source="manual">
 		<property name="EMAIL" direction="asc"/>

@@ -1,7 +1,6 @@
 package com.pratilipi.common.util;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +23,7 @@ public class FacebookApi {
 	
 	private static final String GRAPH_API_2p2_URL = "https://graph.facebook.com/v2.2";
 	private static final String GRAPH_API_2p4_URL = "https://graph.facebook.com/v2.4";
+	private static final String GRAPH_API_2p6_URL = "https://graph.facebook.com/v2.6";
 	
 	
 	public static String getAppId() {
@@ -95,44 +95,31 @@ public class FacebookApi {
 	}
 	
 	
-	public static Map<String, Long> getUrlShareCount( List<String> urlList ) throws UnexpectedServerException {
+	public static long getUrlShareCount( String shareUrl ) throws UnexpectedServerException {
 		
-		int urlsPerRequest = 20;
-		
-		Map<String, Long> urlCountMap = new HashMap<>();
+		Map<String, String> paramsMap = new HashMap<String, String>();
+		paramsMap.put( "id", shareUrl );
+		paramsMap.put( "access_token", getAccessToken() );
+		String responsePayload = HttpUtil.doGet( GRAPH_API_2p6_URL, paramsMap );
 
-		for( int i = 0; i < urlList.size(); i = i + urlsPerRequest ) {
-			String urls = "";
-			for( int j = 0; i + j < urlList.size() && j < urlsPerRequest; j++ )
-				urls = urls + urlList.get( i + j ) + ",";
-			urls = urls.substring( 0, urls.length() - 1 );
+		JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
 
-			Map<String, String> paramsMap = new HashMap<String, String>();
-			paramsMap.put( "ids", urls );
-			paramsMap.put( "access_token", getAccessToken() );
-			String responsePayload = HttpUtil.doGet( GRAPH_API_2p4_URL, paramsMap );
-
-			JsonElement responseJson = new Gson().fromJson( responsePayload, JsonElement.class );
-
-			// Facebook might return an error response.
-			if( responseJson.getAsJsonObject().get( "error" ) != null ) {
-				logger.log( Level.SEVERE, "Facebook responded with an error message :" + responseJson.getAsJsonObject().get( "error" ).getAsJsonObject().get( "message" ) );
-				throw new UnexpectedServerException();
-			}
-
-			for( int j = 0; i + j < urlList.size() && j < urlsPerRequest; j++ ) {
-				JsonElement jsonElement = responseJson.getAsJsonObject().get( urlList.get( i + j ) );
-				JsonElement shareJson = jsonElement.getAsJsonObject().get( "share" );
-				if( shareJson != null ) {
-					JsonElement shareCountJson = shareJson.getAsJsonObject().get( "share_count" );
-					if( shareCountJson != null )
-						urlCountMap.put( urlList.get( i + j ), shareCountJson.getAsLong() );
-				}
-			}
-			
+		// Facebook might return an error response.
+		if( responseJson.getAsJsonObject().get( "error" ) != null ) {
+			logger.log( Level.SEVERE, "Facebook responded with an error message :" + responseJson.getAsJsonObject().get( "error" ).getAsJsonObject().get( "message" ) );
+			throw new UnexpectedServerException();
 		}
+
+		JsonElement shareJson = responseJson.getAsJsonObject().get( "share" );
+		if( shareJson == null )
+			return 0L;
 		
-		return urlCountMap;
+		JsonElement shareCountJson = shareJson.getAsJsonObject().get( "share_count" );
+		if( shareCountJson == null )
+			return 0L;
+		
+		return shareCountJson.getAsLong();
+		
 	}
 	
 	
