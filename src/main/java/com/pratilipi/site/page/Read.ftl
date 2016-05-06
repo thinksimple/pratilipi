@@ -4,12 +4,12 @@
 	<head>
 		<#assign mainPage="pratilipi-reader-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2016050602'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?1'>
 
 		<#if contentType == "PRATILIPI">
 			<link rel='import' href='/elements.${lang}/pratilipi-reader-content.html?20160506'>
 		<#elseif contentType == "IMAGE">
-			<link rel='import' href='/elements.${lang}/pratilipi-reader-image-content.html?20160506'>
+			<link rel='import' href='/elements.${lang}/pratilipi-reader-image-content.html?1'>
 		</#if>
 
 		<script>

@@ -31,8 +31,9 @@
 						</template>
 						<!-- In case of type == IMAGE -->
 						<template is="dom-if" if="{{ imageContent }}">
-							<pratilipi-reader-image-content>
-								</pratilipi-reader-image-content>
+							<pratilipi-reader-image-content
+								content="{{ content }}"
+								last-page="{{ lastPage }}"></pratilipi-reader-image-content>
 						</template>
 					</div>
 				</div>
@@ -266,13 +267,7 @@
 				if( pageNo == null || this.contentMap[ pageNo ] != null )
 					return;
 				
-				var ajaxGet = null;
-
-				if( this.pratilipiContent )
-					ajaxGet = this.$.AjaxGet;
-				else if( this.imageContent )
-					ajaxGet = this.$.AjaxGetImage
-
+				var ajaxGet = this.contentType == "PRATILIPI" ? this.$.AjaxGet : this.$.AjaxGetImage;
 				ajaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
 				ajaxGet.params.chapterNo = pageNo;
 				ajaxGet.params.pageNo = pageNo;

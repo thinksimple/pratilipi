@@ -7,7 +7,30 @@
 	
 	
 	<template>
-	
+		<paper-card id="pager">
+			<div id="reader-content">
+				{{ content }}
+			</div>
+			<template is="dom-if" if="{{ lastPage }}">
+				<div id="reader-alert-box" class="alert alert-success hvr-bounce-in" role="alert">
+					<h3 class="text-center" style="margin-top: 24px;">${ _strings.reader_enjoyed_reading_part1 }</h3>
+					<div class="text-center" style="margin: 0 auto;">
+						<a class="pratilipi-blue" on-click="writeReview">
+							<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_review_book }</h6>
+							<iron-icon icon="icons:create" style="margin-left: 0px; display: inline-block; width: 20px; color: #333;"></iron-icon>
+						</a>
+					</div>
+					<div class="text-center" style="margin: 0 auto;">
+						<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
+						<div style="white-space: nowrap; display: inline-block;">  
+							<i class="fa fa-facebook fa-lg fb" on-click="shareOnFacebook"></i>
+							<i class="fa fa-twitter fa-lg tw" on-click="shareOnTwitter"></i>
+							<i class="fa fa-google-plus fa-lg google" on-click="shareOnGplus"></i>
+						</div>
+					</div>
+				</div>
+			</template>
+		</paper-card>
 	</template>	
 	
 	<script>
@@ -16,7 +39,43 @@
 			
 			is: 'pratilipi-reader-image-content',
 			
+			properties: {
+				content: { type: String, observer: "_onContentChange" },
+				fontSize: { type: Number, observer: "_fontSizeObserver" },
+				lastPage: { type: Boolean }
+			},
 			
+			attached: function() {
+				jQuery( "#pager" ).css( 'min-height', window.innerHeight + "px" );
+			},
+			
+			_onContentChange: function() {
+				jQuery( this.querySelector( '#reader-content' ) ).html( this.content );
+				jQuery( "#reader-content img" ).css( "max-width", "100%", "important" );
+				$( 'html, body' ).animate( { scrollTop : 0 }, 500 );
+			},
+			
+			_fontSizeObserver: function() {
+				jQuery( "#reader-content" ).css( 'font-size', this.fontSize, "important" );
+				jQuery( "#reader-content h2" ).css( 'font-size', this.fontSize + 4, "important" );
+				jQuery( "#reader-content h1" ).css( 'font-size', this.fontSize + 8, "important" );
+			},
+			
+			writeReview: function() {
+				document.querySelector( 'pratilipi-reader-page' ).writeReview();
+			},
+			
+			shareOnFacebook: function() {
+				document.querySelector( 'pratilipi-reader-page' ).shareOnFacebook();
+			},
+			
+			shareOnTwitter: function() {
+				document.querySelector( 'pratilipi-reader-page' ).shareOnTwitter();
+			},
+			
+			shareOnGplus: function() {
+				document.querySelector( 'pratilipi-reader-page' ).shareOnGplus();
+			},
 
 		});
 
