@@ -18,6 +18,33 @@ public class PratilipiGoogleAnalyticsDocImpl implements PratilipiGoogleAnalytics
 	private Map<Integer, YearlyPageViews> readPageViews = new HashMap<>();
 	private Long lastUpdatedMillis;
 	
+
+	@Override
+	public int getPageViews( int year, int month, int day ) {
+		YearlyPageViews yearlyPageViews = pageViews.get( year );
+		if( yearlyPageViews == null )
+			return 0;
+		
+		Map<Integer, Integer> monthlyPageViews = null;
+		switch( month ) {
+			case 1: monthlyPageViews = yearlyPageViews.JAN; break;
+			case 2: monthlyPageViews = yearlyPageViews.FEB; break;
+			case 3: monthlyPageViews = yearlyPageViews.MAR; break;
+			case 4: monthlyPageViews = yearlyPageViews.APR; break;
+			case 5: monthlyPageViews = yearlyPageViews.MAY; break;
+			case 6: monthlyPageViews = yearlyPageViews.JUN; break;
+			case 7: monthlyPageViews = yearlyPageViews.JUL; break;
+			case 8: monthlyPageViews = yearlyPageViews.AUG; break;
+			case 9: monthlyPageViews = yearlyPageViews.SEP; break;
+			case 10: monthlyPageViews = yearlyPageViews.OCT; break;
+			case 11: monthlyPageViews = yearlyPageViews.NOV; break;
+			case 12: monthlyPageViews = yearlyPageViews.DEC; break;
+		}
+		if( monthlyPageViews == null )
+			return 0;
+		
+		return monthlyPageViews.get( day ) == null ? 0 : monthlyPageViews.get( day );
+	}
 	
 	@Override
 	public long getTotalPageViews() {
