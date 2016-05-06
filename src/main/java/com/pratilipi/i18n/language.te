@@ -213,7 +213,7 @@ free						= ఉచితం!
 saving						= సేవ్ అవుతోంది..
 working						= పని చేస్తోంది..
 update						= అప్ డేట్ చేయండి 
-share						= షేర్ చేయండి
+share						= షేర్ చేద్దాం
 menu						= పట్టిక
 back						= వెనక్కి
 load_more_contents			= మరిన్ని రచనలు లోడ్ చేయండి
@@ -303,17 +303,17 @@ remove_from_library	= గ్రంథాలయం నుండి తొలగ�
 empty_library		= క్షమించండి, మీ గ్రంథాలయంలో ఎలాంటి పుస్తకాలు లేవు. మీరు రచనల పేజికి వెళ్ళి వాటిని జత చేసుకోవచ్చు. 
 
 # Reader
-reader_goto_content_page	= Go to Content Page
-reader_goto_author_profile = Go to Author's page
-reader_goto_home_page	= Go to Home Page
-share_on_facebook		= Share on Facebook
-share_on_twitter		= Share on Twitter
-share_on_gplus			= Share on Google Plus
-increase_font_size		= Increase font size
-decrease_font_size		= Decrease font size
+reader_goto_content_page	= కంటెంట్ పేజీకి వెళ్లండి
+reader_goto_author_profile = రచయిత పేజీకి వెళ్లండి
+reader_goto_home_page	= హోంపేజీకి వెళ్లండి
+share_on_facebook		= ఫేస్‌బుక్‌లో షేర్ చేయండి
+share_on_twitter		= ట్విట్టర్‌లో షేర్ చేయండి
+share_on_gplus			= గూగుల్ ప్లస్‌లో షేర్ చేయండి
+increase_font_size		= ఫాంటు పరిమాణాన్ని పెంచండి
+decrease_font_size		= ఫాంటు పరిమాణాన్ని తగ్గించండి
 
 
-# Enjoyed Reading the content? Write a review or Share it on
-reader_enjoyed_reading_part1	= Enjoyed reading the content? 
-reader_enjoyed_review_book		= Write a review
-reader_enjoyed_reading_part2	= Share it on
+# Enjoyed Reading the content? సమీక్ష రాసి షేర్ చేయండి
+reader_enjoyed_reading_part1	= రచనలు చదవడాన్ని ఆస్వాదిస్తున్నారా?
+reader_enjoyed_review_book		= సమీక్ష రాయండి
+reader_enjoyed_reading_part2	= షేర్ చేయండి
