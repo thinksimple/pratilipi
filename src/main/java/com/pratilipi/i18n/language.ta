@@ -304,17 +304,17 @@ remove_from_library	= என் நூலகத்திலிருந்து
 empty_library		= மன்னிக்கவும், உங்களது நூலகத்தில் படைப்புகள் எதுவும் இல்லை,  பிடித்தமான படைப்புகளை சொடுக்கி அதன் பக்கத்திற்கு சென்று நூலகத்தில் சேர்க்கலாம்..
 
 # Reader
-reader_goto_content_page	= Go to Content Page
-reader_goto_author_profile = Go to Author's page
-reader_goto_home_page	= Go to Home Page
-share_on_facebook		= Share on Facebook
-share_on_twitter		= Share on Twitter
-share_on_gplus			= Share on Google Plus
-increase_font_size		= Increase font size
-decrease_font_size		= Decrease font size
+reader_goto_content_page	= படைப்புப் பக்கத்திற்குச் செல்ல
+reader_goto_author_profile = ஆசிரியர் பக்கத்திற்கு செல்ல
+reader_goto_home_page	= முகப்புப் பக்கத்திற்கு செல்ல
+share_on_facebook		= முகநூலில் பகிர
+share_on_twitter		= ட்விட்டரில் பகிர
+share_on_gplus			= கூகிள் ப்ளஸில் பகிர
+increase_font_size		= எழுத்துக்களை பெரிதாக்க
+decrease_font_size		= எழுத்துக்களை சிறியதாக்க
 
 
 # Enjoyed Reading the content? Write a review or Share it on
-reader_enjoyed_reading_part1	= Enjoyed reading the content? 
-reader_enjoyed_review_book		= Write a review
-reader_enjoyed_reading_part2	= Share it on
+reader_enjoyed_reading_part1	= படைப்பு பிடித்திருந்ததா?
+reader_enjoyed_review_book		= படைப்பு குறித்து உங்களது கருத்துகளை பகிர்ந்து கொள்ளவும்
+reader_enjoyed_reading_part2	= பகிர
