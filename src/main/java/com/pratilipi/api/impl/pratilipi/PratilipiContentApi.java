@@ -15,6 +15,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -45,10 +46,13 @@ public class PratilipiContentApi extends GenericApi {
 					request.getPageNo(),
 					content );
 		} else if( contentType == PratilipiContentType.IMAGE ) {
-			return ( GenericFileDownloadResponse ) content;
+			BlobEntry blobEntry = ( BlobEntry ) content;
+			return new GenericFileDownloadResponse( blobEntry.getData(), 
+					blobEntry.getMimeType(), 
+					blobEntry.getETag() );
 		}
 		
-		return null;
+		return new GenericResponse();
 		
 	}
 
