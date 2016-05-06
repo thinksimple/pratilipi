@@ -1,4 +1,5 @@
-<link rel='import' href='pratilipi-reader-header.html?20160506'>
+<link rel='import' href='pratilipi-reader-header.html?2016050602'>
+<link rel='import' href='pratilipi-reader-content.html?2016050604'>
 <link rel='import' href='pratilipi-reader-footer.html?20160429'>
 <link rel="import" href="pratilipi-review-input.html?20160505" />
 
@@ -13,7 +14,8 @@
     				added-to-lib="[[ addedToLib ]]"
     				hide-index-button="[[ hideIndexButton ]]"
     				page-no="[[ pageNo ]]"
-    				index="{{ index }}"></pratilipi-reader-header>
+    				index="{{ index }}"
+    				content-type="{{ contentType }}"></pratilipi-reader-header>
 		</header>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<pratilipi-alert></pratilipi-alert>
@@ -90,6 +92,25 @@
 		      return decodeURIComponent( key[1] );
 		   else
 			   return null;
+		}
+		function preloadImages( array ) {
+			if( !preloadImages.list )
+			    preloadImages.list = [];
+			
+			var list = preloadImages.list;
+			for (var i = 0; i < array.length; i++) {
+				var img = new Image();
+				img.onload = function() {
+					var index = list.indexOf(this);
+					if (index !== -1) {
+						// remove image from the array once it's loaded
+						// for memory consumption reasons
+						list.splice(index, 1);
+					}
+				}
+				list.push(img);
+				img.src = array[i];
+			}
 		}
 	
 		Polymer({
@@ -220,8 +241,18 @@
 						this._loadContent( this.pageNo + 1 );
 				} else if( this.contentType == "IMAGE" ) {
 					// Prefetch images
+					if( this.pageNo > 1 )
+						preloadImages( this.getImageUrl( this.pageNo - 1 ) );
+					if( this.pageNo < this.pageCount )
+						preloadImages( this.getImageUrl( this.pageNo + 1 ) );
 				}
-				
+			},
+			
+			getImageUrl: function( pageNo ) {
+				return "<img src='/api/pratilipi/content?pratilipiId=" + 
+							this.pratilipi.pratilipiId + "&" + 
+							"pageNo=" + pageNo + 
+							"&" + "chapterNo=" + pageNo + "' />";
 			},
 
 			_pageNoChanged: function() {
@@ -243,10 +274,7 @@
 					}
 				} else if( this.contentType == "IMAGE" ) {
 					if( this.contentMap[ this.pageNo ] == null )	// Populate in Map if it doesn't exist
-						this.contentMap[ this.pageNo ] = "<img src='/api/pratilipi/content?pratilipiId=" + 
-																this.pratilipi.pratilipiId + "&" + 
-																"pageNo=" + this.pageNo + 
-																"&" + "chapterNo=" + this.pageNo + "1' />";
+						this.contentMap[ this.pageNo ] = this.getImageUrl( this.pageNo );
 
 					this.set( 'content', this.contentMap[ this.pageNo ] );
 				}

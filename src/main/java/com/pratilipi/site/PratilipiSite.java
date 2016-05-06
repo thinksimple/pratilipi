@@ -773,14 +773,11 @@ public class PratilipiSite extends HttpServlet {
 		
 		pageNo = pageNo < 1 ? 1 : pageNo;
 		pageNo = pageNo > pratilipi.getPageCount() ? pratilipi.getPageCount() : pageNo;
-		Object content = PratilipiDataUtil.getPratilipiContent( pratilipiId, null, pageNo, pratilipi.getContentType() );
-
-		if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
-			BlobEntry blobEntry = ( BlobEntry ) content;
-			content = new GenericFileDownloadResponse( blobEntry.getData(), 
-					blobEntry.getMimeType(), 
-					blobEntry.getETag() );
-		}
+		Object content = null;
+		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI )
+			content = PratilipiDataUtil.getPratilipiContent( pratilipiId, null, pageNo, pratilipi.getContentType() );
+		else if( pratilipi.getContentType() == PratilipiContentType.IMAGE )
+			content = "<img src='/api/pratilipi/content?pratilipiId=" + pratilipi.getId() + "&pageNo=" + pageNo + "&chapterNo=" + pageNo + "' />";
 		
 		Gson gson = new Gson();
 		GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
