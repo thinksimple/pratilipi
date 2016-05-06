@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.data.client.AuthorData;
@@ -52,6 +53,7 @@ public class GenericPratilipiResponse extends GenericResponse {
 	private String writePageUrl;
 
 	private PratilipiType type;
+	private PratilipiContentType contentType;
 	private PratilipiState state;
 	
 	private Long listingDateMillis;
@@ -85,6 +87,7 @@ public class GenericPratilipiResponse extends GenericResponse {
 		this.writePageUrl = pratilipiData.getWritePageUrl();
 		
 		this.type = pratilipiData.getType();
+		this.contentType = pratilipiData.getContentType();
 		this.state = pratilipiData.getState();
 		
 		this.listingDateMillis = pratilipiData.getListingDate().getTime();
@@ -153,6 +156,10 @@ public class GenericPratilipiResponse extends GenericResponse {
 	
 	public PratilipiType getType() {
 		return type;
+	}
+	
+	public PratilipiContentType getContentType() {
+		return contentType;
 	}
 
 	public PratilipiState getState() {

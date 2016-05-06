@@ -18,7 +18,7 @@ public class GetPratilipiContentRequest extends GenericRequest {
 	@Validate
 	private String pageletId;
 	
-	private PratilipiContentType type;
+	private PratilipiContentType contentType;
 
 	
 	public Long getPratilipiId() {
@@ -38,7 +38,7 @@ public class GetPratilipiContentRequest extends GenericRequest {
 	}
 	
 	public PratilipiContentType getContentType() {
-		return type;
+		return contentType;
 	}
 	
 }
