@@ -782,14 +782,6 @@ public class PratilipiDataUtil {
 		long fbLikeShareCount = FacebookApi.getUrlShareCount( "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri() );
 		
 		
-		Gson gson = new Gson();
-
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
-		
 		if( pratilipi.getReadCount() > readCount ) {
 			logger.log( Level.SEVERE, "Read count for " + pratilipiId
 					+ " decreased from " + pratilipi.getReadCountOffset()
@@ -803,7 +795,19 @@ public class PratilipiDataUtil {
 					+ " to " + fbLikeShareCount + "." );
 			throw new UnexpectedServerException();
 		}
+		
+		if( pratilipi.getRatingCount() == readCount && pratilipi.getFbLikeShareCount() == fbLikeShareCount )
+			return;
+		
+		
+		Gson gson = new Gson();
 
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
+		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+		
 		pratilipi.setReadCount( readCount );
 		pratilipi.setFbLikeShareCount( fbLikeShareCount );
 		

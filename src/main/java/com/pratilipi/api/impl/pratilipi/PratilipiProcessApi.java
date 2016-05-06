@@ -100,7 +100,7 @@ public class PratilipiProcessApi extends GenericApi {
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeZone( TimeZone.getTimeZone( "IST" ) );
-		cal.setTime( new Date( date.getTime() - TimeUnit.MINUTES.toMillis( 15 ) ) );
+		cal.setTime( new Date( date.getTime() - TimeUnit.MINUTES.toMillis( 15 ) ) ); // Google updates reports every 10 min
 		
 		int year = cal.get( Calendar.YEAR );
 		int month = cal.get( Calendar.MONTH ) + 1;
@@ -207,7 +207,7 @@ public class PratilipiProcessApi extends GenericApi {
 							.setUrl( "/author/process" )
 							.addParam( "authorId", pratilipi.getAuthorId().toString() )
 							.addParam( "updateStats", "true" );
-					TaskQueueFactory.getAuthorOfflineTaskQueue().addAll( task );
+					TaskQueueFactory.getAuthorOfflineTaskQueue().add( task );
 				}
 			}
 		}
@@ -217,6 +217,7 @@ public class PratilipiProcessApi extends GenericApi {
 			for( long pratilipiId : pratilipiIdList )
 				PratilipiDataUtil.updateUserPratilipiStats( pratilipiId );
 		}
+		
 		
 		return new GenericResponse();
 		
