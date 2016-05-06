@@ -42,7 +42,7 @@ public class DocAccessorImpl implements DocAccessor {
 		try {
 			return gson.fromJson(
 					new String( blobEntry.getData(), "UTF-8" ),
-					PratilipiGoogleAnalyticsDoc.class );
+					PratilipiGoogleAnalyticsDocImpl.class );
 		} catch( JsonSyntaxException | UnsupportedEncodingException e) {
 			logger.log( Level.SEVERE, e.getMessage() );
 			throw new UnexpectedServerException();

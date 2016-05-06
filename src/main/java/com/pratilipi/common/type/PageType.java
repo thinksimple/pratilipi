@@ -12,7 +12,7 @@ public enum PageType {
 	AUTHOR_DASHBOARD( null ),
 	
 	@Deprecated
-	PUBLISHER( "/publisher" ),
+	PUBLISHER( "/publisher/" ),
 	
 	EVENT( "/event/" ),
 	

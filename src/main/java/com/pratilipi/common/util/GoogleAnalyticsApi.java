@@ -31,32 +31,36 @@ public class GoogleAnalyticsApi {
 		
 		Map<String, Integer> uriViewsMap = new HashMap<String, Integer>();
 		
-		while( true ) {
-			try {
+			
+		try {
+			
+			while( true ) {
 				
 				Get apiQuery = getAnalytics().data().ga()
 						.get( "ga:96325104",		// Table Id.
-								date,				// Start Date.
-								date,				// End Date.
+								date,				// Start Date YYYY-MM-DD
+								date,				// End Date YYYY-MM-DD
 								"ga:pageviews" )	// Metrics.
 						.setDimensions( "ga:pagePath" )
 						.setStartIndex( uriViewsMap.size() + 1 )
 						.setMaxResults( 10000 );
 				
 				GaData gaData = apiQuery.execute();
-				if( gaData.getRows() != null ) {
+				
+				if( gaData.getRows() != null )
 					for( List<String> row : gaData.getRows() )
 						uriViewsMap.put( row.get( 0 ), Integer.parseInt( row.get( 1 ) ) );
-				}
 				
 				if( uriViewsMap.size() == gaData.getTotalResults() )
 					break;
 				
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to fetch data from Google Analytics.", e );
-				throw new UnexpectedServerException();
 			}
+				
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch data from Google Analytics.", e );
+			throw new UnexpectedServerException();
 		}
+			
 		
 		return uriViewsMap;
 		
