@@ -2,6 +2,7 @@ package com.pratilipi.api.impl.pratilipi.shared;
 
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.common.type.PratilipiContentType;
 
 public class GetPratilipiContentRequest extends GenericRequest {
 
@@ -16,6 +17,8 @@ public class GetPratilipiContentRequest extends GenericRequest {
 	
 	@Validate
 	private String pageletId;
+	
+	private PratilipiContentType type;
 
 	
 	public Long getPratilipiId() {
@@ -32,6 +35,10 @@ public class GetPratilipiContentRequest extends GenericRequest {
 	
 	public Integer getPageletId() {
 		return pageNo;
+	}
+	
+	public PratilipiContentType getContentType() {
+		return type;
 	}
 	
 }

@@ -8,10 +8,13 @@ import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiContentRequest;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiContentResponse;
 import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiContentRequest;
 import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiContentResponse;
+import com.pratilipi.api.shared.GenericFileDownloadResponse;
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PratilipiContentType;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -21,19 +24,31 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 public class PratilipiContentApi extends GenericApi {
 
 	@Get
-	public GetPratilipiContentResponse getPratilipiContent( GetPratilipiContentRequest request )
+	public GenericResponse getPratilipiContent( GetPratilipiContentRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+		
+		PratilipiContentType contentType = request.getContentType();
+		
+		if( contentType == null )
+			contentType = DataAccessorFactory.getDataAccessor()
+							.getPratilipi( request.getPratilipiId() ).getContentType();
 
 		Object content = PratilipiDataUtil.getPratilipiContent(
 				request.getPratilipiId(),
 				request.getChapterNo(),
 				request.getPageNo(),
-				PratilipiContentType.PRATILIPI );
+				contentType );
 
-		return new GetPratilipiContentResponse(
-				request.getPratilipiId(),
-				request.getPageNo(),
-				content );
+		if( contentType == PratilipiContentType.PRATILIPI ) {
+			return new GetPratilipiContentResponse(
+					request.getPratilipiId(),
+					request.getPageNo(),
+					content );
+		} else if( contentType == PratilipiContentType.IMAGE ) {
+			return ( GenericFileDownloadResponse ) content;
+		}
+		
+		return null;
 		
 	}
 
