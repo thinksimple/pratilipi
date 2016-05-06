@@ -1,5 +1,4 @@
 <link rel='import' href='pratilipi-reader-header.html?20160506'>
-<link rel='import' href='pratilipi-reader-content.html?20160506'>
 <link rel='import' href='pratilipi-reader-footer.html?20160429'>
 <link rel="import" href="pratilipi-review-input.html?20160505" />
 
@@ -24,11 +23,17 @@
 				<div class="container" style="margin: 0 auto;">
 					<div style="overflow:hidden;">
 						<!-- In case of type == PRATILIPI -->
-						<pratilipi-reader-content
-							content="{{ content }}"
-							font-size="{{ fontSize }}"
-							last-page="{{ lastPage }}"></pratilipi-reader-content>
+						<template is="dom-if" if="{{ pratilipiContent }}">
+							<pratilipi-reader-content
+								content="{{ content }}"
+								font-size="{{ fontSize }}"
+								last-page="{{ lastPage }}"></pratilipi-reader-content>
+						</template>
 						<!-- In case of type == IMAGE -->
+						<template is="dom-if" if="{{ imageContent }}">
+							<pratilipi-reader-image-content>
+								</pratilipi-reader-image-content>
+						</template>
 					</div>
 				</div>
 			</div>
@@ -45,6 +50,15 @@
 				method="GET"
 				content-type="application/json"
 				handle-as="json"
+				on-response="_onResponse"
+				on-error="_onError"
+				></iron-ajax>
+		<iron-ajax
+				id="AjaxGetImage"
+				url="/api/pratilipi/content"
+				method="GET"
+				content-type="application/json"
+				handle-as="blob"
 				on-response="_onResponse"
 				on-error="_onError"
 				></iron-ajax>
@@ -107,11 +121,10 @@
 				fontSize: { type: Number, notify: true },
 				pageNo: { type: Number, observer: "_pageNoChanged", notify: true },
 				pageCount: { type: Number },
-				content: { type: String },
+				content: { types: String },
 				contentMap: { type: Object, value: {} },
 				index: { types: Array, value: [] },
 				
-				addedToLibrary: { type: String },
 				addedToLib: { type: Boolean },
 				addToLibClicked: { type: Boolean, value: false },
 
@@ -119,7 +132,11 @@
 				reviewButtonClicked: { type: Boolean, value: false },
 				hideIndexButton: { type: Boolean, value: false },
 
-				lastPage: { type: Boolean, value: false }
+				lastPage: { type: Boolean },
+				
+				contentType: { type: String },
+				pratilipiContent: { type: Boolean },
+				imageContent: { type: Boolean }
 			},
 			
 			showPrevious: function() {
@@ -193,10 +210,10 @@
 			},
 			
 			ready: function() {
-				jQuery( '#scrollToTop' ).css( "display", "none" );
-				this.setFontSize( getCookie( "fontSize" ) );
+				if( this.contentType == "PRATILIPI" )
+					this.setFontSize( getCookie( "fontSize" ) );
+				
 				this.contentMap[ this.pageNo ] = this.content;
-				this._precache();
 				
 				if( this.index != null )
 					this.index = jQuery.parseJSON( this.index );
@@ -207,8 +224,12 @@
 				if( this.index == null || this.index.length == 0 )
 					this.set( 'hideIndexButton', true );
 
-				this.set( 'addedToLib', this.addedToLibrary == "true" ? true : false );
+				this._precache();
+
+				this.set( 'addedToLib', this.userpratilipi != null ? this.userpratilipi.addedToLib : false );
 				this.set( 'lastPage', this.pageNo == this.pageCount ? true : false );
+				this.set( 'pratilipiContent', this.contentType == "PRATILIPI" ? true : false );
+				this.set( 'imageContent', this.contentType == "IMAGE" ? true : false );
 			},
 			
 			_precache: function() {
@@ -245,7 +266,13 @@
 				if( pageNo == null || this.contentMap[ pageNo ] != null )
 					return;
 				
-				var ajaxGet = this.$.AjaxGet;
+				var ajaxGet = null;
+
+				if( this.pratilipiContent )
+					ajaxGet = this.$.AjaxGet;
+				else if( this.imageContent )
+					ajaxGet = this.$.AjaxGetImage
+
 				ajaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
 				ajaxGet.params.chapterNo = pageNo;
 				ajaxGet.params.pageNo = pageNo;

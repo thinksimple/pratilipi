@@ -4,7 +4,14 @@
 	<head>
 		<#assign mainPage="pratilipi-reader-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160506'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2016050602'>
+
+		<#if contentType == "PRATILIPI">
+			<link rel='import' href='/elements.${lang}/pratilipi-reader-content.html?20160506'>
+		<#elseif contentType == "IMAGE">
+			<link rel='import' href='/elements.${lang}/pratilipi-reader-image-content.html?20160506'>
+		</#if>
+
 		<script>
 			$(document).keyup( function(e) {
 				if( e.which == 37 || e.which == 39 )
@@ -20,9 +27,9 @@
 				userpratilipi='${ userpratilipiJson }'
 				page-no='${ pageNo }'
 				page-count='${ pageCount }'
-				content='${ contentHTML }'
+				content='${ content }'
+				content-type='${ contentType }'
 				index='${ indexJson }'
-				added-to-library=${ addedToLib?c }
 				></pratilipi-pratilipi-page>
 	</body>
 	

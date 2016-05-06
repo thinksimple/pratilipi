@@ -53,7 +53,6 @@ public class GenericPratilipiResponse extends GenericResponse {
 	private String writePageUrl;
 
 	private PratilipiType type;
-	private PratilipiContentType contentType;
 	private PratilipiState state;
 	
 	private Long listingDateMillis;
@@ -87,7 +86,6 @@ public class GenericPratilipiResponse extends GenericResponse {
 		this.writePageUrl = pratilipiData.getWritePageUrl();
 		
 		this.type = pratilipiData.getType();
-		this.contentType = pratilipiData.getContentType();
 		this.state = pratilipiData.getState();
 		
 		this.listingDateMillis = pratilipiData.getListingDate().getTime();
@@ -158,10 +156,6 @@ public class GenericPratilipiResponse extends GenericResponse {
 		return type;
 	}
 	
-	public PratilipiContentType getContentType() {
-		return contentType;
-	}
-
 	public PratilipiState getState() {
 		return state;
 	}

@@ -30,6 +30,7 @@ import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericReviewResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
+import com.pratilipi.api.shared.GenericFileDownloadResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -59,6 +60,7 @@ import com.pratilipi.data.client.UserAuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Event;
@@ -771,7 +773,14 @@ public class PratilipiSite extends HttpServlet {
 		
 		pageNo = pageNo < 1 ? 1 : pageNo;
 		pageNo = pageNo > pratilipi.getPageCount() ? pratilipi.getPageCount() : pageNo;
-		Object content = PratilipiDataUtil.getPratilipiContent( pratilipiId, null, pageNo, PratilipiContentType.PRATILIPI );
+		Object content = PratilipiDataUtil.getPratilipiContent( pratilipiId, null, pageNo, pratilipi.getContentType() );
+
+		if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
+			BlobEntry blobEntry = ( BlobEntry ) content;
+			content = new GenericFileDownloadResponse( blobEntry.getData(), 
+					blobEntry.getMimeType(), 
+					blobEntry.getETag() );
+		}
 		
 		Gson gson = new Gson();
 		GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
@@ -779,23 +788,20 @@ public class PratilipiSite extends HttpServlet {
 						new GenericUserPratilipiResponse( userPratilipiData ) : null;
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
+		dataModel.put( "pageNo", pageNo );
+		dataModel.put( "pageCount", pratilipi.getPageCount() );
+		dataModel.put( "content", content );
+		dataModel.put( "contentType", pratilipi.getContentType() );
 		if( basicMode ) {
-			dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "userpratilipi", userPratilipiResponse );
-			dataModel.put( "pageNo", pageNo );
-			dataModel.put( "pageCount", pratilipi.getPageCount() );
 			dataModel.put( "indexList", gson.fromJson( pratilipi.getIndex(), Object.class ) );
-			dataModel.put( "content", content );
+			
 		} else {
-			dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
 			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
-			dataModel.put( "pageNo", pageNo );
-			dataModel.put( "pageCount", pratilipi.getPageCount() );
 			dataModel.put( "indexJson", gson.toJson( pratilipi.getIndex() ) );
-			dataModel.put( "addedToLib", userPratilipiData != null ? userPratilipiData.hasAddedToLib() : false );
-			dataModel.put( "contentHTML", content );
 		}
 		return dataModel;
 		
