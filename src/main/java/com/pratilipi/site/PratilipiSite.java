@@ -777,7 +777,7 @@ public class PratilipiSite extends HttpServlet {
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI )
 			content = PratilipiDataUtil.getPratilipiContent( pratilipiId, null, pageNo, pratilipi.getContentType() );
 		else if( pratilipi.getContentType() == PratilipiContentType.IMAGE )
-			content = "<img src='/api/pratilipi/content?pratilipiId=" + pratilipi.getId() + "&pageNo=" + pageNo + "&chapterNo=" + pageNo + "' />";
+			content = "<img src=\"/api/pratilipi/content?pratilipiId=" + pratilipi.getId() + "&pageNo=" + pageNo + "&chapterNo=" + pageNo + "\" />";
 		
 		Gson gson = new Gson();
 		GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
