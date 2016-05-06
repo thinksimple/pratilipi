@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-reader-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2016050606'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2016050607'>
 
 		<script>
 			$(document).keyup( function(e) {
@@ -19,6 +19,7 @@
 				user-data='${ userJson }'
 				pratilipi='${ pratilipiJson }'
 				userpratilipi='${ userpratilipiJson }'
+				font-size=${ fontSize }
 				page-no='${ pageNo }'
 				page-count='${ pageCount }'
 				content='${ content }'
