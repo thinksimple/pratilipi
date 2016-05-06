@@ -8,7 +8,7 @@ import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 
 public class PratilipiGoogleAnalyticsDocImpl implements PratilipiGoogleAnalyticsDoc {
 	
-	private class YearlyPageViews {
+	public static class YearlyPageViews {
 		//          Day      Count
 		private Map<Integer, Integer> JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC;
 	};
