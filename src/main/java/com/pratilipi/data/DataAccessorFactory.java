@@ -18,6 +18,7 @@ public class DataAccessorFactory {
 			: new SearchAccessorMockImpl( indexName );
 	private static final BlobAccessor blobAccessor = new BlobAccessorGcsImpl( gcsBucket );
 	private static final BlobAccessor blobAccessorBackup = new BlobAccessorGcsImpl( gcsBucketBackup );
+	private static final ThreadLocal<DocAccessor> threadLocalDocAccessor = new ThreadLocal<>();
 
 	
 	public static Memcache getL1CacheAccessor() {
@@ -57,6 +58,18 @@ public class DataAccessorFactory {
 
 	public static BlobAccessor getBlobAccessorBackup() {
 		return blobAccessorBackup;
+	}
+
+	public static DocAccessor getDocAccessor() {
+		DocAccessor docAccessor = threadLocalDocAccessor.get();
+		if( docAccessor == null ) {
+			BlobAccessor blobAccessor = DataAccessorFactory.blobAccessor;
+			blobAccessor = new BlobAccessorWithMemcache( blobAccessor, cacheL2 );
+			blobAccessor = new BlobAccessorWithMemcache( blobAccessor, new MemcacheImpl() );
+			docAccessor = new DocAccessorImpl( blobAccessor );
+			threadLocalDocAccessor.set( docAccessor );
+		}
+		return docAccessor;
 	}
 
 }
