@@ -206,6 +206,10 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "action", action );
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 			
+			} else if( uri.equals( "/pratilipihomepage" ) ) {
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Home Page" );
+				templateName = templateFilePrefix + "HomePage.ftl";
 			} else if( uri.equals( "/search" ) ) {
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
