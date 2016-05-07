@@ -94,12 +94,17 @@ public class PratilipiDocUtil {
 				String patilipiIdStr = uri.indexOf( '&' ) == -1
 						? uri.substring( "/read?id=".length() )
 						: uri.substring( "/read?id=".length(), uri.indexOf( '&' ) );
-				Long pratilpiId = Long.parseLong( patilipiIdStr );
-				if( readPageViewsMap.get( pratilpiId ) == null )
-					readPageViewsMap.put( pratilpiId, entry.getValue() );
-				else
-					readPageViewsMap.put( pratilpiId, readPageViewsMap.get( pratilpiId ) + entry.getValue() );
-
+						
+				try {
+					Long pratilpiId = Long.parseLong( patilipiIdStr );
+					if( readPageViewsMap.get( pratilpiId ) == null )
+						readPageViewsMap.put( pratilpiId, entry.getValue() );
+					else
+						readPageViewsMap.put( pratilpiId, readPageViewsMap.get( pratilpiId ) + entry.getValue() );
+				} catch( NumberFormatException e ) {
+					logger.log( Level.SEVERE, "Exception while processing reader uri " + uri, e );
+				}
+				
 			}
 			
 		}
