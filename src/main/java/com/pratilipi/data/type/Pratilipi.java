@@ -94,6 +94,8 @@ public interface Pratilipi extends GenericOfyType, Serializable {
 	
 	Long getFbLikeShareCountOffset();
 
+	void setFbLikeShareCountOffset( Long fbLikeShareCountOffset );
+	
 	Long getFbLikeShareCount();
 
 	void setFbLikeShareCount( Long fbLikeShareCount );
