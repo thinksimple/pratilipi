@@ -1,3 +1,21 @@
+@font-face {
+	font-family: 'Montserrat Bold';
+	src: url("../fonts/Montserrat/Montserrat-Bold.woff2") format("woff2"), url("../fonts/Montserrat/Montserrat-Bold.woff") format("woff"), url("../fonts/Montserrat/Montserrat-Bold.ttf") format("truetype"); 
+}
+@font-face {
+	font-family: 'Montserrat Regular';
+	src: url("../fonts/Montserrat/Montserrat-Regular.woff2") format("woff2"), url("../fonts/Montserrat/Montserrat-Regular.woff") format("woff"), url("../fonts/Montserrat/Montserrat-Regular.ttf") format("truetype"); 
+}
+@font-face {
+	font-family: 'Montserrat Light';
+	src: url("../fonts/Montserrat/Montserrat-Light.woff 2") format("woff2"), url("../fonts/Montserrat/Montserrat-Light.woff") format("woff"), url("../fonts/Montserrat/Montserrat-Light.ttf") format("truetype"); 
+}
+@font-face {
+	font-family: 'Montserrat ultra-Light';
+	src: url("../fonts/Montserrat/Montserrat-UltraLight.woff2") format("woff2"), url("../fonts/Montserrat/Montserrat-UltraLight.woff") format("woff"), url("../fonts/Montserrat/Montserrat-UltraLight.ttf") format("truetype"); 
+}
+
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -11,269 +29,358 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline; }
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline; 
+}
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-  display: block; }
+	display: block; 
+}
 
 body {
-  line-height: 1; }
+	line-height: 1; 
+}
 
 ol, ul {
-  list-style: none; }
+	list-style: none; 
+}
 
 blockquote, q {
-  quotes: none; }
+	quotes: none; 
+}
 
 blockquote:before, blockquote:after,
 q:before, q:after {
-  content: '';
-  content: none; }
+	content: '';
+	content: none; 
+}
 
 table {
-  border-collapse: collapse;
-  border-spacing: 0; }
+	border-collapse: collapse;
+	border-spacing: 0; 
+}
 
-@font-face {
-  font-family: 'Montserrat Bold';
-  src: url("../fonts/Montserrat/Montserrat-Bold.woff2") format("woff2"), url("../fonts/Montserrat/Montserrat-Bold.woff") format("woff"), url("../fonts/Montserrat/Montserrat-Bold.ttf") format("truetype"); }
-@font-face {
-  font-family: 'Montserrat Regular';
-  src: url("../fonts/Montserrat/Montserrat-Regular.woff2") format("woff2"), url("../fonts/Montserrat/Montserrat-Regular.woff") format("woff"), url("../fonts/Montserrat/Montserrat-Regular.ttf") format("truetype"); }
-@font-face {
-  font-family: 'Montserrat Light';
-  src: url("../fonts/Montserrat/Montserrat-Light.woff 2") format("woff2"), url("../fonts/Montserrat/Montserrat-Light.woff") format("woff"), url("../fonts/Montserrat/Montserrat-Light.ttf") format("truetype"); }
-@font-face {
-  font-family: 'Montserrat ultra-Light';
-  src: url("../fonts/Montserrat/Montserrat-UltraLight.woff2") format("woff2"), url("../fonts/Montserrat/Montserrat-UltraLight.woff") format("woff"), url("../fonts/Montserrat/Montserrat-UltraLight.ttf") format("truetype"); }
+
 body {
-  font-family: 'gotham-book'; }
+	font-family: 'gotham-book'; 
+}
 
 .container {
-  width: 100%;
-  padding: 0px; }
+	width: 100%;
+	padding: 0px; 
+}
 
 .wrapper {
-  width: 100%;
-  max-width: 1200; }
+	width: 100%;
+	max-width: 1200; 
+}
 
 .active {
-  display: block !important; }
-
-a {
-  text-decoration: none; }
+	display: block !important; 
+}
 
 .inactive {
-  display: none !important; }
+	display: none !important; 
+}
+
+a {
+	text-decoration: none; 
+}
 
 .clearfix:after {
-  content: "";
-  display: block;
-  clear: both; }
+	content: "";
+	display: block;
+	clear: both; 
+}
 
 .pull-right {
-  float: right; }
+	float: right; 
+}
 
 .pull-left {
-  float: left; }
+	float: left; 
+}
 
 .col-50 {
-  width: 50%; }
+	width: 50%; 
+}
 
 .col-25 {
-  width: 25%; }
+	width: 25%; 
+}
 
-.col-50,
-.col-25 {
-  display: inline-block;
-  vertical-align: top; }
+.col-50, .col-25 {
+	display: inline-block;
+	vertical-align: top; 
+}
 
 .btn {
-  height: 35px;
-  background-color: #ff0000;
-  color: #fff;
-  border: 2px solid transparent;
-  padding: 0px 25px;
-  font-size: 16px;
-  line-height: 35px;
-  margin: 10px;
-  text-transform: uppercase;
-  font-weight: 200;
-  border-radius: 4px; }
+	height: 35px;
+	background-color: #ff0000;
+	color: #fff;
+	border: 2px solid transparent;
+	padding: 0px 25px;
+	font-size: 16px;
+	line-height: 35px;
+	margin: 10px;
+	text-transform: uppercase;
+	font-weight: 200;
+	border-radius: 4px; 
+}
 
 * {
-  box-sizing: border-box; }
+	box-sizing: border-box; 
+}
 
 .landing-page .pratilipi-banner {
-  background-image: url("http://0.ptlp.co/resource-all/home-page/book.png");
-  background-color: lightgrey;
-  background-position: center;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding: 10px;
-  padding-bottom: 6%;
-  text-align: center; }
-  .landing-page .pratilipi-banner .login-btn,
-  .landing-page .pratilipi-banner .signup-btn {
-    height: 35px;
-    background: transparent;
-    color: #fff;
-    border: 2px solid #fff;
-    padding: 0px 25px;
-    font-size: 16px;
-    line-height: 35px;
-    margin: 10px;
-    text-transform: uppercase;
-    font-weight: 200;
-    margin-top: 0;
-    border-radius: 4px; }
-  .landing-page .pratilipi-banner .content-wrapper {
-    padding-top: 50px; }
-    .landing-page .pratilipi-banner .content-wrapper .description {
-      margin-bottom: 30px; }
-    .landing-page .pratilipi-banner .content-wrapper h2 {
-      font-size: 30px;
-      font-weight: 400;
-      color: #fff;
-      margin: 20px; }
-    .landing-page .pratilipi-banner .content-wrapper .logo {
-      display: inline-block;
-      text-align: center; }
-      .landing-page .pratilipi-banner .content-wrapper .logo .pratilipi {
-        display: inline-block;
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background-image: url("http://0.ptlp.co/resource-all/home-page/logo.jpg");
-        background-repeat: no-repeat;
-        background-size: cover; }
-      .landing-page .pratilipi-banner .content-wrapper .logo h1 {
-        display: inline-block;
-        font-size: 34px;
-        color: #fff;
-        line-height: 120px;
-        vertical-align: top;
-        font-weight: 400;
-        margin-left: 10px; }
-    .landing-page .pratilipi-banner .content-wrapper .bg-white {
-      background-color: #fff;
-      color: #666;
-      display: inline-block;
-      margin: 2px; }
+	background-image: url("http://0.ptlp.co/resource-all/home-page/book.png");
+	background-color: lightgrey;
+	background-position: center;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 10px;
+	padding-bottom: 6%;
+	text-align: center; 
+}
+.landing-page .pratilipi-banner .login-btn,
+	.landing-page .pratilipi-banner .signup-btn {
+	height: 35px;
+	background: transparent;
+	color: #fff;
+	border: 2px solid #fff;
+	padding: 0px 25px;
+	font-size: 16px;
+	line-height: 35px;
+	margin: 10px;
+	text-transform: uppercase;
+	font-weight: 200;
+	margin-top: 0;
+	border-radius: 4px; 
+}
+.landing-page .pratilipi-banner .content-wrapper {
+	padding-top: 50px; 
+}
+.landing-page .pratilipi-banner .content-wrapper .description {
+	margin-bottom: 30px; 
+}
+.landing-page .pratilipi-banner .content-wrapper h2 {
+	font-size: 30px;
+	font-weight: 400;
+	color: #fff;
+	margin: 20px; 
+}
+.landing-page .pratilipi-banner .content-wrapper .logo {
+	display: inline-block;
+	text-align: center; 
+}
+.landing-page .pratilipi-banner .content-wrapper .logo .pratilipi {
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	background-image: url("http://0.ptlp.co/resource-all/home-page/logo.jpg");
+	background-repeat: no-repeat;
+	background-size: cover; 
+}
+.landing-page .pratilipi-banner .content-wrapper .logo h1 {
+	display: inline-block;
+	font-size: 34px;
+	color: #fff;
+	line-height: 120px;
+	vertical-align: top;
+	font-weight: 400;
+	margin-left: 10px; 
+}
+.landing-page .pratilipi-banner .content-wrapper .bg-white {
+	background-color: #fff;
+	color: #666;
+	display: inline-block;
+	margin: 2px; 
+}
 .landing-page .wrapper {
-  max-width: 1200px;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  margin: auto; }
-  .landing-page .wrapper a {
-    width: calc(33.33% - 20px);
-    margin: 10px; }
-  .landing-page .wrapper a .tiles {
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: #ebebeb;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center; }
-    .landing-page .wrapper a .tiles .language {
-      text-decoration: none;
-      margin-top: 30px;
-      background: rgba(255, 255, 255, 0.5);
-      text-align: center;
-      padding: 20px;
-      font-size: 18px;
-      color: #666;
-      display: inline-block; }
-.landing-page .notify-me-wrapper {
-  padding: 20px;
-  text-align: center;
-  background-color: #333; }
-  .landing-page .notify-me-wrapper .notify-elements {
-    width: 60%;
-    margin: 0 auto; }
-    .landing-page .notify-me-wrapper .notify-elements h3 {
-      color: #fff;
-      font-size: 24px;
-      margin: 10px;
-      font-weight: 400; }
-    .landing-page .notify-me-wrapper .notify-elements .language-selection {
-      display: inline-block;
-      background-color: #ebebeb;
-      width: 100px;
-      color: #ababab;
-      margin: 10px;
-      font-size: 18px;
-      font-weight: 100;
-      float: none;
-      height: 35px; }
-    .landing-page .notify-me-wrapper .notify-elements .input-feilds {
-      display: inline-block;
-      text-align: center;
-      width: 200px;
-      color: #ababab;
-      font-size: 18px;
-      border-radius: 4px;
-      height: 35px;
-      margin-right: 10px;
-      background-color: #ebebeb; }
-    .landing-page .notify-me-wrapper .notify-elements .notify-me-btn {
-      display: inline-block;
-      height: 35px;
-      background-color: #ff0000;
-      color: #fff;
-      border: 2px solid transparent;
-      padding: 0px 25px;
-      font-size: 16px;
-      line-height: 35px;
-      margin: 10px;
-      text-transform: uppercase;
-      font-weight: 200;
-      border-radius: 4px; }
-.landing-page .pratilipi-footer {
-  padding: 20px;
-  background-color: #ebebeb; }
-  .landing-page .pratilipi-footer .about-pratilipi {
-    position: relative;
-    padding-bottom: 40px;
-    border-right: 1px solid gray; }
-    .landing-page .pratilipi-footer .about-pratilipi h5 {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 10px; }
-    .landing-page .pratilipi-footer .about-pratilipi span {
-      font-size: 14px;
-      line-height: 1.5;
-      color: #666; }
-    .landing-page .pratilipi-footer .about-pratilipi .copyrights {
-      position: absolute;
-      bottom: -21%; }
-  .landing-page .pratilipi-footer .about-part-2 {
-    padding: 10px;
-    padding-top: 0;
-    border-right: 1px solid gray; }
-    .landing-page .pratilipi-footer .about-part-2 ul {
-      display: inline-block;
-      margin: 0 10px; }
-    .landing-page .pratilipi-footer .about-part-2 ul li {
-      margin-bottom: 10px; }
-      .landing-page .pratilipi-footer .about-part-2 ul li a {
-        color: #666; }
-  .landing-page .pratilipi-footer .about-part-3 {
-    color: #666;
-    font-size: 16px;
-    width: 22%; }
-    .landing-page .pratilipi-footer .about-part-3 a {
-      color: #666; }
+	max-width: 1200px;
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	margin: auto; 
+}
+@media only screen and (min-width: 911px) {
+	.landing-page .wrapper ul {
+		width:900px;
+		margin: auto;
+		padding:10px;
+		display: block;
+		height: 700px;
+	}
+	.landing-page .wrapper ul li.image {
+		float: left;
+		margin: 7px;
+		overflow: hidden;
+		width: 280px;
+		height: 324px;
+		margin-bottom: 0px;
+	}
+	.landing-page .wrapper ul li.image-left {
+		margin-right: 0px;
+	}
+	.landing-page .wrapper ul li.image-right {
+		margin-left: 0px;
+	}
+	.landing-page .wrapper ul li.image2 {
+		height: 183px;
+	}
+	.landing-page .wrapper ul li.image3 {
+		height: 283px;
+		margin-top: -137px;
+	}
+	.landing-page .wrapper ul li.image4 {
+		height: 183px;
+		margin-top: -182px;
+	}    
+}
 
-/*# sourceMappingURL=style.css.map */
+@media only screen and (max-width: 911px) {
+	.landing-page .wrapper ul {
+		width:100%;
+		margin: auto;
+		padding:10px;
+	}
+	.landing-page .wrapper ul li.image {
+		margin: 7px auto;
+		overflow: hidden;
+		width: 350px;
+		height: 350px;
+	}
+	.landing-page .wrapper ul li.image-none {
+		display: none;
+	}
+}
+
+.landing-page .wrapper a {
+	width: 100%;
+	margin: 0; 
+}
+.landing-page .wrapper a .tiles {
+	width: 100%;
+	padding-bottom: 100%;
+	background-color: #ebebeb;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center; 
+}
+.landing-page .wrapper a .tiles .language {
+	text-decoration: none;
+	margin-top: 30px;
+	background: rgba(255, 255, 255, 0.5);
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	color: #666;
+	display: inline-block; 
+}
+.landing-page .notify-me-wrapper {
+	padding: 20px;
+	text-align: center;
+	background-color: #333; 
+}
+.landing-page .notify-me-wrapper .notify-elements {
+	width: 60%;
+	margin: 0 auto; 
+}
+.landing-page .notify-me-wrapper .notify-elements h3 {
+	color: #fff;
+	font-size: 24px;
+	margin: 10px;
+	font-weight: 400; 
+}
+.landing-page .notify-me-wrapper .notify-elements .language-selection {
+	display: inline-block;
+	background-color: #ebebeb;
+	width: 100px;
+	color: #ababab;
+	margin: 10px;
+	font-size: 18px;
+	font-weight: 100;
+	float: none;
+	height: 35px; 
+}
+.landing-page .notify-me-wrapper .notify-elements .input-feilds {
+	display: inline-block;
+	text-align: center;
+	width: 200px;
+	color: #ababab;
+	font-size: 18px;
+	border-radius: 4px;
+	height: 35px;
+	margin-right: 10px;
+	background-color: #ebebeb; 
+}
+.landing-page .notify-me-wrapper .notify-elements .notify-me-btn {
+	display: inline-block;
+	height: 35px;
+	background-color: #ff0000;
+	color: #fff;
+	border: 2px solid transparent;
+	padding: 0px 25px;
+	font-size: 16px;
+	line-height: 35px;
+	margin: 10px;
+	text-transform: uppercase;
+	font-weight: 200;
+	border-radius: 4px; 
+}
+.landing-page .pratilipi-footer {
+	padding: 20px;
+	background-color: #ebebeb; 
+}
+.landing-page .pratilipi-footer .about-pratilipi {
+	position: relative;
+	padding-bottom: 40px;
+	border-right: 1px solid gray; 
+}
+.landing-page .pratilipi-footer .about-pratilipi h5 {
+	font-size: 18px;
+	color: #666;
+	margin-bottom: 10px; 
+}
+.landing-page .pratilipi-footer .about-pratilipi span {
+	font-size: 14px;
+	line-height: 1.5;
+	color: #666; 
+}
+.landing-page .pratilipi-footer .about-pratilipi .copyrights {
+	position: absolute;
+	bottom: -21%; 
+}
+.landing-page .pratilipi-footer .about-part-2 {
+	padding: 10px;
+	padding-top: 0;
+	border-right: 1px solid gray; 
+}
+.landing-page .pratilipi-footer .about-part-2 ul {
+	display: inline-block;
+	margin: 0 10px; 
+}
+.landing-page .pratilipi-footer .about-part-2 ul li {
+		margin-bottom: 10px; 
+}
+.landing-page .pratilipi-footer .about-part-2 ul li a {
+	color: #666; 
+}
+.landing-page .pratilipi-footer .about-part-3 {
+	color: #666;
+	font-size: 16px;
+	width: 22%; 
+}
+.landing-page .pratilipi-footer .about-part-3 a {
+	color: #666; 
+}

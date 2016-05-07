@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?2">
 </head>
 
 <body>
@@ -35,43 +35,67 @@
 						<br>
 						<h5 class="bg-white">world's largest platform for indian languages </h5>
 					</div>
-					<button class="start-reading-btn btn">Start Reading</button>
+					<a href="#wrapper" class="start-reading-btn btn">Start Reading</a>
 
 				</div>
 
 			</div>
-			<div class="wrapper">
-				<a href="#">
-					<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi.jpg');">
-						<span class="language"><img src="" />Hindi</span>
-					</div>
-				</a>
-				<a href="#">
-					<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/marathi.jpg');">
-						<span class="language"><img src="" />Marathi</span>
-					</div>
-				</a>
-				<a href="#">
-					<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/bengali.jpg'); ">
-						<span class="language"><img src="" />Bengali</span>
-					</div>
-				</a>
-				<a href="#">
-					<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/tamil.png'); ">
-						<span class="language"><img src="" />Tamil</span>
-					</div>
-				</a>
-				<a href="#">
-					<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/gujarati.jpg');">
-						<span class="language"><img src="" />Gujarati</span>
-					</div>
-				</a>
-				<a href="#">
-					<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/malayalam.jpg');">
-						<span class="language"><img src=""/>Malayalam</span>
-					</div>
-				</a>
+
+			<div class="wrapper" id="wrapper">
+				<ul>
+					<li class="image image-left">
+						<a href="http://hindi.pratilipi.com/">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi.jpg');">
+								<span class="language">Hindi</span>
+							</div>
+						</a>
+					</li>
+					<li class="image image2">
+						<a href="http://tamil.pratilipi.com/">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/tamil.png');">
+								<span class="language">Tamil</span>
+							</div>
+						</a>
+					</li>
+					<li class="image image-right">
+						<a href="http://malayalam.pratilipi.com/">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/malayalam.jpg');">
+								<span class="language">Malayalam</span>
+							</div>
+						</a>
+					</li>
+					<li class="image image-left">
+						<a href="http://bengali.pratilipi.com/">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/bengali.jpg');">
+								<span class="language">Bengali</span>
+							</div>
+						</a>
+					</li>
+					<li class="image image3">
+						<a href="http://telugu.pratilipi.com/">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/telugu.jpg');">
+								<span class="language">Telugu</span>
+							</div>
+						</a>
+					</li>
+					<li class="image image-right">
+						<a href="http://gujarati.pratilipi.com/">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/gujarati.jpg');">
+								<span class="language">Gujarati</span>
+							</div>
+						</a>
+					</li>
+					<li class="image image-left image-none" style="height: 0px;"></li>
+					<li class="image image4">
+						<a href="http://marathi.pratilipi.com/">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/marathi.jpg');">
+								<span class="language">Marathi</span>
+							</div>
+						</a>
+					</li> 
+				</ul>
 			</div>
+
 			<div class="notify-me-wrapper">
 				<div class="notify-elements clearfix">
 					<h3>Be the first to know when your language gets added</h3>
