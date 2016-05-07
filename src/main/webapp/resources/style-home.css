@@ -88,15 +88,23 @@ a {
 	float: left; 
 }
 
-.col-50 {
-	width: 50%; 
-}
-
 .col-25 {
 	width: 25%; 
 }
 
-.col-50, .col-25 {
+.col-40 {
+	width: 40%;
+}
+
+.col-45 {
+	width: 45%;
+}
+
+.col-50 {
+	width: 50%; 
+}
+
+.col-25, .col-40, .col-45, .col-50 {
 	display: inline-block;
 	vertical-align: top; 
 }
@@ -106,9 +114,9 @@ a {
 }
 
 .landing-page .pratilipi-banner {
-	background-image: url("http://0.ptlp.co/resource-all/home-page/book.png");
+	background-image: url("http://0.ptlp.co/resource-all/home-page/wall.jpeg");
 	background-color: lightgrey;
-	background-position: center;
+	background-position: top;
 	width: 100%;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -204,9 +212,8 @@ a {
 	justify-content: space-between;
 	margin: auto; 
 }
-@media only screen and (min-width: 911px) {
+@media only screen and (min-width: 1150px) {
 	.landing-page .wrapper ul {
-		width:900px;
 		margin: auto;
 		padding:10px;
 		display: block;
@@ -216,7 +223,7 @@ a {
 		float: left;
 		margin: 7px;
 		overflow: hidden;
-		width: 280px;
+		width: 366px;
 		height: 324px;
 		margin-bottom: 0px;
 	}
@@ -239,7 +246,7 @@ a {
 	}    
 }
 
-@media only screen and (max-width: 911px) {
+@media only screen and (max-width: 1150px) {
 	.landing-page .wrapper ul {
 		width:100%;
 		margin: auto;
@@ -267,7 +274,7 @@ a {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-	opacity: 0.85; 
+	opacity: 0.65; 
 }
 .landing-page .wrapper a .tiles:hover {
 	opacity: 1; 
@@ -288,7 +295,6 @@ a {
 	background-color: #333; 
 }
 .landing-page .notify-me-wrapper .notify-elements {
-	width: 60%;
 	margin: 0 auto; 
 }
 .landing-page .notify-me-wrapper .notify-elements h3 {
@@ -300,7 +306,7 @@ a {
 .landing-page .notify-me-wrapper .notify-elements .language-selection {
 	display: inline-block;
 	background-color: #ebebeb;
-	width: 300px;
+	width: 200px;
 	color: #555555;
 	margin: 10px 0px;
 	margin-left: 8px;
@@ -341,6 +347,7 @@ a {
 }
 .landing-page .pratilipi-footer .about-pratilipi {
 	position: relative;
+	padding-top: 10px;
 	padding-bottom: 40px;
 	border-right: 1px solid gray; 
 }
@@ -363,9 +370,8 @@ a {
 }
 .landing-page .pratilipi-footer .about-part-2 {
 	padding: 10px;
-	padding-top: 0;
 	border-right: 1px solid gray;
-	height: 120px;
+	height: 128px;
 }
 .landing-page .pratilipi-footer .about-part-2 ul {
 	display: inline-block;
@@ -375,17 +381,22 @@ a {
 	margin-bottom: 10px; 
 }
 .landing-page .pratilipi-footer .about-part-2 ul li a {
-	color: #666; 
+	color: #666;
+	line-height: 1.3em;
 }
 .landing-page .pratilipi-footer .about-part-3 {
 	color: #666;
 	font-size: 16px;
-	width: 22%;
-	padding-left: 20px;
+	padding-top: 10px;
+	padding-left: 10px;
 }
 .landing-page .pratilipi-footer .about-part-3 span {
 	display: block;
+	line-height: 1.3em;
 	margin-bottom: 16px; 
+}
+.landing-page .pratilipi-footer .about-part-3 .social-media-links {
+	white-space: nowrap;
 }
 .landing-page .pratilipi-footer .about-part-3 a {
 	color: #666;

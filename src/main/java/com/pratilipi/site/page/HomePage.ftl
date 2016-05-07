@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?3">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?4">
 </head>
 
 <body>
@@ -115,7 +115,7 @@
 				</div>
 			</div>
 			<div class="pratilipi-footer">
-				<div class="col-50 about-pratilipi">
+				<div class="col-45 about-pratilipi">
 					<h5>Pratilipi</h5>
 					<a href="mailto:contact@pratilipi.com"><span>contact@pratilipi.com</span></a>
 					<a href="tel:+919789316700"><span>+91 9789316700</span></a>
@@ -128,8 +128,8 @@
 					</ul>
 				</div>
 				<div class="col-25 about-part-3">
+					<span>Follow us on Social Media :</span>
 					<div class="social-media-links">
-						<span>Follow us on Social Media: </span>
 						<a href="#"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a>
 						<a href="#"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></a>
 						<a href="#"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a>
