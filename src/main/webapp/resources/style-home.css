@@ -1,20 +1,4 @@
-@font-face {
-	font-family: 'Montserrat Bold';
-	src: url("../fonts/Montserrat/Montserrat-Bold.woff2") format("woff2"), url("../fonts/Montserrat/Montserrat-Bold.woff") format("woff"), url("../fonts/Montserrat/Montserrat-Bold.ttf") format("truetype"); 
-}
-@font-face {
-	font-family: 'Montserrat Regular';
-	src: url("../fonts/Montserrat/Montserrat-Regular.woff2") format("woff2"), url("../fonts/Montserrat/Montserrat-Regular.woff") format("woff"), url("../fonts/Montserrat/Montserrat-Regular.ttf") format("truetype"); 
-}
-@font-face {
-	font-family: 'Montserrat Light';
-	src: url("../fonts/Montserrat/Montserrat-Light.woff 2") format("woff2"), url("../fonts/Montserrat/Montserrat-Light.woff") format("woff"), url("../fonts/Montserrat/Montserrat-Light.ttf") format("truetype"); 
-}
-@font-face {
-	font-family: 'Montserrat ultra-Light';
-	src: url("../fonts/Montserrat/Montserrat-UltraLight.woff2") format("woff2"), url("../fonts/Montserrat/Montserrat-UltraLight.woff") format("woff"), url("../fonts/Montserrat/Montserrat-UltraLight.ttf") format("truetype"); 
-}
-
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -45,6 +29,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1; 
+	font-family: Montserrat, Helvetica;
 }
 
 ol, ul {
@@ -66,10 +51,6 @@ table {
 	border-spacing: 0; 
 }
 
-
-body {
-	font-family: 'gotham-book'; 
-}
 
 .container {
 	width: 100%;
@@ -120,20 +101,6 @@ a {
 	vertical-align: top; 
 }
 
-.btn {
-	height: 35px;
-	background-color: #ff0000;
-	color: #fff;
-	border: 2px solid transparent;
-	padding: 0px 25px;
-	font-size: 16px;
-	line-height: 35px;
-	margin: 10px;
-	text-transform: uppercase;
-	font-weight: 200;
-	border-radius: 4px; 
-}
-
 * {
 	box-sizing: border-box; 
 }
@@ -148,9 +115,11 @@ a {
 	padding: 10px;
 	padding-bottom: 6%;
 	text-align: center; 
+	opacity: 0.92;
 }
 .landing-page .pratilipi-banner .login-btn,
 	.landing-page .pratilipi-banner .signup-btn {
+	font-family: 'gotham-book'; 
 	height: 35px;
 	background: transparent;
 	color: #fff;
@@ -165,16 +134,19 @@ a {
 	border-radius: 4px; 
 }
 .landing-page .pratilipi-banner .content-wrapper {
-	padding-top: 50px; 
+	padding: 64px 0px; 
 }
 .landing-page .pratilipi-banner .content-wrapper .description {
-	margin-bottom: 30px; 
+	font-family: Montserrat, Helvetica;
+	margin-bottom: 10px; 
 }
 .landing-page .pratilipi-banner .content-wrapper h2 {
+	font-family: Montserrat, Helvetica;
 	font-size: 30px;
 	font-weight: 400;
 	color: #fff;
-	margin: 20px; 
+	margin: 20px;
+	opacity: 0.97; 
 }
 .landing-page .pratilipi-banner .content-wrapper .logo {
 	display: inline-block;
@@ -182,31 +154,50 @@ a {
 }
 .landing-page .pratilipi-banner .content-wrapper .logo .pratilipi {
 	display: inline-block;
-	width: 100px;
-	height: 100px;
+	width: 75px;
+	height: 75px;
+	margin-top: 20px;
 	border-radius: 50%;
-	background-image: url("http://0.ptlp.co/resource-all/home-page/logo.jpg");
+	background-image: url("http://0.ptlp.co/resource-all/home-page/pratilipi_logo.png");
 	background-repeat: no-repeat;
 	background-size: cover; 
 }
 .landing-page .pratilipi-banner .content-wrapper .logo h1 {
+	font-family: Montserrat, Helvetica;
 	display: inline-block;
 	font-size: 34px;
 	color: #fff;
 	line-height: 120px;
 	vertical-align: top;
 	font-weight: 400;
-	margin-left: 10px; 
+	margin-left: 10px;
 }
 .landing-page .pratilipi-banner .content-wrapper .bg-white {
 	background-color: #fff;
-	color: #666;
+	color: #333;
 	display: inline-block;
-	margin: 2px; 
+	margin: 2px 10px;
+	opacity: 0.8;
+	padding: 2px 5px; 
+}
+.landing-page .pratilipi-banner .content-wrapper a.start-reading-btn, 
+.landing-page .pratilipi-banner .content-wrapper a.start-reading-btn:hover, 
+.landing-page .pratilipi-banner .content-wrapper a.start-reading-btn:focus {
+	font-family: 'gotham-book'; 
+	height: 35px;
+	background-color: #D0021B;
+	color: #fff;
+	border: 2px solid transparent;
+	padding: 0px 25px;
+	font-size: 16px;
+	line-height: 35px;
+	margin: 10px;
+	text-transform: uppercase;
+	font-weight: 200;
+	border-radius: 4px; 
 }
 .landing-page .wrapper {
 	max-width: 1200px;
-	padding: 10px;
 	display: flex;
 	flex-direction: row;
 	flex-flow: row wrap;
@@ -275,12 +266,16 @@ a {
 	background-color: #ebebeb;
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: center; 
+	background-position: center;
+	opacity: 0.85; 
+}
+.landing-page .wrapper a .tiles:hover {
+	opacity: 1; 
 }
 .landing-page .wrapper a .tiles .language {
 	text-decoration: none;
 	margin-top: 30px;
-	background: rgba(255, 255, 255, 0.5);
+	background: rgba(255, 255, 255, 0.8);
 	text-align: center;
 	padding: 20px;
 	font-size: 18px;
@@ -288,7 +283,7 @@ a {
 	display: inline-block; 
 }
 .landing-page .notify-me-wrapper {
-	padding: 20px;
+	padding: 20px 5px;
 	text-align: center;
 	background-color: #333; 
 }
@@ -299,35 +294,37 @@ a {
 .landing-page .notify-me-wrapper .notify-elements h3 {
 	color: #fff;
 	font-size: 24px;
-	margin: 10px;
+	margin: 16px;
 	font-weight: 400; 
 }
 .landing-page .notify-me-wrapper .notify-elements .language-selection {
 	display: inline-block;
 	background-color: #ebebeb;
-	width: 100px;
-	color: #ababab;
-	margin: 10px;
-	font-size: 18px;
+	width: 300px;
+	color: #555555;
+	margin: 10px 0px;
+	margin-left: 8px;
+	font-size: 16px;
 	font-weight: 100;
 	float: none;
 	height: 35px; 
 }
-.landing-page .notify-me-wrapper .notify-elements .input-feilds {
+.landing-page .notify-me-wrapper .notify-elements .input-field {
 	display: inline-block;
-	text-align: center;
-	width: 200px;
-	color: #ababab;
-	font-size: 18px;
+	width: 300px;
+	color: #555555;
+	font-size: 16px;
 	border-radius: 4px;
 	height: 35px;
 	margin-right: 10px;
+	margin-left: 16px;
 	background-color: #ebebeb; 
 }
 .landing-page .notify-me-wrapper .notify-elements .notify-me-btn {
+	font-family: 'gotham-book'; 
 	display: inline-block;
 	height: 35px;
-	background-color: #ff0000;
+	background-color: #D0021B;
 	color: #fff;
 	border: 2px solid transparent;
 	padding: 0px 25px;
@@ -348,6 +345,7 @@ a {
 	border-right: 1px solid gray; 
 }
 .landing-page .pratilipi-footer .about-pratilipi h5 {
+	font-family: Montserrat, Helvetica; 
 	font-size: 18px;
 	color: #666;
 	margin-bottom: 10px; 
@@ -356,22 +354,25 @@ a {
 	font-size: 14px;
 	line-height: 1.5;
 	color: #666; 
+	display: block;
+	margin-bottom: 4px;
 }
 .landing-page .pratilipi-footer .about-pratilipi .copyrights {
 	position: absolute;
-	bottom: -21%; 
+	bottom: 0; 
 }
 .landing-page .pratilipi-footer .about-part-2 {
 	padding: 10px;
 	padding-top: 0;
-	border-right: 1px solid gray; 
+	border-right: 1px solid gray;
+	height: 120px;
 }
 .landing-page .pratilipi-footer .about-part-2 ul {
 	display: inline-block;
 	margin: 0 10px; 
 }
 .landing-page .pratilipi-footer .about-part-2 ul li {
-		margin-bottom: 10px; 
+	margin-bottom: 10px; 
 }
 .landing-page .pratilipi-footer .about-part-2 ul li a {
 	color: #666; 
@@ -379,8 +380,14 @@ a {
 .landing-page .pratilipi-footer .about-part-3 {
 	color: #666;
 	font-size: 16px;
-	width: 22%; 
+	width: 22%;
+	padding-left: 20px;
+}
+.landing-page .pratilipi-footer .about-part-3 span {
+	display: block;
+	margin-bottom: 16px; 
 }
 .landing-page .pratilipi-footer .about-part-3 a {
-	color: #666; 
+	color: #666;
+	margin-right: 16px; 
 }

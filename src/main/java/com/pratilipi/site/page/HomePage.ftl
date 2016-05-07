@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?2">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?3">
 </head>
 
 <body>
@@ -33,7 +33,7 @@
 					<div class="description">
 						<h5 class="bg-white">Read great stories and write your own on</h5>
 						<br>
-						<h5 class="bg-white">world's largest platform for indian languages </h5>
+						<h5 class="bg-white">world's largest platform for Indian languages</h5>
 					</div>
 					<a href="#wrapper" class="start-reading-btn btn">Start Reading</a>
 
@@ -97,44 +97,42 @@
 			</div>
 
 			<div class="notify-me-wrapper">
-				<div class="notify-elements clearfix">
+				<div class="notify-elements">
 					<h3>Be the first to know when your language gets added</h3>
 
-					<select class="language-selection pull-left">
-						<option value="hindi">hindi</option>
-						<option value="english">english</option>
-						<option value="bengali">bengali</option>
-						<option value="kannada">kannda</option>
+					<select name="Language" class="language-selection">
+						<option value="language" selected disabled>Language</option>
+						<option value="urdu">		Urdu		</option>
+						<option value="odia">		Odia		</option>
+						<option value="punjabi">	Punjabi		</option>
+						<option value="assamese">	Assamese	</option>
+						<option value="maithili">	Maithili	</option>
+						<option value="bhojpuri">	Bhojpuri	</option>
+						<option value="other">		Any Other	</option>
 					</select>
-					<input class="input-feilds" type="email" name="email" id="email" placeholder="Email">
-					<button class="notify-me-btn">Notify me</button>
+					<input class="input-field" type="email" name="email" id="email" placeholder="Email">
+					<button class="notify-me-btn">Notify me!</button>
 				</div>
 			</div>
 			<div class="pratilipi-footer">
 				<div class="col-50 about-pratilipi">
-					<h5>Pratilip</h5>
-					<span> Contact@pratilip.com</span>
-					<span>123456789</span>
-					<p class="copyrights">
-					2014-15 Nasadiya Pvt Ltd</p>
+					<h5>Pratilipi</h5>
+					<a href="mailto:contact@pratilipi.com"><span>contact@pratilipi.com</span></a>
+					<a href="tel:+919789316700"><span>+91 9789316700</span></a>
+					<p class="copyrights">&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</p>
 				</div>
 				<div class="col-25 about-part-2">
-					<ul clas="col-50">
-						<li><a href="#">About us</a></li>
-						<li><a href="#">Privacy</a></li>
-						<li><a href="#">Work with us</a></li>
-					</ul>
 					<ul class="col-50">
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">Terms</a></li>
+						<li><a href="#">About us</a></li>
+						<li><a href="#">Work with us</a></li>
 					</ul>
 				</div>
 				<div class="col-25 about-part-3">
-					<button class="download-btn">Download app</button>
 					<div class="social-media-links">
-						<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-						<a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-						<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+						<span>Follow us on Social Media: </span>
+						<a href="#"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a>
+						<a href="#"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></a>
+						<a href="#"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a>
 					</div>
 				</div>
 			</div>
