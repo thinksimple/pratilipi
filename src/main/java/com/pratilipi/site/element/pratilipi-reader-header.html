@@ -72,30 +72,60 @@
 					
 					<td align="right">
 						
-						<!-- Increase and Decrease font-size buttons -->
-						<div class="dropdown" style="display: inline-block;">
-							<paper-icon-button icon="editor:format-size" data-toggle="dropdown"></paper-icon-button>
-							<ul class="dropdown-menu pull-right">
-								<li>
-									<a style="padding: 5px; margin: 0;">
-										<paper-item on-click="increaseFontSize">
-											<paper-icon-item><iron-icon icon="icons:add"></iron-icon></paper-icon-item>
-											&nbsp;&nbsp;
-											<paper-item-body>${ _strings.increase_font_size }</paper-item-body>
-										</paper-item>
-									</a>
-								</li>
-								<li>
-									<a style="padding: 5px; margin: 0;">
-										<paper-item on-click="decreaseFontSize">
-											<paper-icon-item><iron-icon icon="icons:remove"></iron-icon></paper-icon-item>
-											&nbsp;&nbsp;
-											<paper-item-body>${ _strings.decrease_font_size }</paper-item-body>
-										</paper-item>
-									</a>
-								</li>
-							</ul>
-						</div>
+						<!-- Increase and Decrease size buttons -->
+						<!-- In case of PRATILIPI contentType -->
+						<template is="dom-if" if="{{ pratilipiContentType }}">
+							<div class="dropdown" style="display: inline-block;">
+								<paper-icon-button icon="editor:format-size" data-toggle="dropdown"></paper-icon-button>
+								<ul class="dropdown-menu pull-right" style="right: -64px;">
+									<li>
+										<a style="padding: 5px; margin: 0;">
+											<paper-item on-click="increaseFontSize">
+												<paper-icon-item><iron-icon icon="icons:add"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>${ _strings.increase_font_size }</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+									<li>
+										<a style="padding: 5px; margin: 0;">
+											<paper-item on-click="decreaseFontSize">
+												<paper-icon-item><iron-icon icon="icons:remove"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>${ _strings.decrease_font_size }</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</template>
+
+						<!-- In case of IMAGE contentType -->
+						<template is="dom-if" if="{{ imageContentType }}">
+							<div class="dropdown" style="display: inline-block;">
+								<paper-icon-button icon="icons:aspect-ratio" data-toggle="dropdown"></paper-icon-button>
+								<ul class="dropdown-menu pull-right" style="right: -64px;">
+									<li>
+										<a style="padding: 5px; margin: 0;">
+											<paper-item on-click="increaseImageSize">
+												<paper-icon-item><iron-icon icon="icons:add"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>Increase Image Size</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+									<li>
+										<a style="padding: 5px; margin: 0;">
+											<paper-item on-click="decreaseImageSize">
+												<paper-icon-item><iron-icon icon="icons:remove"></iron-icon></paper-icon-item>
+												&nbsp;&nbsp;
+												<paper-item-body>Decrease Image Size</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</template>
 						
 						<!-- Library Section -->
 						<div class="dropdown" style="display: inline-block;">
@@ -261,6 +291,9 @@
 			ready: function() {
 				this.title = 	this.pratilipi.title != null && this.pratilipi.title.trim() != "" ?
 								this.pratilipi.title : this.pratilipi.titleEn;
+
+				this.pratilipiContentType = this.contentType == "PRATILIPI" ? true : false;
+				this.imageContentType = this.contentType == "IMAGE" ? true : false;
 			},
 			
 			attached: function() {
@@ -299,6 +332,14 @@
 				document.querySelector( 'pratilipi-reader-content' ).decreaseFontSize();
 			},
 			
+			increaseImageSize: function() {
+				document.querySelector( 'pratilipi-reader-content' ).increaseImageSize();
+			},
+
+			decreaseImageSize: function() {
+				document.querySelector( 'pratilipi-reader-content' ).decreaseImageSize();
+			},
+
 			addToLibrary: function() {
 				document.querySelector( 'pratilipi-reader-page' ).addToLibrary();
 			},

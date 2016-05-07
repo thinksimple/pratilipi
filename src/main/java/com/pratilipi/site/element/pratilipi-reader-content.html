@@ -131,6 +131,7 @@
 
 				pratilipiId: { type: Number },
 				fontSize: { type: Number, observer: "_onFontSizeChange" },
+				imageSize: { type: Number, observer: "_onImageSizeChange" },
 
 				pageNo: { type: Number, observer: "_onPageNoChange" },
 				pageCount: { type: Number },
@@ -145,6 +146,7 @@
 				jQuery( "#pager" ).css( 'min-height', window.innerHeight + "px" );
 				this.contentMap[ this.pageNo ] = this.content;
 				this.set( 'lastPage', this.pageNo == this.pageCount ? true : false );
+				this._setImageSize();
 				this._precache();
 			},
 
@@ -172,12 +174,37 @@
 				if( this.fontSize - 2 >= 12 )
 					this._setFontSize( this.fontSize - 2 );
 			},
+			
+			
+			// Image Size
+			_onImageSizeChange: function() {
+				jQuery( "#reader-content img" ).css( 'width', this.imageSize + 'px' );
+				if( jQuery( "#reader-content" ).width() < this.imageSize )
+					jQuery( "#reader-content" ).css( "overflow", "scroll" );
+				else
+					jQuery( "#reader-content" ).css( "overflow", "hidden" );
+			},
+			
+			_setImageSize: function( imageSize ) {
+				this.set( "imageSize", imageSize == null ? jQuery( "#reader-content" ).width() : parseInt( imageSize ) );
+			},
+			
+			increaseImageSize: function() {
+				this._setImageSize( jQuery( "#reader-content img" ).width() + 50 );
+			},
+			
+			decreaseImageSize: function() {
+				this._setImageSize( jQuery( "#reader-content img" ).width() - 50 );
+			},
 
 
 			// Content
 			_onContentChange: function() {
 				jQuery( this.querySelector( '#reader-content' ) ).html( this.content );
-				jQuery( "#reader-content img" ).css( "max-width", "100%", "important" );
+				if( this.contentType == "PRATILIPI" )
+					jQuery( "#reader-content img" ).css( "max-width", "100%", "important" );
+				else if( this.contentType == "IMAGE" )
+					this._onImageSizeChange();
 				$( 'html, body' ).animate( { scrollTop : 0 }, 500 );
 			},
 
