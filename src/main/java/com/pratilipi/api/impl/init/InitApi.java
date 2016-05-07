@@ -74,6 +74,7 @@ public class InitApi extends GenericApi {
 		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
 		
 		pratilipi.setFbLikeShareCountOffset( 92L );
+		pratilipi.setFbLikeShareCount( 2L );
 		
 		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 
