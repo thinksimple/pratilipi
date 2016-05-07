@@ -314,6 +314,8 @@ share_on_twitter		= ട്വിറ്ററില്‍ ഷെയര്‍ ച�
 share_on_gplus			= ഗൂഗിള്‍ പ്ലസില്‍ ഷെയര്‍ ചെയ്യൂ
 increase_font_size		= അക്ഷരങ്ങളുടെ വലിപ്പം കൂട്ടൂ
 decrease_font_size		= അക്ഷരങ്ങളുടെ വലിപ്പം കുറയ്ക്കൂ
+increase_image_size		= Increase image size
+decrease_image_size		= Decrease image size
 
 
 # Enjoyed Reading the content? Write a review or Share it on

@@ -190,11 +190,15 @@
 			},
 			
 			increaseImageSize: function() {
-				this._setImageSize( jQuery( "#reader-content img" ).width() + 50 );
+				// cutoff = 1200
+				if( this.imageSize + 50 <= 1200 )
+					this._setImageSize( this.imageSize + 50 );
 			},
 			
 			decreaseImageSize: function() {
-				this._setImageSize( jQuery( "#reader-content img" ).width() - 50 );
+				// cutoff = 300
+				if( this.imageSize - 50 >= 300 )
+					this._setImageSize( this.imageSize - 50 );
 			},
 
 
