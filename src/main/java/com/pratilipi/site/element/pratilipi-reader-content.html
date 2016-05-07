@@ -235,9 +235,10 @@
 					return;
 
 				var ajaxGet = this.$.AjaxGet;
-				ajaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
+				ajaxGet.params.pratilipiId = this.pratilipiId;
 				ajaxGet.params.chapterNo = pageNo;
 				ajaxGet.params.pageNo = pageNo;
+				ajaxGet.params.contentType = this.contentType;
 				ajaxGet.generateRequest();
 			},
 
