@@ -62,22 +62,31 @@ public class InitApi extends GenericApi {
 		
 		long[][] offset = {
 //				new long[] {5135361533542400L,2663L},
-				new long[] {5196411878506496L,183L},
-				new long[] {5741295515467776L,1483L},
-				new long[] {5709949130768384L,78L},
 //				new long[] {5155035268775936L,474L},
-				new long[] {5645455495004160L,6L},
-				new long[] {5725637813731328L,52L},
 //				new long[] {4946718139351040L,0L},
 //				new long[] {5822385531912192L,10L},
 //				new long[] {5669071953592320L,1609L},
-				new long[] {5693765442338816L,193L},
 //				new long[] {5693908432453632L,0L},
 //				new long[] {5670554354843648L,2119L},
 //				new long[] {5691188921237504L,3040L},
 //				new long[] {5096266023305216L,1009L},
+				
+//				new long[] {5073954372845568L,669L},
+//				new long[] {5153641115680768L,470L},
+				new long[] {5190908077146112L,67L},
+//				new long[] {5971619986014208L,1055L},
+				new long[] {5174492376596480L,3416L},
+//				new long[] {5713391385575424L,3734L},
+//				new long[] {5181175278600192L,338L},
+//				new long[] {5688643247144960L,52L},
+//				new long[] {6041301266989056L,1539L},
+//				new long[] {5083798974758912L,1239L},
+//				new long[] {6246207177359360L,0L},
+//				new long[] {6565354117529600L,1535L},
+//				new long[] {6257159746617344L,0L},
+//				new long[] {5718893775552512L,0L},
+//				new long[] {5747531812175872L,144L},
 		};
-		
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
