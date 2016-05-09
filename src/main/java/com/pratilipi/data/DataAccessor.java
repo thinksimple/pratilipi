@@ -155,6 +155,7 @@ public interface DataAccessor {
 
 	
 	// MAILING_LIST_SUBSCRIPTION Table
+	MailingListSubscription newMailingListSubscription();
 	MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog );
 	
 	

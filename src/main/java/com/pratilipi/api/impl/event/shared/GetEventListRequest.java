@@ -1,4 +1,4 @@
-package com.pratilipi.api.impl.init.shared;
+package com.pratilipi.api.impl.event.shared;
 
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.type.Language;

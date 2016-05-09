@@ -1,4 +1,4 @@
-package com.pratilipi.api.impl.init.shared;
+package com.pratilipi.api.impl.event.shared;
 
 import java.util.List;
 

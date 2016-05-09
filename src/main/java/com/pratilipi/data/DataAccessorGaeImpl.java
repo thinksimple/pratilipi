@@ -66,6 +66,7 @@ import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
 import com.pratilipi.data.type.gae.CategoryEntity;
 import com.pratilipi.data.type.gae.EventEntity;
+import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
 import com.pratilipi.data.type.gae.NavigationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiCategoryEntity;
@@ -1305,6 +1306,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 
+	@Override
+	public MailingListSubscription newMailingListSubscription() {
+		return new MailingListSubscriptionEntity();
+	}
+	
 	@Override
 	public MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog ) {
 		return createOrUpdateEntityOfy( mailingListSubscription, auditLog );

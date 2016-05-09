@@ -554,6 +554,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	
 	// MAILING_LIST_SUBSCRIPTION Table
+	@Override public MailingListSubscription newMailingListSubscription() { return dataAccessor.newMailingListSubscription(); }
 	@Override public MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog ) { return dataAccessor.createOrUpdateMailingListSubscription( mailingListSubscription, auditLog ); }
 	
 	

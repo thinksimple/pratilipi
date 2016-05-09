@@ -50,6 +50,7 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
 import com.pratilipi.data.type.gae.EventEntity;
+import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
@@ -682,6 +683,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	
 	// MAILING_LIST_SUBSCRIPTION Table
+	
+	@Override
+	public MailingListSubscription newMailingListSubscription() {
+		return new MailingListSubscriptionEntity();
+	}
 	
 	@Override
 	public MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog) {
