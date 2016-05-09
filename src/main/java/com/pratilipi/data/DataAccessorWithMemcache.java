@@ -26,6 +26,7 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
+import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
@@ -550,6 +551,10 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		}
 		return pratilipiCategoryList;
 	}
+	
+	
+	// MAILING_LIST_SUBSCRIPTION Table
+	@Override public MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog ) { return dataAccessor.createOrUpdateMailingListSubscription( mailingListSubscription, auditLog ); }
 	
 	
 	// Destroy

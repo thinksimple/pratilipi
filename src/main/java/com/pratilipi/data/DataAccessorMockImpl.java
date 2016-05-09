@@ -35,6 +35,7 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
+import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
@@ -671,12 +672,20 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	
-	//PRATILIPI_CATEGORY Table
+	// PRATILIPI_CATEGORY Table
 	
 	@Override
 	public List<PratilipiCategory> getPratilipiCategoryList(Long pratilipiId) {
 		// TODO Auto-generated method stub
 		return new ArrayList<PratilipiCategory>( 0 );
+	}
+	
+	
+	// MAILING_LIST_SUBSCRIPTION Table
+	
+	@Override
+	public MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog) {
+		return mailingListSubscription;
 	}
 	
 	

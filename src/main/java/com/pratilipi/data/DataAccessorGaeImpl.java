@@ -49,6 +49,7 @@ import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.GenericOfyType;
+import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
@@ -1302,8 +1303,16 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	
-	// Destroy
+	// MAILING_LIST_SUBSCRIPTION Table
 
+	@Override
+	public MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog ) {
+		return createOrUpdateEntityOfy( mailingListSubscription, auditLog );
+	}
+	
+	
+	// Destroy
+	
 	@Override
 	public void destroy() {
 		pm.close();

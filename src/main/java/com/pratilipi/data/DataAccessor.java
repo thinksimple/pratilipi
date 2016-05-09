@@ -20,6 +20,7 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Event;
+import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
@@ -149,9 +150,13 @@ public interface DataAccessor {
 	List<Category> getCategoryList( Language language );
 	
 	
-	//PRATILIPI_CATEGORY Table
+	// PRATILIPI_CATEGORY Table
 	List<PratilipiCategory> getPratilipiCategoryList( Long pratilipiId );
 
+	
+	// MAILING_LIST_SUBSCRIPTION Table
+	MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog );
+	
 	
 	// Destroy
 	void destroy();
