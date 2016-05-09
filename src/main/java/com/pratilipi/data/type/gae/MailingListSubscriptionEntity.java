@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.condition.IfNotNull;
+import com.pratilipi.common.type.MailingList;
 import com.pratilipi.data.type.MailingListSubscription;
 
 @Cache
@@ -18,7 +19,7 @@ public class MailingListSubscriptionEntity implements MailingListSubscription {
 	private Long MAILING_LIST_SUBSCRIPTION_ID;
 
 	@Index
-	private String MAILING_LIST_NAME;
+	private MailingList MAILING_LIST;
 
 	@Index( IfNotNull.class )
 	private Long USER_ID;
@@ -52,13 +53,13 @@ public class MailingListSubscriptionEntity implements MailingListSubscription {
 	
 
 	@Override
-	public String getMailingListName() {
-		return MAILING_LIST_NAME;
+	public MailingList getMailingList() {
+		return MAILING_LIST;
 	}
 
 	@Override
-	public void setMailingListName( String mailingListName ) {
-		this.MAILING_LIST_NAME = mailingListName;
+	public void setMailingList( MailingList mailingList ) {
+		this.MAILING_LIST = mailingList;
 	}
 
 	@Override

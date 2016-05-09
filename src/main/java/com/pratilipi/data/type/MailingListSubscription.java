@@ -2,11 +2,13 @@ package com.pratilipi.data.type;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.MailingList;
+
 public interface MailingListSubscription extends GenericOfyType {
 
-	String getMailingListName();
+	MailingList getMailingList();
 	
-	void setMailingListName( String mailingListName );
+	void setMailingList( MailingList mailingList );
 	
 	String getEmail();
 	
