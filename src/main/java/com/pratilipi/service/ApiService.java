@@ -10,6 +10,7 @@ import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventBannerApi;
 import com.pratilipi.api.impl.event.EventListApi;
+import com.pratilipi.api.impl.init.InitApi;
 import com.pratilipi.api.impl.mailinglist.MailingListSubscribeApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
@@ -34,7 +35,7 @@ public class ApiService extends GenericService {
 	
 	static {
 		
-		ApiRegistry.register( MailingListSubscribeApi.class );
+		ApiRegistry.register( InitApi.class );
 		
 		ApiRegistry.register( UserLoginApi.class );					// *.pratilipi.com
 		ApiRegistry.register( UserLoginFacebookApi.class );			// *.pratilipi.com
