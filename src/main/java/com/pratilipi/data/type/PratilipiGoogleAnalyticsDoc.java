@@ -11,6 +11,8 @@ public interface PratilipiGoogleAnalyticsDoc {
 	void setPageViews( int year, int month, int day, int count );
 
 	
+	int getReadPageViews( int year, int month, int day );
+	
 	long getTotalReadPageViews();
 
 	void setReadPageViews( int year, int month, int day, int count );

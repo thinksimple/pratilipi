@@ -21,7 +21,39 @@ public class PratilipiGoogleAnalyticsDocImpl implements PratilipiGoogleAnalytics
 
 	@Override
 	public int getPageViews( int year, int month, int day ) {
-		YearlyPageViews yearlyPageViews = pageViews.get( year );
+		return _getPageViews( pageViews, year, month, day);
+	}
+	
+	@Override
+	public long getTotalPageViews() {
+		return _getTotalPageViews( pageViews );
+	}
+
+	@Override
+	public void setPageViews( int year, int month, int day, int count ) {
+		_setPageViews( pageViews, year, month, day, count );
+		lastUpdatedMillis = new Date().getTime();
+	}
+
+	
+	@Override
+	public int getReadPageViews( int year, int month, int day ) {
+		return _getPageViews( readPageViews, year, month, day);
+	}
+	
+	public long getTotalReadPageViews() {
+		return _getTotalPageViews( readPageViews );
+	}
+
+	@Override
+	public void setReadPageViews( int year, int month, int day, int count ) {
+		_setPageViews( readPageViews, year, month, day, count );
+		lastUpdatedMillis = new Date().getTime();
+	}
+	
+
+	public int _getPageViews( Map<Integer, YearlyPageViews> yearlyPageViewsMap, int year, int month, int day ) {
+		YearlyPageViews yearlyPageViews = yearlyPageViewsMap.get( year );
 		if( yearlyPageViews == null )
 			return 0;
 		
@@ -45,30 +77,6 @@ public class PratilipiGoogleAnalyticsDocImpl implements PratilipiGoogleAnalytics
 		
 		return monthlyPageViews.get( day ) == null ? 0 : monthlyPageViews.get( day );
 	}
-	
-	@Override
-	public long getTotalPageViews() {
-		return _getTotalPageViews( pageViews );
-	}
-
-	@Override
-	public void setPageViews( int year, int month, int day, int count ) {
-		_setPageViews( pageViews, year, month, day, count );
-		lastUpdatedMillis = new Date().getTime();
-	}
-
-	
-	@Override
-	public long getTotalReadPageViews() {
-		return _getTotalPageViews( readPageViews );
-	}
-
-	@Override
-	public void setReadPageViews( int year, int month, int day, int count ) {
-		_setPageViews( readPageViews, year, month, day, count );
-		lastUpdatedMillis = new Date().getTime();
-	}
-	
 	
 	private long _getTotalPageViews( Map<Integer, YearlyPageViews> yearlyPageViewsMap ) {
 		long totalCount = 0L;
@@ -112,7 +120,6 @@ public class PratilipiGoogleAnalyticsDocImpl implements PratilipiGoogleAnalytics
 		}
 		return totalCount;
 	}
-	
 	
 	private void _setPageViews( Map<Integer, YearlyPageViews> yearlyPageViewsMap, int year, int month, int day, int count ) {
 		
