@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.jdo.PersistenceManager;
 
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
@@ -156,6 +157,7 @@ public interface DataAccessor {
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 	MailingListSubscription newMailingListSubscription();
+	MailingListSubscription getMailingListSubscription( MailingList mailingList, String email );
 	MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog );
 	
 	

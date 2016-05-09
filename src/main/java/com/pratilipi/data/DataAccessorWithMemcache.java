@@ -12,6 +12,7 @@ import javax.jdo.PersistenceManager;
 
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
@@ -555,6 +556,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 	@Override public MailingListSubscription newMailingListSubscription() { return dataAccessor.newMailingListSubscription(); }
+	@Override public MailingListSubscription getMailingListSubscription( MailingList mailingList, String email ) { return dataAccessor.getMailingListSubscription( mailingList, email ); }
 	@Override public MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog ) { return dataAccessor.createOrUpdateMailingListSubscription( mailingListSubscription, auditLog ); }
 	
 	

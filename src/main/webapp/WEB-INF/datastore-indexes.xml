@@ -88,4 +88,11 @@
 		<property name="REVIEW_DATE" direction="desc"/>
 	</datastore-index>
 
+
+	<datastore-index kind="MAILING_LIST_SUBSCRIPTION" ancestor="false" source="manual">
+		<property name="MAILING_LIST" direction="asc"/>
+		<property name="EMAIL" direction="asc"/>
+		<property name="SUBSCRIPTION_DATE" direction="asc"/>
+	</datastore-index>
+
 </datastore-indexes>

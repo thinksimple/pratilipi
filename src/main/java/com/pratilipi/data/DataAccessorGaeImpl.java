@@ -32,6 +32,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.UserState;
@@ -1309,6 +1310,20 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public MailingListSubscription newMailingListSubscription() {
 		return new MailingListSubscriptionEntity();
+	}
+	
+	@Override
+	public MailingListSubscription getMailingListSubscription( MailingList mailingList, String email ) {
+		
+		com.googlecode.objectify.cmd.Query<MailingListSubscriptionEntity> query
+				= ObjectifyService.ofy().load().type( MailingListSubscriptionEntity.class );
+		
+		query = query.filter( "MAILING_LIST", mailingList );
+		query = query.filter( "EMAIL", email );
+		query = query.order( "SUBSCRIPTION_DATE" );
+		
+		return query.first().now();
+		
 	}
 	
 	@Override

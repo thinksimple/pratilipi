@@ -64,6 +64,8 @@ public class GenericRequest {
 	
 	public static final String ERR_BLOG_POST_STATE_REQUIRED = "State is required.";
 
+	public static final String ERR_MAILING_LIST_EMAIL_SUBSCRIBED_ALREDY = "Email already subscribed to this mailing list.";
+
 	
 	public GenericRequest() {}
 
