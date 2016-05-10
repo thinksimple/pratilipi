@@ -1,13 +1,9 @@
 package com.pratilipi.api.impl.init;
 
 import java.nio.charset.Charset;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,16 +15,20 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
-import com.pratilipi.data.type.AppProperty;
+import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
+import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.util.PratilipiDocUtil;
+import com.pratilipi.filter.AccessTokenFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -74,7 +74,7 @@ public class InitApi extends GenericApi {
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
 */
 		
-/*		long[][] offset = {
+		long[][] offset = {
 //				new long[] {5135361533542400L,2663L},
 //				new long[] {5155035268775936L,474L},
 //				new long[] {4946718139351040L,0L},
@@ -87,9 +87,7 @@ public class InitApi extends GenericApi {
 				
 //				new long[] {5073954372845568L,669L},
 //				new long[] {5153641115680768L,470L},
-				new long[] {5190908077146112L,67L},
 //				new long[] {5971619986014208L,1055L},
-				new long[] {5174492376596480L,3416L},
 //				new long[] {5713391385575424L,3734L},
 //				new long[] {5181175278600192L,338L},
 //				new long[] {5688643247144960L,52L},
@@ -100,6 +98,21 @@ public class InitApi extends GenericApi {
 //				new long[] {6257159746617344L,0L},
 //				new long[] {5718893775552512L,0L},
 //				new long[] {5747531812175872L,144L},
+				
+				
+				new long[] { 4896100288823296L, 385L, 6L },
+				new long[] { 5713881188007936L, 8L, 0L },
+				new long[] { 5767727608233984L, 130L, 87L },
+				new long[] { 6028434421579776L, 164L, 160L },
+				new long[] { 5636590961426432L, 454L, 133L },
+				new long[] { 6279647541067776L, 19L, 0L },
+				new long[] { 6046070882697216L, 4L, 0L },
+				new long[] { 6609883877081088L, 418L, 265L },
+				new long[] { 5634191987310592L, 17L, 1L },
+				new long[] { 5118635873927168L, 1L, 0L },
+				new long[] { 5088740947001344L, 0L, 87L },
+				new long[] { 4914143572262912L, 363L, 582L },
+				
 		};
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -116,24 +129,24 @@ public class InitApi extends GenericApi {
 			auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
 			
-	//		pratilipi.setFbLikeShareCountOffset( 92L );
-	//		pratilipi.setFbLikeShareCount( 2L );
-			pratilipi.setReadCountOffset( offsetCount[1] );
+			pratilipi.setFbLikeShareCountOffset( offsetCount[1] );
+			pratilipi.setFbLikeShareCount( offsetCount[2] );
+//			pratilipi.setReadCountOffset( offsetCount[1] );
 			
 			auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 	
 			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 			
 		}
-*/
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+/*		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		String appPropertyId = "Api.Init.UpdateStats";
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
 		if( appProperty == null ) {
 			appProperty = dataAccessor.newAppProperty( appPropertyId );
-			appProperty.setValue( new Date( 1420051500000L ) ); // 01 Jan 2015, 12:15 AM IST
+			appProperty.setValue( new Date( 1420051500000L + TimeUnit.DAYS.toMillis( 13 ) ) ); // 01 + 13 Jan 2015, 12:15 AM IST
 		}
 		
 		Date date = (Date) appProperty.getValue();
@@ -142,18 +155,24 @@ public class InitApi extends GenericApi {
 		cal.setTimeZone( TimeZone.getTimeZone( "IST" ) );
 		cal.setTime( new Date( date.getTime() - TimeUnit.MINUTES.toMillis( 15 ) ) ); // Google updates reports every 10 min
 		
-		int year = cal.get( Calendar.YEAR );
-		int month = cal.get( Calendar.MONTH ) + 1;
-		int day = cal.get( Calendar.DAY_OF_MONTH );
+		int year = request.getYear() != null ? request.getYear() : cal.get( Calendar.YEAR );
+		int month = request.getMonth() != null ? request.getMonth() : cal.get( Calendar.MONTH ) + 1;
+		int day = request.getDay() != null ? request.getDay() :  cal.get( Calendar.DAY_OF_MONTH );
 
 		
 		updatePratilipiGoogleAnalyticsPageViews( year, month, day );
+		
+		
+		if( request.getYear() != null || request.getMonth() != null || request.getDay() != null )
+			return new GenericResponse();
 		
 		
 		appProperty.setValue( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) > new Date().getTime()
 				? new Date()
 				: new Date( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) ) );
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
+		
+*/
 		
 		return new GenericResponse();
 		
@@ -176,6 +195,7 @@ public class InitApi extends GenericApi {
 		
 		String fileName = "pratilipi-google-analytics/page-views/" + dateStr;
 		BlobEntry blobEntry = blobAccessor.getBlob( fileName );
+		logger.log( Level.INFO, fileName );
 		
 		Map<String, Integer> uriViewsMap = gson.fromJson(
 				new String( blobEntry.getData(), Charset.forName( "UTF-8" ) ),
