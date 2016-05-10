@@ -1,9 +1,13 @@
 package com.pratilipi.api.impl.init;
 
 import java.nio.charset.Charset;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,7 +16,8 @@ import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.impl.init.shared.GetInitApiRequest;
+import com.pratilipi.api.impl.init.shared.GetInitRequest;
+import com.pratilipi.api.impl.init.shared.PostInitRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
@@ -22,6 +27,7 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
@@ -38,7 +44,7 @@ public class InitApi extends GenericApi {
 			Logger.getLogger( InitApi.class.getName() );
 
 	@Get
-	public GenericResponse get( GetInitApiRequest request ) throws UnexpectedServerException {
+	public GenericResponse get( GetInitRequest request ) throws UnexpectedServerException {
 		
 /*		
 		List<Long> authorIdList = DataAccessorFactory.getDataAccessor()
@@ -73,76 +79,14 @@ public class InitApi extends GenericApi {
 		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
 */
-		
-		long[][] offset = {
-//				new long[] {5135361533542400L,2663L},
-//				new long[] {5155035268775936L,474L},
-//				new long[] {4946718139351040L,0L},
-//				new long[] {5822385531912192L,10L},
-//				new long[] {5669071953592320L,1609L},
-//				new long[] {5693908432453632L,0L},
-//				new long[] {5670554354843648L,2119L},
-//				new long[] {5691188921237504L,3040L},
-//				new long[] {5096266023305216L,1009L},
-				
-//				new long[] {5073954372845568L,669L},
-//				new long[] {5153641115680768L,470L},
-//				new long[] {5971619986014208L,1055L},
-//				new long[] {5713391385575424L,3734L},
-//				new long[] {5181175278600192L,338L},
-//				new long[] {5688643247144960L,52L},
-//				new long[] {6041301266989056L,1539L},
-//				new long[] {5083798974758912L,1239L},
-//				new long[] {6246207177359360L,0L},
-//				new long[] {6565354117529600L,1535L},
-//				new long[] {6257159746617344L,0L},
-//				new long[] {5718893775552512L,0L},
-//				new long[] {5747531812175872L,144L},
-				
-				
-				new long[] { 6258706740150272L, 78L, 0L },
-				new long[] { 5664555598348288L, 25L, 0L },
-				new long[] { 6304057064947712L, 5L, 1L },
-				new long[] { 5718893775552512L, 138L, 0L },
-				new long[] { 4772488038842368L, 0L, 77L },
-				new long[] { 5672576806289408L, 161L, 116L },
-				new long[] { 6343218836799488L, 333L, 0L },
-				new long[] { 6588737081311232L, 906L, 625L },
-				
-		};
-		
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		Gson gson = new Gson();
-
-		for( long[] offsetCount : offset ) {
-		
-			Pratilipi pratilipi = dataAccessor.getPratilipi( offsetCount[0] );
-	
-			AccessToken accessToken = AccessTokenFilter.getAccessToken();
-			AuditLog auditLog = dataAccessor.newAuditLogOfy();
-			auditLog.setAccessId( accessToken.getId() );
-			auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
-			
-			pratilipi.setFbLikeShareCountOffset( offsetCount[1] );
-			pratilipi.setFbLikeShareCount( offsetCount[2] );
-//			pratilipi.setReadCountOffset( offsetCount[1] );
-			
-			auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-	
-			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
-			
-		}
-
-
-/*		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		String appPropertyId = "Api.Init.UpdateStats";
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
 		if( appProperty == null ) {
 			appProperty = dataAccessor.newAppProperty( appPropertyId );
-			appProperty.setValue( new Date( 1420051500000L + TimeUnit.DAYS.toMillis( 13 ) ) ); // 01 + 13 Jan 2015, 12:15 AM IST
+			appProperty.setValue( new Date( 1420051500000L + TimeUnit.DAYS.toMillis( 13 ) ) ); // 14 Jan 2015, 12:15 AM IST
 		}
 		
 		Date date = (Date) appProperty.getValue();
@@ -164,14 +108,42 @@ public class InitApi extends GenericApi {
 		
 		
 		appProperty.setValue( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) > new Date().getTime()
-				? new Date()
+				? new Date( 1420051500000L + TimeUnit.DAYS.toMillis( 13 ) ) // 14 Jan 2015, 12:15 AM IST
 				: new Date( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) ) );
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		
-*/
 		
 		return new GenericResponse();
 		
+	}
+	
+	public void post( PostInitRequest request ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Gson gson = new Gson();
+		
+		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
+
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
+		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+		
+		if( request.getReadCountOffset() != null )
+			pratilipi.setReadCountOffset( request.getReadCountOffset() );
+		if( request.getReadCount() != null )
+			pratilipi.setReadCount( request.getReadCount() );
+		if( request.getFbLikeShareCountOffset() != null )
+			pratilipi.setFbLikeShareCountOffset( request.getFbLikeShareCountOffset() );
+		if( request.getFbLikeShareCount() != null )
+			pratilipi.setFbLikeShareCount( request.getFbLikeShareCount() );
+		
+		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
+
+		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
+
 	}
 	
 	
