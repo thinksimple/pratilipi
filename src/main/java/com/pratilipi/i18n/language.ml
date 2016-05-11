@@ -24,6 +24,7 @@ language_ml					= മലയാളം
 language_bn					= ബംഗാളി
 language_en					= ഇംഗ്ലീഷ്
 language_te					= തെലുഗു
+language_kn					= Kannada
 
 
 
