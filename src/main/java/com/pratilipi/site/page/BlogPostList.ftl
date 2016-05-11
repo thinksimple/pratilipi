@@ -13,7 +13,7 @@
 	<body>
 		<pratilipi-blog-list-page 
 			user-data='${ userJson }'
-			blog-id='${ blogId }'
+			blog-id='${ blogId?c }'
 			has-access-to-add=${ hasAccessToAdd?c }
 			blogpost-list='${ blogPostListJson }'
 			filter='${ blogPostFilterJson }'
