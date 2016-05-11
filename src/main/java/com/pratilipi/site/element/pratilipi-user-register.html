@@ -21,14 +21,17 @@
 					<div class="display-message-div">
 						<p>{{ message }}</p>
 					</div>
+					<div style="padding: 12px 0px;">
+						<input style="position: absolute; margin-top: 8px;" type="checkbox" name="acceptTerms" id="acceptTerms">
+						<p style="text-align: center; display: inline-block; margin-left: 16px;">
+							${ _strings.register_part_1 }
+							<a class="pratilipi-blue" style="white-space: nowrap;" href="/privacy-policy">${ _strings.footer_privacy_policy }</a>
+							&nbsp;${ _strings.register_part_2 }&nbsp;
+							<a class="pratilipi-blue" style="white-space: nowrap;" href="/terms-of-service">${ _strings.footer_terms_of_service }</a>
+							&nbsp;${ _strings.register_part_3 }
+						</p>
+					</div>
 					<button id="registerButton" class="pratilipi-blue-button" on-click="onSubmit">${ _strings.user_sign_up }</button>
-					<p style="display: block; margin-top: 15px; text-align: center;">
-						${ _strings.register_part_1 }
-						<a class="pratilipi-blue" style="white-space: nowrap; font-size: 16px;" href="/privacy-policy">privacy policy</a>
-						&nbsp;${ _strings.register_part_2 }&nbsp;
-						<a class="pratilipi-blue" style="white-space: nowrap; font-size: 16px;" href="/terms-of-service">terms of service</a>
-						&nbsp;${ _strings.register_part_3 }
-					</p>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -88,7 +91,12 @@
 				this.message = null;
 				
 				if( this.params.name == null || this.params.email == null || this.params.password == null || this.params.name.trim() == "" || this.params.email.trim() == "" ) {
-					this.message = "Please fill in the details";
+					this.message = "Please fill in the details!";
+					return;
+				}
+
+				if( !document.getElementById( "acceptTerms" ).checked ) {
+					this.message = "Please accept to our terms!";
 					return;
 				}
 				

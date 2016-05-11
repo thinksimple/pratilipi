@@ -84,6 +84,10 @@ pratilipi_publish_it		= प्रकाशित करा
 
 pratilipi_no_reviews		= तुमच्या सामिक्षतेचे पहिले हकदार तुम्ही असून ती तुमी स्वतः देऊ शकता.
 
+pratilipi_confirm_move_to_drafts_title	= Moving to drafts
+pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
+pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
+pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
 
 
 # Rating

@@ -83,6 +83,10 @@ pratilipi_publish_it		= પ્રકાશિત કરો
 
 pratilipi_no_reviews		= આપ પ્રથમ સમીક્ષક બની ને લેખકનો ઉત્સાહ વધારી શકો છો. 
 
+pratilipi_confirm_move_to_drafts_title	= Moving to drafts
+pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
+pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
+pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
 
 
 # Rating

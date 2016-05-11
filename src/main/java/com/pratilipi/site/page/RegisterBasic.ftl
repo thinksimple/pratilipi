@@ -98,6 +98,11 @@
 					return;
 				}
 				
+				if( !document.getElementById( "acceptTerms" ).checked ) {
+					alert( "Please accept to our terms!" );
+					return;
+				}
+
 				// Make Ajax call
 
 				$.ajax({
@@ -201,17 +206,20 @@
 		                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="${ _strings.user_password }">
 		                    </div>
 		                </div>
+		                <div style="padding: 12px 0px;">
+						<input style="position: absolute; margin-top: 8px;" type="checkbox" name="acceptTerms" id="acceptTerms">
+							<p style="margin-left: 24px; text-align: center;">
+								${ _strings.register_part_1 }
+								<a class="pratilipi-blue" style="white-space: nowrap; font-size: 16px;" href="/privacy-policy">${ _strings.footer_privacy_policy }</a>
+								&nbsp;${ _strings.register_part_2 }&nbsp;
+								<a class="pratilipi-blue" style="white-space: nowrap; font-size: 16px;" href="/terms-of-service">${ _strings.footer_terms_of_service }</a>
+								&nbsp;${ _strings.register_part_3 }
+							</p>
+						</div>
 		                <div class="form-group" style="margin: 0 auto; text-align: center;">
 		                	<button class="pratilipi-dark-blue-button" onclick="register()">${ _strings.user_sign_up }</button>
 		                </div>
 		            </form>
-		            <p style="display: block; margin: 15px auto 30px auto; max-width: 600px;">
-						${ _strings.register_part_1 }
-						<a class="pratilipi-blue" style="white-space: nowrap; font-size: 16px;" href="/privacy-policy">privacy policy</a>
-						&nbsp;${ _strings.register_part_2 }&nbsp;
-						<a class="pratilipi-blue" style="white-space: nowrap; font-size: 16px;" href="/terms-of-service">terms of service</a>
-						&nbsp;${ _strings.register_part_3 }
-					</p>
 					<div style="text-align: center; margin-bottom: 20px;">
 		            	<a class="link" href="/">${ _strings.back }</a>
 		            </div>

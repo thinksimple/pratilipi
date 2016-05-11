@@ -86,6 +86,11 @@ pratilipi_publish_it		= പ്രസിദ്ധീകരിക്കൂ.
 
 pratilipi_no_reviews		= ക്ഷമിക്കണം! ഈ രചനയ്ക്ക് റിവ്യൂസ് ഒന്നും തന്നെ ഇല്ല!
 
+pratilipi_confirm_move_to_drafts_title	= Moving to drafts
+pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
+pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
+pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
+
 
 
 # Rating

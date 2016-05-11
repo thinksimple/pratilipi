@@ -83,7 +83,10 @@ pratilipi_publish_it		=   প্রকাশিত করুন
 
 pratilipi_no_reviews		=  আপনার পূর্বাপর বিবেচনা লিপিবদ্ধ করে আপনি প্রথম সমীক্ষক হতে পারেন।
 
-
+pratilipi_confirm_move_to_drafts_title	= Moving to drafts
+pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
+pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
+pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
 
 # Rating
 
