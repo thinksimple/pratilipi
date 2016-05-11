@@ -176,7 +176,7 @@ public class AuthorDataUtil {
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
 		authorData.setContentPublished( author.getContentPublished() );
-		authorData.setTotalReadCount( author.getTotalReadCount() < 0L ? 0L : author.getTotalReadCount() );
+		authorData.setTotalReadCount( author.getTotalReadCount() );
 		authorData.setTotalFbLikeShareCount( author.getTotalFbLikeShareCount() );
 		
 		authorData.setAccessToUpdate( hasAccessToUpdateAuthorData( author, null ) );
@@ -530,7 +530,7 @@ public class AuthorDataUtil {
 		for( Pratilipi pratilipi : pratilipiList ) {
 			if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
 				contentPublished++;
-				totalReadCount = totalReadCount + pratilipi.getReadCount() + pratilipi.getReadCountOffset();
+				totalReadCount = totalReadCount + pratilipi.getReadCountOffset() + pratilipi.getReadCount();
 				totalFbLikeShareCount = totalFbLikeShareCount + pratilipi.getFbLikeShareCount();
 			}
 		}

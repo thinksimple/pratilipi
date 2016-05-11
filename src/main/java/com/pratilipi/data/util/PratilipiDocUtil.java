@@ -120,7 +120,7 @@ public class PratilipiDocUtil {
 		}
 		
 		for( Entry<Long, Integer> entry : readPageViewsMap.entrySet() )
-			updatePratilipiGoogleAnalyticsPageViews( entry.getKey(), year, month, day, 0, readPageViewsMap.get( entry.getKey() ) );
+			updatePratilipiGoogleAnalyticsPageViews( entry.getKey(), year, month, day, 0, entry.getValue() );
 		
 		
 		if( diffPageViewsMap.size() > 0 ) {

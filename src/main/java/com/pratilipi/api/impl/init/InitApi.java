@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.init.shared.GetInitRequest;
 import com.pratilipi.api.impl.init.shared.PostInitRequest;
 import com.pratilipi.api.shared.GenericResponse;
@@ -117,7 +118,8 @@ public class InitApi extends GenericApi {
 		
 	}
 	
-	public void post( PostInitRequest request ) {
+	@Post
+	public GenericResponse post( PostInitRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
@@ -144,6 +146,9 @@ public class InitApi extends GenericApi {
 
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 
+		
+		return new GenericResponse();
+		
 	}
 	
 	
