@@ -7,12 +7,14 @@
 		
 		<#assign mainPage="pratilipi-blog-list-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160430'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160511'>
 	</head>
 
 	<body>
 		<pratilipi-blog-list-page 
 			user-data='${ userJson }'
+			blog-id='${ blogId }'
+			has-access-to-add=${ hasAccessToAdd?c }
 			blogpost-list='${ blogPostListJson }'
 			filter='${ blogPostFilterJson }'
 			cursor='${ blogPostListCursor }'

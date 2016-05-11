@@ -149,13 +149,16 @@
 				
 				var blogpost = event.detail.response;
 
-				document.querySelector( 'pratilipi-blog-page' ).updateBlogpost( blogpost );
-				
-				this.async( function() {
-					jQuery( '#blogEditButton' ).prop( 'disabled', false );
-					this.message = null;
-					this.close();
-				}, 1000 );
+				if( document.querySelector( 'pratilipi-blog-page' ) != null ) {
+					document.querySelector( 'pratilipi-blog-page' ).updateBlogpost( blogpost );
+					this.async( function() {
+						jQuery( '#blogEditButton' ).prop( 'disabled', false );
+						this.message = null;
+						this.close();
+					}, 1000 );
+				} else if( document.querySelector( 'pratilipi-blog-list-page' ) != null ) {
+					window.location.href = event.detail.response.pageUrl;
+				}
 			},
 			
 			_handleAjaxPostError: function( event ) {

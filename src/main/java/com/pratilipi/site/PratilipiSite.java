@@ -722,6 +722,10 @@ public class PratilipiSite extends HttpServlet {
 		blogPostFilter.setLanguage( lang );
 		blogPostFilter.setState( BlogPostState.PUBLISHED );
 		
+		BlogPostData blogPostLanguage = new BlogPostData();
+		blogPostLanguage.setLanguage( lang );
+		boolean hasAccessToAdd = BlogPostDataUtil.hasAccessToAddBlogPostData( blogPostLanguage );
+		
 		DataListCursorTuple<BlogPostData> blogPostDataListCursorTuple
 				= BlogPostDataUtil.getBlogPostDataList( blogPostFilter, null, 0, 10 );
 
@@ -736,6 +740,8 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "blogPostList", blogPostList );
 		} else {
 			Gson gson = new Gson();
+			dataModel.put( "blogId", blogId );
+			dataModel.put( "hasAccessToAdd", hasAccessToAdd );
 			dataModel.put( "blogPostListJson", gson.toJson( blogPostList ) );
 			dataModel.put( "blogPostFilterJson", gson.toJson( blogPostFilter ) );
 			dataModel.put( "blogPostListCursor", blogPostDataListCursorTuple.getCursor() );
