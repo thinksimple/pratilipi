@@ -85,6 +85,11 @@ pratilipi_publish_it		= Publish it!
 
 pratilipi_no_reviews		= Sorry! No Reviews found for this content!
 
+pratilipi_confirm_move_to_drafts_title	= Moving to drafts
+pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
+pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
+pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
+
 
 
 # Rating

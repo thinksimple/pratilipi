@@ -30,18 +30,18 @@
 		properties: {
 			message: { type: String },
 			timeout: { type: Number },
-			successMessage: { type: Boolean }
+			isSuccessMessage: { type: Boolean }
 		},
 		
-		alert: function( message, successMessage, timeout ) {
+		alert: function( message, isSuccessMessage, timeout ) {
 			this.message = message != null ? message : "Success!";
-			this.successMessage = successMessage != null ? successMessage : true;
+			this.isSuccessMessage = isSuccessMessage != null ? isSuccessMessage : true;
 			this.timeout = timeout != null ? timeout : 2500;
 			this.open();
 		},
 		
 		open: function() {
-			if( this.successMessage )
+			if( this.isSuccessMessage )
 				jQuery( '#pratilipi-alert-message' ).removeClass( 'text-danger' );
 			else
 				jQuery( '#pratilipi-alert-message' ).addClass( 'text-danger' );
@@ -50,7 +50,7 @@
 				jQuery( "#pratilipiAlert" ).modal();
 			});
 			
-			if( this.successMessage ) {
+			if( this.isSuccessMessage ) {
 				this.async( function() {
 					jQuery( "#pratilipiAlert" ).modal( 'hide' );
 				}, parseInt( this.timeout ) );

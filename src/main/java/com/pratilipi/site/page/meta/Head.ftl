@@ -21,7 +21,8 @@
 <link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160503'>
 <link rel='import' href='/elements.${lang}/pratilipi-footer.html?201603'>
 <link rel='import' href='/elements.${lang}/pratilipi-input.html?20160411'>
-<link rel='import' href='/elements.${lang}/pratilipi-alert.html?20160411'>
+<link rel='import' href='/elements.${lang}/pratilipi-alert.html?20160511'>
+<link rel='import' href='/elements.${lang}/pratilipi-confirm-action.html?20160411'>
 
 
 <#-- Custom Stylesheet -->

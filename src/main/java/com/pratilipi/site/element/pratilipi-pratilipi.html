@@ -195,18 +195,16 @@
 			<br class="pratilipi-break" />
 		</div>
 		
-		<div id="alertSuccess" class="modal fade">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
-					<div class="modal-body">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<div style="margin-top: 50px; margin-bottom: 50px; text-align: center;">
-							<h5>${ _strings.updated_pratilipi_info_success }</h5>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<pratilipi-alert></pratilipi-alert>
+		
+		<pratilipi-confirm-action
+			value="{{ moveToDraftsBoolean }}"
+			modal-title="${ _strings.pratilipi_confirm_move_to_drafts_title }"
+			modal-content="${ _strings.pratilipi_confirm_move_to_drafts_body }"
+			modal-okay-button="${ _strings.pratilipi_confirm_move_to_drafts_true }"
+			modal-cancel-button="${ _strings.pratilipi_confirm_move_to_drafts_false }"
+			invert-buttons></pratilipi-confirm-action>
+		
 		
 		<iron-ajax
 				id="AjaxGet"
@@ -249,7 +247,8 @@
 				pratilipiTypes: { types: Object },
 				
 				mobile: { type: Boolean },
-				imageUploaded: { type: Boolean, value: false }
+				imageUploaded: { type: Boolean, value: false },
+				moveToDraftsBoolean: { type: Boolean, observer: "_moveToDrafts" }
 			},
 			
 			updateUserRating: function( userpratilipi ) {
@@ -431,25 +430,27 @@
 					this.moveToDrafts();
 			},
 			
-			publishPratilipi: function( pratilipiId ) {
+			publishPratilipi: function() {
 				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=PUBLISHED" );
 				this.$.AjaxPost.generateRequest();
 			},
 			
-			moveToDrafts: function( pratilipiId ) {
+			_moveToDrafts: function() {
+				if( !this.moveToDraftsBoolean ) return;
 				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=DRAFTED" );
 				this.$.AjaxPost.generateRequest();
+			},
+			
+			moveToDrafts: function() {
+				if( this.moveToDraftsBoolean != null )
+					this.set( 'moveToDraftsBoolean', null );
+				this.querySelector( 'pratilipi-confirm-action' ).open();
 			},
 			
 			_handleAjaxPostResponse: function( event ) {
 				var pratilipi = event.detail.response;
 				this.updatePratilipi( pratilipi );
-				this.async( function() {
-					jQuery( "#alertSuccess" ).modal();
-				});
-				this.async( function() {
-					jQuery( "#alertSuccess" ).modal( 'hide' );
-				}, 1200);
+				document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.updated_pratilipi_info_success }", true, 1500 );
 			},
 			
 			_handleAjaxPostError: function( event ) {
