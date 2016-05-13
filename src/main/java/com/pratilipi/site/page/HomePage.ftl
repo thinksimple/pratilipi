@@ -14,15 +14,39 @@
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
 	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?4">
+
+	<script>
+		function validateEmail( email ) {
+			var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			return re.test(email);
+		}
+	</script>
 </head>
 
 <body>
+	<#include "../element/pratilipi-homepage-login.ftl">
+	
 	<div class="container">
 		<div class="landing-page">
 			<div class="pratilipi-banner clearfix">
-				<div class="login-signup pull-right">
-					<button class="login-btn">Login</button>
+				<div id="login-signup" class="login-signup pull-right">
+					<button class="login-btn" onClick="openLoginModal()">Login</button>
 					<button class="signup-btn">Signup</button>
+				</div>
+				<div id="user-dropdown" class="user-dropdown pull-right">
+					<div class="dropdown" style="display: inline-block;">
+						<button id="username" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Test 
+						<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu pull-right">
+							<li>
+								<a style="padding: 5px; margin: 0;" onClick="logout()">
+									Logout
+								</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 				<div class="content-wrapper">
 					<h2>2,000,000 Readers. 3,000 Writers. 1 Platform </h2>
