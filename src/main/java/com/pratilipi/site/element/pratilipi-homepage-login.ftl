@@ -4,7 +4,12 @@
 		jQuery( "#pratilipiUserLogin" ).modal( {backdrop: 'static'} );
 	}
 	
-	function login() {
+	function login( e, input ) {
+		if( e != null ) {
+			var code = ( e.keyCode ? e.keyCode : e.which );
+			if( code != 13 )
+				return;
+		}
 		document.getElementById( "login-message" ).innerText = "Please Wait...";
 		var email = document.getElementById( "userLoginEmail" ).value;
 		var password = document.getElementById( "userLoginPassword" ).value;
@@ -76,8 +81,8 @@
 				</div>
 				<img title="Pratilipi" alt="Pratilipi" src="http://0.ptlp.co/resource-all/home-page/pratilipi_logo.png" />
 				<h6 class="modal-fullscreen-heading">Sign in to Pratilipi</h6>
-				<input class="input-field" type="email" name="email" id="userLoginEmail" placeholder="Email" />
-				<input class="input-field" type="password" name="password" id="userLoginPassword" placeholder="Password" />
+				<input class="input-field" type="email" name="email" id="userLoginEmail" placeholder="Email" onKeyPress="login( event, this )" />
+				<input class="input-field" type="password" name="password" id="userLoginPassword" placeholder="Password" onKeyPress="login( event, this )" />
 				<div id="login-message" class="display-message-div"></div>
 				<button id="loginButton" class="pratilipi-blue-button" onClick="login()">Sign In</button>
 			</div>

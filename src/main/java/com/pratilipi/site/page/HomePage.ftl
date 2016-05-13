@@ -13,12 +13,48 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?4">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?5">
 
 	<script>
 		function validateEmail( email ) {
 			var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			return re.test(email);
+		}
+		function startReading() {
+			jQuery('html, body').animate( { scrollTop: jQuery( '#wrapper' ).offset().top }, 500 );
+		}
+		function mailingList() {
+			var mailingList = document.getElementById( 'mailingListLanguage' ).value;
+			var email = document.getElementById( 'mailingListEmail' ).value;
+			
+			if( mailingList == "none" ) {
+				jQuery( '#mailingListLanguage' ).css( { "border": '#D0021B 2px solid' } );
+				return;
+			} else {
+				jQuery( '#mailingListLanguage' ).css( { "border": 'none' } );
+			}
+			
+			if( email.trim() == "" || !validateEmail( email ) ) {
+				jQuery( '#mailingListEmail' ).css( { "border": '#D0021B 2px solid' } );
+				return;
+			} else {
+				jQuery( '#mailingListEmail' ).css( { "border": 'none' } );
+			}
+		
+			$.ajax({
+				type: 'post',
+				url: '/api/mailinglist/subscribe',
+				data: { 
+					'email': email, 
+					'mailingList': mailingList
+				},
+				success: function( response ) {
+					alert( "Success! Added to the mailing list" );
+				},
+				error: function( response ) {
+					alert( "Failed! Try again!" );
+				}
+			});
 		}
 	</script>
 </head>
@@ -31,11 +67,12 @@
 	<div class="container">
 		<div class="landing-page">
 			<div class="pratilipi-banner clearfix">
-				<div id="login-signup" class="login-signup pull-right">
-					<button class="login-btn" onClick="openLoginModal()">Login</button>
-					<button class="signup-btn" onClick="openRegisterModal()">Signup</button>
+				<div id="login-signup" class="login-signup pull-right" style="display: <#if user.isGuest == true>block<#else>none</#if>;">
+					<button class="login-btn" onClick="openLoginModal()">LOG IN</button>
+					<button class="signup-btn" onClick="openRegisterModal()">SIGN UP</button>
 				</div>
-				<div id="user-dropdown" class="user-dropdown pull-right">
+				
+				<div id="user-dropdown" class="user-dropdown pull-right" style="display: <#if user.isGuest == true>none<#else>block</#if>;">
 					<div class="dropdown">
 						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span id="username"></span>
@@ -44,7 +81,7 @@
 						<ul class="dropdown-menu pull-right">
 							<li>
 								<a style="padding: 5px; margin: 0;" onClick="logout()">
-									Logout
+									LOGOUT
 								</a>
 							</li>
 						</ul>
@@ -54,14 +91,14 @@
 					<h2>2,000,000 Readers. 3,000 Writers. 1 Platform </h2>
 					<div class="logo">
 						<div class="pratilipi"></div>
-						<h1>Pratilipi</h1>
+						<h1>pratilipi</h1>
 					</div>
 					<div class="description">
 						<h5 class="bg-white">Read great stories and write your own on</h5>
 						<br>
 						<h5 class="bg-white">world's largest platform for Indian languages</h5>
 					</div>
-					<a href="#wrapper" class="start-reading-btn btn">Start Reading</a>
+					<button type="button" class="start-reading-btn" onClick="startReading()">START READING</button>
 
 				</div>
 
@@ -126,18 +163,18 @@
 				<div class="notify-elements">
 					<h3>Be the first to know when your language gets added</h3>
 
-					<select name="Language" class="language-selection">
-						<option value="language" selected disabled>Language</option>
-						<option value="urdu">		Urdu		</option>
-						<option value="odia">		Odia		</option>
-						<option value="punjabi">	Punjabi		</option>
-						<option value="assamese">	Assamese	</option>
-						<option value="maithili">	Maithili	</option>
-						<option value="bhojpuri">	Bhojpuri	</option>
-						<option value="other">		Any Other	</option>
+					<select id="mailingListLanguage" name="Language" class="language-selection">
+						<option value="none" selected disabled>Language</option>
+						<option value="LAUNCH_ANNOUNCEMENT_URDU">		Urdu		</option>
+						<option value="LAUNCH_ANNOUNCEMENT_ODIA">		Odia		</option>
+						<option value="LAUNCH_ANNOUNCEMENT_PUNJABI">	Punjabi		</option>
+						<option value="LAUNCH_ANNOUNCEMENT_ASSAMESE">	Assamese	</option>
+						<option value="LAUNCH_ANNOUNCEMENT_MAITHILI">	Maithili	</option>
+						<option value="LAUNCH_ANNOUNCEMENT_BHOJPURI">	Bhojpuri	</option>
+						<option value="LAUNCH_ANNOUNCEMENT_OTHER">		Any Other	</option>
 					</select>
-					<input class="input-field" type="email" name="email" id="email" placeholder="Email">
-					<button class="notify-me-btn">Notify me!</button>
+					<input class="input-field" type="email" name="mailingListEmail" id="mailingListEmail" placeholder="Email">
+					<button class="notify-me-btn" onClick="mailingList()">NOTIFY ME!</button>
 				</div>
 			</div>
 			<div class="pratilipi-footer">

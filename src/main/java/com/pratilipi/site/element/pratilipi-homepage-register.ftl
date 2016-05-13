@@ -4,7 +4,12 @@
 		jQuery( "#pratilipiUserRegister" ).modal( {backdrop: 'static'} );
 	}
 	
-	function register() {
+	function register( e, input ) {
+		if( e != null ) {
+			var code = ( e.keyCode ? e.keyCode : e.which );
+			if( code != 13 )
+				return;
+		}
 		document.getElementById( "register-message" ).innerText = "Please Wait...";
 		var name = document.getElementById( "userRegisterName" ).value;
 		var email = document.getElementById( "userRegisterEmail" ).value;
@@ -18,7 +23,7 @@
 			return;
 		}
 		if( password == null || password.trim() == "" ) {
-			document.getElementById( "register-message" ).innerText = "Please Enter your Password";
+			document.getElementById( "register-message" ).innerText = "Please Enter the Password";
 			return;
 		}
 		if( ! validateEmail( email ) ) {
@@ -85,9 +90,9 @@
 				</div>
 				<img title="Pratilipi" alt="Pratilipi" src="http://0.ptlp.co/resource-all/home-page/pratilipi_logo.png" />
 				<h6 class="modal-fullscreen-heading">Register on Pratilipi</h6>
-				<input class="input-field" type="text" name="name" id="userRegisterName" placeholder="Name" />
-				<input class="input-field" type="email" name="email" id="userRegisterEmail" placeholder="Email" />
-				<input class="input-field" type="password" name="password" id="userRegisterPassword" placeholder="Password" />
+				<input class="input-field" type="text" name="name" id="userRegisterName" placeholder="Name" onKeyPress="register( event, this )" />
+				<input class="input-field" type="email" name="email" id="userRegisterEmail" placeholder="Email" onKeyPress="register( event, this )" />
+				<input class="input-field" type="password" name="password" id="userRegisterPassword" placeholder="Password" onKeyPress="register( event, this )" />
 				<div id="register-message" class="display-message-div"></div>
 				<button id="registerButton" class="pratilipi-blue-button" onClick="register()">Register</button>
 			</div>

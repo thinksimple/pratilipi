@@ -136,14 +136,10 @@ a {
 	padding: 0px 25px;
 	font-size: 16px;
 	line-height: 35px;
-	text-transform: uppercase;
 	font-weight: 200;
 	margin: 0;
 	border-radius: 4px;
 	outline: none; 
-}
-.landing-page .pratilipi-banner .user-dropdown {
-	display: none;
 }
 .landing-page .pratilipi-banner .content-wrapper {
 	padding: 64px 0px; 
@@ -192,9 +188,9 @@ a {
 	opacity: 0.8;
 	padding: 2px 5px; 
 }
-.landing-page .pratilipi-banner .content-wrapper a.start-reading-btn, 
-.landing-page .pratilipi-banner .content-wrapper a.start-reading-btn:hover, 
-.landing-page .pratilipi-banner .content-wrapper a.start-reading-btn:focus {
+.landing-page .pratilipi-banner .content-wrapper button.start-reading-btn, 
+.landing-page .pratilipi-banner .content-wrapper button.start-reading-btn:hover, 
+.landing-page .pratilipi-banner .content-wrapper button.start-reading-btn:focus {
 	font-family: 'gotham-book'; 
 	height: 35px;
 	background-color: #D0021B;
@@ -204,9 +200,9 @@ a {
 	font-size: 16px;
 	line-height: 35px;
 	margin: 10px;
-	text-transform: uppercase;
 	font-weight: 200;
-	border-radius: 4px; 
+	border-radius: 4px;
+	outline: none; 
 }
 .landing-page .wrapper {
 	max-width: 1200px;
@@ -328,7 +324,8 @@ a {
 	height: 35px;
 	margin-right: 10px;
 	margin-left: 16px;
-	background-color: #ebebeb; 
+	background-color: #ebebeb;
+	padding-left: 10px; 
 }
 .landing-page .notify-me-wrapper .notify-elements .notify-me-btn {
 	font-family: 'gotham-book'; 
@@ -341,9 +338,9 @@ a {
 	font-size: 16px;
 	line-height: 35px;
 	margin: 10px;
-	text-transform: uppercase;
 	font-weight: 200;
-	border-radius: 4px; 
+	border-radius: 4px;
+	outline: none; 
 }
 .landing-page .pratilipi-footer {
 	padding: 20px;
