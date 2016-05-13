@@ -121,7 +121,6 @@ a {
 	background-repeat: no-repeat;
 	background-size: cover;
 	padding: 10px;
-	padding-bottom: 6%;
 	text-align: center; 
 	opacity: 0.92;
 }
@@ -292,7 +291,8 @@ a {
 .landing-page .notify-me-wrapper {
 	padding: 20px 5px;
 	text-align: center;
-	background-color: #333; 
+	background-color: #333;
+	height: 160px;
 }
 .landing-page .notify-me-wrapper .notify-elements {
 	margin: 0 auto; 
@@ -300,6 +300,16 @@ a {
 .landing-page .notify-me-wrapper .notify-elements h3 {
 	color: #fff;
 	font-size: 24px;
+	margin: 16px;
+	font-weight: 400; 
+}
+.landing-page .notify-me-wrapper .notify-message {
+	margin: 0 auto;
+	display: none;
+}
+.landing-page .notify-me-wrapper .notify-message h2 {
+	color: #fff;
+	font-size: 26px;
 	margin: 16px;
 	font-weight: 400; 
 }
@@ -327,7 +337,8 @@ a {
 	background-color: #ebebeb;
 	padding-left: 10px; 
 }
-.landing-page .notify-me-wrapper .notify-elements .notify-me-btn {
+.landing-page .notify-me-wrapper .notify-elements .notify-me-btn,
+.landing-page .notify-me-wrapper .notify-message .notify-me-btn {
 	font-family: 'gotham-book'; 
 	display: inline-block;
 	height: 35px;

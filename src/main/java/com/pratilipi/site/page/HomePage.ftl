@@ -13,9 +13,14 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?5">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?6">
 
 	<script>
+		$( document ).ready(function() {
+			var diff = ( jQuery( window ).height() - jQuery( '#tiles-container' ).height() ) / 2;
+			jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() - 20 - diff - 108 );
+			jQuery( '.wrapper' ).css( "min-height", jQuery( window ).height() + "px" );
+		});
 		function validateEmail( email ) {
 			var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			return re.test(email);
@@ -23,23 +28,36 @@
 		function startReading() {
 			jQuery('html, body').animate( { scrollTop: jQuery( '#wrapper' ).offset().top }, 500 );
 		}
-		function mailingList() {
+		function addSubscription() {
+			document.getElementById( "notify-elements" ).style.display = "block";
+			document.getElementById( "notify-message" ).style.display = "none";
+		}
+		function mailingList( e, input ) {
+			if( e != null ) {
+				var code = ( e.keyCode ? e.keyCode : e.which );
+				if( code != 13 )
+					return;
+			}
 			var mailingList = document.getElementById( 'mailingListLanguage' ).value;
 			var email = document.getElementById( 'mailingListEmail' ).value;
+			var passed = true;
 			
 			if( mailingList == "none" ) {
-				jQuery( '#mailingListLanguage' ).css( { "border": '#D0021B 2px solid' } );
-				return;
+				jQuery( '#mailingListLanguage' ).css( { "border": '#FF0000 1px solid' } );
+				passed = false;
 			} else {
 				jQuery( '#mailingListLanguage' ).css( { "border": 'none' } );
 			}
 			
 			if( email.trim() == "" || !validateEmail( email ) ) {
-				jQuery( '#mailingListEmail' ).css( { "border": '#D0021B 2px solid' } );
-				return;
+				jQuery( '#mailingListEmail' ).css( { "border": '#FF0000 1px solid' } );
+				passed = false;
 			} else {
 				jQuery( '#mailingListEmail' ).css( { "border": 'none' } );
 			}
+			
+			if( !passed )
+				return;
 		
 			$.ajax({
 				type: 'post',
@@ -49,10 +67,23 @@
 					'mailingList': mailingList
 				},
 				success: function( response ) {
-					alert( "Success! Added to the mailing list" );
+					document.getElementById( 'mailingListLanguage' ).value = "none";
+					document.getElementById( 'mailingListEmail' ).value = null;
+					document.getElementById( "notify-elements" ).style.display = "none";
+					document.getElementById( "notify-message-text" ).innerText = "Thank You! You will be notified when we launch the language!";
+					document.getElementById( "notify-message" ).style.display = "block";
 				},
 				error: function( response ) {
-					alert( "Failed! Try again!" );
+					var messageJson = jQuery.parseJSON( response.responseText );
+					var message = "";
+					if( messageJson["message"] != null )
+						message = messageJson["message"];
+					else
+						message = "Failed due to some reason! Please try again!";
+
+					document.getElementById( "notify-elements" ).style.display = "none";
+					document.getElementById( "notify-message-text" ).innerText = message;
+					document.getElementById( "notify-message" ).style.display = "block";
 				}
 			});
 		}
@@ -87,6 +118,7 @@
 						</ul>
 					</div>
 				</div>
+
 				<div class="content-wrapper">
 					<h2>2,000,000 Readers. 3,000 Writers. 1 Platform </h2>
 					<div class="logo">
@@ -105,7 +137,7 @@
 			</div>
 
 			<div class="wrapper" id="wrapper">
-				<ul>
+				<ul id="tiles-container">
 					<li class="image image-left">
 						<a href="http://hindi.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi.jpg');">
@@ -160,7 +192,8 @@
 			</div>
 
 			<div class="notify-me-wrapper">
-				<div class="notify-elements">
+
+				<div class="notify-elements" id="notify-elements">
 					<h3>Be the first to know when your language gets added</h3>
 
 					<select id="mailingListLanguage" name="Language" class="language-selection">
@@ -173,8 +206,13 @@
 						<option value="LAUNCH_ANNOUNCEMENT_BHOJPURI">	Bhojpuri	</option>
 						<option value="LAUNCH_ANNOUNCEMENT_OTHER">		Any Other	</option>
 					</select>
-					<input class="input-field" type="email" name="mailingListEmail" id="mailingListEmail" placeholder="Email">
+					<input class="input-field" type="email" name="mailingListEmail" id="mailingListEmail" placeholder="Email" onKeyPress="mailingList( event, this )">
 					<button class="notify-me-btn" onClick="mailingList()">NOTIFY ME!</button>
+				</div>
+				
+				<div class="notify-message" id="notify-message">
+					<h2 id="notify-message-text"></h2>
+					<button class="notify-me-btn" onClick="addSubscription()">ADD ANOTHER SUBSCRIPTION</button>
 				</div>
 			</div>
 			<div class="pratilipi-footer">
