@@ -18,15 +18,27 @@
 	
 	<h3 style="margin-top: 20px;" class="pratilipi-red text-center">${ pratilipi.getTitle()!pratilipi.getTitleEn() }</h3>
 	
-	<#-- Increase and Decrease font-size buttons -->
-	<a class="menu-item" style="cursor: pointer;" onCLick="increaseFontSize()">
-		<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-in.svg"/>
-		<span>${ _strings.increase_font_size }</span>
-	</a>
-	<a class="menu-item" style="cursor: pointer;" onCLick="decreaseFontSize()">
-		<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-out.svg"/>
-		<span>${ _strings.decrease_font_size }</span>
-	</a>
+	<!-- Increase and Decrease size buttons -->
+	<!-- In case of PRATILIPI contentType -->
+	<#if contentType == "PRATILIPI">
+		<a class="menu-item" style="cursor: pointer;" onCLick="increaseFontSize()">
+			<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-in.svg"/>
+			<span>${ _strings.increase_font_size }</span>
+		</a>
+		<a class="menu-item" style="cursor: pointer;" onCLick="decreaseFontSize()">
+			<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-out.svg"/>
+			<span>${ _strings.decrease_font_size }</span>
+		</a>
+	<#elseif contentType == "IMAGE">
+		<a class="menu-item" style="cursor: pointer;" onCLick="increaseImageSize()">
+			<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-in.svg"/>
+			<span>${ _strings.increase_image_size }</span>
+		</a>
+		<a class="menu-item" style="cursor: pointer;" onCLick="decreaseImageSize()">
+			<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-out.svg"/>
+			<span>${ _strings.decrease_image_size }</span>
+		</a>
+	</#if>
 	
 	<div style="min-height: 1px;"></div>
 	
