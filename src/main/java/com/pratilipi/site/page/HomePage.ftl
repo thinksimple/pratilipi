@@ -25,18 +25,20 @@
 
 <body>
 	<#include "../element/pratilipi-homepage-login.ftl">
+	<#include "../element/pratilipi-homepage-register.ftl">
+	<#include "../element/pratilipi-homepage-logout.ftl">
 	
 	<div class="container">
 		<div class="landing-page">
 			<div class="pratilipi-banner clearfix">
 				<div id="login-signup" class="login-signup pull-right">
 					<button class="login-btn" onClick="openLoginModal()">Login</button>
-					<button class="signup-btn">Signup</button>
+					<button class="signup-btn" onClick="openRegisterModal()">Signup</button>
 				</div>
 				<div id="user-dropdown" class="user-dropdown pull-right">
-					<div class="dropdown" style="display: inline-block;">
-						<button id="username" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Test 
+					<div class="dropdown">
+						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span id="username"></span>
 						<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu pull-right">

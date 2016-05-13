@@ -35,11 +35,15 @@
 				jQuery( '#loginButton' ).prop( 'disabled', false );
 				
 				document.getElementById( "login-message" ).innerText = "Signed in Successfully!";
-				console.log( displayName );
-				
+				document.getElementById( "login-signup" ).style.display = "none";
+				document.getElementById( "user-dropdown" ).style.display = "block";
+				document.getElementById( "username" ).innerText = displayName;
 				
 				setTimeout( function() {
-					document.getElementById( "login-message" ).innerText = "";
+					<#-- Clear Messages -->
+					document.getElementById( "userLoginEmail" ).value = null;
+					document.getElementById( "userLoginPassword" ).value = null;
+					document.getElementById( "login-message" ).innerText = null;
 			        jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
 				}, 1500);
 			},
@@ -66,7 +70,9 @@
 		<div class="modal-center">
 			<div class="modal-content">
 				<div class="modal-fullscreen-close-button">
-					<button type="button" data-dismiss="modal"></button>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<img style="width: 20px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg"/>
+					</button>
 				</div>
 				<img title="Pratilipi" alt="Pratilipi" src="http://0.ptlp.co/resource-all/home-page/pratilipi_logo.png" />
 				<h6 class="modal-fullscreen-heading">Sign in to Pratilipi</h6>
