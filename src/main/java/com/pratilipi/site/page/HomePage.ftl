@@ -13,7 +13,25 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?6">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?7">
+
+	<script>
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '293990794105516',
+				cookie     : true,
+				xfbml      : true,
+				version    : 'v2.0' 
+			});
+		};
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
 
 	<script>
 		$( document ).ready(function() {
@@ -87,6 +105,42 @@
 				}
 			});
 		}
+		function facebookLogin() {
+			FB.login( function( response ) {
+				$.ajax({
+			
+					type: 'post',
+					url: '/api/user/login/facebook',
+
+					data: { 
+						'fbUserAccessToken': response.authResponse.accessToken
+					},
+					
+					success: function( response ) {
+						var displayName = jQuery.parseJSON( response )[ "displayName" ];
+						
+						document.getElementById( "login-signup" ).style.display = "none";
+						document.getElementById( "user-dropdown" ).style.display = "block";
+						document.getElementById( "username" ).innerText = displayName;
+						
+						setTimeout( function() {
+					        jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
+					        jQuery( "#pratilipiUserRegister" ).modal( 'hide' );
+						}, 1500); 
+					},
+					
+					error: function( response ) {
+						var message = jQuery.parseJSON( response.responseText );
+						var status = response.status;
+
+						if( message["message"] != null )
+							alert( "Error " + status + " : " + message["message"] ); 
+						else
+							alert( "Invalid Credentials" );
+					}
+				});
+			}, { scope: 'public_profile,email,user_birthday' } );
+		}
 	</script>
 </head>
 
@@ -106,7 +160,7 @@
 				<div id="user-dropdown" class="user-dropdown pull-right" style="display: <#if user.isGuest == true>none<#else>block</#if>;">
 					<div class="dropdown">
 						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span id="username"></span>
+						<span id="username"><#if user.isGuest == false>${ user.getDisplayName() }</#if></span>
 						<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu pull-right">

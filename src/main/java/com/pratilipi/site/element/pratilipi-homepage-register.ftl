@@ -90,6 +90,9 @@
 				</div>
 				<img title="Pratilipi" alt="Pratilipi" src="http://0.ptlp.co/resource-all/home-page/pratilipi_logo.png" />
 				<h6 class="modal-fullscreen-heading">Register on Pratilipi</h6>
+				<div class="social-wrap">
+					<button class="facebook" onclick="facebookLogin()">Sign up with Facebook</button>
+				</div>
 				<input class="input-field" type="text" name="name" id="userRegisterName" placeholder="Name" onKeyPress="register( event, this )" />
 				<input class="input-field" type="email" name="email" id="userRegisterEmail" placeholder="Email" onKeyPress="register( event, this )" />
 				<input class="input-field" type="password" name="password" id="userRegisterPassword" placeholder="Password" onKeyPress="register( event, this )" />
