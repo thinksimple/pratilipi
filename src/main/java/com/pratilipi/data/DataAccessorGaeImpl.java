@@ -103,6 +103,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		ObjectifyService.register( BlogEntity.class );
 		ObjectifyService.register( BlogPostEntity.class );
 		ObjectifyService.register( UserAuthorEntity.class );
+		ObjectifyService.register( MailingListSubscriptionEntity.class );
 	}
 	
 	
