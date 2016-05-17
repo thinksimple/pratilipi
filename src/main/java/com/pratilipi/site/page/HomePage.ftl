@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?7">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?8">
 
 	<script>
 		window.fbAsyncInit = function() {
@@ -37,6 +37,7 @@
 		$( document ).ready(function() {
 			var diff = ( jQuery( window ).height() - jQuery( '#tiles-container' ).height() ) / 2;
 			jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() - 20 - diff - 108 );
+			jQuery( '.pratilipi-banner' ).css( "max-height", jQuery( window ).height() );
 			jQuery( '.wrapper' ).css( "min-height", jQuery( window ).height() + "px" );
 		});
 		function validateEmail( email ) {
@@ -88,6 +89,7 @@
 					document.getElementById( 'mailingListLanguage' ).value = "none";
 					document.getElementById( 'mailingListEmail' ).value = null;
 					document.getElementById( "notify-elements" ).style.display = "none";
+					jQuery( '#notify-me-wrapper' ).height( jQuery( '#notify-me-wrapper' ).height() );
 					document.getElementById( "notify-message-text" ).innerText = "Thank You! You will be notified when we launch the language!";
 					document.getElementById( "notify-message" ).style.display = "block";
 				},
@@ -99,6 +101,7 @@
 					else
 						message = "Failed due to some reason! Please try again!";
 
+					jQuery( '#notify-me-wrapper' ).height( jQuery( '#notify-me-wrapper' ).height() );
 					document.getElementById( "notify-elements" ).style.display = "none";
 					document.getElementById( "notify-message-text" ).innerText = message;
 					document.getElementById( "notify-message" ).style.display = "block";
@@ -152,6 +155,7 @@
 	<div class="container">
 		<div class="landing-page">
 			<div class="pratilipi-banner clearfix">
+				<div class="pratilipi-background"></div>
 				<div id="login-signup" class="login-signup pull-right" style="display: <#if user.isGuest == true>block<#else>none</#if>;">
 					<button class="login-btn" onClick="openLoginModal()">LOG IN</button>
 					<button class="signup-btn" onClick="openRegisterModal()">SIGN UP</button>
@@ -245,7 +249,7 @@
 				</ul>
 			</div>
 
-			<div class="notify-me-wrapper">
+			<div class="notify-me-wrapper" id="notify-me-wrapper">
 
 				<div class="notify-elements" id="notify-elements">
 					<h3>Be the first to know when your language gets added</h3>
@@ -270,19 +274,12 @@
 				</div>
 			</div>
 			<div class="pratilipi-footer">
-				<div class="col-45 about-pratilipi">
+				<div class="col-50 about-pratilipi">
 					<h5>Pratilipi</h5>
 					<a href="mailto:contact@pratilipi.com"><span>contact@pratilipi.com</span></a>
 					<a href="tel:+919789316700"><span>+91 9789316700</span></a>
-					<p class="copyrights">&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</p>
 				</div>
-				<div class="col-25 about-part-2">
-					<ul class="col-50">
-						<li><a href="#">About us</a></li>
-						<li><a href="#">Work with us</a></li>
-					</ul>
-				</div>
-				<div class="col-25 about-part-3">
+				<div class="col-45 about-part-3">
 					<span>Follow us on Social Media :</span>
 					<div class="social-media-links">
 						<a href="#"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a>
@@ -290,6 +287,7 @@
 						<a href="#"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a>
 					</div>
 				</div>
+				<p class="copyrights">&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</p>
 			</div>
 		</div>
 	</div>
