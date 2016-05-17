@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?8">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?9">
 
 	<script>
 		window.fbAsyncInit = function() {
@@ -120,7 +120,7 @@
 					},
 					
 					success: function( response ) {
-						var displayName = jQuery.parseJSON( response )[ "displayName" ];
+						var displayName = "Hello " + jQuery.parseJSON( response )[ "displayName" ];
 						
 						document.getElementById( "login-signup" ).style.display = "none";
 						document.getElementById( "user-dropdown" ).style.display = "block";
@@ -169,7 +169,7 @@
 						</button>
 						<ul class="dropdown-menu pull-right">
 							<li>
-								<a style="padding: 5px; margin: 0;" onClick="logout()">
+								<a style="padding: 4px 16px; margin: 0;" onClick="logout()">
 									LOGOUT
 								</a>
 							</li>
@@ -198,21 +198,21 @@
 				<ul id="tiles-container">
 					<li class="image image-left">
 						<a href="http://hindi.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi2.jpg'); background-size: contain;">
 								<span class="language">Hindi</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image2">
 						<a href="http://tamil.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/tamil.png');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/tamil.png'); background-size: contain; background-position: top;">
 								<span class="language">Tamil</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image-right">
 						<a href="http://malayalam.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/malayalam.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/malayalam2.jpg'); background-size: contain; background-position: top;">
 								<span class="language">Malayalam</span>
 							</div>
 						</a>
@@ -241,7 +241,7 @@
 					<li class="image image-left image-none" style="height: 0px;"></li>
 					<li class="image image4">
 						<a href="http://marathi.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/marathi.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/marathi.jpg'); background-size: contain; background-position: top;">
 								<span class="language">Marathi</span>
 							</div>
 						</a>
@@ -282,9 +282,9 @@
 				<div class="col-45 about-part-3">
 					<span>Follow us on Social Media :</span>
 					<div class="social-media-links">
-						<a href="#"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a>
-						<a href="#"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></a>
-						<a href="#"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a>
+						<a href="https://twitter.com/TeamPratilipi" target="_blank"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a>
+						<a href="https://plus.google.com/+PratilipiTeam" target="_blank"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></a>
+						<a href="https://www.facebook.com/Pratilipidotcom" target="_blank"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a>
 					</div>
 				</div>
 				<p class="copyrights">&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</p>

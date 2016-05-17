@@ -42,7 +42,7 @@
 				'password': password
 			},
 			success: function( response ) {
-				var displayName = jQuery.parseJSON( response )[ "displayName" ];
+				var displayName = "Hello " + jQuery.parseJSON( response )[ "displayName" ];
 				jQuery( '#registerButton' ).prop( 'disabled', false );
 				
 				document.getElementById( "register-message" ).innerText = "Registered Successfully!";

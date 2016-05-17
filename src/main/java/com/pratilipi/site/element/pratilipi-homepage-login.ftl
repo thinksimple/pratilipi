@@ -36,7 +36,7 @@
 				'password': password
 			},
 			success: function( response ) {
-				var displayName = jQuery.parseJSON( response )[ "displayName" ];
+				var displayName = "Hello " + jQuery.parseJSON( response )[ "displayName" ];
 				jQuery( '#loginButton' ).prop( 'disabled', false );
 				
 				document.getElementById( "login-message" ).innerText = "Signed in Successfully!";

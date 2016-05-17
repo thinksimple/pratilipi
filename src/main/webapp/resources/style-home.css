@@ -127,7 +127,7 @@ a {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: url(http://0.ptlp.co/resource-all/home-page/wall.jpeg) no-repeat 0 0;
+	background: url(http://0.ptlp.co/resource-all/home-page/widebg.png) no-repeat 0 0;
 	background-color: lightgrey;
 	
 	opacity: 0.72;
@@ -148,8 +148,7 @@ a {
 	}
 }
 .landing-page .pratilipi-banner .login-btn,
-.landing-page .pratilipi-banner .signup-btn,
-.landing-page .pratilipi-banner .user-dropdown button {
+.landing-page .pratilipi-banner .signup-btn {
 	height: 35px;
 	background: transparent;
 	padding: 0px 25px;
@@ -163,6 +162,18 @@ a {
 	font-family: Avenir-Black;
 	color: #FFFFFF;
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
+}
+.landing-page .pratilipi-banner .user-dropdown button {
+	background: transparent;
+	padding: 0px 25px;
+	font-size: 20px;
+	line-height: 40px;
+	font-weight: 200;
+	margin: 0;
+	outline: none; 
+	border: none;
+	font-family: Avenir-Black;
+	color: #FFFFFF;
 }
 .landing-page .pratilipi-banner .content-wrapper {
 	padding: 64px 0px; 
