@@ -7,6 +7,7 @@ import com.pratilipi.api.impl.mailinglist.shared.PostMailingListSubscribeRequest
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.data.util.MailingListSubscriptionDataUtil;
+import com.pratilipi.filter.AccessTokenFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/mailinglist/subscribe" )
@@ -18,6 +19,7 @@ public class MailingListSubscribeApi extends GenericApi {
 		
 		MailingListSubscriptionDataUtil.subscribe(
 				request.getMailingList(),
+				AccessTokenFilter.getAccessToken().getUserId(),
 				request.getEmail().toString().trim() );
 		
 		return new GenericResponse();

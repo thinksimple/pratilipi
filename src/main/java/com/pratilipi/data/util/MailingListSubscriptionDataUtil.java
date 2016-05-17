@@ -1,5 +1,7 @@
 package com.pratilipi.data.util;
 
+import java.util.Date;
+
 import com.google.gson.Gson;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -13,7 +15,7 @@ import com.pratilipi.filter.AccessTokenFilter;
 
 public class MailingListSubscriptionDataUtil {
 	
-	public static void subscribe( MailingList mailingList, String email )
+	public static void subscribe( MailingList mailingList, Long userId, String email )
 			throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -33,7 +35,9 @@ public class MailingListSubscriptionDataUtil {
 		auditLog.setEventDataOld( gson.toJson( mailingListSubscription ) );
 		
 		mailingListSubscription.setMailingList( mailingList );
+		mailingListSubscription.setUserId( userId );
 		mailingListSubscription.setEmail( email );
+		mailingListSubscription.setSubscriptionDate( new Date() );
 		
 		auditLog.setEventDataNew( gson.toJson( mailingListSubscription ) );
 		
