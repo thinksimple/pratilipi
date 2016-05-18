@@ -82,7 +82,7 @@ public class CommentDataUtil {
 		JsonObject errorMessages = new JsonObject();
 
 		// New comment must have a user id.
-		if( isNew && commentData.getUserId() == null )
+		if( isNew && ( commentData.getUserId() == null || commentData.getUserId() == 0L ) )
 			errorMessages.addProperty( "userId", GenericRequest.ERR_USER_ID_REQUIRED );
 		
 		// New comment must have a parent type.
