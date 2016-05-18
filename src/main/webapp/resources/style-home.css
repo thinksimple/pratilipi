@@ -169,6 +169,46 @@ a {
 	border: none;
 	color: #FFFFFF;
 }
+.landing-page .pratilipi-banner .user-dropdown .username {
+	font-size: 18px;
+}
+.landing-page .pratilipi-banner .user-dropdown .dropdown ul.dropdown-menu {
+	right: 24px;
+}
+.landing-page .pratilipi-banner .user-dropdown .open > .dropdown-menu {
+	animation-name: slidenavAnimation;
+	animation-duration:.5s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+	animation-fill-mode: forwards;
+	-webkit-animation-name: slidenavAnimation;
+	-webkit-animation-duration:.5s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: ease;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-name: slidenavAnimation;
+	-moz-animation-duration:.5s;
+	-moz-animation-iteration-count: 1;
+	-moz-animation-timing-function: ease;
+	-moz-animation-fill-mode: forwards;
+}
+@keyframes slidenavAnimation {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@-webkit-keyframes slidenavAnimation {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}	
+
 .landing-page .pratilipi-banner .content-wrapper {
 	padding: 64px 0px; 
 }
@@ -421,6 +461,26 @@ a {
 	font-size: 24px;
 	margin: 16px;
 	font-weight: 400; 
+}
+.landing-page .notify-me-wrapper .notify-loader {
+	display: none;
+    margin: 0 auto;
+    border: 2px solid #D0021B;
+    border-radius: 50%;
+    border-top: 2px solid #333;
+    width: 28px;
+    height: 28px;
+    margin-top: 36px;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 .landing-page .notify-me-wrapper .notify-message {
 	margin: 0 auto;

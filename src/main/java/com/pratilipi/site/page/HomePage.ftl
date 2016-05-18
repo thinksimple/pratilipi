@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?10">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?11">
 
 	<#--<script src='/third-party/html5loader/src/jquery.html5Loader.min.js'></script>
 	<script>
@@ -63,7 +63,7 @@
 			<#-- Setting banner height -->
 			var diff = ( jQuery( window ).height() - jQuery( '#tiles-container' ).height() ) / 2;
 			jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() - 20 - diff - 108 );
-			jQuery( '.pratilipi-banner' ).css( "max-height", Math.max( jQuery( window ).height() - 108, jQuery( '.content-wrapper' ).height() + 96 ) + "px" );
+			jQuery( '.pratilipi-banner' ).css( "max-height", Math.max( jQuery( window ).height(), jQuery( '.content-wrapper' ).height() + 96 ) + "px" );
 		});
 		function validateEmail( email ) {
 			var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -102,6 +102,11 @@
 			
 			if( !passed )
 				return;
+
+			<#-- Spinner active -->
+			jQuery( '#notify-me-wrapper' ).height( jQuery( '#notify-me-wrapper' ).height() );
+			document.getElementById( "notify-elements" ).style.display = "none";
+			document.getElementById( 'notify-loader' ).style.display = "block";
 		
 			$.ajax({
 				type: 'post',
@@ -111,10 +116,9 @@
 					'mailingList': mailingList
 				},
 				success: function( response ) {
-					jQuery( '#notify-me-wrapper' ).height( jQuery( '#notify-me-wrapper' ).height() );
+					document.getElementById( 'notify-loader' ).style.display = "none";
 					document.getElementById( 'mailingListLanguage' ).value = "none";
 					document.getElementById( 'mailingListEmail' ).value = null;
-					document.getElementById( "notify-elements" ).style.display = "none";
 					document.getElementById( "notify-message-text" ).innerText = "Thank You! You will be notified when we launch the language!";
 					document.getElementById( "notify-message" ).style.display = "block";
 				},
@@ -126,8 +130,7 @@
 					else
 						message = "Failed due to some reason! Please try again!";
 
-					jQuery( '#notify-me-wrapper' ).height( jQuery( '#notify-me-wrapper' ).height() );
-					document.getElementById( "notify-elements" ).style.display = "none";
+					document.getElementById( 'notify-loader' ).style.display = "none";
 					document.getElementById( "notify-message-text" ).innerText = message;
 					document.getElementById( "notify-message" ).style.display = "block";
 				}
@@ -189,7 +192,7 @@
 				<div id="user-dropdown" class="user-dropdown pull-right" style="display: <#if user.isGuest == true>none<#else>block</#if>;">
 					<div class="dropdown">
 						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span id="username"><#if user.isGuest == false>${ user.getDisplayName() }</#if></span>
+						<span id="username" class="username"><#if user.isGuest == false>Hello ${ user.getDisplayName() }</#if></span>
 						<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu pull-right">
@@ -329,6 +332,8 @@
 					<button class="notify-me-btn" onClick="mailingList()">NOTIFY ME!</button>
 				</div>
 				
+				<div id="notify-loader" class="notify-loader"></div>
+
 				<div class="notify-message" id="notify-message">
 					<h2 id="notify-message-text"></h2>
 					<button class="notify-me-btn" onClick="addSubscription()">ADD ANOTHER SUBSCRIPTION</button>
