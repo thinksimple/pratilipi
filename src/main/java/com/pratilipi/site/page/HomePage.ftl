@@ -13,7 +13,30 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?9">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?10">
+
+	<#--<script src='/third-party/html5loader/src/jquery.html5Loader.min.js'></script>
+	<script>
+		$.html5Loader({
+		      filesToLoad:    		'test.json', 
+		      onBeforeLoad:       function () {},
+		      onComplete:         function () { console.log( "Complete" ); },
+		      onElementLoaded:    function ( obj, elm) { },
+		      onUpdate:           function ( percentage ) {}
+		});
+	</script> 
+	
+	<script>
+		var myPrefetchedPage;
+		$.ajax({
+		  url: 'http://p.ptlp.co/third-party/polymer-1.0/iron-ajax/iron-ajax.html',
+		  cache: true,
+		  success: function(html){
+		    console.log( "Fetched" );
+		  }
+		})
+	</script>
+	-->
 
 	<script>
 		window.fbAsyncInit = function() {
@@ -35,10 +58,12 @@
 
 	<script>
 		$( document ).ready(function() {
+			<#-- Setting tiles min-height -->
+			jQuery( '.wrapper' ).css( "min-height", jQuery( window ).height() + "px" );
+			<#-- Setting banner height -->
 			var diff = ( jQuery( window ).height() - jQuery( '#tiles-container' ).height() ) / 2;
 			jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() - 20 - diff - 108 );
-			jQuery( '.pratilipi-banner' ).css( "max-height", jQuery( window ).height() );
-			jQuery( '.wrapper' ).css( "min-height", jQuery( window ).height() + "px" );
+			jQuery( '.pratilipi-banner' ).css( "max-height", Math.max( jQuery( window ).height() - 108, jQuery( '.content-wrapper' ).height() + 96 ) + "px" );
 		});
 		function validateEmail( email ) {
 			var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -86,10 +111,10 @@
 					'mailingList': mailingList
 				},
 				success: function( response ) {
+					jQuery( '#notify-me-wrapper' ).height( jQuery( '#notify-me-wrapper' ).height() );
 					document.getElementById( 'mailingListLanguage' ).value = "none";
 					document.getElementById( 'mailingListEmail' ).value = null;
 					document.getElementById( "notify-elements" ).style.display = "none";
-					jQuery( '#notify-me-wrapper' ).height( jQuery( '#notify-me-wrapper' ).height() );
 					document.getElementById( "notify-message-text" ).innerText = "Thank You! You will be notified when we launch the language!";
 					document.getElementById( "notify-message" ).style.display = "block";
 				},
@@ -178,16 +203,26 @@
 				</div>
 
 				<div class="content-wrapper">
-					<h2>2,000,000 Readers. 3,000 Writers. 1 Platform </h2>
+
+					<div class="heading-wrapper">
+						<h2>2,000,000 Readers.&nbsp;</h2><h2>3,000 Writers.&nbsp;</h2><h2>1 Platform.</h2>
+					</div>
+
 					<div class="logo">
 						<div class="pratilipi"></div>
 						<h1>pratilipi</h1>
 					</div>
-					<div class="description">
+
+					<div class="description description-mobile">
+						<h5 class="bg-white">Read great stories and write your own on world's largest platform for Indian languages</h5>
+					</div>
+
+					<div class="description description-widescreen">
 						<h5 class="bg-white">Read great stories and write your own on</h5>
 						<br>
 						<h5 class="bg-white">world's largest platform for Indian languages</h5>
 					</div>
+
 					<button type="button" class="start-reading-btn" onClick="startReading()">START READING</button>
 
 				</div>
@@ -195,7 +230,7 @@
 			</div>
 
 			<div class="wrapper" id="wrapper">
-				<ul id="tiles-container">
+				<ul class="tiles-container" id="tiles-container">
 					<li class="image image-left">
 						<a href="http://hindi.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi2.jpg'); background-size: contain;">
@@ -247,6 +282,32 @@
 						</a>
 					</li> 
 				</ul>
+
+				<div class="tiles-container-mobile" id="tiles-container-mobile">
+					<a class="language-button" href="http://hindi.pratilipi.com/">
+						<span>Hindi</span>
+					</a>
+					<a class="language-button" href="http://tamil.pratilipi.com/">
+						<span>Tamil</span>
+					</a>
+					<a class="language-button" href="http://malayalam.pratilipi.com/">
+						<span class="language">Malayalam</span>
+					</a>
+					<a class="language-button" href="http://bengali.pratilipi.com/">
+						<span class="language">Bengali</span>
+					</a>
+					<a class="language-button" href="http://telugu.pratilipi.com/">
+						<span class="language">Telugu</span>
+					</a>
+					<a class="language-button" href="http://gujarati.pratilipi.com/">
+						<span class="language">Gujarati</span>
+					</a>
+					<a class="language-button" href="http://marathi.pratilipi.com/">
+						<span class="language">Marathi</span>
+					</a>
+					
+				</div>
+
 			</div>
 
 			<div class="notify-me-wrapper" id="notify-me-wrapper">

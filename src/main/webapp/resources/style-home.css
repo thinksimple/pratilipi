@@ -29,7 +29,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1; 
-	font-family: Montserrat, Helvetica;
+	font-family: Avenir-Black, Montserrat, Helvetica;
 }
 
 ol, ul {
@@ -59,7 +59,6 @@ table {
 
 .wrapper {
 	width: 100%;
-	max-width: 1200; 
 }
 
 .active {
@@ -118,6 +117,7 @@ a {
 	z-index: 1;
 	padding: 10px;
 	text-align: center;
+	min-height: 420px;
 }
 
 .landing-page .pratilipi-banner .pratilipi-background {
@@ -129,7 +129,6 @@ a {
 	right: 0;
 	background: url(http://0.ptlp.co/resource-all/home-page/widebg.png) no-repeat 0 0;
 	background-color: lightgrey;
-	
 	opacity: 0.72;
 	width: 100%;
 	height: 100%;
@@ -138,7 +137,7 @@ a {
 @media only screen and (max-width: 840px) {
 	.landing-page .pratilipi-banner .pratilipi-background {
 		background-size: cover;
-		background-position: left;
+		background-position-x: -128px;
 	}
 }
 @media only screen and (min-width: 840px) {
@@ -149,19 +148,15 @@ a {
 }
 .landing-page .pratilipi-banner .login-btn,
 .landing-page .pratilipi-banner .signup-btn {
-	height: 35px;
-	background: transparent;
-	padding: 0px 25px;
-	font-size: 16px;
-	line-height: 35px;
-	font-weight: 200;
-	margin: 0;
-	outline: none; 
 	border: 2px solid #FFFFFF;
 	border-radius: 7px;
-	font-family: Avenir-Black;
+	font-size: 18px;
+	line-height: 18px;
 	color: #FFFFFF;
-	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
+	padding: 8px 24px;
+    padding-top: 10px;
+	outline: none;
+	background: transparent;
 }
 .landing-page .pratilipi-banner .user-dropdown button {
 	background: transparent;
@@ -172,39 +167,80 @@ a {
 	margin: 0;
 	outline: none; 
 	border: none;
-	font-family: Avenir-Black;
 	color: #FFFFFF;
 }
 .landing-page .pratilipi-banner .content-wrapper {
 	padding: 64px 0px; 
 }
 .landing-page .pratilipi-banner .content-wrapper .description {
+	margin: 10px auto;
 	font-family: Montserrat, Helvetica;
-	margin-bottom: 10px; 
 }
-.landing-page .pratilipi-banner .content-wrapper h2 {
+@media only screen and (max-width: 512px) {
+	.landing-page .pratilipi-banner .content-wrapper .description-mobile {
+		display: block;
+		width: 320px;
+	}
+	.landing-page .pratilipi-banner .content-wrapper .description-widescreen {
+		display: none;
+	}
+	.landing-page .pratilipi-banner .content-wrapper .description h5.bg-white {
+		display: block;
+		margin-top: 32px;
+		opacity: 0.85;
+		font-size: 20px;
+		line-height: 22px;
+		background-color: #fff;
+		color: #000000;
+		letter-spacing: 0.66px;
+		overflow: hidden;
+		text-align: center;
+		padding: 8px 5px;
+	}
+}
+@media only screen and (min-width: 512px) {
+	.landing-page .pratilipi-banner .content-wrapper .description-mobile {
+		display: none;
+	}
+	.landing-page .pratilipi-banner .content-wrapper .description-widescreen {
+		display: block;
+	}
+	.landing-page .pratilipi-banner .content-wrapper .description h5.bg-white {
+		background-color: #fff;
+		display: inline-block;
+		margin: 2px 10px;
+		opacity: 0.85;
+		padding: 2px 5px; 
+		font-size: 18px;
+		color: #000000;
+		letter-spacing: 0.66px;
+		overflow: hidden;
+	}
+}
+.landing-page .pratilipi-banner .content-wrapper .heading-wrapper h2 {
+	display: inline-block;
+	white-space: nowrap;
 	font-weight: 400;
-	font-family: Avenir-Black;
 	letter-spacing: 1.13px;
+	margin-bottom: 4px;
 	color: #FFFFFF;
 	text-shadow: 4px 1px 4px rgba(0,0,0,0.50);
 }
 
 @media only screen and (max-width: 840px) {
-	.landing-page .pratilipi-banner .content-wrapper h2 {
+	.landing-page .pratilipi-banner .content-wrapper .heading-wrapper {
 		font-size: 32px;
 		margin-top: 64px;
-		margin-bottom: 64px;
 	}
 }
 @media only screen and (min-width: 840px) {
-	.landing-page .pratilipi-banner .content-wrapper h2 {
+	.landing-page .pratilipi-banner .content-wrapper .heading-wrapper {
 		font-size: 42px;
 		margin-bottom: 48px;
 	}
 }
 .landing-page .pratilipi-banner .content-wrapper .logo {
-	display: inline-block;
+	display: block;
 	text-align: center;
 }
 .landing-page .pratilipi-banner .content-wrapper .logo .pratilipi {
@@ -219,104 +255,130 @@ a {
 }
 .landing-page .pratilipi-banner .content-wrapper .logo h1 {
 	display: inline-block;
-	line-height: 120px;
+	line-height: 108px;
 	vertical-align: top;
 	font-weight: 400;
-	margin-left: 10px;
-	font-family: Avenir-Black;
 	font-size: 36px;
 	color: #FFFFFF;
 	letter-spacing: 1.21px;
 	text-shadow: 0px 2px 4px rgba(0,0,0,0.50);
 }
-.landing-page .pratilipi-banner .content-wrapper .bg-white {
-	background-color: #fff;
-	display: inline-block;
-	margin: 2px 10px;
-	opacity: 0.85;
-	padding: 2px 5px; 
-	font-family: Avenir-Book;
-	font-size: 16px;
-	color: #000000;
-	letter-spacing: 0.66px;
-}
 .landing-page .pratilipi-banner .content-wrapper button.start-reading-btn, 
 .landing-page .pratilipi-banner .content-wrapper button.start-reading-btn:hover, 
 .landing-page .pratilipi-banner .content-wrapper button.start-reading-btn:focus {
-	height: 35px;
-	border: 2px solid transparent;
-	padding: 0px 15px;
-	font-size: 16px;
-	line-height: 35px;
-	margin: 10px;
-	font-weight: 200;
-	outline: none;
 	opacity: 0.85;
 	background: #D0021B;
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
 	border-radius: 7px;
-	font-family: Avenir-Black;
+	font-size: 18px;
 	color: #FFFFFF;
-	letter-spacing: 1px;
+	letter-spacing: 0px;
+	outline: none;
+	margin: 10px;
+    border: 2px solid transparent;
+    padding: 10px 48px;
 }
 .landing-page .wrapper {
-	max-width: 1200px;
+	margin: auto;
 	display: flex;
 	flex-direction: row;
 	flex-flow: row wrap;
 	justify-content: space-between;
-	margin: auto; 
 }
-@media only screen and (min-width: 1150px) {
-	.landing-page .wrapper ul {
-		margin: auto;
-		padding:10px;
-		display: block;
-		height: 700px;
-	}
-	.landing-page .wrapper ul li.image {
-		float: left;
-		margin: 7px;
-		overflow: hidden;
-		width: 366px;
-		height: 324px;
-		margin-bottom: 0px;
-	}
-	.landing-page .wrapper ul li.image-left {
-		margin-right: 0px;
-	}
-	.landing-page .wrapper ul li.image-right {
-		margin-left: 0px;
-	}
-	.landing-page .wrapper ul li.image2 {
-		height: 183px;
-	}
-	.landing-page .wrapper ul li.image3 {
-		height: 283px;
-		margin-top: -137px;
-	}
-	.landing-page .wrapper ul li.image4 {
-		height: 183px;
-		margin-top: -182px;
-	}    
+.landing-page .wrapper ul.tiles-container, .landing-page .wrapper .tiles-container-mobile {
+	margin: auto;
+	padding:10px;
+	display: block;
+}
+.landing-page .wrapper ul.tiles-container li.image {
+	float: left;
+	margin: 7px;
+	overflow: hidden;
+	height: 324px;
+	margin-bottom: 0px;
+}
+.landing-page .wrapper ul.tiles-container li.image-left {
+	margin-right: 0px;
+}
+.landing-page .wrapper ul.tiles-container li.image-right {
+	margin-left: 0px;
+}
+.landing-page .wrapper ul.tiles-container li.image2 {
+	height: 183px;
+}
+.landing-page .wrapper ul.tiles-container li.image3 {
+	height: 283px;
+	margin-top: -137px;
+}
+.landing-page .wrapper ul.tiles-container li.image4 {
+	height: 183px;
+	margin-top: -182px;
+}
+.landing-page .wrapper .tiles-container-mobile {
+	padding-left: 24px;
+	padding-right: 24px;
+}
+.landing-page .wrapper .tiles-container-mobile a.language-button {
+	-moz-box-shadow: 1px 1px 1px -1px #555555;
+	-webkit-box-shadow: 1px 1px 1px -1px #555555;
+	box-shadow: 1px 1px 1px -1px #555555;
+	background-color: transparent;
+	-moz-border-radius: 28px;
+	-webkit-border-radius: 28px;
+	border-radius: 28px;
+	border: 1px solid #333;
+	display: inline-block;
+	cursor: pointer;
+	color: #333;
+	/* font-family: Montserrat, Helvetica; */
+	font-size: 18px;
+	padding: 12px 16px;
+	text-align: center;
+	text-decoration: none;
+	margin-bottom: 24px;
+}
+.landing-page .wrapper .tiles-container-mobile a.language-button:hover {
+	background-color: transparent;
+}
+.landing-page .wrapper .tiles-container-mobile a.language-button:active {
+	position: relative;
+	top: 1px;
 }
 
-@media only screen and (max-width: 1150px) {
-	.landing-page .wrapper ul {
-		width:100%;
-		margin: auto;
-		padding:10px;
+
+@media only screen and (min-width: 1150px) {
+	.landing-page .wrapper ul.tiles-container {
+		max-width: 1150px;
 	}
-	.landing-page .wrapper ul li.image {
-		margin: 7px auto;
-		overflow: hidden;
-		width: 350px;
-		height: 350px;
+	.landing-page .wrapper ul.tiles-container li.image {
+		width: 366px;
 	}
-	.landing-page .wrapper ul li.image-none {
+	.landing-page .wrapper .tiles-container-mobile {
+		display: none;
+	} 
+}
+
+@media only screen and (max-width: 1149px) {
+	.landing-page .wrapper ul.tiles-container {
+		max-width: 846px;
+	}
+	.landing-page .wrapper ul.tiles-container li.image {
+		width: 266px;
+	}
+	.landing-page .wrapper .tiles-container-mobile {
 		display: none;
 	}
 }
+
+@media only screen and (max-width: 845px) {
+	.landing-page .wrapper ul.tiles-container {
+		display: none;
+	}
+	.landing-page .wrapper .tiles-container-mobile {
+		display: block;
+	}
+}
+
 
 .landing-page .wrapper a {
 	width: 100%;
@@ -333,6 +395,8 @@ a {
 }
 .landing-page .wrapper a .tiles:hover {
 	opacity: 1; 
+	transition: opacity .5s;
+	-webkit-transition: opacity .5s;
 }
 .landing-page .wrapper a .tiles .language {
 	text-decoration: none;
@@ -405,10 +469,10 @@ a {
 	background: #D0021B;
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
 	border-radius: 7px;
-	font-family: Avenir-Black;
 	color: #FFFFFF;
 }
 .landing-page .pratilipi-footer {
+	font-family: Montserrat, Helvetica;
 	padding: 20px;
 	background-color: #ebebeb; 
 }
@@ -422,7 +486,6 @@ a {
 	border-right: 1px solid gray; 
 }
 .landing-page .pratilipi-footer .about-pratilipi h5 {
-	font-family: Montserrat, Helvetica; 
 	font-size: 18px;
 	color: #666;
 	margin-bottom: 10px; 
