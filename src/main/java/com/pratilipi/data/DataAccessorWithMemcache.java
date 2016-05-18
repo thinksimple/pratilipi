@@ -31,7 +31,6 @@ import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
@@ -536,23 +535,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 		return categoryList;
 	}
 
-	
-	// PRATILIPI_CATEGORY Table
-	
-	@Override
-	public List<PratilipiCategory> getPratilipiCategoryList( Long pratilipiId ){
-		List<PratilipiCategory> pratilipiCategoryList =
-				memcache.get( PREFIX_PRATILIPI_CATEGORY_LIST + pratilipiId );
-		if( pratilipiCategoryList == null ) {
-			pratilipiCategoryList =
-					dataAccessor.getPratilipiCategoryList( pratilipiId );
-			memcache.put(
-					PREFIX_PRATILIPI_CATEGORY_LIST + pratilipiId,
-					new ArrayList<>( pratilipiCategoryList ) );
-		}
-		return pratilipiCategoryList;
-	}
-	
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 	@Override public MailingListSubscription newMailingListSubscription() { return dataAccessor.newMailingListSubscription(); }

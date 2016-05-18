@@ -14,7 +14,6 @@ import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 
-import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
@@ -41,7 +40,6 @@ import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
@@ -674,15 +672,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return new ArrayList<Category>( 0 );
 	}
 
-	
-	// PRATILIPI_CATEGORY Table
-	
-	@Override
-	public List<PratilipiCategory> getPratilipiCategoryList(Long pratilipiId) {
-		// TODO Auto-generated method stub
-		return new ArrayList<PratilipiCategory>( 0 );
-	}
-	
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 	

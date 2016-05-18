@@ -54,7 +54,6 @@ import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
@@ -70,7 +69,6 @@ import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
 import com.pratilipi.data.type.gae.NavigationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
-import com.pratilipi.data.type.gae.PratilipiCategoryEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
@@ -1282,29 +1280,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	}
 	
-	
-	//PRATILIPI_CATEGORY Table
-	
-	@Override
-	public List<PratilipiCategory> getPratilipiCategoryList( Long pratilipiId ){
-		if( pratilipiId == null )
-			return null;
-		
-		try {
-			Query query = 
-					new GaeQueryBuilder( pm.newQuery( PratilipiCategoryEntity.class ))
-			.addFilter( "pratilipiId", pratilipiId )
-			.build();
-			
-			@SuppressWarnings( "unchecked" )
-			List<PratilipiCategory> pratilipiCategoryEntityList = ( List<PratilipiCategory> ) query.execute( pratilipiId );
-			return (List<PratilipiCategory>) pm.detachCopyAll( pratilipiCategoryEntityList );
-		} catch( JDOObjectNotFoundException e ) {
-			logger.log( Level.INFO, "No Category is present for pratilipi id " + pratilipiId );
-		}
-		return null;
-	}
-
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 

@@ -25,7 +25,6 @@ import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.PratilipiCategory;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
@@ -149,10 +148,6 @@ public interface DataAccessor {
 	// CATEGORY Table
 	Category getCategory( Long categoryId );
 	List<Category> getCategoryList( Language language );
-	
-	
-	// PRATILIPI_CATEGORY Table
-	List<PratilipiCategory> getPratilipiCategoryList( Long pratilipiId );
 
 	
 	// MAILING_LIST_SUBSCRIPTION Table

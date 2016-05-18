@@ -14,7 +14,7 @@ import com.pratilipi.filter.AccessTokenFilter;
 public class MailingListSubscribeApi extends GenericApi {
 	
 	@Post
-	public GenericResponse get( PostMailingListSubscribeRequest request )
+	public GenericResponse post( PostMailingListSubscribeRequest request )
 			throws InvalidArgumentException {
 		
 		MailingListSubscriptionDataUtil.subscribe(
