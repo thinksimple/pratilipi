@@ -7,6 +7,7 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.data.type.Comment;
 
 @Cache
@@ -21,19 +22,16 @@ public class CommentEntity implements Comment {
 	private Long USER_ID;
 	
 	@Index
-	private String CONTENT_ID;
-
-	@Deprecated
-	private String PARENT_TYPE;
+	private CommentParentType PARENT_TYPE;
 	
-	@Deprecated
+	@Index
 	private String PARENT_ID;
 
 	
-	@Deprecated
 	private String CONTENT;
 	
-	private String COMMENT_TEXT;
+	@Index
+	private Long LIKE_COUNT;
 	
 	
 	@Deprecated
@@ -91,28 +89,54 @@ public class CommentEntity implements Comment {
 	}
 
 	@Override
-	public String getContentId() {
-		if( CONTENT_ID == null )
-			CONTENT_ID = PARENT_TYPE + "::" + PARENT_ID;
-		return CONTENT_ID;
+	public CommentParentType getParentType() {
+		return PARENT_TYPE;
 	}
 
 	@Override
-	public void setContentId( String contentId ) {
-		this.CONTENT_ID = contentId;
+	public void setParentType( CommentParentType parentType ) {
+		this.PARENT_TYPE = parentType;
+	}
+
+	@Override
+	public String getParentId() {
+		return PARENT_ID;
+	}
+
+	@Override
+	public Long getParentIdLong() {
+		return Long.parseLong( PARENT_ID );
+	}
+
+	@Override
+	public void setParentId( Long parentId ) {
+		this.PARENT_ID = parentId.toString();
+	}
+
+	@Override
+	public void setParentId( String parentId ) {
+		this.PARENT_ID = parentId;
 	}
 
 	
 	@Override
-	public String getCommentText() {
-		if( COMMENT_TEXT == null )
-			COMMENT_TEXT = CONTENT;
-		return COMMENT_TEXT;
+	public String getContent() {
+		return CONTENT;
 	}
 
 	@Override
-	public void setCommentText( String commentText ) {
-		this.COMMENT_TEXT = commentText;
+	public void setContent( String content ) {
+		this.CONTENT = content;
+	}
+	
+	@Override
+	public Long getLikeCount() {
+		return LIKE_COUNT;
+	}
+	
+	@Override
+	public void setLikeCount( Long likeCount ) {
+		this.LIKE_COUNT = likeCount;
 	}
 	
 	

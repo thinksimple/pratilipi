@@ -31,6 +31,7 @@ import com.google.gson.JsonSyntaxException;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
@@ -48,6 +49,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
+import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.GenericOfyType;
 import com.pratilipi.data.type.MailingListSubscription;
@@ -65,6 +67,7 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
 import com.pratilipi.data.type.gae.CategoryEntity;
+import com.pratilipi.data.type.gae.CommentEntity;
 import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
 import com.pratilipi.data.type.gae.NavigationEntity;
@@ -1278,6 +1281,43 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		return categoryList;
 	
+	}
+	
+	
+	// COMMENT Table
+	
+	@Override
+	public Comment newComment() {
+		return new CommentEntity();
+	}
+	
+	@Override
+	public Comment getComment( Long commentId ) {
+		return getEntityOfy( CommentEntity.class, commentId );
+	}
+	
+	@Override
+	public List<Comment> getCommentList( CommentParentType parentType, Long parentId ) {
+		return getCommentList( parentType, parentId.toString() );
+	}
+	
+	@Override
+	public List<Comment> getCommentList( CommentParentType parentType, String parentId ) {
+		
+		com.googlecode.objectify.cmd.Query<CommentEntity> query
+				= ObjectifyService.ofy().load().type( CommentEntity.class );
+		
+		query = query.filter( "PARENT_TYPE", parentType );
+		query = query.filter( "PARENT_ID", parentId );
+		query = query.order( "CREATION_DATE" );
+		
+		return new ArrayList<Comment>( query.list() );
+		
+	}
+	
+	@Override
+	public Comment createOrUpdateComment( Comment comment, AuditLog auditLog ) {
+		return createOrUpdateEntityOfy( comment, auditLog );
 	}
 	
 	

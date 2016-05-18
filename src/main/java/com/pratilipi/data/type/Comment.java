@@ -2,6 +2,9 @@ package com.pratilipi.data.type;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.CommentParentType;
+
+
 public interface Comment extends GenericOfyType {
 
 	Long getId();
@@ -11,14 +14,26 @@ public interface Comment extends GenericOfyType {
 	
 	void setUserId( Long userId );
 	
-	String getContentId();
+	CommentParentType getParentType();
 	
-	void setContentId( String contentId );
+	void setParentType( CommentParentType parentType );
+	
+	String getParentId();
+	
+	Long getParentIdLong();
+	
+	void setParentId( Long parentId );
+	
+	void setParentId( String parentId );
 	
 	
-	String getCommentText();
+	String getContent();
 	
-	void setCommentText( String commentText );
+	void setContent( String content );
+	
+	Long getLikeCount();
+
+	void setLikeCount( Long count );
 	
 
 	Date getCreationDate();

@@ -24,6 +24,8 @@ public enum AccessType {
 	BLOG_POST_ADD	( "Add BlogPost" ),
 	BLOG_POST_UPDATE( "Update BlogPost" ),
 	
+	COMMENT_ADD( "Add Comment" ),
+	
 	MAILING_LIST_SUBSCRIPTION_ADD( "Add Mailing List Subscription" ),
 	;
 

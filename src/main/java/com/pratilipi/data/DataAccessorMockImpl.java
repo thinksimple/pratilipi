@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 
+import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
@@ -35,6 +36,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
+import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
@@ -49,6 +51,7 @@ import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
+import com.pratilipi.data.type.gae.CommentEntity;
 import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
 import com.pratilipi.data.type.gae.PageEntity;
@@ -672,6 +675,34 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return new ArrayList<Category>( 0 );
 	}
 
+	
+	// COMMENT Table
+	
+	@Override
+	public Comment newComment() {
+		return new CommentEntity();
+	}
+	
+	@Override
+	public Comment getComment( Long commentId ) {
+		return null;
+	}
+	
+	@Override
+	public List<Comment> getCommentList( CommentParentType parentType, Long parentId ) {
+		return new ArrayList<>( 0 );
+	}
+	
+	@Override
+	public List<Comment> getCommentList( CommentParentType parentType, String parentId ) {
+		return new ArrayList<>( 0 );
+	}
+	
+	@Override
+	public Comment createOrUpdateComment( Comment comment, AuditLog auditLog ) {
+		return comment;
+	}
+	
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 	

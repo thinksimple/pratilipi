@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import javax.jdo.PersistenceManager;
 
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
@@ -26,6 +27,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
+import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
@@ -536,6 +538,13 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 
 	
+	// COMMENT Table
+	@Override public Comment newComment() { return dataAccessor.newComment(); }
+	@Override public Comment getComment( Long commentId ) { return dataAccessor.getComment( commentId ); }
+	@Override public List<Comment> getCommentList( CommentParentType parentType, Long parentId ) { return dataAccessor.getCommentList( parentType, parentId ); }
+	@Override public List<Comment> getCommentList( CommentParentType parentType, String parentId ) { return dataAccessor.getCommentList( parentType, parentId ); }
+	@Override public Comment createOrUpdateComment( Comment comment, AuditLog auditLog ) { return dataAccessor.createOrUpdateComment( comment, auditLog ); }
+	
 	// MAILING_LIST_SUBSCRIPTION Table
 	@Override public MailingListSubscription newMailingListSubscription() { return dataAccessor.newMailingListSubscription(); }
 	@Override public MailingListSubscription getMailingListSubscription( MailingList mailingList, String email ) { return dataAccessor.getMailingListSubscription( mailingList, email ); }
@@ -545,7 +554,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	// Destroy
 	
 	@Override
-	public void destroy() {
+	public void destroy() {	
 		dataAccessor.destroy();
 	}
 
