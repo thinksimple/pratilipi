@@ -204,7 +204,7 @@ public class PratilipiSite extends HttpServlet {
 				String imageSize = AccessTokenFilter.getCookieValue( RequestCookie.IMAGE_SIZE.getName(), request );
 				String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "read";
 				dataModel.put( "fontSize", fontSize != null ? Integer.parseInt( fontSize ) : 14 );
-				dataModel.put( "imageSize", imageSize != null ? Integer.parseInt( imageSize ) : 600 );
+				dataModel.put( "imageSize", imageSize != null ? Integer.parseInt( imageSize ) : 636 );
 				dataModel.put( "action", action );
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 			
