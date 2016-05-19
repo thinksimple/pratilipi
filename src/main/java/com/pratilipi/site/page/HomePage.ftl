@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?11">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?12">
 
 	<#--<script src='/third-party/html5loader/src/jquery.html5Loader.min.js'></script>
 	<script>
@@ -63,7 +63,7 @@
 			<#-- Setting banner height -->
 			var diff = ( jQuery( window ).height() - jQuery( '#tiles-container' ).height() ) / 2;
 			jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() - 20 - diff - 108 );
-			jQuery( '.pratilipi-banner' ).css( "max-height", Math.max( jQuery( window ).height(), jQuery( '.content-wrapper' ).height() + 96 ) + "px" );
+			jQuery( '.pratilipi-banner' ).css( "max-height", Math.max( jQuery( window ).height(), jQuery( '.content-wrapper' ).height() + 108 ) + "px" );
 		});
 		function validateEmail( email ) {
 			var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -340,12 +340,12 @@
 				</div>
 			</div>
 			<div class="pratilipi-footer">
-				<div class="col-50 about-pratilipi">
+				<div class="about-pratilipi">
 					<h5>Pratilipi</h5>
 					<a href="mailto:contact@pratilipi.com"><span>contact@pratilipi.com</span></a>
 					<a href="tel:+919789316700"><span>+91 9789316700</span></a>
 				</div>
-				<div class="col-45 about-part-3">
+				<div class="about-part-3">
 					<span>Follow us on Social Media :</span>
 					<div class="social-media-links">
 						<a href="https://twitter.com/TeamPratilipi" target="_blank"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a>
