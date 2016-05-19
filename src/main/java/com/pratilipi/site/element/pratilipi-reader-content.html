@@ -208,10 +208,13 @@
 			// Content
 			_onContentChange: function() {
 				jQuery( this.querySelector( '#reader-content' ) ).html( this.content );
-				if( this.contentType == "PRATILIPI" )
-					jQuery( "#reader-content img" ).css( "max-width", "100%", "important" );
-				else if( this.contentType == "IMAGE" )
+				if( this.contentType == "PRATILIPI" ) {
+					this.async( function() {
+						jQuery( "#reader-content img" ).css( "max-width", "100%", "important" );
+					} );
+				} else if( this.contentType == "IMAGE" ) {
 					this._onImageSizeChange();
+				}
 				$( 'html, body' ).animate( { scrollTop : 0 }, 500 );
 			},
 

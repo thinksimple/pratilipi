@@ -1,5 +1,5 @@
 <link rel='import' href='pratilipi-reader-header.html?20160519'>
-<link rel='import' href='pratilipi-reader-content.html?20160519'>
+<link rel='import' href='pratilipi-reader-content.html?2016051902'>
 <link rel='import' href='pratilipi-reader-footer.html?20160429'>
 <link rel="import" href="pratilipi-review-input.html?20160505" />
 
@@ -24,8 +24,8 @@
 				<div class="container" style="margin: 0 auto;">
 					<div style="overflow:hidden;">
 						<pratilipi-reader-content
-							content="{{ content }}"
 							content-type="{{ contentType }}"
+							content="{{ content }}"
 							font-size="{{ fontSize }}"
 							page-no="{{ pageNo }}"
 							page-count="{{ pageCount }}"
@@ -82,8 +82,8 @@
 				fontSize: { type: Number },
 				pageNo: { type: Number },
 				pageCount: { type: Number },
-				content: { types: String },
 				contentType: { type: String },
+				content: { types: String },
 				index: { types: Array, value: [] },
 				
 				addToLibClicked: { type: Boolean, value: false },
