@@ -208,10 +208,35 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "action", action );
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 			
+			} else if( uri.equals( "/pratilipi-project" ) ) {
+				// Test Book
+				Long pratilipiId = 5630253470842880L;
+				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+				
+				if( ! PratilipiDataUtil.hasAccessToReadPratilipiContent( pratilipi ) )
+					throw new InsufficientAccessException();
+				
+				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+				PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
+				GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
+				UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
+				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
+						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 20 );
+				
+				Gson gson = new Gson();
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Pratilipi Project" );
+				dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
+				dataModel.put( "addedToLib", userPratilipiData.isAddedToLib() == null ? false : userPratilipiData.isAddedToLib() );
+				dataModel.put( "reviewListJson", gson.toJson( toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) ) );
+				dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
+				templateName = templateFilePrefix + "Project.ftl";
+
 			} else if( uri.equals( "/pratilipihomepage" ) ) {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Home Page" );
 				templateName = templateFilePrefix + "HomePage.ftl";
+
 			} else if( uri.equals( "/search" ) ) {
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
