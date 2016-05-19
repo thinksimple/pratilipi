@@ -4,6 +4,7 @@ public enum RequestCookie {
 	
 	ACCESS_TOKEN ( "access_token" ),
 	FONT_SIZE ( "fontSize" ),
+	IMAGE_SIZE ( "imageSize" ),
 	PAGE_NO ( "pageNo" )
 	;
 	

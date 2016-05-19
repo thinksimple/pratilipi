@@ -1,26 +1,33 @@
 <style>		
-	#reader-content * {
-		font-size: ${ fontSize }px!important;
-		text-align: justify;
-		-webkit-font-smoothing: antialiased;
-		line-height: 1.6em!important;
-		overflow: hidden;
-	}
+	<#if contentType == "PRATILIPI">
+		#reader-content * {
+			font-size: ${ fontSize }px!important;
+			text-align: justify;
+			-webkit-font-smoothing: antialiased;
+			line-height: 1.6em!important;
+			overflow: hidden;
+		}
+		#reader-content h1, #reader-content h2 {
+			text-align: center;
+		}
+		#reader-content img {
+			max-width: 100%!important;
+		}
+		#reader-content h2 {
+			font-size: ${ fontSize + 4 }px!important;
+		}
+		#reader-content h1 {
+			font-size: ${ fontSize + 8 }px!important;
+		}
+	<#elseif contentType == "IMAGE">
+		#reader-content {
+			overflow: scroll;
+		}
+		#reader-content img {
+			width: ${ imageSize }px!important;
+		}
+	</#if>
 	
-	#reader-content h1, #reader-content h2 {
-		text-align: center;
-	}
-	
-	#reader-content img {
-		max-width: 100%!important;
-	}
-	
-	#reader-content h2 {
-		font-size: ${ fontSize + 4 }px!important;
-	}
-	#reader-content h1 {
-		font-size: ${ fontSize + 8 }px!important;
-	}
 	.reader-icon-alert {
 		width: 24px;
 		height: 24px;

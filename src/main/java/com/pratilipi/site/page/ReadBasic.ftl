@@ -66,16 +66,30 @@
 					document.cookie = name + "=" + value + expires + "; path=/";
 				}
 				function increaseFontSize() {
-					var cutoff = 32;
-					if( ${ fontSize + 2 } <= cutoff ) {
+					// cutoff = 32
+					if( ${ fontSize + 2 } <= 32 ) {
 						setCookie( "fontSize", ${ fontSize + 2 } );
 						window.location.href = getUrl();
 					}
 				}
 				function decreaseFontSize() {
-					var cutoff = 12;
-					if( ${ fontSize - 2 } >= cutoff ) {
+					// cutoff = 12
+					if( ${ fontSize - 2 } >= 12 ) {
 						setCookie( "fontSize", ${ fontSize - 2 } );
+						window.location.href = getUrl();
+					}
+				}
+				function increaseImageSize() {
+					// cutoff = 1500
+					if( ${ imageSize + 50 } <= 1500 ) {
+						setCookie( "imageSize", ${ imageSize + 50 } );
+						window.location.href = getUrl();
+					}
+				}
+				function decreaseImageSize() {
+					// cutoff = 300
+					if( ${ imageSize - 50 } >= 300 ) {
+						setCookie( "imageSize", ${ imageSize - 50 } );
 						window.location.href = getUrl();
 					}
 				}
