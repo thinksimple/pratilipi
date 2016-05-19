@@ -227,7 +227,8 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Pratilipi Project" );
 				dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
-				dataModel.put( "addedToLib", userPratilipiData.isAddedToLib() == null ? false : userPratilipiData.isAddedToLib() );
+				dataModel.put( "addedToLib", ( userPratilipiData == null || userPratilipiData.isAddedToLib() == null ) ? 
+									false : userPratilipiData.isAddedToLib() );
 				dataModel.put( "reviewListJson", gson.toJson( toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) ) );
 				dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
 				templateName = templateFilePrefix + "Project.ftl";
