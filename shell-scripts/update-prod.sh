@@ -19,6 +19,7 @@ then
 
 	# Update prod-pratilipi/prod
 	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=default
+	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=www
 
 	
 	cp src/main/webapp/WEB-INF/prod-dispatch.xml		src/main/webapp/WEB-INF/dispatch.xml
