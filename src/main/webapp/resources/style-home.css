@@ -119,9 +119,10 @@ a {
 }
 .landing-page .pratilipi-banner .login-btn,
 .landing-page .pratilipi-banner .signup-btn {
-	border: 2px solid #FFFFFF;
+	font-family: Montserrat, Helvetica;
+	border: 1px solid #FFFFFF;
 	border-radius: 7px;
-	font-size: 18px;
+	font-size: 16px;
 	line-height: 18px;
 	color: #FFFFFF;
 	padding: 8px 24px;
@@ -145,7 +146,21 @@ a {
 	font-family: Montserrat, Helvetica;
 }
 .landing-page .pratilipi-banner .user-dropdown .dropdown ul.dropdown-menu {
-	right: 24px;
+	right: -48px;
+	background-color: transparent;
+	border: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+.landing-page .pratilipi-banner .user-dropdown .dropdown ul.dropdown-menu > li > a,
+.landing-page .pratilipi-banner .user-dropdown .dropdown ul.dropdown-menu > li > a:hover,
+.landing-page .pratilipi-banner .user-dropdown .dropdown ul.dropdown-menu > li > a:focus {
+	color: #FFFFFF;
+	background-color: transparent;
+	border: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	cursor: pointer;
 }
 .landing-page .pratilipi-banner .user-dropdown .open > .dropdown-menu {
 	animation-name: slidenavAnimation;
@@ -188,26 +203,29 @@ a {
 	margin: 10px auto;
 	font-family: Montserrat, Helvetica;
 }
+.landing-page .pratilipi-banner .content-wrapper .description .bg-white {
+	background-color: #fff;
+	color: #000000;
+	opacity: 0.80;
+	border: 2px solid transparent;
+	letter-spacing: 0.66px;
+	overflow: hidden;
+}
 @media only screen and (max-width: 512px) {
 	.landing-page .pratilipi-banner .content-wrapper .description-mobile {
 		display: block;
-		width: 320px;
+		width: 97%;
 	}
 	.landing-page .pratilipi-banner .content-wrapper .description-widescreen {
 		display: none;
 	}
-	.landing-page .pratilipi-banner .content-wrapper .description h5.bg-white {
+	.landing-page .pratilipi-banner .content-wrapper .description div.bg-white {
 		display: block;
-		border: 2px solid transparent;
+		margin-top: 12px;
+		margin-bottom: 12px;
 		border-radius: 16px;
-		margin: 12px 10px 2px 4px; 
-		opacity: 0.85;
 		font-size: 18px;
 		line-height: 22px;
-		background-color: #fff;
-		color: #000000;
-		letter-spacing: 0.66px;
-		overflow: hidden;
 		text-align: center;
 		padding: 12px 5px;
 	}
@@ -220,15 +238,10 @@ a {
 		display: block;
 	}
 	.landing-page .pratilipi-banner .content-wrapper .description h5.bg-white {
-		background-color: #fff;
 		display: inline-block;
 		margin: 2px 10px;
-		opacity: 0.85;
 		padding: 2px 5px; 
 		font-size: 18px;
-		color: #000000;
-		letter-spacing: 0.66px;
-		overflow: hidden;
 	}
 }
 .landing-page .pratilipi-banner .content-wrapper .heading-wrapper h2 {
@@ -336,7 +349,7 @@ a {
 	-moz-box-shadow: 1px 1px 1px -1px #555555;
 	-webkit-box-shadow: 1px 1px 1px -1px #555555;
 	box-shadow: 1px 1px 1px -1px #555555;
-	background-color: transparent;
+	background-color: #F9F9F9;
 	-moz-border-radius: 28px;
 	-webkit-border-radius: 28px;
 	border-radius: 28px;
@@ -466,38 +479,27 @@ a {
 	font-weight: 400; 
 }
 .landing-page .notify-me-wrapper .notify-elements .language-selection {
-	display: inline-block;
 	background-color: #ebebeb;
-	width: 200px;
 	color: #555555;
-	margin: 10px 0px;
-	margin-left: 8px;
 	font-size: 16px;
 	font-weight: 100;
 	float: none;
 	height: 35px; 
 }
 .landing-page .notify-me-wrapper .notify-elements .input-field {
-	display: inline-block;
-	width: 300px;
 	color: #555555;
 	font-size: 16px;
 	border-radius: 4px;
 	height: 35px;
-	margin-left: 16px;
-	margin-right: 16px;
-	margin-bottom: 12px;
 	background-color: #ebebeb;
 	padding-left: 10px; 
 }
 .landing-page .notify-me-wrapper .notify-elements .notify-me-btn,
 .landing-page .notify-me-wrapper .notify-message .notify-me-btn {
-	height: 35px;
 	border: 2px solid transparent;
 	padding: 0px 25px;
 	font-size: 16px;
-	line-height: 35px;
-	margin: 10px;
+	line-height: 32px;
 	font-weight: 200;
 	outline: none;
 	background: #D0021B;
@@ -505,13 +507,55 @@ a {
 	border-radius: 7px;
 	color: #FFFFFF;
 }
+@media only screen and (max-width: 599px) {
+	.landing-page .notify-me-wrapper .notify-elements .language-selection {
+		display: block;
+		width: 90%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 12px;
+	}
+	.landing-page .notify-me-wrapper .notify-elements .input-field {
+		display: block;
+		width: 90%;
+		margin-bottom: 12px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.landing-page .notify-me-wrapper .notify-elements .notify-me-btn,
+	.landing-page .notify-me-wrapper .notify-message .notify-me-btn {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+@media only screen and (min-width: 600px) {
+	.landing-page .notify-me-wrapper .notify-elements .language-selection {
+		display: inline-block;
+		margin: 10px 0px;
+		margin-left: 8px;
+		width: 200px;
+	}
+	.landing-page .notify-me-wrapper .notify-elements .input-field {
+		display: inline-block;
+		width: 300px;
+		margin-left: 16px;
+		margin-right: 16px;
+	}
+	.landing-page .notify-me-wrapper .notify-elements .notify-me-btn,
+	.landing-page .notify-me-wrapper .notify-message .notify-me-btn {
+		display: inline-block;
+		margin: 10px;
+	}
+}
 .landing-page .pratilipi-footer {
 	font-family: Montserrat, Helvetica;
 	padding: 20px;
 	background-color: #ebebeb; 
 }
 .landing-page .pratilipi-footer p {
-	margin-top: 12px;	
+	margin-top: 12px;
+	font-size: 15px;
 }
 .landing-page .pratilipi-footer .about-pratilipi {
 	position: relative;
@@ -534,7 +578,7 @@ a {
 	position: absolute;
 	bottom: 0; 
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 599px) {
 	.landing-page .pratilipi-footer .about-pratilipi {
 		display: block;
 		margin-left: auto;
@@ -548,6 +592,9 @@ a {
 		margin-right: auto;
 		text-align: center;
 		padding-bottom: 20px;
+	}
+	.landing-page .pratilipi-footer p {
+		text-align: center;
 	}
 }
 @media only screen and (min-width: 600px) {

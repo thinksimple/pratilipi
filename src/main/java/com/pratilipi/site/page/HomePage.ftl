@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?12">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?13">
 
 	<#--<script src='/third-party/html5loader/src/jquery.html5Loader.min.js'></script>
 	<script>
@@ -197,8 +197,8 @@
 						</button>
 						<ul class="dropdown-menu pull-right">
 							<li>
-								<a style="padding: 4px 16px; margin: 0;" onClick="logout()">
-									LOGOUT
+								<a onClick="logout()">
+									Logout
 								</a>
 							</li>
 						</ul>
@@ -217,7 +217,7 @@
 					</div>
 
 					<div class="description description-mobile">
-						<h5 class="bg-white">Read great stories and write your own on world's largest platform for Indian languages</h5>
+						<div class="bg-white">Read great stories and write your own on world's largest platform for Indian languages</div>
 					</div>
 
 					<div class="description description-widescreen">
@@ -264,7 +264,7 @@
 					</li>
 					<li class="image image3">
 						<a href="http://telugu.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/telugu.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/telugu4.jpg'); background-size: contain; background-position: top;">
 								<span class="language">Telugu</span>
 							</div>
 						</a>
