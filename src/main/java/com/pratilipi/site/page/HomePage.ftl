@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="shortcut icon" type="image/png" href="/favicon.png">
-	<title>${ title }</title>
+	<title>Read Hindi, Gujarati and Tamil Stories, Poems and Books</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 	
@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?14">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?15">
 
 	<#--<script src='/third-party/html5loader/src/jquery.html5Loader.min.js'></script>
 	<script>

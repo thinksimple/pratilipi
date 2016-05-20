@@ -418,7 +418,7 @@ a {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-	opacity: 0.7; 
+	opacity: 0.6; 
 }
 .landing-page .wrapper a .tiles:hover {
 	opacity: 1; 
@@ -432,7 +432,7 @@ a {
 	text-align: center;
 	padding: 20px;
 	font-size: 18px;
-	color: #666;
+	color: #000;
 	display: inline-block; 
 }
 .landing-page .notify-me-wrapper {
