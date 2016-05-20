@@ -55,7 +55,7 @@
 								<paper-icon-button icon="icons:view-list" data-toggle="dropdown"></paper-icon-button>
 								<ul	id="navigationdropdown"
 									class="dropdown-menu"
-									style="overflow-y: scroll;">
+									style="overflow-y: scroll; left: -56px;">
 									<template is="dom-repeat" items="{{ index }}" as="entry">
 										<li>
 											<a style="padding: 5px; margin: 0; white-space: normal;" on-click="_entryClicked">
@@ -77,7 +77,7 @@
 						<template is="dom-if" if="{{ pratilipiContentType }}">
 							<div class="dropdown" style="display: inline-block;">
 								<paper-icon-button icon="editor:format-size" data-toggle="dropdown"></paper-icon-button>
-								<ul class="dropdown-menu pull-right" style="right: -64px;">
+								<ul class="dropdown-menu pull-right" style="right: -150px;">
 									<li>
 										<a style="padding: 5px; margin: 0;">
 											<paper-item on-click="increaseFontSize">
@@ -104,7 +104,7 @@
 						<template is="dom-if" if="{{ imageContentType }}">
 							<div class="dropdown" style="display: inline-block;">
 								<paper-icon-button icon="icons:aspect-ratio" data-toggle="dropdown"></paper-icon-button>
-								<ul class="dropdown-menu pull-right" style="right: -64px;">
+								<ul class="dropdown-menu pull-right" style="right: -150px;">
 									<li>
 										<a style="padding: 5px; margin: 0;">
 											<paper-item on-click="increaseImageSize">
@@ -130,7 +130,7 @@
 						<!-- Library Section -->
 						<div class="dropdown" style="display: inline-block;">
 							<paper-icon-button icon="icons:book" data-toggle="dropdown"></paper-icon-button>
-							<ul class="dropdown-menu pull-right">
+							<ul class="dropdown-menu pull-right" style="right: -100px;">
 								<template is="dom-if" if="{{ !addedToLib }}">
 									<li>
 										<a style="padding: 5px; margin: 0;">

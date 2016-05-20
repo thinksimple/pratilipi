@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?13">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?14">
 
 	<#--<script src='/third-party/html5loader/src/jquery.html5Loader.min.js'></script>
 	<script>
@@ -237,42 +237,42 @@
 					<li class="image image-left">
 						<a href="http://hindi.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi2.jpg'); background-size: contain;">
-								<span class="language">Hindi</span>
+								<span class="language">हिंदी</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image2">
 						<a href="http://tamil.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/tamil.png'); background-size: contain; background-position: top;">
-								<span class="language">Tamil</span>
+								<span class="language">தமிழ்</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image-right">
 						<a href="http://malayalam.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/malayalam2.jpg'); background-size: contain; background-position: top;">
-								<span class="language">Malayalam</span>
+								<span class="language">മലയാളം</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image-left">
 						<a href="http://bengali.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/bengali.jpg');">
-								<span class="language">Bengali</span>
+								<span class="language">বাংলা</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image3">
 						<a href="http://telugu.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/telugu4.jpg'); background-size: contain; background-position: top;">
-								<span class="language">Telugu</span>
+								<span class="language">తెలుగు</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image-right">
 						<a href="http://gujarati.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/gujarati.jpg');">
-								<span class="language">Gujarati</span>
+								<span class="language">ગુજરાતી</span>
 							</div>
 						</a>
 					</li>
@@ -280,7 +280,7 @@
 					<li class="image image4">
 						<a href="http://marathi.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/marathi.jpg'); background-size: contain; background-position: top;">
-								<span class="language">Marathi</span>
+								<span class="language">मराठी</span>
 							</div>
 						</a>
 					</li> 
@@ -288,25 +288,25 @@
 
 				<div class="tiles-container-mobile" id="tiles-container-mobile">
 					<a class="language-button" href="http://hindi.pratilipi.com/">
-						<span>Hindi</span>
+						<span>हिंदी</span>
 					</a>
 					<a class="language-button" href="http://tamil.pratilipi.com/">
-						<span>Tamil</span>
+						<span>தமிழ்</span>
 					</a>
 					<a class="language-button" href="http://malayalam.pratilipi.com/">
-						<span class="language">Malayalam</span>
+						<span class="language">മലയാളം</span>
 					</a>
 					<a class="language-button" href="http://bengali.pratilipi.com/">
-						<span class="language">Bengali</span>
+						<span class="language">বাংলা</span>
 					</a>
 					<a class="language-button" href="http://telugu.pratilipi.com/">
-						<span class="language">Telugu</span>
+						<span class="language">తెలుగు</span>
 					</a>
 					<a class="language-button" href="http://gujarati.pratilipi.com/">
-						<span class="language">Gujarati</span>
+						<span class="language">ગુજરાતી</span>
 					</a>
 					<a class="language-button" href="http://marathi.pratilipi.com/">
-						<span class="language">Marathi</span>
+						<span class="language">मराठी</span>
 					</a>
 					
 				</div>
