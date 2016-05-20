@@ -12,7 +12,7 @@
 </#list>
 
 <#-- Polymer 1.0 Custom Elements -->
-<link rel='import' href='/elements.${lang}/pratilipi-user.html?20160511'>
+<link rel='import' href='/elements.${lang}/pratilipi-user.html?20160520'>
 <link rel='import' href='/elements.${lang}/pratilipi-header.html?20160428'>
 <link rel='import' href='/elements.${lang}/pratilipi-edit-account.html?20160414'>
 <link rel='import' href='/elements.${lang}/pratilipi-write.html?20160511'>
