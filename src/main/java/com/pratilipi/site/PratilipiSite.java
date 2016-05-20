@@ -94,6 +94,7 @@ public class PratilipiSite extends HttpServlet {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		// Page Entity
+		String host = request.getServerName();
 		String uri = request.getRequestURI();
 		Page page = dataAccessor.getPage( uri );
 
@@ -143,9 +144,15 @@ public class PratilipiSite extends HttpServlet {
 		try {
 			
 			if( uri.equals( "/" ) ) {
-				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
-				templateName = templateFilePrefix + ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
-			
+				if( host.endsWith( "www.pratilipi.com" ) ) {
+					dataModel = new HashMap<String, Object>();
+					dataModel.put( "title", "Home Page" );
+					templateName = templateFilePrefix + "HomePage.ftl";
+				} else {
+					dataModel = createDataModelForHomePage( basicMode, filterLanguage );
+					templateName = templateFilePrefix + ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
+				}
+				
 			} else if( uri.equals( "/library" ) ) {
 				dataModel = createDataModelForLibraryPage( basicMode, filterLanguage );
 				templateName = templateFilePrefix + ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
@@ -232,11 +239,6 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "reviewListJson", gson.toJson( toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) ) );
 				dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
 				templateName = templateFilePrefix + "Project.ftl";
-
-			} else if( uri.equals( "/pratilipihomepage" ) ) {
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Home Page" );
-				templateName = templateFilePrefix + "HomePage.ftl";
 
 			} else if( uri.equals( "/search" ) ) {
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
