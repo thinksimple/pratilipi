@@ -156,9 +156,11 @@
 
 			// Font size
 			_onFontSizeChange: function() {
-				jQuery( "#reader-content" ).css( 'font-size', this.fontSize, "important" );
-				jQuery( "#reader-content h2" ).css( 'font-size', this.fontSize + 4, "important" );
-				jQuery( "#reader-content h1" ).css( 'font-size', this.fontSize + 8, "important" );
+				this.async( function() {
+					jQuery( "#reader-content" ).css( 'font-size', this.fontSize, "important" );
+					jQuery( "#reader-content h2" ).css( 'font-size', this.fontSize + 4, "important" );
+					jQuery( "#reader-content h1" ).css( 'font-size', this.fontSize + 8, "important" );
+				} );
 			},
 
 			_setFontSize: function( fontSize ) {
@@ -181,11 +183,13 @@
 			
 			// Image Size
 			_onImageSizeChange: function() {
-				jQuery( "#reader-content img" ).css( 'width', this.imageSize + 'px' );
-				if( jQuery( "#reader-content" ).width() < this.imageSize )
-					jQuery( "#reader-content" ).css( "overflow", "scroll" );
-				else
-					jQuery( "#reader-content" ).css( "overflow", "hidden" );
+				this.async( function() {
+					jQuery( "#reader-content img" ).css( 'width', this.imageSize + 'px' );
+					if( jQuery( "#reader-content" ).width() < this.imageSize )
+						jQuery( "#reader-content" ).css( "overflow", "scroll" );
+					else
+						jQuery( "#reader-content" ).css( "overflow", "hidden" );	
+				} );
 			},
 			
 			_setImageSize: function( imageSize ) {
