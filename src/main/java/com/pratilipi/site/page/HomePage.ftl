@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?15">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?2016">
 
 	<#--<script src='/third-party/html5loader/src/jquery.html5Loader.min.js'></script>
 	<script>
