@@ -1,5 +1,5 @@
 <link rel='import' href='pratilipi-reader-header.html?2016052002'>
-<link rel='import' href='pratilipi-reader-content.html?20160521'>
+<link rel='import' href='pratilipi-reader-content.html?2016052102'>
 <link rel='import' href='pratilipi-reader-footer.html?20160429'>
 <link rel="import" href="pratilipi-review-input.html?20160505" />
 
@@ -108,8 +108,12 @@
 			
 			// Setting Page Number
 			setPageNo: function( pageNo ) {
-				if( pageNo != this.pageNo && pageNo >= 1 && pageNo <= this.pageCount )
+				if( pageNo != this.pageNo && pageNo >= 1 && pageNo <= this.pageCount ) {
 					this.set( 'pageNo', parseInt( pageNo ) );
+					//Set cookie
+					setCookie( "reader_page_number_" + this.pratilipi.pratilipiId, pageNo, 60, "/read" );
+					setCookie( "reader_page_number_" + this.pratilipi.pratilipiId, pageNo, 60, "/pratilipireader" );
+				}
 			},
 			
 			showPrevious: function() {

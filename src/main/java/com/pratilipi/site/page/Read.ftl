@@ -4,13 +4,19 @@
 	<head>
 		<#assign mainPage="pratilipi-reader-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/${ mainPage }.html?20160521'>
+		<link rel='import' href='/elements.${lang}/${ mainPage }.html?2016052102'>
 
 		<script>
 			$(document).keyup( function(e) {
 				if( e.which == 37 || e.which == 39 )
 					document.querySelector( 'pratilipi-reader-page' ).keyupHandler( e.which );
 			});
+			function setCookie( name, value, days, path ) {
+				var date = new Date();
+				date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
+				var expires = "; expires=" + date.toGMTString();
+				document.cookie = name + "=" + value + expires + "; path=/" + path;
+			}
 		</script>
 	</head>
 	

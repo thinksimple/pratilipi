@@ -203,8 +203,9 @@ public class PratilipiSite extends HttpServlet {
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_EDITOR.getTag() );
 				}
 
-				Integer pageNo = request.getParameter( "pageNo" ) != null ? 
-						Integer.parseInt( request.getParameter( "pageNo" ) ) : 1;
+				String pageNoPattern = "reader_page_number_" + request.getParameter( "id" );
+				Integer pageNo = request.getParameter( pageNoPattern ) != null ? 
+						Integer.parseInt( request.getParameter( pageNoPattern ) ) : 1;
 
 				dataModel = createDataModelForReadPage( Long.parseLong( request.getParameter( "id" ) ), pageNo, basicMode );
 				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
