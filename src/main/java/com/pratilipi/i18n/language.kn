@@ -49,46 +49,46 @@ author_about					= About the Author        = ಲೇಖಕರ ಕುರಿತು
 author_language					= Language              = ಭಾಷೆ 
 author_since					= Author Since           =  ಪ್ರತಿಲಿಪಿಯೊಂದಿಗೆ 
 
-author_count_works				= WORKS              = ಪ್ರಕಾಶಿತ ಸಾಹಿತ್ಯ 
+author_count_works				= WORKS              = ಪ್ರಕಟಿತ ಸಾಹಿತ್ಯ
 author_count_reads				= READS              = ಓದುಗರು 
 author_count_likes				= LIKES              = ಮೆಚ್ಚುಗೆಗಳು 
 
-author_edit_profile				= Edit My Profile       = ಪ್ರೊಫೈಲ್ ಸಂಪಾದಿಸಿ  
+author_edit_profile				= Edit My Profile       = ನನ್ನ ಪ್ರೊಫೈಲನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
 author_update_image				= Upload Photo          = ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ 
 
-author_drafts					= Drafts                    = ಅಪ್ರಕಾಶಿತ ಬರಹಗಳು 
-author_published_works			= Published Works     = ಪ್ರಕಾಶಿತ ಬರಹಗಳು 
+author_drafts					= Drafts                    = ಅಪ್ರಕಟಿತ ಬರಹಗಳು 
+author_published_works			= Published Works     = ಪ್ರಕಟಿತ ಬರಹಗಳು 
 author_add_new_content			= Add New Content    = ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 
 
-author_no_contents_published	= Sorry! This Author doesn't have any books published! = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರ ಪ್ರಕಾಶಿತ ಪುಸ್ತಕಗಳು ಯಾವುವೂ ಇಲ್ಲ.
+author_no_contents_published	= Sorry! This Author doesn't have any books published! = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರ ಪ್ರಕಟಿತ ಪುಸ್ತಕಗಳು ಯಾವುವೂ ಇಲ್ಲ!
 
 
 
 # Pratilipi
 
 pratilipi_type				= Type                    = ವಿಧ 
-pratilipi_listing_date		= Listing Date        = ಪ್ರಕಾಶಿತ ದಿನಾಂಕ 
-pratilipi_published			= Published             = ಪ್ರಕಾಶಿತ 
-pratilipi_published_year	= Published Year      = ಪ್ರಕಾಶಿತ ವರ್ಷ 
+pratilipi_listing_date		= Listing Date        = ಪ್ರಕಟಿತ ದಿನಾಂಕ
+pratilipi_published			= Published             = ಪ್ರಕಟಗೊಂಡಿದೆ.
+pratilipi_published_year	= Published Year      = ಪ್ರಕಟಿತ ವರ್ಷ 
 pratilipi_summary			= Summary                 = ಸಾರಾಂಶ
 
-pratilipi_edit_info			= Edit Info            = ಮಾಹಿತಿ ಸಂಪಾದಿಸಿ 
-pratilipi_edit_content		= Edit Content       = ವಿಷಯ ಸಂಪಾದಿಸಿ 
+pratilipi_edit_info			= Edit Info            = ಮಾಹಿತಿ ಎಡಿಟ್ ಮಾಡಿ 
+pratilipi_edit_content		= Edit Content       = ವಿಷಯ ಎಡಿಟ್ ಮಾಡಿ 
 pratilipi_update_cover		= Upload Photo       = ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ 
 
 pratilipi_count_reads		= READS                 = ಓದುಗರು 
 pratilipi_count_reviews		= REVIEWS             = ಪ್ರತಿಕ್ರಿಯೆಗಳು
 pratilipi_count_likes		= LIKES                 = ಮೆಚ್ಚುಗೆಗಳು 
 
-pratilipi_move_to_drafts	= Move to Drafts     = ಅಪ್ರಕಾಶಿತಗೊಳಿಸಿ 
+pratilipi_move_to_drafts	= Move to Drafts     = ಅಪ್ರಕಟಿತಗೊಳಿಸಿ
 pratilipi_publish_it		= Publish it!          = ಪ್ರಕಟಿಸಿ 
 
 pratilipi_no_reviews		= Sorry! No Reviews found for this content! = ಕ್ಷಮಿಸಿ! ಈ ಬರಹಕ್ಕೆ ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆಗಳಿಲ್ಲ! 
 
-pratilipi_confirm_move_to_drafts_title	= Moving to drafts = ಅಪ್ರಕಾಶಿತಗೊಳ್ಳುತ್ತಿದೆ 
-pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts? = ಈ ಬರಹವನ್ನು ನೀವು ನಿಸ್ಸಂದೇಹವಾಗಿ ಅಪ್ರಕಾಶಿತಗೊಳಿಸುವಿರಾ?
-pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!  = ಹೌದು, ಅಪ್ರಕಾಶಿತಗೊಳಿಸಿ!
-pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it! = ಇಲ್ಲ, ಅಪ್ರಕಾಶಿತಗೊಳಿಸಬೇಡಿ! 
+pratilipi_confirm_move_to_drafts_title	= Moving to drafts = ಅಪ್ರಕಟಿತಗೊಳ್ಳುತ್ತಿದೆ
+pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts? = ಈ ಬರಹವನ್ನು ನೀವು ನಿಸ್ಸಂದೇಹವಾಗಿ ಅಪ್ರಕಟಿತಗೊಳಿಸುವಿರಾ?
+pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!  = ಹೌದು, ಅಪ್ರಕಟಿತಗೊಳಿಸಿ!
+pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it! = ಇಲ್ಲ, ಅಪ್ರಕಟಿತಗೊಳಿಸಬೇಡಿ!
 
 
 
@@ -100,11 +100,11 @@ rating_rate_this			= Rate This ! = ರೇಟಿಂಗ್ ನೀಡಿ
 rating_your_rating			= Your Rating  = ನಿಮ್ಮ ರೇಟಿಂಗ್
 rating_be_first_one			= Be the first one to rate it!  
 
-rating_1_star				= Poor  = ಕಳಪೆ 
-rating_2_star				= Fair  = ಸಾಧಾರಣ
-rating_3_star				= Good  = ಉತ್ತಮ 
-rating_4_star				= Very Good  = ಅತ್ಯುತ್ತಮ
-rating_5_star				= Excellent  = ಶ್ರೇಷ್ಠ
+rating_1_star				= Poor  = ಚೆನ್ನಾಗಿಲ್ಲ 
+rating_2_star				= Fair  = ಪರವಾಗಿಲ್ಲ  
+rating_3_star				= Good  = ಚೆನ್ನಾಗಿದೆ 
+rating_4_star				= Very Good  = ತುಂಬಾ ಚೆನ್ನಾಗಿದೆ 
+rating_5_star				= Excellent  = ಸಖತ್
 
 
 
@@ -113,13 +113,13 @@ rating_5_star				= Excellent  = ಶ್ರೇಷ್ಠ
 review_heading				= Reviews = ಪ್ರತಿಕ್ರಿಯೆಗಳು 
 review_write_a_review		= Write a Review = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಿರಿ 
 review_title				= Review Title = ಪ್ರತಿಕ್ರಿಯೆಯ ಶೀರ್ಷಿಕೆ
-review_title_help			= e.g., Great Story ! ಉದಾ:  ಶ್ರೇಷ್ಠ ಕಥೆ!
+review_title_help			= e.g., Great Story ! ಉದಾ:  ಸಖತ್ ಕಥೆ! 
 review_content				= Your Review = ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ 
 review_content_help			= Share your thoughts ! What made this work interesting ? What made it inspiring ? What did you learn from it ? You are helping others make a better choice !
                         = ನಿಮ್ಮ ಅನುಭವಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಿ. ಹೇಗೆ ಈ ಬರಹ ನಿಮ್ಮಲ್ಲಿ ಆಸಕ್ತಿ ಕೆರಳಿಸಿತು? ಯಾವ ಅಂಶ ನಿಮ್ಮನ್ನು ಸ್ಫೂರ್ತಿಗೊಳಿಸಿತು? ಅದರಿಂದ ನೀವು ಏನನ್ನು ಕಲಿತಿರಿ? 
                           ಒಳ್ಳೆಯದನ್ನು ಆಯ್ಕೆ ಮಾಡಿಕೊಳ್ಳಲು ನೀವು ಇತರರಿಗೆ ನೆರವಾಗುತ್ತಿದ್ದೀರಿ!
-review_submit_review		= SUBMIT = ಸುಬ್ಮಿಟ್ ಮಾಡಿ 
-review_edit_review			= Edit Review  = ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಸಂಪಾದಿಸಿ 
+review_submit_review		= SUBMIT = ಸಬ್ಮಿಟ್ ಮಾಡಿ 
+review_edit_review			= Edit Review  = ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
 review_delete_review		= Delete Review = ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಿ 
 review_delete_review_confirm	= Are you sure to delete your review? = ನಿಸ್ಸಂದೇಹವಾಗಿ ನೀವು ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡುವಿರಾ?
 review_delete_okay			= Yes, Delete review! = ಹೌದು, ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಿ!
@@ -164,85 +164,85 @@ user_sign_up_for_pratilipi	= Sign Up for Pratilipi  ಪ್ರತಿಲಿಪಿ�
 user_sign_up_with_facebook	= Sign Up with Facebook ಫೇಸ್ಬುಕ್ನೊಂದಿಗೆ ಸೈನ್ ಅಪ್ ಆಗಿರಿ 
 
 user_forgot_password		= Forgot Password ? ಪಾಸ್ವರ್ಡ್ ಮರೆತಿರುವಿರಾ? 
-user_reset_password			= Reset Password ಪಾಸ್ವರ್ಡ್ ರಿಸೆಟ್
-user_reset_password_help	=  Please enter the email address you signed up with. We will send you a link to reset your password.
+user_reset_password			= Reset Password ಪಾಸ್ವರ್ಡ್ ರೀಸೆಟ್ ಮಾಡಿ 
+user_reset_password_help	=  Please enter the email address you signed up with. We will send you a link to reset your password. ದಯವಿಟ್ಟು ನೀವು ಸೈನ್ ಅಪ್ ಆಗಿರುವ ಇ-ಮೇಲ್ ವಿಳಾಸವನ್ನು ದಾಖಲಿಸಿ. ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ರೀಸೆಟ್ ಗೊಳಿಸಲು ನಾವು ನಿಮಗೆ ಒಂದು ಲಿಂಕ್ ಕಳುಹಿಸುತ್ತೇವೆ
 
-user_current_password		= Current Password
-user_new_password			= New Password
+user_current_password		= Current Password = ಈಗಿನ ಪಾಸ್ವರ್ಡ್
+user_new_password			= New Password = ಹೊಸ ಪಾಸ್ವರ್ಡ್
 
-user_full_name				= Full Name
-user_email					= Email
-user_email_not_available	= Email Not Available!
-user_phone					= Phone
-user_phone_not_available	= Phone Number Not Available!
-user_password				= Password
-user_confirm_password		= Confirm Password
+user_full_name				= Full Name = ಪೂರ್ತಿ ಹೆಸರು 
+user_email					= Email = ಇ-ಮೇಲ್ 
+user_email_not_available	= Email Not Available! = ಇ-ಮೇಲ್ ಲಭ್ಯವಿಲ್ಲ
+user_phone					= Phone = ಫೋನ್ 
+user_phone_not_available	= Phone Number Not Available! = ಫೋನ್ ನಂಬರ್ ಲಭ್ಯವಿಲ್ಲ 
+user_password				= Password = ಪಾಸ್ವರ್ಡ್
+user_confirm_password		= Confirm Password = ಪಾಸ್ವರ್ಡ್ ಖಚಿತಪಡಿಸಿ 
 
-user_my_profile				= My Profile
-user_my_account				= My Account
+user_my_profile				= My Profile = ನನ್ನ ಪ್ರೊಫೈಲ್
+user_my_account				= My Account = ನನ್ನ ಅಕೌಂಟ್
 
-user_is_new					= New?
-user_is_registered			= Already a Member?
-user_email_verification		= Email Verification
-user_require_access			= You need to log in to perform this action!
+user_is_new					= New? ಹೊಸಬರೇ? 
+user_is_registered			= Already a Member? = ಈಗಾಗಲೇ ಸದಸ್ಯರಾಗಿರುವಿರಾ?
+user_email_verification		= Email Verification = ಇ-ಮೇಲ್ ಪರಿಶೀಲನೆ 
+user_require_access			= You need to log in to perform this action! = ಈ ಕಾರ್ಯ ನಿರ್ವಹಿಸಲು ನೀವು ಲಾಗಿನ್ ಆಗಬೇಕು.
 
 
 
-# My Account popup
+# My Account popup 
 
-edit_account_heading		= Edit My Account
-edit_account_verify_email	= Verify Email
-edit_account_email_verified	= Email Verified
-edit_account_change_password	= Change Password
+edit_account_heading		= Edit My Account = ನನ್ನ ಅಕೌಂಟನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
+edit_account_verify_email	= Verify Email =  ಇ-ಮೇಲ್ ಪರಿಶೀಲಿಸಿ 
+edit_account_email_verified	= Email Verified = ಇ-ಮೇಲ್ ಪರಿಶೀಲನೆಗೊಂಡಿದೆ
+edit_account_change_password	= Change Password = ಪಾಸ್ವರ್ಡ್ ಬದಲಾಯಿಸಿ 
 
 
 
 # Footer
 
-footer_follow_us_on_social_media	= Follow us on Social Media
-footer_about_us				= About Us
-footer_work_with_us			= Work With Us
-footer_blog					= Blog
-footer_privacy_policy		= Privacy Policy
-footer_terms_of_service		= Terms
-footer_contact_email		= contact@pratilipi.com
+footer_follow_us_on_social_media	= Follow us on Social Media = ನಮ್ಮನ್ನು ಸಾಮಾಜಿಕ ಮಾಧ್ಯಮದಲ್ಲಿ ಹಿಂಬಾಲಿಸಿ 
+footer_about_us				= About Us = ನಮ್ಮ ಬಗ್ಗೆ 
+footer_work_with_us			= Work With Us = ನಮ್ಮ ಜೊತೆ ಕಾರ್ಯ ನಿರ್ವಹಿಸಿ 
+footer_blog					= Blog = ಬ್ಲಾಗ್
+footer_privacy_policy		= Privacy Policy = ಗೌಪ್ಯತಾ ನೀತಿ 
+footer_terms_of_service		= Terms = ನಿಯಮಗಳು
+footer_contact_email		= contact@pratilipi.com 
 footer_contact_10_digit_number		= 9789316700
 
 
 
 # Common Words
 
-okay						= Okay
-cancel						= Cancel
-save_changes				= Save Changes
-show_more					= show more
-show_less					= show less
-read						= Read
-write						= Write
-free						= FREE !
-saving						= Saving ...
-working						= Working ...
-update						= Update
-share						= Share
-menu						= Menu
-back						= Back
-load_more_contents			= Load More Contents
-view_more					= View More
+okay						= Okay = ಸರಿ
+cancel						= Cancel = ರದ್ದುಗೊಳಿಸಿ
+save_changes				= Save Changes = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ 
+show_more					= show more = ಇನ್ನೂ ಹೆಚ್ಚು ತೋರಿಸಿ
+show_less					= show less = ಕಡಿಮೆ ತೋರಿಸಿ 
+read						= Read = ಓದಿರಿ 
+write						= Write = ಬರೆಯಿರಿ 
+free						= FREE ! = ಉಚಿತ! 
+saving						= Saving ... = ಸಂರಕ್ಷಿತಗೊಳ್ಳುತ್ತಿದೆ...
+working						= Working ... = ಕಾರ್ಯ ನಿರ್ವಹಿಸುತ್ತಿದೆ...
+update						= Update = ಅಪ್ಡೇಟ್
+share						= Share = ಶೇರ್ 
+menu						= Menu = ಮೆನು 
+back						= Back = ಬ್ಯಾಕ್ 
+load_more_contents			= Load More Contents = ಇನ್ನಷ್ಟು ವಿಷಯಗಳನ್ನು ಲೋಡ್ ಮಾಡಿ 
+view_more					= View More = ಇನ್ನೂ ಹೆಚ್ಚು ತೋರಿಸಿ 
 
 
 
 # Success Messages
 
-password_reset_request_success		= A mail has been sent to your email Id! 
-user_login_success					= Success !
-user_register_success				= Success !
-password_change_success				= Password has been changed Successfully!
-verification_email_sent_success		= Email Sent Successfully !
-user_verified_success				= Verified Successfully !
-content_created_success				= Success !
-updated_author_info_success			= Success !
-updated_pratilipi_info_success		= Success !
-updated_review						= Success !
+password_reset_request_success		= A mail has been sent to your email Id!  = ನಿಮ್ಮ ಇ-ಮೇಲ್ ಐಡಿಗೆ ಒಂದು ಮೇಲ್ ಕಳುಹಿಸಲಾಗಿರುತ್ತದೆ. 
+user_login_success					= Success ! ಯಶಸ್ವಿ! 
+user_register_success				= Success ! ಯಶಸ್ವಿ! 
+password_change_success				= Password has been changed Successfully! ಯಶಸ್ವಿಯಾಗಿ ಪಾಸ್ವರ್ಡ್ ಬದಲಾವಣೆಗೊಂಡಿರುತ್ತದೆ 
+verification_email_sent_success		= Email Sent Successfully ! = ಯಶಸ್ವಿಯಾಗಿ ಇ-ಮೇಲ್ ಕಳುಹಿಸಲಾಗಿರುತ್ತದೆ. 
+user_verified_success				= Verified Successfully ! = ಯಶಸ್ವಿಯಾಗ ಪರಿಶೀಲನೆಗೊಂಡಿರುತ್ತದೆ!
+content_created_success				= Success ! = ಯಶಸ್ವಿ!
+updated_author_info_success			= Success ! =   ಯಶಸ್ವಿ!
+updated_pratilipi_info_success		= Success ! =  ಯಶಸ್ವಿ!
+updated_review						= Success ! = ಯಶಸ್ವಿ!
 
 # Author Edit Popup
 
