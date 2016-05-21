@@ -18,8 +18,7 @@
 	
 	<h3 style="margin-top: 20px;" class="pratilipi-red text-center">${ pratilipi.getTitle()!pratilipi.getTitleEn() }</h3>
 	
-	<!-- Increase and Decrease size buttons -->
-	<!-- In case of PRATILIPI contentType -->
+	<#-- Increase and Decrease size buttons -->
 	<#if contentType == "PRATILIPI">
 		<a class="menu-item" style="cursor: pointer;" onCLick="increaseFontSize()">
 			<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-in.svg"/>

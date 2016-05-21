@@ -59,37 +59,41 @@
 			</#if>
 			
 			<#if action == "setting">
-				function setCookie( name, value, days ) {
+				function setCookie( name, value, days, path ) {
 					var date = new Date();
 					date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
 					var expires = "; expires=" + date.toGMTString();
-					document.cookie = name + "=" + value + expires + "; path=/";
+					document.cookie = name + "=" + value + expires + "; path=" + path;
 				}
 				function increaseFontSize() {
 					// cutoff = 32
 					if( ${ fontSize + 2 } <= 32 ) {
-						setCookie( "fontSize", ${ fontSize + 2 } );
+						setCookie( "fontSize", ${ fontSize + 2 }, 30, "/read" );
+						setCookie( "fontSize", ${ fontSize + 2 }, 30, "/pratilipireader" );
 						window.location.href = getUrl();
 					}
 				}
 				function decreaseFontSize() {
 					// cutoff = 12
 					if( ${ fontSize - 2 } >= 12 ) {
-						setCookie( "fontSize", ${ fontSize - 2 } );
+						setCookie( "fontSize", ${ fontSize - 2 }, 30, "/read" );
+						setCookie( "fontSize", ${ fontSize - 2 }, 30, "/pratilipireader" );
 						window.location.href = getUrl();
 					}
 				}
 				function increaseImageSize() {
 					// cutoff = 1500
 					if( ${ imageSize + 50 } <= 1500 ) {
-						setCookie( "imageSize", ${ imageSize + 50 } );
+						setCookie( "imageSize", ${ imageSize + 50 }, 30, "/read" );
+						setCookie( "imageSize", ${ imageSize + 50 }, 30, "/pratilipireader" );
 						window.location.href = getUrl();
 					}
 				}
 				function decreaseImageSize() {
 					// cutoff = 300
 					if( ${ imageSize - 50 } >= 300 ) {
-						setCookie( "imageSize", ${ imageSize - 50 } );
+						setCookie( "imageSize", ${ imageSize - 50 }, 30, "/read" );
+						setCookie( "imageSize", ${ imageSize - 50 }, 30, "/pratilipireader" );
 						window.location.href = getUrl();
 					}
 				}
