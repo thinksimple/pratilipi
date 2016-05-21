@@ -204,8 +204,14 @@ public class PratilipiSite extends HttpServlet {
 				}
 
 				String pageNoPattern = "reader_page_number_" + request.getParameter( "id" );
-				Integer pageNo = request.getParameter( pageNoPattern ) != null ? 
-						Integer.parseInt( request.getParameter( pageNoPattern ) ) : 1;
+
+				Integer pageNo = null;
+				if( request.getParameter( RequestCookie.PAGE_NO.getName() ) != null )
+					pageNo = Integer.parseInt( request.getParameter( RequestCookie.PAGE_NO.getName() ) );
+				else if( AccessTokenFilter.getCookieValue( pageNoPattern, request ) != null )
+					pageNo = Integer.parseInt( AccessTokenFilter.getCookieValue( pageNoPattern, request ) );
+				else
+					pageNo = 1;
 
 				dataModel = createDataModelForReadPage( Long.parseLong( request.getParameter( "id" ) ), pageNo, basicMode );
 				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
