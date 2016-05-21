@@ -18,7 +18,11 @@
 									"pageNo=" + parseInt( pageNo, 10);
 
 				if( getUrlParameter( "ret" ) != null )
-					redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" ); 
+					redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" );
+					
+				<#-- Set cookie -->
+				setCookie( "reader_page_number_${ pratilipi.getId()?c }", pageNo, 30, "/read" );
+				setCookie( "reader_page_number_${ pratilipi.getId()?c }", pageNo, 30, "/pratilipireader" ); 
 
 				window.location.href = redirectUrl;
 
