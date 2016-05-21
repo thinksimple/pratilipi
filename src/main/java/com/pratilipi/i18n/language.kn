@@ -3,7 +3,7 @@
 pratilipi					= Pratilipi
 tinymce_language			= en
 
-home_page_title				= Read Hindi, Gujarati and Tamil Stories, Poems and Books
+home_page_title				= Read Hindi, Gujarati and Tamil Stories, Poems and Books  ಕನ್ನಡ, ಹಿಂದಿ, ಗುಜರಾತಿ, ತಮಿಳು, ತೆಲುಗು, ಮಲಯಾಳಂ,ಮರಾಟಿ, ಬೆಂಗಾಲಿ ಕಥೆ, ಕವನ ಮತ್ತು ಪುಸ್ತಕಗಳನ್ನು ಓದಿರಿ.
 
 facebook_page				= https://www.facebook.com/Pratilipidotcom
 twitter_page				= https://twitter.com/TeamPratilipi
@@ -12,157 +12,159 @@ linkedin_page				= https://www.linkedin.com/company/pratilipi
 
 
 
-# Language
+# Language   # ಭಾಷೆ
 
-language_choose_language	= Choose Language
-language_all				= All Languages
-language_hi					= Hindi
-language_gu					= Gujarati
-language_ta					= Tamil
-language_mr					= Marathi
-language_ml					= Malayalam
-language_bn					= Bengali
-language_en					= English
-language_te					= Telugu
-language_kn					= Kannada
+language_choose_language	= Choose Language  =  ಭಾಷೆ ಆಯ್ಕೆ ಮಾಡಿಕೊಳ್ಳಿ
+language_all				= All Languages         =   ಎಲ್ಲಾ ಭಾಷೆಗಳು
+language_hi					= Hindi                 =  ಹಿಂದಿ
+language_gu					= Gujarati              =  ಗುಜರಾತಿ
+language_ta					= Tamil                 =  ತಮಿಳು
+language_mr					= Marathi               = ಮರಾಟಿ
+language_ml					= Malayalam             = ಮಲಯಾಳಂ
+language_bn					= Bengali               = ಬೆಂಗಾಲಿ
+language_en					= English               = ಇಂಗ್ಲಿಷ್
+language_te					= Telugu                = ತೆಲುಗು 
+language_kn					= Kannada               = ಕನ್ನಡ
 
 
 
 # Pratilipi Types
 
-_pratilipi_type_book		= Book
-_pratilipi_type_books		= Books
-_pratilipi_type_poem		= Poem
-_pratilipi_type_poems		= Poems
-_pratilipi_type_story		= Story
-_pratilipi_type_stories		= Stories
-_pratilipi_type_article		= Article
-_pratilipi_type_articles	= Articles
-_pratilipi_type_magazine	= Magazine
-_pratilipi_type_magazines	= Magazines
+_pratilipi_type_book		= Book             = ಪುಸ್ತಕ
+_pratilipi_type_books		= Books            = ಪುಸ್ತಕಗಳು 
+_pratilipi_type_poem		= Poem             = ಕವಿತೆ
+_pratilipi_type_poems		= Poems            = ಕವಿತೆಗಳು 
+_pratilipi_type_story		= Story            = ಕಥೆ
+_pratilipi_type_stories		= Stories        = ಕಥೆಗಳು 
+_pratilipi_type_article		= Article        = ಲೇಖನ
+_pratilipi_type_articles	= Articles       = ಲೇಖನಗಳು 
+_pratilipi_type_magazine	= Magazine       = ನಿಯತಕಾಲಿಕೆ 
+_pratilipi_type_magazines	= Magazines      = ನಿಯತಕಾಲಿಕೆಗಳು 
 
 
 
 # Author
 
-author_about					= About the Author
-author_language					= Language
-author_since					= Author Since
+author_about					= About the Author        = ಲೇಖಕರ ಕುರಿತು  
+author_language					= Language              = ಭಾಷೆ 
+author_since					= Author Since           =  ಪ್ರತಿಲಿಪಿಯೊಂದಿಗೆ 
 
-author_count_works				= WORKS
-author_count_reads				= READS
-author_count_likes				= LIKES
+author_count_works				= WORKS              = ಪ್ರಕಾಶಿತ ಸಾಹಿತ್ಯ 
+author_count_reads				= READS              = ಓದುಗರು 
+author_count_likes				= LIKES              = ಮೆಚ್ಚುಗೆಗಳು 
 
-author_edit_profile				= Edit My Profile
-author_update_image				= Upload Photo
+author_edit_profile				= Edit My Profile       = ಪ್ರೊಫೈಲ್ ಸಂಪಾದಿಸಿ  
+author_update_image				= Upload Photo          = ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ 
 
-author_drafts					= Drafts
-author_published_works			= Published Works
-author_add_new_content			= Add New Content
+author_drafts					= Drafts                    = ಅಪ್ರಕಾಶಿತ ಬರಹಗಳು 
+author_published_works			= Published Works     = ಪ್ರಕಾಶಿತ ಬರಹಗಳು 
+author_add_new_content			= Add New Content    = ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 
 
-author_no_contents_published	= Sorry! This Author doesn't have any books published!
+author_no_contents_published	= Sorry! This Author doesn't have any books published! = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರ ಪ್ರಕಾಶಿತ ಪುಸ್ತಕಗಳು ಯಾವುವೂ ಇಲ್ಲ.
 
 
 
 # Pratilipi
 
-pratilipi_type				= Type
-pratilipi_listing_date		= Listing Date
-pratilipi_published			= Published
-pratilipi_published_year	= Published Year
-pratilipi_summary			= Summary
+pratilipi_type				= Type                    = ವಿಧ 
+pratilipi_listing_date		= Listing Date        = ಪ್ರಕಾಶಿತ ದಿನಾಂಕ 
+pratilipi_published			= Published             = ಪ್ರಕಾಶಿತ 
+pratilipi_published_year	= Published Year      = ಪ್ರಕಾಶಿತ ವರ್ಷ 
+pratilipi_summary			= Summary                 = ಸಾರಾಂಶ
 
-pratilipi_edit_info			= Edit Info
-pratilipi_edit_content		= Edit Content
-pratilipi_update_cover		= Upload Photo
+pratilipi_edit_info			= Edit Info            = ಮಾಹಿತಿ ಸಂಪಾದಿಸಿ 
+pratilipi_edit_content		= Edit Content       = ವಿಷಯ ಸಂಪಾದಿಸಿ 
+pratilipi_update_cover		= Upload Photo       = ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ 
 
-pratilipi_count_reads		= READS
-pratilipi_count_reviews		= REVIEWS
-pratilipi_count_likes		= LIKES
+pratilipi_count_reads		= READS                 = ಓದುಗರು 
+pratilipi_count_reviews		= REVIEWS             = ಪ್ರತಿಕ್ರಿಯೆಗಳು
+pratilipi_count_likes		= LIKES                 = ಮೆಚ್ಚುಗೆಗಳು 
 
-pratilipi_move_to_drafts	= Move to Drafts
-pratilipi_publish_it		= Publish it!
+pratilipi_move_to_drafts	= Move to Drafts     = ಅಪ್ರಕಾಶಿತಗೊಳಿಸಿ 
+pratilipi_publish_it		= Publish it!          = ಪ್ರಕಟಿಸಿ 
 
-pratilipi_no_reviews		= Sorry! No Reviews found for this content!
+pratilipi_no_reviews		= Sorry! No Reviews found for this content! = ಕ್ಷಮಿಸಿ! ಈ ಬರಹಕ್ಕೆ ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆಗಳಿಲ್ಲ! 
 
-pratilipi_confirm_move_to_drafts_title	= Moving to drafts
-pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
-pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
-pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
+pratilipi_confirm_move_to_drafts_title	= Moving to drafts = ಅಪ್ರಕಾಶಿತಗೊಳ್ಳುತ್ತಿದೆ 
+pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts? = ಈ ಬರಹವನ್ನು ನೀವು ನಿಸ್ಸಂದೇಹವಾಗಿ ಅಪ್ರಕಾಶಿತಗೊಳಿಸುವಿರಾ?
+pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!  = ಹೌದು, ಅಪ್ರಕಾಶಿತಗೊಳಿಸಿ!
+pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it! = ಇಲ್ಲ, ಅಪ್ರಕಾಶಿತಗೊಳಿಸಬೇಡಿ! 
 
 
 
 # Rating
 
-rating_rating				= Rating 
-rating_ratings				= Ratings
-rating_rate_this			= Rate This !
-rating_your_rating			= Your Rating
-rating_be_first_one			= Be the first one to rate it!
+rating_rating				= Rating    = ರೇಟಿಂಗ್
+rating_ratings				= Ratings  = ರೇಟಿಂಗ್ಸ್
+rating_rate_this			= Rate This ! = ರೇಟಿಂಗ್ ನೀಡಿ 
+rating_your_rating			= Your Rating  = ನಿಮ್ಮ ರೇಟಿಂಗ್
+rating_be_first_one			= Be the first one to rate it!  
 
-rating_1_star				= Poor
-rating_2_star				= Fair
-rating_3_star				= Good
-rating_4_star				= Very Good
-rating_5_star				= Excellent
+rating_1_star				= Poor  = ಕಳಪೆ 
+rating_2_star				= Fair  = ಸಾಧಾರಣ
+rating_3_star				= Good  = ಉತ್ತಮ 
+rating_4_star				= Very Good  = ಅತ್ಯುತ್ತಮ
+rating_5_star				= Excellent  = ಶ್ರೇಷ್ಠ
 
 
 
 # Review
 
-review_heading				= Reviews 
-review_write_a_review		= Write a Review
-review_title				= Review Title
-review_title_help			= e.g., Great Story !
-review_content				= Your Review
+review_heading				= Reviews = ಪ್ರತಿಕ್ರಿಯೆಗಳು 
+review_write_a_review		= Write a Review = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಿರಿ 
+review_title				= Review Title = ಪ್ರತಿಕ್ರಿಯೆಯ ಶೀರ್ಷಿಕೆ
+review_title_help			= e.g., Great Story ! ಉದಾ:  ಶ್ರೇಷ್ಠ ಕಥೆ!
+review_content				= Your Review = ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ 
 review_content_help			= Share your thoughts ! What made this work interesting ? What made it inspiring ? What did you learn from it ? You are helping others make a better choice !
-review_submit_review		= SUBMIT
-review_edit_review			= Edit Review
-review_delete_review		= Delete Review
-review_delete_review_confirm	= Are you sure to delete your review?
-review_delete_okay			= Yes, Delete review!
-review_delete_cancel		= No, Don't!
-review_helpful				= Was this review helpful?
-review_see_all_reviews		= See All Reviews
+                        = ನಿಮ್ಮ ಅನುಭವಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಿ. ಹೇಗೆ ಈ ಬರಹ ನಿಮ್ಮಲ್ಲಿ ಆಸಕ್ತಿ ಕೆರಳಿಸಿತು? ಯಾವ ಅಂಶ ನಿಮ್ಮನ್ನು ಸ್ಫೂರ್ತಿಗೊಳಿಸಿತು? ಅದರಿಂದ ನೀವು ಏನನ್ನು ಕಲಿತಿರಿ? 
+                          ಒಳ್ಳೆಯದನ್ನು ಆಯ್ಕೆ ಮಾಡಿಕೊಳ್ಳಲು ನೀವು ಇತರರಿಗೆ ನೆರವಾಗುತ್ತಿದ್ದೀರಿ!
+review_submit_review		= SUBMIT = ಸುಬ್ಮಿಟ್ ಮಾಡಿ 
+review_edit_review			= Edit Review  = ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಸಂಪಾದಿಸಿ 
+review_delete_review		= Delete Review = ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಿ 
+review_delete_review_confirm	= Are you sure to delete your review? = ನಿಸ್ಸಂದೇಹವಾಗಿ ನೀವು ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡುವಿರಾ?
+review_delete_okay			= Yes, Delete review! = ಹೌದು, ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಿ!
+review_delete_cancel		= No, Don't! = ಇಲ್ಲ, ಬೇಡ!
+review_helpful				= Was this review helpful? = ಈ ಪ್ರತಿಕ್ರಿಯೆ ನಿಮಗೆ ಸಹಾಯಕವಾಗಿತ್ತೆ?
+review_see_all_reviews		= See All Reviews = ಎಲ್ಲಾ ಪ್ರತಿಕ್ರಿಯೆಗಳನ್ನು ನೋಡಿ 
 
 
 
 # Search
 
-search 						= Search
-search_bar_help				= Search for books, stories, poems and more ...
-search_results				= Search Results
-search_no_results_found		= Sorry! No Search Results found for your search query. Try searching for different search query!
+search 						= Search = ಹುಡುಕಿ 
+search_bar_help				= Search for books, stories, poems and more ... ಪುಸ್ತಕಗಳು, ಕಥೆಗಳು, ಕವಿತೆಗಳು ಮತ್ತು ಇನ್ನಿತರ ಪ್ರಕಾರದ ಬರಹಗಳಿಗಾಗಿ ಹುಡುಕಾಟ ನಡೆಸಿ
+search_results				= Search Results = ಹುಡುಕಾಟದ ಫಲಿತಾಂಶಗಳು 
+search_no_results_found		= Sorry! No Search Results found for your search query. Try searching for different search query! = ಕ್ಷಮಿಸಿ! ನಿಮ್ಮ ಹುಡುಕಾಟದ ಪ್ರಶ್ನೆಗಳಿಗೆ ಯಾವುದೇ ಫಲಿತಾಂಶ ಲಭ್ಯವಿಲ್ಲ.
 
 
 
-# Write
+# Write           = ಬರೆಯಿರಿ 
 
-write_heading				= Add New Content
-write_help					= You can write on Pratilipi!
-write_title					= Title *
-write_title_en				= Title (English)
-write_type					= Select Type *
-write_language				= Language
-write_summary				= Summary (Optional)
-write_create_new_content	= Create New Content
+write_heading				= Add New Content     =ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 
+write_help					= You can write on Pratilipi! = ನೀವು ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಬರೆಯಬಹುದು!
+write_title					= Title * = ಶೀರ್ಷಿಕೆ* 
+write_title_en				= Title (English) = ಶೀರ್ಷಿಕೆ (ಇಂಗ್ಲಿಷ್) 
+write_type					= Select Type * = ವಿಧ ಆರಿಸಿಕೊಳ್ಳಿ*
+write_language				= Language  = ಭಾಷೆ 
+write_summary				= Summary (Optional) = ಸಾರಾಂಶ (ಐಚ್ಛಿಕ)
+write_create_new_content	= Create New Content = ಹೊಸ ಬರಹ  ಸೃಷ್ಟಿಸಿ
 
 
 
-# Common User Popups
+# Common User Popups 
 
-user_sign_in				= Sign In
-user_to_sign_in				= To Sign In
-user_sign_in_with_facebook	= Sign In with Facebook
-user_sign_in_to_pratilipi	= Sign in to Pratilipi
-user_sign_out				= Sign Out
+user_sign_in				= Sign In  = ಸೈನ್ ಇನ್ ಆಗಿರಿ 
+user_to_sign_in				= To Sign In = ಸೈನ್ ಇನ್ ಆಗಲು 
+user_sign_in_with_facebook	= Sign In with Facebook = ಫೇಸ್ಬುಕ್ನೊಂದಿಗೆ ಸೈನ್ ಇನ್ ಆಗಿರಿ 
+user_sign_in_to_pratilipi	= Sign in to Pratilipi = ಪ್ರತಿಲಿಪಿಗೆ ಸೈನ್ ಇನ್ ಆಗಿರಿ 
+user_sign_out				= Sign Out ಸೈನ್ ಔಟ್ 
 
-user_sign_up				= Sign Up !
-user_sign_up_for_pratilipi	= Sign Up for Pratilipi
-user_sign_up_with_facebook	= Sign Up with Facebook
+user_sign_up				= Sign Up ! ಸೈನ್ ಅಪ್!
+user_sign_up_for_pratilipi	= Sign Up for Pratilipi  ಪ್ರತಿಲಿಪಿಗೆ ಸೈನ್ ಅಪ್ ಆಗಿರಿ 
+user_sign_up_with_facebook	= Sign Up with Facebook ಫೇಸ್ಬುಕ್ನೊಂದಿಗೆ ಸೈನ್ ಅಪ್ ಆಗಿರಿ 
 
-user_forgot_password		= Forgot Password ?
-user_reset_password			= Reset Password
+user_forgot_password		= Forgot Password ? ಪಾಸ್ವರ್ಡ್ ಮರೆತಿರುವಿರಾ? 
+user_reset_password			= Reset Password ಪಾಸ್ವರ್ಡ್ ರಿಸೆಟ್
 user_reset_password_help	=  Please enter the email address you signed up with. We will send you a link to reset your password.
 
 user_current_password		= Current Password
