@@ -44,11 +44,6 @@
 		<url>*.gamma.pratilipi.com/*</url>
 		<module>gamma</module>
 	</dispatch>
-	
-	<dispatch>
-		<url>*/read*</url>
-		<module>www</module>
-	</dispatch>
 
 	<dispatch>
 		<url>*/api/*</url>
