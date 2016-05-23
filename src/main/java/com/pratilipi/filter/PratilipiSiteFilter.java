@@ -25,7 +25,7 @@ public class PratilipiSiteFilter implements Filter {
 	private final Pattern validHostSubdomainRegEx = Pattern.compile(
 			"www\\.(hindi|gujarati|tamil)\\.pratilipi\\.com" );
 	private final Pattern validHostRegEx = Pattern.compile(
-			"(mark-6.www|www|hindi|gujarati|tamil|marathi|malayalam|bengali|telugu)\\.pratilipi\\.com" // Prod (Standard)
+			"(www|hindi|gujarati|tamil|marathi|malayalam|bengali|telugu)\\.pratilipi\\.com" // Prod (Standard)
 			+ "|"
 			+ "(m|hi|gu|ta|mr|ml|bn|te)\\.pratilipi\\.com" // Prod (Basic)
 			+ "|"
@@ -64,10 +64,28 @@ public class PratilipiSiteFilter implements Filter {
 		redirections.put( "/give-away/Ram_Ki_Shakti_Pooja.pdf", "/" );
 		redirections.put( "/give-away/Utkrasht_Sahitya_1.pdf", "/" );
 		redirections.put( "/give-away/Chandrakanta.pdf", "/book/5673309542809600" );
-
+		
+		redirections.put( "/event/gpv", "/event/gnayam-pada-varai" );
+		redirections.put( "/event/gnayam&pada&varai", "/event/gnayam-pada-varai" );
+		redirections.put( "/event/gnayam&pada&varai>", "/event/gnayam-pada-varai" );
 		redirections.put( "/event/kk", "/event/kondaadapadaadha-kaadhalgal" );
 		redirections.put( "/event/yn", "/event/yaadhumaagi-nindraal" );
 
+		redirections.put( "/books/gujarati",    "http://gujarati.pratilipi.com/search?q=books" );
+		redirections.put( "/poems/gujarati",    "http://gujarati.pratilipi.com/search?q=poems" );
+		redirections.put( "/stories/gujarati",  "http://gujarati.pratilipi.com/search?q=stories" );
+		redirections.put( "/articles/gujarati", "http://gujarati.pratilipi.com/search?q=articles" );
+
+		redirections.put( "/books/tamil",    "http://tamil.pratilipi.com/search?q=books" );
+		redirections.put( "/poems/tamil",    "http://tamil.pratilipi.com/search?q=poems" );
+		redirections.put( "/stories/tamil",  "http://tamil.pratilipi.com/search?q=stories" );
+		redirections.put( "/articles/tamil", "http://tamil.pratilipi.com/search?q=articles" );
+		
+		redirections.put( "/books/hindi",    "http://hindi.pratilipi.com/search?q=books" );
+		redirections.put( "/poems/hindi",    "http://hindi.pratilipi.com/search?q=poems" );
+		redirections.put( "/stories/hindi",  "http://hindi.pratilipi.com/search?q=stories" );
+		redirections.put( "/articles/hindi", "http://hindi.pratilipi.com/search?q=articles" );
+		
 		redirections.put( "/about", "/about/pratilipi" );
 		redirections.put( "/career", "/JoinTheGang" );
 	}
