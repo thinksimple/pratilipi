@@ -24,7 +24,7 @@ language_ml					= மலையாளம்
 language_bn					= பெங்காலி
 language_en					= ஆங்கிலம்
 language_te					= தெலுங்கு
-language_kn					= Kannada
+language_kn					= கன்னடம்
 
 
 # Pratilipi Types
@@ -84,10 +84,10 @@ pratilipi_publish_it		= பதிப்பிக்க
 
 pratilipi_no_reviews		= மன்னிக்கவும்! இந்த படைப்பிற்கு எந்த விமர்சனமும் இதுவரை எழுதப்படவில்லை. விருப்பமிருப்பின் நீங்கள் எழுதலாம்.
 
-pratilipi_confirm_move_to_drafts_title	= Moving to drafts
-pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
-pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
-pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
+pratilipi_confirm_move_to_drafts_title	= வரைவுகளுக்கு அனுப்புதல் 
+pratilipi_confirm_move_to_drafts_body	= நிச்சயமாக இந்த படைப்பை வரைவுகளுக்கு அனுப்பவேண்டுமா?  
+pratilipi_confirm_move_to_drafts_true	= ஆம், வரைவுகளுக்கு அனுப்பவும்
+pratilipi_confirm_move_to_drafts_false	= இல்லை, வரைவுகளுக்கு அனுப்பவேண்டாம்
 
 
 
@@ -315,10 +315,10 @@ reader_goto_home_page	= முகப்புப் பக்கத்திற�
 share_on_facebook		= முகநூலில் பகிர
 share_on_twitter		= ட்விட்டரில் பகிர
 share_on_gplus			= கூகிள் ப்ளஸில் பகிர
-increase_font_size		= எழுத்துக்களை பெரிதாக்க
+increase_font_size		= எழுத்துக்களை பெரியதாக்க 
 decrease_font_size		= எழுத்துக்களை சிறியதாக்க
-increase_image_size		= Increase image size
-decrease_image_size		= Decrease image size
+increase_image_size		= படத்தை பெரியதாக்க 
+decrease_image_size		= படத்தை சிறியதாக்க 
 
 
 # Enjoyed Reading the content? Write a review or Share it on
