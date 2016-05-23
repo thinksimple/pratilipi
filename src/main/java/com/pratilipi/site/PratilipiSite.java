@@ -490,7 +490,7 @@ public class PratilipiSite extends HttpServlet {
 		String ogType = "books.book";
 		String ogAuthor = "http://" + Website.ALL_LANGUAGE.getHostName() + ( author == null ? "/team-pratilipi" : pratilipiData.getAuthor().getPageUrl() );
 		String ogBooksIsbn = pratilipi.getId().toString();
-		String ogUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri(); // Warning: Changing it to anything else will cause loss of like-share count.
+//		String ogUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri(); // Warning: Changing it to anything else will cause loss of like-share count.
 		String ogTitle = createPratilipiPageTitle( pratilipiData );
 		String ogImage = pratilipiData.getCoverImageUrl();
 		String ogDescription = "";
@@ -508,7 +508,7 @@ public class PratilipiSite extends HttpServlet {
 		fbOgTags.add( "<meta property='og:type' content='" + ogType + "' />" );
 		fbOgTags.add( "<meta property='books:author' content='" + ogAuthor + "' />" );
 		fbOgTags.add( "<meta property='books:isbn' content='" + ogBooksIsbn + "' />" );
-		fbOgTags.add( "<meta property='og:url' content='" + ogUrl + "' />" );
+//		fbOgTags.add( "<meta property='og:url' content='" + ogUrl + "' />" );
 		fbOgTags.add( "<meta property='og:title' content='" + ogTitle + "' />" );
 		fbOgTags.add( "<meta property='og:image' content='" + ogImage + "' />" );
 		fbOgTags.add( "<meta property='og:description' content='" + ogDescription + "' />" );
