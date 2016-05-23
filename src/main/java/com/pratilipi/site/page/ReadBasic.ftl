@@ -1,4 +1,4 @@
-<#assign pageUrl="pratilipireader">
+<#assign pageUrl="read">
 
 <!DOCTYPE html>
 <html lang="${lang}">
@@ -21,8 +21,7 @@
 					redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" );
 					
 				<#-- Set cookie -->
-				setCookie( "reader_page_number_${ pratilipi.getId()?c }", pageNo, 30, "/read" );
-				setCookie( "reader_page_number_${ pratilipi.getId()?c }", pageNo, 30, "/pratilipireader" ); 
+				setCookie( "reader_page_number_${ pratilipi.getId()?c }", pageNo, 30, "/${ pageUrl }" );
 
 				window.location.href = redirectUrl;
 
@@ -72,32 +71,28 @@
 				function increaseFontSize() {
 					// cutoff = 32
 					if( ${ fontSize + 2 } <= 32 ) {
-						setCookie( "fontSize", ${ fontSize + 2 }, 30, "/read" );
-						setCookie( "fontSize", ${ fontSize + 2 }, 30, "/pratilipireader" );
+						setCookie( "fontSize", ${ fontSize + 2 }, 30, "/${ pageUrl }" );
 						window.location.href = getUrl();
 					}
 				}
 				function decreaseFontSize() {
 					// cutoff = 12
 					if( ${ fontSize - 2 } >= 12 ) {
-						setCookie( "fontSize", ${ fontSize - 2 }, 30, "/read" );
-						setCookie( "fontSize", ${ fontSize - 2 }, 30, "/pratilipireader" );
+						setCookie( "fontSize", ${ fontSize - 2 }, 30, "/${ pageUrl }" );
 						window.location.href = getUrl();
 					}
 				}
 				function increaseImageSize() {
 					// cutoff = 1500
 					if( ${ imageSize + 50 } <= 1500 ) {
-						setCookie( "imageSize", ${ imageSize + 50 }, 30, "/read" );
-						setCookie( "imageSize", ${ imageSize + 50 }, 30, "/pratilipireader" );
+						setCookie( "imageSize", ${ imageSize + 50 }, 30, "/${ pageUrl }" );
 						window.location.href = getUrl();
 					}
 				}
 				function decreaseImageSize() {
 					// cutoff = 300
 					if( ${ imageSize - 50 } >= 300 ) {
-						setCookie( "imageSize", ${ imageSize - 50 }, 30, "/read" );
-						setCookie( "imageSize", ${ imageSize - 50 }, 30, "/pratilipireader" );
+						setCookie( "imageSize", ${ imageSize - 50 }, 30, "/${ pageUrl }" );
 						window.location.href = getUrl();
 					}
 				}
