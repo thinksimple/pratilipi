@@ -92,17 +92,12 @@
 				draftedList: { type: Array, value: [], notify: true },
 				draftedListCursor: { type: String, value: "" },
 				draftsActive : { type: Boolean, value: false },
+				draftsLoading: { type: Boolean, value: false },
 				
 				publishedList: { type: Array, value: [], notify: true },
 				publishedListCursor: { type: String, value: "" },
-				publishedActive : { type: Boolean, value: false }
-			},
-			
-			attached: function() {
-				this.draftsClicked();
-				this.async( function() {
-					this.loadPublishedContents();
-				});
+				publishedActive : { type: Boolean, value: false },
+				publishedLoading: { type: Boolean, value: false }
 			},
 			
 			clearDraftedList: function() {
@@ -158,6 +153,13 @@
 				jQuery( '#published' ).removeClass( 'inactive' );
 			},
 			
+			attached: function() {
+				this.draftsClicked();
+				this.async( function() {
+					this._makeAjaxCall( this.$.AjaxGetPublishedList, this.author.authorId, "", "PUBLISHED" );
+				}, 100);
+			},
+			
 			draftsClicked: function() {
 				
 				if( this.draftsActive )
@@ -204,34 +206,51 @@
 				
 			},
 			
+			_checkWindowHeight: function() {
+				var reqHeight = jQuery( window ).scrollTop()
+								- jQuery( this ).position().top
+								+ jQuery( window ).height()
+								+ 2 * jQuery( window ).height();
+
+				if( jQuery( this ).outerHeight( true ) >= reqHeight )
+					return false;
+				else
+					return true;
+			},
+			
+			loadMore: function() {
+				if( !this._checkWindowHeight )
+					return;
+				if( this.draftsActive )
+					this.loadDraftedContents();
+				if( this.publishedActive )
+					this.loadPublishedContents();
+			},
+			
 			loadDraftedContents: function() {
 
-				if( this.draftedListCursor == null ) {
-					if( this.draftsActive ) {
-						// Disable the spinner
+				if( this.draftedListCursor == null || ! this.draftsActive || ! this._checkWindowHeight() || this.draftsLoading ) {
+					// Disable the spinner
+					if( this.draftsActive )
 						jQuery( '#author-books-spinner' ).css( "display", "none" );
-					}
 					return;
 				}
+				
 				// Make the spinner active
 				jQuery( '#author-books-spinner' ).css( "display", "block" );
 				
 				// Make AJAX Call
-				var draftedList = this.$.AjaxGetDraftedList;
-				draftedList.params.authorId = this.author.authorId;
-				draftedList.params.cursor = this.draftedListCursor;
-				draftedList.params.state = "DRAFTED";
-				draftedList.generateRequest();
+				this.draftsLoading = true;
+				this._makeAjaxCall( this.$.AjaxGetDraftedList, this.author.authorId, this.draftedListCursor, "DRAFTED" );
 				
 			},
 			
 			loadPublishedContents: function() {
 
-				if( this.publishedListCursor == null ) {
-					if( this.publishedActive ) {
-						// Disable the spinner
+				if( this.publishedListCursor == null || ! this.publishedActive || ! this._checkWindowHeight() || this.publishedLoading ) {
+					// Disable the spinner
+					if( this.publishedActive )
 						jQuery( '#author-books-spinner' ).css( "display", "none" );
-					}
 					return;
 				}
 				
@@ -239,19 +258,26 @@
 				jQuery( '#author-books-spinner' ).css( "display", "block" );
 				
 				// Make AJAX Call
-				var publishedList = this.$.AjaxGetPublishedList;
-				publishedList.params.authorId = this.author.authorId;
-				publishedList.params.cursor = this.publishedListCursor;
-				publishedList.params.state = "PUBLISHED";
-				publishedList.generateRequest();
+				this.publishedLoading = true;
+				this._makeAjaxCall( this.$.AjaxGetPublishedList, this.author.authorId, this.publishedListCursor, "PUBLISHED" );
 				
 			},
 			
+			_makeAjaxCall: function( listName, authorId, cursor, state ) {
+				listName.params.authorId = authorId;
+				listName.params.cursor = cursor;
+				listName.params.state = state;
+				listName.generateRequest();
+			},
+			
 			_handleAjaxGetDraftedListResponse: function( event ) {
+				
+				this.draftsLoading = false;
+				
 				if( event.detail.response == null ) {
 					this.async( function() {
 						this.loadDraftedContents();
-					}, 1000 );
+					}, 100 );
 					return;
 				}
 				
@@ -265,20 +291,20 @@
 				else if( event.detail.response.cursor != null )
 					this.draftedListCursor = event.detail.response.cursor;
 				
-				if( this.draftsActive ) {
-					// Disable the spinner
+				// Disable the spinner
+				if( this.draftsActive )
 					jQuery( '#author-books-spinner' ).css( "display", "none" );
-				}
-				
-				this.loadDraftedContents();
 				
 			},
 			
 			_handleAjaxGetPublishedListResponse: function( event ) {
+				
+				this.publishedLoading = false;
+				
 				if( event.detail.response == null ) {
 					this.async( function() {
 						this.loadPublishedContents();
-					}, 1000 );
+					}, 100 );
 					return;
 				}
 				
@@ -292,16 +318,14 @@
 				else if( event.detail.response.cursor != null )
 					this.publishedListCursor = event.detail.response.cursor;
 				
-				if( this.publishedActive ) {
-					// Disable the spinner
+				// Disable the spinner
+				if( this.publishedActive ) 
 					jQuery( '#author-books-spinner' ).css( "display", "none" );
-				}
-				
-				this.loadPublishedContents();
 				
 			},
 			
 			_handleAjaxGetDraftedListError: function( event ) {
+				this.draftsLoading = false;
 				if( event.detail.request.xhr.status == 401 ) {
 					return;
 				}
@@ -311,6 +335,7 @@
 			},
 			
 			_handleAjaxGetPublishedListError: function( event ) {
+				this.publishedLoading = false;
 				if( event.detail.request.xhr.status == 401 ) {
 					return;
 				}

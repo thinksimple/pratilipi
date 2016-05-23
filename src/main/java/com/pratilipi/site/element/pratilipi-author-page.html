@@ -1,5 +1,5 @@
 <link rel='import' href='pratilipi-author.html?20160427'>
-<link rel='import' href='pratilipi-author-books.html?2016022603' />
+<link rel='import' href='pratilipi-author-books.html?20160523' />
 <link rel="import" href="pratilipi-edit-author.html?20160511" />
 <link rel="import" href="pratilipi-social.html" />
 
@@ -89,6 +89,8 @@
 					jQuery( '#scrollToTop' ).fadeOut();
 					if( this.author != null && ! this.author.hasAccessToUpdate )
 						this.querySelector( 'pratilipi-card-grid' ).loadMore();
+					else if( document.querySelector( 'pratilipi-author-books' ) != null )
+						document.querySelector( 'pratilipi-author-books' ).loadMore();
 				}
 				else
 					jQuery( '#scrollToTop' ).fadeIn();
