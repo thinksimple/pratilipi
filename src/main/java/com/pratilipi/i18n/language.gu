@@ -307,19 +307,19 @@ remove_from_library	= લાઈબ્રેરીમાંથી કાઢી �
 empty_library		= તમારી લાઈબ્રેરીમાં પુસ્તકો નથી, રચનાઓ માંથી ઉમેરો 
 
 # Reader
-reader_goto_content_page	= Go to Content Page
-reader_goto_author_profile = Go to Author's page
-reader_goto_home_page	= Go to Home Page
-share_on_facebook		= Share on Facebook
-share_on_twitter		= Share on Twitter
-share_on_gplus			= Share on Google Plus
-increase_font_size		= Increase font size
-decrease_font_size		= Decrease font size
-increase_image_size		= Increase image size
-decrease_image_size		= Decrease image size
+reader_goto_content_page	= સારાંશ જુઓ 
+reader_goto_author_profile = લેખકની પ્રોફાઈલ જુઓ 
+reader_goto_home_page	= હોમ પેજ પર જાઓ 
+share_on_facebook		= ફેસબક પર શેર કરો 
+share_on_twitter		= ટવીટર પર શેર કરો 
+share_on_gplus			= ગુગલ પ્લસ પર શેર કરો 
+increase_font_size		= અક્ષર મોટા કરો 
+decrease_font_size		= અક્ષર નાના કરો 
+increase_image_size		= ફોટો મોટો કરો 
+decrease_image_size		= ફોટો નાનો કરો 
 
 
 # Enjoyed Reading the content? Write a review or Share it on
-reader_enjoyed_reading_part1	= Enjoyed reading the content? 
-reader_enjoyed_review_book		= Write a review
-reader_enjoyed_reading_part2	= Share it on
+reader_enjoyed_reading_part1	= વાંચવાની મજા આવી?
+reader_enjoyed_review_book		= રીવ્યુ લખો 
+reader_enjoyed_reading_part2	= શેર કરો 
