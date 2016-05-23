@@ -194,7 +194,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 			
-			} else if( uri.equals( "/pratilipireader" ) ) {
+			} else if( uri.equals( "/read" ) ) {
 				if( !basicMode ) {
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
@@ -457,7 +457,8 @@ public class PratilipiSite extends HttpServlet {
 	private String createReadPageTitle( PratilipiData pratilipiData, int pageNo, int pageCount ) {
 		String title = createPratilipiPageTitle( pratilipiData );
 		title = title == null ? "" : " « " + title;
-		return "Page " + pageNo + " of " + pageCount + title;
+		String pratilipiText = I18n.getString( "pratilipi", UxModeFilter.getDisplayLanguage() ) + " / " + "Pratilipi";
+		return title + " « " + pratilipiText;
 	}
 
 	
