@@ -7,11 +7,6 @@
 	</dispatch>
 
 	<dispatch>
-		<url>*/read*</url>
-		<module>www</module>
-	</dispatch>
-
-	<dispatch>
 		<url>*/write*</url>
 		<module>www</module>
 	</dispatch>
@@ -50,6 +45,11 @@
 		<module>gamma</module>
 	</dispatch>
 	
+	<dispatch>
+		<url>*/read*</url>
+		<module>www</module>
+	</dispatch>
+
 	<dispatch>
 		<url>*/api/*</url>
 		<module>api</module>
