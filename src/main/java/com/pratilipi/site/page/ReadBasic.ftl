@@ -12,6 +12,12 @@
 			   else
 				   return null;
 			}
+			function setCookie( name, value, days, path ) {
+				var date = new Date();
+				date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
+				var expires = "; expires=" + date.toGMTString();
+				document.cookie = name + "=" + value + expires + "; path=" + path;
+			}
 			function gotoPage( pageNo ) {
 				var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
 									<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
@@ -62,12 +68,6 @@
 			</#if>
 			
 			<#if action == "setting">
-				function setCookie( name, value, days, path ) {
-					var date = new Date();
-					date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
-					var expires = "; expires=" + date.toGMTString();
-					document.cookie = name + "=" + value + expires + "; path=" + path;
-				}
 				function increaseFontSize() {
 					// cutoff = 32
 					if( ${ fontSize + 2 } <= 32 ) {
