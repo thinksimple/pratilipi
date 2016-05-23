@@ -381,7 +381,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "resourceList", resourceList );
 		dataModel.put( "user", userResponse );
 		if( basicMode ) {
-			dataModel.put( "requestUrl", "http://" + request.getServerName() + request.getRequestURI() );
+			dataModel.put( "requestUrl", request.getRequestURI() );
 			dataModel.put( "pratilipiTypes", pratilipiTypes );
 		} else {
 			Gson gson = new Gson();
