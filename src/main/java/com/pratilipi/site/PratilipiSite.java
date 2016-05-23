@@ -144,7 +144,7 @@ public class PratilipiSite extends HttpServlet {
 		try {
 			
 			if( uri.equals( "/" ) ) {
-				if( host.endsWith( "www.pratilipi.com" ) || host.endsWith( "m.pratilipi.com" ) ) {
+				if( UxModeFilter.getWebsite() == Website.ALL_LANGUAGE || UxModeFilter.getWebsite() == Website.GAMMA_ALL_LANGUAGE ) {
 					dataModel = new HashMap<String, Object>();
 					dataModel.put( "title", "Home Page" );
 					templateName = templateFilePrefix + "HomePage.ftl";
