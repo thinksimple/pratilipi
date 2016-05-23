@@ -456,7 +456,8 @@ public class PratilipiSite extends HttpServlet {
 
 	private String createReadPageTitle( PratilipiData pratilipiData, int pageNo, int pageCount ) {
 		String title = createPratilipiPageTitle( pratilipiData );
-		title = title == null ? "" : " « " + title;
+		if( title == null )
+			title = "";
 		String pratilipiText = I18n.getString( "pratilipi", UxModeFilter.getDisplayLanguage() ) + " / " + "Pratilipi";
 		return title + " « " + pratilipiText;
 	}
