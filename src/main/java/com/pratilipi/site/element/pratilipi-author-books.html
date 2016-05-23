@@ -156,6 +156,7 @@
 			attached: function() {
 				this.draftsClicked();
 				this.async( function() {
+					this.publishedLoading = true;
 					this._makeAjaxCall( this.$.AjaxGetPublishedList, this.author.authorId, "", "PUBLISHED" );
 				}, 100);
 			},
@@ -210,7 +211,7 @@
 				var reqHeight = jQuery( window ).scrollTop()
 								- jQuery( this ).position().top
 								+ jQuery( window ).height()
-								+ 2 * jQuery( window ).height();
+								+ 3 * jQuery( window ).height();
 
 				if( jQuery( this ).outerHeight( true ) >= reqHeight )
 					return false;
@@ -228,13 +229,12 @@
 			},
 			
 			loadDraftedContents: function() {
+				
+				if( this.draftedListCursor == null && this.draftsActive )
+					jQuery( '#author-books-spinner' ).css( "display", "none" );
 
-				if( this.draftedListCursor == null || ! this.draftsActive || ! this._checkWindowHeight() || this.draftsLoading ) {
-					// Disable the spinner
-					if( this.draftsActive )
-						jQuery( '#author-books-spinner' ).css( "display", "none" );
+				if( this.draftedListCursor == null || ! this.draftsActive || ! this._checkWindowHeight() || this.draftsLoading )
 					return;
-				}
 				
 				// Make the spinner active
 				jQuery( '#author-books-spinner' ).css( "display", "block" );
@@ -246,13 +246,12 @@
 			},
 			
 			loadPublishedContents: function() {
+				
+				if( this.publishedListCursor == null && this.publishedActive )
+					jQuery( '#author-books-spinner' ).css( "display", "none" );
 
-				if( this.publishedListCursor == null || ! this.publishedActive || ! this._checkWindowHeight() || this.publishedLoading ) {
-					// Disable the spinner
-					if( this.publishedActive )
-						jQuery( '#author-books-spinner' ).css( "display", "none" );
+				if( this.publishedListCursor == null || ! this.publishedActive || ! this._checkWindowHeight() || this.publishedLoading )
 					return;
-				}
 				
 				// Make the spinner active
 				jQuery( '#author-books-spinner' ).css( "display", "block" );
