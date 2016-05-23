@@ -12,7 +12,7 @@ linkedin_page				= https://www.linkedin.com/company/pratilipi
 
 
 
-# Language   # ಭಾಷೆ
+# Language   
 
 language_choose_language	= Choose Language  =  ಭಾಷೆ ಆಯ್ಕೆ ಮಾಡಿಕೊಳ್ಳಿ
 language_all				= All Languages         =   ಎಲ್ಲಾ ಭಾಷೆಗಳು
@@ -28,7 +28,7 @@ language_kn					= Kannada               = ಕನ್ನಡ
 
 
 
-# Pratilipi Types
+# Pratilipi Types     
 
 _pratilipi_type_book		= Book             = ಪುಸ್ತಕ
 _pratilipi_type_books		= Books            = ಪುಸ್ತಕಗಳು 
@@ -43,7 +43,7 @@ _pratilipi_type_magazines	= Magazines      = ನಿಯತಕಾಲಿಕೆಗ�
 
 
 
-# Author
+# Author  
 
 author_about					= About the Author        = ಲೇಖಕರ ಕುರಿತು  
 author_language					= Language              = ಭಾಷೆ 
@@ -64,7 +64,7 @@ author_no_contents_published	= Sorry! This Author doesn't have any books publish
 
 
 
-# Pratilipi
+# Pratilipi   
 
 pratilipi_type				= Type                    = ವಿಧ 
 pratilipi_listing_date		= Listing Date        = ಪ್ರಕಟಿತ ದಿನಾಂಕ
@@ -92,13 +92,13 @@ pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it! = ಇಲ್ಲ,
 
 
 
-# Rating
+# Rating          
 
 rating_rating				= Rating    = ರೇಟಿಂಗ್
 rating_ratings				= Ratings  = ರೇಟಿಂಗ್ಸ್
 rating_rate_this			= Rate This ! = ರೇಟಿಂಗ್ ನೀಡಿ 
 rating_your_rating			= Your Rating  = ನಿಮ್ಮ ರೇಟಿಂಗ್
-rating_be_first_one			= Be the first one to rate it!  
+rating_be_first_one			= Be the first one to rate it!  = ಇದಕ್ಕೆ ರೇಟಿಂಗ್ ನೀಡಲು ಮುಂದಾಗಿ 
 
 rating_1_star				= Poor  = ಚೆನ್ನಾಗಿಲ್ಲ 
 rating_2_star				= Fair  = ಪರವಾಗಿಲ್ಲ  
@@ -108,7 +108,7 @@ rating_5_star				= Excellent  = ಸಖತ್
 
 
 
-# Review
+# Review 
 
 review_heading				= Reviews = ಪ್ರತಿಕ್ರಿಯೆಗಳು 
 review_write_a_review		= Write a Review = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಿರಿ 
@@ -129,7 +129,7 @@ review_see_all_reviews		= See All Reviews = ಎಲ್ಲಾ ಪ್ರತಿಕ�
 
 
 
-# Search
+# Search  
 
 search 						= Search = ಹುಡುಕಿ 
 search_bar_help				= Search for books, stories, poems and more ... ಪುಸ್ತಕಗಳು, ಕಥೆಗಳು, ಕವಿತೆಗಳು ಮತ್ತು ಇನ್ನಿತರ ಪ್ರಕಾರದ ಬರಹಗಳಿಗಾಗಿ ಹುಡುಕಾಟ ನಡೆಸಿ
@@ -138,7 +138,7 @@ search_no_results_found		= Sorry! No Search Results found for your search query.
 
 
 
-# Write           = ಬರೆಯಿರಿ 
+# Write       
 
 write_heading				= Add New Content     =ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 
 write_help					= You can write on Pratilipi! = ನೀವು ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಬರೆಯಬಹುದು!
@@ -151,7 +151,7 @@ write_create_new_content	= Create New Content = ಹೊಸ ಬರಹ  ಸೃಷ�
 
 
 
-# Common User Popups 
+# Common User Popups  
 
 user_sign_in				= Sign In  = ಸೈನ್ ಇನ್ ಆಗಿರಿ 
 user_to_sign_in				= To Sign In = ಸೈನ್ ಇನ್ ಆಗಲು 
@@ -188,7 +188,7 @@ user_require_access			= You need to log in to perform this action! = ಈ ಕಾ�
 
 
 
-# My Account popup 
+# My Account popup  
 
 edit_account_heading		= Edit My Account = ನನ್ನ ಅಕೌಂಟನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
 edit_account_verify_email	= Verify Email =  ಇ-ಮೇಲ್ ಪರಿಶೀಲಿಸಿ 
@@ -197,7 +197,7 @@ edit_account_change_password	= Change Password = ಪಾಸ್ವರ್ಡ್ ಬ
 
 
 
-# Footer
+# Footer   
 
 footer_follow_us_on_social_media	= Follow us on Social Media = ನಮ್ಮನ್ನು ಸಾಮಾಜಿಕ ಮಾಧ್ಯಮದಲ್ಲಿ ಹಿಂಬಾಲಿಸಿ 
 footer_about_us				= About Us = ನಮ್ಮ ಬಗ್ಗೆ 
@@ -225,7 +225,7 @@ working						= Working ... = ಕಾರ್ಯ ನಿರ್ವಹಿಸುತ್�
 update						= Update = ಅಪ್ಡೇಟ್
 share						= Share = ಶೇರ್ 
 menu						= Menu = ಮೆನು 
-back						= Back = ಬ್ಯಾಕ್ 
+back						= Back = ಹಿಂದೆ ಹೋಗಿ 
 load_more_contents			= Load More Contents = ಇನ್ನಷ್ಟು ವಿಷಯಗಳನ್ನು ಲೋಡ್ ಮಾಡಿ 
 view_more					= View More = ಇನ್ನೂ ಹೆಚ್ಚು ತೋರಿಸಿ 
 
@@ -238,7 +238,7 @@ user_login_success					= Success ! ಯಶಸ್ವಿ!
 user_register_success				= Success ! ಯಶಸ್ವಿ! 
 password_change_success				= Password has been changed Successfully! ಯಶಸ್ವಿಯಾಗಿ ಪಾಸ್ವರ್ಡ್ ಬದಲಾವಣೆಗೊಂಡಿರುತ್ತದೆ 
 verification_email_sent_success		= Email Sent Successfully ! = ಯಶಸ್ವಿಯಾಗಿ ಇ-ಮೇಲ್ ಕಳುಹಿಸಲಾಗಿರುತ್ತದೆ. 
-user_verified_success				= Verified Successfully ! = ಯಶಸ್ವಿಯಾಗ ಪರಿಶೀಲನೆಗೊಂಡಿರುತ್ತದೆ!
+user_verified_success				= Verified Successfully ! = ಯಶಸ್ವಿಯಾಗಿ ಪರಿಶೀಲನೆಗೊಂಡಿರುತ್ತದೆ!
 content_created_success				= Success ! = ಯಶಸ್ವಿ!
 updated_author_info_success			= Success ! =   ಯಶಸ್ವಿ!
 updated_pratilipi_info_success		= Success ! =  ಯಶಸ್ವಿ!
@@ -246,27 +246,28 @@ updated_review						= Success ! = ಯಶಸ್ವಿ!
 
 # Author Edit Popup
 
-edit_author_heading				= Edit Author Information	
-edit_author_first_name			= First Name( Vernacular )
-edit_author_last_name			= Last Name( Vernacular )
-edit_author_first_name_en		= First Name( English )
-edit_author_last_name_en		= Last Name( English )
-edit_author_pen_name			= Pen Name ( Vernacular )
-edit_author_pen_name_en			= Pen Name ( English )
-edit_author_birthday_ddmmyyyy	= Birthday (dd-mm-yyyy)
-edit_author_language			= Select Language
-edit_author_summary				= Summary ( Optional )
-edit_author_save_changes		= Save Changes
+edit_author_heading				= Edit Author Information	   = ಲೇಖಕರ ಮಾಹಿತಿಯನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
+edit_author_first_name			= First Name( Vernacular ) = ಮೊದಲ ಹೆಸರು (ಕನ್ನಡದಲ್ಲಿ)
+edit_author_last_name			= Last Name( Vernacular )    = ಕೊನೆಯ ಹೆಸರು (ಕನ್ನಡದಲ್ಲಿ)
+edit_author_first_name_en		= First Name( English )    = ಮೊದಲ ಹೆಸರು (ಆಂಗ್ಲ ಭಾಷೆಯಲ್ಲಿ)
+edit_author_last_name_en		= Last Name( English )    = ಕೊನೆಯ ಹೆಸರು (ಆಂಗ್ಲ ಭಾಷೆಯಲ್ಲಿ) 
+edit_author_pen_name			= Pen Name ( Vernacular )  = ಕಾವ್ಯನಾಮ (ಕನ್ನಡದಲ್ಲಿ)
+edit_author_pen_name_en			= Pen Name ( English )   = ಕಾವ್ಯನಾಮ (ಆಂಗ್ಲ ಭಾಷೆಯಲ್ಲಿ)
+edit_author_birthday_ddmmyyyy	= Birthday (dd-mm-yyyy) = ಜನ್ಮ ದಿನಾಂಕ (ದಿದಿ-ತಿತಿ-ವವವವ)
+edit_author_language			= Select Language           = ಭಾಷೆ ಆಯ್ಕೆ ಮಾಡಿಕೊಳ್ಳಿ 
+edit_author_summary				= Summary ( Optional ) = ಸಾರಾಂಶ (ಐಚ್ಛಿಕ)
+
+edit_author_save_changes		= Save Changes   = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ 
 
 # Pratilipi Edit Popup
 
-edit_pratilipi_heading			= Edit Content Information
-edit_pratilipi_title			= Title *
-edit_pratilipi_title_en			= Title (English)
-edit_pratilipi_type				= Select Type *
-edit_pratilipi_language			= Language
-edit_pratilipi_summary			= Summary (Optional) :
-edit_pratilipi_save_changes		= Save Changes
+edit_pratilipi_heading			= Edit Content Information  = (ವಿಷಯ ಮಾಹಿತಿಯನ್ನು ಎಡಿಟ್ ಮಾಡಿ) 
+edit_pratilipi_title			= Title *  = ಶೀರ್ಷಿಕೆ*
+edit_pratilipi_title_en			= Title (English) = ಶೀರ್ಷಿಕೆ (ಆಂಗ್ಲ ಭಾಷೆಯಲ್ಲಿ)
+edit_pratilipi_type				= Select Type * = ವಿಧ ಆರಿಸಿಕೊಳ್ಳಿ*
+edit_pratilipi_language			= Language    = ಭಾಷೆ
+edit_pratilipi_summary			= Summary (Optional) :ಸಾರಾಂಶ ((ಐಚ್ಛಿಕ)
+edit_pratilipi_save_changes		= Save Changes  = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ
 
 
 
@@ -279,57 +280,57 @@ register_part_3					= .
 
 # Event Page
 
-event_entries			= Event Entries
-event_name				= Event Name
-event_name_en			= Event Name in English
-event_description		= Event Description
-event_entries_url_list	= Entries URL List
-event_save_changes		= Save Changes
+event_entries			= Event Entries = ಕಾರ್ಯಕ್ರಮ ನಮೂದುಗಳು 
+event_name				= Event Name = ಕಾರ್ಯಕ್ರಮದ ಹೆಸರು 
+event_name_en			= Event Name in English = ಆಂಗ್ಲ ಭಾಷೆಯಲ್ಲಿ ಕಾರ್ಯಕ್ರಮದ ಹೆಸರು 
+event_description		= Event Description = ಕಾರ್ಯಕ್ರಮ ವಿವರಣೆ  
+event_entries_url_list	= Entries URL List = URL ಪಟ್ಟಿ ನಮೂದುಗಳು 
+event_save_changes		= Save Changes   = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ
 
 
 # Gender
-gender_male			= Male
-gender_female		= Female
-gender_other		= Other
+gender_male			= Male  = ಪುರುಷ 
+gender_female		= Female = ಮಹಿಳೆ 
+gender_other		= Other = ಇತರೆ
 
 # Months
-month_jan	= January
-month_feb	= February
-month_mar	= March
-month_apr	= April
-month_may	= May
-month_jun	= June
-month_jul	= July
-month_aug	= August
-month_sep	= September
-month_oct	= October
-month_nov	= November
-month_dec	= December
+month_jan	= January   = ಜನವರಿ 
+month_feb	= February  = ಫೆಬ್ರವರಿ
+month_mar	= March     = ಮಾರ್ಚ್
+month_apr	= April     = ಏಪ್ರಿಲ್ 
+month_may	= May       = ಮೇ
+month_jun	= June      = ಜೂನ್ 
+month_jul	= July      = ಜುಲೈ 
+month_aug	= August    = ಆಗಸ್ಟ್ 
+month_sep	= September = ಸೆಪ್ಟೆಂಬರ್
+month_oct	= October   = ಅಕ್ಟೋಬರ್ 
+month_nov	= November  = ನವೆಂಬರ್ 
+month_dec	= December  = ಡಿಸೆಂಬರ್ 
 
 # Library
-my_library			= My Library
-add_to_library		= Add to Library
-added_to_library	= Success! You have added this content to your library!
-remove_from_library	= Remove from Library
-removed_from_library = You have removed the content from your library!
-empty_library		= Sorry, there are no books in your library, you can add books from content page.
+my_library			= My Library       = ನನ್ನ ಪುಸ್ತಕ ಭಂಡಾರ
+add_to_library		= Add to Library  = ಪುಸ್ತಕ ಭಂಡಾರಕ್ಕೆ ಸೇರಿಸಿ 
+added_to_library	= Success! You have added this content to your library! = ಯಶಸ್ವಿ! ಈ ಬರಹವನ್ನು ನೀವು ಪುಸ್ತಕ ಭಂಡಾರಕ್ಕೆ ಸೇರಿಸಿರುವಿರಿ!
+remove_from_library	= Remove from Library  = ಪುಸ್ತಕ ಭಂಡಾರದಿಂದ ತೆಗೆದುಹಾಕಿ 
+removed_from_library = You have removed the content from your library! = ನೀವು ಬರಹವನ್ನು ಪುಸ್ತಕ ಭಂಡಾರದಿಂದ ತೆಗೆದು ಹಾಕಿರುವಿರಿ!
+empty_library		= Sorry, there are no books in your library, you can add books from content page. ಕ್ಷಮಿಸಿ, ನಿಮ್ಮ ಪುಸ್ತಕ ಭಂಡಾರದಲ್ಲಿ ಯಾವುದೇ ಪುಸ್ತಕಗಳಿಲ್ಲ, ನೀವು ಪುಸ್ತಕಗಳನ್ನು ಬರಹ ಪುಟದಿಂದ ತೆಗೆದು ಸೇರಿಸಬಹುದು.
 
 
 
 # Reader
-reader_goto_content_page	= Go to Content Page
-reader_goto_author_profile = Go to Author's page
-reader_goto_home_page	= Go to Home Page
-share_on_facebook		= Share on Facebook
-share_on_twitter		= Share on Twitter
-share_on_gplus			= Share on Google Plus
-increase_font_size		= Increase font size
-decrease_font_size		= Decrease font size
-increase_image_size		= Increase image size
-decrease_image_size		= Decrease image size
+reader_goto_content_page	= Go to Content Page   = ಬರಹ ಪುಟಕ್ಕೆ ಹೋಗಿ 
+reader_goto_author_profile = Go to Author's page = ಲೇಖಕರ ಪುಟಕ್ಕೆ ಹೋಗಿ 
+reader_goto_home_page	= Go to Home Page = ಮುಖಪುಟಕ್ಕೆ ಹೋಗಿ 
+share_on_facebook		= Share on Facebook = ಫೇಸ್ಬುಕ್ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ 
+share_on_twitter		= Share on Twitter  = ಟ್ವಿಟ್ಟರ್ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ 
+share_on_gplus			= Share on Google Plus = ಗೂಗಲ್ ಪ್ಲಸ್ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ 
+increase_font_size		= Increase font size = ಫಾಂಟ್ ಘಾತ್ರ ಹಿಗ್ಗಿಸಿ 
+decrease_font_size		= Decrease font size = ಫಾಂಟ್ ಘಾತ್ರ ಕುಗ್ಗಿಸಿ 
+increase_image_size		= Increase image size = ಚಿತ್ರದ ಘಾತ್ರ ಹಿಗ್ಗಿಸಿ 
+decrease_image_size		= Decrease image size = ಚಿತ್ರದ ಘಾತ್ರ ಕುಗ್ಗಿಸಿ 
 
 
 # Enjoyed Reading the content? Write a review or Share it on
-reader_enjoyed_reading_part1	= Enjoyed reading the content? 
-reader_enjoyed_review_book		= Write a review
-reader_enjoyed_reading_part2	= Share it on
+reader_enjoyed_reading_part1	= Enjoyed reading the content? = ಬರಹವನ್ನು ಓದಿ ಎಂಜಾಯ್ ಮಾಡಿದಿರಾ?
+reader_enjoyed_review_book		= Write a review = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಿರಿ 
+reader_enjoyed_reading_part2	= Share it on = ಶೇರ್ ಮಾಡಿ 
