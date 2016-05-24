@@ -160,7 +160,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	private <P extends GenericOfyType,Q extends P> List<P> getEntityListOfy( Class<Q> clazz, List<Long> idList ) {
-		return new ArrayList<P>( ObjectifyService.ofy().load().type( clazz ).ids( idList ).values() );
+		Map<Long, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idList );
+		List<P> entityList = new ArrayList<>();
+		for( Long id : idList )
+			entityList.add( entityMap.get( id ) );
+		return entityList;
 	}
 	
 	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity ) {
