@@ -721,7 +721,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				List<Long> pratilipiIdList = new ArrayList<>( uriList.size() );
 				for( int i = 0; i < uriList.size(); i++ ) {
 					Page page = pratilipiPages.get( uriList.get( i ) );
-					if( page != null && page.getType() == PageType.PRATILIPI )
+					if( page != null && page.getType() == PageType.PRATILIPI && ! pratilipiIdList.contains( page.getPrimaryContentId() ) )
 						pratilipiIdList.add( page.getPrimaryContentId() );
 				}
 
