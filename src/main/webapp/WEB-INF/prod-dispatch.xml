@@ -2,28 +2,29 @@
 <dispatch-entries>
 
 	<dispatch>
-		<url>*/oauth*</url>
-		<module>www</module>
-	</dispatch>
-
-	<dispatch>
 		<url>*/write*</url>
-		<module>www</module>
+		<module>writer</module>
 	</dispatch>
 
 	<dispatch>
 		<url>*/api.pratilipi/*</url>
-		<module>www</module>
+		<module>writer</module>
 	</dispatch>
 
 	<dispatch>
 		<url>*/polymer/*</url>
-		<module>www</module>
+		<module>writer</module>
 	</dispatch>
 
 	<dispatch>
 		<url>*/theme.pratilipi/*</url>
-		<module>www</module>
+		<module>writer</module>
+	</dispatch>
+
+
+	<dispatch>
+		<url>*.gamma.pratilipi.com/*</url>
+		<module>gamma</module>
 	</dispatch>
 
 
@@ -39,12 +40,6 @@
 		<module>default</module>
 	</dispatch>
 
-
-	<dispatch>
-		<url>*.gamma.pratilipi.com/*</url>
-		<module>gamma</module>
-	</dispatch>
-
 	<dispatch>
 		<url>*/api/*</url>
 		<module>api</module>
@@ -52,11 +47,6 @@
 
 
 	<!-- dispatch>
-		<url>www.pratilipi.com/*</url>
-		<module>www</module>
-	</dispatch>
-
-	<dispatch>
 		<url>api.pratilipi.com/*</url>
 		<module>api</module>
 	</dispatch>
