@@ -11,6 +11,8 @@
 	${ resource }
 </#list>
 
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html'>
+
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?20160325">
 
