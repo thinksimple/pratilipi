@@ -28,7 +28,7 @@
 				font-size=${ fontSize }
 				page-no='${ pageNo }'
 				page-count='${ pageCount }'
-				content='${ content }'
+				content='${ content! }'
 				content-type='${ contentType }'
 				index='${ indexJson }'
 				></pratilipi-pratilipi-page>
