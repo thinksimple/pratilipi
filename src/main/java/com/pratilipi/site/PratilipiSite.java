@@ -520,38 +520,29 @@ public class PratilipiSite extends HttpServlet {
 			throws InsufficientAccessException {
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", UxModeFilter.getDisplayLanguage() ), null ) );
+		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", filterLanguage ), null ) );
 		return dataModel;
 
 	}
 	
 	private Map<String, Object> createDataModelForHomePage( boolean basicMode, Language filterLanguage )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, IOException {
 
-		Language listLanguage = filterLanguage == null ? Language.ENGLISH : filterLanguage;
+		if( filterLanguage == null )
+			filterLanguage = Language.ENGLISH;
 		
-		Gson gson = new Gson();
+		List<Map<String, Object>> sections = new LinkedList<>();
 		
-		String[] listNames = new String[] {};
-		if( filterLanguage == Language.HINDI )
-			listNames = new String[] { "ankahi-dastan", "romanchak-duniya", "shrestha-sahitya", "chakmak-chhoti-duniya", "swad-ka-tadka" };
-		else if( filterLanguage == Language.GUJARATI )
-			listNames = new String[] { "horror", "navi-prakashit-rachnao", "hasya-killol", "film-and-music", "bal-sahitya" };
-		else if( filterLanguage == Language.TAMIL )
-			listNames = new String[] { "featured", "fiction", "magazines" };
-		else if( filterLanguage == Language.TELUGU )
-			listNames = new String[] { "books", "stories", "articles" };
-		else if( filterLanguage == Language.MALAYALAM )
-			listNames = new String[] { "books", "stories", "poems" };
-		else if( filterLanguage == Language.BENGALI )
-			listNames = new String[] { "books", "premkahini", "aleek-kahini", "rahashyogalpo" };
-		else if( filterLanguage == Language.MARATHI )
-			listNames = new String[] { "kathajag", "lovestories", "swadishta-pakkala", "vaicharik", "sair-sapata" };
-		ArrayList<Map<String, Object>> sections = new ArrayList<>( listNames.length );
-		
-		for( String listName : listNames ) {
+		String fileName = "home." + filterLanguage.getCode();
+		InputStream inputStream = DataAccessor.class.getResource( "curated/" + fileName ).openStream();
+		LineIterator it = IOUtils.lineIterator( inputStream, "UTF-8" );
+		while( it.hasNext() ) {
 			
-			String title = getListTitle( listName, listLanguage );
+			String listName = it.next().trim();
+			if( listName.isEmpty() )
+				continue;
+			
+			String title = getListTitle( listName, filterLanguage );
 			if( title == null )
 				continue;
 			
@@ -559,12 +550,12 @@ public class PratilipiSite extends HttpServlet {
 				title = title.substring( 0, title.indexOf( '|' ) ).trim();
 			
 			PratilipiFilter pratilipiFilter = new PratilipiFilter();
-			pratilipiFilter.setLanguage( listLanguage );
+			pratilipiFilter.setLanguage( filterLanguage );
 			pratilipiFilter.setListName( listName );
 			pratilipiFilter.setState( PratilipiState.PUBLISHED );
 			
 			DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-					PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 6 );
+					PratilipiDataUtil.getPratilipiDataList( null, pratilipiFilter, null, null, 6 );
 
 			if( pratilipiDataListCursorTuple.getDataList().size() == 0 )
 				continue;
@@ -576,13 +567,14 @@ public class PratilipiSite extends HttpServlet {
 			sections.add( section );
 			
 		}
+		LineIterator.closeQuietly( it );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", UxModeFilter.getDisplayLanguage() ), null ) );
+		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", filterLanguage ), null ) );
 		if( basicMode )
 			dataModel.put( "sections", sections );
 		else
-			dataModel.put( "sectionsJson", gson.toJson( sections ) );
+			dataModel.put( "sectionsJson", new Gson().toJson( sections ) );
 		return dataModel;
 		
 	}
