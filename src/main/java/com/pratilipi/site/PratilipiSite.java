@@ -30,7 +30,6 @@ import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericReviewResponse;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
-import com.pratilipi.api.shared.GenericFileDownloadResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -60,7 +59,6 @@ import com.pratilipi.data.client.UserAuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
-import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Event;
@@ -90,26 +88,25 @@ public class PratilipiSite extends HttpServlet {
 	
 	public void doGet( HttpServletRequest request, HttpServletResponse response )
 			throws IOException {
-
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
+		
 		// Page Entity
-		String host = request.getServerName();
 		String uri = request.getRequestURI();
 		Page page = dataAccessor.getPage( uri );
-
+		
 		// BasicMode
 		boolean basicMode = UxModeFilter.isBasicMode();
 		
 		// Language
 		Language displayLanguage = UxModeFilter.getDisplayLanguage();
 		Language filterLanguage = UxModeFilter.getFilterLanguage();
-
+		
 		// Navigation List
 		List<Navigation> navigationList = dataAccessor.getNavigationList(
 				filterLanguage == null ? Language.ENGLISH : filterLanguage
 		);
-
+		
 		
 		// Common resource list
 		List<String> resourceList = new LinkedList<>();
@@ -145,9 +142,8 @@ public class PratilipiSite extends HttpServlet {
 			
 			if( uri.equals( "/" ) ) {
 				if( UxModeFilter.getWebsite() == Website.ALL_LANGUAGE || UxModeFilter.getWebsite() == Website.GAMMA_ALL_LANGUAGE ) {
-					dataModel = new HashMap<String, Object>();
-					dataModel.put( "title", "Home Page" );
-					templateName = templateFilePrefix + "HomePage.ftl";
+					dataModel = createDataModelForMasterHomePage( filterLanguage );
+					templateName = templateFilePrefix + "MasterHome.ftl";
 				} else {
 					dataModel = createDataModelForHomePage( basicMode, filterLanguage );
 					templateName = templateFilePrefix + ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
@@ -288,17 +284,7 @@ public class PratilipiSite extends HttpServlet {
 			} else if( filterLanguage == Language.GUJARATI && uri.equals( "/non-fiction" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-
-				
-				
-			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
-				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-				
-			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), displayLanguage ) ) != null ) {
-				templateName = templateFilePrefix + ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
-				
-			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
-				templateName = templateFilePrefix + ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
+			
 			
 			} else if( uri.equals( "/register" ) ) {
 				dataModel = new HashMap<String, Object>();
@@ -331,6 +317,18 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.equals( "/events" ) ) {
 				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
+
+				
+			
+			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
+				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+				
+			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), displayLanguage ) ) != null ) {
+				templateName = templateFilePrefix + ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
+				
+			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
+				templateName = templateFilePrefix + ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
+			
 
 			
 			
@@ -418,9 +416,9 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	private String createPageTitle( String contentTitle, String contentTitleEn, Language lang ) {
-		String pageTitle = ( contentTitle == null ? "" : contentTitle + " - " ) + I18n.getString( "pratilipi", lang );
+		String pageTitle = ( contentTitle == null ? "" : contentTitle + " « " ) + I18n.getString( "pratilipi", lang );
 		if( lang != Language.ENGLISH )
-			pageTitle += " | " + ( contentTitleEn == null ? "" : contentTitleEn + " - " ) + I18n.getString( "pratilipi", Language.ENGLISH );
+			pageTitle += " | " + ( contentTitleEn == null ? "" : contentTitleEn + " « " ) + I18n.getString( "pratilipi", Language.ENGLISH );
 		return pageTitle;
 	}
 	
@@ -517,6 +515,15 @@ public class PratilipiSite extends HttpServlet {
 		return fbOgTags;
 	}
 	
+	
+	private Map<String, Object> createDataModelForMasterHomePage( Language filterLanguage )
+			throws InsufficientAccessException {
+		
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", UxModeFilter.getDisplayLanguage() ), null ) );
+		return dataModel;
+
+	}
 	
 	private Map<String, Object> createDataModelForHomePage( boolean basicMode, Language filterLanguage )
 			throws InsufficientAccessException {

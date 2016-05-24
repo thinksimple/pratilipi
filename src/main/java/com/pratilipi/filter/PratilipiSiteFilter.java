@@ -126,7 +126,7 @@ public class PratilipiSiteFilter implements Filter {
 				response.setHeader( "Location", ( request.isSecure() ? "https:" : "http:" ) + "//" + host.substring( 4 ) + requestUri + "?" + request.getQueryString() );
 			
 		
-		} else if( !validHostRegEx.matcher( host ).matches() ) { // Redirecting to www.pratilipi.com
+		} else if( ! validHostRegEx.matcher( host ).matches() ) { // Redirecting to www.pratilipi.com
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
 			String queryString = request.getQueryString();
 			if( queryString == null || queryString.isEmpty() )
