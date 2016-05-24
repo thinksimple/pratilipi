@@ -11,20 +11,6 @@
 	${ resource }
 </#list>
 
-<#-- Polymer 1.0 Custom Elements -->
-<link rel='import' href='/elements.${lang}/pratilipi-user.html?2016052002'>
-<link rel='import' href='/elements.${lang}/pratilipi-header.html?20160428'>
-<link rel='import' href='/elements.${lang}/pratilipi-edit-account.html?20160414'>
-<link rel='import' href='/elements.${lang}/pratilipi-write.html?20160511'>
-<link rel='import' href='/elements.${lang}/pratilipi-navigation-drawer.html?03'>
-<link rel='import' href='/elements.${lang}/pratilipi-navigation.html?20160227'>
-<link rel='import' href='/elements.${lang}/pratilipi-card-grid.html?20160503'>
-<link rel='import' href='/elements.${lang}/pratilipi-footer.html?201603'>
-<link rel='import' href='/elements.${lang}/pratilipi-input.html?20160411'>
-<link rel='import' href='/elements.${lang}/pratilipi-alert.html?20160511'>
-<link rel='import' href='/elements.${lang}/pratilipi-confirm-action.html?20160411'>
-
-
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?20160325">
 
