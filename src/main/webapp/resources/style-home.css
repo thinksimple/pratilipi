@@ -380,6 +380,10 @@ a {
 	.landing-page .wrapper ul.tiles-container li.image {
 		width: 366px;
 	}
+	.landing-page .wrapper ul.tiles-container li.image a .tiles {
+		background-size: contain; 
+		background-position: top;
+	}
 	.landing-page .wrapper .tiles-container-mobile {
 		display: none;
 	} 
@@ -391,6 +395,10 @@ a {
 	}
 	.landing-page .wrapper ul.tiles-container li.image {
 		width: 266px;
+	}
+	.landing-page .wrapper ul.tiles-container li.image a .tiles {
+		background-size: cover; 
+		background-position: top;
 	}
 	.landing-page .wrapper .tiles-container-mobile {
 		display: none;

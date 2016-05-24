@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?2016">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?20160524">
 
 	<#include "meta/GoogleAnalytics.ftl">
 
@@ -238,42 +238,42 @@
 				<ul class="tiles-container" id="tiles-container">
 					<li class="image image-left">
 						<a href="http://hindi.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi2.jpg'); background-size: contain;">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi2.jpg');">
 								<span class="language">हिंदी</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image2">
 						<a href="http://tamil.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/tamil.png'); background-size: contain; background-position: top;">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/tamil.png');">
 								<span class="language">தமிழ்</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image-right">
 						<a href="http://malayalam.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/malayalam2.jpg'); background-size: contain; background-position: top;">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/malayalam2.jpg');">
 								<span class="language">മലയാളം</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image-left">
 						<a href="http://bengali.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/bengali.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/bengali.jpg'); background-size: cover; background-position: top;">
 								<span class="language">বাংলা</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image3">
 						<a href="http://telugu.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/telugu4.jpg'); background-size: contain; background-position: top;">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/telugu4.jpg');">
 								<span class="language">తెలుగు</span>
 							</div>
 						</a>
 					</li>
 					<li class="image image-right">
 						<a href="http://gujarati.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/gujarati.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/gujarati.jpg'); background-size: cover; background-position: top;">
 								<span class="language">ગુજરાતી</span>
 							</div>
 						</a>
@@ -281,7 +281,7 @@
 					<li class="image image-left image-none" style="height: 0px;"></li>
 					<li class="image image4">
 						<a href="http://marathi.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/marathi.jpg'); background-size: contain; background-position: top;">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/marathi.jpg');">
 								<span class="language">मराठी</span>
 							</div>
 						</a>
