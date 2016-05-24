@@ -15,7 +15,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?2016">
 
-	<#include "GoogleAnalytics.ftl">
+	<#include "meta/GoogleAnalytics.ftl">
 
 	<#--<script src='/third-party/html5loader/src/jquery.html5Loader.min.js'></script>
 	<script>
