@@ -26,25 +26,21 @@
 					<li data-target="#carousel" data-slide-to="1"></li>
 					<li data-target="#carousel" data-slide-to="2"></li>
 					<li data-target="#carousel" data-slide-to="3"></li>
-					<li data-target="#carousel" data-slide-to="4"></li>
 				</ol>
 				
 				<!-- Items -->
 				<div class="carousel-inner">
 					<div class="item active">
-						<img src="{{ image1 }}" />
+						<a href="/horror"><img src="{{ image1 }}" /></a>
 					</div>
 					<div class="item">
-						<img src="{{ image2 }}" />
+						<a href="/lovestories"><img src="{{ image2 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/ankahi-dastan"><img src="{{ image3 }}" /></a>
+						<a href="/suspense-aur-thriller"><img src="{{ image3 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/chakmak-chhoti-duniya"><img src="{{ image4 }}" ></a>
-					</div>
-					<div class="item">
-						<a href="http://www.pratilipi.com/event/ptr-lekhan" target="_blank"><img src="{{ image5 }}" /></a>
+						<a href="/mythology"><img src="{{ image4 }}" ></a>
 					</div>
 				</div> 
 				<a href="#carousel" class="left carousel-control" data-slide="prev">
@@ -75,8 +71,7 @@
 			image1: { type: Image },
 			image2: { type: Image },
 			image3: { type: Image },
-			image4: { type: Image },
-			image5: { type: Image }
+			image4: { type: Image }
 		},
 		
 		_onIronResize: function() {
@@ -84,17 +79,15 @@
 			var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 			if( windowsize > 600 ) {
-				this.image1 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-01.jpg";
-				this.image2 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-02.jpg";
-				this.image3 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-03.jpg";
-				this.image4 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-04.jpg";
-				this.image5 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-05.jpg";
+				this.image1 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-06.png";
+				this.image2 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-07.png";
+				this.image3 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-08.png";
+				this.image4 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-09.png";
 			} else {
-				this.image1 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-01-small.jpg";
-				this.image2 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-02-small.jpg";
-				this.image3 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-03-small.jpg";
-				this.image4 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-04-small.jpg";
-				this.image5 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-05-small.jpg";
+				this.image1 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-06-small.png";
+				this.image2 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-07-small.png";
+				this.image3 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-08-small.png";
+				this.image4 = "http://0.ptlp.co/resource-hi/home-page-banner/pratilipi-hindi-carousel-09-small.png";
 			}
 		},
 		
