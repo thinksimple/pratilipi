@@ -19,7 +19,7 @@
 				document.cookie = name + "=" + value + expires + "; path=" + path;
 			}
 			function gotoPage( pageNo ) {
-				var redirectUrl = ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + "pageNo=" + pageNo;
+				var redirectUrl = ${ pratilipi.getReadPageUrl() } + ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + "pageNo=" + pageNo;
 
 				if( getUrlParameter( "ret" ) != null )
 					redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" );
@@ -31,9 +31,7 @@
 
 			}
 			function getUrl() {
-				var url =	"/${ pageUrl }?" + "id=${ pratilipi.getId()?c }" + "&" + "pageNo=${ pageNo }";
-							
-							<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
+				var url =	${ pratilipi.getReadPageUrl() } + ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + "pageNo=" + "${ pageNo }";
 							
 				if( getUrlParameter( "ret" ) != null )
 					url = url + "&" + "ret=" + getUrlParameter( "ret" );
