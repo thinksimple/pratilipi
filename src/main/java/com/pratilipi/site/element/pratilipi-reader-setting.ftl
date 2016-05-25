@@ -43,7 +43,7 @@
 	
 	<#-- Library Section -->
 	<#if user.isGuest == true>
-		<a class="menu-item" href="/login?ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26addToLib=true">
+		<a class="menu-item" href="/login?ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26addToLib=true%26pageNo=${ pageNo }">
 			<img src="http://0.ptlp.co/resource-all/icon/svg/folder-plus.svg"/>
 			<span>${ _strings.add_to_library }</span>
 		</a>

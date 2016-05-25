@@ -19,9 +19,7 @@
 				document.cookie = name + "=" + value + expires + "; path=" + path;
 			}
 			function gotoPage( pageNo ) {
-				var redirectUrl =	"/${ pageUrl }?id=${ pratilipi.getId()?c }" + "&" +
-									<#-- ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + --> 
-									"pageNo=" + parseInt( pageNo, 10);
+				var redirectUrl = ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + "pageNo=" + pageNo;
 
 				if( getUrlParameter( "ret" ) != null )
 					redirectUrl = redirectUrl + "&" + "ret=" + getUrlParameter( "ret" );
@@ -135,13 +133,16 @@
 
 			<#if action == "share" || pageNo == pageCount>
 				function shareOnFacebook() {
-					window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ website_host }/${ pageUrl }?id=${ pratilipi.getId()?c }", "share", "width=600,height=500,left=70px,top=60px" );
+					window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ website_host }/${ pageUrl }?id=${ pratilipi.getId()?c }&share=facebook", 
+							"share", "width=600,height=500,left=70px,top=60px" );
 				}
 				function shareOnTwitter() {
-					window.open( "http://twitter.com/share?url=" + "http://${ website_host }/${ pageUrl }?id=${ pratilipi.getId()?c }", "share", "width=500,height=600,left=70px,top=60px" );
+					window.open( "http://twitter.com/share?url=" + "http://${ website_host }/${ pageUrl }?id=${ pratilipi.getId()?c }&share=twitter", 
+							"share", "width=500,height=600,left=70px,top=60px" );
 				}
 				function shareOnGplus() {
-					window.open( "https://plus.google.com/share?url=" + "http://${ website_host }/${ pageUrl }?id=${ pratilipi.getId()?c }", "share", "width=500,height=600,left=70px,top=60px" );
+					window.open( "https://plus.google.com/share?url=" + "http://${ website_host }/${ pageUrl }?id=${ pratilipi.getId()?c }&share=gplus", 
+							"share", "width=500,height=600,left=70px,top=60px" );
 				}
 			</#if>
 		</script>

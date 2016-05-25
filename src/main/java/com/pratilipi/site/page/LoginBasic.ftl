@@ -116,7 +116,7 @@
 					
 					success: function( response ) {
 						if( getUrlParameters().ret != null )
-							window.location.href = getUrlParameters().ret.replace( "%26", "&" );
+							window.location.href = getUrlParameters().ret.replace( /%26/g, "&" );
 						else
 							window.location.href = "/"; 
 					},
@@ -150,7 +150,7 @@
 						
 						success: function( response ) {
 							if( getUrlParameters().ret != null )
-								window.location.href = getUrlParameters().ret;
+								window.location.href = getUrlParameters().ret.replace( /%26/g, "&" );
 							else
 								window.location.href = "/"; 
 						},
