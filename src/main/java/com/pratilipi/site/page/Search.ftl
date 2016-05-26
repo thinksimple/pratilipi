@@ -2,19 +2,20 @@
 <html lang="${lang}">
 
 	<head>
-		<#assign mainPage="pratilipi-search-page">
+		<#assign mainPage="pratilipi-list-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-search-page.html?20160524'>
+		<link rel='import' href='/elements.${lang}/pratilipi-list-page.html?20160526'>
 	</head>
 
 	<body>
-		<pratilipi-search-page 
+		<pratilipi-list-page 
 			user-data='${ userJson }'
+			heading='${ _strings.search_results }'
 			pratilipi-list='${ pratilipiListJson }'
 			search-query='${ pratilipiListSearchQuery! }'
 			filter='${ pratilipiListFilterJson }'
 			cursor='${ pratilipiListCursor! }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'></pratilipi-search-page>
+			navigation-list='${ navigationList }'></pratilipi-list-page>
 	</body>
 </html>

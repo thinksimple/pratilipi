@@ -19,6 +19,7 @@
 					<div style="overflow: hidden">
 						<pratilipi-card-grid
 							heading='[[ heading ]]'
+							search-query='[[ searchQuery ]]'
 							pratilipi-list='[[ pratilipiList ]]'
 							filter='[[ filter ]]'
 							cursor='[[ cursor ]]'
@@ -48,6 +49,7 @@
 				pratilipiList: { type: Array },
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
+				searchQuery: { type: String },
 				filter: { type: Object },
 				cursor: { type: String },
 				lastScrollTop: { type: Number, value: 0 },
