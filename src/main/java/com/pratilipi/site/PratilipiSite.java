@@ -190,7 +190,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 			
-			} else if( uri.equals( "/read" ) ) {
+			} else if( uri.equals( "/pratilipireader" ) ) {
 				if( !basicMode ) {
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
@@ -199,20 +199,21 @@ public class PratilipiSite extends HttpServlet {
 					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_EDITOR.getTag() );
 				}
 
-				String pageNoPattern = "reader_page_number_" + request.getParameter( "id" );
+				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) );
+				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
+				String imageSize = AccessTokenFilter.getCookieValue( RequestCookie.IMAGE_SIZE.getName(), request );
+				String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "read";
+				String pageNoPattern = "reader_page_number_" + pratilipiId;
 
 				Integer pageNo = null;
-				if( request.getParameter( RequestCookie.PAGE_NO.getName() ) != null )
-					pageNo = Integer.parseInt( request.getParameter( RequestCookie.PAGE_NO.getName() ) );
+				if( request.getParameter( RequestParameter.READER_PAGE_NUMBER.getName() ) != null )
+					pageNo = Integer.parseInt( request.getParameter( RequestParameter.READER_PAGE_NUMBER.getName() ) );
 				else if( AccessTokenFilter.getCookieValue( pageNoPattern, request ) != null )
 					pageNo = Integer.parseInt( AccessTokenFilter.getCookieValue( pageNoPattern, request ) );
 				else
 					pageNo = 1;
 
-				dataModel = createDataModelForReadPage( Long.parseLong( request.getParameter( "id" ) ), pageNo, basicMode );
-				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
-				String imageSize = AccessTokenFilter.getCookieValue( RequestCookie.IMAGE_SIZE.getName(), request );
-				String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "read";
+				dataModel = createDataModelForReadPage( pratilipiId, pageNo, basicMode );
 				dataModel.put( "fontSize", fontSize != null ? Integer.parseInt( fontSize ) : 14 );
 				dataModel.put( "imageSize", imageSize != null ? Integer.parseInt( imageSize ) : 636 );
 				dataModel.put( "action", action );
@@ -626,7 +627,7 @@ public class PratilipiSite extends HttpServlet {
 			if( reviewParam != null && reviewParam.trim().equals( "list" ) ) {
 				int reviewPageCurr = 1;
 				int reviewPageSize = 20;
-				String pageNoStr = request.getParameter( RequestParameter.PAGE_NUMBER.getName() );
+				String pageNoStr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() );
 				if( pageNoStr != null && ! pageNoStr.trim().isEmpty() )
 					reviewPageCurr = Integer.parseInt( pageNoStr );
 				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
@@ -868,7 +869,7 @@ public class PratilipiSite extends HttpServlet {
 		int pageSize = 20;
 		
 		if( basicMode ) {
-			String pageNoStr = request.getParameter( RequestParameter.PAGE_NUMBER.getName() );
+			String pageNoStr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() );
 			if( pageNoStr != null && ! pageNoStr.trim().isEmpty() )
 				pageCurr = Integer.parseInt( pageNoStr );
 		}
@@ -947,7 +948,7 @@ public class PratilipiSite extends HttpServlet {
 		int pageSize = 20;
 		
 		if( basicMode ) {
-			String pageNoStr = request.getParameter( RequestParameter.PAGE_NUMBER.getName() );
+			String pageNoStr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() );
 			if( pageNoStr != null && ! pageNoStr.trim().isEmpty() )
 				pageCurr = Integer.parseInt( pageNoStr );
 		}

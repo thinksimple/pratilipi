@@ -3,7 +3,9 @@ package com.pratilipi.common.type;
 public enum RequestParameter {
 	
 	ACCESS_TOKEN ( "accessToken" ),
-	PAGE_NUMBER( "page" ),
+	LIST_PAGE_NUMBER( "page" ),
+	READER_PAGE_NUMBER( "pageNo" ),
+	READER_CONTENT_ID( "id" ),
 	SEARCH_QUERY( "q" ),
 	PRATILIPI_REVIEW( "review" )
 	;

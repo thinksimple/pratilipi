@@ -7,6 +7,11 @@
 		<link rel='import' href='/elements.${lang}/pratilipi-reader-page.html?20160525'>
 
 		<script>
+			$( document ).ready( function() {
+				$( document ).on( "contextmenu",function() {
+					return false;
+				});
+			});
 			$(document).keyup( function(e) {
 				if( e.which == 37 || e.which == 39 )
 					document.querySelector( 'pratilipi-reader-page' ).keyupHandler( e.which );
