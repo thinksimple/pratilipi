@@ -53,17 +53,6 @@ public class UxModeFilter implements Filter {
 			String requestUri = request.getRequestURI();
 	
 			
-			if( isWebApp ) { // Redirect uri to uriAlias, if present
-				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-				Page page = dataAccessor.getPage( requestUri );
-				if( page != null && page.getUriAlias() != null && requestUri.equals( page.getUri() ) ) {
-					response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-					response.setHeader( "Location", page.getUriAlias() );
-					return;
-				}
-			}
-
-			
 			// Defaults - for all test environments
 			boolean basicMode = false;
 			Website website = null;
@@ -81,6 +70,18 @@ public class UxModeFilter implements Filter {
 				}
 			}
 			
+			
+			// Redirect uri to uriAlias, if present
+			if( isWebApp && website != Website.ALL_LANGUAGE && website != Website.GAMMA_ALL_LANGUAGE ) {
+				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+				Page page = dataAccessor.getPage( requestUri );
+				if( page != null && page.getUriAlias() != null && requestUri.equals( page.getUri() ) ) {
+					response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+					response.setHeader( "Location", page.getUriAlias() );
+					return;
+				}
+			}
+
 			
 			// Figuring out Browser capability
 			
