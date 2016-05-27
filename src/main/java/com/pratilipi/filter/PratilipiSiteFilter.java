@@ -22,20 +22,22 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 
 public class PratilipiSiteFilter implements Filter {
 	
+	private final String subDomainPrefix = "(www|hindi|gujarati|tamil|marathi|malayalam|bengali|telugu|kannada)";
+	private final String mobileSubDomainPrefix = "(m|hi|gu|ta|mr|ml|bn|te|kn)";
 	private final Pattern validHostSubdomainRegEx = Pattern.compile(
-			"www\\.(hindi|gujarati|tamil)\\.pratilipi\\.com" );
+			"www\\." + subDomainPrefix + "\\.pratilipi\\.com" );
 	private final Pattern validHostRegEx = Pattern.compile(
-			"(www|hindi|gujarati|tamil|marathi|malayalam|bengali|telugu)\\.pratilipi\\.com" // Prod (Standard)
+			subDomainPrefix + "\\.pratilipi\\.com" // Prod (Standard)
 			+ "|"
-			+ "(m|hi|gu|ta|mr|ml|bn|te)\\.pratilipi\\.com" // Prod (Basic)
+			+ mobileSubDomainPrefix + "\\.pratilipi\\.com" // Prod (Basic)
 			+ "|"
-			+ "(www|hindi|gujarati|tamil|marathi|malayalam|bengali|kannada|telugu)\\.gamma\\.pratilipi\\.com" // Gamma (Standard)
+			+ subDomainPrefix + "\\.gamma\\.pratilipi\\.com" // Gamma (Standard)
 			+ "|"
-			+ "(m|hi|gu|ta|mr|ml|bn|kn|te)\\.gamma\\.pratilipi\\.com" // Gamma (Basic)
+			+ mobileSubDomainPrefix + "\\.gamma\\.pratilipi\\.com" // Gamma (Basic)
 			+ "|"
-			+ "(www|hindi|gujarati|tamil|marathi|malayalam|bengali)\\.devo-pratilipi\\.appspot\\.com" // Devo (Standard)
+			+ subDomainPrefix + "\\.devo-pratilipi\\.appspot\\.com" // Devo (Standard)
 			+ "|"
-			+ "(m|hi|gu|ta|mr|ml|bn)\\.devo-pratilipi\\.appspot\\.com" // Devo (Basic)
+			+ mobileSubDomainPrefix + "\\.devo-pratilipi\\.appspot\\.com" // Devo (Basic)
 			+ "|"
 			+ "(raghu)\\.devo-pratilipi\\.appspot\\.com" // Devo (Raghu)
 			+ "|"
