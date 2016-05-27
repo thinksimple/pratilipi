@@ -24,15 +24,27 @@
 
 			function updatePassword() {
 			
-				var password = $( '#inputPassword' ).val();
+				<#if passwordResetFromMail??>
+					function getParameter( key ) {
+					   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+					      return decodeURIComponent( key[1] );
+					   else
+						   return null;
+					}
+					var email = getParameter( 'email' );
+					var verificationToken = getParameter( 'token' );
+				<#else>
+					var password = $( '#inputPassword' ).val();
+					if( password == null || password.trim() == "" ) {
+						// Throw message - Please Enter Current Password
+						alert( "Please Enter the current password!" );
+						return;
+					}
+				</#if>
+
+
 				var newPassword = $( '#inputNewPassword' ).val();
 				var newPassword2 = $( '#inputNewPassword2' ).val();
-				
-				if( password == null || password.trim() == "" ) {
-					// Throw message - Please Enter Current Password
-					alert( "Please Enter the current password!" );
-					return;
-				}
 				
 				if( newPassword == null || newPassword.trim() == "" ) {
 					// Throw message - Please Enter new Password
@@ -58,8 +70,13 @@
 					type: 'post',
 					url: '/api/user/passwordupdate',
 
-					data: { 
-						'password': password, 
+					data: {
+						<#if passwordResetFromMail??>
+							'email' : email,
+							'verificationToken': verificationToken,
+						<#else>
+							'password': password,
+						</#if>
 						'newPassword': newPassword
 					},
 					
@@ -68,8 +85,20 @@
 						window.location.href = "/"; 
 					},
 					
-					error: function () {
-						alert( "Invalid Password!" );
+					error: function ( response ) {
+						var message = jQuery.parseJSON( response.responseText );
+						var status = response.status;
+
+						if( message["email"] != null ) 
+							alert( "Error " + status + " : " + message["email"] );
+						else if( message["password"] != null ) 
+							alert( "Error " + status + " : " + message["password"] );
+						else if( message["newPassword"] != null )
+							alert( "Error " + status + " : " + message["newPassword"] );
+						else if( message["message"] != null )
+							alert( "Error " + status + " : " + message["message"] ); 
+						else
+							alert( "Invalid Credentials" );
 					}
 				});
 			}
@@ -87,12 +116,14 @@
 		            </div>
 		            
 		            <form id="userPasswordUpdateForm" class="form-horizontal" action="javascript:void(0);">
-		                <div class="form-group">
-		                    <label for="inputPassword" class="col-sm-2 control-label">Current password</label>
-		                    <div class="col-sm-10">
-		                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="${ _strings.user_current_password }">
-		                    </div>
-		                </div>
+		            	<#if !passwordResetFromMail??>
+		            		<div class="form-group">
+			                    <label for="inputPassword" class="col-sm-2 control-label">Current password</label>
+			                    <div class="col-sm-10">
+			                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="${ _strings.user_current_password }">
+			                    </div>
+			                </div>
+		            	</#if>
 		                <div class="form-group">
 		                    <label for="inputNewPassword" class="col-sm-2 control-label">New password</label>
 		                    <div class="col-sm-10">
