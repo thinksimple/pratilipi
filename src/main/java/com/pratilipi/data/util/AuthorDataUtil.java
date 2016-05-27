@@ -376,15 +376,17 @@ public class AuthorDataUtil {
 
 		Author author = authorId == null ? null : DataAccessorFactory.getDataAccessor().getAuthor( authorId );
 		
-		String fileName = "";
+		BlobEntry blobEntry = null;
+		
 		if( author != null && author.hasCustomImage() )
-			fileName = IMAGE_FOLDER + "/" + authorId;
-		else
-			fileName = IMAGE_FOLDER + "/" + "author";
+			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( IMAGE_FOLDER + "/" + authorId ); // This may return null
 
-		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
+		if( blobEntry == null )
+			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( IMAGE_FOLDER + "/" + "author" );
+		
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, width ) );
+		
 		return blobEntry;
 		
 	}
