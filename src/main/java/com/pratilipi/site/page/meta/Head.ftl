@@ -18,7 +18,7 @@
 
 <#include "GoogleAnalytics.ftl">
 
-<script async>
+<script>
 	var didScroll;
 	var lastScrollTop = 0;
 	var delta = 10;

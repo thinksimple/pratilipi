@@ -2,9 +2,9 @@ package com.pratilipi.common.util;
 
 public enum ThirdPartyResource {
 	
-	JQUERY( "<script defer src='/third-party/jquery-2.1.4/jquery-2.1.4.min.js'></script>" ),
+	JQUERY( "<script src='/third-party/jquery-2.1.4/jquery-2.1.4.min.js'></script>" ),
 	
-	TINYMCE( "<script defer src='/third-party/tinymce/tinymce.min.js'></script>" ),
+	TINYMCE( "<script src='/third-party/tinymce/tinymce.min.js'></script>" ),
 
 	ANGULARJS( "<script defer src='/third-party/angular-1.4.8/angular.min.js'></script>"),
 
@@ -13,7 +13,7 @@ public enum ThirdPartyResource {
 
 	FONT_AWESOME( "<link rel='stylesheet' href='/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>" ),
 
-	POLYMER( "<script async src='/third-party/polymer-1.0/webcomponentsjs/webcomponents-lite.js'></script>"
+	POLYMER( "<script src='/third-party/polymer-1.0/webcomponentsjs/webcomponents-lite.js'></script>"
 		   + "<link rel='import' href='/third-party/polymer-1.0/polymer/polymer.html'>" ),
 
 	POLYMER_IRON_A11Y_KEYS			( "<link rel='import' href='/third-party/polymer-1.0/iron-a11y-keys/iron-a11y-keys.html'>" ),
