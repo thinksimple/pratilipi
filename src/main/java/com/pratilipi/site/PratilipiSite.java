@@ -190,7 +190,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 			
-			} else if( uri.equals( "/pratilipireader" ) ) {
+			} else if( uri.equals( "/read" ) ) {
 				if( !basicMode ) {
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
 					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
