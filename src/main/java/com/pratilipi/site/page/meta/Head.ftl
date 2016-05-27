@@ -18,7 +18,7 @@
 
 <#include "GoogleAnalytics.ftl">
 
-<script>
+<script async>
 	var didScroll;
 	var lastScrollTop = 0;
 	var delta = 10;
@@ -36,7 +36,7 @@
 		lastScrollTop = st; 
 	};
 </script>
-<script>
+<script defer>
 	function processContentTinyMCE( content ) {
 		content = content.replace( /&nbsp;/g, " " );
 		content = content.replace( /\n/g, "" );
