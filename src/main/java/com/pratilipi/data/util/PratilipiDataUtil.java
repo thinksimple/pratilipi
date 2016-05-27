@@ -577,15 +577,17 @@ public class PratilipiDataUtil {
 
 		Pratilipi pratilipi = pratilipiId == null ? null : DataAccessorFactory.getDataAccessor().getPratilipi( pratilipiId );
 		
-		String fileName = "";
+		BlobEntry blobEntry = null;
+		
 		if( pratilipi != null && pratilipi.hasCustomCover() )
-			fileName = COVER_FOLDER + "/" + pratilipiId;
-		else
-			fileName = COVER_FOLDER + "/" + "pratilipi";
-
-		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( fileName );
+			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( COVER_FOLDER + "/" + pratilipiId );
+		
+		if( blobEntry == null )
+			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( COVER_FOLDER + "/" + "pratilipi" );
+		
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, (int) ( 1.5 * width ) ) );
+		
 		return blobEntry;
 		
 	}
