@@ -3,22 +3,22 @@
 
 	<dispatch>
 		<url>*/write*</url>
-		<module>writer</module>
+		<module>legacy</module>
 	</dispatch>
 
 	<dispatch>
 		<url>*/api.pratilipi/*</url>
-		<module>writer</module>
+		<module>legacy</module>
 	</dispatch>
 
 	<dispatch>
 		<url>*/polymer/*</url>
-		<module>writer</module>
+		<module>legacy</module>
 	</dispatch>
 
 	<dispatch>
 		<url>*/theme.pratilipi/*</url>
-		<module>writer</module>
+		<module>legacy</module>
 	</dispatch>
 
 
@@ -28,17 +28,11 @@
 	</dispatch>
 
 
-	<!-- Remove this when www is mapped to default module -->
 	<dispatch>
-		<url>*/pratilipi-cover/*</url>
-		<module>default</module>
+		<url>*/read*</url>
+		<module>legacy</module>
 	</dispatch>
 
-	<!-- Remove this when www is mapped to default module -->
-	<dispatch>
-		<url>*/author-image/*</url>
-		<module>default</module>
-	</dispatch>
 
 	<dispatch>
 		<url>*/api/*</url>
