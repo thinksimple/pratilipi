@@ -1,13 +1,9 @@
 package com.pratilipi.api.impl.init;
 
 import java.nio.charset.Charset;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +24,6 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.AccessToken;
-import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
@@ -81,6 +76,7 @@ public class InitApi extends GenericApi {
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
 */
 
+/*
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		String appPropertyId = "Api.Init.UpdateStats";
@@ -112,6 +108,7 @@ public class InitApi extends GenericApi {
 				? new Date( 1420051500000L + TimeUnit.DAYS.toMillis( 13 ) ) // 14 Jan 2015, 12:15 AM IST
 				: new Date( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) ) );
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
+*/
 		
 		
 		return new GenericResponse();
