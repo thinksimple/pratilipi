@@ -242,7 +242,7 @@ public abstract class GenericApi extends HttpServlet {
 			PrintWriter writer = response.getWriter();
 
 			if( apiResponse instanceof InvalidArgumentException ) {
-				logger.log( Level.SEVERE, ((Throwable) apiResponse ).getMessage() );
+				logger.log( Level.INFO, ((Throwable) apiResponse ).getMessage() );
 				response.setStatus( HttpServletResponse.SC_BAD_REQUEST );
 			} else if( apiResponse instanceof InsufficientAccessException )
 				response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
