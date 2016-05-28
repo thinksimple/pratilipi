@@ -67,7 +67,7 @@
 			sendVerificationMail: function( email ) {
 				this.open();
 				this.message = "Working ...";
-				this.$.sendVerificationEmail.body = ( "email=" + email + "&" + "sendEmailVerificationMail=true" );
+				this.$.sendVerificationEmail.body = jQuery.param( { "email": email, "sendEmailVerificationMail": true } );
 				this.$.sendVerificationEmail.generateRequest();
 			},
 			
