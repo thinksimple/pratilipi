@@ -564,6 +564,8 @@ public class UserDataUtil {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email );
+		if( user == null )
+			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 		String verificationToken = getNextToken( user.getVerificationToken() );
 		if( ! verificationToken.equals( user.getVerificationToken() ) ) {
 			user.setVerificationToken( verificationToken );
