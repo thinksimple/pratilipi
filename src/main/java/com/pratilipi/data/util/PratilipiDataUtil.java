@@ -563,7 +563,8 @@ public class PratilipiDataUtil {
 		else if( pratilipiData.hasState()
 				&& pratilipiData.getState() != PratilipiState.DRAFTED
 				&& pratilipiData.getState() != PratilipiState.SUBMITTED
-				&& pratilipiData.getState() != PratilipiState.PUBLISHED )
+				&& pratilipiData.getState() != PratilipiState.PUBLISHED
+				&& pratilipiData.getState() != PratilipiState.DELETED )
 			errorMessages.addProperty( "state", GenericRequest.ERR_PRATILIPI_STATE_INVALID );
 
 		if( errorMessages.entrySet().size() > 0 )
@@ -805,7 +806,7 @@ public class PratilipiDataUtil {
 			return;
 		
 		
-		updatePratilipiStats( pratilipiId, readCountOffset, readCount, null, fbLikeShareCount);
+		updatePratilipiStats( pratilipiId, readCountOffset, readCount, null, fbLikeShareCount );
 	
 	}	
 
