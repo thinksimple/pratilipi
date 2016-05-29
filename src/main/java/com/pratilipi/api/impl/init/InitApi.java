@@ -12,25 +12,18 @@ import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.init.shared.GetInitRequest;
-import com.pratilipi.api.impl.init.shared.PostInitRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
-import com.pratilipi.data.type.AccessToken;
-import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
-import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.util.PratilipiDocUtil;
-import com.pratilipi.filter.AccessTokenFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -114,40 +107,6 @@ public class InitApi extends GenericApi {
 		return new GenericResponse();
 		
 	}
-	
-	@Post
-	public GenericResponse post( PostInitRequest request ) {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		Gson gson = new Gson();
-		
-		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
-
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
-		
-		if( request.getReadCountOffset() != null )
-			pratilipi.setReadCountOffset( request.getReadCountOffset() );
-		if( request.getReadCount() != null )
-			pratilipi.setReadCount( request.getReadCount() );
-		if( request.getFbLikeShareCountOffset() != null )
-			pratilipi.setFbLikeShareCountOffset( request.getFbLikeShareCountOffset() );
-		if( request.getFbLikeShareCount() != null )
-			pratilipi.setFbLikeShareCount( request.getFbLikeShareCount() );
-		
-		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-
-		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
-
-		
-		return new GenericResponse();
-		
-	}
-	
 	
 	public void updatePratilipiGoogleAnalyticsPageViews( int year, int month, int day )
 			throws UnexpectedServerException {

@@ -805,7 +805,19 @@ public class PratilipiDataUtil {
 			return;
 		
 		
+		updatePratilipiStats( pratilipiId, readCountOffset, readCount, null, fbLikeShareCount);
+	
+	}	
+
+	public static void updatePratilipiStats( Long pratilipiId,
+			Long readCountOffset, Long readCount,
+			Long fbLikeShareCountOffset, Long fbLikeShareCount ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
 		Gson gson = new Gson();
+		
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		AuditLog auditLog = dataAccessor.newAuditLogOfy();
@@ -813,15 +825,20 @@ public class PratilipiDataUtil {
 		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
 		
-		pratilipi.setReadCountOffset( readCountOffset );
-		pratilipi.setReadCount( readCount );
-		pratilipi.setFbLikeShareCount( fbLikeShareCount );
+		if( readCountOffset != null )
+			pratilipi.setReadCountOffset( readCountOffset );
+		if( readCount != null )
+			pratilipi.setReadCount( readCount );
+		if( fbLikeShareCountOffset != null )
+			pratilipi.setFbLikeShareCountOffset( fbLikeShareCountOffset );
+		if( fbLikeShareCount != null )
+			pratilipi.setFbLikeShareCount( fbLikeShareCount );
 		
 		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
-	
-	}	
+
+	}
 	
 	public static void updateUserPratilipiStats( Long pratilipiId ) {
 		

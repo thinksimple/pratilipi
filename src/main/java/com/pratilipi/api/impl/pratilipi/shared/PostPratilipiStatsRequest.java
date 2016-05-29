@@ -1,9 +1,11 @@
-package com.pratilipi.api.impl.init.shared;
+package com.pratilipi.api.impl.pratilipi.shared;
 
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 
-public class PostInitRequest extends GenericRequest {
+public class PostPratilipiStatsRequest extends GenericRequest {
 	
+	@Validate( required = true, minLong = 1L )
 	private Long pratilipiId;
 	
 	private Long readCountOffset;
