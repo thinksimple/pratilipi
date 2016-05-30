@@ -345,7 +345,7 @@
 				<div class="about-pratilipi">
 					<h5>Pratilipi</h5>
 					<a href="mailto:contact@pratilipi.com"><span>contact@pratilipi.com</span></a>
-					<a href="tel:+919789316700"><span>+91 9789316700</span></a>
+					<a href="tel:+918041710149"><span>+918041710149</span></a>
 				</div>
 				<div class="about-part-3">
 					<span>Follow us on Social Media :</span>
