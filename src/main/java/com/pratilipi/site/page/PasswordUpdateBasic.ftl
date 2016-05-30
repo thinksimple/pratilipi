@@ -62,7 +62,9 @@
 					alert( "Passwords doesn't match!" );
 					return;
 				}
-				
+
+				jQuery( '#passwordUpdateButton' ).prop( 'disabled', true );
+
 				// Make Ajax call
 
 				$.ajax({
@@ -81,6 +83,7 @@
 					},
 					
 					success: function( response ) {
+						jQuery( '#passwordUpdateButton' ).prop( 'disabled', false );
 						alert( "${ _strings.password_change_success }" );
 						window.location.href = "/"; 
 					},
@@ -88,7 +91,7 @@
 					error: function ( response ) {
 						var message = jQuery.parseJSON( response.responseText );
 						var status = response.status;
-
+						jQuery( '#passwordUpdateButton' ).prop( 'disabled', false );
 						if( message["email"] != null ) 
 							alert( "Error " + status + " : " + message["email"] );
 						else if( message["password"] != null ) 
@@ -137,7 +140,7 @@
 		                    </div>
 		                </div>
 		                <div class="form-group" style="margin: 25px auto; text-align: center;">
-		                	<button class="pratilipi-dark-blue-button" onclick="updatePassword()">${ _strings.user_reset_password }</button>
+		                	<button id="passwordUpdateButton" class="pratilipi-dark-blue-button" onclick="updatePassword()">${ _strings.user_reset_password }</button>
 		                </div>
 		            </form>
 		            

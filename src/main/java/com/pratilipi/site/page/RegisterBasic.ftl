@@ -105,6 +105,8 @@
 					return;
 				}
 
+				jQuery( '#registerButton' ).prop( 'disabled', true );
+
 				// Make Ajax call
 
 				$.ajax({
@@ -119,6 +121,7 @@
 					},
 					
 					success: function( response ) {
+						jQuery( '#registerButton' ).prop( 'disabled', false );
 						if( getUrlParameters().ret != null )
 							window.location.href = getUrlParameters().ret.replace( /%26/g, "&" );
 						else
@@ -128,7 +131,7 @@
 					error: function ( response ) {
 						var message = jQuery.parseJSON( response.responseText );
 						var status = response.status;
-
+						jQuery( '#registerButton' ).prop( 'disabled', false );
 						if( message["name"] != null ) 
 							alert( "Error " + status + " : " + message["name"] );
 						else if( message["email"] != null ) 
@@ -219,7 +222,7 @@
 							</p>
 						</div>
 		                <div class="form-group" style="margin: 0 auto; text-align: center;">
-		                	<button class="pratilipi-dark-blue-button" onclick="register()">${ _strings.user_sign_up }</button>
+		                	<button id="registerButton" class="pratilipi-dark-blue-button" onclick="register()">${ _strings.user_sign_up }</button>
 		                </div>
 		            </form>
 					<div style="text-align: center; margin-bottom: 20px;">

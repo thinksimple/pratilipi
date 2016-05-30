@@ -40,7 +40,9 @@
 					alert( "Please Enter a valid Email" );
 					return;
 				}
-				
+
+				jQuery( '#passwordResetButton' ).prop( 'disabled', true );
+
 				// Make Ajax call
 
 				$.ajax({
@@ -54,6 +56,7 @@
 					},
 					
 					success: function( response ) {
+						jQuery( '#passwordResetButton' ).prop( 'disabled', false );
 						alert( "${ _strings.password_reset_request_success }" );
 						window.location.href = "/"; 
 					},
@@ -61,7 +64,7 @@
 					error: function( response ) {
 						var message = jQuery.parseJSON( response.responseText );
 						var status = response.status;
-
+						jQuery( '#passwordResetButton' ).prop( 'disabled', false );
 						if( message["email"] != null ) 
 							alert( "Error " + status + " : " + message["email"] );
 						else if( message["message"] != null )
@@ -93,7 +96,7 @@
 		                    </div>
 		                </div>
 		                <div class="form-group" style="margin: 25px auto; text-align: center;">
-		                	<button class="pratilipi-dark-blue-button" onclick="resetPassword()">${ _strings.user_reset_password }</button>
+		                	<button id="passwordResetButton" class="pratilipi-dark-blue-button" onclick="resetPassword()">${ _strings.user_reset_password }</button>
 		                </div>
 		            </form>
 		            

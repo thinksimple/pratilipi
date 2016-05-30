@@ -101,7 +101,9 @@
 					alert( "Please Enter a valid Email" );
 					return;
 				}
-				
+
+				jQuery( '#loginButton' ).prop( 'disabled', true );
+
 				// Make Ajax call
 
 				$.ajax({
@@ -115,6 +117,7 @@
 					},
 					
 					success: function( response ) {
+						jQuery( '#loginButton' ).prop( 'disabled', false );
 						if( getUrlParameters().ret != null )
 							window.location.href = getUrlParameters().ret.replace( /%26/g, "&" );
 						else
@@ -122,6 +125,7 @@
 					},
 					
 					error: function( response ) {
+						jQuery( '#loginButton' ).prop( 'disabled', false );
 						var message = jQuery.parseJSON( response.responseText );
 						var status = response.status;
 
@@ -197,7 +201,7 @@
 		                    </div>
 		                </div>
 		                <div class="form-group" style="margin: 25px auto; text-align: center;">
-		                	<button class="pratilipi-dark-blue-button" onclick="login()">${ _strings.user_sign_in }</button>
+		                	<button id="loginButton" class="pratilipi-dark-blue-button" onclick="login()">${ _strings.user_sign_in }</button>
 		                </div>
 		            </form>
 		            
