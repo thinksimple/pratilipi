@@ -21,7 +21,7 @@
 			data: { 
 				'pratilipiId': ${ pratilipi.id?c }, 
 				'rating': rating,
-				<#-- 'reviewTitle': reviewTitle, -->
+				'reviewTitle': null,
 				'review' : review
 			},
 			
@@ -88,28 +88,15 @@
 			</div>
 		</div>
 		
-		<#--
-		    <div class="form-group">
-		        <label for="inputReviewTitle" class="col-sm-2 control-label">${ _strings.review_title }</label>
-		        <div class="col-sm-10">
-	            	<input 	name="reviewTitle" 
-	            		type="text" 
-	            		class="form-control" 
-	            		id="inputReviewTitle"
-	            		<#if userpratilipi.reviewTitle??>value="${ userpratilipi.reviewTitle }"</#if> 
-	            		placeholder="Review Title" > 
-		        </div>
-		    </div>
-	    -->
-	    
-	    <div class="form-group">
+		<div class="form-group">
 	        <label for="inputReview" class="col-sm-2 control-label">${ _strings.review_content }</label>
 	        <div class="col-sm-10">
 	            <textarea 	name="inputReview" 
 	            			type="text" 
 	            			class="form-control" 
 	            			id="inputReview" rows="10" 
-	            			placeholder="Review"><#if userpratilipi.review??>${ userpratilipi.review }</#if></textarea>
+	            			placeholder="Review"><#if review.getReviewTitle()?? >${ review.getReviewTitle() }  </#if>
+	            			<#if userpratilipi.review??>${ userpratilipi.review }</#if></textarea>
 	        </div>
 	    </div>
 	    <div class="form-group" style="margin: 25px auto; text-align: center;">
