@@ -25,8 +25,10 @@
 	<template>
 		<paper-card id="reviewcard">
 			<div class="row" style="padding: 10px;">
-				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="text-align: center; padding-top: 7px;">
-					<small><pratilipi-rating value="{{ review.rating }}" /></small>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 text-center">
+					<a href="{{ review.userProfilePageUrl }}"><span style="color: #333;">{{ review.userName }}</span></a>
+					<br/>
+					<pratilipi-rating value="{{ review.rating }}" />
 		   			<template is="dom-if" if="{{ reviewUserImageUrl }}">
 		   				<a href="{{ review.userProfilePageUrl }}">
 		   					<img class="img-circle user-dp" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>
@@ -35,13 +37,10 @@
 		   			<template is="dom-if" if="{{ !review.userImageUrl }}">
 		   				<iron-icon icon="account-circle"></iron-icon>
 		   			</template>
-		   			<a href="{{ review.userProfilePageUrl }}"><span style="color: #333;">{{ review.userName }}</span></a>
-		   			<br/>
 		   			<span>{{ reviewDateMillis }}</span>
 				</div>
 				<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-					<h4 class="pratilipi-red">{{ review.reviewTitle }}</h4>
-					<div class="review" style="text-align: justify;"></div>
+					<p style="text-align: justify; white-space:pre-wrap;">{{ reviewText }}</p>
 				</div>
 			</div>
 		</paper-card>
@@ -65,10 +64,17 @@
 					this.$.reviewcard.style.display =  'none';
 					return;
 				}
-					
-				if( this.review.review )
-					jQuery( this.querySelector( '.review' ) ).html( this.review.review );
 				
+				var reviewText = "";
+				
+				if( this.review.reviewTitle != null && this.review.reviewTitle.trim() != "" )
+					reviewText = this.review.reviewTitle + "\n\n";
+					
+				if( this.review.review != null && this.review.review.trim() != "" )
+					reviewText = reviewText + this.review.review;
+					
+				this.set( 'reviewText', reviewText );
+
 				if( this.review.userImageUrl ) {
 					if( this.review.userImageUrl.indexOf( '?' ) == -1 )
 						this.reviewUserImageUrl = this.review.userImageUrl + "?" + "width=64";

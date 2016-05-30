@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.UserReviewState;
@@ -24,6 +26,13 @@ import com.pratilipi.filter.AccessTokenFilter;
 
 public class UserPratilipiDataUtil {
 	
+	private static String convertHtmlToText( String htmlString ) {
+	    if( htmlString == null || htmlString.trim().isEmpty() )
+	        return null;
+	    htmlString = Jsoup.parse( htmlString.replaceAll( "(?i)<br[^>]*>|\\n", "LINE_BREAK" ) ).text();
+	    return htmlString.replaceAll( "LINE_BREAK", "\n" ).trim();
+	}
+
 	public static boolean hasAccessToAddUserPratilipiData( Long pratilipiId ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -62,7 +71,7 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
 		userPratilipiData.setRating( userPratilipi.getRating() );
 		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
-		userPratilipiData.setReview( userPratilipi.getReview() == null ? null : userPratilipi.getReview().replaceAll( "<[^>]*>", "" ) );
+		userPratilipiData.setReview( convertHtmlToText( userPratilipi.getReview() ) );
 		userPratilipiData.setReviewState( userPratilipi.getReviewState() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 		userPratilipiData.setAccessToReview( hasAccessToAddUserPratilipiData( userPratilipi.getPratilipiId() ) );

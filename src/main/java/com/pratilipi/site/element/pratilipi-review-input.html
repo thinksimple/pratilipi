@@ -48,9 +48,8 @@
 						</div>
 						<div style="padding-left: 15px; padding-right: 15px;" id="pratilipi-review-col-right">
 							<pratilipi-rating-input value="{{ rating }}"></pratilipi-rating-input>
-							<!-- <pratilipi-input label="${ _strings.review_title }" value="{{ reviewTitle::input }}" icon="icons:description"></pratilipi-input> -->
 							<div style="margin-top: 10px; margin-bottom: 5px; text-align: left;"><span style="font-size: 14px;">${ _strings.review_content }</span></div>
-							<paper-textarea class="pratilipi-blue" id="reviewInput" value="{{ review::input }}"></paper-textarea>
+							<textarea style="width: 100%; height: 185px;" id="reviewInput" value="{{ review::input }}"></textarea>
 						</div>
 					</div>
 				</div>
@@ -92,9 +91,6 @@
 	
 
 	<script>
-	HTMLImports.whenReady(function () {
-		tinymce.init({ selector:'#reviewInput', editor_selector : "reviewInput", height: "200", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'bold italic underline', });
-	});
 		Polymer({
 
 			is: 'pratilipi-review-input',
@@ -106,7 +102,6 @@
 				// Userpratilipi
 				pratilipiId: { type: String },
 				rating: { type: Number },
-				/* reviewTitle: { type: String }, */
 				review: { type: String },
 				reviewState: { type: String },
 				
@@ -151,11 +146,15 @@
 			process: function( userpratilipi ) {
 				this.pratilipiId = userpratilipi.pratilipiId == null ? this.pratilipi.pratilipiId : userpratilipi.pratilipiId; 
 				this.rating = userpratilipi.rating == null ? null : userpratilipi.rating;
-				/* this.reviewTitle = userpratilipi.reviewTitle == null ? null : userpratilipi.reviewTitle; */
-				this.review = userpratilipi.review == null ? "" : processContentTinyMCE( userpratilipi.review );
-				if( tinyMCE != null && tinyMCE.get( 'reviewInput' ) != null )
-					tinyMCE.get( 'reviewInput' ).setContent( this.review );
 				this.reviewState = userpratilipi.reviewState == "PUBLISHED" ? null : userpratilipi.reviewState;
+				
+				var review = "";
+				if( userpratilipi.reviewTitle != null && userpratilipi.reviewTitle.trim() != "" )
+					review = userpratilipi.reviewTitle + "\n\n";
+				if( userpratilipi.review != null && userpratilipi.review.trim() != "" )
+					review = review + userpratilipi.review;
+				
+				this.review = review;
 			},
 			
 			openReviewInput: function( userpratilipi ) {
@@ -193,9 +192,6 @@
 				this.message = "${ _strings.saving }";
 				jQuery( '#editReviewButton' ).prop( 'disabled', true );
 				
-				if( tinyMCE != null && tinyMCE.get( 'reviewInput' ) != null )
-					this.review = tinyMCE.get( 'reviewInput' ).getContent();
-				
 				var body = {
 					pratilipiId : this.pratilipiId,
 			    };
@@ -203,11 +199,10 @@
 				if( this.rating != null )
 					body.rating = this.rating;
 				
-				/* if( this.reviewTitle != null )
-					body.reviewTitle = this.reviewTitle; */
+				body.reviewTitle = null;
 				
 				if( this.review != null )
-					body.review = processContentTinyMCE( this.review );
+					body.review = this.review;
 				
 				this.$.AjaxPost.body = jQuery.param( body );
 				this.$.AjaxPost.generateRequest();
