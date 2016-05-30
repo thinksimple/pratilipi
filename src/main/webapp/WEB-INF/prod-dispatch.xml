@@ -29,12 +29,6 @@
 
 
 	<dispatch>
-		<url>*/read*</url>
-		<module>legacy</module>
-	</dispatch>
-
-
-	<dispatch>
 		<url>*/api/*</url>
 		<module>api</module>
 	</dispatch>
