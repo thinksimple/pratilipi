@@ -19,7 +19,7 @@
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-center">
 				<div style="margin: 5px auto;">
 					<#if review.getUserProfilePageUrl() ??><a href="${ review.getUserProfilePageUrl() }"></#if>
-						<h5>${ review.getUserName() }</h5>
+						<h6>${ review.getUserName() }</h6>
 					<#if review.getUserProfilePageUrl() ??></a></#if>
 					<#if review.rating?? >
 						<div style="margin: 5px auto;">
