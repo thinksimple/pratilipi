@@ -41,7 +41,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<#if review.getReviewTitle()?? >
-					<div style="margin: 10px 0px; font-size: 15px;">${ review.getReviewTitle() }</div>
+					<div style="margin-bottom: 10px; font-size: 15px;">${ review.getReviewTitle() }</div>
 				</#if>
 				<div style="text-align: justify; font-size: 15px;">${ review.review }</div>
 			</div>

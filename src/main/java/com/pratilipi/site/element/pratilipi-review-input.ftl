@@ -95,8 +95,7 @@
 	            			type="text" 
 	            			class="form-control" 
 	            			id="inputReview" rows="10" 
-	            			placeholder="Review"><#if userpratilipi.getReviewTitle()?? >${ userpratilipi.getReviewTitle() }  </#if>
-	            			<#if userpratilipi.review??>${ userpratilipi.review }</#if></textarea>
+	            			placeholder="Review"><#if userpratilipi.getReviewTitle()?? && userpratilipi.getReviewTitle()?has_content>${ userpratilipi.getReviewTitle() }  </#if><#if userpratilipi.review??>${ userpratilipi.review }</#if></textarea>
 	        </div>
 	    </div>
 	    <div class="form-group" style="margin: 25px auto; text-align: center;">
