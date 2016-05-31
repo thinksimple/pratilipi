@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.pratilipi.common.type.CommentParentType;
+import com.pratilipi.common.type.CommentState;
 import com.pratilipi.data.type.Comment;
 
 @Cache
@@ -31,7 +32,7 @@ public class CommentEntity implements Comment {
 	private String CONTENT;
 	
 	@Index
-	private Long LIKE_COUNT;
+	private CommentState STATE;
 	
 	
 	@Deprecated
@@ -130,13 +131,13 @@ public class CommentEntity implements Comment {
 	}
 	
 	@Override
-	public Long getLikeCount() {
-		return LIKE_COUNT;
+	public CommentState getState() {
+		return STATE;
 	}
 	
 	@Override
-	public void setLikeCount( Long likeCount ) {
-		this.LIKE_COUNT = likeCount;
+	public void setState( CommentState state ) {
+		this.STATE = state;
 	}
 	
 	

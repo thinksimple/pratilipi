@@ -3,6 +3,7 @@ package com.pratilipi.data.type;
 import java.util.Date;
 
 import com.pratilipi.common.type.CommentParentType;
+import com.pratilipi.common.type.CommentState;
 
 
 public interface Comment extends GenericOfyType {
@@ -31,9 +32,9 @@ public interface Comment extends GenericOfyType {
 	
 	void setContent( String content );
 	
-	Long getLikeCount();
-
-	void setLikeCount( Long count );
+	CommentState getState();
+	
+	void setState( CommentState state );
 	
 
 	Date getCreationDate();
