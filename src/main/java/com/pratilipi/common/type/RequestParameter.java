@@ -7,7 +7,10 @@ public enum RequestParameter {
 	READER_PAGE_NUMBER( "pageNo" ),
 	READER_CONTENT_ID( "id" ),
 	SEARCH_QUERY( "q" ),
-	PRATILIPI_REVIEW( "review" )
+	PRATILIPI_REVIEW( "review" ),
+	PASSWORD_RESET_EMAIL_EMAIL( "email" ),
+	PASSWORD_RESET_EMAIL_TOKEN( "token" ),
+	PASSWORD_RESET_EMAIL_FLAG( "passwordReset" )
 	;
 	
 	

@@ -166,8 +166,12 @@ public class PratilipiSite extends HttpServlet {
 			
 			} else if( basicMode && uri.equals( "/updatepassword" ) ) { // BasicMode only
 				dataModel = new HashMap<String, Object>();
-				if( request.getParameter( "email" ) != null && request.getParameter( "token" ) != null )
+				if( request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_EMAIL.getName() ) != null 
+						&& request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_TOKEN.getName() ) != null ) {
 					dataModel.put( "passwordResetFromMail", true );
+					dataModel.put( "email", request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_EMAIL.getName() ) );
+					dataModel.put( "verificationToken", request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_TOKEN.getName() ) );
+				}
 				dataModel.put( "title", "Update Password" );
 				templateName = templateFilePrefix + "PasswordUpdateBasic.ftl";
 				

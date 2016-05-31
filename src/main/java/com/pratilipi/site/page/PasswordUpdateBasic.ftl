@@ -24,16 +24,7 @@
 
 			function updatePassword() {
 			
-				<#if passwordResetFromMail??>
-					function getParameter( key ) {
-					   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
-					      return decodeURIComponent( key[1] );
-					   else
-						   return null;
-					}
-					var email = getParameter( 'email' );
-					var verificationToken = getParameter( 'token' );
-				<#else>
+				<#if !passwordResetFromMail??>
 					var password = $( '#inputPassword' ).val();
 					if( password == null || password.trim() == "" ) {
 						// Throw message - Please Enter Current Password
@@ -74,8 +65,8 @@
 
 					data: {
 						<#if passwordResetFromMail??>
-							'email' : email,
-							'verificationToken': verificationToken,
+							'email' : "${ email }",
+							'verificationToken': "${ verificationToken }",
 						<#else>
 							'password': password,
 						</#if>
