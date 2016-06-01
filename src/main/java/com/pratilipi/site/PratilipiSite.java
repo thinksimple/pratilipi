@@ -198,11 +198,11 @@ public class PratilipiSite extends HttpServlet {
 			
 			} else if( uri.equals( "/read" ) ) {
 				if( !basicMode ) {
-					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
-					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
-					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_SOCIAL.getTag() );
-					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_AV.getTag() );
-					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_EDITOR.getTag() );
+//					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
+//					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
+//					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_SOCIAL.getTag() );
+//					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_AV.getTag() );
+//					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_EDITOR.getTag() );
 				}
 
 				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) );
