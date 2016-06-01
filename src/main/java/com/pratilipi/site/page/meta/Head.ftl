@@ -10,7 +10,7 @@
 <#list resourceList as resource>
 	${ resource }
 </#list>
-<link rel='import' href='http://0.ptlp.co/resource-all/build-final.html'>
+<link rel='import' href='http://0.ptlp.co/resource-all/elements.vulcanized.html'>
 <link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?2'>
 
 <#-- Custom Stylesheet -->

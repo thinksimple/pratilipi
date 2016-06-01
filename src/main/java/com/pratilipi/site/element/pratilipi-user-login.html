@@ -13,7 +13,7 @@
 					</div>
 					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
 					<template is="dom-if" if="{{ requireAccess }}">
-						<h6 class="text-center" style="margin-bottom: 20px;">${ _strings.user_require_access }</h6>
+						<h6 class="text-center" style="margin-bottom: 20px; line-height: 20px;">${ _strings.user_require_access }</h6>
 					</template>
 					<pratilipi-facebook-login></pratilipi-facebook-login>
 					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
@@ -89,7 +89,7 @@
 				
 				this.message = null;
 
-				if( this.email == null || this.password == null || this.email.trim() == "" ) {
+				if( this.email == null || this.password == null || this.email.trim() == "" || this.password == "" ) {
 					this.message = "Please fill in the details";
 					return;
 				}
