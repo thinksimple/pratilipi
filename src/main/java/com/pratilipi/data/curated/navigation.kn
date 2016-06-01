@@ -1,6 +1,6 @@
 Navigation
-/search?q=books        ಪುಸ್ತಕಗಳು 
-/search?q=stories      ಕಥೆಗಳು 
-/search?q=poems        ಕವಿತೆಗಳು 
-/search?q=articles     ಲೇಖನಗಳು 
-/search?q=magazines    ನಿಯತಕಾಲಿಕೆಗಳು
+/books        ಪುಸ್ತಕಗಳು 
+/stories      ಕಥೆಗಳು 
+/poems        ಕವಿತೆಗಳು 
+/articles     ಲೇಖನಗಳು 
+/magazines    ನಿಯತಕಾಲಿಕೆಗಳು
