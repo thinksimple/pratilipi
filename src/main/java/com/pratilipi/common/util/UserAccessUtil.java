@@ -15,7 +15,7 @@ public class UserAccessUtil {
 	private enum Role {
 
 		GUEST			( null ),
-		MEMBER			( null,					AccessType.PRATILIPI_ADD_REVIEW ),
+		MEMBER			( null,					AccessType.PRATILIPI_ADD_REVIEW, AccessType.COMMENT_ADD ),
 
 		ADMIN			( null,					AccessType.USER_ADD, AccessType.USER_UPDATE, AccessType.PRATILIPI_LIST ),
 		ADMIN_BENGALI	( Language.BENGALI,		ADMIN_ACCESS ),

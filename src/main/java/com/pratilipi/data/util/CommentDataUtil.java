@@ -5,24 +5,51 @@ import java.util.Date;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.CommentState;
+import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.CommentData;
+import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Comment;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class CommentDataUtil {
 	
+	public static boolean hasAccessToAddCommentData( CommentData commentData ) {
+		
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.COMMENT_ADD ) )
+			return false;
+		
+		return true;
+		
+	}
+	
+	public static boolean hasAccessToUpdateCommentData( Comment comment, CommentData commentData ) {
+		
+		if( comment.getState() != CommentState.ACTIVE
+				&& comment.getState() != CommentState.DELETED )
+			return false;
+		
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		return comment.getUserId().equals( accessToken.getUserId() );
+		
+	}
+	
+	
 	public static CommentData createCommentData( Comment comment ) {
 		
-		CommentData commentData = new CommentData();
+		CommentData commentData = new CommentData( comment.getId() );
 		
 		commentData.setParentType( comment.getParentType() );
 		commentData.setParentId( comment.getParentId() );
 		commentData.setContent( comment.getContent() );
+		commentData.setState( comment.getState() );
 		commentData.setCreationDate( comment.getCreationDate() );
 		commentData.setLastUpdated( comment.getLastUpdated() );
 		
@@ -32,7 +59,7 @@ public class CommentDataUtil {
 	
 	
 	public static CommentData saveCommentData( CommentData commentData )
-			throws InvalidArgumentException {
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		_validateCommentDataForSave( commentData );
 		
@@ -41,13 +68,18 @@ public class CommentDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Comment comment = isNew ? dataAccessor.newComment() : dataAccessor.getComment( commentData.getId() );
 
+		if ( isNew && ! hasAccessToAddCommentData( commentData ) )
+			throw new InsufficientAccessException();
+		if( ! isNew && ! hasAccessToUpdateCommentData( comment, commentData ) )
+			throw new InsufficientAccessException();
+
 		
 		Gson gson = new Gson();
 
 		
 		AuditLog auditLog = dataAccessor.newAuditLogOfy();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( AccessType.COMMENT_ADD );
+		auditLog.setAccessType( isNew ? AccessType.COMMENT_ADD : AccessType.COMMENT_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( comment ) );
 
 		
@@ -55,13 +87,14 @@ public class CommentDataUtil {
 			comment.setUserId( commentData.getUserId() );
 			comment.setParentType( commentData.getParentType() );
 			comment.setParentId( commentData.getParentId() );
-			comment.setContent( commentData.getContent() );
 			comment.setCreationDate( new Date() );
-			comment.setLastUpdated( new Date() );
-		} else {
-			comment.setContent( commentData.getContent() );
-			comment.setLastUpdated( new Date() );
 		}
+
+		if( commentData.hasContent() )
+			comment.setContent( commentData.getContent() );
+		if( commentData.hasState() )
+			comment.setState( commentData.getState() );
+		comment.setLastUpdated( new Date() );
 		
 		
 		auditLog.setEventDataNew( gson.toJson( comment ) );

@@ -3,6 +3,7 @@ package com.pratilipi.data.client;
 import java.util.Date;
 
 import com.pratilipi.common.type.CommentParentType;
+import com.pratilipi.common.type.CommentState;
 
 public class CommentData {
 
@@ -17,8 +18,10 @@ public class CommentData {
 
 	
 	private String content;
+	private boolean hasContent;
 	
-	private Long likeCount;
+	private CommentState state;
+	private boolean hasState;
 	
 	
 	private Long creationDateMillis;
@@ -82,14 +85,24 @@ public class CommentData {
 
 	public void setContent( String content ) {
 		this.content = content;
+		this.hasContent = true;
 	}
 	
-	public Long getLikeCount() {
-		return likeCount;
+	public boolean hasContent() {
+		return hasContent;
 	}
 	
-	public void setLikeCount( Long likeCount ) {
-		this.likeCount = likeCount;
+	public CommentState getState() {
+		return state;
+	}
+	
+	public void setState( CommentState state ) {
+		this.state = state;
+		this.hasState = true;
+	}
+	
+	public boolean hasState() {
+		return hasState;
 	}
 	
 	
