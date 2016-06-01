@@ -119,18 +119,18 @@ public class PratilipiSite extends HttpServlet {
 			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 			resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_IRON_OVERLAY_BEHAVIOR.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_PAPER_CARD.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_PAPER_DROPDOWN_MENU.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_PAPER_ICON_BUTTON.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_PAPER_INPUT.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_PAPER_MENU.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_PAPER_MENU_BUTTON.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_PAPER_ITEM.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_PAPER_SPINNER.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_IRON_OVERLAY_BEHAVIOR.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_IRON_RESIZABLE_BEHAVIOR.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_PAPER_CARD.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_PAPER_DROPDOWN_MENU.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_PAPER_ICON_BUTTON.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_PAPER_INPUT.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_PAPER_MENU.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_PAPER_MENU_BUTTON.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_PAPER_ITEM.getTag() );
+//			resourceList.add( ThirdPartyResource.POLYMER_PAPER_SPINNER.getTag() );
 		}
 
 		

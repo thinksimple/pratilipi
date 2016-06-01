@@ -13,8 +13,7 @@ public enum ThirdPartyResource {
 
 	FONT_AWESOME( "<link rel='stylesheet' href='/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>" ),
 
-	POLYMER( "<script src='/third-party/polymer-1.0/webcomponentsjs/webcomponents-lite.js'></script>"
-		   + "<link rel='import' href='/third-party/polymer-1.0/polymer/polymer.html'>" ),
+	POLYMER( "<script src='/third-party/polymer-1.0/webcomponentsjs/webcomponents-lite.js'></script>" ),
 
 	POLYMER_IRON_A11Y_KEYS			( "<link rel='import' href='/third-party/polymer-1.0/iron-a11y-keys/iron-a11y-keys.html'>" ),
 	POLYMER_IRON_AJAX				( "<link rel='import' href='/third-party/polymer-1.0/iron-ajax/iron-ajax.html'>" ),
