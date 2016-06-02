@@ -48,13 +48,7 @@
 		<property name="STATE" direction="asc"/>
 	</datastore-index>
 
-    
-    <datastore-index kind="AUTHOR" ancestor="false" source="manual">
-		<property name="EMAIL" direction="asc"/>
-		<property name="STATE" direction="asc"/>
-		<property name="REGISTRATION_DATE" direction="asc"/>
-	</datastore-index>
-	
+
 	<datastore-index kind="AUTHOR" ancestor="false" source="manual">
 		<property name="USER_ID" direction="asc"/>
 		<property name="STATE" direction="asc"/>
