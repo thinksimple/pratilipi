@@ -1314,7 +1314,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		query = query.filter( "PARENT_TYPE", parentType );
 		query = query.filter( "PARENT_ID", parentId );
-		query = query.order( "CREATION_DATE" );
+		query = query.order( "-CREATION_DATE" );
 		
 		return new ArrayList<Comment>( query.list() );
 		
