@@ -8,17 +8,25 @@ import com.pratilipi.data.type.UserPratilipiDoc;
 
 public class PratilipiReviewsDocImpl implements PratilipiReviewsDoc {
 	
-	private List<UserPratilipiDoc> reviews;
+	private List<UserPratilipiDocImpl> reviews;
 	
 	
 	@Override
 	public List<UserPratilipiDoc> getReviews() {
-		return reviews == null ? new ArrayList<UserPratilipiDoc>( 0 ) : reviews;
+		return reviews == null
+				? new ArrayList<UserPratilipiDoc>( 0 )
+				: new ArrayList<UserPratilipiDoc>( reviews );
 	}
 	
 	@Override
 	public void setReviews( List<UserPratilipiDoc> reviews ) {
-		this.reviews = reviews == null || reviews.size() == 0 ? null : reviews;
+		if( reviews == null || reviews.size() == 0 ) {
+			this.reviews = null;
+		} else {
+			this.reviews = new ArrayList<>( reviews.size() );
+			for( UserPratilipiDoc reviewDoc : reviews )
+				this.reviews.add( (UserPratilipiDocImpl) reviewDoc );
+		}
 	}
 
 }

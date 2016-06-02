@@ -16,7 +16,7 @@ public class UserPratilipiDocImpl implements UserPratilipiDoc {
 	private String review;
 	private Long reviewDate;
 	
-	private List<CommentDoc> comments;
+	private List<CommentDocImpl> comments;
 	private List<Long> likedByUserIds;
 	
 	
@@ -74,12 +74,20 @@ public class UserPratilipiDocImpl implements UserPratilipiDoc {
 	
 	@Override
 	public List<CommentDoc> getComments() {
-		return comments == null ? new ArrayList<CommentDoc>( 0 ) : comments;
+		return comments == null
+				? new ArrayList<CommentDoc>( 0 )
+				: new ArrayList<CommentDoc>( comments );
 	}
 	
 	@Override
 	public void setComments( List<CommentDoc> comments ) {
-		this.comments = comments == null || comments.size() == 0 ? null : comments;
+		if( comments == null || comments.size() == 0 ) {
+			this.comments = null;
+		} else {
+			this.comments = new ArrayList<>( comments.size() );
+			for( CommentDoc commentDoc : comments )
+				this.comments.add( (CommentDocImpl) commentDoc );
+		}
 	}
 
 	@Override

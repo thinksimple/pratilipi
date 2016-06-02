@@ -32,12 +32,14 @@ public class DocAccessorImpl implements DocAccessor {
 
 	
 	// UserPratilipi Doc
+	
 	public UserPratilipiDoc newUserPratilipiDoc() {
 		return new UserPratilipiDocImpl();
 	}
 	
 	
 	// Comment Doc
+	
 	public CommentDoc newCommentDoc() {
 		return new CommentDocImpl();
 	}
