@@ -2,6 +2,7 @@ package com.pratilipi.data.util;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -129,6 +130,12 @@ public class UserDataUtil {
 
 	
 	public static UserData createUserData( User user ) {
+		return createUserData(
+				user,
+				DataAccessorFactory.getDataAccessor().getAuthorByUserId( user.getId() ) );
+	}
+	
+	public static UserData createUserData( User user, Author author ) {
 		
 		if( user == null )
 			return null;
@@ -142,7 +149,6 @@ public class UserDataUtil {
 		userData.setState( user.getState() );
 		userData.setSignUpDate( user.getSignUpDate() );
 		
-		Author author = dataAccessor.getAuthorByUserId( user.getId() );
 		if( author != null ) {
 			Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
 			userData.setFirstName( author.getFirstName() != null ? author.getFirstName() : author.getFirstNameEn() );
@@ -156,6 +162,18 @@ public class UserDataUtil {
 		
 		return userData;
 		
+	}
+	
+	public static Map<Long, UserData> createUserDataList( List<Long> userIdList ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Map<Long, User> userMap = dataAccessor.getUsers( userIdList );
+		Map<Long, Author> authorMap = new HashMap<>( userIdList.size() );
+		for( Long userId : userIdList )
+			authorMap.put( userId, dataAccessor.getAuthorByUserId( userId ) ); // TODO: optimize on DataAccessor calls
+		Map<Long, UserData> userDataList = new HashMap<>( userIdList.size() );
+		for( Long userId : userIdList )
+			userDataList.put( userId, createUserData( userMap.get( userId ), authorMap.get( userId ) ) );
+		return userDataList;
 	}
 
 	
@@ -566,6 +584,7 @@ public class UserDataUtil {
 		User user = dataAccessor.getUserByEmail( email );
 		if( user == null )
 			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
+		
 		String verificationToken = getNextToken( user.getVerificationToken() );
 		if( ! verificationToken.equals( user.getVerificationToken() ) ) {
 			user.setVerificationToken( verificationToken );

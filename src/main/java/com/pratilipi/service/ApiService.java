@@ -8,6 +8,7 @@ import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.comment.CommentApi;
+import com.pratilipi.api.impl.comment.CommentListApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventBannerApi;
 import com.pratilipi.api.impl.event.EventListApi;
@@ -68,6 +69,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( UserAuthorFollowApi.class );			// *.pratilipi.com
 
 		ApiRegistry.register( CommentApi.class );					// *.pratilipi.com
+		ApiRegistry.register( CommentListApi.class );				// *.pratilipi.com
 		
 		ApiRegistry.register( MailingListSubscribeApi.class );		// *.pratilipi.com
 		

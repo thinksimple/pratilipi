@@ -11,6 +11,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
 import com.pratilipi.data.client.CommentData;
+import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.CommentDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 
@@ -35,6 +36,39 @@ public class CommentApi extends GenericApi {
 		
 	}
 	
+	@SuppressWarnings("unused")
+	public static class Response extends GenericResponse {
+		
+		private Long commentId;
+		
+		private Long userId;
+		private UserData user;
+		
+		private CommentParentType parentType;
+		private String parentId;
+		
+		private String content;
+		private CommentState state;
+		
+		private Long creationDateMillis;
+		private Long lastUpdatedMillis;
+		
+		
+		Response( CommentData commentData ) {
+			this.commentId = commentData.getId();
+			this.userId = commentData.getUserId();
+			this.user = commentData.getUser();
+			this.parentType = commentData.getParentType();
+			this.parentId = commentData.getParentId();
+			this.content = commentData.getContent();
+			this.state = commentData.getState();
+			this.creationDateMillis = commentData.getCreationDate().getTime();
+			this.lastUpdatedMillis = commentData.getLastUpdated().getTime();
+		}
+		
+	}
+	
+	
 	@Post
 	public GenericResponse post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
@@ -56,7 +90,7 @@ public class CommentApi extends GenericApi {
 		
 		commentData = CommentDataUtil.saveCommentData( commentData );
 		
-		return new GenericResponse();
+		return new Response( commentData );
 		
 	}
 	

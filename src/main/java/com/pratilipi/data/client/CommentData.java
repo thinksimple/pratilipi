@@ -11,6 +11,7 @@ public class CommentData {
 	
 	
 	private Long userId;
+	private UserData user;
 	
 	private CommentParentType parentType;
 	
@@ -54,6 +55,14 @@ public class CommentData {
 		this.userId = userId;
 	}
 
+	public UserData getUser() {
+		return user;
+	}
+	
+	public void setUser( UserData user ) {
+		this.user = user;
+	}
+	
 	public CommentParentType getParentType() {
 		return parentType;
 	}
