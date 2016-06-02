@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.impl.init.shared.GetInitRequest;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PageType;
@@ -32,8 +32,32 @@ public class InitApi extends GenericApi {
 	private static final Logger logger =
 			Logger.getLogger( InitApi.class.getName() );
 
+	
+	public static class GetRequest extends GenericRequest {
+
+		private Long pratilipiId;
+		private Integer year;
+		private Integer month;
+		private Integer day;
+
+		
+		public Integer getYear() {
+			return year;
+		}
+		
+		public Integer getMonth() {
+			return month;
+		}
+
+		public Integer getDay() {
+			return day;
+		}
+		
+	}
+
+	
 	@Get
-	public GenericResponse get( GetInitRequest request ) throws UnexpectedServerException {
+	public GenericResponse get( GetRequest request ) throws UnexpectedServerException {
 		
 /*		
 		List<Long> authorIdList = DataAccessorFactory.getDataAccessor()
@@ -103,6 +127,7 @@ public class InitApi extends GenericApi {
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 */
 		
+		PratilipiDocUtil.updatePratilipiReviews( request.pratilipiId );
 		
 		return new GenericResponse();
 		
