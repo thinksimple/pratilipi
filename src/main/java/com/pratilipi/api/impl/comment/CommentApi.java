@@ -63,7 +63,9 @@ public class CommentApi extends GenericApi {
 			this.content = commentData.getContent();
 			this.state = commentData.getState();
 			this.creationDateMillis = commentData.getCreationDate().getTime();
-			this.lastUpdatedMillis = commentData.getLastUpdated().getTime();
+			this.lastUpdatedMillis = commentData.getLastUpdated() == null
+					? null
+					: commentData.getLastUpdated().getTime();
 		}
 		
 	}

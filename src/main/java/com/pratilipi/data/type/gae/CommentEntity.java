@@ -7,6 +7,7 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
 import com.pratilipi.data.type.Comment;
@@ -52,7 +53,7 @@ public class CommentEntity implements Comment {
 	@Index
 	private Date CREATION_DATE;
 
-	@Index
+	@Index( IfNotNull.class )
 	private Date LAST_UPDATED;
 
 	
