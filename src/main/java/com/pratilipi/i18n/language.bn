@@ -196,7 +196,7 @@ footer_blog			=  ব্লগ
 footer_privacy_policy		=  গোপনীয়তা নীতি
 footer_terms_of_service	=  পরিষেবার শর্ত
 footer_contact_email		= contact@pratilipi.com
-footer_contact_10_digit_number		=  9374724060
+footer_contact_10_digit_number		= (+91)9374724060
 
 
 
@@ -303,19 +303,19 @@ remove_from_library	= লাইব্রেরী থেকে বহির্�
 empty_library		= খালি লাইব্রেরী=ক্ষমা করবেন, আপনার লাইব্রেরী এই মুহুর্তে শূন্য। আপনি রোমাঞ্চক কাহিনী এখানে এড করতে পারেন।
 
 # Reader
-reader_goto_content_page	= Go to Content Page
-reader_goto_author_profile = Go to Author's page
-reader_goto_home_page	= Go to Home Page
-share_on_facebook		= Share on Facebook
-share_on_twitter		= Share on Twitter
-share_on_gplus			= Share on Google Plus
-increase_font_size		= Increase font size
-decrease_font_size		= Decrease font size
-increase_image_size		= Increase image size
-decrease_image_size		= Decrease image size
+reader_goto_content_page	= মূল রচনার পেজে যান
+reader_goto_author_profile = লেখকের পেজে যান
+reader_goto_home_page	= হোমপেজে যান
+share_on_facebook		= ফেসবুকে শেয়ার করুন
+share_on_twitter		=  টুইটারে শেয়ার করুন
+share_on_gplus			= গুগল প্লাসে শেয়ার করুন
+increase_font_size		= ফন্টের আকার বাড়ান
+decrease_font_size		=  ফন্টের আকার ছোট করুন
+increase_image_size		= ছবির আকার বড় করুন
+decrease_image_size		= ছবির আকার ছোট করুন
 
 
 # Enjoyed Reading the content? Write a review or Share it on
-reader_enjoyed_reading_part1	= Enjoyed reading the content? 
-reader_enjoyed_review_book		= Write a review
-reader_enjoyed_reading_part2	= Share it on
+reader_enjoyed_reading_part1	= রচনাটি পাঠ করে আনন্দ উপভোগ করুন
+reader_enjoyed_review_book		= রিভিউ লিখুন
+reader_enjoyed_reading_part2	= এটি শেয়ার করুন
