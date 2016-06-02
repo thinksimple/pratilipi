@@ -5,6 +5,11 @@
 		<url>*/write*</url>
 		<module>legacy</module>
 	</dispatch>
+	
+	<dispatch>
+		<url>*/filebrowser*</url>
+		<module>legacy</module>
+	</dispatch>
 
 	<dispatch>
 		<url>*/api.pratilipi/*</url>
