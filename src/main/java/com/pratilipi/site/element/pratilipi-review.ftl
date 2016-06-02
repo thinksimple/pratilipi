@@ -43,7 +43,9 @@
 				<#if review.getReviewTitle()?? && review.getReviewTitle()?has_content>
 					<div style="margin-bottom: 10px; font-size: 15px;">${ review.getReviewTitle() }</div>
 				</#if>
-				<div style="text-align: justify; font-size: 15px;">${ review.review }</div>
+				<#if review.getReview()?? && review.getReview()?has_content>
+					<div style="text-align: justify; font-size: 15px;">${ review.getReview() }</div>
+				</#if>
 			</div>
 		</div>
 	</div>
