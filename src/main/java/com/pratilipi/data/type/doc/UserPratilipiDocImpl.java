@@ -14,7 +14,7 @@ public class UserPratilipiDocImpl implements UserPratilipiDoc {
 	
 	private Integer rating;
 	private String review;
-	private Long reviewDateMillis;
+	private Long reviewDate;
 	
 	private List<CommentDoc> comments;
 	private List<Long> likedByUserIds;
@@ -63,12 +63,12 @@ public class UserPratilipiDocImpl implements UserPratilipiDoc {
 	
 	@Override
 	public Date getReviewDate() {
-		return reviewDateMillis == null ? null : new Date( reviewDateMillis );
+		return reviewDate == null ? null : new Date( reviewDate );
 	}
 
 	@Override
 	public void setReviewDate( Date reviewDate ) {
-		this.reviewDateMillis = reviewDate == null ? null : reviewDate.getTime();
+		this.reviewDate = reviewDate == null ? null : reviewDate.getTime();
 	}
 
 	

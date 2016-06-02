@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.GoogleAnalyticsApi;
 import com.pratilipi.data.BlobAccessor;
@@ -20,8 +21,13 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.BlobEntry;
+import com.pratilipi.data.type.Comment;
+import com.pratilipi.data.type.CommentDoc;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
+import com.pratilipi.data.type.PratilipiReviewsDoc;
+import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.UserPratilipiDoc;
 
 
 public class PratilipiDocUtil {
@@ -30,7 +36,52 @@ public class PratilipiDocUtil {
 			Logger.getLogger( PratilipiDocUtil.class.getName() );
 	
 	
-	public static List<Long> updatePratilipiGoogleAnalyticsPageViews( int year, int month, int day )
+	public static void updatePratilipiReviews( Long pratilipiId ) throws UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		
+		List<UserPratilipi> reviewList = dataAccessor.getPratilipiReviewList( pratilipiId, null, null, null ).getDataList();
+		List<UserPratilipiDoc> reviewDocList = new ArrayList<>( reviewList.size() );
+		
+		for( UserPratilipi review : reviewList ) {
+			
+			UserPratilipiDoc reviewDoc = docAccessor.newUserPratilipiDoc();
+			reviewDoc.setUserId( review.getUserId() );
+			reviewDoc.setRating( review.getRating() );
+			reviewDoc.setReview( review.getReview() );
+			reviewDoc.setReviewDate( review.getReviewDate() );
+			
+			// TODO: Add liked by UserIds
+			
+			List<Comment> commentList = dataAccessor.getCommentList( CommentParentType.REVIEW, review.getId() );
+			List<CommentDoc> commentDocList = new ArrayList<>( commentList.size() );
+			for( Comment comment : commentList ) {
+				CommentDoc commentDoc = docAccessor.newCommentDoc();
+				commentDoc.setId( comment.getId() );
+				commentDoc.setUserId( comment.getUserId() );
+				commentDoc.setContent( comment.getContent() );
+				commentDoc.setCreationDate( comment.getCreationDate() );
+				commentDoc.setLastUpdated( comment.getLastUpdated() );
+			
+				// TODO: Add liked by UserIds
+				
+				commentDocList.add( commentDoc );
+			}
+			reviewDoc.setComments( commentDocList );
+			
+			reviewDocList.add( reviewDoc );
+			
+		}
+		
+		PratilipiReviewsDoc reviewsDoc = docAccessor.getPratilipiReviewsDoc( pratilipiId );
+		reviewsDoc.setReviews( reviewDocList );
+		docAccessor.save(pratilipiId, reviewsDoc );
+		
+	}
+	
+	
+ 	public static List<Long> updatePratilipiGoogleAnalyticsPageViews( int year, int month, int day )
 			throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

@@ -5,6 +5,11 @@ import java.util.List;
 
 public interface CommentDoc {
 	
+	Long getId();
+	
+	void setId( Long commentId );
+	
+	
 	Long getUserId();
 	
 	void setUserId( Long userId );
@@ -14,9 +19,13 @@ public interface CommentDoc {
 	
 	void setContent( String content );
 	
-	Date getDate();
+	Date getCreationDate();
 	
-	void setDate( Date date );
+	void setCreationDate( Date date );
+
+	Date getLastUpdated();
+	
+	void setLastUpdated( Date date );
 
 	
 	List<Long> getLikedByUserIds();

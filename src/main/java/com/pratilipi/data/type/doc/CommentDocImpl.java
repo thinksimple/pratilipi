@@ -8,14 +8,26 @@ import com.pratilipi.data.type.CommentDoc;
 
 public class CommentDocImpl implements CommentDoc {
 	
+	private Long id;
 	private Long userId;
 	
 	private String content;
-	private Long dateMillis;
+	private Long creationDate;
+	private Long lastUpdated;
 	
 	private List<Long> likedByUserIds;
 	
 	
+	@Override
+	public Long getId() {
+		return id;
+	}
+
+	@Override
+	public void setId( Long commentId ) {
+		this.id = commentId;
+	}
+
 	@Override
 	public Long getUserId() {
 		return userId;
@@ -38,13 +50,23 @@ public class CommentDocImpl implements CommentDoc {
 	}
 	
 	@Override
-	public Date getDate() {
-		return dateMillis == null ? null : new Date( dateMillis );
+	public Date getCreationDate() {
+		return creationDate == null ? null : new Date( creationDate );
 	}
 
 	@Override
-	public void setDate( Date date ) {
-		this.dateMillis = date == null ? null : date.getTime();
+	public void setCreationDate( Date date ) {
+		this.creationDate = date == null ? null : date.getTime();
+	}
+
+	@Override
+	public Date getLastUpdated() {
+		return lastUpdated == null ? null : new Date( lastUpdated );
+	}
+
+	@Override
+	public void setLastUpdated( Date date ) {
+		this.lastUpdated = date == null ? null : date.getTime();
 	}
 
 	

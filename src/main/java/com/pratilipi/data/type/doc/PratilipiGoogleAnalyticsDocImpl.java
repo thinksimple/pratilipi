@@ -16,12 +16,14 @@ public class PratilipiGoogleAnalyticsDocImpl implements PratilipiGoogleAnalytics
 	
 	private Map<Integer, YearlyPageViews> pageViews = new HashMap<>();
 	private Map<Integer, YearlyPageViews> readPageViews = new HashMap<>();
+	private Long lastUpdated;
+	@Deprecated
 	private Long lastUpdatedMillis;
 	
 
 	@Override
 	public int getPageViews( int year, int month, int day ) {
-		return _getPageViews( pageViews, year, month, day);
+		return _getPageViews( pageViews, year, month, day );
 	}
 	
 	@Override
@@ -32,7 +34,7 @@ public class PratilipiGoogleAnalyticsDocImpl implements PratilipiGoogleAnalytics
 	@Override
 	public void setPageViews( int year, int month, int day, int count ) {
 		_setPageViews( pageViews, year, month, day, count );
-		lastUpdatedMillis = new Date().getTime();
+		lastUpdated = new Date().getTime();
 	}
 
 	
@@ -48,11 +50,11 @@ public class PratilipiGoogleAnalyticsDocImpl implements PratilipiGoogleAnalytics
 	@Override
 	public void setReadPageViews( int year, int month, int day, int count ) {
 		_setPageViews( readPageViews, year, month, day, count );
-		lastUpdatedMillis = new Date().getTime();
+		lastUpdated = new Date().getTime();
 	}
 	
 
-	public int _getPageViews( Map<Integer, YearlyPageViews> yearlyPageViewsMap, int year, int month, int day ) {
+	private int _getPageViews( Map<Integer, YearlyPageViews> yearlyPageViewsMap, int year, int month, int day ) {
 		YearlyPageViews yearlyPageViews = yearlyPageViewsMap.get( year );
 		if( yearlyPageViews == null )
 			return 0;
@@ -188,7 +190,11 @@ public class PratilipiGoogleAnalyticsDocImpl implements PratilipiGoogleAnalytics
 	
 	@Override
 	public Date getLastUpdated() {
-		return lastUpdatedMillis == null ? new Date( 0 ) : new Date( lastUpdatedMillis );
+		if( lastUpdated == null ) {
+			lastUpdated = lastUpdatedMillis;
+			lastUpdatedMillis = null;
+		}
+		return lastUpdated == null ? new Date( 0 ) : new Date( lastUpdated );
 	}
 	
 }

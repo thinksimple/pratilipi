@@ -1,5 +1,6 @@
 package com.pratilipi.data.type.doc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pratilipi.data.type.PratilipiReviewsDoc;
@@ -12,12 +13,12 @@ public class PratilipiReviewsDocImpl implements PratilipiReviewsDoc {
 	
 	@Override
 	public List<UserPratilipiDoc> getReviews() {
-		return reviews;
+		return reviews == null ? new ArrayList<UserPratilipiDoc>( 0 ) : reviews;
 	}
 	
 	@Override
 	public void setReviews( List<UserPratilipiDoc> reviews ) {
-		this.reviews = reviews;
+		this.reviews = reviews == null || reviews.size() == 0 ? null : reviews;
 	}
 
 }
