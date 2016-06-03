@@ -1,4 +1,5 @@
-Navigation
+ಪ್ರಕಾರಗಳು 
+
 /books        ಪುಸ್ತಕಗಳು 
 /stories      ಕಥೆಗಳು 
 /poems        ಕವಿತೆಗಳು 
@@ -6,13 +7,13 @@ Navigation
 /magazines    ನಿಯತಕಾಲಿಕೆಗಳು
 
 
-categories    ಪ್ರಭೇದಗಳು 
+ಪ್ರಭೇದಗಳು 
 
-/Spiritual/Mysticism       ಆಧ್ಯಾತ್ಮ/ಅನುಭಾವ 
-/Love/Relationships        ಪ್ರೀತಿ/ಸಂಬಂಧಗಳು 
-/Society                   ಸಮಾಜ 
-/Politics                  ರಾಜಕೀಯ 
-/Cinema/Drama              ಸಿನಿಮಾ/ನಾಟಕ  
-/Gender/Feminism           ಲಿಂಗ/ಸ್ತ್ರೀವಾದ 
-/Satire                    ವಿಡಂಬನೆ 
+/Spiritual  ಅನುಭಾವ 
+/Love       ಪ್ರೀತಿ
+/Society    ಸಮಾಜ 
+/Politics   ರಾಜಕೀಯ 
+/Cinema     ಸಿನಿಮಾ
+/Gender     ಲಿಂಗ
+/Satire     ವಿಡಂಬನೆ 
 
