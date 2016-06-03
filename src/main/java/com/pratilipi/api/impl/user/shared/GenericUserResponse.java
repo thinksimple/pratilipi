@@ -16,6 +16,7 @@ public class GenericUserResponse extends GenericResponse {
 	private Boolean isEmailVerified;
 	
 	private String profilePageUrl;
+	private String profileImageUrl;
 
 	
 	public GenericUserResponse( UserData userData ) {
@@ -26,6 +27,7 @@ public class GenericUserResponse extends GenericResponse {
 		this.isGuest = userData.getState() == UserState.GUEST;
 		this.isEmailVerified = userData.getState() == UserState.ACTIVE;
 		this.profilePageUrl = userData.getProfilePageUrl();
+		this.profileImageUrl = userData.getProfileImageUrl();
 	}
 	
 	
@@ -57,6 +59,10 @@ public class GenericUserResponse extends GenericResponse {
 
 	public String getProfilePageUrl() {
 		return profilePageUrl;
+	}
+	
+	public String getImagePageUrl() {
+		return profileImageUrl;
 	}
 	
 }
