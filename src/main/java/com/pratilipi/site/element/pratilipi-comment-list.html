@@ -119,11 +119,6 @@
 				<#-- Disable spinner -->
 				this.isLoading = false;
 				
-				var commentList = event.commentList;
-				for( var i = 0; i < commentList.length; i++ )
-					this.push( 'commentList', commentList[i] );
-					
-				
 				<#-- Call failed -->
 				if( event.detail.xhr.status == 0 )
 					return;
