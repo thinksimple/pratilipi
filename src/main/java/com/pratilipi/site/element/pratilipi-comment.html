@@ -1,0 +1,172 @@
+<dom-module id="pratilipi-comment">
+
+	<style>
+		.comment {
+			padding: 12px 0px 12px 8px;
+			border-top: 1px solid #d3d3d3;
+		}
+		
+		.user-dp {
+			width: 48px; 
+			height: 48px; 
+			float: left; 
+		}
+		
+		.user-name {
+			color: #333; 
+			text-transform: capitalize; 
+			display: inline-block; 
+			margin: 0px;
+			font-size: 15px;
+		}
+		
+		.comment-text {
+			font-size: 14px;
+			text-align: justify; 
+			white-space:pre-wrap;
+			padding: 16px 0px 4px 4px;
+		}
+		
+		paper-menu-button {
+			padding: 0px;
+		}
+		
+		paper-menu {
+			cursor: pointer;
+			--paper-menu-color: #333;
+			--paper-menu-focused-item: {
+				color: #107FE5;
+			};
+		}
+		
+		paper-item {
+			font-family: inherit;
+			font-size: inherit;
+		}
+		
+	</style>
+	
+	<template>
+		<div class="comment">
+			<template is="dom-if" if="{{ hasAccessToUpdate }}">
+				<paper-menu-button horizontal-align="right" class="pull-right">
+					<paper-icon-button class="dropdown-trigger" icon="icons:more-horiz" noink></paper-icon-button>
+						<paper-menu class="dropdown-content">
+							<paper-item on-click="openCommentEdit">${ _strings.comment_edit_comment }</paper-item>
+							<paper-item on-click="deleteComment">${ _strings.comment_delete_comment }</paper-item>
+						</paper-menu>
+				</paper-menu-button>
+			</template>
+			
+			<div class="user-details">
+				<a href="/">
+					<img class="img-circle user-dp pratilipi-shadow" src="{{ userProfileImageUrl }}" alt="username" title="username"/>
+				</a>
+				<div style="display: inline-block; margin-left: 16px;">
+					<a class="user-name" href="/">{{ comment.user.displayName }}</a>
+					<span style="display: block;">{{ lastUpdatedDate }}</span>
+				</div>
+			</div>
+			
+			<div class="comment-text">{{ content }}</div>
+			
+		</div>
+		
+		<pratilipi-comment-input 	
+					style="display: none;"
+					edit-comment
+					user="{{ comment.user }}" 
+					comment-id="{{ comment.commentId }}" 
+					content="{{ content }}"></pratilipi-comment-input>
+		
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/comment"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
+	</template>
+	
+
+	<script>
+	
+		Polymer({
+
+			is: 'pratilipi-comment',
+			
+			properties: {
+				comment: { type: Object, observer: "_commentObserver" }
+			},
+			
+			_commentObserver: function() {
+				this.lastUpdatedDate = convertDate( this.comment.lastUpdatedMillis != null ? 
+											this.comment.lastUpdatedMillis : this.comment.creationDateMillis );
+				this.userProfileImageUrl = 	this.comment.user.profileImageUrl.indexOf( "?" ) == -1 ?
+											this.comment.user.profileImageUrl + "?" + "width=48" :
+											this.comment.user.profileImageUrl + "&" + "width=48" ;
+				
+				this.hasAccessToUpdate = this.comment.hasAccessToUpdate == null ? false : this.comment.hasAccessToUpdate;
+				this.content = this.comment.content;
+			},
+			
+			openCommentEdit: function() {
+				jQuery( this.querySelector( '.comment' ) ).css( 'display', 'none' );
+				jQuery( this.querySelector( 'pratilipi-comment-input' ) ).css( 'display', 'block' );
+			},
+			
+			closeCommentEdit: function() {
+				jQuery( this.querySelector( 'pratilipi-comment-input' ) ).css( 'display', 'none' );
+				jQuery( this.querySelector( '.comment' ) ).css( 'display', 'block' );
+			},
+			
+			editExistingComment: function( content ) {
+				var body = {
+					commentId: this.comment.commentId,
+					content: content
+				};
+				this.$.AjaxPost.body = jQuery.param( body );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			deleteComment: function() {
+				var body = {
+					commentId: this.comment.commentId,
+					state: "DELETED"
+				};
+				this.$.AjaxPost.body = jQuery.param( body );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			restoreComment: function() {
+				var body = {
+					commentId: this.comment.commentId,
+					state: "ACTIVE"
+				};
+				this.$.AjaxPost.body = jQuery.param( body );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			_handleAjaxPostResponse: function( event ) {
+				var comment = event.detail.response;
+				if( comment.state == "ACTIVE" ) {
+					this.set( 'comment', comment );
+				} else if( comment.state == "DELETED" ){
+					document.querySelector( 'pratilipi-comment-list#comment-'+ this.parentId ).deleteCommentFromList( comment );
+				}
+			},
+			
+			_handleAjaxPostError: function( event ) {
+				if( event.detail.request.xhr.response.message != null )
+					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
+				else
+					document.querySelector( 'pratilipi-alert' ).alert( "Some error occured! Please try again!", false );
+			}
+
+		});
+		
+	</script>
+
+</dom-module>

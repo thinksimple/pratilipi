@@ -6,23 +6,53 @@
 			display: block;
 		}
 		
-		paper-card {
+		paper-card#reviewcard {
 			width: 100%;
-			padding: 10px;
+			margin-bottom: 5px;
+			padding: 20px;
 		}
 		
-		iron-icon, .user-dp {
+		.user-name {
+			color: #333; 
+			text-transform: capitalize; 
+			display: inline-block; 
+			margin: 0px;
+			font-size: 15px;
+		}
+		
+		.user-dp {
 			width: 64px; 
 			height: 64px; 
-			display: block; 
-			margin: 10px auto;
-			color: #989898;
+			float: left; 
 		}
 
 		.reviewText {
 			text-align: justify; 
 			white-space:pre-wrap; 
 			font-size: 15px;
+			margin: 16px 0px 16px 8px;
+		}
+		
+		a.reply-text {
+			margin-right: 16px;
+			font-size: 15px;
+		}
+		
+		a.reply-text iron-icon {
+			margin-top: -4px; 
+		}
+		
+		a.expand-comments {
+			font-size: 15px;
+			color: #333;
+		}
+		
+		a.expand-comments iron-icon {
+			margin-left: -4px;
+		}
+		
+		.reply-section {
+			margin-bottom: 16px;
 		}
 
 	</style>
@@ -30,25 +60,35 @@
 	
 	<template>
 		<paper-card id="reviewcard">
-			<div class="row" style="padding: 10px;">
-				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 text-center">
-					<a href="{{ review.userProfilePageUrl }}"><span style="color: #333;">{{ review.userName }}</span></a>
-					<br/>
-					<pratilipi-rating value="{{ review.rating }}" />
-		   			<template is="dom-if" if="{{ reviewUserImageUrl }}">
-		   				<a href="{{ review.userProfilePageUrl }}">
-		   					<img class="img-circle user-dp" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>
-		   				</a>
-		   			</template>
-		   			<template is="dom-if" if="{{ !review.userImageUrl }}">
-		   				<iron-icon icon="account-circle"></iron-icon>
-		   			</template>
-		   			<span>{{ reviewDateMillis }}</span>
-				</div>
-				<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-					<p class="reviewText">{{ reviewText }}</p>
-				</div>
+			<div>
+   				<a href="{{ review.userProfilePageUrl }}">
+   					<img class="img-circle user-dp pratilipi-shadow" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>
+   				</a>
+   				<div style="display: inline-block; margin-left: 16px;">
+   					<a class="user-name" href="{{ review.userProfilePageUrl }}">{{ review.userName }}</a>
+	   				<pratilipi-rating value="{{ review.rating }}" />
+	   				<span style="display: block;">{{ reviewDateMillis }}</span>
+   				</div>
 			</div>
+			<div class="reviewText">{{ reviewText }}</div>
+			<#--
+			<div class="reply-section">
+				<a class="reply-text pratilipi-red" on-click="writeComment">
+					<iron-icon icon="icons:reply"></iron-icon>
+					${ _strings.comment_reply_comment }
+				</a>
+				<a class="expand-comments" on-click="showOrHideComments">
+					${ _strings.comment_see_all_comments }
+					<iron-icon icon="{{ expandedIcon }}"></iron-icon>
+				</a>
+			</div>
+			
+			<pratilipi-comment-list
+				id="comment-{{ review.userPratilipiId }}"
+				user="{{ user }}"
+				parent-id="{{ review.userPratilipiId }}"
+				parent-type="REVIEW"></pratilipi-comment-list>
+			-->
 		</paper-card>
 	</template>
 	
@@ -60,7 +100,10 @@
 			is: 'pratilipi-review',
 			
 			properties: {
-				review: { type: Object, observer: "ready" }
+				user: { type: Object },
+				review: { type: Object, observer: "ready" },
+				
+				expandedIcon: { type: String, value: "icons:arrow-drop-down" }
 			},
 			
 			ready: function() {
@@ -90,6 +133,19 @@
 				
 				if( this.review.reviewDateMillis )
 					this.reviewDateMillis = convertDate( this.review.reviewDateMillis );
+			},
+			
+			writeComment: function() {
+				this.querySelector( 'pratilipi-comment-list' ).writeComment();
+				this.expandedIcon = "icons:arrow-drop-up";
+			},
+			
+			showOrHideComments: function() {
+				this.querySelector( 'pratilipi-comment-list' ).showOrHideComments( this.review.userPratilipiId );
+				if( this.expandedIcon == "icons:arrow-drop-down" )
+					this.expandedIcon = "icons:arrow-drop-up";
+				else
+					this.expandedIcon = "icons:arrow-drop-down";
 			}
 
 		});

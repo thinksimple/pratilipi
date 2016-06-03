@@ -1,0 +1,157 @@
+<#include "pratilipi-comment.html">
+<#include "pratilipi-comment-input.html">
+
+<dom-module id="pratilipi-comment-list">
+
+	<style>
+		.collapse {
+			min-height: 64px;
+		}
+		.comment-list {
+			padding-left: 24px;
+		}
+		.comments-loaded {
+			border-left: 1px solid #d3d3d3;
+			display: none;
+		}
+		paper-spinner.pratilipi-spinner {
+			display: block;
+			margin: 0px auto 12px auto;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
+	</style>
+	
+	<template>
+		<div class="comment-list">
+			<div id="collapse" class="collapse">
+				<div class="comments-loaded">
+					<template is="dom-repeat" items="{{ commentList }}" as="comment">
+						<pratilipi-comment comment="{{ comment }}"></pratilipi-comment>
+					</template>
+				</div>
+				<template is="dom-if" if="{{ isLoading }}">
+					<paper-spinner class="pratilipi-spinner" active></paper-spinner>
+				</template>
+				<pratilipi-comment-input
+						id="add-comment"
+						add-comment
+						user="{{ user }}"
+						parent-id="{{ parentId }}"
+						parent-type="{{ parentType }}"></pratilipi-comment-input>
+			</div>
+		</div>
+		<iron-ajax
+				id="AjaxGet"
+				url="/api/comment/list"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleAjaxGetResponse"
+				on-error="_handleAjaxGetError"
+				></iron-ajax>
+	</template>
+
+
+	<script>
+
+		Polymer({
+			
+			is: 'pratilipi-comment-list',
+			
+			properties: {
+				user: { type: Object },
+				parentId: { type: Number },
+				parentType: { type: String },
+				cursor: { type: String, value: null },
+				resultCount: { type: Number },
+				
+				commentList: { type: Array, value: [] },
+				isLoading: { type: Boolean, value: false },
+				isFinished: { type: Boolean, value: false }
+			},
+			
+			writeComment: function() {
+				jQuery( this.querySelector( "#collapse" ) ).collapse( 'show' );
+				if( ! this.isFinished )
+					this.loadComments();
+				this.querySelector( 'pratilipi-comment-input#add-comment' ).focusTextarea();
+			},
+			
+			showOrHideComments: function( reviewId ) {
+				jQuery( this.querySelector( "#collapse" ) ).collapse( 'toggle' );
+				
+				if( ! this.isFinished )
+					this.loadComments();
+			},
+			
+			addCommentToList: function( comment ) {
+				this.push( 'commentList', comment );
+			},
+			
+			deleteCommentFromList: function( comment ) {
+				// Removing user's review from review list.
+				var index = -1;
+				for( var i = 0; i < this.commentList.length; i++ ) {
+					if( comment.commentId == this.commentList[i].commentId ) {
+						this.splice( 'commentList', i, 1 );
+						break;
+					}
+				}
+			},
+			
+			loadComments: function() {
+				
+				if( this.isFinished || this.isLoading )
+					return;
+				
+				this.isLoading = true;
+				this.$.AjaxGet.params.parentId = this.parentId;
+				this.$.AjaxGet.params.parentType = this.parentType;
+				this.$.AjaxGet.params.cursor = this.cursor;
+				this.$.AjaxGet.generateRequest();
+			},
+			
+			_handleAjaxGetResponse: function( event ) {
+				
+				<#-- Disable spinner -->
+				this.isLoading = false;
+				
+				var commentList = event.commentList;
+				for( var i = 0; i < commentList.length; i++ )
+					this.push( 'commentList', commentList[i] );
+					
+				
+				<#-- Call didn't succeed. -->
+				if( event.detail.xhr.status == 0 )
+					return;
+				
+				var commentList = event.detail.response.commentList;
+				for( var i = 0; i < commentList.length; i++ )
+					this.push( 'commentList', commentList[i] );
+
+				<#-- if( event.detail.response.cursor == null || commentList.length < 20 )
+					this.isFinished = true;
+				else
+					this.cursor = event.detail.response.cursor; -->
+					
+				this.isFinished = true;
+				if( this.commentList.length > 0 ) {
+					jQuery( this.querySelector( '.comments-loaded' ) ).css( 'display', 'block' );
+				}
+			},
+			
+			_handleAjaxGetError: function( event ) {
+				this.isLoading = false;
+				this.async( function() {
+					this.loadComments();
+				}, 5000 );
+			},
+			
+		});
+
+	</script>
+
+</dom-module>

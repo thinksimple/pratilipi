@@ -12,6 +12,7 @@
 		.secondary-500 {
 			width: 100%;
 			padding: 10px;
+			margin-bottom: 4px;
 		}
 
 		.secondary-500 h3 {
@@ -90,10 +91,10 @@
 
 		<div>
 			<template is="dom-if" if="{{ reviewAvailable }}">
-				<pratilipi-review review="{{ userpratilipi }}"></pratilipi-review>
+				<pratilipi-review user="{{ user }}" review="{{ userpratilipi }}"></pratilipi-review>
 			</template>
 			<template is="dom-repeat" id="repeatReviewList" items="[[reviewList]]">
-					<pratilipi-review review="[[ item ]]"></pratilipi-review>
+				<pratilipi-review user="{{ user }}" review="[[ item ]]"></pratilipi-review>
 			</template>
 		</div>
 

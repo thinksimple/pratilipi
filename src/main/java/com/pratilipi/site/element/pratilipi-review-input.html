@@ -243,7 +243,7 @@
 					this.message = null;
 					this.closeReviewInput();
 					this.closeDeleteReview();
-					document.querySelector( 'pratilipi-user' ).logIn();
+					document.querySelector( 'pratilipi-user' ).logIn( true );
 				} else {
 					this.message = event.detail.request.xhr.response.message;
 				}
