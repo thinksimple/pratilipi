@@ -134,15 +134,15 @@
 
 			<#if action == "share" || pageNo == pageCount>
 				function shareOnFacebook() {
-					window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ website_host }/${ pratilipi.getPageUrl() }&share=facebook", 
+					window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ website_host }" + "${ pratilipi.getPageUrl() }&share=facebook", 
 							"share", "width=600,height=500,left=70px,top=60px" );
 				}
 				function shareOnTwitter() {
-					window.open( "http://twitter.com/share?url=" + "http://${ website_host }/${ pratilipi.getPageUrl() }&share=twitter", 
+					window.open( "http://twitter.com/share?url=" + "http://${ website_host }" + "${ pratilipi.getPageUrl() }&share=twitter", 
 							"share", "width=500,height=600,left=70px,top=60px" );
 				}
 				function shareOnGplus() {
-					window.open( "https://plus.google.com/share?url=" + "http://${ website_host }/${ pratilipi.getPageUrl() }&share=gplus", 
+					window.open( "https://plus.google.com/share?url=" + "http://${ website_host }" + "${ pratilipi.getPageUrl() }&share=gplus", 
 							"share", "width=500,height=600,left=70px,top=60px" );
 				}
 			</#if>

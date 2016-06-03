@@ -9,7 +9,7 @@
 	<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 	
 	<script src='http://j.ptlp.co/third-party/jquery-2.1.4/jquery-2.1.4.min.js'></script>
-	<script src='http://b.ptlp.co/third-party/bootstrap-3.3.4/js/bootstrap.min.js'></script>
+	<script defer src='http://b.ptlp.co/third-party/bootstrap-3.3.4/js/bootstrap.min.js'></script>
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
@@ -345,7 +345,7 @@
 				<div class="about-pratilipi">
 					<h5>Pratilipi</h5>
 					<a href="mailto:contact@pratilipi.com"><span>contact@pratilipi.com</span></a>
-					<a href="tel:+918041710149"><span>+918041710149</span></a>
+					<a href="tel:+918041710149"><span>080-41710149</span></a>
 				</div>
 				<div class="about-part-3">
 					<span>Follow us on Social Media :</span>
