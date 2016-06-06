@@ -142,8 +142,12 @@ public class CommentEntity implements Comment {
 	}
 	
 	
-	public Long getUpvote() {
+	public Long getUpVote() {
 		return UPVOTE;
+	}
+	
+	public Long getDownVote() {
+		return DOWNVOTE;
 	}
 	
 	@Override
