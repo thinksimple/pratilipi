@@ -140,9 +140,12 @@
 			},
 			
 			_handleAjaxPostResponse: function( event ) {
-				var comment = event.detail.response;
-				document.querySelector( 'pratilipi-comment-list#comment-'+ this.parentId ).addCommentToList( comment );
-				this.set( 'content', null );
+				if( this.addComment ) {
+					var comment = event.detail.response;
+					comment.user = this.user;
+					document.querySelector( 'pratilipi-comment-list#comment-'+ this.parentId ).addCommentToList( comment );
+					this.set( 'content', null );
+				}
 			},
 			
 			_handleAjaxPostError: function( event ) {
