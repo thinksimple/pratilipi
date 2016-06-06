@@ -135,11 +135,12 @@ public class InitApi extends GenericApi {
 		
 		com.googlecode.objectify.cmd.Query<CommentEntity> query
 				= ObjectifyService.ofy().load().type( CommentEntity.class );
-		query = query.filter( "COMMENT_DATE !=", null );
+		query = query.filter( "LAST_UPDATED !=", null );
 		List<CommentEntity> commentList = query.list();
 		for( CommentEntity commentEntity : commentList ) {
-			commentEntity.getCreationDate();
-			commentEntity.getLastUpdated();
+			if( ! commentEntity.getCreationDate().equals( commentEntity.getLastUpdated() ) )
+				continue;
+			commentEntity.setLastUpdated( null );
 			ObjectifyService.ofy().save().entity( commentEntity ).now();
 		}
 		

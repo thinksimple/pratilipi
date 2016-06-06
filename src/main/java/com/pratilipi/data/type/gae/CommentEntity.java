@@ -28,26 +28,12 @@ public class CommentEntity implements Comment {
 	
 	@Index
 	private String PARENT_ID;
-
+	
 	
 	private String CONTENT;
 	
 	@Index
 	private CommentState STATE;
-	
-	
-	@Deprecated
-	private Long UPVOTE;
-	
-	@Deprecated
-	private Long DOWNVOTE;
-	
-	
-	@Deprecated
-	private Date COMMENT_DATE;
-	
-	@Deprecated
-	private Date COMMENT_LAST_UPDATED_DATE;			
 	
 	
 	@Index
@@ -142,20 +128,8 @@ public class CommentEntity implements Comment {
 	}
 	
 	
-	public Long getUpVote() {
-		return UPVOTE;
-	}
-	
-	public Long getDownVote() {
-		return DOWNVOTE;
-	}
-	
 	@Override
 	public Date getCreationDate() {
-		if( COMMENT_DATE != null ) {
-			CREATION_DATE = COMMENT_DATE;
-			COMMENT_DATE = null;
-		}
 		return CREATION_DATE;
 	}
 	
@@ -166,10 +140,6 @@ public class CommentEntity implements Comment {
 
 	@Override
 	public Date getLastUpdated() {
-		if( COMMENT_LAST_UPDATED_DATE != null ) {
-			LAST_UPDATED = COMMENT_LAST_UPDATED_DATE;
-			COMMENT_LAST_UPDATED_DATE = null;
-		}
 		return LAST_UPDATED;
 	}
 
