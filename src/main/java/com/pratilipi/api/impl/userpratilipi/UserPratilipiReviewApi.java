@@ -1,13 +1,11 @@
 package com.pratilipi.api.impl.userpratilipi;
 
-import java.util.Date;
-
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
 import com.pratilipi.api.shared.GenericRequest;
-import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.data.client.UserPratilipiData;
@@ -36,66 +34,9 @@ public class UserPratilipiReviewApi extends GenericApi {
 		
 	}
 	
-	public class Response extends GenericResponse {
-		
-		private Long userId;
-		private String userName;
-		private String userImageUrl;
-		private String userProfilePageUrl;
-
-		private Integer rating;
-		private String review;
-		private Long reviewDateMillis;
-
-		
-		public Response( UserPratilipiData userPratilipiData ) {
-			this.userId = userPratilipiData.getUserId();
-			this.userName = userPratilipiData.getUserName();
-			this.userImageUrl = userPratilipiData.getUserImageUrl();
-			this.userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
-			this.rating = userPratilipiData.getRating();
-			this.review = userPratilipiData.getReview();
-			this.reviewDateMillis = userPratilipiData.getReviewDate().getTime();
-		}
-		
-		
-		public Long getUserId() {
-			return userId;
-		}
-		
-		public String getUserName() {
-			return userName;
-		}
-		
-		public String getUserImageUrl() {
-			return userImageUrl;
-		}
-		
-		public String getUserProfilePageUrl() {
-			return userProfilePageUrl;
-		}
-
-		public Integer getRating() {
-			return rating;
-		}
-		
-		public String getReview() {
-			return review;
-		}
-		
-		public Date getReviewDate() {
-			return reviewDateMillis == null ? null : new Date( reviewDateMillis );
-		}
-		
-		public Long getReviewDateMillis() {
-			return reviewDateMillis;
-		}
-		
-	}
-	
 	
 	@Post
-	public Response post( PostRequest request )
+	public GenericUserPratilipiResponse post( PostRequest request )
 			throws InsufficientAccessException {
 
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
@@ -118,7 +59,7 @@ public class UserPratilipiReviewApi extends GenericApi {
 				.addParam( "updateUserPratilipiStats", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 		
-		return new Response( userPratilipiData );
+		return new GenericUserPratilipiResponse( userPratilipiData );
 		
 	}		
 
