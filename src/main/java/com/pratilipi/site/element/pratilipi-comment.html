@@ -153,6 +153,7 @@
 				var comment = event.detail.response;
 				if( comment.state == "ACTIVE" ) {
 					this.set( 'comment', comment );
+					this.closeCommentEdit();
 				} else if( comment.state == "DELETED" ){
 					document.querySelector( 'pratilipi-comment-list#comment-'+ this.parentId ).deleteCommentFromList( comment );
 				}
