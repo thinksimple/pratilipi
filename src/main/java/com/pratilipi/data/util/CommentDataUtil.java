@@ -62,6 +62,8 @@ public class CommentDataUtil {
 		
 		CommentData commentData = new CommentData( comment.getId() );
 		
+		commentData.setParentType( comment.getParentType() );
+		commentData.setParentId( comment.getParentId() );
 		commentData.setUserId( comment.getUserId() );
 		commentData.setContent( comment.getContent() );
 		commentData.setState( comment.getState() );
@@ -82,7 +84,6 @@ public class CommentDataUtil {
 		
 		commentData.setUserId( commentDoc.getUserId() );
 		commentData.setContent( commentDoc.getContent() );
-		commentData.setState( CommentState.ACTIVE );
 		commentData.setCreationDate( commentDoc.getCreationDate() );
 		commentData.setLastUpdated( commentDoc.getLastUpdated() );
 		
