@@ -48,7 +48,7 @@
 						'parentType': "REVIEW"
 					},
 					success: function( response ) {
-						var response_text = response.replace( /(?:\r\n|\r|\n)/g, '\\n' );
+						var response_text = response.trim().replace( /(?:\r\n|\r|\n)/g, '\\n' );
 						var parsed_data = jQuery.parseJSON( response_text );
 						var commentList = parsed_data[ "commentList" ];
 						var cursor = parsed_data[ "cursor" ];
