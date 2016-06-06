@@ -140,7 +140,7 @@ public class InitApi extends GenericApi {
 				= ObjectifyService.ofy().load().type( CommentEntity.class );
 		List<CommentEntity> commentList = query.list();
 		for( CommentEntity commentEntity : commentList ) {
-			if( commentEntity.getParentType() != CommentParentType.REVIEW )
+			if( commentEntity.getParentType() != CommentParentType.COMMENT )
 				continue;
 			if( commentEntity.getContent() != null )
 				continue;
@@ -148,7 +148,7 @@ public class InitApi extends GenericApi {
 				continue;
 			Vote vote = dataAccessor.newVote();
 			vote.setUserId( commentEntity.getUserId() );
-			vote.setParentType( VoteParentType.REVIEW );
+			vote.setParentType( VoteParentType.COMMENT );
 			vote.setParentId( commentEntity.getParentId() );
 			vote.setType( VoteType.LIKE );
 			vote.setCreationDate( commentEntity.getCreationDate() );
