@@ -198,6 +198,12 @@ public class PratilipiProcessApi extends GenericApi {
 		}
 		
 		
+		if( request.updateReviewsDoc() ) {
+			for( long pratilipiId : pratilipiIdList )
+				PratilipiDocUtil.updatePratilipiReviews( pratilipiId );
+		}
+		
+		
 		if( request.updateStats() ) {
 			List<Task> taskList = new ArrayList<>( pratilipiIdList.size() );
 			for( long pratilipiId : pratilipiIdList ) {

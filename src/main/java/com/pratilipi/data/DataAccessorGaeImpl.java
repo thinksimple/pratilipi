@@ -1013,6 +1013,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public UserPratilipi getUserPratilipi( String userPratilipiId ) {
+		try {
+			return getEntity( UserPratilipiEntity.class, userPratilipiId );
+		} catch( JDOObjectNotFoundException e ) {
+			return null;
+		}
+	}
+	
+	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
 		if( userId == null || userId.equals( 0L ) || pratilipiId == null || pratilipiId.equals( 0L ) )
 			return null;
