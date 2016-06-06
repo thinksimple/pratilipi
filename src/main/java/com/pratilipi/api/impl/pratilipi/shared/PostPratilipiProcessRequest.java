@@ -12,6 +12,7 @@ public class PostPratilipiProcessRequest extends GenericRequest {
 	private Boolean validateData;
 	private Boolean processData;
 	private Boolean processContent;
+	private Boolean updateReviewsDoc;
 	private Boolean updateStats;
 	private Boolean updateUserPratilipiStats;
 	
@@ -35,6 +36,10 @@ public class PostPratilipiProcessRequest extends GenericRequest {
 	
 	public boolean processContent() {
 		return processContent == null ? false : processContent;
+	}
+
+	public boolean updateReviewsDoc() {
+		return updateReviewsDoc == null ? false : updateReviewsDoc;
 	}
 
 	public boolean updateStats() {

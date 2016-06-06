@@ -29,6 +29,8 @@ public class CommentData {
 
 	private Long lastUpdatedMillis;
 
+	private Boolean hasAccessToUpdate;
+
 	
 
 	public CommentData() {}
@@ -129,6 +131,15 @@ public class CommentData {
 
 	public void setLastUpdated( Date lastUpdated ) {
 		this.lastUpdatedMillis = lastUpdated == null ? null : lastUpdated.getTime();
+	}
+	
+	
+	public boolean hasAccessToUpdate() {
+		return hasAccessToUpdate == null ? false : hasAccessToUpdate;
+	}
+	
+	public void setAccessToUpdate( Boolean hasAccessToUpdate ) {
+		this.hasAccessToUpdate = hasAccessToUpdate;
 	}
 
 }

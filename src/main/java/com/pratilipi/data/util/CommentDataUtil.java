@@ -42,16 +42,20 @@ public class CommentDataUtil {
 	}
 	
 	public static boolean hasAccessToUpdateCommentData( Comment comment, CommentData commentData ) {
+		return hasAccessToUpdateCommentData( comment.getState(), comment.getUserId() );
+	}
+
+	public static boolean hasAccessToUpdateCommentData( CommentState commentState, Long commentUserId ) {
 		
-		if( comment.getState() != CommentState.ACTIVE
-				&& comment.getState() != CommentState.DELETED )
+		if( commentState != CommentState.ACTIVE
+				&& commentState != CommentState.DELETED )
 			return false;
 		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		return comment.getUserId().equals( accessToken.getUserId() );
-		
-	}
+		return commentUserId.equals( accessToken.getUserId() );
 	
+	}
+
 	
 	public static CommentData createCommentData( Comment comment ) {
 		
@@ -76,6 +80,10 @@ public class CommentDataUtil {
 		commentData.setContent( commentDoc.getContent() );
 		commentData.setCreationDate( commentDoc.getCreationDate() );
 		commentData.setLastUpdated( commentDoc.getLastUpdated() );
+		
+		commentData.setAccessToUpdate( hasAccessToUpdateCommentData(
+				CommentState.ACTIVE,
+				commentDoc.getUserId() ) );
 		
 		return commentData;
 		

@@ -95,7 +95,7 @@ public class UserPratilipiReviewApi extends GenericApi {
 	
 	
 	@Post
-	public Response postUserPratilipi( PostRequest request )
+	public Response post( PostRequest request )
 			throws InsufficientAccessException {
 
 		UserPratilipiData userPratilipiData = new UserPratilipiData();

@@ -44,8 +44,7 @@ public class CommentApi extends GenericApi {
 		
 		private Long commentId;
 		
-		private Long userId;
-		private UserData user;
+		private User user;
 		
 		private CommentParentType parentType;
 		private String parentId;
@@ -56,11 +55,12 @@ public class CommentApi extends GenericApi {
 		private Long creationDateMillis;
 		private Long lastUpdatedMillis;
 		
+		private Boolean hasAccessToUpdate;
+		
 		
 		Response( CommentData commentData ) {
 			this.commentId = commentData.getId();
-			this.userId = commentData.getUserId();
-			this.user = commentData.getUser();
+			this.user = new User( commentData.getUser() );
 			this.parentType = commentData.getParentType();
 			this.parentId = commentData.getParentId();
 			this.content = commentData.getContent();
@@ -69,6 +69,24 @@ public class CommentApi extends GenericApi {
 			this.lastUpdatedMillis = commentData.getLastUpdated() == null
 					? null
 					: commentData.getLastUpdated().getTime();
+			this.hasAccessToUpdate = commentData.hasAccessToUpdate();
+		}
+		
+	}
+
+	@SuppressWarnings("unused")
+	public static class User {
+		
+		private Long userId;
+		private String displayName;
+		private String profilePageUrl;
+		private String profileImageUrl;
+
+		User( UserData userData ) {
+			this.userId = userData.getId();
+			this.displayName = userData.getDisplayName();
+			this.profilePageUrl = userData.getProfilePageUrl();
+			this.profileImageUrl = userData.getProfileImageUrl();
 		}
 		
 	}
