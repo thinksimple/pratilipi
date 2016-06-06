@@ -133,22 +133,14 @@ public class InitApi extends GenericApi {
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 */
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
 		com.googlecode.objectify.cmd.Query<CommentEntity> query
 				= ObjectifyService.ofy().load().type( CommentEntity.class );
+		query = query.filter( "COMMENT_DATE !=", null );
 		List<CommentEntity> commentList = query.list();
 		for( CommentEntity commentEntity : commentList ) {
-			if( commentEntity.getUpVote() == null || commentEntity.getUpVote() != 1 )
-				continue;
-			Vote vote = dataAccessor.newVote();
-			vote.setUserId( commentEntity.getUserId() );
-			vote.setParentType( VoteParentType.REVIEW );
-			vote.setParentId( commentEntity.getParentId() );
-			vote.setType( VoteType.LIKE );
-			vote.setCreationDate( commentEntity.getCreationDate() );
-			vote = dataAccessor.createOrUpdateVote( vote, null );
-			logger.log( Level.INFO, "Adding " + commentEntity.getId() + " ..." );
+			commentEntity.getCreationDate();
+			commentEntity.getLastUpdated();
+			ObjectifyService.ofy().save().entity( commentEntity ).now();
 		}
 		
 		return new GenericResponse();
