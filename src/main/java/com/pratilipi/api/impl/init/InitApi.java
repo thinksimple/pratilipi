@@ -154,6 +154,7 @@ public class InitApi extends GenericApi {
 			vote.setCreationDate( commentEntity.getCreationDate() );
 			vote = dataAccessor.createOrUpdateVote( vote, null );
 			logger.log( Level.INFO, "Deleting " + commentEntity.getId() + " ..." );
+			ObjectifyService.ofy().delete().type( CommentEntity.class ).id( commentEntity.getId() );
 		}
 		
 		return new GenericResponse();
