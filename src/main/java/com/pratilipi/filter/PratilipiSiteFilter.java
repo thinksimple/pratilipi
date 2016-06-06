@@ -175,6 +175,7 @@ public class PratilipiSiteFilter implements Filter {
 		} else {
 			chain.doFilter( request, response );
 			DataAccessorFactory.destroyDataAccessor();
+			DataAccessorFactory.destroyDocAccessor();
 		}
 		
 	}

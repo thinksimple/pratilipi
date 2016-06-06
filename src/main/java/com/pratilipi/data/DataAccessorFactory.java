@@ -71,5 +71,11 @@ public class DataAccessorFactory {
 		}
 		return docAccessor;
 	}
+	
+	public static void destroyDocAccessor() {
+		DocAccessor docAccessor = threadLocalDocAccessor.get();
+		if( docAccessor != null )
+			threadLocalDataAccessor.remove();
+	}
 
 }

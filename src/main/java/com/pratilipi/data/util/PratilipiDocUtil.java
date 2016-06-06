@@ -81,7 +81,7 @@ public class PratilipiDocUtil {
 		
 		PratilipiReviewsDoc reviewsDoc = docAccessor.getPratilipiReviewsDoc( pratilipiId );
 		reviewsDoc.setReviews( reviewDocList );
-		docAccessor.save(pratilipiId, reviewsDoc );
+		docAccessor.save( pratilipiId, reviewsDoc );
 		
 	}
 	
