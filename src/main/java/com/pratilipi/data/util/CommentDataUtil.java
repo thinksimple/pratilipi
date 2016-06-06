@@ -231,7 +231,7 @@ public class CommentDataUtil {
 			errorMessages.addProperty( "parentId", GenericRequest.ERR_COMMENT_PARENT_ID_REQUIRED );
 		
 		// Old/New comment must have content.
-		if( commentData.getContent() == null )
+		if( commentData.getState() != CommentState.DELETED && commentData.getContent() == null )
 			errorMessages.addProperty( "content", GenericRequest.ERR_COMMENT_CONTENT_REQUIRED );
 		
 		if( errorMessages.entrySet().size() > 0 )
