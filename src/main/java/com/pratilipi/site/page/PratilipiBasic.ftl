@@ -3,6 +3,85 @@
 
 	<head>
 		<#include "meta/HeadBasic.ftl">
+		<style>
+			.comment {
+				display: block;
+				padding-left: 24px;
+			}
+			.comment .comment-child {
+				border-top: 1px solid #d3d3d3;
+				border-left: 1px solid #d3d3d3;
+				padding: 12px 8px;
+			}
+			.comment img.user-img {
+				width: 48px;
+				height: 48px;
+				float: left;
+			}
+			.comment .user-name {
+				text-transform: capitalize;
+				margin-top: 8px;
+			}
+			.comment .content {
+				margin-top: 24px;
+				display: block;
+			}
+		</style>
+		<script>
+			function convertDate( date ) {
+				var d = new Date( date );
+				function day(d) { return (d < 10) ? '0' + d : d; }
+				function month(m) { var months = ['${ _strings.month_jan }','${ _strings.month_feb }','${ _strings.month_mar }',
+												'${ _strings.month_apr }','${ _strings.month_may }','${ _strings.month_jun }',
+												'${ _strings.month_jul }','${ _strings.month_aug }','${ _strings.month_sep }',
+												'${ _strings.month_oct }','${ _strings.month_nov }','${ _strings.month_dec }']; 
+												return months[m]; }
+				return [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ');
+			}
+            
+			function loadComments( parentId ) {
+				$.ajax({
+					type: 'get',
+					url: '/api/comment/list',
+					data: {
+						'parentId': parentId, 
+						'parentType': "REVIEW"
+					},
+					success: function( response ) {
+						var response_text = response.replace( /(?:\r\n|\r|\n)/g, '\\n' );
+						var parsed_data = jQuery.parseJSON( response_text );
+						var commentList = parsed_data[ "commentList" ];
+						var cursor = parsed_data[ "cursor" ];
+						var html = "";
+						for( var i = 0; i < commentList.length; i++ ) {
+							html += '<div class="comment">' + 
+							   '<div class="comment-child">' +
+							   '<a href="' + commentList[i].user.profilePageUrl + '">' +
+							   '<img class="user-img img-circle" src="' + commentList[i].user.profileImageUrl + ( commentList[i].user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + 'width=48' + '" />' +
+							   '</a>' +
+							   '<a href="' + commentList[i].user.profilePageUrl + '">' +
+							   '<div class="user-name">' + commentList[i].user.displayName + '</div>' + 
+							   '</a>' +
+							   '<div class="date-added">' + convertDate( commentList[i].lastUpdatedMillis != null ? commentList[i].lastUpdatedMillis : commentList[i].creationDateMillis ) + '</div>' + 
+							   '<div class="content">' + ( commentList[i].content != null ? commentList[i].content : "&nbsp;" ) + '</div>' +
+							   '</div>' + 
+							   ( i == commentList.length - 1 ? '<hr style="margin-top: 0px; border-top: 1px solid #d3d3d3 " />' : '' ) +
+							   '</div>';
+						}
+						jQuery( "button#view-replies-" + parentId ).css( "display", "none" ); 
+						jQuery( "div#comments-" + parentId ).html( html );
+					},
+					error: function( response ) {
+						var message = jQuery.parseJSON( response.responseText );
+						var status = response.status;
+						if( message["message"] != null )
+							alert( "Error " + status + " : " + message["message"] ); 
+						else
+							alert( "Error fetching replies for this review! Please try again" );
+					}
+				});
+			}
+		</script>
 	</head>
 	
 	<body>

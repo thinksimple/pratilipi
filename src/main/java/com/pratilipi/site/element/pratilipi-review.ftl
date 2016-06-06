@@ -47,6 +47,10 @@
 					<div style="text-align: justify; font-size: 15px;">${ review.getReview() }</div>
 				</#if>
 			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<button style="display: block; margin: 10px auto;" class="pratilipi-grey-button" id="view-replies-${ review.getId() }" onClick="loadComments( '${ review.getId() }' )">View all replies</button>
+			</div>
 		</div>
+		<div id="comments-${ review.getId() }"></div>
 	</div>
 </#if>
