@@ -17,6 +17,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.type.VoteType;
@@ -135,12 +136,10 @@ public class InitApi extends GenericApi {
 		
 		com.googlecode.objectify.cmd.Query<CommentEntity> query
 				= ObjectifyService.ofy().load().type( CommentEntity.class );
-		query = query.filter( "LAST_UPDATED !=", null );
+		query = query.filter( "STATE ==", null );
 		List<CommentEntity> commentList = query.list();
 		for( CommentEntity commentEntity : commentList ) {
-			if( ! commentEntity.getCreationDate().equals( commentEntity.getLastUpdated() ) )
-				continue;
-			commentEntity.setLastUpdated( null );
+			commentEntity.setState( CommentState.ACTIVE );
 			ObjectifyService.ofy().save().entity( commentEntity ).now();
 		}
 		
