@@ -573,6 +573,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public UserPratilipi getUserPratilipi( String userPratilipiId ) {
+		return null;
+	}
+	
+	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
 		for( UserPratilipi userPratilipi : UserPratilipiMock.USER_PRATILIPI_TABLE )
 			if( userPratilipi.getUserId().equals( userId ) && userPratilipi.getPratilipiId().equals( pratilipiId ) )

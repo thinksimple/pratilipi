@@ -445,6 +445,20 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 	
 	@Override
+	public UserPratilipi getUserPratilipi( String userPratilipiId ) {
+		if( userPratilipiId == null )
+			return null;
+		
+		UserPratilipi userPratilipi = memcache.get( PREFIX_USER_PRATILIPI + userPratilipiId );
+		if( userPratilipi == null ) {
+			userPratilipi = dataAccessor.getUserPratilipi( userPratilipiId );
+			if( userPratilipi != null )
+				memcache.put( PREFIX_USER_PRATILIPI + userPratilipiId, userPratilipi );
+		}
+		return userPratilipi;
+	}
+
+	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
 		if( userId == null || userId.equals( 0L ) || pratilipiId == null || pratilipiId.equals( 0L ) )
 			return null;
