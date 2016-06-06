@@ -102,7 +102,7 @@ public class CommentApi extends GenericApi {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/pratilipi/process" )
 					.addParam( "pratilipiId", pratilipiId.toString() )
-					.addParam( "updatePratilipiReviewsDoc", "true" );
+					.addParam( "updateReviewsDoc", "true" );
 			TaskQueueFactory.getPratilipiTaskQueue().add( task );
 		}
 		

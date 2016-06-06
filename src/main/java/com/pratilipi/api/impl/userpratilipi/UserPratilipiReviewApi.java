@@ -114,7 +114,7 @@ public class UserPratilipiReviewApi extends GenericApi {
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/pratilipi/process" )
 				.addParam( "pratilipiId", request.pratilipiId.toString() )
-				.addParam( "updatePratilipiReviewsDoc", "true" )
+				.addParam( "updateReviewsDoc", "true" )
 				.addParam( "updateUserPratilipiStats", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 		
