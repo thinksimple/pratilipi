@@ -154,8 +154,9 @@
 				if( comment.state == "ACTIVE" ) {
 					this.set( 'comment', comment );
 					this.closeCommentEdit();
-				} else if( comment.state == "DELETED" ){
-					this.domHost.deleteCommentFromList( comment );
+				} else if( comment.state == "DELETED" ) {
+					document.querySelector( 'pratilipi-comment-list#comment-'+ this.comment.parentId ).deleteCommentFromList( comment );
+					/* this.domHost.deleteCommentFromList( comment ); */
 				}
 			},
 			
