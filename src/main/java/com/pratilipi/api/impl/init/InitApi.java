@@ -140,19 +140,19 @@ public class InitApi extends GenericApi {
 				= ObjectifyService.ofy().load().type( CommentEntity.class );
 		List<CommentEntity> commentList = query.list();
 		for( CommentEntity commentEntity : commentList ) {
-			if( commentEntity.getParentType() != CommentParentType.COMMENT )
-				continue;
+//			if( commentEntity.getParentType() != CommentParentType.COMMENT )
+//				continue;
 			if( commentEntity.getContent() != null )
 				continue;
-			if( commentEntity.getUpvote() != 1 )
+			if( commentEntity.getDownVote() != 1 )
 				continue;
-			Vote vote = dataAccessor.newVote();
-			vote.setUserId( commentEntity.getUserId() );
-			vote.setParentType( VoteParentType.COMMENT );
-			vote.setParentId( commentEntity.getParentId() );
-			vote.setType( VoteType.LIKE );
-			vote.setCreationDate( commentEntity.getCreationDate() );
-			vote = dataAccessor.createOrUpdateVote( vote, null );
+//			Vote vote = dataAccessor.newVote();
+//			vote.setUserId( commentEntity.getUserId() );
+//			vote.setParentType( VoteParentType.COMMENT );
+//			vote.setParentId( commentEntity.getParentId() );
+//			vote.setType( VoteType.LIKE );
+//			vote.setCreationDate( commentEntity.getCreationDate() );
+//			vote = dataAccessor.createOrUpdateVote( vote, null );
 			logger.log( Level.INFO, "Deleting " + commentEntity.getId() + " ..." );
 			ObjectifyService.ofy().delete().type( CommentEntity.class ).id( commentEntity.getId() ).now();
 		}
