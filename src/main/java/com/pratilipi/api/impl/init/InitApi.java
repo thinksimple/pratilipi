@@ -144,7 +144,7 @@ public class InitApi extends GenericApi {
 //				continue;
 			if( commentEntity.getContent() != null )
 				continue;
-			if( commentEntity.getDownVote() != 1 )
+			if( commentEntity.getDownVote() != 0 || commentEntity.getUpVote() != 0 )
 				continue;
 //			Vote vote = dataAccessor.newVote();
 //			vote.setUserId( commentEntity.getUserId() );
