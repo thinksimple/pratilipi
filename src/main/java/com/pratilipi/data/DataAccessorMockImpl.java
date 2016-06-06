@@ -60,6 +60,7 @@ import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.data.type.gae.VoteEntity;
 
 public class DataAccessorMockImpl implements DataAccessor {
 
@@ -712,6 +713,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	// USER_VOTE Table
 
+	@Override
+	public Vote newVote() {
+		return new VoteEntity();
+	}
+	
 	@Override
 	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {
 		return vote; 

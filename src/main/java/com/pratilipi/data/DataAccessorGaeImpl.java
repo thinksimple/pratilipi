@@ -107,6 +107,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		ObjectifyService.register( BlogPostEntity.class );
 		ObjectifyService.register( UserAuthorEntity.class );
 		ObjectifyService.register( CommentEntity.class );
+		ObjectifyService.register( VoteEntity.class );
 		ObjectifyService.register( MailingListSubscriptionEntity.class );
 	}
 	
@@ -1338,6 +1339,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	
 	// USER_VOTE Table
+	
+	@Override
+	public Vote newVote() {
+		return new VoteEntity();
+	}
 	
 	@Override
 	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {

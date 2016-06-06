@@ -163,6 +163,7 @@ public interface DataAccessor {
 	Comment createOrUpdateComment( Comment comment, AuditLog auditLog );
 	
 	// VOTE Table
+	Vote newVote();
 	Vote createOrUpdateVote( Vote vote, AuditLog auditLog );
 	
 	

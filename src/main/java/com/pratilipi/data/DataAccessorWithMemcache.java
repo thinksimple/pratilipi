@@ -37,6 +37,7 @@ import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.Vote;
+import com.pratilipi.data.type.gae.VoteEntity;
 
 public class DataAccessorWithMemcache implements DataAccessor {
 	
@@ -561,6 +562,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public Comment createOrUpdateComment( Comment comment, AuditLog auditLog ) { return dataAccessor.createOrUpdateComment( comment, auditLog ); }
 	
 	// USER_VOTE Table
+	@Override public Vote newVote() { return dataAccessor.newVote(); }
 	@Override public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) { return dataAccessor.createOrUpdateVote( vote, auditLog ); }
 	
 	// MAILING_LIST_SUBSCRIPTION Table
