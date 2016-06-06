@@ -139,7 +139,7 @@ public class InitApi extends GenericApi {
 				= ObjectifyService.ofy().load().type( CommentEntity.class );
 		List<CommentEntity> commentList = query.list();
 		for( CommentEntity commentEntity : commentList ) {
-			if( commentEntity.getUpVote() != null && commentEntity.getUpVote() != 1 )
+			if( commentEntity.getUpVote() == null || commentEntity.getUpVote() != 1 )
 				continue;
 			Vote vote = dataAccessor.newVote();
 			vote.setUserId( commentEntity.getUserId() );
