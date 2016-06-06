@@ -12,7 +12,6 @@
 		}
 		.comments-loaded {
 			border-left: 1px solid #d3d3d3;
-			display: none;
 		}
 		paper-spinner.pratilipi-spinner {
 			display: block;
@@ -133,9 +132,7 @@
 					this.cursor = event.detail.response.cursor; -->
 					
 				this.isFinished = true;
-				if( this.commentList.length > 0 ) {
-					jQuery( this.querySelector( '.comments-loaded' ) ).css( 'display', 'block' );
-				}
+			
 			},
 			
 			_handleAjaxGetError: function( event ) {
