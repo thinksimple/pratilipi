@@ -142,6 +142,10 @@ public class CommentEntity implements Comment {
 	}
 	
 	
+	public Long getUpvote() {
+		return UPVOTE;
+	}
+	
 	@Override
 	public Date getCreationDate() {
 		if( COMMENT_DATE != null ) {

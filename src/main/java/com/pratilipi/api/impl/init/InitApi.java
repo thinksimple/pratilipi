@@ -144,6 +144,8 @@ public class InitApi extends GenericApi {
 				continue;
 			if( commentEntity.getContent() != null )
 				continue;
+			if( commentEntity.getUpvote() != 1 )
+				continue;
 			Vote vote = dataAccessor.newVote();
 			vote.setUserId( commentEntity.getUserId() );
 			vote.setParentType( VoteParentType.REVIEW );
@@ -151,7 +153,7 @@ public class InitApi extends GenericApi {
 			vote.setType( VoteType.LIKE );
 			vote.setCreationDate( commentEntity.getCreationDate() );
 			vote = dataAccessor.createOrUpdateVote( vote, null );
-			logger.log( Level.INFO, "Deleting " + commentEntity.getId() );
+			logger.log( Level.INFO, "Deleting " + commentEntity.getId() + " ..." );
 		}
 		
 		return new GenericResponse();

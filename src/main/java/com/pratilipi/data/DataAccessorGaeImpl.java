@@ -1348,7 +1348,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {
 		( (VoteEntity) vote ).setId( vote.getUserId() + "-" + vote.getParentType() + "::" + vote.getParentId() );
-		return createOrUpdateEntityOfy( vote, auditLog );
+//		return createOrUpdateEntityOfy( vote, auditLog ); // TODO
+		return createOrUpdateEntityOfy( vote );
 	}
 
 	
