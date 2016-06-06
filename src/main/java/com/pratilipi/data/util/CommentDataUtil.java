@@ -26,6 +26,7 @@ import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.CommentDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
+import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserPratilipiDoc;
 import com.pratilipi.filter.AccessTokenFilter;
 
@@ -193,9 +194,15 @@ public class CommentDataUtil {
 		
 		
 		comment = dataAccessor.createOrUpdateComment( comment, auditLog );
+
 		
+		User user = dataAccessor.getUser( commentData.getUserId() );
+		UserData userData = UserDataUtil.createUserData( user );
 		
-		return createCommentData( comment );
+		commentData = createCommentData( comment );
+		commentData.setUser( userData );
+		
+		return commentData;
 		
 	}
 	
