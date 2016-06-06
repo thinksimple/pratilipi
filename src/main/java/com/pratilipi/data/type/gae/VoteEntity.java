@@ -13,7 +13,7 @@ import com.pratilipi.common.type.VoteType;
 import com.pratilipi.data.type.Vote;
 
 @Cache
-@Entity( name = "USER_VOTE" )
+@Entity( name = "VOTE" )
 public class VoteEntity implements Vote {
 
 	@Id
