@@ -75,7 +75,7 @@ public class DataAccessorFactory {
 	public static void destroyDocAccessor() {
 		DocAccessor docAccessor = threadLocalDocAccessor.get();
 		if( docAccessor != null )
-			threadLocalDataAccessor.remove();
+			threadLocalDocAccessor.remove();
 	}
 
 }
