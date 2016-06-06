@@ -14,6 +14,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.CommentParentType;
+import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.util.GoogleAnalyticsApi;
 import com.pratilipi.data.BlobAccessor;
@@ -57,6 +58,10 @@ public class PratilipiDocUtil {
 			List<Comment> commentList = dataAccessor.getCommentList( CommentParentType.REVIEW, review.getId() );
 			List<CommentDoc> commentDocList = new ArrayList<>( commentList.size() );
 			for( Comment comment : commentList ) {
+				if( comment.getState() == CommentState.DELETED )
+					continue;
+				if( comment.getCreationDate() == null ) // TODO: remove this as soon as COMMENT table is cleaned up.
+					continue;
 				CommentDoc commentDoc = docAccessor.newCommentDoc();
 				commentDoc.setId( comment.getId() );
 				commentDoc.setUserId( comment.getUserId() );
