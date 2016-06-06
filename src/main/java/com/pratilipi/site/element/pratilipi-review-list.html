@@ -67,12 +67,14 @@
 				<template is="dom-if" if="{{ !reviewAvailable }}">
 					<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
 				</template>
+				<#--
 				<template is="dom-if" if="{{ reviewAvailable }}">
 					<div style="white-space: nowrap; display: inline-block;">
 						<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_edit_review }</a>
 						<a class="pratilipi-grey-button" role="button" on-click="openDeleteReview">${ _strings.review_delete_review }</a>
 					</div>
 				</template>
+				-->
 			</template>
 		</div>
 		
@@ -91,7 +93,7 @@
 
 		<div>
 			<template is="dom-if" if="{{ reviewAvailable }}">
-				<pratilipi-review user="{{ user }}" review="{{ userpratilipi }}"></pratilipi-review>
+				<pratilipi-review user="{{ user }}" review="{{ userpratilipi }}" has-access-to-update></pratilipi-review>
 			</template>
 			<template is="dom-repeat" id="repeatReviewList" items="[[reviewList]]">
 				<pratilipi-review user="{{ user }}" review="[[ item ]]"></pratilipi-review>

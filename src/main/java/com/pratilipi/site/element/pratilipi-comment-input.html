@@ -128,6 +128,7 @@
 							parentType: this.parentType,
 							content: this.content
 						};
+					jQuery( '#submitCommentButton' ).prop( 'disabled', true );
 					this.$.AjaxPost.body = jQuery.param( body );
 					this.$.AjaxPost.generateRequest();
 				}
@@ -145,10 +146,12 @@
 					comment.user = this.user;
 					document.querySelector( 'pratilipi-comment-list#comment-'+ this.parentId ).addCommentToList( comment );
 					this.set( 'content', null );
+					jQuery( '#submitCommentButton' ).prop( 'disabled', false );
 				}
 			},
 			
 			_handleAjaxPostError: function( event ) {
+				jQuery( '#submitCommentButton' ).prop( 'disabled', false );
 				if( event.detail.request.xhr.response.message != null )
 					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
 				else

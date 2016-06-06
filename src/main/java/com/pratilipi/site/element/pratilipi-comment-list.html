@@ -91,14 +91,17 @@
 			},
 			
 			deleteCommentFromList: function( comment ) {
-				// Removing user's review from review list.
+				// Removing user's comment from the comment list.
 				var index = -1;
 				for( var i = 0; i < this.commentList.length; i++ ) {
 					if( comment.commentId == this.commentList[i].commentId ) {
-						this.splice( 'commentList', i, 1 );
+						index = i;
 						break;
 					}
 				}
+				
+				if( index != -1 && index < this.commentList.length )
+					this.splice( 'commentList', index, 1 );
 			},
 			
 			loadComments: function() {
@@ -123,7 +126,7 @@
 					return;
 				
 				var commentList = event.detail.response.commentList;
-				for( var i = 0; i < commentList.length; i++ )
+				for( var i = commentList.length - 1; i >= 0; i-- )
 					this.push( 'commentList', commentList[i] );
 
 				<#-- if( event.detail.response.cursor == null || commentList.length < 20 )
@@ -137,9 +140,15 @@
 			
 			_handleAjaxGetError: function( event ) {
 				this.isLoading = false;
+				
+				if( event.detail.request.xhr.response.message != null )
+					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
+				else
+					document.querySelector( 'pratilipi-alert' ).alert( "Failed to load comments! Please try again!", false );
+				
 				this.async( function() {
 					this.loadComments();
-				}, 5000 );
+				}, 60000 );
 			},
 			
 		});

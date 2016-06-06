@@ -54,12 +54,38 @@
 		.reply-section {
 			margin-bottom: 16px;
 		}
+		
+		paper-menu-button {
+			padding: 0px;
+		}
+		
+		paper-menu {
+			cursor: pointer;
+			--paper-menu-color: #333;
+			--paper-menu-focused-item: {
+				color: #107FE5;
+			};
+		}
+		
+		paper-item {
+			font-family: inherit;
+			font-size: inherit;
+		}
 
 	</style>
 
 	
 	<template>
 		<paper-card id="reviewcard">
+			<template is="dom-if" if="{{ hasAccessToUpdate }}">
+				<paper-menu-button horizontal-align="right" class="pull-right">
+					<paper-icon-button class="dropdown-trigger" icon="icons:more-horiz" noink></paper-icon-button>
+						<paper-menu class="dropdown-content">
+							<paper-item on-click="showReviewInput">${ _strings.review_edit_review }</paper-item>
+							<paper-item on-click="openDeleteReview">${ _strings.review_delete_review }</paper-item>
+						</paper-menu>
+				</paper-menu-button>
+			</template>
 			<div>
    				<a href="{{ review.userProfilePageUrl }}">
    					<img class="img-circle user-dp pratilipi-shadow" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>
@@ -101,7 +127,8 @@
 				user: { type: Object },
 				review: { type: Object, observer: "ready" },
 				
-				expandedIcon: { type: String, value: "icons:arrow-drop-down" }
+				expandedIcon: { type: String, value: "icons:arrow-drop-down" },
+				hasAccessToUpdate: { type: Boolean, value: false }
 			},
 			
 			ready: function() {
@@ -144,6 +171,15 @@
 					this.expandedIcon = "icons:arrow-drop-up";
 				else
 					this.expandedIcon = "icons:arrow-drop-down";
+			},
+			
+			
+			showReviewInput: function() {
+				this.domHost.showReviewInput();
+			},
+			
+			openDeleteReview: function() {
+				this.domHost.openDeleteReview();
 			}
 
 		});
