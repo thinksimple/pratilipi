@@ -2,7 +2,6 @@ package com.pratilipi.api.impl.init;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -10,17 +9,13 @@ import java.util.logging.Logger;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.PageType;
-import com.pratilipi.common.type.VoteParentType;
-import com.pratilipi.common.type.VoteType;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -28,8 +23,6 @@ import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
-import com.pratilipi.data.type.Vote;
-import com.pratilipi.data.type.gae.CommentEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
@@ -133,15 +126,7 @@ public class InitApi extends GenericApi {
 				: new Date( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) ) );
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 */
-		
-		com.googlecode.objectify.cmd.Query<CommentEntity> query
-				= ObjectifyService.ofy().load().type( CommentEntity.class );
-		query = query.filter( "STATE ==", null );
-		List<CommentEntity> commentList = query.list();
-		for( CommentEntity commentEntity : commentList ) {
-			commentEntity.setState( CommentState.ACTIVE );
-			ObjectifyService.ofy().save().entity( commentEntity ).now();
-		}
+
 		
 		return new GenericResponse();
 		
