@@ -16,12 +16,11 @@
 		$.ajax({
 		
 			type: 'post',
-			url: '/api/userpratilipi',
+			url: '/api/userpratilipi/review',
 
 			data: { 
 				'pratilipiId': ${ pratilipi.id?c }, 
 				'rating': rating,
-				'reviewTitle': null,
 				'review' : review
 			},
 			
