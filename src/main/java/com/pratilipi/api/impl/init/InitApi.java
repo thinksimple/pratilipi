@@ -141,11 +141,11 @@ public class InitApi extends GenericApi {
 		for( CommentEntity commentEntity : commentList ) {
 			if( commentEntity.getContent() != null )
 				continue;
-			if( commentEntity.getDownVote() != 1 )
+			if( commentEntity.getUpVote() != 1 )
 				continue;
 			Vote vote = dataAccessor.newVote();
 			vote.setUserId( commentEntity.getUserId() );
-			vote.setParentType( VoteParentType.COMMENT );
+			vote.setParentType( VoteParentType.REVIEW );
 			vote.setParentId( commentEntity.getParentId() );
 			vote.setType( VoteType.LIKE );
 			vote.setCreationDate( commentEntity.getCreationDate() );
