@@ -113,9 +113,9 @@ public class CommentApi extends GenericApi {
 		
 		commentData = CommentDataUtil.saveCommentData( commentData );
 		
-		if( request.parentType == CommentParentType.REVIEW ) {
+		if( commentData.getParentType() == CommentParentType.REVIEW ) {
 			Long pratilipiId = DataAccessorFactory.getDataAccessor()
-					.getUserPratilipi( request.parentId )
+					.getUserPratilipi( commentData.getParentId() )
 					.getPratilipiId();
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/pratilipi/process" )
