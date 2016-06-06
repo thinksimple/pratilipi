@@ -7,12 +7,14 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
+import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.type.VoteType;
-import com.pratilipi.data.type.UserVote;
+import com.pratilipi.data.type.Vote;
 
 @Cache
 @Entity( name = "USER_VOTE" )
-public class UserVoteEntity implements UserVote {
+public class VoteEntity implements Vote {
 
 	@Id
 	private String VOTE_ID;
@@ -22,24 +24,27 @@ public class UserVoteEntity implements UserVote {
 	private Long USER_ID;
 	
 	@Index
-	private String CONTENT_ID;
-	
+	private VoteParentType PARENT_TYPE;
 	
 	@Index
-	private VoteType VOTE;
+	private String PARENT_ID;
+	
+	
+	@Index( IfNotNull.class )
+	private VoteType TYPE;
 	
 	
 	@Index
 	private Date CREATION_DATE;
 
-	@Index
+	@Index( IfNotNull.class )
 	private Date LAST_UPDATED;
 
 	
 
-	public UserVoteEntity() {}
+	public VoteEntity() {}
 
-	public UserVoteEntity( String id ) {
+	public VoteEntity( String id ) {
 		this.VOTE_ID = id;
 	}
 
@@ -70,24 +75,34 @@ public class UserVoteEntity implements UserVote {
 	}
 
 	@Override
-	public String getContentId() {
-		return CONTENT_ID;
+	public VoteParentType getParentType() {
+		return PARENT_TYPE;
 	}
 	
 	@Override
-	public void setContentId( String contentId ) {
-		this.CONTENT_ID = contentId;
+	public void setParentType( VoteParentType parentType ) {
+		this.PARENT_TYPE = parentType;
+	}
+	
+	@Override
+	public String getParentId() {
+		return PARENT_ID;
+	}
+	
+	@Override
+	public void setParentId( String parentId ) {
+		this.PARENT_ID = parentId;
 	}
 
 	
 	@Override
-	public VoteType getVote() {
-		return VOTE;
+	public VoteType getType() {
+		return TYPE;
 	}
 	
 	@Override
-	public void setVote( VoteType vote ) {
-		this.VOTE = vote;
+	public void setType( VoteType type ) {
+		this.TYPE = type;
 	}
 	
 	

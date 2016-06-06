@@ -45,6 +45,7 @@ import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.Vote;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
@@ -706,6 +707,14 @@ public class DataAccessorMockImpl implements DataAccessor {
 	@Override
 	public Comment createOrUpdateComment( Comment comment, AuditLog auditLog ) {
 		return comment;
+	}
+	
+	
+	// USER_VOTE Table
+
+	@Override
+	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {
+		return vote; 
 	}
 	
 	

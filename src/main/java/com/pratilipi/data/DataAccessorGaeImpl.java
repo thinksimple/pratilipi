@@ -59,6 +59,7 @@ import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.Vote;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
@@ -76,6 +77,7 @@ import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.data.type.gae.VoteEntity;
 
 public class DataAccessorGaeImpl implements DataAccessor {
 
@@ -1334,6 +1336,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntityOfy( comment, auditLog );
 	}
 	
+	
+	// USER_VOTE Table
+	
+	@Override
+	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {
+		( (VoteEntity) vote ).setId( vote.getUserId() + "-" + vote.getParentType() + "::" + vote.getParentId() );
+		return createOrUpdateEntityOfy( vote, auditLog );
+	}
+
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 

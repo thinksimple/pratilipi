@@ -36,6 +36,7 @@ import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.Vote;
 
 public class DataAccessorWithMemcache implements DataAccessor {
 	
@@ -558,6 +559,9 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public List<Comment> getCommentList( CommentParentType parentType, Long parentId ) { return dataAccessor.getCommentList( parentType, parentId ); }
 	@Override public List<Comment> getCommentList( CommentParentType parentType, String parentId ) { return dataAccessor.getCommentList( parentType, parentId ); }
 	@Override public Comment createOrUpdateComment( Comment comment, AuditLog auditLog ) { return dataAccessor.createOrUpdateComment( comment, auditLog ); }
+	
+	// USER_VOTE Table
+	@Override public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) { return dataAccessor.createOrUpdateVote( vote, auditLog ); }
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 	@Override public MailingListSubscription newMailingListSubscription() { return dataAccessor.newMailingListSubscription(); }

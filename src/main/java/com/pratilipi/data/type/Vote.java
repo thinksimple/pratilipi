@@ -2,9 +2,10 @@ package com.pratilipi.data.type;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.type.VoteType;
 
-public interface UserVote extends GenericOfyType {
+public interface Vote extends GenericOfyType {
 
 	String getId();
 	
@@ -13,14 +14,18 @@ public interface UserVote extends GenericOfyType {
 	
 	void setUserId( Long userId );
 	
-	String getContentId();
+	VoteParentType getParentType();
 	
-	void setContentId( String contentId );
+	void setParentType( VoteParentType parentType );
+	
+	String getParentId();
+	
+	void setParentId( String parentId );
 	
 	
-	VoteType getVote();
+	VoteType getType();
 	
-	void setVote( VoteType vote );
+	void setType( VoteType vote );
 	
 	
 	Date getCreationDate();
