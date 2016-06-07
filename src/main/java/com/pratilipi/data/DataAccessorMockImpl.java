@@ -14,10 +14,12 @@ import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 
+import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -706,6 +708,16 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public List<Comment> getCommentListByReference( ReferenceType referenceType, Long referenceId ) {
+		return getCommentListByReference( referenceType, referenceId.toString() );
+	}
+	
+	@Override
+	public List<Comment> getCommentListByReference( ReferenceType referenceType, String referenceId ) {
+		return new ArrayList<>( 0 );
+	}
+
+	@Override
 	public Comment createOrUpdateComment( Comment comment, AuditLog auditLog ) {
 		return comment;
 	}
@@ -718,6 +730,16 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return new VoteEntity();
 	}
 	
+	@Override
+	public List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId ) {
+		return new ArrayList<>( 0 );
+	}
+	
+	@Override
+	public List<Vote> getVoteListByReference( ReferenceType referenceType, String referenceId ) {
+		return new ArrayList<>( 0 );
+	}
+
 	@Override
 	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {
 		return vote; 

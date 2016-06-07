@@ -10,7 +10,7 @@ import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
-import com.pratilipi.common.type.VoteParentType;
+import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -160,11 +160,15 @@ public interface DataAccessor {
 	Comment getComment( Long commentId );
 	List<Comment> getCommentList( CommentParentType parentType, Long parentId );
 	List<Comment> getCommentList( CommentParentType parentType, String parentId );
+	List<Comment> getCommentListByReference( ReferenceType referenceType, Long referenceId );
+	List<Comment> getCommentListByReference( ReferenceType referenceType, String referenceId );
 	Comment createOrUpdateComment( Comment comment, AuditLog auditLog );
 	
 	// VOTE Table
 	Vote newVote();
 	Vote createOrUpdateVote( Vote vote, AuditLog auditLog );
+	List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId );
+	List<Vote> getVoteListByReference( ReferenceType referenceType, String referenceId );
 	
 	
 	// MAILING_LIST_SUBSCRIPTION Table

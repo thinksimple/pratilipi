@@ -15,6 +15,7 @@ import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
@@ -37,7 +38,6 @@ import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.Vote;
-import com.pratilipi.data.type.gae.VoteEntity;
 
 public class DataAccessorWithMemcache implements DataAccessor {
 	
@@ -559,11 +559,15 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public Comment getComment( Long commentId ) { return dataAccessor.getComment( commentId ); }
 	@Override public List<Comment> getCommentList( CommentParentType parentType, Long parentId ) { return dataAccessor.getCommentList( parentType, parentId ); }
 	@Override public List<Comment> getCommentList( CommentParentType parentType, String parentId ) { return dataAccessor.getCommentList( parentType, parentId ); }
+	@Override public List<Comment> getCommentListByReference( ReferenceType referenceType, Long referenceId ) { return dataAccessor.getCommentListByReference( referenceType, referenceId ); }
+	@Override public List<Comment> getCommentListByReference( ReferenceType referenceType, String referenceId ) { return dataAccessor.getCommentListByReference( referenceType, referenceId ); }
 	@Override public Comment createOrUpdateComment( Comment comment, AuditLog auditLog ) { return dataAccessor.createOrUpdateComment( comment, auditLog ); }
 	
 	// USER_VOTE Table
 	@Override public Vote newVote() { return dataAccessor.newVote(); }
 	@Override public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) { return dataAccessor.createOrUpdateVote( vote, auditLog ); }
+	@Override public List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId ) { return dataAccessor.getVoteListByReference( referenceType, referenceId ); }
+	@Override public List<Vote> getVoteListByReference( ReferenceType referenceType, String referenceId ) { return dataAccessor.getVoteListByReference( referenceType, referenceId ); }
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 	@Override public MailingListSubscription newMailingListSubscription() { return dataAccessor.newMailingListSubscription(); }

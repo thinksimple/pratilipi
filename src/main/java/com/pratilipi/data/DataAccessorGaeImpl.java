@@ -35,6 +35,7 @@ import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
@@ -1333,6 +1334,25 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public List<Comment> getCommentListByReference( ReferenceType referenceType, Long referenceId ) {
+		return getCommentListByReference( referenceType, referenceId.toString() );
+	}
+	
+	@Override
+	public List<Comment> getCommentListByReference( ReferenceType referenceType, String referenceId ) {
+		
+		com.googlecode.objectify.cmd.Query<CommentEntity> query
+				= ObjectifyService.ofy().load().type( CommentEntity.class );
+		
+		query = query.filter( "REFERENCE_TYPE", referenceType );
+		query = query.filter( "REFERENCE_ID", referenceId );
+		query = query.order( "-CREATION_DATE" );
+		
+		return new ArrayList<Comment>( query.list() );
+		
+	}
+
+	@Override
 	public Comment createOrUpdateComment( Comment comment, AuditLog auditLog ) {
 		return createOrUpdateEntityOfy( comment, auditLog );
 	}
@@ -1349,6 +1369,25 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {
 		( (VoteEntity) vote ).setId( vote.getUserId() + "-" + vote.getParentType() + "::" + vote.getParentId() );
 		return createOrUpdateEntityOfy( vote, auditLog );
+	}
+
+	@Override
+	public List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId ) {
+		return getVoteListByReference( referenceType, referenceId.toString() );
+	}
+	
+	@Override
+	public List<Vote> getVoteListByReference( ReferenceType referenceType, String referenceId ) {
+		
+		com.googlecode.objectify.cmd.Query<VoteEntity> query
+				= ObjectifyService.ofy().load().type( VoteEntity.class );
+		
+		query = query.filter( "REFERENCE_TYPE", referenceType );
+		query = query.filter( "REFERENCE_ID", referenceId );
+		query = query.order( "-CREATION_DATE" );
+		
+		return new ArrayList<Vote>( query.list() );
+		
 	}
 
 	

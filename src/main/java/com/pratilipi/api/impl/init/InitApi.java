@@ -2,6 +2,7 @@ package com.pratilipi.api.impl.init;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,7 +11,9 @@ import java.util.logging.Logger;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.QueryKeys;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -18,19 +21,17 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PageType;
-import com.pratilipi.common.type.ReferenceType;
-import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.BlobEntry;
-import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
-import com.pratilipi.data.type.UserPratilipi;
-import com.pratilipi.data.type.gae.VoteEntity;
+import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -134,28 +135,16 @@ public class InitApi extends GenericApi {
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 */
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		List<VoteEntity> voteList = ObjectifyService.ofy().load().type( VoteEntity.class ).list();
-		for( VoteEntity vote : voteList ) {
-			
-			if( vote.getReferenceId() != null )
-				continue;
-			
-			vote.setReferenceType( ReferenceType.PRATILIPI );
-			if( vote.getParentType() == VoteParentType.COMMENT ) {
-				logger.log( Level.INFO, vote.getParentIdLong().toString() );
-				Comment comment = dataAccessor.getComment( vote.getParentIdLong() );
-				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( comment.getParentId() );
-				vote.setReferenceId( userPratilipi.getPratilipiId() );
-				ObjectifyService.ofy().save().entity( vote ).now();
-			} else if( vote.getParentType() == VoteParentType.REVIEW ) {
-				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( vote.getParentId() );
-				vote.setReferenceId( userPratilipi.getPratilipiId() );
-				ObjectifyService.ofy().save().entity( vote ).now();
-			}
-			
+		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load().type( PratilipiEntity.class ).keys();
+		List<Task> taskList = new LinkedList<>();
+		for( Key<PratilipiEntity> key : queryKeys.iterable() ) {
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/process" )
+					.addParam( "pratilipiId", key.getId() + "" )
+					.addParam( "updateReviewsDoc", "true" );
+			taskList.add( task );
 		}
+		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
 		
 		
 		return new GenericResponse();

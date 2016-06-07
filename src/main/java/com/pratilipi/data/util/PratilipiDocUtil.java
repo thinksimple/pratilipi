@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,6 +17,8 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.ReferenceType;
+import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.util.GoogleAnalyticsApi;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
@@ -29,6 +32,7 @@ import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.UserPratilipiDoc;
+import com.pratilipi.data.type.Vote;
 
 
 public class PratilipiDocUtil {
@@ -42,9 +46,43 @@ public class PratilipiDocUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		
+		List<Comment> commentList = dataAccessor.getCommentListByReference( ReferenceType.PRATILIPI, pratilipiId );
+		Map<String, List<Comment>> reviewIdCommentListMap = new HashMap<>();
+		for( Comment comment : commentList ) {
+			if( comment.getParentType() != CommentParentType.REVIEW )
+				continue;
+			List<Comment> reviewCommentList = reviewIdCommentListMap.get( comment.getParentId() );
+			if( reviewCommentList == null ) {
+				reviewCommentList = new LinkedList<>();
+				reviewIdCommentListMap.put( comment.getParentId(), reviewCommentList );
+			}
+			reviewCommentList.add( comment );
+		}
+		
+		List<Vote> voteList = dataAccessor.getVoteListByReference( ReferenceType.PRATILIPI, pratilipiId );
+		Map<String, List<Long>> reviewIdLikedByUserIdsMap = new HashMap<>();
+		Map<String, List<Long>> commentIdLikedByUserIdsMap = new HashMap<>();
+		for( Vote vote : voteList ) {
+			List<Long> userIdList = null;
+			if( vote.getParentType() == VoteParentType.REVIEW ) {
+				userIdList = reviewIdLikedByUserIdsMap.get( vote.getParentId() );
+				if( userIdList == null ) {
+					userIdList = new LinkedList<>();
+					reviewIdLikedByUserIdsMap.put( vote.getParentId(), userIdList );
+				}
+			} else if( vote.getParentType() == VoteParentType.COMMENT ) {
+				userIdList = commentIdLikedByUserIdsMap.get( vote.getParentId() );
+				if( userIdList == null ) {
+					userIdList = new LinkedList<>();
+					commentIdLikedByUserIdsMap.put( vote.getParentId(), userIdList );
+				}
+			}
+			userIdList.add( vote.getUserId() );
+		}
+		
+		
 		List<UserPratilipi> reviewList = dataAccessor.getPratilipiReviewList( pratilipiId, null, null, null ).getDataList();
 		List<UserPratilipiDoc> reviewDocList = new ArrayList<>( reviewList.size() );
-		
 		for( UserPratilipi review : reviewList ) {
 			
 			UserPratilipiDoc reviewDoc = docAccessor.newUserPratilipiDoc();
@@ -52,24 +90,21 @@ public class PratilipiDocUtil {
 			reviewDoc.setRating( review.getRating() );
 			reviewDoc.setReview( review.getReview() );
 			reviewDoc.setReviewDate( review.getReviewDate() );
+			reviewDoc.setLikedByUserIds( reviewIdLikedByUserIdsMap.get( review.getId() ) );
 			
-			// TODO: Add liked by UserIds
-			
-			List<Comment> commentList = dataAccessor.getCommentList( CommentParentType.REVIEW, review.getId() );
-			List<CommentDoc> commentDocList = new ArrayList<>( commentList.size() );
-			for( Comment comment : commentList ) {
+			List<Comment> reviewCommentList = reviewIdCommentListMap.get( review.getId() );
+			List<CommentDoc> commentDocList = new ArrayList<>( reviewCommentList.size() );
+			for( Comment comment : reviewCommentList ) {
 				if( comment.getState() == CommentState.DELETED )
 					continue;
-				if( comment.getCreationDate() == null ) // TODO: remove this as soon as COMMENT table is cleaned up.
-					continue;
+				
 				CommentDoc commentDoc = docAccessor.newCommentDoc();
 				commentDoc.setId( comment.getId() );
 				commentDoc.setUserId( comment.getUserId() );
 				commentDoc.setContent( comment.getContent() );
 				commentDoc.setCreationDate( comment.getCreationDate() );
 				commentDoc.setLastUpdated( comment.getLastUpdated() );
-			
-				// TODO: Add liked by UserIds
+				commentDoc.setLikedByUserIds( commentIdLikedByUserIdsMap.get( comment.getId().toString() ) );
 				
 				commentDocList.add( commentDoc );
 			}
