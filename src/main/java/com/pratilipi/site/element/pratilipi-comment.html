@@ -153,6 +153,8 @@
 			},
 			
 			editExistingComment: function( content ) {
+				if( this.editComment )
+					return;
 				this.editComment = true;
 				var body = {
 					commentId: this.comment.commentId,
@@ -163,6 +165,8 @@
 			},
 			
 			_deleteComment: function() {
+				if( this.deleteComment )
+					return;
 				this.deleteComment = true;
 				var body = {
 					commentId: this.comment.commentId,
@@ -173,6 +177,8 @@
 			},
 			
 			_restoreComment: function() {
+				if( this.restoreComment )
+					return;
 				this.restoreComment = true;
 				var body = {
 					commentId: this.comment.commentId,
@@ -195,7 +201,7 @@
 					comment.hasAccessToUpdate = false;
 					// Inactive comment
 					jQuery( this.querySelector( '.comment' ) ).css( 'color', '#767676', 'important' );
-					jQuery( this.querySelector( '.comment' ) ).css( 'background', '#f9f9f9;', 'important' );
+					jQuery( this.querySelector( '.comment' ) ).css( 'background-color', '#f9f9f9', 'important' );
 					// Enable restoring the comment
 					this.showRestoreComment = true;
 					
@@ -210,7 +216,7 @@
 					this.restoreComment = false;
 					// Active comment
 					jQuery( this.querySelector( '.comment' ) ).css( 'color', 'inherit', 'important' );
-					jQuery( this.querySelector( '.comment' ) ).css( 'background', 'inherit', 'important' );
+					jQuery( this.querySelector( '.comment' ) ).css( 'background-color', 'inherit', 'important' );
 					// Disable restoring the comment
 					this.showRestoreComment = false;
 					this.set( 'comment', comment );
