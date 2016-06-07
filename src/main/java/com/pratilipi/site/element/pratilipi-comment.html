@@ -13,7 +13,7 @@
 		}
 		
 		.user-name {
-			color: #333; 
+			color: inherit; 
 			text-transform: capitalize; 
 			display: inline-block; 
 			margin: 0px;
@@ -58,6 +58,10 @@
 				</paper-menu-button>
 			</template>
 			
+			<template is="dom-if" if="{{ showRestoreComment }}">
+				<a on-click="restoreComment" class="pull-right">Restore Comment</a>
+			</template>
+			
 			<div class="user-details">
 				<a href="{{ comment.user.profilePageUrl }}">
 					<img class="img-circle user-dp pratilipi-shadow" src="{{ userProfileImageUrl }}" alt="username" title="username"/>
@@ -100,7 +104,13 @@
 			is: 'pratilipi-comment',
 			
 			properties: {
-				comment: { type: Object, observer: "_commentObserver" }
+				comment: { type: Object, observer: "_commentObserver" },
+
+				editComment: { type: Boolean, value: false },
+				deleteComment: { type: Boolean, value: false },
+				restoreComment: { type: Boolean, value: false },
+
+				showRestoreComment: { type: Boolean, value: false }
 			},
 			
 			_commentObserver: function() {
@@ -125,6 +135,7 @@
 			},
 			
 			editExistingComment: function( content ) {
+				this.editComment = true;
 				var body = {
 					commentId: this.comment.commentId,
 					content: content
@@ -134,6 +145,7 @@
 			},
 			
 			deleteComment: function() {
+				this.deleteComment = true;
 				var body = {
 					commentId: this.comment.commentId,
 					state: "DELETED"
@@ -143,6 +155,7 @@
 			},
 			
 			restoreComment: function() {
+				this.restoreComment = true;
 				var body = {
 					commentId: this.comment.commentId,
 					state: "ACTIVE"
@@ -153,13 +166,34 @@
 			
 			_handleAjaxPostResponse: function( event ) {
 				var comment = event.detail.response;
-				if( comment.state == "ACTIVE" ) {
+
+				if( this.editComment ) {
+					this.editComment = false;
 					this.set( 'comment', comment );
 					this.closeCommentEdit();
-				} else if( comment.state == "DELETED" ) {
-					<#-- document.querySelector( 'pratilipi-comment-list#comment-'+ this.comment.parentId ).deleteCommentFromList( comment );
-					this.domHost.deleteCommentFromList( comment ); -->
-					jQuery( this.querySelector( '.comment' ) ).css( 'display', 'none' );
+				} else if( this.deleteComment ) {
+					this.deleteComment = false;
+					// Disable edit and deleting
+					comment.hasAccessToUpdate = false;
+					// Inactive comment
+					jQuery( this.querySelector( '.comment' ) ).css( 'color', '#767676', 'important' );
+					// Enable restoring the comment
+					this.showRestoreComment = true;
+					
+					this.set( 'comment', comment );
+					
+					<#-- 
+						document.querySelector( 'pratilipi-comment-list#comment-'+ this.comment.parentId ).deleteCommentFromList( comment );
+						this.domHost.deleteCommentFromList( comment ); 
+						jQuery( this.querySelector( '.comment' ) ).css( 'display', 'none' ); 
+					-->
+				} else if( this.restoreComment ) {
+					this.restoreComment = false;
+					// Active comment
+					jQuery( this.querySelector( '.comment' ) ).css( 'color', 'inherit', 'important' );
+					// Disable restoring the comment
+					this.showRestoreComment = false;
+					this.set( 'comment', comment );
 				}
 			},
 			
