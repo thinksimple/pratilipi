@@ -19,15 +19,17 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.ReferenceType;
+import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.BlobEntry;
+import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.UserPratilipi;
-import com.pratilipi.data.type.gae.CommentEntity;
+import com.pratilipi.data.type.gae.VoteEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
@@ -134,14 +136,24 @@ public class InitApi extends GenericApi {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		List<CommentEntity> commentList = ObjectifyService.ofy().load().type( CommentEntity.class ).list();
-		for( CommentEntity comment : commentList ) {
-			if( comment.getReferenceId() == null ) {
+		List<VoteEntity> voteList = ObjectifyService.ofy().load().type( VoteEntity.class ).list();
+		for( VoteEntity vote : voteList ) {
+			
+			if( vote.getReferenceId() != null )
+				continue;
+			
+			vote.setReferenceType( ReferenceType.PRATILIPI );
+			if( vote.getParentType() == VoteParentType.COMMENT ) {
+				Comment comment = dataAccessor.getComment( vote.getParentIdLong() );
 				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( comment.getParentId() );
-				comment.setReferenceType( ReferenceType.PRATILIPI );
-				comment.setReferenceId( userPratilipi.getPratilipiId() );
-				ObjectifyService.ofy().save().entity( comment ).now();
+				vote.setReferenceId( userPratilipi.getPratilipiId() );
+				ObjectifyService.ofy().save().entity( vote ).now();
+			} else if( vote.getParentType() == VoteParentType.REVIEW ) {
+				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( vote.getParentId() );
+				vote.setReferenceId( userPratilipi.getPratilipiId() );
+				ObjectifyService.ofy().save().entity( vote ).now();
 			}
+			
 		}
 		
 		

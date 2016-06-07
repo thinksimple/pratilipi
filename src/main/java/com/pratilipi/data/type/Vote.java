@@ -21,6 +21,10 @@ public interface Vote extends GenericOfyType {
 	
 	String getParentId();
 	
+	Long getParentIdLong();
+	
+	void setParentId( Long parentId );
+
 	void setParentId( String parentId );
 	
 	ReferenceType getReferenceType();

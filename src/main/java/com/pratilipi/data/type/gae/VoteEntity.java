@@ -97,6 +97,16 @@ public class VoteEntity implements Vote {
 	}
 	
 	@Override
+	public Long getParentIdLong() {
+		return Long.parseLong( PARENT_ID );
+	}
+	
+	@Override
+	public void setParentId( Long parentId ) {
+		this.PARENT_ID = parentId.toString();
+	}
+
+	@Override
 	public void setParentId( String parentId ) {
 		this.PARENT_ID = parentId;
 	}
