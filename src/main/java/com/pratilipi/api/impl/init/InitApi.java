@@ -144,6 +144,7 @@ public class InitApi extends GenericApi {
 			
 			vote.setReferenceType( ReferenceType.PRATILIPI );
 			if( vote.getParentType() == VoteParentType.COMMENT ) {
+				logger.log( Level.INFO, vote.getParentIdLong().toString() );
 				Comment comment = dataAccessor.getComment( vote.getParentIdLong() );
 				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( comment.getParentId() );
 				vote.setReferenceId( userPratilipi.getPratilipiId() );
