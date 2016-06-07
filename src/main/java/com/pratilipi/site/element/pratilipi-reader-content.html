@@ -235,10 +235,7 @@
 				if( this.contentType == "PRATILIPI" ) {
 					if( this.contentMap[ this.pageNo ] != null ) { // Check in Map if exists
 						this.set( 'content', this.contentMap[ this.pageNo ] );
-					} else if( this.contentMap[ this.pageNo ] == "LOADING" + "_" + this.pratilipiId + "_" + this.pageNo ) { // Request in flight
-						return;
 					} else {										// Else make api call
-						this.contentMap[ this.pageNo ] = "LOADING" + "_" + this.pratilipiId + "_" + this.pageNo;
 						this.set( 'content', "<paper-spinner class=\"pratilipi-spinner-center\" active></paper-spinner>" );
 						this._loadContent( this.pageNo );
 					}

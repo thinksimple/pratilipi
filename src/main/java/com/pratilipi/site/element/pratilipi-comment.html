@@ -70,16 +70,7 @@
 			
 			<div class="comment-text">{{ content }}</div>
 			
-		</div>
-		
-		<pratilipi-comment-input 	
-					style="display: none;"
-					edit-comment
-					user="{{ comment.user }}" 
-					comment-id="{{ comment.commentId }}" 
-					content="{{ content }}"></pratilipi-comment-input>
-		
-		<iron-ajax
+			<iron-ajax
 				id="AjaxPost"
 				url="/api/comment"
 				method="POST"
@@ -88,6 +79,17 @@
 				on-response="_handleAjaxPostResponse"
 				on-error="_handleAjaxPostError"
 				></iron-ajax>
+		</div>
+		
+		<template is="dom-if" if="{{ hasAccessToUpdate }}">
+			<pratilipi-comment-input 	
+					style="display: none;"
+					edit-comment
+					user="{{ comment.user }}" 
+					comment-id="{{ comment.commentId }}" 
+					content="{{ content }}"></pratilipi-comment-input>
+		</template>
+		
 	</template>
 	
 
@@ -155,8 +157,9 @@
 					this.set( 'comment', comment );
 					this.closeCommentEdit();
 				} else if( comment.state == "DELETED" ) {
-					document.querySelector( 'pratilipi-comment-list#comment-'+ this.comment.parentId ).deleteCommentFromList( comment );
-					/* this.domHost.deleteCommentFromList( comment ); */
+					<#-- document.querySelector( 'pratilipi-comment-list#comment-'+ this.comment.parentId ).deleteCommentFromList( comment );
+					this.domHost.deleteCommentFromList( comment ); -->
+					jQuery( this.querySelector( '.comment' ) ).css( 'display', 'none' );
 				}
 			},
 			
