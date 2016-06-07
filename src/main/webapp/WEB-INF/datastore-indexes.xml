@@ -84,8 +84,8 @@
 
 
 	<datastore-index kind="COMMENT" ancestor="false" source="manual">
-		<property name="PARENT_ID" direction="asc"/>
-		<property name="PARENT_TYPE" direction="asc"/>
+		<property name="REFERENCE_ID" direction="asc"/>
+		<property name="REFERENCE_TYPE" direction="asc"/>
 		<property name="CREATION_DATE" direction="desc"/>
 	</datastore-index>
 
