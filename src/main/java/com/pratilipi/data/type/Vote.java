@@ -2,6 +2,7 @@ package com.pratilipi.data.type;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.type.VoteType;
 
@@ -22,6 +23,18 @@ public interface Vote extends GenericOfyType {
 	
 	void setParentId( String parentId );
 	
+	ReferenceType getReferenceType();
+
+	void setReferenceType( ReferenceType referenceType );
+
+	String getReferenceId();
+
+	Long getReferenceIdLong();
+
+	void setReferenceId( Long parentId );
+
+	void setReferenceId( String parentId );
+
 	
 	VoteType getType();
 	

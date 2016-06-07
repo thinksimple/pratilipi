@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
+import com.pratilipi.common.type.ReferenceType;
 
 
 public interface Comment extends GenericOfyType {
@@ -26,6 +27,18 @@ public interface Comment extends GenericOfyType {
 	void setParentId( Long parentId );
 	
 	void setParentId( String parentId );
+	
+	ReferenceType getReferenceType();
+
+	void setReferenceType( ReferenceType referenceType );
+
+	String getReferenceId();
+
+	Long getReferenceIdLong();
+
+	void setReferenceId( Long parentId );
+
+	void setReferenceId( String parentId );
 	
 	
 	String getContent();

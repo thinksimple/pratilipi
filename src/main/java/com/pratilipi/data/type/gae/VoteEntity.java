@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.condition.IfNotNull;
+import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.type.VoteType;
 import com.pratilipi.data.type.Vote;
@@ -28,6 +29,12 @@ public class VoteEntity implements Vote {
 	
 	@Index
 	private String PARENT_ID;
+	
+	@Index
+	private ReferenceType REFERENCE_TYPE;
+	
+	@Index
+	private String REFERENCE_ID;
 	
 	
 	@Index( IfNotNull.class )
@@ -92,6 +99,36 @@ public class VoteEntity implements Vote {
 	@Override
 	public void setParentId( String parentId ) {
 		this.PARENT_ID = parentId;
+	}
+
+	@Override
+	public ReferenceType getReferenceType() {
+		return REFERENCE_TYPE;
+	}
+
+	@Override
+	public void setReferenceType( ReferenceType referenceType ) {
+		this.REFERENCE_TYPE = referenceType;
+	}
+
+	@Override
+	public String getReferenceId() {
+		return REFERENCE_ID;
+	}
+
+	@Override
+	public Long getReferenceIdLong() {
+		return Long.parseLong( REFERENCE_ID );
+	}
+
+	@Override
+	public void setReferenceId( Long parentId ) {
+		this.REFERENCE_ID = parentId.toString();
+	}
+
+	@Override
+	public void setReferenceId( String parentId ) {
+		this.REFERENCE_ID = parentId;
 	}
 
 	

@@ -14,6 +14,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
+import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -27,6 +28,7 @@ import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.CommentDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.UserPratilipiDoc;
 import com.pratilipi.filter.AccessTokenFilter;
 
@@ -185,6 +187,11 @@ public class CommentDataUtil {
 			comment.setUserId( commentData.getUserId() );
 			comment.setParentType( commentData.getParentType() );
 			comment.setParentId( commentData.getParentId() );
+			if( commentData.getParentType() == CommentParentType.REVIEW ) {
+				UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( commentData.getParentId() );
+				comment.setReferenceType( ReferenceType.PRATILIPI );
+				comment.setReferenceId( userPratilipi.getPratilipiId() );
+			}
 			comment.setCreationDate( new Date() );
 		}
 

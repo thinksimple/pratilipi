@@ -10,6 +10,7 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
+import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.data.type.Comment;
 
 @Cache
@@ -28,6 +29,12 @@ public class CommentEntity implements Comment {
 	
 	@Index
 	private String PARENT_ID;
+	
+	@Index
+	private ReferenceType REFERENCE_TYPE;
+	
+	@Index
+	private String REFERENCE_ID;
 	
 	
 	private String CONTENT;
@@ -104,6 +111,36 @@ public class CommentEntity implements Comment {
 	@Override
 	public void setParentId( String parentId ) {
 		this.PARENT_ID = parentId;
+	}
+
+	@Override
+	public ReferenceType getReferenceType() {
+		return REFERENCE_TYPE;
+	}
+
+	@Override
+	public void setReferenceType( ReferenceType referenceType ) {
+		this.REFERENCE_TYPE = referenceType;
+	}
+
+	@Override
+	public String getReferenceId() {
+		return REFERENCE_ID;
+	}
+
+	@Override
+	public Long getReferenceIdLong() {
+		return Long.parseLong( REFERENCE_ID );
+	}
+
+	@Override
+	public void setReferenceId( Long parentId ) {
+		this.REFERENCE_ID = parentId.toString();
+	}
+
+	@Override
+	public void setReferenceId( String parentId ) {
+		this.REFERENCE_ID = parentId;
 	}
 
 	
