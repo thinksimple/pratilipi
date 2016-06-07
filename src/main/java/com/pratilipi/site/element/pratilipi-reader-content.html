@@ -199,7 +199,9 @@
 				} else if( this.contentType == "IMAGE" ) {
 					this._onImageSizeChange();
 				}
-				$( 'html, body' ).animate( { scrollTop : 0 }, 500 );
+				this.async( function() {
+					jQuery( 'html, body' ).animate( { scrollTop : 0 }, 500 );
+				} );
 			},
 
 			getImageUrl: function( pageNo ) {
@@ -230,21 +232,24 @@
 				if( this.contentMap == null || jQuery.isEmptyObject( this.contentMap ) )
 					return;
 				
-				if( !this.lastPage && this.pageNo == this.pageCount )
-					this.set( 'lastPage', true );
-				else if( this.lastPage && this.pageNo != this.pageCount )
-					this.set( 'lastPage', false );
-				
 				if( this.contentType == "PRATILIPI" ) {
-					if( this.contentMap[ this.pageNo ] != null )	// Check in Map if exists
+					if( this.contentMap[ this.pageNo ] != null ) { // Check in Map if exists
 						this.set( 'content', this.contentMap[ this.pageNo ] );
-					else {											// Else make api call
+					} else if( this.contentMap[ this.pageNo ] == "LOADING" + "_" + this.pratilipiId + "_" + this.pageNo ) { // Request in flight
+						return;
+					} else {										// Else make api call
+						this.contentMap[ this.pageNo ] = "LOADING" + "_" + this.pratilipiId + "_" + this.pageNo;
 						this.set( 'content', "<paper-spinner class=\"pratilipi-spinner-center\" active></paper-spinner>" );
 						this._loadContent( this.pageNo );
 					}
 				} else if( this.contentType == "IMAGE" ) {
 					this.set( 'content', this.getImageUrl( this.pageNo ) );
 				}
+				
+				if( !this.lastPage && this.pageNo == this.pageCount )
+					this.set( 'lastPage', true );
+				else if( this.lastPage && this.pageNo != this.pageCount )
+					this.set( 'lastPage', false );
 
 				this._precache();								// Load Previous and next pages
 
