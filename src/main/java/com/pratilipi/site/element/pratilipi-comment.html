@@ -46,7 +46,7 @@
 			margin-right: 4px;
 		}
 		
-		pratilipi-grey-button {
+		button.pratilipi-grey-button {
 			padding: 6px 8px;
 			margin: 0px;
 			margin-top: 4px;
@@ -73,9 +73,9 @@
 			</template>
 			
 			<template is="dom-if" if="{{ showRestoreComment }}">
-				<button class="pratilipi-grey-button" on-click="restoreComment" class="pull-right">
+				<button class="pratilipi-grey-button pull-right" on-click="restoreComment" class="pull-right">
 					<iron-icon style="width: 16px; height: 16px; margin-top: -4px;" icon="icons:restore"></iron-icon>
-					Restore Comment
+					${ _strings.comment_restore_comment }
 				</button>
 			</template>
 			

@@ -34,7 +34,7 @@
 			margin-top: 1px;
 		}
 		
-		.pratilipi-dark-blue-button {
+		button.pratilipi-dark-blue-button {
 			padding: 7px 21px;
 			min-width: auto;
 			height: auto;
@@ -51,7 +51,7 @@
 					<span class="hidden-sm hidden-md hidden-lg">{{ user.displayName }}</span>
 				</div>
 				<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11" style="height: 100%;">
-					<textarea placeholder="${ _strings.comment_reply_to_comment }" value="{{ content::input }}"></textarea>
+					<textarea placeholder="${ _strings.comment_reply_comment_help }" value="{{ content::input }}"></textarea>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<button id="submitCommentButton" class="pratilipi-dark-blue-button pull-right" on-click="onSubmit">${ _strings.comment_submit_comment }</button>

@@ -130,10 +130,11 @@ review_see_all_reviews		= See All Reviews
 
 comment_reply_comment		= Reply
 comment_see_all_comments	= See all Replies
-comment_reply_to_comment	= Reply
+comment_reply_comment_help	= Type here to comment
 comment_add_comment			= Add Comment
 comment_edit_comment		= Edit Comment
 comment_delete_comment		= Delete Comment
+comment_restore_comment		= Restore Comment
 comment_submit_comment		= Submit
 comment_cancel_comment		= Cancel
 
