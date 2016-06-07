@@ -111,7 +111,9 @@
 			},
 			
 			focusTextarea: function() {
+				var offset = jQuery( this.querySelector( 'textarea' ) ).offset().top;
 				jQuery( this.querySelector( 'textarea' ) ).focus();
+				jQuery( 'html, body' ).animate( { scrollTop: offset }, 500 );
 			},
 
 			onSubmit: function() {

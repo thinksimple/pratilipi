@@ -38,10 +38,6 @@
 			font-size: 15px;
 		}
 		
-		a.reply-text iron-icon {
-			margin-top: -4px; 
-		}
-		
 		a.expand-comments {
 			font-size: 15px;
 			color: #333;
@@ -107,10 +103,11 @@
 			<div class="reviewText">{{ reviewText }}</div>
 			<div class="reply-section">
 				<a class="reply-text pratilipi-red" on-click="writeComment">
-					<iron-icon icon="icons:reply"></iron-icon>
 					${ _strings.comment_reply_comment }
 				</a>
+				<br/>
 				<a class="expand-comments" on-click="showOrHideComments">
+					<iron-icon icon="icons:subdirectory-arrow-right"></iron-icon>
 					${ _strings.comment_see_all_comments }
 					<iron-icon icon="{{ expandedIcon }}"></iron-icon>
 				</a>
