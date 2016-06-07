@@ -238,9 +238,13 @@ public class CommentDataUtil {
 		if( isNew && commentData.getParentId() == null )
 			errorMessages.addProperty( "parentId", GenericRequest.ERR_COMMENT_PARENT_ID_REQUIRED );
 		
-		// Old/New comment must have content.
-		if( commentData.getState() != CommentState.DELETED && commentData.getContent() == null )
+		// New comment must have content.
+		if( isNew && commentData.getContent() == null )
 			errorMessages.addProperty( "content", GenericRequest.ERR_COMMENT_CONTENT_REQUIRED );
+		// Content can not be unset or set to null for old comment
+		else if( ! isNew && commentData.hasContent() && commentData.getContent() == null )
+			errorMessages.addProperty( "content", GenericRequest.ERR_COMMENT_CONTENT_REQUIRED );
+		
 		
 		if( errorMessages.entrySet().size() > 0 )
 			throw new InvalidArgumentException( errorMessages );
