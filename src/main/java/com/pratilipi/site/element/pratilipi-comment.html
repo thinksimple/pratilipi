@@ -2,7 +2,7 @@
 
 	<style>
 		.comment {
-			padding: 12px 0px 12px 8px;
+			padding: 12px 8px;
 			border-top: 1px solid #d3d3d3;
 		}
 		
@@ -24,7 +24,7 @@
 			font-size: 14px;
 			text-align: justify; 
 			white-space:pre-wrap;
-			padding: 16px 0px 4px 4px;
+			padding: 14px 0px 4px 4px;
 		}
 		
 		paper-menu-button {
@@ -42,8 +42,16 @@
 		paper-item {
 			font-family: inherit;
 			font-size: inherit;
+			margin-left: 4px;
+			margin-right: 4px;
 		}
 		
+		pratilipi-grey-button {
+			padding: 6px 8px;
+			margin: 0px;
+			margin-top: 4px;
+		}
+	
 	</style>
 	
 	<template>
@@ -52,14 +60,23 @@
 				<paper-menu-button horizontal-align="right" class="pull-right">
 					<paper-icon-button class="dropdown-trigger" icon="icons:more-horiz" noink></paper-icon-button>
 						<paper-menu class="dropdown-content">
-							<paper-item on-click="openCommentEdit">${ _strings.comment_edit_comment }</paper-item>
-							<paper-item on-click="deleteComment">${ _strings.comment_delete_comment }</paper-item>
+							<paper-item on-click="openCommentEdit">
+								<iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:create"></iron-icon>
+								${ _strings.comment_edit_comment }
+							</paper-item>
+							<paper-item on-click="deleteComment">
+								<iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:delete"></iron-icon>
+								${ _strings.comment_delete_comment }
+							</paper-item>
 						</paper-menu>
 				</paper-menu-button>
 			</template>
 			
 			<template is="dom-if" if="{{ showRestoreComment }}">
-				<a on-click="restoreComment" class="pull-right">Restore Comment</a>
+				<button class="pratilipi-grey-button" on-click="restoreComment" class="pull-right">
+					<iron-icon style="width: 16px; height: 16px; margin-top: -4px;" icon="icons:restore"></iron-icon>
+					Restore Comment
+				</button>
 			</template>
 			
 			<div class="user-details">
