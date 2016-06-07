@@ -91,8 +91,12 @@ public class PratilipiDocUtil {
 			reviewDoc.setReview( review.getReview() );
 			reviewDoc.setReviewDate( review.getReviewDate() );
 			reviewDoc.setLikedByUserIds( reviewIdLikedByUserIdsMap.get( review.getId() ) );
+			reviewDocList.add( reviewDoc );
 			
 			List<Comment> reviewCommentList = reviewIdCommentListMap.get( review.getId() );
+			if( reviewCommentList == null )
+				continue;
+			
 			List<CommentDoc> commentDocList = new ArrayList<>( reviewCommentList.size() );
 			for( Comment comment : reviewCommentList ) {
 				if( comment.getState() == CommentState.DELETED )
@@ -109,8 +113,6 @@ public class PratilipiDocUtil {
 				commentDocList.add( commentDoc );
 			}
 			reviewDoc.setComments( commentDocList );
-			
-			reviewDocList.add( reviewDoc );
 			
 		}
 		
