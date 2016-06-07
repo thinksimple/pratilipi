@@ -193,13 +193,14 @@ public class CommentDataUtil {
 				comment.setReferenceId( userPratilipi.getPratilipiId() );
 			}
 			comment.setCreationDate( new Date() );
+		} else {
+			comment.setLastUpdated( new Date() );
 		}
-
+		
 		if( commentData.hasContent() )
 			comment.setContent( commentData.getContent() );
 		if( commentData.hasState() )
 			comment.setState( commentData.getState() );
-		comment.setLastUpdated( new Date() );
 		
 		
 		auditLog.setEventDataNew( gson.toJson( comment ) );
