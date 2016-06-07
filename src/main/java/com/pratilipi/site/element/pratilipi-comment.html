@@ -25,6 +25,7 @@
 			text-align: justify; 
 			white-space:pre-wrap;
 			padding: 14px 0px 4px 4px;
+			letter-spacing: 0.1px;
 		}
 		
 		paper-menu-button {
@@ -64,7 +65,7 @@
 								<iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:create"></iron-icon>
 								${ _strings.comment_edit_comment }
 							</paper-item>
-							<paper-item on-click="deleteComment">
+							<paper-item on-click="_deleteComment">
 								<iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:delete"></iron-icon>
 								${ _strings.comment_delete_comment }
 							</paper-item>
@@ -73,7 +74,7 @@
 			</template>
 			
 			<template is="dom-if" if="{{ showRestoreComment }}">
-				<button class="pratilipi-grey-button pull-right" on-click="restoreComment" class="pull-right">
+				<button class="pratilipi-grey-button pull-right" on-click="_restoreComment" class="pull-right">
 					<iron-icon style="width: 16px; height: 16px; margin-top: -4px;" icon="icons:restore"></iron-icon>
 					${ _strings.comment_restore_comment }
 				</button>
@@ -161,7 +162,7 @@
 				this.$.AjaxPost.generateRequest();
 			},
 			
-			deleteComment: function() {
+			_deleteComment: function() {
 				this.deleteComment = true;
 				var body = {
 					commentId: this.comment.commentId,
@@ -171,7 +172,7 @@
 				this.$.AjaxPost.generateRequest();
 			},
 			
-			restoreComment: function() {
+			_restoreComment: function() {
 				this.restoreComment = true;
 				var body = {
 					commentId: this.comment.commentId,
@@ -194,6 +195,7 @@
 					comment.hasAccessToUpdate = false;
 					// Inactive comment
 					jQuery( this.querySelector( '.comment' ) ).css( 'color', '#767676', 'important' );
+					jQuery( this.querySelector( '.comment' ) ).css( 'background', '#f9f9f9;', 'important' );
 					// Enable restoring the comment
 					this.showRestoreComment = true;
 					
@@ -208,6 +210,7 @@
 					this.restoreComment = false;
 					// Active comment
 					jQuery( this.querySelector( '.comment' ) ).css( 'color', 'inherit', 'important' );
+					jQuery( this.querySelector( '.comment' ) ).css( 'background', 'inherit', 'important' );
 					// Disable restoring the comment
 					this.showRestoreComment = false;
 					this.set( 'comment', comment );
