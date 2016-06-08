@@ -86,7 +86,7 @@ public class PratilipiDocUtil {
 		for( UserPratilipi review : reviewList ) {
 			
 			if( ( review.getReviewTitle() == null || review.getReviewTitle().trim().isEmpty() )
-					|| ( review.getReview() == null || review.getReview().trim().isEmpty() ) )
+					&& ( review.getReview() == null || review.getReview().trim().isEmpty() ) )
 				continue;
 			
 			UserPratilipiDoc reviewDoc = docAccessor.newUserPratilipiDoc();
