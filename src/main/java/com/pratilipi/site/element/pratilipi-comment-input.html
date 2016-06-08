@@ -25,7 +25,7 @@
 			padding-left: 8px;
 			padding-right: 8px;
 			box-sizing: border-box;
-			margin-left: -8px;
+			margin: 0px;
 		}
 		
 		button.pratilipi-grey-button {
@@ -78,7 +78,7 @@
 			is: 'pratilipi-comment-input',
 			
 			properties: {
-				user: { type: Object },
+				user: { type: Object, observer: "attached" },
 				
 				<#-- Adding new comment -->
 				addComment: { type: Boolean, value: false },
@@ -95,13 +95,11 @@
 			},
 			
 			attached: function() {
-				if( ! this.user.isGuest ) {
-					this.userProfileImageUrl = 	this.user.profileImageUrl.indexOf( "?" ) == -1 ?
-							this.user.profileImageUrl + "?" + "width=48" :
-							this.user.profileImageUrl + "&" + "width=48" ;
-				} else {
-					this.userProfileImageUrl = "http://10.ptlp.co/author/image?width=48";
-				}
+				if( this.user.isGuest )
+					return;
+				this.userProfileImageUrl = 	this.user.profileImageUrl.indexOf( "?" ) == -1 ?
+						this.user.profileImageUrl + "?" + "width=36" :
+						this.user.profileImageUrl + "&" + "width=36" ;
 			},
 			
 			onCancel: function() {

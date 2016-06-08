@@ -91,6 +91,8 @@
 					document.querySelector( 'pratilipi-user' ).logIn( true );
 					return;
 				}
+				if( this.commentCount == 0 )
+					this.isFinished = true;
 				if( ! this.isFinished )
 					this.loadComments();
 				jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'block' );
@@ -99,6 +101,8 @@
 			},
 			
 			showOrHideComments: function() {
+				if( this.commentCount == 0 )
+					this.isFinished = true;
 				if( ! this.isFinished )
 					this.loadComments();
 				
