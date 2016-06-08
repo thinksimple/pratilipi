@@ -125,6 +125,8 @@
 			},
 			
 			_updateCommentCount: function() {
+				if( ! this.isFinished )
+					return;
 				var n = 0;
 				for( var i = 0; i < this.commentList.length; i++ )
 					if( this.commentList[i].state == "ACTIVE" )
