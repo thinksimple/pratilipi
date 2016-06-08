@@ -1,56 +1,38 @@
-<#if ( review.getReviewTitle()?? && review.getReviewTitle() != "" ) || 
-	 ( review.getReview()?? && review.getReview() != "" ) >
+<#if review.getReview()?? && review.getReview() != "" >
 	 
-	 <#assign hasReview = true >
+	<#assign hasReview = true >
 	 
 	<#if review.getReviewDateMillis()?? >
 		<script>
 			$( document ).ready( function() {
-				var d = new Date( ${ review.getReviewDateMillis()?c } );
-				function day(d) { return (d < 10) ? '0' + d : d; }
-				function month(m) { var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return months[m]; }
-				$( '#reviewDate-${ review.getId() }' ).html( [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ') );
+				$( '#reviewDate-${ review.getId() }' ).html( convertDate( ${ review.getReviewDateMillis()?c } ) );
 			});
 		</script>
 	</#if>
-	
 	<div class="secondary-500 pratilipi-shadow box" style="padding: 10px 20px;">
-		<div class="row" style="padding: 10px;">
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-center">
-				<div style="margin: 5px auto;">
-					<#if review.getUserProfilePageUrl() ??><a href="${ review.getUserProfilePageUrl() }"></#if>
-						<h6>${ review.getUserName() }</h6>
-					<#if review.getUserProfilePageUrl() ??></a></#if>
-					<#if review.rating?? >
-						<div style="margin: 5px auto;">
-							<#assign rating=review.rating>
-							<#include "pratilipi-rating.ftl" >
-						</div>
-					</#if>
-	   			</div>
-				<#if review.getUserImageUrl()?? >
-					<div style="height: 64px; width: 64px; display: block; margin: 0 auto;">
-						<#if review.getUserProfilePageUrl() ??><a href="${ review.getUserProfilePageUrl() }"></#if>
-							<img class="img-circle pratilipi-shadow" style="max-width: 64px; max-height: 64px;" src="${ review.getUserImageUrl() }" alt="${ review.getUserName() }" title="${ review.getUserName() }"/>
-						<#if review.getUserProfilePageUrl() ??></a></#if>
+		<div style="padding: 20px;">
+			<a href="${ review.getUserProfilePageUrl() }">
+				<img style="margin: 12px 0;" class="img-circle pratilipi-shadow pull-left" src="${ review.getUserImageUrl() }" alt="${ review.getUserName() }" title="${ review.getUserName() }"/>
+			</a>
+			<div style="display: inline-block; margin-left: 16px;">
+				<a href="${ review.getUserProfilePageUrl() }">${ review.getUserName() }</a>  
+                <#if review.rating?? >
+					<div>
+						<#assign rating=review.rating>
+						<#include "pratilipi-rating.ftl" >
 					</div>
 				</#if>
 				<#if review.getReviewDateMillis()?? >
-   					<span id="reviewDate-${ review.getId() }"></span>
-   				</#if>
-			</div>
-			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-				<#if review.getReviewTitle()?? && review.getReviewTitle()?has_content>
-					<div style="margin-bottom: 10px; font-size: 15px;">${ review.getReviewTitle() }</div>
+					<span style="display: block;" id="reviewDate-${ review.getId() }"></span>
 				</#if>
-				<#if review.getReview()?? && review.getReview()?has_content>
-					<div style="text-align: justify; font-size: 15px;">${ review.getReview() }</div>
-				</#if>
-			</div>
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<button style="display: block; margin: 10px auto;" class="pratilipi-grey-button" id="view-replies-${ review.getId() }" onClick="loadComments( '${ review.getId() }' )">View all replies</button>
 			</div>
 		</div>
-		<div id="comments-${ review.getId() }"></div>
+		<div style="text-align: justify; font-size: 15px; margin-bottom: 8px;">${ review.getReview() }</div>
+		<div class="reply-section">
+			<a class="reply-text pratilipi-red">${ _strings.comment_reply_comment }</a>
+			<br/>
+			<a class="expand-comments" id="view-replies-${ review.getId() }" onClick="loadComments( '${ review.getId() }' )">${ _strings.comment_see_all_comments }</a>
+		</div>
 	</div>
+	<div id="comments-${ review.getId() }"></div>
 </#if>
