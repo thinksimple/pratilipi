@@ -148,8 +148,8 @@ public class InitApi extends GenericApi {
 				.list();
 		
 		for( PratilipiEntity pratilipi : pratilipiList ) {
-			pratilipi.getTotalRating();
-			ObjectifyService.ofy().save().entity( pratilipi ).now();
+			if( pratilipi.getTotalRating() > 0 )
+				ObjectifyService.ofy().save().entity( pratilipi ).now();
 		}
 		
 		
