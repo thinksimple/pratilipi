@@ -2,7 +2,6 @@ package com.pratilipi.api.impl.init;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,9 +10,7 @@ import java.util.logging.Logger;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.cmd.QueryKeys;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -30,8 +27,6 @@ import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
-import com.pratilipi.taskqueue.Task;
-import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -135,7 +130,7 @@ public class InitApi extends GenericApi {
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 */
 
-		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load().type( PratilipiEntity.class ).keys();
+/*		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load().type( PratilipiEntity.class ).keys();
 		List<Task> taskList = new LinkedList<>();
 		for( Key<PratilipiEntity> key : queryKeys.iterable() ) {
 			Task task = TaskQueueFactory.newTask()
@@ -145,6 +140,17 @@ public class InitApi extends GenericApi {
 			taskList.add( task );
 		}
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
+*/
+		
+		List<PratilipiEntity> pratilipiList = ObjectifyService.ofy().load()
+				.type( PratilipiEntity.class )
+				.filter( "LANGUAGE ==", null )
+				.list();
+		
+		for( PratilipiEntity pratilipi : pratilipiList ) {
+			pratilipi.getLanguage();
+			ObjectifyService.ofy().save().entity( pratilipi ).now();
+		}
 		
 		
 		return new GenericResponse();
