@@ -18,6 +18,7 @@ import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.ReferenceType;
+import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.util.GoogleAnalyticsApi;
 import com.pratilipi.data.BlobAccessor;
@@ -81,28 +82,37 @@ public class PratilipiDocUtil {
 		}
 		
 		
-		List<UserPratilipi> reviewList = dataAccessor.getPratilipiReviewList( pratilipiId, null, null, null ).getDataList();
-		List<UserPratilipiDoc> reviewDocList = new ArrayList<>( reviewList.size() );
-		for( UserPratilipi review : reviewList ) {
+		List<UserPratilipi> userPratilipiList = dataAccessor.getUserPratilipiList( null, pratilipiId, null, null ).getDataList();
+		long ratingCount = 0;
+		long totalRating = 0;
+		List<UserPratilipiDoc> reviewDocList = new ArrayList<>();
+		for( UserPratilipi userPratilipi : userPratilipiList ) {
 			
-			if( ( review.getReviewTitle() == null || review.getReviewTitle().trim().isEmpty() )
-					&& ( review.getReview() == null || review.getReview().trim().isEmpty() ) )
+			if( userPratilipi.getRating() != null && userPratilipi.getRating() > 0 ) {
+				ratingCount++;
+				totalRating += userPratilipi.getRating();
+			}
+			
+			if( userPratilipi.getReviewState() != UserReviewState.PUBLISHED )
+				continue;
+			
+			if( ( userPratilipi.getReviewTitle() == null || userPratilipi.getReviewTitle().trim().isEmpty() )
+					&& ( userPratilipi.getReview() == null || userPratilipi.getReview().trim().isEmpty() ) )
 				continue;
 			
 			UserPratilipiDoc reviewDoc = docAccessor.newUserPratilipiDoc();
-			reviewDoc.setId( review.getId() );
-			reviewDoc.setUserId( review.getUserId() );
+			reviewDoc.setId( userPratilipi.getId() );
+			reviewDoc.setUserId( userPratilipi.getUserId() );
 
-			reviewDoc.setRating( review.getRating() );
+			reviewDoc.setRating( userPratilipi.getRating() );
+			reviewDoc.setReviewTitle( userPratilipi.getReviewTitle() == null || userPratilipi.getReviewTitle().trim().isEmpty() ? null : userPratilipi.getReviewTitle().trim() );
+			reviewDoc.setReview( userPratilipi.getReview() == null || userPratilipi.getReview().trim().isEmpty() ? null : userPratilipi.getReview().trim() );
 			
-			reviewDoc.setReviewTitle( review.getReviewTitle() == null || review.getReviewTitle().trim().isEmpty() ? null : review.getReviewTitle().trim() );
-			reviewDoc.setReview( review.getReview() == null || review.getReview().trim().isEmpty() ? null : review.getReview().trim() );
-			
-			reviewDoc.setReviewDate( review.getReviewDate() );
-			reviewDoc.setLikedByUserIds( reviewIdLikedByUserIdsMap.get( review.getId() ) );
+			reviewDoc.setReviewDate( userPratilipi.getReviewDate() );
+			reviewDoc.setLikedByUserIds( reviewIdLikedByUserIdsMap.get( userPratilipi.getId() ) );
 			reviewDocList.add( reviewDoc );
 			
-			List<Comment> reviewCommentList = reviewIdCommentListMap.get( review.getId() );
+			List<Comment> reviewCommentList = reviewIdCommentListMap.get( userPratilipi.getId() );
 			if( reviewCommentList == null )
 				continue;
 			

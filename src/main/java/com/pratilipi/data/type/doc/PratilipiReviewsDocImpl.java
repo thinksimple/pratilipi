@@ -7,10 +7,36 @@ import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipiDoc;
 
 public class PratilipiReviewsDocImpl implements PratilipiReviewsDoc {
-	
+
+	private Long ratingCount;
+	private Long totalRating;
 	private List<UserPratilipiDocImpl> reviews;
 	
 	
+	@Override
+	public Long getRatingCount() {
+		return ratingCount == null ? 0 : ratingCount;
+	}
+	
+	@Override
+	public void setRatingCount( Long count ) {
+		this.ratingCount = count;
+	}
+	
+	@Override
+	public Long getTotalRating() {
+		return totalRating == null ? 0 : totalRating;
+	}
+
+	@Override
+	public void setTotalRating( Long totalRating ) {
+		this.totalRating = totalRating;
+	}
+
+	public Long getReviewCount() {
+		return reviews == null ? 0L : (long) reviews.size();
+	}
+
 	@Override
 	public List<UserPratilipiDoc> getReviews() {
 		return reviews == null
