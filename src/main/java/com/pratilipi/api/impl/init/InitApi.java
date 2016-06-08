@@ -2,6 +2,8 @@ package com.pratilipi.api.impl.init;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -25,10 +27,11 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
-import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -132,19 +135,19 @@ public class InitApi extends GenericApi {
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 */
 
-/*		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load().type( PratilipiEntity.class ).keys();
+		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load().type( PratilipiEntity.class ).keys();
 		List<Task> taskList = new LinkedList<>();
 		for( Key<PratilipiEntity> key : queryKeys.iterable() ) {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/pratilipi/process" )
 					.addParam( "pratilipiId", key.getId() + "" )
-					.addParam( "updateReviewsDoc", "true" );
+					.addParam( "updateUserPratilipiStats", "true" );
 			taskList.add( task );
 		}
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
-*/
+
 		
-		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load()
+/*		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load()
 				.type( PratilipiEntity.class )
 				.filter( "TOTAL_RATING ==", null )
 				.keys();
@@ -154,7 +157,7 @@ public class InitApi extends GenericApi {
 			if( pratilipi.getTotalRating() > 0 )
 				ObjectifyService.ofy().save().entity( pratilipi ).now();
 		}
-		
+*/		
 		
 		return new GenericResponse();
 		
