@@ -144,7 +144,7 @@ public class InitApi extends GenericApi {
 		
 		List<PratilipiEntity> pratilipiList = ObjectifyService.ofy().load()
 				.type( PratilipiEntity.class )
-				.filter( "STAR_COUNT !=", null )
+				.filter( "LAST_PROCESS_DATE !=", null )
 				.list();
 		
 		for( PratilipiEntity pratilipi : pratilipiList ) {
