@@ -2,7 +2,6 @@ package com.pratilipi.api.impl.init;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -10,7 +9,9 @@ import java.util.logging.Logger;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.QueryKeys;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -24,6 +25,7 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
+import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
@@ -142,12 +144,13 @@ public class InitApi extends GenericApi {
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
 */
 		
-		List<PratilipiEntity> pratilipiList = ObjectifyService.ofy().load()
+		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load()
 				.type( PratilipiEntity.class )
-				.filter( "LAST_PROCESS_DATE !=", null )
-				.list();
+				.filter( "TOTAL_RATING ==", null )
+				.keys();
 		
-		for( PratilipiEntity pratilipi : pratilipiList ) {
+		for( Key<PratilipiEntity> key : queryKeys.iterable() ) {
+			Pratilipi pratilipi = (Pratilipi) ObjectifyService.ofy().load().key( key );
 			if( pratilipi.getTotalRating() > 0 )
 				ObjectifyService.ofy().save().entity( pratilipi ).now();
 		}
