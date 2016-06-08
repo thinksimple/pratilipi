@@ -19,6 +19,8 @@ public class GenericReviewResponse extends GenericResponse {
 	private Integer rating;
 	private String review;
 	private Long reviewDateMillis;
+	
+	private Integer commentCount;
 
 	
 	private GenericReviewResponse() { }
@@ -32,6 +34,7 @@ public class GenericReviewResponse extends GenericResponse {
 		this.rating = userPratilipiData.getRating();
 		this.review = userPratilipiData.getReview();
 		this.reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate().getTime();
+		this.commentCount = userPratilipiData.getCommentCount();
 		
 	}
 	
@@ -66,6 +69,10 @@ public class GenericReviewResponse extends GenericResponse {
 	
 	public Long getReviewDateMillis() {
 		return reviewDateMillis == null ? null : reviewDateMillis;
+	}
+	
+	public Integer getCommentCount() {
+		return commentCount;
 	}
 	
 }
