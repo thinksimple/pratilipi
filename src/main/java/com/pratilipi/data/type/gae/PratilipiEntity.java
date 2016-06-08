@@ -278,10 +278,9 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public Long getTotalRating() {
-		if( TOTAL_RATING == null ) {
+		if( TOTAL_RATING == null )
 			TOTAL_RATING = STAR_COUNT;
-			STAR_COUNT = null;
-		}
+		STAR_COUNT = null;
 		return TOTAL_RATING == null ? 0 : TOTAL_RATING;
 	}
 
