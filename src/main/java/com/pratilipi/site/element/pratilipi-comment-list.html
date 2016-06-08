@@ -122,17 +122,15 @@
 			
 			addCommentToList: function( comment ) {
 				this.push( 'commentList', comment );
-				this.updateCommentCount();
+				this.incrementCommentCount();
+			},
+
+			incrementCommentCount: function( value ) {
+				this.set( 'commentCount', this.commentCount + ( value != null ? value : 1 ) );
 			},
 			
-			updateCommentCount: function() {
-				if( ! this.isFinished )
-					return;
-				var n = 0;
-				for( var i = 0; i < this.commentList.length; i++ )
-					if( this.commentList[i].state == "ACTIVE" )
-						n ++;
-				this.set( 'commentCount', n );
+			decrementCommentCount: function( value ) {
+				this.set( 'commentCount', this.commentCount - ( value != null ? value : 1 ) );
 			},
 			
 			<#--

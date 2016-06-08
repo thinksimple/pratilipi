@@ -269,8 +269,10 @@
 					return;
 				
 				var reviewList = event.detail.response.reviewList;
-				for( var i = 0; i < reviewList.length; i++ )
-					this.push( 'reviewList', reviewList[i] );
+				for( var i = 0; i < reviewList.length; i++ ) {
+					if( reviewList[i].userPratilipiId != this.userpratilipi.userPratilipiId )
+						this.push( 'reviewList', reviewList[i] );
+				}
 
 				if( event.detail.response.cursor == null || reviewList.length < 20 )
 					this.isFinished = true;
