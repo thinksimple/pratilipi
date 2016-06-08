@@ -49,6 +49,11 @@ public class DocAccessorImpl implements DocAccessor {
 	// Pratilipi Reviews Doc
 	
 	@Override
+	public PratilipiReviewsDoc newPratilipiReviewsDoc() {
+		return new PratilipiReviewsDocImpl();
+	}
+	
+	@Override
 	public PratilipiReviewsDoc getPratilipiReviewsDoc( Long pratilipiId ) throws UnexpectedServerException {
 		if( pratilipiId != null )
 			return _get( "pratilipi/" + pratilipiId + "/reviews", PratilipiReviewsDocImpl.class );

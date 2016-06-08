@@ -6,9 +6,11 @@ import java.util.List;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericReviewResponse;
-import com.pratilipi.api.impl.userpratilipi.shared.GetUserPratilipiReviewListRequest;
-import com.pratilipi.api.impl.userpratilipi.shared.GetUserPratilipiReviewListResponse;
+import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
@@ -17,21 +19,47 @@ import com.pratilipi.data.util.UserPratilipiDataUtil;
 @Bind( uri = "/userpratilipi/review/list" )
 public class UserPratilipiReviewListApi extends GenericApi {
 
+	public class GetRequest extends GenericRequest {
+
+		@Validate( required = true )
+		private Long pratilipiId;
+		
+		private String cursor;
+		
+		private Integer resultCount;
+
+	}
+	
+	@SuppressWarnings("unused")
+	public class Response extends GenericResponse {
+		
+		private List<GenericReviewResponse> reviewList;
+		private String cursor;
+
+		
+		Response() {}
+		
+		Response( List<UserPratilipiData> reviewList, String cursor ) {
+			this.reviewList = new ArrayList<>( reviewList.size() );
+			for( UserPratilipiData review : reviewList )
+				this.reviewList.add( new GenericReviewResponse( review ) );
+			this.cursor = cursor;
+		}
+		
+	}
+
+	
 	@Get
-	public GetUserPratilipiReviewListResponse get( GetUserPratilipiReviewListRequest request ) {
+	public Response get( GetRequest request ) throws UnexpectedServerException {
 		
 		DataListCursorTuple<UserPratilipiData> userPratilipiListCursorTuple =
 				UserPratilipiDataUtil.getPratilipiReviewList(
-						request.getPratilipiId(),
-						request.getCursor(),
-						request.getResultCount() == null ? 20 : request.getResultCount() );
+						request.pratilipiId,
+						request.cursor,
+						request.resultCount == null ? 20 : request.resultCount );
 		
-		List<GenericReviewResponse> reviewList = new ArrayList<>( userPratilipiListCursorTuple.getDataList().size() );
-		for( UserPratilipiData userPratilipiData : userPratilipiListCursorTuple.getDataList() )
-			reviewList.add( new GenericReviewResponse( userPratilipiData ) );
-		
-		return new GetUserPratilipiReviewListResponse(
-				reviewList,
+		return new Response(
+				userPratilipiListCursorTuple.getDataList(),
 				userPratilipiListCursorTuple.getCursor() );
 	
 	}

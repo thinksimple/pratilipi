@@ -7,6 +7,7 @@ import java.util.List;
 import org.jsoup.Jsoup;
 
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.util.UserAccessUtil;
@@ -14,14 +15,17 @@ import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.UserPratilipiDoc;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class UserPratilipiDataUtil {
@@ -81,6 +85,32 @@ public class UserPratilipiDataUtil {
 		
 	}
 	
+	public static UserPratilipiData createUserPratilipiData( UserPratilipiDoc userPratilipiDoc ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUser( userPratilipiDoc.getUserId() );
+		UserData userData = UserDataUtil.createUserData( user );
+		
+		UserPratilipiData userPratilipiData = new UserPratilipiData();
+		
+//		userPratilipiData.setId( userPratilipi.getId() ); TODO
+		userPratilipiData.setUserId( userPratilipiDoc.getUserId() );
+		userPratilipiData.setUserName( userData.getDisplayName() );
+		userPratilipiData.setUserImageUrl( userData.getProfileImageUrl() );
+		userPratilipiData.setUserProfilePageUrl( userData.getProfilePageUrl() );
+		userPratilipiData.setUser( userData );
+		
+		userPratilipiData.setRating( userPratilipiDoc.getRating() );
+//		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() ); TODO
+		userPratilipiData.setReview( convertHtmlToText( userPratilipiDoc.getReview() ) );
+		userPratilipiData.setReviewDate( userPratilipiDoc.getReviewDate() );
+		
+		userPratilipiData.setCommentCount( userPratilipiDoc.getComments().size() );
+		
+		return userPratilipiData;
+		
+	}
+	
 	public static List<UserPratilipiData> createUserPratilipiDataList( List<UserPratilipi> userPratilipiList ) {
 		List<UserPratilipiData> userPratilipiDataList = new ArrayList<>( userPratilipiList.size() );
 		for( UserPratilipi userPratilipi : userPratilipiList )
@@ -126,24 +156,38 @@ public class UserPratilipiDataUtil {
 	}
 	
 	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList(
-			Long pratilipiId, String cursor, Integer resultCount ) {
+			Long pratilipiId, String cursor, Integer resultCount ) throws UnexpectedServerException {
 		
 		return getPratilipiReviewList( pratilipiId, cursor, null, resultCount );
 		
 	}
 	
 	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList(
-			Long pratilipiId, String cursor, Integer offset, Integer resultCount ) {
+			Long pratilipiId, String cursor, Integer offset, Integer resultCount ) throws UnexpectedServerException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		DataListCursorTuple<UserPratilipi> userPratilipiListCursorTuple =
-				dataAccessor.getPratilipiReviewList( pratilipiId, cursor, offset, resultCount );
-		List<UserPratilipi> userPratilipiList = userPratilipiListCursorTuple.getDataList();
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		
+		PratilipiReviewsDoc reviewsDoc = docAccessor.getPratilipiReviewsDoc( pratilipiId );
+		List<UserPratilipiDoc> reviewDocList = reviewsDoc.getReviews();
+		
+		
+		int fromIndex = ( cursor == null ? 0 : Integer.parseInt( cursor ) ) + ( offset == null ? 0 : offset );
+		int toIndex = resultCount == null ? reviewDocList.size() : offset + resultCount;
+		
+		reviewDocList = reviewDocList.subList(
+				Math.min( fromIndex, reviewDocList.size() ),
+				Math.min( toIndex, reviewDocList.size() ) );
+		
+		
+		List<UserPratilipiData> userPratilipiDataList = new ArrayList<>( reviewDocList.size() );
+		for( UserPratilipiDoc review : reviewDocList )
+			userPratilipiDataList.add( createUserPratilipiData( review ) );
+		
 		
 		return new DataListCursorTuple<UserPratilipiData>(
-				createUserPratilipiDataList( userPratilipiList ),
-				userPratilipiListCursorTuple.getCursor() );
+				userPratilipiDataList,
+				toIndex + "",
+				(long) (int) reviewsDoc.getReviews().size() );
 		
 	}
 	

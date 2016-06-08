@@ -9,13 +9,16 @@ public class UserPratilipiData {
 	private String userPratilipiId;
 	
 	private Long userId;
-	
-	private String userName;
-	
-	private String userImageUrl;
-	
-	private String userProfilePageUrl;
 
+	@Deprecated
+	private String userName;
+	@Deprecated
+	private String userImageUrl;
+	@Deprecated
+	private String userProfilePageUrl;
+	
+	private UserData user;
+	
 	private Long pratilipiId;
 	
 	
@@ -31,11 +34,14 @@ public class UserPratilipiData {
 	private UserReviewState reviewState;
 	private boolean hasReviewState;
 	
+	private Long reviewDateMillis;
+
+	private Integer commentCount;
+	
+	
 	private Boolean addedToLib;
 	private boolean hasAddedToLib;
 
-	private Long reviewDateMillis;
-	
 	private Boolean hasAccessToReview;
 	
 
@@ -56,28 +62,42 @@ public class UserPratilipiData {
 		this.userId = userId;
 	}
 	
+	@Deprecated
 	public String getUserName() {
 		return userName;
 	}
 
+	@Deprecated
 	public void setUserName( String userName ) {
 		this.userName = userName;
 	}
 
+	@Deprecated
 	public String getUserImageUrl() {
 		return userImageUrl;
 	}
 
+	@Deprecated
 	public void setUserImageUrl( String userImageUrl ) {
 		this.userImageUrl = userImageUrl;
 	}
 
+	@Deprecated
 	public String getUserProfilePageUrl() {
 		return userProfilePageUrl;
 	}
 
+	@Deprecated
 	public void setUserProfilePageUrl( String userProfilePageUrl ) {
 		this.userProfilePageUrl = userProfilePageUrl;
+	}
+
+	public UserData getUser() {
+		return user;
+	}
+
+	public void setUser( UserData user ) {
+		this.user = user;
 	}
 
 	public Long getPratilipiId() {
@@ -149,14 +169,14 @@ public class UserPratilipiData {
 		this.reviewDateMillis = reviewDate == null ? null : reviewDate.getTime();
 	}
 
-	public boolean hasAccessToReview() {
-		return hasAccessToReview == null ? false : hasAccessToReview;
+	public Integer getCommentCount() {
+		return commentCount;
 	}
 	
-	public void setAccessToReview( Boolean hasAccessToReview ) {
-		this.hasAccessToReview = hasAccessToReview;
+	public void setCommentCount( Integer count ) {
+		this.commentCount = count;
 	}
-
+	
 	public Boolean isAddedToLib() {
 		return addedToLib == null ? false : addedToLib;
 	}
@@ -170,4 +190,12 @@ public class UserPratilipiData {
 		return hasAddedToLib;
 	}
 	
+	public boolean hasAccessToReview() {
+		return hasAccessToReview == null ? false : hasAccessToReview;
+	}
+	
+	public void setAccessToReview( Boolean hasAccessToReview ) {
+		this.hasAccessToReview = hasAccessToReview;
+	}
+
 }
