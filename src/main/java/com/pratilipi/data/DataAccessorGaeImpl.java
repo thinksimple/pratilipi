@@ -36,7 +36,6 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.ReferenceType;
-import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
@@ -1035,36 +1034,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		} catch( JDOObjectNotFoundException e ) {
 			return null;
 		}
-	}
-
-	@Override
-	public DataListCursorTuple<UserPratilipi> getPratilipiReviewList(
-			Long pratilipiId, String cursorStr, Integer offset, Integer resultCount ) {
-		
-		GaeQueryBuilder queryBuilder =
-				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) )
-						.addFilter( "pratilipiId", pratilipiId )
-						.addFilter( "reviewState", UserReviewState.PUBLISHED )
-						.addOrdering( "reviewDate", false );
-		
-		if( cursorStr != null )
-			queryBuilder.setCursor( cursorStr );
-		
-		if( offset != null && resultCount != null )
-			queryBuilder.setRange( offset, offset + resultCount );
-		else if( resultCount != null )
-			queryBuilder.setRange( 0, resultCount );
-		
-		Query query = queryBuilder.build();
-		
-		@SuppressWarnings("unchecked")
-		List<UserPratilipi> userPratilipiList =
-				(List<UserPratilipi>) query.executeWithMap( queryBuilder.getParamNameValueMap() );
-		Cursor cursor = JDOCursorHelper.getCursor( userPratilipiList );
-		
-		return new DataListCursorTuple<UserPratilipi>(
-				(List<UserPratilipi>) pm.detachCopyAll( userPratilipiList ),
-				cursor == null ? null : cursor.toWebSafeString() );
 	}
 
 	@Override

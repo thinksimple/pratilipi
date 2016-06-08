@@ -475,13 +475,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	}
 
 	@Override
-	public DataListCursorTuple<UserPratilipi> getPratilipiReviewList(
-			Long pratilipiId, String cursor, Integer offset, Integer resultCount ) {
-
-		return dataAccessor.getPratilipiReviewList( pratilipiId, cursor, offset, resultCount );
-	}
-
-	@Override
 	public DataListCursorTuple<Long> getPratilipiIdList(
 			UserPratilipiFilter userPratilipiFilter, String cursorStr,
 			Integer offset, Integer resultCount ) {

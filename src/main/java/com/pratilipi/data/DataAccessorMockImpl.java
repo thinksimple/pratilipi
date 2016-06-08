@@ -3,18 +3,15 @@ package com.pratilipi.data;
 import static com.pratilipi.data.mock.AuthorMock.AUTHOR_TABLE;
 import static com.pratilipi.data.mock.PageMock.PAGE_TABLE;
 import static com.pratilipi.data.mock.PratilipiMock.PRATILIPI_TABLE;
-import static com.pratilipi.data.mock.UserPratilipiMock.USER_PRATILIPI_TABLE;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 
-import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -587,19 +584,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 			if( userPratilipi.getUserId().equals( userId ) && userPratilipi.getPratilipiId().equals( pratilipiId ) )
 				return userPratilipi;
 		return null;
-	}
-
-	@Override
-	public DataListCursorTuple<UserPratilipi> getPratilipiReviewList(
-			Long pratilipiId, String cursor, Integer offset, Integer resultCount ) {
-
-		List<UserPratilipi> userPratilipiList = new LinkedList<>();
-
-		for( UserPratilipi userPratilipi : USER_PRATILIPI_TABLE )
-			if( userPratilipi.getPratilipiId().equals( pratilipiId ) && userPratilipi.getReviewDate() != null )
-				userPratilipiList.add( userPratilipi );
-
-		return new DataListCursorTuple<UserPratilipi>( userPratilipiList, userPratilipiList.size() > 0 ? "cursor" : null );
 	}
 
 	@Override
