@@ -67,12 +67,16 @@
 				cursor: { type: String, value: null },
 				resultCount: { type: Number },
 				
-				commentList: { type: Array, value: [], observer: "_updateCommentCount" },
+				commentList: { type: Array, value: function() { return []; } },
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
 
 				writeCommentClicked: { type: Boolean, value: false }
 			},
+			
+			observers: [
+				'_updateCommentCount( commentList.splices )'
+			],
 			
 			attached: function() {
 				this.set( 'commentList', [] );
@@ -127,7 +131,6 @@
 			_updateCommentCount: function() {
 				if( ! this.isFinished )
 					return;
-				console.log( this.commentList );
 				var n = 0;
 				for( var i = 0; i < this.commentList.length; i++ )
 					if( this.commentList[i].state == "ACTIVE" )

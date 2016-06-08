@@ -645,6 +645,8 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "reviewParam", reviewParam );
 			} else if( reviewParam != null && reviewParam.trim().equals( "write" ) && userPratilipiData != null && userPratilipiData.hasAccessToReview() ) {
 				dataModel.put( "reviewParam", reviewParam );
+			} else if( reviewParam != null && reviewParam.trim().equals( "reply" ) ) {
+				dataModel.put( "reviewParam", reviewParam );
 			} else { // if( reviewParam == null || reviewParam.trim().isEmpty() ) {
 				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
 						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 10 );
