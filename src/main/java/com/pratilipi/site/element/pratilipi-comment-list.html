@@ -141,6 +141,9 @@
 				this.$.AjaxGet.params.parentType = this.parentType;
 				/* this.$.AjaxGet.params.cursor = this.cursor; */
 				this.$.AjaxGet.generateRequest();
+				
+				console.log( "this.commentList" );
+				console.log( this.commentList );
 			},
 			
 			_handleAjaxGetResponse: function( event ) {
@@ -153,6 +156,10 @@
 					return;
 				
 				var commentList = event.detail.response.commentList;
+				
+				console.log( "commentList from response" );
+				console.log( commentList );
+				
 				for( var i = commentList.length - 1; i >= 0; i-- )
 					this.push( 'commentList', commentList[i] );
 
