@@ -80,7 +80,7 @@
 			<textarea id="comment-input" placeholder="${ _strings.comment_reply_comment_help }"></textarea>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<button id="submitCommentButton" class="pratilipi-dark-blue-button pull-right" onClick="addComment">${ _strings.comment_submit_comment }</button>
+			<button id="submitCommentButton" class="pratilipi-dark-blue-button pull-right" onClick="addComment()">${ _strings.comment_submit_comment }</button>
 			<a class="pratilipi-grey-button pull-right" href="${ pratilipi.getPageUrl() }">${ _strings.comment_cancel_comment }</a>
 		</div>
 	</div>

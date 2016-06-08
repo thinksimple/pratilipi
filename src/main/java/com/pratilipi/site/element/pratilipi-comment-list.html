@@ -74,10 +74,6 @@
 				writeCommentClicked: { type: Boolean, value: false }
 			},
 			
-			observers: [
-				'_updateCommentCount( commentList.splices )'
-			],
-			
 			attached: function() {
 				this.set( 'commentList', [] );
 			},
@@ -126,9 +122,10 @@
 			
 			addCommentToList: function( comment ) {
 				this.push( 'commentList', comment );
+				this.updateCommentCount();
 			},
 			
-			_updateCommentCount: function() {
+			updateCommentCount: function() {
 				if( ! this.isFinished )
 					return;
 				var n = 0;

@@ -207,6 +207,7 @@
 					this.showRestoreComment = true;
 					
 					this.set( 'comment', comment );
+					this.domHost.updateCommentCount();
 					
 					<#-- 
 						document.querySelector( 'pratilipi-comment-list#comment-'+ this.comment.parentId ).deleteCommentFromList( comment );
@@ -221,6 +222,7 @@
 					// Disable restoring the comment
 					this.showRestoreComment = false;
 					this.set( 'comment', comment );
+					this.domHost.updateCommentCount();
 				}
 			},
 			
