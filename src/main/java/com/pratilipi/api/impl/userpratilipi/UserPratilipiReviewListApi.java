@@ -19,7 +19,7 @@ import com.pratilipi.data.util.UserPratilipiDataUtil;
 @Bind( uri = "/userpratilipi/review/list" )
 public class UserPratilipiReviewListApi extends GenericApi {
 
-	public class GetRequest extends GenericRequest {
+	public static class GetRequest extends GenericRequest {
 
 		@Validate( required = true )
 		private Long pratilipiId;
@@ -31,7 +31,7 @@ public class UserPratilipiReviewListApi extends GenericApi {
 	}
 	
 	@SuppressWarnings("unused")
-	public class Response extends GenericResponse {
+	public static class Response extends GenericResponse {
 		
 		private List<GenericReviewResponse> reviewList;
 		private String cursor;

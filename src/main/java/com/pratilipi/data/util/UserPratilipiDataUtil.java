@@ -101,7 +101,9 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setUser( userData );
 		
 		userPratilipiData.setRating( userPratilipiDoc.getRating() );
-		userPratilipiData.setReview( userPratilipiDoc.getReviewTitle() + "\n\n" + convertHtmlToText( userPratilipiDoc.getReview() ) );
+		userPratilipiData.setReview( userPratilipiDoc.getReviewTitle() == null
+				? convertHtmlToText( userPratilipiDoc.getReview() )
+				: userPratilipiDoc.getReviewTitle() + "\n\n" + convertHtmlToText( userPratilipiDoc.getReview() ) );
 		userPratilipiData.setReviewDate( userPratilipiDoc.getReviewDate() );
 		
 		userPratilipiData.setCommentCount( userPratilipiDoc.getComments().size() );
