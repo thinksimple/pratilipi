@@ -83,9 +83,16 @@
 				if( ! this.isFinished )
 					this.loadComments();
 				
-				this.async( function() { 
-					jQuery( this.querySelector( "#collapse" ) ).collapse( 'toggle' );
-					jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'none' );
+				this.async( function() {
+					<#-- Changing the order of executions for better UX -->
+					<#-- Collapse opened if aria-expanded == true -->
+					if( jQuery( this.querySelector( "#collapse" ) ).attr( 'aria-expanded' ) == "true" ) {
+						jQuery( this.querySelector( "#collapse" ) ).collapse( 'toggle' );
+						jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'none' );
+					} else {
+						jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'none' );
+						jQuery( this.querySelector( "#collapse" ) ).collapse( 'toggle' );
+					}
 				} );
 			},
 			
