@@ -111,7 +111,8 @@
 			},
 			
 			focusTextarea: function() {
-				var offset = jQuery( this.querySelector( 'textarea' ) ).offset().top;
+				var offset = jQuery( this.querySelector( '.comment-input' ) ).offset().top;
+				offset = offset + jQuery( document ).height() - ( jQuery( this.querySelector( '.comment-input' ) ).height() * 2 );
 				jQuery( this.querySelector( 'textarea' ) ).focus();
 				jQuery( 'html, body' ).animate( { scrollTop: offset }, 500 );
 			},

@@ -45,6 +45,7 @@
 		
 		a.expand-comments iron-icon {
 			margin-left: -4px;
+			width: 16px;
 		}
 		
 		.reply-section {
@@ -107,9 +108,9 @@
 				</a>
 				<br/>
 				<a class="expand-comments" on-click="showOrHideComments">
-					<iron-icon icon="icons:subdirectory-arrow-right"></iron-icon>
+					<iron-icon icon="icons:unfold-more"></iron-icon>
 					${ _strings.comment_see_all_comments }
-					<iron-icon icon="{{ expandedIcon }}"></iron-icon>
+					<#-- <iron-icon icon="{{ expandedIcon }}"></iron-icon> -->
 				</a>
 			</div>
 			
@@ -132,7 +133,7 @@
 				user: { type: Object },
 				review: { type: Object, observer: "ready" },
 				
-				expandedIcon: { type: String, value: "icons:arrow-drop-down" },
+				<#-- expandedIcon: { type: String, value: "icons:arrow-drop-down" }, -->
 				hasAccessToUpdate: { type: Boolean, value: false }
 			},
 			
@@ -167,15 +168,17 @@
 			
 			writeComment: function() {
 				this.querySelector( 'pratilipi-comment-list' ).writeComment();
-				this.expandedIcon = "icons:arrow-drop-up";
+				<#-- this.expandedIcon = "icons:arrow-drop-up"; -->
 			},
 			
 			showOrHideComments: function() {
 				this.querySelector( 'pratilipi-comment-list' ).showOrHideComments( this.review.userPratilipiId );
+				<#--
 				if( this.expandedIcon == "icons:arrow-drop-down" )
 					this.expandedIcon = "icons:arrow-drop-up";
 				else
 					this.expandedIcon = "icons:arrow-drop-down";
+				-->
 			},
 			
 			

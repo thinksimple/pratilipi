@@ -5,9 +5,6 @@
 <dom-module id="pratilipi-comment-list">
 
 	<style>
-		.collapse {
-			min-height: 64px;
-		}
 		.comment-list {
 			padding-left: 8px;
 		}
@@ -75,19 +72,18 @@
 			},
 			
 			writeComment: function() {
-				jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'block' );
-				jQuery( this.querySelector( "#collapse" ) ).collapse( 'show' );
 				if( ! this.isFinished )
 					this.loadComments();
+				jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'block' );
+				this.async( function() { jQuery( this.querySelector( "#collapse" ) ).collapse( 'show' ); }, 100 );
 				this.querySelector( 'pratilipi-comment-input#add-comment' ).focusTextarea();
 			},
 			
 			showOrHideComments: function( reviewId ) {
-				jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'none' );
-				jQuery( this.querySelector( "#collapse" ) ).collapse( 'toggle' );
-				
 				if( ! this.isFinished )
 					this.loadComments();
+				jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'none' );
+				this.async( function() { jQuery( this.querySelector( "#collapse" ) ).collapse( 'toggle' ); }, 100 );
 			},
 			
 			addCommentToList: function( comment ) {
