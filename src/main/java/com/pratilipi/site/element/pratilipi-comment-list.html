@@ -75,15 +75,18 @@
 				if( ! this.isFinished )
 					this.loadComments();
 				jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'block' );
-				this.async( function() { jQuery( this.querySelector( "#collapse" ) ).collapse( 'show' ); }, 100 );
+				this.async( function() { jQuery( this.querySelector( "#collapse" ) ).collapse( 'show' ); } );
 				this.querySelector( 'pratilipi-comment-input#add-comment' ).focusTextarea();
 			},
 			
 			showOrHideComments: function( reviewId ) {
 				if( ! this.isFinished )
 					this.loadComments();
-				jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'none' );
-				this.async( function() { jQuery( this.querySelector( "#collapse" ) ).collapse( 'toggle' ); }, 100 );
+				
+				this.async( function() { 
+					jQuery( this.querySelector( "#collapse" ) ).collapse( 'toggle' );
+					jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'none' );
+				} );
 			},
 			
 			addCommentToList: function( comment ) {
