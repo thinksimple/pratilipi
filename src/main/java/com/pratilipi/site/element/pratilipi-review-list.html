@@ -93,10 +93,10 @@
 
 		<div>
 			<template is="dom-if" if="{{ reviewAvailable }}">
-				<pratilipi-review user="{{ user }}" review="{{ userpratilipi }}" has-access-to-update></pratilipi-review>
+				<pratilipi-review id="review-{{ userpratilipi.userPratilipiId }}" user="{{ user }}" review="{{ userpratilipi }}" has-access-to-update></pratilipi-review>
 			</template>
-			<template is="dom-repeat" id="repeatReviewList" items="[[reviewList]]">
-				<pratilipi-review user="{{ user }}" review="[[ item ]]"></pratilipi-review>
+			<template is="dom-repeat" id="repeatReviewList" items="[[reviewList]]" as="review">
+				<pratilipi-review id="review-{{ review.userPratilipiId }}" user="{{ user }}" review="[[ review ]]"></pratilipi-review>
 			</template>
 		</div>
 

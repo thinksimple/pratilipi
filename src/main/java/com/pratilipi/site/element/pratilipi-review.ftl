@@ -31,8 +31,10 @@
 		<div class="reply-section">
 			<a class="reply-text pratilipi-red">${ _strings.comment_reply_comment }</a>
 			<br/>
-			<a class="expand-comments" id="view-replies-${ review.getId() }" onClick="loadComments( '${ review.getId() }' )">${ _strings.comment_see_all_comments }</a>
+			<#if ${ review.getCommentCount() } gt 0>
+				<a class="expand-comments" id="view-replies-${ review.getId() }" onClick="loadComments( '${ review.getId() }' )">${ review.getCommentCount() }&nbsp;${ _strings.comment_number_of_comments }</a>
+			</#if>
 		</div>
+		<div id="comments-${ review.getId() }"></div>
 	</div>
-	<div id="comments-${ review.getId() }"></div>
 </#if>

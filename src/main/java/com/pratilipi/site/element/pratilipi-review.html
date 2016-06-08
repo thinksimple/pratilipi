@@ -107,15 +107,18 @@
 					${ _strings.comment_reply_comment }
 				</a>
 				<br/>
-				<a class="expand-comments" on-click="showOrHideComments">
-					<iron-icon icon="icons:unfold-more"></iron-icon>
-					${ _strings.comment_see_all_comments }
-					<#-- <iron-icon icon="{{ expandedIcon }}"></iron-icon> -->
-				</a>
+				<template is="dom-if" if="{{ showCommentCount }}">
+					<a class="expand-comments" on-click="showOrHideComments">
+						<iron-icon icon="icons:unfold-more"></iron-icon>
+						{{ commentCount }}&nbsp;${ _strings.comment_number_of_comments }
+						<#-- <iron-icon icon="{{ expandedIcon }}"></iron-icon> -->
+					</a>
+				</template>
 			</div>
 			
 			<pratilipi-comment-list
 				id="comment-{{ review.userPratilipiId }}"
+				comment-count="{{ commentCount }}"
 				user="{{ user }}"
 				parent-id="{{ review.userPratilipiId }}"
 				parent-type="REVIEW"></pratilipi-comment-list>
@@ -134,7 +137,9 @@
 				review: { type: Object, observer: "ready" },
 				
 				<#-- expandedIcon: { type: String, value: "icons:arrow-drop-down" }, -->
-				hasAccessToUpdate: { type: Boolean, value: false }
+				hasAccessToUpdate: { type: Boolean, value: false },
+				commentCount: { type: Number, value: 0, observer: "_commentCountObserver" },
+				showCommentCount: { type: Boolean, value: false }
 			},
 			
 			ready: function() {
@@ -164,6 +169,12 @@
 				
 				if( this.review.reviewDateMillis )
 					this.reviewDateMillis = convertDate( this.review.reviewDateMillis );
+				
+				this.commentCount = this.review.commentCount;
+			},
+			
+			_commentCountObserver: function() {
+				this.showCommentCount = this.commentCount != null && this.commentCount > 0 ? true : false;
 			},
 			
 			writeComment: function() {

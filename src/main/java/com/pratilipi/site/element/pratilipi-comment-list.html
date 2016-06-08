@@ -61,12 +61,13 @@
 			
 			properties: {
 				user: { type: Object, observer: "_userObserver" },
+				commentCount: { type: Number, notify: true },
 				parentId: { type: Number },
 				parentType: { type: String },
 				cursor: { type: String, value: null },
 				resultCount: { type: Number },
 				
-				commentList: { type: Array, value: [] },
+				commentList: { type: Array, value: [], observer: "_updateCommentCount" },
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
 
@@ -95,7 +96,7 @@
 					this.loadComments();
 				jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'block' );
 				this.async( function() { jQuery( this.querySelector( "#collapse" ) ).collapse( 'show' ); } );
-				this.querySelector( 'pratilipi-comment-input#add-comment' ).focusTextarea();
+				this.querySelector( 'pratilipi-comment-input#add-comment' ).focusTextarea( this.isFinished );
 			},
 			
 			showOrHideComments: function() {
@@ -115,8 +116,20 @@
 				} );
 			},
 			
+			closeCommentEdit: function() {
+				jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'none' );
+			},
+			
 			addCommentToList: function( comment ) {
 				this.push( 'commentList', comment );
+			},
+			
+			_updateCommentCount: function() {
+				var n = 0;
+				for( var i = 0; i < this.commentList.length; i++ )
+					if( this.commentList[i].state == "ACTIVE" )
+						n ++;
+				this.set( 'commentCount', n );
 			},
 			
 			<#--
@@ -145,9 +158,6 @@
 				this.$.AjaxGet.params.parentType = this.parentType;
 				/* this.$.AjaxGet.params.cursor = this.cursor; */
 				this.$.AjaxGet.generateRequest();
-				
-				console.log( "this.commentList" );
-				console.log( this.commentList );
 			},
 			
 			_handleAjaxGetResponse: function( event ) {
@@ -160,9 +170,6 @@
 					return;
 				
 				var commentList = event.detail.response.commentList;
-				
-				console.log( "commentList from response" );
-				console.log( commentList );
 				
 				for( var i = commentList.length - 1; i >= 0; i-- )
 					this.push( 'commentList', commentList[i] );

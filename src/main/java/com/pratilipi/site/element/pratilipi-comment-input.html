@@ -55,9 +55,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<button id="submitCommentButton" class="pratilipi-dark-blue-button pull-right" on-click="onSubmit">${ _strings.comment_submit_comment }</button>
-					<template is="dom-if" if="{{ editComment }}">
-						<button class="pratilipi-grey-button pull-right" on-click="onCancel">${ _strings.comment_cancel_comment }</button>
-					</template>
+					<button class="pratilipi-grey-button pull-right" on-click="onCancel">${ _strings.comment_cancel_comment }</button>
 				</div>
 			</div>
 		</div>
@@ -110,11 +108,14 @@
 				this.domHost.closeCommentEdit();
 			},
 			
-			focusTextarea: function() {
-				var offset = jQuery( this.querySelector( '.comment-input' ) ).offset().top;
-				offset = offset - ( jQuery( window ).height() / 2 );
+			focusTextarea: function( isFinished ) {
+				if( isFinished ) {
+					var offset = jQuery( this.querySelector( '.comment-input' ) ).offset().top;
+					offset = offset - ( jQuery( window ).height() / 2 );
+					jQuery( 'html, body' ).animate( { scrollTop: offset }, 500 );
+				}
+				
 				jQuery( this.querySelector( 'textarea' ) ).focus();
-				jQuery( 'html, body' ).animate( { scrollTop: offset }, 500 );
 			},
 
 			onSubmit: function() {
