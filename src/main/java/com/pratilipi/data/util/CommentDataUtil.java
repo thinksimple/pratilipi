@@ -139,7 +139,7 @@ public class CommentDataUtil {
 			}
 
 			int fromIndex = ( cursor == null ? 0 : Integer.parseInt( cursor ) ) + ( offset == null ? 0 : offset );
-			int toIndex = resultCount == null ? commentDocList.size() : offset + resultCount;
+			int toIndex = resultCount == null ? commentDocList.size() : fromIndex + resultCount;
 			
 			commentDocList = commentDocList.subList(
 					Math.min( fromIndex, commentDocList.size() ),

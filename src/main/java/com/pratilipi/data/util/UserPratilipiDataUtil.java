@@ -172,7 +172,7 @@ public class UserPratilipiDataUtil {
 		
 		
 		int fromIndex = ( cursor == null ? 0 : Integer.parseInt( cursor ) ) + ( offset == null ? 0 : offset );
-		int toIndex = resultCount == null ? reviewDocList.size() : offset + resultCount;
+		int toIndex = resultCount == null ? reviewDocList.size() : fromIndex + resultCount;
 		
 		reviewDocList = reviewDocList.subList(
 				Math.min( fromIndex, reviewDocList.size() ),
