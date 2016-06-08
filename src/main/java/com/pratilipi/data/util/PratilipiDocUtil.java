@@ -85,12 +85,19 @@ public class PratilipiDocUtil {
 		List<UserPratilipiDoc> reviewDocList = new ArrayList<>( reviewList.size() );
 		for( UserPratilipi review : reviewList ) {
 			
+			if( ( review.getReviewTitle() == null || review.getReviewTitle().trim().isEmpty() )
+					|| ( review.getReview() == null || review.getReview().trim().isEmpty() ) )
+				continue;
+			
 			UserPratilipiDoc reviewDoc = docAccessor.newUserPratilipiDoc();
 			reviewDoc.setId( review.getId() );
 			reviewDoc.setUserId( review.getUserId() );
+
 			reviewDoc.setRating( review.getRating() );
-			reviewDoc.setReviewTitle( review.getReviewTitle() );
-			reviewDoc.setReview( review.getReview() );
+			
+			reviewDoc.setReviewTitle( review.getReviewTitle() == null || review.getReviewTitle().trim().isEmpty() ? null : review.getReviewTitle().trim() );
+			reviewDoc.setReview( review.getReview() == null || review.getReview().trim().isEmpty() ? null : review.getReview().trim() );
+			
 			reviewDoc.setReviewDate( review.getReviewDate() );
 			reviewDoc.setLikedByUserIds( reviewIdLikedByUserIdsMap.get( review.getId() ) );
 			reviewDocList.add( reviewDoc );
