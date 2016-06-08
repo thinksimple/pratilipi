@@ -144,11 +144,11 @@ public class InitApi extends GenericApi {
 		
 		List<PratilipiEntity> pratilipiList = ObjectifyService.ofy().load()
 				.type( PratilipiEntity.class )
-				.filter( "LANGUAGE ==", null )
+				.filter( "TOTAL_RATING ==", null )
 				.list();
 		
 		for( PratilipiEntity pratilipi : pratilipiList ) {
-			pratilipi.getLanguage();
+			pratilipi.getTotalRating();
 			ObjectifyService.ofy().save().entity( pratilipi ).now();
 		}
 		

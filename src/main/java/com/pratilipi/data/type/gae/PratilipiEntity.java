@@ -33,10 +33,6 @@ public class PratilipiEntity implements Pratilipi {
 	@Index
 	private Language LANGUAGE;
 
-	@Deprecated
-	@Index
-	private Long LANGUAGE_ID;
-
 	@Index
 	private Long AUTHOR_ID;
 	
@@ -149,22 +145,6 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public Language getLanguage() {
-		if( LANGUAGE == null ) {
-			if( LANGUAGE_ID == 5130467284090880L || LANGUAGE_ID == 5750790484393984L )
-				LANGUAGE = Language.HINDI;
-			else if( LANGUAGE_ID == 5965057007550464L || LANGUAGE_ID == 5746055551385600L )
-				LANGUAGE = Language.GUJARATI;
-			else if( LANGUAGE_ID == 6319546696728576L || LANGUAGE_ID == 5719238044024832L )
-				LANGUAGE = Language.TAMIL;
-			else if( LANGUAGE_ID == 5173513199550464L )
-				LANGUAGE = Language.MARATHI;
-			else if( LANGUAGE_ID == 5752669171875840L )
-				LANGUAGE = Language.MALAYALAM;
-			else if( LANGUAGE_ID == 6235363433512960L )
-				LANGUAGE = Language.BENGALI;
-			else if( LANGUAGE_ID == 6213615354904576L || LANGUAGE_ID == 5688424874901504L )
-				LANGUAGE = Language.ENGLISH;
-		}
 		return LANGUAGE;
 	}
 
@@ -298,8 +278,10 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public Long getTotalRating() {
-		if( TOTAL_RATING == null )
+		if( TOTAL_RATING == null ) {
 			TOTAL_RATING = STAR_COUNT;
+			STAR_COUNT = null;
+		}
 		return TOTAL_RATING == null ? 0 : TOTAL_RATING;
 	}
 
