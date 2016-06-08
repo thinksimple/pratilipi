@@ -80,9 +80,6 @@ public class PratilipiEntity implements Pratilipi {
 	@Index
 	private Long RATING_COUNT;
 	
-	@Deprecated
-	private Long STAR_COUNT;
-
 	@Index
 	private Long TOTAL_RATING;
 	
@@ -278,15 +275,11 @@ public class PratilipiEntity implements Pratilipi {
 	
 	@Override
 	public Long getTotalRating() {
-		if( TOTAL_RATING == null )
-			TOTAL_RATING = STAR_COUNT;
-		STAR_COUNT = null;
 		return TOTAL_RATING == null ? 0 : TOTAL_RATING;
 	}
 
 	@Override
 	public void setTotalRating( Long totalRating ) {
-		this.STAR_COUNT = totalRating;
 		this.TOTAL_RATING = totalRating;
 	}
 	

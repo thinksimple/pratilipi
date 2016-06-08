@@ -23,7 +23,6 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
-import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.ImageUtil;
@@ -48,7 +47,7 @@ import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
-import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class PratilipiDataUtil {
@@ -841,26 +840,20 @@ public class PratilipiDataUtil {
 
 	}
 	
-	public static void updateUserPratilipiStats( Long pratilipiId ) {
+	public static void updateUserPratilipiStats( Long pratilipiId ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		if( pratilipi.getState() != PratilipiState.PUBLISHED )
 			return;
-		
-		DataListCursorTuple<UserPratilipi> userPratilipiDataListCursorTuple =
-				dataAccessor.getUserPratilipiList( null, pratilipiId, null, 1000 );
-		long reviewCount = 0;
-		long ratingCount = 0;
-		long totalRating = 0;
-		for( UserPratilipi userPratilipi : userPratilipiDataListCursorTuple.getDataList() ) {
-			if( userPratilipi.getReviewState() == UserReviewState.PUBLISHED )
-				reviewCount++;
-			if( userPratilipi.getRating() != null && userPratilipi.getRating() > 0 ) {
-				ratingCount++;
-				totalRating += userPratilipi.getRating();
-			}
-		}
+
+		PratilipiReviewsDoc reviewsDoc = docAccessor.getPratilipiReviewsDoc( pratilipiId );
+		if( pratilipi.getRatingCount().equals( reviewsDoc.getRatingCount() )
+				&& pratilipi.getTotalRating().equals( reviewsDoc.getTotalRating() )
+				&& pratilipi.getReviewCount().equals( reviewsDoc.getReviewCount() ) )
+			return;
 		
 		Gson gson = new Gson();
 
@@ -870,14 +863,9 @@ public class PratilipiDataUtil {
 		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
 
-		if( pratilipi.getReviewCount() == reviewCount
-				&& pratilipi.getRatingCount() == ratingCount
-				&& pratilipi.getTotalRating() == totalRating )
-			return;
-		
-		pratilipi.setReviewCount( reviewCount );
-		pratilipi.setRatingCount( ratingCount );
-		pratilipi.setTotalRating( totalRating );
+		pratilipi.setRatingCount( reviewsDoc.getRatingCount() );
+		pratilipi.setTotalRating( reviewsDoc.getTotalRating() );
+		pratilipi.setReviewCount( reviewsDoc.getReviewCount() );
 		
 		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 
