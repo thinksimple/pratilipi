@@ -6,7 +6,8 @@
 		<style>
 			.comment {
 				display: block;
-				padding-left: 24px;
+				padding-left: 4px;
+				border-right: 1px solid#f9f9f9;
 			}
 			.comment .comment-child {
 				border-top: 1px solid #d3d3d3;
@@ -25,6 +26,7 @@
 			.comment .content {
 				margin-top: 24px;
 				display: block;
+				margin-left: 12px;
 			}
 		</style>
 		<script>
@@ -59,9 +61,11 @@
 							   '<a href="' + commentList[i].user.profilePageUrl + '">' +
 							   '<img class="user-img img-circle" src="' + commentList[i].user.profileImageUrl + ( commentList[i].user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + 'width=48' + '" />' +
 							   '</a>' +
-							   '<a href="' + commentList[i].user.profilePageUrl + '">' +
-							   '<div class="user-name">' + commentList[i].user.displayName + '</div>' + 
-							   '</a>' +
+							   '<div class="user-name">' + 
+							   '<a href="' + commentList[i].user.profilePageUrl + '">' + 
+							   commentList[i].user.displayName + 
+							   '</a>' + 
+							   '</div>' +
 							   '<div class="date-added">' + convertDate( commentList[i].lastUpdatedMillis != null ? commentList[i].lastUpdatedMillis : commentList[i].creationDateMillis ) + '</div>' + 
 							   '<div class="content">' + ( commentList[i].content != null ? commentList[i].content : "&nbsp;" ) + '</div>' +
 							   '</div>' + 
@@ -113,7 +117,8 @@
 						If reviewParam = pratilipi, show pratilipi page and few reviews. -->
 				<#if reviewParam == "write">
 					<#include "../element/pratilipi-review-input.ftl">
-					
+				<#elseif reviewParam == "reply">
+					<#include "../element/pratilipi-comment-input.ftl">
 				<#elseif reviewParam == "list">
 					<#include "../element/pratilipi-review-list.ftl">
 					<#-- Add page navigation -->

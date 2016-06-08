@@ -127,6 +127,7 @@
 			_updateCommentCount: function() {
 				if( ! this.isFinished )
 					return;
+				console.log( this.commentList );
 				var n = 0;
 				for( var i = 0; i < this.commentList.length; i++ )
 					if( this.commentList[i].state == "ACTIVE" )

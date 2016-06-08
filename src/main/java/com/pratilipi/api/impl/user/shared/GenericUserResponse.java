@@ -61,7 +61,7 @@ public class GenericUserResponse extends GenericResponse {
 		return profilePageUrl;
 	}
 	
-	public String getImagePageUrl() {
+	public String getProfileImageUrl() {
 		return profileImageUrl;
 	}
 	

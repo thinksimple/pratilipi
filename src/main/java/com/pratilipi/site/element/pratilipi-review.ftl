@@ -12,7 +12,7 @@
 	<div class="secondary-500 pratilipi-shadow box" style="padding: 10px 20px;">
 		<div style="padding: 20px;">
 			<a href="${ review.getUserProfilePageUrl() }">
-				<img style="margin: 12px 0;" class="img-circle pratilipi-shadow pull-left" src="${ review.getUserImageUrl() }" alt="${ review.getUserName() }" title="${ review.getUserName() }"/>
+				<img style="margin: 0;" class="img-circle pratilipi-shadow pull-left" src="${ review.getUserImageUrl() }" alt="${ review.getUserName() }" title="${ review.getUserName() }"/>
 			</a>
 			<div style="display: inline-block; margin-left: 16px;">
 				<a href="${ review.getUserProfilePageUrl() }">${ review.getUserName() }</a>  
@@ -27,14 +27,17 @@
 				</#if>
 			</div>
 		</div>
-		<div style="text-align: justify; font-size: 15px; margin-bottom: 8px;">${ review.getReview() }</div>
+		<div style="text-align: justify; font-size: 15px; margin-bottom: 8px; clear: both; padding-top: 8px;">${ review.getReview() }</div>
 		<div class="reply-section">
-			<a class="reply-text pratilipi-red">${ _strings.comment_reply_comment }</a>
-			<br/>
+			<#if user.isGuest == true>
+				<a class="reply-text pratilipi-red" href="/login&ret=${ pratilipi.getPageUrl() }?review=reply&parentId=${ review.getId() }">${ _strings.comment_reply_comment }</a>
+			<#else>
+				<a class="reply-text pratilipi-red" href="?review=reply&parentId=${ review.getId() }">${ _strings.comment_reply_comment }</a>
+			</#if>
 			<#if review.getCommentCount() gt 0>
-				<a class="expand-comments" id="view-replies-${ review.getId() }" onClick="loadComments( '${ review.getId() }' )">${ review.getCommentCount() }&nbsp;${ _strings.comment_number_of_comments }</a>
+				<button style="outline: none; border: none; padding: 0px; display: none; background: none;" id="view-replies-${ review.getId() }" onClick="loadComments( '${ review.getId() }' )">${ review.getCommentCount() }&nbsp;${ _strings.comment_number_of_comments }</button>
 			</#if>
 		</div>
-		<div id="comments-${ review.getId() }"></div>
+		<div style="margin-top: 12px;" id="comments-${ review.getId() }"></div>
 	</div>
 </#if>
