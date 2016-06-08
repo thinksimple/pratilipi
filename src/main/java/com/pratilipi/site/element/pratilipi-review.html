@@ -167,12 +167,12 @@
 			},
 			
 			writeComment: function() {
-				this.querySelector( 'pratilipi-comment-list' ).writeComment();
+				this.querySelector( 'pratilipi-comment-list#comment-' + this.review.userPratilipiId ).writeComment();
 				<#-- this.expandedIcon = "icons:arrow-drop-up"; -->
 			},
 			
 			showOrHideComments: function() {
-				this.querySelector( 'pratilipi-comment-list' ).showOrHideComments( this.review.userPratilipiId );
+				this.querySelector( 'pratilipi-comment-list#comment-' + this.review.userPratilipiId ).showOrHideComments();
 				<#--
 				if( this.expandedIcon == "icons:arrow-drop-down" )
 					this.expandedIcon = "icons:arrow-drop-up";

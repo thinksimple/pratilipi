@@ -73,6 +73,10 @@
 				writeCommentClicked: { type: Boolean, value: false }
 			},
 			
+			attached: function() {
+				this.set( 'commentList', [] );
+			},
+			
 			_userObserver: function() {
 				if( ! this.user.isGuest && this.writeCommentClicked ) {
 					this.writeCommentClicked = false;
@@ -94,7 +98,7 @@
 				this.querySelector( 'pratilipi-comment-input#add-comment' ).focusTextarea();
 			},
 			
-			showOrHideComments: function( reviewId ) {
+			showOrHideComments: function() {
 				if( ! this.isFinished )
 					this.loadComments();
 				
