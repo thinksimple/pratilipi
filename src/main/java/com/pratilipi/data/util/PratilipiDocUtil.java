@@ -86,8 +86,10 @@ public class PratilipiDocUtil {
 		for( UserPratilipi review : reviewList ) {
 			
 			UserPratilipiDoc reviewDoc = docAccessor.newUserPratilipiDoc();
+			reviewDoc.setId( review.getId() );
 			reviewDoc.setUserId( review.getUserId() );
 			reviewDoc.setRating( review.getRating() );
+			reviewDoc.setReviewTitle( review.getReviewTitle() );
 			reviewDoc.setReview( review.getReview() );
 			reviewDoc.setReviewDate( review.getReviewDate() );
 			reviewDoc.setLikedByUserIds( reviewIdLikedByUserIdsMap.get( review.getId() ) );

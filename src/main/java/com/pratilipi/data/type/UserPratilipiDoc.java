@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 public interface UserPratilipiDoc {
+
+	String getId();
+
+	void setId( String userPratilipiId );
 	
 	Long getUserId();
 	
@@ -17,6 +21,10 @@ public interface UserPratilipiDoc {
 	Integer getRating();
 	
 	void setRating( Integer rating );
+	
+	String getReviewTitle();
+	
+	void setReviewTitle( String reviewTitle );
 	
 	String getReview();
 	

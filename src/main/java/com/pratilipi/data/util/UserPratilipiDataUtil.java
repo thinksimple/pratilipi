@@ -93,7 +93,7 @@ public class UserPratilipiDataUtil {
 		
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
 		
-//		userPratilipiData.setId( userPratilipi.getId() ); TODO
+		userPratilipiData.setId( userPratilipiDoc.getId() );
 		userPratilipiData.setUserId( userPratilipiDoc.getUserId() );
 		userPratilipiData.setUserName( userData.getDisplayName() );
 		userPratilipiData.setUserImageUrl( userData.getProfileImageUrl() );
@@ -101,8 +101,7 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setUser( userData );
 		
 		userPratilipiData.setRating( userPratilipiDoc.getRating() );
-//		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() ); TODO
-		userPratilipiData.setReview( convertHtmlToText( userPratilipiDoc.getReview() ) );
+		userPratilipiData.setReview( userPratilipiDoc.getReviewTitle() + "\n\n" + convertHtmlToText( userPratilipiDoc.getReview() ) );
 		userPratilipiData.setReviewDate( userPratilipiDoc.getReviewDate() );
 		
 		userPratilipiData.setCommentCount( userPratilipiDoc.getComments().size() );

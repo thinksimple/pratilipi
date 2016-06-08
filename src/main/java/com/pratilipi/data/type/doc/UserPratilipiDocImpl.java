@@ -9,16 +9,29 @@ import com.pratilipi.data.type.UserPratilipiDoc;
 
 public class UserPratilipiDocImpl implements UserPratilipiDoc {
 	
+	private String id;
+	
 	private Long userId;
 	private Long pratilipiId;
 	
 	private Integer rating;
+	private String reviewTitle;
 	private String review;
 	private Long reviewDate;
 	
 	private List<CommentDocImpl> comments;
 	private List<Long> likedByUserIds;
 	
+	
+	@Override
+	public String getId() {
+		return id;
+	}
+	
+	@Override
+	public void setId( String id ) {
+		this.id = id;
+	}
 	
 	@Override
 	public Long getUserId() {
@@ -49,6 +62,16 @@ public class UserPratilipiDocImpl implements UserPratilipiDoc {
 	@Override
 	public void setRating( Integer rating ) {
 		this.rating = rating;
+	}
+	
+	@Override
+	public String getReviewTitle() {
+		return reviewTitle;
+	}
+
+	@Override
+	public void setReviewTitle( String reviewTitle ) {
+		this.reviewTitle = reviewTitle;
 	}
 	
 	@Override

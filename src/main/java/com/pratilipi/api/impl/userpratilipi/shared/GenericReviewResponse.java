@@ -17,7 +17,6 @@ public class GenericReviewResponse extends GenericResponse {
 	private String userProfilePageUrl;
 
 	private Integer rating;
-	private String reviewTitle;
 	private String review;
 	private Long reviewDateMillis;
 
@@ -31,7 +30,6 @@ public class GenericReviewResponse extends GenericResponse {
 		this.userImageUrl = userPratilipiData.getUserImageUrl();
 		this.userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
 		this.rating = userPratilipiData.getRating();
-		this.reviewTitle = userPratilipiData.getReviewTitle();
 		this.review = userPratilipiData.getReview();
 		this.reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate().getTime();
 		
@@ -56,10 +54,6 @@ public class GenericReviewResponse extends GenericResponse {
 
 	public Integer getRating() {
 		return rating;
-	}
-	
-	public String getReviewTitle() {
-		return reviewTitle;
 	}
 	
 	public String getReview() {
