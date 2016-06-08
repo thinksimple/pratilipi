@@ -136,6 +136,8 @@ public class PratilipiDocUtil {
 		}
 		
 		PratilipiReviewsDoc reviewsDoc = docAccessor.newPratilipiReviewsDoc();
+		reviewsDoc.setRatingCount( ratingCount );
+		reviewsDoc.setTotalRating( totalRating );
 		reviewsDoc.setReviews( reviewDocList );
 		docAccessor.save( pratilipiId, reviewsDoc );
 		
