@@ -9,8 +9,7 @@
 			padding-left: 8px;
 		}
 		.comments-loaded {
-			border-left: 1px solid #d3d3d3;
-			border-right: 1px solid #f0f0f0;
+			border-left: 2px solid #d3d3d3;
 		}
 		paper-spinner.pratilipi-spinner {
 			display: block;
@@ -96,7 +95,7 @@
 					this.loadComments();
 				jQuery( this.querySelector( 'pratilipi-comment-input#add-comment' ) ).css( 'display', 'block' );
 				this.async( function() { jQuery( this.querySelector( "#collapse" ) ).collapse( 'show' ); } );
-				this.querySelector( 'pratilipi-comment-input#add-comment' ).focusTextarea( this.isFinished );
+				this.querySelector( 'pratilipi-comment-input#add-comment' ).focusTextarea( jQuery( this.querySelector( "#collapse" ) ).attr( 'aria-expanded' ) == "true" && this.isFinished );
 			},
 			
 			showOrHideComments: function() {

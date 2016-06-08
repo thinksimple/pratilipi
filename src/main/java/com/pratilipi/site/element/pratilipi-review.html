@@ -39,8 +39,7 @@
 		}
 		
 		a.expand-comments {
-			font-size: 15px;
-			color: #333;
+			font-size: 13px;
 		}
 		
 		a.expand-comments iron-icon {
@@ -108,7 +107,7 @@
 				</a>
 				<br/>
 				<template is="dom-if" if="{{ showCommentCount }}">
-					<a class="expand-comments" on-click="showOrHideComments">
+					<a class="expand-comments pratilipi-red" on-click="showOrHideComments">
 						<iron-icon icon="icons:unfold-more"></iron-icon>
 						{{ commentCount }}&nbsp;${ _strings.comment_number_of_comments }
 						<#-- <iron-icon icon="{{ expandedIcon }}"></iron-icon> -->

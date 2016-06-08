@@ -3,13 +3,12 @@
 	<style>
 		.comment {
 			padding: 12px 8px;
-			border-top: 1px solid #d3d3d3;
-			border-bottom: 1px solid #f8f8f8;
 		}
 		
 		.user-dp {
-			width: 48px; 
-			height: 48px; 
+			width: 36px;
+			height: 36px;
+			margin-top: 4px;
 			float: left; 
 		}
 		
@@ -136,8 +135,8 @@
 				this.lastUpdatedDate = convertDate( this.comment.lastUpdatedMillis != null ? 
 											this.comment.lastUpdatedMillis : this.comment.creationDateMillis );
 				this.userProfileImageUrl = 	this.comment.user.profileImageUrl.indexOf( "?" ) == -1 ?
-											this.comment.user.profileImageUrl + "?" + "width=48" :
-											this.comment.user.profileImageUrl + "&" + "width=48" ;
+											this.comment.user.profileImageUrl + "?" + "width=36" :
+											this.comment.user.profileImageUrl + "&" + "width=36" ;
 				
 				this.hasAccessToUpdate = this.comment.hasAccessToUpdate == null ? false : this.comment.hasAccessToUpdate;
 				this.content = this.comment.content;
