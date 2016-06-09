@@ -20,7 +20,6 @@ import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
-import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.mock.AccessTokenMock;
 import com.pratilipi.data.mock.AppPropertyMock;
 import com.pratilipi.data.mock.AuthorMock;
@@ -587,8 +586,8 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataListCursorTuple<Long> getPratilipiIdList(
-			UserPratilipiFilter userPratilipiFilter, String cursorStr,
+	public DataListCursorTuple<Long> getUserLibrary(
+			Long userId, String cursorStr,
 			Integer offset, Integer resultCount ) {
 
 		// TODO: Implementation

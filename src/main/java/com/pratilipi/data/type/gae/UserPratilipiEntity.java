@@ -2,215 +2,221 @@ package com.pratilipi.data.type.gae;
 
 import java.util.Date;
 
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Text;
-import com.pratilipi.common.type.SellerType;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.data.type.UserPratilipi;
 
-@PersistenceCapable( table = "USER_PRATILIPI" )
+@Cache
+@Entity( name = "USER_PRATILIPI" )
 public class UserPratilipiEntity implements UserPratilipi {
-
-	private static final long serialVersionUID = 2207445050785647416L;
-
-	@PrimaryKey
-	@Persistent( column = "USER_PRATILIPI_ID" )
-	private String id;
 	
-	@Persistent( column = "USER_ID" )
-	private Long userId;
+	@Id
+	private String USER_PRATILIPI_ID;
+
+	@Index
+	private Long USER_ID;
 	
-	@Persistent( column = "PRATILIPI_ID" )
-	private Long pratilipiId;
+	@Index
+	private Long PRATILIPI_ID;
 
 	
-	@Persistent( column = "LAST_OPENED_PAGE" )
-	private Integer lastOpenedPage;
+	@Index( IfNotNull.class )
+	private Integer LAST_OPENED_PAGE;
 	
-	@Persistent( column = "LAST_OPENED_DATE" )
-	private Date lastOpenedDate;
+	@Index( IfNotNull.class )
+	private Date LAST_OPENED_DATE;
 
 	
-	@Deprecated
-	@Persistent( column = "PURCHASED_FROM" )
-	private SellerType purchasedFrom;
+	@Index( IfNotNull.class )
+	private Integer RATING;
 	
-	@Deprecated
-	@Persistent( column = "PURCHASE_DATE" )
-	private Date purchaseDate;
+	@Index( IfNotNull.class )
+	private Date RATING_DATE;
+
+	private String REVIEW_TITLE;
+
+	private String REVIEW;
+	
+	@Index( IfNotNull.class )
+	private UserReviewState REVIEW_STATE;
+	
+	@Index( IfNotNull.class )
+	private Date REVIEW_DATE;
 
 	
-	@Persistent( column = "RATING" )
-	private Integer rating;
-	
-	@Persistent( column = "RATING_DATE" )
-	private Date ratingDate;
-
-	@Persistent( column = "REVIEW_TITLE" )
-	private String reviewTitle;
-
-	@Persistent( column = "REVIEW" )
-	private Text review;
-	
-	@Persistent( column = "REVIEW_STATE" )
-	private UserReviewState reviewState;
-	
-	@Persistent( column = "REVIEW_DATE" )
-	private Date reviewDate;
+	@Index( IfNotNull.class )
+	private Long COMMENT_COUNT;
 
 	
-	@Persistent( column = "ADDED_TO_LIB" )
-	private Boolean addedToLib;
+	@Index( IfNotNull.class )
+	private Boolean ADDED_TO_LIB;
 	
-	@Persistent( column = "ADDED_TO_LIB_DATE" )
-	private Date addedToLibDate;
+	@Index( IfNotNull.class )
+	private Date ADDED_TO_LIB_DATE;
 
+	
 	
 	public UserPratilipiEntity() {}
 	
 	public UserPratilipiEntity( Long userId, Long pratilipiId ) {
-		this.id = userId + "-" + pratilipiId;
-		this.userId = userId;
-		this.pratilipiId = pratilipiId;
+		this.USER_PRATILIPI_ID = userId + "-" + pratilipiId;
+		this.USER_ID = userId;
+		this.PRATILIPI_ID = pratilipiId;
 	}
 
 	
+	@Override
+	public String getId() {
+		return this.USER_PRATILIPI_ID;
+	}
+
 	public void setId( String id ) {
-		this.id = id;
+		this.USER_PRATILIPI_ID = id;
 	}
 	
 	@Override
-	public String getId() {
-		return this.id;
+	public <T> void setKey( Key<T> key ) {
+		this.USER_PRATILIPI_ID = key.getName();
 	}
+
 	
 	@Override
 	public Long getUserId() {
-		return userId;
+		return USER_ID;
 	}
 	
 	@Override
 	public void setUserId( Long userId ) {
-		this.userId = userId;
+		this.USER_ID = userId;
 	}
 	
 	@Override
 	public Long getPratilipiId() {
-		return pratilipiId;
+		return PRATILIPI_ID;
 	}
 	
 	@Override
 	public void setPratilipiId( Long pratilipiId ) {
-		this.pratilipiId = pratilipiId;
+		this.PRATILIPI_ID = pratilipiId;
 	}
 	
 
 	@Override
 	public Integer getLastOpenedPage() {
-		return lastOpenedPage;
+		return LAST_OPENED_PAGE;
 	}
 	
 	@Override
 	public void setLastOpenedPage( Integer lastOpenedPage ) {
-		this.lastOpenedPage = lastOpenedPage;
+		this.LAST_OPENED_PAGE = lastOpenedPage;
 	}
 
 	@Override
 	public Date getLastOpenedDate() {
-		return lastOpenedDate;
+		return LAST_OPENED_DATE;
 	}
 	
 	@Override
 	public void setLastOpenedDate( Date lastOpenedDate ) {
-		this.lastOpenedDate = lastOpenedDate;
+		this.LAST_OPENED_DATE = lastOpenedDate;
 	}
 
 
 	@Override
 	public Integer getRating() {
-		return rating;
+		return RATING;
 	}
 	
 	@Override
 	public void setRating( Integer rating ) {
-		this.rating = rating;
+		this.RATING = rating;
 	}
 	
 	@Override
 	public Date getRatingDate() {
-		return ratingDate;
+		return RATING_DATE;
 	}
 	
 	@Override
 	public void setRatingDate( Date ratingDate ) {
-		this.ratingDate = ratingDate;
+		this.RATING_DATE = ratingDate;
 	}
 	
-
 	@Override
 	public String getReviewTitle() {
-		return reviewTitle;
+		return REVIEW_TITLE;
 	}
 
 	@Override
 	public void setReviewTitle( String reviewTitle ) {
-		this.reviewTitle = reviewTitle;
+		this.REVIEW_TITLE = reviewTitle;
 	}
 	
 	@Override
 	public String getReview() {
-		return review == null ? null : review.getValue();
+		return REVIEW;
 	}
 
 	@Override
 	public void setReview( String review ) {
-		this.review = new Text( review );
+		this.REVIEW = review;
 	}
 	
 	@Override
 	public UserReviewState getReviewState() {
-		if( reviewState == UserReviewState.PENDING_APPROVAL || ( reviewState == null && reviewDate != null ) )
-			reviewState = UserReviewState.SUBMITTED;
-		return reviewState;
+		return REVIEW_STATE;
 	}
 	
 	@Override
 	public void setReviewState( UserReviewState reviewState ) {
-		this.reviewState = reviewState;
+		this.REVIEW_STATE = reviewState;
 	}
 
 	@Override
 	public Date getReviewDate() {
-		return reviewDate;
+		return REVIEW_DATE;
 	}
 	
 	@Override
 	public void setReviewDate( Date reviewDate ) {
-		this.reviewDate = reviewDate;
+		this.REVIEW_DATE = reviewDate;
 	}
 	
 
 	@Override
+	public Long getCommentCount() {
+		return COMMENT_COUNT;
+	}
+	
+	@Override
+	public void setCommentCount( Long count ) {
+		this.COMMENT_COUNT = count;
+	}
+	
+	
+	@Override
 	public Boolean isAddedToLib() {
-		return addedToLib == null ? false : addedToLib;
+		return ADDED_TO_LIB == null ? false : ADDED_TO_LIB;
 	}
 
 	@Override
 	public void setAddedToLib( Boolean addedToLib ) {
-		this.addedToLib = addedToLib;
+		this.ADDED_TO_LIB = addedToLib;
 	}
 
 	@Override
 	public Date getAddedToLibDate() {
-		return addedToLibDate;
+		return ADDED_TO_LIB_DATE;
 	}
 	
 	@Override
 	public void setAddedToLibDate( Date addedToLibDate ) {
-		this.addedToLibDate = addedToLibDate;
+		this.ADDED_TO_LIB_DATE = addedToLibDate;
 	}
 
 }

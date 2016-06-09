@@ -20,7 +20,6 @@ import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
-import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
@@ -49,7 +48,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private static final String PREFIX_NAVIGATION_LIST = "NavigationList-";
 	private static final String PREFIX_CATEGORY = "Category-";
 	private static final String PREFIX_CATEGORY_LIST = "CategoryList-";
-	private static final String PREFIX_PRATILIPI_CATEGORY_LIST = "PratilipiCategoryList-";
 	
 	private final DataAccessor dataAccessor;
 	private final Memcache memcache;
@@ -440,62 +438,12 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	
 	// USER_PRATILIPI Table
-	
-	@Override
-	public UserPratilipi newUserPratilipi() {
-		return dataAccessor.newUserPratilipi();
-	}
-	
-	@Override
-	public UserPratilipi getUserPratilipi( String userPratilipiId ) {
-		if( userPratilipiId == null )
-			return null;
-		
-		UserPratilipi userPratilipi = memcache.get( PREFIX_USER_PRATILIPI + userPratilipiId );
-		if( userPratilipi == null ) {
-			userPratilipi = dataAccessor.getUserPratilipi( userPratilipiId );
-			if( userPratilipi != null )
-				memcache.put( PREFIX_USER_PRATILIPI + userPratilipiId, userPratilipi );
-		}
-		return userPratilipi;
-	}
-
-	@Override
-	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
-		if( userId == null || userId.equals( 0L ) || pratilipiId == null || pratilipiId.equals( 0L ) )
-			return null;
-		
-		UserPratilipi userPratilipi = memcache.get( PREFIX_USER_PRATILIPI + userId + "-" + pratilipiId );
-		if( userPratilipi == null ) {
-			userPratilipi = dataAccessor.getUserPratilipi( userId, pratilipiId );
-			if( userPratilipi != null )
-				memcache.put( PREFIX_USER_PRATILIPI + userId + "-" + pratilipiId, userPratilipi );
-		}
-		return userPratilipi;
-	}
-
-	@Override
-	public DataListCursorTuple<Long> getPratilipiIdList(
-			UserPratilipiFilter userPratilipiFilter, String cursorStr,
-			Integer offset, Integer resultCount ) {
-		
-		return dataAccessor.getPratilipiIdList( userPratilipiFilter, cursorStr, offset, resultCount );
-	}
-	
-	@Override
-	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
-			Long pratilipiId, String cursorStr, Integer resultCount ) {
-		
-		return dataAccessor.getUserPratilipiList( userId, pratilipiId, cursorStr, resultCount );
-	}
-
-	@Override
-	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
-		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
-		memcache.put( PREFIX_USER_PRATILIPI + userPratilipi.getId(), userPratilipi );
-		return userPratilipi;
-	}
-	
+	@Override public UserPratilipi newUserPratilipi() { return dataAccessor.newUserPratilipi(); }
+	@Override public UserPratilipi getUserPratilipi( String userPratilipiId ) { return dataAccessor.getUserPratilipi( userPratilipiId ); }
+	@Override public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) { return dataAccessor.getUserPratilipi( userId, pratilipiId ); }
+	@Override public DataListCursorTuple<Long> getUserLibrary( Long userId, String cursorStr, Integer offset, Integer resultCount ) { return dataAccessor.getUserLibrary( userId, cursorStr, offset, resultCount ); }
+	@Override public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursorStr, Integer resultCount ) { return dataAccessor.getUserPratilipiList( userId, pratilipiId, cursorStr, resultCount ); }
+	@Override public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) { return dataAccessor.createOrUpdateUserPratilipi( userPratilipi ); }
 	
 	// USER_AUTHOR Table
 	@Override public UserAuthor newUserAuthor() { return dataAccessor.newUserAuthor(); }

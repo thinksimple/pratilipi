@@ -1,11 +1,10 @@
 package com.pratilipi.data.type;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.UserReviewState;
 
-public interface UserPratilipi extends Serializable {
+public interface UserPratilipi extends GenericOfyType {
 
 	String getId();
 	
@@ -52,6 +51,11 @@ public interface UserPratilipi extends Serializable {
 	
 	void setReviewDate( Date reviewDate );
 
+	
+	Long getCommentCount();
+	
+	void setCommentCount( Long count );
+	
 	
 	Boolean isAddedToLib();
 	

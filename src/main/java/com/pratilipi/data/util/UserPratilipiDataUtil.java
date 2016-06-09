@@ -11,7 +11,6 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.util.UserAccessUtil;
-import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
@@ -146,14 +145,9 @@ public class UserPratilipiDataUtil {
 	public static DataListCursorTuple<PratilipiData> getUserPratilipiLibrary(
 			Long userId, String cursor, Integer offset, Integer resultCount ) {
 		
-		UserPratilipiFilter userPratilipiFilter = new UserPratilipiFilter();
-		userPratilipiFilter.setUserId( userId );
-		userPratilipiFilter.setAddedToLib( true );
-		userPratilipiFilter.setOrderByAddedToLibDate( false );
-		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
-				dataAccessor.getPratilipiIdList( userPratilipiFilter, cursor, offset, resultCount );
+				dataAccessor.getUserLibrary( userId, cursor, offset, resultCount );
 		
 		return new DataListCursorTuple<PratilipiData>(
 				PratilipiDataUtil.createPratilipiDataList( pratilipiIdListCursorTuple.getDataList(), true ),

@@ -40,7 +40,6 @@ import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
-import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
@@ -99,16 +98,24 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// Registering Entities
 	
 	static {
+		
 		ObjectifyService.register( AuditLogEntityOfy.class );
+		
 		ObjectifyService.register( PageEntity.class );
 		ObjectifyService.register( PratilipiEntity.class );
 		ObjectifyService.register( EventEntity.class );
+		
 		ObjectifyService.register( BlogEntity.class );
 		ObjectifyService.register( BlogPostEntity.class );
+		
+		ObjectifyService.register( UserPratilipiEntity.class );
 		ObjectifyService.register( UserAuthorEntity.class );
+		
 		ObjectifyService.register( CommentEntity.class );
 		ObjectifyService.register( VoteEntity.class );
+		
 		ObjectifyService.register( MailingListSubscriptionEntity.class );
+		
 	}
 	
 	
@@ -1017,58 +1024,53 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public UserPratilipi getUserPratilipi( String userPratilipiId ) {
-		try {
-			return getEntity( UserPratilipiEntity.class, userPratilipiId );
-		} catch( JDOObjectNotFoundException e ) {
-			return null;
-		}
+		return getEntityOfy( UserPratilipiEntity.class, userPratilipiId );
 	}
 	
 	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
 		if( userId == null || userId.equals( 0L ) || pratilipiId == null || pratilipiId.equals( 0L ) )
 			return null;
-		
-		try {
-			return getEntity( UserPratilipiEntity.class, userId + "-" + pratilipiId );
-		} catch( JDOObjectNotFoundException e ) {
-			return null;
-		}
+		return getEntityOfy( UserPratilipiEntity.class, userId + "-" + pratilipiId );
 	}
 
 	@Override
-	public DataListCursorTuple<Long> getPratilipiIdList(
-			UserPratilipiFilter userPratilipiFilter, String cursorStr,
-			Integer offset, Integer resultCount ) {
+	public DataListCursorTuple<Long> getUserLibrary( Long userId, String cursorStr, Integer offset, Integer resultCount ) {
 		
-		GaeQueryBuilder queryBuilder =
-				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
+		com.googlecode.objectify.cmd.Query<UserPratilipiEntity> query
+				= ObjectifyService.ofy().load().type( UserPratilipiEntity.class );
+				
+		query = query.filter( "USER_ID", userId );
+		query = query.filter( "ADDED_TO_LIB", true );
+		query = query.order( "-ADDED_TO_LIB" );
 		
-		if( userPratilipiFilter.getUserId() != null )
-			queryBuilder.addFilter( "userId", userPratilipiFilter.getUserId() );
-		if( userPratilipiFilter.getPratilipiId() != null )
-			queryBuilder.addFilter( "pratilipiId", userPratilipiFilter.getPratilipiId() );
-		if( userPratilipiFilter.getAddedToLib() != null )
-			queryBuilder.addFilter( "addedToLib", userPratilipiFilter.getAddedToLib() );
-
-		if( userPratilipiFilter.getOrderByAddedToLibDate() != null )
-			queryBuilder.addOrdering( "addedToLib", userPratilipiFilter.getOrderByAddedToLibDate() );
-
-		queryBuilder.setCursor( cursorStr );
+		query.project( "PRATILIPI_ID" );
 		
-		if( offset != null && resultCount != null )
-			queryBuilder.setRange( offset, offset + resultCount );
-		else if( resultCount != null )
-			queryBuilder.setRange( 0, resultCount );
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
 		
-		queryBuilder.setResult( "pratilipiId" );
+		if( offset != null && offset > 0 )
+			query = query.offset( offset );
 		
-		Query query = queryBuilder.build();
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
 		
-		@SuppressWarnings("unchecked")
-		List<Long> pratilipiIdList =
-				(List<Long>) query.executeWithMap( queryBuilder.getParamNameValueMap() );
-		Cursor cursor = JDOCursorHelper.getCursor( pratilipiIdList );
+		
+		QueryResultIterator<UserPratilipiEntity> iterator = query.iterator();
+		
+		
+		// Pratilipi id list
+		ArrayList<Long> pratilipiIdList = resultCount == null
+				? new ArrayList<Long>( 0 )
+				: new ArrayList<Long>( resultCount );
+		
+		while( iterator.hasNext() )
+			pratilipiIdList.add( iterator.next().getPratilipiId() );
+		
+		
+		// Cursor
+		Cursor cursor = iterator.getCursor();
+		
 		
 		return new DataListCursorTuple<Long>(
 				pratilipiIdList,
@@ -1080,34 +1082,48 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
 			Long pratilipiId, String cursorStr, Integer resultCount ) {
 		
-		GaeQueryBuilder queryBuilder =
-				new GaeQueryBuilder( pm.newQuery( UserPratilipiEntity.class ) );
-		
+		com.googlecode.objectify.cmd.Query<UserPratilipiEntity> query
+				= ObjectifyService.ofy().load().type( UserPratilipiEntity.class );
+				
 		if( userId != null )
-			queryBuilder.addFilter( "userId", userId );
+			query = query.filter( "USER_ID", userId );
+
 		if( pratilipiId != null )
-			queryBuilder.addFilter( "pratilipiId", pratilipiId );
+			query = query.filter( "PRATILIPI_ID", pratilipiId );
+		
 		if( cursorStr != null )
-			queryBuilder.setCursor( cursorStr );
-		if( resultCount != null )
-			queryBuilder.setRange( 0, resultCount );
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
 		
-		Query query = queryBuilder.build();
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
 		
-		@SuppressWarnings("unchecked")
-		List<UserPratilipi> userPratilipiList =
-				(List<UserPratilipi>) query.executeWithMap( queryBuilder.getParamNameValueMap() );
-		Cursor cursor = JDOCursorHelper.getCursor( userPratilipiList );
+		
+		QueryResultIterator<UserPratilipiEntity> iterator = query.iterator();
+
+		
+		// UserPratilipi List
+		ArrayList<UserPratilipi> userPratilipiList = resultCount == null
+				? new ArrayList<UserPratilipi>()
+				: new ArrayList<UserPratilipi>( resultCount );
+		
+		while( iterator.hasNext() )
+			userPratilipiList.add( iterator.next() );
+
+		
+		// Cursor
+		Cursor cursor = iterator.getCursor();
+
 		
 		return new DataListCursorTuple<UserPratilipi>(
-				(List<UserPratilipi>) pm.detachCopyAll( userPratilipiList ),
+				userPratilipiList,
 				cursor == null ? null : cursor.toWebSafeString() );
+
 	}
 
 	@Override
 	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
-		return createOrUpdateEntity( userPratilipi );
+		return createOrUpdateEntityOfy( userPratilipi );
 	}
 	
 	
@@ -1172,9 +1188,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
-		UserAuthorEntity userAuthorEntity = (UserAuthorEntity) userAuthor;
-		userAuthorEntity.setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
-		return (UserAuthor) createOrUpdateEntityOfy( userAuthorEntity );
+		( (UserAuthorEntity) userAuthor ).setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
+		return createOrUpdateEntityOfy( userAuthor );
 	}
 	
 	
