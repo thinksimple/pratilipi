@@ -141,6 +141,7 @@ public class InitApi extends GenericApi {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/pratilipi/process" )
 					.addParam( "pratilipiId", key.getId() + "" )
+					.addParam( "updateReviewsDoc", "true" )
 					.addParam( "updateUserPratilipiStats", "true" );
 			taskList.add( task );
 		}
