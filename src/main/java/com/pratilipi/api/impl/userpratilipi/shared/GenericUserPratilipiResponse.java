@@ -23,6 +23,8 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	
 	private Boolean hasAccessToReview;
 	
+	private Long commentCount;
+	
 	
 	@SuppressWarnings("unused")
 	private GenericUserPratilipiResponse() {}
@@ -45,6 +47,8 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 		addedToLib = userPratilipiData.isAddedToLib();
 		
 		hasAccessToReview = userPratilipiData.hasAccessToReview();
+		
+		commentCount = userPratilipiData.getCommentCount();
 		
 	}
 	
@@ -105,6 +109,11 @@ public class GenericUserPratilipiResponse extends GenericResponse {
 	
 	public Boolean getHasAccessToReview() {
 		return hasAccessToReview;
+	}
+
+	
+	public Long getCommentCount() {
+		return commentCount;
 	}
 
 }
