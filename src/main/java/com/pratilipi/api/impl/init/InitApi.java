@@ -1,19 +1,16 @@
 package com.pratilipi.api.impl.init;
 
 import java.nio.charset.Charset;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.cmd.QueryKeys;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -25,13 +22,11 @@ import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
-import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
-import com.pratilipi.taskqueue.Task;
-import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
@@ -161,7 +156,12 @@ public class InitApi extends GenericApi {
 		}
 */		
 		
-		PratilipiDocUtil.updatePratilipiGoogleAnalyticsPageViews( 2016, 6, 8 );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		String appPropertyId = "Api.PratilipiProcess.UpdateStats";
+		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
+		appProperty.setValue( new Date( new Date().getTime() - TimeUnit.DAYS.toMillis( 9 ) ) );
+		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		
 		return new GenericResponse();
 		
