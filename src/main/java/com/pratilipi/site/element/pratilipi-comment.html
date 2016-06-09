@@ -60,7 +60,7 @@
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
 				<div class="dropdown">
 					<paper-icon-button style="color: #333;" class="dropdown-trigger pull-right" icon="icons:more-horiz" noink type="button" data-toggle="dropdown"></paper-icon-button>
-					<ul class="dropdown-menu pull-right">
+					<ul style="margin-right: -20px; margin-top: -4px;" class="dropdown-menu pull-right">
 						<li>
 							<a style="padding: 0; margin: 0;" on-click="openCommentEdit">
 								<paper-item>
@@ -70,7 +70,7 @@
 							</a>
 						</li>
 						<li>
-							<a style="padding: 0; margin: 0;" on-click="_deleteComment">
+							<a style="padding: 0; margin: 0;" on-click="_confirmDeleteComment">
 								<paper-item>
 									<paper-icon-item><iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:delete"></iron-icon></paper-icon-item>
 									<paper-item-body>${ _strings.comment_delete_comment }</paper-item-body>
@@ -109,6 +109,14 @@
 				on-response="_handleAjaxPostResponse"
 				on-error="_handleAjaxPostError"
 				></iron-ajax>
+		</div>
+		
+		<div style="display: none; padding: 16px 10px;" class="delete-comment-confirmation">
+			<h5 class="text-center">Are you sure to delete this comment?</h5>
+			<div class="text-center" style="margin: 16px auto 4px auto;">
+				<button style="margin-right: 4px; padding-left: 16px; padding-right: 16px; outline: none;" class="btn btn-danger" on-click="_deleteComment">Yes</button>
+				<button style="margin-left: 4px; padding-left: 22px; padding-right: 22px; outline: none;" class="btn btn-primary" on-click="_cancelDeleteComment">No</button>
+			</div>
 		</div>
 		
 		<template is="dom-if" if="{{ hasAccessToUpdate }}">
@@ -172,6 +180,19 @@
 				this.$.AjaxPost.generateRequest();
 			},
 			
+			_confirmDeleteComment: function() {
+				var height = jQuery( this.querySelector( '.comment' ) ).height() + 24; // 12px padding top and bottom
+				jQuery( this.querySelector( '.comment' ) ).css( 'display', 'none', 'important' );
+				jQuery( this.querySelector( '.delete-comment-confirmation' ) ).css( 'display', 'block', 'important' );
+				jQuery( this.querySelector( '.delete-comment-confirmation' ) ).css( 'min-height', height );
+				
+			},
+			
+			_cancelDeleteComment: function() {
+				jQuery( this.querySelector( '.delete-comment-confirmation' ) ).css( 'display', 'none', 'important' );
+				jQuery( this.querySelector( '.comment' ) ).css( 'display', 'block', 'important' );
+			},
+			
 			_deleteComment: function() {
 				if( this.deleteComment )
 					return;
@@ -205,22 +226,24 @@
 					this.closeCommentEdit();
 				} else if( this.deleteComment ) {
 					this.deleteComment = false;
-					// Disable edit and deleting
-					comment.hasAccessToUpdate = false;
-					// Inactive comment
-					jQuery( this.querySelector( '.comment' ) ).css( 'color', '#767676', 'important' );
-					jQuery( this.querySelector( '.comment' ) ).css( 'background-color', '#f9f9f9', 'important' );
-					// Enable restoring the comment
-					this.showRestoreComment = true;
+					
+					<#-- Case 1: Restoring Comment -->
+					<#--
+						// Disable edit and deleting
+						comment.hasAccessToUpdate = false;
+						// Inactive comment
+						jQuery( this.querySelector( '.comment' ) ).css( 'color', '#767676', 'important' );
+						jQuery( this.querySelector( '.comment' ) ).css( 'background-color', '#f9f9f9', 'important' );
+						// Enable restoring the comment
+						this.showRestoreComment = true;
+					-->
+					
+					<#-- Case 2: Hiding comment from list -->
 					
 					this.set( 'comment', comment );
+					jQuery( this.querySelector( '.comment' ) ).css( 'display', 'none' );
 					this.domHost.decrementCommentCount();
-					
-					<#-- 
-						document.querySelector( 'pratilipi-comment-list#comment-'+ this.comment.parentId ).deleteCommentFromList( comment );
-						this.domHost.deleteCommentFromList( comment ); 
-						jQuery( this.querySelector( '.comment' ) ).css( 'display', 'none' ); 
-					-->
+					this.async( function() { this.domHost.deleteCommentFromList( comment ); });
 				} else if( this.restoreComment ) {
 					this.restoreComment = false;
 					// Active comment
