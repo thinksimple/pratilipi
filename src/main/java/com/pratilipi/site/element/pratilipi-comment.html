@@ -42,10 +42,9 @@
 		}
 		
 		paper-item {
+			cursor: pointer;
 			font-family: inherit;
-			font-size: inherit;
-			margin-left: 4px;
-			margin-right: 4px;
+			font-size: 13px;
 		}
 		
 		button.pratilipi-grey-button {
@@ -59,19 +58,27 @@
 	<template>
 		<div class="comment">
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
-				<paper-menu-button horizontal-align="right" class="pull-right">
-					<paper-icon-button class="dropdown-trigger" icon="icons:more-horiz" noink></paper-icon-button>
-						<paper-menu class="dropdown-content">
-							<paper-item on-click="openCommentEdit">
-								<iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:create"></iron-icon>
-								${ _strings.comment_edit_comment }
-							</paper-item>
-							<paper-item on-click="_deleteComment">
-								<iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:delete"></iron-icon>
-								${ _strings.comment_delete_comment }
-							</paper-item>
-						</paper-menu>
-				</paper-menu-button>
+				<div class="dropdown">
+					<paper-icon-button style="color: #333;" class="dropdown-trigger pull-right" icon="icons:more-horiz" noink type="button" data-toggle="dropdown"></paper-icon-button>
+					<ul class="dropdown-menu pull-right">
+						<li>
+							<a style="padding: 0; margin: 0;" on-click="openCommentEdit">
+								<paper-item>
+									<paper-icon-item><iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:create"></iron-icon></paper-icon-item>
+									<paper-item-body>${ _strings.comment_edit_comment }</paper-item-body>
+								</paper-item>
+							</a>
+						</li>
+						<li>
+							<a style="padding: 0; margin: 0;" on-click="_deleteComment">
+								<paper-item>
+									<paper-icon-item><iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:delete"></iron-icon></paper-icon-item>
+									<paper-item-body>${ _strings.comment_delete_comment }</paper-item-body>
+								</paper-item>
+							</a>
+						</li>
+					</ul>
+				</div>
 			</template>
 			
 			<template is="dom-if" if="{{ showRestoreComment }}">

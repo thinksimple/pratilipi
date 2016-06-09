@@ -23,9 +23,7 @@
 		paper-item {
 			cursor: pointer;
 			font-family: inherit;
-			font-size: inherit;
-			margin-left: 4px;
-			margin-right: 4px;
+			font-size: 13px;
 		}
 		
 		.col-right-mobile table {
@@ -90,13 +88,27 @@
 		<paper-card>
 			
 			<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
-				<paper-menu-button horizontal-align="right" class="pull-right">
-					<paper-icon-button style="color: #333;" class="dropdown-trigger" icon="more-vert" noink></paper-icon-button>
-						<paper-menu class="dropdown-content">
-							<paper-item on-click="openPratilipiEdit">${ _strings.pratilipi_edit_info }</paper-item>
-							<paper-item on-click="openWriterPanel">${ _strings.pratilipi_edit_content }</paper-item>
-						</paper-menu>
-				</paper-menu-button>
+				<div class="dropdown">
+					<paper-icon-button style="color: #333;" class="dropdown-trigger pull-right" icon="more-vert" noink type="button" data-toggle="dropdown"></paper-icon-button>
+					<ul class="dropdown-menu pull-right">
+						<li>
+							<a style="padding: 0; margin: 0;" on-click="openPratilipiEdit">
+								<paper-item>
+									<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="editor:mode-edit"></iron-icon></paper-icon-item>
+									<paper-item-body>${ _strings.pratilipi_edit_info }</paper-item-body>
+								</paper-item>
+							</a>
+						</li>
+						<li>
+							<a style="padding: 0; margin: 0;" on-click="openWriterPanel">
+								<paper-item>
+									<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="icons:description"></iron-icon></paper-icon-item>
+									<paper-item-body>${ _strings.pratilipi_edit_content }</paper-item-body>
+								</paper-item>
+							</a>
+						</li>
+					</ul>
+				</div>
 			</template>
 			
 			<!-- For wide-screens and mobile screens-->

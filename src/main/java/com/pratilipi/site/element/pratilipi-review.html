@@ -64,10 +64,9 @@
 		}
 		
 		paper-item {
+			cursor: pointer;
 			font-family: inherit;
-			font-size: inherit;
-			margin-left: 4px;
-			margin-right: 4px;
+			font-size: 13px;
 		}
 
 	</style>
@@ -76,19 +75,27 @@
 	<template>
 		<paper-card id="reviewcard">
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
-				<paper-menu-button horizontal-align="right" class="pull-right">
-					<paper-icon-button class="dropdown-trigger" icon="icons:more-horiz" noink></paper-icon-button>
-						<paper-menu class="dropdown-content">
-							<paper-item on-click="showReviewInput">
-								<iron-icon style="margin-right: 8px;" icon="icons:create"></iron-icon>
-								${ _strings.review_edit_review }
-							</paper-item>
-							<paper-item on-click="openDeleteReview">
-								<iron-icon style="margin-right: 8px;" icon="icons:delete"></iron-icon>
-								${ _strings.review_delete_review }
-							</paper-item>
-						</paper-menu>
-				</paper-menu-button>
+				<div class="dropdown">
+					<paper-icon-button style="color: #333;" class="dropdown-trigger pull-right" icon="icons:more-horiz" noink type="button" data-toggle="dropdown"></paper-icon-button>
+					<ul style="margin-top: 0;" class="dropdown-menu pull-right">
+						<li>
+							<a style="padding: 0; margin: 0;" on-click="showReviewInput">
+								<paper-item>
+									<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="editor:mode-edit"></iron-icon></paper-icon-item>
+									<paper-item-body>${ _strings.review_edit_review }</paper-item-body>
+								</paper-item>
+							</a>
+						</li>
+						<li>
+							<a style="padding: 0; margin: 0;" on-click="openDeleteReview">
+								<paper-item>
+									<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="icons:description"></iron-icon></paper-icon-item>
+									<paper-item-body>${ _strings.review_delete_review }</paper-item-body>
+								</paper-item>
+							</a>
+						</li>
+					</ul>
+				</div>
 			</template>
 			<div>
    				<a href="{{ review.userProfilePageUrl }}">
