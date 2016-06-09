@@ -35,7 +35,7 @@
 				<a class="reply-text pratilipi-red" href="?review=reply&parentId=${ review.getId() }">${ _strings.comment_reply_comment }</a>
 			</#if>
 			<#if review.getCommentCount() gt 0>
-				<button style="outline: none; border: none; padding: 0px; background: none;" id="view-replies-${ review.getId() }" onClick="loadComments( '${ review.getId() }' )">${ review.getCommentCount() }&nbsp;${ _strings.comment_number_of_comments }</button>
+				<button style="outline: none; border: none; padding: 0px; background: none; display: block;" id="view-replies-${ review.getId() }" onClick="loadComments( '${ review.getId() }' )">${ review.getCommentCount() }&nbsp;${ _strings.comment_number_of_comments }</button>
 			</#if>
 		</div>
 		<div style="margin-top: 12px;" id="comments-${ review.getId() }"></div>

@@ -103,7 +103,10 @@
 			},
 			
 			onCancel: function() {
-				this.domHost.closeCommentEdit();
+				if( this.addComment )
+					this.domHost.closeCommentAdd();
+				if( this.editComment )
+					this.domHost.closeCommentEdit();
 			},
 			
 			focusTextarea: function( isFinished ) {
@@ -157,6 +160,7 @@
 					comment.user = this.user;
 					document.querySelector( 'pratilipi-comment-list#comment-'+ this.parentId ).addCommentToList( comment );
 					this.set( 'content', null );
+					this.domHost.closeCommentAdd();
 					jQuery( '#submitCommentButton' ).prop( 'disabled', false );
 				}
 			},

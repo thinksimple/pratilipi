@@ -55,7 +55,7 @@
 						var commentList = parsed_data[ "commentList" ];
 						var cursor = parsed_data[ "cursor" ];
 						var html = "";
-						for( var i = 0; i < commentList.length; i++ ) {
+						for( var i = commentList.length - 1; i >= 0; i-- ) {
 							html += '<div class="comment">' + 
 							   '<div class="comment-child">' +
 							   '<a href="' + commentList[i].user.profilePageUrl + '">' +
