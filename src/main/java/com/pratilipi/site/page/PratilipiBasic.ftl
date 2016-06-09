@@ -7,11 +7,9 @@
 			.comment {
 				display: block;
 				padding-left: 4px;
-				border-right: 1px solid#f9f9f9;
 			}
 			.comment .comment-child {
-				border-top: 1px solid #d3d3d3;
-				border-left: 1px solid #d3d3d3;
+				border-left: 2px solid #d3d3d3;
 				padding: 12px 8px;
 			}
 			.comment img.user-img {
@@ -69,7 +67,6 @@
 							   '<div class="date-added">' + convertDate( commentList[i].lastUpdatedMillis != null ? commentList[i].lastUpdatedMillis : commentList[i].creationDateMillis ) + '</div>' + 
 							   '<div class="content">' + ( commentList[i].content != null ? commentList[i].content : "&nbsp;" ) + '</div>' +
 							   '</div>' + 
-							   ( i == commentList.length - 1 ? '<hr style="margin-top: 0px; border-top: 1px solid #d3d3d3 " />' : '' ) +
 							   '</div>';
 						}
 						jQuery( "button#view-replies-" + parentId ).css( "display", "none" ); 
