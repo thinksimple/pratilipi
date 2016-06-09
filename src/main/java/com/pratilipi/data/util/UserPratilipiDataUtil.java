@@ -56,14 +56,16 @@ public class UserPratilipiDataUtil {
 	}
 	
 
-	public static UserPratilipiData createUserPratilipiData( UserPratilipi userPratilipi ) {
+	public static UserPratilipiData createUserPratilipiData( UserPratilipi userPratilipi ) throws UnexpectedServerException {
 		
 		if( userPratilipi == null )
 			return null;
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		User user = dataAccessor.getUser( userPratilipi.getUserId() );
 		UserData userData = UserDataUtil.createUserData( user );
+		PratilipiReviewsDoc reviewsDoc = docAccessor.getPratilipiReviewsDoc( userPratilipi.getPratilipiId() );
 		
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
 		userPratilipiData.setId( userPratilipi.getId() );
@@ -79,6 +81,13 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
 		userPratilipiData.setAccessToReview( hasAccessToAddUserPratilipiData( userPratilipi.getPratilipiId() ) );
 		userPratilipiData.setAddedToLib( userPratilipi.isAddedToLib() );
+		
+		for( UserPratilipiDoc review : reviewsDoc.getReviews() ) {
+			if( review.getId().equals( userPratilipi.getId() ) ) {
+				userPratilipiData.setCommentCount( review.getCommentCount() );
+				break;
+			}
+		}
 		
 		return userPratilipiData;
 		
@@ -110,13 +119,13 @@ public class UserPratilipiDataUtil {
 		
 		userPratilipiData.setReviewDate( userPratilipiDoc.getReviewDate() );
 		
-		userPratilipiData.setCommentCount( userPratilipiDoc.getComments().size() );
+		userPratilipiData.setCommentCount( userPratilipiDoc.getCommentCount() );
 		
 		return userPratilipiData;
 		
 	}
 	
-	public static List<UserPratilipiData> createUserPratilipiDataList( List<UserPratilipi> userPratilipiList ) {
+	public static List<UserPratilipiData> createUserPratilipiDataList( List<UserPratilipi> userPratilipiList ) throws UnexpectedServerException {
 		List<UserPratilipiData> userPratilipiDataList = new ArrayList<>( userPratilipiList.size() );
 		for( UserPratilipi userPratilipi : userPratilipiList )
 			userPratilipiDataList.add( createUserPratilipiData( userPratilipi ) );
@@ -124,7 +133,7 @@ public class UserPratilipiDataUtil {
 	}
 
 	
-	public static UserPratilipiData getUserPratilipi( Long pratilipiId ) {
+	public static UserPratilipiData getUserPratilipi( Long pratilipiId ) throws UnexpectedServerException {
 
 		Long userId = AccessTokenFilter.getAccessToken().getUserId();
 		if( userId.equals( 0L ) )
@@ -192,7 +201,7 @@ public class UserPratilipiDataUtil {
 	}
 	
 	public static UserPratilipiData saveUserPratilipi( UserPratilipiData userPratilipiData )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		if( ! hasAccessToAddUserPratilipiData( userPratilipiData.getPratilipiId() ) )
 			throw new InsufficientAccessException();

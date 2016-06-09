@@ -36,7 +36,7 @@ public class UserPratilipiData {
 	
 	private Long reviewDateMillis;
 
-	private Integer commentCount;
+	private Long commentCount;
 	
 	
 	private Boolean addedToLib;
@@ -169,11 +169,11 @@ public class UserPratilipiData {
 		this.reviewDateMillis = reviewDate == null ? null : reviewDate.getTime();
 	}
 
-	public Integer getCommentCount() {
+	public Long getCommentCount() {
 		return commentCount;
 	}
 	
-	public void setCommentCount( Integer count ) {
+	public void setCommentCount( Long count ) {
 		this.commentCount = count;
 	}
 	

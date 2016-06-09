@@ -7,6 +7,7 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
@@ -37,7 +38,7 @@ public class UserPratilipiReviewApi extends GenericApi {
 	
 	@Post
 	public GenericUserPratilipiResponse post( PostRequest request )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
 		userPratilipiData.setUserId( AccessTokenFilter.getAccessToken().getUserId() );

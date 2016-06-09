@@ -1044,8 +1044,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		query = query.filter( "ADDED_TO_LIB", true );
 		query = query.order( "-ADDED_TO_LIB" );
 		
-		query.project( "PRATILIPI_ID" );
-		
 		if( cursorStr != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
 		
@@ -1103,7 +1101,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		// UserPratilipi List
 		ArrayList<UserPratilipi> userPratilipiList = resultCount == null
-				? new ArrayList<UserPratilipi>()
+				? new ArrayList<UserPratilipi>( 0 )
 				: new ArrayList<UserPratilipi>( resultCount );
 		
 		while( iterator.hasNext() )

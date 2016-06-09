@@ -14,7 +14,6 @@ import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
-import com.pratilipi.common.util.UserPratilipiFilter;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;

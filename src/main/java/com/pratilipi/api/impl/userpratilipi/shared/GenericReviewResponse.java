@@ -20,7 +20,7 @@ public class GenericReviewResponse extends GenericResponse {
 	private String review;
 	private Long reviewDateMillis;
 	
-	private Integer commentCount;
+	private Long commentCount;
 
 	
 	private GenericReviewResponse() { }
@@ -71,7 +71,7 @@ public class GenericReviewResponse extends GenericResponse {
 		return reviewDateMillis == null ? null : reviewDateMillis;
 	}
 	
-	public Integer getCommentCount() {
+	public Long getCommentCount() {
 		return commentCount;
 	}
 	

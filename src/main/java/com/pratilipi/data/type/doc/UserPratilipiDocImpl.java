@@ -96,6 +96,11 @@ public class UserPratilipiDocImpl implements UserPratilipiDoc {
 
 	
 	@Override
+	public Long getCommentCount() {
+		return comments == null ? 0L : (long) comments.size();
+	}
+
+	@Override
 	public List<CommentDoc> getComments() {
 		return comments == null
 				? new ArrayList<CommentDoc>( 0 )

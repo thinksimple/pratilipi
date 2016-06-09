@@ -39,6 +39,8 @@ public interface UserPratilipiDoc {
 	
 	void setLikedByUserIds( List<Long> likedByUserIds );
 	
+	Long getCommentCount();
+	
 	List<CommentDoc> getComments();
 	
 	void setComments( List<CommentDoc> comments );

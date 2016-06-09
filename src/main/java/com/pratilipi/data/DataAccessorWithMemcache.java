@@ -44,7 +44,6 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	private final static String PREFIX_USER = "User-";
 	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
 	private static final String PREFIX_AUTHOR = "Author-";
-	private static final String PREFIX_USER_PRATILIPI = "UserPratilipi-";
 	private static final String PREFIX_NAVIGATION_LIST = "NavigationList-";
 	private static final String PREFIX_CATEGORY = "Category-";
 	private static final String PREFIX_CATEGORY_LIST = "CategoryList-";
