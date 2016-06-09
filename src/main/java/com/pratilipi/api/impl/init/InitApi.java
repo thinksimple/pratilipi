@@ -135,7 +135,7 @@ public class InitApi extends GenericApi {
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 */
 
-		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load().type( PratilipiEntity.class ).keys();
+/*		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load().type( PratilipiEntity.class ).keys();
 		List<Task> taskList = new LinkedList<>();
 		for( Key<PratilipiEntity> key : queryKeys.iterable() ) {
 			Task task = TaskQueueFactory.newTask()
@@ -146,6 +146,7 @@ public class InitApi extends GenericApi {
 			taskList.add( task );
 		}
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
+*/
 
 		
 /*		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load()
@@ -159,6 +160,8 @@ public class InitApi extends GenericApi {
 				ObjectifyService.ofy().save().entity( pratilipi ).now();
 		}
 */		
+		
+		PratilipiDocUtil.updatePratilipiGoogleAnalyticsPageViews( 2016, 6, 8 );
 		
 		return new GenericResponse();
 		
