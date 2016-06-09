@@ -93,14 +93,14 @@ public class PratilipiProcessApi extends GenericApi {
 		appProperty = dataAccessor.getAppProperty( appPropertyId );
 		if( appProperty == null ) {
 			appProperty = dataAccessor.newAppProperty( appPropertyId );
-			appProperty.setValue( new Date( 1420051500000L ) ); // 01 Jan 2015, 12:15 AM IST
+			appProperty.setValue( new Date( 1420072200000L ) ); // 01 Jan 2015, 06:00 AM IST
 		}
 		
 		Date date = (Date) appProperty.getValue();
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeZone( TimeZone.getTimeZone( "IST" ) );
-		cal.setTime( new Date( date.getTime() - TimeUnit.MINUTES.toMillis( 15 ) ) ); // Google updates reports every 10 min
+		cal.setTime( new Date( date.getTime() - TimeUnit.HOURS.toMillis( 6 ) ) ); // To cover delay in Google Analytics report generation
 		
 		int year = cal.get( Calendar.YEAR );
 		int month = cal.get( Calendar.MONTH ) + 1;
