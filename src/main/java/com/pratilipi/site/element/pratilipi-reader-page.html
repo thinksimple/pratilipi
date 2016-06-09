@@ -147,17 +147,20 @@
 			
 			shareOnFacebook: function() {
 				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ "&" + "share=facebook", "share", "width=1100,height=500,left=70px,top=60px" );
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
+						+ "share=facebook", "share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			shareOnTwitter: function() {
 				window.open( "http://twitter.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ "&" + "share=twitter", "share", "width=1100,height=500,left=70px,top=60px" );
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
+						+ "share=twitter", "share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			shareOnGplus: function() {
 				window.open( "https://plus.google.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ "&" + "share=gplus", "share", "width=1100,height=500,left=70px,top=60px" );
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
+						+ "share=gplus", "share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			
