@@ -93,7 +93,7 @@ public abstract class GenericApi extends HttpServlet {
 			if( value.startsWith( "{" ) || value.startsWith( "[" ) ) // Value could be a valid JSON string.
 				queryParamsStr.append( "\"" + param + "\":" + value + "," );
 			else
-				queryParamsStr.append( "\"" + param + "\":\"" + value.replaceAll( "\"", "\\\"" ) + "\"," );
+				queryParamsStr.append( "\"" + param + "\":\"" + value.replaceAll( "\"", "\\\\\"" ) + "\"," );
 		}
 		if( queryParamsStr.length() > 1 )
 			queryParamsStr.setCharAt( queryParamsStr.length() - 1, '}' );
