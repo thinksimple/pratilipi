@@ -581,7 +581,7 @@ public class UserDataUtil {
 			throws InvalidArgumentException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( email );
+		User user = dataAccessor.getUserByEmail( email.toLowerCase() );
 		if( user == null )
 			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 		
@@ -606,7 +606,7 @@ public class UserDataUtil {
 			throws InvalidArgumentException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( email );
+		User user = dataAccessor.getUserByEmail( email.toLowerCase() );
 		
 		if( user == null || user.getState() != UserState.REGISTERED )
 			return;
@@ -648,7 +648,7 @@ public class UserDataUtil {
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( email.trim().toLowerCase() );
+		User user = dataAccessor.getUserByEmail( email.toLowerCase() );
 		
 		JsonObject errorMessages = new JsonObject();
 		if( user == null || user.getState() == UserState.REFERRAL || user.getState() == UserState.DELETED ) {
