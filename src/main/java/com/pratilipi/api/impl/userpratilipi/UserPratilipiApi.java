@@ -60,7 +60,7 @@ public class UserPratilipiApi extends GenericApi {
 		// TODO: Change access to package level ASAP
 		public Response( UserPratilipiData userPratilipiData ) {
 			
-			this( userPratilipiData, false );
+			this( userPratilipiData, true );
 			
 			userId = userPratilipiData.getUserId();
 			pratilipiId = userPratilipiData.getPratilipiId();
@@ -71,7 +71,8 @@ public class UserPratilipiApi extends GenericApi {
 			
 		}
 		
-		Response( UserPratilipiData userPratilipiData, boolean asReview ) {
+		// TODO: Change access to package level ASAP
+		public Response( UserPratilipiData userPratilipiData, boolean asReview ) {
 
 			userPratilipiId = userPratilipiData.getId();
 			

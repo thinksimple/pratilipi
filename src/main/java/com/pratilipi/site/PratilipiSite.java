@@ -1019,10 +1019,10 @@ public class PratilipiSite extends HttpServlet {
 		return pratilipiList;
 	}
 
-	private List<UserPratilipiReviewListApi.Review> toGenericReviewResponseList( List<UserPratilipiData> userPratilipiList ) {
-		List<UserPratilipiReviewListApi.Review> reviewList = new ArrayList<>( userPratilipiList.size() );
+	private List<UserPratilipiApi.Response> toGenericReviewResponseList( List<UserPratilipiData> userPratilipiList ) {
+		List<UserPratilipiApi.Response> reviewList = new ArrayList<>( userPratilipiList.size() );
 		for( UserPratilipiData userPratilipiData : userPratilipiList )
-			reviewList.add( new UserPratilipiReviewListApi.Review( userPratilipiData ) );
+			reviewList.add( new UserPratilipiApi.Response( userPratilipiData, true ) );
 		return reviewList;
 	}
 	
