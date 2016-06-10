@@ -136,7 +136,6 @@
 				isFinished: { type: Boolean, value: false },
 				
 				reviewAvailable: { type: Boolean, value: false, observer: "checkForZeroResults" },
-				userReviewDeleted: { type: Boolean, value: false },
 				reviewButtonClicked: { type: Boolean, value: false }
 			},
 			
@@ -157,16 +156,12 @@
 				}
 
 				// Checking if user has review
-				if( this.userpratilipi == null || this.userpratilipi.reviewState == "BLOCKED" || this.userpratilipi.reviewState == "DELETED" 
-						|| ( ( this.userpratilipi.reviewTitle == null || this.userpratilipi.reviewTitle == "" ) 
-								&& ( this.userpratilipi.review == null || this.userpratilipi.review == "" ) ) ) {
-					this.reviewAvailable = false;
-					return;
-				}
+				if( this.userpratilipi != null && this.userpratilipi.reviewState != "BLOCKED" && this.userpratilipi.reviewState != "DELETED"
+						&& this.userpratilipi.review != null && this.userpratilipi.review.trim() != "" )
+					this.set( 'reviewAvailable', true )
+				else
+					this.set( 'reviewAvailable', false )
 
-				this.reviewAvailable = true;
-				
-				
 				// Removing user's review from review list.
 				var index = -1;
 				for( var i = 0; i < this.reviewList.length; i++ ) {
@@ -175,12 +170,8 @@
 						break;
 					}
 				}
-				
-				if( index != -1 ) {
+				if( index != -1 )
 					this.splice( 'reviewList', index, 1 );
-					this.userReviewDeleted = true;
-					/* this.$.repeatReviewList.render(); */
-				}
 				
 			},
 			
@@ -200,17 +191,19 @@
 			},
 			
 			checkForZeroResults: function() {
-				if( this.reviewAvailable )
+				if( this.reviewAvailable ) {
 					this.zeroReviewResults = false;
-				else {
-					for( var i = 0; i < this.reviewList.length; i ++ ) {
-						if( ( this.reviewList[i].reviewTitle != null && this.reviewList[i].reviewTitle.trim() != "" )
-								||	( this.reviewList[i].review != null && this.reviewList[i].review.trim() != "" )	) {
-							this.zeroReviewResults = false;
-							break;
-						}
+					return;
+				}
+				var zeroReviewResults = true;
+				for( var i = 0; i < this.reviewList.length; i ++ ) {
+					if( this.reviewList[i].reviewState != "BLOCKED" && this.reviewList[i].reviewState != "DELETED" && 
+							this.reviewList[i].review != null && this.reviewList[i].review.trim() != "" ) {
+						zeroReviewResults = false;
+						break;
 					}
 				}
+				this.set( 'zeroReviewResults', zeroReviewResults );
 			},
 			
 			reset: function() {
