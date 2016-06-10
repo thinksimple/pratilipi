@@ -4,6 +4,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -12,7 +13,6 @@ import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.CommentData;
-import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.CommentDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.taskqueue.Task;
@@ -44,7 +44,7 @@ public class CommentApi extends GenericApi {
 		
 		private Long commentId;
 		
-		private User user;
+		private UserApi.Response user;
 		
 		private CommentParentType parentType;
 		private String parentId;
@@ -60,7 +60,7 @@ public class CommentApi extends GenericApi {
 		
 		Response( CommentData commentData ) {
 			this.commentId = commentData.getId();
-			this.user = new User( commentData.getUser() );
+			this.user = new UserApi.Response( commentData.getUser(), true );
 			this.parentType = commentData.getParentType();
 			this.parentId = commentData.getParentId();
 			this.content = commentData.getContent();
@@ -70,23 +70,6 @@ public class CommentApi extends GenericApi {
 					? null
 					: commentData.getLastUpdated().getTime();
 			this.hasAccessToUpdate = commentData.hasAccessToUpdate();
-		}
-		
-	}
-
-	@SuppressWarnings("unused")
-	public static class User {
-		
-		private Long userId;
-		private String displayName;
-		private String profilePageUrl;
-		private String profileImageUrl;
-
-		User( UserData userData ) {
-			this.userId = userData.getId();
-			this.displayName = userData.getDisplayName();
-			this.profilePageUrl = userData.getProfilePageUrl();
-			this.profileImageUrl = userData.getProfileImageUrl();
 		}
 		
 	}

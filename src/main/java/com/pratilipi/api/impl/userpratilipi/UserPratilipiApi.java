@@ -6,11 +6,11 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.UserReviewState;
-import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -40,7 +40,7 @@ public class UserPratilipiApi extends GenericApi {
 		@Deprecated
 		private String userProfilePageUrl;
 		
-		private User user;
+		private UserApi.Response user;
 		
 		private Integer rating;
 		private String review;
@@ -59,24 +59,11 @@ public class UserPratilipiApi extends GenericApi {
 		
 		// TODO: Change access to package level ASAP
 		public Response( UserPratilipiData userPratilipiData ) {
-
-			userPratilipiId = userPratilipiData.getId();
+			
+			this( userPratilipiData, false );
+			
 			userId = userPratilipiData.getUserId();
 			pratilipiId = userPratilipiData.getPratilipiId();
-			
-			userName = userPratilipiData.getUserName();
-			userImageUrl = userPratilipiData.getUserImageUrl();
-			userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
-
-			user = new User( userPratilipiData.getUser() );
-			
-			rating = userPratilipiData.getRating();
-			review = userPratilipiData.getReview();
-			reviewState = userPratilipiData.getReviewState();
-			if( userPratilipiData.getReviewDate() != null )
-				reviewDateMillis = userPratilipiData.getReviewDate().getTime();
-
-			commentCount = userPratilipiData.getCommentCount();
 			
 			addedToLib = userPratilipiData.isAddedToLib();
 			
@@ -84,6 +71,25 @@ public class UserPratilipiApi extends GenericApi {
 			
 		}
 		
+		Response( UserPratilipiData userPratilipiData, boolean asReview ) {
+
+			userPratilipiId = userPratilipiData.getId();
+			
+			userName = userPratilipiData.getUserName();
+			userImageUrl = userPratilipiData.getUserImageUrl();
+			userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
+
+			user = new UserApi.Response( userPratilipiData.getUser(), true );
+			
+			rating = userPratilipiData.getRating();
+			review = userPratilipiData.getReview();
+			reviewState = userPratilipiData.getReviewState();
+			reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate().getTime();
+
+			commentCount = userPratilipiData.getCommentCount();
+			
+		}
+
 		
 		public String getId() {
 			return userPratilipiId;
@@ -117,7 +123,7 @@ public class UserPratilipiApi extends GenericApi {
 		}
 		
 
-		public User getUser() {
+		public UserApi.Response getUser() {
 			return user;
 		}
 		
@@ -157,49 +163,6 @@ public class UserPratilipiApi extends GenericApi {
 			return hasAccessToReview;
 		}
 
-	}
-	
-	public static class User {
-		
-		private Long userId;
-		private String displayName;
-		private String profilePageUrl;
-		private String profileImageUrl;
-	
-		
-		@SuppressWarnings("unused")
-		private User() {}
-		
-		User( UserData userData ) {
-			userId = userData.getId();
-			displayName = userData.getDisplayName();
-			profilePageUrl = userData.getProfilePageUrl();
-			profileImageUrl = userData.getProfileImageUrl();
-		}
-		
-		
-		public Long getId() {
-			return userId;
-		}
-
-		public String getDisplayName() {
-			return displayName;
-		}
-
-		public String getProfilePageUrl() {
-			return profilePageUrl;
-		}
-		
-		public String getProfileImageUrl() {
-			return profileImageUrl;
-		}
-		
-		public String getUserImageUrl( int width ) {
-			return profileImageUrl.indexOf( '?' ) == -1
-					? profileImageUrl + "?width=" + width
-					: profileImageUrl + "&width=" + width;
-		}
-		
 	}
 	
 	

@@ -23,6 +23,50 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @Bind( uri= "/user" )
 public class UserApi extends GenericApi {
 
+	public static class Response {
+		
+		private Long userId;
+		private String displayName;
+		private String profilePageUrl;
+		private String profileImageUrl;
+	
+		
+		@SuppressWarnings("unused")
+		private Response() {}
+		
+		public Response( UserData userData, boolean embed ) {
+			userId = userData.getId();
+			displayName = userData.getDisplayName();
+			profilePageUrl = userData.getProfilePageUrl();
+			profileImageUrl = userData.getProfileImageUrl();
+		}
+		
+		
+		public Long getId() {
+			return userId;
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+		public String getProfilePageUrl() {
+			return profilePageUrl;
+		}
+		
+		public String getProfileImageUrl() {
+			return profileImageUrl;
+		}
+		
+		public String getUserImageUrl( int width ) {
+			return profileImageUrl.indexOf( '?' ) == -1
+					? profileImageUrl + "?width=" + width
+					: profileImageUrl + "&width=" + width;
+		}
+		
+	}
+
+	
 	@Post
 	public GenericUserResponse post( PostUserRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
