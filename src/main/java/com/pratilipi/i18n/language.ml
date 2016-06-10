@@ -24,7 +24,7 @@ language_ml					= മലയാളം
 language_bn					= ബംഗാളി
 language_en					= ഇംഗ്ലീഷ്
 language_te					= തെലുഗു
-language_kn					= Kannada
+language_kn					= കന്നഡ
 
 
 
@@ -86,10 +86,10 @@ pratilipi_publish_it		= പ്രസിദ്ധീകരിക്കൂ.
 
 pratilipi_no_reviews		= ക്ഷമിക്കണം! ഈ രചനയ്ക്ക് റിവ്യൂസ് ഒന്നും തന്നെ ഇല്ല!
 
-pratilipi_confirm_move_to_drafts_title	= Moving to drafts
-pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
-pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
-pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
+pratilipi_confirm_move_to_drafts_title	= ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റുന്നു 
+pratilipi_confirm_move_to_drafts_body	= ഈ രചന ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റട്ടേ ?
+pratilipi_confirm_move_to_drafts_true	= അതെ, ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റൂ!
+pratilipi_confirm_move_to_drafts_false	= വേണ്ട, ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റരുത്!
 
 
 
@@ -128,19 +128,19 @@ review_see_all_reviews		= എല്ലാ റിവ്യൂസും കാണ�
 
 # Comments
 
-comment_reply_to_comment				= Reply
+comment_reply_to_comment				= മറുപടി എഴുതൂ 
 comment_number_of_comments_singular		= Replies
 comment_number_of_comments_plural		= Replies
-comment_reply_comment_help				= Type here to reply
-comment_add_comment						= Add Comment
-comment_edit_comment					= Edit Comment
-comment_delete_comment					= Delete Comment
-comment_confirm_delete_comment			= Are you sure to delete this comment?
+comment_reply_comment_help				= മറുപടി എഴുതാന്‍ ഇവിടെ ടൈപ്പ് ചെയ്യൂ 
+comment_add_comment						= കമന്റ് ചേര്‍ക്കൂ
+comment_edit_comment					= കമന്റ് തിരുത്തൂ 
+comment_delete_comment					= കമന്റ് നീക്കം ചെയ്യൂ
+comment_confirm_delete_comment			= ഈ കമന്റ് നീക്കം ചെയ്യട്ടേ?
 comment_confirm_delete_comment_yes		= Yes
 comment_confirm_delete_comment_no		= No
 comment_restore_comment					= Restore Comment
-comment_submit_comment					= Submit
-comment_cancel_comment					= Cancel
+comment_submit_comment					= സമര്‍പ്പിക്കൂ 
+comment_cancel_comment					= വേണ്ട
 
 # Search
 
