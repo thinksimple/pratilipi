@@ -17,6 +17,7 @@ import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.type.UserState;
+import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -505,9 +506,11 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 	// USER_VOTE Table
 	@Override public Vote newVote() { return dataAccessor.newVote(); }
-	@Override public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) { return dataAccessor.createOrUpdateVote( vote, auditLog ); }
+	@Override public Vote getVote( Long userId, VoteParentType parentType, String parentId ) { return dataAccessor.getVote( userId, parentType, parentId ); }
 	@Override public List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId ) { return dataAccessor.getVoteListByReference( referenceType, referenceId ); }
 	@Override public List<Vote> getVoteListByReference( ReferenceType referenceType, String referenceId ) { return dataAccessor.getVoteListByReference( referenceType, referenceId ); }
+	@Override public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) { return dataAccessor.createOrUpdateVote( vote, auditLog ); }
+	
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 	@Override public MailingListSubscription newMailingListSubscription() { return dataAccessor.newMailingListSubscription(); }

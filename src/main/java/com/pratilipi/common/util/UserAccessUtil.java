@@ -8,7 +8,8 @@ public class UserAccessUtil {
 	private static final AccessType[] MEMBER_ACCESS = {
 			AccessType.PRATILIPI_ADD_REVIEW,
 			AccessType.USER_PRATILIPI_REVIEW, AccessType.USER_PRATILIPI_ADDED_TO_LIB,
-			AccessType.COMMENT_ADD };
+			AccessType.COMMENT_ADD, AccessType.COMMENT_UPDATE,
+			AccessType.VOTE };
 	
 	private static final AccessType[] ADMIN_ACCESS = {
 			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE,

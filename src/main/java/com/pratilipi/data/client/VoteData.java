@@ -2,48 +2,42 @@ package com.pratilipi.data.client;
 
 import java.util.Date;
 
-import com.pratilipi.common.type.CommentParentType;
-import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.ReferenceType;
+import com.pratilipi.common.type.VoteParentType;
+import com.pratilipi.common.type.VoteType;
 
-public class CommentData {
+public class VoteData {
 
-	private Long commentId;
+	private String voteId;
 	
 	private Long userId;
 	private UserData user;
 	
-	private CommentParentType parentType;
+	private VoteParentType parentType;
 	private String parentId;
 
 	private ReferenceType referenceType;
 	private String referenceId;
 	
-	private String content;
-	private boolean hasContent;
-	
-	private CommentState state;
-	private boolean hasState;
+	private VoteType type;
 	
 	private Long creationDateMillis;
 	private Long lastUpdatedMillis;
 
-	private Boolean hasAccessToUpdate;
-	
 
-	public CommentData() {}
+	public VoteData() {}
 
-	public CommentData( Long id ) {
-		this.commentId = id;
+	public VoteData( String id ) {
+		this.voteId = id;
 	}
 
 	
-	public Long getId() {
-		return commentId;
+	public String getId() {
+		return voteId;
 	}
 	
-	public void setId( Long id ) {
-		this.commentId = id;
+	public void setId( String id ) {
+		this.voteId = id;
 	}
 	
 	
@@ -64,11 +58,11 @@ public class CommentData {
 	}
 
 	
-	public CommentParentType getParentType() {
+	public VoteParentType getParentType() {
 		return parentType;
 	}
 
-	public void setParentType( CommentParentType parentType ) {
+	public void setParentType( VoteParentType parentType ) {
 		this.parentType = parentType;
 	}
 
@@ -114,30 +108,12 @@ public class CommentData {
 	}
 
 	
-	public String getContent() {
-		return content;
+	public VoteType getType() {
+		return type;
 	}
 
-	public void setContent( String content ) {
-		this.content = content;
-		this.hasContent = true;
-	}
-	
-	public boolean hasContent() {
-		return hasContent;
-	}
-	
-	public CommentState getState() {
-		return state;
-	}
-	
-	public void setState( CommentState state ) {
-		this.state = state;
-		this.hasState = true;
-	}
-	
-	public boolean hasState() {
-		return hasState;
+	public void setType( VoteType type ) {
+		this.type = type;
 	}
 	
 	
@@ -155,15 +131,6 @@ public class CommentData {
 
 	public void setLastUpdated( Date lastUpdated ) {
 		this.lastUpdatedMillis = lastUpdated == null ? null : lastUpdated.getTime();
-	}
-	
-	
-	public boolean hasAccessToUpdate() {
-		return hasAccessToUpdate == null ? false : hasAccessToUpdate;
-	}
-	
-	public void setAccessToUpdate( Boolean hasAccessToUpdate ) {
-		this.hasAccessToUpdate = hasAccessToUpdate;
 	}
 
 }

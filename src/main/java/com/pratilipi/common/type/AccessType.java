@@ -31,6 +31,8 @@ public enum AccessType {
 	COMMENT_ADD( "Add Comment" ),
 	COMMENT_UPDATE( "Update Comment" ),
 	
+	VOTE( "Vote" ),
+	
 	MAILING_LIST_SUBSCRIPTION_ADD( "Add Mailing List Subscription" ),
 	;
 

@@ -11,6 +11,7 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.ReferenceType;
+import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -164,9 +165,10 @@ public interface DataAccessor {
 	
 	// VOTE Table
 	Vote newVote();
-	Vote createOrUpdateVote( Vote vote, AuditLog auditLog );
+	Vote getVote( Long userId, VoteParentType parentType, String parentId );
 	List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId );
 	List<Vote> getVoteListByReference( ReferenceType referenceType, String referenceId );
+	Vote createOrUpdateVote( Vote vote, AuditLog auditLog );
 	
 	
 	// MAILING_LIST_SUBSCRIPTION Table

@@ -37,6 +37,7 @@ import com.pratilipi.common.type.MailingList;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.type.UserState;
+import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -1348,11 +1349,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {
-		( (VoteEntity) vote ).setId( vote.getUserId() + "-" + vote.getParentType() + "::" + vote.getParentId() );
-		return createOrUpdateEntityOfy( vote, auditLog );
+	public Vote getVote( Long userId, VoteParentType parentType, String parentId ) {
+		if( userId == null || userId.equals( 0L ) || parentType == null || parentId == null || parentId.isEmpty() )
+			return null;
+		return getEntityOfy( VoteEntity.class, userId + "-" + parentType + "::" + parentId );
 	}
-
+	
 	@Override
 	public List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId ) {
 		return getVoteListByReference( referenceType, referenceId.toString() );
@@ -1370,6 +1372,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		return new ArrayList<Vote>( query.list() );
 		
+	}
+
+	@Override
+	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {
+		( (VoteEntity) vote ).setId( vote.getUserId() + "-" + vote.getParentType() + "::" + vote.getParentId() );
+		return createOrUpdateEntityOfy( vote, auditLog );
 	}
 
 	

@@ -37,6 +37,10 @@ public class CommentDataUtil {
 	public static boolean hasAccessToAddCommentData( CommentData commentData ) {
 		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		
+		if( ! commentData.getUserId().equals( accessToken.getUserId() ) )
+			return false;
+
 		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.COMMENT_ADD ) )
 			return false;
 		
@@ -44,17 +48,23 @@ public class CommentDataUtil {
 		
 	}
 	
-	public static boolean hasAccessToUpdateCommentData( Comment comment, CommentData commentData ) {
+	public static boolean hasAccessToUpdateCommentData( Comment comment ) {
 		return hasAccessToUpdateCommentData( comment.getState(), comment.getUserId() );
 	}
 
 	public static boolean hasAccessToUpdateCommentData( CommentState commentState, Long commentUserId ) {
 		
-		if( commentState != CommentState.ACTIVE
-				&& commentState != CommentState.DELETED )
+		if( commentState != CommentState.ACTIVE && commentState != CommentState.DELETED )
 			return false;
 		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		
+		if( ! commentUserId.equals( accessToken.getUserId() ) )
+			return false;
+
+		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.COMMENT_UPDATE ) )
+			return false;
+		
 		return commentUserId.equals( accessToken.getUserId() );
 	
 	}
@@ -64,17 +74,17 @@ public class CommentDataUtil {
 		
 		CommentData commentData = new CommentData( comment.getId() );
 		
+		commentData.setUserId( comment.getUserId() );
 		commentData.setParentType( comment.getParentType() );
 		commentData.setParentId( comment.getParentId() );
-		commentData.setUserId( comment.getUserId() );
+		commentData.setReferenceType( comment.getReferenceType() );
+		commentData.setReferenceId( comment.getReferenceId() );
 		commentData.setContent( comment.getContent() );
 		commentData.setState( comment.getState() );
 		commentData.setCreationDate( comment.getCreationDate() );
 		commentData.setLastUpdated( comment.getLastUpdated() );
 
-		commentData.setAccessToUpdate( hasAccessToUpdateCommentData(
-				comment,
-				commentData ) );
+		commentData.setAccessToUpdate( hasAccessToUpdateCommentData( comment ) );
 
 		return commentData;
 		
@@ -170,7 +180,7 @@ public class CommentDataUtil {
 
 		if ( isNew && ! hasAccessToAddCommentData( commentData ) )
 			throw new InsufficientAccessException();
-		if( ! isNew && ! hasAccessToUpdateCommentData( comment, commentData ) )
+		if( ! isNew && ! hasAccessToUpdateCommentData( comment ) )
 			throw new InsufficientAccessException();
 
 		

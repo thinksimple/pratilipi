@@ -11,7 +11,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
-import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.data.client.CommentData;
 import com.pratilipi.data.util.CommentDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -76,7 +76,7 @@ public class CommentApi extends GenericApi {
 	
 	
 	@Post
-	public GenericResponse post( PostRequest request )
+	public Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		CommentData commentData = new CommentData( request.commentId );
@@ -93,19 +93,22 @@ public class CommentApi extends GenericApi {
 			commentData.setState( request.state );
 		else
 			commentData.setState( CommentState.ACTIVE );
+
 		
 		commentData = CommentDataUtil.saveCommentData( commentData );
 		
-		if( commentData.getParentType() == CommentParentType.REVIEW ) {
-			Long pratilipiId = DataAccessorFactory.getDataAccessor()
-					.getUserPratilipi( commentData.getParentId() )
-					.getPratilipiId();
+		
+		if( commentData.getReferenceType() == ReferenceType.PRATILIPI ) {
+			
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/pratilipi/process" )
-					.addParam( "pratilipiId", pratilipiId.toString() )
+					.addParam( "pratilipiId", commentData.getReferenceId() )
 					.addParam( "updateReviewsDoc", "true" );
+			
 			TaskQueueFactory.getPratilipiTaskQueue().add( task );
+			
 		}
+
 		
 		return new Response( commentData );
 		
