@@ -89,11 +89,11 @@ public abstract class GenericApi extends HttpServlet {
 		StringBuilder queryParamsStr = new StringBuilder( "{" );
 		while( queryParams.hasMoreElements() ) {
 			String param = queryParams.nextElement();
-			String value = request.getParameter( param ); // Value could be a valid JSON string.
-			if( value.startsWith( "{" ) || value.startsWith( "[" ) )
+			String value = request.getParameter( param );
+			if( value.startsWith( "{" ) || value.startsWith( "[" ) ) // Value could be a valid JSON string.
 				queryParamsStr.append( "\"" + param + "\":" + value + "," );
 			else
-				queryParamsStr.append( "\"" + param + "\":\"" + value + "\"," );
+				queryParamsStr.append( "\"" + param + "\":\"" + value.replaceAll( "\"", "\\\"" ) + "\"," );
 		}
 		if( queryParamsStr.length() > 1 )
 			queryParamsStr.setCharAt( queryParamsStr.length() - 1, '}' );
@@ -114,11 +114,19 @@ public abstract class GenericApi extends HttpServlet {
 		
 		JsonObject requestPayloadJson = new JsonObject();
 		for( Entry<String, JsonElement> entry : queryParamsJson.entrySet() ) {
-			requestPayloadJson.add( entry.getKey(), entry.getValue() );
+			String value = entry.getValue().getAsString().trim();
+			if( value.isEmpty() || value.equals( "null" ) || value.equals( "undefined" ) )
+				requestPayloadJson.add( entry.getKey(), null );
+			else
+				requestPayloadJson.add( entry.getKey(), entry.getValue() );
 			requestPayloadJson.addProperty( "has" + Character.toUpperCase( entry.getKey().charAt( 0 ) ) + entry.getKey().substring( 1 ), true );
 		}
 		for( Entry<String, JsonElement> entry : requestBodyJson.entrySet() ) {
-			requestPayloadJson.add( entry.getKey(), entry.getValue() );
+			String value = entry.getValue().getAsString().trim();
+			if( value.isEmpty() || value.equals( "null" ) || value.equals( "undefined" ) )
+				requestPayloadJson.add( entry.getKey(), null );
+			else
+				requestPayloadJson.add( entry.getKey(), entry.getValue() );
 			requestPayloadJson.addProperty( "has" + Character.toUpperCase( entry.getKey().charAt( 0 ) ) + entry.getKey().substring( 1 ), true );
 		}
 		
