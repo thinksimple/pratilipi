@@ -71,6 +71,11 @@ public class CommentDocImpl implements CommentDoc {
 
 	
 	@Override
+	public Long getLikeCount() {
+		return likedByUserIds == null ? 0L : (long) likedByUserIds.size();
+	}
+
+	@Override
 	public List<Long> getLikedByUserIds() {
 		return likedByUserIds == null ? new ArrayList<Long>( 0 ) : likedByUserIds;
 	}

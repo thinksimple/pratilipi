@@ -99,9 +99,13 @@ public class CommentDataUtil {
 		commentData.setCreationDate( commentDoc.getCreationDate() );
 		commentData.setLastUpdated( commentDoc.getLastUpdated() );
 		
+		commentData.setLikeCount( (long) commentDoc.getLikedByUserIds().size() );
+		
 		commentData.setAccessToUpdate( hasAccessToUpdateCommentData(
 				CommentState.ACTIVE,
 				commentDoc.getUserId() ) );
+
+		commentData.setLiked( commentDoc.getLikedByUserIds().contains( AccessTokenFilter.getAccessToken().getUserId() ) );
 		
 		return commentData;
 		

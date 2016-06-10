@@ -47,12 +47,15 @@ public class UserPratilipiApi extends GenericApi {
 		private UserReviewState reviewState;
 		private Long reviewDateMillis;
 		
+		private Long likeCount;
 		private Long commentCount;
 		
 		private Boolean addedToLib;
 		
 		private Boolean hasAccessToReview;
 		
+		private Boolean isLiked;
+
 		
 		@SuppressWarnings("unused")
 		private Response() {}
@@ -88,6 +91,9 @@ public class UserPratilipiApi extends GenericApi {
 			reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate().getTime();
 
 			commentCount = userPratilipiData.getCommentCount();
+			likeCount = userPratilipiData.getLikeCount();
+			
+			isLiked = userPratilipiData.isLiked();
 			
 		}
 
@@ -150,6 +156,10 @@ public class UserPratilipiApi extends GenericApi {
 		}
 		
 		
+		public Long getLikeCount() {
+			return likeCount;
+		}
+
 		public Long getCommentCount() {
 			return commentCount;
 		}
@@ -162,6 +172,11 @@ public class UserPratilipiApi extends GenericApi {
 
 		public Boolean getHasAccessToReview() {
 			return hasAccessToReview;
+		}
+
+		
+		public boolean isLiked() {
+			return isLiked == null ? false : isLiked;
 		}
 
 	}

@@ -35,6 +35,8 @@ public interface UserPratilipiDoc {
 	void setReviewDate( Date reviewDate );
 
 	
+	Long getLikeCount();
+		
 	List<Long> getLikedByUserIds();
 	
 	void setLikedByUserIds( List<Long> likedByUserIds );

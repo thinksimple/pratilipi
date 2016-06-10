@@ -19,8 +19,8 @@ public class UserPratilipiDocImpl implements UserPratilipiDoc {
 	private String review;
 	private Long reviewDate;
 	
-	private List<CommentDocImpl> comments;
 	private List<Long> likedByUserIds;
+	private List<CommentDocImpl> comments;
 	
 	
 	@Override
@@ -96,6 +96,21 @@ public class UserPratilipiDocImpl implements UserPratilipiDoc {
 
 	
 	@Override
+	public Long getLikeCount() {
+		return likedByUserIds == null ? 0L : (long) likedByUserIds.size();
+	}
+
+	@Override
+	public List<Long> getLikedByUserIds() {
+		return likedByUserIds == null ? new ArrayList<Long>( 0 ) : likedByUserIds;
+	}
+	
+	@Override
+	public void setLikedByUserIds( List<Long> likedByUserIds ) {
+		this.likedByUserIds = likedByUserIds == null || likedByUserIds.size() == 0 ? null : likedByUserIds;
+	}
+
+	@Override
 	public Long getCommentCount() {
 		return comments == null ? 0L : (long) comments.size();
 	}
@@ -116,16 +131,6 @@ public class UserPratilipiDocImpl implements UserPratilipiDoc {
 			for( CommentDoc commentDoc : comments )
 				this.comments.add( (CommentDocImpl) commentDoc );
 		}
-	}
-
-	@Override
-	public List<Long> getLikedByUserIds() {
-		return likedByUserIds == null ? new ArrayList<Long>( 0 ) : likedByUserIds;
-	}
-	
-	@Override
-	public void setLikedByUserIds( List<Long> likedByUserIds ) {
-		this.likedByUserIds = likedByUserIds == null || likedByUserIds.size() == 0 ? null : likedByUserIds;
 	}
 	
 }

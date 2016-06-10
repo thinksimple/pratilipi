@@ -32,6 +32,7 @@ import com.pratilipi.api.impl.userpratilipi.UserPratilipiLibraryApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiLibraryListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
+import com.pratilipi.api.impl.vote.VoteApi;
 
 @SuppressWarnings("serial")
 public class ApiService extends GenericService {
@@ -77,6 +78,8 @@ public class ApiService extends GenericService {
 
 		ApiRegistry.register( CommentApi.class );					// *.pratilipi.com
 		ApiRegistry.register( CommentListApi.class );				// *.pratilipi.com
+		
+		ApiRegistry.register( VoteApi.class );						// *.pratilipi.com
 		
 		ApiRegistry.register( MailingListSubscribeApi.class );		// *.pratilipi.com
 		

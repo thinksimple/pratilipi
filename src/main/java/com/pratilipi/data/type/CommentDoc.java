@@ -28,6 +28,8 @@ public interface CommentDoc {
 	void setLastUpdated( Date date );
 
 	
+	Long getLikeCount();
+
 	List<Long> getLikedByUserIds();
 	
 	void setLikedByUserIds( List<Long> likedByUserIds );

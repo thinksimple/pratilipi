@@ -95,6 +95,8 @@ public class UserPratilipiDataUtil {
 		for( UserPratilipiDoc review : reviewsDoc.getReviews() ) {
 			if( review.getId().equals( userPratilipi.getId() ) ) {
 				userPratilipiData.setCommentCount( review.getCommentCount() );
+				userPratilipiData.setLikeCount( review.getLikeCount() );
+				userPratilipiData.setLiked( review.getLikedByUserIds().contains( AccessTokenFilter.getAccessToken().getUserId() ) );
 				break;
 			}
 		}
@@ -128,7 +130,10 @@ public class UserPratilipiDataUtil {
 		userPratilipiData.setReview( processReview( userPratilipiDoc.getReviewTitle(), userPratilipiDoc.getReview() ) );
 		userPratilipiData.setReviewDate( userPratilipiDoc.getReviewDate() );
 		
+		userPratilipiData.setLikeCount( userPratilipiDoc.getLikeCount() );
 		userPratilipiData.setCommentCount( userPratilipiDoc.getCommentCount() );
+		
+		userPratilipiData.setLiked( userPratilipiDoc.getLikedByUserIds().contains( AccessTokenFilter.getAccessToken().getUserId() ) );
 		
 		return userPratilipiData;
 		

@@ -28,7 +28,11 @@ public class CommentData {
 	private Long creationDateMillis;
 	private Long lastUpdatedMillis;
 
+	private Long likeCount;
+	
 	private Boolean hasAccessToUpdate;
+	
+	private Boolean isLiked;
 	
 
 	public CommentData() {}
@@ -157,6 +161,15 @@ public class CommentData {
 		this.lastUpdatedMillis = lastUpdated == null ? null : lastUpdated.getTime();
 	}
 	
+
+	public Long getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount( Long likeCount ) {
+		this.likeCount = likeCount;
+	}
+
 	
 	public boolean hasAccessToUpdate() {
 		return hasAccessToUpdate == null ? false : hasAccessToUpdate;
@@ -166,4 +179,13 @@ public class CommentData {
 		this.hasAccessToUpdate = hasAccessToUpdate;
 	}
 
+	
+	public boolean isLiked() {
+		return isLiked == null ? false : isLiked;
+	}
+
+	public void setLiked( Boolean isLiked ) {
+		this.isLiked = isLiked;
+	}
+	
 }

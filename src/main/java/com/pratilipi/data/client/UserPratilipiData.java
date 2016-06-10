@@ -33,6 +33,8 @@ public class UserPratilipiData {
 	
 	private Long reviewDateMillis;
 
+	
+	private Long likeCount;
 	private Long commentCount;
 	
 	
@@ -41,6 +43,8 @@ public class UserPratilipiData {
 
 	private Boolean hasAccessToReview;
 	
+	private Boolean isLiked;
+
 
 	
 	public String getId() {
@@ -153,6 +157,15 @@ public class UserPratilipiData {
 		this.reviewDateMillis = reviewDate == null ? null : reviewDate.getTime();
 	}
 
+	
+	public Long getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount( Long likeCount ) {
+		this.likeCount = likeCount;
+	}
+
 	public Long getCommentCount() {
 		return commentCount;
 	}
@@ -160,6 +173,7 @@ public class UserPratilipiData {
 	public void setCommentCount( Long count ) {
 		this.commentCount = count;
 	}
+	
 	
 	public Boolean isAddedToLib() {
 		return addedToLib == null ? false : addedToLib;
@@ -180,6 +194,15 @@ public class UserPratilipiData {
 	
 	public void setAccessToReview( Boolean hasAccessToReview ) {
 		this.hasAccessToReview = hasAccessToReview;
+	}
+
+	
+	public boolean isLiked() {
+		return isLiked == null ? false : isLiked;
+	}
+
+	public void setLiked( Boolean isLiked ) {
+		this.isLiked = isLiked;
 	}
 
 }

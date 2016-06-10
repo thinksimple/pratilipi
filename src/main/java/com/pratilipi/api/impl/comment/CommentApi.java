@@ -55,8 +55,12 @@ public class CommentApi extends GenericApi {
 		private Long creationDateMillis;
 		private Long lastUpdatedMillis;
 		
+		private Long likeCount;
+		
 		private Boolean hasAccessToUpdate;
 		
+		private Boolean isLiked;
+
 		
 		Response( CommentData commentData ) {
 			this.commentId = commentData.getId();
@@ -69,7 +73,9 @@ public class CommentApi extends GenericApi {
 			this.lastUpdatedMillis = commentData.getLastUpdated() == null
 					? null
 					: commentData.getLastUpdated().getTime();
+			this.likeCount = commentData.getLikeCount();
 			this.hasAccessToUpdate = commentData.hasAccessToUpdate();
+			this.isLiked = commentData.isLiked();
 		}
 		
 	}
