@@ -10,7 +10,7 @@
 			}
 			.comment .comment-child {
 				border-left: 2px solid #d3d3d3;
-				padding: 12px 8px;
+				padding: 12px 8px 16px 8px;
 			}
 			.comment img.user-img {
 				width: 36px;
@@ -22,7 +22,7 @@
 				margin-top: 8px;
 			}
 			.comment .content {
-				margin-top: 24px;
+				margin-top: 12px;
 				display: block;
 				margin-left: 12px;
 			}
@@ -66,6 +66,7 @@
 							   '</div>' +
 							   '<div class="date-added">' + convertDate( commentList[i].lastUpdatedMillis != null ? commentList[i].lastUpdatedMillis : commentList[i].creationDateMillis ) + '</div>' + 
 							   '<div class="content">' + ( commentList[i].content != null ? commentList[i].content : "&nbsp;" ) + '</div>' +
+							   '<a style="margin-left: 12px;" class="pratilipi-red" href="<#if user.isGuest == true>/login?ret=${ pratilipi.getPageUrl() }?review=reply%26parentId=${ review.getId() }<#else>?review=reply&parentId=${ review.getId() }</#if>">${ _strings.comment_reply_to_comment }</a>' +
 							   '</div>' + 
 							   '</div>';
 						}

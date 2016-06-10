@@ -103,7 +103,9 @@
    				</a>
    				<div style="display: inline-block; margin-left: 16px;">
    					<a class="user-name" href="{{ review.userProfilePageUrl }}">{{ review.userName }}</a>
-	   				<pratilipi-rating value="{{ review.rating }}" />
+   					<template is="dom-if" if="{{ showRating }}">
+   						<pratilipi-rating value="{{ review.rating }}" />
+   					</template>
 	   				<span style="display: block;">{{ reviewDateMillis }}</span>
    				</div>
 			</div>
@@ -116,7 +118,7 @@
 				<template is="dom-if" if="{{ showCommentCount }}">
 					<a class="expand-comments pratilipi-red" on-click="showOrHideComments">
 						<iron-icon icon="icons:unfold-more"></iron-icon>
-						{{ commentNumberText }}
+						{{ commentCount }}&nbsp;{{ commentNumberText }}
 					</a>
 				</template>
 			</div>
@@ -142,7 +144,7 @@
 				review: { type: Object, observer: "ready" },
 				
 				hasAccessToUpdate: { type: Boolean, value: false },
-				commentCount: { type: Number, value: 0, observer: "_commentCountObserver" },
+				commentCount: { type: Number, observer: "_commentCountObserver" },
 				showCommentCount: { type: Boolean, value: false }
 			},
 			
@@ -174,13 +176,13 @@
 				if( this.review.reviewDateMillis )
 					this.reviewDateMillis = convertDate( this.review.reviewDateMillis );
 				
+				this.showRating = this.review.rating > 0 ? true : false;
 				this.commentCount = this.review.commentCount;
 			},
 			
 			_commentCountObserver: function() {
 				this.showCommentCount = this.commentCount != null && this.commentCount > 0 ? true : false;
-				this.commentNumberText = this.commentCount + " " + 
-										this.commentCount != null && this.commentCount > 1 ? 
+				this.commentNumberText = this.commentCount != null && this.commentCount > 1 ? 
 										"${ _strings.comment_number_of_comments_plural }" : "${ _strings.comment_number_of_comments_singular }";  
 			},
 			
