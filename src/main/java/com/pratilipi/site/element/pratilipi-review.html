@@ -110,14 +110,13 @@
 			<div class="reviewText">{{ reviewText }}</div>
 			<div class="reply-section">
 				<a class="reply-text pratilipi-red" on-click="writeComment">
-					${ _strings.comment_reply_comment }
+					${ _strings.comment_reply_to_comment }
 				</a>
 				<br/>
 				<template is="dom-if" if="{{ showCommentCount }}">
 					<a class="expand-comments pratilipi-red" on-click="showOrHideComments">
 						<iron-icon icon="icons:unfold-more"></iron-icon>
-						{{ commentCount }}&nbsp;${ _strings.comment_number_of_comments }
-						<#-- <iron-icon icon="{{ expandedIcon }}"></iron-icon> -->
+						{{ commentNumberText }}
 					</a>
 				</template>
 			</div>
@@ -142,7 +141,6 @@
 				user: { type: Object },
 				review: { type: Object, observer: "ready" },
 				
-				<#-- expandedIcon: { type: String, value: "icons:arrow-drop-down" }, -->
 				hasAccessToUpdate: { type: Boolean, value: false },
 				commentCount: { type: Number, value: 0, observer: "_commentCountObserver" },
 				showCommentCount: { type: Boolean, value: false }
@@ -181,21 +179,17 @@
 			
 			_commentCountObserver: function() {
 				this.showCommentCount = this.commentCount != null && this.commentCount > 0 ? true : false;
+				this.commentNumberText = this.commentCount + " " + 
+										this.commentCount != null && this.commentCount > 1 ? 
+										"${ _strings.comment_number_of_comments_plural }" : "${ _strings.comment_number_of_comments_singular }";  
 			},
 			
 			writeComment: function() {
 				this.querySelector( 'pratilipi-comment-list#comment-' + this.review.userPratilipiId ).writeComment();
-				<#-- this.expandedIcon = "icons:arrow-drop-up"; -->
 			},
 			
 			showOrHideComments: function() {
 				this.querySelector( 'pratilipi-comment-list#comment-' + this.review.userPratilipiId ).showOrHideComments();
-				<#--
-				if( this.expandedIcon == "icons:arrow-drop-down" )
-					this.expandedIcon = "icons:arrow-drop-up";
-				else
-					this.expandedIcon = "icons:arrow-drop-down";
-				-->
 			},
 			
 			
