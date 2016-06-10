@@ -442,7 +442,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) { return dataAccessor.getUserPratilipi( userId, pratilipiId ); }
 	@Override public DataListCursorTuple<Long> getUserLibrary( Long userId, String cursorStr, Integer offset, Integer resultCount ) { return dataAccessor.getUserLibrary( userId, cursorStr, offset, resultCount ); }
 	@Override public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursorStr, Integer resultCount ) { return dataAccessor.getUserPratilipiList( userId, pratilipiId, cursorStr, resultCount ); }
-	@Override public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) { return dataAccessor.createOrUpdateUserPratilipi( userPratilipi ); }
+	@Override public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi, AuditLog auditLog ) { return dataAccessor.createOrUpdateUserPratilipi( userPratilipi, auditLog ); }
 	
 	// USER_AUTHOR Table
 	@Override public UserAuthor newUserAuthor() { return dataAccessor.newUserAuthor(); }

@@ -603,7 +603,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi ) {
+	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi, AuditLog auditLog ) {
 		for( int i = 0; i < UserPratilipiMock.USER_PRATILIPI_TABLE.size(); i++ ) {
 			if( UserPratilipiMock.USER_PRATILIPI_TABLE.get( i ).getUserId().equals( userPratilipi.getUserId() )
 					&& UserPratilipiMock.USER_PRATILIPI_TABLE.get( i ).getPratilipiId().equals( userPratilipi.getPratilipiId() ) ) {

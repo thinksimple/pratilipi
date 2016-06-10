@@ -5,6 +5,11 @@ import com.pratilipi.common.type.Language;
 
 public class UserAccessUtil {
 	
+	private static final AccessType[] MEMBER_ACCESS = {
+			AccessType.PRATILIPI_ADD_REVIEW,
+			AccessType.USER_PRATILIPI_REVIEW, AccessType.USER_PRATILIPI_ADDED_TO_LIB,
+			AccessType.COMMENT_ADD };
+	
 	private static final AccessType[] ADMIN_ACCESS = {
 			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE,
 			AccessType.PRATILIPI_READ_META, AccessType.PRATILIPI_READ_CONTENT,
@@ -15,7 +20,7 @@ public class UserAccessUtil {
 	private enum Role {
 
 		GUEST			( null ),
-		MEMBER			( null,					AccessType.PRATILIPI_ADD_REVIEW, AccessType.COMMENT_ADD ),
+		MEMBER			( null,					MEMBER_ACCESS ),
 
 		ADMIN			( null,					AccessType.USER_ADD, AccessType.USER_UPDATE, AccessType.PRATILIPI_LIST ),
 		ADMIN_BENGALI	( Language.BENGALI,		ADMIN_ACCESS ),

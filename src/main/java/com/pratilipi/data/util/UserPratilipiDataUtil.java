@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jsoup.Jsoup;
 
+import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
@@ -19,6 +20,7 @@ import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
@@ -29,58 +31,66 @@ import com.pratilipi.filter.AccessTokenFilter;
 
 public class UserPratilipiDataUtil {
 	
-	private static String convertHtmlToText( String htmlString ) {
-	    if( htmlString == null || htmlString.trim().isEmpty() )
-	        return null;
-	    htmlString = Jsoup.parse( htmlString.replaceAll( "(?i)<br[^>]*>|\\n", "LINE_BREAK" ) ).text();
-	    return htmlString.replaceAll( "LINE_BREAK", "\n" ).trim();
-	}
+	public static boolean hasAccessToUpdateUserPratilipiData( UserPratilipi userPratilipi, AccessType accessType ) {
 
-	public static boolean hasAccessToAddUserPratilipiData( Long pratilipiId ) {
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		// Case 1: User not having PRATILIPI_ADD_REVIEW access can not review a content piece.
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.PRATILIPI_ADD_REVIEW ) )
+		if( ! userPratilipi.getUserId().equals( accessToken.getUserId() ) )
+			return false;
+		
+		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, accessType ) )
 			return false;
 
-		// Case 2: User can not review content pieces lined with his/her own author profile.
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		Author author = pratilipi.getAuthorId() == null ? null : dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		if( author != null && accessToken.getUserId().equals( author.getUserId() ) )
-			return false;
+		// Review can not be created for content pieces created by the user.
+		if( accessType == AccessType.USER_PRATILIPI_REVIEW ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			Pratilipi pratilipi = dataAccessor.getPratilipi( userPratilipi.getPratilipiId() );
+			Author author = pratilipi.getAuthorId() == null ? null : dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			if( author != null && userPratilipi.getUserId().equals( author.getUserId() ) )
+				return false;
+		}
 		
 		return true;
 		
 	}
 	
-
-	public static UserPratilipiData createUserPratilipiData( UserPratilipi userPratilipi ) throws UnexpectedServerException {
+	
+	private static String processReview( String reviewTitle, String review ) {
 		
-		if( userPratilipi == null )
-			return null;
+		if( review == null || review.trim().isEmpty() )
+			return reviewTitle.trim();
+		
+		review = Jsoup.parse( review.replaceAll( "(?i)<br[^>]*>|\\n", "LINE_BREAK" ) ).text();
+		review = review.replaceAll( "LINE_BREAK", "\n" ).trim();
+
+		return reviewTitle == null ? review : reviewTitle + "\n\n" + review;
+
+	}
+
+	private static UserPratilipiData createUserPratilipiData( UserPratilipi userPratilipi )
+			throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		
 		User user = dataAccessor.getUser( userPratilipi.getUserId() );
 		UserData userData = UserDataUtil.createUserData( user );
 		PratilipiReviewsDoc reviewsDoc = docAccessor.getPratilipiReviewsDoc( userPratilipi.getPratilipiId() );
 		
 		UserPratilipiData userPratilipiData = new UserPratilipiData();
+		
 		userPratilipiData.setId( userPratilipi.getId() );
 		userPratilipiData.setUserId( userPratilipi.getUserId() );
+		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
+
+		userPratilipiData.setUser( userData );
 		userPratilipiData.setUserName( userData.getDisplayName() );
 		userPratilipiData.setUserImageUrl( userData.getProfileImageUrl() );
 		userPratilipiData.setUserProfilePageUrl( userData.getProfilePageUrl() );
-		userPratilipiData.setPratilipiId( userPratilipi.getPratilipiId() );
+
 		userPratilipiData.setRating( userPratilipi.getRating() );
-		userPratilipiData.setReviewTitle( userPratilipi.getReviewTitle() );
-		userPratilipiData.setReview( convertHtmlToText( userPratilipi.getReview() ) );
+		userPratilipiData.setReview( processReview( userPratilipi.getReviewTitle(), userPratilipi.getReview() ) );
 		userPratilipiData.setReviewState( userPratilipi.getReviewState() );
 		userPratilipiData.setReviewDate( userPratilipi.getReviewDate() );
-		userPratilipiData.setAccessToReview( hasAccessToAddUserPratilipiData( userPratilipi.getPratilipiId() ) );
-		userPratilipiData.setAddedToLib( userPratilipi.isAddedToLib() );
 		
 		for( UserPratilipiDoc review : reviewsDoc.getReviews() ) {
 			if( review.getId().equals( userPratilipi.getId() ) ) {
@@ -88,14 +98,19 @@ public class UserPratilipiDataUtil {
 				break;
 			}
 		}
+
+		userPratilipiData.setAddedToLib( userPratilipi.isAddedToLib() );
+		
+		userPratilipiData.setAccessToReview( hasAccessToUpdateUserPratilipiData( userPratilipi, AccessType.USER_PRATILIPI_REVIEW ) );
 		
 		return userPratilipiData;
 		
 	}
 	
-	public static UserPratilipiData createUserPratilipiData( UserPratilipiDoc userPratilipiDoc ) {
+	private static UserPratilipiData createUserPratilipiData( UserPratilipiDoc userPratilipiDoc ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
 		User user = dataAccessor.getUser( userPratilipiDoc.getUserId() );
 		UserData userData = UserDataUtil.createUserData( user );
 		
@@ -103,20 +118,14 @@ public class UserPratilipiDataUtil {
 		
 		userPratilipiData.setId( userPratilipiDoc.getId() );
 		userPratilipiData.setUserId( userPratilipiDoc.getUserId() );
+		
+		userPratilipiData.setUser( userData );
 		userPratilipiData.setUserName( userData.getDisplayName() );
 		userPratilipiData.setUserImageUrl( userData.getProfileImageUrl() );
 		userPratilipiData.setUserProfilePageUrl( userData.getProfilePageUrl() );
-		userPratilipiData.setUser( userData );
 		
 		userPratilipiData.setRating( userPratilipiDoc.getRating() );
-		
-		if( userPratilipiDoc.getReviewTitle() == null )
-			userPratilipiData.setReview( convertHtmlToText( userPratilipiDoc.getReview() ) );
-		else if( userPratilipiDoc.getReview() == null )
-			userPratilipiData.setReview( userPratilipiDoc.getReviewTitle() );
-		else
-			userPratilipiData.setReview( userPratilipiDoc.getReviewTitle() + "\n\n" + convertHtmlToText( userPratilipiDoc.getReview() ) );
-		
+		userPratilipiData.setReview( processReview( userPratilipiDoc.getReviewTitle(), userPratilipiDoc.getReview() ) );
 		userPratilipiData.setReviewDate( userPratilipiDoc.getReviewDate() );
 		
 		userPratilipiData.setCommentCount( userPratilipiDoc.getCommentCount() );
@@ -124,18 +133,11 @@ public class UserPratilipiDataUtil {
 		return userPratilipiData;
 		
 	}
-	
-	public static List<UserPratilipiData> createUserPratilipiDataList( List<UserPratilipi> userPratilipiList ) throws UnexpectedServerException {
-		List<UserPratilipiData> userPratilipiDataList = new ArrayList<>( userPratilipiList.size() );
-		for( UserPratilipi userPratilipi : userPratilipiList )
-			userPratilipiDataList.add( createUserPratilipiData( userPratilipi ) );
-		return userPratilipiDataList;
-	}
 
 	
-	public static UserPratilipiData getUserPratilipi( Long pratilipiId ) throws UnexpectedServerException {
+	public static UserPratilipiData getUserPratilipi( Long userId, Long pratilipiId )
+			throws UnexpectedServerException {
 
-		Long userId = AccessTokenFilter.getAccessToken().getUserId();
 		if( userId.equals( 0L ) )
 			return null;
 
@@ -151,10 +153,10 @@ public class UserPratilipiDataUtil {
 		
 	}
 	
-	public static DataListCursorTuple<PratilipiData> getUserPratilipiLibrary(
-			Long userId, String cursor, Integer offset, Integer resultCount ) {
+	public static DataListCursorTuple<PratilipiData> getUserLibrary( Long userId, String cursor, Integer offset, Integer resultCount ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
 		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
 				dataAccessor.getUserLibrary( userId, cursor, offset, resultCount );
 		
@@ -164,15 +166,8 @@ public class UserPratilipiDataUtil {
 		
 	}
 	
-	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList(
-			Long pratilipiId, String cursor, Integer resultCount ) throws UnexpectedServerException {
-		
-		return getPratilipiReviewList( pratilipiId, cursor, null, resultCount );
-		
-	}
-	
-	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList(
-			Long pratilipiId, String cursor, Integer offset, Integer resultCount ) throws UnexpectedServerException {
+	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList( Long pratilipiId, String cursor, Integer offset, Integer resultCount )
+			throws UnexpectedServerException {
 		
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		
@@ -200,50 +195,93 @@ public class UserPratilipiDataUtil {
 		
 	}
 	
-	public static UserPratilipiData saveUserPratilipi( UserPratilipiData userPratilipiData )
+	public static UserPratilipiData saveUserPratilipiAddToLibrary( Long userId, Long pratilipiId, Boolean addedToLibrary )
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		if( ! hasAccessToAddUserPratilipiData( userPratilipiData.getPratilipiId() ) )
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( userId, pratilipiId );
+		if( userPratilipi == null ) {
+			userPratilipi = dataAccessor.newUserPratilipi();
+			userPratilipi.setUserId( userId );
+			userPratilipi.setPratilipiId( pratilipiId );
+		}
+
+		
+		if( ! hasAccessToUpdateUserPratilipiData( userPratilipi, AccessType.USER_PRATILIPI_ADDED_TO_LIB ) )
 			throw new InsufficientAccessException();
 
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(
-				AccessTokenFilter.getAccessToken().getUserId(),
-				userPratilipiData.getPratilipiId() );
+		Gson gson = new Gson();
 
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setAccessType( AccessType.USER_PRATILIPI_ADDED_TO_LIB );
+		auditLog.setEventDataOld( gson.toJson( userPratilipi ) );
+
+		userPratilipi.setAddedToLib( addedToLibrary );
+		userPratilipi.setAddedToLibDate( new Date() );
+
+		auditLog.setEventDataNew( gson.toJson( userPratilipi ) );
+		
+		
+		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi, auditLog );
+		
+		
+		return createUserPratilipiData( userPratilipi );
+		
+	}
+	
+	public static UserPratilipiData saveUserPratilipiReview( Long userId, Long pratilipiId, Integer rating, String review, UserReviewState reviewState )
+			throws InsufficientAccessException, UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi( userId, pratilipiId );
 		if( userPratilipi == null ) {
 			userPratilipi = dataAccessor.newUserPratilipi();
-			userPratilipi.setUserId( AccessTokenFilter.getAccessToken().getUserId() );
-			userPratilipi.setPratilipiId( userPratilipiData.getPratilipiId() );
+			userPratilipi.setUserId( userId );
+			userPratilipi.setPratilipiId( pratilipiId );
 		}
 		
-		if( ! userPratilipiData.hasRating() && ! userPratilipiData.hasReview() && ! userPratilipiData.hasReviewState() && ! userPratilipiData.hasAddedToLib() )
-			return createUserPratilipiData( userPratilipi );
+
+		if( ! hasAccessToUpdateUserPratilipiData( userPratilipi, AccessType.USER_PRATILIPI_REVIEW ) )
+			throw new InsufficientAccessException();
 
 		
-		if( userPratilipiData.hasRating() ) {
-			userPratilipi.setRating( userPratilipiData.getRating() );
+		Gson gson = new Gson();
+
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setAccessType( AccessType.USER_PRATILIPI_ADDED_TO_LIB );
+		auditLog.setEventDataOld( gson.toJson( userPratilipi ) );
+		
+		
+		if( rating != null
+				&& ! rating.equals( userPratilipi.getRating() )
+				&& !( rating == 0 && userPratilipi.getRating() == null ) ) {
+			userPratilipi.setRating( rating );
 			userPratilipi.setRatingDate( new Date() );
 		}
 		
-		if( userPratilipiData.hasReviewTitle() )
-			userPratilipi.setReviewTitle( userPratilipiData.getReviewTitle() );
-
-		if( userPratilipiData.hasReview() ) {
-			userPratilipi.setReview( userPratilipiData.getReview() );
+		if( review != null ) {
+			userPratilipi.setReviewTitle( null );
+			userPratilipi.setReview( review );
 			userPratilipi.setReviewState( UserReviewState.PUBLISHED );
 			userPratilipi.setReviewDate( new Date() );
 		}
 
-		if( userPratilipiData.hasReviewState() )
-			userPratilipi.setReviewState( userPratilipiData.getReviewState() );
+		if( reviewState != null ) {
+			userPratilipi.setReviewState( reviewState );
+			userPratilipi.setReviewDate( new Date() );
+		}
 
 		
-		if( userPratilipiData.hasAddedToLib() )
-			userPratilipi.setAddedToLib( userPratilipiData.isAddedToLib() );
+		auditLog.setEventDataNew( gson.toJson( userPratilipi ) );
 		
-		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi );
+		
+		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi, auditLog );
+
 		
 		return createUserPratilipiData( userPratilipi );
 		

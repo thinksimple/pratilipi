@@ -134,7 +134,7 @@ public interface DataAccessor {
 	UserPratilipi getUserPratilipi( Long userId, Long pratilipiId );
 	DataListCursorTuple<Long> getUserLibrary( Long userId, String cursorStr, Integer offset, Integer resultCount );
 	DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursor, Integer resultCount );
-	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi );
+	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi, AuditLog auditLog );
 	
 	// USER_AUTHOR Table
 	UserAuthor newUserAuthor();
