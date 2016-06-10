@@ -13,8 +13,8 @@
 				padding: 12px 8px;
 			}
 			.comment img.user-img {
-				width: 48px;
-				height: 48px;
+				width: 36px;
+				height: 36px;
 				float: left;
 			}
 			.comment .user-name {
@@ -57,7 +57,7 @@
 							html += '<div class="comment">' + 
 							   '<div class="comment-child">' +
 							   '<a href="' + commentList[i].user.profilePageUrl + '">' +
-							   '<img class="user-img img-circle" src="' + commentList[i].user.profileImageUrl + ( commentList[i].user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + 'width=48' + '" />' +
+							   '<img class="user-img img-circle" src="' + commentList[i].user.profileImageUrl + ( commentList[i].user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + 'width=36' + '" />' +
 							   '</a>' +
 							   '<div class="user-name">' + 
 							   '<a href="' + commentList[i].user.profilePageUrl + '">' + 

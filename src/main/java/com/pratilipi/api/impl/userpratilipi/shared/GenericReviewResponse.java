@@ -51,6 +51,12 @@ public class GenericReviewResponse extends GenericResponse {
 		return userImageUrl;
 	}
 	
+	public String getUserImageUrl( int width ) {
+		return userImageUrl.indexOf( '?' ) == -1
+				? userImageUrl + "?width=" + width
+				: userImageUrl + "&width=" + width;
+	}
+
 	public String getUserProfilePageUrl() {
 		return userProfilePageUrl;
 	}

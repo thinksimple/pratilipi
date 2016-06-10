@@ -64,7 +64,7 @@
 				if( message["message"] != null )
 					alert( "Error " + status + " : " + message["message"] ); 
 				else
-					alert( "Some error occured! Please try again!" );
+					alert( "Some error occurred! Please try again!" );
 			}
 		});
 	}
