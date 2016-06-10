@@ -59,7 +59,7 @@
 			is: 'pratilipi-comment-list',
 			
 			properties: {
-				user: { type: Object, observer: "_userObserver" },
+				user: { type: Object },
 				commentCount: { type: Number, notify: true },
 				parentId: { type: Number },
 				parentType: { type: String },
@@ -75,13 +75,6 @@
 			
 			attached: function() {
 				this.set( 'commentList', [] );
-			},
-			
-			_userObserver: function() {
-				if( ! this.user.isGuest && this.writeCommentClicked ) {
-					this.writeCommentClicked = false;
-					this.writeComment();
-				}
 			},
 			
 			writeComment: function() {

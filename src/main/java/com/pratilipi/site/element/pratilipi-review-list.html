@@ -141,12 +141,8 @@
 			},
 			
 			_userChanged: function() {
-				// To reload the page when the user( with review ) logs out.
-				if( this.user.isGuest && this.userReviewDeleted ) {
-					this.userReviewDeleted = false;
+				// To reload the page - to load comments
 					this.reset();
-				}
-				
 			},
 			
 			_userPratilipiChanged: function() {
