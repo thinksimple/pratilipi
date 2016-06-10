@@ -84,10 +84,10 @@ pratilipi_publish_it		= ప్రచురించండి!
 
 pratilipi_no_reviews		= క్షమించండి! ఈ రచనకు ఎలాంటి సమీక్షలు లేవు!
 
-pratilipi_confirm_move_to_drafts_title	= Moving to drafts
-pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
-pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
-pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
+pratilipi_confirm_move_to_drafts_title	= ఈ  రచన డ్రాఫ్టులలోకి పంపించబడుతోంది
+pratilipi_confirm_move_to_drafts_body	= ఈ రచనను మీరు డ్రాఫ్టులలోకి పంపించాలని భావిస్తున్నారా?
+pratilipi_confirm_move_to_drafts_true	= అవును. డ్రాఫ్టులలోకి పంపించండి
+pratilipi_confirm_move_to_drafts_false	= లేదు. డ్రాఫ్టులలోకి పంపించవద్దు
 
 # Rating
 
@@ -124,19 +124,19 @@ review_see_all_reviews		= అన్ని సమీక్షలు చూడం�
 
 # Comments
 
-comment_reply_to_comment				= Reply
-comment_number_of_comments_singular		= Replies
-comment_number_of_comments_plural		= Replies
-comment_reply_comment_help				= Type here to reply
-comment_add_comment						= Add Comment
-comment_edit_comment					= Edit Comment
-comment_delete_comment					= Delete Comment
-comment_confirm_delete_comment			= Are you sure to delete this comment?
-comment_confirm_delete_comment_yes		= Yes
-comment_confirm_delete_comment_no		= No
-comment_restore_comment					= Restore Comment
-comment_submit_comment					= Submit
-comment_cancel_comment					= Cancel
+comment_reply_to_comment				= ప్రత్యుత్తరం
+comment_number_of_comments_singular		= ప్రత్యుత్తరములు
+comment_number_of_comments_plural		= ప్రత్యుత్తరములు
+comment_reply_comment_help				= ప్రత్యుత్తరం ఇవ్వడానికి ఇక్కడ టైపు చేయండి
+comment_add_comment						= వ్యాఖ్యని జత చేయండి
+comment_edit_comment					= వ్యాఖ్యని సవరించండి
+comment_delete_comment					= వ్యాఖ్యని తొలగించండి
+comment_confirm_delete_comment			= ఈ వ్యాఖ్యని తొలగించాలని మీరు భావిస్తున్నారా?
+comment_confirm_delete_comment_yes		= అవును
+comment_confirm_delete_comment_no		= కాదు
+comment_restore_comment					= వ్యాఖ్యను రీస్టోర్ చేయండి
+comment_submit_comment					= ప్రచురించండి
+comment_cancel_comment					= తొలగించండి
 
 # Search
 
@@ -328,8 +328,8 @@ share_on_twitter		= ట్విట్టర్‌లో షేర్ చేయ�
 share_on_gplus			= గూగుల్ ప్లస్‌లో షేర్ చేయండి
 increase_font_size		= ఫాంటు పరిమాణాన్ని పెంచండి
 decrease_font_size		= ఫాంటు పరిమాణాన్ని తగ్గించండి
-increase_image_size		= Increase image size
-decrease_image_size		= Decrease image size
+increase_image_size		= ఛాయాచిత్రం పరిమాణాన్ని పెంచండి
+decrease_image_size		= ఛాయాచిత్రం పరిమాణాన్ని తగ్గించండి
 
 
 # Enjoyed Reading the content? సమీక్ష రాసి షేర్ చేయండి
