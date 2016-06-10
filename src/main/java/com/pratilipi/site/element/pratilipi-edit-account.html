@@ -147,7 +147,7 @@
 				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
 					alert( event.detail.request.xhr.response.email != null ? event.detail.request.xhr.response.email : event.detail.request.xhr.response.message );
 				else
-					alert( "Some Error occured! Please try Again." );
+					alert( "Some Error occurred! Please try Again." );
 				this._disableEditEmail();
 				this._disableEditPhone();
 			},
