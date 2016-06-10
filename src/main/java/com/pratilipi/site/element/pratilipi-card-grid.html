@@ -225,9 +225,8 @@
 				if( ajaxGet.params.state == null )
 					ajaxGet.params.state = "PUBLISHED";
 				
-				ajaxGet.params.cursor = this.cursor;
+				delete ajaxGet.params.cursor;
 				this.async( function() { ajaxGet.generateRequest(); });
-				
 			},
 			
 			loadMore: function() {

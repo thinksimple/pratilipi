@@ -229,9 +229,8 @@
 				
 				// Set params and make ajax GET call.
 				ajaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
-				ajaxGet.params.cursor = this.cursor;
+				delete ajaxGet.params.cursor;
 				ajaxGet.generateRequest();
-
 			},
 			
 			loadMore: function( scrollTop ) {
