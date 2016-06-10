@@ -129,16 +129,16 @@ review_see_all_reviews		= എല്ലാ റിവ്യൂസും കാണ�
 # Comments
 
 comment_reply_to_comment				= മറുപടി എഴുതൂ 
-comment_number_of_comments_singular		= Replies
-comment_number_of_comments_plural		= Replies
+comment_number_of_comments_singular		= മറുപടി
+comment_number_of_comments_plural		= മറുപടികള്‍ 
 comment_reply_comment_help				= മറുപടി എഴുതാന്‍ ഇവിടെ ടൈപ്പ് ചെയ്യൂ 
 comment_add_comment						= കമന്റ് ചേര്‍ക്കൂ
 comment_edit_comment					= കമന്റ് തിരുത്തൂ 
 comment_delete_comment					= കമന്റ് നീക്കം ചെയ്യൂ
 comment_confirm_delete_comment			= ഈ കമന്റ് നീക്കം ചെയ്യട്ടേ?
-comment_confirm_delete_comment_yes		= Yes
-comment_confirm_delete_comment_no		= No
-comment_restore_comment					= Restore Comment
+comment_confirm_delete_comment_yes		= ചെയ്യൂ
+comment_confirm_delete_comment_no		= വേണ്ട
+comment_restore_comment					= കമന്റ് തിരികെ ചേര്‍ക്കൂ 
 comment_submit_comment					= സമര്‍പ്പിക്കൂ 
 comment_cancel_comment					= വേണ്ട
 
@@ -292,11 +292,11 @@ register_part_3					= ഉം അംഗീകരിക്കുന്നു.
 
 # Event Page
 
-event_entries			= Event Entries
-event_name				= Event Name
-event_name_en			= Event Name in English
-event_description		= Event Description
-event_entries_url_list	= Entries URL List
+event_entries			= മത്സര എന്‍ട്രികള്‍ 
+event_name				= രചനാ മത്സരത്തിന്റെ പേര്
+event_name_en			= മത്സരത്തിന്റെ പേര് ഇംഗ്ലീഷില്‍ 
+event_description		= മത്സരത്തെക്കുറിച്ചുള്ള വിവരണം 
+event_entries_url_list	= എന്‍ട്രികളുടെ യു ആര്‍ എല്‍ ലിസ്റ്റ് 
 event_save_changes		= മാറ്റങ്ങള്‍ സേവ് ചെയ്യുക
 
 
@@ -334,8 +334,8 @@ share_on_twitter		= ട്വിറ്ററില്‍ ഷെയര്‍ ച�
 share_on_gplus			= ഗൂഗിള്‍ പ്ലസില്‍ ഷെയര്‍ ചെയ്യൂ
 increase_font_size		= അക്ഷരങ്ങളുടെ വലിപ്പം കൂട്ടൂ
 decrease_font_size		= അക്ഷരങ്ങളുടെ വലിപ്പം കുറയ്ക്കൂ
-increase_image_size		= Increase image size
-decrease_image_size		= Decrease image size
+increase_image_size		= ചിത്രത്തിന്റെ  വലിപ്പം കൂട്ടൂ 
+decrease_image_size		= ചിത്രത്തിന്റെ വലിപ്പം കുറയ്ക്കൂ
 
 
 # Enjoyed Reading the content? Write a review or Share it on
