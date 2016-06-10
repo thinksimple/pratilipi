@@ -141,8 +141,11 @@
 			},
 			
 			_userChanged: function() {
-				// To reload the page - to load comments
-					this.reset();
+				// Called when user is set
+				if( this.user == null || this.pratilipi == null )
+					return;
+				// To reload the page - to load comments	
+				this.reset();
 			},
 			
 			_userPratilipiChanged: function() {
