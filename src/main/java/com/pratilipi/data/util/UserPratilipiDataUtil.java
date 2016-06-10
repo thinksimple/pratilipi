@@ -62,7 +62,7 @@ public class UserPratilipiDataUtil {
 		review = Jsoup.parse( review.replaceAll( "(?i)<br[^>]*>|\\n", "LINE_BREAK" ) ).text();
 		review = review.replaceAll( "LINE_BREAK", "\n" ).trim();
 
-		return reviewTitle == null ? review : reviewTitle + "\n\n" + review;
+		return reviewTitle == null || reviewTitle.trim().isEmpty() ? review : reviewTitle + "\n\n" + review;
 
 	}
 
