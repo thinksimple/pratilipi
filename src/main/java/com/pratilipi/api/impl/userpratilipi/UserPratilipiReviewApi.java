@@ -4,7 +4,6 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -25,33 +24,22 @@ public class UserPratilipiReviewApi extends GenericApi {
 		private Long pratilipiId;
 		
 		private Integer rating;
-		private boolean hasRating;
-		
 		private String review;
-		private boolean hasReview;
-		
 		private UserReviewState reviewState;
-		private boolean hasReviewState;
 		
 	}
 	
 	
 	@Post
-	public GenericUserPratilipiResponse post( PostRequest request )
+	public UserPratilipiApi.Response post( PostRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		UserPratilipiData userPratilipiData = new UserPratilipiData();
-		userPratilipiData.setUserId( AccessTokenFilter.getAccessToken().getUserId() );
-		userPratilipiData.setPratilipiId( request.pratilipiId );
-
-		if( request.hasRating )
-			userPratilipiData.setRating( request.rating );
-		if( request.hasReview )
-			userPratilipiData.setReview( request.review );
-		if( request.hasReviewState )
-			userPratilipiData.setReviewState( request.reviewState );
-		
-		userPratilipiData = UserPratilipiDataUtil.saveUserPratilipi( userPratilipiData );
+		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.saveUserPratilipiReview(
+				AccessTokenFilter.getAccessToken().getUserId(),
+				request.pratilipiId,
+				request.rating,
+				request.review,
+				request.reviewState );
 		
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/pratilipi/process" )
@@ -60,7 +48,7 @@ public class UserPratilipiReviewApi extends GenericApi {
 				.addParam( "updateUserPratilipiStats", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 		
-		return new GenericUserPratilipiResponse( userPratilipiData );
+		return new UserPratilipiApi.Response( userPratilipiData );
 		
 	}		
 

@@ -57,7 +57,7 @@ public class UserPratilipiDataUtil {
 	private static String processReview( String reviewTitle, String review ) {
 		
 		if( review == null || review.trim().isEmpty() )
-			return reviewTitle.trim();
+			return reviewTitle == null ? null : reviewTitle.trim();
 		
 		review = Jsoup.parse( review.replaceAll( "(?i)<br[^>]*>|\\n", "LINE_BREAK" ) ).text();
 		review = review.replaceAll( "LINE_BREAK", "\n" ).trim();

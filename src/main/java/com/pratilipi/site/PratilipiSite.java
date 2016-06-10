@@ -28,8 +28,8 @@ import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
-import com.pratilipi.api.impl.userpratilipi.shared.GenericReviewResponse;
-import com.pratilipi.api.impl.userpratilipi.shared.GenericUserPratilipiResponse;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -236,7 +236,7 @@ public class PratilipiSite extends HttpServlet {
 				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 				PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 				GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
-				UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
+				UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( AccessTokenFilter.getAccessToken().getUserId(), pratilipiId );
 				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
 						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 20 );
 				
@@ -589,7 +589,7 @@ public class PratilipiSite extends HttpServlet {
 	private Map<String, Object> createDataModelForLibraryPage( boolean basicMode, Language filterLanguage ) {
 		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
-				= UserPratilipiDataUtil.getUserPratilipiLibrary( AccessTokenFilter.getAccessToken().getUserId(), null, null, null );
+				= UserPratilipiDataUtil.getUserLibrary( AccessTokenFilter.getAccessToken().getUserId(), null, null, null );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "My Library" );
@@ -617,11 +617,11 @@ public class PratilipiSite extends HttpServlet {
 		
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
-		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
+		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( AccessTokenFilter.getAccessToken().getUserId(), pratilipiId );
 
 		GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
-		GenericUserPratilipiResponse userPratilipiResponse = userPratilipiData == null
-				? null : new GenericUserPratilipiResponse( userPratilipiData );
+		UserPratilipiApi.Response userPratilipiResponse = userPratilipiData == null
+				? null : new UserPratilipiApi.Response( userPratilipiData );
 		
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -824,7 +824,7 @@ public class PratilipiSite extends HttpServlet {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( pratilipiId );
+		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( AccessTokenFilter.getAccessToken().getUserId(), pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		
@@ -838,8 +838,8 @@ public class PratilipiSite extends HttpServlet {
 		
 		Gson gson = new Gson();
 		GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
-		GenericUserPratilipiResponse userPratilipiResponse = userPratilipiData != null ?
-						new GenericUserPratilipiResponse( userPratilipiData ) : null;
+		UserPratilipiApi.Response userPratilipiResponse = userPratilipiData != null ?
+						new UserPratilipiApi.Response( userPratilipiData ) : null;
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
@@ -1019,10 +1019,10 @@ public class PratilipiSite extends HttpServlet {
 		return pratilipiList;
 	}
 
-	private List<GenericReviewResponse> toGenericReviewResponseList( List<UserPratilipiData> userPratilipiList ) {
-		List<GenericReviewResponse> reviewList = new ArrayList<>( userPratilipiList.size() );
+	private List<UserPratilipiReviewListApi.Review> toGenericReviewResponseList( List<UserPratilipiData> userPratilipiList ) {
+		List<UserPratilipiReviewListApi.Review> reviewList = new ArrayList<>( userPratilipiList.size() );
 		for( UserPratilipiData userPratilipiData : userPratilipiList )
-			reviewList.add( new GenericReviewResponse( userPratilipiData ) );
+			reviewList.add( new UserPratilipiReviewListApi.Review( userPratilipiData ) );
 		return reviewList;
 	}
 	

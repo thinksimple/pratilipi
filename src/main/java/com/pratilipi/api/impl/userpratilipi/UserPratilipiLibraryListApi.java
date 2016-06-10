@@ -4,7 +4,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
-import com.pratilipi.api.impl.userpratilipi.shared.GetUserPratilipiLibraryListRequest;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.PratilipiData;
@@ -15,16 +15,24 @@ import com.pratilipi.filter.AccessTokenFilter;
 @Bind( uri = "/userpratilipi/library/list" )
 public class UserPratilipiLibraryListApi extends GenericApi {
 	
+	public static class GetRequest extends GenericRequest {
+
+		private String cursor;
+		private Integer resultCount;
+		
+	}
+	
+	
 	@Get
-	public static GetPratilipiListResponse get( GetUserPratilipiLibraryListRequest request ) 
+	public static GetPratilipiListResponse get( GetRequest request ) 
 			throws InsufficientAccessException {
 		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
-				= UserPratilipiDataUtil.getUserPratilipiLibrary(
+				= UserPratilipiDataUtil.getUserLibrary(
 						AccessTokenFilter.getAccessToken().getUserId(),
-						request.getCursor(),
+						request.cursor,
 						null,
-						request.getResultCount() == null ? 20 : request.getResultCount() );
+						request.resultCount == null ? 20 : request.resultCount );
 		
 		return new GetPratilipiListResponse(
 				pratilipiDataListCursorTuple.getDataList(),
