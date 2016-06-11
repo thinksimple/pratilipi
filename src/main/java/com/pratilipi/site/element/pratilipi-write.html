@@ -324,10 +324,10 @@
 			},
 			
 			_handleAjaxPostError: function( event ) {
-				
 				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', false );
 				
-				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
+				this.message = null;
+				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 && event.detail.request.xhr.response.message != null )
 					this.message = event.detail.request.xhr.response.message;
 				else
 					this.message = "Some Error occurred! Please try Again."

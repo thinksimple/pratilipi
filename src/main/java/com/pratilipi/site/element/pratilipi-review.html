@@ -276,7 +276,8 @@
 			_handleAjaxPostError: function( event ) {
 				if( event != null && event.detail.request.xhr.response.message != null )
 					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
-				
+				else
+					document.querySelector( 'pratilipi-alert' ).alert( "Some exception occured at the server! Please try again!", false );
 				// Reverting it
 				this.likeDislikeReview();
 			},

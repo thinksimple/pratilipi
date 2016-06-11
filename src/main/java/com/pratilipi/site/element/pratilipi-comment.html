@@ -52,6 +52,14 @@
 			margin: 0px;
 			margin-top: 4px;
 		}
+
+		.comment-liked, .comment-liked * {
+			color: #de4d5f;
+		}
+		
+		.comment-none, .comment-none * {
+			color: grey;
+		}
 	
 	</style>
 	
@@ -100,8 +108,22 @@
 			
 			<div class="comment-text">{{ content }}</div>
 			
-			<a style="margin-left: 4px;" class="pratilipi-red" on-click="writeComment">${ _strings.comment_reply_to_comment }</a>
-
+			<div id="comment-like-{{ comment.commentId }}" style="display: inline-block;">
+				<a on-click="likeDislikeComment">
+					<iron-icon style="width: 16px; height: 16px; margin-top: -2px; margin-left: 6px;" icon="icons:thumb-up"></iron-icon>
+				</a>
+				<template is="dom-if" if="{{ showLikeCount }}">
+					<span style="margin-left: 8px; font-size: 15px;">
+						{{ likeCount }}
+					</span>
+				</template>
+			</div>
+			
+			<iron-icon icon="icons:add-circle" style="width: 4px; height: 4px; margin-left: 8px; color: grey;"></iron-icon>
+			
+			<a class="reply-text" style="color: grey; margin-left: 10px;" on-click="writeComment">
+				${ _strings.comment_reply_to_comment }
+			</a>
 		</div>
 		
 		<div style="display: none; padding: 16px 10px;" class="delete-comment-confirmation">
@@ -130,6 +152,16 @@
 				on-response="_handleAjaxPostResponse"
 				on-error="_handleAjaxPostError"
 				></iron-ajax>
+				
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/vote"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_likeDislikePostResponse"
+				on-error="_likeDislikePostError"
+				></iron-ajax>
 
 	</template>
 	
@@ -147,7 +179,11 @@
 				deleteComment: { type: Boolean, value: false },
 				restoreComment: { type: Boolean, value: false },
 
-				showRestoreComment: { type: Boolean, value: false }
+				showRestoreComment: { type: Boolean, value: false },
+
+				likeCount: { type: Number, observer: "_likeCountObserver" },
+				showLikeCount: { type: Boolean, value: false },
+				isLiked: { type: Boolean, observer: "_isLikedObserver" }
 			},
 			
 			_commentObserver: function() {
@@ -159,6 +195,17 @@
 				
 				this.hasAccessToUpdate = this.comment.hasAccessToUpdate == null ? false : this.comment.hasAccessToUpdate;
 				this.content = this.comment.content;
+				this.likeCount = this.comment.likeCount;
+				this.isLiked = this.comment.isLiked;
+			},
+			
+			_likeCountObserver: function() {
+				this.showLikeCount = this.likeCount != null && this.likeCount > 0 ? true : false;
+			},
+			
+			_isLikedObserver: function() {
+				jQuery( this.querySelector( '#comment-like-' + this.comment.commentId ) ).removeClass( this.isLiked ? "comment-none" : "comment-liked" );
+				jQuery( this.querySelector( '#comment-like-' + this.comment.commentId ) ).addClass( this.isLiked ? "comment-liked" : "comment-none" );
 			},
 			
 			writeComment: function() {
@@ -268,7 +315,48 @@
 					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
 				else
 					document.querySelector( 'pratilipi-alert' ).alert( "Some error occurred! Please try again!", false );
-			}
+			},
+			
+			likeDislikeComment: function( event ) {
+				if( this.isLiked ) {
+					this.isLiked = false;
+					this.likeCount --;
+				} else {
+					this.isLiked = true;
+					this.likeCount ++;
+				}
+				
+				// When called from _handleAjaxPostError
+				if( event == null )
+					return;
+				
+				// Make Ajax call
+				var body = {
+						parentType: "COMMENT",
+						parentId: this.comment.commentId,
+						type: this.isLiked ? "LIKE" : "NONE"
+				};
+				this.$.AjaxPost.body = jQuery.param( body );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			_likeDislikePostResponse: function( event ) {
+				if( event.detail.xhr.status == 0 ) {
+					document.querySelector( 'pratilipi-alert' ).alert( "Could not connect to server! Please try again!", false );
+					this._handleAjaxPostError();
+					return;
+				}
+			},
+			
+			_likeDislikePostError: function( event ) {
+				if( event != null && event.detail.request.xhr.response.message != null )
+					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
+				else
+					document.querySelector( 'pratilipi-alert' ).alert( "Some exception occured at the server! Please try again!", false );
+				
+				// Reverting it
+				this.likeDislikeComment();
+			},
 
 		});
 		
