@@ -37,6 +37,7 @@
 		a.reply-text {
 			margin-right: 16px;
 			font-size: 15px;
+			margin-left: 10px;
 		}
 		
 		a.expand-comments {
@@ -49,6 +50,7 @@
 		}
 		
 		.reply-section {
+		    margin-left: 10px;
 			margin-bottom: 16px;
 		}
 		
@@ -70,26 +72,14 @@
 			font-size: 13px;
 		}
 
-		.review-liked, .review-liked iron-icon {
-			color: #107FE5;
+		.review-liked, .review-liked * {
+			color: #de4d5f;
 		}
 		
-		a.review-liked:hover, a.review-liked:hover iron-icon {
-			color: #278be7;
-			transition: color .15s;
-			-webkit-transition: color .15s;
+		.review-none, .review-none * {
+			color: grey;
 		}
 		
-		.review-none, .review-none iron-icon {
-			color: #333;
-		}
-		
-		a.review-none:hover, a.review-none:hover iron-icon {
-			color: #474747;
-			transition: color .15s;
-			-webkit-transition: color .15s;
-		}
-
 	</style>
 
 	
@@ -132,19 +122,21 @@
 			</div>
 			<div class="reviewText">{{ reviewText }}</div>
 			<div class="reply-section">
-				<a class="reply-text pratilipi-red" on-click="writeComment">
+				<div id="review-like-{{ review.userPratilipiId }}" style="display: inline-block;">
+					<a on-click="likeDislikeReview">
+						<iron-icon style="width: 16px; height: 16px; margin-top: -2px;" icon="icons:thumb-up"></iron-icon>
+					</a>
+					<template is="dom-if" if="{{ showLikeCount }}">
+						<span style="margin-left: 8px; font-size: 15px;">
+							{{ likeCount }}
+						</span>
+					</template>
+				</div>
+				
+				<iron-icon icon="icons:add-circle" style="width: 4px; height: 4px; margin-left: 8px; color: grey;"></iron-icon>
+				<a class="reply-text" style="color: grey;" on-click="writeComment">
 					${ _strings.comment_reply_to_comment }
 				</a>
-				<a id="review-like-{{ review.userPratilipiId }}" on-click="likeDislikeReview">
-					<iron-icon icon="icons:thumb-up" style="width: 20px; height: 20px; margin-top: -2px;"></iron-icon>
-					Like
-				</a>
-				<template is="dom-if" if="{{ showLikeCount }}">
-					<span style="margin-left: 8px; font-size: 15px;">
-						{{ likeCount }}
-						<iron-icon style="width: 14px; height: 14px;" icon="{{ likeIcon }}"></iron-icon>
-					</span>
-				</template>
 				<br/>
 				<template is="dom-if" if="{{ showCommentCount }}">
 					<a class="expand-comments pratilipi-red" on-click="showOrHideComments">
@@ -190,7 +182,7 @@
 
 				likeCount: { type: Number, observer: "_likeCountObserver" },
 				showLikeCount: { type: Boolean, value: false },
-				isLiked: { type: Boolean, observer: "_isLikeObserver" }
+				isLiked: { type: Boolean, observer: "_isLikedObserver" }
 			},
 			
 			ready: function() {
@@ -235,11 +227,9 @@
 			
 			_likeCountObserver: function() {
 				this.showLikeCount = this.likeCount != null && this.likeCount > 0 ? true : false;
-				this.likeIcon = this.likeCount != null && this.likeCount > 1 ? 
-						"social:people" : "social:person";
 			},
 			
-			_isLikeObserver: function() {
+			_isLikedObserver: function() {
 				jQuery( this.querySelector( '#review-like-' + this.review.userPratilipiId ) ).removeClass( this.isLiked ? "review-none" : "review-liked" );
 				jQuery( this.querySelector( '#review-like-' + this.review.userPratilipiId ) ).addClass( this.isLiked ? "review-liked" : "review-none" );
 			},
@@ -284,7 +274,7 @@
 			},
 			
 			_handleAjaxPostError: function( event ) {
-				if( event.detail.request.xhr.response.message != null )
+				if( event != null && event.detail.request.xhr.response.message != null )
 					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
 				
 				// Reverting it
