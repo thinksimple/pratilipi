@@ -147,14 +147,7 @@
 				this.pratilipiId = userpratilipi.pratilipiId == null ? this.pratilipi.pratilipiId : userpratilipi.pratilipiId; 
 				this.rating = userpratilipi.rating == null ? null : userpratilipi.rating;
 				this.reviewState = userpratilipi.reviewState == "PUBLISHED" ? null : userpratilipi.reviewState;
-				
-				var review = "";
-				if( userpratilipi.reviewTitle != null && userpratilipi.reviewTitle.trim() != "" )
-					review = userpratilipi.reviewTitle + "\n\n";
-				if( userpratilipi.review != null && userpratilipi.review.trim() != "" )
-					review = review + userpratilipi.review;
-				
-				this.review = review;
+				this.review = userpratilipi.review;
 			},
 			
 			openReviewInput: function( userpratilipi ) {

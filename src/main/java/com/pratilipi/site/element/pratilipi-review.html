@@ -187,21 +187,16 @@
 			
 			ready: function() {
 				
-				if( ( this.review.reviewTitle == null || this.review.reviewTitle.trim() == "" )
-						&& ( this.review.review == null || this.review.review.trim() == "" ) ) {
+				if( this.review == null || jQuery.isEmptyObject( this.review ) )
+					return;
+
+				if( this.review.review == null || this.review.review.trim() == "" ) {
 					this.$.reviewcard.style.display =  'none';
 					return;
-				}
 				
-				var reviewText = "";
+				this.$.reviewcard.style.display =  'block';
 				
-				if( this.review.reviewTitle != null && this.review.reviewTitle.trim() != "" )
-					reviewText = this.review.reviewTitle + "\n\n";
-					
-				if( this.review.review != null && this.review.review.trim() != "" )
-					reviewText = reviewText + this.review.review;
-					
-				this.set( 'reviewText', reviewText );
+				this.set( 'reviewText', this.review.review );
 
 				if( this.review.userImageUrl ) {
 					if( this.review.userImageUrl.indexOf( '?' ) == -1 )
