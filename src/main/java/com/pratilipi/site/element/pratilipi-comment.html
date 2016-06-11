@@ -154,7 +154,7 @@
 				></iron-ajax>
 				
 		<iron-ajax
-				id="AjaxPost"
+				id="LikeDislikePost"
 				url="/api/vote"
 				method="POST"
 				content-type="application/x-www-form-urlencoded"
@@ -343,8 +343,8 @@
 						parentId: this.comment.commentId,
 						type: this.isLiked ? "LIKE" : "NONE"
 				};
-				this.$.AjaxPost.body = jQuery.param( body );
-				this.$.AjaxPost.generateRequest();
+				this.$.LikeDislikePost.body = jQuery.param( body );
+				this.$.LikeDislikePost.generateRequest();
 			},
 			
 			_likeDislikePostResponse: function( event ) {
