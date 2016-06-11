@@ -18,8 +18,10 @@
 				float: left;
 			}
 			.comment .user-name {
-				text-transform: capitalize;
 				margin-top: 8px;
+			}
+			.comment .user-name a {
+				text-transform: capitalize;
 			}
 			.comment .content {
 				margin-top: 12px;
@@ -66,7 +68,7 @@
 							   '</div>' +
 							   '<div class="date-added">' + convertDate( commentList[i].lastUpdatedMillis != null ? commentList[i].lastUpdatedMillis : commentList[i].creationDateMillis ) + '</div>' + 
 							   '<div class="content">' + ( commentList[i].content != null ? commentList[i].content : "&nbsp;" ) + '</div>' +
-							   '<a style="margin-left: 12px; display: none;" class="pratilipi-red" href="<#if user.isGuest == true>/login?ret=${ pratilipi.getPageUrl() }?review=reply%26parentId=<#else>?review=reply&parentId=</#if>' + commentList[i].parentId + '">${ _strings.comment_reply_to_comment }</a>' +
+							   '<a style="margin-left: 12px;" class="pratilipi-red" href="<#if user.isGuest == true>/login?ret=${ pratilipi.getPageUrl() }?review=reply%26parentId=<#else>?review=reply&parentId=</#if>' + parentId + '">${ _strings.comment_reply_to_comment }</a>' +
 							   '</div>' + 
 							   '</div>';
 						}

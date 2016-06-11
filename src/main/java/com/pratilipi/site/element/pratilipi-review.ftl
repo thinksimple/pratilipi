@@ -15,7 +15,7 @@
 				<img style="margin: 0; margin-top: 8px;" class="img-circle pratilipi-shadow pull-left" src="${ review.getUserImageUrl( 48 ) }" alt="${ review.getUserName() }" title="${ review.getUserName() }"/>
 			</a>
 			<div style="display: inline-block; margin-left: 16px;">
-				<a href="${ review.getUserProfilePageUrl() }">${ review.getUserName() }</a>  
+				<a style="text-transform: capitalize;" href="${ review.getUserProfilePageUrl() }">${ review.getUserName() }</a>  
                 <#if review.rating?? >
 					<div>
 						<#assign rating=review.rating>
