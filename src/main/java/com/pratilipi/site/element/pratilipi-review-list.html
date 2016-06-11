@@ -153,6 +153,10 @@
 					this.set( 'reviewAvailable', true )
 				else
 					this.set( 'reviewAvailable', false )
+					
+				
+				if( ! this.reviewAvailable )
+					return;
 
 				// Removing user's review from review list.
 				var index = -1;
