@@ -70,6 +70,26 @@
 			font-size: 13px;
 		}
 
+		.review-liked, .review-liked iron-icon {
+			color: #107FE5;
+		}
+		
+		a.review-liked:hover, a.review-liked:hover iron-icon {
+			color: #278be7;
+			transition: color .15s;
+			-webkit-transition: color .15s;
+		}
+		
+		.review-none, .review-none iron-icon {
+			color: #333;
+		}
+		
+		a.review-none:hover, a.review-none:hover iron-icon {
+			color: #474747;
+			transition: color .15s;
+			-webkit-transition: color .15s;
+		}
+
 	</style>
 
 	
@@ -115,6 +135,16 @@
 				<a class="reply-text pratilipi-red" on-click="writeComment">
 					${ _strings.comment_reply_to_comment }
 				</a>
+				<a id="review-like-{{ review.userPratilipiId }}" on-click="likeDislikeReview">
+					<iron-icon icon="icons:thumb-up" style="width: 20px; height: 20px; margin-top: -2px;"></iron-icon>
+					Like
+				</a>
+				<template is="dom-if" if="{{ showLikeCount }}">
+					<span style="margin-left: 8px; font-size: 15px;">
+						{{ likeCount }}
+						<iron-icon style="width: 14px; height: 14px;" icon="{{ likeIcon }}"></iron-icon>
+					</span>
+				</template>
 				<br/>
 				<template is="dom-if" if="{{ showCommentCount }}">
 					<a class="expand-comments pratilipi-red" on-click="showOrHideComments">
@@ -131,6 +161,15 @@
 				parent-id="{{ review.userPratilipiId }}"
 				parent-type="REVIEW"></pratilipi-comment-list>
 		</paper-card>
+		<iron-ajax
+				id="AjaxPost"
+				url="/api/vote"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_handleAjaxPostResponse"
+				on-error="_handleAjaxPostError"
+				></iron-ajax>
 	</template>
 	
 
@@ -145,8 +184,13 @@
 				review: { type: Object, observer: "ready" },
 				
 				hasAccessToUpdate: { type: Boolean, value: false },
+				
 				commentCount: { type: Number, observer: "_commentCountObserver" },
-				showCommentCount: { type: Boolean, value: false }
+				showCommentCount: { type: Boolean, value: false },
+
+				likeCount: { type: Number, observer: "_likeCountObserver" },
+				showLikeCount: { type: Boolean, value: false },
+				isLiked: { type: Boolean, observer: "_isLikeObserver" }
 			},
 			
 			ready: function() {
@@ -179,6 +223,8 @@
 				
 				this.showRating = this.review.rating > 0 ? true : false;
 				this.commentCount = this.review.commentCount;
+				this.likeCount = this.review.likeCount;
+				this.isLiked = this.review.isLiked != null ? this.review.isLiked : false;
 			},
 			
 			_commentCountObserver: function() {
@@ -187,12 +233,62 @@
 										"${ _strings.comment_number_of_comments_plural }" : "${ _strings.comment_number_of_comments_singular }";  
 			},
 			
+			_likeCountObserver: function() {
+				this.showLikeCount = this.likeCount != null && this.likeCount > 0 ? true : false;
+				this.likeIcon = this.likeCount != null && this.likeCount > 1 ? 
+						"social:people" : "social:person";
+			},
+			
+			_isLikeObserver: function() {
+				jQuery( this.querySelector( '#review-like-' + this.review.userPratilipiId ) ).removeClass( this.isLiked ? "review-none" : "review-liked" );
+				jQuery( this.querySelector( '#review-like-' + this.review.userPratilipiId ) ).addClass( this.isLiked ? "review-liked" : "review-none" );
+			},
+			
 			writeComment: function() {
 				this.querySelector( 'pratilipi-comment-list#comment-' + this.review.userPratilipiId ).writeComment();
 			},
 			
 			showOrHideComments: function() {
 				this.querySelector( 'pratilipi-comment-list#comment-' + this.review.userPratilipiId ).showOrHideComments();
+			},
+			
+			likeDislikeReview: function( event ) {
+				if( this.isLiked ) {
+					this.isLiked = false;
+					this.likeCount --;
+				} else {
+					this.isLiked = true;
+					this.likeCount ++;
+				}
+				
+				// When called from _handleAjaxPostError
+				if( event == null )
+					return;
+				
+				// Make Ajax call
+				var body = {
+						parentType: "REVIEW",
+						parentId: this.review.userPratilipiId,
+						type: this.isLiked ? "LIKE" : "NONE"
+				};
+				this.$.AjaxPost.body = jQuery.param( body );
+				this.$.AjaxPost.generateRequest();
+			},
+			
+			_handleAjaxPostResponse: function( event ) {
+				if( event.detail.xhr.status == 0 ) {
+					document.querySelector( 'pratilipi-alert' ).alert( "Could not connect to server! Please try again!", false );
+					this._handleAjaxPostError();
+					return;
+				}
+			},
+			
+			_handleAjaxPostError: function( event ) {
+				if( event.detail.request.xhr.response.message != null )
+					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
+				
+				// Reverting it
+				this.likeDislikeReview();
 			},
 			
 			
