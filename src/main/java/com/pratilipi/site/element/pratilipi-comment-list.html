@@ -26,7 +26,7 @@
 			<div id="collapse" class="collapse">
 				<div class="comments-loaded">
 					<template is="dom-repeat" items="{{ commentList }}" as="comment">
-						<pratilipi-comment comment="{{ comment }}"></pratilipi-comment>
+						<pratilipi-comment comment="{{ comment }}" user="{{ user }}"></pratilipi-comment>
 					</template>
 				</div>
 				<template is="dom-if" if="{{ isLoading }}">

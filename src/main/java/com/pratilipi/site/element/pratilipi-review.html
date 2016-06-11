@@ -243,6 +243,11 @@
 			},
 			
 			likeDislikeReview: function( event ) {
+				if( this.user.isGuest ) {
+					document.querySelector( 'pratilipi-user' ).logIn( true );
+					return;
+				}
+
 				if( this.isLiked ) {
 					this.isLiked = false;
 					this.likeCount --;

@@ -173,6 +173,7 @@
 			is: 'pratilipi-comment',
 			
 			properties: {
+				user: { type: Object },
 				comment: { type: Object, observer: "_commentObserver" },
 
 				editComment: { type: Boolean, value: false },
@@ -318,6 +319,12 @@
 			},
 			
 			likeDislikeComment: function( event ) {
+				
+				if( this.user.isGuest ) {
+					document.querySelector( 'pratilipi-user' ).logIn( true );
+					return;
+				}
+				
 				if( this.isLiked ) {
 					this.isLiked = false;
 					this.likeCount --;
