@@ -9,7 +9,7 @@
 		<#include "meta/Head.ftl">
 
 		<link rel='import' href='/elements.${lang}/pratilipi-home-page.html?20160418'>
-		<link rel='import' href='/elements.${lang}/pratilipi-${ language?lower_case }-carousel.html?2016061103'>
+		<link rel='import' href='/elements.${lang}/pratilipi-${ language?lower_case }-carousel.html?20160613'>
 	</head>
 
 	<body>
