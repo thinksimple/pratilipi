@@ -27,10 +27,6 @@ public class AuditLogEntity implements AuditLog {
 	@Persistent( column = "ACCESS_TYPE" )
 	private AccessType accessType;
 
-	@Deprecated
-	@Persistent( column = "EVENT_ID" )
-	private String eventId;
-	
 	@Persistent( column = "EVENT_DATA_OLD" )
 	private Text eventDataOld;
 	
@@ -66,8 +62,6 @@ public class AuditLogEntity implements AuditLog {
 
 	@Override
 	public AccessType getAccessType() {
-		if( accessType == null )
-			accessType = AccessType.valueOf( eventId );
 		return accessType;
 	}
 

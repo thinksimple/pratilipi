@@ -7,7 +7,6 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.data.type.AuditLog;
 
@@ -18,10 +17,6 @@ public class AuditLogEntityOfy implements AuditLog {
 	
 	@Id
 	private Long AUDIT_LOG_ID;
-	
-	@Deprecated
-	@Index( IfNotNull.class )
-	private String EVENT_ID;
 	
 	@Index
 	private String ACCESS_ID;
@@ -59,10 +54,6 @@ public class AuditLogEntityOfy implements AuditLog {
 
 	@Override
 	public AccessType getAccessType() {
-		if( ACCESS_TYPE == null ) {
-			ACCESS_TYPE = AccessType.valueOf( EVENT_ID.toUpperCase() );
-			EVENT_ID = null;
-		}
 		return ACCESS_TYPE;
 	}
 
