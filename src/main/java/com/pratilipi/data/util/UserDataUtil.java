@@ -130,9 +130,14 @@ public class UserDataUtil {
 
 	
 	public static UserData createUserData( User user ) {
+		
+		if( user == null )
+			return null;
+		
 		return createUserData(
 				user,
 				DataAccessorFactory.getDataAccessor().getAuthorByUserId( user.getId() ) );
+		
 	}
 	
 	public static UserData createUserData( User user, Author author ) {
