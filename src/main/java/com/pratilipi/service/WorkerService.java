@@ -19,6 +19,8 @@ public class WorkerService extends GenericService {
 	
 	static {
 
+		ApiRegistry.register( InitApi.class );
+		
 		ApiRegistry.register( UserProcessApi.class );
 		ApiRegistry.register( UserEmailApi.class );
 		ApiRegistry.register( UserFacebookValidationApi.class );
