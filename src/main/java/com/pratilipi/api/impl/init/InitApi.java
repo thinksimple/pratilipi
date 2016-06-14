@@ -23,10 +23,11 @@ import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
+import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
-import com.pratilipi.data.type.gae.AuthorEntity;
+import com.pratilipi.data.type.gae.AuditLogEntityOfy;
 import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
@@ -157,7 +158,7 @@ public class InitApi extends GenericApi {
 		}
 */		
 		
-		Query<AuthorEntity> query = ObjectifyService.ofy()
+/*		Query<AuthorEntity> query = ObjectifyService.ofy()
 				.load()
 				.type( AuthorEntity.class )
 				.filter( "LANGUAGE_ID !=", null )
@@ -170,6 +171,23 @@ public class InitApi extends GenericApi {
 			author.getLanguage();
 			author.getState();
 			author.hasCustomImage();
+			
+			ObjectifyService.ofy().save().entity( author );
+			
+		}
+*/
+		
+		Query<AuditLogEntityOfy> query = ObjectifyService.ofy()
+				.load()
+				.type( AuditLogEntityOfy.class )
+				.filter( "EVENT_ID !=", null )
+				.limit( 1000 );
+
+		QueryResultIterator <AuditLogEntityOfy> iterator = query.iterator();
+		while( iterator.hasNext() ) {
+			
+			AuditLog author = iterator.next();
+			author.getAccessType();
 			
 			ObjectifyService.ofy().save().entity( author );
 			

@@ -21,7 +21,7 @@ public class AuditLogEntityOfy implements AuditLog {
 	
 	@Deprecated
 	@Index( IfNotNull.class )
-	private String eventId;
+	private String EVENT_ID;
 	
 	@Index
 	private String ACCESS_ID;
@@ -59,8 +59,10 @@ public class AuditLogEntityOfy implements AuditLog {
 
 	@Override
 	public AccessType getAccessType() {
-		if( ACCESS_TYPE == null )
-			ACCESS_TYPE = AccessType.valueOf( eventId );
+		if( ACCESS_TYPE == null ) {
+			ACCESS_TYPE = AccessType.valueOf( EVENT_ID );
+			EVENT_ID = null;
+		}
 		return ACCESS_TYPE;
 	}
 

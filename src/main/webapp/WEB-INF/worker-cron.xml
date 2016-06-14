@@ -1,6 +1,14 @@
 <cronentries>
 
 	<cron>
+		<url>/api/init?cron</url>
+		<target>gamma</target>
+		<schedule>every 1 minutes</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+
+
+	<cron>
 		<url>/pratilipi/process?cron</url>
 		<target>worker</target>
 		<schedule>every 5 minutes</schedule>
