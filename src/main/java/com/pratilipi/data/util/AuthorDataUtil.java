@@ -250,7 +250,7 @@ public class AuthorDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLog();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( AccessType.AUTHOR_ADD );
 		auditLog.setEventDataOld( gson.toJson( author ) );
@@ -294,7 +294,7 @@ public class AuthorDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLog();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( isNew ? AccessType.AUTHOR_ADD : AccessType.AUTHOR_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( author ) );
@@ -409,7 +409,7 @@ public class AuthorDataUtil {
 		Gson gson = new Gson();
 		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( author ) );
