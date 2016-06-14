@@ -11,6 +11,7 @@ public class AuthorProcessPostRequest extends GenericRequest {
 	private Boolean validateData;
 	private Boolean processData;
 	private Boolean updateStats;
+	private Boolean updateUserAuthorStats;
 
 	
 	public Long getAuthorId() {
@@ -28,6 +29,10 @@ public class AuthorProcessPostRequest extends GenericRequest {
 	
 	public boolean updateStats() {
 		return updateStats == null ? false : updateStats;
+	}
+	
+	public boolean updateUserAuthorStats() {
+		return updateUserAuthorStats == null ? false : updateUserAuthorStats;
 	}
 
 }

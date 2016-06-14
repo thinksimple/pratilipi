@@ -133,15 +133,16 @@ public interface DataAccessor {
 	UserPratilipi newUserPratilipi();
 	UserPratilipi getUserPratilipi( String userPratilipiId );
 	UserPratilipi getUserPratilipi( Long userId, Long pratilipiId );
-	DataListCursorTuple<Long> getUserLibrary( Long userId, String cursorStr, Integer offset, Integer resultCount );
+	DataListCursorTuple<Long> getUserLibrary( Long userId, String cursor, Integer offset, Integer resultCount );
 	DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursor, Integer resultCount );
 	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi, AuditLog auditLog );
 	
 	// USER_AUTHOR Table
 	UserAuthor newUserAuthor();
 	UserAuthor getUserAuthor( Long userId, Long authorId );
+	DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
 	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
-	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ); // TODO
+	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog );
 
 	
 	// NAVIGATION Table

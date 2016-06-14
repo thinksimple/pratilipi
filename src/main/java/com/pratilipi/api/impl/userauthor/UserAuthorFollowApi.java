@@ -10,6 +10,8 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.data.util.UserAuthorDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/userauthor/follow" )
@@ -43,6 +45,12 @@ public class UserAuthorFollowApi extends GenericApi {
 				AccessTokenFilter.getAccessToken().getUserId(),
 				request.authorId,
 				request.following );
+		
+		Task task = TaskQueueFactory.newTask()
+				.setUrl( "/author/process" )
+				.addParam( "authorId", request.authorId.toString() )
+				.addParam( "updateUserAuthorStats", "true" );
+		TaskQueueFactory.getAuthorTaskQueue().add( task );
 		
 		return new GenericResponse();
 	

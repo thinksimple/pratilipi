@@ -1060,7 +1060,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		// Pratilipi id list
 		ArrayList<Long> pratilipiIdList = resultCount == null
-				? new ArrayList<Long>( 0 )
+				? new ArrayList<Long>()
 				: new ArrayList<Long>( resultCount );
 		
 		while( iterator.hasNext() )
@@ -1102,7 +1102,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		// UserPratilipi List
 		ArrayList<UserPratilipi> userPratilipiList = resultCount == null
-				? new ArrayList<UserPratilipi>( 0 )
+				? new ArrayList<UserPratilipi>()
 				: new ArrayList<UserPratilipi>( resultCount );
 		
 		while( iterator.hasNext() )
@@ -1141,6 +1141,57 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursorStr, Integer offset, Integer resultCount ) {
+
+		com.googlecode.objectify.cmd.Query<UserAuthorEntity> query
+				= ObjectifyService.ofy().load().type( UserAuthorEntity.class );
+			
+		if( userId != null )
+			query = query.filter( "USER_ID", userId );
+
+		if( authorId != null )
+			query = query.filter( "AUTHOR_ID", authorId );
+		
+		query = query.filter( "FOLLOWING", true );
+		query = query.order( "-FOLLOWING" );
+		
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
+		
+		if( offset != null && offset > 0 )
+			query = query.offset( offset );
+		
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
+		
+		
+		QueryResultIterator<UserAuthorEntity> iterator = query.iterator();
+
+		
+		// UserAuthor List
+		ArrayList<Long> idList = resultCount == null
+				? new ArrayList<Long>()
+				: new ArrayList<Long>( resultCount );
+		
+		while( iterator.hasNext() ) {
+			if( userId != null )
+				idList.add( iterator.next().getAuthorId() );
+			else if( authorId != null )
+				idList.add( iterator.next().getUserId() );
+		}
+		
+		
+		// Cursor
+		Cursor cursor = iterator.getCursor();
+
+		
+		return new DataListCursorTuple<Long>(
+				idList,
+				cursor == null ? null : cursor.toWebSafeString() );
+		
+	}
+
+	@Override
 	public DataListCursorTuple<UserAuthor> getUserAuthorList(
 			Long userId, Long authorId, String cursorStr, Integer offset, Integer resultCount ) {
 
@@ -1166,7 +1217,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		QueryResultIterator<UserAuthorEntity> iterator = query.iterator();
 
 		
-		// BlogPost List
+		// UserAuthor List
 		ArrayList<UserAuthor> userAuthorList = resultCount == null
 				? new ArrayList<UserAuthor>()
 				: new ArrayList<UserAuthor>( resultCount );
