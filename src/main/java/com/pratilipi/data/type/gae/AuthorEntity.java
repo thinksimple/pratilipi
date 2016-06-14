@@ -2,375 +2,329 @@ package com.pratilipi.data.type.gae;
 
 import java.util.Date;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Text;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.Author;
 
-@PersistenceCapable( table = "AUTHOR" )
+@Cache
+@Entity( name = "AUTHOR" )
 public class AuthorEntity implements Author {
 	
-	private static final long serialVersionUID = -3668863380117991344L;
+	@Id
+	private Long AUTHOR_ID;
 
-	@PrimaryKey
-	@Persistent( column = "AUTHOR_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
-	private Long id;
+	@Index
+	private Long USER_ID;
 
-	@Persistent( column = "USER_ID" )
-	private Long userId;
 	
-	@Persistent( column = "FIRST_NAME" )
-	private String firstName;
+	private String FIRST_NAME;
 	
-	@Persistent( column = "LAST_NAME" )
-	private String lastName;
+	private String LAST_NAME;
 
-	@Persistent( column = "PEN_NAME" )
-	private String penName;
+	private String PEN_NAME;
 	
-	@Persistent( column = "FIRST_NAME_EN" )
-	private String firstNameEn;
+	private String FIRST_NAME_EN;
 	
-	@Persistent( column = "LAST_NAME_EN" )
-	private String lastNameEn;
+	private String LAST_NAME_EN;
 
-	@Persistent( column = "PEN_NAME_EN" )
-	private String penNameEn;
+	private String PEN_NAME_EN;
 
 
-	@Persistent( column = "GENDER" )
-	private Gender gender;
+	@Index( IfNotNull.class )
+	private Gender GENDER;
 	
-	@Persistent( column = "DATE_OF_BIRTH" )
-	private String dateOfBirth;
+	@Index( IfNotNull.class )
+	private String DATE_OF_BIRTH;
 	
 	
 	@Deprecated
-	@Persistent( column = "EMAIL" )
-	private String email;
+	@Index( IfNotNull.class )
+	private String EMAIL;
 
-	@Persistent( column = "LANGUAGE" )
-	private Language language;
-
-	@Deprecated
-	@Persistent( column = "LANGUAGE_ID" )
-	private Long languageId;
-
-	@Persistent( column = "SUMMARY" )
-	private Text summary;
-	
-
-	@Persistent( column = "STATE" )
-	private AuthorState state;
-	
-	@Deprecated
-	@Persistent( column = "CUSTOM_COVER" )
-	private Boolean customCover;
-
-	@Persistent( column = "CUSTOM_IMAGE" )
-	private Boolean customImage;
-
-	@Persistent( column = "REGISTRATION_DATE" )
-	private Date registrationDate;
-
-	@Persistent( column = "LAST_UPDATED" )
-	private Date lastUpdated;
-
-	
-	@Persistent( column = "FOLLOW_COUNT" )
-	private Long followCount;
-
-	@Persistent( column = "CONTENT_PUBLISHED" )
-	private Integer contentPublished;
-	
-	@Persistent( column = "TOTAL_READ_COUNT" )
-	private Long totalReadCount;
-
-	@Persistent( column = "TOTAL_FB_LIKE_SHARE_COUNT" )
-	private Long totalFbLikeShareCount;
-
-	
-	@Deprecated
-	@Persistent( column = "LAST_PROCESS_DATE" )
-	private Date lastProcessDate;
+	@Index
+	private Language LANGUAGE;
 
 	@Deprecated
-	@Persistent( column = "NEXT_PROCESS_DATE" )
-	private Date nextProcessDate;
+	private Long LANGUAGE_ID;
+
+	private String SUMMARY;
 	
+
+	@Index
+	private AuthorState STATE;
+	
+	@Deprecated
+	private Boolean CUSTOM_COVER;
+
+	@Index
+	private Boolean CUSTOM_IMAGE;
+
+	@Index
+	private Date REGISTRATION_DATE;
+
+	@Index
+	private Date LAST_UPDATED;
+
+	
+	@Index
+	private Long FOLLOW_COUNT;
+
+	@Index
+	private Integer CONTENT_PUBLISHED;
+	
+	@Index
+	private Long TOTAL_READ_COUNT;
+
+	@Index
+	private Long TOTAL_FB_LIKE_SHARE_COUNT;
+
 	
 	public AuthorEntity() {}
 	
 	public AuthorEntity( Long id ) {
-		this.id = id;
+		this.AUTHOR_ID = id;
 	}
 
 	
 	@Override
 	public Long getId() {
-		return id;
+		return AUTHOR_ID;
 	}
 
 	public void setId( Long id ) {
-		this.id = id;
+		this.AUTHOR_ID = id;
 	}
 	
 	@Override
+	public <T> void setKey( Key<T> key ) {
+		this.AUTHOR_ID = key.getId();
+	}
+
+	
+	@Override
 	public Long getUserId() {
-		return userId;
+		return USER_ID;
 	}
 
 	@Override
 	public void setUserId( Long userId ) {
-		this.userId = userId;
+		this.USER_ID = userId;
 	}
 
 	@Override
 	public String getFirstName() {
-		return firstName;
+		return FIRST_NAME;
 	}
 
 	@Override
 	public void setFirstName( String firstName ) {
-		this.firstName = firstName;
+		this.FIRST_NAME = firstName;
 	}
 
 	@Override
 	public String getLastName() {
-		return lastName;
+		return LAST_NAME;
 	}
 
 	@Override
 	public void setLastName( String lastName ) {
-		this.lastName = lastName;
+		this.LAST_NAME = lastName;
 	}
 
 	@Override
 	public String getPenName() {
-		return penName;
+		return PEN_NAME;
 	}
 
 	@Override
 	public void setPenName( String penName ) {
-		this.penName = penName;
+		this.PEN_NAME = penName;
 	}
 
 	@Override
 	public String getFirstNameEn() {
-		return firstNameEn;
+		return FIRST_NAME_EN;
 	}
 
 	@Override
 	public void setFirstNameEn( String firstNameEn ) {
-		this.firstNameEn = firstNameEn;
+		this.FIRST_NAME_EN = firstNameEn;
 	}
 
 	@Override
 	public String getLastNameEn() {
-		return lastNameEn;
+		return LAST_NAME_EN;
 	}
 
 	@Override
 	public void setLastNameEn( String lastNameEn ) {
-		this.lastNameEn = lastNameEn;
+		this.LAST_NAME_EN = lastNameEn;
 	}
 
 	@Override
 	public String getPenNameEn() {
-		return penNameEn;
+		return PEN_NAME_EN;
 	}
 
 	@Override
 	public void setPenNameEn( String penNameEn ) {
-		this.penNameEn = penNameEn;
+		this.PEN_NAME_EN = penNameEn;
 	}
 
 	
 	@Override
 	public Gender getGender() {
-		return gender ;
+		return GENDER ;
 	}
 	
 	@Override
 	public void setGender( Gender gender ) {
-		this.gender = gender;
+		this.GENDER = gender;
 	}
 	
 	@Override
 	public String getDateOfBirth() {
-		return dateOfBirth;
+		return DATE_OF_BIRTH;
 	}
 	
 	@Override
 	public void setDateOfBirth( String dateOfBirth ) {
-		this.dateOfBirth = dateOfBirth;
+		this.DATE_OF_BIRTH = dateOfBirth;
 	}
 
 	
-	@Override
-	public String getEmail() {
-		return email;
-	}
-	
-	@Override
-	public void setEmail( String email ) {
-		this.email = email;
-	}
-
 	@Override
 	public Language getLanguage() {
-		if( language == null ) {
-			if( languageId == null )
-				language = null;
-			else if( languageId == 5130467284090880L || languageId == 5750790484393984L )
-				language = Language.HINDI;
-			else if( languageId == 5965057007550464L || languageId == 5746055551385600L )
-				language = Language.GUJARATI;
-			else if( languageId == 6319546696728576L || languageId == 5719238044024832L )
-				language = Language.TAMIL;
-			else if( languageId == 5173513199550464L )
-				language = Language.MARATHI;
-			else if( languageId == 5752669171875840L )
-				language = Language.MALAYALAM;
-			else if( languageId == 6235363433512960L )
-				language = Language.BENGALI;
-			else if( languageId == 6213615354904576L || languageId == 5688424874901504L )
-				language = Language.ENGLISH;
+		if( LANGUAGE == null ) {
+			if( LANGUAGE_ID == null )
+				LANGUAGE = null;
+			else if( LANGUAGE_ID == 5130467284090880L || LANGUAGE_ID == 5750790484393984L )
+				LANGUAGE = Language.HINDI;
+			else if( LANGUAGE_ID == 5965057007550464L || LANGUAGE_ID == 5746055551385600L )
+				LANGUAGE = Language.GUJARATI;
+			else if( LANGUAGE_ID == 6319546696728576L || LANGUAGE_ID == 5719238044024832L )
+				LANGUAGE = Language.TAMIL;
+			else if( LANGUAGE_ID == 5173513199550464L )
+				LANGUAGE = Language.MARATHI;
+			else if( LANGUAGE_ID == 5752669171875840L )
+				LANGUAGE = Language.MALAYALAM;
+			else if( LANGUAGE_ID == 6235363433512960L )
+				LANGUAGE = Language.BENGALI;
+			else if( LANGUAGE_ID == 6213615354904576L || LANGUAGE_ID == 5688424874901504L )
+				LANGUAGE = Language.ENGLISH;
 		}
-		return language;
+		LANGUAGE_ID = null;
+		return LANGUAGE;
 	}
 
 	@Override
 	public void setLanguage( Language language ) {
-		if( language == null )
-			languageId = null;
-		else
-			switch( language ) {
-				case HINDI:
-					languageId = 5130467284090880L;
-					break;
-				case GUJARATI:
-					languageId = 5965057007550464L;
-					break;
-				case TAMIL:
-					languageId = 6319546696728576L;
-					break;
-				case MARATHI:
-					languageId = 5173513199550464L;
-					break;
-				case MALAYALAM:
-					languageId = 5752669171875840L;
-					break;
-				case BENGALI:
-					languageId = 6235363433512960L;
-					break;
-				case ENGLISH:
-					languageId = 6213615354904576L;
-					break;
-			}
-		this.language = language;
+		this.LANGUAGE = language;
 	}
 
 	@Override
 	public String getSummary() {
-		return summary == null ? null : summary.getValue();
+		return SUMMARY;
 	}
 
 	@Override
 	public void setSummary( String summary ) {
-		this.summary = summary == null ? null : new Text( summary );
+		this.SUMMARY = summary;
 	}
 
 	
 	@Override
 	public AuthorState getState() {
-		if( state == null )
-			state = AuthorState.ACTIVE;
-		return state;
+		if( STATE == null )
+			STATE = AuthorState.ACTIVE;
+		return STATE;
 	}
 	
 	@Override
 	public void setState( AuthorState state ) {
-		this.state = state;
+		this.STATE = state;
 	}
 	
 	@Override
 	public Boolean hasCustomImage() {
-		if( customImage == null )
-			customImage = customCover;
-		return customImage == null ? false : customImage;
+		if( CUSTOM_IMAGE == null ) {
+			CUSTOM_IMAGE = CUSTOM_COVER;
+			CUSTOM_COVER = null;
+		}
+		return CUSTOM_IMAGE == null ? false : CUSTOM_IMAGE;
 	}
 
 	@Override
 	public void setCustomImage( Boolean customImage ) {
-		this.customImage = customImage;
+		this.CUSTOM_IMAGE = customImage;
 	}
 	
 	@Override
 	public Date getRegistrationDate() {
-		return registrationDate;
+		return REGISTRATION_DATE;
 	}
 
 	@Override
 	public void setRegistrationDate( Date registrationDate ) {
-		this.registrationDate = registrationDate;
+		this.REGISTRATION_DATE = registrationDate;
 	}
 
 	@Override
 	public Date getLastUpdated() {
-		return lastUpdated;
+		return LAST_UPDATED;
 	}
 
 	@Override
 	public void setLastUpdated( Date lastUpdated ) {
-		this.lastUpdated = lastUpdated;
+		this.LAST_UPDATED = lastUpdated;
 	}
 	
 	
 	@Override
 	public Long getFollowCount() {
-		return followCount == null ? 0 : followCount;
+		return FOLLOW_COUNT == null ? 0 : FOLLOW_COUNT;
 	}
 	
 	@Override
 	public void setFollowCount( Long followCount ) {
-		this.followCount = followCount;
+		this.FOLLOW_COUNT = followCount;
 	}
 	
 	@Override
 	public Integer getContentPublished() {
-		return contentPublished == null ? 0 : contentPublished;
+		return CONTENT_PUBLISHED == null ? 0 : CONTENT_PUBLISHED;
 	}
 	
 	@Override
 	public void setContentPublished( Integer contentPublished ) {
-		this.contentPublished = contentPublished;
+		this.CONTENT_PUBLISHED = contentPublished;
 	}
 	
 	@Override
 	public Long getTotalReadCount() {
-		return totalReadCount == null ? 0L : totalReadCount;
+		return TOTAL_READ_COUNT == null ? 0L : TOTAL_READ_COUNT;
 	}
 	
 	@Override
 	public void setTotalReadCount( Long totalReadCount ) {
-		this.totalReadCount = totalReadCount;
+		this.TOTAL_READ_COUNT = totalReadCount;
 	}
 	
 	@Override
 	public Long getTotalFbLikeShareCount() {
-		return totalFbLikeShareCount == null ? 0L : totalFbLikeShareCount;
+		return TOTAL_FB_LIKE_SHARE_COUNT == null ? 0L : TOTAL_FB_LIKE_SHARE_COUNT;
 	}
 	
 	@Override
 	public void setTotalFbLikeShareCount( Long totalFbLikeShareCount ) {
-		this.totalFbLikeShareCount = totalFbLikeShareCount;
+		this.TOTAL_FB_LIKE_SHARE_COUNT = totalFbLikeShareCount;
 	}
-	
+
 }

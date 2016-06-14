@@ -79,7 +79,6 @@ public class AuthorBackupApi extends GenericApi {
 							.append( CSV_SEPARATOR ).append( author.getFirstNameEn()	== null ? "" : author.getFirstNameEn() )
 							.append( CSV_SEPARATOR ).append( author.getLastNameEn()		== null ? "" : author.getLastNameEn() )
 							.append( CSV_SEPARATOR ).append( author.getPenNameEn()		== null ? "" : author.getPenNameEn() )
-							.append( CSV_SEPARATOR ).append( author.getEmail()			== null ? "" : author.getEmail() )
 							.append( CSV_SEPARATOR ).append( author.getLanguage() )
 							.append( CSV_SEPARATOR ).append( author.getSummary() != null && author.getSummary().trim().length() != 0 )
 							.append( CSV_SEPARATOR ).append( author.hasCustomImage() )

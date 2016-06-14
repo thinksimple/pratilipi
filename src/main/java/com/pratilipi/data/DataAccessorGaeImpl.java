@@ -104,6 +104,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		ObjectifyService.register( PageEntity.class );
 		ObjectifyService.register( PratilipiEntity.class );
+		ObjectifyService.register( AuthorEntity.class );
 		ObjectifyService.register( EventEntity.class );
 		
 		ObjectifyService.register( BlogEntity.class );
@@ -786,104 +787,91 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Author getAuthor( Long id ) {
-		return id == null ? null : getEntity( AuthorEntity.class, id );
+		return getEntityOfy( AuthorEntity.class, id );
 	}
 	
 	@Override
 	public Author getAuthorByUserId( Long userId ) {
-		Query query = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) )
-				.addFilter( "userId", userId )
-				.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS )
-				.addOrdering( "state", true )
-				.addOrdering( "registrationDate", true )
-				.build();
 		
-		@SuppressWarnings("unchecked")
-		List<Author> authorList = (List<Author>) query.execute( userId, AuthorState.DELETED );
+		com.googlecode.objectify.cmd.Query<AuthorEntity> query
+				= ObjectifyService.ofy().load().type( AuthorEntity.class );
 		
-		if( authorList.size() > 1 )
-			logger.log( Level.SEVERE, authorList.size() + " Authors found with User Id " + userId + " ." );
+		query = query.filter( "USER_ID", userId );
+		query = query.filter( "STATE !=", AuthorState.DELETED );
+		query = query.order( "STATE" );
+		query = query.order( "REGISTRATION_DATE" );
 		
-		return authorList.size() == 0 ? null : pm.detachCopy( authorList.get( 0 ) );
+		return query.first().now();
+		
 	}
 	
 	@Override
 	public List<Author> getAuthorList( List<Long> idList ) {
-		List<Author> authorList = new ArrayList<>( idList.size() );
-		for( Long id : idList )
-			authorList.add( getAuthor( id ) );
-		return authorList;
+		return getEntityListOfy( AuthorEntity.class, idList );
 	}
 	
 	@Override
-	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter,
-			String cursorStr, Integer resultCount ) {
-		
-		return getAuthorList( authorFilter, cursorStr, resultCount, true );
+	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursorStr, Integer resultCount ) {
+		return _getAuthorList( authorFilter, cursorStr, resultCount, true );
 	}
 	
 	@Override
-	public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter,
-			String cursorStr, Integer resultCount ) {
-		
-		return getAuthorList( authorFilter, cursorStr, resultCount, false );
+	public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursorStr, Integer resultCount ) {
+		return _getAuthorList( authorFilter, cursorStr, resultCount, false );
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T> DataListCursorTuple<T> getAuthorList( AuthorFilter authorFilter,
-			String cursorStr, Integer resultCount, boolean idOnly ) {
+	private <T> DataListCursorTuple<T> _getAuthorList( AuthorFilter authorFilter, String cursorStr, Integer resultCount, boolean idOnly ) {
 
-		GaeQueryBuilder gaeQueryBuilder =
-				new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
+		com.googlecode.objectify.cmd.Query<AuthorEntity> query
+				= ObjectifyService.ofy().load().type( AuthorEntity.class );
 		
 		if( authorFilter.getLanguage() != null )
-			gaeQueryBuilder.addFilter( "language", authorFilter.getLanguage() );
+			query = query.filter( "LANGUAGE", authorFilter.getLanguage() );
 
 		if( authorFilter.getMinLastUpdated() != null ) {
-			gaeQueryBuilder.addFilter( "lastUpdated",
-					authorFilter.getMinLastUpdated(),
-					authorFilter.isMinLastUpdatedInclusive() ? Operator.GREATER_THAN_OR_EQUAL : Operator.GREATER_THAN );
-			gaeQueryBuilder.addOrdering( "lastUpdated", true );
+			query = query.filter(
+					authorFilter.isMinLastUpdatedInclusive() ? "LAST_UPDATED >=" : "LAST_UPDATED >",
+					authorFilter.getMinLastUpdated() );
+			query = query.order( "LAST_UPDATED" );
 		}
 		
-		if( authorFilter.getNextProcessDateEnd() != null ) {
-			gaeQueryBuilder.addFilter( "nextProcessDate", authorFilter.getNextProcessDateEnd(), Operator.LESS_THAN_OR_EQUAL );
-			gaeQueryBuilder.addOrdering( "nextProcessDate", true );
-		}
-	
 		if( authorFilter.getOrderByContentPublished() != null )
-			gaeQueryBuilder.addOrdering( "contentPublished", authorFilter.getOrderByContentPublished() );
+			query = query.order( authorFilter.getOrderByContentPublished() ? "CONTENT_PUBLISHED" : "-CONTENT_PUBLISHED" );
 	
 		if( resultCount != null )
-			gaeQueryBuilder.setRange( 0, resultCount );
+			query = query.limit( resultCount );
 	
-		Query query = gaeQueryBuilder.build();
-		if( cursorStr != null ) {
-			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-			Map<String, Object> extensionMap = new HashMap<String, Object>();
-			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions( extensionMap );
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
+
+		
+		List<T> responseList = resultCount == null ? new ArrayList<T>() : new ArrayList<T>( resultCount );
+		Cursor cursor = null;
+		if( idOnly ) {
+			QueryResultIterator <Key<AuthorEntity>> iterator = query.keys().iterator();
+			while( iterator.hasNext() )
+				responseList.add( (T) (Long) iterator.next().getId() );
+			cursor = iterator.getCursor();
+		} else {
+			QueryResultIterator <AuthorEntity> iterator = query.iterator();
+			while( iterator.hasNext() )
+				responseList.add( (T) iterator.next() );
+			cursor = iterator.getCursor();
 		}
 
-		if( idOnly )
-			query.setResult( "id" );
+		return new DataListCursorTuple<T>( responseList, cursor == null ? null : cursor.toWebSafeString() );
 		
-		List<T> authorEntityList = (List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-		Cursor cursor = JDOCursorHelper.getCursor( authorEntityList );
-		
-		return new DataListCursorTuple<T>(
-				idOnly ? authorEntityList : (List<T>) pm.detachCopyAll( authorEntityList ),
-				cursor == null ? null : cursor.toWebSafeString() );
 	}
 	
 	@Override
 	public Author createOrUpdateAuthor( Author author ) {
-		return createOrUpdateEntity( author );
+		return createOrUpdateEntityOfy( author );
 	}
 
 	@Override
 	public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) {
-		return (Author) createOrUpdateEntities( author, auditLog )[ 0 ];
+		return createOrUpdateEntityOfy( author, auditLog );
 	}
 
 	

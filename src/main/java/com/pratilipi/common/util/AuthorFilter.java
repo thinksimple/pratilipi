@@ -11,8 +11,6 @@ public class AuthorFilter {
 	private Date minLastUpdated;
 	private Boolean minLastUpdatedInclusive;
 	
-	private Date nextProcessDateEnd;
-
 	private Boolean orderByContentPublished;
 	
 	
@@ -35,14 +33,6 @@ public class AuthorFilter {
 	public void setMinLastUpdate( Date minLastUpdated, boolean inclusive ) {
 		this.minLastUpdated = minLastUpdated;
 		this.minLastUpdatedInclusive = inclusive;
-	}
-	
-	public Date getNextProcessDateEnd() {
-		return nextProcessDateEnd;
-	}
-
-	public void setNextProcessDateEnd( Date nextProcessDateEnd ) {
-		this.nextProcessDateEnd = nextProcessDateEnd;
 	}
 	
 	public Boolean getOrderByContentPublished() {

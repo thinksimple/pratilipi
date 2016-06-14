@@ -1,14 +1,12 @@
 package com.pratilipi.api.impl.init;
 
 import java.nio.charset.Charset;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -21,17 +19,14 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PageType;
-import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
-import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
-import com.pratilipi.data.type.UserPratilipi;
-import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
@@ -162,54 +157,24 @@ public class InitApi extends GenericApi {
 		}
 */		
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		String appPropertyId = "Api.Init";
-		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
-		if( appProperty == null )
-			appProperty = dataAccessor.newAppProperty( appPropertyId );
-
-		
-		Query<UserPratilipiEntity> query = ObjectifyService.ofy()
+		Query<AuthorEntity> query = ObjectifyService.ofy()
 				.load()
-				.type( UserPratilipiEntity.class )
+				.type( AuthorEntity.class )
+				.filter( "LANGUAGE_ID !=", null )
 				.limit( 1000 );
 
-		if( appProperty.getValue() != null )
-			query = query.startAt( Cursor.fromWebSafeString( (String) appProperty.getValue() ) );
-		
-		
-		QueryResultIterator <UserPratilipiEntity> iterator = query.iterator();
+		QueryResultIterator <AuthorEntity> iterator = query.iterator();
 		while( iterator.hasNext() ) {
 			
-			UserPratilipi userPratilipi = iterator.next();
+			AuthorEntity author = iterator.next();
+			author.getLanguage();
+			author.getState();
+			author.hasCustomImage();
 			
-			if( userPratilipi.getReviewTitle() != null && userPratilipi.getReviewTitle().trim().isEmpty() )
-				userPratilipi.setReviewTitle( null );
-			if( userPratilipi.getReview() != null && userPratilipi.getReview().trim().isEmpty() )
-				userPratilipi.setReview( null );
-			
-			if( userPratilipi.getReviewTitle() == null && userPratilipi.getReview() == null )
-				userPratilipi.setReviewDate( null );
-			
-			if( userPratilipi.getReviewDate() != null && userPratilipi.getReviewState() == null )
-				userPratilipi.setReviewState( UserReviewState.PUBLISHED );
-
-			if( userPratilipi.getRatingDate() == null && userPratilipi.getRating() != null && userPratilipi.getRating() != 0L ) {
-				if( userPratilipi.getReviewDate() == null )
-					userPratilipi.setRatingDate( new Date(0) );
-				else
-					userPratilipi.setRatingDate( userPratilipi.getReviewDate() );
-			}
-			
-			ObjectifyService.ofy().save().entity( userPratilipi );
+			ObjectifyService.ofy().save().entity( author );
 			
 		}
 
-		
-		appProperty.setValue( iterator.getCursor().toWebSafeString() );
-		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
-		
 		return new GenericResponse();
 		
 	}

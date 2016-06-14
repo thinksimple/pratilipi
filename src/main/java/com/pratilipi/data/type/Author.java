@@ -1,13 +1,12 @@
 package com.pratilipi.data.type;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.Language;
 
-public interface Author extends Serializable {
+public interface Author extends GenericOfyType {
 	
 	Long getId();
 
@@ -48,12 +47,6 @@ public interface Author extends Serializable {
 	
 	void setDateOfBirth( String dateOfBirth );
 	
-	
-	@Deprecated
-	String getEmail();
-	
-	@Deprecated
-	void setEmail( String email );
 	
 	Language getLanguage();
 	

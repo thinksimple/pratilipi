@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.jdo.PersistenceManager;
 
-import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -277,6 +276,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) { return dataAccessor.getAuditLogList( cursorStr, resultCount ); }
 	@Override public DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursorStr, Integer resultCount) { return dataAccessor.getAuditLogList( accessId, cursorStr, resultCount ); }
 	
+	
 	// PAGE Table
 	@Override public Page newPage() { return dataAccessor.newPage(); }
 	@Override public Page getPage( Long id ) { return dataAccessor.getPage( id ); }
@@ -296,133 +296,24 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public DataListCursorTuple<Pratilipi> getPratilipiList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) { return dataAccessor.getPratilipiList( pratilipiFilter, cursorStr, resultCount ); }
 	@Override public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) { return dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog ); }
 	@Override public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, Page page, AuditLog auditLog ) { return dataAccessor.createOrUpdatePratilipi( pratilipi, page, auditLog ); }
-
 	
 	// AUTHOR Table
-	
-	@Override
-	public Author newAuthor() {
-		return dataAccessor.newAuthor();
-	}
+	@Override public Author newAuthor() { return dataAccessor.newAuthor(); }
+	@Override public Author getAuthor( Long id ) { return dataAccessor.getAuthor( id ); }
+	@Override public Author getAuthorByUserId( Long userId ) { return dataAccessor.getAuthorByUserId( userId ); }
+	@Override public List<Author> getAuthorList( List<Long> idList ) { return dataAccessor.getAuthorList( idList ); }
+	@Override public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount ) { return dataAccessor.getAuthorIdList( authorFilter, cursor, resultCount ); }
+	@Override public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount ) { return dataAccessor.getAuthorList( authorFilter, cursor, resultCount ); }
+	@Override public Author createOrUpdateAuthor( Author author ) { return dataAccessor.createOrUpdateAuthor( author ); }
+	@Override public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) { return dataAccessor.createOrUpdateAuthor( author, auditLog ); }
 
-	@Override
-	public Author getAuthor( Long id ) {
-		if( id == null )
-			return null;
-		
-		Author author = memcache.get( PREFIX_AUTHOR + id );
-		if( author == null ) {
-			author = dataAccessor.getAuthor( id );
-			if( author != null )
-				memcache.put( PREFIX_AUTHOR + id, author );
-		}
-		return author;
-	}
-
-	@Override
-	public Author getAuthorByUserId( Long userId ) {
-		Author author = memcache.get( PREFIX_AUTHOR + "USER::" + userId );
-		if( author == null ) {
-			author = dataAccessor.getAuthorByUserId( userId );
-			if( author != null )
-				memcache.put( PREFIX_AUTHOR + "USER::" + userId, author );
-		}
-		return author;
-	}
-	
-	@Override
-	public List<Author> getAuthorList( List<Long> idList ) {
-		if( idList.size() == 0 )
-			return new ArrayList<>( 0 );
-
-		
-		List<String> memcacheKeyList = new ArrayList<>( idList.size() );
-		for( Long id : idList )
-			memcacheKeyList.add( PREFIX_AUTHOR + id );
-		Map<String, Author> memcacheKeyEntityMap = memcache.getAll( memcacheKeyList );
-
-		
-		List<Long> missingIdList = new LinkedList<>();
-		for( Long id : idList )
-			if( memcacheKeyEntityMap.get( PREFIX_AUTHOR + id ) == null ) 
-				missingIdList.add( id );
-		List<Author> missingAuthorList = dataAccessor.getAuthorList( missingIdList );
-
-		
-		List<Author> authorList = new ArrayList<>( idList.size() );
-		for( Long id : idList ) {
-			Author author = memcacheKeyEntityMap.get( PREFIX_AUTHOR + id );
-			if( author == null ) {
-				author = missingAuthorList.remove( 0 );
-				if( author != null )
-					memcache.put( PREFIX_AUTHOR + id, author );
-			}
-			authorList.add( author );
-		}
-		
-		
-		return authorList;
-	}
-	
-	@Override
-	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter,
-			String cursor, Integer resultCount ) {
-		
-		return dataAccessor.getAuthorIdList( authorFilter, cursor, resultCount );
-	}
-
-	@Override
-	public DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter,
-			String cursor, Integer resultCount ) {
-		
-		return dataAccessor.getAuthorList( authorFilter, cursor, resultCount );
-	}
-
-	@Override
-	public Author createOrUpdateAuthor( Author author ) {
-		author = dataAccessor.createOrUpdateAuthor( author );
-		memcache.put( PREFIX_AUTHOR + author.getId(), author );
-		if( author.getEmail() != null ) {
-			if( author.getState() == AuthorState.DELETED )
-				memcache.remove( PREFIX_AUTHOR + author.getEmail() );
-			else
-				memcache.put( PREFIX_AUTHOR + author.getEmail(), author );
-		}
-		if( author.getUserId() != null ) {
-			if( author.getState() == AuthorState.DELETED )
-				memcache.remove( PREFIX_AUTHOR + "USER::" + author.getUserId() );
-			else
-				memcache.put( PREFIX_AUTHOR + "USER::" + author.getUserId(), author );
-		}
-		return author;
-	}
-
-	@Override
-	public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) {
-		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
-		memcache.put( PREFIX_AUTHOR + author.getId(), author );
-		if( author.getEmail() != null ) {
-			if( author.getState() == AuthorState.DELETED )
-				memcache.remove( PREFIX_AUTHOR + author.getEmail() );
-			else
-				memcache.put( PREFIX_AUTHOR + author.getEmail(), author );
-		}
-		if( author.getUserId() != null ) {
-			if( author.getState() == AuthorState.DELETED )
-				memcache.remove( PREFIX_AUTHOR + "USER::" + author.getUserId() );
-			else
-				memcache.put( PREFIX_AUTHOR + "USER::" + author.getUserId(), author );
-		}
-		return author;
-	}
-
-	
 	// EVENT Table
 	@Override public Event newEvent() { return dataAccessor.newEvent(); }
 	@Override public Event getEvent( Long id ) { return dataAccessor.getEvent( id ); }
 	@Override public List<Event> getEventList( Language language ) { return dataAccessor.getEventList( language ); }
 	@Override public Event createOrUpdateEvent( Event event, AuditLog auditLog ) { return dataAccessor.createOrUpdateEvent( event, auditLog ); }
 	@Override public Event createOrUpdateEvent( Event event, Page page, AuditLog auditLog ) { return dataAccessor.createOrUpdateEvent( event, page, auditLog ); }
+
 	
 	// BLOG Table
 	@Override public Blog newBlog() { return dataAccessor.newBlog(); }
