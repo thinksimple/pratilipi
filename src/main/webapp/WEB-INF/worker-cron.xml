@@ -1,8 +1,8 @@
 <cronentries>
 
 	<cron>
-		<url>/api/init?cron</url>
-		<target>gamma</target>
+		<url>/init?cron</url>
+		<target>worker</target>
 		<schedule>every 1 minutes</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
