@@ -38,6 +38,9 @@ public class GenericAuthorResponse extends GenericResponse {
 	
 	private Boolean hasAccessToUpdate;
 	
+	@SuppressWarnings("unused")
+	private GenericAuthorResponse() { }
+	
 	public GenericAuthorResponse( AuthorData authorData ) {
 		
 		this.authorId = authorData.getId();
