@@ -60,7 +60,7 @@ public class AuditLogEntityOfy implements AuditLog {
 	@Override
 	public AccessType getAccessType() {
 		if( ACCESS_TYPE == null ) {
-			ACCESS_TYPE = AccessType.valueOf( EVENT_ID );
+			ACCESS_TYPE = AccessType.valueOf( EVENT_ID.toUpperCase() );
 			EVENT_ID = null;
 		}
 		return ACCESS_TYPE;
