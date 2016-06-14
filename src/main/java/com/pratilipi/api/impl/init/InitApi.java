@@ -195,6 +195,8 @@ public class InitApi extends GenericApi {
 			
 			AuditLog auditLog = iterator.next();
 			
+			logger.log( Level.INFO, "AuditLog " + auditLog.getId() );
+			
 			if( auditLog.getCreationDate() != null ) {
 				
 				logger.log( Level.INFO, "Creation date is not null for " + auditLog.getId() );
@@ -221,10 +223,8 @@ public class InitApi extends GenericApi {
 				Pratilipi p2 = gson.fromJson( auditLog.getEventDataNew(), PratilipiEntity.class );
 				
 				if( p2.getLastUpdated().equals( p1.getLastUpdated() ) ) {
-					logger.log( Level.INFO, "Deleting audit log " + auditLog.getId() );
 					ObjectifyService.ofy().delete().entity( auditLog );
 				} else {
-					logger.log( Level.INFO, "Setting creation date for " + auditLog.getId() + " to " + p2.getLastUpdated() );
 					( (AuditLogEntityOfy) auditLog ).setCreationDate( p2.getLastUpdated() );
 					ObjectifyService.ofy().save().entity( auditLog );
 				}
