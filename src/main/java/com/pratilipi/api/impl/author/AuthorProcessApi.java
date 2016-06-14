@@ -106,7 +106,7 @@ public class AuthorProcessApi extends GenericApi {
 		}
 
 		if( request.updateUserAuthorStats() )
-			PratilipiDataUtil.updateUserPratilipiStats( request.getAuthorId() );
+			AuthorDataUtil.updateUserAuthorStats( request.getAuthorId() );
 		
 		return new GenericResponse();
 	}
