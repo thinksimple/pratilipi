@@ -188,7 +188,7 @@ public class InitApi extends GenericApi {
 				.load()
 				.type( AuditLogEntityOfy.class )
 				.filter( "CREATION_DATE", null )
-				.limit( 1000 );
+				.limit( 100000 );
 
 		QueryResultIterator <AuditLogEntityOfy> iterator = query.iterator();
 		while( iterator.hasNext() ) {
@@ -222,7 +222,7 @@ public class InitApi extends GenericApi {
 				Pratilipi p1 = gson.fromJson( auditLog.getEventDataOld(), PratilipiEntity.class );
 				Pratilipi p2 = gson.fromJson( auditLog.getEventDataNew(), PratilipiEntity.class );
 				
-				if( p2.getLastUpdated().equals( p1.getLastUpdated() ) ) {
+				if( p2.getLastUpdated() != null && p2.getLastUpdated().equals( p1.getLastUpdated() ) ) {
 					ObjectifyService.ofy().delete().entity( auditLog );
 				} else {
 					( (AuditLogEntityOfy) auditLog ).setCreationDate( p2.getLastUpdated() );
