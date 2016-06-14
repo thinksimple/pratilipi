@@ -5,13 +5,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.google.gson.JsonObject;
-import com.pratilipi.api.shared.GenericRequest;
+import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserAuthorData;
+import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AuditLog;
+import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.filter.AccessTokenFilter;
 
@@ -21,8 +25,26 @@ public class UserAuthorDataUtil {
 			Logger.getLogger( UserAuthorDataUtil.class.getName() );
 
 	
-	public static boolean hasAccessToAddOrUpdateUserAuthorData( UserAuthorData userAuthorData ) {
-		return userAuthorData.getUserId().equals( AccessTokenFilter.getAccessToken().getUserId() );
+	public static boolean hasAccessToUpdateUserAuthorData( UserAuthor userAuthor, AccessType accessType ) {
+		
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		
+		if( ! userAuthor.getUserId().equals( accessToken.getUserId() ) )
+			return false;
+		
+		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, accessType ) )
+			return false;
+
+		// User can not follow his/her own Author profile.
+		if( accessType == AccessType.USER_AUTHOR_FOLLOWING ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			Author author = dataAccessor.getAuthor( userAuthor.getAuthorId() );
+			if( userAuthor.getUserId().equals( author.getUserId() ) )
+				return false;
+		}
+		
+		return true;
+
 	}
 	
 
@@ -69,54 +91,41 @@ public class UserAuthorDataUtil {
 	}
 
 	
-	public static UserAuthorData saveUserAuthor( UserAuthorData userAuthorData )
+	public static UserAuthorData saveUserAuthorFollow( Long userId, Long authorId, Boolean following )
 			throws InvalidArgumentException, InsufficientAccessException {
 
-		_validateUserAuthorDataForSave( userAuthorData );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		UserAuthor userAuthor = dataAccessor.getUserAuthor( userId, authorId );
+		if( userAuthor == null ) {
+			userAuthor = dataAccessor.newUserAuthor();
+			userAuthor.setUserId( userId );
+			userAuthor.setAuthorId( authorId );
+		}
 		
-		if( ! hasAccessToAddOrUpdateUserAuthorData( userAuthorData ) )
+		
+		if( ! hasAccessToUpdateUserAuthorData( userAuthor, AccessType.USER_AUTHOR_FOLLOWING ) )
 			throw new InsufficientAccessException();
 		
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		UserAuthor userAuthor = dataAccessor.getUserAuthor(
-				userAuthorData.getUserId(),
-				userAuthorData.getAuthorId() );
+		Gson gson = new Gson();
 
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setAccessType( AccessType.USER_AUTHOR_FOLLOWING );
+		auditLog.setEventDataOld( gson.toJson( userAuthor ) );
+
+		userAuthor.setFollowing( following );
+		userAuthor.setFollowingSince( new Date() );
 		
-		if( userAuthor == null ) {
-			userAuthor = dataAccessor.newUserAuthor();
-			userAuthor.setUserId( userAuthorData.getUserId() );
-			userAuthor.setAuthorId( userAuthorData.getAuthorId() );
-		}
-		
-		
-		if( userAuthorData.hasFollowing() ) {
-			userAuthor.setFollowing( userAuthorData.isFollowing() );
-			userAuthor.setFollowingSince( new Date() );
-		}
+		auditLog.setEventDataNew( gson.toJson( userAuthor ) );
 		
 		
-		userAuthor = dataAccessor.createOrUpdateUserAuthor( userAuthor );
+		userAuthor = dataAccessor.createOrUpdateUserAuthor( userAuthor, auditLog );
+		
 		
 		return createUserAuthorData( userAuthor );
 		
-	}
-	
-	private static void _validateUserAuthorDataForSave( UserAuthorData userAuthorData )
-			throws InvalidArgumentException {
-		
-		JsonObject errorMessages = new JsonObject();
-		
-		if( userAuthorData.getUserId() == null || userAuthorData.getUserId().equals( 0L ) )
-			errorMessages.addProperty( "userId", GenericRequest.ERR_USER_ID_REQUIRED );
-		
-		if( userAuthorData.getAuthorId() == null || userAuthorData.getAuthorId().equals( 0L ) )
-			errorMessages.addProperty( "authorId", GenericRequest.ERR_AUTHOR_ID_REQUIRED );		
-		
-		if( errorMessages.entrySet().size() > 0 )
-			throw new InvalidArgumentException( errorMessages );
-
 	}
 	
 }

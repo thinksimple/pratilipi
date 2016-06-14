@@ -3,11 +3,11 @@ package com.pratilipi.api.impl.userauthor;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.userauthor.shared.PostUserAuthorFollowRequest;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.data.client.UserAuthorData;
 import com.pratilipi.data.util.UserAuthorDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 
@@ -15,16 +15,34 @@ import com.pratilipi.filter.AccessTokenFilter;
 @Bind( uri = "/userauthor/follow" )
 public class UserAuthorFollowApi extends GenericApi {
 
+	public class Request extends GenericRequest {
+
+		@Validate( required = true, minLong = 1L )
+		private Long authorId;
+		
+		@Validate( required = true )
+		private Boolean following;
+		
+		
+		public Long getAuthorId() {
+			return authorId;
+		}
+		
+		public Boolean getFollowing() {
+			return following;
+		}
+
+	}
+	
+	
 	@Post
-	public GenericResponse post( PostUserAuthorFollowRequest request )
+	public GenericResponse post( Request request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
-		UserAuthorData userAuthorData = new UserAuthorData();
-		userAuthorData.setUserId( AccessTokenFilter.getAccessToken().getUserId() );
-		userAuthorData.setAuthorId( request.getAuthorId() );
-		userAuthorData.setFollowing( request.getFollowing() );
-		
-		userAuthorData = UserAuthorDataUtil.saveUserAuthor( userAuthorData );
+		UserAuthorDataUtil.saveUserAuthorFollow(
+				AccessTokenFilter.getAccessToken().getUserId(),
+				request.authorId,
+				request.following );
 		
 		return new GenericResponse();
 	

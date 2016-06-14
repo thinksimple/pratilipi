@@ -99,7 +99,7 @@ public class CommentDataUtil {
 		commentData.setCreationDate( commentDoc.getCreationDate() );
 		commentData.setLastUpdated( commentDoc.getLastUpdated() );
 		
-		commentData.setLikeCount( (long) commentDoc.getLikedByUserIds().size() );
+		commentData.setLikeCount( commentDoc.getLikeCount() );
 		
 		commentData.setAccessToUpdate( hasAccessToUpdateCommentData(
 				CommentState.ACTIVE,

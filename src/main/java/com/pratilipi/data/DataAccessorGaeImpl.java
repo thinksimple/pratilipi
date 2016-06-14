@@ -1186,9 +1186,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
+	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) {
 		( (UserAuthorEntity) userAuthor ).setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
-		return createOrUpdateEntityOfy( userAuthor );
+		return createOrUpdateEntityOfy( userAuthor, auditLog );
 	}
 	
 	

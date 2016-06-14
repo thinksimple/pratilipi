@@ -639,7 +639,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor ) {
+	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) {
 		// TODO: Implementation
 		return userAuthor;
 	}
