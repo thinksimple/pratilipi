@@ -23,13 +23,13 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.pratilipi.api.impl.author.shared.GenericAuthorResponse;
 import com.pratilipi.api.impl.blogpost.shared.GenericBlogPostResponse;
 import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
-import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -671,6 +671,7 @@ public class PratilipiSite extends HttpServlet {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
+		GenericAuthorResponse genericAuthorResponse = new GenericAuthorResponse( authorData );
 		UserAuthorData userAuthorData = UserAuthorDataUtil.getUserAuthor( AccessTokenFilter.getAccessToken().getUserId(), authorId );
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
@@ -682,13 +683,13 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createAuthorPageTitle( authorData ) );
 		if( basicMode ) {
-			dataModel.put( "author", authorData );
+			dataModel.put( "author", genericAuthorResponse );
 			dataModel.put( "publishedPratilipiList", pratilipiDataListCursorTuple.getDataList() );
 			if( pratilipiDataListCursorTuple.getDataList().size() == 20 && pratilipiDataListCursorTuple.getCursor() != null )
 				dataModel.put( "publishedPratilipiListSearchQuery", pratilipiFilter.toUrlEncodedString() );
 		} else {
 			Gson gson = new Gson();
-			dataModel.put( "authorJson", gson.toJson( authorData ) );
+			dataModel.put( "authorJson", gson.toJson( genericAuthorResponse ) );
 			dataModel.put( "userAuthorJson", gson.toJson( userAuthorData ) );
 			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ) );
 			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ) );

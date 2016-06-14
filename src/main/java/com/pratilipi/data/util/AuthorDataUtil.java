@@ -181,6 +181,12 @@ public class AuthorDataUtil {
 		
 		authorData.setAccessToUpdate( hasAccessToUpdateAuthorData( author, null ) );
 		
+		// Add meta-data
+		if( hasAccessToUpdateAuthorData( author, null ) ) {
+			authorData.setDateOfBirth( author.getDateOfBirth() );
+			authorData.setGender( author.getGender() );
+		}
+
 		return authorData;
 		
 	}
