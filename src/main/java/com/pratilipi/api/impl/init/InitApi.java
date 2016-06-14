@@ -25,11 +25,13 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.AuditLog;
+import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.gae.AuditLogEntityOfy;
+import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
 
@@ -196,6 +198,22 @@ public class InitApi extends GenericApi {
 			if( auditLog.getCreationDate() != null ) {
 				
 				logger.log( Level.INFO, "Creation date is not null for " + auditLog.getId() );
+				
+			} else if( auditLog.getAccessType() == AccessType.AUTHOR_ADD ) {
+				
+				Author a2 = gson.fromJson( auditLog.getEventDataNew(), AuthorEntity.class );
+				if( a2.getRegistrationDate() != null ) {
+					( (AuditLogEntityOfy) auditLog ).setCreationDate( a2.getRegistrationDate() );
+					ObjectifyService.ofy().save().entity( auditLog );
+				}
+				
+			} else if( auditLog.getAccessType() == AccessType.PRATILIPI_ADD ) {
+				
+				Pratilipi p2 = gson.fromJson( auditLog.getEventDataNew(), PratilipiEntity.class );
+				if( p2.getLastUpdated() != null ) {
+					( (AuditLogEntityOfy) auditLog ).setCreationDate( p2.getLastUpdated() );
+					ObjectifyService.ofy().save().entity( auditLog );
+				}
 				
 			} else if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE ) {
 				
