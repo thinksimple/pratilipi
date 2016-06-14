@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -18,6 +21,7 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -26,6 +30,8 @@ import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
+import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.gae.UserPratilipiEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
@@ -158,9 +164,50 @@ public class InitApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		String appPropertyId = "Api.PratilipiProcess.UpdateStats";
+		String appPropertyId = "Api.Init";
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
-		appProperty.setValue( new Date( new Date().getTime() - TimeUnit.DAYS.toMillis( 9 ) ) );
+		if( appProperty == null )
+			appProperty = dataAccessor.newAppProperty( appPropertyId );
+
+		
+		Query<UserPratilipiEntity> query = ObjectifyService.ofy()
+				.load()
+				.type( UserPratilipiEntity.class )
+				.limit( 1000 );
+
+		if( appProperty.getValue() != null )
+			query = query.startAt( Cursor.fromWebSafeString( (String) appProperty.getValue() ) );
+		
+		
+		QueryResultIterator <UserPratilipiEntity> iterator = query.iterator();
+		while( iterator.hasNext() ) {
+			
+			UserPratilipi userPratilipi = iterator.next();
+			
+			if( userPratilipi.getReviewTitle() != null && userPratilipi.getReviewTitle().trim().isEmpty() )
+				userPratilipi.setReviewTitle( null );
+			if( userPratilipi.getReview() != null && userPratilipi.getReview().trim().isEmpty() )
+				userPratilipi.setReview( null );
+			
+			if( userPratilipi.getReviewTitle() == null && userPratilipi.getReview() == null )
+				userPratilipi.setReviewDate( null );
+			
+			if( userPratilipi.getReviewDate() != null && userPratilipi.getReviewState() == null )
+				userPratilipi.setReviewState( UserReviewState.PUBLISHED );
+
+			if( userPratilipi.getRatingDate() == null && userPratilipi.getRating() != null && userPratilipi.getRating() != 0L ) {
+				if( userPratilipi.getReviewDate() == null )
+					userPratilipi.setRatingDate( new Date(0) );
+				else
+					userPratilipi.setRatingDate( userPratilipi.getReviewDate() );
+			}
+			
+			ObjectifyService.ofy().save().entity( userPratilipi );
+			
+		}
+
+		
+		appProperty.setValue( iterator.getCursor().toWebSafeString() );
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		
 		return new GenericResponse();
