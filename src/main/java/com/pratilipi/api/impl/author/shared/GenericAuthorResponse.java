@@ -69,6 +69,10 @@ public class GenericAuthorResponse extends GenericResponse {
 		this.registrationDateMillis = authorData.getRegistrationDate() != null ? 
 				 authorData.getRegistrationDate().getTime() : null;
 				 
+		this.contentPublished = authorData.getContentPublished() != null ? authorData.getContentPublished() : 0;
+		this.totalReadCount = authorData.getTotalReadCount() != null ? authorData.getTotalReadCount() : 0L;
+		this.totalFbLikeShareCount = authorData.getTotalFbLikeShareCount() != null ? authorData.getTotalFbLikeShareCount() : 0L;
+
 		this.hasAccessToUpdate = authorData.hasAccessToUpdate();
 		
 	}
@@ -159,20 +163,20 @@ public class GenericAuthorResponse extends GenericResponse {
 	
 	
 	public Integer getContentPublished() {
-		return contentPublished != null ? contentPublished : 0;
+		return contentPublished;
 	}
 	
 	public Long getTotalReadCount() {
-		return totalReadCount != null ? totalReadCount : 0L;
+		return totalReadCount;
 	}
 	
 	public Long getTotalFbLikeShareCount() {
-		return totalFbLikeShareCount != null ? totalFbLikeShareCount : 0L;
+		return totalFbLikeShareCount;
 	}
 	
 	
 	public boolean hasAccessToUpdate() {
-		return hasAccessToUpdate == null ? false : hasAccessToUpdate;
+		return hasAccessToUpdate;
 	}
 	
 }
