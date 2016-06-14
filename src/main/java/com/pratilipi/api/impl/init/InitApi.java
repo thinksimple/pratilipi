@@ -204,9 +204,10 @@ public class InitApi extends GenericApi {
 				
 				if( p2.getLastUpdated().equals( p1.getLastUpdated() ) ) {
 					logger.log( Level.INFO, "Deleting audit log " + auditLog.getId() );
+					ObjectifyService.ofy().delete().entity( auditLog );
 				} else {
 					logger.log( Level.INFO, "Setting creation date for " + auditLog.getId() + " to " + p2.getLastUpdated() );
-//					ObjectifyService.ofy().save().entity( auditLog );
+					ObjectifyService.ofy().save().entity( auditLog );
 				}
 				
 			} else {
