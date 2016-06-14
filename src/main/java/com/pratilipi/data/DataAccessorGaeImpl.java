@@ -193,6 +193,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity, Page page, AuditLog auditLog ) {
+		( (AuditLogEntityOfy) auditLog ).setCreationDate( new Date() );
 		Map<Key<GenericOfyType>, GenericOfyType> map = page == null
 				? ObjectifyService.ofy().save().entities( entity, auditLog ).now()
 				: ObjectifyService.ofy().save().entities( entity, page, auditLog ).now();
