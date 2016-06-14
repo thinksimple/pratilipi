@@ -551,6 +551,32 @@ public class AuthorDataUtil {
 
 	}
 	
+	public static void updateUserAuthorStats( Long authorId ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Author author = dataAccessor.getAuthor( authorId );
+		if( author.getState() != AuthorState.ACTIVE )
+			return;
+
+		
+		Gson gson = new Gson();
+
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		auditLog.setAccessId( accessToken.getId() );
+		auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
+		auditLog.setEventDataOld( gson.toJson( author ) );
+
+		author.setFollowCount( (long) dataAccessor.getUserAuthorFollowList( null, authorId, null, null, null ).getDataList().size() );
+		
+		auditLog.setEventDataNew( gson.toJson( author ) );
+
+		
+		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
+		
+	}
+
 	public static void updateAuthorSearchIndex( Long authorId )
 			throws UnexpectedServerException {
 		
