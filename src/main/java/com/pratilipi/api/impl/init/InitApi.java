@@ -27,8 +27,10 @@ import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
+import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.gae.AuditLogEntityOfy;
+import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
@@ -177,20 +179,41 @@ public class InitApi extends GenericApi {
 			
 		}
 */
+
+		Gson gson = new Gson();
 		
 		Query<AuditLogEntityOfy> query = ObjectifyService.ofy()
 				.load()
 				.type( AuditLogEntityOfy.class )
-				.filter( "ACCESS_TYPE", "PRATILIPI_ADD_REVIEW" )
-				.limit( 10000 );
+				.filter( "CREATION_DATE", null )
+				.limit( 1000 );
 
 		QueryResultIterator <AuditLogEntityOfy> iterator = query.iterator();
 		while( iterator.hasNext() ) {
 			
 			AuditLog auditLog = iterator.next();
-			auditLog.setAccessType( AccessType.USER_PRATILIPI_REVIEW );
 			
-			ObjectifyService.ofy().save().entity( auditLog );
+			if( auditLog.getCreationDate() != null ) {
+				
+				logger.log( Level.INFO, "Creation date is not null for " + auditLog.getId() );
+				
+			} else if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE ) {
+				
+				Pratilipi p1 = gson.fromJson( auditLog.getEventDataOld(), PratilipiEntity.class );
+				Pratilipi p2 = gson.fromJson( auditLog.getEventDataNew(), PratilipiEntity.class );
+				
+				if( p2.getLastUpdated().equals( p1.getLastUpdated() ) ) {
+					logger.log( Level.INFO, "Deleting audit log " + auditLog.getId() );
+				} else {
+					logger.log( Level.INFO, "Setting creation date for " + auditLog.getId() + " to " + p2.getLastUpdated() );
+//					ObjectifyService.ofy().save().entity( auditLog );
+				}
+				
+			} else {
+				
+				logger.log( Level.INFO, "Skipping audit log of type " + auditLog.getAccessType() );
+				
+			}
 			
 		}
 
