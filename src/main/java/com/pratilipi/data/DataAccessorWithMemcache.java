@@ -65,29 +65,9 @@ public class DataAccessorWithMemcache implements DataAccessor {
 
 	
 	// APP_PROPERTY Table
-	
-	@Override
-	public AppProperty newAppProperty( String id ) {
-		return dataAccessor.newAppProperty( id );
-	}
-
-	@Override
-	public AppProperty getAppProperty( String id ) {
-		AppProperty appProperty = memcache.get( PREFIX_APP_PROPERTY + id );
-		if( appProperty == null ) {
-			appProperty = dataAccessor.getAppProperty( id );
-			if( appProperty != null )
-				memcache.put( PREFIX_APP_PROPERTY + id, appProperty );
-		}
-		return appProperty;
-	}
-
-	@Override
-	public AppProperty createOrUpdateAppProperty( AppProperty appProperty ) {
-		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
-		memcache.put( PREFIX_APP_PROPERTY + appProperty.getId(), appProperty );
-		return appProperty;
-	}
+	@Override public AppProperty newAppProperty( String id ) { return dataAccessor.newAppProperty( id ); }
+	@Override public AppProperty getAppProperty( String id ) { return dataAccessor.getAppProperty( id ); }
+	@Override public AppProperty createOrUpdateAppProperty( AppProperty appProperty ) { return dataAccessor.createOrUpdateAppProperty( appProperty ); }
 
 
 	// USER Table

@@ -1,8 +1,6 @@
 package com.pratilipi.data.type;
 
-import java.io.Serializable;
-
-public interface AppProperty extends Serializable {
+public interface AppProperty extends GenericOfyType {
 	
 	String FACEBOOK_CREDENTIALS = "Facebook.Credentials";
 	

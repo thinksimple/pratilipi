@@ -1,45 +1,49 @@
 package com.pratilipi.data.type.gae;
 
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Serialize;
 import com.pratilipi.data.type.AppProperty;
 
-@PersistenceCapable( table = "APP_PROPERTY" )
+@Cache
+@Entity( name = "APP_PROPERTY" )
 public class AppPropertyEntity implements AppProperty {
 
-	private static final long serialVersionUID = 9031802007755452031L;
-
-	@PrimaryKey
-	@Persistent( column = "APP_PROPERTY_ID" )
-	private String id;
+	@Id
+	private String APP_PROPERTY_ID;
 	
-	@Persistent( column = "VALUE", serialized = "true", defaultFetchGroup = "true" )
-	private Object value;
+	@Serialize
+	private Object VALUE;
 
 
 	public AppPropertyEntity() {}
 	
 	public AppPropertyEntity( String id ) {
-		this.id = id;
+		this.APP_PROPERTY_ID = id;
 	}
 
 	
 	@Override
 	public String getId() {
-		return id;
+		return APP_PROPERTY_ID;
 	}
 
+	@Override
+	public <T> void setKey( Key<T> key ) {
+		this.APP_PROPERTY_ID = key.getName();
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T getValue() {
-		return (T) value;
+		return (T) VALUE;
 	}
 
 	@Override
 	public <T> void setValue( T value ) {
-		this.value = value;
+		this.VALUE = value;
 	}
 	
 }

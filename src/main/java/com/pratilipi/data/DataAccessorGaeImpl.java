@@ -99,6 +99,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// Registering Entities
 	
 	static {
+
+		ObjectifyService.register( AppPropertyEntity.class );
 		
 		ObjectifyService.register( AuditLogEntityOfy.class );
 		
@@ -215,19 +217,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public AppProperty getAppProperty( String id ) {
-		if( id == null )
-			return null;
-		
-		try{
-			return getEntity( AppPropertyEntity.class, id );
-		} catch( JDOObjectNotFoundException e ) {
-			return null;
-		}
+		return getEntityOfy( AppPropertyEntity.class, id );
 	}
 	
 	@Override
 	public AppProperty createOrUpdateAppProperty( AppProperty appProperty ) {
-		return createOrUpdateEntity( appProperty );
+		return createOrUpdateEntityOfy( appProperty );
 	}
 	
 	
