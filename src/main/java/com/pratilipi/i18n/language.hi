@@ -218,7 +218,7 @@ footer_blog					= ब्लॉग
 footer_privacy_policy		= गोपनीयता नीति
 footer_terms_of_service		= सेवा की शर्तें
 footer_contact_email		= contact@pratilipi.com
-footer_contact_10_digit_number		= 8604623871
+footer_contact_10_digit_number		= (+91) 8604623871
 
 
 
@@ -297,9 +297,9 @@ event_entries_url_list	=एंट्री का युआरएल लिस�
 event_save_changes		= बदलाव को सुरक्षित करें
 
 # Gender
-gender_male			= Male
-gender_female		= Female
-gender_other		= Other
+gender_male			= पुरुष
+gender_female		=  स्त्री
+gender_other		= अन्य
 
  # Months
 month_jan	= January
@@ -335,6 +335,6 @@ decrease_image_size		= चित्र कद घटाए
 
 
 # Enjoyed Reading the content? Write a review or Share it on
-reader_enjoyed_reading_part1	= क्या आप रचना पढ़ना पसंद कर रहे हैं ?
-reader_enjoyed_review_book		= टिपण्णी लिखें 
-reader_enjoyed_reading_part2	= शेर करे 
+reader_enjoyed_reading_part1	= क्या आपको यह रचना पसंद आई?
+reader_enjoyed_review_book		= टिप्पणी लिखें 
+reader_enjoyed_reading_part2	= शेयर करे 
