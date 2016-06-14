@@ -18,6 +18,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
@@ -180,16 +181,16 @@ public class InitApi extends GenericApi {
 		Query<AuditLogEntityOfy> query = ObjectifyService.ofy()
 				.load()
 				.type( AuditLogEntityOfy.class )
-				.filter( "EVENT_ID !=", null )
-				.limit( 1000 );
+				.filter( "ACCESS_TYPE", "PRATILIPI_ADD_REVIEW" )
+				.limit( 10000 );
 
 		QueryResultIterator <AuditLogEntityOfy> iterator = query.iterator();
 		while( iterator.hasNext() ) {
 			
-			AuditLog author = iterator.next();
-			author.getAccessType();
+			AuditLog auditLog = iterator.next();
+			auditLog.setAccessType( AccessType.USER_PRATILIPI_REVIEW );
 			
-			ObjectifyService.ofy().save().entity( author );
+			ObjectifyService.ofy().save().entity( auditLog );
 			
 		}
 
