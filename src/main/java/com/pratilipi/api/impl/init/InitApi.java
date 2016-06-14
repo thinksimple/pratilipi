@@ -207,6 +207,7 @@ public class InitApi extends GenericApi {
 					ObjectifyService.ofy().delete().entity( auditLog );
 				} else {
 					logger.log( Level.INFO, "Setting creation date for " + auditLog.getId() + " to " + p2.getLastUpdated() );
+					( (AuditLogEntityOfy) auditLog ).setCreationDate( p2.getLastUpdated() );
 					ObjectifyService.ofy().save().entity( auditLog );
 				}
 				
