@@ -11,9 +11,6 @@ public enum PageType {
 	AUTHOR( "/author/" ),
 	AUTHOR_DASHBOARD( null ),
 	
-	@Deprecated
-	PUBLISHER( "/publisher/" ),
-	
 	EVENT( "/event/" ),
 	
 	BLOG( "/blog/" ),

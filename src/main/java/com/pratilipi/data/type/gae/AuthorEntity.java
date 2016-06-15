@@ -51,18 +51,12 @@ public class AuthorEntity implements Author {
 	@Index
 	private Language LANGUAGE;
 
-	@Deprecated
-	private Long LANGUAGE_ID;
-
 	private String SUMMARY;
 	
 
 	@Index
 	private AuthorState STATE;
 	
-	@Deprecated
-	private Boolean CUSTOM_COVER;
-
 	@Index
 	private Boolean CUSTOM_IMAGE;
 
@@ -202,25 +196,6 @@ public class AuthorEntity implements Author {
 	
 	@Override
 	public Language getLanguage() {
-		if( LANGUAGE == null ) {
-			if( LANGUAGE_ID == null )
-				LANGUAGE = null;
-			else if( LANGUAGE_ID == 5130467284090880L || LANGUAGE_ID == 5750790484393984L )
-				LANGUAGE = Language.HINDI;
-			else if( LANGUAGE_ID == 5965057007550464L || LANGUAGE_ID == 5746055551385600L )
-				LANGUAGE = Language.GUJARATI;
-			else if( LANGUAGE_ID == 6319546696728576L || LANGUAGE_ID == 5719238044024832L )
-				LANGUAGE = Language.TAMIL;
-			else if( LANGUAGE_ID == 5173513199550464L )
-				LANGUAGE = Language.MARATHI;
-			else if( LANGUAGE_ID == 5752669171875840L )
-				LANGUAGE = Language.MALAYALAM;
-			else if( LANGUAGE_ID == 6235363433512960L )
-				LANGUAGE = Language.BENGALI;
-			else if( LANGUAGE_ID == 6213615354904576L || LANGUAGE_ID == 5688424874901504L )
-				LANGUAGE = Language.ENGLISH;
-		}
-		LANGUAGE_ID = null;
 		return LANGUAGE;
 	}
 
@@ -254,10 +229,6 @@ public class AuthorEntity implements Author {
 	
 	@Override
 	public Boolean hasCustomImage() {
-		if( CUSTOM_IMAGE == null ) {
-			CUSTOM_IMAGE = CUSTOM_COVER;
-			CUSTOM_COVER = null;
-		}
 		return CUSTOM_IMAGE == null ? false : CUSTOM_IMAGE;
 	}
 
