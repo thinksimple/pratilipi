@@ -38,11 +38,6 @@ sudo mkdir -p ~/prod
 cd ~/prod
 sudo git clone -b release-prod https://github.com/Pratilipi/pratilipi.git
 
-# Cloning git repository for prod-pratilipi/mobile
-sudo mkdir -p ~/mobile
-cd ~/mobile
-sudo git clone -b release-mobile https://github.com/Pratilipi/pratilipi.git
-
 # Cloning git repository for prod-pratilipi/api
 sudo mkdir -p ~/api
 cd ~/api
