@@ -343,7 +343,7 @@ public class AuthorApi extends GenericApi {
 	
 	
 	@Get
-	public Response getAuthor( GetRequest request ) {
+	public Response get( GetRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( request.getAuthorId() );
@@ -353,7 +353,7 @@ public class AuthorApi extends GenericApi {
 	}
 	
 	@Post
-	public Response postAuthor( PostRequest request ) 
+	public Response post( PostRequest request ) 
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		Gson gson = new Gson();
