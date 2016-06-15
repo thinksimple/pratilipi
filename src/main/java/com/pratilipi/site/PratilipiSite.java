@@ -65,7 +65,6 @@ import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.User;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;

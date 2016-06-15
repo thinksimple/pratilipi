@@ -5,13 +5,15 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.author.shared.GenericAuthorResponse;
-import com.pratilipi.api.impl.author.shared.GetAuthorRequest;
-import com.pratilipi.api.impl.author.shared.PostAuthorRequest;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.Gender;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.AuthorData;
@@ -24,19 +26,334 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @Bind( uri = "/author" )
 public class AuthorApi extends GenericApi {
 
+	public static class GetRequest extends GenericRequest {
+		
+		@Validate( required = true )
+		private Long authorId;
+		
+		
+		public Long getAuthorId() {
+			return authorId;
+		}
+
+	}
+	
+	public static class PostRequest extends GenericRequest {
+		
+		private Long authorId;
+		
+		private String firstName;
+		private boolean hasFirstName;
+		
+		private String lastName;
+		private boolean hasLastName;
+		
+		private String penName;
+		private boolean hasPenName;
+		
+		private String firstNameEn;
+		private boolean hasFirstNameEn;
+		
+		private String lastNameEn;
+		private boolean hasLastNameEn;
+		
+		private String penNameEn;
+		private boolean hasPenNameEn;
+		
+
+		private Gender gender;
+		private boolean hasGender;
+		
+		private String dateOfBirth;
+		private boolean hasDateOfBirth;
+
+		
+		private Language language;
+		private boolean hasLanguage;
+		
+		private String summary;
+		private boolean hasSummary;
+		
+
+		
+		public Long getId() {
+			return authorId;
+		}
+		
+
+		public String getFirstName() {
+			return firstName;
+		}
+		
+		public boolean hasFirstName() {
+			return hasFirstName;
+		}
+		
+		public String getLastName() {
+			return lastName;
+		}
+		
+		public boolean hasLastName() {
+			return hasLastName;
+		}
+		
+		public String getPenName() {
+			return penName;
+		}
+		
+		public boolean hasPenName() {
+			return hasPenName;
+		}
+		
+		public String getFirstNameEn() {
+			return firstNameEn;
+		}
+		
+		public boolean hasFirstNameEn() {
+			return hasFirstNameEn;
+		}
+		
+		public String getLastNameEn() {
+			return lastNameEn;
+		}
+		
+		public boolean hasLastNameEn() {
+			return hasLastNameEn;
+		}
+		
+		public String getPenNameEn() {
+			return penNameEn;
+		}
+		
+		public boolean hasPenNameEn() {
+			return hasPenNameEn;
+		}
+		
+		
+		public Gender getGender() {
+			return gender;
+		}
+		
+		public boolean hasGender() {
+			return hasGender;
+		}
+		
+		public String getDateOfBirth() {
+			return dateOfBirth;
+		}
+		
+		public boolean hasDateOfBirth() {
+			return hasDateOfBirth;
+		}
+		
+		
+		public Language getLanguage() {
+			return language;
+		}
+
+		public boolean hasLanguage() {
+			return hasLanguage;
+		}
+		
+		public String getSummary() {
+			return summary;
+		}
+
+		public boolean hasSummary() {
+			return hasSummary;
+		}
+		
+	}
+	
+	public static class Response extends GenericResponse {
+
+		private Long authorId;
+
+		private String firstName;
+		private String lastName;
+		private String penName;
+		private String name;
+		private String fullName;
+
+		private String firstNameEn;
+		private String lastNameEn;
+		private String penNameEn;
+		private String nameEn;
+		private String fullNameEn;
+
+		private Gender gender;
+		private String dateOfBirth;
+		
+		private Language language;
+		private String summary;
+		
+		private String pageUrl;
+		private String imageUrl;
+
+		private Long registrationDateMillis;
+		
+		private Integer contentPublished;
+		private Long totalReadCount;
+		private Long totalFbLikeShareCount;
+		
+		private Boolean hasAccessToUpdate;
+		
+		
+		@SuppressWarnings("unused")
+		private Response() { }
+		
+		Response( AuthorData authorData ) {
+			
+			this.authorId = authorData.getId();
+			
+			this.firstName = authorData.getFirstName();
+			this.lastName = authorData.getLastName();
+			this.penName = authorData.getPenName();
+			this.name = authorData.getName();
+			this.fullName = authorData.getFullName();
+			
+			this.firstNameEn = authorData.getFirstNameEn();
+			this.lastNameEn = authorData.getLastNameEn();
+			this.penNameEn = authorData.getPenNameEn();
+			this.nameEn = authorData.getNameEn();
+			this.fullNameEn = authorData.getFullNameEn();
+			
+			this.gender = authorData.getGender();
+			this.dateOfBirth = authorData.getDateOfBirth();
+			
+			this.language = authorData.getLanguage();
+			this.summary = authorData.getSummary();
+			
+			this.pageUrl = authorData.getPageUrl();
+			this.imageUrl = authorData.getImageUrl();
+			
+			this.registrationDateMillis = authorData.getRegistrationDate().getTime();
+					 
+			this.contentPublished = authorData.getContentPublished();
+			this.totalReadCount = authorData.getTotalReadCount();
+			this.totalFbLikeShareCount = authorData.getTotalFbLikeShareCount();
+
+			this.hasAccessToUpdate = authorData.hasAccessToUpdate();
+			
+		}
+		
+		
+		public Long getId() {
+			return authorId;
+		}
+		
+		public String getFirstName() {
+			return firstName;
+		}
+		
+		public String getLastName() {
+			return lastName;
+		}
+			
+		public String getPenName() {
+			return penName;
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public String getFullName() {
+			return fullName;
+		}
+		
+		
+		public String getFirstNameEn() {
+			return firstNameEn;
+		}
+		
+		public String getLastNameEn() {
+			return lastNameEn;
+		}
+		
+		public String getPenNameEn() {
+			return penNameEn;
+		}
+		
+		public String getNameEn() {
+			return nameEn;
+		}
+		
+		public String getFullNameEn() {
+			return fullNameEn;
+		}
+		
+		
+		public Gender getGender() {
+			return gender;
+		}
+		
+		public String getDateOfBirth() {
+			return dateOfBirth;
+		}
+		
+		
+		public Language getLanguage() {
+			return language;
+		}
+		
+		public String getSummary() {
+			return summary;
+		}
+		
+		
+		public String getPageUrl() {
+			return pageUrl;
+		}
+		
+		public String getImageUrl() {
+			return imageUrl;
+		}
+		
+		public String getImageUrl( int width ) {
+			return imageUrl.indexOf( '?' ) == -1
+					? imageUrl + "?width=" + width
+					: imageUrl + "&width=" + width;
+		}
+		
+		
+		public Long getRegistrationDateMillis() {
+			return registrationDateMillis;
+		}
+		
+		
+		public Integer getContentPublished() {
+			return contentPublished;
+		}
+		
+		public Long getTotalReadCount() {
+			return totalReadCount;
+		}
+		
+		public Long getTotalFbLikeShareCount() {
+			return totalFbLikeShareCount;
+		}
+		
+		
+		public boolean hasAccessToUpdate() {
+			return hasAccessToUpdate;
+		}
+		
+	}
+	
+	
 	@Get
-	public GenericAuthorResponse getAuthor( GetAuthorRequest request )
-			throws InvalidArgumentException, UnexpectedServerException {
+	public Response getAuthor( GetRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( request.getAuthorId() );
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
-		return new GenericAuthorResponse( authorData );
+		return new Response( authorData );
 		
 	}
 	
 	@Post
-	public GenericAuthorResponse postAuthor( PostAuthorRequest request ) 
+	public Response postAuthor( PostRequest request ) 
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		Gson gson = new Gson();
@@ -52,7 +369,7 @@ public class AuthorApi extends GenericApi {
 				.addParam( "processData", "true" );
 		TaskQueueFactory.getAuthorTaskQueue().add( task );
 
-		return gson.fromJson( gson.toJson( authorData ), GenericAuthorResponse.class );
+		return new Response( authorData );
 		
 	}
 	

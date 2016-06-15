@@ -44,10 +44,6 @@ public class AuthorEntity implements Author {
 	private String DATE_OF_BIRTH;
 	
 	
-	@Deprecated
-	@Index( IfNotNull.class )
-	private String EMAIL;
-
 	@Index
 	private Language LANGUAGE;
 
