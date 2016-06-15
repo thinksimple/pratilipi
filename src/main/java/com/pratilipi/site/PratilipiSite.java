@@ -65,6 +65,7 @@ import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.User;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
@@ -90,6 +91,16 @@ public class PratilipiSite extends HttpServlet {
 			throws IOException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// Setting user's author profile's default language, if not set already
+		if( UxModeFilter.getFilterLanguage() != null ) {
+			Author author = dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() );
+			if( author != null && author.getLanguage() == null ) {
+				author.setLanguage( UxModeFilter.getFilterLanguage() );
+				dataAccessor.createOrUpdateAuthor( author );
+			}
+		}
+		
 		
 		// Page Entity
 		String uri = request.getRequestURI();

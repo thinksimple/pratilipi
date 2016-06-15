@@ -89,15 +89,21 @@ public class UxModeFilter implements Filter {
 					
 				} else if( page.getType() == PageType.PRATILIPI ) {
 					Pratilipi pratilipi = dataAccessor.getPratilipi( page.getPrimaryContentId() );
-					for( Website web : Website.values() )
-						if( web.getFilterLanguage() == pratilipi.getLanguage() )
+					for( Website web : Website.values() ) {
+						if( web.getFilterLanguage() == pratilipi.getLanguage() ) {
 							destHostName = basicMode ? web.getMobileHostName() : web.getHostName();
+							break;
+						}
+					}
 				
 				} else if( page.getType() == PageType.AUTHOR ) {
 					Author author = dataAccessor.getAuthor( page.getPrimaryContentId() );
-					for( Website web : Website.values() )
-						if( web.getFilterLanguage() == author.getLanguage() )
+					for( Website web : Website.values() ) {
+						if( web.getFilterLanguage() == author.getLanguage() ) {
 							destHostName = basicMode ? web.getMobileHostName() : web.getHostName();
+							break;
+						}
+					}
 				
 				}
 			
