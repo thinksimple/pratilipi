@@ -7,7 +7,7 @@
 		<img src="${ author.getImageUrl( 200 ) }" alt="${ author.fullName!author.fullNameEn }" title="${ author.fullNameEn!author.fullName }" />
 	</div>
 	
-	<h5 style="margin: 12px auto;">${ _strings.author_since }&nbsp;&minus;&nbsp;${ author.registrationDate?date }</h5>
+	<h5 style="margin: 12px auto;">${ _strings.author_since }&nbsp;&minus;&nbsp;${ author.getRegistrationDateMillis()?number_to_date }</h5>
 	
 	<hr/>
 	<div class="row" style="padding: 0px; margin-bottom: 10px;">
