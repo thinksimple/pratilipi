@@ -38,6 +38,7 @@ public class GenericAuthorResponse extends GenericResponse {
 	
 	private Boolean hasAccessToUpdate;
 	
+	
 	@SuppressWarnings("unused")
 	private GenericAuthorResponse() { }
 	
@@ -66,12 +67,11 @@ public class GenericAuthorResponse extends GenericResponse {
 		this.pageUrl = authorData.getPageUrl();
 		this.imageUrl = authorData.getImageUrl();
 		
-		this.registrationDateMillis = authorData.getRegistrationDate() != null ? 
-				 authorData.getRegistrationDate().getTime() : null;
+		this.registrationDateMillis = authorData.getRegistrationDate() != null ? authorData.getRegistrationDate().getTime() : null;
 				 
-		this.contentPublished = authorData.getContentPublished() != null ? authorData.getContentPublished() : 0;
-		this.totalReadCount = authorData.getTotalReadCount() != null ? authorData.getTotalReadCount() : 0L;
-		this.totalFbLikeShareCount = authorData.getTotalFbLikeShareCount() != null ? authorData.getTotalFbLikeShareCount() : 0L;
+		this.contentPublished = authorData.getContentPublished();
+		this.totalReadCount = authorData.getTotalReadCount();
+		this.totalFbLikeShareCount = authorData.getTotalFbLikeShareCount();
 
 		this.hasAccessToUpdate = authorData.hasAccessToUpdate();
 		
@@ -157,7 +157,7 @@ public class GenericAuthorResponse extends GenericResponse {
 	}
 	
 	
-	public Long getRegistrationDate() {
+	public Long getRegistrationDateMillis() {
 		return registrationDateMillis;
 	}
 	
