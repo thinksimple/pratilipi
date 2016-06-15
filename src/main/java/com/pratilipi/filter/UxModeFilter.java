@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
+import com.pratilipi.data.type.Pratilipi;
 
 public class UxModeFilter implements Filter {
 
@@ -51,7 +54,8 @@ public class UxModeFilter implements Filter {
 			HttpServletResponse response = ( HttpServletResponse ) resp;
 			String hostName = request.getServerName();
 			String requestUri = request.getRequestURI();
-	
+			String userAgent = request.getHeader( "user-agent" );
+			
 			
 			// Defaults - for all test environments
 			boolean basicMode = false;
@@ -70,9 +74,45 @@ public class UxModeFilter implements Filter {
 				}
 			}
 			
+	
+			// Redirect Pratilipi & Author page requests on www.pratilipi.com to language specific Websites
+			// NOTE: DO NOT redirect Facebook Scraping requests
+			if( isWebApp && website == Website.ALL_LANGUAGE && ( userAgent == null || userAgent.isEmpty() || ! userAgent.startsWith( "facebookexternalhit/1.1" ) ) ) {
+				
+				String destHostName = null;
+				
+				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+				Page page = dataAccessor.getPage( requestUri );
+				
+				if( page == null ) {
+					// Do Nothing
+					
+				} else if( page.getType() == PageType.PRATILIPI ) {
+					Pratilipi pratilipi = dataAccessor.getPratilipi( page.getPrimaryContentId() );
+					for( Website web : Website.values() )
+						if( web.getFilterLanguage() == pratilipi.getLanguage() )
+							destHostName = basicMode ? web.getMobileHostName() : web.getHostName();
+				
+				} else if( page.getType() == PageType.AUTHOR ) {
+					Author author = dataAccessor.getAuthor( page.getPrimaryContentId() );
+					for( Website web : Website.values() )
+						if( web.getFilterLanguage() == author.getLanguage() )
+							destHostName = basicMode ? web.getMobileHostName() : web.getHostName();
+				
+				}
+			
+				if( destHostName != null ) {
+					response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+					response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + destHostName + requestUri );
+					return;
+				}
+				
+			}
+			
 			
 			// Redirect uri to uriAlias, if present
-			if( isWebApp && website != Website.ALL_LANGUAGE && website != Website.GAMMA_ALL_LANGUAGE ) {
+			// NOTE: DO NOT redirect Facebook Scraping requests
+			if( isWebApp && ( userAgent == null || userAgent.isEmpty() || ! userAgent.startsWith( "facebookexternalhit/1.1" ) ) ) {
 				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 				Page page = dataAccessor.getPage( requestUri );
 				if( page != null && page.getUriAlias() != null && requestUri.equals( page.getUri() ) ) {
@@ -86,7 +126,6 @@ public class UxModeFilter implements Filter {
 			// Figuring out Browser capability
 			
 			boolean basicBrowser = false;
-			String userAgent = request.getHeader( "user-agent" );
 			
 			if( isWebApp ) {
 				
@@ -178,29 +217,6 @@ public class UxModeFilter implements Filter {
 					response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + website.getMobileHostName() + requestUri + "?" + request.getQueryString() );
 				return;
 			}
-			
-			
-/*			if( filterLanguage != null ) {
-				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-				Page page = dataAccessor.getPage( requestUri );
-				if( page != null ) {
-					if( page.getType() == PageType.PRATILIPI ) {
-						Pratilipi pratilipi = dataAccessor.getPratilipi( page.getPrimaryContentId() );
-						if( filterLanguage != pratilipi.getLanguage() ) {
-							response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-							response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + Website.ALL_LANGUAGE.getHostName() + requestUri );
-							return;
-						}
-					} else if( page.getType() == PageType.AUTHOR ) {
-						Author author = dataAccessor.getAuthor( page.getPrimaryContentId() );
-						if( filterLanguage != author.getLanguage() ) {
-							response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-							response.setHeader( "Location", ( request.isSecure() ? "https://" : "http://" ) + Website.ALL_LANGUAGE.getHostName() + requestUri );
-							return;
-						}
-					}
-				}
-			}*/
 			
 			
 			threadLocalBasicMode.set( basicMode );
