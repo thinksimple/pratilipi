@@ -23,7 +23,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
-import com.pratilipi.api.impl.author.shared.GenericAuthorResponse;
+import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.blogpost.shared.GenericBlogPostResponse;
 import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
@@ -681,7 +681,7 @@ public class PratilipiSite extends HttpServlet {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
-		GenericAuthorResponse genericAuthorResponse = new GenericAuthorResponse( authorData );
+		AuthorApi.Response genericAuthorResponse = new AuthorApi.Response( authorData );
 		UserAuthorData userAuthorData = UserAuthorDataUtil.getUserAuthor( AccessTokenFilter.getAccessToken().getUserId(), authorId );
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();

@@ -72,7 +72,7 @@ public class AuthorListApi extends GenericApi {
 	
 	
 	@Get
-	public Response getAuthorList( GetRequest request )
+	public Response get( GetRequest request )
 			throws InsufficientAccessException {
 		
 		AuthorFilter authorFilter = new AuthorFilter();

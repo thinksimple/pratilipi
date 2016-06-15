@@ -4,9 +4,10 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.author.shared.PostAuthorImageRequest;
-import com.pratilipi.api.impl.pratilipi.shared.GetAuthorImageRequest;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericFileDownloadResponse;
+import com.pratilipi.api.shared.GenericFileUploadRequest;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -19,22 +20,39 @@ import com.pratilipi.data.util.AuthorDataUtil;
 @Bind( uri = "/author/image" )
 public class AuthorImageApi extends GenericApi {
 
+	public static class GetRequest extends GenericRequest {
+
+		private Long authorId;
+
+		private Integer width;
+		
+	}
+	
+	public static class PostRequest extends GenericFileUploadRequest {
+
+		@Validate( required = true )
+		private Long authorId;
+
+	}
+
+	
 	@Get
-	public GenericFileDownloadResponse getAuthorImage( GetAuthorImageRequest request )
+	public GenericFileDownloadResponse get( GetRequest request )
 			throws UnexpectedServerException {
 
 		BlobEntry blobEntry = (BlobEntry) AuthorDataUtil.getAuthorImage(
-				request.getAuthorId(),
-				request.getWidth() );
+				request.authorId,
+				request.width );
 		
 		return new GenericFileDownloadResponse(
 				blobEntry.getData(),
 				blobEntry.getMimeType(),
 				blobEntry.getETag() );
+		
 	}
 
 	@Post
-	public GenericResponse postAuthorImage( PostAuthorImageRequest request )
+	public GenericResponse post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		// This is to cover issue with jQuery FileUpload plug-in.
@@ -49,10 +67,11 @@ public class AuthorImageApi extends GenericApi {
 		blobEntry.setMimeType( request.getMimeType() );
 		
 		AuthorDataUtil.saveAuthorImage(
-				request.getAuthorId(),
+				request.authorId,
 				blobEntry );
 
 		return new GenericResponse();
+		
 	}		
 
 }

@@ -12,7 +12,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.author.shared.AuthorProcessPostRequest;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -42,8 +42,21 @@ public class AuthorProcessApi extends GenericApi {
 			Logger.getLogger( AuthorProcessApi.class.getName() );
 	
 	
+	public class PostRequest extends GenericRequest {
+
+		@Validate( required = true )
+		private Long authorId;
+
+		private Boolean validateData;
+		private Boolean processData;
+		private Boolean updateStats;
+		private Boolean updateUserAuthorStats;
+		
+	}
+
+	
 	@Get
-	public GenericResponse getAuthorProcess( GenericRequest request ) {
+	public GenericResponse get( GenericRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -83,35 +96,37 @@ public class AuthorProcessApi extends GenericApi {
 	}
 	
 	@Post
-	public GenericResponse postAuthorProcess( AuthorProcessPostRequest request )
+	public GenericResponse post( PostRequest request )
 			throws InvalidArgumentException, UnexpectedServerException {
 
-		if( request.validateData() )
-			validateAuthorData( request.getAuthorId() );
+		if( request.validateData != null && request.validateData )
+			_validateAuthorData( request.authorId );
 		
-		if( request.processData() ) {
-			boolean changed = AuthorDataUtil.createOrUpdateAuthorPageUrl( request.getAuthorId() );
+		if( request.processData != null && request.processData ) {
+			boolean changed = AuthorDataUtil.createOrUpdateAuthorPageUrl( request.authorId );
 //			AuthorDataUtil.createOrUpdateAuthorDashboardPageUrl( request.getAuthorId() );
 			if( changed ) {
 				// TODO: Update all Pratilipi's PageUrl ( where AUTHOR_ID == request.getAuthorId() )
 			}
-			AuthorDataUtil.updateAuthorSearchIndex( request.getAuthorId() );
-			PratilipiDataUtil.updatePratilipiSearchIndex( null, request.getAuthorId() );
+			AuthorDataUtil.updateAuthorSearchIndex( request.authorId );
+			PratilipiDataUtil.updatePratilipiSearchIndex( null, request.authorId );
 		}
 		
-		if( request.updateStats() ) {
-			boolean changed = AuthorDataUtil.updateAuthorStats( request.getAuthorId() );
+		if( request.updateStats != null && request.updateStats ) {
+			boolean changed = AuthorDataUtil.updateAuthorStats( request.authorId );
 			if( changed )
-				AuthorDataUtil.updateAuthorSearchIndex( request.getAuthorId() );
+				AuthorDataUtil.updateAuthorSearchIndex( request.authorId );
 		}
 
-		if( request.updateUserAuthorStats() )
-			AuthorDataUtil.updateUserAuthorStats( request.getAuthorId() );
+		if( request.updateUserAuthorStats != null && request.updateUserAuthorStats )
+			AuthorDataUtil.updateUserAuthorStats( request.authorId );
 		
 		return new GenericResponse();
+		
 	}
 
-	private void validateAuthorData( Long authorId ) throws InvalidArgumentException {
+	
+	private void _validateAuthorData( Long authorId ) throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );

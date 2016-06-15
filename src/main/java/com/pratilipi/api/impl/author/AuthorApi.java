@@ -202,7 +202,8 @@ public class AuthorApi extends GenericApi {
 		@SuppressWarnings("unused")
 		private Response() { }
 		
-		Response( AuthorData authorData ) {
+		// TODO: change access level to package level ASAP
+		public Response( AuthorData authorData ) {
 			
 			this.authorId = authorData.getId();
 			

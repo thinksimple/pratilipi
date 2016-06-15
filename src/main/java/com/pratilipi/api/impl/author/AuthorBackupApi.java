@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.impl.author.shared.GetAuthorBackupRequest;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.AuthorFilter;
@@ -40,8 +40,15 @@ public class AuthorBackupApi extends GenericApi {
 	private static final String LINE_SEPARATOR = "\n";
 	
 	
+	public static class GetRequest extends GenericRequest {
+		
+		private Boolean generateCsv;
+
+	}
+
+	
 	@Get
-	public GenericResponse get( GetAuthorBackupRequest request ) throws UnexpectedServerException {
+	public GenericResponse get( GetRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessorBackup();
@@ -70,7 +77,7 @@ public class AuthorBackupApi extends GenericApi {
 			for( Author author : authorList ) {
 				backup.append( gson.toJson( author ) + LINE_SEPARATOR );
 
-				if( request.generateCsv() )
+				if( request.generateCsv != null &&  request.generateCsv )
 					csv.append( "'" + author.getId() )
 							.append( CSV_SEPARATOR ).append( author.getUserId()			== null ? "" : "'" + author.getUserId() )
 							.append( CSV_SEPARATOR ).append( author.getFirstName()		== null ? "" : author.getFirstName() )
@@ -109,7 +116,7 @@ public class AuthorBackupApi extends GenericApi {
 		blobAccessor.createOrUpdateBlob( authorBackupEntry );
 		
 		
-		if( request.generateCsv() ) {
+		if( request.generateCsv != null &&  request.generateCsv ) {
 			BlobEntry authorCsvEntry = blobAccessor.newBlob(
 					"datastore/author.csv",
 					csv.toString().getBytes( Charset.forName( "UTF-8" ) ),

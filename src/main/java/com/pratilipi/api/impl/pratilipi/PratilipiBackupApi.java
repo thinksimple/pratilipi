@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.impl.author.shared.GetPratilipiBackupRequest;
+import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiBackupRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.GsonIstDateAdapter;

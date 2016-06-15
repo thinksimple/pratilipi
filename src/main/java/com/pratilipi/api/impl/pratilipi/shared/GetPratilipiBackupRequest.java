@@ -1,8 +1,8 @@
-package com.pratilipi.api.impl.author.shared;
+package com.pratilipi.api.impl.pratilipi.shared;
 
 import com.pratilipi.api.shared.GenericRequest;
 
-public class GetAuthorBackupRequest extends GenericRequest {
+public class GetPratilipiBackupRequest extends GenericRequest {
 	
 	private Boolean generateCsv;
 	
