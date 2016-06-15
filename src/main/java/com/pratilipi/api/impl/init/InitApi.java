@@ -7,32 +7,24 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.datastore.QueryResultIterator;
+import com.google.appengine.api.log.LogService.LogLevel;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
-import com.pratilipi.data.type.AuditLog;
-import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
-import com.pratilipi.data.type.gae.AuditLogEntityOfy;
-import com.pratilipi.data.type.gae.AuthorEntity;
-import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
@@ -163,39 +155,39 @@ public class InitApi extends GenericApi {
 		}
 */		
 		
-/*		Query<AuthorEntity> query = ObjectifyService.ofy()
+/*		ObjectifyService.register( AuthorEntity.class );
+		
+		Query<AuthorEntity> query = ObjectifyService.ofy()
 				.load()
 				.type( AuthorEntity.class )
-				.filter( "LANGUAGE_ID !=", null )
+				.filter( "STATE" , null )
 				.limit( 1000 );
 
 		QueryResultIterator <AuthorEntity> iterator = query.iterator();
 		while( iterator.hasNext() ) {
 			
-			AuthorEntity author = iterator.next();
+			Author author = iterator.next();
 			author.getLanguage();
 			author.getState();
 			author.hasCustomImage();
-			
 			ObjectifyService.ofy().save().entity( author );
 			
 		}
 */
 
+/*
 		Gson gson = new Gson();
 		
 		Query<AuditLogEntityOfy> query = ObjectifyService.ofy()
 				.load()
 				.type( AuditLogEntityOfy.class )
 				.filter( "CREATION_DATE", null )
-				.limit( 100000 );
+				.limit( 10000 );
 
 		QueryResultIterator <AuditLogEntityOfy> iterator = query.iterator();
 		while( iterator.hasNext() ) {
 			
 			AuditLog auditLog = iterator.next();
-			
-			logger.log( Level.INFO, "AuditLog " + auditLog.getId() );
 			
 			if( auditLog.getCreationDate() != null ) {
 				
@@ -211,7 +203,12 @@ public class InitApi extends GenericApi {
 				
 			} else if( auditLog.getAccessType() == AccessType.PRATILIPI_ADD ) {
 				
-				Pratilipi p2 = gson.fromJson( auditLog.getEventDataNew(), PratilipiEntity.class );
+				JsonObject j2 = gson.fromJson( auditLog.getEventDataNew(), JsonElement.class ).getAsJsonObject();
+				if( j2.get( "LAST_UPDATED" ) == null )
+					j2.add( "LAST_UPDATED", j2.get( "lastUpdated" ) );
+				
+				Pratilipi p2 = gson.fromJson( j2, PratilipiEntity.class );
+				
 				if( p2.getLastUpdated() != null ) {
 					( (AuditLogEntityOfy) auditLog ).setCreationDate( p2.getLastUpdated() );
 					ObjectifyService.ofy().save().entity( auditLog );
@@ -219,15 +216,30 @@ public class InitApi extends GenericApi {
 				
 			} else if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE ) {
 				
-				Pratilipi p1 = gson.fromJson( auditLog.getEventDataOld(), PratilipiEntity.class );
-				Pratilipi p2 = gson.fromJson( auditLog.getEventDataNew(), PratilipiEntity.class );
+				JsonObject j1 = gson.fromJson( auditLog.getEventDataOld(), JsonElement.class ).getAsJsonObject();
+				JsonObject j2 = gson.fromJson( auditLog.getEventDataNew(), JsonElement.class ).getAsJsonObject();
 				
-				if( p2.getLastUpdated() != null && p2.getLastUpdated().equals( p1.getLastUpdated() ) ) {
+				if( j1.get( "LAST_UPDATED" ) == null )
+					j1.add( "LAST_UPDATED", j1.get( "lastUpdated" ) );
+				
+				if( j2.get( "LAST_UPDATED" ) == null )
+					j2.add( "LAST_UPDATED", j2.get( "lastUpdated" ) );
+				
+				Pratilipi p1 = gson.fromJson( j1, PratilipiEntity.class );
+				Pratilipi p2 = gson.fromJson( j2, PratilipiEntity.class );
+				
+				if( p2.getLastUpdated().equals( p1.getLastUpdated() ) ) {
 					ObjectifyService.ofy().delete().entity( auditLog );
 				} else {
 					( (AuditLogEntityOfy) auditLog ).setCreationDate( p2.getLastUpdated() );
 					ObjectifyService.ofy().save().entity( auditLog );
 				}
+				
+			} else if( auditLog.getAccessType() == AccessType.USER_ADD
+					|| auditLog.getAccessType() == AccessType.USER_UPDATE
+					|| auditLog.getAccessType() == AccessType.USER_PRATILIPI_ADDED_TO_LIB ) {
+
+				ObjectifyService.ofy().delete().entity( auditLog );
 				
 			} else {
 				
@@ -236,7 +248,18 @@ public class InitApi extends GenericApi {
 			}
 			
 		}
+*/
 
+		Pratilipi p1 = DataAccessorFactory.getDataAccessor().getPratilipi( 4504336642080768L );
+		Pratilipi p2 = DataAccessorFactory.getDataAccessor().getPratilipi( 4504336642080768L );
+		
+		logger.log( Level.INFO, p1.equals( p2 ) + "" );
+		
+		p1.setTitle( "ABCDEF" );
+		
+		logger.log( Level.INFO, p1.getTitle() );
+		logger.log( Level.INFO, p2.getTitle() );
+		
 		return new GenericResponse();
 		
 	}
