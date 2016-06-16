@@ -8,6 +8,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
+import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.data.type.AuditLog;
@@ -45,6 +46,12 @@ public class AuditLogEntity implements AuditLog {
 		return id;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Key<T> getKey() {
+		return getId() == null ? null : (Key<T>) Key.create( getClass(), getId() );
+	}
+	
 	@Override
 	public <T> void setKey( Key<T> key ) {
 		this.id = key.getId();
@@ -76,6 +83,11 @@ public class AuditLogEntity implements AuditLog {
 	}
 
 	@Override
+	public void setEventDataOld( Object eventDataOld ) {
+		setEventDataOld( new Gson().toJson( eventDataOld ) );
+	}
+	
+	@Override
 	public void setEventDataOld( String eventDataOld ) {
 		this.eventDataOld = eventDataOld == null ? null : new Text( eventDataOld );
 	}
@@ -83,6 +95,11 @@ public class AuditLogEntity implements AuditLog {
 	@Override
 	public String getEventDataNew() {
 		return eventDataNew == null ? null : eventDataNew.getValue();
+	}
+
+	@Override
+	public void setEventDataNew( Object eventDataNew ) {
+		setEventDataNew( new Gson().toJson( eventDataNew ) );
 	}
 
 	@Override

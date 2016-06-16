@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -66,6 +67,7 @@ public interface DataAccessor {
 
 	// AUDIT_LOG Table
 	AuditLog newAuditLogOfy();
+	AuditLog newAuditLogOfy( String accessId, AccessType accessType, Object eventDataOld );
 	@Deprecated
 	AuditLog newAuditLog();
 	@Deprecated

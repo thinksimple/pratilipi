@@ -2,6 +2,7 @@ package com.pratilipi.data.type.gae;
 
 import java.util.Date;
 
+import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -31,6 +32,15 @@ public class AuditLogEntityOfy implements AuditLog {
 	@Index
 	private Date CREATION_DATE;
 
+
+	public AuditLogEntityOfy() {}
+	
+	public AuditLogEntityOfy( String accessId, AccessType accessType, Object eventDataOld ) {
+		this.ACCESS_ID = accessId;
+		this.ACCESS_TYPE = accessType;
+		this.EVENT_DATA_OLD = new Gson().toJson( eventDataOld );
+	}
+	
 	
 	@Override
 	public Long getId() {
@@ -68,6 +78,11 @@ public class AuditLogEntityOfy implements AuditLog {
 	}
 
 	@Override
+	public void setEventDataOld( Object eventDataOld ) {
+		setEventDataOld( new Gson().toJson( eventDataOld ) );
+	}
+
+	@Override
 	public void setEventDataOld( String eventDataOld ) {
 		this.EVENT_DATA_OLD = eventDataOld;
 	}
@@ -75,6 +90,11 @@ public class AuditLogEntityOfy implements AuditLog {
 	@Override
 	public String getEventDataNew() {
 		return EVENT_DATA_NEW;
+	}
+
+	@Override
+	public void setEventDataNew( Object eventDataNew ) {
+		setEventDataNew( new Gson().toJson( eventDataNew ) );
 	}
 
 	@Override
@@ -97,6 +117,7 @@ public class AuditLogEntityOfy implements AuditLog {
 		return CREATION_DATE;
 	}
 
+	@Override
 	public void setCreationDate( Date creationDate ) {
 		this.CREATION_DATE = creationDate;
 	}

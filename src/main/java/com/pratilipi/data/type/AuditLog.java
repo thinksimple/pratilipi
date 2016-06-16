@@ -19,10 +19,16 @@ public interface AuditLog extends GenericOfyType, Serializable { // TODO: remove
 
 	String getEventDataOld();
 	
+	void setEventDataOld( Object eventDataOld );
+	
+	@Deprecated
 	void setEventDataOld( String eventDataOld );
 
 	String getEventDataNew();
 
+	void setEventDataNew(  Object eventDataNew );
+	
+	@Deprecated
 	void setEventDataNew(  String eventDataNew );
 
 	String getEventComment();
@@ -31,4 +37,6 @@ public interface AuditLog extends GenericOfyType, Serializable { // TODO: remove
 
 	Date getCreationDate();
 
+	void setCreationDate( Date date );
+	
 }

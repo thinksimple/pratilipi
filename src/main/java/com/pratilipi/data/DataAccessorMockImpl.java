@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -48,6 +49,7 @@ import com.pratilipi.data.type.Vote;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
+import com.pratilipi.data.type.gae.AuditLogEntityOfy;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
@@ -241,6 +243,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return new AuditLogEntity();
 	}
 
+	@Override
+	public AuditLog newAuditLogOfy( String accessId, AccessType accessType, Object eventDataOld ) {
+		return new AuditLogEntityOfy( accessId, accessType, eventDataOld );
+	}
+	
 	@Override
 	public AuditLog newAuditLogOfy() {
 		// TODO Auto-generated method stub

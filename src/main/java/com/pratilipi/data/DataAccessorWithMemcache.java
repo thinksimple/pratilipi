@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.jdo.PersistenceManager;
 
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -40,10 +41,8 @@ import com.pratilipi.data.type.Vote;
 
 public class DataAccessorWithMemcache implements DataAccessor {
 	
-	private final static String PREFIX_APP_PROPERTY = "AppProperty-";
 	private final static String PREFIX_USER = "User-";
 	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
-	private static final String PREFIX_AUTHOR = "Author-";
 	private static final String PREFIX_NAVIGATION_LIST = "NavigationList-";
 	private static final String PREFIX_CATEGORY = "Category-";
 	private static final String PREFIX_CATEGORY_LIST = "CategoryList-";
@@ -252,6 +251,7 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	// AUDIT_LOG Table
 	@Override public AuditLog newAuditLog() { return dataAccessor.newAuditLog(); }
 	@Override public AuditLog newAuditLogOfy() { return dataAccessor.newAuditLogOfy(); }
+	@Override public AuditLog newAuditLogOfy( String accessId, AccessType accessType, Object eventDataOld ) { return dataAccessor.newAuditLogOfy( accessId, accessType, eventDataOld ); }
 	@Override public AuditLog createAuditLog( AuditLog auditLog ) {	return dataAccessor.createAuditLog( auditLog ); }
 	@Override public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) { return dataAccessor.getAuditLogList( cursorStr, resultCount ); }
 	@Override public DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursorStr, Integer resultCount) { return dataAccessor.getAuditLogList( accessId, cursorStr, resultCount ); }

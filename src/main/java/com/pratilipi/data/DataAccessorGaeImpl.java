@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
@@ -193,15 +194,41 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity, Page page, AuditLog auditLog ) {
-		( (AuditLogEntityOfy) auditLog ).setCreationDate( new Date() );
-		Map<Key<GenericOfyType>, GenericOfyType> map = page == null
-				? ObjectifyService.ofy().save().entities( entity, auditLog ).now()
-				: ObjectifyService.ofy().save().entities( entity, page, auditLog ).now();
-		for( Key<GenericOfyType> key : map.keySet() )
-			map.get( key ).setKey( key );
-		if( page != null ) // Updating additional page memcache ids
-			_createOrUpdatePageMemcache( page );
+		
+		if( entity.getKey() == null ) {
+			
+			if( page == null ) {
+				Key<T> key = ObjectifyService.ofy().save().entity( entity ).now();
+				entity.setKey( key );
+			} else {
+				Map<Key<GenericOfyType>, GenericOfyType> map = ObjectifyService.ofy().save().entities( entity, page ).now();
+				for( Key<GenericOfyType> key : map.keySet() )
+					map.get( key ).setKey( key );
+			}
+			
+			auditLog.setEventDataNew( entity );
+			auditLog.setCreationDate( new Date() );
+			
+			Key<AuditLog> key = ObjectifyService.ofy().save().entity( auditLog ).now();
+			auditLog.setKey( key );
+			
+		} else {
+			
+			auditLog.setEventDataNew( entity );
+			auditLog.setCreationDate( new Date() );
+			
+			Map<Key<GenericOfyType>, GenericOfyType> map = page == null
+					? ObjectifyService.ofy().save().entities( entity, auditLog ).now()
+					: ObjectifyService.ofy().save().entities( entity, page, auditLog ).now();
+			for( Key<GenericOfyType> key : map.keySet() )
+				map.get( key ).setKey( key );
+			
+			_createOrUpdatePageMemcache( page ); // Updating additional page memcache ids
+			
+		}
+		
 		return entity;
+		
 	}
 
 	private void deleteEntityOfy( GenericOfyType entity ) {
@@ -396,6 +423,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return new AuditLogEntityOfy();
 	}
 	
+	@Override
+	public AuditLog newAuditLogOfy( String accessId, AccessType accessType, Object eventDataOld ) {
+		return new AuditLogEntityOfy( accessId, accessType, eventDataOld );
+	}
+
 	@Override
 	public AuditLog newAuditLog() {
 		return new AuditLogEntity();
