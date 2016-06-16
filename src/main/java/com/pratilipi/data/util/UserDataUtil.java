@@ -85,25 +85,10 @@ public class UserDataUtil {
 		
 		} else {
 			
-			if( isFbLogin ) {
-				
-				if( UxModeFilter.getFilterLanguage() == null )
-					return UserSignUpSource.WEBSITE_FACEBOOK;
-				else if( UxModeFilter.getFilterLanguage() == Language.TAMIL )
-					return UserSignUpSource.WEBSITE_M6_TAMIL_FACEBOOK;
-				else
-					return UserSignUpSource.WEBSITE_M6_FACEBOOK;
-				
-			} else {
-
-				if( UxModeFilter.getFilterLanguage() == null )
-					return UserSignUpSource.WEBSITE;
-				if( UxModeFilter.getFilterLanguage() == Language.TAMIL )
-					return UserSignUpSource.WEBSITE_M6_TAMIL;
-				else
-					return UserSignUpSource.WEBSITE_M6;
-				
-			}
+			if( isFbLogin )
+				return UserSignUpSource.WEBSITE_M6_FACEBOOK;
+			else
+				return UserSignUpSource.WEBSITE_M6;
 			
 		}
 		
