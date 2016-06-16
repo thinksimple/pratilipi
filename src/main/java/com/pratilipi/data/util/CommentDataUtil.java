@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -188,13 +187,10 @@ public class CommentDataUtil {
 			throw new InsufficientAccessException();
 
 		
-		Gson gson = new Gson();
-
-		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( isNew ? AccessType.COMMENT_ADD : AccessType.COMMENT_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( comment ) );
+		AuditLog auditLog = dataAccessor.newAuditLogOfy(
+				AccessTokenFilter.getAccessToken().getId(),
+				isNew ? AccessType.COMMENT_ADD : AccessType.COMMENT_UPDATE,
+				comment );
 
 		
 		if( isNew ) {
@@ -215,9 +211,6 @@ public class CommentDataUtil {
 			comment.setContent( commentData.getContent() );
 		if( commentData.hasState() )
 			comment.setState( commentData.getState() );
-		
-		
-		auditLog.setEventDataNew( gson.toJson( comment ) );
 		
 		
 		comment = dataAccessor.createOrUpdateComment( comment, auditLog );

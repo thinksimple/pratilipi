@@ -391,18 +391,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			query = query.limit( resultCount );
 
 		
-		List<AccessToken> accessTokenEntityList = resultCount == null
+		List<AccessToken> accessTokenList = resultCount == null
 				? new ArrayList<AccessToken>()
 				: new ArrayList<AccessToken>( resultCount );
 		
 		
 		QueryResultIterator <AccessTokenEntity> iterator = query.iterator();
 		while( iterator.hasNext() )
-			accessTokenEntityList.add( iterator.next() );
+			accessTokenList.add( iterator.next() );
 		Cursor cursor = iterator.getCursor();
 				
 		
-		return new DataListCursorTuple<AccessToken>( accessTokenEntityList, cursor == null ? null : cursor.toWebSafeString() );
+		return new DataListCursorTuple<AccessToken>( accessTokenList, cursor == null ? null : cursor.toWebSafeString() );
 		
 	}
 	
