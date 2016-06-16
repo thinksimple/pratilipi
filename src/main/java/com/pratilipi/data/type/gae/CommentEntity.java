@@ -67,6 +67,12 @@ public class CommentEntity implements Comment {
 		this.COMMENT_ID = id;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Key<T> getKey() {
+		return getId() == null ? null : (Key<T>) Key.create( getClass(), getId() );
+	}
+	
 	@Override
 	public <T> void setKey( Key<T> key ) {
 		this.COMMENT_ID = key.getId();

@@ -30,6 +30,12 @@ public class AppPropertyEntity implements AppProperty {
 		return APP_PROPERTY_ID;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Key<T> getKey() {
+		return getId() == null ? null : (Key<T>) Key.create( getClass(), getId() );
+	}
+	
 	@Override
 	public <T> void setKey( Key<T> key ) {
 		this.APP_PROPERTY_ID = key.getName();

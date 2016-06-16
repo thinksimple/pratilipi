@@ -3,121 +3,123 @@ package com.pratilipi.data.type.gae;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.data.type.AccessToken;
 
-@PersistenceCapable( table = "ACCESS_TOKEN" )
+@Cache
+@Entity( name = "ACCESS_TOKEN" )
 public class AccessTokenEntity implements AccessToken {
 
-	private static final long serialVersionUID = 4669082442894372545L;
-
-	@PrimaryKey
-	@Persistent( column = "ACCESS_TOKEN_ID" )
-	private String id;
+	@Id
+	private String ACCESS_TOKEN_ID;
 	
-	@Persistent( column = "PARENT_ACCESS_TOKEN_ID" )
-	private String parentId;
+	@Index( IfNotNull.class )
+	private String PARENT_ACCESS_TOKEN_ID;
 	
-	@Persistent( column = "USER_ID" )
-	private Long userId;
+	@Index
+	private Long USER_ID;
 	
-	@Deprecated
-	@Persistent( column = "PUBLISHER_ID" )
-	private Long publisherId;
-
-	@Deprecated
-	@Persistent( column = "ACCESS_TOKEN_TYPE" )
-	private String type;
-
-	@Persistent( column = "LOGIN_DATE" )
-	private Date logInDate;
+	@Index
+	private Date LOGIN_DATE;
 	
-	@Persistent( column = "LOGOUT_DATE" )
-	private Date logOutDate;
+	@Index
+	private Date LOGOUT_DATE;
 
-	@Persistent( column = "EXPIRY" )
-	private Date expiry;
+	@Index
+	private Date EXPIRY;
 
-	@Persistent( column = "CREATION_DATE" )
-	private Date creationDate;
+	@Index
+	private Date CREATION_DATE;
 
 	
 	public AccessTokenEntity() {
-		this.id = UUID.randomUUID().toString();
+		this.ACCESS_TOKEN_ID = UUID.randomUUID().toString();
 	}
 	
 	
 	@Override
 	public String getId() {
-		return id;
+		return ACCESS_TOKEN_ID;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Key<T> getKey() {
+		return getId() == null ? null : (Key<T>) Key.create( getClass(), getId() );
+	}
+
+	public <T> void setKey( Key<T> key ) {
+		this.ACCESS_TOKEN_ID = key.getName();
+	}
+	
 	@Override
 	public String getParentId() {
-		return parentId;
+		return PARENT_ACCESS_TOKEN_ID;
 	}
 
 	@Override
 	public void setParentId( String parentId ) {
-		this.parentId = parentId;
+		this.PARENT_ACCESS_TOKEN_ID = parentId;
 	}
 
 	@Override
 	public Long getUserId() {
-		return userId;
+		return USER_ID;
 	}
 
 	@Override
 	public void setUserId( Long userId ) {
-		this.userId = userId;
+		this.USER_ID = userId;
 	}
 
 	@Override
 	public Date getLogInDate() {
-		return logInDate;
+		return LOGIN_DATE;
 	}
 	
 	@Override
 	public void setLogInDate( Date logInDate ) {
-		this.logInDate = logInDate;
+		this.LOGIN_DATE = logInDate;
 	}
 	
 	@Override
 	public Date getLogOutDate() {
-		return logOutDate;
+		return LOGOUT_DATE;
 	}
 	
 	@Override
 	public void setLogOutDate( Date logOutDate ) {
-		this.logOutDate = logOutDate;
+		this.LOGOUT_DATE = logOutDate;
 	}
 	
 	@Override
 	public Date getExpiry() {
-		return expiry;
+		return EXPIRY;
 	}
 
 	@Override
 	public void setExpiry( Date expiry ) {
-		this.expiry = expiry;
+		this.EXPIRY = expiry;
 	}
 
 	@Override
 	public boolean isExpired() {
-		return expiry.before( new Date() );
+		return EXPIRY.before( new Date() );
 	}
 
 	@Override
 	public Date getCreationDate() {
-		return creationDate;
+		return CREATION_DATE;
 	}
 
 	@Override
 	public void setCreationDate( Date creationDate ) {
-		this.creationDate = creationDate;
+		this.CREATION_DATE = creationDate;
 	}
 	
 }

@@ -1,9 +1,8 @@
 package com.pratilipi.data.type;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public interface AccessToken extends Serializable {
+public interface AccessToken extends GenericOfyType {
 
 	String getId();
 	

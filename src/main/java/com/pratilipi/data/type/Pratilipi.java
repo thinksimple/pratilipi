@@ -1,6 +1,5 @@
 package com.pratilipi.data.type;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.Language;
@@ -8,7 +7,7 @@ import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
-public interface Pratilipi extends GenericOfyType, Serializable {
+public interface Pratilipi extends GenericOfyType {
 
 	Long getId();
 	

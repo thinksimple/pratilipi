@@ -57,6 +57,12 @@ public class BlogPostEntity implements BlogPost {
 		this.BLOG_POST_ID = id;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Key<T> getKey() {
+		return getId() == null ? null : (Key<T>) Key.create( getClass(), getId() );
+	}
+	
 	@Override
 	public <T> void setKey( Key<T> key ) {
 		this.BLOG_POST_ID = key.getId();

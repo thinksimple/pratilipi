@@ -114,6 +114,12 @@ public class PratilipiEntity implements Pratilipi {
 		this.PRATILIPI_ID = id;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Key<T> getKey() {
+		return getId() == null ? null : (Key<T>) Key.create( getClass(), getId() );
+	}
+	
 	@Override
 	public <T> void setKey( Key<T> key ) {
 		this.PRATILIPI_ID = key.getId();

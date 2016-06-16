@@ -192,61 +192,11 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	
 
 	// ACCESS_TOKEN Table
-	
-	@Override
-	public AccessToken newAccessToken() {
-		return dataAccessor.newAccessToken();
-	}
-
-	@Override
-	public AccessToken getAccessToken( String accessTokenId ) {
-		if( accessTokenId == null )
-			return null;
-		
-		AccessToken accessToken = memcache.get( PREFIX_ACCESS_TOKEN + accessTokenId );
-		if( accessToken == null ) {
-			accessToken = dataAccessor.getAccessToken( accessTokenId );
-			if( accessToken != null )
-				memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
-		}
-		return accessToken;
-	}
-	
-	@Override
-	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
-		return dataAccessor.getAccessTokenList( cursorStr, resultCount );
-	}
-
-	@Override
-	public DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount ) {
-		return dataAccessor.getAccessTokenList( userId, minExpiry, cursorStr, resultCount );
-	}
-
-	@Override
-	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
-		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
-		memcache.put( PREFIX_ACCESS_TOKEN + accessToken.getId(), accessToken );
-		return accessToken;
-	}
-
-	@Override
-	public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) {
-		newAccessToken = dataAccessor.createOrUpdateAccessToken( newAccessToken, oldAccessToken );
-
-		Map<String, AccessToken> keyValueMap = new HashMap<>();
-		keyValueMap.put( PREFIX_ACCESS_TOKEN + newAccessToken.getId(), newAccessToken );
-		keyValueMap.put( PREFIX_ACCESS_TOKEN + oldAccessToken.getId(), oldAccessToken );
-		memcache.putAll( keyValueMap );
-		
-		return newAccessToken;
-	}
-
-	@Override
-	public void deleteAccessToken( AccessToken accessToken ) {
-		dataAccessor.deleteAccessToken( accessToken );
-		memcache.remove( PREFIX_ACCESS_TOKEN + accessToken.getId() );
-	}
-
+	@Override public AccessToken newAccessToken() { return dataAccessor.newAccessToken(); }
+	@Override public AccessToken getAccessToken( String accessTokenId ) { return dataAccessor.getAccessToken( accessTokenId ); }
+	@Override public DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount ) { return dataAccessor.getAccessTokenList( userId, minExpiry, cursorStr, resultCount ); }
+	@Override public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) { return dataAccessor.createOrUpdateAccessToken( accessToken ); }
+	@Override public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) { return dataAccessor.createOrUpdateAccessToken( newAccessToken, oldAccessToken ); }
 	
 	// AUDIT_LOG Table
 	@Override public AuditLog newAuditLog() { return dataAccessor.newAuditLog(); }

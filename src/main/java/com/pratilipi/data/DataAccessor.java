@@ -59,11 +59,9 @@ public interface DataAccessor {
 	// ACCESS_TOKEN Table
 	AccessToken newAccessToken();
 	AccessToken getAccessToken( String accessTokenId );
-	DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount );
 	DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount );
 	AccessToken createOrUpdateAccessToken( AccessToken accessToken );
 	AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken );
-	void deleteAccessToken( AccessToken accessToken );
 
 	// AUDIT_LOG Table
 	AuditLog newAuditLogOfy();

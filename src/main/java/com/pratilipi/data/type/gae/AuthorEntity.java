@@ -92,6 +92,12 @@ public class AuthorEntity implements Author {
 		this.AUTHOR_ID = id;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Key<T> getKey() {
+		return getId() == null ? null : (Key<T>) Key.create( getClass(), getId() );
+	}
+	
 	@Override
 	public <T> void setKey( Key<T> key ) {
 		this.AUTHOR_ID = key.getId();

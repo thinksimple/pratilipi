@@ -189,6 +189,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return entity;
 	}
 	
+	@SuppressWarnings("unchecked")
+	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entityA, T entityB ) {
+		Map<Key<T>, T> map = ObjectifyService.ofy().save().entities( entityA, entityB ).now();
+		for( Key<T> key : map.keySet() )
+			map.get( key ).setKey( key );
+		return entityA;
+	}
+	
 	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity, AuditLog auditLog ) {
 		return createOrUpdateEntityOfy( entity, null, auditLog );
 	}
@@ -355,64 +363,56 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public AccessToken getAccessToken( String accessTokenId ) {
-		if( accessTokenId == null )
-			return null;
-		
-		try{
-			return getEntity( AccessTokenEntity.class, accessTokenId );
-		} catch( JDOObjectNotFoundException e ) {
-			return null;
-		}
-	}
-	
-	@Override
-	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
-		return getAccessTokenList( null, null, cursorStr, resultCount );
+		return getEntityOfy( AccessTokenEntity.class, accessTokenId );
 	}
 	
 	@Override
 	public DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount ) {
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AccessTokenEntity.class ) );
+		
+		com.googlecode.objectify.cmd.Query<AccessTokenEntity> query
+				= ObjectifyService.ofy().load().type( AccessTokenEntity.class );
+		
 		if( userId != null )
-			gaeQueryBuilder.addFilter( "userId", userId );
+			query = query.filter( "USER_ID", userId );
+		
 		if( minExpiry != null ) {
-			gaeQueryBuilder.addFilter( "expiry", minExpiry, Operator.GREATER_THAN_OR_EQUAL );
-			gaeQueryBuilder.addOrdering( "expiry", true );
+			query = query.filter( "EXPIRY >=", minExpiry );
+			query = query.order( "EXPIRY" );
 		}
-		gaeQueryBuilder.addOrdering( "creationDate", true );
-
-		if( resultCount != null )
-			gaeQueryBuilder.setRange( 0, resultCount );
 		
-		Query query = gaeQueryBuilder.build();
-		if( cursorStr != null ) {
-			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-			Map<String, Object> extensionMap = new HashMap<String, Object>();
-			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions( extensionMap );
-		}
-
-		@SuppressWarnings("unchecked")
-		List<AccessToken> accessTokenEntityList =
-				(List<AccessToken>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-		Cursor cursor = JDOCursorHelper.getCursor( accessTokenEntityList );
+		query = query.order( "CREATION_DATE" );
 		
-		return new DataListCursorTuple<AccessToken>( (List<AccessToken>) pm.detachCopyAll( accessTokenEntityList ), cursor.toWebSafeString() );
+		
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
+		
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
+
+		
+		List<AccessToken> accessTokenEntityList = resultCount == null
+				? new ArrayList<AccessToken>()
+				: new ArrayList<AccessToken>( resultCount );
+		
+		
+		QueryResultIterator <AccessTokenEntity> iterator = query.iterator();
+		while( iterator.hasNext() )
+			accessTokenEntityList.add( iterator.next() );
+		Cursor cursor = iterator.getCursor();
+				
+		
+		return new DataListCursorTuple<AccessToken>( accessTokenEntityList, cursor == null ? null : cursor.toWebSafeString() );
+		
 	}
 	
 	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
-		return createOrUpdateEntity( accessToken );
+		return createOrUpdateEntityOfy( accessToken );
 	}
 	
 	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) {
-		return (AccessToken) createOrUpdateEntities( newAccessToken, oldAccessToken )[ 0 ];
-	}
-	
-	@Override
-	public void deleteAccessToken( AccessToken accessToken ) {
-		deleteEntity( AccessTokenEntity.class, accessToken.getId() );
+		return createOrUpdateEntityOfy( newAccessToken, oldAccessToken );
 	}
 
 	

@@ -207,12 +207,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public DataListCursorTuple<AccessToken> getAccessTokenList( String cursorStr, Integer resultCount ) {
-		// TODO: Implementation
-		return null;
-	}
-	
-	@Override
 	public DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount ) {
 		// TODO: Implementation
 		return null;
@@ -228,11 +222,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) {
 		AccessTokenMock.ACCESS_TOKEN_TABLE.add( newAccessToken );
 		return newAccessToken;
-	}
-
-	@Override
-	public void deleteAccessToken( AccessToken accessToken ) {
-		// TODO: Implementation
 	}
 
 	
