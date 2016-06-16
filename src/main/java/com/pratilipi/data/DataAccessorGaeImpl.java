@@ -103,6 +103,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 		ObjectifyService.register( AppPropertyEntity.class );
 		
+		ObjectifyService.register( AccessTokenEntity.class );
 		ObjectifyService.register( AuditLogEntityOfy.class );
 		
 		ObjectifyService.register( PageEntity.class );
