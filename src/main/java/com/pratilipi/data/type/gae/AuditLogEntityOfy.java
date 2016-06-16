@@ -1,12 +1,21 @@
 package com.pratilipi.data.type.gae;
 
+import java.lang.reflect.Type;
 import java.util.Date;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.data.type.AuditLog;
@@ -15,6 +24,27 @@ import com.pratilipi.data.type.AuditLog;
 @Cache
 @Entity( name = "AUDIT_LOG" )
 public class AuditLogEntityOfy implements AuditLog {
+
+	@Ignore
+	private final Gson gson = new GsonBuilder()
+			.registerTypeAdapter( Date.class, new JsonSerializer<Date>() {
+		
+				@Override
+				public JsonElement serialize( Date date, Type type, JsonSerializationContext context ) {
+					return new JsonPrimitive( date.getTime() );
+				}
+				
+			})
+			.registerTypeAdapter( Date.class, new JsonDeserializer<Date>() {
+				
+				@Override
+				public Date deserialize( JsonElement json, Type type, JsonDeserializationContext context ) {
+					return new Date( json.getAsLong() );
+				}
+				
+			})
+			.create();
+
 	
 	@Id
 	private Long AUDIT_LOG_ID;
@@ -38,7 +68,7 @@ public class AuditLogEntityOfy implements AuditLog {
 	public AuditLogEntityOfy( String accessId, AccessType accessType, Object eventDataOld ) {
 		this.ACCESS_ID = accessId;
 		this.ACCESS_TYPE = accessType;
-		this.EVENT_DATA_OLD = new Gson().toJson( eventDataOld );
+		this.EVENT_DATA_OLD = gson.toJson( eventDataOld );
 	}
 	
 	
@@ -85,7 +115,7 @@ public class AuditLogEntityOfy implements AuditLog {
 
 	@Override
 	public void setEventDataOld( Object eventDataOld ) {
-		setEventDataOld( new Gson().toJson( eventDataOld ) );
+		setEventDataOld( gson.toJson( eventDataOld ) );
 	}
 
 	@Override
@@ -100,7 +130,7 @@ public class AuditLogEntityOfy implements AuditLog {
 
 	@Override
 	public void setEventDataNew( Object eventDataNew ) {
-		setEventDataNew( new Gson().toJson( eventDataNew ) );
+		setEventDataNew( gson.toJson( eventDataNew ) );
 	}
 
 	@Override
