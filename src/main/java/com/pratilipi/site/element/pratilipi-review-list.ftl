@@ -14,7 +14,7 @@
 </div>
 
 <#assign hasReview = false >
-<#if ( userpratilipi?? ) && ( userpratilipi.reviewTitle?? || userpratilipi.review?? ) > <#-- User has review -->
+<#if userpratilipi?? && userpratilipi.review?? > <#-- User has review -->
 	<#-- Show user review on top iff userpratilipi.reviewState != "DELETED" && userpratilipi.reviewState != "BLOCKED" -->
 	<#if userpratilipi.reviewState != "DELETED" && userpratilipi.reviewState != "BLOCKED">
 		<#assign review=userpratilipi>
