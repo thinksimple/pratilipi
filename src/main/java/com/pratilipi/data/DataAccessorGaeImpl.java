@@ -232,9 +232,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			for( Key<GenericOfyType> key : map.keySet() )
 				map.get( key ).setKey( key );
 			
-			_createOrUpdatePageMemcache( page ); // Updating additional page memcache ids
-			
 		}
+
+		
+		if( page != null )
+			_createOrUpdatePageMemcache( page ); // Updating additional page memcache ids
+
 		
 		return entity;
 		
