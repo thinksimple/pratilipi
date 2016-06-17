@@ -42,7 +42,7 @@ public class AuthorProcessApi extends GenericApi {
 			Logger.getLogger( AuthorProcessApi.class.getName() );
 	
 	
-	public class PostRequest extends GenericRequest {
+	public static class PostRequest extends GenericRequest {
 
 		@Validate( required = true )
 		private Long authorId;
