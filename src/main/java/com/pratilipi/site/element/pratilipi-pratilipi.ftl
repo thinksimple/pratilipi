@@ -12,14 +12,11 @@
 				},
 				
 				success: function( response ) {
-					if( response.data != null ) {
-						if( response.data.addedToLib )
-							alert( "${ _strings.added_to_library }" );
-						else
-							alert( "${ _strings.removed_from_library }" );
-					} else {
-						console.log( response );
-					}
+					var data = jQuery.parseJSON( response );
+					if( data.addedToLib )
+						alert( "${ _strings.added_to_library }" );
+					else
+						alert( "${ _strings.removed_from_library }" );
 
 					location.reload(); 
 				},
