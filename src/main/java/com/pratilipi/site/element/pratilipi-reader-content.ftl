@@ -57,7 +57,7 @@
 	
 <div class="secondary-500 pratilipi-shadow box" style="margin-bottom: 5px; padding: 16px 22px; width: 100%;">
 	<div id="reader-content">
-		${ content }
+		${ content! }
 	</div>
 	<#if pageNo == pageCount>
 		<div class="alert alert-success" role="alert">
@@ -71,13 +71,13 @@
 				<div class="text-center div-center">
 					<h6 style="margin: 15px;display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
 					<div style="white-space: nowrap; display: inline-block;">
-						<a style="cursor: pointer;" onCLick="shareOnFacebook()">
+						<a style="cursor: pointer;" onCLick="shareOnFacebook( 'container' )">
 							<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/facebook2.svg">
 						</a>
-						<a style="cursor: pointer;" onCLick="shareOnTwitter()">
+						<a style="cursor: pointer;" onCLick="shareOnTwitter( 'container' )">
 							<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/twitter.svg">
 						</a>
-						<a style="cursor: pointer;" onCLick="shareOnGplus()">
+						<a style="cursor: pointer;" onCLick="shareOnGplus( 'container' )">
 							<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/google-plus2.svg">
 						</a>
 					</div>

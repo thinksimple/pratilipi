@@ -1,37 +1,43 @@
-<#if userpratilipi?? >
-	<#if userpratilipi.isAddedtoLib() ??>
-		<script>
-			function addToOrRemoveFromLibrary() {
-				$.ajax({
-						
-					type: 'post',
-					url: '/api/userpratilipi/library',
-		
-					data: { 
-						'pratilipiId': ${ pratilipi.getId()?c }, 
-						'addedToLib': <#if userpratilipi.isAddedtoLib()>false<#else>true</#if>
-					},
+<#if userpratilipi?? && userpratilipi.isAddedtoLib()?? >
+	<script>
+		function addToOrRemoveFromLibrary() {
+			$.ajax({
 					
-					success: function( response ) {
-						alert( "Success" );
-						location.reload(); 
-					},
-					
-					error: function( response ) {
-						var message = jQuery.parseJSON( response.responseText );
-						var status = response.status;
-		
-						if( message["message"] != null )
-							alert( "Error " + status + " : " + message["message"] );
-						else if( message["error"] != null )
-							alert( "Error " + status + " : " + message["error"] ); 
+				type: 'post',
+				url: '/api/userpratilipi/library',
+	
+				data: { 
+					'pratilipiId': ${ pratilipi.getId()?c }, 
+					'addedToLib': <#if userpratilipi.isAddedtoLib()>false<#else>true</#if>
+				},
+				
+				success: function( response ) {
+					if( response.data != null ) {
+						if( response.data.addedToLib )
+							alert( "${ _strings.added_to_library }" );
 						else
-							alert( "Some exception occured at the server! Please try again." );
+							alert( "${ _strings.removed_from_library }" );
+					} else {
+						console.log( response );
 					}
-				});
-			}
-		</script>
-	</#if>
+
+					location.reload(); 
+				},
+				
+				error: function( response ) {
+					var message = jQuery.parseJSON( response.responseText );
+					var status = response.status;
+	
+					if( message["message"] != null )
+						alert( "Error " + status + " : " + message["message"] );
+					else if( message["error"] != null )
+						alert( "Error " + status + " : " + message["error"] ); 
+					else
+						alert( "Some exception occured at the server! Please try again." );
+				}
+			});
+		}
+	</script>
 </#if>
 
 
@@ -39,7 +45,7 @@
 	<h2 class="pratilipi-red">${ pratilipi.title!pratilipi.titleEn }</h2>
 	
 	<#if pratilipi.author?? >
-		<a href="${ pratilipi.author.pageUrlAlias!pratilipi.author.pageUrl }"><h4>${ pratilipi.author.name }</h4></a>
+		<a href="${ pratilipi.author.pageUrl }"><h4>${ pratilipi.author.name }</h4></a>
 	</#if>
 	
 	<div style="width: 150px; height: 225px; margin: 15px auto;" class="pratilipi-shadow">
@@ -59,18 +65,22 @@
 	<h6 style="margin-top: 10px;">${ pratilipi.type }</h6>
 	
 	<div style="margin:25px 0px 5px 0px">
-		<#if pratilipi.listingDateMillis?? ><h5>${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;${ pratilipi.listingDateMillis }</h5></#if>
+		<h5>${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;${ pratilipi.getListingDateMillis()?number_to_date }</h5>
 		<h5>${ _strings.pratilipi_count_reads }&nbsp;&minus;&nbsp;${ pratilipi.readCount }</h5>
 	</div>
 	
 	<div style="padding-top: 20px; padding-bottom: 20px;">
 		<a class="pratilipi-light-blue-button" href="${ pratilipi.readPageUrl }&ret=${ requestUrl }">${ _strings.read }</a>
-		<#if userpratilipi?? ><#if userpratilipi.isAddedtoLib()??>
-			<br />
+		<br />
+		<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
 			<button style="margin-top: 15px;" type="button" class="pratilipi-grey-button" onclick="addToOrRemoveFromLibrary()">
 				<#if !userpratilipi.isAddedtoLib()>${ _strings.add_to_library }<#else>${ _strings.remove_from_library }</#if>
 			</button>
-		</#if></#if>
+		<#else>
+			<a style="margin-top: 15px;" class="pratilipi-grey-button" href="/login?ret=${ requestUrl }">
+				${ _strings.add_to_library }
+			</a>
+		</#if>
 	</div>
 			
 </div>

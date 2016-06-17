@@ -161,12 +161,12 @@ public class GenericPratilipiResponse extends GenericResponse {
 	}
 
 	
-	public Date getListingDate() {
-		return listingDateMillis == null ? null : new Date( listingDateMillis );
+	public Long getListingDateMillis() {
+		return listingDateMillis;
 	}
 
-	public Date getLastUpdated() {
-		return lastUpdatedMillis == null ? null : new Date( lastUpdatedMillis );
+	public Long getLastUpdatedMillis() {
+		return lastUpdatedMillis;
 	}
 
 	
