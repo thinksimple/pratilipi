@@ -39,6 +39,16 @@
 							{{ title }}
 							<template is="dom-if" if="{{ blogpost.hasAccessToUpdate }}">
 								<paper-icon-button on-click="editBlogpost" icon="create" noink></paper-icon-button>
+								<button class="pull-right pratilipi-light-blue-button" on-click="changeBlogState">{{ blogStateText }}</button>
+								<iron-ajax
+									id="changeStateAjax"
+									url="/api/blogpost"
+									method="POST"
+									content-type="application/x-www-form-urlencoded"
+									handle-as="json"
+									on-response="_changeStateResponse"
+									on-error="_changeStateError"
+									></iron-ajax>
 							</template>
 						</div>
 
@@ -65,7 +75,7 @@
 
 			properties: {
 				userData: { type: Object },
-				blogpost: { type: Object },
+				blogpost: { type: Object, observer: "_processBlogPost" },
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				showPratilipiList: { type: Boolean, value: true },
@@ -74,6 +84,7 @@
 			
 			_processBlogPost: function() {
 				this.title = this.blogpost.title;
+				this.blogStateText = this.blogpost.state == "PUBLISHED" ? "Move to Drafts" : "Publish Now!";
 				var jSummary = jQuery( "#pratilipi-blogpost-content" );
 				jSummary.html( this.blogpost.content );
 				jQuery( "#pratilipi-blogpost-content img" ).css( "max-width", "100%", "important" );
@@ -83,11 +94,27 @@
 				if( blogpost.pageUrl != null && blogpost.pageUrl != window.location.pathname )
 					window.location.href = blogpost.pageUrl;
 				this.set( 'blogpost', blogpost );
-				this._processBlogPost();
 			},
 			
 			editBlogpost: function() {
 				this.querySelector( 'pratilipi-edit-blog' ).editCurrentBlog( this.blogpost );
+			},
+			
+			changeBlogState: function() {
+				this.$.changeStateAjax.body = {
+						blogPostId: this.blogpost.blogPostId,
+						blogId: this.blogpost.blogId,
+						state: this.blogpost.state != "PUBLISHED" ? "PUBLISHED" : "DRAFTED" 
+				};
+				this.$.changeStateAjax.generateRequest();
+			},
+			
+			_changeStateResponse: function( event ) {
+				document.querySelector( 'pratilipi-alert' ).alert( "Success!" );
+			},
+			
+			_changeStateError: function( event ) {
+				document.querySelector( 'pratilipi-alert' ).alert( "Failed! Please try again!", false );
 			},
 			
 			scrollToTop: function() {
@@ -96,7 +123,6 @@
 			
 			ready: function() {
 				jQuery( '#scrollToTop' ).css( "display", "none" );
-				this._processBlogPost();
 			},
 			
 			scrollHandler: function( st ) {
@@ -105,7 +131,7 @@
 				else
 					jQuery( '#scrollToTop' ).fadeIn();
 				this.lastScrollTop = st;
-			},
+			}
 			
 		});
 	</script>

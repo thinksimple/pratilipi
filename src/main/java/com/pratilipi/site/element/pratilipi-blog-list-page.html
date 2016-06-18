@@ -21,6 +21,9 @@
 					<div style="overflow: hidden;">
 						<template is="dom-if" if="{{ hasAccessToAdd }}">
 							<pratilipi-edit-blog></pratilipi-edit-blog>
+							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+								DRAFTED ENTRIES
+							</div>
 							<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
 								<div style="text-align: center;">
 									<a on-click="createNewBlog">
@@ -31,11 +34,18 @@
 									</a>
 								</div>
 							</paper-card>
+							<template is="dom-repeat" items="[[ draftedBlogpostList ]]">
+								<pratilipi-bloglist-snippet blogpost="{{ item }}" drafted></pratilipi-bloglist-snippet>
+								<div style="min-height: 10px;"></div>
+							</template>
+							<br>
+							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+								PUBLISHED ENTRIES
+							</div>
 							<br class="pratilipi-break">
 						</template>
 						<template is="dom-repeat" items="[[ blogpostList ]]">
-							<pratilipi-bloglist-snippet blogpost="{{ item }}"
-								></pratilipi-bloglist-snippet>
+							<pratilipi-bloglist-snippet blogpost="{{ item }}"></pratilipi-bloglist-snippet>
 							<div style="min-height: 10px;"></div>
 						</template>
 						
@@ -68,6 +78,15 @@
 				on-response="_handleAjaxGetResponse"
 				on-error="_handleAjaxGetError"
 				></iron-ajax>
+		<iron-ajax
+				id="DraftedList"
+				url="/api/blogpost/list"
+				method="GET"
+				params="[[ filter ]]"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleDraftedListResponse"
+				></iron-ajax>
 	</template>
 		
 
@@ -81,6 +100,7 @@
 				blogId: { type: String },
 				hasAccessToAdd: { types: Boolean, value: false },
 				blogpostList: { type: Array },
+				draftedBlogpostList: { type: Array, value: function() { return []; } },
 				filter: { type: Object },
 				cursor: { type: String },
 				
@@ -95,6 +115,18 @@
 			
 			createNewBlog: function() {
 				document.querySelector( 'pratilipi-edit-blog' ).createNewBlog( this.blogId );
+			},
+			
+			loadDraftedList: function() {
+				var draftedList = this.$.DraftedList;
+				draftedList.params.state = "DRAFTED";
+				draftedList.generateRequest();
+			},
+			
+			_handleDraftedListResponse: function( response ) {
+				var draftedBlogpostList = response.detail.response.blogPostList;
+				for( var i = 0; i < draftedBlogpostList.length; i++ )
+					this.push( 'draftedBlogpostList', draftedBlogpostList[i] );
 			},
 			
 			loadMore: function() {
@@ -159,6 +191,8 @@
 			ready: function() {
 				jQuery( '#scrollToTop' ).css( "display", "none" );
 				this.hasAccessToAdd = jQuery.parseJSON( this.hasAccessToAdd );
+				if( this.hasAccessToAdd )
+					this.loadDraftedList();
 			},
 			
 			attached: function() {
@@ -214,8 +248,6 @@
 			
 			attached: function() {
 				jQuery( this.querySelector( '#blogpostContent' ) ).html( this.blogpost.content );
-				if( this.blogpost.state == "DRAFTED" )
-					this.drafted = true;
 			}
 			
 		});
