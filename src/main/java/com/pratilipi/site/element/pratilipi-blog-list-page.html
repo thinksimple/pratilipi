@@ -22,8 +22,9 @@
 						<template is="dom-if" if="{{ hasAccessToAdd }}">
 							<pratilipi-edit-blog></pratilipi-edit-blog>
 							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
-								DRAFTED ENTRIES
+								Drafted Entries
 							</div>
+							<br class="pratilipi-break">
 							<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
 								<div style="text-align: center;">
 									<a on-click="createNewBlog">
@@ -34,13 +35,14 @@
 									</a>
 								</div>
 							</paper-card>
+							<br class="pratilipi-break">
 							<template is="dom-repeat" items="[[ draftedBlogpostList ]]">
 								<pratilipi-bloglist-snippet blogpost="{{ item }}" drafted></pratilipi-bloglist-snippet>
 								<div style="min-height: 10px;"></div>
 							</template>
 							<br>
 							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
-								PUBLISHED ENTRIES
+								Published Entries
 							</div>
 							<br class="pratilipi-break">
 						</template>
@@ -224,7 +226,7 @@
 	</style>
 	<template>
 		<paper-card style="padding: 16px 12px;">
-			<a class="pratilipi-blue" href="[[ blogpost.pageUrl ]]">
+			<a target="_blank" class="pratilipi-blue" href="[[ blogpost.pageUrl ]]">
 				<iron-icon icon="icons:open-in-new" style="position: absolute; right: 20px; top: 20px;"></iron-icon>
 			</a>
 			<a href="[[ blogpost.pageUrl ]]">

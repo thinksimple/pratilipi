@@ -40,15 +40,6 @@
 							<template is="dom-if" if="{{ blogpost.hasAccessToUpdate }}">
 								<paper-icon-button on-click="editBlogpost" icon="create" noink></paper-icon-button>
 								<button class="pull-right pratilipi-light-blue-button" on-click="changeBlogState">{{ blogStateText }}</button>
-								<iron-ajax
-									id="changeStateAjax"
-									url="/api/blogpost"
-									method="POST"
-									content-type="application/x-www-form-urlencoded"
-									handle-as="json"
-									on-response="_changeStateResponse"
-									on-error="_changeStateError"
-									></iron-ajax>
 							</template>
 						</div>
 
@@ -65,6 +56,15 @@
 		<div class="scroll-top-button">
 			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
 		</div>
+		<iron-ajax
+			id="changeStateAjax"
+			url="/api/blogpost"
+			method="POST"
+			content-type="application/x-www-form-urlencoded"
+			handle-as="json"
+			on-response="_changeStateResponse"
+			on-error="_changeStateError"
+			></iron-ajax>
 	</template>
 		
 
