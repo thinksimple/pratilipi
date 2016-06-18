@@ -7,9 +7,9 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.log.LogService.LogLevel;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -21,10 +21,11 @@ import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
+import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
-import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
+import com.pratilipi.data.type.User;
 import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
@@ -250,15 +251,12 @@ public class InitApi extends GenericApi {
 		}
 */
 
-		Pratilipi p1 = DataAccessorFactory.getDataAccessor().getPratilipi( 4504336642080768L );
-		Pratilipi p2 = DataAccessorFactory.getDataAccessor().getPratilipi( 4504336642080768L );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUserByEmail( "antshpra@gmail.com" );
+		Author author = dataAccessor.getAuthorByUserId( user.getId() );
+		author.setLanguage( null );
 		
-		logger.log( Level.INFO, p1.equals( p2 ) + "" );
-		
-		p1.setTitle( "ABCDEF" );
-		
-		logger.log( Level.INFO, p1.getTitle() );
-		logger.log( Level.INFO, p2.getTitle() );
+		ObjectifyService.ofy().save().entity( author );
 		
 		return new GenericResponse();
 		
