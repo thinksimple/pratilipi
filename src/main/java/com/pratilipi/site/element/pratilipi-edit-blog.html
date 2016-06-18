@@ -37,6 +37,10 @@
 						</div>
 					</div>
 					<br/>
+					<input style="margin-right: 4px;" type="checkbox" name="checkBlogState" id="checkBlogState">
+					<h6 style="display: inline-block;">Check this box to Publish it!</h6>
+					<br/>
+					<br/>
 					<paper-textarea class="edit" id="blogContent" value="{{ content::input }}"></paper-textarea>
 					<br/>
 				</div>
@@ -88,6 +92,7 @@
 				if( tinyMCE != null && tinyMCE.get( 'blogContent' ) != null )
 					tinyMCE.get( 'blogContent' ).setContent( this.content == null ? "" : this.content );
 				
+				document.getElementById( "checkBlogState" ).checked = this.state == "PUBLISHED" ? true : false;
 				// Opening the modal
 				this.open();
 			},
@@ -129,7 +134,7 @@
 				var params = { 	"blogId" : this.blogId,
 								"title" : this.title,
 								"content" : processContentTinyMCE( this.content ),
-								"state": this.state };
+								"state": document.getElementById( "checkBlogState" ).checked ? "PUBLISHED" : "DRAFTED" };
 				
 				if( this.blogPostId != null )
 					params.blogPostId = this.blogPostId;

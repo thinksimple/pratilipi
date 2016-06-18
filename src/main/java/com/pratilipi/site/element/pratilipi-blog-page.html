@@ -40,7 +40,6 @@
 							{{ title }}
 							<template is="dom-if" if="{{ blogpost.hasAccessToUpdate }}">
 								<paper-icon-button on-click="editBlogpost" icon="create" noink></paper-icon-button>
-								<button class="pull-right pratilipi-light-blue-button" on-click="changeBlogState">{{ blogStateText }}</button>
 							</template>
 						</div>
 						<paper-card class="blogpost-content">
@@ -56,15 +55,6 @@
 		<div class="scroll-top-button">
 			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
 		</div>
-		<iron-ajax
-			id="changeStateAjax"
-			url="/api/blogpost"
-			method="POST"
-			content-type="application/x-www-form-urlencoded"
-			handle-as="json"
-			on-response="_changeStateResponse"
-			on-error="_changeStateError"
-			></iron-ajax>
 	</template>
 		
 
@@ -84,7 +74,6 @@
 			
 			_processBlogPost: function() {
 				this.title = this.blogpost.title;
-				this.blogStateText = this.blogpost.state == "PUBLISHED" ? "Move to Drafts" : "Publish Now!";
 				var jSummary = jQuery( "#pratilipi-blogpost-content" );
 				jSummary.html( this.blogpost.content );
 				jQuery( "#pratilipi-blogpost-content img" ).css( "max-width", "100%", "important" );
@@ -98,26 +87,6 @@
 			
 			editBlogpost: function() {
 				this.querySelector( 'pratilipi-edit-blog' ).editCurrentBlog( this.blogpost );
-			},
-			
-			changeBlogState: function() {
-				var body = {
-						blogPostId: this.blogpost.blogPostId,
-						blogId: this.blogpost.blogId,
-						state: this.blogpost.state != "PUBLISHED" ? "PUBLISHED" : "DRAFTED"
-				};
-				this.$.changeStateAjax.body = jQuery.param( body );
-				this.$.changeStateAjax.generateRequest();
-			},
-			
-			_changeStateResponse: function( event ) {
-				var blogpost = event.detail.response;
-				this.updateBlogpost( blogpost );
-				this.querySelector( 'pratilipi-alert' ).alert( "Success!" );
-			},
-			
-			_changeStateError: function( event ) {
-				this.querySelector( 'pratilipi-alert' ).alert( "Failed! Please try again!", false );
 			},
 			
 			scrollToTop: function() {
