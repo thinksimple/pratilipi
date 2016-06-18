@@ -6,20 +6,9 @@
 			display: block;
 		}
 		
-		paper-input.pratilipi-blue, paper-textarea.pratilipi-blue {
+		textarea {
 			display: block;
-			--paper-input-container-color: #107FE5;
-			--paper-input-container-focus-color: #107FE5;
-			--paper-input-container-input-color: #333;
-			--paper-input-container-input: {
-				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
-				text-align: left;
-			};
-			--paper-input-container-label: {
-				font-size: 15px;
-				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
-				text-align: left;
-			};
+			width: 100%;
 		}
 		
 		paper-dropdown-menu {
@@ -124,7 +113,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div style="margin-top: 25px; margin-bottom: 5px; text-align: left;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.edit_author_summary }</span></div>
-							<paper-textarea class="edit" id="authorSummary" value="{{ summary::input }}"></paper-textarea>
+							<textarea name="authorSummary" id="authorSummary" rows="10" value="{{ summary::input }}"></textarea>
 						</div>
 					</div>
 				</div>
@@ -147,7 +136,7 @@
 	
 	<script>
 	HTMLImports.whenReady(function () {
-		tinymce.init({ selector:'#authorSummary', editor_selector : "authorSummary", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });
+		CKEDITOR.replace( 'authorSummary' );
 	});	
 		Polymer({
 	
@@ -212,9 +201,9 @@
 				this.dateOfBirth = author.dateOfBirth == null ? null : this.setDateProcess( author.dateOfBirth );
 				
 				// TinyMCE editor - Author Summary
-				this.summary = author.summary == null ? "" : processContentTinyMCE( author.summary );				
-				if( tinyMCE != null && tinyMCE.get( 'authorSummary' ) != null )
-					tinyMCE.get( 'authorSummary' ).setContent( this.summary );
+				this.summary = author.summary == null ? "" : author.summary;				
+				if( CKEDITOR != null && CKEDITOR.instances.authorSummary != null )
+					CKEDITOR.instances.authorSummary.setData( this.summary );
 				
 				// paper-dropdown-menu for language
 				this.language = author.language == null ? "${ language?upper_case }" : author.language;
@@ -276,8 +265,8 @@
 				this.message = "${ _strings.working }";
 				jQuery( '#authorEditButton' ).prop( 'disabled', true );
 				
-				if( tinyMCE != null && tinyMCE.get( 'authorSummary' ) != null )
-					this.summary = tinyMCE.get( 'authorSummary' ).getContent();
+				if( CKEDITOR != null && CKEDITOR.instances.authorSummary != null )
+					this.summary = CKEDITOR.instances.authorSummary.getData();
 				
 				this.language = this.$.authorLanguage.selectedItem.getAttribute( "value" );
 				
@@ -307,7 +296,7 @@
 				if( this.language != null )
 					body.language = this.language;
 				if( this.summary != null )
-					body.summary = processContentTinyMCE( this.summary );
+					body.summary = this.summary;
 				
 				this.$.AjaxPost.body = jQuery.param( body );
 

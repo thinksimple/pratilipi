@@ -6,19 +6,9 @@
 			display: block;
 		}
 		
-		paper-textarea.pratilipi-blue {
+		textarea {
 			display: block;
-			--paper-input-container-color: #107FE5;
-			--paper-input-container-focus-color: #107FE5;
-			--paper-input-container-input-color: #333;
-			--paper-input-container-input: {
-				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
-			};
-			--paper-input-container-label: {
-				font-size: 15px;
-				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
-				text-align: left;
-			};
+			width: 100%;
 		}
 		
 		paper-dropdown-menu {
@@ -98,7 +88,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div style="margin-top: 25px; margin-bottom: 5px;"><span class="pratilipi-blue" style="font-size: 14px;">${ _strings.write_summary }</span></div>
-							<paper-textarea class="pratilipi-blue" id="writeSummary" value="{{ summary::input }}"></paper-textarea>
+							<textarea name="writeSummary" id="writeSummary" rows="10" value="{{ summary::input }}"></textarea>
 						</div>
 					</div>
 					
@@ -123,7 +113,7 @@
 	
 	<script>
 	HTMLImports.whenReady(function () {
-		tinymce.init({ selector:'#writeSummary', editor_selector : "writeSummary", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }', menubar: false, toolbar: 'styleselect | bold italic underline | link image', });
+		CKEDITOR.replace( 'writeSummary' );
 	});
 		Polymer({
 
@@ -192,10 +182,11 @@
 				this.title = pratilipi.title == null ? null : pratilipi.title;
 				this.titleEn = pratilipi.titleEn == null ? null : pratilipi.titleEn;
 				this.state = pratilipi.state == null ? "DRAFTED" : pratilipi.state;
-				this.summary = pratilipi.summary == null ? "" : processContentTinyMCE( pratilipi.summary );
+				this.summary = pratilipi.summary == null ? "" : pratilipi.summary;
 
-				if( tinyMCE != null && tinyMCE.get( 'writeSummary' ) != null )
-					tinyMCE.get( 'writeSummary' ).setContent( this.summary );
+				
+				if( CKEDITOR != null && CKEDITOR.instances.writeSummary != null )
+					CKEDITOR.instances.writeSummary.setData( this.summary );
 				
 				var languageVernacular = {
 					"HINDI" : "${ _strings.language_hi }",
@@ -267,8 +258,8 @@
 
 				this.type = this.$.selectPratilipiType.selectedItem.getAttribute( "value" );
 
-				if( tinyMCE != null && tinyMCE.get( 'writeSummary' ) != null )
-					this.summary = tinyMCE.get( 'writeSummary' ).getContent();
+				if( CKEDITOR != null && CKEDITOR.instances.writeSummary != null )
+					this.summary = CKEDITOR.instances.writeSummary.getData();
 				
 				this.message = "${ _strings.working }";
 				
@@ -286,7 +277,7 @@
 					body.titleEn = this.titleEn;
 				
 				if( this.summary != null )
-					body.summary = processContentTinyMCE( this.summary );
+					body.summary = this.summary;
 				
 				if( this.authorId != null )
 					body.authorId = this.authorId;

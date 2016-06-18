@@ -5,6 +5,7 @@ public enum ThirdPartyResource {
 	JQUERY( "<script src='/third-party/jquery-2.1.4/jquery-2.1.4.min.js'></script>" ),
 	
 	TINYMCE( "<script src='/third-party/tinymce/tinymce.min.js'></script>" ),
+	CKEDITOR( "<script src='/third-party/ckeditor-4.5.9-customised/ckeditor.js'></script>" ),
 
 	ANGULARJS( "<script defer src='/third-party/angular-1.4.8/angular.min.js'></script>"),
 
