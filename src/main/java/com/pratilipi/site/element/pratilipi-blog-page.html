@@ -26,6 +26,7 @@
 			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
 			<pratilipi-edit-blog></pratilipi-edit-blog>
+			<pratilipi-alert></pratilipi-alert>
 			<div class="parent-container margin-top-bottom">
 				<div class="container">
 					<pratilipi-navigation
@@ -42,7 +43,6 @@
 								<button class="pull-right pratilipi-light-blue-button" on-click="changeBlogState">{{ blogStateText }}</button>
 							</template>
 						</div>
-
 						<paper-card class="blogpost-content">
 							<div id="pratilipi-blogpost-content"></div>
 						</paper-card>
@@ -101,20 +101,23 @@
 			},
 			
 			changeBlogState: function() {
-				this.$.changeStateAjax.body = {
+				var body = {
 						blogPostId: this.blogpost.blogPostId,
 						blogId: this.blogpost.blogId,
-						state: this.blogpost.state != "PUBLISHED" ? "PUBLISHED" : "DRAFTED" 
+						state: this.blogpost.state != "PUBLISHED" ? "PUBLISHED" : "DRAFTED"
 				};
+				this.$.changeStateAjax.body = jQuery.param( body );
 				this.$.changeStateAjax.generateRequest();
 			},
 			
 			_changeStateResponse: function( event ) {
-				document.querySelector( 'pratilipi-alert' ).alert( "Success!" );
+				var blogpost = event.detail.response;
+				this.updateBlogpost( blogpost );
+				this.querySelector( 'pratilipi-alert' ).alert( "Success!" );
 			},
 			
 			_changeStateError: function( event ) {
-				document.querySelector( 'pratilipi-alert' ).alert( "Failed! Please try again!", false );
+				this.querySelector( 'pratilipi-alert' ).alert( "Failed! Please try again!", false );
 			},
 			
 			scrollToTop: function() {
