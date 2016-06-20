@@ -13,32 +13,16 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?20160524">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?20160620">
 
 	<#include "meta/GoogleAnalytics.ftl">
 
-	<#--<script src='/third-party/html5loader/src/jquery.html5Loader.min.js'></script>
 	<script>
-		$.html5Loader({
-		      filesToLoad:    		'test.json', 
-		      onBeforeLoad:       function () {},
-		      onComplete:         function () { console.log( "Complete" ); },
-		      onElementLoaded:    function ( obj, elm) { },
-		      onUpdate:           function ( percentage ) {}
-		});
-	</script> 
-	
-	<script>
-		var myPrefetchedPage;
-		$.ajax({
-		  url: 'http://p.ptlp.co/third-party/polymer-1.0/iron-ajax/iron-ajax.html',
+		jQuery.ajax( {
+		  url: 'http://0.ptlp.co/resource-all/elements.vulcanized.html',
 		  cache: true,
-		  success: function(html){
-		    console.log( "Fetched" );
-		  }
-		})
+		} );
 	</script>
-	-->
 
 	<script>
 		window.fbAsyncInit = function() {
@@ -236,53 +220,59 @@
 
 			<div class="wrapper" id="wrapper">
 				<ul class="tiles-container" id="tiles-container">
-					<li class="image image-left">
+					<li class="image">
 						<a href="http://hindi.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi2.jpg');">
 								<span class="language">हिंदी</span>
 							</div>
 						</a>
 					</li>
-					<li class="image image2">
+					<li class="image">
 						<a href="http://tamil.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/tamil.png');">
 								<span class="language">தமிழ்</span>
 							</div>
 						</a>
 					</li>
-					<li class="image image-right">
+					<li class="image">
 						<a href="http://malayalam.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/malayalam2.jpg');">
 								<span class="language">മലയാളം</span>
 							</div>
 						</a>
 					</li>
-					<li class="image image-left">
+					<li class="image">
 						<a href="http://bengali.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/bengali.jpg'); background-size: cover; background-position: top;">
 								<span class="language">বাংলা</span>
 							</div>
 						</a>
 					</li>
-					<li class="image image3">
+					<li class="image">
 						<a href="http://telugu.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/telugu4.jpg');">
 								<span class="language">తెలుగు</span>
 							</div>
 						</a>
 					</li>
-					<li class="image image-right">
+					<li class="image">
 						<a href="http://gujarati.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/gujarati.jpg'); background-size: cover; background-position: top;">
 								<span class="language">ગુજરાતી</span>
 							</div>
 						</a>
 					</li>
-					<li class="image image-left image-none" style="height: 0px;"></li>
-					<li class="image image4">
+					<li class="image">
 						<a href="http://marathi.pratilipi.com/">
 							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/marathi.jpg');">
 								<span class="language">मराठी</span>
+							</div>
+						</a>
+					</li>
+					<li class="image">
+						<a href="http://kannada.pratilipi.com/">
+							<div class="tiles" style="background-image:url('https://storage.googleapis.com/devo-pratilipi.appspot.com/kannada.JPG');">
+								<span class="language">ಕನ್ನಡ</span>
 							</div>
 						</a>
 					</li> 
@@ -310,7 +300,9 @@
 					<a class="language-button" href="http://marathi.pratilipi.com/">
 						<span class="language">मराठी</span>
 					</a>
-					
+					<a class="language-button" href="http://kannada.pratilipi.com/">
+						<span class="language">ಕನ್ನಡ</span>
+					</a>
 				</div>
 
 			</div>

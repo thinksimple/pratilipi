@@ -319,28 +319,11 @@ a {
 	display: block;
 }
 .landing-page .wrapper ul.tiles-container li.image {
-	float: left;
-	margin: 7px;
+	display: inline-block;
+	width: 24%;
+	padding: 7px;
 	overflow: hidden;
-	height: 324px;
 	margin-bottom: 0px;
-}
-.landing-page .wrapper ul.tiles-container li.image-left {
-	margin-right: 0px;
-}
-.landing-page .wrapper ul.tiles-container li.image-right {
-	margin-left: 0px;
-}
-.landing-page .wrapper ul.tiles-container li.image2 {
-	height: 183px;
-}
-.landing-page .wrapper ul.tiles-container li.image3 {
-	height: 283px;
-	margin-top: -137px;
-}
-.landing-page .wrapper ul.tiles-container li.image4 {
-	height: 183px;
-	margin-top: -182px;
 }
 .landing-page .wrapper .tiles-container-mobile {
 	padding-left: 24px;
@@ -373,39 +356,22 @@ a {
 }
 
 
-@media only screen and (min-width: 1150px) {
+@media only screen and (min-width: 769px) {
 	.landing-page .wrapper ul.tiles-container {
-		max-width: 1150px;
-	}
-	.landing-page .wrapper ul.tiles-container li.image {
-		width: 366px;
+		width: 100%;
+		text-align: center;
 	}
 	.landing-page .wrapper ul.tiles-container li.image a .tiles {
-		background-size: contain; 
+		background-size: cover; 
 		background-position: top;
+		height: 300px;
 	}
 	.landing-page .wrapper .tiles-container-mobile {
 		display: none;
 	} 
 }
 
-@media only screen and (max-width: 1149px) {
-	.landing-page .wrapper ul.tiles-container {
-		max-width: 846px;
-	}
-	.landing-page .wrapper ul.tiles-container li.image {
-		width: 266px;
-	}
-	.landing-page .wrapper ul.tiles-container li.image a .tiles {
-		background-size: cover; 
-		background-position: top;
-	}
-	.landing-page .wrapper .tiles-container-mobile {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 845px) {
+@media only screen and (max-width: 768px) {
 	.landing-page .wrapper ul.tiles-container {
 		display: none;
 	}
@@ -435,6 +401,7 @@ a {
 }
 .landing-page .wrapper a .tiles .language {
 	text-decoration: none;
+	float: left;
 	margin-top: 30px;
 	background: rgba(255, 255, 255, 0.8);
 	text-align: center;
