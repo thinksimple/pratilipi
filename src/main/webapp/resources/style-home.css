@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/earlyaccess/notosanstamil.css);
+@import url(http://0.ptlp.co/resource-gu/font/shruti.css);
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
 html, body, div, span, applet, object, iframe,
@@ -29,7 +31,8 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1; 
-	font-family: Avenir-Black, Montserrat, Helvetica;
+	font-family: Avenir-Black, Montserrat, Helvetica, 'Noto Sans Tamil','Shruti';
+	font-weight: 600;
 }
 
 ol, ul {
@@ -98,7 +101,7 @@ a {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: url(http://0.ptlp.co/resource-all/home-page/widebg.png) no-repeat 0 0;
+	background: url(http://0.ptlp.co/resource-all/home-page/pratilipi-banner.png) no-repeat 0 0;
 	background-color: lightgrey;
 	opacity: 0.72;
 	width: 100%;
@@ -541,6 +544,9 @@ a {
 	font-size: 18px;
 	color: #666;
 	margin-bottom: 10px; 
+}
+.landing-page .pratilipi-footer .about-pratilipi a {
+	display: inline-block;
 }
 .landing-page .pratilipi-footer .about-pratilipi span {
 	font-size: 14px;

@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?20160620">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?2016062002">
 
 	<#include "meta/GoogleAnalytics.ftl">
 
@@ -222,56 +222,56 @@
 				<ul class="tiles-container" id="tiles-container">
 					<li class="image">
 						<a href="http://hindi.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/hindi2.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-hindi.jpg');">
 								<span class="language">हिंदी</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://tamil.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/tamil.png');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-tamil.png');">
 								<span class="language">தமிழ்</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://malayalam.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/malayalam2.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-malayalam.jpg');">
 								<span class="language">മലയാളം</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://bengali.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/bengali.jpg'); background-size: cover; background-position: top;">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-bengali.jpg'); background-size: cover; background-position: top;">
 								<span class="language">বাংলা</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://telugu.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/telugu4.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-telugu.jpg');">
 								<span class="language">తెలుగు</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://gujarati.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/gujarati.jpg'); background-size: cover; background-position: top;">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-gujarati.jpg'); background-size: cover; background-position: top;">
 								<span class="language">ગુજરાતી</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://marathi.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/marathi.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-marathi.jpg');">
 								<span class="language">मराठी</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://kannada.pratilipi.com/">
-							<div class="tiles" style="background-image:url('https://storage.googleapis.com/devo-pratilipi.appspot.com/kannada.JPG');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-kannada.jpg');">
 								<span class="language">ಕನ್ನಡ</span>
 							</div>
 						</a>
@@ -337,6 +337,7 @@
 				<div class="about-pratilipi">
 					<h5>Pratilipi</h5>
 					<a href="mailto:contact@pratilipi.com"><span>contact@pratilipi.com</span></a>
+					<br/>
 					<a href="tel:+918041710149"><span>080-41710149</span></a>
 				</div>
 				<div class="about-part-3">
