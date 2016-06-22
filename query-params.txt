@@ -1,6 +1,0 @@
-email			String		*
-
-passwordReset	boolean		User Password Reset use-case.
-
-token			String		User VerificationToken - used for Email Verification & Password Reset
-accessToken		String		OAuth 2.0 access token
