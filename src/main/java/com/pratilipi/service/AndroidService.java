@@ -4,6 +4,8 @@ import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
 import com.pratilipi.api.impl.author.AuthorImageApi;
 import com.pratilipi.api.impl.category.CategoryListApi;
+import com.pratilipi.api.impl.comment.CommentApi;
+import com.pratilipi.api.impl.comment.CommentListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
@@ -14,8 +16,9 @@ import com.pratilipi.api.impl.user.UserLoginFacebookApi;
 import com.pratilipi.api.impl.user.UserLogoutApi;
 import com.pratilipi.api.impl.user.UserPasswordUpdateApi;
 import com.pratilipi.api.impl.user.UserRegisterApi;
-import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
+import com.pratilipi.api.impl.vote.VoteApi;
 
 @SuppressWarnings("serial")
 public class AndroidService extends GenericService {
@@ -31,13 +34,18 @@ public class AndroidService extends GenericService {
 
 		ApiRegistry.register( PratilipiApi.class );
 		ApiRegistry.register( PratilipiListApi.class );
-		ApiRegistry.register( PratilipiCoverApi.class );
 		ApiRegistry.register( PratilipiContentApi.class );
+		ApiRegistry.register( PratilipiCoverApi.class );
 		
 		ApiRegistry.register( AuthorImageApi.class );
 		
-		ApiRegistry.register( UserPratilipiApi.class );
+		ApiRegistry.register( UserPratilipiReviewApi.class );
 		ApiRegistry.register( UserPratilipiReviewListApi.class );
+		
+		ApiRegistry.register( CommentApi.class );
+		ApiRegistry.register( CommentListApi.class );
+		
+		ApiRegistry.register( VoteApi.class );
 		
 		ApiRegistry.register( CategoryListApi.class );
 		
