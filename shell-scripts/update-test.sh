@@ -19,4 +19,11 @@ then
 	
 	# Update prod-pratilipi/gamma
 	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=gamma
+	
+	
+	cp src/main/webapp/WEB-INF/gamma-android-web.xml			src/main/webapp/WEB-INF/web.xml
+	cp src/main/webapp/WEB-INF/gamma-android-appengine-web.xml	src/main/webapp/WEB-INF/appengine-web.xml
+	
+	# Update prod-pratilipi/gamma
+	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=gamma-android
 fi
