@@ -42,7 +42,6 @@ import com.pratilipi.data.type.Vote;
 public class DataAccessorWithMemcache implements DataAccessor {
 	
 	private final static String PREFIX_USER = "User-";
-	private final static String PREFIX_ACCESS_TOKEN = "AccessToken-";
 	private static final String PREFIX_NAVIGATION_LIST = "NavigationList-";
 	private static final String PREFIX_CATEGORY = "Category-";
 	private static final String PREFIX_CATEGORY_LIST = "CategoryList-";
@@ -217,9 +216,10 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public Page createOrUpdatePage( Page page ) { return dataAccessor.createOrUpdatePage( page ); }
 	@Override public void deletePage( Page page ) { dataAccessor.deletePage( page ); }
 
-	// PRATILIPI Table
+	// PRATILIPI Table & curated/list.<list-name>.<lang>
 	@Override public Pratilipi newPratilipi() { return dataAccessor.newPratilipi(); }
 	@Override public Pratilipi getPratilipi( Long id ) { return dataAccessor.getPratilipi( id ); }
+	@Override public String getPratilipiListTitle( String listName, Language language ) { return dataAccessor.getPratilipiListTitle( listName, language ); }
 	@Override public List<Pratilipi> getPratilipiList( List<Long> idList ) { return dataAccessor.getPratilipiList( idList ); }
 	@Override public DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) { return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, resultCount ); }
 	@Override public DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) { return dataAccessor.getPratilipiIdList( pratilipiFilter, cursorStr, offset, resultCount ); }
@@ -272,6 +272,10 @@ public class DataAccessorWithMemcache implements DataAccessor {
 	@Override public DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount ) { return dataAccessor.getUserAuthorFollowList( userId, authorId, cursor, offset, resultCount ); }
 	@Override public DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount ) { return dataAccessor.getUserAuthorList( userId, authorId, cursor, offset, resultCount ); }
 	@Override public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) { return dataAccessor.createOrUpdateUserAuthor( userAuthor, auditLog ); }
+	
+	
+	// curated/home.<lang>
+	@Override public List<String> getHomeSectionList( Language language ) { return dataAccessor.getHomeSectionList( language ); }
 	
 	
 	// NAVIGATION Table

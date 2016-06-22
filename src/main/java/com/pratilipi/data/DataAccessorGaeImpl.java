@@ -635,7 +635,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	
-	// PRATILIPI Table
+	// PRATILIPI Table & curated/list.<list-name>.<lang>
 
 	@Override
 	public Pratilipi newPratilipi() {
@@ -647,6 +647,21 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return getEntityOfy( PratilipiEntity.class, id );
 	}
 
+	@Override
+	public String getPratilipiListTitle( String listName, Language lang ) {
+		String fileName = "list." + lang.getCode() + "." + listName;
+		String listTitle = null;
+		try {
+			InputStream inputStream = DataAccessor.class.getResource( CURATED_DATA_FOLDER + "/" + fileName ).openStream();
+			LineIterator it = IOUtils.lineIterator( inputStream, "UTF-8" );
+			listTitle = it.nextLine().trim();
+			LineIterator.closeQuietly( it );
+		} catch( NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception while reading from " + listName + " .", e );
+		}
+		return listTitle;
+	}
+	
 	@Override
 	public List<Pratilipi> getPratilipiList( List<Long> idList ) {
 		return getEntityListOfy( PratilipiEntity.class, idList );
@@ -1260,6 +1275,31 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) {
 		( (UserAuthorEntity) userAuthor ).setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
 		return createOrUpdateEntityOfy( userAuthor, auditLog );
+	}
+	
+	
+	// curated/home.<lang>
+	
+	@Override
+	public List<String> getHomeSectionList( Language language ) {
+
+		List<String> sectionList = new LinkedList<>();
+
+		try {
+			File file = new File( DataAccessor.class.getResource( CURATED_DATA_FOLDER + "/home." + language.getCode() ).toURI() );
+			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+			while( it.hasNext() ) {
+				String listName = it.next().trim();
+				if( ! listName.isEmpty() )
+					sectionList.add( listName );
+			}
+			LineIterator.closeQuietly( it );
+		} catch( URISyntaxException | NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception while reading from home." + language.getNameEn() + " .", e );
+		}
+		
+		return sectionList;
+	
 	}
 	
 	

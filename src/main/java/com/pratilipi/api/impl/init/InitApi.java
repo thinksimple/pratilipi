@@ -1,369 +1,101 @@
 package com.pratilipi.api.impl.init;
 
-import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.PageType;
-import com.pratilipi.data.BlobAccessor;
+import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DocAccessor;
-import com.pratilipi.data.type.Author;
-import com.pratilipi.data.type.BlobEntry;
-import com.pratilipi.data.type.Page;
-import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
-import com.pratilipi.data.type.User;
-import com.pratilipi.data.util.PratilipiDocUtil;
+import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.util.PratilipiDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
 public class InitApi extends GenericApi {
 	
-	private static final Logger logger =
-			Logger.getLogger( InitApi.class.getName() );
-
-	
 	public static class GetRequest extends GenericRequest {
-
-		private Long pratilipiId;
-		private Integer year;
-		private Integer month;
-		private Integer day;
-
 		
-		public Integer getYear() {
-			return year;
+		@Validate( required = true )
+		private Language language;
+		
+	}
+	
+	public static class Response extends GenericResponse {
+		
+		@SuppressWarnings("unused")
+		public static class Section {
+		
+			private String title;
+			private String listPageUrl;
+			private List<GetPratilipiListResponse.Pratilipi> pratilipiList;
+			
+			private Section() {}
+		
+			private Section( String title, String listPageUrl, List<PratilipiData> pratilipiList ) {
+				this.title = title;
+				this.listPageUrl = listPageUrl;
+				this.pratilipiList = new ArrayList<GetPratilipiListResponse.Pratilipi>( pratilipiList.size() );
+				for( PratilipiData pratilipiData : pratilipiList )
+					this.pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
+			}
+		
 		}
 		
-		public Integer getMonth() {
-			return month;
-		}
-
-		public Integer getDay() {
-			return day;
+		private List<Section> sections = new LinkedList<>();
+	
+		Response() {};
+		
+		void addSection( String title, String listPageUrl, List<PratilipiData> pratilipiList ) {
+			sections.add( new Section( title, listPageUrl, pratilipiList ) );
 		}
 		
 	}
-
+	
 	
 	@Get
-	public GenericResponse get( GetRequest request ) throws UnexpectedServerException {
-		
-/*		
-		List<Long> authorIdList = DataAccessorFactory.getDataAccessor()
-				.getAuthorIdList( new AuthorFilter(), null, null )
-				.getDataList();
-
-		List<Task> taskList = new ArrayList<Task>( authorIdList.size() );
-		for( Long authorId : authorIdList ) {
-			Task task = TaskQueueFactory.newTask()
-					.setUrl( "/author/process" )
-					.addParam( "authorId", authorId.toString() )
-					.addParam( "processData", "true" );
-			taskList.add( task );
-		}
-		TaskQueueFactory.getAuthorTaskQueue().addAll( taskList );
-		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
-*/
-		
-/*		
-		List<Long> pratilipiIdList = DataAccessorFactory.getDataAccessor()
-				.getPratilipiIdList( new PratilipiFilter(), null, null )
-				.getDataList();
-
-		List<Task> taskList = new ArrayList<Task>( pratilipiIdList.size() );
-		for( Long pratilipiId : pratilipiIdList ) {
-			Task task = TaskQueueFactory.newTask()
-					.setUrl( "/pratilipi/process" )
-					.addParam( "pratilipiId", pratilipiId.toString() )
-					.addParam( "processData", "true" );
-			taskList.add( task );
-		}
-		TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
-		logger.log( Level.INFO, "Added " + taskList.size() + " tasks in the queue." );
-*/
-
-/*
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		String appPropertyId = "Api.Init.UpdateStats";
-		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
-		if( appProperty == null ) {
-			appProperty = dataAccessor.newAppProperty( appPropertyId );
-			appProperty.setValue( new Date( 1420051500000L + TimeUnit.DAYS.toMillis( 13 ) ) ); // 14 Jan 2015, 12:15 AM IST
-		}
-		
-		Date date = (Date) appProperty.getValue();
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeZone( TimeZone.getTimeZone( "IST" ) );
-		cal.setTime( new Date( date.getTime() - TimeUnit.MINUTES.toMillis( 15 ) ) ); // Google updates reports every 10 min
-		
-		int year = request.getYear() != null ? request.getYear() : cal.get( Calendar.YEAR );
-		int month = request.getMonth() != null ? request.getMonth() : cal.get( Calendar.MONTH ) + 1;
-		int day = request.getDay() != null ? request.getDay() :  cal.get( Calendar.DAY_OF_MONTH );
-
-		
-		updatePratilipiGoogleAnalyticsPageViews( year, month, day );
-		
-		
-		if( request.getYear() != null || request.getMonth() != null || request.getDay() != null )
-			return new GenericResponse();
-		
-		
-		appProperty.setValue( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) > new Date().getTime()
-				? new Date( 1420051500000L + TimeUnit.DAYS.toMillis( 13 ) ) // 14 Jan 2015, 12:15 AM IST
-				: new Date( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) ) );
-		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
-*/
-
-/*		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load().type( PratilipiEntity.class ).keys();
-		List<Task> taskList = new LinkedList<>();
-		for( Key<PratilipiEntity> key : queryKeys.iterable() ) {
-			Task task = TaskQueueFactory.newTask()
-					.setUrl( "/pratilipi/process" )
-					.addParam( "pratilipiId", key.getId() + "" )
-					.addParam( "updateReviewsDoc", "true" )
-					.addParam( "updateUserPratilipiStats", "true" );
-			taskList.add( task );
-		}
-		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
-*/
-
-		
-/*		QueryKeys<PratilipiEntity> queryKeys = ObjectifyService.ofy().load()
-				.type( PratilipiEntity.class )
-				.filter( "TOTAL_RATING ==", null )
-				.keys();
-		
-		for( Key<PratilipiEntity> key : queryKeys.iterable() ) {
-			Pratilipi pratilipi = (Pratilipi) ObjectifyService.ofy().load().key( key );
-			if( pratilipi.getTotalRating() > 0 )
-				ObjectifyService.ofy().save().entity( pratilipi ).now();
-		}
-*/		
-		
-/*		ObjectifyService.register( AuthorEntity.class );
-		
-		Query<AuthorEntity> query = ObjectifyService.ofy()
-				.load()
-				.type( AuthorEntity.class )
-				.filter( "STATE" , null )
-				.limit( 1000 );
-
-		QueryResultIterator <AuthorEntity> iterator = query.iterator();
-		while( iterator.hasNext() ) {
-			
-			Author author = iterator.next();
-			author.getLanguage();
-			author.getState();
-			author.hasCustomImage();
-			ObjectifyService.ofy().save().entity( author );
-			
-		}
-*/
-
-/*
-		Gson gson = new Gson();
-		
-		Query<AuditLogEntityOfy> query = ObjectifyService.ofy()
-				.load()
-				.type( AuditLogEntityOfy.class )
-				.filter( "CREATION_DATE", null )
-				.limit( 10000 );
-
-		QueryResultIterator <AuditLogEntityOfy> iterator = query.iterator();
-		while( iterator.hasNext() ) {
-			
-			AuditLog auditLog = iterator.next();
-			
-			if( auditLog.getCreationDate() != null ) {
-				
-				logger.log( Level.INFO, "Creation date is not null for " + auditLog.getId() );
-				
-			} else if( auditLog.getAccessType() == AccessType.AUTHOR_ADD ) {
-				
-				Author a2 = gson.fromJson( auditLog.getEventDataNew(), AuthorEntity.class );
-				if( a2.getRegistrationDate() != null ) {
-					( (AuditLogEntityOfy) auditLog ).setCreationDate( a2.getRegistrationDate() );
-					ObjectifyService.ofy().save().entity( auditLog );
-				}
-				
-			} else if( auditLog.getAccessType() == AccessType.PRATILIPI_ADD ) {
-				
-				JsonObject j2 = gson.fromJson( auditLog.getEventDataNew(), JsonElement.class ).getAsJsonObject();
-				if( j2.get( "LAST_UPDATED" ) == null )
-					j2.add( "LAST_UPDATED", j2.get( "lastUpdated" ) );
-				
-				Pratilipi p2 = gson.fromJson( j2, PratilipiEntity.class );
-				
-				if( p2.getLastUpdated() != null ) {
-					( (AuditLogEntityOfy) auditLog ).setCreationDate( p2.getLastUpdated() );
-					ObjectifyService.ofy().save().entity( auditLog );
-				}
-				
-			} else if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE ) {
-				
-				JsonObject j1 = gson.fromJson( auditLog.getEventDataOld(), JsonElement.class ).getAsJsonObject();
-				JsonObject j2 = gson.fromJson( auditLog.getEventDataNew(), JsonElement.class ).getAsJsonObject();
-				
-				if( j1.get( "LAST_UPDATED" ) == null )
-					j1.add( "LAST_UPDATED", j1.get( "lastUpdated" ) );
-				
-				if( j2.get( "LAST_UPDATED" ) == null )
-					j2.add( "LAST_UPDATED", j2.get( "lastUpdated" ) );
-				
-				Pratilipi p1 = gson.fromJson( j1, PratilipiEntity.class );
-				Pratilipi p2 = gson.fromJson( j2, PratilipiEntity.class );
-				
-				if( p2.getLastUpdated().equals( p1.getLastUpdated() ) ) {
-					ObjectifyService.ofy().delete().entity( auditLog );
-				} else {
-					( (AuditLogEntityOfy) auditLog ).setCreationDate( p2.getLastUpdated() );
-					ObjectifyService.ofy().save().entity( auditLog );
-				}
-				
-			} else if( auditLog.getAccessType() == AccessType.USER_ADD
-					|| auditLog.getAccessType() == AccessType.USER_UPDATE
-					|| auditLog.getAccessType() == AccessType.USER_PRATILIPI_ADDED_TO_LIB ) {
-
-				ObjectifyService.ofy().delete().entity( auditLog );
-				
-			} else {
-				
-				logger.log( Level.INFO, "Skipping audit log of type " + auditLog.getAccessType() );
-				
-			}
-			
-		}
-*/
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByEmail( "antshpra@gmail.com" );
-		Author author = dataAccessor.getAuthorByUserId( user.getId() );
-		author.setLanguage( null );
-		
-		ObjectifyService.ofy().save().entity( author );
-		
-		return new GenericResponse();
-		
-	}
-	
-	public void updatePratilipiGoogleAnalyticsPageViews( int year, int month, int day )
-			throws UnexpectedServerException {
+	public GenericResponse get( GetRequest request ) throws InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		
+		Response response = new Response();
 		
-		Gson gson = new Gson();
-		
-		String dateStr = year
-				+ ( month < 10 ? "-0" + month : "-" + month )
-				+ ( day < 10 ? "-0" + day : "-" + day );
-		
-		String fileName = "pratilipi-google-analytics/page-views/" + dateStr;
-		BlobEntry blobEntry = blobAccessor.getBlob( fileName );
-		logger.log( Level.INFO, fileName );
-		
-		Map<String, Integer> uriViewsMap = gson.fromJson(
-				new String( blobEntry.getData(), Charset.forName( "UTF-8" ) ),
-				new TypeToken<Map<String, Integer>>(){}.getType() );
-		
-		
-		Map<Long, Integer> pageViewsMap = new HashMap<>();
-		Map<Long, Integer> readPageViewsMap = new HashMap<>();
-		
-		for( Entry<String, Integer> entry : uriViewsMap.entrySet() ) {
+		for( String listName : dataAccessor.getHomeSectionList( request.language ) ) {
 			
-			String uri = entry.getKey();
+			String title = dataAccessor.getPratilipiListTitle( listName, request.language );
+			if( title == null )
+				continue;
 			
-			if( ! uri.startsWith( "/read?id=" ) ) { // Summary Page
-				
-				if( uri.indexOf( '?' ) != -1 )
-					uri = uri.substring( 0, uri.indexOf( '?' ) );
-				
-				Page page = dataAccessor.getPage( uri );
-				if( page != null && page.getType() == PageType.PRATILIPI ) {
-					Long pratilpiId = page.getPrimaryContentId();
-					if( pageViewsMap.get( pratilpiId ) == null )
-						pageViewsMap.put( pratilpiId, entry.getValue() );
-					else
-						pageViewsMap.put( pratilpiId, pageViewsMap.get( pratilpiId ) + entry.getValue() );
-				}
-				
-			} else { // Reader
-				
-				String patilipiIdStr = uri.indexOf( '&' ) == -1
-						? uri.substring( "/read?id=".length() )
-						: uri.substring( "/read?id=".length(), uri.indexOf( '&' ) );
-						
-				try {
-					Long pratilpiId = Long.parseLong( patilipiIdStr );
-					if( readPageViewsMap.get( pratilpiId ) == null )
-						readPageViewsMap.put( pratilpiId, entry.getValue() );
-					else
-						readPageViewsMap.put( pratilpiId, readPageViewsMap.get( pratilpiId ) + entry.getValue() );
-				} catch( NumberFormatException e ) {
-					logger.log( Level.SEVERE, "Exception while processing reader uri " + uri, e );
-				}
-				
-			}
+			if( title.indexOf( '|' ) != -1 )
+				title = title.substring( 0, title.indexOf( '|' ) ).trim();
+			
+			PratilipiFilter pratilipiFilter = new PratilipiFilter();
+			pratilipiFilter.setLanguage( request.language );
+			pratilipiFilter.setListName( listName );
+			pratilipiFilter.setState( PratilipiState.PUBLISHED );
+			
+			DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
+					PratilipiDataUtil.getPratilipiDataList( null, pratilipiFilter, null, null, 6 );
+
+			if( pratilipiDataListCursorTuple.getDataList().size() == 0 )
+				continue;
+			
+			response.addSection( title, "/" + listName, pratilipiDataListCursorTuple.getDataList() );
 			
 		}
 		
-		
-		for( Entry<Long, Integer> entry : pageViewsMap.entrySet() ) {
-			PratilipiGoogleAnalyticsDoc gaDoc = docAccessor.getPratilipiGoogleAnalyticsDoc( entry.getKey() );
-			if( readPageViewsMap.get( entry.getKey() ) == null ) {
-				if( gaDoc.getPageViews( year, month, day ) != entry.getValue() ) {
-					logger.log( Level.WARNING,
-							"Year:" + year
-							+ " Month:" + month
-							+ " Day:" + day
-							+ " Count:" + gaDoc.getPageViews( year, month, day ) + " --> " + entry.getValue() );
-					PratilipiDocUtil.updatePratilipiGoogleAnalyticsPageViews( entry.getKey(), year, month, day, entry.getValue(), 0 );
-				}
-			} else {
-				if( gaDoc.getPageViews( year, month, day ) != entry.getValue()
-						|| gaDoc.getReadPageViews( year, month, day ) != readPageViewsMap.get( entry.getKey() ) ) {
-					logger.log( Level.WARNING,
-							"Year:" + year
-							+ " Month:" + month
-							+ " Day:" + day
-							+ " Count:" + gaDoc.getPageViews( year, month, day ) + " --> " + entry.getValue()
-							+ " Read Count:" + gaDoc.getReadPageViews( year, month, day ) + " --> " + readPageViewsMap.get( entry.getKey() ) );
-					PratilipiDocUtil.updatePratilipiGoogleAnalyticsPageViews( entry.getKey(), year, month, day, entry.getValue(), readPageViewsMap.get( entry.getKey() ) );
-				}
-				readPageViewsMap.remove( entry.getKey() );
-			}
-		}
-		
-		for( Entry<Long, Integer> entry : readPageViewsMap.entrySet() ) {
-			PratilipiGoogleAnalyticsDoc gaDoc = docAccessor.getPratilipiGoogleAnalyticsDoc( entry.getKey() );
-			if( gaDoc.getReadPageViews( year, month, day ) != entry.getValue() ) {
-				logger.log( Level.WARNING,
-						"Year:" + year
-						+ " Month:" + month
-						+ " Day:" + day
-						+ " Read Count:" + gaDoc.getReadPageViews( year, month, day ) + " --> " + entry.getValue() );
-				PratilipiDocUtil.updatePratilipiGoogleAnalyticsPageViews( entry.getKey(), year, month, day, 0, entry.getValue() );
-			}
-		}
+		return response;
 		
 	}
 	

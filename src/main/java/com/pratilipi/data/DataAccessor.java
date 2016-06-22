@@ -86,9 +86,10 @@ public interface DataAccessor {
 	Page createOrUpdatePage( Page page );
 	void deletePage( Page page );
 
-	// PRATILIPI Table
+	// PRATILIPI Table & curated/list.<list-name>.<lang>
 	Pratilipi newPratilipi();
 	Pratilipi getPratilipi( Long id );
+	String getPratilipiListTitle( String listName, Language language );
 	List<Pratilipi> getPratilipiList( List<Long> idList );
 	@Deprecated
 	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
@@ -144,6 +145,10 @@ public interface DataAccessor {
 	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
 	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog );
 
+
+	// curated/home.<lang>
+	List<String> getHomeSectionList( Language language );
+	
 	
 	// NAVIGATION Table
 	List<Navigation> getNavigationList( Language language );

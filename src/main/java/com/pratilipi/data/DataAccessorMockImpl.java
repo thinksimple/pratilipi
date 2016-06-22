@@ -320,13 +320,18 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	
-	// PRATILIPI Table
+	// PRATILIPI Table & curated/list.<list-name>.<lang>
 
 	@Override
 	public Pratilipi newPratilipi() {
 		return new PratilipiEntity();
 	}
 
+	@Override
+	public String getPratilipiListTitle( String listName, Language language ) {
+		return null;
+	}
+	
 	@Override
 	public Pratilipi getPratilipi( Long id ) {
 		for( Pratilipi pratilipi : PRATILIPI_TABLE )
@@ -647,6 +652,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 
+	// curated/home.<lang>
+	
+	@Override
+	public List<String> getHomeSectionList( Language language ) { return null; }
+	
+	
 	// NAVIGATION Table
 	
 	@Override
