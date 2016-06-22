@@ -34,12 +34,6 @@
 
 
 	<dispatch>
-		<url>*/api/*</url>
-		<module>api</module>
-	</dispatch>
-
-
-	<!-- dispatch>
 		<url>api.pratilipi.com/*</url>
 		<module>api</module>
 	</dispatch>
@@ -52,6 +46,12 @@
 	<dispatch>
 		<url>worker.pratilipi.com/*</url>
 		<module>worker</module>
-	</dispatch -->
+	</dispatch>
+	
+	
+	<dispatch>
+		<url>*/api/*</url>
+		<module>api</module>
+	</dispatch>
 
 </dispatch-entries>
