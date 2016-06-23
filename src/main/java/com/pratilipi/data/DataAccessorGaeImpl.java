@@ -111,15 +111,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	// Objectify Helper Methods
 	
-	private <T extends GenericOfyType> T getEntityOfy( Class<T> clazz, Long id ) {
+	private <T extends GenericOfyType> T getEntity( Class<T> clazz, Long id ) {
 		return id == null || id == 0L ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
-	private <T extends GenericOfyType> T getEntityOfy( Class<T> clazz, String id ) {
+	private <T extends GenericOfyType> T getEntity( Class<T> clazz, String id ) {
 		return id == null || id.isEmpty() ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
-	private <P extends GenericOfyType,Q extends P> List<P> getEntityListOfy( Class<Q> clazz, List<Long> idList ) {
+	private <P extends GenericOfyType,Q extends P> List<P> getEntityList( Class<Q> clazz, List<Long> idList ) {
 		Map<Long, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idList );
 		List<P> entityList = new ArrayList<>();
 		for( Long id : idList )
@@ -127,25 +127,25 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return entityList;
 	}
 	
-	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity ) {
+	private <T extends GenericOfyType> T createOrUpdateEntity( T entity ) {
 		Key<T> key = ObjectifyService.ofy().save().entity( entity ).now();
 		entity.setKey( key );
 		return entity;
 	}
 	
 	@SuppressWarnings("unchecked")
-	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entityA, T entityB ) {
+	private <T extends GenericOfyType> T createOrUpdateEntity( T entityA, T entityB ) {
 		Map<Key<T>, T> map = ObjectifyService.ofy().save().entities( entityA, entityB ).now();
 		for( Key<T> key : map.keySet() )
 			map.get( key ).setKey( key );
 		return entityA;
 	}
 	
-	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity, AuditLog auditLog ) {
-		return createOrUpdateEntityOfy( entity, null, auditLog );
+	private <T extends GenericOfyType> T createOrUpdateEntity( T entity, AuditLog auditLog ) {
+		return createOrUpdateEntity( entity, null, auditLog );
 	}
 	
-	private <T extends GenericOfyType> T createOrUpdateEntityOfy( T entity, Page page, AuditLog auditLog ) {
+	private <T extends GenericOfyType> T createOrUpdateEntity( T entity, Page page, AuditLog auditLog ) {
 		
 		if( entity.getKey() == null ) {
 			
@@ -186,7 +186,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 	}
 
-	private void deleteEntityOfy( GenericOfyType entity ) {
+	private void deleteEntity( GenericOfyType entity ) {
 		ObjectifyService.ofy().delete().entity( entity ).now();
 	}
 
@@ -200,12 +200,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public AppProperty getAppProperty( String id ) {
-		return getEntityOfy( AppPropertyEntity.class, id );
+		return getEntity( AppPropertyEntity.class, id );
 	}
 	
 	@Override
 	public AppProperty createOrUpdateAppProperty( AppProperty appProperty ) {
-		return createOrUpdateEntityOfy( appProperty );
+		return createOrUpdateEntity( appProperty );
 	}
 	
 	
@@ -218,7 +218,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public User getUser( Long id ) {
-		return getEntityOfy( UserEntity.class, id );
+		return getEntity( UserEntity.class, id );
 	}
 	
 	@Override
@@ -275,7 +275,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public List<User> getUserList( List<Long> idList ) {
-		return getEntityListOfy( UserEntity.class, idList );
+		return getEntityList( UserEntity.class, idList );
 	}
 	
 	@Override
@@ -316,15 +316,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public User createOrUpdateUser( User user ) {
-		return createOrUpdateEntityOfy( user, null );
+		return createOrUpdateEntity( user, null );
 	}
 
 	@Override
 	public User createOrUpdateUser( User user, AuditLog auditLog ) {
 		
 		user = auditLog == null // TODO: Remove this condition as soon as "User createOrUpdateUser( User user )" method is removed.
-				? createOrUpdateEntityOfy( user )
-				: createOrUpdateEntityOfy( user, auditLog );
+				? createOrUpdateEntity( user )
+				: createOrUpdateEntity( user, auditLog );
 		
 		if( user.getEmail() != null ) {
 			String memcacheId = "DataStore.User-" + user.getEmail();
@@ -356,7 +356,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public AccessToken getAccessToken( String accessTokenId ) {
-		return getEntityOfy( AccessTokenEntity.class, accessTokenId );
+		return getEntity( AccessTokenEntity.class, accessTokenId );
 	}
 	
 	@Override
@@ -399,12 +399,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
-		return createOrUpdateEntityOfy( accessToken );
+		return createOrUpdateEntity( accessToken );
 	}
 	
 	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) {
-		return createOrUpdateEntityOfy( newAccessToken, oldAccessToken );
+		return createOrUpdateEntity( newAccessToken, oldAccessToken );
 	}
 
 	
@@ -430,7 +430,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Page getPage( Long id ) {
-		return getEntityOfy( PageEntity.class, id );
+		return getEntity( PageEntity.class, id );
 	}
 	
 	@Override
@@ -546,13 +546,13 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Page createOrUpdatePage( Page page ) {
-		page = createOrUpdateEntityOfy( page );
+		page = createOrUpdateEntity( page );
 		_createOrUpdatePageMemcache( page );
 		return page;
 	}
 	
 	public void deletePage( Page page ) {
-		deleteEntityOfy( page );
+		deleteEntity( page );
 		if( page.getUri() != null )
 			memcache.remove( _createPageEntityMemcacheId( page.getUri() ) );
 		if( page.getUriAlias() != null )
@@ -588,7 +588,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Pratilipi getPratilipi( Long id ) {
-		return getEntityOfy( PratilipiEntity.class, id );
+		return getEntity( PratilipiEntity.class, id );
 	}
 
 	@Override
@@ -608,7 +608,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public List<Pratilipi> getPratilipiList( List<Long> idList ) {
-		return getEntityListOfy( PratilipiEntity.class, idList );
+		return getEntityList( PratilipiEntity.class, idList );
 	}
 	
 	@Override
@@ -745,7 +745,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, Page page, AuditLog auditLog ) {
-		pratilipi = createOrUpdateEntityOfy( pratilipi, page, auditLog );
+		pratilipi = createOrUpdateEntity( pratilipi, page, auditLog );
 		// Hack for backward compatibility with Mark-4.
 		// TODO: Remove it as soon as mark-4 is deprecated.
 		memcache.remove( "Pratilipi-" + pratilipi.getId() );
@@ -762,7 +762,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Author getAuthor( Long id ) {
-		return getEntityOfy( AuthorEntity.class, id );
+		return getEntity( AuthorEntity.class, id );
 	}
 	
 	@Override
@@ -780,7 +780,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.filter( "USER_ID", userId )
 				.filter( "STATE !=", AuthorState.DELETED )
 				.order( "STATE" )
-				.order( "REGISTRATION_DATE" ).first().now();
+				.order( "REGISTRATION_DATE" )
+				.first().now();
 		
 		if( author != null )
 			memcache.put( memcacheId, author );
@@ -791,7 +792,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public List<Author> getAuthorList( List<Long> idList ) {
-		return getEntityListOfy( AuthorEntity.class, idList );
+		return getEntityList( AuthorEntity.class, idList );
 	}
 	
 	@Override
@@ -849,7 +850,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Author createOrUpdateAuthor( Author author ) {
-		return createOrUpdateEntityOfy( author );
+		return createOrUpdateEntity( author );
 	}
 
 	@Override
@@ -859,7 +860,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Author createOrUpdateAuthor( Author author, Page page, AuditLog auditLog ) {
-		author = createOrUpdateEntityOfy( author, page, auditLog );
+		author = createOrUpdateEntity( author, page, auditLog );
 		if( author.getUserId() != null ) {
 			String memcacheId = "DataStore.Author-USER::" + author.getUserId();
 			if( author.getState() == AuthorState.DELETED )
@@ -880,7 +881,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Event getEvent( Long id ) {
-		return getEntityOfy( EventEntity.class, id );
+		return getEntity( EventEntity.class, id );
 	}
 	
 	@Override
@@ -904,7 +905,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Event createOrUpdateEvent( Event event, Page page, AuditLog auditLog ) {
-		return createOrUpdateEntityOfy( event, page, auditLog );
+		return createOrUpdateEntity( event, page, auditLog );
 	}
 
 	
@@ -917,12 +918,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Blog getBlog( Long id ) {
-		return getEntityOfy( BlogEntity.class, id );
+		return getEntity( BlogEntity.class, id );
 	}
 	
 	@Override
 	public Blog createOrUpdateBlog( Blog blog, AuditLog auditLog ) {
-		return createOrUpdateEntityOfy( blog, auditLog );
+		return createOrUpdateEntity( blog, auditLog );
 	}
 
 	
@@ -935,7 +936,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public BlogPost getBlogPost( Long id ) {
-		return getEntityOfy( BlogPostEntity.class, id );
+		return getEntity( BlogPostEntity.class, id );
 	}
 	
 	@Override
@@ -994,7 +995,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public BlogPost createOrUpdateBlogPost( BlogPost blogPost, Page page, AuditLog auditLog ) {
-		return createOrUpdateEntityOfy( blogPost, page, auditLog );
+		return createOrUpdateEntity( blogPost, page, auditLog );
 	}
 
 	
@@ -1007,14 +1008,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public UserPratilipi getUserPratilipi( String userPratilipiId ) {
-		return getEntityOfy( UserPratilipiEntity.class, userPratilipiId );
+		return getEntity( UserPratilipiEntity.class, userPratilipiId );
 	}
 	
 	@Override
 	public UserPratilipi getUserPratilipi( Long userId, Long pratilipiId ) {
 		if( userId == null || userId.equals( 0L ) || pratilipiId == null || pratilipiId.equals( 0L ) )
 			return null;
-		return getEntityOfy( UserPratilipiEntity.class, userId + "-" + pratilipiId );
+		return getEntity( UserPratilipiEntity.class, userId + "-" + pratilipiId );
 	}
 
 	@Override
@@ -1102,7 +1103,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi, AuditLog auditLog ) {
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
-		return createOrUpdateEntityOfy( userPratilipi, auditLog );
+		return createOrUpdateEntity( userPratilipi, auditLog );
 	}
 	
 	
@@ -1117,7 +1118,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public UserAuthor getUserAuthor( Long userId, Long authorId ) {
 		if( userId == null || userId.equals( 0L ) || authorId == null || authorId.equals( 0L ) )
 			return null;
-		return getEntityOfy( UserAuthorEntity.class, userId + "-" + authorId );
+		return getEntity( UserAuthorEntity.class, userId + "-" + authorId );
 	}
 
 	@Override
@@ -1217,7 +1218,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) {
 		( (UserAuthorEntity) userAuthor ).setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
-		return createOrUpdateEntityOfy( userAuthor, auditLog );
+		return createOrUpdateEntity( userAuthor, auditLog );
 	}
 	
 	
@@ -1370,7 +1371,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Comment getComment( Long commentId ) {
-		return getEntityOfy( CommentEntity.class, commentId );
+		return getEntity( CommentEntity.class, commentId );
 	}
 	
 	@Override
@@ -1411,7 +1412,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Comment createOrUpdateComment( Comment comment, AuditLog auditLog ) {
-		return createOrUpdateEntityOfy( comment, auditLog );
+		return createOrUpdateEntity( comment, auditLog );
 	}
 	
 	
@@ -1426,7 +1427,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public Vote getVote( Long userId, VoteParentType parentType, String parentId ) {
 		if( userId == null || userId.equals( 0L ) || parentType == null || parentId == null || parentId.isEmpty() )
 			return null;
-		return getEntityOfy( VoteEntity.class, userId + "-" + parentType + "::" + parentId );
+		return getEntity( VoteEntity.class, userId + "-" + parentType + "::" + parentId );
 	}
 	
 	@Override
@@ -1450,7 +1451,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {
 		( (VoteEntity) vote ).setId( vote.getUserId() + "-" + vote.getParentType() + "::" + vote.getParentId() );
-		return createOrUpdateEntityOfy( vote, auditLog );
+		return createOrUpdateEntity( vote, auditLog );
 	}
 
 	
@@ -1475,7 +1476,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog ) {
-		return createOrUpdateEntityOfy( mailingListSubscription, auditLog );
+		return createOrUpdateEntity( mailingListSubscription, auditLog );
 	}
 	
 }

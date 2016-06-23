@@ -42,7 +42,7 @@ public class PratilipiIdfApi extends GenericApi {
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		String cursor = null;
 		DataListCursorTuple<Long> pratilipiIdListCursorTupe =
-				dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, null );
+				dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, null, null );
 		List<Long> pratilipiIdList = pratilipiIdListCursorTupe.getDataList();
 		
 		// Populate Keyword-Frequency map.
