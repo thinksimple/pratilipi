@@ -23,8 +23,8 @@ language_mr					= मराठी
 lanugage_ml					= मलयालम 
 language_bn					= बांग्ला
 language_en					= अंग्रेजी 
-language_te					= Telugu
-language_kn					= Kannada
+language_te					= तेलुगु
+language_kn					=  कन्नडा
 
 
 
@@ -54,7 +54,7 @@ author_count_reads			= पाठकों ने पढ़ा
 author_count_likes			= ने पसंद किया 	
 
 author_edit_profile			= प्रोफ़ाइल संपादित करें
-author_update_image				= Upload Photo
+author_update_image				= प्रोफ़ाइल चित्र अपडेट करे
 
 author_drafts				= अप्रकाशित रचनायें
 author_published_works		= प्रकाशित रचनायें
@@ -86,10 +86,10 @@ pratilipi_publish_it		= प्रकाशित करें
 
 pratilipi_no_reviews		= आपकी टिप्पणी दर्ज कर आप प्रथम समीक्षक बन सकते है | 
 
-pratilipi_confirm_move_to_drafts_title	= Moving to drafts
-pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
-pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
-pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
+pratilipi_confirm_move_to_drafts_title	= ड्राफ्ट में जाएँ
+pratilipi_confirm_move_to_drafts_body	= इस रचना का ड्राफ्ट में जाना सुनिश्चित करें
+pratilipi_confirm_move_to_drafts_true	= हाँ, ड्राफ्ट में जाएँ!
+pratilipi_confirm_move_to_drafts_false	= नहीं, इसे अप्रकाशित न करें 
 
 
 # Rating
@@ -98,7 +98,7 @@ rating_rating				= रेटिंग
 rating_ratings				= रेटिंग
 rating_rate_this			= रेटिंग दें
 rating_your_rating			= आपकी रेटिंग
-rating_be_first_one			= Be the first one to rate it!
+rating_be_first_one			= अपनी रेटिंग दे
 
 rating_1_star				= १
 rating_2_star				= २
@@ -127,19 +127,19 @@ review_see_all_reviews		= सारी टिप्पणियाँ देख�
 
 # Comments
 
-comment_reply_to_comment				= Reply
-comment_number_of_comments_singular		= Replies
-comment_number_of_comments_plural		= Replies
-comment_reply_comment_help				= Type here to reply
-comment_add_comment						= Add Comment
-comment_edit_comment					= Edit Comment
-comment_delete_comment					= Delete Comment
-comment_confirm_delete_comment			= Are you sure to delete this comment?
-comment_confirm_delete_comment_yes		= Yes
-comment_confirm_delete_comment_no		= No
-comment_restore_comment					= Restore Comment
-comment_submit_comment					= Submit
-comment_cancel_comment					= Cancel
+comment_reply_to_comment				= रिप्लाय
+comment_number_of_comments_singular		= रिप्लाय
+comment_number_of_comments_plural		= रिप्लाय
+comment_reply_comment_help				= रिप्लाय यहाँ टाइप करें
+comment_add_comment						= कोई टिप्पणी लिखें
+comment_edit_comment					= टिप्पणी सम्पादित करें
+comment_delete_comment					= टिप्पणी हटाएँ
+comment_confirm_delete_comment			= क्या आप वाकई इस टिप्पणी को हटाना चाहते है?
+comment_confirm_delete_comment_yes		= हाँ
+comment_confirm_delete_comment_no		= नहीं
+comment_restore_comment					= टिप्पणी पुनःस्थापित करे
+comment_submit_comment					= दर्ज करें
+comment_cancel_comment					= हटाएँ
 
 
 # Search
@@ -185,9 +185,9 @@ user_new_password			= नया पासवर्ड
 
 user_full_name				= पूरा नाम दर्ज करें 
 user_email					= ईमेल प्रदान करे
-user_email_not_available	= Email Not Available!
-user_phone					= Phone
-user_phone_not_available	= Phone Number Not Available! 
+user_email_not_available	=  ई–मेल उपलब्ध नहीं है!
+user_phone					= फ़ोन 
+user_phone_not_available	= फ़ोन नंबर उपलब्ध नहीं है! 
 user_password				= पासवर्ड
 user_confirm_password		= पासवर्ड की पुष्टि करें
 
@@ -197,7 +197,7 @@ user_my_account				= सेटिंग्स
 user_is_new					= उपयोगकर्ता नये है	
 user_is_registered			= उपयोगकर्ता पंजीकृत है
 user_email_verification		= आपको भेजे गए ईमेल की पुष्टि करें		
-user_require_access			= You need to log in to perform this action!
+user_require_access			= इस प्रक्रिया के लिए कृपया साईट पर लोग इन करें! 
 
 
 # My Account popup
