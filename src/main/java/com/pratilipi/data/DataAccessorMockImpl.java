@@ -47,7 +47,7 @@ import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.Vote;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
-import com.pratilipi.data.type.gae.AuditLogEntityOfy;
+import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
@@ -225,12 +225,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	// AUDIT_LOG Table
 
 	@Override
-	public AuditLog newAuditLogOfy( String accessId, AccessType accessType, Object eventDataOld ) {
-		return new AuditLogEntityOfy( accessId, accessType, eventDataOld );
+	public AuditLog newAuditLog( String accessId, AccessType accessType, Object eventDataOld ) {
+		return new AuditLogEntity( accessId, accessType, eventDataOld );
 	}
 	
 	@Override
-	public AuditLog newAuditLogOfy() {
+	public AuditLog newAuditLog() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -322,14 +322,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return pratilipiList;
 	}
 	
-	@Override
-	public DataListCursorTuple<Long> getPratilipiIdList(
-			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
-		
-		// TODO: Implementation
-		return null;
-	}
-
 	@Override
 	public DataListCursorTuple<Long> getPratilipiIdList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) {
@@ -452,7 +444,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return createOrUpdateAuthor( author );
 	}
 
-	
+	@Override
+	public Author createOrUpdateAuthor( Author author, Page page, AuditLog auditLog ) {
+		return createOrUpdateAuthor( author );
+	}
+
+
 	// BLOG Table
 	
 	@Override

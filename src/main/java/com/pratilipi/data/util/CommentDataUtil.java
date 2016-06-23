@@ -187,7 +187,7 @@ public class CommentDataUtil {
 			throw new InsufficientAccessException();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy(
+		AuditLog auditLog = dataAccessor.newAuditLog(
 				AccessTokenFilter.getAccessToken().getId(),
 				isNew ? AccessType.COMMENT_ADD : AccessType.COMMENT_UPDATE,
 				comment );

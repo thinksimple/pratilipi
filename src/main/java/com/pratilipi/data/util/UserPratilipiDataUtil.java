@@ -219,7 +219,7 @@ public class UserPratilipiDataUtil {
 		Gson gson = new Gson();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.USER_PRATILIPI_ADDED_TO_LIB );
 		auditLog.setEventDataOld( gson.toJson( userPratilipi ) );
@@ -256,7 +256,7 @@ public class UserPratilipiDataUtil {
 		Gson gson = new Gson();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.USER_PRATILIPI_ADDED_TO_LIB );
 		auditLog.setEventDataOld( gson.toJson( userPratilipi ) );

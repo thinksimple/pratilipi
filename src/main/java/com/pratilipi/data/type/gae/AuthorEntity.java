@@ -13,6 +13,7 @@ import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.Author;
 
+@SuppressWarnings("serial")
 @Cache
 @Entity( name = "AUTHOR" )
 public class AuthorEntity implements Author {

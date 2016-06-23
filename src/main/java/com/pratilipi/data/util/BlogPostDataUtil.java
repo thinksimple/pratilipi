@@ -158,7 +158,7 @@ public class BlogPostDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( isNew ? AccessType.BLOG_POST_ADD : AccessType.BLOG_POST_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( blogPost ) );

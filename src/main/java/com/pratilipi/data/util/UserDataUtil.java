@@ -204,7 +204,7 @@ public class UserDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( isNew ? AccessType.USER_ADD : AccessType.USER_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( user ) );
@@ -288,7 +288,7 @@ public class UserDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( AccessType.USER_ADD );
 		auditLog.setEventDataOld( gson.toJson( user ) );
@@ -367,7 +367,7 @@ public class UserDataUtil {
 			
 			Gson gson = new Gson();
 			
-			AuditLog auditLog = dataAccessor.newAuditLogOfy();
+			AuditLog auditLog = dataAccessor.newAuditLog();
 			auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 
 			if( user == null || user.getState() == UserState.DELETED ) {

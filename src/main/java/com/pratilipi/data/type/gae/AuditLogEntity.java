@@ -23,7 +23,7 @@ import com.pratilipi.data.type.AuditLog;
 @SuppressWarnings("serial")
 @Cache
 @Entity( name = "AUDIT_LOG" )
-public class AuditLogEntityOfy implements AuditLog {
+public class AuditLogEntity implements AuditLog {
 
 	@Ignore
 	private final Gson gson = new GsonBuilder()
@@ -63,9 +63,9 @@ public class AuditLogEntityOfy implements AuditLog {
 	private Date CREATION_DATE;
 
 
-	public AuditLogEntityOfy() {}
+	public AuditLogEntity() {}
 	
-	public AuditLogEntityOfy( String accessId, AccessType accessType, Object eventDataOld ) {
+	public AuditLogEntity( String accessId, AccessType accessType, Object eventDataOld ) {
 		this.ACCESS_ID = accessId;
 		this.ACCESS_TYPE = accessType;
 		this.EVENT_DATA_OLD = gson.toJson( eventDataOld );

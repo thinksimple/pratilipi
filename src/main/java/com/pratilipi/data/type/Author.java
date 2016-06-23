@@ -1,12 +1,13 @@
 package com.pratilipi.data.type;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.Language;
 
-public interface Author extends GenericOfyType {
+public interface Author extends GenericOfyType, Serializable {
 	
 	Long getId();
 

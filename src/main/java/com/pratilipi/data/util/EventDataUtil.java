@@ -151,7 +151,7 @@ public class EventDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( isNew ? AccessType.EVENT_ADD : AccessType.EVENT_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( event ) );
@@ -250,7 +250,7 @@ public class EventDataUtil {
 		Gson gson = new Gson();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.EVENT_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( event ) );

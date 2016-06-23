@@ -69,7 +69,7 @@ public class VoteDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( AccessType.VOTE );
 		auditLog.setEventDataOld( gson.toJson( vote ) );

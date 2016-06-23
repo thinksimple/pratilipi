@@ -474,7 +474,7 @@ public class PratilipiDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( isNew ? AccessType.PRATILIPI_ADD : AccessType.PRATILIPI_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
@@ -610,7 +610,7 @@ public class PratilipiDataUtil {
 		Gson gson = new Gson();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
@@ -651,7 +651,7 @@ public class PratilipiDataUtil {
 			Gson gson = new Gson();
 
 			AccessToken accessToken = AccessTokenFilter.getAccessToken();
-			AuditLog auditLog = dataAccessor.newAuditLogOfy();
+			AuditLog auditLog = dataAccessor.newAuditLog();
 			auditLog.setAccessId( accessToken.getId() );
 			auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
@@ -820,7 +820,7 @@ public class PratilipiDataUtil {
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
@@ -858,7 +858,7 @@ public class PratilipiDataUtil {
 		Gson gson = new Gson();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
@@ -1013,7 +1013,7 @@ public class PratilipiDataUtil {
 		Gson gson = new Gson();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( pratilipi ) );

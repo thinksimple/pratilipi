@@ -29,7 +29,7 @@ public class MailingListSubscriptionDataUtil {
 		
 		mailingListSubscription = dataAccessor.newMailingListSubscription();
 		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( AccessType.MAILING_LIST_SUBSCRIPTION_ADD );
 		auditLog.setEventDataOld( gson.toJson( mailingListSubscription ) );

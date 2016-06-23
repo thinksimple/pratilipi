@@ -1,9 +1,7 @@
 package com.pratilipi.data;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
@@ -57,7 +54,7 @@ import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.Vote;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
-import com.pratilipi.data.type.gae.AuditLogEntityOfy;
+import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
@@ -91,7 +88,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		ObjectifyService.register( UserEntity.class );
 		ObjectifyService.register( AccessTokenEntity.class );
-		ObjectifyService.register( AuditLogEntityOfy.class );
+		ObjectifyService.register( AuditLogEntity.class );
 		
 		ObjectifyService.register( PageEntity.class );
 		ObjectifyService.register( PratilipiEntity.class );
@@ -115,11 +112,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// Objectify Helper Methods
 	
 	private <T extends GenericOfyType> T getEntityOfy( Class<T> clazz, Long id ) {
-		return id == null ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
+		return id == null || id == 0L ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
 	private <T extends GenericOfyType> T getEntityOfy( Class<T> clazz, String id ) {
-		return id == null ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
+		return id == null || id.isEmpty() ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
 	private <P extends GenericOfyType,Q extends P> List<P> getEntityListOfy( Class<Q> clazz, List<Long> idList ) {
@@ -253,7 +250,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public User getUserByFacebookId( String facebookId ) {
 		
-		String memcacheId = "DataStore.User-" + "fb::" + facebookId;
+		String memcacheId = "DataStore.User-fb::" + facebookId;
 		
 		User user = memcache.get( memcacheId );
 		if( user != null )
@@ -298,22 +295,22 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			query = query.limit( resultCount );
 
 		
-		List<T> responseList = resultCount == null ? new ArrayList<T>() : new ArrayList<T>( resultCount );
+		List<T> dataList = resultCount == null ? new ArrayList<T>() : new ArrayList<T>( resultCount );
 		Cursor cursor = null;
 		if( idOnly ) {
 			QueryResultIterator <Key<UserEntity>> iterator = query.keys().iterator();
 			while( iterator.hasNext() )
-				responseList.add( (T) (Long) iterator.next().getId() );
+				dataList.add( (T) (Long) iterator.next().getId() );
 			cursor = iterator.getCursor();
 		} else {
 			QueryResultIterator <UserEntity> iterator = query.iterator();
 			while( iterator.hasNext() )
-				responseList.add( (T) iterator.next() );
+				dataList.add( (T) iterator.next() );
 			cursor = iterator.getCursor();
 		}
 		
 		
-		return new DataListCursorTuple<T>( responseList, cursor == null ? null : cursor.toWebSafeString() );
+		return new DataListCursorTuple<T>( dataList, cursor == null ? null : cursor.toWebSafeString() );
 		
 	}
 
@@ -325,7 +322,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public User createOrUpdateUser( User user, AuditLog auditLog ) {
 		
-		user = auditLog == null
+		user = auditLog == null // TODO: Remove this condition as soon as "User createOrUpdateUser( User user )" method is removed.
 				? createOrUpdateEntityOfy( user )
 				: createOrUpdateEntityOfy( user, auditLog );
 		
@@ -365,8 +362,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount ) {
 		
-		com.googlecode.objectify.cmd.Query<AccessTokenEntity> query
-				= ObjectifyService.ofy().load().type( AccessTokenEntity.class );
+		Query<AccessTokenEntity> query = ObjectifyService.ofy().load().type( AccessTokenEntity.class );
 		
 		if( userId != null )
 			query = query.filter( "USER_ID", userId );
@@ -415,15 +411,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// AUDIT_LOG Table
 	
 	@Override
-	public AuditLog newAuditLogOfy() {
-		return new AuditLogEntityOfy();
+	public AuditLog newAuditLog() {
+		return new AuditLogEntity();
 	}
 	
 	@Override
-	public AuditLog newAuditLogOfy( String accessId, AccessType accessType, Object eventDataOld ) {
-		return new AuditLogEntityOfy( accessId, accessType, eventDataOld );
+	public AuditLog newAuditLog( String accessId, AccessType accessType, Object eventDataOld ) {
+		return new AuditLogEntity( accessId, accessType, eventDataOld );
 	}
-
+	
 	
 	// PAGE Table
 	
@@ -479,17 +475,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		String memcacheId = _createPageEntityMemcacheId( pageType, primaryContentId );
 		
 		Page page = memcache.get( memcacheId );
+		if( page != null )
+			return page;
 		
-		if( page == null ) {
-			page = ObjectifyService.ofy().load()
-					.type( PageEntity.class )
-					.filter( "PAGE_TYPE", pageType )
-					.filter( "PRIMARY_CONTENT_ID", primaryContentId )
-					.order( "CREATION_DATE" )
-					.first().now();
-			if( page != null )
-				memcache.put( memcacheId, page );
-		}
+		page = ObjectifyService.ofy().load()
+				.type( PageEntity.class )
+				.filter( "PAGE_TYPE", pageType )
+				.filter( "PRIMARY_CONTENT_ID", primaryContentId )
+				.order( "CREATION_DATE" )
+				.first().now();
+		
+		if( page != null )
+			memcache.put( memcacheId, page );
 		
 		return page;
 		
@@ -616,13 +613,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public DataListCursorTuple<Long> getPratilipiIdList(
-			PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount ) {
-		
-		return getPratilipiList( pratilipiFilter, cursorStr, null, resultCount, true );
-	}
-	
-	@Override
-	public DataListCursorTuple<Long> getPratilipiIdList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) {
 		
 		return getPratilipiList( pratilipiFilter, cursorStr, offset, resultCount, true );
@@ -641,8 +631,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		if( pratilipiFilter.getListName() == null ) {
 		
-			com.googlecode.objectify.cmd.Query<PratilipiEntity> query
-					= ObjectifyService.ofy().load().type( PratilipiEntity.class );
+			Query<PratilipiEntity> query = ObjectifyService.ofy().load().type( PratilipiEntity.class );
 	
 			if( pratilipiFilter.getAuthorId() != null )
 				query = query.filter( "AUTHOR_ID", pratilipiFilter.getAuthorId() );
@@ -655,16 +644,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 			if( pratilipiFilter.getMinLastUpdated() != null ) {
 				query = query.filter(
-						pratilipiFilter.isMinLastUpdatedInclusive() ? "LAST_UPDATED >= " : "LAST_UPDATED > ",
+						pratilipiFilter.isMinLastUpdatedInclusive() ? "LAST_UPDATED >=" : "LAST_UPDATED >",
 						pratilipiFilter.getMinLastUpdated() );
 				query = query.order( "LAST_UPDATED" );
-			}
-			
-			if( pratilipiFilter.getMaxNextProcessDate() != null ) {
-				query = query.filter(
-						pratilipiFilter.isMaxNextProcessDateInclusive() ? "NEXT_PROCESS_DATE <= " : "NEXT_PROCESS_DATE < ",
-						pratilipiFilter.getMaxNextProcessDate() );
-				query = query.order( "NEXT_PROCESS_DATE" );
 			}
 			
 			if( pratilipiFilter.getOrderByReadCount() != null )
@@ -699,60 +681,59 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			
 		} else {
 			
+			List<String> uriList = null;
 			try {
-				
 				String fileName = CURATED_DATA_FOLDER + "/list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
 				InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
-				List<String> uriList = IOUtils.readLines( inputStream, "UTF-8" );
+				uriList = IOUtils.readLines( inputStream, "UTF-8" );
 				inputStream.close();
-
-				// Removing the first line having title.
-				uriList.remove( 0 );
-				
-				// Removing empty lines.
-				for( int i = 0; i < uriList.size(); i++ ) {
-					String uri = uriList.get( i ).trim();
-					if( uri.isEmpty() ) {
-						uriList.remove( i );
-						i--;
-						continue;
-					} else {
-						uriList.set( i, uri );
-					}
-				}
-
-				// Fetching Pratilipi pages.
-				Map<String, Page> pratilipiPages = getPages( uriList );
-				
-				// Pratilipi id list.
-				List<Long> pratilipiIdList = new ArrayList<>( uriList.size() );
-				for( int i = 0; i < uriList.size(); i++ ) {
-					Page page = pratilipiPages.get( uriList.get( i ) );
-					if( page != null && page.getType() == PageType.PRATILIPI && ! pratilipiIdList.contains( page.getPrimaryContentId() ) )
-						pratilipiIdList.add( page.getPrimaryContentId() );
-				}
-
-				
-				offset = cursorStr == null ? 0 : Integer.parseInt( cursorStr )
-						+ ( offset == null || offset < 0 ? 0 : offset );
-				
-				offset = Math.min( offset, pratilipiIdList.size() );
-				
-				resultCount = resultCount == null || resultCount > pratilipiIdList.size() - offset
-						? pratilipiIdList.size() - offset : resultCount;
-				
-				
-				List<T> responseList = idOnly
-						? (List<T>) pratilipiIdList.subList( offset, offset + resultCount )
-						: (List<T>) getPratilipiList( pratilipiIdList.subList( offset, offset + resultCount ) );
-				
-				return new DataListCursorTuple<T>( responseList, offset + resultCount + "", (long) pratilipiIdList.size() );
-				
 			} catch( NullPointerException | IOException e ) {
 				logger.log( Level.SEVERE, "Failed to fetch " + pratilipiFilter.getListName() + " list for " + pratilipiFilter.getLanguage() + ".", e );
 				return new DataListCursorTuple<T>( new ArrayList<T>( 0 ), "0", 0L );
 			}
 
+			// Removing the first line having title.
+			uriList.remove( 0 );
+			
+			// Removing empty lines.
+			for( int i = 0; i < uriList.size(); i++ ) {
+				String uri = uriList.get( i ).trim();
+				if( uri.isEmpty() ) {
+					uriList.remove( i );
+					i--;
+					continue;
+				} else {
+					uriList.set( i, uri );
+				}
+			}
+
+			// Fetching Pratilipi pages.
+			Map<String, Page> pratilipiPages = getPages( uriList );
+			
+			// Pratilipi id list.
+			List<Long> pratilipiIdList = new ArrayList<>( uriList.size() );
+			for( int i = 0; i < uriList.size(); i++ ) {
+				Page page = pratilipiPages.get( uriList.get( i ) );
+				if( page != null && page.getType() == PageType.PRATILIPI && ! pratilipiIdList.contains( page.getPrimaryContentId() ) )
+					pratilipiIdList.add( page.getPrimaryContentId() );
+			}
+
+			
+			offset = cursorStr == null ? 0 : Integer.parseInt( cursorStr )
+					+ ( offset == null || offset < 0 ? 0 : offset );
+			
+			offset = Math.min( offset, pratilipiIdList.size() );
+			
+			resultCount = resultCount == null || resultCount > pratilipiIdList.size() - offset
+					? pratilipiIdList.size() - offset : resultCount;
+			
+			
+			List<T> responseList = idOnly
+					? (List<T>) pratilipiIdList.subList( offset, offset + resultCount )
+					: (List<T>) getPratilipiList( pratilipiIdList.subList( offset, offset + resultCount ) );
+			
+			return new DataListCursorTuple<T>( responseList, offset + resultCount + "", (long) pratilipiIdList.size() );
+			
 		}
 		
 	}
@@ -787,15 +768,24 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public Author getAuthorByUserId( Long userId ) {
 		
-		com.googlecode.objectify.cmd.Query<AuthorEntity> query
-				= ObjectifyService.ofy().load().type( AuthorEntity.class );
+		String memcacheId = "DataStore.Author-USER::" + userId;
 		
-		query = query.filter( "USER_ID", userId );
-		query = query.filter( "STATE !=", AuthorState.DELETED );
-		query = query.order( "STATE" );
-		query = query.order( "REGISTRATION_DATE" );
+		Author author = memcache.get( memcacheId );
+		if( author != null )
+			return author;
 		
-		return query.first().now();
+		
+		author = ObjectifyService.ofy().load()
+				.type( AuthorEntity.class )
+				.filter( "USER_ID", userId )
+				.filter( "STATE !=", AuthorState.DELETED )
+				.order( "STATE" )
+				.order( "REGISTRATION_DATE" ).first().now();
+		
+		if( author != null )
+			memcache.put( memcacheId, author );
+		
+		return author;
 		
 	}
 	
@@ -817,8 +807,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@SuppressWarnings("unchecked")
 	private <T> DataListCursorTuple<T> _getAuthorList( AuthorFilter authorFilter, String cursorStr, Integer resultCount, boolean idOnly ) {
 
-		com.googlecode.objectify.cmd.Query<AuthorEntity> query
-				= ObjectifyService.ofy().load().type( AuthorEntity.class );
+		Query<AuthorEntity> query = ObjectifyService.ofy().load().type( AuthorEntity.class );
 		
 		if( authorFilter.getLanguage() != null )
 			query = query.filter( "LANGUAGE", authorFilter.getLanguage() );
@@ -833,12 +822,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( authorFilter.getOrderByContentPublished() != null )
 			query = query.order( authorFilter.getOrderByContentPublished() ? "CONTENT_PUBLISHED" : "-CONTENT_PUBLISHED" );
 	
-		if( resultCount != null )
-			query = query.limit( resultCount );
-	
 		if( cursorStr != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
 
+		if( resultCount != null )
+			query = query.limit( resultCount );
+	
 		
 		List<T> responseList = resultCount == null ? new ArrayList<T>() : new ArrayList<T>( resultCount );
 		Cursor cursor = null;
@@ -865,7 +854,20 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) {
-		return createOrUpdateEntityOfy( author, auditLog );
+		return createOrUpdateAuthor( author, null, auditLog );
+	}
+
+	@Override
+	public Author createOrUpdateAuthor( Author author, Page page, AuditLog auditLog ) {
+		author = createOrUpdateEntityOfy( author, page, auditLog );
+		if( author.getUserId() != null ) {
+			String memcacheId = "DataStore.Author-USER::" + author.getUserId();
+			if( author.getState() == AuthorState.DELETED )
+				memcache.remove( memcacheId );
+			else
+				memcache.put( memcacheId, author );
+		}
+		return author;
 	}
 
 	
@@ -884,8 +886,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public List<Event> getEventList( Language language ) {
 		
-		com.googlecode.objectify.cmd.Query<EventEntity> query
-				= ObjectifyService.ofy().load().type( EventEntity.class );
+		Query<EventEntity> query = ObjectifyService.ofy().load().type( EventEntity.class );
 		
 		if( language != null )
 			query = query.filter( "LANGUAGE", language );
@@ -941,8 +942,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public DataListCursorTuple<BlogPost> getBlogPostList(
 			BlogPostFilter blogPostFilter, String cursorStr, Integer offset, Integer resultCount ) {
 
-		com.googlecode.objectify.cmd.Query<BlogPostEntity> query
-				= ObjectifyService.ofy().load().type( BlogPostEntity.class );
+		Query<BlogPostEntity> query = ObjectifyService.ofy().load().type( BlogPostEntity.class );
 		
 		if( blogPostFilter.getBlogId() != null )
 			query = query.filter( "BLOG_ID", blogPostFilter.getBlogId() );
@@ -1020,12 +1020,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public DataListCursorTuple<Long> getUserLibrary( Long userId, String cursorStr, Integer offset, Integer resultCount ) {
 		
-		com.googlecode.objectify.cmd.Query<UserPratilipiEntity> query
-				= ObjectifyService.ofy().load().type( UserPratilipiEntity.class );
-				
-		query = query.filter( "USER_ID", userId );
-		query = query.filter( "ADDED_TO_LIB", true );
-		query = query.order( "-ADDED_TO_LIB" );
+		Query<UserPratilipiEntity> query = ObjectifyService.ofy().load()
+				.type( UserPratilipiEntity.class )
+				.filter( "USER_ID", userId )
+				.filter( "ADDED_TO_LIB", true )
+				.order( "-ADDED_TO_LIB_DATE" );
 		
 		if( cursorStr != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
@@ -1063,8 +1062,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
 			Long pratilipiId, String cursorStr, Integer resultCount ) {
 		
-		com.googlecode.objectify.cmd.Query<UserPratilipiEntity> query
-				= ObjectifyService.ofy().load().type( UserPratilipiEntity.class );
+		Query<UserPratilipiEntity> query = ObjectifyService.ofy().load().type( UserPratilipiEntity.class );
 				
 		if( userId != null )
 			query = query.filter( "USER_ID", userId );
@@ -1125,9 +1123,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursorStr, Integer offset, Integer resultCount ) {
 
-		com.googlecode.objectify.cmd.Query<UserAuthorEntity> query
-				= ObjectifyService.ofy().load().type( UserAuthorEntity.class );
-			
+		Query<UserAuthorEntity> query = ObjectifyService.ofy().load().type( UserAuthorEntity.class );
+		
 		if( userId != null )
 			query = query.filter( "USER_ID", userId );
 
@@ -1135,7 +1132,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			query = query.filter( "AUTHOR_ID", authorId );
 		
 		query = query.filter( "FOLLOWING", true );
-		query = query.order( "-FOLLOWING" );
+		query = query.order( "-FOLLOWING_SINCE" );
 		
 		if( cursorStr != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
@@ -1177,12 +1174,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public DataListCursorTuple<UserAuthor> getUserAuthorList(
 			Long userId, Long authorId, String cursorStr, Integer offset, Integer resultCount ) {
 
-		com.googlecode.objectify.cmd.Query<UserAuthorEntity> query
-				= ObjectifyService.ofy().load().type( UserAuthorEntity.class );
-				
+		Query<UserAuthorEntity> query = ObjectifyService.ofy().load().type( UserAuthorEntity.class );
+		
 		if( userId != null )
 			query = query.filter( "USER_ID", userId );
-
+		
 		if( authorId != null )
 			query = query.filter( "AUTHOR_ID", authorId );
 		
@@ -1206,7 +1202,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		while( iterator.hasNext() )
 			userAuthorList.add( iterator.next() );
-
+		
 		
 		// Cursor
 		Cursor cursor = iterator.getCursor();
@@ -1233,16 +1229,16 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		List<String> sectionList = new LinkedList<>();
 
 		try {
-			File file = new File( DataAccessor.class.getResource( CURATED_DATA_FOLDER + "/home." + language.getCode() ).toURI() );
-			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
-			while( it.hasNext() ) {
-				String listName = it.next().trim();
+			String fileName = CURATED_DATA_FOLDER + "/home." + language.getCode();
+			InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
+			for( String listName : IOUtils.readLines( inputStream, "UTF-8" ) ) {
+				listName = listName.trim();
 				if( ! listName.isEmpty() )
 					sectionList.add( listName );
 			}
-			LineIterator.closeQuietly( it );
-		} catch( URISyntaxException | NullPointerException | IOException e ) {
-			logger.log( Level.SEVERE, "Exception while reading from home." + language.getNameEn() + " .", e );
+			inputStream.close();
+		} catch( NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception while reading from home." + language.getNameEn(), e );
 		}
 		
 		return sectionList;
@@ -1250,7 +1246,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	
-	// NAVIGATION Table
+	// curated/navigation.<lang>
 	
 	@Override
 	public List<Navigation> getNavigationList( Language language ) {
@@ -1319,7 +1315,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 
-	// CATEGORY Table
+	// curated/category.<lang>
 	
 	@Override
 	public List<Category> getCategoryList( Language language ) {
@@ -1385,12 +1381,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public List<Comment> getCommentList( CommentParentType parentType, String parentId ) {
 		
-		com.googlecode.objectify.cmd.Query<CommentEntity> query
-				= ObjectifyService.ofy().load().type( CommentEntity.class );
-		
-		query = query.filter( "PARENT_TYPE", parentType );
-		query = query.filter( "PARENT_ID", parentId );
-		query = query.order( "-CREATION_DATE" );
+		Query<CommentEntity> query = ObjectifyService.ofy().load()
+				.type( CommentEntity.class )
+				.filter( "PARENT_TYPE", parentType )
+				.filter( "PARENT_ID", parentId )
+				.order( "-CREATION_DATE" );
 		
 		return new ArrayList<Comment>( query.list() );
 		
@@ -1404,12 +1399,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public List<Comment> getCommentListByReference( ReferenceType referenceType, String referenceId ) {
 		
-		com.googlecode.objectify.cmd.Query<CommentEntity> query
-				= ObjectifyService.ofy().load().type( CommentEntity.class );
-		
-		query = query.filter( "REFERENCE_TYPE", referenceType );
-		query = query.filter( "REFERENCE_ID", referenceId );
-		query = query.order( "-CREATION_DATE" );
+		Query<CommentEntity> query = ObjectifyService.ofy().load()
+				.type( CommentEntity.class )
+				.filter( "REFERENCE_TYPE", referenceType )
+				.filter( "REFERENCE_ID", referenceId )
+				.order( "-CREATION_DATE" );
 		
 		return new ArrayList<Comment>( query.list() );
 		
@@ -1443,12 +1437,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public List<Vote> getVoteListByReference( ReferenceType referenceType, String referenceId ) {
 		
-		com.googlecode.objectify.cmd.Query<VoteEntity> query
-				= ObjectifyService.ofy().load().type( VoteEntity.class );
-		
-		query = query.filter( "REFERENCE_TYPE", referenceType );
-		query = query.filter( "REFERENCE_ID", referenceId );
-		query = query.order( "-CREATION_DATE" );
+		Query<VoteEntity> query = ObjectifyService.ofy().load()
+				.type( VoteEntity.class )
+				.filter( "REFERENCE_TYPE", referenceType )
+				.filter( "REFERENCE_ID", referenceId )
+				.order( "-CREATION_DATE" );
 		
 		return new ArrayList<Vote>( query.list() );
 		
@@ -1471,14 +1464,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public MailingListSubscription getMailingListSubscription( MailingList mailingList, String email ) {
 		
-		com.googlecode.objectify.cmd.Query<MailingListSubscriptionEntity> query
-				= ObjectifyService.ofy().load().type( MailingListSubscriptionEntity.class );
-		
-		query = query.filter( "MAILING_LIST", mailingList );
-		query = query.filter( "EMAIL", email );
-		query = query.order( "SUBSCRIPTION_DATE" );
-		
-		return query.first().now();
+		return ObjectifyService.ofy().load()
+				.type( MailingListSubscriptionEntity.class )
+				.filter( "MAILING_LIST", mailingList )
+				.filter( "EMAIL", email )
+				.order( "SUBSCRIPTION_DATE" )
+				.first().now();
 		
 	}
 	

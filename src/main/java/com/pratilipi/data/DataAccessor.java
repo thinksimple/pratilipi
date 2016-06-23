@@ -47,6 +47,7 @@ public interface DataAccessor {
 	User getUserByFacebookId( String facebookId );
 	List<User> getUserList( List<Long> idList );
 	DataListCursorTuple<User> getUserList( String cursorStr, Integer resultCount );
+	@Deprecated
 	User createOrUpdateUser( User user );
 	User createOrUpdateUser( User user, AuditLog auditLog );
 
@@ -58,8 +59,8 @@ public interface DataAccessor {
 	AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken );
 
 	// AUDIT_LOG Table
-	AuditLog newAuditLogOfy();
-	AuditLog newAuditLogOfy( String accessId, AccessType accessType, Object eventDataOld );
+	AuditLog newAuditLog();
+	AuditLog newAuditLog( String accessId, AccessType accessType, Object eventDataOld );
 
 	
 	// PAGE Table
@@ -77,8 +78,6 @@ public interface DataAccessor {
 	Pratilipi getPratilipi( Long id );
 	String getPratilipiListTitle( String listName, Language language );
 	List<Pratilipi> getPratilipiList( List<Long> idList );
-	@Deprecated
-	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount );
 	DataListCursorTuple<Pratilipi> getPratilipiList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
 	Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog );
@@ -94,6 +93,7 @@ public interface DataAccessor {
 	@Deprecated
 	Author createOrUpdateAuthor( Author author );
 	Author createOrUpdateAuthor( Author author, AuditLog auditLog );
+	Author createOrUpdateAuthor( Author author, Page page, AuditLog auditLog );
 
 	// EVENT Table
 	Event newEvent();
@@ -135,12 +135,10 @@ public interface DataAccessor {
 	// curated/home.<lang>
 	List<String> getHomeSectionList( Language language );
 	
-	
-	// NAVIGATION Table
+	// curated/navigation.<lang>
 	List<Navigation> getNavigationList( Language language );
 	
-	
-	// CATEGORY Table
+	// curated/category.<lang>
 	List<Category> getCategoryList( Language language );
 
 	

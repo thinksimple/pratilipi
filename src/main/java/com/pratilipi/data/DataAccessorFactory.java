@@ -33,8 +33,6 @@ public class DataAccessorFactory {
 		DataAccessor dataAccessor = threadLocalDataAccessor.get();
 		if( dataAccessor == null ) {
 			dataAccessor = datasource.equals( "gae" ) ? new DataAccessorGaeImpl() : new DataAccessorMockImpl();
-			dataAccessor = new DataAccessorWithMemcache( dataAccessor, cacheL2 );
-			dataAccessor = new DataAccessorWithMemcache( dataAccessor, new MemcacheImpl() );
 			threadLocalDataAccessor.set( dataAccessor );
 		}
 		return dataAccessor;

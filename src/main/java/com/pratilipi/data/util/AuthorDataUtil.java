@@ -263,7 +263,7 @@ public class AuthorDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( AccessType.AUTHOR_ADD );
 		auditLog.setEventDataOld( gson.toJson( author ) );
@@ -307,7 +307,7 @@ public class AuthorDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( isNew ? AccessType.AUTHOR_ADD : AccessType.AUTHOR_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( author ) );
@@ -422,7 +422,7 @@ public class AuthorDataUtil {
 		Gson gson = new Gson();
 		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( author ) );
@@ -536,7 +536,7 @@ public class AuthorDataUtil {
 		// This call is not consistent due to some issue with Google AppEngine
 		// Relying on Memcahe until the issue is fixed
 //		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiFilter, null, null ).getDataList();
-		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null ).getDataList();
+		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null, null ).getDataList();
 		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
 		
 		int contentPublished = 0;
@@ -576,7 +576,7 @@ public class AuthorDataUtil {
 		Gson gson = new Gson();
 
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLogOfy();
+		AuditLog auditLog = dataAccessor.newAuditLog();
 		auditLog.setAccessId( accessToken.getId() );
 		auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( author ) );
