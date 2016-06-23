@@ -62,8 +62,15 @@
 			
 			is: 'pratilipi-facebook-login',
 			
+			properties: {
+				requestOnFlight: { type: Boolean, value: false }
+			},
+			
 			sendData: function( authResponse ) {
+				if( this.requestOnFlight )
+					return;
 				if( authResponse != null ) {
+					this.requestOnFlight = true; 
 					this.$.AjaxPost.body = ( "fbUserAccessToken=" + authResponse.accessToken );
 					this.$.AjaxPost.generateRequest();
 				}
@@ -97,11 +104,13 @@
 			},
 			
 			_handleAjaxPostResponse: function( event ) {
+				this.requestOnFlight = false;
 				document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
 				document.querySelector( 'pratilipi-user' ).closeAllElements();
 			},
 			
 			_handleAjaxPostError: function( event ) {
+				this.requestOnFlight = false;
 				alert( event.detail.request.xhr.response.message );
 			}, 
 		});

@@ -15,6 +15,7 @@
 				var value = res[i].substring( res[i].indexOf( '=' ) + 1 );
 				retObj[ key ] = value;
 			}
+			if( retObj[""] != null ) delete retObj[""];
 			return retObj;
 		}
 		
@@ -58,35 +59,35 @@
 		    
 		    <#if nav1?? >
 		    	<div class="col-xs-2 col-xs-offset-1">
-		    		<a class="clickable" <#if nav1 != currentPage>style="font-size: 18px;" class="pratilipi-blue"</#if>  
+		    		<a class="clickable" <#if nav1 != currentPage>style="font-size: 18px; color: #107FE5;"</#if>  
 		    			onClick="goToPage( ${ nav1 } )">${ nav1 }</a>
 		    	</div>
 		    </#if>
 		    
 	    	<#if nav2?? >
     			<div class="col-xs-2">
-    				<a class="clickable" <#if nav2 != currentPage>style="font-size: 18px;" class="pratilipi-blue"</#if> 
+    				<a class="clickable" <#if nav2 != currentPage>style="font-size: 18px; color: #107FE5;"</#if> 
     				 onClick="goToPage( ${ nav2 } )">${ nav2 }</a>
     			</div>
 			</#if>
 		    
 		    <#if nav3?? >
 		    	<div class="col-xs-2">
-    				<a class="clickable" <#if nav3 != currentPage>style="font-size: 18px;" class="pratilipi-blue"</#if> 
+    				<a class="clickable" <#if nav3 != currentPage>style="font-size: 18px; color: #107FE5;"</#if> 
     				 onClick="goToPage( ${ nav3 } )">${ nav3 }</a>
     			</div>
 		    </#if>
 		    
 		    <#if nav4?? >
 		    	<div class="col-xs-2">
-    				<a class="clickable" <#if nav4 != currentPage>style="font-size: 18px;" class="pratilipi-blue"</#if> 
+    				<a class="clickable" <#if nav4 != currentPage>style="font-size: 18px; color: #107FE5;"</#if> 
     				 onClick="goToPage( ${ nav4 } )">${ nav4 }</a>
     			</div>
 		    </#if>
 		    
 		    <#if nav5?? >
 		    	<div class="col-xs-2">
-    				<a class="clickable" <#if nav5 != currentPage>style="font-size: 18px;" class="pratilipi-blue"</#if> 
+    				<a class="clickable" <#if nav5 != currentPage>style="font-size: 18px; color: #107FE5;"</#if> 
     				 onClick="goToPage( ${ nav5 } )">${ nav5 }</a>
     			</div>
 		    </#if>

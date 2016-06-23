@@ -60,7 +60,7 @@ public class FacebookApi {
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put( "access_token", fbUserAccessToken );
 		paramsMap.put( "fields", "id,first_name,last_name,gender,birthday,email" );
-		String responsePayload = HttpUtil.doGet( GRAPH_API_2p4_URL + "/me", paramsMap );
+		String responsePayload = HttpUtil.doGet( GRAPH_API_2p6_URL + "/me", paramsMap );
 		
 		JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
 		if( responseJson.get( "error" ) != null ) {
@@ -75,7 +75,8 @@ public class FacebookApi {
 			userData.setFacebookId( responseJson.get( "id" ).getAsString() );
 			userData.setFirstName( responseJson.get( "first_name" ).getAsString() );
 			userData.setLastName( responseJson.get( "last_name" ).getAsString() );
-			userData.setGender( Gender.valueOf( responseJson.get( "gender" ).getAsString().toUpperCase() ) );
+			if( responseJson.get( "gender" ) != null )
+				userData.setGender( Gender.valueOf( responseJson.get( "gender" ).getAsString().toUpperCase() ) );
 			
 			if( responseJson.get( "birthday" ) != null ) {
 				String dob = responseJson.get( "birthday" ).getAsString();
