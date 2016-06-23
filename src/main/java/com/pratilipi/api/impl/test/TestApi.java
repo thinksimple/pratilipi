@@ -8,10 +8,10 @@ import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.UserState;
-import com.pratilipi.data.DataAccessorGaeImpl;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.UserEntity;
 
@@ -22,7 +22,7 @@ public class TestApi extends GenericApi {
 	private static final Logger logger = Logger.getLogger( TestApi.class.getName() );
 	
 	@Get
-	public GenericResponse get( GenericResponse request ) throws InsufficientAccessException {
+	public GenericResponse get( GenericRequest request ) throws InsufficientAccessException {
 		
 		List<UserEntity> userList = ObjectifyService.ofy().load()
 				.type( UserEntity.class )
