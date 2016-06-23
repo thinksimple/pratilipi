@@ -36,12 +36,6 @@
 				<#assign currentPage = pratilipiListPageCurr>
 				<#assign maxPage = pratilipiListPageMax>
 				
-				<#if pratilipiListSearchQuery?? >
-					<#assign prefix = "?q=${ pratilipiListSearchQuery }&" >
-				<#else>
-					<#assign prefix = "?" >
-				</#if>
-	
 				<#include "../element/pratilipi-page-navigation.ftl">
 	
 			</div>

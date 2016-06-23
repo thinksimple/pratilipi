@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<div class="media-body">
-			<a href="${ pratilipi.pageUrl }"><h4 class="pratilipi-red">${ pratilipi.title }</h4></a>
+			<a href="${ pratilipi.pageUrl }"><h4 class="pratilipi-red" style="margin-top: 2px;">${ pratilipi.title }</h4></a>
 			<#if pratilipi.author?? >
 				<a href="${ pratilipi.author.pageUrl }"><h6 style="margin-top:15px;">${ pratilipi.author.name }</h6></a>
 			</#if>

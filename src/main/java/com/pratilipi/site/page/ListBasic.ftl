@@ -22,7 +22,6 @@
 				<#-- Add page navigation -->
 				<#assign currentPage = pratilipiListPageCurr>
 				<#assign maxPage = pratilipiListPageMax>
-				<#assign prefix = "?" >
 				<#include "../element/pratilipi-page-navigation.ftl">
 			</div>
 		</div>

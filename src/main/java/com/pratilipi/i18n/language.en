@@ -129,7 +129,7 @@ review_see_all_reviews		= See All Reviews
 # Comments
 
 comment_reply_to_comment				= Reply
-comment_number_of_comments_singular		= Replies
+comment_number_of_comments_singular		= Reply
 comment_number_of_comments_plural		= Replies
 comment_reply_comment_help				= Type here to reply
 comment_add_comment						= Add Comment
