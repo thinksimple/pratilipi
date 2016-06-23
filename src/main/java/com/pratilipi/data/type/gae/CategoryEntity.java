@@ -6,27 +6,27 @@ import com.pratilipi.data.type.Category;
 @SuppressWarnings("serial")
 public class CategoryEntity implements Category {
 
-	private String NAME;
+	private String name;
 	
-	private PratilipiFilter PRATILIPI_FILTER;
+	private PratilipiFilter pratilipiFilter;
 
 	
 	public CategoryEntity() {}
 	
 	public CategoryEntity( String name, PratilipiFilter pratilipiFilter ) {
-		this.NAME = name;
-		this.PRATILIPI_FILTER = pratilipiFilter;
+		this.name = name;
+		this.pratilipiFilter = pratilipiFilter;
 	}
 
 	
 	@Override
 	public String getName() {
-		return NAME;
+		return name;
 	}
 	
 	@Override
 	public PratilipiFilter getPratilipiFilter() {
-		return PRATILIPI_FILTER;
+		return pratilipiFilter;
 	}
 	
 }

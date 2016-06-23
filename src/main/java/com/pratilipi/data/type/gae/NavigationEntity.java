@@ -8,34 +8,34 @@ import com.pratilipi.data.type.Navigation;
 @SuppressWarnings("serial")
 public class NavigationEntity implements Navigation {
 
-	private String TITLE;
+	private String title;
 	
-	private List<Link> LINKS;
+	private List<Link> linkList;
 	
 	
 	public NavigationEntity() {
-		this.LINKS = new LinkedList<Link>();
+		this.linkList = new LinkedList<Link>();
 	}
 
 	
 	@Override
 	public String getTitle() {
-		return TITLE;
+		return title;
 	}
 
 	@Override
 	public void setTitle( String title ) {
-		this.TITLE = title;
+		this.title = title;
 	}
 	
 	@Override
 	public List<Link> getLinkList() {
-		return LINKS;
+		return linkList;
 	}
 	
 	@Override
 	public void addLink( Link link ) {
-		this.LINKS.add( link );
+		this.linkList.add( link );
 	}
 
 }
