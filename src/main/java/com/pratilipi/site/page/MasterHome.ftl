@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?2016062002">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?20160623">
 
 	<#include "meta/GoogleAnalytics.ftl">
 
@@ -162,14 +162,17 @@
 </head>
 
 <body>
+	<#--
 	<#include "../element/pratilipi-homepage-login.ftl">
 	<#include "../element/pratilipi-homepage-register.ftl">
 	<#include "../element/pratilipi-homepage-logout.ftl">
+	-->
 	
 	<div class="container">
 		<div class="landing-page">
 			<div class="pratilipi-banner clearfix">
 				<div class="pratilipi-background"></div>
+				<#--
 				<div id="login-signup" class="login-signup pull-right" style="display: <#if user.isGuest == true>block<#else>none</#if>;">
 					<button class="login-btn" onClick="openLoginModal()">LOG IN</button>
 					<button class="signup-btn" onClick="openRegisterModal()">SIGN UP</button>
@@ -190,7 +193,7 @@
 						</ul>
 					</div>
 				</div>
-
+				-->
 				<div class="content-wrapper">
 
 					<div class="heading-wrapper">

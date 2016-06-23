@@ -128,7 +128,6 @@ public class PratilipiSite extends HttpServlet {
 			resourceList.add( ThirdPartyResource.BOOTSTRAP.getTag() );
 			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
 			resourceList.add( ThirdPartyResource.CKEDITOR.getTag() );
-			resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER.getTag() );
 //			resourceList.add( ThirdPartyResource.POLYMER_IRON_AJAX.getTag() );
 //			resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS.getTag() );
@@ -196,14 +195,20 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.EVENT ) {
+				if( ! basicMode )
+					resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.BLOG ) {
+				if( ! basicMode )
+					resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 				dataModel = createDataModelForBlogPage( page.getPrimaryContentId(), filterLanguage, basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "BlogPostListBasic.ftl" : "BlogPostList.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.BLOG_POST ) {
+				if( ! basicMode )
+					resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 			
@@ -333,10 +338,10 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "AuthorList.ftl";
 			
 			} else if( uri.equals( "/events" ) ) {
+				if( ! basicMode )
+					resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
-
-				
 			
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );

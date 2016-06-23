@@ -22,10 +22,13 @@
 						<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
 							<pratilipi-input type="email" disabled="{{ emailDisabled }}" label="${ _strings.user_email }" value="{{ email::input }}" icon="icons:mail"></pratilipi-input>
 						</div>
+						<#--
 						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
 							<iron-icon icon="{{ emailIcon }}" style="margin-top: 24px; width: 28px; height: 28px; cursor: pointer;" on-click="editEmail"></iron-icon>
 						</div>
+						-->
 					</div>
+					<#--
 					<div class="row">
 						<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
 							<pratilipi-input type="tel" disabled="{{ phoneDisabled }}" label="${ _strings.user_phone }" value="{{ phone::input }}" icon="icons:settings-phone"></pratilipi-input>
@@ -34,6 +37,7 @@
 							<iron-icon icon="{{ phoneIcon }}" style="margin-top: 24px; width: 28px; height: 28px; cursor: pointer;" on-click="editPhone"></iron-icon>
 						</div>
 					</div>
+					-->
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
 							<template is="dom-if" if="{{ ! user.isEmailVerified }}">
@@ -87,6 +91,7 @@
 					this.set( "phone", this.user.phone );
 			},
 			
+			<#--
 			_disableEditEmail: function() {
 				this.set( 'emailDisabled', true );
 				this.set( 'emailIcon', "icons:create" );
@@ -151,6 +156,7 @@
 				this._disableEditEmail();
 				this._disableEditPhone();
 			},
+			-->
 			
 			open: function() {
 				this.async( function() {
@@ -160,8 +166,10 @@
 			
 			close: function() {
 				this._userChanged();
+				<#--
 				this._disableEditEmail();
 				this._disableEditPhone();
+				-->
 				jQuery( "#pratilipiEditAccount" ).modal( 'hide' );	
 			},
 			
