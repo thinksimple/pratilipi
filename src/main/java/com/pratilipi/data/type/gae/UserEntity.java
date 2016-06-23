@@ -2,13 +2,12 @@ package com.pratilipi.data.type.gae;
 
 import java.util.Date;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
@@ -20,48 +19,47 @@ import com.pratilipi.data.type.User;
 @Entity( name = "USER" )
 public class UserEntity implements User {
 	
-	@PrimaryKey
-	@Persistent( column = "USER_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
+	@Id
 	private Long USER_ID;
 	
-	@Persistent( column = "FACEBOOK_ID" )
+	@Index( IfNotNull.class )
 	private String FACEBOOK_ID;
 	
-	@Persistent( column = "PASSWORD" )
+	@Index
 	private String PASSWORD;
 	
 
-	@Persistent( column = "EMAIL" )
+	@Index( IfNotNull.class )
 	private String EMAIL;
 	
-	@Persistent( column = "PHONE" )
+	@Index( IfNotNull.class )
 	private String PHONE;
 	
 	
-	@Persistent( column = "VERIFICATION_TOKEN" )
+	@Index( IfNotNull.class )
 	private String VERIFICATION_TOKEN;
 	
 	@Deprecated
-	@Persistent( column = "STATUS" )
+	@Index( IfNotNull.class )
 	private UserStatus STATUS;
 	
-	@Persistent( column = "STATE" )
-	private UserState state;
+	@Index
+	private UserState STATE;
 	
 	
-	@Persistent( column = "CAMPAIGN" )
+	@Index( IfNotNull.class )
 	private String CAMPAIGN;
 	
-	@Persistent( column = "REFERER" )
+	@Index( IfNotNull.class )
 	private String REFERER;
 	
-	@Persistent( column = "SIGN_UP_DATE" )
+	@Index
 	private Date SIGN_UP_DATE;
 	
-	@Persistent( column = "SIGN_UP_SOURCE" )
+	@Index
 	private UserSignUpSource SIGN_UP_SOURCE;
 	
-	@Persistent( column = "LAST_UPDATED" )
+	@Index
 	private Date LAST_UPDATED;
 
 	
@@ -148,12 +146,12 @@ public class UserEntity implements User {
 	public UserState getState() {
 
 		if( CAMPAIGN != null && CAMPAIGN.equals( "Publisher:5684064812007424" ) ) {
-			state = UserState.DELETED;
-		} else if( state == null && STATUS != null ) {
+			STATE = UserState.DELETED;
+		} else if( STATE == null && STATUS != null ) {
 			switch( STATUS ) {
 				case PRELAUNCH_REFERRAL:
 				case POSTLAUNCH_REFERRAL:
-					state = UserState.REFERRAL;
+					STATE = UserState.REFERRAL;
 					break;
 				case PRELAUNCH_SIGNUP:
 				case POSTLAUNCH_SIGNUP:
@@ -161,18 +159,18 @@ public class UserEntity implements User {
 				case ANDROID_SIGNUP:
 				case ANDROID_SIGNUP_FACEBOOK:
 				case ANDROID_SIGNUP_GOOGLE:
-					state = UserState.REGISTERED;
+					STATE = UserState.REGISTERED;
 					break;
 			}
 		}
 		
-		return state;
+		return STATE;
 		
 	}
 	
 	@Override
 	public void setState( UserState state ) {
-		this.state = state;
+		this.STATE = state;
 	}
 	
 	
