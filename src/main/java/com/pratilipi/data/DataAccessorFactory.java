@@ -40,14 +40,6 @@ public class DataAccessorFactory {
 		return dataAccessor;
 	}
 	
-	public static void destroyDataAccessor() {
-		DataAccessor dataAccessor = threadLocalDataAccessor.get();
-		if( dataAccessor != null ) {
-			dataAccessor.destroy();
-			threadLocalDataAccessor.remove();
-		}
-	}
-	
 	public static SearchAccessor getSearchAccessor() {
 		return searchAccessor;
 	}

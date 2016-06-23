@@ -3,12 +3,11 @@ package com.pratilipi.data.type;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 
-public interface User extends Serializable {
+public interface User extends GenericOfyType, Serializable {
 	
 	Long getId();
 	
@@ -19,38 +18,6 @@ public interface User extends Serializable {
 	String getPassword();
 	
 	void setPassword( String password );
-	
-	
-	@Deprecated
-	String getFirstName();
-	
-	@Deprecated
-	void setFirstName( String firstName );
-	
-	@Deprecated
-	String getLastName();
-	
-	@Deprecated
-	void setLastName( String lastName );
-	
-	@Deprecated
-	String getNickName();
-	
-	@Deprecated
-	void setNickName( String nickName );
-	
-	
-	@Deprecated
-	Gender getGender();
-	
-	@Deprecated
-	void setGender( Gender gender );
-	
-	@Deprecated
-	Date getDateOfBirth();
-	
-	@Deprecated
-	void setDateOfBirth( Date dateOfBirth );
 	
 	
 	String getEmail();

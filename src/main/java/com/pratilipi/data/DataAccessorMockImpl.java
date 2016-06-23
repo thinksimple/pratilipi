@@ -6,7 +6,6 @@ import static com.pratilipi.data.mock.PratilipiMock.PRATILIPI_TABLE;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +47,6 @@ import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.Vote;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
-import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuditLogEntityOfy;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
@@ -158,9 +156,9 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Map<Long, User> getUsers( List<Long> idList ) {
+	public List<User> getUserList( List<Long> idList ) {
 		// TODO: Implementation
-		return new HashMap<>( 0 );
+		return new ArrayList<>( 0 );
 	}
 	
 	@Override
@@ -185,7 +183,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public User createOrUpdateUser( User user, AuditLog auditLog ) {
-		createAuditLog( auditLog );
 		return createOrUpdateUser( user );
 	}
 	
@@ -228,11 +225,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 	// AUDIT_LOG Table
 
 	@Override
-	public AuditLog newAuditLog() {
-		return new AuditLogEntity();
-	}
-
-	@Override
 	public AuditLog newAuditLogOfy( String accessId, AccessType accessType, Object eventDataOld ) {
 		return new AuditLogEntityOfy( accessId, accessType, eventDataOld );
 	}
@@ -243,25 +235,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return null;
 	}
 	
-	@Override
-	public AuditLog createAuditLog( AuditLog auditLog ) {
-		// TODO: Implementation
-		return null;
-	}
-	
-
-	@Override
-	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount) {
-		// TODO: Implementation
-		return null;
-	}
-
-	@Override
-	public DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursorStr, Integer resultCount) {
-		// TODO: Implementation
-		return null;
-	}
-
 	
 	// PAGE Table
 	
@@ -476,7 +449,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public Author createOrUpdateAuthor( Author author, AuditLog auditLog ) {
-		createAuditLog( auditLog );
 		return createOrUpdateAuthor( author );
 	}
 
@@ -670,12 +642,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 	// CATEGORY Table
 	
 	@Override
-	public Category getCategory(Long categoryId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
 	public List<Category> getCategoryList( Language language ) {
 		// TODO Auto-generated method stub
 		return new ArrayList<Category>( 0 );
@@ -766,10 +732,4 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return mailingListSubscription;
 	}
 	
-	
-	// Destroy
-
-	@Override
-	public void destroy() {}
-
 }

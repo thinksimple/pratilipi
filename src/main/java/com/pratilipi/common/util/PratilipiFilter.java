@@ -7,10 +7,8 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 
+@SuppressWarnings("serial")
 public class PratilipiFilter implements Serializable {
-	
-	private static final long serialVersionUID = 6769002082197329230L;
-
 	
 	private Long authorId;
 	private Language language;

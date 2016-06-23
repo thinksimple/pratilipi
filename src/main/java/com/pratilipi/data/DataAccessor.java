@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.jdo.PersistenceManager;
-
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
@@ -36,9 +34,6 @@ import com.pratilipi.data.type.Vote;
 
 public interface DataAccessor {
 
-	PersistenceManager getPersistenceManager();
-
-	
 	// APP_PROPERTY Table
 	AppProperty newAppProperty( String id );
 	AppProperty getAppProperty( String id );
@@ -50,8 +45,7 @@ public interface DataAccessor {
 	User getUser( Long id );
 	User getUserByEmail( String email );
 	User getUserByFacebookId( String facebookId );
-	Map<Long, User> getUsers( List<Long> idList );
-	@Deprecated
+	List<User> getUserList( List<Long> idList );
 	DataListCursorTuple<User> getUserList( String cursorStr, Integer resultCount );
 	User createOrUpdateUser( User user );
 	User createOrUpdateUser( User user, AuditLog auditLog );
@@ -66,14 +60,6 @@ public interface DataAccessor {
 	// AUDIT_LOG Table
 	AuditLog newAuditLogOfy();
 	AuditLog newAuditLogOfy( String accessId, AccessType accessType, Object eventDataOld );
-	@Deprecated
-	AuditLog newAuditLog();
-	@Deprecated
-	AuditLog createAuditLog( AuditLog auditLog );
-	@Deprecated
-	DataListCursorTuple<AuditLog> getAuditLogList( String cursor, Integer resultCount );
-	@Deprecated
-	DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursor, Integer resultCount );
 
 	
 	// PAGE Table
@@ -155,7 +141,6 @@ public interface DataAccessor {
 	
 	
 	// CATEGORY Table
-	Category getCategory( Long categoryId );
 	List<Category> getCategoryList( Language language );
 
 	
@@ -180,9 +165,5 @@ public interface DataAccessor {
 	MailingListSubscription newMailingListSubscription();
 	MailingListSubscription getMailingListSubscription( MailingList mailingList, String email );
 	MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog );
-	
-	
-	// Destroy
-	void destroy();
 	
 }

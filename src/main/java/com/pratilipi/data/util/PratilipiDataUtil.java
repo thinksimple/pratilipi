@@ -1182,14 +1182,14 @@ public class PratilipiDataUtil {
 			
 			Gson gson = new Gson();
 
-			AccessToken accessToken = AccessTokenFilter.getAccessToken();
+/*			AccessToken accessToken = AccessTokenFilter.getAccessToken();
 			AuditLog auditLog = dataAccessor.newAuditLog();
 			auditLog.setAccessId( accessToken.getId() );
 			auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
 			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
 			auditLog.setEventDataNew( gson.toJson( pratilipi ) );
 			auditLog.setEventComment( "Uploaded content image (resource)." );
-			auditLog = dataAccessor.createAuditLog( auditLog );
+			auditLog = dataAccessor.createAuditLog( auditLog );*/
 			
 			return true;
 			

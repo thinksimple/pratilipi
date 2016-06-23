@@ -10,14 +10,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.jdo.JDOHelper;
-import javax.jdo.JDOObjectNotFoundException;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -25,11 +20,10 @@ import org.apache.commons.io.LineIterator;
 
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
-import com.google.appengine.datanucleus.query.JDOCursorHelper;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.CommentParentType;
@@ -42,7 +36,7 @@ import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.PratilipiFilter;
-import com.pratilipi.data.GaeQueryBuilder.Operator;
+import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
@@ -63,7 +57,6 @@ import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.Vote;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
-import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuditLogEntityOfy;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
@@ -87,14 +80,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	private static final Memcache memcache = new MemcacheGaeImpl();
 
-	private static final String NAVIGATION_DATA_FILE_PREFIX = "curated/navigation.";
-	private static final String CATEGORY_DATA_FILE_PREFIX = "curated/category.";
 	private static final String CURATED_DATA_FOLDER = "curated";
-	
-	private static final PersistenceManagerFactory pmfInstance =
-			JDOHelper.getPersistenceManagerFactory( "transactions-optional" );
-
-	private final PersistenceManager pm;
 	
 	
 	// Registering Entities
@@ -103,6 +89,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 		ObjectifyService.register( AppPropertyEntity.class );
 		
+		ObjectifyService.register( UserEntity.class );
 		ObjectifyService.register( AccessTokenEntity.class );
 		ObjectifyService.register( AuditLogEntityOfy.class );
 		
@@ -124,47 +111,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 	}
 	
-	
-	// Constructor
-
-	public DataAccessorGaeImpl() {
-		this.pm = pmfInstance.getPersistenceManager();
-	}
-
-	@Override
-	public PersistenceManager getPersistenceManager() {
-		return pm;
-	}
-	
-	
-	// JDO Helper Methods
-	
-	private <T> T getEntity( Class<T> clazz, Object id ) {
-		T entity = (T) pm.getObjectById( clazz, id );
-		return pm.detachCopy( entity );
-	}
-
-	private <T> T createOrUpdateEntity( T entity ) {
-		entity = pm.makePersistent( entity );
-		return pm.detachCopy( entity );
-	}
-	
-	private Object[] createOrUpdateEntities( Object... entities ) {
-		entities = pm.makePersistentAll( entities );
-		return pm.detachCopyAll( entities );
-	}
-	
-	@SuppressWarnings("unused")
-	private <T> List<T> createOrUpdateEntityList( List<T> entityList ) {
-		entityList = (List<T>) pm.makePersistentAll( entityList );
-		return (List<T>) pm.detachCopyAll( entityList );
-	}
-	
-	private <T> void deleteEntity( Class<T> clazz, Object id ) {
-		T entity = (T) pm.getObjectById( clazz, id );
-		pm.deletePersistent( entity );
-	}
-
 	
 	// Objectify Helper Methods
 	
@@ -275,51 +221,64 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public User getUser( Long id ) {
-		return id == null ? null : getEntity( UserEntity.class, id );
+		return getEntityOfy( UserEntity.class, id );
 	}
 	
 	@Override
 	public User getUserByEmail( String email ) {
-		Query query = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) )
-				.addFilter( "email", email )
-				.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS )
-				.addOrdering( "state", true )
-				.addOrdering( "signUpDate", true )
-				.build();
 		
-		@SuppressWarnings("unchecked")
-		List<User> userList = (List<User>) query.execute( email, UserState.DELETED );
-
-		if( userList.size() > 1 )
-			logger.log( Level.SEVERE, userList.size() + " Users found with Email Id " + email   + " ." );
-
-		return userList.size() == 0 ? null : pm.detachCopy( userList.get( 0 ) );
+		String memcacheId = "DataStore.User-" + email;
+		
+		User user = memcache.get( memcacheId );
+		if( user != null )
+			return user;
+		
+		
+		user = ObjectifyService.ofy().load()
+				.type( UserEntity.class )
+				.filter( "EMAIL", email )
+				.filter( "STATE !=", UserState.DELETED )
+				.order( "STATE" )
+				.order( "SIGN_UP_DATE" )
+				.first().now();
+		
+		if( user != null )
+			memcache.put( memcacheId, user );
+		
+		
+		return user;
+		
 	}
 	
 	@Override
 	public User getUserByFacebookId( String facebookId ) {
-		Query query = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) )
-				.addFilter( "facebookId", facebookId )
-				.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS )
-				.addOrdering( "state", true )
-				.addOrdering( "signUpDate", true )
-				.build();
 		
-		@SuppressWarnings("unchecked")
-		List<User> userList = (List<User>) query.execute( facebookId, UserState.DELETED );
-
-		if( userList.size() > 1 )
-			logger.log( Level.SEVERE, userList.size() + " Users found with facebook Id " + facebookId   + " ." );
-
-		return userList.size() == 0 ? null : pm.detachCopy( userList.get( 0 ) );
+		String memcacheId = "DataStore.User-" + "fb::" + facebookId;
+		
+		User user = memcache.get( memcacheId );
+		if( user != null )
+			return user;
+		
+		
+		user = ObjectifyService.ofy().load()
+				.type( UserEntity.class )
+				.filter( "FACEBOOK_ID", facebookId )
+				.filter( "STATE !=", UserState.DELETED )
+				.order( "STATE" )
+				.order( "SIGN_UP_DATE" )
+				.first().now();
+		
+		if( user != null )
+			memcache.put( memcacheId, user );
+		
+		
+		return user;
+		
 	}
 
 	@Override
-	public Map<Long, User> getUsers( List<Long> idList ) {
-		Map<Long, User> keyValueMap = new HashMap<>( idList.size() );
-		for( Long userId : idList )
-			keyValueMap.put( userId, getUser( userId ) );
-		return keyValueMap;
+	public List<User> getUserList( List<Long> idList ) {
+		return getEntityListOfy( UserEntity.class, idList );
 	}
 	
 	@Override
@@ -329,32 +288,65 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@SuppressWarnings("unchecked")
 	private <T> DataListCursorTuple<T> getUserList( String cursorStr, Integer resultCount, boolean idOnly ) {
+		
+		Query<UserEntity> query = ObjectifyService.ofy().load().type( UserEntity.class );
+		
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
+		
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
 
-		GaeQueryBuilder gaeQueryBuilder =
-				new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
 		
-		gaeQueryBuilder.setCursor( cursorStr );
-		if( resultCount != null )
-			gaeQueryBuilder.setRange( 0, resultCount );
-		if( idOnly )
-			gaeQueryBuilder.setResult( "id" );
-	
-		Query query = gaeQueryBuilder.build();
-		List<T> userEntityList = (List<T>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-		Cursor cursor = JDOCursorHelper.getCursor( userEntityList );
+		List<T> responseList = resultCount == null ? new ArrayList<T>() : new ArrayList<T>( resultCount );
+		Cursor cursor = null;
+		if( idOnly ) {
+			QueryResultIterator <Key<UserEntity>> iterator = query.keys().iterator();
+			while( iterator.hasNext() )
+				responseList.add( (T) (Long) iterator.next().getId() );
+			cursor = iterator.getCursor();
+		} else {
+			QueryResultIterator <UserEntity> iterator = query.iterator();
+			while( iterator.hasNext() )
+				responseList.add( (T) iterator.next() );
+			cursor = iterator.getCursor();
+		}
 		
-		return new DataListCursorTuple<T>(
-				idOnly ? userEntityList : (List<T>) pm.detachCopyAll( userEntityList ),
-				cursor == null ? null : cursor.toWebSafeString() );
+		
+		return new DataListCursorTuple<T>( responseList, cursor == null ? null : cursor.toWebSafeString() );
+		
 	}
 
 	@Override
 	public User createOrUpdateUser( User user ) {
-		return createOrUpdateEntity( user );
+		return createOrUpdateEntityOfy( user, null );
 	}
 
+	@Override
 	public User createOrUpdateUser( User user, AuditLog auditLog ) {
-		return (User) createOrUpdateEntities( user, auditLog )[ 0 ];
+		
+		user = auditLog == null
+				? createOrUpdateEntityOfy( user )
+				: createOrUpdateEntityOfy( user, auditLog );
+		
+		if( user.getEmail() != null ) {
+			String memcacheId = "DataStore.User-" + user.getEmail();
+			if( user.getState() == UserState.DELETED )
+				memcache.remove( memcacheId );
+			else
+				memcache.put( memcacheId, user );
+		}
+		
+		if( user.getFacebookId() != null ) {
+			String memcacheId = "DataStore.User-" + "fb::" + user.getFacebookId();
+			if( user.getState() == UserState.DELETED )
+				memcache.remove( memcacheId );
+			else
+				memcache.put(memcacheId, user );
+		}
+		
+		return user;
+
 	}
 	
 	
@@ -432,51 +424,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return new AuditLogEntityOfy( accessId, accessType, eventDataOld );
 	}
 
-	@Override
-	public AuditLog newAuditLog() {
-		return new AuditLogEntity();
-	}
-
-	@Override
-	public AuditLog createAuditLog( AuditLog auditLog ) {
-		( (AuditLogEntity) auditLog ).setCreationDate( new Date() );
-		return createOrUpdateEntity( auditLog );
-	}
-
-	@Override
-	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount ) {
-		return getAuditLogList( null, cursorStr, resultCount );
-	}
-
-	@Override
-	public DataListCursorTuple<AuditLog> getAuditLogList( String accessId, String cursorStr, Integer resultCount ) {
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuditLogEntity.class ) )
-				.addOrdering( "creationDate", false );
-
-		if( accessId != null )
-			gaeQueryBuilder.addFilter( "accessId", accessId );
-
-		if( resultCount != null )
-			gaeQueryBuilder.setRange( 0, resultCount );
-		
-		Query query = gaeQueryBuilder.build();
-
-		if( cursorStr != null ) {
-			Cursor cursor = Cursor.fromWebSafeString( cursorStr );
-			Map<String, Object> extensionMap = new HashMap<String, Object>();
-			extensionMap.put( JDOCursorHelper.CURSOR_EXTENSION, cursor );
-			query.setExtensions( extensionMap );
-		}
-		
-		@SuppressWarnings("unchecked")
-		List<AuditLog> audtiLogList = (List<AuditLog>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
-		Cursor cursor = JDOCursorHelper.getCursor( audtiLogList );
-		
-		return new DataListCursorTuple<>( 
-				(List<AuditLog>) pm.detachCopyAll( audtiLogList ),
-				cursor == null ? null : cursor.toWebSafeString() );
-	}
-	
 	
 	// PAGE Table
 	
@@ -1308,47 +1255,64 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public List<Navigation> getNavigationList( Language language ) {
 
-		List<Navigation> navigationList = new LinkedList<>();
+		String memcacheId = "CuratedData.NavigationList-" + language.getCode()
+				+ "?" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 15 ) )
+				+ "/" + SystemProperty.STAGE;
+		
+		ArrayList<Navigation> navigationList = memcache.get( memcacheId );
+		if( navigationList != null )
+			return navigationList;
+		
 
+		List<String> lines = null;
 		try {
-			File file = new File( DataAccessor.class.getResource( NAVIGATION_DATA_FILE_PREFIX + language.getCode() ).toURI() );
-			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+			String fileName = CURATED_DATA_FOLDER + "/navigation." + language.getCode();
+			InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
+			lines = IOUtils.readLines( inputStream, "UTF-8" );
+			inputStream.close();
+		} catch( NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch " + language.getNameEn() + " navigation list.", e );
+			lines = new ArrayList<>( 0 );
+		}
+
+
+		navigationList = new ArrayList<>( lines.size() );
+		
+		Navigation navigation = new NavigationEntity();
+		for( String line : lines ) {
 			
-			Navigation navigation = new NavigationEntity();
-			while( it.hasNext() ) {
-				String line = it.nextLine().trim();
-				
-				if( navigation.getTitle() == null && line.isEmpty() )
-					continue;
-				
-				else if( navigation.getTitle() == null && ! line.isEmpty() )
-					navigation.setTitle( line );
-				
-				else if( navigation.getTitle() != null && line.isEmpty() ) {
-					navigationList.add( navigation );
-					navigation = new NavigationEntity();
-				}
-				
-				else if( navigation.getTitle() != null && ! line.isEmpty() ) {
-					Navigation.Link link = null;
-					if( line.indexOf( ' ' ) == -1 )
-						link = new Navigation.Link( line, line );
-					else
-						link = new Navigation.Link( 
-								line.substring( line.indexOf( ' ' ) + 1 ).trim(),
-								line.substring( 0, line.indexOf( ' ' ) )
-						);
-					navigation.addLink( link );
-				}
+			line = line.trim();
+			
+			if( navigation.getTitle() == null && line.isEmpty() )
+				continue;
+			
+			else if( navigation.getTitle() == null && ! line.isEmpty() )
+				navigation.setTitle( line );
+			
+			else if( navigation.getTitle() != null && line.isEmpty() ) {
+				navigationList.add( navigation );
+				navigation = new NavigationEntity();
+			
+			} else if( navigation.getTitle() != null && ! line.isEmpty() ) {
+				Navigation.Link link = null;
+				if( line.indexOf( ' ' ) == -1 )
+					link = new Navigation.Link( line, line );
+				else
+					link = new Navigation.Link( 
+							line.substring( line.indexOf( ' ' ) + 1 ).trim(),
+							line.substring( 0, line.indexOf( ' ' ) )
+					);
+				navigation.addLink( link );
 			}
 			
-			if( navigation.getTitle() != null )
-				navigationList.add( navigation );
-			
-			LineIterator.closeQuietly( it );
-		} catch( URISyntaxException | NullPointerException | IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch " + language.getNameEn() + " navigation list.", e );
 		}
+
+		if( navigation.getTitle() != null )
+			navigationList.add( navigation );
+		
+		
+		memcache.put( memcacheId, navigationList );
+
 		
 		return navigationList;
 	
@@ -1358,39 +1322,44 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// CATEGORY Table
 	
 	@Override
-	public Category getCategory( Long id ) {
-		if( id == null )
-			return null;
-		
-		try {
-			return getEntity( CategoryEntity.class, id );
-		} catch ( JDOObjectNotFoundException e ) {
-			logger.log( Level.SEVERE, "Category Id " + id + " is not found!" );
-		}
-		return null;
-	}
-	
-	@Override
 	public List<Category> getCategoryList( Language language ) {
-
-		List<Category> categoryList = new LinkedList<>();
-
-		try {
-			Gson gson = new Gson();
-			File file = new File( DataAccessor.class.getResource( CATEGORY_DATA_FILE_PREFIX + language.getCode() ).toURI() );
-			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
-			while( it.hasNext() ) {
-				String categoryStr = it.nextLine();
-				String categoryName = categoryStr.substring( 0, categoryStr.indexOf( '{' ) ).trim();
-				String pratilipiFilterJson = categoryStr.substring( categoryStr.indexOf( '{' ) ).trim();
-				PratilipiFilter pratilipiFilter = gson.fromJson( pratilipiFilterJson, PratilipiFilter.class );
-				categoryList.add( new CategoryEntity( categoryName, pratilipiFilter ) );
-			}
-			LineIterator.closeQuietly( it );
-		} catch( URISyntaxException | NullPointerException | JsonSyntaxException | IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch " + language.getNameEn() + " category list.", e );
-		}
 		
+		String memcacheId = "CuratedData.CategoryList-" + language.getCode()
+				+ "?" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 15 ) )
+				+ "/" + SystemProperty.STAGE;
+
+		ArrayList<Category> categoryList = memcache.get( memcacheId );
+		if( categoryList != null )
+			return categoryList;
+		
+		
+		List<String> lines = null;
+		try {
+			String fileName = CURATED_DATA_FOLDER + "/category." + language.getCode();
+			InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
+			lines = IOUtils.readLines( inputStream, "UTF-8" );
+			inputStream.close();
+		} catch( NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch " + language.getNameEn() + " navigation list.", e );
+			lines = new ArrayList<>( 0 );
+		}
+
+		
+		Gson gson = new Gson();
+		
+		categoryList = new ArrayList<Category>( lines.size() );
+		for( String categoryStr : lines ) {
+			if( categoryStr.trim().isEmpty() )
+				continue;
+			String categoryName = categoryStr.substring( 0, categoryStr.indexOf( '{' ) ).trim();
+			String pratilipiFilterJson = categoryStr.substring( categoryStr.indexOf( '{' ) ).trim();
+			PratilipiFilter pratilipiFilter = gson.fromJson( pratilipiFilterJson, PratilipiFilter.class );
+			categoryList.add( new CategoryEntity( categoryName, pratilipiFilter ) );
+		}
+
+		
+		memcache.put( memcacheId, categoryList );
+
 		return categoryList;
 	
 	}
@@ -1518,12 +1487,4 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntityOfy( mailingListSubscription, auditLog );
 	}
 	
-	
-	// Destroy
-	
-	@Override
-	public void destroy() {
-		pm.close();
-	}
-
 }

@@ -5,39 +5,37 @@ import java.util.List;
 
 import com.pratilipi.data.type.Navigation;
 
+@SuppressWarnings("serial")
 public class NavigationEntity implements Navigation {
 
-	private static final long serialVersionUID = -837436400887184239L;
-
+	private String TITLE;
 	
-	private String title;
-	
-	private List<Link> linkList;
+	private List<Link> LINKS;
 	
 	
 	public NavigationEntity() {
-		this.linkList = new LinkedList<Link>();
+		this.LINKS = new LinkedList<Link>();
 	}
 
 	
 	@Override
 	public String getTitle() {
-		return title;
+		return TITLE;
 	}
 
 	@Override
 	public void setTitle( String title ) {
-		this.title = title;
+		this.TITLE = title;
 	}
 	
 	@Override
 	public List<Link> getLinkList() {
-		return linkList;
+		return LINKS;
 	}
 	
 	@Override
 	public void addLink( Link link ) {
-		linkList.add( link );
+		this.LINKS.add( link );
 	}
 
 }

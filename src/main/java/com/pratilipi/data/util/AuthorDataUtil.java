@@ -2,6 +2,7 @@ package com.pratilipi.data.util;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -196,12 +197,18 @@ public class AuthorDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		List<Author> authorList = dataAccessor.getAuthorList( authorIdList );
-
+		
 		List<Long> userIdList = new ArrayList<>( authorIdList.size() );
 		for( Author author : authorList )
 			if( author.getUserId() != null )
 				userIdList.add( author.getUserId() );
-		Map<Long, User> users = dataAccessor.getUsers( userIdList );
+		
+		List<User> userList = dataAccessor.getUserList( userIdList );
+		
+		Map<Long, User> users = new HashMap<>();
+		for( User user : userList )
+			users.put( user.getId(), user );
+		
 		
 		Map<Long, Page> authorPages = dataAccessor.getPages( PageType.AUTHOR, authorIdList );
 		

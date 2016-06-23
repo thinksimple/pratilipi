@@ -21,18 +21,12 @@ public class UserMock {
 		USER_TABLE.add( user_2 );
 		USER_TABLE.add( user_3 );
 
-		user_1.setFirstName( "User" );
-		user_1.setLastName( "One" );
 		user_1.setEmail( "user-one@pratilipi.com" );
 		user_1.setPassword( "8EilZIQ04Vuf5sbYrp16FV4Z+3IE36ciZUyOeUc8mQA=$7iAI9oWvfqriubH34iWulvkQlAtc5bsLpIc6LuHYUlQ=" ); // password
 		user_1.setState( UserState.ACTIVE );
 		
-		user_2.setFirstName( "User" );
-		user_2.setLastName( "Two" );
 		user_2.setEmail( "user-two@pratilipi.com" );
 
-		user_3.setFirstName( "User" );
-		user_3.setLastName( "Three" );
 		user_3.setEmail( "user-three@pratilipi.com" );
 	}
 	

@@ -156,13 +156,13 @@ public class UserDataUtil {
 	
 	public static Map<Long, UserData> createUserDataList( List<Long> userIdList ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Map<Long, User> userMap = dataAccessor.getUsers( userIdList );
+		List<User> userList = dataAccessor.getUserList( userIdList );
 		Map<Long, Author> authorMap = new HashMap<>( userIdList.size() );
 		for( Long userId : userIdList )
 			authorMap.put( userId, dataAccessor.getAuthorByUserId( userId ) ); // TODO: optimize on DataAccessor calls
 		Map<Long, UserData> userDataList = new HashMap<>( userIdList.size() );
-		for( Long userId : userIdList )
-			userDataList.put( userId, createUserData( userMap.get( userId ), authorMap.get( userId ) ) );
+		for( User user : userList )
+			userDataList.put( user.getId(), createUserData( user, authorMap.get( user.getId() ) ) );
 		return userDataList;
 	}
 
@@ -204,7 +204,7 @@ public class UserDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLog();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( isNew ? AccessType.USER_ADD : AccessType.USER_UPDATE );
 		auditLog.setEventDataOld( gson.toJson( user ) );
@@ -288,7 +288,7 @@ public class UserDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLog();
+		AuditLog auditLog = dataAccessor.newAuditLogOfy();
 		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 		auditLog.setAccessType( AccessType.USER_ADD );
 		auditLog.setEventDataOld( gson.toJson( user ) );
@@ -367,7 +367,7 @@ public class UserDataUtil {
 			
 			Gson gson = new Gson();
 			
-			AuditLog auditLog = dataAccessor.newAuditLog();
+			AuditLog auditLog = dataAccessor.newAuditLogOfy();
 			auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 
 			if( user == null || user.getState() == UserState.DELETED ) {

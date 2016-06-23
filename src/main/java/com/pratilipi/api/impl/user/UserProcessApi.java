@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-
+import com.google.appengine.api.datastore.QueryResultIterator;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -21,8 +22,6 @@ import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.GaeQueryBuilder;
-import com.pratilipi.data.GaeQueryBuilder.Operator;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
@@ -45,7 +44,6 @@ public class UserProcessApi extends GenericApi {
 	public GenericResponse get( GenericRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		PersistenceManager pm = dataAccessor.getPersistenceManager();
 		
 		// Fetching AppProperty
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
@@ -54,14 +52,18 @@ public class UserProcessApi extends GenericApi {
 			appProperty.setValue( new Date( 0 ) );
 		}
 
-		// Fetching list of user ids.
-		GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
-		gaeQueryBuilder.addFilter( "signUpDate", appProperty.getValue(), Operator.GREATER_THAN );
-		gaeQueryBuilder.addOrdering( "signUpDate", true );
-		gaeQueryBuilder.setResult( "id" );
-		gaeQueryBuilder.setRange( 0, 10000 );
-		Query query = gaeQueryBuilder.build();
-		List<Long> userIdList = (List<Long>) query.execute( appProperty.getValue() );
+		
+		Query<UserEntity> query = ObjectifyService.ofy().load().type( UserEntity.class )
+				.filter( "SIGN_UP_DATE >", appProperty.getValue() )
+				.order( "SIGN_UP_DATE" )
+				.limit( 10000 );
+
+		
+		QueryResultIterator <Key<UserEntity>> iterator = query.keys().iterator();
+		List<Long> userIdList = new ArrayList<Long>();
+		while( iterator.hasNext() )
+			userIdList.add( iterator.next().getId() );
+		
 		
 		// Creating task for each user.
 		List<Task> taskList = new ArrayList<>( userIdList.size() );
@@ -92,7 +94,6 @@ public class UserProcessApi extends GenericApi {
 		if( request.validateData() ) {
 			
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			PersistenceManager pm = dataAccessor.getPersistenceManager();
 			User user = dataAccessor.getUser( request.getUserId() );
 
 			
@@ -125,39 +126,36 @@ public class UserProcessApi extends GenericApi {
 
 			// Only one non-DELETED User entity can exist per email id.
 			if( user.getEmail() != null ) {
-				GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
-				gaeQueryBuilder.addFilter( "email", user.getEmail() );
-				gaeQueryBuilder.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS );
-				gaeQueryBuilder.addOrdering( "state", true );
-				gaeQueryBuilder.addOrdering( "signUpDate", true );
-				Query query = gaeQueryBuilder.build();
-				List<User> list = (List<User>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
+				Query<UserEntity> query = ObjectifyService.ofy().load().type( UserEntity.class )
+						.filter( "EMAIL", user.getEmail() )
+						.filter( "STATE !=", UserState.DELETED )
+						.order( "STATE" )
+						.order( "SIGN_UP_DATE" );
+				List<UserEntity> list = query.list();
 				if( list.size() != 1 )
 					throw new InvalidArgumentException( list.size() + " non-DELETED User entities found for email " + user.getEmail() + " ." );
 			}
 			
 			// Only one non-DELETED User entity can exist per facebook id.
 			if( user.getFacebookId() != null ) {
-				GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( UserEntity.class ) );
-				gaeQueryBuilder.addFilter( "facebookId", user.getFacebookId() );
-				gaeQueryBuilder.addFilter( "state", UserState.DELETED, Operator.NOT_EQUALS );
-				gaeQueryBuilder.addOrdering( "state", true );
-				gaeQueryBuilder.addOrdering( "signUpDate", true );
-				Query query = gaeQueryBuilder.build();
-				List<User> list = (List<User>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );
+				Query<UserEntity> query = ObjectifyService.ofy().load().type( UserEntity.class )
+						.filter( "FACEBOOK_ID", user.getFacebookId() )
+						.filter( "STATE !=", UserState.DELETED )
+						.order( "STATE" )
+						.order( "SIGN_UP_DATE" );
+				List<UserEntity> list = query.list();
 				if( list.size() != 1 )
 					throw new InvalidArgumentException( list.size() + " non-DELETED User entities found for Facebook Id " + user.getFacebookId() + " ." );
 			}
 
 
 			// Author profile for the user.
-			GaeQueryBuilder gaeQueryBuilder = new GaeQueryBuilder( pm.newQuery( AuthorEntity.class ) );
-			gaeQueryBuilder.addFilter( "userId", user.getId() );
-			gaeQueryBuilder.addFilter( "state", AuthorState.DELETED, Operator.NOT_EQUALS );
-			gaeQueryBuilder.addOrdering( "state", true );
-			gaeQueryBuilder.addOrdering( "registrationDate", true );
-			Query query = gaeQueryBuilder.build();
-			List<Author> authorList = (List<Author>) query.executeWithMap( gaeQueryBuilder.getParamNameValueMap() );;
+			Query<AuthorEntity> query = ObjectifyService.ofy().load().type( AuthorEntity.class )
+					.filter( "USER_ID", user.getId() )
+					.filter( "STATE !=", AuthorState.DELETED )
+					.order( "STATE" )
+					.order( "REGISTRATION_DATE" );
+			List<AuthorEntity> authorList = query.list();
 			
 			if( authorList.size() == 0 ) {
 				

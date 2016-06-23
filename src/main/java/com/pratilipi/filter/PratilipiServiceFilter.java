@@ -35,7 +35,6 @@ public class PratilipiServiceFilter implements Filter {
 		else
 			chain.doFilter( request, response );
 
-		DataAccessorFactory.destroyDataAccessor();
 		DataAccessorFactory.destroyDocAccessor();
 		
 	}

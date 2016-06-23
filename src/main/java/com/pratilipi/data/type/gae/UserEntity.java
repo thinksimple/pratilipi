@@ -3,217 +3,154 @@ package com.pratilipi.data.type.gae;
 import java.util.Date;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.pratilipi.common.type.Gender;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
 import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.type.UserStatus;
 import com.pratilipi.data.type.User;
 
-@PersistenceCapable( table = "USER" )
+@SuppressWarnings("serial")
+@Cache
+@Entity( name = "USER" )
 public class UserEntity implements User {
-	
-	private static final long serialVersionUID = 5942981653445086715L;
 	
 	@PrimaryKey
 	@Persistent( column = "USER_ID", valueStrategy = IdGeneratorStrategy.IDENTITY )
-	private Long id;
+	private Long USER_ID;
 	
 	@Persistent( column = "FACEBOOK_ID" )
-	private String facebookId;
+	private String FACEBOOK_ID;
 	
 	@Persistent( column = "PASSWORD" )
-	private String password;
+	private String PASSWORD;
 	
 
-	@Deprecated
-	@Persistent( column = "FIRST_NAME" )
-	private String firstName;
-	
-	@Deprecated
-	@Persistent( column = "LAST_NAME" )
-	private String lastName;
-	
-	@Deprecated
-	@Persistent( column = "NICK_NAME" )
-	private String nickName;
-
-	
-	@Deprecated
-	@Persistent( column = "GENDER" )
-	private Gender gender;
-	
-	@Deprecated
-	@Persistent( column = "DATE_OF_BIRTH" )
-	private Date dateOfBirth;
-	
-	
 	@Persistent( column = "EMAIL" )
-	private String email;
+	private String EMAIL;
 	
 	@Persistent( column = "PHONE" )
-	private String phone;
+	private String PHONE;
 	
 	
 	@Persistent( column = "VERIFICATION_TOKEN" )
-	private String verificationToken;
+	private String VERIFICATION_TOKEN;
 	
 	@Deprecated
 	@Persistent( column = "STATUS" )
-	private UserStatus status;
+	private UserStatus STATUS;
 	
 	@Persistent( column = "STATE" )
 	private UserState state;
 	
 	
 	@Persistent( column = "CAMPAIGN" )
-	private String campaign;
+	private String CAMPAIGN;
 	
 	@Persistent( column = "REFERER" )
-	private String referer;
+	private String REFERER;
 	
 	@Persistent( column = "SIGN_UP_DATE" )
-	private Date signUpDate;
+	private Date SIGN_UP_DATE;
 	
 	@Persistent( column = "SIGN_UP_SOURCE" )
-	private UserSignUpSource signUpSource;
+	private UserSignUpSource SIGN_UP_SOURCE;
 	
 	@Persistent( column = "LAST_UPDATED" )
-	private Date lastUpdated;
+	private Date LAST_UPDATED;
 
 	
 	public UserEntity() {}
 	
 	public UserEntity( Long id ) {
-		this.id = id;
+		this.USER_ID = id;
 	}
 	
 	
 	@Override
 	public Long getId() {
-		return id;
+		return USER_ID;
 	}
 	
 	public void setId( Long id ) {
-		this.id = id;
+		this.USER_ID = id;
 	}
 	
-	@Override 
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Key<T> getKey() {
+		return getId() == null ? null : (Key<T>) Key.create( getClass(), getId() );
+	}
+
+	@Override
+	public <T> void setKey( Key<T> key ) {
+		this.USER_ID = key.getId();
+	}
+
+	@Override
 	public String getFacebookId() {
-		return facebookId;
+		return FACEBOOK_ID;
 	}
 	
 	@Override
 	public void setFacebookId( String facebookId ) {
-		this.facebookId = facebookId;
+		this.FACEBOOK_ID = facebookId;
 	}
 	
 	@Override
 	public String getPassword() {
-		return password;
+		return PASSWORD;
 	}
 	
 	@Override
 	public void setPassword( String password ) {
-		this.password = password;
-	}
-	
-	
-	@Override
-	public String getFirstName() {
-		return firstName;
-	}
-	
-	@Override
-	public void setFirstName( String firstName ) {
-		this.firstName = firstName;
-	}
-	
-	@Override
-	public String getLastName() {
-		return lastName;
-	}
-	
-	@Override
-	public void setLastName( String lastName ) {
-		this.lastName = lastName;
-	}
-	
-	@Override
-	public String getNickName() {
-		return nickName;
-	}
-	
-	@Override
-	public void setNickName( String nickName ) {
-		this.nickName = nickName;
-	}
-	
-	
-	@Override
-	public Gender getGender() {
-		return gender ;
-	}
-	
-	@Override
-	public void setGender( Gender gender ) {
-		this.gender = gender;
-	}
-	
-	@Override
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-	
-	@Override
-	public void setDateOfBirth( Date dateOfBirth ) {
-		this.dateOfBirth = dateOfBirth;
+		this.PASSWORD = password;
 	}
 	
 	
 	@Override
 	public String getEmail() {
-		return email;
+		return EMAIL;
 	}
 	
 	@Override
 	public void setEmail( String email ) {
-		this.email = email;
+		this.EMAIL = email;
 	}
 	
 	@Override
 	public String getPhone() {
-		return phone;
+		return PHONE;
 	}
 	
 	@Override
 	public void setPhone( String phone ) {
-		this.phone = phone;
+		this.PHONE = phone;
 	}
 	
 	
 	@Override 
 	public String getVerificationToken() {
-		return verificationToken;
+		return VERIFICATION_TOKEN;
 	}
 	
 	@Override
 	public void setVerificationToken( String verificationToken ) {
-		this.verificationToken = verificationToken;
+		this.VERIFICATION_TOKEN = verificationToken;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public UserState getState() {
 
-		if( campaign != null && campaign.equals( "Publisher:5684064812007424" ) ) {
+		if( CAMPAIGN != null && CAMPAIGN.equals( "Publisher:5684064812007424" ) ) {
 			state = UserState.DELETED;
-		} else if( state == null && status != null ) {
-			switch( status ) {
+		} else if( state == null && STATUS != null ) {
+			switch( STATUS ) {
 				case PRELAUNCH_REFERRAL:
 				case POSTLAUNCH_REFERRAL:
 					state = UserState.REFERRAL;
@@ -241,82 +178,81 @@ public class UserEntity implements User {
 	
 	@Override
 	public UserCampaign getCampaign() {
-		return campaign == null ? null : UserCampaign.fromString( campaign );
+		return CAMPAIGN == null ? null : UserCampaign.fromString( CAMPAIGN );
 	}
 	
 	@Override
 	public void setCampaign( UserCampaign campaign ) {
-		this.campaign = campaign == null ? null : campaign.toString();
+		this.CAMPAIGN = campaign == null ? null : campaign.toString();
 	}
 	
 	@Override
 	public String getReferrer() {
-		return referer;
+		return REFERER;
 	}
 	
 	@Override
 	public void setReferrer( String referrer ) {
-		this.referer = referrer;
+		this.REFERER = referrer;
 	}
 	
 	@Override
 	public Date getSignUpDate() {
-		return signUpDate;
+		return SIGN_UP_DATE;
 	}
 	
 	@Override
 	public void setSignUpDate( Date signUpDate ) {
-		this.signUpDate = signUpDate;
+		this.SIGN_UP_DATE = signUpDate;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public UserSignUpSource getSignUpSource() {
 
-		if( campaign != null && campaign.equals( "Publisher:5684064812007424" ) ) {
-			signUpSource = null;
-		} else if( signUpSource == null && status != null ) {
-			switch( status ) {
+		if( CAMPAIGN != null && CAMPAIGN.equals( "Publisher:5684064812007424" ) ) {
+			SIGN_UP_SOURCE = null;
+		} else if( SIGN_UP_SOURCE == null && STATUS != null ) {
+			switch( STATUS ) {
 				case PRELAUNCH_REFERRAL:
 				case PRELAUNCH_SIGNUP:
-					signUpSource = UserSignUpSource.PRE_LAUNCH_WEBSITE;
+					SIGN_UP_SOURCE = UserSignUpSource.PRE_LAUNCH_WEBSITE;
 					break;
 				case POSTLAUNCH_REFERRAL:
 				case POSTLAUNCH_SIGNUP:
-					signUpSource = UserSignUpSource.WEBSITE;
+					SIGN_UP_SOURCE = UserSignUpSource.WEBSITE;
 					break;
 				case POSTLAUNCH_SIGNUP_SOCIALLOGIN:
-					signUpSource = UserSignUpSource.WEBSITE_FACEBOOK;
+					SIGN_UP_SOURCE = UserSignUpSource.WEBSITE_FACEBOOK;
 					break;
 				case ANDROID_SIGNUP:
-					signUpSource = UserSignUpSource.ANDROID_APP;
+					SIGN_UP_SOURCE = UserSignUpSource.ANDROID_APP;
 					break;
 				case ANDROID_SIGNUP_FACEBOOK:
-					signUpSource = UserSignUpSource.ANDROID_APP_FACEBOOK;
+					SIGN_UP_SOURCE = UserSignUpSource.ANDROID_APP_FACEBOOK;
 					break;
 				case ANDROID_SIGNUP_GOOGLE:
-					signUpSource = UserSignUpSource.ANDROID_APP_GOOGLE;
+					SIGN_UP_SOURCE = UserSignUpSource.ANDROID_APP_GOOGLE;
 					break;
 			}
 		}
 		
-		return signUpSource;
+		return SIGN_UP_SOURCE;
 		
 	}
 	
 	@Override
 	public void setSignUpSource( UserSignUpSource signUpSource ) {
-		this.signUpSource = signUpSource;
+		this.SIGN_UP_SOURCE = signUpSource;
 	}
 		
 	@Override
 	public Date getLastUpdated() {
-		return lastUpdated == null ? signUpDate : lastUpdated;
+		return LAST_UPDATED == null ? SIGN_UP_DATE : LAST_UPDATED;
 	}
 	
 	@Override
 	public void setLastUpdated( Date lastUpdated ) {
-		this.lastUpdated = lastUpdated;
+		this.LAST_UPDATED = lastUpdated;
 	}
-	
+
 }

@@ -5,9 +5,8 @@ import java.util.List;
 
 public interface Navigation extends Serializable {
 
+	@SuppressWarnings("serial")
 	class Link implements Serializable {
-		
-		private static final long serialVersionUID = -5964869848319539644L;
 		
 		private String name;
 		private String url;
