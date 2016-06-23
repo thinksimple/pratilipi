@@ -5,7 +5,7 @@ pratilipi					= প্রতিলিপি
 home_page_title				= পড়ুন বাংলা গল্প,কবিতা,উপন্যাস এবং আরও অনেক কিছু
 website_language			= বাংলা
 
-facebook_page				= https://www.facebook.com/Pratilipidotcom/
+facebook_page				= https://www.facebook.com/Pratilipi.Bengali/
 twitter_page				= https://twitter.com/TeamPratilipi
 googleplus_page				= https://plus.google.com/+PratilipiTeam
 linkedin_page				= https://www.linkedin.com/company/pratilipi
@@ -24,7 +24,7 @@ lanugage_ml					=  মালায়ালাম
 language_bn					= বাংলা
 language_en					= ইংরাজী
 language_te					= তেলুগু
-language_kn					= Kannada
+language_kn					= কন্নড
 
 
 
@@ -83,10 +83,10 @@ pratilipi_publish_it		=   প্রকাশিত করুন
 
 pratilipi_no_reviews		=  আপনার পূর্বাপর বিবেচনা লিপিবদ্ধ করে আপনি প্রথম সমীক্ষক হতে পারেন।
 
-pratilipi_confirm_move_to_drafts_title	= Moving to drafts
-pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
-pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
-pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
+pratilipi_confirm_move_to_drafts_title	= ড্রাফ্টে সরানো হচ্ছে।
+pratilipi_confirm_move_to_drafts_body	= ড্রাফ্টে এই বিষয়বস্তু সরিয়ে ফেলার ব্যাপারে আপনি নিশ্চিত?
+pratilipi_confirm_move_to_drafts_true	= হ্যাঁ, ড্রাফ্টে সরানো হোক!
+pratilipi_confirm_move_to_drafts_false	= না, এটা অপ্রকাশিত করবেন না।
 
 # Rating
 
@@ -123,19 +123,19 @@ review_see_all_reviews		= সকল টিপ্পনী দেখুন
 
 # Comments
 
-comment_reply_to_comment				= Reply
-comment_number_of_comments_singular		= Replies
-comment_number_of_comments_plural		= Replies
-comment_reply_comment_help				= Type here to reply
-comment_add_comment						= Add Comment
-comment_edit_comment					= Edit Comment
-comment_delete_comment					= Delete Comment
-comment_confirm_delete_comment			= Are you sure to delete this comment?
-comment_confirm_delete_comment_yes		= Yes
-comment_confirm_delete_comment_no		= No
-comment_restore_comment					= Restore Comment
-comment_submit_comment					= Submit
-comment_cancel_comment					= Cancel
+comment_reply_to_comment				= প্রত্যুত্তর
+comment_number_of_comments_singular		= প্রত্যুত্তর
+comment_number_of_comments_plural		= প্রত্যুত্তর
+comment_reply_comment_help				= উত্তর দেওয়ার জন্য এখানে টাইপ করুন
+comment_add_comment						= মন্তব্য যোগ করুন
+comment_edit_comment					= মন্তব্য সম্পাদনা করুন
+comment_delete_comment					= মন্তব্য মুছে ফেলুন
+comment_confirm_delete_comment			= আপনি কি এই মন্তব্যটি মুছে ফেলার ব্যাপারে নিশ্চিত?
+comment_confirm_delete_comment_yes		= হ্যাঁ
+comment_confirm_delete_comment_no		= না
+comment_restore_comment					= পুনরুদ্ধার মন্তব্য
+comment_submit_comment					= জমা
+comment_cancel_comment					= বাতিল
 
 # Search
 
