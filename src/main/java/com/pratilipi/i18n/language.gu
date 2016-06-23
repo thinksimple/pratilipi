@@ -23,7 +23,7 @@ language_ml					= મલયાલમ
 language_bn					= બંગાળી 
 language_en					= અંગ્રેજી 
 language_te					= તેલુગુ 
-language_kn					= Kannada
+language_kn					= કન્નડા 
 
 
 # Pratilipi Types
@@ -83,10 +83,10 @@ pratilipi_publish_it		= પ્રકાશિત કરો
 
 pratilipi_no_reviews		= આપ પ્રથમ સમીક્ષક બની ને લેખકનો ઉત્સાહ વધારી શકો છો. 
 
-pratilipi_confirm_move_to_drafts_title	= Moving to drafts
-pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
-pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
-pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
+pratilipi_confirm_move_to_drafts_title	= ડ્રાફ્ટમાં મોકલો 
+pratilipi_confirm_move_to_drafts_body	= આ રચનાને ડ્રાફ્ટમાં મોકલવી નિશ્ચિત છે?
+pratilipi_confirm_move_to_drafts_true	= હા, ડ્રાફ્ટમાં મોકલો!
+pratilipi_confirm_move_to_drafts_false	= ના, અપ્રકાશિત ન કરો!
 
 
 # Rating
@@ -95,7 +95,7 @@ rating_rating		  = રેટિંગ
 rating_ratings		= રેટિંગ 
 rating_rate_this	= રેટિંગ આપો 
 rating_your_rating	= આપનું રેટિંગ 
-rating_be_first_one	= Be the first one to rate it!
+rating_be_first_one	= રેટિંગ આપો 
 
 rating_1_star		= ૧ 
 rating_2_star		= ૨ 
@@ -124,19 +124,19 @@ review_see_all_reviews		= બધા રિવ્યુઝ જુઓ
 
 # Comments
 
-comment_reply_to_comment				= Reply
-comment_number_of_comments_singular		= Replies
-comment_number_of_comments_plural		= Replies
-comment_reply_comment_help				= Type here to reply
-comment_add_comment						= Add Comment
-comment_edit_comment					= Edit Comment
-comment_delete_comment					= Delete Comment
-comment_confirm_delete_comment			= Are you sure to delete this comment?
-comment_confirm_delete_comment_yes		= Yes
-comment_confirm_delete_comment_no		= No
-comment_restore_comment					= Restore Comment
-comment_submit_comment					= Submit
-comment_cancel_comment					= Cancel
+comment_reply_to_comment				= જવાબ આપો 
+comment_number_of_comments_singular		= જવાબો
+comment_number_of_comments_plural		= જવાબો
+comment_reply_comment_help				= જવાબો
+comment_add_comment						= કોમેન્ટ લખો
+comment_edit_comment					= કોમેન્ટ સુધારો
+comment_delete_comment					= કોમેન્ટ હટાવો 
+comment_confirm_delete_comment			= શું ખરેખર તમારે આ કોમેન્ટ રદ કરવા માગો છો?
+comment_confirm_delete_comment_yes		= હા 
+comment_confirm_delete_comment_no		= ના 
+comment_restore_comment					= કોમેન્ટ પુનઃસ્થાપિત કરો 
+comment_submit_comment					= સબમિટ કરો
+comment_cancel_comment					= રદ કરો 
 
 # Search
 
@@ -181,9 +181,9 @@ user_new_password		= નવો પાસવર્ડ
  
 user_full_name			= પૂરું નામ લખો
 user_email			= ઈ-મેલ આઈડી પ્રદાન કરો  
-user_email_not_available	= Email Not Available!
-user_phone					= Phone
-user_phone_not_available	= Phone Number Not Available!
+user_email_not_available	= ઈ-મેઈલ દર્જ થયેલ નથી!
+user_phone					= ફોન 
+user_phone_not_available	= ફોન નંબર દર્જ થયેલ નથી!
 user_password			= પાસવર્ડ 
 user_confirm_password	= પાસવર્ડની ખાતરી કરો 
 
@@ -193,7 +193,7 @@ user_my_account		= સેટિંગ
 user_is_new			= ઉપયોગકર્તા નવા છે -	
 user_is_registered		= ઉપયોગકર્તા અગાઉથી અકાઉન્ટ ધરાવે છે - 
 user_email_verification		= આપને મોકલેલ ઈ-મેલની ચકાસણી કરો 		
-user_require_access			= You need to log in to perform this action!
+user_require_access			= આ પ્રકિયા માટે સાઈટ પર લોગ-ઇન કરો!
 
 
 # My Account popup
