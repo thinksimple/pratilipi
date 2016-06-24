@@ -27,24 +27,28 @@
 					<li data-target="#carousel" data-slide-to="2"></li>
 					<li data-target="#carousel" data-slide-to="3"></li>
 					<li data-target="#carousel" data-slide-to="4"></li>
+					<li data-target="#carousel" data-slide-to="5"></li>
 				</ol>
 				
 				<!-- Items -->
 				<div class="carousel-inner">
 					<div class="item active">
-						<a on-click="write"><img src="{{ image1 }}" /></a>
+						<a href="/event/lb" target="_blank"><img src="{{ image1 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/children"><img src="{{ image2 }}" /></a>
+						<a on-click="write"><img src="{{ image2 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/love"><img src="{{ image3 }}" /></a>
+						<a href="/children" target="_blank"><img src="{{ image3 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/social"><img src="{{ image4 }}" /></a>
+						<a href="/love" target="_blank"><img src="{{ image4 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/women"><img src="{{ image5 }}" /></a>
+						<a href="/social" target="_blank"><img src="{{ image5 }}" /></a>
+					</div>
+					<div class="item">
+						<a href="/women" target="_blank"><img src="{{ image6 }}" /></a>
 					</div>
 				</div> 
 				<a href="#carousel" class="left carousel-control" data-slide="prev">
@@ -76,25 +80,28 @@
 			image2: { type: Image },
 			image3: { type: Image },
 			image4: { type: Image },
-			image5: { type: Image }
+			image5: { type: Image },
+			image6: { type: Image }
 		},
 		
 		_onIronResize: function() {
 			$( '.carousel' ).carousel();
 			var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-			if( windowsize > 600 ) {
-				this.image1 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-11.jpg";
-				this.image2 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-07.jpg";
-				this.image3 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-08.jpg";
-				this.image4 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-09.jpg";
-				this.image5 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-10.jpg";
+			if( windowsize > 560 ) {
+				this.image1 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-12.jpg";
+				this.image2 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-11.jpg";
+				this.image3 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-07.jpg";
+				this.image4 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-08.jpg";
+				this.image5 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-09.jpg";
+				this.image6 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-10.jpg";
 			} else {
-				this.image1 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-11-small.jpg";
-				this.image2 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-07-small.jpg";
-				this.image3 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-08-small.jpg";
-				this.image4 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-09-small.jpg";
-				this.image5 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-10-small.jpg";
+				this.image1 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-12-small.jpg";
+				this.image2 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-11-small.jpg";
+				this.image3 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-07-small.jpg";
+				this.image4 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-08-small.jpg";
+				this.image5 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-09-small.jpg";
+				this.image6 = "http://0.ptlp.co/resource-te/home-page-banner/pratilipi-telugu-carousel-10-small.jpg";
 			}
 		},
 		
