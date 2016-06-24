@@ -321,7 +321,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public User createOrUpdateUser( User user ) {
-		return createOrUpdateEntity( user, null );
+		return createOrUpdateUser( user, null );
 	}
 
 	@Override
