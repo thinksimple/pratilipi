@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -403,7 +404,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "user", userResponse );
 		dataModel.put( "pratilipiTypesJson", new Gson().toJson( pratilipiTypes ) );
 		if( basicMode ) {
-			dataModel.put( "requestUrl", new StringBuffer( request.getRequestURI() ).append( '?' ).append( request.getQueryString() ) );
+			dataModel.put( "requestUrl", URLEncoder.encode( new StringBuffer( request.getRequestURI() ).append( '?' ).append( request.getQueryString() ).toString() ) );
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "userJson", gson.toJson( userResponse ) );

@@ -18,7 +18,7 @@
 		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 			<a style="display: block;" <#if user.isGuest == true>href="/login?ret=${ requestUrl }"<#else>href="/account?ret=${ requestUrl }"</#if>>
 				<img style="width: 24px; height: 24px; margin: 20px auto;" 
-					src="http://0.ptlp.co/resource-all/icon/svg/<#if user.isGuest == true>question.svg<#else>happy.svg</#if>" />
+					src="http://0.ptlp.co/resource-all/icon/svg/user.svg" />
 			</a>
 		</div>
 	</div>

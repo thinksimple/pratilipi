@@ -39,16 +39,12 @@
 	
 	function facebookLogin() {
 		if( facebookLoginOnFlight ) return;
-		facebookLoginOnFlight = true;
-
 		FB.login( function( response ) {
-
-			<#-- response = null if window closed -->
-			if( response == null ) {
+			if( response == null || response.authResponse == null ) {
 				facebookLoginOnFlight = false;
 				return;
 			}
-
+			facebookLoginOnFlight = true;
 			$.ajax({
 		
 				type: 'post',
