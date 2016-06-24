@@ -14,11 +14,21 @@
 		}
 		
 		:host #pager #reader-content {
-			text-align: justify;
 			-webkit-font-smoothing: antialiased;
 			line-height: 1.6em;
 		}
-
+		
+		@media only screen and (max-width: 768px) {
+			:host #pager #reader-content {
+				text-align: left;
+			}
+		}
+		@media only screen and (min-width: 769px) {
+			:host #pager #reader-content {
+				text-align: justify;
+			}
+		}
+		
 		/* Bootstrap override */
 		.alert-success {
 			color: #333;

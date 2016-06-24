@@ -59,7 +59,7 @@
 	</#if>
 
 	
-	<h6 style="margin-top: 10px;">${ pratilipi.type }</h6>
+	<h6 style="margin-top: 10px;">${ pratilipiTypes[ pratilipi.getType() ].name }</h6>
 	
 	<div style="margin:25px 0px 5px 0px">
 		<h5>${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;${ pratilipi.getListingDateMillis()?number_to_date }</h5>

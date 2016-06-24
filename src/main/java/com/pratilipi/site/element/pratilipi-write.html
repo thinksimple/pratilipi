@@ -113,7 +113,8 @@
 	
 	<script>
 	HTMLImports.whenReady(function () {
-		CKEDITOR.replace( 'writeSummary' );
+		if( CKEDITOR != null && document.getElementById( 'writeSummary' ) != null )
+			CKEDITOR.replace( 'writeSummary' );
 	});
 		Polymer({
 

@@ -2,7 +2,7 @@
 	<#if contentType == "PRATILIPI">
 		#reader-content * {
 			font-size: ${ fontSize }px!important;
-			text-align: justify;
+			text-align: left!important;
 			-webkit-font-smoothing: antialiased;
 			line-height: 1.6em!important;
 			overflow: hidden;

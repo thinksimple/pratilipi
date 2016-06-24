@@ -10,17 +10,10 @@
 	<h5 style="margin: 12px auto;">${ _strings.author_since }&nbsp;&minus;&nbsp;${ author.getRegistrationDateMillis()?number_to_date }</h5>
 	
 	<hr/>
-	<div class="row" style="padding: 0px; margin-bottom: 10px;">
-		<div style="text-align: center; padding: 5px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<h5>${ _strings.author_count_works }&nbsp;&minus;&nbsp;${ author.contentPublished }</h5>
-		</div>
-		<div style="text-align: center; padding: 5px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<h5>${ _strings.author_count_reads }&nbsp;&minus;&nbsp;${ author.totalReadCount }</h5>
-		</div>
-		<div style="text-align: center; padding: 5px 0px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<h5>${ _strings.author_count_likes }&nbsp;&minus;&nbsp;${ author.totalFbLikeShareCount }</h5>
-		</div>
-	</div>
+	
+	<h5 style="margin-bottom: 12px;">${ _strings.author_count_works }&nbsp;&minus;&nbsp;${ author.contentPublished }</h5>
+	<h5 style="margin-bottom: 12px;">${ _strings.author_count_reads }&nbsp;&minus;&nbsp;${ author.totalReadCount }</h5>
+	<h5 style="margin-bottom: 12px;">${ _strings.author_count_likes }&nbsp;&minus;&nbsp;${ author.totalFbLikeShareCount }</h5>
 </div>
 
 
