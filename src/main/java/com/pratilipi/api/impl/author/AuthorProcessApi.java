@@ -183,7 +183,15 @@ public class AuthorProcessApi extends GenericApi {
 		// At least one of four name fields must be set.
 		if( author.getFirstName() == null && author.getLastName() == null && author.getFirstNameEn() == null && author.getLastNameEn() == null )
 			throw new InvalidArgumentException( "Author name is missing." );
-
+		
+		
+		// Name fields must not have empty string.
+		if( ( author.getFirstName() != null && author.getFirstName().trim().isEmpty() )
+				|| ( author.getLastName() != null && author.getLastName().trim().isEmpty() )
+				|| ( author.getFirstNameEn() != null && author.getFirstNameEn().trim().isEmpty() )
+				|| ( author.getLastNameEn() != null && author.getLastNameEn().trim().isEmpty() ) )
+			throw new InvalidArgumentException( "Author name has empty string." );
+		
 	}
 	
 }

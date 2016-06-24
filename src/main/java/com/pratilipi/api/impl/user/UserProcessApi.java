@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
@@ -53,24 +52,20 @@ public class UserProcessApi extends GenericApi {
 		}
 
 		
-		Query<UserEntity> query = ObjectifyService.ofy().load().type( UserEntity.class )
+		List<Key<UserEntity>> keyList = ObjectifyService.ofy().load()
+				.type( UserEntity.class )
 				.filter( "SIGN_UP_DATE >", appProperty.getValue() )
 				.order( "SIGN_UP_DATE" )
-				.limit( 10000 );
+				.limit( 10000 )
+				.keys().list();
 
 		
-		QueryResultIterator <Key<UserEntity>> iterator = query.keys().iterator();
-		List<Long> userIdList = new ArrayList<Long>();
-		while( iterator.hasNext() )
-			userIdList.add( iterator.next().getId() );
-		
-		
 		// Creating task for each user.
-		List<Task> taskList = new ArrayList<>( userIdList.size() );
-		for( Long userId : userIdList ) {
+		List<Task> taskList = new ArrayList<>( keyList.size() );
+		for( Key<UserEntity> key : keyList ) {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/user/process" )
-					.addParam( "userId", userId.toString() )
+					.addParam( "userId", key.getId() + "" )
 					.addParam( "validateData", "true" );
 			taskList.add( task );
 		}
@@ -78,8 +73,8 @@ public class UserProcessApi extends GenericApi {
 		logger.log( Level.INFO, "Added " + taskList.size() + " tasks." );
 		
 		// Updating AppProperty.
-		if( userIdList.size() > 0 ) {
-			appProperty.setValue( dataAccessor.getUser( userIdList.get( userIdList.size() - 1 ) ).getSignUpDate() );
+		if( taskList.size() > 0 ) {
+			appProperty.setValue( dataAccessor.getUser( keyList.get( keyList.size() - 1 ).getId() ).getSignUpDate() );
 			dataAccessor.createOrUpdateAppProperty( appProperty );
 		}
 		
@@ -126,7 +121,8 @@ public class UserProcessApi extends GenericApi {
 
 			// Only one non-DELETED User entity can exist per email id.
 			if( user.getEmail() != null ) {
-				Query<UserEntity> query = ObjectifyService.ofy().load().type( UserEntity.class )
+				Query<UserEntity> query = ObjectifyService.ofy().load()
+						.type( UserEntity.class )
 						.filter( "EMAIL", user.getEmail() )
 						.filter( "STATE !=", UserState.DELETED )
 						.order( "STATE" )
@@ -138,7 +134,8 @@ public class UserProcessApi extends GenericApi {
 			
 			// Only one non-DELETED User entity can exist per facebook id.
 			if( user.getFacebookId() != null ) {
-				Query<UserEntity> query = ObjectifyService.ofy().load().type( UserEntity.class )
+				Query<UserEntity> query = ObjectifyService.ofy().load()
+						.type( UserEntity.class )
 						.filter( "FACEBOOK_ID", user.getFacebookId() )
 						.filter( "STATE !=", UserState.DELETED )
 						.order( "STATE" )
@@ -150,7 +147,8 @@ public class UserProcessApi extends GenericApi {
 
 
 			// Author profile for the user.
-			Query<AuthorEntity> query = ObjectifyService.ofy().load().type( AuthorEntity.class )
+			Query<AuthorEntity> query = ObjectifyService.ofy().load()
+					.type( AuthorEntity.class )
 					.filter( "USER_ID", user.getId() )
 					.filter( "STATE !=", AuthorState.DELETED )
 					.order( "STATE" )

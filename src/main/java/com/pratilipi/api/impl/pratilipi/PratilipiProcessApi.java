@@ -105,7 +105,7 @@ public class PratilipiProcessApi extends GenericApi {
 		int year = cal.get( Calendar.YEAR );
 		int month = cal.get( Calendar.MONTH ) + 1;
 		int day = cal.get( Calendar.DAY_OF_MONTH );
-
+		
 		
 		List<Long> updatedPratilipiIdList = 
 				PratilipiDocUtil.updatePratilipiGoogleAnalyticsPageViews( year, month, day );
@@ -174,6 +174,13 @@ public class PratilipiProcessApi extends GenericApi {
 				
 				if( pratilipi.getState() != PratilipiState.DELETED && pratilipiPage == null )
 					throw new InvalidArgumentException( "Page entity is missing for the Pratilipi." );
+				
+				if( pratilipi.getTitle() == null || pratilipi.getTitleEn() == null )
+					throw new InvalidArgumentException( "Title is missing for the Pratilipi." );
+					
+				if( ( pratilipi.getTitle() != null && pratilipi.getTitle().trim().isEmpty() )
+						|| ( pratilipi.getTitleEn() != null && pratilipi.getTitleEn().trim().isEmpty() ) )
+					throw new InvalidArgumentException( "Title has empty string." );
 				
 			}
 		}
