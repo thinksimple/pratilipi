@@ -14,7 +14,7 @@
 						<div class="input-group">
 							<input type="text" class="form-control" name="q" placeholder="${ _strings.search }" style="display: table-cell; width:100%;" maxlength="120" <#if pratilipiListSearchQuery?? >value="${ pratilipiListSearchQuery }"</#if> />
 							<div style="background: #f5f5f5" class="input-group-addon"><button class="search-button" type="submit">
-								<img style="width: 16px; height: 16px;" src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/search.svg" />
+								<img style="width: 16px; height: 16px;" src="http://0.ptlp.co/resource-all/icon/svg/search.svg" />
 							</button></div>
 						</div>
 					</div>
@@ -27,7 +27,7 @@
 				<#else>
 					<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
 						<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
-								src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/search.svg" />
+								src="http://0.ptlp.co/resource-all/icon/svg/search.svg" />
 						<div class="text-center">${ _strings.search_no_results_found }</div>
 					</div>
 				</#if>

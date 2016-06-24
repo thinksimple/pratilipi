@@ -37,6 +37,13 @@
 	</script>
 </#if>
 
+<script>
+	$( document ).ready( function() {
+		var pratilipiTypes = ${ pratilipiTypesJson };
+		$( '#pratilipiType-${ pratilipi.getId() }' ).html( pratilipiTypes[ "${ pratilipi.getType() }" ].name );
+		$( '#creationDate-${ pratilipi.getId() }' ).html( "${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;" + convertDate( ${ pratilipi.getListingDateMillis()?c } ) );
+	});
+</script>
 
 <div class="secondary-500 pratilipi-shadow box text-center">
 	<h2 class="pratilipi-red">${ pratilipi.title!pratilipi.titleEn }</h2>
@@ -59,11 +66,11 @@
 	</#if>
 
 	
-	<h6 style="margin-top: 10px;">${ pratilipiTypes[ pratilipi.getType() ].name }</h6>
+	<h6 style="margin-top: 10px;" id="pratilipiType-${ pratilipi.getId() }"></h6>
 	
 	<div style="margin:25px 0px 5px 0px">
-		<h5>${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;${ pratilipi.getListingDateMillis()?number_to_date }</h5>
-		<h5>${ _strings.pratilipi_count_reads }&nbsp;&minus;&nbsp;${ pratilipi.readCount }</h5>
+		<h5 id="creationDate-${ pratilipi.getId() }"></h5>
+		<h5>${ _strings.pratilipi_count_reads }&nbsp;&minus;&nbsp;${ pratilipi.getReadCount()?c }</h5>
 	</div>
 	
 	<div style="padding-top: 20px; padding-bottom: 20px;">

@@ -401,13 +401,12 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
 		dataModel.put( "resourceList", resourceList );
 		dataModel.put( "user", userResponse );
+		dataModel.put( "pratilipiTypesJson", new Gson().toJson( pratilipiTypes ) );
 		if( basicMode ) {
 			dataModel.put( "requestUrl", request.getRequestURI() );
-			dataModel.put( "pratilipiTypes", pratilipiTypes );
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "userJson", gson.toJson( userResponse ) );
-			dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
 			dataModel.put( "navigationList", gson.toJson( navigationList ) );
 		}
 

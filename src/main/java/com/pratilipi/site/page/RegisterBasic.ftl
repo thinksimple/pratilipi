@@ -20,38 +20,6 @@
 	            margin-right: auto;
 	            padding: 20px;
 	        }
-	        div.social-wrap button {
-				padding-left: 20px;
-				padding-right: 0px;
-				margin-left: auto;
-				margin-right: auto;
-				height: 35px;
-				background: none;
-				border: none;
-				display: block;
-				background-size: 25px 25px, cover;
-				background-position: 10px center, center center;
-				background-repeat: no-repeat, repeat;
-				border-radius: 4px;
-				color: white;
-				font-size: 14px;
-				margin-bottom: 15px;
-				width: 275px;
-				border-bottom: 2px solid transparent;
-				border-left: 1px solid transparent;
-				border-right: 1px solid transparent;
-				box-shadow: 0 4px 2px -2px gray;
-				text-shadow: rgba(0, 0, 0, .4) -1px -1px 0;
-			}
-	
-			div.social-wrap > .facebook {
-				background-color: #3b5998;
-				background: url('http://0.ptlp.co/resource-all/icon/facebook-login/facebook_transparent_icon_25x25.png') no-repeat 10px #3b5998;
-				background: url(http://0.ptlp.co/resource-all/icon/facebook-login/facebook_transparent_icon_25x25.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4c74c4), color-stop(100%, #3b5998));
-				background-size: 25px 25px, cover;
-				background-position: 10px center, center center;
-				background-repeat: no-repeat, repeat;
-			}
     	</style>
     	
     	<script type="text/javascript">
@@ -71,44 +39,34 @@
 				return re.test(email);
 			}
 			function register() {
-				
 				var name = $( '#inputName' ).val();
 				var email = $( '#inputEmail' ).val();
 				var password = $( '#inputPassword' ).val();
-				
 				if( name == null || name.trim() == "" ) {
 					// Throw message - Please Enter Name
 					alert( "Please Enter your Name" );
 					return;
 				}
-				
 				if( email == null || email.trim() == "" ) {
 					// Throw message - Please Enter Email
 					alert( "Please Enter your Email" );
 					return;
 				}
-				
 				if( password == null || password.trim() == "" ) {
 					// Throw message - Please Enter Password
 					alert( "Please Enter your Password" );
 					return;
 				}
-				
 				if( ! validateEmail( email ) ) {
 					// Throw message - Email is not valid
 					alert( "Please Enter a valid Email" );
 					return;
 				}
-				
 				if( !document.getElementById( "acceptTerms" ).checked ) {
 					alert( "Please accept to our terms!" );
 					return;
 				}
-
 				jQuery( '#registerButton' ).prop( 'disabled', true );
-
-				// Make Ajax call
-
 				$.ajax({
 				
 					type: 'post',
@@ -145,41 +103,12 @@
 					}
 				});
 			}
-			function facebookLogin() {
-				FB.login( function( response ) {
-					$.ajax({
-				
-						type: 'post',
-						url: '/api/user/login/facebook',
-	
-						data: { 
-							'fbUserAccessToken': response.authResponse.accessToken
-						},
-						
-						success: function( response ) {
-							if( getUrlParameters().ret != null )
-								window.location.href = getUrlParameters().ret.replace( /%26/g, "&" );
-							else
-								window.location.href = "/"; 
-						},
-						
-						error: function( response ) {
-							var message = jQuery.parseJSON( response.responseText );
-							var status = response.status;
-	
-							if( message["message"] != null )
-								alert( "Error " + status + " : " + message["message"] ); 
-							else
-								alert( "Invalid Credentials" );
-						}
-					});
-				}, { scope: 'public_profile,email,user_birthday' } );
-			}
     	</script>
 	</head>
 
 	<body>
 		<#include "../element/pratilipi-header.ftl">
+		<#include "../element/pratilipi-facebook-login.ftl">
 		<div class="parent-container">
 			<div class="container">
 				
@@ -189,7 +118,7 @@
 		            </div>
 		            
 		            <div class="social-wrap" style="margin-top: 30px;">
-						<button class="facebook" onclick="facebookLogin()">${ _strings.user_sign_in_with_facebook }</button>
+						<button class="facebook" onClick="facebookLogin()">${ _strings.user_sign_in_with_facebook }</button>
 					</div>
 		            
 		            <form id="userRegisterForm" class="form-horizontal" action="javascript:void(0);">

@@ -247,7 +247,7 @@
 			},
 			
 			exitReader: function() {
-				window.location.href = getUrlParameter( "ret" ) != null ? getUrlParameter( "ret" ) : this.pratilipi.pageUrl;
+				window.location.href = getUrlParameter( "ret" ) != null ? decodeURIComponent( getUrlParameter( "ret" ) ) : this.pratilipi.pageUrl;
 			},
 			
 			

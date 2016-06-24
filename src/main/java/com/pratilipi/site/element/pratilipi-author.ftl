@@ -1,3 +1,9 @@
+<script>
+	$( document ).ready( function() {
+		$( '#creationDate-${ author.getId() }' ).html( "${ _strings.author_since }&nbsp;&minus;&nbsp;" + convertDate( ${ author.getRegistrationDateMillis()?c } ) );
+	});
+</script>
+
 <div class="secondary-500 pratilipi-shadow box text-center">
 	<h2 class="pratilipi-red">${ author.name!author.nameEn }</h2>
 	<#if author.penName?? || author.penNameEn?? >
@@ -7,7 +13,7 @@
 		<img src="${ author.getImageUrl( 200 ) }" alt="${ author.fullName!author.fullNameEn }" title="${ author.fullNameEn!author.fullName }" />
 	</div>
 	
-	<h5 style="margin: 12px auto;">${ _strings.author_since }&nbsp;&minus;&nbsp;${ author.getRegistrationDateMillis()?number_to_date }</h5>
+	<h5 style="margin: 12px auto;" id="creationDate-${ author.getId() }"></h5>
 	
 	<hr/>
 	
