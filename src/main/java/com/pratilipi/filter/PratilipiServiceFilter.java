@@ -30,12 +30,12 @@ public class PratilipiServiceFilter implements Filter {
 		
 		String requestUri = request.getRequestURI();
 
-		if( requestUri.equals( "/_ah/start" ) || requestUri.equals( "/_ah/stop" ) )
+		if( requestUri.equals( "/_ah/start" ) || requestUri.equals( "/_ah/stop" ) ) {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
-		else
+		} else {
+			DataAccessorFactory.getL1CacheAccessor().flush();
 			chain.doFilter( request, response );
-
-		DataAccessorFactory.destroyDocAccessor();
+		}
 		
 	}
 

@@ -173,8 +173,8 @@ public class PratilipiSiteFilter implements Filter {
 
 		
 		} else {
+			DataAccessorFactory.getL1CacheAccessor().flush();
 			chain.doFilter( request, response );
-			DataAccessorFactory.destroyDocAccessor();
 		}
 		
 	}

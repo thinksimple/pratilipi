@@ -75,9 +75,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	private static final Logger logger =
 			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
 	
-	private static final Memcache memcache = new MemcacheGaeImpl();
-
 	private static final String CURATED_DATA_FOLDER = "curated";
+	
+	private final Memcache memcache;
 	
 	
 	// Registering Entities
@@ -108,6 +108,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 	}
 	
+	
+	public DataAccessorGaeImpl( Memcache memcache ) {
+		this.memcache = memcache;
+	}
+
 	
 	// Objectify Helper Methods
 	

@@ -68,8 +68,7 @@ public class MemcacheGaeImpl implements Memcache {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public <K, T extends Serializable> void put(
-			K key, T value, long expirationDeltaMillis ) {
+	public <K, T extends Serializable> void put( K key, T value, long expirationDeltaMillis ) {
 
 		if( expirationDeltaMillis <= 0 )
 			return;
@@ -137,6 +136,7 @@ public class MemcacheGaeImpl implements Memcache {
 
 	}
 
+	@Override
 	public <K> void remove( K key ) {
 		try {
 			Cache cache = CacheManager.getInstance().getCacheFactory()
@@ -147,6 +147,7 @@ public class MemcacheGaeImpl implements Memcache {
 		}
 	}
 
+	@Override
 	public void flush() {
 		try {
 			Cache cache = CacheManager.getInstance().getCacheFactory()

@@ -28,6 +28,7 @@ public class MemcacheImpl implements Memcache {
 
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public <K, T extends Serializable> T get( K key ) {
 		T value = (T) cache.get(key);
 		if( value == null )
@@ -46,25 +47,28 @@ public class MemcacheImpl implements Memcache {
 		return keyValueMap;
 	}
 	
+	@Override
 	public <K, T extends Serializable> void put( K key, T value ) {
 		cache.put( key, value );
 	}
 
-	public <K, T extends Serializable> void put(
-			K key, T value, long expirationDeltaMillis ) {
-
+	@Override
+	public <K, T extends Serializable> void put( K key, T value, long expirationDeltaMillis ) {
 		cache.put( key, value );
 	}
 
+	@Override
 	public <K, T extends Serializable> void putAll( Map<K, T> keyValueMap ) {
 		for( Entry<K, T> entry : keyValueMap.entrySet() )
 			cache.put( entry.getKey(), entry.getValue() );
 	}
 
+	@Override
 	public <K> void remove( K key ) {
 		cache.remove( key );
 	}
 
+	@Override
 	public void flush() {
 		cache.clear();
 	}
