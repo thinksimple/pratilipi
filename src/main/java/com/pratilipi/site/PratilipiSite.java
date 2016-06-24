@@ -403,7 +403,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "user", userResponse );
 		dataModel.put( "pratilipiTypesJson", new Gson().toJson( pratilipiTypes ) );
 		if( basicMode ) {
-			dataModel.put( "requestUrl", request.getRequestURI() );
+			dataModel.put( "requestUrl", new StringBuffer( request.getRequestURI() ).append( '?' ).append( request.getQueryString() ) );
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "userJson", gson.toJson( userResponse ) );

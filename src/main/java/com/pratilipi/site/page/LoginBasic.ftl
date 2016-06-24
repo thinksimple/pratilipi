@@ -79,7 +79,7 @@
 					success: function( response ) {
 						jQuery( '#loginButton' ).prop( 'disabled', false );
 						if( getUrlParameters().ret != null )
-							window.location.href = getUrlParameters().ret.replace( /%26/g, "&" );
+							window.location.href = decodeURIComponent( getUrlParameters().ret );
 						else
 							window.location.href = "/"; 
 					},

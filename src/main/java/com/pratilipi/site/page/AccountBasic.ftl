@@ -60,7 +60,7 @@
 					<a href="/updatepassword"><h6 class="account">${ _strings.edit_account_change_password }</h6></a>
 					<#--
 					<#if user.isEmailVerified != true>
-						<a href="/verifyemail?ret=${ requestUrl }"><h6 class="account">${ _strings.edit_account_verify_email }</h6></a>
+						<a href="/verifyemail?ret=/"><h6 class="account">${ _strings.edit_account_verify_email }</h6></a>
 					</#if>
 					-->
 					<a href="/library"><h6 class="account">${ _strings.my_library }</h6></a>

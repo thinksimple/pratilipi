@@ -40,7 +40,15 @@
 	function facebookLogin() {
 		if( facebookLoginOnFlight ) return;
 		facebookLoginOnFlight = true;
+
 		FB.login( function( response ) {
+
+			<#-- response = null if window closed -->
+			if( response == null ) {
+				facebookLoginOnFlight = false;
+				return;
+			}
+
 			$.ajax({
 		
 				type: 'post',
@@ -53,7 +61,7 @@
 				success: function( response ) {
 					facebookLoginOnFlight = false;
 					if( getUrlParameters().ret != null )
-						window.location.href = getUrlParameters().ret.replace( /%26/g, "&" );
+						window.location.href = decodeURIComponent( getUrlParameters().ret );
 					else
 						window.location.href = "/";
 				},

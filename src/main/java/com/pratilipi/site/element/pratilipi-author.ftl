@@ -1,6 +1,6 @@
 <script>
 	$( document ).ready( function() {
-		$( '#creationDate-${ author.getId() }' ).html( "${ _strings.author_since }&nbsp;&minus;&nbsp;" + convertDate( ${ author.getRegistrationDateMillis()?c } ) );
+		$( '#creationDate-${ author.getId()?c }' ).html( "${ _strings.author_since }&nbsp;&minus;&nbsp;" + convertDate( ${ author.getRegistrationDateMillis()?c } ) );
 	});
 </script>
 
@@ -13,7 +13,7 @@
 		<img src="${ author.getImageUrl( 200 ) }" alt="${ author.fullName!author.fullNameEn }" title="${ author.fullNameEn!author.fullName }" />
 	</div>
 	
-	<h5 style="margin: 12px auto;" id="creationDate-${ author.getId() }"></h5>
+	<h5 style="margin: 12px auto;" id="creationDate-${ author.getId()?c }"></h5>
 	
 	<hr/>
 	

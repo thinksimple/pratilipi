@@ -40,8 +40,8 @@
 <script>
 	$( document ).ready( function() {
 		var pratilipiTypes = ${ pratilipiTypesJson };
-		$( '#pratilipiType-${ pratilipi.getId() }' ).html( pratilipiTypes[ "${ pratilipi.getType() }" ].name );
-		$( '#creationDate-${ pratilipi.getId() }' ).html( "${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;" + convertDate( ${ pratilipi.getListingDateMillis()?c } ) );
+		$( '#pratilipiType-${ pratilipi.getId()?c }' ).html( pratilipiTypes[ "${ pratilipi.getType() }" ].name );
+		$( '#creationDate-${ pratilipi.getId()?c }' ).html( "${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;" + convertDate( ${ pratilipi.getListingDateMillis()?c } ) );
 	});
 </script>
 
@@ -57,31 +57,31 @@
 	</div>
 	
 	<#if pratilipi.ratingCount gt 0 >
-		<a <#if user.isGuest == true>href="/login?ret=${ requestUrl }?review=write"<#else>href="?review=write"</#if> >
+		<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> >
 			<#assign rating=pratilipi.averageRating >
 			<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
 		</a>
 	<#else>
-		<a <#if user.isGuest == true>href="/login?ret=${ requestUrl }?review=write"<#else>href="?review=write"</#if> class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
+		<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
 	</#if>
 
 	
-	<h6 style="margin-top: 10px;" id="pratilipiType-${ pratilipi.getId() }"></h6>
+	<h6 style="margin-top: 10px;" id="pratilipiType-${ pratilipi.getId()?c }"></h6>
 	
 	<div style="margin:25px 0px 5px 0px">
-		<h5 id="creationDate-${ pratilipi.getId() }"></h5>
+		<h5 id="creationDate-${ pratilipi.getId()?c }"></h5>
 		<h5>${ _strings.pratilipi_count_reads }&nbsp;&minus;&nbsp;${ pratilipi.getReadCount()?c }</h5>
 	</div>
 	
 	<div style="padding-top: 20px; padding-bottom: 20px;">
-		<a class="pratilipi-light-blue-button" href="${ pratilipi.readPageUrl }&ret=${ requestUrl }">${ _strings.read }</a>
+		<a class="pratilipi-light-blue-button" href="${ pratilipi.readPageUrl }&ret=${ pratilipi.getPageUrl() }">${ _strings.read }</a>
 		<br />
 		<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
 			<button style="margin-top: 15px;" type="button" class="pratilipi-grey-button" onclick="addToOrRemoveFromLibrary()">
 				<#if !userpratilipi.isAddedtoLib()>${ _strings.add_to_library }<#else>${ _strings.remove_from_library }</#if>
 			</button>
 		<#else>
-			<a style="margin-top: 15px;" class="pratilipi-grey-button" href="/login?ret=${ requestUrl }">
+			<a style="margin-top: 15px;" class="pratilipi-grey-button" href="/login?ret=${ pratilipi.getPageUrl() }">
 				${ _strings.add_to_library }
 			</a>
 		</#if>

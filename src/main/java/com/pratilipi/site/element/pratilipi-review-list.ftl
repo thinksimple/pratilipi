@@ -9,7 +9,7 @@
 				${ _strings.review_write_a_review }
 			</#if></a>
 	<#elseif user.isGuest == true>
-		<a href="/login?ret=${ requestUrl }?review=write" style="display: inline-block" class="pratilipi-grey-button">${ _strings.review_write_a_review }</a>
+		<a href="/login?ret=${ pratilipi.getPageUrl() }?review=write" style="display: inline-block" class="pratilipi-grey-button">${ _strings.review_write_a_review }</a>
 	</#if>				
 </div>
 
