@@ -976,13 +976,14 @@ public class PratilipiSite extends HttpServlet {
 			}
 		}
 		
+		PratilipiListApi pratilipiListApi = new PratilipiListApi();
 		GetPratilipiListRequest pratilipiListRequest = new GetPratilipiListRequest();
 		pratilipiListRequest.setListName( listName );
 		pratilipiListRequest.setLanguage( filterLanguage );
 		pratilipiListRequest.setType( type );
 		pratilipiListRequest.setState( PratilipiState.PUBLISHED );
 		pratilipiListRequest.setOffset( offset );
-		GetPratilipiListResponse pratilipiListResponse = PratilipiListApi.getPratilipiList( pratilipiListRequest );
+		GetPratilipiListResponse pratilipiListResponse = pratilipiListApi.getPratilipiList( pratilipiListRequest );
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( filterLanguage );

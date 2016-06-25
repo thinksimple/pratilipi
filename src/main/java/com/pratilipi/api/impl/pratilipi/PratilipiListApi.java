@@ -16,7 +16,7 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 public class PratilipiListApi extends GenericApi {
 
 	@Get
-	public static GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request )
+	public GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request )
 			throws InsufficientAccessException {
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
