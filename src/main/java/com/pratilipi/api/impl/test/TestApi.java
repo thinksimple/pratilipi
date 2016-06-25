@@ -28,7 +28,7 @@ public class TestApi extends GenericApi {
 	public static class GetRequest extends GenericRequest {
 		Long deleteUserId;
 		String email;
-		Long facebookId;
+		String facebookId;
 	}
 	
 	public static class Response extends GenericResponse {
@@ -179,6 +179,7 @@ public class TestApi extends GenericApi {
 		
 		List<PageEntity> pageList = ObjectifyService.ofy().load()
 				.type( PageEntity.class )
+				.filter( "PAGE_TYPE", "AUTHOR" )
 				.filter( "PRIMARY_CONTENT_ID", author.getId() )
 				.list();
 		
