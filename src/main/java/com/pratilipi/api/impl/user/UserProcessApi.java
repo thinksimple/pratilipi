@@ -18,6 +18,7 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -157,7 +158,8 @@ public class UserProcessApi extends GenericApi {
 			
 			if( authorList.size() == 0 ) {
 				
-				throw new InvalidArgumentException( "Could not find an Author entity linked." );
+				if( user.getState() != UserState.REFERRAL || user.getSignUpSource() != UserSignUpSource.PRE_LAUNCH_WEBSITE )
+					throw new InvalidArgumentException( "Could not find an Author entity linked." );
 				
 			} else if( authorList.size() == 1 ) {
 				
