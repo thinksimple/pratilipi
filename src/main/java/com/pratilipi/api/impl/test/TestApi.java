@@ -84,6 +84,9 @@ public class TestApi extends GenericApi {
 						.list();
 			}
 		
+			if( userList.size() == 0 )
+				return new Response( "Could not find user for given email/facebook id !" );
+			
 			if( userList.size() == 1 )
 				return new Response( "Everythig looks well !" );
 			
@@ -110,7 +113,8 @@ public class TestApi extends GenericApi {
 			for( Author author : authorList ) {
 				List<PageEntity> pageList = ObjectifyService.ofy().load()
 						.type( PageEntity.class )
-						.filter( "PRIMARY_CONTENT_ID", authorList.get( 0 ).getId() )
+						.filter( "PAGE_TYPE", "AUTHOR" )
+						.filter( "PRIMARY_CONTENT_ID", author.getId() )
 						.list();
 				ObjectifyService.ofy().delete().entities( pageList );
 				author.setState( AuthorState.DELETED );
