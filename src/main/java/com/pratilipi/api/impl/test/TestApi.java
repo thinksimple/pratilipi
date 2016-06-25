@@ -10,7 +10,6 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.AuthorState;
-import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
@@ -18,7 +17,6 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
-import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
 @SuppressWarnings("serial")
@@ -61,7 +59,7 @@ public class TestApi extends GenericApi {
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty ); */
 		
 		
-		if( request.email != null || request.facebookId != null ) {
+/*		if( request.email != null || request.facebookId != null ) {
 			
 			List<UserEntity> userList = null;
 			
@@ -134,7 +132,11 @@ public class TestApi extends GenericApi {
 			
 			return new GenericResponse();
 			
-		}
+		}*/
+		
+		
+		return new GenericResponse();
+		
 		
 	}
 	
