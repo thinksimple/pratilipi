@@ -40,10 +40,8 @@ public class TestApi extends GenericApi {
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( 6214944447004672L );
 		Page page = dataAccessor.getPage( PageType.PRATILIPI, 6214944447004672L );
-		if( page == null ) {
-			page = PratilipiDataUtil._updatePratilipiPageUrl( pratilipi );
-			page = dataAccessor.createOrUpdatePage( page );
-		}
+		page = PratilipiDataUtil._updatePratilipiPageUrl( pratilipi );
+		page = dataAccessor.createOrUpdatePage( page );
 		
 		
 		return new GenericResponse();
