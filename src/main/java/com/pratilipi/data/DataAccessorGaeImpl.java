@@ -724,7 +724,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			}
 
 			
-			offset = cursorStr == null ? 0 : Integer.parseInt( cursorStr )
+			offset = ( cursorStr == null ? 0 : Integer.parseInt( cursorStr ) )
 					+ ( offset == null || offset < 0 ? 0 : offset );
 			
 			offset = Math.min( offset, pratilipiIdList.size() );
