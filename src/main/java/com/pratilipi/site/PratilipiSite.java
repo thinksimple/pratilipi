@@ -27,7 +27,9 @@ import com.google.gson.Gson;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.blogpost.shared.GenericBlogPostResponse;
 import com.pratilipi.api.impl.event.shared.GenericEventResponse;
+import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
+import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListRequest;
 import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
@@ -962,39 +964,46 @@ public class PratilipiSite extends HttpServlet {
 		
 		String title = createPageTitle( listTitle, listTitleEn, displayLanugage );
 		
+		Integer offset = null;
+		Integer pageCurr = 1;
+		Integer pageSize = 20;
+		
+		if( basicMode ) {
+			String pageNoStr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() );
+			if( pageNoStr != null && ! pageNoStr.trim().isEmpty() ) {
+				pageCurr = Integer.parseInt( pageNoStr );
+				offset = ( pageCurr - 1 ) * pageSize;
+			}
+		}
+		
+		GetPratilipiListRequest pratilipiListRequest = new GetPratilipiListRequest();
+		pratilipiListRequest.setListName( listName );
+		pratilipiListRequest.setLanguage( filterLanguage );
+		pratilipiListRequest.setType( type );
+		pratilipiListRequest.setState( PratilipiState.PUBLISHED );
+		pratilipiListRequest.setOffset( offset );
+		GetPratilipiListResponse pratilipiListResponse = PratilipiListApi.getPratilipiList( pratilipiListRequest );
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( filterLanguage );
 		pratilipiFilter.setType( type );
 		pratilipiFilter.setListName( listName );
 		pratilipiFilter.setState( PratilipiState.PUBLISHED );
-		
-		int pageCurr = 1;
-		int pageSize = 20;
-		
-		if( basicMode ) {
-			String pageNoStr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() );
-			if( pageNoStr != null && ! pageNoStr.trim().isEmpty() )
-				pageCurr = Integer.parseInt( pageNoStr );
-		}
-		
-		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, ( pageCurr - 1 ) * pageSize, pageSize );
 
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", title );
 		dataModel.put( "pratilipiListTitle", listTitle );
 		if( basicMode ) {
-			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
+			dataModel.put( "pratilipiList", pratilipiListResponse.getPratilipiList() );
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
-			if( pratilipiDataListCursorTuple.getNumberFound() != null )
-				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) pratilipiDataListCursorTuple.getNumberFound() ) / pageSize ) );
+			if( pratilipiListResponse.getNumberFound() != null )
+				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) pratilipiListResponse.getNumberFound() ) / pageSize ) );
 		} else {
 			Gson gson = new Gson();
-			dataModel.put( "pratilipiListJson", gson.toJson( toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
+			dataModel.put( "pratilipiListJson", gson.toJson( pratilipiListResponse.getPratilipiList() ) );
 			dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
-			dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+			dataModel.put( "pratilipiListCursor", pratilipiListResponse.getCursor() );
 		}
 		return dataModel;
 		

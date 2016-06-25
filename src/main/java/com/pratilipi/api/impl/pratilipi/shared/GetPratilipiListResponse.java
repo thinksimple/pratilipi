@@ -152,15 +152,30 @@ public class GetPratilipiListResponse extends GenericResponse {
 	
 	private List<Pratilipi> pratilipiList;
 	private String cursor;
+	private Long numberFound;
 
 	
 	private GetPratilipiListResponse() {}
 	
-	public GetPratilipiListResponse( List<PratilipiData> pratilipiList, String cursor ) {
+	public GetPratilipiListResponse( List<PratilipiData> pratilipiList, String cursor, Long numberFound ) {
 		this.pratilipiList = new ArrayList<>( pratilipiList.size() ); 
 		for( PratilipiData pratilipi : pratilipiList )
 			this.pratilipiList.add( new Pratilipi( pratilipi ) );
 		this.cursor = cursor;
+		this.numberFound = numberFound;
 	}
-	
+
+
+	public List<Pratilipi> getPratilipiList() {
+		return pratilipiList;
+	}
+
+	public String getCursor() {
+		return cursor;
+	}
+
+	public Long getNumberFound() {
+		return numberFound;
+	}
+
 }

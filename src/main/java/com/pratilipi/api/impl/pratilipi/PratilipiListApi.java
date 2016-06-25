@@ -16,7 +16,7 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 public class PratilipiListApi extends GenericApi {
 
 	@Get
-	public GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request )
+	public static GetPratilipiListResponse getPratilipiList( GetPratilipiListRequest request )
 			throws InsufficientAccessException {
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
@@ -32,12 +32,14 @@ public class PratilipiListApi extends GenericApi {
 						request.getSearchQuery(),
 						pratilipiFilter,
 						request.getCursor(),
+						request.getOffset(),
 						request.getResultCount() == null ? 20 : request.getResultCount() );
 
 		// Preparing & returning response object.
 		return new GetPratilipiListResponse(
 				pratilipiListCursorTuple.getDataList(),
-				pratilipiListCursorTuple.getCursor() );
+				pratilipiListCursorTuple.getCursor(),
+				pratilipiListCursorTuple.getNumberFound() );
 		
 	}
 
