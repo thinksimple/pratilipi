@@ -36,7 +36,8 @@ public class UserPratilipiLibraryListApi extends GenericApi {
 		
 		return new GetPratilipiListResponse(
 				pratilipiDataListCursorTuple.getDataList(),
-				pratilipiDataListCursorTuple.getCursor() );
+				pratilipiDataListCursorTuple.getCursor(),
+				pratilipiDataListCursorTuple.getNumberFound() );
 		
 	}
 	
