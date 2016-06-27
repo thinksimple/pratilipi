@@ -70,6 +70,13 @@
 	</datastore-index>
 
 
+	<datastore-index kind="USER_PRATILIPI" ancestor="false" source="manual">
+		<property name="ADDED_TO_LIB" direction="asc"/>
+		<property name="USER_ID" direction="asc"/>
+		<property name="ADDED_TO_LIB_DATE" direction="desc"/>
+	</datastore-index>
+
+
 	<datastore-index kind="COMMENT" ancestor="false" source="manual">
 		<property name="REFERENCE_ID" direction="asc"/>
 		<property name="REFERENCE_TYPE" direction="asc"/>
