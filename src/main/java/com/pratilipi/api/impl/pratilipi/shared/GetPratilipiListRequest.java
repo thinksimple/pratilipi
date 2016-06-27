@@ -21,10 +21,6 @@ public class GetPratilipiListRequest extends GenericRequest {
 	private Integer resultCount;
 
 
-
-	public GetPratilipiListRequest() {}
-
-
 	public String getSearchQuery() {
 		return searchQuery;
 	}

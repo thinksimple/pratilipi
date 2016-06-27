@@ -15,6 +15,7 @@ public final class ApiRegistry {
 			Logger.getLogger( ApiRegistry.class.getName() );
 
 	private static final Map<String, GenericApi> uriServletMap = new HashMap<>();
+	private static final Map<Class<? extends GenericApi>, GenericApi> classServletMap = new HashMap<>();
 
 	
 	public static void register( Class<? extends GenericApi> clazz ) {
@@ -24,6 +25,7 @@ public final class ApiRegistry {
 				GenericApi api = clazz.newInstance();
 				api.init();
 				uriServletMap.put( bind.uri(), api );
+				classServletMap.put( clazz, api );
 			} catch( InstantiationException | IllegalAccessException | ServletException e ) {
 				logger.log( Level.SEVERE, "API registration failed.", e );
 			}
@@ -32,6 +34,11 @@ public final class ApiRegistry {
 	
 	public static GenericApi getApi( String uri ) {
 		return uriServletMap.get( uri );
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T extends GenericApi> T getApi( Class<T> clazz ) {
+		return (T) classServletMap.get( clazz );
 	}
 	
 }

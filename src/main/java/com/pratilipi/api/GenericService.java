@@ -22,7 +22,7 @@ public abstract class GenericService extends HttpServlet {
 		
 		ServletConfig servletConfig = getServletConfig();
 		String prefix = servletConfig.getInitParameter( "Prefix" );
-		if( prefix != null && !prefix.isEmpty() )
+		if( prefix != null && ! prefix.isEmpty() )
 			requestUri = requestUri.substring( prefix.length() );
 
 		GenericApi api = ApiRegistry.getApi( requestUri );

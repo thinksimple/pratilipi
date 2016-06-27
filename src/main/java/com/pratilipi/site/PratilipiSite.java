@@ -24,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.blogpost.shared.GenericBlogPostResponse;
 import com.pratilipi.api.impl.event.shared.GenericEventResponse;
@@ -976,14 +977,15 @@ public class PratilipiSite extends HttpServlet {
 			}
 		}
 		
-		PratilipiListApi pratilipiListApi = new PratilipiListApi();
 		GetPratilipiListRequest pratilipiListRequest = new GetPratilipiListRequest();
 		pratilipiListRequest.setListName( listName );
 		pratilipiListRequest.setLanguage( filterLanguage );
 		pratilipiListRequest.setType( type );
 		pratilipiListRequest.setState( PratilipiState.PUBLISHED );
 		pratilipiListRequest.setOffset( offset );
-		GetPratilipiListResponse pratilipiListResponse = pratilipiListApi.getPratilipiList( pratilipiListRequest );
+		GetPratilipiListResponse pratilipiListResponse = ApiRegistry
+				.getApi( PratilipiListApi.class )
+				.getPratilipiList( pratilipiListRequest );
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( filterLanguage );
