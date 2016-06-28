@@ -59,7 +59,7 @@
 					gotoPage( ${ pageNo + 1 } );
 				}
 				function exitReader() {
-					window.location.href = getUrlParameter( "ret" ) != null ? getUrlParameter( "ret" ) : "${ pratilipi.getPageUrl() }";
+					window.location.href = getUrlParameter( "ret" ) != null ? decodeURIComponent( getUrlParameter( "ret" ) ) : "${ pratilipi.getPageUrl() }";
 				}
 			</#if>
 			

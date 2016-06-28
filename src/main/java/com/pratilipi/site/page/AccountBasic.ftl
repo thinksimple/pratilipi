@@ -23,17 +23,16 @@
 				return retObj;
 			}
 			function logout() {
-				// Make Ajax call
 				$.ajax({
 					type: 'get',
 					url: '/api/user/logout',
 					success: function( response ) {
-						if( getUrlParameters().ret != null && 
-							getUrlParameters().ret.substring( getUrlParameters().ret.lastIndexOf('/') ) != "library#" && 
-							getUrlParameters().ret.substring( getUrlParameters().ret.lastIndexOf('/') ) != "account#"  )
-							window.location.href = getUrlParameters().ret;
-						else
-							window.location.href = "/";
+						var ret = getUrlParameters().ret == null ? "/" : decodeURIComponent( getUrlParameters().ret );
+						if( ret.charAt( ret.length - 1 ) == '#' )
+							ret = ret.substring( 0, ret.length - 1 ); 
+						if( ret == "/library" && ret == "/account"  )
+							ret = "/";
+						window.location.href = ret;
 					},
 					error: function () {
 						alert( "Logout Failed!" );
