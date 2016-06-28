@@ -51,6 +51,7 @@ import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -196,7 +197,10 @@ public class PratilipiSite extends HttpServlet {
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode );
-				templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
+				if( SystemProperty.STAGE.equals( "gamma" ) )
+					templateName = templateFilePrefix + "AuthorPage.ftl";
+				else
+					templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.EVENT ) {
 				if( ! basicMode )
@@ -407,7 +411,10 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "user", userResponse );
 		dataModel.put( "pratilipiTypesJson", new Gson().toJson( pratilipiTypes ) );
 		if( basicMode ) {
-			dataModel.put( "requestUrl", URLEncoder.encode( new StringBuffer( request.getRequestURI() ).append( '?' ).append( request.getQueryString() ).toString() ) );
+			StringBuffer requestUrl = new StringBuffer( request.getRequestURI() );
+			if( request.getQueryString() != null )
+				requestUrl.append( '?' ).append( request.getQueryString() );
+			dataModel.put( "requestUrl", URLEncoder.encode( requestUrl.toString() ) );
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "userJson", gson.toJson( userResponse ) );
