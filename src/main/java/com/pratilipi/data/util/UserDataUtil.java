@@ -141,6 +141,7 @@ public class UserDataUtil {
 		
 		if( author != null ) {
 			Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
+			userData.setAuthorId( author.getId() );
 			userData.setFirstName( author.getFirstName() != null ? author.getFirstName() : author.getFirstNameEn() );
 			userData.setLastName( author.getLastName() != null ? author.getLastName() : author.getLastNameEn() );
 			userData.setDisplayName( userData.getFirstName() != null ? userData.getFirstName() : userData.getLastName() );
