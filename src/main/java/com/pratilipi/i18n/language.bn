@@ -184,7 +184,7 @@ user_password		=  পাসওয়ার্ড
 user_confirm_password    =  পাসওয়ার্ড অনুমোদন করুন
 
 user_my_profile	= আপনার প্রোফাইল
-user_my_account	= सेटिंग
+user_my_account	= সেটিং
 user_is_new		= ব্যবহারকারী নতুন
 user_is_registered	= ব্যবহারকারী রেজিস্টার্ড
 user_email_verification		= আপনাকে পাঠানো ইমেল অনুমোদন করুন
