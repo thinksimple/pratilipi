@@ -14,6 +14,7 @@ public class GenericPratilipiResponse extends GenericResponse {
 	
 	public static class Author {
 		
+		private Long authorId;
 		private String name;
 		private String pageUrl;
 
@@ -28,6 +29,7 @@ public class GenericPratilipiResponse extends GenericResponse {
 		
 		public Author( AuthorData authorData ) {
 			if( authorData != null ) {
+				authorId = authorData.getId();
 				name = authorData.getName() == null
 						? authorData.getNameEn()
 						: authorData.getName();
