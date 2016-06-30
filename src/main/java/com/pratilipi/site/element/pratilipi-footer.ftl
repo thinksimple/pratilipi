@@ -9,10 +9,10 @@
 	</div>
 	
 	<div style="white-space: nowrap; display: block;">
-		<a href="${ _strings.facebook_page }"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png" /></a>&nbsp;
-		<a href="${ _strings.twitter_page }"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/twitter.png" /></a>&nbsp;
-		<a href="${ _strings.googleplus_page }"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/google_plus.png" /></a>&nbsp;
-		<a href="${ _strings.linkedin_page }"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/linkedin.png" /></a>
+		<a href="${ _strings.facebook_page }" target="_blank"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png" /></a>&nbsp;
+		<a href="${ _strings.twitter_page }" target="_blank"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/twitter.png" /></a>&nbsp;
+		<a href="${ _strings.googleplus_page }" target="_blank"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/google_plus.png" /></a>&nbsp;
+		<a href="${ _strings.linkedin_page }" target="_blank"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/linkedin.png" /></a>
 	</div>
 	<br />
 	<a class="link" href="/about/pratilipi">${ _strings.footer_about_us }</a><br />
@@ -20,7 +20,7 @@
 	<a class="link" href="/privacy-policy">${ _strings.footer_privacy_policy }</a><br />
 	<a class="link" href="/terms-of-service">${ _strings.footer_terms_of_service }</a>
 	<div style="display: block; margin-top: 10px;">
-		<span style="color: #333;">&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</span>
+		<span style="color: #333;">&copy;&nbsp;2015-2016 Nasadiya Tech. Pvt. Ltd.</span>
 	</div>
 </div>
 	

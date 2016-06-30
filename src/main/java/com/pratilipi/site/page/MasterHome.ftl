@@ -346,12 +346,14 @@
 				<div class="about-part-3">
 					<span>Follow us on Social Media :</span>
 					<div class="social-media-links">
+						<a href="https://www.facebook.com/Pratilipidotcom" target="_blank"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a>
 						<a href="https://twitter.com/TeamPratilipi" target="_blank"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a>
 						<a href="https://plus.google.com/+PratilipiTeam" target="_blank"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></a>
-						<a href="https://www.facebook.com/Pratilipidotcom" target="_blank"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a>
+						<a href="https://www.linkedin.com/company/pratilipi" target="_blank"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a>
+						<a href="https://www.quora.com/topic/Pratilipi-company" target="_blank"><img style="width: 20px; position: absolute;" src="http://0.ptlp.co/resource-all/icon/svg/quora.svg" /></a>
 					</div>
 				</div>
-				<p class="copyrights">&copy;&nbsp;2014-2015 Nasadiya Tech. Pvt. Ltd.</p>
+				<p class="copyrights">&copy;&nbsp;2015-2016 Nasadiya Tech. Pvt. Ltd.</p>
 			</div>
 		</div>
 	</div>
