@@ -6,6 +6,8 @@ import com.pratilipi.data.client.UserData;
 
 public class GenericUserResponse extends GenericResponse {
 	
+	private Long userId;
+	private Long authorId;
 	private String displayName;
 	private String email;
 	private String phone;
@@ -20,6 +22,8 @@ public class GenericUserResponse extends GenericResponse {
 
 	
 	public GenericUserResponse( UserData userData ) {
+		this.userId = userData.getId();
+		this.authorId = userData.getAuthorId();
 		this.displayName = userData.getDisplayName();
 		this.email = userData.getEmail();
 		this.phone = userData.getPhone();
