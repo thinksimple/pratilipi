@@ -129,11 +129,13 @@ public class GetPratilipiListResponse extends GenericResponse {
 	
 	public static class Author {
 		
+		private Long authorId;
 		private String name;
 		private String pageUrl;
 		
 		
 		private Author( AuthorData authorData ) {
+			this.authorId = authorData.getId();
 			this.name = authorData.getName() == null ? authorData.getNameEn() : authorData.getName();
 			this.pageUrl = authorData.getPageUrl();
 		}
