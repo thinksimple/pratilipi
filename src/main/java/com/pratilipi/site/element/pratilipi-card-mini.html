@@ -4,48 +4,144 @@
 
 		:host {
 			display: inline-block;
-			width: 100px;
-			margin: auto 15px auto 15px;
+			width: 160px;
 			text-align:center;
+			margin-bottom: 16px;
 		}
 
-		:host img {
-			width: 100px;
-			height: 150px;
+		.pratilipi-card {
+			width: 160px;
+			height: 240px;
+			display: block;
+			cursor: pointer;
 		}
 
-		:host h6 {
-			margin-top: 0px;
-			margin-bottom: 5px;
+		.ellipsed, a.ellipsed:hover, a.ellipsed:focus {
+			line-height: 24px;
+			text-align: center;
+			color: #3d3d3d;
+			display: block;
+			font-size: 13px;
+		}
+		
+		.pratilipi-title {
+			font-weight: 700;
+		}
+		
+		.white-snippet, .white-snippet-reduced {
+			text-decoration: none;
+			float: left;
+			width: 160px;
+			background: linear-gradient(to bottom, rgba(255, 255, 255, 0.75) 0%, #fbfbfb 100%);
+			text-align: center;
+			color: #333;
+		}
+		
+		.white-snippet {
+			height: 60px;
+			margin-top: calc( 240px - 60px );
+			padding: 4px 8px;
+		}
+		
+		.white-snippet-reduced {
+			height: 45px;
+			margin-top: calc( 240px - 45px );
+			padding: 8px;
+		}
+		
+		.meta-container {
+			color: #7e7e7e;
+			text-align: left;
+			padding-bottom: 10px;
+			background: #fbfbfb;
+		}
+		
+		.read-count {
+			margin-left: 8px;
+			font-size: 14px;
+		}
+		
+		.read-count iron-icon {
+			width: 16px; 
+			height: 16px; 
+			margin-top: -2px;
+		}
+		
+		.rating-count {
+			margin-right: 8px;
+			font-size: 14px;
+		}
+		
+		.rating-count iron-icon {
+			width: 18px; 
+			height: 18px; 
+			margin-top: -1px;
 		}
 		
 	</style>
 
 
 	<template>
-		<a href="{{ pratilipi.pageUrlAlias }}">
-			<img src="{{ pratilipi.coverImageUrl }}" alt="{{ pratilipi.title }}" title="{{ pratilipi.titleEn }}"/>
-		</a>
-  		<h5>
-		 	<a href="{{ pratilipi.pageUrlAlias }}">{{ pratilipi.title }}</a>
-		</h5>
-		<h6>
-			<a href="{{ pratilipi.author.pageUrlAlias }}">{{ pratilipi.author.name }}</a>
-		</h6>
-		<div>
-			<pratilipi-rating value="{{ pratilipi.averageRating }}" />
+		<div class="pratilipi-shadow">
+			<span style="background-image: url({{ pratilipiCoverImage }});" class="pratilipi-card" on-click="redirectToContentPage" title="{{ fullTitle }}">
+				<template is="dom-if" if="{{ pratilipi.author }}">
+					<div class="white-snippet">
+						<div class="contain-title ellipsed pratilipi-title">{{ title }}</div>
+						<a href="{{ pratilipi.author.pageUrl }}"><span class="contain-title ellipsed">{{ pratilipi.author.name }}</span></a>
+					</div>
+				</template>
+				<template is="dom-if" if="{{ !pratilipi.author }}">
+					<div class="white-snippet-reduced">
+						<div class="contain-title ellipsed pratilipi-title">{{ title }}</div>
+					</div>
+				</template>
+			</span>
+			<div class="meta-container">
+				<span class="read-count">
+					<iron-icon icon="icons:chrome-reader-mode"></iron-icon>
+					{{ readText }}
+				</span>
+				<template is="dom-if" if="{{ showRating }}">
+					<span class="pull-right rating-count">
+						<iron-icon icon="{{ starIcon }}"></iron-icon>
+						{{ ratingText }}
+					</span>
+				</template>
+			</div>
 		</div>
 	</template>
 
 
 	<script>
+		function abbrNum(n,d){x=(''+n).length,p=Math.pow,d=p(10,d)
+		x-=x%3
+		return Math.round(n*d/p(10,x))/d+" kMGTPE"[x/3]}
 
 		Polymer({
 
 			is: 'pratilipi-card-mini',
 
 			properties: {
-				pratilipi: { type: Object }
+				pratilipi: { type: Object, observer: "_pratilipiObserver", value: {"pratilipiId":5266216904032256,"title":"गांठें","hasTitle":true,"titleEn":"gaanthe","hasTitleEn":true,"language":"HINDI","hasLanguage":true,"author": {"name":"Raghu", pageUrl: "/raghu"},"authorId":5851947900862464,"hasAuthorId":true,"summary":"","hasSummary":true,"pageUrl":"/yogita-yadav/gaanthe","coverImageUrl":"http://6.ptlp.co/pratilipi/cover?pratilipiId\u003d5266216904032256\u0026version\u003d1465032811004","readPageUrl":"/read?id\u003d5266216904032256","writePageUrl":"/write?id\u003d5266216904032256","type":"STORY","hasType":true,"contentType":"PRATILIPI","hasContentType":true,"state":"PUBLISHED","hasState":true,"listingDateMillis":1465032508471,"index":"[]","reviewCount":4,"ratingCount":2,"averageRating":5.0,"relevance":6979.5,"readCount":4036,"fbLikeShareCount":1042,"hasAccessToUpdate":true} }
+			},
+			
+			_pratilipiObserver: function() {
+				if( this.pratilipi.title != null && this.pratilipi.title.trim() != "" && this.pratilipi.titleEn != null && this.pratilipi.titleEn.trim() != null )
+					this.fullTitle = this.pratilipi.title + " | " + this.pratilipi.titleEn;
+				else if( this.pratilipi.title != null && this.pratilipi.title.trim() != "" )
+					this.fullTitle = this.pratilipi.title;
+				else
+					this.fullTitle = this.pratilipi.titleEn;
+				this.title = this.pratilipi.title != null && this.pratilipi.title.trim() != "" ? this.pratilipi.title : this.pratilipi.titleEn;
+				this.pratilipiCoverImage = this.pratilipi.coverImageUrl + ( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=160";
+				this.readText = abbrNum( this.pratilipi.readCount, 1 );
+				this.showRating = this.pratilipi.averageRating == 0 ? false : true;
+				this.starIcon = this.pratilipi.averageRating > 2.5 ? "icons:star" : "icons:star-half";
+				this.ratingText = Math.round( this.pratilipi.averageRating * 100 ) / 100;
+			},
+			
+			redirectToContentPage: function() {
+				window.location.href = this.pratilipi.pageUrl;
 			}
 		
 		});

@@ -1,0 +1,83 @@
+<#include "pratilipi-author-details.html">
+<#include "pratilipi-author-tabs.html">
+
+<dom-module id="pratilipi-author-page">
+
+	<template>
+		<header class="nav-down">
+    		<pratilipi-header user='[[ user ]]'></pratilipi-header>
+		</header>
+		<main>
+			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
+			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+			<div class="parent-container margin-top-bottom">
+				<div class="container">
+					<pratilipi-navigation
+							class='pull-left hidden-xs hidden-sm'
+							navigation-list='[[ navigationList ]]'
+							></pratilipi-navigation>
+					<!-- Navigation & Search bar for extra-small & small screens. -->
+					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
+					<div style="overflow:hidden">
+						<pratilipi-author-details></pratilipi-author-details>
+						<pratilipi-author-tabs></pratilipi-author-tabs>
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer>
+   			<pratilipi-footer></pratilipi-footer>
+		</footer>
+		<div class="scroll-top-button">
+			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
+		</div>
+	</template>
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-author-page',
+			
+			properties: {
+				userData: { type: Object },
+				authorData: { type:Object },
+				userAuthorData: { type:Object },
+				
+				pratilipiList: { type: Array },
+				navigationList: { type: Array },
+				pratilipiTypes: { types: Object },
+				filter: { type: Object },
+				cursor: { type: String },
+				lastScrollTop: { type: Number, value: 0 },
+			},
+			
+			ready: function() {
+				jQuery( '#scrollToTop' ).css( "display", "none" );
+			},
+			
+			scrollToTop: function() {
+				$( 'html, body' ).animate( { scrollTop : 0 },800 );
+			},
+			
+			scrollHandler: function( st ) {
+				if( st > this.lastScrollTop || st < 100 ) {
+					jQuery( '#scrollToTop' ).fadeOut();
+					if( this.author != null && ! this.author.hasAccessToUpdate )
+						this.querySelector( 'pratilipi-card-grid' ).loadMore();
+					else if( document.querySelector( 'pratilipi-author-books' ) != null )
+						document.querySelector( 'pratilipi-author-books' ).loadMore();
+				}
+				else
+					jQuery( '#scrollToTop' ).fadeIn();
+			
+				this.lastScrollTop = st;
+			
+			}
+
+		});
+
+	</script>
+
+</dom-module>

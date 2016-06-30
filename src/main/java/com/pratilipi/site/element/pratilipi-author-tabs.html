@@ -1,0 +1,68 @@
+<#include "pratilipi-card-mini.html">
+<#include "pratilipi-author-tab-activity.html">
+<#include "pratilipi-author-tab-about.html">
+
+<dom-module id="pratilipi-author-tabs">
+	<style>
+		:host {
+			display: block;
+		}
+		.nav-tabs>li>a {
+			font-size: 16px;
+			line-height: 32px;
+			border: none;
+			color: #333;
+		}
+		.nav-tabs, .nav-tabs>li>a:hover {
+			border-bottom: none;
+			border-top: none;
+			border-left: none;
+			border-right: none;
+			background: none;
+		}
+		.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+			border-bottom: 3px solid #107FE5;
+			border-top: none;
+			border-left: none;
+			border-right: none;
+			background: none;
+		}
+		.fade {
+			opacity: 0;
+			-webkit-transition: opacity 0.05s linear;
+			-moz-transition: opacity 0.05s linear;
+			-o-transition: opacity 0.05s linear;
+			transition: opacity 0.05s linear;
+		}
+		.fade.in {
+			opacity: 1;
+			-webkit-transition: opacity 0.05s linear;
+			-moz-transition: opacity 0.05s linear;
+			-o-transition: opacity 0.05s linear;
+			transition: opacity 0.05s linear;
+	}
+	</style>
+	<template>
+		<div class="secondary-500 pratilipi-shadow">
+			<ul class="nav nav-tabs" role="tablist">
+				<li style="width: 50%;" role="presentation" class="active">	<a href="#author-activity" 	class="text-center" aria-controls="author-activity" role="tab" data-toggle="tab">Activity</a>	</li>
+				<li style="width: 50%;" role="presentation">				<a href="#author-about" 	class="text-center" aria-controls="author-about" 	role="tab" data-toggle="tab">About</a>		</li>
+			</ul>
+		</div>
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade in active" id="author-activity">
+				<pratilipi-author-tab-activity></pratilipi-author-tab-activity>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="author-about">
+				<pratilipi-author-tab-about></pratilipi-author-tab-about>
+			</div>
+		</div>
+	</template>
+	<script>
+	Polymer({
+
+		is: 'pratilipi-author-tabs',
+		
+	});
+	</script>
+</dom-module>
