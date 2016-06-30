@@ -79,7 +79,7 @@
 	}
 </script>
 
-<div class="modal modal-fullscreen fade" id="pratilipiUserRegister" role="dialog">
+<div class="modal modal-fullscreen fade" id="pratilipiUserRegister" role="dialog" tabindex="-1">
 	<div class="modal-dialog" role="document">
 		<div class="modal-center">
 			<div class="modal-content">
