@@ -19,6 +19,7 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.util.AuthorDataUtil;
+import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -235,6 +236,21 @@ public class AuthorApi extends GenericApi {
 			this.totalFbLikeShareCount = authorData.getTotalFbLikeShareCount();
 
 			this.hasAccessToUpdate = authorData.hasAccessToUpdate();
+			
+		}
+		
+		public Response( AuthorData authorData, boolean embed ) {
+			
+			if( authorData == null )
+				return;
+			
+			if( UxModeFilter.isAndroidApp() )
+				this.authorId = authorData.getId();
+			
+			this.name = authorData.getName() == null
+					? authorData.getNameEn()
+					: authorData.getName();
+			this.pageUrl = authorData.getPageUrl();
 			
 		}
 		

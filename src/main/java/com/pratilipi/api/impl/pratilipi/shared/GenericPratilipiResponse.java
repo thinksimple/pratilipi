@@ -1,51 +1,20 @@
 package com.pratilipi.api.impl.pratilipi.shared;
 
-import java.util.Date;
-
+import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
-import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 
 public class GenericPratilipiResponse extends GenericResponse {
 	
-	public static class Author {
-		
-		private Long authorId;
-		private String name;
-		private String pageUrl;
-
-		public String getName() {
-			return name;
-		}
-		
-		public String getPageUrl() {
-			return pageUrl;
-		}
-	
-		
-		public Author( AuthorData authorData ) {
-			if( authorData != null ) {
-				authorId = authorData.getId();
-				name = authorData.getName() == null
-						? authorData.getNameEn()
-						: authorData.getName();
-				pageUrl = authorData.getPageUrl();
-			}
-		}
-		
-	}
-	
-
 	private Long pratilipiId;
 	
 	private String title;
 	private String titleEn;
 	private Language language;
-	private Author author;
+	private AuthorApi.Response author;
 	@Deprecated
 	private String summary;
 	
@@ -79,7 +48,7 @@ public class GenericPratilipiResponse extends GenericResponse {
 		this.title = pratilipiData.getTitle();
 		this.titleEn = pratilipiData.getTitleEn();
 		this.language = pratilipiData.getLanguage();
-		this.author = new Author( pratilipiData.getAuthor() );
+		this.author = new AuthorApi.Response( pratilipiData.getAuthor(), true );
 		this.summary = pratilipiData.getSummary();
 		
 		this.pageUrl = pratilipiData.getPageUrl();
@@ -122,7 +91,7 @@ public class GenericPratilipiResponse extends GenericResponse {
 		return language;
 	}
 	
-	public Author getAuthor() {
+	public AuthorApi.Response getAuthor() {
 		return author;
 	}
 

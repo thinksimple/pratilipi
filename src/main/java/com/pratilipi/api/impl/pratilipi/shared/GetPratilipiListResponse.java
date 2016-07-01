@@ -3,6 +3,7 @@ package com.pratilipi.api.impl.pratilipi.shared;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiContentType;
@@ -19,7 +20,7 @@ public class GetPratilipiListResponse extends GenericResponse {
 		
 		private String title;
 		private Language language;
-		private Author author;
+		private AuthorApi.Response author;
 
 		private String summary;
 		
@@ -43,8 +44,7 @@ public class GetPratilipiListResponse extends GenericResponse {
 			this.title = pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle();
 			if( UxModeFilter.isAndroidApp() )
 				this.language = pratilipi.getLanguage();
-			if( pratilipi.getAuthor() != null )
-				this.author = new Author( pratilipi.getAuthor() );
+			this.author = new AuthorApi.Response( pratilipi.getAuthor(), true );
 			if( UxModeFilter.isAndroidApp() )
 				this.summary = pratilipi.getSummary();
 			this.pageUrl = pratilipi.getPageUrl();
@@ -74,7 +74,7 @@ public class GetPratilipiListResponse extends GenericResponse {
 			return language;
 		}
 		
-		public Author getAuthor() {
+		public AuthorApi.Response getAuthor() {
 			return author;
 		}
 
