@@ -112,7 +112,8 @@ public class PratilipiApi extends GenericApi {
 		@SuppressWarnings("unused")
 		private Response() { }
 		
-		Response( PratilipiData pratilipiData ) {
+		// TODO: change this to package level access ASAP
+		public Response( PratilipiData pratilipiData ) {
 			
 			this.pratilipiId = pratilipiData.getId();
 			

@@ -4,10 +4,11 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiContentImageRequest;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiContentImageRequest;
 import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiContentImageResponse;
 import com.pratilipi.api.shared.GenericFileDownloadResponse;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -20,14 +21,25 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 @Bind( uri = "/pratilipi/content/image" )
 public class PratilipiContentImageApi extends GenericApi {
 
+	public static class GetRequest extends GenericRequest {
+
+		@Validate( required = true )
+		private Long pratilipiId;
+
+		@Validate( required = true )
+		private Integer pageNo;
+		
+	}
+	
+	
 	@Get
-	public GenericFileDownloadResponse getPratilipiContent( GetPratilipiContentImageRequest request )
+	public GenericFileDownloadResponse getPratilipiContent( GetRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		BlobEntry blobEntry = (BlobEntry) PratilipiDataUtil.getPratilipiContent(
-				request.getPratilipiId(),
+				request.pratilipiId,
 				0,
-				request.getPageNo(),
+				request.pageNo,
 				PratilipiContentType.IMAGE );
 	
 		return new GenericFileDownloadResponse(

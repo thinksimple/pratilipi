@@ -30,7 +30,6 @@ import com.pratilipi.api.impl.blogpost.shared.GenericBlogPostResponse;
 import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
-import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -258,7 +257,7 @@ public class PratilipiSite extends HttpServlet {
 				
 				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 				PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
-				GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
+				PratilipiApi.Response pratilipiResponse = new PratilipiApi.Response( pratilipiData );
 				UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( AccessTokenFilter.getAccessToken().getUserId(), pratilipiId );
 				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
 						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 20 );
@@ -644,7 +643,7 @@ public class PratilipiSite extends HttpServlet {
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( AccessTokenFilter.getAccessToken().getUserId(), pratilipiId );
 
-		GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
+		PratilipiApi.Response pratilipiResponse = new PratilipiApi.Response( pratilipiData );
 		UserPratilipiApi.Response userPratilipiResponse = userPratilipiData == null
 				? null : new UserPratilipiApi.Response( userPratilipiData );
 		
@@ -863,7 +862,7 @@ public class PratilipiSite extends HttpServlet {
 			content = "<img src=\"/api/pratilipi/content?pratilipiId=" + pratilipi.getId() + "&pageNo=" + pageNo + "&chapterNo=" + pageNo + "\" />";
 		
 		Gson gson = new Gson();
-		GenericPratilipiResponse pratilipiResponse = new GenericPratilipiResponse( pratilipiData );
+		PratilipiApi.Response pratilipiResponse = new PratilipiApi.Response( pratilipiData );
 		UserPratilipiApi.Response userPratilipiResponse = userPratilipiData != null ?
 						new UserPratilipiApi.Response( userPratilipiData ) : null;
 		
