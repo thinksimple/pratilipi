@@ -5,11 +5,16 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
-import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiRequest;
-import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiRequest;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.impl.author.AuthorApi;
+import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiContentType;
+import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.PratilipiData;
@@ -24,23 +29,230 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @Bind( uri = "/pratilipi" )
 public class PratilipiApi extends GenericApi {
 	
+	public static class GetRequest extends GenericRequest {
+
+		@Validate( required = true, minLong = 1L )
+		private Long pratilipiId;
+		
+	}
+	
+	@SuppressWarnings("unused")
+	public static class PostRequest extends GenericRequest {
+
+		@Validate( minLong = 1L )
+		private Long pratilipiId;
+		
+		private String title;
+		private boolean hasTitle;
+		
+		private String titleEn;
+		private boolean hasTitleEn;
+		
+		private Language language;
+		private boolean hasLanguage;
+		
+		private Long authorId;
+		private boolean hasAuthorId;
+		
+		@Deprecated
+		private String summary;
+		@Deprecated
+		private boolean hasSummary;
+		
+		private Integer publicationYear;
+		private boolean hasPublicationYear;
+		
+		
+		private PratilipiType type;
+		private boolean hasType;
+
+		private PratilipiContentType contentType;
+		private boolean hasContentType;
+
+		private PratilipiState state;
+		private boolean hasState;
+
+	}
+	
+	public static class Response extends GenericResponse {
+		
+		private Long pratilipiId;
+		
+		private String title;
+		private String titleEn;
+		private Language language;
+		private AuthorApi.Response author;
+		@Deprecated
+		private String summary;
+		
+		private String pageUrl;
+		private String coverImageUrl;
+		private String readPageUrl;
+		private String writePageUrl;
+
+		private PratilipiType type;
+		private PratilipiState state;
+		
+		private Long listingDateMillis;
+		private Long lastUpdatedMillis;
+		
+		private Long reviewCount;
+		private Long ratingCount;
+		private Float averageRating;
+		private Long readCount;
+		private Long fbLikeShareCount;
+		
+		private Boolean hasAccessToUpdate;
+		
+		
+		@SuppressWarnings("unused")
+		private Response() { }
+		
+		Response( PratilipiData pratilipiData ) {
+			
+			this.pratilipiId = pratilipiData.getId();
+			
+			this.title = pratilipiData.getTitle();
+			this.titleEn = pratilipiData.getTitleEn();
+			this.language = pratilipiData.getLanguage();
+			this.author = new AuthorApi.Response( pratilipiData.getAuthor(), true );
+			this.summary = pratilipiData.getSummary();
+			
+			this.pageUrl = pratilipiData.getPageUrl();
+			this.coverImageUrl = pratilipiData.getCoverImageUrl();
+			this.readPageUrl = pratilipiData.getReadPageUrl();
+			this.writePageUrl = pratilipiData.getWritePageUrl();
+			
+			this.type = pratilipiData.getType();
+			this.state = pratilipiData.getState();
+			
+			this.listingDateMillis = pratilipiData.getListingDate().getTime();
+			if( pratilipiData.getLastUpdated() != null )
+				this.lastUpdatedMillis = pratilipiData.getLastUpdated().getTime();
+			
+			this.reviewCount = pratilipiData.getReviewCount();
+			this.ratingCount = pratilipiData.getRatingCount();
+			this.averageRating = pratilipiData.getAverageRating();
+			this.readCount = pratilipiData.getReadCount();
+			this.fbLikeShareCount = pratilipiData.getFbLikeShareCount();
+			
+			this.hasAccessToUpdate = pratilipiData.hasAccessToUpdate();
+			
+		}
+
+		
+		public Long getId() {
+			return pratilipiId;
+		}
+		
+		
+		public String getTitle() {
+			return title;
+		}
+		
+		public String getTitleEn() {
+			return titleEn;
+		}
+		
+		public Language getLanguage() {
+			return language;
+		}
+		
+		public AuthorApi.Response getAuthor() {
+			return author;
+		}
+
+		public String getSummary() {
+			return summary;
+		}
+
+		
+		public String getPageUrl() {
+			return pageUrl;
+		}
+		
+		public String getCoverImageUrl() {
+			return coverImageUrl;
+		}
+		
+		public String getCoverImageUrl( int width ) {
+			return coverImageUrl.indexOf( '?' ) == -1
+					? coverImageUrl + "?width=" + width
+					: coverImageUrl + "&width=" + width;
+		}
+
+		public String getReadPageUrl() {
+			return readPageUrl;
+		}
+
+		public String getWritePageUrl() {
+			return writePageUrl;
+		}
+
+		
+		public PratilipiType getType() {
+			return type;
+		}
+		
+		public PratilipiState getState() {
+			return state;
+		}
+
+		
+		public Long getListingDateMillis() {
+			return listingDateMillis;
+		}
+
+		public Long getLastUpdatedMillis() {
+			return lastUpdatedMillis;
+		}
+
+		
+		public Long getReviewCount() {
+			return reviewCount;
+		}
+
+		public Long getRatingCount() {
+			return ratingCount;
+		}
+		
+		public Float getAverageRating() {
+			return averageRating;
+		}
+
+		public Long getReadCount() {
+			return readCount;
+		}
+
+		public Long getFbLikeShareCount() {
+			return fbLikeShareCount;
+		}
+
+		
+		public Boolean hasAccessToUpdate() {
+			return hasAccessToUpdate;
+		}
+		
+	}
+	
+	
 	@Get
-	public GenericPratilipiResponse getPratilipi( GetPratilipiRequest request ) {
+	public Response get( GetRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi( request.getPratilipiId() );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( request.pratilipiId );
 		Author author = pratilipi.getAuthorId() == null
 				? null
 				: dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
 
-		return new GenericPratilipiResponse( pratilipiData );
+		return new Response( pratilipiData );
 		
 	}
 
 	@Post
-	public GenericPratilipiResponse postPratilipi( PostPratilipiRequest request )
+	public Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 
 		Gson gson = new Gson();
@@ -66,7 +278,7 @@ public class PratilipiApi extends GenericApi {
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 
 		// If PratilipiState has changed, creating AuthorProcess task to update Author stats.
-		if( request.hasState() && pratilipiData.getAuthorId() != null ) {
+		if( request.hasState && pratilipiData.getAuthorId() != null ) {
 			Task authorTask = TaskQueueFactory.newTask()
 					.setUrl( "/author/process" )
 					.addParam( "authorId", pratilipiData.getAuthorId().toString() )
@@ -74,7 +286,7 @@ public class PratilipiApi extends GenericApi {
 			TaskQueueFactory.getAuthorTaskQueue().add( authorTask );
 		}
 		
-		return new GenericPratilipiResponse( pratilipiData );
+		return new Response( pratilipiData );
 		
 	}		
 
