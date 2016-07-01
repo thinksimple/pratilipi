@@ -8,7 +8,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
+import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -39,16 +39,16 @@ public class InitApi extends GenericApi {
 		
 			private String title;
 			private String listPageUrl;
-			private List<GetPratilipiListResponse.Pratilipi> pratilipiList;
+			private List<PratilipiApi.Response> pratilipiList;
 			
 			private Section() {}
 		
 			private Section( String title, String listPageUrl, List<PratilipiData> pratilipiList ) {
 				this.title = title;
 				this.listPageUrl = listPageUrl;
-				this.pratilipiList = new ArrayList<GetPratilipiListResponse.Pratilipi>( pratilipiList.size() );
+				this.pratilipiList = new ArrayList<PratilipiApi.Response>( pratilipiList.size() );
 				for( PratilipiData pratilipiData : pratilipiList )
-					this.pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
+					this.pratilipiList.add( new PratilipiApi.Response( pratilipiData, true ) );
 			}
 		
 		}

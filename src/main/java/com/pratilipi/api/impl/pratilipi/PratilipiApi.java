@@ -22,6 +22,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -91,10 +92,13 @@ public class PratilipiApi extends GenericApi {
 		private String writePageUrl;
 
 		private PratilipiType type;
+		private PratilipiContentType contentType;
 		private PratilipiState state;
 		
 		private Long listingDateMillis;
 		private Long lastUpdatedMillis;
+		
+		private String index;
 		
 		private Long reviewCount;
 		private Long ratingCount;
@@ -140,6 +144,30 @@ public class PratilipiApi extends GenericApi {
 			
 		}
 
+		public Response( PratilipiData pratilipi, boolean listItem ) {
+			
+			this.pratilipiId = pratilipi.getId();
+			this.title = pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle();
+			if( UxModeFilter.isAndroidApp() )
+				this.language = pratilipi.getLanguage();
+			if( pratilipi.getAuthor() != null )
+				this.author = new AuthorApi.Response( pratilipi.getAuthor(), true );
+			if( UxModeFilter.isAndroidApp() )
+				this.summary = pratilipi.getSummary();
+			this.pageUrl = pratilipi.getPageUrl();
+			this.coverImageUrl = pratilipi.getCoverImageUrl();
+			this.readPageUrl = pratilipi.getReadPageUrl();
+			this.writePageUrl = pratilipi.getWritePageUrl();
+			if( UxModeFilter.isAndroidApp() )
+				this.contentType = pratilipi.getContentType();
+			if( UxModeFilter.isAndroidApp() )
+				this.index = pratilipi.getIndex();
+			this.ratingCount = pratilipi.getRatingCount();
+			this.averageRating = pratilipi.getAverageRating();
+			this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();
+			
+		}
+		
 		
 		public Long getId() {
 			return pratilipiId;

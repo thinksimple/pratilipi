@@ -28,10 +28,9 @@ import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.blogpost.shared.GenericBlogPostResponse;
 import com.pratilipi.api.impl.event.shared.GenericEventResponse;
+import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.pratilipi.shared.GenericPratilipiResponse;
-import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListRequest;
-import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiListResponse;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -984,15 +983,15 @@ public class PratilipiSite extends HttpServlet {
 			}
 		}
 		
-		GetPratilipiListRequest pratilipiListRequest = new GetPratilipiListRequest();
+		PratilipiListApi.GetRequest pratilipiListRequest = new PratilipiListApi.GetRequest();
 		pratilipiListRequest.setListName( listName );
 		pratilipiListRequest.setLanguage( filterLanguage );
 		pratilipiListRequest.setType( type );
 		pratilipiListRequest.setState( PratilipiState.PUBLISHED );
 		pratilipiListRequest.setOffset( offset );
-		GetPratilipiListResponse pratilipiListResponse = ApiRegistry
+		PratilipiListApi.Response pratilipiListResponse = ApiRegistry
 				.getApi( PratilipiListApi.class )
-				.getPratilipiList( pratilipiListRequest );
+				.get( pratilipiListRequest );
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( filterLanguage );
@@ -1048,10 +1047,10 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 
-	private List<GetPratilipiListResponse.Pratilipi> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
-		List<GetPratilipiListResponse.Pratilipi> pratilipiList = new ArrayList<>( pratilipiDataList.size() );
+	private List<PratilipiApi.Response> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
+		List<PratilipiApi.Response> pratilipiList = new ArrayList<>( pratilipiDataList.size() );
 		for( PratilipiData pratilipiData : pratilipiDataList )
-			pratilipiList.add( new GetPratilipiListResponse.Pratilipi( pratilipiData ) );
+			pratilipiList.add( new PratilipiApi.Response( pratilipiData, true ) );
 		return pratilipiList;
 	}
 

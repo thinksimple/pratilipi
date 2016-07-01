@@ -241,9 +241,6 @@ public class AuthorApi extends GenericApi {
 		
 		public Response( AuthorData authorData, boolean embed ) {
 			
-			if( authorData == null )
-				return;
-			
 			if( UxModeFilter.isAndroidApp() )
 				this.authorId = authorData.getId();
 			
