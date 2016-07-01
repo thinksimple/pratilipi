@@ -50,6 +50,13 @@
 	</filter-mapping>
 	
 	
+	<!-- Note: It is important to load ApiService else ApiRegistry will not be loaded. -->
+	<servlet>
+		<servlet-name>ApiService</servlet-name>
+		<servlet-class>com.pratilipi.service.ApiService</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
 	<servlet>
 		<servlet-name>PratilipiSite</servlet-name>
 		<servlet-class>com.pratilipi.site.PratilipiSite</servlet-class>
