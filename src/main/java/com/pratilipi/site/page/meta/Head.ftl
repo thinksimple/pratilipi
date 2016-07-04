@@ -11,10 +11,10 @@
 	${ resource }
 </#list>
 <link rel='import' href='http://0.ptlp.co/resource-all/elements.vulcanized.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?10'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?11'>
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css?20160325">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?201607">
 
 <#include "GoogleAnalytics.ftl">
 
