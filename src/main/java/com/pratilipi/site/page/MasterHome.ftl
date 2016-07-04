@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?20160624">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?201607">
 
 	<#include "meta/GoogleAnalytics.ftl">
 
@@ -47,9 +47,14 @@
 			<#-- Setting tiles min-height -->
 			jQuery( '.wrapper' ).css( "min-height", jQuery( window ).height() + "px" );
 			<#-- Setting banner height -->
-			var diff = ( jQuery( window ).height() - jQuery( '#tiles-container' ).height() ) / 2;
-			jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() - 20 - diff - 108 );
-			jQuery( '.pratilipi-banner' ).css( "max-height", Math.max( jQuery( window ).height(), jQuery( '.content-wrapper' ).height() + 108 ) + "px" );
+			if( $( window ).width() < 768 ) {
+				jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() );
+			} else {
+				var diff = ( jQuery( window ).height() - jQuery( '#tiles-container' ).height() ) / 2;
+				jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() - 20 - diff - 108 );
+				jQuery( '.pratilipi-banner' ).css( "max-height", Math.max( jQuery( window ).height(), jQuery( '.content-wrapper' ).height() + 108 ) + "px" );
+			}
+			
 		});
 		function validateEmail( email ) {
 			var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

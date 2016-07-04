@@ -91,7 +91,8 @@ a {
 	z-index: 1;
 	padding: 10px;
 	text-align: center;
-	min-height: 480px;
+	min-height: 520px;
+	overflow: hidden;
 }
 
 .landing-page .pratilipi-banner .pratilipi-background {
