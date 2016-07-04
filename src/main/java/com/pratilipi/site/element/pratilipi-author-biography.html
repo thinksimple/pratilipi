@@ -1,0 +1,177 @@
+<dom-module id="pratilipi-author-biography">
+	<style>
+		:host {
+			display: block;
+			margin-top: 6px;
+		}
+		.author-biography .author-biography-header {
+			padding: 8px;
+		}
+		.author-biography .author-biography-header h5 {
+			font-weight: 700;
+			text-align: center;
+			margin-bottom: 12px;
+		}
+		.author-biography .author-biography-header .social-connect-icons {
+			margin: 0 auto;
+			text-align: center;
+			white-space: nowrap;
+		}
+		.social-connect-icons i {
+			margin-left: 4px;
+			margin-right: 4px;
+			cursor: pointer;
+		}
+		.author-details table {
+			margin-left: 6px;
+		}
+		.author-details table th {
+			padding: 6px 32px 6px 12px;
+			font-size: 16px;
+		}
+		.author-details td {
+			font-size: 16px;
+		}
+		.author-summary-container {
+			font-family: inherit!important;
+			font-size: 15px!important;
+			line-height: 23px!important;
+			color: #333;
+			padding: 12px 16px;
+		}
+		.author-summary-container h6 {
+			margin-left: 12px;
+			font-weight: bold;
+		}
+		
+		@media only screen and (max-width: 600px) {
+			.author-summary-container {
+				text-align: left;
+			}
+		}
+		@media only screen and (min-width: 601px) {
+			.author-summary-container {
+				text-align: justify;
+			}
+		}
+		.more-button {
+			margin-top: 16px;
+			background: #F1F8FB;
+			padding: 15px;
+			text-align: center;
+			color: #0C68BD;
+			cursor: pointer;
+			font-size: 21px;
+			font-weight: 700;
+			letter-spacing: 0.3px;
+			line-height: 16px;
+			text-shadow: 0px 1px 2px #FFFFFF;
+		}
+		
+		hr {
+			margin-top: 0.5em;
+			margin-bottom: 0.8em;
+			border: 0;
+			border-top: 2px solid #eee;
+		}
+		
+		.complete-summary {
+			max-height: auto;
+			overflow: visible;
+		}
+		.reduced-summary {
+			max-height: 200px; 
+			overflow: hidden;
+		}
+	</style>
+	<template>
+		<div class="secondary-500 author-biography pratilipi-shadow">
+			<div class="author-biography-header">
+				<h5 class="pratilipi-red">Biography</h5>
+				<div class="social-connect-icons">
+					<i class="fa fa-facebook" aria-hidden="true"></i>
+					<i class="fa fa-twitter" aria-hidden="true"></i>
+					<i class="fa fa-google-plus" aria-hidden="true"></i>
+				</div>
+			</div>
+			<hr/>
+			<div class="author-details">
+				<table>
+					<tr>
+						<th>Author Since</th>
+						<td>06 June 2016</td>
+					</tr>
+					<tr>
+						<th>Location</th>
+						<td>New Delhi</td>
+					</tr>
+					<tr>
+						<th>Date of Birth</th>
+						<td>17/03/1994</td>
+					</tr>
+				</table>
+				
+				<div class="author-summary-container" id="author-summary-container">
+					<h6>Summary :</h6>
+					<div id="author-summary"></div>
+				</div>
+				<div class="more-button" id="more-button" on-click="toggleSnippet">More...</div>
+			</div>
+		</div>
+	</template>
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-author-biography',
+			
+			properties: {
+			 	summary: { type: String, value: "\u003cp\u003eஆராய்ச்சித்துறையில் மைக்ரோபயாலஜிஸ்டாக ஒரு மருந்து கண்டுபிடிப்பு நிறுவனத்தில் 25 ஆண்டுகாலம் பணியாற்றி பதவி ஓய்வி பெற்றவள் நான். மதுரை காமராசர் பல்கலைக்கழகத்தில் எனது முதல் முனைவர் பட்டத்தை விஞ்ஞானத்துறையில்1980-ல் பெற்றேன்.\u0026nbsp; பதவி ஓய்வு பெற்றபின்\u0026nbsp; கல்லூரிக் காலத்தில் ரசித்துப்படித்த தமிழை இன்னும் விரிவாகப்படிக்க ஆசைகொண்டு முதுநிலைப் பட்டம் பெற்றுள்ளேன். தற்போது தமிழில் முனைவர் பட்டத்திற்கான ஆராய்ச்சியை மேற்கொண்டுள்ளேன்.\u003c/p\u003e\n\n\u003cp\u003eபழந்தமிழ் இலக்கியங்கள், குறிப்பாகச் சிற்றிலக்கியங்கள் என்னை மிகவும் கவர்ந்தவை. இவற்றைப்பற்றி இலக்கியரசம் வாய்ந்த கட்டுரைகளை தாரகை, வல்லமை, சொல்வனம், தமிழ் ஹிந்து இணையதளங்களில் எழுதி வருகிறேன். கடந்த பல ஆண்டுகளில் அவ்வப்போது சிறுகதைகள், குறுநாவல், நாவல் முதலியன எழுதி அவை கலைமகள், கல்கி, அமுதசுரபி, ஓம்சக்தி பத்திரிகைகளில் வெளிவந்துள்ளன.\u003c/p\u003e" }
+			},
+			
+			attached: function() {
+				if( this.summary == null || this.summary.trim() == "" ) {
+					jQuery( this.querySelector( '.author-summary-container' ) ).css( 'display', 'none' );
+					return;
+				}
+				jQuery( this.querySelector( '.author-summary-container' ) ).css( 'display', 'block' );
+				
+				
+				var author_summary = document.getElementById( "author-summary" );
+				var summary = document.createElement( "div" );
+				summary.innerHTML = this.summary;
+				author_summary.appendChild( summary );
+				
+				// Calculating summary height
+				var height = 0;
+				var clone = author_summary.cloneNode( true );
+				clone.style.position = "absolute";
+				clone.style.top = "-1000px";
+				clone.style.width = ( jQuery( 'pratilipi-author-details' ).width() - 32 ) + "px"; /* 32px for padding */
+				document.body.appendChild( clone );
+				height = clone.clientHeight;
+				document.body.removeChild( clone );
+				
+				if( height < 200 ) {
+					jQuery( this.querySelector( '#author-summary' ) ).removeClass( 'complete-summary' );
+					jQuery( this.querySelector( '#author-summary' ) ).removeClass( 'reduced-summary' );
+					jQuery( this.querySelector( '#more-button' ) ).css( 'display', 'none' );
+				} else {
+					jQuery( this.querySelector( '#author-summary' ) ).addClass( 'reduced-summary' );
+					jQuery( this.querySelector( '#author-summary' ) ).removeClass( 'complete-summary' );
+					jQuery( this.querySelector( '#more-button' ) ).css( 'display', 'block' );
+				}
+			},
+			
+			toggleSnippet: function() {
+				jQuery( this.querySelector( '#author-summary' ) ).toggleClass( 'reduced-summary' );
+				jQuery( this.querySelector( '#author-summary' ) ).toggleClass( 'complete-summary' );
+				jQuery( this.querySelector( '#more-button' ) ).css( 'display', 'none' );
+			}
+ 
+		});
+
+	</script>
+
+</dom-module>

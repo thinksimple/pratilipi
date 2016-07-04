@@ -54,6 +54,7 @@
 			text-align: left;
 			padding-bottom: 10px;
 			background: #fbfbfb;
+			height: 32px;
 		}
 		
 		.read-count {
@@ -70,12 +71,6 @@
 		.rating-count {
 			margin-right: 8px;
 			font-size: 14px;
-		}
-		
-		.rating-count iron-icon {
-			width: 18px; 
-			height: 18px; 
-			margin-top: -1px;
 		}
 		
 	</style>
@@ -102,10 +97,7 @@
 					{{ readText }}
 				</span>
 				<template is="dom-if" if="{{ showRating }}">
-					<span class="pull-right rating-count">
-						<iron-icon icon="{{ starIcon }}"></iron-icon>
-						{{ ratingText }}
-					</span>
+					<pratilipi-rating class="pull-right rating-count" value="{{ pratilipi.averageRating }}" mini></pratilipi-rating>
 				</template>
 			</div>
 		</div>
@@ -113,9 +105,12 @@
 
 
 	<script>
-		function abbrNum(n,d){x=(''+n).length,p=Math.pow,d=p(10,d)
-		x-=x%3
-		return Math.round(n*d/p(10,x))/d+" kMGTPE"[x/3]}
+		function abbrNum( n, d ) {
+			if( n < 1000 ) return n;
+			x = ( '' + n ).length, p = Math.pow, d = p( 10,d );
+			x -= x % 3;
+			return Math.round( n * d / p ( 10, x ) ) / d + " kMGTPE" [ x / 3 ]; 
+		}
 
 		Polymer({
 
@@ -136,8 +131,6 @@
 				this.pratilipiCoverImage = this.pratilipi.coverImageUrl + ( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=160";
 				this.readText = abbrNum( this.pratilipi.readCount, 1 );
 				this.showRating = this.pratilipi.averageRating == 0 ? false : true;
-				this.starIcon = this.pratilipi.averageRating > 2.5 ? "icons:star" : "icons:star-half";
-				this.ratingText = Math.round( this.pratilipi.averageRating * 100 ) / 100;
 			},
 			
 			redirectToContentPage: function() {

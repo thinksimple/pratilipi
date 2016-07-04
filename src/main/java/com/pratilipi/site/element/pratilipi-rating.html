@@ -2,17 +2,27 @@
 
 	<style>
 
-		iron-icon {
+		.standard iron-icon {
 			color: #D0021B;
 			width: 20px;
 			height: 20px;
+		}
+		
+		.mini {
+			display: inline-block;
+		}
+		
+		.mini iron-icon {
+			width: 20px;
+			height: 16px;
+			margin: -4px;
 		}
 		
 	</style>
 
 
 	<template>
-		<div style="display: block;">
+		<div class="rating-stars">
 			<iron-icon icon="{{ icon1 }}"></iron-icon>
 			<iron-icon icon="{{ icon2 }}"></iron-icon>
 			<iron-icon icon="{{ icon3 }}"></iron-icon>
@@ -31,7 +41,8 @@
 			is: 'pratilipi-rating',
 
 			properties: {
-				value: { type: Number, observer:"_setValue" }
+				value: { type: Number, observer:"_setValue" },
+				mini: { type: Boolean, value: false }
 			},
 			
 			_setZero: function() {
@@ -41,7 +52,7 @@
 			
 			_setValue: function( value ) {
 				this._setZero();
-				
+				jQuery( this.querySelector( '.rating-stars' ) ).addClass( this.mini == true ? "mini" : "standard" );
 				if( this.value >= 0.01 )
 					this.set( "icon1" , "star-half" );
 				if( this.value >= 0.51 )
