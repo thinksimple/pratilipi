@@ -57,19 +57,17 @@
 			margin-top: -4px;
 			margin-right: 3px;
 		}
-		.upload-cover {
+		.edit-profile {
 			position: absolute;
 			top: 16px;
-			left: 16px;
+			right: 64px;
 		}
-		.upload-cover paper-fab {
+		.edit-profile paper-fab {
 			width: 24px;
 			height: 24px;
-			--paper-fab-background: #ADADAD;
+			--paper-fab-background: #F5F5F5;
 			--paper-fab-iron-icon: {
-				color: #FFF;
-				width: 18px;
-				height: 18px;
+				color: #333;
 			}
 		}
 		.share-author {
@@ -111,8 +109,8 @@
 		<paper-card class="cover-image pratilipi-shadow" style="background-image: url('http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg')">
 		
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
-				<div class="upload-cover">
-					<paper-fab mini icon="editor:insert-photo"></paper-fab>
+				<div class="edit-profile">
+					<paper-fab icon="icons:create" on-click="editAuthorProfile"></paper-fab>
 				</div>
 			</template>
 			
@@ -259,7 +257,7 @@
 
 		updateUserAuthor: function( userAuthor ) {
 			this.set( 'userAuthor', userAuthor );
-			this.set( 'following', userAuthor.following )
+			this.set( 'following', userAuthor != null ? userAuthor.following : false )
 		},
 		
 		attached: function() {
@@ -310,6 +308,10 @@
 				document.querySelector( 'pratilipi-alert' ).alert( "Some error Occured! Please try again", false );
 				console.log( response );
 			}
+		},
+		
+		editAuthorProfile: function() {
+			
 		}
 		
 	});
