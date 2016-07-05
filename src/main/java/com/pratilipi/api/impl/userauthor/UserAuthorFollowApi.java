@@ -64,8 +64,8 @@ public class UserAuthorFollowApi extends GenericApi {
 		private Response() { }
 		
 		public Response( UserAuthorData userAuthorData ) {
-			this.authorId = userAuthorData.getAuthorId();
-			this.following = userAuthorData.isFollowing();
+			this.authorId = userAuthorData != null ? userAuthorData.getAuthorId() : null;
+			this.following = userAuthorData != null ? userAuthorData.isFollowing() : null;
 		}
 		
 		
