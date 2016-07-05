@@ -1252,6 +1252,31 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	
+	// curated/recommend.<lang>
+	
+	@Override
+	public List<String> getRecommendSectionList( Language language ) {
+
+		List<String> sectionList = new LinkedList<>();
+
+		try {
+			String fileName = CURATED_DATA_FOLDER + "/recommend." + language.getCode();
+			InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
+			for( String listName : IOUtils.readLines( inputStream, "UTF-8" ) ) {
+				listName = listName.trim();
+				if( ! listName.isEmpty() )
+					sectionList.add( listName );
+			}
+			inputStream.close();
+		} catch( NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception while reading from home." + language.getNameEn(), e );
+		}
+		
+		return sectionList;
+	
+	}
+	
+	
 	// curated/navigation.<lang>
 	
 	@Override

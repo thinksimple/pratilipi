@@ -135,6 +135,9 @@ public interface DataAccessor {
 	// curated/home.<lang>
 	List<String> getHomeSectionList( Language language );
 	
+	// curated/recommend.<lang>
+	List<String> getRecommendSectionList( Language language );
+	
 	// curated/navigation.<lang>
 	List<Navigation> getNavigationList( Language language );
 	
