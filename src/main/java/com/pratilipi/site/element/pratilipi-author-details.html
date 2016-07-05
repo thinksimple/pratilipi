@@ -131,16 +131,16 @@
 				<div class="author-name">{{ name }}</div>
 				<template is="dom-if" if="{{ !hasAccessToUpdate }}">
 					<div class="follow-author">
-						<template is="dom-if" if="{{ !isFollowing }}">
+						<template is="dom-if" if="{{ !following }}">
 							<button class="pratilipi-light-blue-button" on-click="followAuthor">
 								<iron-icon icon="social:person-add"></iron-icon>
-								Follow | {{ followCountAbbr }}
+								Follow{{ followCountAbbr }}
 							</button>
 						</template>
-						<template is="dom-if" if="{{ isFollowing }}">
+						<template is="dom-if" if="{{ following }}">
 							<button class="pratilipi-grey-button" on-click="unFollowAuthor">
 								<iron-icon icon="icons:remove-circle"></iron-icon>
-								UnFollow | {{ followCountAbbr }}
+								UnFollow{{ followCountAbbr }}
 							</button>
 						</template>
 					</div>
@@ -152,15 +152,15 @@
 			<div class="row">
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 					<span>${ _strings.author_count_works }</span>
-					<div class="numbers">{{ author.contentPublished }}</div>
+					<div class="numbers">{{ contentPublished }}</div>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 					<span>${ _strings.author_count_reads }</span>
-					<div class="numbers">{{ author.totalReadCount }}</div>
+					<div class="numbers">{{ totalReadCount }}</div>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 					<span>${ _strings.author_count_likes }</span>
-					<div class="numbers">{{ author.totalFbLikeShareCount }}</div>
+					<div class="numbers">{{ totalFbLikeShareCount }}</div>
 				</div>
 			</div>
 		</div>
@@ -196,6 +196,7 @@
 	<script>
 		function abbrNum( n, d ) {
 			if( n < 1000 ) return n;
+			d = d != null ? d : 2;
 			x = ( '' + n ).length, p = Math.pow, d = p( 10,d );
 			x -= x % 3;
 			return Math.round( n * d / p ( 10, x ) ) / d + " kMGTPE" [ x / 3 ]; 
@@ -206,16 +207,17 @@
 		is: 'pratilipi-author-details',
 		
 		properties: {
-			user: { type: Object, "_userObserver" },
+			user: { type: Object, observer: "_userObserver" },
 			authorData: { type: Object },
+			userAuthorData: { type: Object },
 			author: { type: Object, notify: true },
-			isFollowing: { type: Boolean, notify: true },
+			userAuthor: { type: Object, notify: true },
 			
 			followCount: { type: Object, observer: "_followCountObserver" }
 		},
 		
 		_userObserver: function() {
-			if( this.author == null || this.isFollowing == null )
+			if( this.author == null || this.userAuthor == null || this.user == null )
 				return;
 
 			this.$.AuthorGetApi.params.authorId = this.author.authorId;
@@ -229,7 +231,7 @@
 		},
 		
 		_userAuthorGetApiResponse: function( response ) {
-			this.set( 'isFollowing', response.detail.response.isFollowing );
+			this.updateUserAuthor( response.detail.response );
 		},
 		
 		_checkUserLoginStatus: function() {
@@ -241,7 +243,7 @@
 		},
 		
 		_followCountObserver: function() {
-			this.followCountAbbr = abbr( this.followCount );
+			this.followCountAbbr = this.followCount > 0 ? ( "  |  " + abbrNum( this.followCount ) ) : null;
 		},
 		
 		updateAuthor: function( author ) {
@@ -249,11 +251,20 @@
 			this.set( 'hasAccessToUpdate', author.hasAccessToUpdate );
 			this.set( 'name', author.name != null ? author.name : author.nameEn );
 			this.set( 'imageUrl', author.imageUrl + ( author.imageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
-			this.set( 'followCount', author.followCount );
+			this.set( 'followCount', author.followCount != null ? author.followCount : 0 );
+			this.set( 'contentPublished', abbrNum( author.contentPublished ) );
+			this.set( 'totalReadCount', abbrNum( author.totalReadCount ) );
+			this.set( 'totalFbLikeShareCount', abbrNum( author.totalFbLikeShareCount ) );
+		},
+
+		updateUserAuthor: function( userAuthor ) {
+			this.set( 'userAuthor', userAuthor );
+			this.set( 'following', userAuthor.following )
 		},
 		
-		ready: function() {
+		attached: function() {
 			this.updateAuthor( this.authorData );
+			this.updateUserAuthor( this.userAuthorData );
 		},
 		
 		shareAuthorOnFacebook: function() {
@@ -288,8 +299,8 @@
 		},
 		
 		_userAuthorFollowPostApiResponse: function( response ) {
-			this.set( 'isFollowing', this.isFollowing ? false : true );
-			this.set( 'followCount', this.isFollowing ? this.followCount - 1 : this.followCount + 1 );
+			this.set( 'following', this.following ? false : true );
+			this.set( 'followCount', this.following ? this.followCount + 1 : this.followCount - 1 );
 		},
 		
 		_userAuthorFollowPostApiError: function( response ) {

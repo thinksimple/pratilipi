@@ -22,9 +22,10 @@
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden">
 						<pratilipi-author-details user='[[ user ]]'
-								author='{{ author }}'
 								author-data='[[ authorData ]]'
-								is-following='{{ isFollowing }}'></pratilipi-author-details>
+								author='{{ author }}'
+								user-author-data='[[ userAuthorData ]]'
+								user-author='{{ userAuthor }}'></pratilipi-author-details>
 						<#-- <pratilipi-author-tabs></pratilipi-author-tabs> -->
 					</div>
 				</div>
@@ -47,7 +48,7 @@
 			properties: {
 				userData: { type: Object },
 				authorData: { type: Object },
-				isFollowing: { type: Boolean },
+				userAuthorData: { type: Object },
 				
 				pratilipiList: { type: Array },
 				navigationList: { type: Array },
@@ -66,13 +67,8 @@
 			},
 			
 			scrollHandler: function( st ) {
-				if( st > this.lastScrollTop || st < 100 ) {
+				if( st > this.lastScrollTop || st < 100 )
 					jQuery( '#scrollToTop' ).fadeOut();
-					if( this.author != null && ! this.author.hasAccessToUpdate )
-						this.querySelector( 'pratilipi-card-grid' ).loadMore();
-					else if( document.querySelector( 'pratilipi-author-books' ) != null )
-						document.querySelector( 'pratilipi-author-books' ).loadMore();
-				}
 				else
 					jQuery( '#scrollToTop' ).fadeIn();
 			
