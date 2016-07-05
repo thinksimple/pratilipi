@@ -31,6 +31,7 @@ import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
+import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -696,7 +697,12 @@ public class PratilipiSite extends HttpServlet {
 		Author author = dataAccessor.getAuthor( authorId );
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
 		AuthorApi.Response genericAuthorResponse = new AuthorApi.Response( authorData );
-		UserAuthorData userAuthorData = UserAuthorDataUtil.getUserAuthor( AccessTokenFilter.getAccessToken().getUserId(), authorId );
+
+		UserAuthorFollowApi.GetRequest getRequest = new UserAuthorFollowApi.GetRequest();
+		getRequest.setAuthorId( authorId );
+		UserAuthorFollowApi.Response userAuthorData = ApiRegistry
+				.getApi( UserAuthorFollowApi.class )
+				.get( getRequest );
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setAuthorId( authorId );
