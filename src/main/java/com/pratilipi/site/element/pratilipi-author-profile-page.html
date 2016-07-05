@@ -11,6 +11,7 @@
 			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+			<pratilipi-alert></pratilipi-alert>
 			<div class="parent-container margin-top-bottom">
 				<div class="container">
 					<pratilipi-navigation
@@ -20,8 +21,11 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden">
-						<pratilipi-author-details></pratilipi-author-details>
-						<pratilipi-author-tabs></pratilipi-author-tabs>
+						<pratilipi-author-details user='[[ user ]]'
+								author='{{ author }}'
+								author-data='[[ authorData ]]'
+								is-following='{{ isFollowing }}'></pratilipi-author-details>
+						<#-- <pratilipi-author-tabs></pratilipi-author-tabs> -->
 					</div>
 				</div>
 			</div>
@@ -42,15 +46,15 @@
 			
 			properties: {
 				userData: { type: Object },
-				authorData: { type:Object },
-				userAuthorData: { type:Object },
+				authorData: { type: Object },
+				isFollowing: { type: Boolean },
 				
 				pratilipiList: { type: Array },
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				filter: { type: Object },
 				cursor: { type: String },
-				lastScrollTop: { type: Number, value: 0 },
+				lastScrollTop: { type: Number, value: 0 }
 			},
 			
 			ready: function() {

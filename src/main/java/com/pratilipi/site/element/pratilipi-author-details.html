@@ -37,14 +37,14 @@
 		.follow-author button.pratilipi-light-blue-button {
 			display: block;
 			margin: 0 auto;
-			border-radius: 10px;
+			border-radius: 5px;
 			font-weight: 400;
 			font-size: 15px;
 		}
 		.follow-author button.pratilipi-grey-button {
 			display: block;
 			margin: 0 auto;
-			border-radius: 8px;
+			border-radius: 5px;
 			font-weight: 400;
 			font-size: 15px;
 			-webkit-box-shadow: none;
@@ -80,7 +80,7 @@
 		.share-author paper-menu-button paper-fab {
 			width: 12px;
 			height: 12px;
-			--paper-fab-background: #FBFBFB;
+			--paper-fab-background: #F5F5F5;
 			--paper-fab-iron-icon: {
 				color: #333;
 			}
@@ -104,67 +104,202 @@
 		}
 		.meta-data div.numbers {
 			font-size: 21px;
-			font-family: montserrat;
-			font-weight: 300;
+			font-weight: 500;
 		}
 	</style>
 	<template>
-		<paper-card class="cover-image pratilipi-shadow" style="background-image: url('{{ author.coverImageUrl }}')">
-			<div class="upload-cover">
-				<paper-fab mini icon="editor:insert-photo"></paper-fab>
-			</div>
+		<paper-card class="cover-image pratilipi-shadow" style="background-image: url('http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg')">
+		
+			<template is="dom-if" if="{{ hasAccessToUpdate }}">
+				<div class="upload-cover">
+					<paper-fab mini icon="editor:insert-photo"></paper-fab>
+				</div>
+			</template>
+			
 			<div class="share-author">
 				<paper-menu-button horizontal-align="right" vertical-align="top">
 					<paper-fab icon="social:share" class="dropdown-trigger"></paper-fab>
 					<paper-menu class="dropdown-content">
-						<paper-item><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></paper-item>
-						<paper-item><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></paper-item>
-						<paper-item><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></paper-item>
+						<paper-item on-click="shareAuthorOnFacebook"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></paper-item>
+						<paper-item on-click="shareAuthorOnTwitter"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></paper-item>
+						<paper-item on-click="shareAuthorOnGplus"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></paper-item>
 					</paper-menu>
 				</paper-menu-button>
 			</div>
 			<div class="author-detail-container">
-				<img class="img-thumbnail img-circle profile-picture" src="{{ author.imageUrl }}">
-				<div class="author-name">{{ author.name }}</div>
-				<div class="follow-author">
-					<button class="pratilipi-light-blue-button">
-						<iron-icon icon="social:person-add"></iron-icon>
-						Follow | 1.2k
-					</button>
-					<div style="min-height: 10px;"></div>
-					<button class="pratilipi-grey-button">
-						<iron-icon icon="icons:remove-circle"></iron-icon>
-						Unfollow | 1.2k
-					</button>
-				</div>
+				<img class="img-thumbnail img-circle profile-picture" src="{{ imageUrl }}">
+				<div class="author-name">{{ name }}</div>
+				<template is="dom-if" if="{{ !hasAccessToUpdate }}">
+					<div class="follow-author">
+						<template is="dom-if" if="{{ !isFollowing }}">
+							<button class="pratilipi-light-blue-button" on-click="followAuthor">
+								<iron-icon icon="social:person-add"></iron-icon>
+								Follow | {{ followCountAbbr }}
+							</button>
+						</template>
+						<template is="dom-if" if="{{ isFollowing }}">
+							<button class="pratilipi-grey-button" on-click="unFollowAuthor">
+								<iron-icon icon="icons:remove-circle"></iron-icon>
+								UnFollow | {{ followCountAbbr }}
+							</button>
+						</template>
+					</div>
+				</template>
 			</div>
 			
 		</paper-card>
 		<div class="secondary-500 meta-data pratilipi-shadow">
 			<div class="row">
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<span>Reads</span>
-					<div class="numbers">56</div>
+					<span>${ _strings.author_count_works }</span>
+					<div class="numbers">{{ author.contentPublished }}</div>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<span>Views</span>
-					<div class="numbers">109</div>
+					<span>${ _strings.author_count_reads }</span>
+					<div class="numbers">{{ author.totalReadCount }}</div>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<span>Likes</span>
-					<div class="numbers">30</div>
+					<span>${ _strings.author_count_likes }</span>
+					<div class="numbers">{{ author.totalFbLikeShareCount }}</div>
 				</div>
 			</div>
 		</div>
+		
+		<iron-ajax
+				id="UserAuthorFollowPostApi"
+				url="/api/userauthor/follow"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_userAuthorFollowPostApiResponse"
+				on-error="_userAuthorFollowPostApiError"
+				></iron-ajax>
+				
+		<iron-ajax
+				id="AuthorGetApi"
+				url="/api/author"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_authorGetApiResponse"
+				></iron-ajax>
+				
+		<iron-ajax
+				id="UserAuthorGetApi"
+				url="/api/userauthor/follow"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_userAuthorGetApiResponse"
+				></iron-ajax>
 	</template>
 	<script>
+		function abbrNum( n, d ) {
+			if( n < 1000 ) return n;
+			x = ( '' + n ).length, p = Math.pow, d = p( 10,d );
+			x -= x % 3;
+			return Math.round( n * d / p ( 10, x ) ) / d + " kMGTPE" [ x / 3 ]; 
+		}
+	
 	Polymer({
 
 		is: 'pratilipi-author-details',
 		
 		properties: {
-			author: { type: Object, value: {"authorId":5938410302734336,"firstName":"மீனாட்சி பாலகணேஷ்","name":"மீனாட்சி பாலகணேஷ்","fullName":"மீனாட்சி பாலகணேஷ்","firstNameEn":"Meenakshi Balganesh","nameEn":"Meenakshi Balganesh","fullNameEn":"Meenakshi Balganesh","language":"TAMIL","summary":"\u003cp\u003eஆராய்ச்சித்துறையில் மைக்ரோபயாலஜிஸ்டாக ஒரு மருந்து கண்டுபிடிப்பு நிறுவனத்தில் 25 ஆண்டுகாலம் பணியாற்றி பதவி ஓய்வி பெற்றவள் நான். மதுரை காமராசர் பல்கலைக்கழகத்தில் எனது முதல் முனைவர் பட்டத்தை விஞ்ஞானத்துறையில்1980-ல் பெற்றேன்.\u0026nbsp; பதவி ஓய்வு பெற்றபின்\u0026nbsp; கல்லூரிக் காலத்தில் ரசித்துப்படித்த தமிழை இன்னும் விரிவாகப்படிக்க ஆசைகொண்டு முதுநிலைப் பட்டம் பெற்றுள்ளேன். தற்போது தமிழில் முனைவர் பட்டத்திற்கான ஆராய்ச்சியை மேற்கொண்டுள்ளேன்.\u003c/p\u003e\n\n\u003cp\u003eபழந்தமிழ் இலக்கியங்கள், குறிப்பாகச் சிற்றிலக்கியங்கள் என்னை மிகவும் கவர்ந்தவை. இவற்றைப்பற்றி இலக்கியரசம் வாய்ந்த கட்டுரைகளை தாரகை, வல்லமை, சொல்வனம், தமிழ் ஹிந்து இணையதளங்களில் எழுதி வருகிறேன். கடந்த பல ஆண்டுகளில் அவ்வப்போது சிறுகதைகள், குறுநாவல், நாவல் முதலியன எழுதி அவை கலைமகள், கல்கி, அமுதசுரபி, ஓம்சக்தி பத்திரிகைகளில் வெளிவந்துள்ளன.\u003c/p\u003e","pageUrl":"/meenakshi-balganesh","imageUrl":"http://orig04.deviantart.net/92ae/f/2009/230/4/1/spongebob_9_150x150_png_by_somemilk.png","coverImageUrl": "http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg", "registrationDateMillis":1455704486610,"contentPublished":19,"totalReadCount":2895,"totalFbLikeShareCount":994,"hasAccessToUpdate":false} }
+			user: { type: Object, "_userObserver" },
+			authorData: { type: Object },
+			author: { type: Object, notify: true },
+			isFollowing: { type: Boolean, notify: true },
+			
+			followCount: { type: Object, observer: "_followCountObserver" }
 		},
+		
+		_userObserver: function() {
+			if( this.author == null || this.isFollowing == null )
+				return;
+
+			this.$.AuthorGetApi.params.authorId = this.author.authorId;
+			this.$.UserAuthorGetApi.params.authorId = this.author.authorId;
+			this.$.AuthorGetApi.generateRequest();
+			this.$.UserAuthorGetApi.generateRequest();
+		},
+		
+		_authorGetApiResponse: function( response ) {
+			this.updateAuthor( response.detail.response );
+		},
+		
+		_userAuthorGetApiResponse: function( response ) {
+			this.set( 'isFollowing', response.detail.response.isFollowing );
+		},
+		
+		_checkUserLoginStatus: function() {
+			if( this.user.isGuest ) {
+				document.querySelector( 'pratilipi-user' ).logIn( true );
+				return false;
+			}
+			return true;
+		},
+		
+		_followCountObserver: function() {
+			this.followCountAbbr = abbr( this.followCount );
+		},
+		
+		updateAuthor: function( author ) {
+			this.set( 'author', author );
+			this.set( 'hasAccessToUpdate', author.hasAccessToUpdate );
+			this.set( 'name', author.name != null ? author.name : author.nameEn );
+			this.set( 'imageUrl', author.imageUrl + ( author.imageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
+			this.set( 'followCount', author.followCount );
+		},
+		
+		ready: function() {
+			this.updateAuthor( this.authorData );
+		},
+		
+		shareAuthorOnFacebook: function() {
+			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl, 
+					"share", "width=1100,height=500,left=70px,top=60px" );
+		},
+		
+		shareAuthorOnTwitter: function() {
+			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl,
+					"share", "width=1100,height=500,left=70px,top=60px" );
+		},
+		
+		shareAuthorOnGplus: function() {
+			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl,
+					"share", "width=1100,height=500,left=70px,top=60px" );
+		},
+		
+		followAuthor: function() {
+			if( ! this._checkUserLoginStatus() )
+				return;
+			var body = { authorId: this.author.authorId, following: true };
+			this.$.UserAuthorFollowPostApi.body = jQuery.param( body );
+			this.$.UserAuthorFollowPostApi.generateRequest();
+		},
+		
+		unFollowAuthor: function() {
+			if( ! this._checkUserLoginStatus() )
+				return;
+			var body = { authorId: this.author.authorId, following: false };
+			this.$.UserAuthorFollowPostApi.body = jQuery.param( body );
+			this.$.UserAuthorFollowPostApi.generateRequest();
+		},
+		
+		_userAuthorFollowPostApiResponse: function( response ) {
+			this.set( 'isFollowing', this.isFollowing ? false : true );
+			this.set( 'followCount', this.isFollowing ? this.followCount - 1 : this.followCount + 1 );
+		},
+		
+		_userAuthorFollowPostApiError: function( response ) {
+			if( response.detail.request.xhr.response.message != null ) {
+				document.querySelector( 'pratilipi-alert' ).alert( response.detail.request.xhr.response.message, false );
+			} else {
+				document.querySelector( 'pratilipi-alert' ).alert( "Some error Occured! Please try again", false );
+				console.log( response );
+			}
+		}
 		
 	});
 	</script>

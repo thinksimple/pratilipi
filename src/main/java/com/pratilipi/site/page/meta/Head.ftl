@@ -11,7 +11,7 @@
 	${ resource }
 </#list>
 <link rel='import' href='http://0.ptlp.co/resource-all/elements.vulcanized.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?11'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?12'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?201607">
@@ -54,7 +54,6 @@
 <script defer>
 	function processContentTinyMCE( content ) {
 		content = content.replace( /&nbsp;/g, " " );
-		content = content.replace( /\n/g, "" );
 		return content;
 	}
 </script>

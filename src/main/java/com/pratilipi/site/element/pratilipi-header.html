@@ -3,11 +3,16 @@
 	<style>
 		.pratilipi-text {
 			color: #d0021B;
-			font-size: 19px;
+			font-size: 22px;
+			margin-left: 4px;
+			<#if lang == "ta">
+				font-size: 17px;
+				margin-left: 0px;
+			</#if>
 			font-weight: 700;
 			margin-top: -6px;
-			margin-left: 4px;
 			position: absolute;
+			max-width: 90px;
 		}
 
 		paper-card {
@@ -81,14 +86,14 @@
 							
 							<template is="dom-if" if="{{ !mobile }}">
 								<td width="90px">
-									<#--
 									<a class="pratilipi-text" href="/">
 										${ _strings.pratilipi }
 									</a>
-									-->
+									<#--
 									<a href="/">
 										<img style= "padding-top: 5px; max-width: 90px;" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi-text-${ lang }.png" />
 									</a>
+									-->
 								</td>
 							</template>
 							
