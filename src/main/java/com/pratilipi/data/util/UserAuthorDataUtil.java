@@ -3,6 +3,7 @@ package com.pratilipi.data.util;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
@@ -12,7 +13,10 @@ import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserAuthorData;
+import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
@@ -90,6 +94,26 @@ public class UserAuthorDataUtil {
 		
 	}
 
+	public static DataListCursorTuple<AuthorData> getUserFollowList( Long userId, String cursor, Integer offset, Integer resultCount ) {
+		DataListCursorTuple<Long> authorIdListCursorTuple = DataAccessorFactory.getDataAccessor()
+				.getUserAuthorFollowList( userId, null, cursor, offset, resultCount );
+		return new DataListCursorTuple<>(
+				AuthorDataUtil.createAuthorDataList( authorIdListCursorTuple.getDataList() ),
+				authorIdListCursorTuple.getCursor() );
+	}
+	
+	public static DataListCursorTuple<UserData> getAuthorFollowList( Long authorId, String cursor, Integer offset, Integer resultCount ) {
+		DataListCursorTuple<Long> userIdListCursorTuple = DataAccessorFactory.getDataAccessor()
+				.getUserAuthorFollowList( null, authorId, cursor, offset, resultCount );
+		Map<Long, UserData> users = UserDataUtil.createUserDataList( userIdListCursorTuple.getDataList() );
+		List<UserData> userList = new ArrayList<>( users.size() );
+		for( Long userId : userIdListCursorTuple.getDataList() )
+			userList.add( users.get( userId ) );
+		return new DataListCursorTuple<>(
+				userList,
+				userIdListCursorTuple.getCursor() );
+	}
+	
 	
 	public static UserAuthorData saveUserAuthorFollow( Long userId, Long authorId, Boolean following )
 			throws InvalidArgumentException, InsufficientAccessException {
