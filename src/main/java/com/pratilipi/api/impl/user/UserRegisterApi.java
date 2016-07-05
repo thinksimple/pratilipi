@@ -38,7 +38,7 @@ public class UserRegisterApi extends GenericApi {
 				email, request.getPassword(),
 				UserDataUtil.getUserSignUpSource( false, false ) );
 		// Create Author profile for the User.
-		AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
+		Long authorId = AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
 		// Log-in the User.
 		userData = UserDataUtil.loginUser( email, request.getPassword() );
 
@@ -53,7 +53,12 @@ public class UserRegisterApi extends GenericApi {
 				.addParam( "userId", userData.getId().toString() )
 				.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
 				.addParam( "sendEmailVerificationMail", "true" );
-		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2 );
+		Task task3 = TaskQueueFactory.newTask()
+				.setUrl( "/author/process" )
+				.addParam( "authorId", authorId.toString() )
+				.addParam( "processData", "true" );
+
+		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2, task3 );
 
 		
 		return new GenericUserResponse( userData );
