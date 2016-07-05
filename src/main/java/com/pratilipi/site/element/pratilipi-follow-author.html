@@ -1,8 +1,66 @@
 <dom-module id="pratilipi-follow-author">
 	<style>
+		:host {
+			display: inline-block;
+			width: 100%;
+		}
+		.follow-author {
+			width: 100%;
+			padding: 24px 12px;
+			display: flex;
+		}
+		.follow-author .follow-author-image {
+			float: left;
+			text-align: center;
+			align-self: center;
+			margin-right: 8px;
+		}
+		.follow-author .follow-author-name {
+			float: left;
+			width: 65%;
+			text-align: left;
+			align-self: center;
+			font-size: 15px;
+		}
+		.follow-author .follow-author-button {
+			margin-left: 8px;
+			float: right;
+			text-align: center;
+			align-self: center;
+		}
+		.follow-author .follow-author-button .pratilipi-light-blue-button {
+			margin: 0;
+			border-radius: 4px;
+			font-weight: 400;
+			font-size: 15px;
+		}
+		.follow-author .follow-author-button .pratilipi-grey-button {
+			border-radius: 4px;
+			font-weight: 400;
+			font-size: 13px;
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			box-shadow: none;
+			margin: 0;
+		}
 	</style>
 	<template>
-		
+		<div class="follow-author">
+			<div class="follow-author-image">
+				<img src="{{ userImageUrl }}" class="img-circle"/>
+			</div>
+			<div class="follow-author-name contain-title ellipsed">
+				{{ userName }}
+			</div>
+			<div class="follow-author-button">
+				<template is="dom-if" if="{{ !isFollowed }}">
+					<button class="pratilipi-light-blue-button">Follow</button>
+				</template>
+				<template is="dom-if" if="{{ isFollowed }}">
+					<button class="pratilipi-grey-button">UnFollow</button>
+				</template>
+			</div>
+		</div>
 	</template>
 
 	<script>
@@ -10,6 +68,27 @@
 		Polymer({
 
 			is: 'pratilipi-follow-author',
+			
+			properties: {
+				userImageUrl: { type: String },
+				userName: { type: String },
+				isFollowed: { type: Boolean }
+			},
+			
+			ready: function() {
+				this.userImageUrl = "http://10.ptlp.co/author/image?width=48";
+				this.userName = "Test User";
+				this.isFollowed = false;
+				
+			},
+			
+			followAuthor: function() {
+				
+			},
+			
+			unFollowAuthor: function() {
+				
+			}
 
 		});
 

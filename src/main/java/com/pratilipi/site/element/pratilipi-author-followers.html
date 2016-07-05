@@ -4,9 +4,56 @@
 			display: block;
 			margin-top: 6px;
 		}
+		.author-followers .author-followers-header {
+			padding-top: 16px;
+		}
+		.author-followers .author-followers-header h5 {
+			font-weight: 700;
+			text-align: center;
+			margin-bottom: 12px;
+		}
+		.author-followers .author-followers-header .followers-text {
+			font-size: 15px;
+		}
+		hr {
+			margin-top: 0.5em;
+			margin-bottom: 0.8em;
+			margin-left: 8px;
+			margin-right: 8px;
+			border: 0;
+			border-top: 2px solid #eee;
+		}
+		
+		/* Bootstrap overrides */
+		.row {
+			margin-left: 0;
+			margin-right: 0;
+		}
+		.col-xs-12, .col-sm-12, .col-md-6, .col-lg-6 {
+			padding-left: 0;
+			padding-right: 0;
+		}
 	</style>
 	<template>
-		Followers	
+		<div class="secondary-500 pratilipi-shadow author-followers">
+			<div class="author-followers-header">
+				<h5 class="pratilipi-red">Followers</h5>
+				<div class="followers-text text-center">57 Members</div>
+			</div>
+			<hr/>
+			<div class="row followers-grid">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<pratilipi-follow-author></pratilipi-follow-author>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<pratilipi-follow-author></pratilipi-follow-author>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<pratilipi-follow-author></pratilipi-follow-author>
+				</div>
+					
+			</div>
+		</div>
 	</template>
 
 	<script>
