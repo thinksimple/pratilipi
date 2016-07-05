@@ -71,6 +71,8 @@ public class AuthorData implements Serializable {
 	
 	private Long registrationDateMillis;
 	
+	private Long followCount;
+	
 	private Integer contentPublished;
 	
 	private Long totalReadCount;
@@ -317,6 +319,14 @@ public class AuthorData implements Serializable {
 		this.registrationDateMillis = registrationDate == null ? null : registrationDate.getTime();
 	}
 	
+	public Long getFollowCount() {
+		return followCount;
+	}
+	
+	public void setFollowCount( Long followCount ) {
+		this.followCount = followCount;
+	}
+
 	public Integer getContentPublished() {
 		return contentPublished;
 	}

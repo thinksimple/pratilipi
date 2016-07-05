@@ -176,6 +176,7 @@ public class AuthorDataUtil {
 		authorData.setImageUrl( createAuthorImageUrl( author ) );
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
+		authorData.setFollowCount( author.getFollowCount() );
 		authorData.setContentPublished( author.getContentPublished() );
 		authorData.setTotalReadCount( author.getTotalReadCount() );
 		authorData.setTotalFbLikeShareCount( author.getTotalFbLikeShareCount() );
