@@ -169,6 +169,7 @@ public class AuthorApi extends GenericApi {
 	public static class Response extends GenericResponse {
 
 		private Long authorId;
+		private Long userId;
 
 		private String firstName;
 		private String lastName;
@@ -208,6 +209,7 @@ public class AuthorApi extends GenericApi {
 		public Response( AuthorData authorData ) {
 			
 			this.authorId = authorData.getId();
+			this.userId = authorData.getUserId();
 			
 			this.firstName = authorData.getFirstName();
 			this.lastName = authorData.getLastName();
@@ -256,6 +258,10 @@ public class AuthorApi extends GenericApi {
 		
 		public Long getId() {
 			return authorId;
+		}
+		
+		public Long getUserId() {
+			return userId;
 		}
 		
 		public String getFirstName() {

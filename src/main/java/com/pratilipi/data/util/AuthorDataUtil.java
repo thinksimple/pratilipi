@@ -128,8 +128,9 @@ public class AuthorDataUtil {
 		AuthorData authorData = new AuthorData();
 		
 		authorData.setId( author.getId() );
+		authorData.setUserId( author.getUserId() );
+
 		if( userData != null ) {
-			authorData.setUserId( userData.getId() );
 			authorData.setUser( userData );
 		}
 
