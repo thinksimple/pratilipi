@@ -257,7 +257,7 @@
 
 		updateUserAuthor: function( userAuthor ) {
 			this.set( 'userAuthor', userAuthor );
-			this.set( 'following', userAuthor != null ? userAuthor.following : false )
+			this.set( 'following', ( userAuthor != null && userAuthor.following != null ) ? userAuthor.following : false )
 		},
 		
 		attached: function() {

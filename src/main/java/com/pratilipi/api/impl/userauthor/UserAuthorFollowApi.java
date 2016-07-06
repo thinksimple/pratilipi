@@ -34,7 +34,7 @@ public class UserAuthorFollowApi extends GenericApi {
 		
 	}
 
-	public class PostRequest extends GenericRequest {
+	public static class PostRequest extends GenericRequest {
 
 		@Validate( required = true, minLong = 1L )
 		private Long authorId;
