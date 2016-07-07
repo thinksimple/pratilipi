@@ -27,6 +27,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
+import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -186,7 +187,7 @@ public class UserProcessApi extends GenericApi {
 		
 		
 		if( request.updateUserAuthorStats != null && request.updateUserAuthorStats ) {
-//			UserDataUtil.updateUserAuthorStats( request.userId ); // TODO
+			UserDataUtil.updateUserAuthorStats( request.userId );
 		}
 
 

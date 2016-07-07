@@ -657,4 +657,31 @@ public class UserDataUtil {
 
 	}
 	
+	
+	public static void updateUserAuthorStats( Long userId ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		User user = dataAccessor.getUser( userId );
+		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE )
+			return;
+
+		
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken().getId(),
+				AccessType.USER_UPDATE,
+				user );
+
+		long followCount = dataAccessor.getUserAuthorFollowList( userId, null, null, null, null )
+				.getDataList()
+				.size();
+		user.setFollowCount( followCount );
+		
+		auditLog.setEventDataNew( user );
+
+		
+		user = dataAccessor.createOrUpdateUser( user, auditLog );
+		
+	}
+
 }
