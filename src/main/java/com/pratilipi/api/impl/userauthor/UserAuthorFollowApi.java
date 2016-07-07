@@ -50,7 +50,7 @@ public class UserAuthorFollowApi extends GenericApi {
 		@SuppressWarnings("unused")
 		private Response() { }
 		
-		public Response( UserAuthorData userAuthorData ) {
+		Response( UserAuthorData userAuthorData ) {
 			if( userAuthorData != null ) {
 				this.authorId = userAuthorData.getAuthorId();
 				this.following = userAuthorData.isFollowing();
