@@ -61,8 +61,11 @@ public class UserEntity implements User {
 	
 	@Index
 	private Date LAST_UPDATED;
-
 	
+	@Index
+	private Long FOLLOW_COUNT;
+
+
 	public UserEntity() {}
 	
 	public UserEntity( Long id ) {
@@ -144,28 +147,7 @@ public class UserEntity implements User {
 	
 	@Override
 	public UserState getState() {
-
-		if( CAMPAIGN != null && CAMPAIGN.equals( "Publisher:5684064812007424" ) ) {
-			STATE = UserState.DELETED;
-		} else if( STATE == null && STATUS != null ) {
-			switch( STATUS ) {
-				case PRELAUNCH_REFERRAL:
-				case POSTLAUNCH_REFERRAL:
-					STATE = UserState.REFERRAL;
-					break;
-				case PRELAUNCH_SIGNUP:
-				case POSTLAUNCH_SIGNUP:
-				case POSTLAUNCH_SIGNUP_SOCIALLOGIN:
-				case ANDROID_SIGNUP:
-				case ANDROID_SIGNUP_FACEBOOK:
-				case ANDROID_SIGNUP_GOOGLE:
-					STATE = UserState.REGISTERED;
-					break;
-			}
-		}
-		
 		return STATE;
-		
 	}
 	
 	@Override
@@ -251,6 +233,17 @@ public class UserEntity implements User {
 	@Override
 	public void setLastUpdated( Date lastUpdated ) {
 		this.LAST_UPDATED = lastUpdated;
+	}
+
+	
+	@Override
+	public Long getFollowCount() {
+		return FOLLOW_COUNT == null ? 0 : FOLLOW_COUNT;
+	}
+	
+	@Override
+	public void setFollowCount( Long followCount ) {
+		this.FOLLOW_COUNT = followCount;
 	}
 
 }
