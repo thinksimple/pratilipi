@@ -24,10 +24,6 @@ public class UserAuthorFollowApi extends GenericApi {
 		@Validate( required = true, minLong = 1L )
 		private Long authorId;
 		
-		public Long getAuthorId() {
-			return authorId;
-		}
-		
 		public void setAuthorId( Long authorId ) {
 			this.authorId = authorId;
 		}
@@ -41,15 +37,6 @@ public class UserAuthorFollowApi extends GenericApi {
 		
 		@Validate( required = true )
 		private Boolean following;
-		
-		
-		public Long getAuthorId() {
-			return authorId;
-		}
-		
-		public Boolean getFollowing() {
-			return following;
-		}
 
 	}
 	
@@ -64,8 +51,10 @@ public class UserAuthorFollowApi extends GenericApi {
 		private Response() { }
 		
 		public Response( UserAuthorData userAuthorData ) {
-			this.authorId = userAuthorData != null ? userAuthorData.getAuthorId() : null;
-			this.following = userAuthorData != null ? userAuthorData.isFollowing() : null;
+			if( userAuthorData != null ) {
+				this.authorId = userAuthorData.getAuthorId();
+				this.following = userAuthorData.isFollowing();
+			}
 		}
 		
 		
@@ -84,7 +73,7 @@ public class UserAuthorFollowApi extends GenericApi {
 	public Response get( GetRequest request ) {
 		UserAuthorData userAuthorData = UserAuthorDataUtil.getUserAuthor( 
 				AccessTokenFilter.getAccessToken().getUserId(), 
-				request.getAuthorId() );
+				request.authorId );
 		return new Response( userAuthorData );
 	}
 	
