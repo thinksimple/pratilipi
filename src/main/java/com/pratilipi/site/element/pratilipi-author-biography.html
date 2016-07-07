@@ -101,16 +101,16 @@
 				<table>
 					<tr>
 						<th>Author Since</th>
-						<td>06 June 2016</td>
+						<td>{{ registrationDate }}</td>
 					</tr>
-					<tr>
+					<#-- <tr>
 						<th>Location</th>
 						<td>New Delhi</td>
 					</tr>
 					<tr>
 						<th>Date of Birth</th>
 						<td>17/03/1994</td>
-					</tr>
+					</tr> -->
 				</table>
 				
 				<div class="author-summary-container" id="author-summary-container">
@@ -123,16 +123,32 @@
 	</template>
 
 	<script>
+	
+		function convertDate( date ) {
+			var d = new Date( date );
+			function day(d) { return (d < 10) ? '0' + d : d; }
+			function month(m) { var months = ['${ _strings.month_jan }','${ _strings.month_feb }','${ _strings.month_mar }',
+			                                  '${ _strings.month_apr }','${ _strings.month_may }','${ _strings.month_jun }',
+			                                  '${ _strings.month_jul }','${ _strings.month_aug }','${ _strings.month_sep }',
+			                                  '${ _strings.month_oct }','${ _strings.month_nov }','${ _strings.month_dec }']; return months[m]; }
+			return [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ');
+		}
 
 		Polymer({
 
 			is: 'pratilipi-author-biography',
 			
 			properties: {
-			 	summary: { type: String, value: "\u003cp\u003eஆராய்ச்சித்துறையில் மைக்ரோபயாலஜிஸ்டாக ஒரு மருந்து கண்டுபிடிப்பு நிறுவனத்தில் 25 ஆண்டுகாலம் பணியாற்றி பதவி ஓய்வி பெற்றவள் நான். மதுரை காமராசர் பல்கலைக்கழகத்தில் எனது முதல் முனைவர் பட்டத்தை விஞ்ஞானத்துறையில்1980-ல் பெற்றேன்.\u0026nbsp; பதவி ஓய்வு பெற்றபின்\u0026nbsp; கல்லூரிக் காலத்தில் ரசித்துப்படித்த தமிழை இன்னும் விரிவாகப்படிக்க ஆசைகொண்டு முதுநிலைப் பட்டம் பெற்றுள்ளேன். தற்போது தமிழில் முனைவர் பட்டத்திற்கான ஆராய்ச்சியை மேற்கொண்டுள்ளேன்.\u003c/p\u003e\n\n\u003cp\u003eபழந்தமிழ் இலக்கியங்கள், குறிப்பாகச் சிற்றிலக்கியங்கள் என்னை மிகவும் கவர்ந்தவை. இவற்றைப்பற்றி இலக்கியரசம் வாய்ந்த கட்டுரைகளை தாரகை, வல்லமை, சொல்வனம், தமிழ் ஹிந்து இணையதளங்களில் எழுதி வருகிறேன். கடந்த பல ஆண்டுகளில் அவ்வப்போது சிறுகதைகள், குறுநாவல், நாவல் முதலியன எழுதி அவை கலைமகள், கல்கி, அமுதசுரபி, ஓம்சக்தி பத்திரிகைகளில் வெளிவந்துள்ளன.\u003c/p\u003e" }
+			 	author: { type: Object, observer: "_authorObserver" },
+			 	
+			 	summary: { type: String }
 			},
 			
-			attached: function() {
+			_authorObserver: function() {
+				
+				this.set( 'summary', this.author.summary );
+				this.set( 'registrationDate', convertDate( this.author.registrationDateMillis ) );
+				
 				if( this.summary == null || this.summary.trim() == "" ) {
 					jQuery( this.querySelector( '.author-summary-container' ) ).css( 'display', 'none' );
 					return;

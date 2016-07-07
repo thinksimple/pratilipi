@@ -26,7 +26,11 @@
 								author='{{ author }}'
 								user-author-data='[[ userAuthorData ]]'
 								user-author='{{ userAuthor }}'></pratilipi-author-details>
-						<#-- <pratilipi-author-tabs></pratilipi-author-tabs> -->
+						<pratilipi-author-tabs 
+								user="[[ user ]]"
+								author="[[ author ]]"
+								published-pratilipi-list="{{ publishedPratilipiList }}"
+						></pratilipi-author-tabs>
 					</div>
 				</div>
 			</div>
@@ -50,11 +54,9 @@
 				authorData: { type: Object },
 				userAuthorData: { type: Object },
 				
-				pratilipiList: { type: Array },
-				navigationList: { type: Array },
+				publishedPratilipiList: { type: Object },
 				pratilipiTypes: { types: Object },
-				filter: { type: Object },
-				cursor: { type: String },
+				navigationList: { type: Array },
 				lastScrollTop: { type: Number, value: 0 }
 			},
 			

@@ -1,5 +1,10 @@
-<#include "pratilipi-author-tab-activity.html">
-<#include "pratilipi-author-tab-about.html">
+<#include "pratilipi-author-drafted-contents.html">
+<#include "pratilipi-author-published-contents.html">
+<#include "pratilipi-author-library-contents.html">
+<#include "pratilipi-author-biography.html">
+<#include "pratilipi-author-following.html">
+<#include "pratilipi-author-followers.html">
+<#-- <#include "pratilipi-author-recent-contents.html"> -->
 
 <dom-module id="pratilipi-author-tabs">
 	<style>
@@ -51,10 +56,15 @@
 		</div>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane fade in active" id="author-activity">
-				<pratilipi-author-tab-activity></pratilipi-author-tab-activity>
+				<#-- <pratilipi-author-drafted-contents pratilipi-list-object="[[ draftedPratilipiList ]]"></pratilipi-author-drafted-contents> -->
+				<pratilipi-author-published-contents pratilipi-list-object="[[ publishedPratilipiList ]]"></pratilipi-author-published-contents>
+				<#-- <pratilipi-author-library-contents pratilipi-list-object="[[ libraryPratilipiList ]]"></pratilipi-author-library-contents> -->
+				<#-- <pratilipi-author-recent-contents></pratilipi-author-recent-contents> -->
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="author-about">
-				<pratilipi-author-tab-about></pratilipi-author-tab-about>
+				<pratilipi-author-biography author="[[ author ]]"></pratilipi-author-biography>
+				<#-- <pratilipi-author-following></pratilipi-author-following>
+				<pratilipi-author-followers></pratilipi-author-followers> -->
 			</div>
 		</div>
 	</template>
@@ -62,6 +72,18 @@
 	Polymer({
 
 		is: 'pratilipi-author-tabs',
+		
+		properties: {
+			user: { type: Object },
+			author: { type: Object },
+			
+			draftedPratilipiList: { type: Object },
+			publishedPratilipiList: { type: Object },
+			libraryPratilipiList: { type: Object },
+			
+			authorFollowingList: { type: Object },
+			authorFollowersList: { type: Object }
+		},
 		
 	});
 	</script>

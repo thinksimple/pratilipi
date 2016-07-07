@@ -195,7 +195,7 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode );
+				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), filterLanguage, basicMode );
 				if( SystemProperty.STAGE.equals( "gamma" ) )
 					templateName = templateFilePrefix + "AuthorPage.ftl";
 				else
@@ -690,7 +690,7 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode )
+	public Map<String, Object> createDataModelForAuthorPage( Long authorId, Language filterLanguage, boolean basicMode )
 			throws InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -707,23 +707,32 @@ public class PratilipiSite extends HttpServlet {
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setAuthorId( authorId );
 		pratilipiFilter.setState( PratilipiState.PUBLISHED );
-		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-				PratilipiDataUtil.getPratilipiDataList( pratilipiFilter, null, 20 );
+		pratilipiFilter.setLanguage( filterLanguage );
+
+		PratilipiListApi.GetRequest pratilipiListRequest = new PratilipiListApi.GetRequest();
+		pratilipiListRequest.setAuthorId( authorId );
+		pratilipiListRequest.setLanguage( filterLanguage );
+		pratilipiListRequest.setState( PratilipiState.PUBLISHED );
+
+		PratilipiListApi.Response pratilipiListResponse = ApiRegistry
+				.getApi( PratilipiListApi.class )
+				.get( pratilipiListRequest );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createAuthorPageTitle( authorData ) );
 		if( basicMode ) {
 			dataModel.put( "author", genericAuthorResponse );
-			dataModel.put( "publishedPratilipiList", pratilipiDataListCursorTuple.getDataList() );
-			if( pratilipiDataListCursorTuple.getDataList().size() == 20 && pratilipiDataListCursorTuple.getCursor() != null )
+			dataModel.put( "publishedPratilipiList", pratilipiListResponse.getPratilipiList() );
+			if( pratilipiListResponse.getPratilipiList().size() == 20 && pratilipiListResponse.getCursor() != null )
 				dataModel.put( "publishedPratilipiListSearchQuery", pratilipiFilter.toUrlEncodedString() );
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "authorJson", gson.toJson( genericAuthorResponse ) );
 			dataModel.put( "userAuthorJson", gson.toJson( userAuthorData ) );
-			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiDataListCursorTuple.getDataList() ) );
+			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiListResponse.getPratilipiList() ) );
 			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
-			dataModel.put( "publishedPratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+			dataModel.put( "publishedPratilipiListCursor", pratilipiListResponse.getCursor() );
+			dataModel.put( "publishedPratilipiListObjectJson", gson.toJson( pratilipiListResponse ) );
 		}
 		return dataModel;
 		
