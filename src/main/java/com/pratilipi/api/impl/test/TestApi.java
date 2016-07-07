@@ -10,7 +10,10 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
@@ -18,6 +21,7 @@ import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.data.util.PratilipiDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -27,6 +31,8 @@ public class TestApi extends GenericApi {
 		Long deleteUserId;
 		String email;
 		String facebookId;
+		
+		Long pratilipiId;
 	}
 	
 	public static class Response extends GenericResponse {
@@ -42,6 +48,12 @@ public class TestApi extends GenericApi {
 	
 	@Get
 	public GenericResponse get( GetRequest request ) throws InsufficientAccessException {
+		
+		if( request.pratilipiId != null ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			Page page = PratilipiDataUtil._updatePratilipiPageUrl( dataAccessor.getPratilipi( request.pratilipiId ) );
+			dataAccessor.createOrUpdatePage( page );
+		}
 		
 /*		String appPropertyId = "Api.PratilipiProcess.ValidateData";
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
