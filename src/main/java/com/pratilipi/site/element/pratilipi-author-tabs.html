@@ -56,10 +56,25 @@
 		</div>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane fade in active" id="author-activity">
-				<#-- <pratilipi-author-drafted-contents pratilipi-list-object="[[ draftedPratilipiList ]]"></pratilipi-author-drafted-contents> -->
-				<pratilipi-author-published-contents pratilipi-list-object="[[ publishedPratilipiList ]]"></pratilipi-author-published-contents>
-				<#-- <pratilipi-author-library-contents pratilipi-list-object="[[ libraryPratilipiList ]]"></pratilipi-author-library-contents> -->
+
+				<template is="dom-if" if="{{ hasAccessToUpdate }}">
+					<pratilipi-author-drafted-contents 
+						pratilipi-list-object="[[ draftedPratilipiList ]]"
+						author-id="[[ author.authorId ]]"></pratilipi-author-drafted-contents>
+				</template>
+
+				<pratilipi-author-published-contents 
+						pratilipi-list-object="[[ publishedPratilipiList ]]" 
+						author-id="[[ author.authorId ]]"></pratilipi-author-published-contents>
+
+				<template is="dom-if" if="{{ hasAccessToUpdate }}">
+					<pratilipi-author-library-contents 
+						pratilipi-list-object="[[ libraryPratilipiList ]]"
+						author-id="[[ author.authorId ]]"></pratilipi-author-library-contents>
+				</template>
+
 				<#-- <pratilipi-author-recent-contents></pratilipi-author-recent-contents> -->
+
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="author-about">
 				<pratilipi-author-biography author="[[ author ]]"></pratilipi-author-biography>
@@ -75,7 +90,7 @@
 		
 		properties: {
 			user: { type: Object },
-			author: { type: Object },
+			author: { type: Object, observer: "_authorObserver" },
 			
 			draftedPratilipiList: { type: Object },
 			publishedPratilipiList: { type: Object },
@@ -84,6 +99,10 @@
 			authorFollowingList: { type: Object },
 			authorFollowersList: { type: Object }
 		},
+		
+		_authorObserver: function() {
+			this.set( 'hasAccessToUpdate', this.author.hasAccessToUpdate );
+		}
 		
 	});
 	</script>

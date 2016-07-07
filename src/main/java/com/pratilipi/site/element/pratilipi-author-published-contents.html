@@ -19,6 +19,27 @@
 			border: 0;
 			border-top: 2px solid #eee;
 		}
+		.more-button {
+			margin-top: 16px;
+			background: #F1F8FB;
+			padding: 18px;
+			text-align: center;
+			color: #0C68BD;
+			cursor: pointer;
+			font-size: 18px;
+			font-weight: 700;
+			letter-spacing: 0.3px;
+			line-height: 16px;
+			text-shadow: 0px 1px 2px #FFFFFF;
+		}
+		paper-spinner {
+			margin: 16px auto;
+			display: block;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
 	</style>
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
@@ -34,33 +55,74 @@
 					</div>
 				</template>
 			</div>
+			<template is="dom-if" if="{{ isLoading }}">
+				<paper-spinner active></paper-spinner>
+			</template>
+			<template is="dom-if" if="{{ showMore }}">
+				<div class="more-button" on-click="loadMore">More...</div>
+			</template>
 		</div>
+		<iron-ajax
+				id="PratilipiListApi"
+				url="/api/pratilipi/list"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_pratilipiListApiResponse"
+				on-error="_pratilipiListApiError"
+				></iron-ajax>
 	</template>
+	
 	<script>
-	Polymer({
+		Polymer({
 
-		is: 'pratilipi-author-published-contents',
-		
-		properties: {
-			pratilipiListObject: { type: Object },
+			is: 'pratilipi-author-published-contents',
+
+			properties: {
+				pratilipiListObject: { type: Object },
+				authorId: { type: String },
+
+				pratilipiList: { type: Array, value: function() { return []; } },
+				cursor: { type: String },
+				numberFound: { type: Number },
+				showMore: { type: Boolean, value: false }
+			},
+
+			processPratilipiListObject: function( pratilipiListObject ) {
+				var pratilipiList = pratilipiListObject.pratilipiList;
+				for( var i = 0; i < pratilipiList.length; i++ )
+					this.push( 'pratilipiList', pratilipiList[i] );
+				this.set( 'cursor', pratilipiListObject.cursor );
+				this.set( 'numberFound', pratilipiListObject.numberFound );
+				this.set( 'showMore', this.pratilipiList.length < this.numberFound ? true : false );
+			},
+
+			ready: function() {
+				this.processPratilipiListObject( this.pratilipiListObject );
+			},
+
+			loadMore: function() {
+				this.set( 'isLoading', true );
+				this.set( 'showMore', false );
+				this.$.PratilipiListApi.params.authorId = this.authorId;
+				this.$.PratilipiListApi.params.state = "PUBLISHED";
+				this.$.PratilipiListApi.params.cursor = this.cursor;
+				this.$.PratilipiListApi.generateRequest();
+			},
+
+			_pratilipiListApiResponse: function( response ) {
+				this.set( 'isLoading', false );
+				this.processPratilipiListObject( response.detail.response );
+			},
+
+			_pratilipiListApiError: function( response ) {
+				this.set( 'isLoading', false );
+				this.set( 'showMore', true );
+				var message = response.detail.request.xhr.response.message != null ? 
+						response.detail.request.xhr.response.message : "Error occurred! Please try again!";
+				document.querySelector( 'pratilipi-alert' ).alert( message, false );
+			}
 			
-			pratilipiList: { type: Array, value: function() { return []; } },
-			cursor: { type: String },
-			numberFound: { type: Number }
-		},
-		
-		processPratilipiListObject: function( pratilipiListObject ) {
-			var pratilipiList = pratilipiListObject.pratilipiList;
-			for( var i = 0; i < pratilipiList.length; i++ )
-				this.push( 'pratilipiList', pratilipiList[i] );
-			this.set( 'cursor', pratilipiListObject.cursor );
-			this.set( 'numberFound', pratilipiListObject.numberFound );
-		},
-		
-		ready: function() {
-			this.processPratilipiListObject( this.pratilipiListObject );
-		}
-		
-	});
+		});
 	</script>
 </dom-module>

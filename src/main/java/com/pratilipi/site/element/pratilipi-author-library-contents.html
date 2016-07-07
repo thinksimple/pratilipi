@@ -7,53 +7,114 @@
 		.secondary-500 {
 			padding: 12px 8px;
 		}
-		.works-number {
-			font-size: 15px;
-		}
 		h5 {
 			font-weight: 700;
 		}
 		hr {
-			margin-top: 0.5em;
+			margin-top: 1.5em;
 			margin-bottom: 0.8em;
 			border: 0;
 			border-top: 2px solid #eee;
+		}
+		.more-button {
+			margin-top: 16px;
+			background: #F1F8FB;
+			padding: 18px;
+			text-align: center;
+			color: #0C68BD;
+			cursor: pointer;
+			font-size: 18px;
+			font-weight: 700;
+			letter-spacing: 0.3px;
+			line-height: 16px;
+			text-shadow: 0px 1px 2px #FFFFFF;
+		}
+		paper-spinner {
+			margin: 16px auto;
+			display: block;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
 		}
 	</style>
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
 			<h5 class="text-center pratilipi-red">
-				Library
+				${ _strings.my_library }
 			</h5>
-			<div class="works-number text-center">9 Works</div>
 			<hr/>
 			<div class="row text-center">
-				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-					<pratilipi-card-mini></pratilipi-card-mini>
-				</div>
-				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-					<pratilipi-card-mini></pratilipi-card-mini>
-				</div>
-				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-					<pratilipi-card-mini></pratilipi-card-mini>
-				</div>
-				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-					<pratilipi-card-mini></pratilipi-card-mini>
-				</div>
-				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-					<pratilipi-card-mini></pratilipi-card-mini>
-				</div>
-				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-					<pratilipi-card-mini></pratilipi-card-mini>
-				</div>
+				<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
+					<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+						<pratilipi-card-mini pratilipi="{{ pratilipi }}"></pratilipi-card-mini>
+					</div>
+				</template>
 			</div>
+			<template is="dom-if" if="{{ isLoading }}">
+				<paper-spinner active></paper-spinner>
+			</template>
+			<template is="dom-if" if="{{ showMore }}">
+				<div class="more-button" on-click="loadMore">More...</div>
+			</template>
 		</div>
+		<iron-ajax
+				id="UserPratilipiLibraryListApi"
+				url="/api/userpratilipi/library/list"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_userPratilipiLibraryListApiResponse"
+				on-error="_userPratilipiLibraryListApiError"
+				></iron-ajax>
 	</template>
-	<script>
-	Polymer({
 
-		is: 'pratilipi-author-library-contents',
-		
-	});
+	<script>
+		Polymer({
+
+			is: 'pratilipi-author-library-contents',
+
+			properties: {
+				pratilipiList: { type: Array, value: function() { return []; } },
+				cursor: { type: String, value: null },
+				showMore: { type: Boolean, value: false }
+			},
+
+			processPratilipiListObject: function( pratilipiListObject ) {
+				var pratilipiList = pratilipiListObject.pratilipiList;
+				for( var i = 0; i < pratilipiList.length; i++ )
+					this.push( 'pratilipiList', pratilipiList[i] );
+				this.set( 'cursor', pratilipiListObject.cursor );
+				this.set( 'showMore', pratilipiList.length == 20 ? true : false );
+			},
+
+			ready: function() {
+				this.loadMore();
+			},
+
+			loadMore: function() {
+				this.set( 'isLoading', true );
+				this.set( 'showMore', false );
+				if( this.cursor != null )
+					this.$.UserPratilipiLibraryListApi.params.cursor = this.cursor;
+				else
+					delete this.$.UserPratilipiLibraryListApi.params.cursor;
+				this.$.UserPratilipiLibraryListApi.generateRequest();
+			},
+
+			_userPratilipiLibraryListApiResponse: function( response ) {
+				this.set( 'isLoading', false );
+				this.processPratilipiListObject( response.detail.response );
+			},
+
+			_userPratilipiLibraryListApiError: function( response ) {
+				this.set( 'isLoading', false );
+				this.set( 'showMore', true );
+				var message = response.detail.request.xhr.response.message != null ? 
+						response.detail.request.xhr.response.message : "Error occurred! Please try again!";
+				document.querySelector( 'pratilipi-alert' ).alert( message, false );
+			}
+
+		});
 	</script>
 </dom-module>

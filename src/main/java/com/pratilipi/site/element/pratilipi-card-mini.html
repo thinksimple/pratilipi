@@ -12,8 +12,38 @@
 		.pratilipi-card {
 			width: 160px;
 			height: 240px;
+			display: flex;
+			cursor: pointer;
+		}
+		
+		.pratilipi-card .button-holders {
+			align-self: center;
+			margin: auto;
+		}
+
+		.pratilipi-card .button-holders button {
 			display: block;
 			cursor: pointer;
+			margin: 8px auto;
+		}
+
+		.pratilipi-card .button-holders .btn {
+			border-radius: 4px;
+			outline: none;
+		}
+
+		.pratilipi-card paper-fab {
+			position: absolute;
+			top: 12px;
+			margin-left: 128px;
+			width: 24px;
+			height: 24px;
+			--paper-fab-background: #F5F5F5;
+			--paper-fab-iron-icon: {
+				color: #333;
+				width: 16px;
+				height: 16px;
+			}
 		}
 
 		.ellipsed, a.ellipsed:hover, a.ellipsed:focus {
@@ -81,19 +111,34 @@
 
 	<template>
 		<div class="pratilipi-shadow">
-			<span style="background-image: url({{ pratilipiCoverImage }});" class="pratilipi-card" on-click="redirectToContentPage" title="{{ fullTitle }}">
-				<template is="dom-if" if="{{ pratilipi.author }}">
-					<div class="white-snippet">
-						<div class="contain-title ellipsed pratilipi-title">{{ title }}</div>
-						<a href="{{ pratilipi.author.pageUrl }}"><span class="contain-title ellipsed">{{ pratilipi.author.name }}</span></a>
+			<template is="dom-if" if="{{ !editProfile }}">
+				<span style="background-image: url({{ pratilipiCoverImage }});" class="pratilipi-card" on-click="redirectToContentPage" title="{{ fullTitle }}">
+					<template is="dom-if" if="{{ hasAccessToUpdate }}">
+						<paper-fab mini icon="icons:create" on-click="toggleEditProfile"></paper-fab>
+					</template>
+					<template is="dom-if" if="{{ pratilipi.author }}">
+						<div class="white-snippet">
+							<div class="contain-title ellipsed pratilipi-title">{{ title }}</div>
+							<a href="{{ pratilipi.author.pageUrl }}"><span class="contain-title ellipsed">{{ pratilipi.author.name }}</span></a>
+						</div>
+					</template>
+					<template is="dom-if" if="{{ !pratilipi.author }}">
+						<div class="white-snippet-reduced">
+							<div class="contain-title ellipsed pratilipi-title">{{ title }}</div>
+						</div>
+					</template>
+				</span>
+			</template>
+			<template is="dom-if" if="{{ editProfile }}">
+				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
+					<div class="button-holders">
+						<button class="btn btn-success">Publish</button>
+						<button class="btn btn-danger">Delete</button>
+						<button class="btn btn-default" on-click="toggleEditProfile">Cancel</button>
 					</div>
-				</template>
-				<template is="dom-if" if="{{ !pratilipi.author }}">
-					<div class="white-snippet-reduced">
-						<div class="contain-title ellipsed pratilipi-title">{{ title }}</div>
-					</div>
-				</template>
-			</span>
+				</div>
+			</template>
+
 			<div class="meta-container">
 				<span class="read-count">
 					<iron-icon icon="icons:chrome-reader-mode"></iron-icon>
@@ -120,7 +165,9 @@
 			is: 'pratilipi-card-mini',
 
 			properties: {
-				pratilipi: { type: Object, observer: "_pratilipiObserver" }
+				pratilipi: { type: Object, observer: "_pratilipiObserver" },
+
+				editProfile: { type: Boolean, value: false }
 			},
 			
 			_pratilipiObserver: function() {
@@ -134,10 +181,16 @@
 				this.pratilipiCoverImage = this.pratilipi.coverImageUrl + ( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=160";
 				this.readText = abbrNum( this.pratilipi.readCount, 1 );
 				this.showRating = this.pratilipi.averageRating == 0 ? false : true;
+				this.hasAccessToUpdate = this.pratilipi.hasAccessToUpdate;
 			},
 			
 			redirectToContentPage: function() {
-				window.location.href = this.pratilipi.pageUrl;
+				if( ! this.editProfile )
+					window.location.href = this.pratilipi.pageUrl;
+			},
+
+			toggleEditProfile: function() {
+				this.set( 'editProfile', this.editProfile ? false : true );
 			}
 		
 		});
