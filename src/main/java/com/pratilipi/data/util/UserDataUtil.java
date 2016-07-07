@@ -138,6 +138,7 @@ public class UserDataUtil {
 		userData.setPhone( user.getPhone() );
 		userData.setState( user.getState() );
 		userData.setSignUpDate( user.getSignUpDate() );
+		userData.setFollowCount( user.getFollowCount() );
 		
 		if( author != null ) {
 			Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );

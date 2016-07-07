@@ -59,7 +59,6 @@ import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.BlogPostData;
 import com.pratilipi.data.client.EventData;
 import com.pratilipi.data.client.PratilipiData;
-import com.pratilipi.data.client.UserAuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
@@ -73,7 +72,6 @@ import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
-import com.pratilipi.data.util.UserAuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -459,7 +457,7 @@ public class PratilipiSite extends HttpServlet {
 		if( pratilipiData == null )
 			return null;
 		
-		String title = createAuthorPageTitle( pratilipiData.getAuthor() );
+		String title = createAuthorPageTitle( new AuthorApi.Response( pratilipiData.getAuthor() ) );
 		title = title == null ? "" : " « " + title;
 		
 		if( pratilipiData.getTitle() != null && pratilipiData.getTitleEn() == null )
@@ -471,7 +469,7 @@ public class PratilipiSite extends HttpServlet {
 		return null;
 	}
 	
-	private String createAuthorPageTitle( AuthorData authorData ) {
+	private String createAuthorPageTitle( AuthorApi.Response authorData ) {
 		if( authorData == null )
 			return null;
 		
@@ -693,10 +691,9 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode )
 			throws InsufficientAccessException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = dataAccessor.getAuthor( authorId );
-		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
-		AuthorApi.Response genericAuthorResponse = new AuthorApi.Response( authorData );
+		AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
+		authorApiGetRequest.setAuthorId( authorId );
+		AuthorApi.Response authorResponse = ApiRegistry.getApi( AuthorApi.class ).get( authorApiGetRequest );
 
 		UserAuthorFollowApi.GetRequest getRequest = new UserAuthorFollowApi.GetRequest();
 		getRequest.setAuthorId( authorId );
@@ -713,15 +710,15 @@ public class PratilipiSite extends HttpServlet {
 				.get( pratilipiListRequest );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createAuthorPageTitle( authorData ) );
+		dataModel.put( "title", createAuthorPageTitle( authorResponse ) );
 		if( basicMode ) {
-			dataModel.put( "author", genericAuthorResponse );
+			dataModel.put( "author", authorResponse );
 			dataModel.put( "publishedPratilipiList", pratilipiListResponse.getPratilipiList() );
 			if( pratilipiListResponse.getPratilipiList().size() == 20 && pratilipiListResponse.getCursor() != null )
 				dataModel.put( "publishedPratilipiListSearchQuery", "authorId=" + authorId + "&state=" + PratilipiState.PUBLISHED );
 		} else {
 			Gson gson = new Gson();
-			dataModel.put( "authorJson", gson.toJson( genericAuthorResponse ) );
+			dataModel.put( "authorJson", gson.toJson( authorResponse ) );
 			dataModel.put( "userAuthorJson", gson.toJson( userAuthorData ) );
 			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiListResponse.getPratilipiList() ) );
 			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiListRequest ) );

@@ -120,7 +120,7 @@ public class PratilipiApi extends GenericApi {
 			this.title = pratilipiData.getTitle();
 			this.titleEn = pratilipiData.getTitleEn();
 			this.language = pratilipiData.getLanguage();
-			this.author = new AuthorApi.Response( pratilipiData.getAuthor(), true );
+			this.author = new AuthorApi.Response( pratilipiData.getAuthor(), PratilipiApi.class );
 			this.summary = pratilipiData.getSummary();
 			
 			this.pageUrl = pratilipiData.getPageUrl();
@@ -152,7 +152,7 @@ public class PratilipiApi extends GenericApi {
 			if( UxModeFilter.isAndroidApp() )
 				this.language = pratilipi.getLanguage();
 			if( pratilipi.getAuthor() != null )
-				this.author = new AuthorApi.Response( pratilipi.getAuthor(), true );
+				this.author = new AuthorApi.Response( pratilipi.getAuthor(), PratilipiListApi.class );
 			if( UxModeFilter.isAndroidApp() )
 				this.summary = pratilipi.getSummary();
 			this.pageUrl = pratilipi.getPageUrl();

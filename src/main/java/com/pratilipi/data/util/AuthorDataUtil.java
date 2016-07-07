@@ -122,17 +122,16 @@ public class AuthorDataUtil {
 		if( authorPage == null )
 			authorPage = DataAccessorFactory.getDataAccessor().getPage( PageType.AUTHOR, author.getId() );
 		
-		UserData userData = user == null ? null : UserDataUtil.createUserData( user );
+		UserData userData = user == null
+				? ( author.getUserId() == null ? null : new UserData( author.getUserId() ) )
+				: UserDataUtil.createUserData( user );
 
 		
 		AuthorData authorData = new AuthorData();
 		
 		authorData.setId( author.getId() );
-		authorData.setUserId( author.getUserId() );
-
-		if( userData != null ) {
-			authorData.setUser( userData );
-		}
+		
+		authorData.setUser( userData );
 
 		authorData.setFirstName( author.getFirstName() );
 		authorData.setLastName( author.getLastName() );

@@ -6,6 +6,10 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.impl.pratilipi.PratilipiApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
+import com.pratilipi.api.impl.user.UserApi;
+import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -26,15 +30,15 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @SuppressWarnings( "serial" )
 @Bind( uri = "/author" )
 public class AuthorApi extends GenericApi {
-
+	
 	public static class GetRequest extends GenericRequest {
 		
 		@Validate( required = true )
 		private Long authorId;
 		
 		
-		public Long getAuthorId() {
-			return authorId;
+		public void setAuthorId( Long authorId ) {
+			this.authorId = authorId;
 		}
 
 	}
@@ -169,8 +173,9 @@ public class AuthorApi extends GenericApi {
 	public static class Response extends GenericResponse {
 
 		private Long authorId;
-		private Long userId;
 
+		private UserApi.Response user;
+		
 		private String firstName;
 		private String lastName;
 		private String penName;
@@ -209,7 +214,8 @@ public class AuthorApi extends GenericApi {
 		public Response( AuthorData authorData ) {
 			
 			this.authorId = authorData.getId();
-			this.userId = authorData.getUserId();
+			
+			this.user = authorData.getUser() == null ? null : new UserApi.Response( authorData.getUser(), AuthorApi.class );
 			
 			this.firstName = authorData.getFirstName();
 			this.lastName = authorData.getLastName();
@@ -243,25 +249,37 @@ public class AuthorApi extends GenericApi {
 			
 		}
 		
-		public Response( AuthorData authorData, boolean embed ) {
+		public Response( AuthorData authorData, Class<? extends GenericApi> clazz ) {
 			
-			if( UxModeFilter.isAndroidApp() )
-				this.authorId = authorData.getId();
+			if( clazz == PratilipiApi.class || clazz == PratilipiListApi.class ) {
+
+				if( UxModeFilter.isAndroidApp() )
+					this.authorId = authorData.getId();
+				this.name = authorData.getName() == null
+						? authorData.getNameEn()
+						: authorData.getName();
+				this.pageUrl = authorData.getPageUrl();
 			
-			this.name = authorData.getName() == null
-					? authorData.getNameEn()
-					: authorData.getName();
-			this.pageUrl = authorData.getPageUrl();
+			} else if( clazz == UserAuthorFollowListApi.class ) {
+				
+				this.user = authorData.getUser() == null ? null : new UserApi.Response( authorData.getUser(), clazz );
+				this.name = authorData.getName() == null
+						? authorData.getNameEn()
+						: authorData.getName();
+				this.pageUrl = authorData.getPageUrl();
+				this.followCount = authorData.getFollowCount();
+					
+			}
 			
 		}
 		
-		
+
 		public Long getId() {
 			return authorId;
 		}
 		
-		public Long getUserId() {
-			return userId;
+		public UserApi.Response getUser() {
+			return user;
 		}
 		
 		public String getFirstName() {
@@ -372,7 +390,7 @@ public class AuthorApi extends GenericApi {
 	public Response get( GetRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = dataAccessor.getAuthor( request.getAuthorId() );
+		Author author = dataAccessor.getAuthor( request.authorId );
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
 		return new Response( authorData );
 		

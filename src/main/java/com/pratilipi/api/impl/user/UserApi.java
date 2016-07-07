@@ -6,8 +6,10 @@ import java.util.List;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.user.shared.PostUserRequest;
+import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.UserState;
@@ -29,6 +31,8 @@ public class UserApi extends GenericApi {
 		private String displayName;
 		private String profilePageUrl;
 		private String profileImageUrl;
+		
+		private Long followCount;
 	
 		
 		@SuppressWarnings("unused")
@@ -39,6 +43,20 @@ public class UserApi extends GenericApi {
 			displayName = userData.getDisplayName();
 			profilePageUrl = userData.getProfilePageUrl();
 			profileImageUrl = userData.getProfileImageUrl();
+		}
+
+		public Response( UserData userData, Class<? extends GenericApi> clazz ) {
+			
+			if( clazz == AuthorApi.class ) {
+				
+				this.userId = userData.getId();
+				
+			} else if( clazz == UserAuthorFollowListApi.class ) {
+
+				this.followCount = userData.getFollowCount();
+			
+			}
+			
 		}
 		
 		
@@ -62,6 +80,10 @@ public class UserApi extends GenericApi {
 			return profileImageUrl.indexOf( '?' ) == -1
 					? profileImageUrl + "?width=" + width
 					: profileImageUrl + "&width=" + width;
+		}
+		
+		public Long getFollowCount() {
+			return followCount;
 		}
 		
 	}

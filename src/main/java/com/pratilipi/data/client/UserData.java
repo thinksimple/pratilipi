@@ -46,7 +46,10 @@ public class UserData implements Serializable {
 	
 	private Long signUpDateMillis;
 
+	
+	private Long followCount;
 
+	
 	
 	public UserData() {}
 
@@ -182,5 +185,13 @@ public class UserData implements Serializable {
 		this.signUpDateMillis = signUpDate == null ? null : signUpDate.getTime();
 	}
 
+	
+	public Long getFollowCount() {
+		return followCount;
+	}
+	
+	public void setFollowCount( Long followCount ) {
+		this.followCount = followCount;
+	}
 
 }
