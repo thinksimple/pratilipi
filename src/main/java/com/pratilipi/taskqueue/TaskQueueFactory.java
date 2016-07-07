@@ -13,6 +13,7 @@ public class TaskQueueFactory {
 	private static final String QUEUE_PRATILIPI_OFFLINE	= "pratilipi-offline";
 	private static final String QUEUE_AUTHOR			= "author";
 	private static final String QUEUE_AUTHOR_OFFLINE	= "author-offline";
+	private static final String QUEUE_USER_AUTHOR		= "user-author";
 	
 	
 	public static TaskQueue getUserTaskQueue() {
@@ -37,6 +38,10 @@ public class TaskQueueFactory {
 	
 	public static TaskQueue getAuthorOfflineTaskQueue() {
 		return getTaskQueue( QUEUE_AUTHOR_OFFLINE );
+	}
+
+	public static TaskQueue getUserAuthorTaskQueue() {
+		return getTaskQueue( QUEUE_USER_AUTHOR );
 	}
 
 	

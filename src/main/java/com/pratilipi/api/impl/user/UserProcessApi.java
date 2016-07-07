@@ -13,7 +13,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.user.shared.PostUserProcessRequest;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -38,6 +38,17 @@ public class UserProcessApi extends GenericApi {
 			Logger.getLogger( UserProcessApi.class.getName() );
 	
 	private static final String appPropertyId = "Api.UserProcess.ValidateData";
+	
+	
+	public static class PostRequest extends GenericRequest {
+
+		@Validate( required = true )
+		private Long userId;
+
+		private Boolean validateData;
+		private Boolean updateUserAuthorStats;
+
+	}
 	
 	
 	@Get
@@ -84,13 +95,13 @@ public class UserProcessApi extends GenericApi {
 	}
 	
 	@Post
-	public GenericResponse post( PostUserProcessRequest request )
+	public GenericResponse post( PostRequest request )
 			throws InvalidArgumentException {
 
-		if( request.validateData() ) {
+		if( request.validateData != null && request.validateData ) {
 			
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-			User user = dataAccessor.getUser( request.getUserId() );
+			User user = dataAccessor.getUser( request.userId );
 
 			
 			// DELETED User entity can not have a non-DELETED Author entity linked.
@@ -172,6 +183,12 @@ public class UserProcessApi extends GenericApi {
 			}
 
 		}
+		
+		
+		if( request.updateUserAuthorStats != null && request.updateUserAuthorStats ) {
+//			UserDataUtil.updateUserAuthorStats( request.userId ); // TODO
+		}
+
 
 		return new GenericResponse();
 		

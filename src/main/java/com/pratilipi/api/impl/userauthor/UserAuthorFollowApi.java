@@ -82,16 +82,22 @@ public class UserAuthorFollowApi extends GenericApi {
 	public Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
+		Long userId = AccessTokenFilter.getAccessToken().getUserId();
+		
 		UserAuthorData userAuthorData = UserAuthorDataUtil.saveUserAuthorFollow(
-				AccessTokenFilter.getAccessToken().getUserId(),
+				userId,
 				request.authorId,
 				request.following );
 		
-		Task task = TaskQueueFactory.newTask()
+		Task task_1 = TaskQueueFactory.newTask()
 				.setUrl( "/author/process" )
 				.addParam( "authorId", request.authorId.toString() )
 				.addParam( "updateUserAuthorStats", "true" );
-		TaskQueueFactory.getAuthorTaskQueue().add( task );
+		Task task_2 = TaskQueueFactory.newTask()
+				.setUrl( "/user/process" )
+				.addParam( "userId", userId.toString() )
+				.addParam( "updateUserAuthorStats", "true" );
+		TaskQueueFactory.getUserAuthorTaskQueue().addAll( task_1, task_2 );
 		
 		return new Response( userAuthorData );
 	
