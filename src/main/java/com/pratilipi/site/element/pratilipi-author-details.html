@@ -199,6 +199,10 @@
 			x -= x % 3;
 			return Math.round( n * d / p ( 10, x ) ) / d + " kMGTPE" [ x / 3 ]; 
 		}
+
+		function commaSeparatedNumber(x) {
+		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
 	
 	Polymer({
 
@@ -250,9 +254,9 @@
 			this.set( 'name', author.name != null ? author.name : author.nameEn );
 			this.set( 'imageUrl', author.imageUrl + ( author.imageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
 			this.set( 'followCount', author.followCount != null ? author.followCount : 0 );
-			this.set( 'contentPublished', abbrNum( author.contentPublished ) );
-			this.set( 'totalReadCount', abbrNum( author.totalReadCount ) );
-			this.set( 'totalFbLikeShareCount', abbrNum( author.totalFbLikeShareCount ) );
+			this.set( 'contentPublished', commaSeparatedNumber( author.contentPublished ) );
+			this.set( 'totalReadCount', commaSeparatedNumber( author.totalReadCount ) );
+			this.set( 'totalFbLikeShareCount', commaSeparatedNumber( author.totalFbLikeShareCount ) );
 		},
 
 		updateUserAuthor: function( userAuthor ) {

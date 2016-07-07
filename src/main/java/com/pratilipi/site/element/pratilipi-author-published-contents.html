@@ -25,7 +25,7 @@
 			<h5 class="text-center pratilipi-red">
 				${ _strings.author_published_works }
 			</h5>
-			<div class="works-number text-center">{{ numberFound }} Works</div>
+			<div class="works-number text-center">{{ numberFound }} ${ _strings.author_count_works }</div>
 			<hr/>
 			<div class="row text-center">
 				<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
@@ -44,17 +44,17 @@
 		properties: {
 			pratilipiListObject: { type: Object },
 			
-			pratilipiList: { type: Array },
+			pratilipiList: { type: Array, value: function() { return []; } },
 			cursor: { type: String },
 			numberFound: { type: Number }
 		},
 		
-		processPratilipiListObject: function( processListObject ) {
-			var pratilipiList = processListObject.pratilipiList;
+		processPratilipiListObject: function( pratilipiListObject ) {
+			var pratilipiList = pratilipiListObject.pratilipiList;
 			for( var i = 0; i < pratilipiList.length; i++ )
 				this.push( 'pratilipiList', pratilipiList[i] );
-			this.set( 'cursor', processListObject.cursor );
-			this.set( 'numberFound', processListObject.numberFound );
+			this.set( 'cursor', pratilipiListObject.cursor );
+			this.set( 'numberFound', pratilipiListObject.numberFound );
 		},
 		
 		ready: function() {

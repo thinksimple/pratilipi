@@ -165,8 +165,7 @@ public class PratilipiApi extends GenericApi {
 				this.index = pratilipi.getIndex();
 			this.ratingCount = pratilipi.getRatingCount();
 			this.averageRating = pratilipi.getAverageRating();
-			if( UxModeFilter.isAndroidApp() )
-				this.readCount = pratilipi.getReadCount();
+			this.readCount = pratilipi.getReadCount();
 			this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();
 			
 		}
