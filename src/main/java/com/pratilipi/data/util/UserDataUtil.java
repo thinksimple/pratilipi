@@ -16,7 +16,6 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
@@ -25,11 +24,11 @@ import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
-import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.User;
 import com.pratilipi.email.EmailUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -130,8 +129,6 @@ public class UserDataUtil {
 		if( user == null )
 			return null;
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
 		UserData userData = new UserData( user.getId() );
 		userData.setFacebookId( user.getFacebookId() );
 		userData.setEmail( user.getEmail() );
@@ -141,31 +138,43 @@ public class UserDataUtil {
 		userData.setFollowCount( user.getFollowCount() );
 		
 		if( author != null ) {
-			Page authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
+			
+			AuthorData authorData = AuthorDataUtil.createAuthorData( author );
 			userData.setAuthorId( author.getId() );
-			userData.setFirstName( author.getFirstName() != null ? author.getFirstName() : author.getFirstNameEn() );
-			userData.setLastName( author.getLastName() != null ? author.getLastName() : author.getLastNameEn() );
+			userData.setAuthor( authorData );
+			
+			userData.setFirstName( authorData.getFirstName() != null ? authorData.getFirstName() : authorData.getFirstNameEn() );
+			userData.setLastName( authorData.getLastName() != null ? authorData.getLastName() : authorData.getLastNameEn() );
 			userData.setDisplayName( userData.getFirstName() != null ? userData.getFirstName() : userData.getLastName() );
-			userData.setGender( author.getGender() );
-			userData.setDateOfBirth( author.getDateOfBirth() );
-			userData.setProfilePageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
-			userData.setProfileImageUrl( AuthorDataUtil.createAuthorImageUrl( author ) );
+			userData.setGender( authorData.getGender() );
+			userData.setDateOfBirth( authorData.getDateOfBirth() );
+			userData.setProfilePageUrl( authorData.getPageUrl() );
+			userData.setProfileImageUrl( authorData.getImageUrl() );
+			
 		}
 		
 		return userData;
 		
 	}
 	
-	public static Map<Long, UserData> createUserDataList( List<Long> userIdList ) {
+	public static Map<Long, UserData> createUserDataList( List<Long> userIdList, boolean includeAuthorData ) {
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
 		List<User> userList = dataAccessor.getUserList( userIdList );
-		Map<Long, Author> authorMap = new HashMap<>( userIdList.size() );
-		for( Long userId : userIdList )
-			authorMap.put( userId, dataAccessor.getAuthorByUserId( userId ) ); // TODO: optimize on DataAccessor calls
+		
 		Map<Long, UserData> userDataList = new HashMap<>( userIdList.size() );
-		for( User user : userList )
-			userDataList.put( user.getId(), createUserData( user, authorMap.get( user.getId() ) ) );
+		if( includeAuthorData ) {
+			List<Author> authorList = dataAccessor.getAuthorListByUserIdList( userIdList );
+			for( int i = 0; i < userIdList.size(); i++ )
+				userDataList.put( userIdList.get( i ), createUserData( userList.get( i ), authorList.get( i ) ) );
+		} else {
+			for( User user : userList )
+				userDataList.put( user.getId(), createUserData( user, null ) );
+		}
+		
 		return userDataList;
+		
 	}
 
 	

@@ -773,7 +773,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public Author getAuthorByUserId( Long userId ) {
 		
-		String memcacheId = "DataStore.Author-USER::" + userId;
+		String memcacheId = _createAuthorEntityMemcacheId( userId );
 		
 		Author author = memcache.get( memcacheId );
 		if( author != null )
@@ -795,6 +795,27 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 	}
 	
+	@Override
+	public List<Author> getAuthorListByUserIdList( List<Long> userIdList ) {
+
+		List<String> memcacheIdList = new ArrayList<>( userIdList.size() );
+		for( Long userId : userIdList )
+			memcacheIdList.add( _createAuthorEntityMemcacheId( userId ) );
+		
+		Map<String, Author> authors = memcache.getAll( memcacheIdList );
+		
+		List<Author> authorList = new ArrayList<>();
+		for( Long userId : userIdList ) {
+			Author author = authors.get( _createAuthorEntityMemcacheId( userId ) );
+			if( author == null )
+				author = getAuthorByUserId( userId );
+			authorList.add( author );
+		}
+
+		return authorList;
+		
+	}
+
 	@Override
 	public List<Author> getAuthorList( List<Long> idList ) {
 		return getEntityList( AuthorEntity.class, idList );
@@ -867,7 +888,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public Author createOrUpdateAuthor( Author author, Page page, AuditLog auditLog ) {
 		author = createOrUpdateEntity( author, page, auditLog );
 		if( author.getUserId() != null ) {
-			String memcacheId = "DataStore.Author-USER::" + author.getUserId();
+			String memcacheId = _createAuthorEntityMemcacheId( author.getUserId() );
 			if( author.getState() == AuthorState.DELETED )
 				memcache.remove( memcacheId );
 			else
@@ -876,6 +897,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return author;
 	}
 
+	private String _createAuthorEntityMemcacheId( Long userId ) {
+		return "DataStore.Author-USER::" + userId;
+	}
+	
 	
 	// EVENT Table
 	

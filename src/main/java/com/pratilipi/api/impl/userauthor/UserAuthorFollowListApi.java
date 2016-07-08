@@ -44,7 +44,7 @@ public class UserAuthorFollowListApi extends GenericApi {
 			if( userList != null ) {
 				this.userList = new ArrayList<>( userList.size() ); 
 				for( UserData user : userList )
-					this.userList.add( new UserApi.Response( user, true ) );
+					this.userList.add( new UserApi.Response( user, UserAuthorFollowListApi.class ) );
 			}
 			
 			if( authorList != null ) {

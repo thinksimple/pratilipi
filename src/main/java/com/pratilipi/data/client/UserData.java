@@ -14,6 +14,7 @@ public class UserData implements Serializable {
 	private Long userId;
 
 	private Long authorId;
+	private AuthorData author;
 	
 	private String facebookId;
 
@@ -72,6 +73,14 @@ public class UserData implements Serializable {
 
 	public void setAuthorId( Long authorId ) {
 		this.authorId = authorId;
+	}
+	
+	public AuthorData getAuthor() {
+		return author;
+	}
+
+	public void setAuthor( AuthorData author ) {
+		this.author = author;
 	}
 	
 	public String getFacebookId() {

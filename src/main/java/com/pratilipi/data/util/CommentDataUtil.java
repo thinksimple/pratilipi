@@ -117,7 +117,7 @@ public class CommentDataUtil {
 			if( ! userIdList.contains( commentDoc.getUserId() ) )
 				userIdList.add( commentDoc.getUserId() );
 		
-		Map<Long, UserData> userDataMap = UserDataUtil.createUserDataList( userIdList );
+		Map<Long, UserData> userDataMap = UserDataUtil.createUserDataList( userIdList, true );
 		
 		List<CommentData> commentDataList = new ArrayList<>( commentDocList.size() );
 		for( CommentDoc commentDoc : commentDocList ) {

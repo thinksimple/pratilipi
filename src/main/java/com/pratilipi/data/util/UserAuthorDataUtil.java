@@ -98,14 +98,14 @@ public class UserAuthorDataUtil {
 		DataListCursorTuple<Long> authorIdListCursorTuple = DataAccessorFactory.getDataAccessor()
 				.getUserAuthorFollowList( userId, null, cursor, offset, resultCount );
 		return new DataListCursorTuple<>(
-				AuthorDataUtil.createAuthorDataList( authorIdListCursorTuple.getDataList() ),
+				AuthorDataUtil.createAuthorDataList( authorIdListCursorTuple.getDataList(), true ),
 				authorIdListCursorTuple.getCursor() );
 	}
 	
 	public static DataListCursorTuple<UserData> getAuthorFollowList( Long authorId, String cursor, Integer offset, Integer resultCount ) {
 		DataListCursorTuple<Long> userIdListCursorTuple = DataAccessorFactory.getDataAccessor()
 				.getUserAuthorFollowList( null, authorId, cursor, offset, resultCount );
-		Map<Long, UserData> users = UserDataUtil.createUserDataList( userIdListCursorTuple.getDataList() );
+		Map<Long, UserData> users = UserDataUtil.createUserDataList( userIdListCursorTuple.getDataList(), true );
 		List<UserData> userList = new ArrayList<>( users.size() );
 		for( Long userId : userIdListCursorTuple.getDataList() )
 			userList.add( users.get( userId ) );

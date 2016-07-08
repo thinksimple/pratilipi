@@ -347,7 +347,7 @@ public class PratilipiDataUtil {
 				if( pratilipi.getAuthorId() != null && ! authorIdList.contains( pratilipi.getAuthorId() ) )
 					authorIdList.add( pratilipi.getAuthorId() );
 			
-			List<AuthorData> authorDataList = AuthorDataUtil.createAuthorDataList( authorIdList );
+			List<AuthorData> authorDataList = AuthorDataUtil.createAuthorDataList( authorIdList, false );
 			authorIdToDataMap = new HashMap<>( authorDataList.size() );
 			for( AuthorData authorData : authorDataList )
 				authorIdToDataMap.put( authorData.getId(), authorData );	

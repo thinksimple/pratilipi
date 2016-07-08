@@ -106,33 +106,17 @@ public class AuthorDataUtil {
 	
 	
 	public static AuthorData createAuthorData( Author author ) {
-		return createAuthorData( author, null, null );
+		return createAuthorData(
+				author,
+				DataAccessorFactory.getDataAccessor().getPage( PageType.AUTHOR, author.getId() ) );
 	}
 	
 	public static AuthorData createAuthorData( Author author, Page authorPage ) {
-		return createAuthorData( author, authorPage, null );
-	}
-	
-	public static AuthorData createAuthorData( Author author, Page authorPage, User user ) {
-
-		if( author == null )
-			return null;
-
-		
-		if( authorPage == null )
-			authorPage = DataAccessorFactory.getDataAccessor().getPage( PageType.AUTHOR, author.getId() );
-		
-		UserData userData = user == null
-				? ( author.getUserId() == null ? null : new UserData( author.getUserId() ) )
-				: UserDataUtil.createUserData( user );
-
 		
 		AuthorData authorData = new AuthorData();
 		
 		authorData.setId( author.getId() );
 		
-		authorData.setUser( userData );
-
 		authorData.setFirstName( author.getFirstName() );
 		authorData.setLastName( author.getLastName() );
 		authorData.setPenName( author.getPenName() );
@@ -193,32 +177,51 @@ public class AuthorDataUtil {
 		
 	}
 	
-	public static List<AuthorData> createAuthorDataList( List<Long> authorIdList ) {
+	public static AuthorData createAuthorData( Author author, Page authorPage, User user ) {
+		AuthorData authorData = createAuthorData( author, authorPage );
+		if( user == null )
+			authorData.setUser( new UserData( author.getUserId() ) );
+		else
+			authorData.setUser( UserDataUtil.createUserData( user, null ) );
+		return authorData;
+	}
+	
+	public static List<AuthorData> createAuthorDataList( List<Long> authorIdList, boolean includeUserData ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		List<Author> authorList = dataAccessor.getAuthorList( authorIdList );
-		
-		List<Long> userIdList = new ArrayList<>( authorIdList.size() );
-		for( Author author : authorList )
-			if( author.getUserId() != null )
-				userIdList.add( author.getUserId() );
-		
-		List<User> userList = dataAccessor.getUserList( userIdList );
-		
-		Map<Long, User> users = new HashMap<>();
-		for( User user : userList )
-			users.put( user.getId(), user );
-		
-		
 		Map<Long, Page> authorPages = dataAccessor.getPages( PageType.AUTHOR, authorIdList );
 		
 		List<AuthorData> authorDataList = new ArrayList<>( authorIdList.size() );
-		for( Author author : authorList )
-			authorDataList.add( createAuthorData(
-					author,
-					authorPages.get( author.getId() ),
-					users.get( author.getUserId() ) ) );
+		
+		if( includeUserData ) {
+			
+			List<Long> userIdList = new ArrayList<>( authorIdList.size() );
+			for( Author author : authorList )
+				if( author.getUserId() != null )
+					userIdList.add( author.getUserId() );
+			
+			List<User> userList = dataAccessor.getUserList( userIdList );
+			
+			Map<Long, User> users = new HashMap<>( userIdList.size() );
+			for( User user : userList )
+				users.put( user.getId(), user );
+			
+			for( Author author : authorList )
+				authorDataList.add( createAuthorData(
+						author,
+						authorPages.get( author.getId() ),
+						users.get( author.getUserId() ) ) );
+			
+		} else {
+			
+			for( Author author : authorList )
+				authorDataList.add( createAuthorData(
+						author,
+						authorPages.get( author.getId() ) ) );
+			
+		}
 		
 		return authorDataList;
 		
@@ -243,7 +246,7 @@ public class AuthorDataUtil {
 				.getSearchAccessor()
 				.searchAuthor( searchQuery, authorFilter, cursor, null, resultCount );
 		
-		List<AuthorData> authorDataList = createAuthorDataList( authorIdListCursorTuple.getDataList() );
+		List<AuthorData> authorDataList = createAuthorDataList( authorIdListCursorTuple.getDataList(), true );
 		
 		return new DataListCursorTuple<AuthorData>( authorDataList, authorIdListCursorTuple.getCursor() );
 		

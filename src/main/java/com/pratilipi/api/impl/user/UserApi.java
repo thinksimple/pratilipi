@@ -28,6 +28,9 @@ public class UserApi extends GenericApi {
 	public static class Response {
 		
 		private Long userId;
+		
+		private AuthorApi.Response author;
+		
 		private String displayName;
 		private String profilePageUrl;
 		private String profileImageUrl;
@@ -53,7 +56,15 @@ public class UserApi extends GenericApi {
 				
 			} else if( clazz == UserAuthorFollowListApi.class ) {
 
-				this.followCount = userData.getFollowCount();
+				if( userData.getAuthor() == null ) {
+					this.followCount = userData.getFollowCount();
+				} else {
+					this.author = new AuthorApi.Response( userData.getAuthor(), clazz );
+					this.displayName = userData.getDisplayName();
+					this.profilePageUrl = userData.getProfilePageUrl();
+					this.profileImageUrl = userData.getProfileImageUrl();
+					this.followCount = userData.getFollowCount();
+				}
 			
 			}
 			
@@ -62,6 +73,10 @@ public class UserApi extends GenericApi {
 		
 		public Long getId() {
 			return userId;
+		}
+
+		public AuthorApi.Response getAuthor() {
+			return author;
 		}
 
 		public String getDisplayName() {

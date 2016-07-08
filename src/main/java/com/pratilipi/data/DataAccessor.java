@@ -87,6 +87,7 @@ public interface DataAccessor {
 	Author newAuthor();
 	Author getAuthor( Long id );
 	Author getAuthorByUserId( Long userId );
+	List<Author> getAuthorListByUserIdList( List<Long> userIdList );
 	List<Author> getAuthorList( List<Long> idList );
 	DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount );
 	DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount );
