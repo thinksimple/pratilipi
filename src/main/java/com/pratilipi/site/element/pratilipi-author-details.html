@@ -101,7 +101,7 @@
 			font-size: 13px;
 		}
 		.meta-data div.numbers {
-			font-size: 21px;
+			font-size: 20px;
 			font-weight: 500;
 		}
 	</style>
@@ -172,24 +172,6 @@
 				on-response="_userAuthorFollowPostApiResponse"
 				on-error="_userAuthorFollowPostApiError"
 				></iron-ajax>
-				
-		<iron-ajax
-				id="AuthorGetApi"
-				url="/api/author"
-				method="GET"
-				content-type="application/json"
-				handle-as="json"
-				on-response="_authorGetApiResponse"
-				></iron-ajax>
-				
-		<iron-ajax
-				id="UserAuthorGetApi"
-				url="/api/userauthor/follow"
-				method="GET"
-				content-type="application/json"
-				handle-as="json"
-				on-response="_userAuthorGetApiResponse"
-				></iron-ajax>
 	</template>
 	<script>
 		function abbrNum( n, d ) {
@@ -209,47 +191,13 @@
 		is: 'pratilipi-author-details',
 		
 		properties: {
-			user: { type: Object, observer: "_userObserver" },
-			authorData: { type: Object },
-			userAuthorData: { type: Object },
-			author: { type: Object, notify: true },
-			userAuthor: { type: Object, notify: true },
+			author: { type: Object, observer: "_authorObserver" },
+			userAuthor: { type: Object, observer: "_userAuthorObserver" },
 			
 			followCount: { type: Object, observer: "_followCountObserver" }
 		},
 		
-		_userObserver: function() {
-			if( this.author == null || this.userAuthor == null || this.user == null )
-				return;
-
-			this.$.AuthorGetApi.params.authorId = this.author.authorId;
-			this.$.UserAuthorGetApi.params.authorId = this.author.authorId;
-			this.$.AuthorGetApi.generateRequest();
-			this.$.UserAuthorGetApi.generateRequest();
-		},
-		
-		_authorGetApiResponse: function( response ) {
-			this.updateAuthor( response.detail.response );
-		},
-		
-		_userAuthorGetApiResponse: function( response ) {
-			this.updateUserAuthor( response.detail.response );
-		},
-		
-		_checkUserLoginStatus: function() {
-			if( this.user.isGuest ) {
-				document.querySelector( 'pratilipi-user' ).logIn( true );
-				return false;
-			}
-			return true;
-		},
-		
-		_followCountObserver: function() {
-			this.followCountAbbr = this.followCount > 0 ? ( "  |  " + abbrNum( this.followCount ) ) : null;
-		},
-		
-		updateAuthor: function( author ) {
-			this.set( 'author', author );
+		_authorObserver: function( author ) {
 			this.set( 'hasAccessToUpdate', author.hasAccessToUpdate );
 			this.set( 'name', author.name != null ? author.name : author.nameEn );
 			this.set( 'imageUrl', author.imageUrl + ( author.imageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
@@ -259,14 +207,66 @@
 			this.set( 'totalFbLikeShareCount', commaSeparatedNumber( author.totalFbLikeShareCount ) );
 		},
 
-		updateUserAuthor: function( userAuthor ) {
-			this.set( 'userAuthor', userAuthor );
+		_userAuthorObserver: function( userAuthor ) {
 			this.set( 'following', ( userAuthor != null && userAuthor.following != null ) ? userAuthor.following : false )
 		},
 		
-		attached: function() {
-			this.updateAuthor( this.authorData );
-			this.updateUserAuthor( this.userAuthorData );
+		_followCountObserver: function() {
+			this.followCountAbbr = this.followCount > 0 ? ( "  |  " + abbrNum( this.followCount ) ) : null;
+		},
+		
+		_checkUserLoginStatus: function() {
+			if( document.querySelector( 'pratilipi-user' ).getCurrentUser().isGuest ) {
+				document.querySelector( 'pratilipi-user' ).logIn( true );
+				return false;
+			}
+			return true;
+		},
+		
+		followAuthor: function() {
+			if( ! this._checkUserLoginStatus() )
+				return;
+
+			this._swapFollowButton();
+			var body = { authorId: this.author.authorId, following: true };
+			this.$.UserAuthorFollowPostApi.body = jQuery.param( body );
+			this.$.UserAuthorFollowPostApi.generateRequest();
+		},
+		
+		unFollowAuthor: function() {
+			if( ! this._checkUserLoginStatus() )
+				return;
+
+			this._swapFollowButton();
+			var body = { authorId: this.author.authorId, following: false };
+			this.$.UserAuthorFollowPostApi.body = jQuery.param( body );
+			this.$.UserAuthorFollowPostApi.generateRequest();
+		},
+		
+		_swapFollowButton: function() {
+			this.set( 'following', this.following ? false : true );
+			this.set( 'followCount', this.following ? this.followCount + 1 : this.followCount - 1 );
+		},
+		
+		_userAuthorFollowPostApiResponse: function( response ) {
+			var following = response.detail.response.following;
+			if( this.following != following ) {
+				this._userAuthorFollowPostApiError();
+			}
+		},
+		
+		_userAuthorFollowPostApiError: function( response ) {
+			this._swapFollowButton();
+			if( response != null && response.detail.request.xhr.response.message != null ) {
+				document.querySelector( 'pratilipi-alert' ).alert( response.detail.request.xhr.response.message, false );
+			} else {
+				document.querySelector( 'pratilipi-alert' ).alert( "Some error Occured! Please try again", false );
+				console.log( response );
+			}
+		},
+		
+		editAuthorProfile: function() {
+			console.log( "Edit Profile" );
 		},
 		
 		shareAuthorOnFacebook: function() {
@@ -283,40 +283,6 @@
 			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl,
 					"share", "width=1100,height=500,left=70px,top=60px" );
 		},
-		
-		followAuthor: function() {
-			if( ! this._checkUserLoginStatus() )
-				return;
-			var body = { authorId: this.author.authorId, following: true };
-			this.$.UserAuthorFollowPostApi.body = jQuery.param( body );
-			this.$.UserAuthorFollowPostApi.generateRequest();
-		},
-		
-		unFollowAuthor: function() {
-			if( ! this._checkUserLoginStatus() )
-				return;
-			var body = { authorId: this.author.authorId, following: false };
-			this.$.UserAuthorFollowPostApi.body = jQuery.param( body );
-			this.$.UserAuthorFollowPostApi.generateRequest();
-		},
-		
-		_userAuthorFollowPostApiResponse: function( response ) {
-			this.set( 'following', this.following ? false : true );
-			this.set( 'followCount', this.following ? this.followCount + 1 : this.followCount - 1 );
-		},
-		
-		_userAuthorFollowPostApiError: function( response ) {
-			if( response.detail.request.xhr.response.message != null ) {
-				document.querySelector( 'pratilipi-alert' ).alert( response.detail.request.xhr.response.message, false );
-			} else {
-				document.querySelector( 'pratilipi-alert' ).alert( "Some error Occured! Please try again", false );
-				console.log( response );
-			}
-		},
-		
-		editAuthorProfile: function() {
-			
-		}
 		
 	});
 	</script>

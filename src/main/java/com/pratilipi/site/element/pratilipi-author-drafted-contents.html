@@ -47,11 +47,11 @@
 		.more-button {
 			margin-top: 16px;
 			background: #F1F8FB;
-			padding: 18px;
+			padding: 16px;
 			text-align: center;
 			color: #0C68BD;
 			cursor: pointer;
-			font-size: 18px;
+			font-size: 16px;
 			font-weight: 700;
 			letter-spacing: 0.3px;
 			line-height: 16px;
@@ -84,7 +84,7 @@
 				</div>
 				<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
 					<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-						<pratilipi-card-mini pratilipi="{{ pratilipi }}"></pratilipi-card-mini>
+						<pratilipi-card-mini show-edit-option pratilipi="{{ pratilipi }}"></pratilipi-card-mini>
 					</div>
 				</template>
 			</div>
@@ -92,7 +92,7 @@
 				<paper-spinner active></paper-spinner>
 			</template>
 			<template is="dom-if" if="{{ showMore }}">
-				<div class="more-button" on-click="loadMore">More...</div>
+				<div class="more-button" on-click="loadMore">${ _strings.show_more }...</div>
 			</template>
 		</div>
 		<iron-ajax
@@ -112,7 +112,7 @@
 			is: 'pratilipi-author-drafted-contents',
 
 			properties: {
-				authorId: { type: String },
+				author: { type: Object },
 
 				pratilipiList: { type: Array, value: function() { return []; } },
 				cursor: { type: String, value: null },
@@ -136,11 +136,11 @@
 			ready: function() {
 				this.loadMore();
 			},
-
+			
 			loadMore: function() {
 				this.set( 'isLoading', true );
 				this.set( 'showMore', false );
-				this.$.PratilipiListApi.params.authorId = this.authorId;
+				this.$.PratilipiListApi.params.authorId = this.author.authorId;
 				this.$.PratilipiListApi.params.state = "DRAFTED";
 				if( this.cursor != null )
 					this.$.PratilipiListApi.params.cursor = this.cursor;

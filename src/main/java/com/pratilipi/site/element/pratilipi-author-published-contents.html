@@ -14,7 +14,7 @@
 			font-weight: 700;
 		}
 		hr {
-			margin-top: 0.5em;
+			margin-top: 0.8em;
 			margin-bottom: 0.8em;
 			border: 0;
 			border-top: 2px solid #eee;
@@ -40,6 +40,20 @@
 			--paper-spinner-layer-3-color: #D0021B;
 			--paper-spinner-layer-4-color: #107FE5;
 		}
+		.author-no-works {
+			text-align: center;
+			padding: 16px;
+			display: none;
+		}
+		.author-no-works iron-icon {
+			margin: 16px auto;
+			width: 46px;
+			height: 46px;
+		}
+		.author-no-works h6 {
+			font-weight: 500;
+			line-height: 24px;
+		}
 	</style>
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
@@ -51,7 +65,7 @@
 			<div class="row text-center">
 				<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
 					<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-						<pratilipi-card-mini pratilipi="{{ pratilipi }}"></pratilipi-card-mini>
+						<pratilipi-card-mini show-edit-option pratilipi="{{ pratilipi }}"></pratilipi-card-mini>
 					</div>
 				</template>
 			</div>
@@ -59,8 +73,13 @@
 				<paper-spinner active></paper-spinner>
 			</template>
 			<template is="dom-if" if="{{ showMore }}">
-				<div class="more-button" on-click="loadMore">More...</div>
+				<div class="more-button" on-click="loadMore">${ _strings.show_more }...</div>
 			</template>
+				
+			<div class="author-no-works">
+				<iron-icon icon="icons:info-outline"></iron-icon>
+				<h6>${ _strings.author_no_contents_published }</h6>
+			</div>
 		</div>
 		<iron-ajax
 				id="PratilipiListApi"
@@ -80,14 +99,27 @@
 
 			properties: {
 				pratilipiListObject: { type: Object },
-				authorId: { type: String },
+				author: { type: Object, observer: "_authorObserver" },
 
 				pratilipiList: { type: Array, value: function() { return []; } },
 				cursor: { type: String },
-				numberFound: { type: Number },
+				numberFound: { type: Number, observer: "_numberFoundObserver" },
 				showMore: { type: Boolean, value: false }
 			},
 
+			_authorObserver: function() {
+				/* Called before first rendering */
+				if( this.pratilipiListObject == null ) return;
+
+				this.set( 'pratilipiList', [] );
+				this.set( 'cursor', null );
+				this.loadMore();
+			},
+			
+			_numberFoundObserver: function() {
+				jQuery( this.querySelector( '.works-number' ) ).css( 'display', this.numberFound > 0 ? 'block' : 'none' );
+			},
+			
 			processPratilipiListObject: function( pratilipiListObject ) {
 				var pratilipiList = pratilipiListObject.pratilipiList;
 				for( var i = 0; i < pratilipiList.length; i++ )
@@ -96,17 +128,29 @@
 				this.set( 'numberFound', pratilipiListObject.numberFound );
 				this.set( 'showMore', this.pratilipiList.length < this.numberFound ? true : false );
 			},
+			
+			_checkEmptyList: function( pratilipiListObject ) {
+				return 	pratilipiListObject != null && 
+						pratilipiListObject.pratilipiList != null && 
+						pratilipiListObject.pratilipiList.length > 0; 
+			},
 
 			ready: function() {
-				this.processPratilipiListObject( this.pratilipiListObject );
+				if( this._checkEmptyList( this.pratilipiListObject ) )
+					this.processPratilipiListObject( this.pratilipiListObject );
+				else
+					jQuery( this.querySelector( '.author-no-works' ) ).css( 'display', 'block' );
 			},
 
 			loadMore: function() {
 				this.set( 'isLoading', true );
 				this.set( 'showMore', false );
-				this.$.PratilipiListApi.params.authorId = this.authorId;
+				this.$.PratilipiListApi.params.authorId = this.author.authorId;
 				this.$.PratilipiListApi.params.state = "PUBLISHED";
-				this.$.PratilipiListApi.params.cursor = this.cursor;
+				if( this.cursor != null )
+					this.$.PratilipiListApi.params.cursor = this.cursor;
+				else
+					delete this.$.PratilipiListApi.params.cursor;
 				this.$.PratilipiListApi.generateRequest();
 			},
 

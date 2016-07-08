@@ -215,7 +215,7 @@
 				<div class="content-wrapper">
 
 					<div class="heading-wrapper">
-						<h2>2,000,000 Readers.&nbsp;</h2><h2>3,000 Writers.&nbsp;</h2><h2>1 Platform.</h2>
+						<h2>2,000,000 Readers.&nbsp;</h2><h2>4,000 Writers.&nbsp;</h2><h2>1 Platform.</h2>
 					</div>
 
 					<div class="logo">

@@ -59,21 +59,16 @@
 
 				<template is="dom-if" if="{{ hasAccessToUpdate }}">
 					<pratilipi-author-drafted-contents 
-						pratilipi-list-object="[[ draftedPratilipiList ]]"
-						author-id="[[ author.authorId ]]"></pratilipi-author-drafted-contents>
+						author="[[ author ]]"></pratilipi-author-drafted-contents>
 				</template>
 
 				<pratilipi-author-published-contents 
 						pratilipi-list-object="[[ publishedPratilipiList ]]" 
-						author-id="[[ author.authorId ]]"></pratilipi-author-published-contents>
+						author="[[ author ]]"></pratilipi-author-published-contents>
 
 				<template is="dom-if" if="{{ hasAccessToUpdate }}">
-					<pratilipi-author-library-contents 
-						pratilipi-list-object="[[ libraryPratilipiList ]]"
-						author-id="[[ author.authorId ]]"></pratilipi-author-library-contents>
+					<pratilipi-author-library-contents></pratilipi-author-library-contents>
 				</template>
-
-				<#-- <pratilipi-author-recent-contents></pratilipi-author-recent-contents> -->
 
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="author-about">
@@ -89,13 +84,10 @@
 		is: 'pratilipi-author-tabs',
 		
 		properties: {
-			user: { type: Object },
 			author: { type: Object, observer: "_authorObserver" },
-			
-			draftedPratilipiList: { type: Object },
+
 			publishedPratilipiList: { type: Object },
-			libraryPratilipiList: { type: Object },
-			
+
 			authorFollowingList: { type: Object },
 			authorFollowersList: { type: Object }
 		},

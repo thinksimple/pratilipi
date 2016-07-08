@@ -112,9 +112,11 @@
 	<template>
 		<div class="pratilipi-shadow">
 			<template is="dom-if" if="{{ !editProfile }}">
-				<span style="background-image: url({{ pratilipiCoverImage }});" class="pratilipi-card" on-click="redirectToContentPage" title="{{ fullTitle }}">
-					<template is="dom-if" if="{{ hasAccessToUpdate }}">
-						<paper-fab mini icon="icons:create" on-click="toggleEditProfile"></paper-fab>
+				<span style="background-image: url( {{ pratilipiCoverImage }} );" class="pratilipi-card" on-click="redirectToContentPage" title="{{ fullTitle }}">
+					<template is="dom-if" if="{{ showEditOption }}">
+						<template is="dom-if" if="{{ hasAccessToUpdate }}">
+							<paper-fab mini icon="icons:create" on-click="toggleEditProfile"></paper-fab>
+						</template>
 					</template>
 					<template is="dom-if" if="{{ pratilipi.author }}">
 						<div class="white-snippet">
@@ -166,7 +168,7 @@
 
 			properties: {
 				pratilipi: { type: Object, observer: "_pratilipiObserver" },
-
+				showEditOption: { type: Boolean, value: false },
 				editProfile: { type: Boolean, value: false }
 			},
 			

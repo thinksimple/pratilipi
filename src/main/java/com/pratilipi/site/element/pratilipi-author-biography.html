@@ -40,7 +40,7 @@
 			padding: 12px 16px;
 		}
 		.author-summary-container h6 {
-			margin-left: 12px;
+			margin-top: 12px;
 			font-weight: bold;
 		}
 		
@@ -57,7 +57,7 @@
 		.more-button {
 			margin-top: 16px;
 			background: #F1F8FB;
-			padding: 18px;
+			padding: 16px;
 			text-align: center;
 			color: #0C68BD;
 			cursor: pointer;
@@ -100,7 +100,7 @@
 			<div class="author-details">
 				<table>
 					<tr>
-						<th>Author Since</th>
+						<th>${ _strings.author_since }</th>
 						<td>{{ registrationDate }}</td>
 					</tr>
 					<#-- <tr>
@@ -114,10 +114,10 @@
 				</table>
 				
 				<div class="author-summary-container" id="author-summary-container">
-					<h6>Summary :</h6>
+					<h6>${ _strings.author_about }</h6>
 					<div id="author-summary"></div>
 				</div>
-				<div class="more-button" id="more-button" on-click="toggleSnippet">More...</div>
+				<div class="more-button" id="more-button" on-click="toggleSnippet">${ _strings.show_more }...</div>
 			</div>
 		</div>
 	</template>
@@ -140,26 +140,33 @@
 			
 			properties: {
 			 	author: { type: Object, observer: "_authorObserver" },
-			 	
-			 	summary: { type: String }
+			 	summary: { type: String, observer: "_summaryObserver" }
 			},
 			
 			_authorObserver: function() {
-				
-				this.set( 'summary', this.author.summary );
-				this.set( 'registrationDate', convertDate( this.author.registrationDateMillis ) );
-				
+				this.set( 'summary', this.author == null ? null : this.author.summary );
+				this.set( 'registrationDate', this.author == null ? null : convertDate( this.author.registrationDateMillis ) );
+			},
+
+			attached: function() {
+				this._summaryObserver();
+			},
+
+			_summaryObserver: function() {
+
 				if( this.summary == null || this.summary.trim() == "" ) {
 					jQuery( this.querySelector( '.author-summary-container' ) ).css( 'display', 'none' );
 					return;
 				}
+
 				jQuery( this.querySelector( '.author-summary-container' ) ).css( 'display', 'block' );
-				
-				
+
+				/* Called before DOM is attached */
+				if( document.getElementById( "author-summary" ) == null )
+					return;
+
 				var author_summary = document.getElementById( "author-summary" );
-				var summary = document.createElement( "div" );
-				summary.innerHTML = this.summary;
-				author_summary.appendChild( summary );
+				jQuery( author_summary ).html( this.summary );
 				
 				// Calculating summary height
 				var height = 0;

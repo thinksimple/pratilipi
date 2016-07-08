@@ -11,7 +11,7 @@
 			font-weight: 700;
 		}
 		hr {
-			margin-top: 1.5em;
+			margin-top: 1em;
 			margin-bottom: 0.8em;
 			border: 0;
 			border-top: 2px solid #eee;
@@ -19,7 +19,7 @@
 		.more-button {
 			margin-top: 16px;
 			background: #F1F8FB;
-			padding: 18px;
+			padding: 16px;
 			text-align: center;
 			color: #0C68BD;
 			cursor: pointer;
@@ -36,6 +36,18 @@
 			--paper-spinner-layer-2-color: #107FE5;
 			--paper-spinner-layer-3-color: #D0021B;
 			--paper-spinner-layer-4-color: #107FE5;
+		}
+		.empty-library {
+			padding: 32px 16px;
+			text-align: center;
+		}
+		.empty-library iron-icon {
+			height: 46px;
+			width: 46px;
+			margin-bottom: 16px;
+		}
+		.empty-library h6 {
+			line-height: 24px;
 		}
 	</style>
 	<template>
@@ -55,7 +67,13 @@
 				<paper-spinner active></paper-spinner>
 			</template>
 			<template is="dom-if" if="{{ showMore }}">
-				<div class="more-button" on-click="loadMore">More...</div>
+				<div class="more-button" on-click="loadMore">${ _strings.show_more }...</div>
+			</template>
+			<template is="dom-if" if="{{ !hasContent }}">
+				<div class="empty-library">
+					<iron-icon icon="icons:info-outline"></iron-icon>
+					<h6>${ _strings.empty_library }</h6>
+				</div>
 			</template>
 		</div>
 		<iron-ajax
@@ -77,15 +95,17 @@
 			properties: {
 				pratilipiList: { type: Array, value: function() { return []; } },
 				cursor: { type: String, value: null },
-				showMore: { type: Boolean, value: false }
+				showMore: { type: Boolean, value: false },
+				hasContent: { type: Boolean }
 			},
-
+			
 			processPratilipiListObject: function( pratilipiListObject ) {
 				var pratilipiList = pratilipiListObject.pratilipiList;
 				for( var i = 0; i < pratilipiList.length; i++ )
 					this.push( 'pratilipiList', pratilipiList[i] );
 				this.set( 'cursor', pratilipiListObject.cursor );
 				this.set( 'showMore', pratilipiList.length == 20 ? true : false );
+				this.set( 'hasContent', this.pratilipiList.length > 0 ? true : false );
 			},
 
 			ready: function() {
