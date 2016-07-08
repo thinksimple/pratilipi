@@ -100,14 +100,51 @@ public class UserAuthorDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		User user = dataAccessor.getUser( userId );
-		if( user.getFollowCount() == 0 )
+		if( user.getFollowCount() == 0L )
 			return new DataListCursorTuple<>( new ArrayList<AuthorData>( 0 ), null, 0L );
 		
-		DataListCursorTuple<Long> authorIdListCursorTuple = dataAccessor
-				.getUserAuthorFollowList( userId, null, cursor, offset, resultCount );
+		
+		DataListCursorTuple<Long> authorIdListCursorTuple = dataAccessor.getUserAuthorFollowList( userId, null, cursor, offset, resultCount );
+		List<Long> authorIdList = authorIdListCursorTuple.getDataList();
+		List<AuthorData> authorDataList = AuthorDataUtil.createAuthorDataList( authorIdList, true );
+
+		
+		// Setting AuthorData.isFollowing flag
+		if( userId.equals( AccessTokenFilter.getAccessToken().getUserId() ) ) {
+
+			for( AuthorData authorData : authorDataList )
+				authorData.setFollowing( true );
+
+		} else {
+			
+			List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList(
+					AccessTokenFilter.getAccessToken().getUserId(),
+					authorIdList );
+			
+			for( int i = 0; i < authorIdList.size(); i++ )
+				if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
+					authorDataList.get( i ).setFollowing( true );
+			
+		}
+		
+		
+		// Setting UserData.isFollowing flag
+		List<Long> userIdList = new ArrayList<>( authorDataList.size() );
+		for( AuthorData authorData : authorDataList )
+			if( authorData.getUser().getId() != null )
+				userIdList.add( authorData.getUser().getId() );
+		
+		List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList(
+				userIdList,
+				dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() ).getId() );
+		
+		for( UserAuthor userAuthor : userAuthorList )
+			if( userAuthor != null && userAuthor.isFollowing() )
+				authorDataList.get( authorIdList.indexOf( userAuthor.getAuthorId() ) ).getUser().setFollowing( true );
+
 		
 		return new DataListCursorTuple<>(
-				AuthorDataUtil.createAuthorDataList( authorIdListCursorTuple.getDataList(), true ),
+				authorDataList,
 				authorIdListCursorTuple.getCursor(),
 				user.getFollowCount() );
 
@@ -118,18 +155,54 @@ public class UserAuthorDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		Author author = dataAccessor.getAuthor( authorId );
-		if( author.getFollowCount() == 0 )
+		if( author.getFollowCount() == 0L )
 			return new DataListCursorTuple<>( new ArrayList<UserData>( 0 ), null, 0L );
 		
-		DataListCursorTuple<Long> userIdListCursorTuple = DataAccessorFactory.getDataAccessor()
-				.getUserAuthorFollowList( null, authorId, cursor, offset, resultCount );
-		Map<Long, UserData> users = UserDataUtil.createUserDataList( userIdListCursorTuple.getDataList(), true );
-		List<UserData> userList = new ArrayList<>( users.size() );
-		for( Long userId : userIdListCursorTuple.getDataList() )
-			userList.add( users.get( userId ) );
+		
+		DataListCursorTuple<Long> userIdListCursorTuple = dataAccessor.getUserAuthorFollowList( null, authorId, cursor, offset, resultCount );
+		List<Long> userIdList = userIdListCursorTuple.getDataList();
+		Map<Long, UserData> users = UserDataUtil.createUserDataList( userIdList, true );
+		
+		List<UserData> userDataList = new ArrayList<>( userIdList.size() );
+		for( Long userId : userIdList )
+			userDataList.add( users.get( userId ) );
+		
+		
+		// Setting UserData.isFollowing flag
+		if( AccessTokenFilter.getAccessToken().getUserId().equals( author.getUserId() ) ) {
+
+			for( UserData userData : userDataList )
+				userData.setFollowing( true );
+
+		} else {
+			
+			List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList(
+					userIdList,
+					dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() ).getId() );
+			
+			for( int i = 0; i < userIdList.size(); i++ )
+				if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
+					userDataList.get( i ).setFollowing( true );
+			
+		}
+
+		
+		// Setting AuthorData.isFollowing flag
+		List<Long> authorIdList = new ArrayList<>( userDataList.size() );
+		for( UserData userData : userDataList )
+			authorIdList.add( userData.getAuthor().getId() );
+		
+		List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList(
+				AccessTokenFilter.getAccessToken().getUserId(),
+				authorIdList );
+		
+		for( int i = 0; i < authorIdList.size(); i++ )
+			if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
+				userDataList.get( i ).getAuthor().setFollowing( true );
+		
 		
 		return new DataListCursorTuple<>(
-				userList,
+				userDataList,
 				userIdListCursorTuple.getCursor(),
 				author.getFollowCount() );
 		

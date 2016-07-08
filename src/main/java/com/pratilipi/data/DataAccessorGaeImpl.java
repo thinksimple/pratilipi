@@ -124,10 +124,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return id == null || id.isEmpty() ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
-	private <P extends GenericOfyType,Q extends P> List<P> getEntityList( Class<Q> clazz, List<Long> idList ) {
-		Map<Long, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idList );
+	private <P extends GenericOfyType,Q extends P, R> List<P> getEntityList( Class<Q> clazz, List<R> idList ) {
+		Map<R, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idList );
 		List<P> entityList = new ArrayList<>();
-		for( Long id : idList )
+		for( R id : idList )
 			entityList.add( entityMap.get( id ) );
 		return entityList;
 	}
@@ -1149,6 +1149,36 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( userId == null || userId.equals( 0L ) || authorId == null || authorId.equals( 0L ) )
 			return null;
 		return getEntity( UserAuthorEntity.class, userId + "-" + authorId );
+	}
+
+	@Override
+	public List<UserAuthor> getUserAuthorList( Long userId, List<Long> authorIdList ) {
+
+		if( userId == null || userId.equals( 0L ) || authorIdList.size() == 0 )
+			return new ArrayList<>( 0 );
+		
+		List<String> idList = new ArrayList<>( authorIdList.size() );
+		for( Long authorId : authorIdList )
+			if( authorId != null && authorId != 0L )
+				idList.add( userId + "-" + authorId );
+		
+		return getEntityList( UserAuthorEntity.class, idList );
+		
+	}
+	
+	@Override
+	public List<UserAuthor> getUserAuthorList( List<Long> userIdList, Long authorId ) {
+		
+		if( userIdList.size() == 0 || authorId == null || authorId.equals( 0L ) )
+			return null;
+		
+		List<String> idList = new ArrayList<>( userIdList.size() );
+		for( Long userId : userIdList )
+			if( userId != null && userId != 0L )
+				idList.add( userId + "-" + authorId );
+		
+		return getEntityList( UserAuthorEntity.class, idList );
+		
 	}
 
 	@Override

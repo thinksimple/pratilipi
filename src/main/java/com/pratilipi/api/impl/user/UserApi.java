@@ -36,6 +36,7 @@ public class UserApi extends GenericApi {
 		private String profileImageUrl;
 		
 		private Long followCount;
+		private Boolean isFollowing;
 	
 		
 		@SuppressWarnings("unused")
@@ -64,6 +65,7 @@ public class UserApi extends GenericApi {
 					this.profilePageUrl = userData.getProfilePageUrl();
 					this.profileImageUrl = userData.getProfileImageUrl();
 					this.followCount = userData.getFollowCount();
+					this.isFollowing = userData.isFollowing();
 				}
 			
 			}
@@ -99,6 +101,10 @@ public class UserApi extends GenericApi {
 		
 		public Long getFollowCount() {
 			return followCount;
+		}
+		
+		public boolean isFollowing() {
+			return isFollowing;
 		}
 		
 	}
