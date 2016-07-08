@@ -270,6 +270,7 @@ public class AuthorApi extends GenericApi {
 							? authorData.getNameEn()
 							: authorData.getName();
 					this.pageUrl = authorData.getPageUrl();
+					this.imageUrl = authorData.getImageUrl();
 					this.followCount = authorData.getFollowCount();
 				}
 				
