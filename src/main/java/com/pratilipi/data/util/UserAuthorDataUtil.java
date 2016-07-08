@@ -20,6 +20,7 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.filter.AccessTokenFilter;
 
@@ -95,23 +96,43 @@ public class UserAuthorDataUtil {
 	}
 
 	public static DataListCursorTuple<AuthorData> getUserFollowList( Long userId, String cursor, Integer offset, Integer resultCount ) {
-		DataListCursorTuple<Long> authorIdListCursorTuple = DataAccessorFactory.getDataAccessor()
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		User user = dataAccessor.getUser( userId );
+		if( user.getFollowCount() == 0 )
+			return new DataListCursorTuple<>( new ArrayList<AuthorData>( 0 ), null, 0L );
+		
+		DataListCursorTuple<Long> authorIdListCursorTuple = dataAccessor
 				.getUserAuthorFollowList( userId, null, cursor, offset, resultCount );
+		
 		return new DataListCursorTuple<>(
 				AuthorDataUtil.createAuthorDataList( authorIdListCursorTuple.getDataList(), true ),
-				authorIdListCursorTuple.getCursor() );
+				authorIdListCursorTuple.getCursor(),
+				user.getFollowCount() );
+
 	}
 	
 	public static DataListCursorTuple<UserData> getAuthorFollowList( Long authorId, String cursor, Integer offset, Integer resultCount ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		Author author = dataAccessor.getAuthor( authorId );
+		if( author.getFollowCount() == 0 )
+			return new DataListCursorTuple<>( new ArrayList<UserData>( 0 ), null, 0L );
+		
 		DataListCursorTuple<Long> userIdListCursorTuple = DataAccessorFactory.getDataAccessor()
 				.getUserAuthorFollowList( null, authorId, cursor, offset, resultCount );
 		Map<Long, UserData> users = UserDataUtil.createUserDataList( userIdListCursorTuple.getDataList(), true );
 		List<UserData> userList = new ArrayList<>( users.size() );
 		for( Long userId : userIdListCursorTuple.getDataList() )
 			userList.add( users.get( userId ) );
+		
 		return new DataListCursorTuple<>(
 				userList,
-				userIdListCursorTuple.getCursor() );
+				userIdListCursorTuple.getCursor(),
+				author.getFollowCount() );
+		
 	}
 	
 	

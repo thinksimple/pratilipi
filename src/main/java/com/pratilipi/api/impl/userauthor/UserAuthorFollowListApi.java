@@ -35,22 +35,25 @@ public class UserAuthorFollowListApi extends GenericApi {
 		private List<UserApi.Response> userList;
 		private List<AuthorApi.Response> authorList;
 		private String cursor;
+		private Long numberFound;
 
 		
 		private Response() {}
 		
-		public Response( List<UserData> userList, List<AuthorData> authorList, String cursor ) {
+		public Response( List<UserData> userList, List<AuthorData> authorList, String cursor, Long numberFound ) {
 			
 			if( userList != null ) {
 				this.userList = new ArrayList<>( userList.size() ); 
 				for( UserData user : userList )
 					this.userList.add( new UserApi.Response( user, UserAuthorFollowListApi.class ) );
+				this.numberFound = numberFound;
 			}
 			
 			if( authorList != null ) {
 				this.authorList = new ArrayList<>( authorList.size() ); 
 				for( AuthorData author : authorList )
 					this.authorList.add( new AuthorApi.Response( author, UserAuthorFollowListApi.class ) );
+				this.numberFound = numberFound;
 			}
 			
 			this.cursor = cursor;
@@ -70,6 +73,10 @@ public class UserAuthorFollowListApi extends GenericApi {
 			return cursor;
 		}
 		
+		public Long getNumberFound() {
+			return numberFound;
+		}
+		
 	}
 
 	
@@ -82,7 +89,11 @@ public class UserAuthorFollowListApi extends GenericApi {
 					request.cursor,
 					request.offset,
 					request.resultCount );
-			return new Response( null, authorListCursorTuple.getDataList(), authorListCursorTuple.getCursor() );
+			return new Response(
+					null,
+					authorListCursorTuple.getDataList(),
+					authorListCursorTuple.getCursor(),
+					authorListCursorTuple.getNumberFound() );
 		}
 		
 		
@@ -92,7 +103,11 @@ public class UserAuthorFollowListApi extends GenericApi {
 					request.cursor,
 					request.offset,
 					request.resultCount );
-			return new Response( authorListCursorTuple.getDataList(), null, authorListCursorTuple.getCursor() );
+			return new Response(
+					authorListCursorTuple.getDataList(),
+					null,
+					authorListCursorTuple.getCursor(),
+					authorListCursorTuple.getNumberFound() );
 		}
 
 		return new Response();
