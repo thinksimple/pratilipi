@@ -28,7 +28,7 @@
 								user="[[ user ]]"
 								author="[[ author ]]"
 								published-pratilipi-list="{{ publishedPratilipiList }}"
-						></pratilipi-author-tabs>
+								followers-list="{{ followersList }}"></pratilipi-author-tabs>
 					</div>
 				</div>
 			</div>
@@ -73,6 +73,7 @@
 				loadUser: { type: Boolean, value: false },
 				
 				publishedPratilipiList: { type: Object },
+				followersList: { type: Object },
 				pratilipiTypes: { types: Object },
 				navigationList: { type: Array },
 				lastScrollTop: { type: Number, value: 0 }

@@ -26,32 +26,28 @@
 		
 		/* Bootstrap overrides */
 		.row {
-			margin-left: 0;
-			margin-right: 0;
+			margin-left: -12px;
+			margin-right: -12px;
+			padding-bottom: 8px;
 		}
 		.col-xs-12, .col-sm-12, .col-md-6, .col-lg-6 {
-			padding-left: 0;
-			padding-right: 0;
+			padding-left: 12px;
+			padding-right: 12px;
 		}
 	</style>
 	<template>
 		<div class="secondary-500 pratilipi-shadow author-followers">
 			<div class="author-followers-header">
 				<h5 class="pratilipi-red">Followers</h5>
-				<div class="followers-text text-center">57 Members</div>
+				<div class="followers-text text-center">{{ followCount }} Members</div>
 			</div>
 			<hr/>
 			<div class="row followers-grid">
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-					<pratilipi-follow-author></pratilipi-follow-author>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-					<pratilipi-follow-author></pratilipi-follow-author>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-					<pratilipi-follow-author></pratilipi-follow-author>
-				</div>
-					
+				<template is="dom-repeat" items="{{ followList }}">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
+					</div>
+				</template>
 			</div>
 		</div>
 	</template>
@@ -61,6 +57,36 @@
 		Polymer({
 
 			is: 'pratilipi-author-followers',
+			
+			properties: {
+				followersList: { type: Object },
+				
+				followList: { type: Array, value: function() { return []; } },
+				followCount: { type: Number },
+			},
+			
+			processFollowersListObject: function( followersListObject ) {
+				var userList = followersListObject.userList;
+				for( var i = 0; i < userList.length; i++ ) {
+					var user = userList[i];
+					var follow = {
+						name: user.displayName,
+						pageUrl: user.profilePageUrl,
+						followCount: user.author.followCount,
+						imageUrl: user.profileImageUrl,
+						following: user.following,
+						canFollow: user.userId != document.querySelector( 'pratilipi-user' ).getCurrentUser().userId 
+					};
+					this.push( 'followList', follow );
+				}
+					
+				this.set( 'cursor', followersListObject.cursor );
+				this.set( 'followCount', followersListObject.numberFound );
+			},
+			
+			attached: function() {
+				this.processFollowersListObject( this.followersList );
+			}
 
 		});
 

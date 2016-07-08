@@ -73,8 +73,8 @@
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="author-about">
 				<pratilipi-author-biography author="[[ author ]]"></pratilipi-author-biography>
-				<#-- <pratilipi-author-following></pratilipi-author-following>
-				<pratilipi-author-followers></pratilipi-author-followers> -->
+				<#-- <pratilipi-author-following></pratilipi-author-following> -->
+				<pratilipi-author-followers followers-list="{{ followersList }}"></pratilipi-author-followers>
 			</div>
 		</div>
 	</template>
@@ -88,8 +88,8 @@
 
 			publishedPratilipiList: { type: Object },
 
-			authorFollowingList: { type: Object },
-			authorFollowersList: { type: Object }
+			followingList: { type: Object },
+			followersList: { type: Object }
 		},
 		
 		_authorObserver: function() {

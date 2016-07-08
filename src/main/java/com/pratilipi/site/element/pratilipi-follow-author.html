@@ -6,14 +6,14 @@
 		}
 		.follow-author {
 			width: 100%;
-			padding: 24px 12px;
+			padding: 14px 12px;
 			display: flex;
 		}
 		.follow-author .follow-author-image {
 			float: left;
 			text-align: center;
 			align-self: center;
-			margin-right: 8px;
+			margin-right: 16px;
 		}
 		.follow-author .follow-author-name {
 			float: left;
@@ -21,6 +21,10 @@
 			text-align: left;
 			align-self: center;
 			font-size: 15px;
+		}
+		.follow-author .follow-author-name a, .follow-author .follow-author-name a:hover, .follow-author .follow-author-name a:focus {
+			color: #333;
+			display: inline-block;
 		}
 		.follow-author .follow-author-button {
 			margin-left: 8px;
@@ -43,23 +47,37 @@
 			box-shadow: none;
 			margin: 0;
 		}
+		.follow-author .yourself {
+			margin-left: 8px;
+			float: right;
+			text-align: right;
+			align-self: center;
+			font-size: 14px;
+			color: #1c9963;
+			font-weight: 600;
+		}
 	</style>
 	<template>
 		<div class="follow-author">
 			<div class="follow-author-image">
-				<img src="{{ userImageUrl }}" class="img-circle"/>
+				<a href="{{ pageUrl }}"><img src="{{ imageUrl }}" class="img-circle" /></a>
 			</div>
 			<div class="follow-author-name contain-title ellipsed">
-				{{ userName }}
+				<a href="{{ pageUrl }}">{{ name }}</a>
 			</div>
-			<div class="follow-author-button">
-				<template is="dom-if" if="{{ !isFollowed }}">
-					<button class="pratilipi-light-blue-button">Follow</button>
-				</template>
-				<template is="dom-if" if="{{ isFollowed }}">
-					<button class="pratilipi-grey-button">UnFollow</button>
-				</template>
-			</div>
+			<template is="dom-if" if="{{ canFollow }}">
+				<div class="follow-author-button">
+					<template is="dom-if" if="{{ !following }}">
+						<button class="pratilipi-light-blue-button" on-click="followAuthor">Follow</button>
+					</template>
+					<template is="dom-if" if="{{ following }}">
+						<button class="pratilipi-grey-button" on-click="unFollowAuthor">UnFollow</button>
+					</template>
+				</div>
+			</template>
+			<template is="dom-if" if="{{ !canFollow }}">
+				<div class="yourself">YOURSELF!</div>
+			</template>
 		</div>
 	</template>
 
@@ -70,25 +88,34 @@
 			is: 'pratilipi-follow-author',
 			
 			properties: {
-				userImageUrl: { type: String },
-				userName: { type: String },
-				isFollowed: { type: Boolean }
+				followObject: { type: Object, observer: "_followObjectObserver" },
+
+				authorId: { type: String },
+				name: { type: String },
+				pageUrl: { type: String },
+				followCount: { type: Number },
+				imageUrl: { type: String },
+				following: { type: Boolean },
+				canFollow: { type: Boolean }
 			},
 			
-			ready: function() {
-				this.userImageUrl = "http://10.ptlp.co/author/image?width=48";
-				this.userName = "Test User";
-				this.isFollowed = false;
-				
+			_followObjectObserver: function() {
+				this.set( 'authorId', this.followObject.authorId );
+				this.set( 'name', this.followObject.name );
+				this.set( 'pageUrl', this.followObject.pageUrl );
+				this.set( 'followCount', this.followObject.followCount );
+				this.set( 'imageUrl', this.followObject.imageUrl + ( this.followObject.imageUrl.indexOf( "?" ) == -1 ? "?" : "&" ) + "width=48" );
+				this.set( 'following', this.followObject.following );
+				this.set( 'canFollow', this.followObject.canFollow );
 			},
 			
 			followAuthor: function() {
-				
+				console.log( "Follow" );
 			},
 			
 			unFollowAuthor: function() {
-				
-			}
+				console.log( "unfollow" );
+			},
 
 		});
 
