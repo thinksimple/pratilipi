@@ -23,7 +23,7 @@ public class GenericUserResponse extends GenericResponse {
 	
 	public GenericUserResponse( UserData userData ) {
 		this.userId = userData.getId();
-		this.authorId = userData.getAuthorId();
+		this.authorId = userData.getAuthor().getId();
 		this.displayName = userData.getDisplayName();
 		this.email = userData.getEmail();
 		this.phone = userData.getPhone();

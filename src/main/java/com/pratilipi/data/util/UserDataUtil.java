@@ -140,7 +140,6 @@ public class UserDataUtil {
 		if( author != null ) {
 			
 			AuthorData authorData = AuthorDataUtil.createAuthorData( author );
-			userData.setAuthorId( author.getId() );
 			userData.setAuthor( authorData );
 			
 			userData.setFirstName( authorData.getFirstName() != null ? authorData.getFirstName() : authorData.getFirstNameEn() );

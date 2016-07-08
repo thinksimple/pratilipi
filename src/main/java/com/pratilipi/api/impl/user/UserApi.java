@@ -31,7 +31,6 @@ public class UserApi extends GenericApi {
 	public static class Response {
 		
 		private Long userId;
-		private Long authorId;
 		private AuthorApi.Response author;
 		private String displayName;
 		private String email;
