@@ -58,9 +58,11 @@ public class UserApi extends GenericApi {
 			} else if( clazz == UserAuthorFollowListApi.class ) {
 
 				if( userData.getAuthor() == null ) {
+					this.userId = userData.getId();
 					this.followCount = userData.getFollowCount();
 					this.following = userData.isFollowing();
 				} else {
+					this.userId = userData.getId();
 					this.author = new AuthorApi.Response( userData.getAuthor(), clazz );
 					this.displayName = userData.getDisplayName();
 					this.profilePageUrl = userData.getProfilePageUrl();

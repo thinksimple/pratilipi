@@ -200,8 +200,8 @@ public class AuthorApi extends GenericApi {
 		private Long registrationDateMillis;
 		
 		private Long followCount;
-		private Integer contentPublished;
 		private Integer contentDrafted;
+		private Integer contentPublished;
 		private Long totalReadCount;
 		private Long totalFbLikeShareCount;
 		
@@ -243,8 +243,8 @@ public class AuthorApi extends GenericApi {
 			this.registrationDateMillis = authorData.getRegistrationDate().getTime();
 			
 			this.followCount = authorData.getFollowCount();
-			this.contentPublished = authorData.getContentPublished();
 			this.contentDrafted = authorData.getContentDrafted();
+			this.contentPublished = authorData.getContentPublished();
 			this.totalReadCount = authorData.getTotalReadCount();
 			this.totalFbLikeShareCount = authorData.getTotalFbLikeShareCount();
 
