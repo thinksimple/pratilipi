@@ -78,7 +78,11 @@ public interface Author extends GenericOfyType, Serializable {
 	Long getFollowCount();
 	
 	void setFollowCount( Long followCount );
-		
+	
+	Integer getContentDrafted();
+	
+	void setContentDrafted( Integer contentDrafted );
+	
 	Integer getContentPublished();
 	
 	void setContentPublished( Integer contentPublished );

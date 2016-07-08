@@ -166,6 +166,7 @@ public class AuthorDataUtil {
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
 		authorData.setFollowCount( author.getFollowCount() );
+		authorData.setContentDrafted( author.getContentDrafted() );
 		authorData.setContentPublished( author.getContentPublished() );
 		authorData.setTotalReadCount( author.getTotalReadCount() );
 		authorData.setTotalFbLikeShareCount( author.getTotalFbLikeShareCount() );
@@ -548,11 +549,14 @@ public class AuthorDataUtil {
 		List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null, null ).getDataList();
 		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
 		
+		int contentDrafted = 0;
 		int contentPublished = 0;
 		long totalReadCount = 0;
 		long totalFbLikeShareCount = 0;
 		for( Pratilipi pratilipi : pratilipiList ) {
-			if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
+			if( pratilipi.getState() == PratilipiState.DRAFTED ) {
+				contentDrafted++;
+			} else if( pratilipi.getState() == PratilipiState.PUBLISHED ) {
 				contentPublished++;
 				totalReadCount = totalReadCount + pratilipi.getReadCountOffset() + pratilipi.getReadCount();
 				totalFbLikeShareCount = totalFbLikeShareCount + pratilipi.getFbLikeShareCount();
@@ -564,7 +568,8 @@ public class AuthorDataUtil {
 				&& (long) author.getTotalReadCount() == totalReadCount
 				&& (long) author.getTotalFbLikeShareCount() == totalFbLikeShareCount )
 			return false;
-		
+
+		author.setContentDrafted( contentDrafted );
 		author.setContentPublished( contentPublished );
 		author.setTotalReadCount( totalReadCount );
 		author.setTotalFbLikeShareCount( totalFbLikeShareCount );

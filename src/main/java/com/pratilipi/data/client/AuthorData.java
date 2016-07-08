@@ -71,6 +71,8 @@ public class AuthorData implements Serializable {
 	
 	private Long followCount;
 	
+	private Integer contentDrafted;
+	
 	private Integer contentPublished;
 	
 	private Long totalReadCount;
@@ -316,6 +318,14 @@ public class AuthorData implements Serializable {
 	
 	public void setFollowCount( Long followCount ) {
 		this.followCount = followCount;
+	}
+
+	public Integer getContentDrafted() {
+		return contentDrafted;
+	}
+
+	public void setContentDrafted( Integer contentDrafted ) {
+		this.contentDrafted = contentDrafted;
 	}
 
 	public Integer getContentPublished() {

@@ -68,6 +68,9 @@ public class AuthorEntity implements Author {
 	private Long FOLLOW_COUNT;
 
 	@Index
+	private Integer CONTENT_DRAFTED;
+	
+	@Index
 	private Integer CONTENT_PUBLISHED;
 	
 	@Index
@@ -269,6 +272,16 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setFollowCount( Long followCount ) {
 		this.FOLLOW_COUNT = followCount;
+	}
+	
+	@Override
+	public Integer getContentDrafted() {
+		return CONTENT_DRAFTED == null ? 0 : CONTENT_DRAFTED;
+	}
+	
+	@Override
+	public void setContentDrafted( Integer contentDrafted ) {
+		this.CONTENT_DRAFTED = contentDrafted;
 	}
 	
 	@Override

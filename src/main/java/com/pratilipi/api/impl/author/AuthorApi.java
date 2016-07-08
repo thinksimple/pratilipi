@@ -201,6 +201,7 @@ public class AuthorApi extends GenericApi {
 		
 		private Long followCount;
 		private Integer contentPublished;
+		private Integer contentDrafted;
 		private Long totalReadCount;
 		private Long totalFbLikeShareCount;
 		
@@ -243,6 +244,7 @@ public class AuthorApi extends GenericApi {
 			
 			this.followCount = authorData.getFollowCount();
 			this.contentPublished = authorData.getContentPublished();
+			this.contentDrafted = authorData.getContentDrafted();
 			this.totalReadCount = authorData.getTotalReadCount();
 			this.totalFbLikeShareCount = authorData.getTotalFbLikeShareCount();
 
@@ -372,6 +374,10 @@ public class AuthorApi extends GenericApi {
 		
 		public Long getFollowCount() {
 			return followCount;
+		}
+		
+		public Integer getContentDrafted() {
+			return contentDrafted;
 		}
 		
 		public Integer getContentPublished() {
