@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +35,6 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.DocAccessor;
-import com.pratilipi.data.Memcache;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
@@ -400,58 +398,29 @@ public class PratilipiDataUtil {
 		if( ! hasAccessToListPratilipiData( pratilipiFilter ) )
 			throw new InsufficientAccessException();
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Memcache l2Cache = DataAccessorFactory.getL2CacheAccessor();
-
-		// Skip cache for cases when User has access to update the Author.
-		boolean skipCache = pratilipiFilter.getAuthorId() != null
-				&& AuthorDataUtil.hasAccessToUpdateAuthorData( dataAccessor.getAuthor( pratilipiFilter.getAuthorId() ), null );
-		
 		// Processing search query
 		if( searchQuery != null )
 			searchQuery = searchQuery.toLowerCase().trim()
 					.replaceAll( ",|\\sor\\s", " " )
 					.replaceAll( "[\\s]+", " OR " );
 
-		// Creating memcache id
-		String memcacheId = PratilipiDataUtil.class.getSimpleName() + "-" + pratilipiFilter.toUrlEncodedString();
-		if( searchQuery != null )
-			memcacheId += "&searchQuery=" + searchQuery;
-		if( resultCount != null )
-			memcacheId += "&resultCount=" + resultCount;
-		if( offset != null )
-			memcacheId += "&offset=" + offset;
-		if( cursor != null )
-			memcacheId += "&cursor=" + cursor;
-		memcacheId += "?" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 10 ) );
-
-		// Fetching cached response from Memcache
-		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
-				= skipCache ? null : (DataListCursorTuple<PratilipiData>) l2Cache.get( memcacheId );
-
-		if( pratilipiDataListCursorTuple == null || pratilipiDataListCursorTuple.getDataList().size() == 0 ) {
-			// Fetching Pratilipi id list from DataStore/SearchIndex
-			DataListCursorTuple<Long> pratilipiIdListCursorTuple =
-					pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED
-					? DataAccessorFactory.getSearchAccessor().searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount )
-					: dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, offset, resultCount );
-			// Creating PratilipiData list from Pratilipi id list
-			List<PratilipiData> pratilipiDataList = createPratilipiDataList(
-					pratilipiIdListCursorTuple.getDataList(),
-					pratilipiFilter.getAuthorId() == null,
-					false );
-			// Creating response object
-			pratilipiDataListCursorTuple = new DataListCursorTuple<PratilipiData>(
-					pratilipiDataList,
-					pratilipiIdListCursorTuple.getCursor(),
-					pratilipiIdListCursorTuple.getNumberFound() );
-			// Caching response object in Memcache
-			// Need to have this check because sometimes GAE fails to read existent file(s)
-			if( pratilipiFilter.getListName() == null || pratilipiIdListCursorTuple.getNumberFound() != 0 )
-				l2Cache.put( memcacheId, pratilipiDataListCursorTuple );
-		}
-
-		return pratilipiDataListCursorTuple;
+		// Fetching Pratilipi id list from DataStore/SearchIndex
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
+				pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED
+				? DataAccessorFactory.getSearchAccessor().searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount )
+				: DataAccessorFactory.getDataAccessor().getPratilipiIdList( pratilipiFilter, cursor, offset, resultCount );
+			
+		// Creating PratilipiData list from Pratilipi id list
+		List<PratilipiData> pratilipiDataList = createPratilipiDataList(
+				pratilipiIdListCursorTuple.getDataList(),
+				pratilipiFilter.getAuthorId() == null,
+				false );
+		
+		// Creating response object
+		return new DataListCursorTuple<PratilipiData>(
+				pratilipiDataList,
+				pratilipiIdListCursorTuple.getCursor(),
+				pratilipiIdListCursorTuple.getNumberFound() );
 		
 	}
 	
