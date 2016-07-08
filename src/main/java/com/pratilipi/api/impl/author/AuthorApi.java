@@ -265,6 +265,7 @@ public class AuthorApi extends GenericApi {
 				
 				if( authorData.getUser() == null ) {
 					this.followCount = authorData.getFollowCount();
+					this.isFollowing = authorData.isFollowing();
 				} else {
 					this.user = new UserApi.Response( authorData.getUser(), clazz );
 					this.name = authorData.getName() == null
