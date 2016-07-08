@@ -28,6 +28,26 @@ public class UserAuthorFollowListApi extends GenericApi {
 		private Integer offset;
 		private Integer resultCount;
 		
+		public void setUserId( Long userId ) {
+			this.userId = userId;
+		}
+
+		public void setAuthorId( Long authorId ) {
+			this.authorId = authorId;
+		}
+
+		public void setCursor( String cursor ) {
+			this.cursor = cursor;
+		}
+
+		public void setOffset( Integer offset ) {
+			this.offset = offset;
+		}
+
+		public void setResultCount( Integer resultCount ) {
+			this.resultCount = resultCount;
+		}
+
 	}
 	
 	public static class Response extends GenericResponse { 

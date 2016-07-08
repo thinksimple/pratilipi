@@ -13,6 +13,7 @@
 			author='${ authorJson }'
 			user-author='${ userAuthorJson }'
 			published-pratilipi-list='${ publishedPratilipiListObjectJson }'
+			followers-list='${ followersListJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'></pratilipi-author-page>
 	</body>

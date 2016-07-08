@@ -32,6 +32,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
+import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -709,6 +710,13 @@ public class PratilipiSite extends HttpServlet {
 				.getApi( PratilipiListApi.class )
 				.get( pratilipiListRequest );
 		
+		UserAuthorFollowListApi.GetRequest userAuthorFollowListApiRequest = new UserAuthorFollowListApi.GetRequest();
+		userAuthorFollowListApiRequest.setAuthorId( authorId );
+		ApiRegistry
+				.getApi( UserAuthorFollowListApi.class );
+		UserAuthorFollowListApi.Response followersList = UserAuthorFollowListApi
+				.get( userAuthorFollowListApiRequest );
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createAuthorPageTitle( authorResponse ) );
 		if( basicMode ) {
@@ -724,6 +732,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiListRequest ) );
 			dataModel.put( "publishedPratilipiListCursor", pratilipiListResponse.getCursor() );
 			dataModel.put( "publishedPratilipiListObjectJson", gson.toJson( pratilipiListResponse ) );
+			dataModel.put( "followersListJson", gson.toJson( followersList ) );
 		}
 		return dataModel;
 		
