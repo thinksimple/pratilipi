@@ -106,9 +106,14 @@ public class AuthorDataUtil {
 	
 	
 	public static AuthorData createAuthorData( Author author ) {
+
+		if( author == null )
+			return null;
+		
 		return createAuthorData(
 				author,
 				DataAccessorFactory.getDataAccessor().getPage( PageType.AUTHOR, author.getId() ) );
+	
 	}
 	
 	public static AuthorData createAuthorData( Author author, Page authorPage ) {
