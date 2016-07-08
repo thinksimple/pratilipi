@@ -130,13 +130,13 @@
 				<template is="dom-if" if="{{ !hasAccessToUpdate }}">
 					<div class="follow-author">
 						<template is="dom-if" if="{{ !following }}">
-							<button class="pratilipi-light-blue-button" on-click="followAuthor">
+							<button id="author-follow-button" class="pratilipi-light-blue-button" on-click="followAuthor">
 								<iron-icon icon="social:person-add"></iron-icon>
 								Follow{{ followCountAbbr }}
 							</button>
 						</template>
 						<template is="dom-if" if="{{ following }}">
-							<button class="pratilipi-grey-button" on-click="unFollowAuthor">
+							<button id="author-unfollow-button" class="pratilipi-grey-button" on-click="unFollowAuthor">
 								<iron-icon icon="icons:remove-circle"></iron-icon>
 								UnFollow{{ followCountAbbr }}
 							</button>
@@ -223,24 +223,32 @@
 			return true;
 		},
 		
-		followAuthor: function() {
+		_disableFollowButtons: function() {
+			jQuery( '#author-follow-button' ).prop( 'disabled', true );
+			jQuery( '#author-unfollow-button' ).prop( 'disabled', true );
+		},
+
+		_enableFollowButtons: function() {
+			jQuery( '#author-follow-button' ).prop( 'disabled', false );
+			jQuery( '#author-unfollow-button' ).prop( 'disabled', false );
+		},
+
+		_postFollowApi: function( following ) {
 			if( ! this._checkUserLoginStatus() )
 				return;
-
 			this._swapFollowButton();
-			var body = { authorId: this.author.authorId, following: true };
+			this._disableFollowButtons();
+			var body = { authorId: this.author.authorId, following: following };
 			this.$.UserAuthorFollowPostApi.body = jQuery.param( body );
 			this.$.UserAuthorFollowPostApi.generateRequest();
 		},
 		
+		followAuthor: function() {
+			this._postFollowApi( true );
+		},
+		
 		unFollowAuthor: function() {
-			if( ! this._checkUserLoginStatus() )
-				return;
-
-			this._swapFollowButton();
-			var body = { authorId: this.author.authorId, following: false };
-			this.$.UserAuthorFollowPostApi.body = jQuery.param( body );
-			this.$.UserAuthorFollowPostApi.generateRequest();
+			this._postFollowApi( false );
 		},
 		
 		_swapFollowButton: function() {
@@ -250,6 +258,7 @@
 		
 		_userAuthorFollowPostApiResponse: function( response ) {
 			var following = response.detail.response.following;
+			this._enableFollowButtons();
 			if( this.following != following ) {
 				this._userAuthorFollowPostApiError();
 			}
@@ -257,6 +266,7 @@
 		
 		_userAuthorFollowPostApiError: function( response ) {
 			this._swapFollowButton();
+			this._enableFollowButtons();
 			if( response != null && response.detail.request.xhr.response.message != null ) {
 				document.querySelector( 'pratilipi-alert' ).alert( response.detail.request.xhr.response.message, false );
 			} else {
