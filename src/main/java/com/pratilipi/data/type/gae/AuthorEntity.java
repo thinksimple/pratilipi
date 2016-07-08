@@ -48,9 +48,17 @@ public class AuthorEntity implements Author {
 	@Index
 	private Language LANGUAGE;
 
+	private String LOCATION;
+	
+	private String PROFILE_FACEBOOK;
+	
+	private String PROFILE_TWITTER;
+
+	private String PROFILE_GOOGLE_PLUS;
+
 	private String SUMMARY;
 	
-
+	
 	@Index
 	private AuthorState STATE;
 	
@@ -210,6 +218,46 @@ public class AuthorEntity implements Author {
 		this.LANGUAGE = language;
 	}
 
+	@Override
+	public String getLocation() {
+		return LOCATION;
+	}
+	
+	@Override
+	public void setLocation( String location ) {
+		this.LOCATION = location;
+	}
+	
+	@Override
+	public String getProfileFacebook() {
+		return PROFILE_FACEBOOK;
+	}
+	
+	@Override
+	public void setProfileFacebook( String profileFacebook ) {
+		this.PROFILE_FACEBOOK = profileFacebook;
+	}
+	
+	@Override
+	public String getProfileTwitter() {
+		return PROFILE_TWITTER;
+	}
+	
+	@Override
+	public void setProfileTwitter( String profileTwitter ) {
+		this.PROFILE_TWITTER = profileTwitter;
+	}
+	
+	@Override
+	public String getProfileGooglePlus() {
+		return PROFILE_GOOGLE_PLUS;
+	}
+	
+	@Override
+	public void setProfileGooglePlus( String profileGooglePlus ) {
+		this.PROFILE_GOOGLE_PLUS = profileGooglePlus;
+	}
+	
 	@Override
 	public String getSummary() {
 		return SUMMARY;

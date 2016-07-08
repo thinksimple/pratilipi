@@ -26,6 +26,7 @@ import org.apache.commons.io.LineIterator;
 import com.google.gson.Gson;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.impl.author.AuthorApi;
+import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.blogpost.shared.GenericBlogPostResponse;
 import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
@@ -458,7 +459,7 @@ public class PratilipiSite extends HttpServlet {
 		if( pratilipiData == null )
 			return null;
 		
-		String title = createAuthorPageTitle( new AuthorApi.Response( pratilipiData.getAuthor() ) );
+		String title = createAuthorPageTitle( new AuthorApi.Response( pratilipiData.getAuthor(), AuthorListApi.class ) );
 		title = title == null ? "" : " « " + title;
 		
 		if( pratilipiData.getTitle() != null && pratilipiData.getTitleEn() == null )

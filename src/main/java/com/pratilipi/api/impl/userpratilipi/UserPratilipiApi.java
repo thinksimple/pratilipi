@@ -6,6 +6,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
@@ -83,7 +84,7 @@ public class UserPratilipiApi extends GenericApi {
 			userImageUrl = userPratilipiData.getUserImageUrl();
 			userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
 
-			user = new UserApi.Response( userPratilipiData.getUser(), true );
+			user = new UserApi.Response( userPratilipiData.getUser(), UserPratilipiApi.class );
 			
 			rating = userPratilipiData.getRating();
 			review = userPratilipiData.getReview();

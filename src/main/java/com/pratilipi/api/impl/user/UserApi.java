@@ -7,9 +7,12 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.author.AuthorApi;
+import com.pratilipi.api.impl.author.AuthorListApi;
+import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.user.shared.PostUserRequest;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.UserState;
@@ -28,32 +31,46 @@ public class UserApi extends GenericApi {
 	public static class Response {
 		
 		private Long userId;
-		
+		private Long authorId;
 		private AuthorApi.Response author;
-		
 		private String displayName;
+		private String email;
+		private String phone;
+		private UserState state;
+
+		@Deprecated
+		private Boolean isGuest;
+		private Boolean isEmailVerified;
+		
 		private String profilePageUrl;
 		private String profileImageUrl;
-		
+
 		private Long followCount;
 		private Boolean following;
-	
+		
 		
 		@SuppressWarnings("unused")
 		private Response() {}
 		
-		public Response( UserData userData, boolean embed ) {
-			userId = userData.getId();
-			displayName = userData.getDisplayName();
-			profilePageUrl = userData.getProfilePageUrl();
-			profileImageUrl = userData.getProfileImageUrl();
-		}
-
 		public Response( UserData userData, Class<? extends GenericApi> clazz ) {
 			
 			if( clazz == AuthorApi.class ) {
 				
 				this.userId = userData.getId();
+				
+			} else if( clazz == AuthorListApi.class ) {
+				
+				this.userId = userData.getId();
+				this.email = userData.getEmail();
+				this.phone = userData.getPhone();
+				this.state = userData.getState();
+				
+			} else if( clazz == UserPratilipiApi.class || clazz == CommentApi.class ) {
+				
+				this.userId = userData.getId();
+				this.displayName = userData.getDisplayName();
+				this.profilePageUrl = userData.getProfilePageUrl();
+				this.profileImageUrl = userData.getProfileImageUrl();
 				
 			} else if( clazz == UserAuthorFollowListApi.class ) {
 

@@ -55,6 +55,19 @@ public class AuthorData implements Serializable {
 	private Language language;
 	private boolean hasLanguage;
 	
+	private String location;
+	private boolean hasLocation;
+	
+	private String profileFacebook;
+	private boolean hasProfileFacebook;
+	
+	private String profileTwitter;
+	private boolean hasProfileTwitter;
+
+	private String profileGooglePlus;
+	private boolean hasProfileGooglePlus;
+
+	
 	private String summary;
 	private boolean hasSummary;
 	
@@ -251,6 +264,58 @@ public class AuthorData implements Serializable {
 	
 	public boolean hasLanguage() {
 		return hasLanguage;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+	
+	public void setLocation( String location ) {
+		this.location = location;
+		this.hasLocation = true;
+	}
+	
+	public boolean hasLocation() {
+		return hasLocation;
+	}
+
+	public String getProfileFacebook() {
+		return profileFacebook;
+	}
+	
+	public void setProfileFacebook( String profileFacebook ) {
+		this.profileFacebook = profileFacebook;
+		this.hasProfileFacebook = true;
+	}
+	
+	public boolean hasProfileFacebook() {
+		return hasProfileFacebook;
+	}
+
+	public String getProfileTwitter() {
+		return profileTwitter;
+	}
+	
+	public void setProfileTwitter( String profileTwitter ) {
+		this.profileTwitter = profileTwitter;
+		this.hasProfileTwitter = true;
+	}
+	
+	public boolean hasProfileTwitter() {
+		return hasProfileTwitter;
+	}
+
+	public String getProfileGooglePlus() {
+		return profileGooglePlus;
+	}
+	
+	public void setProfileGooglePlus( String profileGooglePlus ) {
+		this.profileGooglePlus = profileGooglePlus;
+		this.hasProfileGooglePlus = true;
+	}
+	
+	public boolean hasProfileGooglePlus() {
+		return hasProfileGooglePlus;
 	}
 
 	public String getSummary() {

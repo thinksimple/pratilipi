@@ -61,10 +61,10 @@ public class AuthorListApi extends GenericApi {
 		
 		private Response() {}
 		
-		Response( List<AuthorData> authorList, String cursor ) {
+		private Response( List<AuthorData> authorList, String cursor ) {
 			this.authorList = new ArrayList<>( authorList.size() );
 			for( AuthorData authorData : authorList )
-				this.authorList.add( new AuthorApi.Response( authorData ) );
+				this.authorList.add( new AuthorApi.Response( authorData, AuthorListApi.class ) );
 			this.cursor = cursor;
 		}
 		

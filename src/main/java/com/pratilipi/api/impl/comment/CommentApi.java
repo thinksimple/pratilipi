@@ -64,7 +64,7 @@ public class CommentApi extends GenericApi {
 		
 		Response( CommentData commentData ) {
 			this.commentId = commentData.getId();
-			this.user = new UserApi.Response( commentData.getUser(), true );
+			this.user = new UserApi.Response( commentData.getUser(), CommentApi.class );
 			this.parentType = commentData.getParentType();
 			this.parentId = commentData.getParentId();
 			this.content = commentData.getContent();

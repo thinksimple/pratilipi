@@ -53,6 +53,22 @@ public interface Author extends GenericOfyType, Serializable {
 	
 	void setLanguage( Language language );
 	
+	String getLocation();
+	
+	void setLocation( String location );
+	
+	String getProfileFacebook();
+	
+	void setProfileFacebook( String profileFacebook );
+	
+	String getProfileTwitter();
+	
+	void setProfileTwitter( String profileTwitter );
+	
+	String getProfileGooglePlus();
+	
+	void setProfileGooglePlus( String profileGooglePlus );
+
 	String getSummary();
 	
 	void setSummary( String summary );
