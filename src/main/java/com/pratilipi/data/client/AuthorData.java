@@ -78,7 +78,7 @@ public class AuthorData implements Serializable {
 	private Long totalFbLikeShareCount;
 
 	
-	private Boolean isFollowing;
+	private Boolean following;
 	private Boolean hasAccessToUpdate;
 	
 	
@@ -343,11 +343,11 @@ public class AuthorData implements Serializable {
 	}
 	
 	public boolean isFollowing() {
-		return isFollowing == null ? false : isFollowing;
+		return following == null ? false : following;
 	}
 
 	public void setFollowing( boolean isFollowing ) {
-		this.isFollowing = isFollowing;
+		this.following = isFollowing;
 	}
 	
 	public boolean hasAccessToUpdate() {

@@ -204,7 +204,7 @@ public class AuthorApi extends GenericApi {
 		private Long totalReadCount;
 		private Long totalFbLikeShareCount;
 		
-		private Boolean isFollowing;
+		private Boolean following;
 		private Boolean hasAccessToUpdate;
 		
 		
@@ -265,7 +265,7 @@ public class AuthorApi extends GenericApi {
 				
 				if( authorData.getUser() == null ) {
 					this.followCount = authorData.getFollowCount();
-					this.isFollowing = authorData.isFollowing();
+					this.following = authorData.isFollowing();
 				} else {
 					this.user = new UserApi.Response( authorData.getUser(), clazz );
 					this.name = authorData.getName() == null
@@ -274,7 +274,7 @@ public class AuthorApi extends GenericApi {
 					this.pageUrl = authorData.getPageUrl();
 					this.imageUrl = authorData.getImageUrl();
 					this.followCount = authorData.getFollowCount();
-					this.isFollowing = authorData.isFollowing();
+					this.following = authorData.isFollowing();
 				}
 				
 			}
@@ -388,7 +388,7 @@ public class AuthorApi extends GenericApi {
 		
 		
 		public boolean isFollowing() {
-			return isFollowing;
+			return following;
 		}
 		
 		public boolean hasAccessToUpdate() {

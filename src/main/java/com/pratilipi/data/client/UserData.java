@@ -50,7 +50,7 @@ public class UserData implements Serializable {
 	
 	private Long followCount;
 
-	private Boolean isFollowing;
+	private Boolean following;
 
 	
 	
@@ -207,11 +207,11 @@ public class UserData implements Serializable {
 
 	
 	public boolean isFollowing() {
-		return isFollowing == null ? false : isFollowing;
+		return following == null ? false : following;
 	}
 
 	public void setFollowing( boolean isFollowing ) {
-		this.isFollowing = isFollowing;
+		this.following = isFollowing;
 	}
 
 }

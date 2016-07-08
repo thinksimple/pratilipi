@@ -36,7 +36,7 @@ public class UserApi extends GenericApi {
 		private String profileImageUrl;
 		
 		private Long followCount;
-		private Boolean isFollowing;
+		private Boolean following;
 	
 		
 		@SuppressWarnings("unused")
@@ -59,14 +59,14 @@ public class UserApi extends GenericApi {
 
 				if( userData.getAuthor() == null ) {
 					this.followCount = userData.getFollowCount();
-					this.isFollowing = userData.isFollowing();
+					this.following = userData.isFollowing();
 				} else {
 					this.author = new AuthorApi.Response( userData.getAuthor(), clazz );
 					this.displayName = userData.getDisplayName();
 					this.profilePageUrl = userData.getProfilePageUrl();
 					this.profileImageUrl = userData.getProfileImageUrl();
 					this.followCount = userData.getFollowCount();
-					this.isFollowing = userData.isFollowing();
+					this.following = userData.isFollowing();
 				}
 			
 			}
@@ -105,7 +105,7 @@ public class UserApi extends GenericApi {
 		}
 		
 		public boolean isFollowing() {
-			return isFollowing;
+			return following;
 		}
 		
 	}
