@@ -773,6 +773,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public Author getAuthorByUserId( Long userId ) {
 		
+		if( userId == null || userId == 0L )
+			return null;
+		
+		
 		String memcacheId = _createAuthorEntityMemcacheId( userId );
 		
 		Author author = memcache.get( memcacheId );

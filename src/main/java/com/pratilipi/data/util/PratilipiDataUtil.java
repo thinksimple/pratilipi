@@ -179,30 +179,6 @@ public class PratilipiDataUtil {
 		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), language, AccessType.PRATILIPI_UPDATE_META );
 	}
 	
-	public static boolean hasAccessToAddPratilipiReview( Pratilipi pratilipi ) {
-
-		// Case 1: Content piece must be PUBLISHED.
-		if( pratilipi.getState() != PratilipiState.PUBLISHED )
-			return false;
-
-		
-		// Case 2: User must have PRATILIPI_ADD_REVIEW access.
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), pratilipi.getLanguage(), AccessType.PRATILIPI_ADD_REVIEW ) )
-			return false;
-
-		
-		// Case 3: User must not be the owner of Pratilpi's Author profile.
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		if( author != null && accessToken.getUserId().equals( author.getUserId() ) )
-			return false;
-
-		
-		return true;
-		
-	}
-	
 	public static boolean hasAccessToReadPratilipiContent( Pratilipi pratilipi ) {
 
 		// Case 1: Any user can read PUBLISHED content.
