@@ -121,6 +121,7 @@ public class AuthorDataUtil {
 		AuthorData authorData = new AuthorData();
 		
 		authorData.setId( author.getId() );
+		authorData.setUser( new UserData( author.getUserId() ) );
 		
 		authorData.setFirstName( author.getFirstName() );
 		authorData.setLastName( author.getLastName() );

@@ -695,7 +695,9 @@ public class PratilipiSite extends HttpServlet {
 		
 		AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
 		authorApiGetRequest.setAuthorId( authorId );
-		AuthorApi.Response authorResponse = ApiRegistry.getApi( AuthorApi.class ).get( authorApiGetRequest );
+		AuthorApi.Response authorResponse = ApiRegistry
+				.getApi( AuthorApi.class )
+				.get( authorApiGetRequest );
 
 		UserAuthorFollowApi.GetRequest getRequest = new UserAuthorFollowApi.GetRequest();
 		getRequest.setAuthorId( authorId );
@@ -706,17 +708,21 @@ public class PratilipiSite extends HttpServlet {
 		PratilipiListApi.GetRequest pratilipiListRequest = new PratilipiListApi.GetRequest();
 		pratilipiListRequest.setAuthorId( authorId );
 		pratilipiListRequest.setState( PratilipiState.PUBLISHED );
-
 		PratilipiListApi.Response pratilipiListResponse = ApiRegistry
 				.getApi( PratilipiListApi.class )
 				.get( pratilipiListRequest );
 		
-		UserAuthorFollowListApi.GetRequest userAuthorFollowListApiRequest = new UserAuthorFollowListApi.GetRequest();
-		userAuthorFollowListApiRequest.setAuthorId( authorId );
-		ApiRegistry
-				.getApi( UserAuthorFollowListApi.class );
-		UserAuthorFollowListApi.Response followersList = UserAuthorFollowListApi
-				.get( userAuthorFollowListApiRequest );
+		UserAuthorFollowListApi.GetRequest followersListRequest = new UserAuthorFollowListApi.GetRequest();
+		followersListRequest.setAuthorId( authorId );
+		UserAuthorFollowListApi.Response followersList = ApiRegistry
+				.getApi( UserAuthorFollowListApi.class )
+				.get( followersListRequest );
+
+		UserAuthorFollowListApi.GetRequest followingListRequest = new UserAuthorFollowListApi.GetRequest();
+		followingListRequest.setUserId( authorResponse.getUser().getId() );
+		UserAuthorFollowListApi.Response followingList= ApiRegistry
+				.getApi( UserAuthorFollowListApi.class )
+				.get( followingListRequest );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createAuthorPageTitle( authorResponse ) );
@@ -734,6 +740,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "publishedPratilipiListCursor", pratilipiListResponse.getCursor() );
 			dataModel.put( "publishedPratilipiListObjectJson", gson.toJson( pratilipiListResponse ) );
 			dataModel.put( "followersListJson", gson.toJson( followersList ) );
+			dataModel.put( "followingListJson", gson.toJson( followingList ) );
 		}
 		return dataModel;
 		

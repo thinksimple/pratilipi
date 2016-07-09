@@ -101,7 +101,7 @@ public class UserAuthorFollowListApi extends GenericApi {
 
 	
 	@Get
-	public static Response get( GetRequest request ) throws InsufficientAccessException {
+	public Response get( GetRequest request ) throws InsufficientAccessException {
 		
 		if( request.userId != null ) {
 			DataListCursorTuple<AuthorData> authorListCursorTuple = UserAuthorDataUtil.getUserFollowList(
