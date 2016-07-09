@@ -179,6 +179,7 @@ public class UserDataUtil {
 	
 	public static UserData getGuestUser() {
 		UserData userData = new UserData( 0L );
+		userData.setAuthor( new AuthorData() );
 		userData.setFirstName( "Guest" );
 		userData.setLastName( "User" );
 		userData.setState( UserState.GUEST );
