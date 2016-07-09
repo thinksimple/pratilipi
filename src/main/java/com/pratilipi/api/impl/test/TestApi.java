@@ -53,6 +53,7 @@ public class TestApi extends GenericApi {
 		Pratilipi pratilipi = dataAccessor.getPratilipi( 5830554839678976L );
 		pratilipi.setContentType( PratilipiContentType.IMAGE );
 		pratilipi.setPageCount( 180 );
+		ObjectifyService.ofy().save().entity( pratilipi ).now();
 		
 /*		String appPropertyId = "Api.PratilipiProcess.ValidateData";
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
