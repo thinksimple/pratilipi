@@ -65,7 +65,7 @@
 			<div class="row text-center">
 				<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
 					<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-						<pratilipi-card-mini show-edit-option pratilipi="{{ pratilipi }}"></pratilipi-card-mini>
+						<pratilipi-card-mini show-edit-option state="PUBLISHED" pratilipi="{{ pratilipi }}"></pratilipi-card-mini>
 					</div>
 				</template>
 			</div>
@@ -120,6 +120,23 @@
 				jQuery( this.querySelector( '.works-number' ) ).css( 'display', this.numberFound > 0 ? 'block' : 'none' );
 			},
 			
+			removeFromPratilipiList: function( pratilipiId ) {
+				var index = -1;
+				for( var i = 0; i < this.pratilipiList.length; i++ ) {
+					if( pratilipiId == this.pratilipiList[i].pratilipiId ) {
+						index = i;
+						break;
+					}
+				}
+				
+				if( index != -1 )
+					this.splice( 'pratilipiList', index, 1 );
+			},
+			
+			addToPratilipiList: function( pratilipi ) {
+				this.unshift( 'pratilipiList', pratilipi );
+			},
+			
 			processPratilipiListObject: function( pratilipiListObject ) {
 				var pratilipiList = pratilipiListObject.pratilipiList;
 				for( var i = 0; i < pratilipiList.length; i++ )
@@ -138,8 +155,13 @@
 			ready: function() {
 				if( this._checkEmptyList( this.pratilipiListObject ) )
 					this.processPratilipiListObject( this.pratilipiListObject );
-				else
+				else {
 					jQuery( this.querySelector( '.author-no-works' ) ).css( 'display', 'block' );
+					this.set( 'cursor', null );
+					this.set( 'numberFound', 0 );
+					this.set( 'showMore', false );
+				}
+
 			},
 
 			loadMore: function() {
@@ -165,7 +187,15 @@
 				var message = response.detail.request.xhr.response.message != null ? 
 						response.detail.request.xhr.response.message : "Error occurred! Please try again!";
 				document.querySelector( 'pratilipi-alert' ).alert( message, false );
-			}
+			},
+
+			moveContentToDrafts: function( pratilipiId ) {
+				this.domHost.moveContentToDrafts( pratilipiId );
+			},
+
+			deleteContent: function( pratilipiId ) {
+				this.domHost.deleteContent( pratilipiId );
+			},
 			
 		});
 	</script>

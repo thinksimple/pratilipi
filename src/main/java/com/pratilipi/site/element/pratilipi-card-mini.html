@@ -134,8 +134,15 @@
 			<template is="dom-if" if="{{ editProfile }}">
 				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
 					<div class="button-holders">
-						<button class="btn btn-success">Publish</button>
-						<button class="btn btn-danger">Delete</button>
+						<template is="dom-if" if="{{ canMoveToDrafts }}">
+							<button class="btn btn-primary" on-click="moveContentToDrafts">Move to drafts</button>
+						</template>
+						<template is="dom-if" if="{{ canPublish }}">
+							<button class="btn btn-success" on-click="publishContent">Publish</button>
+						</template>
+						<template is="dom-if" if="{{ canDelete }}">
+							<button class="btn btn-danger" on-click="deleteContent">Delete</button>
+						</template>
 						<button class="btn btn-default" on-click="toggleEditProfile">Cancel</button>
 					</div>
 				</div>
@@ -168,10 +175,17 @@
 
 			properties: {
 				pratilipi: { type: Object, observer: "_pratilipiObserver" },
+				state: { type: String, observer: "_stateObserver" },
 				showEditOption: { type: Boolean, value: false },
 				editProfile: { type: Boolean, value: false }
 			},
 			
+			_stateObserver: function() {
+				this.canMoveToDrafts = this.state != "DRAFTED";
+				this.canPublish = this.state != "PUBLISHED";
+				this.canDelete = this.state != "DELETED" && false; /* Once Delete is tested */
+			},
+
 			_pratilipiObserver: function() {
 				if( this.pratilipi.title != null && this.pratilipi.title.trim() != "" && this.pratilipi.titleEn != null && this.pratilipi.titleEn.trim() != null )
 					this.fullTitle = this.pratilipi.title + " | " + this.pratilipi.titleEn;
@@ -193,6 +207,18 @@
 
 			toggleEditProfile: function() {
 				this.set( 'editProfile', this.editProfile ? false : true );
+			},
+
+			moveContentToDrafts: function() {
+				this.domHost.moveContentToDrafts( this.pratilipi.pratilipiId );
+			},
+
+			publishContent: function() {
+				this.domHost.publishContent( this.pratilipi.pratilipiId );
+			},
+
+			deleteContent: function() {
+				this.domHost.deleteContent( this.pratilipi.pratilipiId );
 			}
 		
 		});

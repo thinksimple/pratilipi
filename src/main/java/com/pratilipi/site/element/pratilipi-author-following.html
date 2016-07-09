@@ -26,32 +26,28 @@
 		
 		/* Bootstrap overrides */
 		.row {
-			margin-left: 0;
-			margin-right: 0;
+			margin-left: -12px;
+			margin-right: -12px;
+			padding-bottom: 8px;
 		}
 		.col-xs-12, .col-sm-12, .col-md-6, .col-lg-6 {
-			padding-left: 0;
-			padding-right: 0;
+			padding-left: 12px;
+			padding-right: 12px;
 		}
 	</style>
 	<template>
 		<div class="secondary-500 pratilipi-shadow author-following">
 			<div class="author-following-header">
 				<h5 class="pratilipi-red">Following</h5>
-				<div class="following-text text-center">57 Members</div>
+				<div class="following-text text-center">{{ followCount }} Members</div>
 			</div>
 			<hr/>
 			<div class="row following-grid">
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-					<pratilipi-follow-author></pratilipi-follow-author>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-					<pratilipi-follow-author></pratilipi-follow-author>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-					<pratilipi-follow-author></pratilipi-follow-author>
-				</div>
-					
+				<template is="dom-repeat" items="{{ followList }}">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
+					</div>
+				</template>
 			</div>
 		</div>
 	</template>
@@ -61,6 +57,37 @@
 		Polymer({
 
 			is: 'pratilipi-author-following',
+			
+			properties: {
+				followingList: { type: Object },
+				
+				followList: { type: Array, value: function() { return []; } },
+				followCount: { type: Number },
+			},
+			
+			processfollowingListObject: function( followingListObject ) {
+				var authorList = followingListObject.authorList;
+				for( var i = 0; i < authorList.length; i++ ) {
+					var author = authorList[i];
+					var follow = {
+							authorId: author.authorId,
+							name: author.name,
+							pageUrl: author.pageUrl,
+							followCount: author.followCount,
+							imageUrl: author.imageUrl,
+							following: author.following,
+							canFollow: author.user.userId != document.querySelector( 'pratilipi-user' ).getCurrentUser().userId 
+						};
+						this.push( 'followList', follow );
+				}
+
+				this.set( 'cursor', followingListObject.cursor );
+				this.set( 'followCount', followingListObject.numberFound );
+			},
+			
+			attached: function() {
+				this.processfollowingListObject( this.followingList );
+			}
 
 		});
 

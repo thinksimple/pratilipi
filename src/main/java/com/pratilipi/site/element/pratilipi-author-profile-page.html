@@ -28,6 +28,7 @@
 								user="[[ user ]]"
 								author="[[ author ]]"
 								published-pratilipi-list="{{ publishedPratilipiList }}"
+								following-list="{{ followingList }}"
 								followers-list="{{ followersList }}"></pratilipi-author-tabs>
 					</div>
 				</div>
@@ -73,6 +74,7 @@
 				loadUser: { type: Boolean, value: false },
 				
 				publishedPratilipiList: { type: Object },
+				followingList: { type: Object },
 				followersList: { type: Object },
 				pratilipiTypes: { types: Object },
 				navigationList: { type: Array },

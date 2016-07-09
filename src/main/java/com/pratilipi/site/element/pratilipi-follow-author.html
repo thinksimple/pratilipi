@@ -76,7 +76,7 @@
 				</div>
 			</template>
 			<template is="dom-if" if="{{ !canFollow }}">
-				<div class="yourself">YOURSELF!</div>
+				<div class="yourself">YOURSELF</div>
 			</template>
 		</div>
 	</template>
@@ -110,11 +110,11 @@
 			},
 			
 			followAuthor: function() {
-				console.log( "Follow" );
+				console.log( "Follow-" + this.authorId );
 			},
 			
 			unFollowAuthor: function() {
-				console.log( "unfollow" );
+				console.log( "UnFollow-" + this.authorId );
 			},
 
 		});
