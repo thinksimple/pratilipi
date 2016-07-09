@@ -120,11 +120,10 @@
 			this.$.PratilipiApi.generateRequest();
 		},
 
-		_pratilipiApiResponse: function( reponse ) {
+		_pratilipiApiResponse: function( response ) {
 
 			var pratilipi = response.detail.response;
 
-			// Move to Published Section if drafts is already active
 			if( pratilipi.state == "DRAFTED" ) {
 				this.querySelector( 'pratilipi-author-published-contents' ).removeFromPratilipiList( pratilipi.pratilipiId );
 				this.querySelector( 'pratilipi-author-drafted-contents' ).addToPratilipiList( pratilipi );
