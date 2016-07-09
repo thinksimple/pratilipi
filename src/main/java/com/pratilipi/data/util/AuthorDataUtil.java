@@ -121,7 +121,6 @@ public class AuthorDataUtil {
 		AuthorData authorData = new AuthorData();
 		
 		authorData.setId( author.getId() );
-		authorData.setUser( new UserData( author.getUserId() ) );
 		
 		authorData.setFirstName( author.getFirstName() );
 		authorData.setLastName( author.getLastName() );
@@ -185,6 +184,8 @@ public class AuthorDataUtil {
 	}
 	
 	public static AuthorData createAuthorData( Author author, Page authorPage, User user ) {
+		if( authorPage == null )
+			authorPage = DataAccessorFactory.getDataAccessor().getPage( PageType.AUTHOR, author.getId() );
 		AuthorData authorData = createAuthorData( author, authorPage );
 		if( user == null )
 			authorData.setUser( new UserData( author.getUserId() ) );

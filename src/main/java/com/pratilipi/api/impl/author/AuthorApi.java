@@ -447,7 +447,7 @@ public class AuthorApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( request.authorId );
-		AuthorData authorData = AuthorDataUtil.createAuthorData( author );
+		AuthorData authorData = AuthorDataUtil.createAuthorData( author, null, null );
 		return new Response( authorData );
 		
 	}
