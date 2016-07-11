@@ -29,6 +29,7 @@
 		.follow-author .follow-author-button {
 			margin-left: 8px;
 			float: right;
+			white-space: nowrap;
 			text-align: center;
 			align-self: center;
 		}
@@ -68,10 +69,10 @@
 			<template is="dom-if" if="{{ canFollow }}">
 				<div class="follow-author-button">
 					<template is="dom-if" if="{{ !following }}">
-						<button class="pratilipi-light-blue-button" on-click="followAuthor">Follow</button>
+						<button class="pratilipi-light-blue-button" on-click="followAuthor">Follow{{ followCountString }}</button>
 					</template>
 					<template is="dom-if" if="{{ following }}">
-						<button class="pratilipi-grey-button" on-click="unFollowAuthor">UnFollow</button>
+						<button class="pratilipi-grey-button" on-click="unFollowAuthor">UnFollow{{ followCountString }}</button>
 					</template>
 				</div>
 			</template>
@@ -79,6 +80,15 @@
 				<div class="yourself">YOURSELF</div>
 			</template>
 		</div>
+		<iron-ajax
+			id="UserAuthorFollowApi"
+			url="/api/userauthor/follow"
+			method="POST"
+			content-type="application/x-www-form-urlencoded"
+			handle-as="json"
+			on-response="_userAuthorFollowApiResponse"
+			on-error="_userAuthorFollowApiError"
+		></iron-ajax>
 	</template>
 
 	<script>
@@ -93,10 +103,14 @@
 				authorId: { type: String },
 				name: { type: String },
 				pageUrl: { type: String },
-				followCount: { type: Number },
+				followCount: { type: Number, observer: "_followCountObserver" },
 				imageUrl: { type: String },
 				following: { type: Boolean },
 				canFollow: { type: Boolean }
+			},
+			
+			_followCountObserver: function() {
+				this.set( 'followCountString', this.followCount > 0 ? ( " | " + this.followCount ) : "" );
 			},
 			
 			_followObjectObserver: function() {
@@ -109,13 +123,56 @@
 				this.set( 'canFollow', this.followObject.canFollow );
 			},
 			
+			_makeFollowApiCall: function( following ) {
+				if( document.querySelector( 'pratilipi-user' ).getCurrentUser().isGuest ) {
+					document.querySelector( 'pratilipi-user' ).logIn( true );
+					return;
+				}
+				this._swapFollowingState();
+				this._disableFollowButtons();
+				var body = { authorId: this.authorId, following: following };
+				this.$.UserAuthorFollowApi.body = jQuery.param( body );
+				this.$.UserAuthorFollowApi.generateRequest();
+			},
+			
 			followAuthor: function() {
-				console.log( "Follow-" + this.authorId );
+				this._makeFollowApiCall( true );
 			},
 			
 			unFollowAuthor: function() {
-				console.log( "UnFollow-" + this.authorId );
+				this._makeFollowApiCall( false );
 			},
+
+			_userAuthorFollowApiResponse: function( event ) {
+				if( event.detail.response.following != this.following ) {
+					this._swapFollowingState();
+				}
+				this._enableFollowButtons();
+			},
+
+			_userAuthorFollowApiError: function( event ) {
+				this._swapFollowingState();
+				this._enableFollowButtons();
+				if( event != null && event.detail.request.xhr.response.message != null ) {
+					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
+				} else {
+					document.querySelector( 'pratilipi-alert' ).alert( "Some error Occured! Please try again", false );
+					console.log( event );
+				}
+			},
+
+			_disableFollowButtons: function() {
+				jQuery( this.querySelector( '.follow-author-button button' ) ).prop( 'disabled', true );
+			},
+
+			_enableFollowButtons: function() {
+				jQuery( this.querySelector( '.follow-author-button button' ) ).prop( 'disabled', false );
+			},
+
+			_swapFollowingState: function() {
+				this.set( 'following', !this.following );
+				this.set( 'followCount', ( this.following ? ( this.followCount + 1 ) : ( this.followCount - 1 ) ) );
+			}
 
 		});
 

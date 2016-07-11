@@ -11,7 +11,7 @@
 	${ resource }
 </#list>
 <link rel='import' href='http://0.ptlp.co/resource-all/elements.vulcanized.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?17'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?18'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?201607">
@@ -55,10 +55,4 @@
 			$( 'header' ).removeClass( 'nav-up' ).addClass( 'nav-down' );
 		lastScrollTop = st; 
 	};
-</script>
-<script defer>
-	function processContentTinyMCE( content ) {
-		content = content.replace( /&nbsp;/g, " " );
-		return content;
-	}
 </script>

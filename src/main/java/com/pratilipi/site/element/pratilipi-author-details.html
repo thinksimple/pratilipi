@@ -130,13 +130,13 @@
 				<template is="dom-if" if="{{ !hasAccessToUpdate }}">
 					<div class="follow-author">
 						<template is="dom-if" if="{{ !following }}">
-							<button id="author-follow-button" class="pratilipi-light-blue-button" on-click="followAuthor">
+							<button class="pratilipi-light-blue-button" on-click="followAuthor">
 								<iron-icon icon="social:person-add"></iron-icon>
 								Follow{{ followCountAbbr }}
 							</button>
 						</template>
 						<template is="dom-if" if="{{ following }}">
-							<button id="author-unfollow-button" class="pratilipi-grey-button" on-click="unFollowAuthor">
+							<button class="pratilipi-grey-button" on-click="unFollowAuthor">
 								<iron-icon icon="icons:remove-circle"></iron-icon>
 								UnFollow{{ followCountAbbr }}
 							</button>
@@ -224,13 +224,11 @@
 		},
 		
 		_disableFollowButtons: function() {
-			jQuery( '#author-follow-button' ).prop( 'disabled', true );
-			jQuery( '#author-unfollow-button' ).prop( 'disabled', true );
+			jQuery( this.querySelector( '.follow-author-button button' ) ).prop( 'disabled', true );
 		},
 
 		_enableFollowButtons: function() {
-			jQuery( '#author-follow-button' ).prop( 'disabled', false );
-			jQuery( '#author-unfollow-button' ).prop( 'disabled', false );
+			jQuery( this.querySelector( '.follow-author-button button' ) ).prop( 'disabled', false );
 		},
 
 		_postFollowApi: function( following ) {

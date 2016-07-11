@@ -70,6 +70,7 @@
 				for( var i = 0; i < userList.length; i++ ) {
 					var user = userList[i];
 					var follow = {
+						authorId: user.author.authorId,
 						name: user.displayName,
 						pageUrl: user.profilePageUrl,
 						followCount: user.author.followCount,

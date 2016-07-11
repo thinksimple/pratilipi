@@ -106,17 +106,19 @@
 		},
 
 		moveContentToDrafts: function( pratilipiId ) {
-			this.$.PratilipiApi.body = jQuery.param( {"pratilipiId": pratilipiId, "state": "DRAFTED" } );
-			this.$.PratilipiApi.generateRequest();
+			this._pratilipiApiGetCall( pratilipiId, "DRAFTED" );
 		},
 
 		publishContent: function( pratilipiId ) {
-			this.$.PratilipiApi.body = jQuery.param( {"pratilipiId": pratilipiId, "state": "PUBLISHED" } );
-			this.$.PratilipiApi.generateRequest();
+			this._pratilipiApiGetCall( pratilipiId, "PUBLISHED" );
 		},
 
 		deleteContent: function( pratilipiId ) {
-			this.$.PratilipiApi.body = jQuery.param( {"pratilipiId": pratilipiId, "state": "DELETED" } );
+			this._pratilipiApiGetCall( pratilipiId, "DELETED" );
+		},
+
+		_pratilipiApiGetCall: function( pratilipiId, state ) {
+			this.$.PratilipiApi.body = jQuery.param( { "pratilipiId": pratilipiId, "state": state } );
 			this.$.PratilipiApi.generateRequest();
 		},
 
@@ -135,6 +137,15 @@
 				window.location.reload();
 			}
 
+		},
+
+		_pratilipiApiError: function( response ) {
+			if( response != null && response.detail.request.xhr.response.message != null ) {
+				document.querySelector( 'pratilipi-alert' ).alert( response.detail.request.xhr.response.message, false );
+			} else {
+				document.querySelector( 'pratilipi-alert' ).alert( "Some error Occured! Please try again", false );
+				console.log( response );
+			}
 		}
 		
 	});

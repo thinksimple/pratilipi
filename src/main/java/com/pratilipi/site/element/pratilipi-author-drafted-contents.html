@@ -133,12 +133,15 @@
 					}
 				}
 				
-				if( index != -1 )
+				if( index != -1 ) {
 					this.splice( 'pratilipiList', index, 1 );
+					this.set( 'numberFound', this.numberFound - 1 );
+				}
 			},
 			
 			addToPratilipiList: function( pratilipi ) {
 				this.unshift( 'pratilipiList', pratilipi );
+				this.set( 'numberFound', this.numberFound + 1 );
 			},
 
 			processPratilipiListObject: function( pratilipiListObject ) {
