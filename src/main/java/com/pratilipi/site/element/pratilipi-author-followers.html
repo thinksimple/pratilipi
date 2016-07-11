@@ -1,55 +1,11 @@
 <dom-module id="pratilipi-author-followers">
-	<style>
-		:host {
-			display: block;
-			margin-top: 6px;
-		}
-		.author-followers .author-followers-header {
-			padding-top: 16px;
-		}
-		.author-followers .author-followers-header h5 {
-			font-weight: 700;
-			text-align: center;
-			margin-bottom: 12px;
-		}
-		.author-followers .author-followers-header .followers-text {
-			font-size: 15px;
-		}
-		hr {
-			margin-top: 0.5em;
-			margin-bottom: 0.8em;
-			margin-left: 8px;
-			margin-right: 8px;
-			border: 0;
-			border-top: 2px solid #eee;
-		}
-		
-		/* Bootstrap overrides */
-		.row {
-			margin-left: -12px;
-			margin-right: -12px;
-			padding-bottom: 8px;
-		}
-		.col-xs-12, .col-sm-12, .col-md-6, .col-lg-6 {
-			padding-left: 12px;
-			padding-right: 12px;
-		}
-	</style>
+
 	<template>
-		<div class="secondary-500 pratilipi-shadow author-followers">
-			<div class="author-followers-header">
-				<h5 class="pratilipi-red">Followers</h5>
-				<div class="followers-text text-center">{{ followCount }} Members</div>
-			</div>
-			<hr/>
-			<div class="row followers-grid">
-				<template is="dom-repeat" items="{{ followList }}">
-					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-						<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
-					</div>
-				</template>
-			</div>
-		</div>
+		<pratilipi-follow-author-grid 
+			follow-list="{{ followList }}"
+			cursor="{{ cursor }}"
+			number-found="{{ numberFound }}"
+			title="Followers"></pratilipi-follow-author-grid>
 	</template>
 
 	<script>
@@ -59,14 +15,15 @@
 			is: 'pratilipi-author-followers',
 			
 			properties: {
-				followersList: { type: Object },
-				
+				userList: { type: Object },
 				followList: { type: Array, value: function() { return []; } },
-				followCount: { type: Number },
+				cursor: { type: String },
+				numberFound: { type: Number }
 			},
 			
-			processFollowersListObject: function( followersListObject ) {
-				var userList = followersListObject.userList;
+			processUserListObject: function( userListObject ) {
+				var followList = [];
+				var userList = userListObject.userList;
 				for( var i = 0; i < userList.length; i++ ) {
 					var user = userList[i];
 					var follow = {
@@ -78,15 +35,24 @@
 						following: user.following,
 						canFollow: user.userId != document.querySelector( 'pratilipi-user' ).getCurrentUser().userId 
 					};
-					this.push( 'followList', follow );
+					followList.push( follow );
 				}
-					
-				this.set( 'cursor', followersListObject.cursor );
-				this.set( 'followCount', followersListObject.numberFound );
+
+				return { followList: followList,
+						cursor: userListObject.cursor,
+						numberFound: userListObject.numberFound != null ? userListObject.numberFound : 0 };
+			},
+
+			_pushToFollowList: function( followListObject ) {
+				var followList = followListObject.followList;
+				for( var i = 0; i < followList.length; i++ )
+					this.push( 'followList', followList[i] );
+				this.set( 'cursor', followListObject.cursor );
+				this.set( 'numberFound', followListObject.numberFound );
 			},
 			
 			attached: function() {
-				this.processFollowersListObject( this.followersList );
+				this._pushToFollowList( this.processUserListObject( this.userList ) );
 			}
 
 		});

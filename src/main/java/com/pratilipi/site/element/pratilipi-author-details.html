@@ -127,7 +127,7 @@
 			<div class="author-detail-container">
 				<img class="img-thumbnail img-circle profile-picture" src="{{ imageUrl }}">
 				<div class="author-name">{{ name }}</div>
-				<template is="dom-if" if="{{ !hasAccessToUpdate }}">
+				<template is="dom-if" if="{{ hasAccessToFollow }}">
 					<div class="follow-author">
 						<template is="dom-if" if="{{ !following }}">
 							<button class="pratilipi-light-blue-button" on-click="followAuthor">
@@ -197,14 +197,20 @@
 			followCount: { type: Object, observer: "_followCountObserver" }
 		},
 		
-		_authorObserver: function( author ) {
-			this.set( 'hasAccessToUpdate', author.hasAccessToUpdate );
-			this.set( 'name', author.name != null ? author.name : author.nameEn );
-			this.set( 'imageUrl', author.imageUrl + ( author.imageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
-			this.set( 'followCount', author.followCount != null ? author.followCount : 0 );
-			this.set( 'contentPublished', commaSeparatedNumber( author.contentPublished ) );
-			this.set( 'totalReadCount', commaSeparatedNumber( author.totalReadCount ) );
-			this.set( 'totalFbLikeShareCount', commaSeparatedNumber( author.totalFbLikeShareCount ) );
+		attached: function() {
+			this._authorObserver(); <#-- Calling first time -->
+		},
+
+		_authorObserver: function() {
+			if( document.querySelector( 'pratilipi-user' ) == null ) return;
+			this.set( 'hasAccessToFollow', this.author.user.userId != document.querySelector( 'pratilipi-user' ).getCurrentUser().userId );
+			this.set( 'hasAccessToUpdate', this.author.hasAccessToUpdate );
+			this.set( 'name', this.author.name != null ? this.author.name : this.author.nameEn );
+			this.set( 'imageUrl', this.author.imageUrl + ( this.author.imageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
+			this.set( 'followCount', this.author.followCount != null ? this.author.followCount : 0 );
+			this.set( 'contentPublished', commaSeparatedNumber( this.author.contentPublished ) );
+			this.set( 'totalReadCount', commaSeparatedNumber( this.author.totalReadCount ) );
+			this.set( 'totalFbLikeShareCount', commaSeparatedNumber( this.author.totalFbLikeShareCount ) );
 		},
 
 		_userAuthorObserver: function( userAuthor ) {

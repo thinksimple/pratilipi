@@ -1,0 +1,75 @@
+<#include "pratilipi-follow-author.html">
+
+<dom-module id="pratilipi-follow-author-grid">
+	<style>
+		:host {
+			display: block;
+			margin-top: 6px;
+		}
+		.author-follow .author-follow-header {
+			padding-top: 16px;
+		}
+		.author-follow .author-follow-header h5 {
+			font-weight: 700;
+			text-align: center;
+			margin-bottom: 12px;
+		}
+		.author-follow .author-follow-header .follow-text {
+			font-size: 15px;
+		}
+		hr {
+			margin-top: 0.5em;
+			margin-bottom: 0.8em;
+			margin-left: 8px;
+			margin-right: 8px;
+			border: 0;
+			border-top: 2px solid #eee;
+		}
+		
+		/* Bootstrap overrides */
+		.row {
+			margin-left: -12px;
+			margin-right: -12px;
+			padding-bottom: 8px;
+		}
+		.col-xs-12, .col-sm-12, .col-md-6, .col-lg-6 {
+			padding-left: 12px;
+			padding-right: 12px;
+		}
+	</style>
+
+	<template>
+		<div class="secondary-500 pratilipi-shadow author-follow">
+			<div class="author-follow-header">
+				<h5 class="pratilipi-red">{{ title }}</h5>
+				<div class="follow-text text-center">{{ numberFound }} Members</div>
+			</div>
+			<hr/>
+			<div class="row follow-grid">
+				<template is="dom-repeat" items="{{ followList }}">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
+					</div>
+				</template>
+			</div>
+		</div>
+	</template>
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-follow-author-grid',
+
+			properties: {
+				followList: { type: Array },
+				cursor: { type: String },
+				numberFound: { type: Number },
+				title: { type: String }
+			}
+			
+		});
+
+	</script>
+
+</dom-module>

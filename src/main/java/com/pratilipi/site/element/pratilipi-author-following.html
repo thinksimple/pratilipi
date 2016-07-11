@@ -1,55 +1,11 @@
 <dom-module id="pratilipi-author-following">
-	<style>
-		:host {
-			display: block;
-			margin-top: 6px;
-		}
-		.author-following .author-following-header {
-			padding-top: 16px;
-		}
-		.author-following .author-following-header h5 {
-			font-weight: 700;
-			text-align: center;
-			margin-bottom: 12px;
-		}
-		.author-following .author-following-header .following-text {
-			font-size: 15px;
-		}
-		hr {
-			margin-top: 0.5em;
-			margin-bottom: 0.8em;
-			margin-left: 8px;
-			margin-right: 8px;
-			border: 0;
-			border-top: 2px solid #eee;
-		}
-		
-		/* Bootstrap overrides */
-		.row {
-			margin-left: -12px;
-			margin-right: -12px;
-			padding-bottom: 8px;
-		}
-		.col-xs-12, .col-sm-12, .col-md-6, .col-lg-6 {
-			padding-left: 12px;
-			padding-right: 12px;
-		}
-	</style>
+
 	<template>
-		<div class="secondary-500 pratilipi-shadow author-following">
-			<div class="author-following-header">
-				<h5 class="pratilipi-red">Following</h5>
-				<div class="following-text text-center">{{ followCount }} Members</div>
-			</div>
-			<hr/>
-			<div class="row following-grid">
-				<template is="dom-repeat" items="{{ followList }}">
-					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-						<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
-					</div>
-				</template>
-			</div>
-		</div>
+		<pratilipi-follow-author-grid 
+			follow-list="{{ followList }}"
+			cursor="{{ cursor }}"
+			number-found="{{ numberFound }}"
+			title="Following"></pratilipi-follow-author-grid>
 	</template>
 
 	<script>
@@ -59,14 +15,15 @@
 			is: 'pratilipi-author-following',
 			
 			properties: {
-				followingList: { type: Object },
-				
+				authorList: { type: Object },
 				followList: { type: Array, value: function() { return []; } },
-				followCount: { type: Number },
+				cursor: { type: String },
+				numberFound: { type: Number }
 			},
 			
-			processfollowingListObject: function( followingListObject ) {
-				var authorList = followingListObject.authorList;
+			processAuthorListObject: function( authorListObject ) {
+				var followList = [];
+				var authorList = authorListObject.authorList;
 				for( var i = 0; i < authorList.length; i++ ) {
 					var author = authorList[i];
 					var follow = {
@@ -77,16 +34,25 @@
 							imageUrl: author.imageUrl,
 							following: author.following,
 							canFollow: author.user.userId != document.querySelector( 'pratilipi-user' ).getCurrentUser().userId 
-						};
-						this.push( 'followList', follow );
+					};
+					followList.push( follow );
 				}
 
-				this.set( 'cursor', followingListObject.cursor );
-				this.set( 'followCount', followingListObject.numberFound );
+				return { followList: followList,
+						cursor: authorListObject.cursor,
+						numberFound: authorListObject.numberFound != null ? authorListObject.numberFound : 0 };
+			},
+
+			_pushToFollowList: function( followListObject ) {
+				var followList = followListObject.followList;
+				for( var i = 0; i < followList.length; i++ )
+					this.push( 'followList', followList[i] );
+				this.set( 'cursor', followListObject.cursor );
+				this.set( 'numberFound', followListObject.numberFound );
 			},
 			
 			attached: function() {
-				this.processfollowingListObject( this.followingList );
+				this._pushToFollowList( this.processAuthorListObject( this.authorList ) );
 			}
 
 		});
