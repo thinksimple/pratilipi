@@ -14,9 +14,9 @@
 		}
 		
 		textarea {
-			margin: 20px auto;
+			margin: 35px auto;
+			display: block;
 			width: 100%;
-			height: 300px;
 		}
 	</style>
 	
@@ -39,10 +39,7 @@
 					<br/>
 					<input style="margin-right: 4px;" type="checkbox" name="checkBlogState" id="checkBlogState">
 					<h6 style="display: inline-block;">Check this box to Publish it!</h6>
-					<br/>
-					<br/>
-					<paper-textarea class="edit" id="blogContent" value="{{ content::input }}"></paper-textarea>
-					<br/>
+					<textarea name="blogContent" id="blogContent" rows="10" value="{{ content::input }}"></textarea>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -63,7 +60,8 @@
 	</template>
 	<script>
 	HTMLImports.whenReady(function () {
-		tinymce.init({ selector:'#blogContent', editor_selector : "blogContent", height: "300", content_css : "https://storage.googleapis.com/devo-pratilipi.appspot.com/custom.css", language: '${ _strings.tinymce_language }' });
+		if( CKEDITOR != null && document.getElementById( 'blogContent' ) != null )
+			CKEDITOR.replace( 'blogContent' );
 	});
 		Polymer({
 	
@@ -88,9 +86,9 @@
 				this.content = blogPost.content == null ? null : blogPost.content;
 				this.state = blogPost.state == null ? "DRAFTED" : blogPost.state;
 				
-				// Setting TinyMCE editor
-				if( tinyMCE != null && tinyMCE.get( 'blogContent' ) != null )
-					tinyMCE.get( 'blogContent' ).setContent( this.content == null ? "" : this.content );
+				// Setting CK editor
+				if( CKEDITOR != null && CKEDITOR.instances.blogContent != null )
+					CKEDITOR.instances.blogContent.setData( this.content );
 				
 				document.getElementById( "checkBlogState" ).checked = this.state == "PUBLISHED" ? true : false;
 				// Opening the modal
@@ -128,12 +126,12 @@
 					return;
 				}
 				
-				if( tinyMCE != null && tinyMCE.get( 'blogContent' ) != null )
-					this.content = tinyMCE.get( 'blogContent' ).getContent();
+				if( CKEDITOR != null && CKEDITOR.instances.blogContent != null )
+					this.content = CKEDITOR.instances.blogContent.getData();
 				
 				var params = { 	"blogId" : this.blogId,
 								"title" : this.title,
-								"content" : processContentTinyMCE( this.content ),
+								"content" : this.content,
 								"state": document.getElementById( "checkBlogState" ).checked ? "PUBLISHED" : "DRAFTED" };
 				
 				if( this.blogPostId != null )

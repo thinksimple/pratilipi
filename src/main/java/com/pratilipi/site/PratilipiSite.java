@@ -202,20 +202,14 @@ public class PratilipiSite extends HttpServlet {
 					templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.EVENT ) {
-				if( ! basicMode )
-					resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.BLOG ) {
-				if( ! basicMode )
-					resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 				dataModel = createDataModelForBlogPage( page.getPrimaryContentId(), filterLanguage, basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "BlogPostListBasic.ftl" : "BlogPostList.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.BLOG_POST ) {
-				if( ! basicMode )
-					resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 			
