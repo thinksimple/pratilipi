@@ -250,9 +250,10 @@ public abstract class GenericApi extends HttpServlet {
 			if( apiResponse instanceof InvalidArgumentException ) {
 				logger.log( Level.INFO, ((Throwable) apiResponse ).getMessage() );
 				response.setStatus( HttpServletResponse.SC_BAD_REQUEST );
-			} else if( apiResponse instanceof InsufficientAccessException )
+			} else if( apiResponse instanceof InsufficientAccessException ) {
+				logger.log( Level.INFO, ((Throwable) apiResponse ).getMessage() );
 				response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
-			else if( apiResponse instanceof UnexpectedServerException )
+			} else if( apiResponse instanceof UnexpectedServerException )
 				response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 			else
 				response.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
