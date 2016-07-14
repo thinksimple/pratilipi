@@ -118,6 +118,7 @@
 			
 			_numberFoundObserver: function() {
 				jQuery( this.querySelector( '.works-number' ) ).css( 'display', this.numberFound > 0 ? 'block' : 'none' );
+				jQuery( this.querySelector( '.author-no-works' ) ).css( 'display', this.numberFound > 0 ? 'none' : 'block' );
 			},
 
 			getPratilipiById: function( pratilipiId ) {
@@ -172,7 +173,6 @@
 				if( this._checkEmptyList( this.pratilipiListObject ) )
 					this.processPratilipiListObject( this.pratilipiListObject );
 				else {
-					jQuery( this.querySelector( '.author-no-works' ) ).css( 'display', 'block' );
 					this.set( 'cursor', null );
 					this.set( 'numberFound', 0 );
 					this.set( 'showMore', false );

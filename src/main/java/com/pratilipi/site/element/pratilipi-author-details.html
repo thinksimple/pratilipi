@@ -21,10 +21,31 @@
 			align-self: center;
 			padding: 12px 16px;
 		}
-		.profile-picture {
+		.profile-picture, .pratilipi-file-upload {
 			width: 150px;
 			height: 150px;
-			padding: 2px;
+			border: 2px solid #fbfbfb;
+			border-radius: 50%;
+			overflow: hidden;
+			box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+			-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+			-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+		}
+		.pratilipi-file-upload .pratilipi-file-upload-caption {
+			transition: none;
+		}
+		.pratilipi-file-upload iron-icon, .pratilipi-file-upload .pratilipi-file-upload-caption iron-icon {
+			left: 32px;
+			margin: 0;
+		}
+		.profile-picture, .pratilipi-file-upload paper-spinner {
+			width: 146px;
+			height: 147px;
+			margin: 0;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
 		}
 		.author-name {
 			margin: 12px auto;
@@ -108,11 +129,13 @@
 	<template>
 		<paper-card class="cover-image pratilipi-shadow" style="background-image: url('http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg')">
 		
+			<#--
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
 				<div class="edit-profile">
 					<paper-fab icon="icons:create" on-click="editAuthorProfile"></paper-fab>
 				</div>
 			</template>
+			-->
 			
 			<div class="share-author">
 				<paper-menu-button horizontal-align="right" vertical-align="top">
@@ -125,7 +148,29 @@
 				</paper-menu-button>
 			</div>
 			<div class="author-detail-container">
-				<img class="img-thumbnail img-circle profile-picture" src="{{ imageUrl }}">
+				<template is="dom-if" if="{{ hasAccessToUpdate }}">
+					<div style="position: absolute; top: -1000px;">
+						<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId={{ author.authorId }}" target="upload_target">
+							<input id="uploadAuthorImageInput" type="file" on-change="uploadImage" name="{{ author.authorId }}" accept="image/*">
+						</form>
+						<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
+					</div>
+					<div class="pratilipi-file-upload">
+						<template is="dom-if" if="{{ !imageUploaded }}">
+							<img src="{{ imageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
+						</template>
+						<template is="dom-if" if="{{ imageUploaded }}">
+							<paper-spinner active></paper-spinner>
+						</template>
+						<iron-icon icon="icons:cloud-upload"></iron-icon>
+						<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
+							<iron-icon icon="icons:cloud-upload"></iron-icon>
+						</div>
+					</div>
+				</template>
+				<template is="dom-if" if="{{ !hasAccessToUpdate }}">
+					<img class="profile-picture" src="{{ imageUrl }}">
+				</template>
 				<div class="author-name">{{ name }}</div>
 				<template is="dom-if" if="{{ hasAccessToFollow }}">
 					<div class="follow-author">
@@ -194,7 +239,8 @@
 			author: { type: Object, observer: "_authorObserver" },
 			userAuthor: { type: Object, observer: "_userAuthorObserver" },
 			
-			followCount: { type: Object, observer: "_followCountObserver" }
+			followCount: { type: Object, observer: "_followCountObserver" },
+			imageUploaded: { type: Boolean, value: false }
 		},
 		
 		attached: function() {
@@ -297,7 +343,23 @@
 			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl,
 					"share", "width=1100,height=500,left=70px,top=60px" );
 		},
+
+		_chooseFile: function() {
+			document.getElementById( "uploadAuthorImageInput" ).click();
+		},
 		
+		_onchangeiframe: function( response ) {
+			if( this.imageUploaded ) {
+				this.async( function() { this.imageUploaded = false; }, 300 );
+				this.domHost.getAuthor();
+			}
+		},
+
+		uploadImage: function() {
+			document.getElementById( "uploadAuthorImage" ).submit();
+			this.imageUploaded = true;
+		}
+
 	});
 	</script>
 </dom-module>

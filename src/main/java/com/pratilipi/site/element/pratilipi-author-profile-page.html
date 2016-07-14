@@ -86,9 +86,17 @@
 					this.loadUser = true;
 					return;
 				}
+				this.getAuthor();
+				this.getUserAuthor();
+			},
+
+			getAuthor: function() {
 				this.$.AuthorGetApi.params.authorId = this.author.authorId;
-				this.$.UserAuthorGetApi.params.authorId = this.author.authorId;
 				this.$.AuthorGetApi.generateRequest();
+			},
+
+			getUserAuthor: function() {
+				this.$.UserAuthorGetApi.params.authorId = this.author.authorId;
 				this.$.UserAuthorGetApi.generateRequest();
 			},
 			

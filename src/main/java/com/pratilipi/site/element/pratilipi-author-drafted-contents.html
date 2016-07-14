@@ -27,6 +27,7 @@
 			display: block;
 			cursor: pointer;
 			margin: 0 auto;
+			margin-bottom: 16px;
 			background: linear-gradient(to bottom, #f5f5f5 0%, #d3d3d3 100%);
 			padding: 0 12px;
 		}
@@ -116,12 +117,16 @@
 
 				pratilipiList: { type: Array, value: function() { return []; } },
 				cursor: { type: String, value: null },
-				numberFound: { type: Number, value: null },
+				numberFound: { type: Number, value: null, observer: "_numberFoundObserver" },
 				showMore: { type: Boolean, value: false }
 			},
 
 			_write: function() {
 				document.querySelector( 'pratilipi-write' ).createNewPratilipi( this.authorId );
+			},
+
+			_numberFoundObserver: function() {
+				jQuery( this.querySelector( '.works-number' ) ).css( 'display', this.numberFound > 0 ? 'block' : 'none' );
 			},
 
 			removeFromPratilipiList: function( pratilipiId ) {
@@ -161,7 +166,7 @@
 				for( var i = 0; i < pratilipiList.length; i++ )
 					this.push( 'pratilipiList', pratilipiList[i] );
 				this.set( 'cursor', pratilipiListObject.cursor );
-				this.set( 'numberFound', pratilipiListObject.numberFound );
+				this.set( 'numberFound', pratilipiListObject.numberFound != null ? pratilipiListObject.numberFound : 0 );
 				this.set( 'showMore', pratilipiList.length == 20 ? true : false );
 			},
 
