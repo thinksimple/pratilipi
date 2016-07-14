@@ -3,9 +3,20 @@
 	<template>
 		<pratilipi-follow-author-grid 
 			follow-list="{{ followList }}"
-			cursor="{{ cursor }}"
 			number-found="{{ numberFound }}"
-			title="Followers"></pratilipi-follow-author-grid>
+			title="Followers"
+			is-finished="{{ isFinished }}"></pratilipi-follow-author-grid>
+
+		<iron-ajax
+				id="UserAuthorFollowListApi"
+				url="/api/userauthor/follow/list"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_userAuthorFollowListApiResponse"
+				on-error="_userAuthorFollowListApiError"
+				></iron-ajax>
+
 	</template>
 
 	<script>
@@ -15,10 +26,12 @@
 			is: 'pratilipi-author-followers',
 			
 			properties: {
+				authorId: { type: String },
 				userList: { type: Object },
 				followList: { type: Array, value: function() { return []; } },
 				cursor: { type: String },
-				numberFound: { type: Number }
+				numberFound: { type: Number },
+				isFinished: { type: Boolean, value: false }
 			},
 			
 			processUserListObject: function( userListObject ) {
@@ -49,10 +62,24 @@
 					this.push( 'followList', followList[i] );
 				this.set( 'cursor', followListObject.cursor );
 				this.set( 'numberFound', followListObject.numberFound );
+				this.set( 'isFinished', followList.length < 20 ? true : false );
 			},
 			
 			attached: function() {
 				this._pushToFollowList( this.processUserListObject( this.userList ) );
+			},
+			
+			loadMore: function() {
+				this.$.UserAuthorFollowListApi.params.authorId = this.authorId;
+				this.$.UserAuthorFollowListApi.generateRequest();
+			},
+
+			_userAuthorFollowListApiResponse: function( response ) {
+				this._pushToFollowList( this.processUserListObject( response.detail.response ) );
+			},
+
+			_userAuthorFollowListApiError: function( response ) {
+				
 			}
 
 		});

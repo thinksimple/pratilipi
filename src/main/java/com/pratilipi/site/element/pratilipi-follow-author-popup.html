@@ -1,0 +1,103 @@
+<dom-module id="pratilipi-follow-author-popup">
+	<style>
+		.modal-dialog {
+			overflow-y: initial !important
+		}
+		.modal-body {
+			height: 250px;
+			overflow-y: auto;
+		}
+		.vertical-alignment-helper {
+			display: table;
+			height: 100%;
+			width: 100%;
+			pointer-events: none;
+		}
+		.vertical-align-center {
+			display: table-cell;
+			vertical-align: middle;
+			pointer-events: none;
+		}
+		.modal-content {
+			width: inherit;
+			height: inherit;
+			margin: 0 auto;
+			pointer-events: all;
+		}
+		@media only screen and (max-width: 768px) {
+			.modal-body {
+				width: auto;
+				height: auto;
+				max-height: 100%;
+			}
+		}
+		pratilipi-follow-author {
+			display: block;
+		}
+		.load-more-button {
+			position: absolute;
+			bottom: 12px;
+			left: 8px;
+			right: 8px;
+		    background: #F1F8FB;
+		    padding: 16px;
+		    text-align: center;
+		    color: #0C68BD;
+		    cursor: pointer;
+		    font-size: 16px;
+		    font-weight: 700;
+		    letter-spacing: 0.3px;
+		    line-height: 16px;
+		    text-shadow: 0px 1px 2px #FFFFFF;
+		}
+	</style>
+
+	<template>
+		<div class="modal fade col-xs-12" id="pratilipi-follow-author" tabindex="-1" role="dialog" aria-labelledby="pratilipiFollowAuthor" aria-hidden="true">
+			<div class="vertical-alignment-helper">
+				<div class="modal-dialog vertical-align-center">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">${ _strings.cancel }</span></button>
+							<h4 class="modal-title" id="myModalLabel">{{ title }}</h4>
+						</div>
+						<div class="modal-body">
+							<template is="dom-repeat" items="{{ followList }}">
+								<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
+							</template>
+							<template is="dom-if" if="{{ !isFinished }}">
+								<div class="load-more-button" on-click="loadMore">Show More</button>
+							</template>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> 		
+	</template>
+
+	<script>
+
+		Polymer({
+
+			is: 'pratilipi-follow-author-popup',
+
+			properties: {
+				followList: { type: Array },
+				numberFound: { type: Number },
+				title: { type: String },
+				isFinished: { type: Boolean }
+			},
+
+			openModal: function() {
+				jQuery( this.querySelector( '#pratilipi-follow-author' ) ).modal();
+			},
+
+			loadMore: function() {
+				this.domHost.loadMore();
+			}
+
+		});
+
+	</script>
+
+</dom-module>

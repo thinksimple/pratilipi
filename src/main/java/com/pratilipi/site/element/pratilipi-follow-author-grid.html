@@ -1,4 +1,5 @@
 <#include "pratilipi-follow-author.html">
+<#include "pratilipi-follow-author-popup.html">
 
 <dom-module id="pratilipi-follow-author-grid">
 	<style>
@@ -6,8 +7,11 @@
 			display: block;
 			margin-top: 6px;
 		}
+		.author-follow {
+			padding: 8px;
+		}
 		.author-follow .author-follow-header {
-			padding-top: 16px;
+			padding-top: 8px;
 		}
 		.author-follow .author-follow-header h5 {
 			font-weight: 700;
@@ -16,6 +20,19 @@
 		}
 		.author-follow .author-follow-header .follow-text {
 			font-size: 15px;
+		}
+		.author-follow .more-button {
+			margin-top: 16px;
+		    background: #F1F8FB;
+		    padding: 16px;
+		    text-align: center;
+		    color: #0C68BD;
+		    cursor: pointer;
+		    font-size: 16px;
+		    font-weight: 700;
+		    letter-spacing: 0.3px;
+		    line-height: 16px;
+		    text-shadow: 0px 1px 2px #FFFFFF;
 		}
 		hr {
 			margin-top: 0.5em;
@@ -46,12 +63,20 @@
 			</div>
 			<hr/>
 			<div class="row follow-grid">
-				<template is="dom-repeat" items="{{ followList }}">
+				<template is="dom-repeat" items="{{ reducedFollowList }}">
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
 					</div>
 				</template>
 			</div>
+			<template is="dom-if" if="{{ showModalButton }}">
+				<div class="more-button" on-click="openModal">Show More</div>
+			</template>
+			<pratilipi-follow-author-popup
+				follow-list="{{ followList }}"
+				number-found="{{ numberFound }}"
+				title="{{ title }}"
+				is-finished="{{ isFinished }}"></pratilipi-follow-author-popup>
 		</div>
 	</template>
 
@@ -63,9 +88,26 @@
 
 			properties: {
 				followList: { type: Array },
-				cursor: { type: String },
+				reducedFollowList: { type: Array, value: function() { return []; } },
 				numberFound: { type: Number },
-				title: { type: String }
+				title: { type: String },
+				showModalButton: { type: Boolean, value: false },
+				isFinished: { type: Boolean }
+			},
+
+			attached: function() {
+				var itemsToShow = 3;
+				for( var i = 0; i < Math.min( this.followList.length, itemsToShow ); i++ )
+					this.push( 'reducedFollowList', this.followList[i] );
+				this.set( 'showModalButton', this.followList.length > itemsToShow ? true : false );
+			},
+
+			openModal: function() {
+				this.querySelector( 'pratilipi-follow-author-popup' ).openModal();
+			},
+
+			loadMore: function() {
+				this.domHost.loadMore();
 			}
 			
 		});

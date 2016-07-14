@@ -17,7 +17,7 @@
 		}
 		.follow-author .follow-author-name {
 			float: left;
-			width: 65%;
+			width: 70%;
 			text-align: left;
 			align-self: center;
 			font-size: 15px;
@@ -67,7 +67,7 @@
 				<a href="{{ pageUrl }}">{{ name }}</a>
 			</div>
 			<template is="dom-if" if="{{ canFollow }}">
-				<div class="follow-author-button">
+				<div class="follow-author-button pull-right">
 					<template is="dom-if" if="{{ !following }}">
 						<button class="pratilipi-light-blue-button" on-click="followAuthor">Follow{{ followCountString }}</button>
 					</template>
@@ -77,7 +77,7 @@
 				</div>
 			</template>
 			<template is="dom-if" if="{{ !canFollow }}">
-				<div class="yourself">YOURSELF</div>
+				<div class="yourself pull-right">YOURSELF</div>
 			</template>
 		</div>
 		<iron-ajax
