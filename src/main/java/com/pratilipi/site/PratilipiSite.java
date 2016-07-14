@@ -695,7 +695,7 @@ public class PratilipiSite extends HttpServlet {
 
 		UserAuthorFollowApi.GetRequest getRequest = new UserAuthorFollowApi.GetRequest();
 		getRequest.setAuthorId( authorId );
-		UserAuthorFollowApi.Response userAuthorData = ApiRegistry
+		UserAuthorFollowApi.Response userAuthorResponse = ApiRegistry
 				.getApi( UserAuthorFollowApi.class )
 				.get( getRequest );
 
@@ -722,13 +722,14 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "title", createAuthorPageTitle( authorResponse ) );
 		if( basicMode ) {
 			dataModel.put( "author", authorResponse );
+			dataModel.put( "userAuthor", userAuthorResponse );
 			dataModel.put( "publishedPratilipiList", pratilipiListResponse.getPratilipiList() );
 			if( pratilipiListResponse.getPratilipiList().size() == 20 && pratilipiListResponse.getCursor() != null )
 				dataModel.put( "publishedPratilipiListSearchQuery", "authorId=" + authorId + "&state=" + PratilipiState.PUBLISHED );
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "authorJson", gson.toJson( authorResponse ) );
-			dataModel.put( "userAuthorJson", gson.toJson( userAuthorData ) );
+			dataModel.put( "userAuthorJson", gson.toJson( userAuthorResponse ) );
 			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiListResponse.getPratilipiList() ) );
 			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiListRequest ) );
 			dataModel.put( "publishedPratilipiListCursor", pratilipiListResponse.getCursor() );

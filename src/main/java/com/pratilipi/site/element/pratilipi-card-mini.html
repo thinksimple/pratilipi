@@ -135,15 +135,15 @@
 				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
 					<div class="button-holders">
 						<template is="dom-if" if="{{ canMoveToDrafts }}">
-							<button class="btn btn-primary" on-click="moveContentToDrafts">Move to drafts</button>
+							<button class="btn btn-primary" on-click="moveContentToDrafts">${ _strings.pratilipi_move_to_drafts }</button>
 						</template>
 						<template is="dom-if" if="{{ canPublish }}">
-							<button class="btn btn-success" on-click="publishContent">Publish</button>
+							<button class="btn btn-success" on-click="publishContent">${ _strings.pratilipi_publish_it }</button>
 						</template>
 						<template is="dom-if" if="{{ canDelete }}">
-							<button class="btn btn-danger" on-click="deleteContent">Delete</button>
+							<button class="btn btn-danger" on-click="deleteContent">${ _strings.pratilipi_delete_content }</button>
 						</template>
-						<button class="btn btn-default" on-click="toggleEditProfile">Cancel</button>
+						<button class="btn btn-default" on-click="toggleEditProfile">${ _strings.cancel }</button>
 					</div>
 				</div>
 			</template>
