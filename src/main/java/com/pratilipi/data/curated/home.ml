@@ -1,3 +1,3 @@
-books
+new
 stories
-poems
+articles
