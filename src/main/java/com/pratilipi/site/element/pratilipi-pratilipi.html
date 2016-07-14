@@ -173,8 +173,8 @@
 					<table style="margin-top: 15px; margin-bottom: 25px;">
 						<tr> <th>${ _strings.pratilipi_listing_date }</th><td>:</td><td>{{ listingDate }}</td> </tr>
 						<tr> <th>${ _strings.pratilipi_count_reads }</th><td>:</td><td>{{ readCount }}</td> </tr>
-						<template is="dom-if" if="{{ lastUpdatedDate }}">
-							<tr> <th>Last Updated</th><td>:</td><td>{{ lastUpdatedDate }}</td> </tr>
+						<template is="dom-if" if="{{ showLastUpdatedDate }}">
+							<tr> <th>${ _strings.pratilipi_last_updated_date }</th><td>:</td><td>{{ lastUpdatedDate }}</td> </tr>
 						</template>
 					</table>
 					
@@ -356,19 +356,11 @@
 				this.averageRating = pratilipi.averageRating != null ? pratilipi.averageRating : 0 ;
 				this.ratingCount = pratilipi.ratingCount != null ? pratilipi.ratingCount : 0 ;
 				this.readCount = pratilipi.readCount != null ? pratilipi.readCount : 0 ;
-				
-				if( pratilipi.coverImageUrl.indexOf( '?' ) == -1 )
-					this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "?" + "width=150";
-				else
-					this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + "&" + "width=150";
-				
-				if( pratilipi.ratingCount != null && pratilipi.ratingCount > 0  )
-					this.zeroRating = false;
-				else
-					this.zeroRating = true;
-				
+				this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + ( pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150"; 
+				this.zeroRating = ( pratilipi.ratingCount != null && pratilipi.ratingCount > 0 ) ? true : false;
 				this.type = this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name;
 				this.listingDate = convertDate( pratilipi.listingDateMillis );
+				this.showLastUpdatedDate = pratilipi.lastUpdatedMillis != null ? true : false;
 				this.lastUpdatedDate = pratilipi.lastUpdatedMillis != null ? convertDate( pratilipi.lastUpdatedMillis ) : null; 
 				if( pratilipi.state == "DRAFTED" )
 					this.changeState = "${ _strings.pratilipi_publish_it }";
