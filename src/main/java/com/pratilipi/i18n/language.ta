@@ -153,7 +153,7 @@ search_no_results_found		= மன்னிக்கவும்! உங்கள
 # Write
 
 write_heading				= படைப்பை சேர்க்க                                                                                                                                                                                                                                                                                     
-write_help					= ப்ரதிலிபியில் அனைவரும் எழுதலாம். உங்கள் படைப்புகளை நீங்களே வெளியிட்டுக் கொள்ளலாம். இது எல்லா வகையான எழுத்திற்கும், எழுத்தாளர்களுக்குமான தளம்.
+write_help					= பிரதிலிபியில் அனைவரும் எழுதலாம். உங்கள் படைப்புகளை நீங்களே வெளியிட்டுக் கொள்ளலாம். இது எல்லா வகையான எழுத்திற்கும், எழுத்தாளர்களுக்குமான தளம்.
 write_title					= தலைப்பு *
 write_title_en				= தலைப்பு (ஆங்கிலத்தில்)
 write_type					= வகை *
@@ -168,11 +168,11 @@ write_create_new_content	= புதிய படைப்பை உருவா
 user_sign_in				= உள்நுழைக
 user_to_sign_in				= உள்நுழைய 
 user_sign_in_with_facebook	= முகநூல்  மூலம் உள்நுழைய 
-user_sign_in_to_pratilipi	= ப்ரதிலிபியில் உள்நுழைக
+user_sign_in_to_pratilipi	= பிரதிலிபியில் உள்நுழைக
 user_sign_out				= வெளியேற  
 
 user_sign_up				= தளத்தில்  பதிவு செய்க !
-user_sign_up_for_pratilipi	= ப்ரதிலிபியில் பதிவு செய்க !
+user_sign_up_for_pratilipi	= பிரதிலிபியில் பதிவு செய்க !
 user_sign_up_with_facebook	= முகநூல்  மூலம் உள்நுழைய
 
 user_forgot_password		= கடவுச்சொல் நினைவில் இல்லை? 
