@@ -138,7 +138,19 @@
 					this.set( 'numberFound', this.numberFound - 1 );
 				}
 			},
-			
+
+			getPratilipiById: function( pratilipiId ) {
+				if( pratilipiId == null ) return null;
+				var pratilipi = null;
+				for( var i = 0; i < this.pratilipiList.length; i++ ) {
+					if( pratilipiId == this.pratilipiList[i].pratilipiId ) {
+						pratilipi = this.pratilipiList[i];
+						break;
+					}
+				}
+				return pratilipi;
+			},
+
 			addToPratilipiList: function( pratilipi ) {
 				this.unshift( 'pratilipiList', pratilipi );
 				this.set( 'numberFound', this.numberFound + 1 );

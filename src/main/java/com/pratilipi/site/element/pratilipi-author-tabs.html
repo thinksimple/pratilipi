@@ -108,10 +108,16 @@
 		},
 
 		moveContentToDrafts: function( pratilipiId ) {
+			var pratilipi = this.querySelector( 'pratilipi-author-published-contents' ).getPratilipiById( pratilipiId );
+			this.querySelector( 'pratilipi-author-published-contents' ).removeFromPratilipiList( pratilipiId );
+			this.querySelector( 'pratilipi-author-drafted-contents' ).addToPratilipiList( pratilipi );
 			this._pratilipiApiGetCall( pratilipiId, "DRAFTED" );
 		},
 
 		publishContent: function( pratilipiId ) {
+			var pratilipi = this.querySelector( 'pratilipi-author-drafted-contents' ).getPratilipiById( pratilipiId );
+			this.querySelector( 'pratilipi-author-drafted-contents' ).removeFromPratilipiList( pratilipiId );
+			this.querySelector( 'pratilipi-author-published-contents' ).addToPratilipiList( pratilipi );
 			this._pratilipiApiGetCall( pratilipiId, "PUBLISHED" );
 		},
 
@@ -125,20 +131,11 @@
 		},
 
 		_pratilipiApiResponse: function( response ) {
-
 			var pratilipi = response.detail.response;
-
-			if( pratilipi.state == "DRAFTED" ) {
-				this.querySelector( 'pratilipi-author-published-contents' ).removeFromPratilipiList( pratilipi.pratilipiId );
-				this.querySelector( 'pratilipi-author-drafted-contents' ).addToPratilipiList( pratilipi );
-			} else if( pratilipi.state == "PUBLISHED" ) {
-				this.querySelector( 'pratilipi-author-drafted-contents' ).removeFromPratilipiList( pratilipi.pratilipiId );
-				this.querySelector( 'pratilipi-author-published-contents' ).addToPratilipiList( pratilipi );
-			} else if( pratilipi.state == "DELETED" ) {
+			if( pratilipi.state == "DELETED" ) {
 				document.querySelector( 'pratilipi-alert' ).alert( "You have deleted the book successfully!" );
 				window.location.reload();
 			}
-
 		},
 
 		_pratilipiApiError: function( response ) {
@@ -148,6 +145,7 @@
 				document.querySelector( 'pratilipi-alert' ).alert( "Some error Occured! Please try again", false );
 				console.log( response );
 			}
+			this.async( function() { window.location.reload(); }, 2500 );
 		}
 		
 	});

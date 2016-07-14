@@ -119,7 +119,19 @@
 			_numberFoundObserver: function() {
 				jQuery( this.querySelector( '.works-number' ) ).css( 'display', this.numberFound > 0 ? 'block' : 'none' );
 			},
-			
+
+			getPratilipiById: function( pratilipiId ) {
+				if( pratilipiId == null ) return null;
+				var pratilipi = null;
+				for( var i = 0; i < this.pratilipiList.length; i++ ) {
+					if( pratilipiId == this.pratilipiList[i].pratilipiId ) {
+						pratilipi = this.pratilipiList[i];
+						break;
+					}
+				}
+				return pratilipi;
+			},
+
 			removeFromPratilipiList: function( pratilipiId ) {
 				var index = -1;
 				for( var i = 0; i < this.pratilipiList.length; i++ ) {

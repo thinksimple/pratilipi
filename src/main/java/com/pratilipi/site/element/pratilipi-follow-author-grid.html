@@ -34,6 +34,21 @@
 		    line-height: 16px;
 		    text-shadow: 0px 1px 2px #FFFFFF;
 		}
+		.author-follow .empty-list-message {
+			font-size: 16px;
+			text-align: center;
+			padding: 48px 12px;
+			padding-top: 32px;
+			font-weight: bold;
+			color: #333;
+		}
+		.author-follow .empty-list-message iron-icon {
+			display: block;
+			margin: auto;
+			margin-bottom: 16px;
+			width: 46px;
+			height: 46px;
+		}
 		hr {
 			margin-top: 0.5em;
 			margin-bottom: 0.8em;
@@ -59,24 +74,34 @@
 		<div class="secondary-500 pratilipi-shadow author-follow">
 			<div class="author-follow-header">
 				<h5 class="pratilipi-red">{{ title }}</h5>
-				<div class="follow-text text-center">{{ numberFound }} Members</div>
-			</div>
-			<hr/>
-			<div class="row follow-grid">
-				<template is="dom-repeat" items="{{ reducedFollowList }}">
-					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-						<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
-					</div>
+				<template is="dom-if" if="{{ !emptyList }}">
+					<div class="follow-text text-center">{{ numberFound }} Members</div>
 				</template>
 			</div>
-			<template is="dom-if" if="{{ showModalButton }}">
-				<div class="more-button" on-click="openModal">Show More</div>
+			<hr/>
+			<template is="dom-if" if="{{ !emptyList }}">
+				<div class="row follow-grid">
+					<template is="dom-repeat" items="{{ reducedFollowList }}">
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
+						</div>
+					</template>
+				</div>
+				<template is="dom-if" if="{{ showModalButton }}">
+					<div class="more-button" on-click="openModal">Show More</div>
+				</template>
+				<pratilipi-follow-author-popup
+					follow-list="{{ followList }}"
+					number-found="{{ numberFound }}"
+					title="{{ title }}"
+					is-finished="{{ isFinished }}"></pratilipi-follow-author-popup>
 			</template>
-			<pratilipi-follow-author-popup
-				follow-list="{{ followList }}"
-				number-found="{{ numberFound }}"
-				title="{{ title }}"
-				is-finished="{{ isFinished }}"></pratilipi-follow-author-popup>
+			<template is="dom-if" if="{{ emptyList }}">
+				<div class="empty-list-message">
+					<iron-icon icon="icons:info-outline"></iron-icon>
+					{{ emptyListMessage }}
+				</div>
+			</template>
 		</div>
 	</template>
 
@@ -91,15 +116,18 @@
 				reducedFollowList: { type: Array, value: function() { return []; } },
 				numberFound: { type: Number },
 				title: { type: String },
+				emptyListMessage: { type: String },
 				showModalButton: { type: Boolean, value: false },
 				isFinished: { type: Boolean }
 			},
 
 			attached: function() {
-				var itemsToShow = 3;
+				var itemsToShow = 4;
 				for( var i = 0; i < Math.min( this.followList.length, itemsToShow ); i++ )
 					this.push( 'reducedFollowList', this.followList[i] );
 				this.set( 'showModalButton', this.followList.length > itemsToShow ? true : false );
+
+				this.set( 'emptyList', this.followList.length == 0 ? true : false );
 			},
 
 			openModal: function() {
