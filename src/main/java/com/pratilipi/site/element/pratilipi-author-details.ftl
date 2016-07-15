@@ -21,17 +21,24 @@
 	</div>
 	<div class="clearfix"></div>
 	<div class="follow-author">
-		<#if userAuthor.isFollowing() == true>
-			<button class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
-				<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				Follow|1.2k
-			</button>
+		<#if userAuthor.isFollowing()??>
+			<#if userAuthor.isFollowing() == true>
+				<button class="pratilipi-grey-button" onclick="FollowUnfollowPostRequest(false)>
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					Unfollow &nbsp; 1.2k
+				</button>		
+			<#else>
+				<button class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					Follow|1.2k
+				</button>
+			</#if> 
 		<#else>
-			<button class="pratilipi-grey-button" onclick="FollowUnfollowPostRequest(false)>
-				<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-				Unfollow &nbsp; 1.2k
-			</button>
-		</#if>    			
+				<button class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					Follow|1.2k
+				</button>			
+		</#if>	   			
 	</div>
 </div>
 
