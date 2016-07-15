@@ -23,6 +23,14 @@
 			padding-right: 8px;
 		}
 
+		.pratilipi-card .button-holders h6 {
+			margin: 0;
+			margin-bottom: 16px;
+			font-size: 16px;
+			line-height: 22px;
+			font-weight: 500;
+		}
+
 		.pratilipi-card .button-holders button {
 			display: block;
 			cursor: pointer;
@@ -114,11 +122,11 @@
 
 	<template>
 		<div class="pratilipi-shadow">
-			<template is="dom-if" if="{{ !editProfile }}">
+			<template is="dom-if" if="{{ showContent }}">
 				<span style="background-image: url( {{ pratilipiCoverImage }} );" class="pratilipi-card" on-click="redirectToContentPage" title="{{ fullTitle }}">
 					<template is="dom-if" if="{{ showEditOption }}">
 						<template is="dom-if" if="{{ hasAccessToUpdate }}">
-							<paper-fab mini icon="icons:create" on-click="toggleEditProfile"></paper-fab>
+							<paper-fab mini icon="icons:create" on-click="showEditFunction"></paper-fab>
 						</template>
 					</template>
 					<template is="dom-if" if="{{ pratilipi.author }}">
@@ -134,19 +142,37 @@
 					</template>
 				</span>
 			</template>
-			<template is="dom-if" if="{{ editProfile }}">
+			<template is="dom-if" if="{{ editContent }}">
 				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
 					<div class="button-holders">
 						<template is="dom-if" if="{{ canMoveToDrafts }}">
-							<button class="btn btn-primary" on-click="moveContentToDrafts">${ _strings.pratilipi_move_to_drafts }</button>
+							<button class="btn btn-primary" on-click="confirmMoveContentToDrafts">${ _strings.pratilipi_move_to_drafts }</button>
 						</template>
 						<template is="dom-if" if="{{ canPublish }}">
 							<button class="btn btn-success" on-click="publishContent">${ _strings.pratilipi_publish_it }</button>
 						</template>
 						<template is="dom-if" if="{{ canDelete }}">
-							<button class="btn btn-danger" on-click="deleteContent">${ _strings.pratilipi_delete_content }</button>
+							<button class="btn btn-danger" on-click="confirmDeleteContent">${ _strings.pratilipi_delete_content }</button>
 						</template>
-						<button class="btn btn-default" on-click="toggleEditProfile">${ _strings.cancel }</button>
+						<button class="btn btn-default" on-click="cancelEditFunction">${ _strings.cancel }</button>
+					</div>
+				</div>
+			</template>
+			<template is="dom-if" if="{{ draftsContent }}">
+				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
+					<div class="button-holders">
+						<h6>Do you want it to move to drafts?</h6>
+						<button class="btn btn-danger" on-click="moveContentToDrafts">Yes</button>
+						<button class="btn btn-default" on-click="cancelEditFunction">${ _strings.cancel }</button>
+					</div>
+				</div>
+			</template>
+			<template is="dom-if" if="{{ deleteContent }}">
+				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
+					<div class="button-holders">
+						<h6>Do you want it to delete the content?</h6>
+						<button class="btn btn-danger" on-click="deleteContent">Yes</button>
+						<button class="btn btn-default" on-click="cancelEditFunction">${ _strings.cancel }</button>
 					</div>
 				</div>
 			</template>
@@ -180,13 +206,17 @@
 				pratilipi: { type: Object, observer: "_pratilipiObserver" },
 				state: { type: String, observer: "_stateObserver" },
 				showEditOption: { type: Boolean, value: false },
-				editProfile: { type: Boolean, value: false }
+
+				showContent: { type: Boolean, value: true },
+				editContent: { type: Boolean, value: false },
+				draftsContent: { type: Boolean, value: false },
+				deleteContent: { type: Boolean, value: false }
 			},
 			
 			_stateObserver: function() {
 				this.canMoveToDrafts = this.state != "DRAFTED";
 				this.canPublish = this.state != "PUBLISHED";
-				this.canDelete = this.state != "DELETED";
+				this.canDelete = this.state != "DELETED" && this.state != "PUBLISHED";
 			},
 
 			_pratilipiObserver: function() {
@@ -204,12 +234,30 @@
 			},
 			
 			redirectToContentPage: function() {
-				if( ! this.editProfile )
+				if( ! this.editContent )
 					window.location.href = this.pratilipi.pageUrl;
 			},
 
-			toggleEditProfile: function() {
-				this.set( 'editProfile', this.editProfile ? false : true );
+			showEditFunction: function() {
+				this.set( 'showContent', false );
+				this.set( 'editContent', true );
+			},
+
+			cancelEditFunction: function() {
+				this.set( 'editContent', false );
+				this.set( 'draftsContent', false );
+				this.set( 'deleteContent', false );
+				this.set( 'showContent', true );
+			},
+
+			confirmMoveContentToDrafts: function() {
+				this.set( 'editContent', false );
+				this.set( 'draftsContent', true );
+			},
+
+			confirmDeleteContent: function() {
+				this.set( 'editContent', false );
+				this.set( 'deleteContent', true );
 			},
 
 			moveContentToDrafts: function() {
