@@ -1,5 +1,6 @@
 <#include "pratilipi-author-details.html">
 <#include "pratilipi-author-tabs.html">
+<#include "pratilipi-author-settings.html">
 
 <dom-module id="pratilipi-author-page">
 
@@ -24,6 +25,7 @@
 						<pratilipi-author-details
 								author='[[ author ]]'
 								user-author='[[ userAuthor ]]'></pratilipi-author-details>
+						<pratilipi-author-settings author="[[ author ]]"></pratilipi-author-settings>
 						<pratilipi-author-tabs 
 								user="[[ user ]]"
 								author="[[ author ]]"
@@ -114,6 +116,10 @@
 			
 			_userAuthorGetApiResponse: function( response ) {
 				this.updateUserAuthor( response.detail.response );
+			},
+			
+			editAuthorProfile: function() {
+				this.querySelector( 'pratilipi-author-settings' ).editAuthor();
 			},
 			
 			ready: function() {

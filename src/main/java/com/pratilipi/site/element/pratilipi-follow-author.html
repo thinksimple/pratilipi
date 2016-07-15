@@ -162,11 +162,13 @@
 			},
 
 			_disableFollowButtons: function() {
-				jQuery( this.querySelector( '.follow-author-button button' ) ).prop( 'disabled', true );
+				jQuery( this.querySelector( '.follow-author-button .pratilipi-light-blue-button' ) ).prop( 'disabled', true );
+				jQuery( this.querySelector( '.follow-author-button .pratilipi-grey-button' ) ).prop( 'disabled', true );
 			},
 
 			_enableFollowButtons: function() {
-				jQuery( this.querySelector( '.follow-author-button button' ) ).prop( 'disabled', false );
+				jQuery( this.querySelector( '.follow-author-button .pratilipi-light-blue-button' ) ).prop( 'disabled', false );
+				jQuery( this.querySelector( '.follow-author-button .pratilipi-grey-button' ) ).prop( 'disabled', false );
 			},
 
 			_swapFollowingState: function() {

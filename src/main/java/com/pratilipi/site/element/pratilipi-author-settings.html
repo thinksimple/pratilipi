@@ -1,0 +1,70 @@
+<dom-module id="pratilipi-author-settings">
+	<style>
+		.modal-dialog {
+			overflow-y: initial !important
+		}
+		.modal-body {
+			height: 250px;
+			overflow-y: auto;
+		}
+		.vertical-alignment-helper {
+			display: table;
+			height: 100%;
+			width: 100%;
+			pointer-events: none;
+		}
+		.vertical-align-center {
+			display: table-cell;
+			vertical-align: middle;
+			pointer-events: none;
+		}
+		.modal-content {
+			width: inherit;
+			height: inherit;
+			margin: 0 auto;
+			pointer-events: all;
+		}
+		@media only screen and (max-width: 768px) {
+			.modal-body {
+				width: auto;
+				height: auto;
+				max-height: 100%;
+			}
+		}
+	</style>
+	
+	<template>
+		<div class="modal fade col-xs-12" id="pratilipiAuthorSettings" tabindex="-1" role="dialog" aria-labelledby="pratilipiFollowAuthor" aria-hidden="true">
+			<div class="vertical-alignment-helper">
+				<div class="modal-dialog vertical-align-center">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">${ _strings.cancel }</span></button>
+							<h4 class="modal-title">Edit Author</h4>
+						</div>
+						<div class="modal-body">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+	
+	<script>
+		Polymer({
+			is: 'pratilipi-author-settings',
+			
+			properties: {
+				author: { type: Object }
+			},
+			
+			editAuthor: function() {
+				this.async( function() {
+					jQuery( "#pratilipiAuthorSettings" ).modal();
+				});
+			}
+		});
+
+	</script>
+
+</dom-module>

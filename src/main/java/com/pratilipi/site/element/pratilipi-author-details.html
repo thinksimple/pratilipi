@@ -129,13 +129,11 @@
 	<template>
 		<paper-card class="cover-image pratilipi-shadow" style="background-image: url('http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg')">
 		
-			<#--
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
 				<div class="edit-profile">
-					<paper-fab icon="icons:create" on-click="editAuthorProfile"></paper-fab>
+					<paper-fab icon="icons:settings" on-click="editAuthorProfile"></paper-fab>
 				</div>
 			</template>
-			-->
 			
 			<div class="share-author">
 				<paper-menu-button horizontal-align="right" vertical-align="top">
@@ -276,11 +274,13 @@
 		},
 		
 		_disableFollowButtons: function() {
-			jQuery( this.querySelector( '.follow-author-button button' ) ).prop( 'disabled', true );
+			jQuery( this.querySelector( '.follow-author-button .pratilipi-light-blue-button' ) ).prop( 'disabled', true );
+			jQuery( this.querySelector( '.follow-author-button .pratilipi-grey-button' ) ).prop( 'disabled', true );
 		},
 
 		_enableFollowButtons: function() {
-			jQuery( this.querySelector( '.follow-author-button button' ) ).prop( 'disabled', false );
+			jQuery( this.querySelector( '.follow-author-button .pratilipi-light-blue-button' ) ).prop( 'disabled', false );
+			jQuery( this.querySelector( '.follow-author-button .pratilipi-grey-button' ) ).prop( 'disabled', false );
 		},
 
 		_postFollowApi: function( following ) {
@@ -326,7 +326,7 @@
 		},
 		
 		editAuthorProfile: function() {
-			console.log( "Edit Profile" );
+			this.domHost.editAuthorProfile();
 		},
 		
 		shareAuthorOnFacebook: function() {
@@ -355,7 +355,14 @@
 			}
 		},
 
-		uploadImage: function() {
+		uploadImage: function( event ) {
+			if( this.imageUploaded ) return;
+			var FileList = event.target.files;
+			if( FileList.length != 1 ) return; // No file or more than 1 file is selected.
+			var file = FileList[0];
+			if( file == null ) return;
+			var fileName = file.name.toLowerCase();
+			if( ! ( fileName.match( ".*\.jpg" ) || fileName.match( ".*\.png" ) ) ) return; // Only jpg and png
 			document.getElementById( "uploadAuthorImage" ).submit();
 			this.imageUploaded = true;
 		}
