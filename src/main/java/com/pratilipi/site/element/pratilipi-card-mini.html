@@ -142,7 +142,7 @@
 					</template>
 				</span>
 			</template>
-			<template is="dom-if" if="{{ editContent }}">
+			<template is="dom-if" if="{{ showEditContent }}">
 				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
 					<div class="button-holders">
 						<template is="dom-if" if="{{ canMoveToDrafts }}">
@@ -158,7 +158,7 @@
 					</div>
 				</div>
 			</template>
-			<template is="dom-if" if="{{ draftsContent }}">
+			<template is="dom-if" if="{{ showDraftsContent }}">
 				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
 					<div class="button-holders">
 						<h6>Do you want it to move to drafts?</h6>
@@ -167,7 +167,7 @@
 					</div>
 				</div>
 			</template>
-			<template is="dom-if" if="{{ deleteContent }}">
+			<template is="dom-if" if="{{ showDeleteContent }}">
 				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
 					<div class="button-holders">
 						<h6>Do you want it to delete the content?</h6>
@@ -208,9 +208,9 @@
 				showEditOption: { type: Boolean, value: false },
 
 				showContent: { type: Boolean, value: true },
-				editContent: { type: Boolean, value: false },
-				draftsContent: { type: Boolean, value: false },
-				deleteContent: { type: Boolean, value: false }
+				showEditContent: { type: Boolean, value: false },
+				showDraftsContent: { type: Boolean, value: false },
+				showDeleteContent: { type: Boolean, value: false }
 			},
 			
 			_stateObserver: function() {
@@ -234,30 +234,30 @@
 			},
 			
 			redirectToContentPage: function() {
-				if( ! this.editContent )
+				if( ! this.showEditContent )
 					window.location.href = this.pratilipi.pageUrl;
 			},
 
 			showEditFunction: function() {
 				this.set( 'showContent', false );
-				this.set( 'editContent', true );
+				this.set( 'showEditContent', true );
 			},
 
 			cancelEditFunction: function() {
-				this.set( 'editContent', false );
-				this.set( 'draftsContent', false );
-				this.set( 'deleteContent', false );
+				this.set( 'showEditContent', false );
+				this.set( 'showDraftsContent', false );
+				this.set( 'showDeleteContent', false );
 				this.set( 'showContent', true );
 			},
 
 			confirmMoveContentToDrafts: function() {
-				this.set( 'editContent', false );
-				this.set( 'draftsContent', true );
+				this.set( 'showEditContent', false );
+				this.set( 'showDraftsContent', true );
 			},
 
 			confirmDeleteContent: function() {
-				this.set( 'editContent', false );
-				this.set( 'deleteContent', true );
+				this.set( 'showEditContent', false );
+				this.set( 'showDeleteContent', true );
 			},
 
 			moveContentToDrafts: function() {
