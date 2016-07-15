@@ -197,7 +197,7 @@ public class PratilipiSite extends HttpServlet {
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode );
 				if( SystemProperty.STAGE.equals( "gamma" ) )
-					templateName = templateFilePrefix + "AuthorPage.ftl";
+					templateName = templateFilePrefix + ( basicMode ? "AuthorPageBasic.ftl" : "AuthorPage.ftl" );
 				else
 					templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 			
