@@ -121,9 +121,10 @@ public class UserAuthorDataUtil {
 					AccessTokenFilter.getAccessToken().getUserId(),
 					authorIdList );
 			
-			for( int i = 0; i < authorIdList.size(); i++ )
-				if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
-					authorDataList.get( i ).setFollowing( true );
+			if( userAuthorList.size() != 0 )
+				for( int i = 0; i < authorIdList.size(); i++ )
+					if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
+						authorDataList.get( i ).setFollowing( true );
 			
 		}
 		
