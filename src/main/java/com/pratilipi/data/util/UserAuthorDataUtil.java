@@ -176,10 +176,10 @@ public class UserAuthorDataUtil {
 
 		} else {
 			
-			author = dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() );
+			Author authorProfile = dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() );
 			
-			if( author != null ) {
-				List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList( userIdList, author.getId() );
+			if( authorProfile != null ) {
+				List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList( userIdList, authorProfile.getId() );
 				for( int i = 0; i < userIdList.size(); i++ )
 					if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
 						userDataList.get( i ).setFollowing( true );
