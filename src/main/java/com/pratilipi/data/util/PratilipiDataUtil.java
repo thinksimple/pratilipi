@@ -253,7 +253,7 @@ public class PratilipiDataUtil {
 	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Page pratilipiPage, Author author, boolean includeMetaData ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		if( pratilipiPage == null )
+		if( pratilipiPage == null ) // will still be null for DELETED Pratilipis
 			pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipi.getId() );
 		Page readPage = null; // dataAccessor.getPage( PageType.READ, pratilipi.getId() ); TODO: Uncomment this once data in DataStore is fixed.
 		Page writePage = null; // dataAccessor.getPage( PageType.WRITE, pratilipi.getId() ); TODO: Uncomment this once data in DataStore is fixed.
@@ -268,9 +268,8 @@ public class PratilipiDataUtil {
 		pratilipiData.setAuthor( AuthorDataUtil.createAuthorData( author ) );
 		pratilipiData.setSummary( pratilipi.getSummary() );
 		
-		pratilipiData.setPageUrl( pratilipiPage.getUriAlias() == null
-				? pratilipiPage.getUri()
-				: pratilipiPage.getUriAlias() );
+		pratilipiData.setPageUrl( pratilipiPage == null ? null :
+				( pratilipiPage.getUriAlias() == null ? pratilipiPage.getUri() : pratilipiPage.getUriAlias() ) );
 		pratilipiData.setCoverImageUrl( createPratilipiCoverUrl( pratilipi ) );
 		pratilipiData.setReadPageUrl( readPage == null || readPage.getUriAlias() == null
 				? PageType.READ.getUrlPrefix() + pratilipi.getId()
