@@ -251,6 +251,7 @@ a.pratilipi-new-blue-button:hover, a.pratilipi-new-blue-button:focus {
 	height: 40px;
 	padding: 10px;
 	color: #ffffff;
+	
 	font-size: 13px;
 	letter-spacing: 0.3px;
 	text-align: center;
@@ -266,3 +267,93 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	color: #ffffff; 
 	font-size: 13px;
 }
+
+.cover-image {
+	height: 350px;
+	border-radius: 0;
+	background-color: #FFF;
+	background-repeat: no-repeat;
+	background-position: top;
+	background-size: cover;
+}
+.edit-profile {
+
+	position: relative;
+	top: 16px;
+	left: 40px;
+}
+.numbers{
+	font-size: 20px;
+	font-weight: 500;
+}
+.share-author {
+	position: relative;
+	top: 16px;
+	right: 40px;
+}
+.profile-picture {
+	width: 200px;
+	height: 200px;
+	padding: 2px;
+	margin-top: 30px;
+}
+.author-name {
+	/*margin: 12px auto;*/
+	display: block;
+	color: #fbfbfb;
+	font-size: 21px;
+	font-weight: 700;
+	text-shadow: 4px 1px 4px rgba(0,0,0,0.50);
+	letter-spacing: 1.13px;
+}
+.follow-author button.pratilipi-light-blue-button {
+	display: block;
+	margin: 0 auto;
+	border-radius: 5px;
+	font-weight: 400;
+	font-size: 15px;
+	color: Blue;
+	padding: 5px;
+	border: 1px blue solid;
+	margin-top: 10px;
+}
+.pratilipi-author-stat {
+	padding: 10px;
+}
+.active > .nav-tab-blue-underline
+{
+	text-decoration: none;
+	font-weight: bold;
+	border-radius:0px;
+	border-bottom-width: 4px !important;
+	border-bottom-style: solid;
+	border-bottom-color: blue !important;
+	color: #000 !important;
+	background-color: transparent !important;
+}
+.pratilipi-bold {
+	font-weight: bold;
+}
+.pratilipi-no-margin {
+	margin-bottom: 0px;
+}
+.works-number {
+	font-size: 15px;
+	color: grey;
+}
+.media span {
+	margin: 5px;
+}
+.media button{
+	margin:5px;
+}
+.pratilipi-light-blue-button-with-margin {
+	margin: 0 auto;
+	border-radius: 5px;
+	font-weight: 400;
+	font-size: 15px;
+	color: Blue;
+	padding: 5px;
+	border: 1px blue solid;
+	margin-top: 20px !important;				
+}						
