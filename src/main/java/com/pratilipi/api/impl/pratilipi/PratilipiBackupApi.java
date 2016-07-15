@@ -41,7 +41,7 @@ public class PratilipiBackupApi extends GenericApi {
 	private static final String LINE_SEPARATOR = "\n";
 
 
-	public class GetRequest extends GenericRequest {
+	public static class GetRequest extends GenericRequest {
 		
 		private Boolean generateCsv;
 
