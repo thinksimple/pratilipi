@@ -197,9 +197,10 @@ public class UserAuthorDataUtil {
 				AccessTokenFilter.getAccessToken().getUserId(),
 				authorIdList );
 		
-		for( int i = 0; i < authorIdList.size(); i++ )
-			if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
-				userDataList.get( i ).getAuthor().setFollowing( true );
+		if( userAuthorList.size() != 0 )
+			for( int i = 0; i < authorIdList.size(); i++ )
+				if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
+					userDataList.get( i ).getAuthor().setFollowing( true );
 		
 		
 		return new DataListCursorTuple<>(
