@@ -34,10 +34,12 @@
 				</button>
 			</#if> 
 		<#else>
-				<button class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					Follow|1.2k
-				</button>			
+			<a href="/login">
+					<button class="pratilipi-light-blue-button" >
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						Follow|1.2k
+					</button>
+			</a>					
 		</#if>	   			
 	</div>
 </div>

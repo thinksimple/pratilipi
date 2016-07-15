@@ -22,7 +22,7 @@
 			  function FollowUnfollowPostRequest(follow){
 			    $.ajax({type: "POST",
 			            url: "/api/userauthor/follow",
-			            data: { authorId: "3424353432345667", following: follow },
+			            data: { authorId: "${ author.getId()?c }", following: follow },
 			            success:function(response){
 			      			if (response.following == follow) {
 			      				window.location.reload();
@@ -36,7 +36,7 @@
 			    		}			    		
 			    		
 			    });
-			  });
+			  }
 			});
 		</script>
 	</body>
