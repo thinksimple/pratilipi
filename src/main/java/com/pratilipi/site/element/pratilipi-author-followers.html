@@ -37,7 +37,7 @@
 			
 			processUserListObject: function( userListObject ) {
 				var followList = [];
-				var userList = userListObject.userList;
+				var userList = userListObject.userList != null ? userListObject.userList : [];
 				for( var i = 0; i < userList.length; i++ ) {
 					var user = userList[i];
 					var follow = {

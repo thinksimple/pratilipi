@@ -106,7 +106,12 @@
 			attached: function() {
 				
 				this.updateUser( this.userData );
-				
+
+				if( getValue( 'action' ) == "login" )
+					this.logIn();
+				else if( getValue( 'action' ) == "register" )
+					this.register();
+
 				if( getValue( 'email' ) !== "" && getValue( 'token' ) !== "" ) {
 
 					this.closeAllElements();

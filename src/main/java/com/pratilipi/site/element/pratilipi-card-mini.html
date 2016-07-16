@@ -1,105 +1,138 @@
 <dom-module id="pratilipi-card-mini">
 
 	<style>
-
 		:host {
 			display: inline-block;
 			text-align:center;
 			margin-bottom: 16px;
 		}
-		
 		.pratilipi-card {
-			display: flex;
-			cursor: pointer;
 			border-top: 1px solid #d3d3d3;
+			display: flex;
 		}
-		
-		.pratilipi-card .button-holders {
-			align-self: center;
-			margin: auto;
-			padding-left: 8px;
-			padding-right: 8px;
+		.pratilipi-card .pratilipi-title {
+			line-height: 24px;
+			font-weight: 700;
+			font-size: 14px;
 		}
-
-		.pratilipi-card .button-holders h6 {
-			margin: 0;
+		.pratilipi-card .pratilipi-title-mini {
 			margin-bottom: 16px;
-			font-size: 16px;
-			line-height: 22px;
-			font-weight: 500;
 		}
-
-		.pratilipi-card .button-holders button {
+		.pratilipi-card img {
+			position: absolute;
+			z-index: 0;
 			display: block;
-			cursor: pointer;
-			margin: 8px auto;
+			width: inherit;
+			height: inherit;
 		}
-
-		.pratilipi-card .button-holders .btn {
-			white-space: normal;
-			border-radius: 4px;
-			outline: none;
-		}
-
-		.pratilipi-card paper-fab {
+		.pratilipi-card paper-fab.add-icon {
 			position: absolute;
 			width: 24px;
 			height: 24px;
 			--paper-fab-background: #F5F5F5;
+			opacity: 0.8;
 			--paper-fab-iron-icon: {
 				color: #333;
 				width: 16px;
 				height: 16px;
 			}
 		}
-
+		.pratilipi-card paper-fab.share-icon {
+			position: absolute;
+			width: 24px;
+			height: 24px;
+			--paper-fab-background: #F5F5F5;
+			opacity: 0.75;
+			--paper-fab-iron-icon: {
+				color: #333;
+				width: 16px;
+				height: 16px;
+			}
+		}
+		.pratilipi-card paper-fab.edit-icon {
+			position: absolute;
+			width: 22px;
+			height: 22px;
+			z-index: 1;
+			--paper-fab-background: transparent;
+			--paper-fab-iron-icon: {
+				color: #333;
+				width: 16px;
+				height: 16px;
+			}
+		}
+		.pratilipi-card .centered-div {
+			align-self: center;
+			margin: auto;
+			padding-left: 8px;
+			padding-right: 8px;
+		}
+		.pratilipi-card .centered-div h6 {
+			margin: 0;
+			margin-bottom: 8px;
+			font-size: 14px;
+			line-height: 18px;
+			font-weight: 500;
+		}
+		.pratilipi-card .centered-div button {
+			display: block;
+			cursor: pointer;
+			margin: 4px auto;
+			font-size: 12px;
+		}
+		.pratilipi-card .centered-div .btn {
+			white-space: normal;
+			border-radius: 4px;
+			outline: none;
+		}
+		.pratilipi-card paper-icon-button.close-button {
+			position: absolute;
+			top: 1px;
+			right: 16px;
+		}
 		.ellipsed, a.ellipsed:hover, a.ellipsed:focus {
-			line-height: 24px;
 			text-align: left;
 			color: #000;
 			display: block;
-			font-size: 14px;
 		}
-		
-		.pratilipi-title {
-			font-weight: 700;
-		}
-		
 		.white-snippet, .white-snippet-reduced {
 			text-decoration: none;
 			float: left;
 			width: inherit;
-			background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65) 0%, #fbfbfb 100%);
 			text-align: center;
 			color: #333;
+			position: relative;
+			z-index: 0;
+			background: #fbfbfb;
+			background: -moz-linear-gradient(to bottom, rgba(255, 255, 255, 0.65) 0%, #fbfbfb 100%);
+			background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.65) 0%, #fbfbfb 100%);
+			background: -o-linear-gradient(top, rgba(255, 255, 255, 0.65) 0%, #fbfbfb 100%);
+			background: -ms-linear-gradient(top, rgba(255, 255, 255, 0.65) 0%, #fbfbfb 100%);
+			background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65) 0%, #fbfbfb 100%);
 		}
-		
 		.white-snippet {
 			height: 60px;
 			padding: 4px 8px;
 		}
-		
 		.white-snippet-reduced {
 			height: 45px;
 			padding: 8px;
 		}
-		
 		.meta-container {
 			color: #7e7e7e;
 			text-align: left;
-			padding-bottom: 10px;
 			background: #fbfbfb;
+			position: relative;
 		}
-		
 		.read-rating-count {
 			font-size: 14px;
 		}
-		
 		.read-rating-count iron-icon {
 			width: 15px; 
 			height: 15px;
 			margin-top: -2px;
 		}
+		
 		@media only screen and (max-width: 599px) {
 			:host {
 				width: 120px;
@@ -108,19 +141,33 @@
 				width: 120px;	
 				height: 180px;
 			}
-			.pratilipi-card paper-fab {
-				top: 6px;
+			.pratilipi-card paper-fab.add-icon {
+				top: 8px;
 				margin-left: 4px;
 			}
+			.pratilipi-card paper-fab.share-icon {
+				top: 8px;
+				margin-left: 94px;
+			}
+			.pratilipi-card paper-fab.edit-icon {
+				top: 120px;
+				margin-left: 94px;
+			}
+			.pratilipi-card .centered-div button {
+				word-break: break-all;
+			}
 			.white-snippet {
-				margin-top: calc( 180px - 60px - 28px );
+				margin-top: calc( 180px - 60px - 24px );
 			}
 			.white-snippet-reduced {
-				margin-top: calc( 180px - 45px - 28px );
+				margin-top: calc( 180px - 45px - 24px );
 			}
 			.meta-container {
 				height: 28px;
-				margin-top: -28px;
+				margin-top: -27px;
+			}
+			.ellipsed, a.ellipsed:hover, a.ellipsed:focus {
+				width: 90px;
 			}
 		}
 		@media only screen and (min-width: 600px) {
@@ -131,20 +178,33 @@
 				width: 160px;
 				height: 240px;
 			}
-			.pratilipi-card paper-fab {
-				top: 170px;
+			.pratilipi-card paper-fab.add-icon {
+				top: 10px;
+				margin-left: 4px;
+			}
+			.pratilipi-card paper-fab.share-icon {
+				top: 10px;
 				margin-left: 132px;
 			}
+			.pratilipi-card paper-fab.edit-icon {
+				top: 184px;
+				margin-left: 132px;
+			}
+			.pratilipi-card .centered-div button {
+				word-break: normal;
+			}
 			.white-snippet {
-				margin-top: calc( 240px - 60px - 32px );
-				
+				margin-top: calc( 240px - 60px - 20px );
 			}
 			.white-snippet-reduced {
-				margin-top: calc( 240px - 45px - 32px );
+				margin-top: calc( 240px - 45px - 20px );
 			}
 			.meta-container {
-				height: 32px;
-				margin-top: -32px;
+				height: 24px;
+				margin-top: -23px;
+			}
+			.ellipsed, a.ellipsed:hover, a.ellipsed:focus {
+				width: 120px;
 			}
 		}
 	</style>
@@ -153,18 +213,23 @@
 	<template>
 		<div class="pratilipi-shadow">
 			<template is="dom-if" if="{{ showContent }}">
-				<span style="background-image: url( {{ pratilipiCoverImage }} );" class="pratilipi-card" on-click="redirectToContentPage" title="{{ fullTitle }}">
+				<span class="pratilipi-card" on-click="redirectToContentPage" style="cursor: pointer;" title="{{ fullTitle }}">
+					<#-- Image -->
+					<img src="{{ pratilipiCoverImage }}">
+					<#-- Icons -->
+					<paper-fab mini class="add-icon" icon="icons:add" on-click="addToLibrary"></paper-fab>
+					<paper-fab mini class="share-icon" icon="social:share" on-click="shareAuthor"></paper-fab>
 					<template is="dom-if" if="{{ showEditOption }}">
-						<template is="dom-if" if="{{ hasAccessToUpdate }}">
-							<paper-fab mini icon="icons:create" on-click="showEditFunction"></paper-fab>
-						</template>
+						<paper-fab mini class="edit-icon" icon="icons:create" on-click="showEditFunction"></paper-fab>
 					</template>
+					<#-- Case : Author exists -->
 					<template is="dom-if" if="{{ pratilipi.author }}">
 						<div class="white-snippet">
 							<div class="contain-title ellipsed pratilipi-title">{{ title }}</div>
 							<a href="{{ pratilipi.author.pageUrl }}"><span class="contain-title ellipsed">{{ pratilipi.author.name }}</span></a>
 						</div>
 					</template>
+					<#-- Case : Author doesn't exist -->
 					<template is="dom-if" if="{{ !pratilipi.author }}">
 						<div class="white-snippet-reduced">
 							<div class="contain-title ellipsed pratilipi-title">{{ title }}</div>
@@ -173,8 +238,9 @@
 				</span>
 			</template>
 			<template is="dom-if" if="{{ showEditContent }}">
-				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
-					<div class="button-holders">
+				<div style="background: #fbfbfb;" class="pratilipi-card">
+					<div class="centered-div">
+						<div class="pratilipi-title pratilipi-title-mini">{{ fullTitle }}</div>
 						<template is="dom-if" if="{{ canMoveToDrafts }}">
 							<button class="btn btn-primary" on-click="confirmMoveContentToDrafts">${ _strings.pratilipi_move_to_drafts }</button>
 						</template>
@@ -184,26 +250,28 @@
 						<template is="dom-if" if="{{ canDelete }}">
 							<button class="btn btn-danger" on-click="confirmDeleteContent">${ _strings.pratilipi_delete_content }</button>
 						</template>
-						<button class="btn btn-default" on-click="cancelEditFunction">${ _strings.cancel }</button>
 					</div>
+					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 				</div>
 			</template>
 			<template is="dom-if" if="{{ showDraftsContent }}">
-				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
-					<div class="button-holders">
+				<div style="background: #fbfbfb;" class="pratilipi-card">
+					<div class="centered-div">
+						<div class="pratilipi-title pratilipi-title-mini">{{ fullTitle }}</div>
 						<h6>Do you want it to move to drafts?</h6>
 						<button class="btn btn-danger" on-click="moveContentToDrafts">Yes</button>
-						<button class="btn btn-default" on-click="cancelEditFunction">${ _strings.cancel }</button>
 					</div>
+					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 				</div>
 			</template>
 			<template is="dom-if" if="{{ showDeleteContent }}">
-				<div style="background: #fbfbfb;" class="pratilipi-card" title="{{ fullTitle }}">
-					<div class="button-holders">
+				<div style="background: #fbfbfb;" class="pratilipi-card">
+					<div class="centered-div">
+						<div class="pratilipi-title pratilipi-title-mini">{{ fullTitle }}</div>
 						<h6>Do you want it to delete the content?</h6>
 						<button class="btn btn-danger" on-click="deleteContent">Yes</button>
-						<button class="btn btn-default" on-click="cancelEditFunction">${ _strings.cancel }</button>
 					</div>
+					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 				</div>
 			</template>
 
@@ -260,12 +328,13 @@
 				else
 					this.fullTitle = this.pratilipi.titleEn;
 				this.title = this.pratilipi.title != null && this.pratilipi.title.trim() != "" ? this.pratilipi.title : this.pratilipi.titleEn;
-				var width = jQuery( window ).width() > 768 ? "160" : "120";
+				var width = jQuery( window ).width() >= 600 ? "160" : "120";
 				this.pratilipiCoverImage = this.pratilipi.coverImageUrl + ( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=" + width;
 				this.averageRating = Math.round( this.pratilipi.averageRating * 10 ) / 10 ;
 				this.readText = abbrNum( this.pratilipi.readCount, 1 );
 				this.showRating = this.pratilipi.averageRating == 0 ? false : true;
 				this.hasAccessToUpdate = this.pratilipi.hasAccessToUpdate;
+				this.showEditOption = this.pratilipi.hasAccessToUpdate && this.showEditOption;
 			},
 			
 			redirectToContentPage: function() {

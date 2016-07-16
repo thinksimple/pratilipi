@@ -36,7 +36,7 @@
 			
 			processAuthorListObject: function( authorListObject ) {
 				var followList = [];
-				var authorList = authorListObject.authorList;
+				var authorList = authorListObject.authorList != null ? authorListObject.authorList : [];
 				for( var i = 0; i < authorList.length; i++ ) {
 					var author = authorList[i];
 					var follow = {

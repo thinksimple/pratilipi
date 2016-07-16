@@ -66,6 +66,16 @@
 			--paper-spinner-layer-3-color: #D0021B;
 			--paper-spinner-layer-4-color: #107FE5;
 		}
+
+		/* Bootstrap overrides */
+		.row {
+			margin-left: -8px;
+			margin-right: -8px;
+		}
+		.col-xs-4, .col-sm-3, .col-md-3, .col-lg-3 {
+			padding-left: 8px;
+			padding-right: 8px;
+		}
 	</style>
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
@@ -75,7 +85,7 @@
 			<div class="works-number text-center">{{ numberFound }} ${ _strings.author_count_works }</div>
 			<hr/>
 			<div class="row text-center">
-				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+				<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
 					<div class="add-new-card pratilipi-shadow" on-click="_write">
 						<span>
 							<iron-icon icon="add-circle"></iron-icon>
