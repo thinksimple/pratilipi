@@ -23,6 +23,5 @@
 					src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.author_no_contents_published }" />
 			<div class="text-center">${ _strings.author_no_contents_published }</div>
 		</div>
-	</#if>	
-	<#include "pratilipi-pratilipi-card-mini.ftl">		
+	</#if>
 </div>
