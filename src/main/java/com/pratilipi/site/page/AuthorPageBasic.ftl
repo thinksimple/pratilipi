@@ -23,7 +23,11 @@
 			            url: "/api/userauthor/follow",
 			            data: { authorId: "${ author.getId()?c }", following: follow },
 			            success:function(response){
-			      			if (response.following == follow) {
+			            	console.log(response);
+			            	console.log(typeof response);
+			            	
+			            	var parsed_data = jQuery.parseJSON( response );
+			      			if ( parsed_data.following == follow ) {
 			      				window.location.reload();
 			      			}
 			      			else {
