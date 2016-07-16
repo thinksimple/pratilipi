@@ -1,6 +1,6 @@
 <div class="media">
   <a class="media-left" href="#">
-    <img class="media-object" style="width:100px;height:125px;" src="${ pratilipi.getCoverImageUrl() }">
+    <img class="media-object" style="width:100px;height:125px;" src="${ pratilipi.getCoverImageUrl( 100 ) }">
   </a>
   <div class="media-body">
   	<div class="pull-left">	
