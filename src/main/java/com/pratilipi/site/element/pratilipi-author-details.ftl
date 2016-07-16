@@ -28,7 +28,7 @@
 					Unfollow | ${ author.getFollowCount()?c }
 				</button>		
 			<#else>
-				<button style="white-space: nowrap;" class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
+				<button class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 					Follow | ${ author.getFollowCount()?c }
 				</button>

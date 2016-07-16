@@ -12,7 +12,17 @@
 	</div>
 	<div class="clearfix"></div>
 	<hr style="margin-top:0px;margin-bottom:0px;">	
-	
-	<#include "pratilipi-pratilipi-card-mini.ftl">
+
+	<#if publishedPratilipiList?has_content>
+		<#list publishedPratilipiList as pratilipi>
+			<#include "pratilipi-pratilipi-card-mini.ftl">
+		</#list>
+	<#else>
+		<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
+			<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
+					src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.author_no_contents_published }" />
+			<div class="text-center">${ _strings.author_no_contents_published }</div>
+		</div>
+	</#if>	
 	<#include "pratilipi-pratilipi-card-mini.ftl">		
 </div>

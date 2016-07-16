@@ -9,8 +9,12 @@
 	</div>	
 	<div class="clearfix"></div>
 	<hr>
-	<p><span class="pratilipi-bold">Place of Birth</span> &nbsp &nbsp Maharashtra</p>
-	<p><span class="pratilipi-bold">Date of Birth</span> &nbsp &nbsp 16 August 1997</p>
-	<p class="pratilipi-bold">My introduction: </p>
-	<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris </p>
+	<p><span class="pratilipi-bold">Place of Birth</span> &nbsp &nbsp </p>
+	<#if author.getDateOfBirth()?? && author.getDateOfBirth() != "" >
+		<p><span class="pratilipi-bold">Date of Birth</span> &nbsp &nbsp ${ author.getDateOfBirth() }</p>
+	</#if>
+	<#if author.getSummary()?? && author.getSummary() != "" >
+		<p class="pratilipi-bold">My introduction: </p>
+		<p> ${ author.getSummary() }</p>
+	</#if>	
 </div>
