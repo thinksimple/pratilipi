@@ -4,7 +4,7 @@
 			<!-- ${ _strings.author_drafts } -->Drafts
 				<!-- <span><button class="pratilipi-grey-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new</button></span> -->
 		</h5>
-		<p class="works-number"><!-- {{ numberFound }} ${ _strings.author_count_works } -->9 works</p>
+		<p class="works-number"> ${author.getContentDrafted()} ${ _strings.author_count_works }</p>
 	</div>
 	<div class="pull-right">
 		<br>	

@@ -18,7 +18,6 @@
 		</div>
 		<#include "../element/pratilipi-footer.ftl">
 		<script>
-		    $(document).ready(function(){
 			  function FollowUnfollowPostRequest(follow){
 			    $.ajax({type: "POST",
 			            url: "/api/userauthor/follow",
@@ -37,25 +36,7 @@
 			    		
 			    });
 			  }
-			});
 		</script>
 	</body>
 	
 </html>
-
-<#--
-import element pratilpi-author-details
-import element pratilipi-authoRr-activity
-	pratilipi-author-published-contents
-	pratilipi-author-library-contents
-		pratilipi-pratilipi-card-mini
-		
-import element pratilipi-author-about
-	import element pratilipi-author-biography
-	import element pratilipi-author-following
-		pratilipi-follow-author-card
-	import element pratilipi-author-followers
-		pratilipi-follow-author-card
-		
-		
--->
