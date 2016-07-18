@@ -11,12 +11,10 @@
 			display: flex;
 		}
 		.pratilipi-card .pratilipi-title {
-			line-height: 24px;
 			font-weight: 700;
-			font-size: 14px;
 		}
 		.pratilipi-card .pratilipi-title-mini {
-			margin-bottom: 16px;
+			margin-bottom: 12px;
 		}
 		.pratilipi-card img {
 			position: absolute;
@@ -124,9 +122,6 @@
 			background: #fbfbfb;
 			position: relative;
 		}
-		.read-rating-count {
-			font-size: 14px;
-		}
 		.read-rating-count iron-icon {
 			width: 15px; 
 			height: 15px;
@@ -164,11 +159,15 @@
 
 		@media only screen and (max-width: 599px) {
 			:host {
-				width: 120px;
+				width: 110px;
 			}
 			.pratilipi-card {
-				width: 120px;	
-				height: 180px;
+				width: 110px;	
+				height: 165px;
+			}
+			.pratilipi-card .pratilipi-title {
+				font-size: 11px;
+				line-height: 13px;
 			}
 			.pratilipi-card paper-fab.library-icon {
 				top: 8px;
@@ -176,27 +175,30 @@
 			}
 			.pratilipi-card paper-fab.share-icon {
 				top: 8px;
-				margin-left: 94px;
+				margin-left: 85px;
 			}
 			.pratilipi-card paper-fab.edit-icon {
-				top: 120px;
-				margin-left: 94px;
+				top: 104px;
+				margin-left: 85px;
 			}
 			.pratilipi-card .centered-div button {
 				word-break: break-all;
 			}
 			.white-snippet {
-				margin-top: calc( 180px - 60px - 24px );
+				margin-top: calc( 165px - 60px - 24px );
 			}
 			.white-snippet-reduced {
-				margin-top: calc( 180px - 45px - 24px );
+				margin-top: calc( 165px - 45px - 24px );
 			}
 			.meta-container {
 				height: 28px;
 				margin-top: -27px;
 			}
 			.ellipsed, a.ellipsed:hover, a.ellipsed:focus {
-				width: 90px;
+				width: 80px;
+			}
+			.read-rating-count {
+				font-size: 12px;
 			}
 		}
 		@media only screen and (min-width: 600px) {
@@ -206,6 +208,10 @@
 			.pratilipi-card {
 				width: 160px;
 				height: 240px;
+			}
+			.pratilipi-card .pratilipi-title {
+				font-size: 14px;
+				line-height: 24px;
 			}
 			.pratilipi-card paper-fab.library-icon {
 				top: 10px;
@@ -235,6 +241,9 @@
 			.ellipsed, a.ellipsed:hover, a.ellipsed:focus {
 				width: 120px;
 			}
+			.read-rating-count {
+				font-size: 14px;
+			}
 		}
 	</style>
 
@@ -246,8 +255,10 @@
 					<#-- Image -->
 					<img src="{{ pratilipiCoverImage }}">
 					<#-- Icons -->
-					<paper-fab mini class="library-icon" icon="icons:book" on-click="openLibraryDialog"></paper-fab>
-					<paper-fab mini class="share-icon" icon="social:share" on-click="openShareDialog"></paper-fab>
+					<template is="dom-if" if="{{ showShareAndLibraryOptions }}">
+						<paper-fab mini class="library-icon" icon="icons:book" on-click="openLibraryDialog"></paper-fab>
+						<paper-fab mini class="share-icon" icon="social:share" on-click="openShareDialog"></paper-fab>
+					</template>
 					<template is="dom-if" if="{{ showEditOption }}">
 						<paper-fab mini class="edit-icon" icon="icons:create" on-click="showEditFunction"></paper-fab>
 					</template>
@@ -407,13 +418,14 @@
 				else
 					this.set( 'fullTitle', this.pratilipi.titleEn );
 				this.set( 'title', this.pratilipi.title != null && this.pratilipi.title.trim() != "" ? this.pratilipi.title : this.pratilipi.titleEn );
-				var width = jQuery( window ).width() >= 600 ? "160" : "120";
+				var width = jQuery( window ).width() >= 600 ? "160" : "110";
 				this.set( 'pratilipiCoverImage', this.pratilipi.coverImageUrl + ( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=" + width );
 				this.set( 'averageRating', Math.round( this.pratilipi.averageRating * 10 ) / 10 );
 				this.set( 'readText', abbrNum( this.pratilipi.readCount, 1 ) );
 				this.set( 'showRating', this.pratilipi.averageRating > 0 );
 				this.set( 'hasAccessToUpdate', this.pratilipi.hasAccessToUpdate );
 				this.set( 'showEditOption', this.pratilipi.hasAccessToUpdate && this.showEditOption );
+				this.set( 'showShareAndLibraryOptions', this.state != "DRAFTED" );
 				this.set( 'addedToLib', false );
 			},
 
