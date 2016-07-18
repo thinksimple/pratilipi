@@ -20,6 +20,7 @@ import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.VoteParentType;
+import com.pratilipi.common.type.VoteType;
 import com.pratilipi.common.util.GoogleAnalyticsApi;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
@@ -65,7 +66,9 @@ public class PratilipiDocUtil {
 		Map<String, List<Long>> commentIdLikedByUserIdsMap = new HashMap<>();
 		for( Vote vote : voteList ) {
 			List<Long> userIdList = null;
-			if( vote.getParentType() == VoteParentType.REVIEW ) {
+			if( vote.getType() == VoteType.NONE ) {
+				continue;
+			} else if( vote.getParentType() == VoteParentType.REVIEW ) {
 				userIdList = reviewIdLikedByUserIdsMap.get( vote.getParentId() );
 				if( userIdList == null ) {
 					userIdList = new LinkedList<>();
