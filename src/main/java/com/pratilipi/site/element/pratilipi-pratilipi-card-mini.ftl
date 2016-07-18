@@ -2,7 +2,7 @@
 	$( document ).ready(function() {
 	    $( "#book-rating-${ pratilipi.getId() }" ).prepend( roundOffRating( ${ pratilipi.getAverageRating() } ) );
 	});
-<script>
+</script>
 
 <div class="media">
   <a class="media-left" href="#">
