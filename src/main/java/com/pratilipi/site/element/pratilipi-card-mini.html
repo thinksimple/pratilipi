@@ -25,7 +25,7 @@
 			width: inherit;
 			height: inherit;
 		}
-		.pratilipi-card paper-fab.add-icon {
+		.pratilipi-card paper-fab.library-icon {
 			position: absolute;
 			width: 24px;
 			height: 24px;
@@ -132,7 +132,36 @@
 			height: 15px;
 			margin-top: -2px;
 		}
-		
+		.share-popup a.share-menu-item {
+			color: inherit;
+			margin:32px 16px;
+			display: block;
+			text-align: left;
+		}
+		.share-popup a.share-menu-item img {
+			margin-right: 12px;
+			width: 20px;
+			height: 20px;
+		}
+		.share-popup a.share-menu-item span {
+			font-size: 15px;
+		}
+		.library-popup .library-item-menu {
+			padding: 30px 4px;
+			padding-top: 64px;
+		}
+		.library-popup .library-item-menu h6 {
+			float: left;
+		}
+		.library-popup .library-item-menu paper-toggle-button {
+			--paper-toggle-button-checked-bar-color:  #107fe5;
+			--paper-toggle-button-checked-button-color:  #107fe5;
+			--paper-toggle-button-checked-ink-color: #107fe5;
+			--paper-toggle-button-unchecked-bar-color:  #d0021b;
+			--paper-toggle-button-unchecked-button-color:  #d0021b;
+			--paper-toggle-button-unchecked-ink-color: #d0021b;
+		}
+
 		@media only screen and (max-width: 599px) {
 			:host {
 				width: 120px;
@@ -141,7 +170,7 @@
 				width: 120px;	
 				height: 180px;
 			}
-			.pratilipi-card paper-fab.add-icon {
+			.pratilipi-card paper-fab.library-icon {
 				top: 8px;
 				margin-left: 4px;
 			}
@@ -178,7 +207,7 @@
 				width: 160px;
 				height: 240px;
 			}
-			.pratilipi-card paper-fab.add-icon {
+			.pratilipi-card paper-fab.library-icon {
 				top: 10px;
 				margin-left: 4px;
 			}
@@ -217,8 +246,8 @@
 					<#-- Image -->
 					<img src="{{ pratilipiCoverImage }}">
 					<#-- Icons -->
-					<paper-fab mini class="add-icon" icon="icons:add" on-click="addToLibrary"></paper-fab>
-					<paper-fab mini class="share-icon" icon="social:share" on-click="shareAuthor"></paper-fab>
+					<paper-fab mini class="library-icon" icon="icons:book" on-click="openLibraryDialog"></paper-fab>
+					<paper-fab mini class="share-icon" icon="social:share" on-click="openShareDialog"></paper-fab>
 					<template is="dom-if" if="{{ showEditOption }}">
 						<paper-fab mini class="edit-icon" icon="icons:create" on-click="showEditFunction"></paper-fab>
 					</template>
@@ -288,6 +317,53 @@
 				</span>
 			</div>
 		</div>
+		<#-- Share Modal -->
+		<div class="modal fade share-popup" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<paper-icon-button class="pull-right" icon="icons:close" data-dismiss="modal"></paper-icon-button>
+						<div class="text-center">
+							<a class="share-menu-item" on-click="shareOnFacebook">
+								<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/facebook2.svg"/>
+								<span>${ _strings.share_on_facebook }</span>
+							</a>
+							<a class="share-menu-item" on-click="shareOnTwitter">
+								<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/twitter.svg"/>
+								<span>${ _strings.share_on_twitter }</span>
+							</a>
+							<a class="share-menu-item" on-click="shareOnGplus">
+								<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/google-plus2.svg"/>
+								<span>${ _strings.share_on_gplus }</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<#-- Library Modal -->
+		<div class="modal fade library-popup" tabindex="-1">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-body">
+						<paper-icon-button class="pull-right" icon="icons:close" data-dismiss="modal"></paper-icon-button>
+						<div class="library-item-menu">
+							<h6>Library</h6>
+							<paper-toggle-button noink class="pull-right" checked="{{ addedToLib }}" on-change="switchLibraryState"></paper-toggle-button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<iron-ajax
+				id="UserPratilipiLibraryApi"
+				url="/api/userpratilipi/library"
+				method="POST"
+				content-type="application/x-www-form-urlencoded"
+				handle-as="json"
+				on-response="_userPratilipiLibraryApiResponse"
+				on-error="_userPratilipiLibraryApiError"
+				></iron-ajax>
 	</template>
 
 
@@ -311,7 +387,10 @@
 				showContent: { type: Boolean, value: true },
 				showEditContent: { type: Boolean, value: false },
 				showDraftsContent: { type: Boolean, value: false },
-				showDeleteContent: { type: Boolean, value: false }
+				showDeleteContent: { type: Boolean, value: false },
+
+				shareDialogOpened: { type: Boolean, value: false },
+				libraryDialogOpened: { type: Boolean, value: false }
 			},
 			
 			_stateObserver: function() {
@@ -322,24 +401,35 @@
 
 			_pratilipiObserver: function() {
 				if( this.pratilipi.title != null && this.pratilipi.title.trim() != "" && this.pratilipi.titleEn != null && this.pratilipi.titleEn.trim() != null )
-					this.fullTitle = this.pratilipi.title + " | " + this.pratilipi.titleEn;
+					this.set( 'fullTitle', this.pratilipi.title + " | " + this.pratilipi.titleEn );
 				else if( this.pratilipi.title != null && this.pratilipi.title.trim() != "" )
-					this.fullTitle = this.pratilipi.title;
+					this.set( 'fullTitle', this.pratilipi.title );
 				else
-					this.fullTitle = this.pratilipi.titleEn;
-				this.title = this.pratilipi.title != null && this.pratilipi.title.trim() != "" ? this.pratilipi.title : this.pratilipi.titleEn;
+					this.set( 'fullTitle', this.pratilipi.titleEn );
+				this.set( 'title', this.pratilipi.title != null && this.pratilipi.title.trim() != "" ? this.pratilipi.title : this.pratilipi.titleEn );
 				var width = jQuery( window ).width() >= 600 ? "160" : "120";
-				this.pratilipiCoverImage = this.pratilipi.coverImageUrl + ( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=" + width;
-				this.averageRating = Math.round( this.pratilipi.averageRating * 10 ) / 10 ;
-				this.readText = abbrNum( this.pratilipi.readCount, 1 );
-				this.showRating = this.pratilipi.averageRating == 0 ? false : true;
-				this.hasAccessToUpdate = this.pratilipi.hasAccessToUpdate;
-				this.showEditOption = this.pratilipi.hasAccessToUpdate && this.showEditOption;
+				this.set( 'pratilipiCoverImage', this.pratilipi.coverImageUrl + ( this.pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=" + width );
+				this.set( 'averageRating', Math.round( this.pratilipi.averageRating * 10 ) / 10 );
+				this.set( 'readText', abbrNum( this.pratilipi.readCount, 1 ) );
+				this.set( 'showRating', this.pratilipi.averageRating > 0 );
+				this.set( 'hasAccessToUpdate', this.pratilipi.hasAccessToUpdate );
+				this.set( 'showEditOption', this.pratilipi.hasAccessToUpdate && this.showEditOption );
+				this.set( 'addedToLib', false );
 			},
-			
+
 			redirectToContentPage: function() {
-				if( ! this.showEditContent )
-					window.location.href = this.pratilipi.pageUrl;
+				if( this.shareDialogOpened ) {
+					this.set( 'shareDialogOpened', false );
+					return;
+				}
+				if( this.libraryDialogOpened ) {
+					this.set( 'libraryDialogOpened', false );
+					return;
+				}
+				if( this.showEditContent )
+					return;
+
+				window.location.href = this.pratilipi.pageUrl;
 			},
 
 			showEditFunction: function() {
@@ -374,8 +464,50 @@
 
 			deleteContent: function() {
 				this.domHost.deleteContent( this.pratilipi.pratilipiId );
+			},
+
+			openShareDialog: function() {
+				this.set( 'shareDialogOpened', true );
+				jQuery( this.querySelector( '.share-popup' ) ).modal();
+			},
+
+			openLibraryDialog: function() {
+				this.set( 'libraryDialogOpened', true );
+				jQuery( this.querySelector( '.library-popup' ) ).modal();
+			},
+			
+			shareOnFacebook: function() {
+				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.pratilipi.pageUrl 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
+						+ "share=facebook" + "%26" + "utm_source=card_mini", "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+
+			shareOnTwitter: function() {
+				window.open( "http://twitter.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
+						+ "share=twitter" + "%26" + "utm_source=card_mini", "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+
+			shareOnGplus: function() {
+				window.open( "https://plus.google.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
+						+ "share=gplus" + "%26" + "utm_source=card_mini", "share", "width=1100,height=500,left=70px,top=60px" );
+			},
+
+			switchLibraryState: function() {
+				this.$.UserPratilipiLibraryApi.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=" + this.addedToLib );
+				this.$.UserPratilipiLibraryApi.generateRequest();
+			},
+			
+			_userPratilipiLibraryApiResponse: function( response ) {
+				if( this.addedToLib != response.detail.response.addedToLib )
+					this.set( 'addedToLib', response.detail.response.addedToLib );
+			},
+			
+			_userPratilipiLibraryApiError: function( response ) {
+				this.set( 'addedToLib', ! this.addedToLib );
 			}
-		
+
 		});
 
 	</script>
