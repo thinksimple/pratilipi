@@ -175,7 +175,7 @@ table tr td {
 	background: #F1F8FB;
 	border: 1px solid #0C68BD;
 	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
-	border-radius: 2px;
+	border-radius: 5px;
 	font-size: 13px;
 	color: #0C68BD;
 	letter-spacing: 0.3px;
@@ -306,16 +306,35 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	text-shadow: 4px 1px 4px rgba(0,0,0,0.50);
 	letter-spacing: 1.13px;
 }
-.follow-author button.pratilipi-light-blue-button {
+.follow-author button.pratilipi-light-blue-button, .follow-author a.pratilipi-light-blue-button {
 	display: block;
 	margin: 0 auto;
 	border-radius: 5px;
 	font-weight: 400;
+	white-space: nowrap;
 	font-size: 15px;
 	color: Blue;
 	padding: 5px;
 	border: 1px blue solid;
 	margin-top: 10px;
+}
+.follow-author button.pratilipi-grey-button, .follow-author a.pratilipi-grey-button {
+    background: #E5E5E5;
+    border: 1px solid #979797;
+    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+    color: #4A4A4A;
+    letter-spacing: 0.3px;
+    line-height: 16px;
+    text-shadow: 0px 1px 2px #FFFFFF;
+    display: block;	
+    padding: 5px;
+    margin: 0 auto;
+    margin-top: 10px;
+    outline: none;
 }
 .pratilipi-author-stat {
 	padding: 10px;

@@ -1,4 +1,9 @@
-<div class=" pratilipi-shadow secondary-500 box">	
+<script>
+	function roundOffRating(n) {
+	    return (Math.round(n*2)/2).toFixed(1);
+	};
+</script>
+<div class="pratilipi-shadow secondary-500 box">	
 	<div class="pull-left">
 		<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
 			<#-- ${ _strings.author_drafts } -->Published

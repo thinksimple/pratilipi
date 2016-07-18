@@ -9,7 +9,12 @@
 	</div>	
 	<div class="clearfix"></div>
 	<hr>
-	<p><span class="pratilipi-bold">Place of Birth</span> &nbsp &nbsp </p>
+	<#if author.getPlaceOfBirth()?? && author.getPlaceOfBirth() != "" >
+		<p><span class="pratilipi-bold">Place of Birth</span> &nbsp &nbsp </p>
+	</#if>
+	<#if author.getRegistrationDateMillis()?? >
+		<p><span class="pratilipi-bold">With Pratilipi Since: </span> &nbsp &nbsp ${ author.getRegistrationDateMillis()?c }</p>
+	<#if>
 	<#if author.getDateOfBirth()?? && author.getDateOfBirth() != "" >
 		<p><span class="pratilipi-bold">Date of Birth</span> &nbsp &nbsp ${ author.getDateOfBirth() }</p>
 	</#if>

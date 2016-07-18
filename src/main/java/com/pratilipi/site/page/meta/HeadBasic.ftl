@@ -12,7 +12,7 @@
 </#list>
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style-basic.css?20160716">
+<link type="text/css" rel="stylesheet" href="/resources/style-basic.css?20160718">
 
 <script>
 	window.fbAsyncInit = function() {
