@@ -62,26 +62,26 @@ public class PratilipiDocUtil {
 		}
 		
 		List<Vote> voteList = dataAccessor.getVoteListByReference( ReferenceType.PRATILIPI, pratilipiId );
-		Map<String, List<Long>> reviewIdLikedByUserIdsMap = new HashMap<>();
+		Map<String, List<Vote>> reviewIdLikeVotesMap = new HashMap<>();
 		Map<String, List<Long>> commentIdLikedByUserIdsMap = new HashMap<>();
 		for( Vote vote : voteList ) {
-			List<Long> userIdList = null;
 			if( vote.getType() == VoteType.NONE ) {
 				continue;
 			} else if( vote.getParentType() == VoteParentType.REVIEW ) {
-				userIdList = reviewIdLikedByUserIdsMap.get( vote.getParentId() );
-				if( userIdList == null ) {
-					userIdList = new LinkedList<>();
-					reviewIdLikedByUserIdsMap.put( vote.getParentId(), userIdList );
+				List<Vote> reviewLikeVoteList = reviewIdLikeVotesMap.get( vote.getParentId() );
+				if( reviewLikeVoteList == null ) {
+					reviewLikeVoteList = new LinkedList<>();
+					reviewIdLikeVotesMap.put( vote.getParentId(), reviewLikeVoteList );
 				}
+				reviewLikeVoteList.add( vote );
 			} else if( vote.getParentType() == VoteParentType.COMMENT ) {
-				userIdList = commentIdLikedByUserIdsMap.get( vote.getParentId() );
+				List<Long> userIdList = commentIdLikedByUserIdsMap.get( vote.getParentId() );
 				if( userIdList == null ) {
 					userIdList = new LinkedList<>();
 					commentIdLikedByUserIdsMap.put( vote.getParentId(), userIdList );
 				}
+				userIdList.add( vote.getUserId() );
 			}
-			userIdList.add( vote.getUserId() );
 		}
 		
 		
@@ -112,29 +112,43 @@ public class PratilipiDocUtil {
 			reviewDoc.setReview( userPratilipi.getReview() == null || userPratilipi.getReview().trim().isEmpty() ? null : userPratilipi.getReview().trim() );
 			
 			reviewDoc.setReviewDate( userPratilipi.getReviewDate() );
-			reviewDoc.setLikedByUserIds( reviewIdLikedByUserIdsMap.get( userPratilipi.getId() ) );
 			reviewDocList.add( reviewDoc );
 			
-			List<Comment> reviewCommentList = reviewIdCommentListMap.get( userPratilipi.getId() );
-			if( reviewCommentList == null )
-				continue;
 			
-			List<CommentDoc> commentDocList = new ArrayList<>( reviewCommentList.size() );
-			for( Comment comment : reviewCommentList ) {
-				if( comment.getState() == CommentState.DELETED )
-					continue;
-				
-				CommentDoc commentDoc = docAccessor.newCommentDoc();
-				commentDoc.setId( comment.getId() );
-				commentDoc.setUserId( comment.getUserId() );
-				commentDoc.setContent( comment.getContent() );
-				commentDoc.setCreationDate( comment.getCreationDate() );
-				commentDoc.setLastUpdated( comment.getLastUpdated() );
-				commentDoc.setLikedByUserIds( commentIdLikedByUserIdsMap.get( comment.getId().toString() ) );
-				
-				commentDocList.add( commentDoc );
+			List<Vote> reviewLikeVoteList = reviewIdLikeVotesMap.get( userPratilipi.getId() );
+			if( reviewLikeVoteList != null ) {
+				List<Long> userIdList = new ArrayList<>( reviewLikeVoteList.size() );
+				for( Vote vote : reviewLikeVoteList ) {
+					if( vote.getCreationDate().before( userPratilipi.getReviewDate() ) )
+						continue;
+					userIdList.add( vote.getUserId() );
+				}
+				reviewDoc.setLikedByUserIds( userIdList );
 			}
-			reviewDoc.setComments( commentDocList );
+			
+			
+			List<Comment> reviewCommentList = reviewIdCommentListMap.get( userPratilipi.getId() );
+			if( reviewCommentList != null ) {
+				List<CommentDoc> commentDocList = new ArrayList<>( reviewCommentList.size() );
+				for( Comment comment : reviewCommentList ) {
+					if( comment.getState() == CommentState.DELETED )
+						continue;
+					
+					if( comment.getCreationDate().before( userPratilipi.getReviewDate() ) )
+						continue;
+					
+					CommentDoc commentDoc = docAccessor.newCommentDoc();
+					commentDoc.setId( comment.getId() );
+					commentDoc.setUserId( comment.getUserId() );
+					commentDoc.setContent( comment.getContent() );
+					commentDoc.setCreationDate( comment.getCreationDate() );
+					commentDoc.setLastUpdated( comment.getLastUpdated() );
+					commentDoc.setLikedByUserIds( commentIdLikedByUserIdsMap.get( comment.getId().toString() ) );
+					
+					commentDocList.add( commentDoc );
+				}
+				reviewDoc.setComments( commentDocList );
+			}
 			
 		}
 		

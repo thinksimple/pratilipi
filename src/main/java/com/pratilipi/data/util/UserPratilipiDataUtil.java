@@ -272,11 +272,19 @@ public class UserPratilipiDataUtil {
 		if( review != null ) {
 			userPratilipi.setReviewTitle( null );
 			userPratilipi.setReview( review );
-			userPratilipi.setReviewState( UserReviewState.PUBLISHED );
-			userPratilipi.setReviewDate( new Date() );
+			if( userPratilipi.getReviewState() != UserReviewState.PUBLISHED ) {
+				// NOTE: As review comment and likes are counted only if they
+				// were created after review date, do NOT update reviewDate if
+				// review is already published.
+				userPratilipi.setReviewState( UserReviewState.PUBLISHED );
+				userPratilipi.setReviewDate( new Date() );
+			}
 		}
 
-		if( reviewState != null ) {
+		// NOTE: As review comment and likes are counted only if they
+		// were created after review date, do NOT update reviewDate if
+		// review is already published.
+		if( reviewState != null && reviewState != userPratilipi.getReviewState() ) {
 			userPratilipi.setReviewState( reviewState );
 			userPratilipi.setReviewDate( new Date() );
 		}
