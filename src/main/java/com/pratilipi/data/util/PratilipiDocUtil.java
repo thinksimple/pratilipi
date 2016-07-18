@@ -119,7 +119,7 @@ public class PratilipiDocUtil {
 			if( reviewLikeVoteList != null ) {
 				List<Long> userIdList = new ArrayList<>( reviewLikeVoteList.size() );
 				for( Vote vote : reviewLikeVoteList ) {
-					if( vote.getCreationDate().before( userPratilipi.getReviewDate() ) )
+					if( vote.getLastUpdated().before( userPratilipi.getReviewDate() ) )
 						continue;
 					userIdList.add( vote.getUserId() );
 				}
@@ -134,7 +134,7 @@ public class PratilipiDocUtil {
 					if( comment.getState() == CommentState.DELETED )
 						continue;
 					
-					if( comment.getLastUpdated().before( userPratilipi.getReviewDate() ) )
+					if( comment.getCreationDate().before( userPratilipi.getReviewDate() ) )
 						continue;
 					
 					CommentDoc commentDoc = docAccessor.newCommentDoc();
