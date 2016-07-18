@@ -171,7 +171,7 @@ public class VoteEntity implements Vote {
 
 	@Override
 	public Date getLastUpdated() {
-		return LAST_UPDATED;
+		return LAST_UPDATED == null ? CREATION_DATE : LAST_UPDATED;
 	}
 
 	@Override

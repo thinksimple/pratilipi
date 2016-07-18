@@ -134,7 +134,7 @@ public class PratilipiDocUtil {
 					if( comment.getState() == CommentState.DELETED )
 						continue;
 					
-					if( comment.getCreationDate().before( userPratilipi.getReviewDate() ) )
+					if( comment.getLastUpdated().before( userPratilipi.getReviewDate() ) )
 						continue;
 					
 					CommentDoc commentDoc = docAccessor.newCommentDoc();
