@@ -939,19 +939,21 @@ public class PratilipiDataUtil {
 			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( contentHtml );
 
-			if( contentHtml != null )
-				contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
-
-			if( UxModeFilter.isAndroidApp() ) {
-				Object content = pratilipiContentUtil.toPratilipiContentData();
-				if( content != null && chapterNo != null )
-					content = ( (PratilipiContentData) content ).getChapter( chapterNo );
-				if( content != null && pageNo != null )
-					content = ( (Chapter) content ).getPage( pageNo );
+			if( contentHtml != null ) {
+				if( UxModeFilter.isAndroidApp() ) {
+					Object content = pratilipiContentUtil.toPratilipiContentData();
+					if( content != null && chapterNo != null )
+						content = ( (PratilipiContentData) content ).getChapter( chapterNo );
+					if( content != null && pageNo != null )
+						content = ( (Chapter) content ).getPage( pageNo );
+				} else {
+					contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
+					return contentHtml;
+				}
 			}
-			
-			return contentHtml;
 
+			return null;
+			
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			
 			return blobAccessor.getBlob( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );

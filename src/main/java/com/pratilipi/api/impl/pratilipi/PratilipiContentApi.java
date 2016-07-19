@@ -42,16 +42,16 @@ public class PratilipiContentApi extends GenericApi {
 
 	}
 	
-	public static class GetPratilipiContentResponse extends GenericResponse { 
+	public static class Response extends GenericResponse { 
 		
 		private Long pratilipiId;
 		private Integer pageNo;
 		private Object pageContent;
 
 		
-		private GetPratilipiContentResponse() {}
+		private Response() {}
 		
-		private GetPratilipiContentResponse( Long pratilipiId, Integer pageNo, Object pageContent ) {
+		private Response( Long pratilipiId, Integer pageNo, Object pageContent ) {
 			this.pratilipiId = pratilipiId;
 			this.pageNo = pageNo;
 			this.pageContent = pageContent;
@@ -78,7 +78,7 @@ public class PratilipiContentApi extends GenericApi {
 				contentType );
 
 		if( contentType == PratilipiContentType.PRATILIPI ) {
-			return new GetPratilipiContentResponse(
+			return new Response(
 					request.pratilipiId,
 					request.pageNo,
 					content );
