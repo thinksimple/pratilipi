@@ -6,11 +6,11 @@
 
 <div class="media">
   <a class="media-left" href="#">
-    <img class="media-object" src="${ pratilipi.getCoverImageUrl(100) }">
+    <img class="media-object" src="${ pratilipi.getCoverImageUrl(75) }">	
   </a>
   <div class="media-body">
   	<div class="pull-left">	
-	    <h4 class="media-heading">${ pratilipi.getTitle()!pratilipi.getTitleEn() }<a href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h4>
+	    <h4 class="media-heading">${ pratilipi.getTitle()!pratilipi.getTitleEn() } nbsp; <a href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h4>
 	    <span id="book-rating-${ pratilipi.getId()?c }"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
 	    <span>${ pratilipi.getReadCount()?c }<span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
 	    <div>

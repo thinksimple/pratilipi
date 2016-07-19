@@ -22,12 +22,10 @@
 		<div class="media-body">
 		    <h4 class="media-heading">Premchand</h4>
 		    <span>4.3K Followers<span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-    		<div class="follow-author-button">
-				<button class="pratilipi-grey-button">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-					Unfollow &nbsp
-				</button>    			
-    		</div>
+			<button class="pratilipi-grey-button">
+				<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				Unfollow &nbsp
+			</button>    			
 		</div>
 		<br>
 	</div>				
