@@ -37,6 +37,8 @@ import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.client.AuthorData;
+import com.pratilipi.data.client.PratilipiContentData;
+import com.pratilipi.data.client.PratilipiContentData.Chapter;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
@@ -48,6 +50,7 @@ import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.filter.UxModeFilter;
 
 public class PratilipiDataUtil {
 	
@@ -939,11 +942,14 @@ public class PratilipiDataUtil {
 			if( contentHtml != null )
 				contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
 
-//			Object content = pratilipiContentUtil.toPratilipiContentData();
-//			if( content != null && chapterNo != null )
-//				content = ( (PratilipiContentData) content ).getChapter( chapterNo );
-//			if( content != null && pageNo != null )
-//				content = ( (Chapter) content ).getPage( pageNo );
+			if( UxModeFilter.isAndroidApp() ) {
+				Object content = pratilipiContentUtil.toPratilipiContentData();
+				if( content != null && chapterNo != null )
+					content = ( (PratilipiContentData) content ).getChapter( chapterNo );
+				if( content != null && pageNo != null )
+					content = ( (Chapter) content ).getPage( pageNo );
+			}
+			
 			return contentHtml;
 
 		} else if( contentType == PratilipiContentType.IMAGE ) {

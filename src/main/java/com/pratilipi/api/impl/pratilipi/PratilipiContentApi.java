@@ -4,11 +4,11 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiContentRequest;
-import com.pratilipi.api.impl.pratilipi.shared.GetPratilipiContentResponse;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiContentRequest;
 import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiContentResponse;
 import com.pratilipi.api.shared.GenericFileDownloadResponse;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -24,26 +24,63 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @Bind( uri = "/pratilipi/content" )
 public class PratilipiContentApi extends GenericApi {
 
+	public static class GetRequest extends GenericRequest {
+
+		@Validate( required = true )
+		private Long pratilipiId;
+
+		@Validate( required = true )
+		private Integer chapterNo;
+		
+		@Validate
+		private Integer pageNo;
+		
+		@Validate
+		private String pageletId;
+		
+		private PratilipiContentType contentType;
+
+	}
+	
+	public static class GetPratilipiContentResponse extends GenericResponse { 
+		
+		private Long pratilipiId;
+		private Integer pageNo;
+		private Object pageContent;
+
+		
+		private GetPratilipiContentResponse() {}
+		
+		private GetPratilipiContentResponse( Long pratilipiId, Integer pageNo, Object pageContent ) {
+			this.pratilipiId = pratilipiId;
+			this.pageNo = pageNo;
+			this.pageContent = pageContent;
+		}
+
+	}
+	
+	
 	@Get
-	public GenericResponse getPratilipiContent( GetPratilipiContentRequest request )
+	public GenericResponse getPratilipiContent( GetRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
-		PratilipiContentType contentType = request.getContentType();
+		PratilipiContentType contentType = request.contentType;
 		
-		if( contentType == null )
+		if( request.contentType == null )
 			contentType = DataAccessorFactory.getDataAccessor()
-							.getPratilipi( request.getPratilipiId() ).getContentType();
+							.getPratilipi( request.pratilipiId )
+							.getContentType();
 
 		Object content = PratilipiDataUtil.getPratilipiContent(
-				request.getPratilipiId(),
-				request.getChapterNo(),
-				request.getPageNo(),
+				request.pratilipiId,
+				request.chapterNo,
+				request.pageNo,
 				contentType );
 
 		if( contentType == PratilipiContentType.PRATILIPI ) {
 			return new GetPratilipiContentResponse(
-					request.getPratilipiId(),
-					request.getPageNo(),
+					request.pratilipiId,
+					request.pageNo,
 					content );
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			BlobEntry blobEntry = ( BlobEntry ) content;
