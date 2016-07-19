@@ -946,6 +946,7 @@ public class PratilipiDataUtil {
 						content = ( (PratilipiContentData) content ).getChapter( chapterNo );
 					if( content != null && pageNo != null )
 						content = ( (Chapter) content ).getPage( pageNo );
+					return content;
 				} else {
 					contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
 					return contentHtml;
