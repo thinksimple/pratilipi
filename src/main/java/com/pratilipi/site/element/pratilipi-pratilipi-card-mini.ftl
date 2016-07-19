@@ -1,6 +1,6 @@
 <script>
 	$( document ).ready(function() {
-	    $( "#book-rating-${ pratilipi.getId() }" ).prepend( roundOffRating( ${ pratilipi.getAverageRating() } ) );
+	    $( "#book-rating-${ pratilipi.getId()?c }" ).prepend( roundOffRating( ${ pratilipi.getAverageRating() } ) );
 	});
 </script>
 
