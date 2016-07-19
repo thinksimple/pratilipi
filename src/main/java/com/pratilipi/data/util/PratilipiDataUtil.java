@@ -46,6 +46,7 @@ import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
+import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class PratilipiDataUtil {
@@ -373,6 +374,8 @@ public class PratilipiDataUtil {
 		if( ! hasAccessToListPratilipiData( pratilipiFilter ) )
 			throw new InsufficientAccessException();
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
 		// Processing search query
 		if( searchQuery != null )
 			searchQuery = searchQuery.toLowerCase().trim()
@@ -383,13 +386,24 @@ public class PratilipiDataUtil {
 		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
 				pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED
 				? DataAccessorFactory.getSearchAccessor().searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount )
-				: DataAccessorFactory.getDataAccessor().getPratilipiIdList( pratilipiFilter, cursor, offset, resultCount );
+				: dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, offset, resultCount );
 			
 		// Creating PratilipiData list from Pratilipi id list
 		List<PratilipiData> pratilipiDataList = createPratilipiDataList(
 				pratilipiIdListCursorTuple.getDataList(),
 				pratilipiFilter.getAuthorId() == null,
 				false );
+		
+		// Fetching UserPratilipi list from DataStore
+		List<UserPratilipi> userPratilipiList = dataAccessor.getUserPratilipiList(
+				AccessTokenFilter.getAccessToken().getUserId(),
+				pratilipiIdListCursorTuple.getDataList() );
+
+		// Setting isAddedToLib flag for for each PratilipiData in the list
+		for( int i = 0; i < userPratilipiList.size(); i++ ) {
+			UserPratilipi userPratilipi = userPratilipiList.get( i );
+			pratilipiDataList.get( i ).setAddedToLib( userPratilipi != null && userPratilipi.isAddedToLib() );
+		}
 		
 		// Creating response object
 		return new DataListCursorTuple<PratilipiData>(

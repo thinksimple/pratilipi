@@ -106,6 +106,7 @@ public class PratilipiApi extends GenericApi {
 		private Long readCount;
 		private Long fbLikeShareCount;
 		
+		private Boolean addedToLib;
 		private Boolean hasAccessToUpdate;
 		
 		
@@ -166,6 +167,7 @@ public class PratilipiApi extends GenericApi {
 			this.ratingCount = pratilipi.getRatingCount();
 			this.averageRating = pratilipi.getAverageRating();
 			this.readCount = pratilipi.getReadCount();
+			this.addedToLib = pratilipi.isAddedToLib();
 			this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();
 			
 		}
@@ -258,6 +260,10 @@ public class PratilipiApi extends GenericApi {
 			return fbLikeShareCount;
 		}
 
+		
+		public boolean isAddedToLib() {
+			return addedToLib;
+		}
 		
 		public Boolean hasAccessToUpdate() {
 			return hasAccessToUpdate;

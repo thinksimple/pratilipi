@@ -121,6 +121,7 @@ public interface DataAccessor {
 	UserPratilipi newUserPratilipi();
 	UserPratilipi getUserPratilipi( String userPratilipiId );
 	UserPratilipi getUserPratilipi( Long userId, Long pratilipiId );
+	List<UserPratilipi> getUserPratilipiList( Long userId, List<Long> pratilipiIdList );
 	DataListCursorTuple<Long> getUserLibrary( Long userId, String cursor, Integer offset, Integer resultCount );
 	DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId, Long pratilipiId, String cursor, Integer resultCount );
 	UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi, AuditLog auditLog );

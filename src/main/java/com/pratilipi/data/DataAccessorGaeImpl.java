@@ -1053,6 +1053,21 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public List<UserPratilipi> getUserPratilipiList( Long userId, List<Long> pratilipiIdList ) {
+		
+		if( userId == null || userId == 0L || pratilipiIdList.size() == 0 )
+			return new ArrayList<>( 0 );
+		
+		List<String> idList = new ArrayList<>( pratilipiIdList.size() );
+		for( Long pratilipiId : pratilipiIdList )
+			if( pratilipiId != null && pratilipiId != 0L )
+				idList.add( userId + "-" + pratilipiId );
+		
+		return getEntityList( UserPratilipiEntity.class, idList );
+	
+	}
+	
+	@Override
 	public DataListCursorTuple<Long> getUserLibrary( Long userId, String cursorStr, Integer offset, Integer resultCount ) {
 		
 		Query<UserPratilipiEntity> query = ObjectifyService.ofy().load()
