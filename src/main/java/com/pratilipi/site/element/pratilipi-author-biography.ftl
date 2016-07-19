@@ -1,7 +1,7 @@
 <script>
 	$( document ).ready(function() {
-	    $( "#since-date-${ pratilipi.getId()?c }" ).append( convertDate( ${ author.getRegistrationDateMillis() } ) );
-	    $( "#birth-date-${ pratilipi.getId()?c }" ).append( convertDate( ${ author.getDateOfBirth() } ) );
+	    $( "#since-date-${ author.getId()?c }" ).append( convertDate( ${ author.getRegistrationDateMillis() } ) );
+	    $( "#birth-date-${ author.getId()?c }" ).append( convertDate( ${ author.getDateOfBirth() } ) );
 	});
 </script>
 <div class="pratilipi-shadow secondary-500 box">
