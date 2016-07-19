@@ -303,6 +303,7 @@ event_save_changes		= Save Changes
 
 
 # Gender
+gender				= Gender
 gender_male			= Male
 gender_female		= Female
 gender_other		= Other

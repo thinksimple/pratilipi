@@ -516,7 +516,13 @@
 
 			switchLibraryState: function() {
 				if( document.querySelector( 'pratilipi-user' ).getCurrentUser().isGuest ) {
-					document.querySelector( 'pratilipi-user' ).logIn( true );
+					this.async( function() {
+						this.set( 'addedToLib', ! this.addedToLib );
+					}, 150 );
+					this.async( function() {
+						jQuery( this.querySelector( '.library-popup' ) ).modal( 'hide' );
+						document.querySelector( 'pratilipi-user' ).logIn( true );
+					}, 300 );
 					return;
 				}
 				this.$.UserPratilipiLibraryApi.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=" + this.addedToLib );
