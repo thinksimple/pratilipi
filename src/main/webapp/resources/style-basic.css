@@ -1,8 +1,9 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosanstamil.css);
+
 @import url(http://0.ptlp.co/resource-gu/font/shruti.css);
 
 body {
-	font-family: Helvetica,'Noto Sans Tamil','Shruti', sans-serif;
+	font-family: Helvetica, 'Noto Sans Tamil', 'Shruti', sans-serif;
 	background: #f5f5f5;
 	margin: 0px;
 	padding: 0px;
@@ -24,7 +25,6 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 }
-
 
 h1 {
 	font-size: 25px;
@@ -129,9 +129,9 @@ table tr td {
 
 /* Header */
 .search-button {
-	background:none!important;
-	border:none; 
-	padding:0!important;
+	background: none !important;
+	border: none;
+	padding: 0 !important;
 	font: inherit;
 	cursor: pointer;
 	color: white;
@@ -155,26 +155,26 @@ table tr td {
 
 /* Branding */
 .pratilipi-red, a.pratilipi-red:hover, a.pratilipi-red:focus {
-	color: #D0021B!important;
-	text-decoration: none!important;
+	color: #D0021B !important;
+	text-decoration: none !important;
 }
 
-.pratilipi-blue, a.pratilipi-blue:hover, a.pratilipi-blue:focus  {
-	color: #107FE5!important;
-	text-decoration: none!important;
+.pratilipi-blue, a.pratilipi-blue:hover, a.pratilipi-blue:focus {
+	color: #107FE5 !important;
+	text-decoration: none !important;
 }
 
 .pratilipi-shadow {
 	border-top: 1px solid #DDD;
-	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
-	-webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
-	-moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
+	-webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
+	-moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
 }
 
 .pratilipi-light-blue-button {
 	background: #F1F8FB;
 	border: 1px solid #0C68BD;
-	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
 	border-radius: 5px;
 	font-size: 13px;
 	color: #0C68BD;
@@ -182,13 +182,14 @@ table tr td {
 	line-height: 16px;
 	text-shadow: 0px 1px 2px #FFFFFF;
 	display: inline-block;
-	padding: 10px 15px 10px 15px;
+	padding: 5px;
 	margin-right: 10px;
 	magin-top: 5px;
 	outline: none;
 }
 
-a.pratilipi-light-blue-button:hover, a.pratilipi-light-blue-button:focus {
+a.pratilipi-light-blue-button:hover, a.pratilipi-light-blue-button:focus
+	{
 	color: #0C68BD;
 	text-decoration: none;
 	font-size: 13px;
@@ -198,7 +199,7 @@ a.pratilipi-light-blue-button:hover, a.pratilipi-light-blue-button:focus {
 	/* Dashboard Button */
 	background: #E5E5E5;
 	border: 1px solid #979797;
-	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
 	border-radius: 2px;
 	font-size: 13px;
 	color: #4A4A4A;
@@ -206,7 +207,7 @@ a.pratilipi-light-blue-button:hover, a.pratilipi-light-blue-button:focus {
 	line-height: 16px;
 	text-shadow: 0px 1px 2px #FFFFFF;
 	display: inline-block;
-	padding: 10px 15px 10px 15px;
+	padding: 5px;
 	margin-right: 10px;
 	margin-top: 5px;
 	outline: none;
@@ -214,7 +215,7 @@ a.pratilipi-light-blue-button:hover, a.pratilipi-light-blue-button:focus {
 
 a.pratilipi-grey-button:hover, a.pratilipi-grey-button:focus {
 	color: #4A4A4A;
-	text-decoration:none; 
+	text-decoration: none;
 	font-size: 13px;
 }
 
@@ -251,7 +252,6 @@ a.pratilipi-new-blue-button:hover, a.pratilipi-new-blue-button:focus {
 	height: 40px;
 	padding: 10px;
 	color: #ffffff;
-	
 	font-size: 13px;
 	letter-spacing: 0.3px;
 	text-align: center;
@@ -259,12 +259,12 @@ a.pratilipi-new-blue-button:hover, a.pratilipi-new-blue-button:focus {
 	width: auto;
 	font-weight: 300;
 	line-height: 20px;
-	display: inline-block;	
+	display: inline-block;
 	outline: none;
 }
 
 a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
-	color: #ffffff; 
+	color: #ffffff;
 	font-size: 13px;
 }
 
@@ -276,36 +276,41 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	background-position: top;
 	background-size: cover;
 }
-.edit-profile {
 
+.edit-profile {
 	position: relative;
 	top: 16px;
 	left: 40px;
 }
-.numbers{
+
+.numbers {
 	font-size: 20px;
 	font-weight: 500;
 }
+
 .share-author {
 	position: relative;
 	top: 16px;
 	right: 40px;
 }
+
 .profile-picture {
 	width: 200px;
 	height: 200px;
 	padding: 2px;
 	margin-top: 30px;
 }
+
 .author-name {
 	/*margin: 12px auto;*/
 	display: block;
 	color: #fbfbfb;
 	font-size: 21px;
 	font-weight: 700;
-	text-shadow: 4px 1px 4px rgba(0,0,0,0.50);
+	text-shadow: 4px 1px 4px rgba(0, 0, 0, 0.50);
 	letter-spacing: 1.13px;
 }
+
 .follow-author {
 	text-align: center;
 }
@@ -334,54 +339,63 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	border: 1px blue solid;
 	margin-top: 10px;
 }
-.follow-author button.pratilipi-grey-button, .follow-author a.pratilipi-grey-button {
-    background: #E5E5E5;
-    border: 1px solid #979797;
-    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: 400;
-    white-space: nowrap;
-    color: #4A4A4A;
-    letter-spacing: 0.3px;
-    line-height: 16px;
-    text-shadow: 0px 1px 2px #FFFFFF;
-    display: block;	
-    padding: 5px;
-    margin: 0 auto;
-    margin-top: 10px;
-    outline: none;
+
+.follow-author button.pratilipi-grey-button, .follow-author a.pratilipi-grey-button
+	{
+	background: #E5E5E5;
+	border: 1px solid #979797;
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
+	border-radius: 5px;
+	font-size: 15px;
+	font-weight: 400;
+	white-space: nowrap;
+	color: #4A4A4A;
+	letter-spacing: 0.3px;
+	line-height: 16px;
+	text-shadow: 0px 1px 2px #FFFFFF;
+	display: block;
+	padding: 5px;
+	margin: 0 auto;
+	margin-top: 10px;
+	outline: none;
 }
+
 .pratilipi-author-stat {
 	padding: 10px;
 }
-.active > .nav-tab-blue-underline
-{
+
+.active>.nav-tab-blue-underline {
 	text-decoration: none;
 	font-weight: bold;
-	border-radius:0px;
+	border-radius: 0px;
 	border-bottom-width: 4px !important;
 	border-bottom-style: solid;
 	border-bottom-color: blue !important;
 	color: #000 !important;
 	background-color: transparent !important;
 }
+
 .pratilipi-bold {
 	font-weight: bold;
 }
+
 .pratilipi-no-margin {
 	margin-bottom: 0px;
 }
+
 .works-number {
 	font-size: 15px;
 	color: grey;
 }
+
 .media span {
 	margin: 5px;
 }
-.media button{
-	margin:5px;
+
+.media button {
+	margin: 5px;
 }
+
 .pratilipi-light-blue-button-with-margin {
 	margin: 0 auto;
 	border-radius: 5px;
@@ -390,5 +404,5 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	color: Blue;
 	padding: 5px;
 	border: 1px blue solid;
-	margin-top: 20px !important;				
-}						
+	margin-top: 20px !important;
+}
