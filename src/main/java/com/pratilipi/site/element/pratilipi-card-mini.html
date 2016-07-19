@@ -86,7 +86,6 @@
 		.pratilipi-card paper-icon-button.close-button {
 			position: absolute;
 			top: 1px;
-			right: 16px;
 		}
 		.ellipsed, a.ellipsed:hover, a.ellipsed:focus {
 			text-align: left;
@@ -175,7 +174,7 @@
 			}
 			.pratilipi-card paper-fab.share-icon {
 				top: 8px;
-				margin-left: 85px;
+				margin-left: 83px;
 			}
 			.pratilipi-card paper-fab.edit-icon {
 				top: 104px;
@@ -200,6 +199,12 @@
 			.read-rating-count {
 				font-size: 12px;
 			}
+			.pratilipi-card paper-icon-button.close-button {
+				top: 0px;
+				margin-left: 82px;
+				height: 32px;
+				width: 32px;
+			}
 		}
 		@media only screen and (min-width: 600px) {
 			:host {				
@@ -211,7 +216,7 @@
 			}
 			.pratilipi-card .pratilipi-title {
 				font-size: 14px;
-				line-height: 24px;
+				line-height: 20px;
 			}
 			.pratilipi-card paper-fab.library-icon {
 				top: 10px;
@@ -243,6 +248,9 @@
 			}
 			.read-rating-count {
 				font-size: 14px;
+			}
+			.pratilipi-card paper-icon-button.close-button {
+				margin-left: 124px;
 			}
 		}
 	</style>
@@ -279,6 +287,7 @@
 			</template>
 			<template is="dom-if" if="{{ showEditContent }}">
 				<div style="background: #fbfbfb;" class="pratilipi-card">
+					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 					<div class="centered-div">
 						<div class="pratilipi-title pratilipi-title-mini">{{ fullTitle }}</div>
 						<template is="dom-if" if="{{ canMoveToDrafts }}">
@@ -291,27 +300,26 @@
 							<button class="btn btn-danger" on-click="confirmDeleteContent">${ _strings.pratilipi_delete_content }</button>
 						</template>
 					</div>
-					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 				</div>
 			</template>
 			<template is="dom-if" if="{{ showDraftsContent }}">
 				<div style="background: #fbfbfb;" class="pratilipi-card">
+					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 					<div class="centered-div">
 						<div class="pratilipi-title pratilipi-title-mini">{{ fullTitle }}</div>
 						<h6>Do you want it to move to drafts?</h6>
 						<button class="btn btn-danger" on-click="moveContentToDrafts">Yes</button>
 					</div>
-					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 				</div>
 			</template>
 			<template is="dom-if" if="{{ showDeleteContent }}">
 				<div style="background: #fbfbfb;" class="pratilipi-card">
+					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 					<div class="centered-div">
 						<div class="pratilipi-title pratilipi-title-mini">{{ fullTitle }}</div>
 						<h6>Do you want it to delete the content?</h6>
 						<button class="btn btn-danger" on-click="deleteContent">Yes</button>
 					</div>
-					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 				</div>
 			</template>
 
@@ -426,7 +434,7 @@
 				this.set( 'hasAccessToUpdate', this.pratilipi.hasAccessToUpdate );
 				this.set( 'showEditOption', this.pratilipi.hasAccessToUpdate && this.showEditOption );
 				this.set( 'showShareAndLibraryOptions', this.state != "DRAFTED" );
-				this.set( 'addedToLib', false );
+				this.set( 'addedToLib', this.pratilipi.addedToLib );
 			},
 
 			redirectToContentPage: function() {
@@ -507,6 +515,10 @@
 			},
 
 			switchLibraryState: function() {
+				if( document.querySelector( 'pratilipi-user' ).getCurrentUser().isGuest ) {
+					document.querySelector( 'pratilipi-user' ).logIn( true );
+					return;
+				}
 				this.$.UserPratilipiLibraryApi.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=" + this.addedToLib );
 				this.$.UserPratilipiLibraryApi.generateRequest();
 			},
