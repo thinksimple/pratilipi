@@ -1,7 +1,9 @@
 <script>
 	$( document ).ready(function() {
 	    $( "#since-date-${ author.getId()?c }" ).append( convertDate( ${ author.getRegistrationDateMillis() } ) );
-	    $( "#birth-date-${ author.getId()?c }" ).append( convertDate( ${ author.getDateOfBirth() } ) );
+	    <#if author.getDateOfBirth()?? >
+	    	$( "#birth-date-${ author.getId()?c }" ).append( convertDate( ${ author.getDateOfBirth() } ) );
+	    </#if>
 	});
 </script>
 <div class="pratilipi-shadow secondary-500 box">
