@@ -1,19 +1,12 @@
 # Do NOT edit
-
 pratilipi					= பிரதிலிபி
-tinymce_language			= ta
-
 home_page_title				= தமிழ் கதைகள், புத்தகங்கள் , கவிதைகள், கட்டுரைகள், ஆகியவற்றை படிக்க
-
 facebook_page				= https://www.facebook.com/pages/ப்ரதிலிபி/448203822022932
 twitter_page				= https://twitter.com/TeamPratilipi
 googleplus_page				= https://plus.google.com/+PratilipiTeam
 linkedin_page				= https://www.linkedin.com/company/pratilipi
 
-
-
 # Language
-
 language_choose_language	= மொழித்தேர்வு
 language_all				= அனைத்தும்
 language_hi					= ஹிந்தி
@@ -26,9 +19,7 @@ language_en					= ஆங்கிலம்
 language_te					= தெலுங்கு
 language_kn					= கன்னடம்
 
-
 # Pratilipi Types
-
 _pratilipi_type_book		= புத்தகம்
 _pratilipi_type_books		= புத்தகங்கள்
 _pratilipi_type_poem		= கவிதை
@@ -40,75 +31,55 @@ _pratilipi_type_articles	= கட்டுரைகள்
 _pratilipi_type_magazine	= இதழ்
 _pratilipi_type_magazines	= இதழ்கள்
 
-
-
 # Author
-
 author_about					= எழுத்தாளரைப் பற்றி
 author_language					= மொழி	
 author_since					= எழுத ஆரம்பித்தது	
-
 author_count_works				= எழுதியவை	
 author_count_reads				= படித்தவர்கள்	
 author_count_likes				= விருப்பங்கள்	
-
 author_edit_profile				= சுயவிவரத்தை திருத்த	
 author_update_image				= புகைப்படம்
-
 author_drafts					= வரைவுகள்	
 author_published_works			= பதிப்பித்துள்ள படைப்புகள்
 author_add_new_content			= புதிய படைப்பை சேர்க்க	
-
 author_no_contents_published	= மன்னிக்கவும்! இந்த ஆசிரியர் எந்த படைப்பையும் பிரசுரிக்கவில்லை.
 
-
-
 # Pratilipi
-
 pratilipi_type				= வகை	
-pratilipi_listing_date		= சேர்க்கப்பட்டது	
+pratilipi_listing_date		= சேர்க்கப்பட்டது
+pratilipi_last_updated_date	= Last Updated Date	
 pratilipi_published			= பதிப்பிக்கப்பட்டது	
 pratilipi_published_year	= பதிப்பு 
 pratilipi_summary			= படைப்பைப் பற்றி
-
 pratilipi_edit_info			= விவரத்தை திருத்த		
 pratilipi_edit_content		= படைப்பைத் திருத்த
 pratilipi_update_cover		= புகைப்படம்
-
 pratilipi_count_reads		= படித்தவர்கள்	
 pratilipi_count_reviews		= விமர்சனங்கள்	
 pratilipi_count_likes		= விருப்பங்கள்	
-
 pratilipi_move_to_drafts	= வரைவுகளுக்கு அனுப்ப
 pratilipi_publish_it		= பதிப்பிக்க
-
+pratilipi_delete_content	= Delete
 pratilipi_no_reviews		= மன்னிக்கவும்! இந்த படைப்பிற்கு எந்த விமர்சனமும் இதுவரை எழுதப்படவில்லை. விருப்பமிருப்பின் நீங்கள் எழுதலாம்.
-
 pratilipi_confirm_move_to_drafts_title	= வரைவுகளுக்கு அனுப்புதல் 
 pratilipi_confirm_move_to_drafts_body	= நிச்சயமாக இந்த படைப்பை வரைவுகளுக்கு அனுப்பவேண்டுமா?  
 pratilipi_confirm_move_to_drafts_true	= ஆம், வரைவுகளுக்கு அனுப்பவும்
 pratilipi_confirm_move_to_drafts_false	= இல்லை, வரைவுகளுக்கு அனுப்பவேண்டாம்
 
-
-
 # Rating
-
 rating_rating				= மதிப்பீடு 
 rating_ratings				= மதிப்பீடகள்
 rating_rate_this			= மதிப்பிடுக!
 rating_your_rating			= உங்கள் மதிப்பீடு!
 rating_be_first_one			= முதல் ஆளாக மதிப்பீடு வழங்க!
-
 rating_1_star				= 1
 rating_2_star				= 2
 rating_3_star				= 3
 rating_4_star				= 4
 rating_5_star				= 5
 
-
-
 # Review
-
 review_heading				= விமர்சனங்கள் 
 review_write_a_review		= விமர்சனம் எழுத 
 review_title				= விமர்சனத் தலைப்பு 
@@ -124,9 +95,7 @@ review_delete_cancel		= வேண்டாம்
 review_helpful				= இந்த விமர்சனம் உதவியாக இருந்ததா?
 review_see_all_reviews		= அனைத்து விமர்சனங்களையும்   பார்க்க  
 
-
 # Comments
-
 comment_reply_to_comment				= பதிலளி
 comment_number_of_comments_singular		= பதில்
 comment_number_of_comments_plural		= பதில்கள்
@@ -142,16 +111,12 @@ comment_submit_comment					= சமர்ப்பிக்க
 comment_cancel_comment					= வேண்டாம்
 
 # Search
-
 search 						= தேட
 search_bar_help				= தேட - கவிதை, கதை, புத்தகம், கட்டுரை மற்றும் பல  ...
 search_results				= தேடல் முடிவுகள்
 search_no_results_found		= மன்னிக்கவும்! உங்கள் தேடலுக்குத் தகுந்த எந்த முடிவுகளும் இல்லை. வேறு தேடலை மேற்கொள்ளவும்.
 
-
-
 # Write
-
 write_heading				= படைப்பை சேர்க்க                                                                                                                                                                                                                                                                                     
 write_help					= பிரதிலிபியில் அனைவரும் எழுதலாம். உங்கள் படைப்புகளை நீங்களே வெளியிட்டுக் கொள்ளலாம். இது எல்லா வகையான எழுத்திற்கும், எழுத்தாளர்களுக்குமான தளம்.
 write_title					= தலைப்பு *
@@ -161,27 +126,20 @@ write_language				= மொழித்தேர்வு
 write_summary				= படைப்பைப் பற்றி (விருப்பமிருப்பின்)
 write_create_new_content	= புதிய படைப்பை உருவாக்க
 
-
-
 # Common User Popups
-
 user_sign_in				= உள்நுழைக
 user_to_sign_in				= உள்நுழைய 
 user_sign_in_with_facebook	= முகநூல்  மூலம் உள்நுழைய 
 user_sign_in_to_pratilipi	= பிரதிலிபியில் உள்நுழைக
 user_sign_out				= வெளியேற  
-
 user_sign_up				= தளத்தில்  பதிவு செய்க !
 user_sign_up_for_pratilipi	= பிரதிலிபியில் பதிவு செய்க !
 user_sign_up_with_facebook	= முகநூல்  மூலம் உள்நுழைய
-
 user_forgot_password		= கடவுச்சொல் நினைவில் இல்லை? 
 user_reset_password			= கடவுச்சொல்லை மாற்ற
 user_reset_password_help	=  இத்தளத்தில் பதிவு செய்யப் பயன்படுத்திய மின்னஞ்சல் முகவரியை வழங்கவும். அம்முகவரியில் கடவுச்சொல் மாற்றுவதற்கான இணைப்பை அனுப்பிவைக்கிறோம்.
-
 user_current_password		= தற்போதைய கடவுச்சொல்
 user_new_password			= புதிய கடவுச்சொல்
-
 user_full_name				= முழுப்பெயர்
 user_email					= மின்னஞ்சல் முகவரி 
 user_email_not_available	= ஈமெயில் ஐடி இல்லை!
@@ -189,27 +147,20 @@ user_phone					= தொலைபேசி
 user_phone_not_available	= தொலைபேசி எண் இல்லை!
 user_password				= கடவுச்சொல்
 user_confirm_password		= கடவுச்சொலை மீண்டும் பதிவு செய்க
-
 user_my_profile				= என் பக்கம்
 user_my_account				= என் கணக்கு
-
 user_is_new					= புதியவர்?	
 user_is_registered			= உறுப்பினர்?	
 user_email_verification		= மின்னஞ்சல் சரிபார்ப்பு	
 user_require_access			= இந்த செயலை செய்ய நீங்கள் லாக் இன் செய்ய வேண்டும்!
 
-
 # My Account popup
-
 edit_account_heading		= என் கணக்கை திருத்த	
 edit_account_verify_email	= மின்னஞ்சலை சரிபார்க்க	
 edit_account_email_verified	= மின்னஞ்சல் சரிபார்க்கப்பட்டது	
 edit_account_change_password	= கடவுச்சொல்லை மாற்ற	
 
-
-
 # Footer
-
 footer_follow_us_on_social_media	= சமூக வலைதளங்களில் தொடர	
 footer_about_us				= எங்களைப் பற்றி	
 footer_work_with_us			= எங்களுடன் இணைய	
@@ -219,10 +170,7 @@ footer_terms_of_service		= சேவை விதிமுறைகள்
 footer_contact_email		= tamil@pratilipi.com
 footer_contact_10_digit_number		= 9206706899
 
-
-
 # Common Words
-
 okay						= சரி	
 cancel						= இல்லை	
 save_changes				= மாற்றங்களை சேமிக்க	
@@ -240,10 +188,7 @@ back						= பின்னால் செல்ல
 load_more_contents			= மேலும் புத்தகங்களுக்கு
 view_more					= மேலும்  பார்க்க
 
-
-
 # Success Messages
-
 password_reset_request_success		= உங்கள்  முகவரிக்கு மின்னஞ்சல் அனுப்பியுள்ளோம்! 
 user_login_success					= வெற்றி !
 user_register_success				= வெற்றி !
@@ -256,7 +201,6 @@ updated_pratilipi_info_success		= வெற்றி !
 updated_review						= வெற்றி !
 
 # Author Edit Popup
-
 edit_author_heading				= உங்கள் விவரத்தை திருத்த	
 edit_author_first_name			= பெயர் (தமிழில்)
 edit_author_last_name			= 
@@ -270,7 +214,6 @@ edit_author_summary				= உங்களைப் பற்றி ( விரு
 edit_author_save_changes		= மாற்றங்களை சேமிக்க
 
 # Pratilipi Edit Popup
-
 edit_pratilipi_heading			= விவரத்தை திருத்த
 edit_pratilipi_title			= பெயர் *
 edit_pratilipi_title_en			= பெயர் (ஆங்கிலத்தில்)
@@ -279,17 +222,12 @@ edit_pratilipi_language			= மொழி
 edit_pratilipi_summary			= படைப்பைப் பற்றி  (விருப்பமிருப்பின்) :
 edit_pratilipi_save_changes		= மாற்றங்களை சேமிக்க
 
-
-
 # Register Form
-
 register_part_1					= இத்தளத்தில் பதிவு செய்வதன்மூலம், எங்களின் 
 register_part_2					= மற்றும்
 register_part_3					= க்கு ஒப்புக்கொள்கிறேன்.
 
-
 # Event Page
-
 event_entries			= போட்டிக்கான படைப்புகள் 
 event_name				= போட்டியின் பெயர்
 event_name_en			= Event Name in English
@@ -297,8 +235,8 @@ event_description		= Event Description
 event_entries_url_list	= Entries URL List
 event_save_changes		= மாற்றங்களை சேமிக்க 
 
-
 # Gender
+gender				= Gender
 gender_male			= ஆண்
 gender_female		= பெண்
 gender_other		= வேறு
@@ -319,8 +257,10 @@ month_dec	= டிசம்பர்
 
 # Library
 my_library			= என் நூலகம்
-add_to_library		= என் நூலகத்தில் சேர்க்க 
+add_to_library		= என் நூலகத்தில் சேர்க்க
+added_to_library	= Success! You have added this content to your library! 
 remove_from_library	= என் நூலகத்திலிருந்து  அழிக்க  
+removed_from_library = You have removed the content from your library!
 empty_library		= மன்னிக்கவும், உங்களது நூலகத்தில் படைப்புகள் எதுவும் இல்லை,  பிடித்தமான படைப்புகளை சொடுக்கி அதன் பக்கத்திற்கு சென்று நூலகத்தில் சேர்க்கலாம்..
 
 # Reader
@@ -334,7 +274,6 @@ increase_font_size		= எழுத்துக்களை பெரியதா
 decrease_font_size		= எழுத்துக்களை சிறியதாக்க
 increase_image_size		= படத்தை பெரியதாக்க 
 decrease_image_size		= படத்தை சிறியதாக்க 
-
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	= படைப்பு பிடித்திருந்ததா?

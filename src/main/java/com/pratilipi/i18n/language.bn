@@ -1,19 +1,12 @@
 # Do NOT edit
-
 pratilipi					= প্রতিলিপি
-
 home_page_title				= পড়ুন বাংলা গল্প,কবিতা,উপন্যাস এবং আরও অনেক কিছু
-website_language			= বাংলা
-
 facebook_page				= https://www.facebook.com/Pratilipi.Bengali/
 twitter_page				= https://twitter.com/TeamPratilipi
 googleplus_page				= https://plus.google.com/+PratilipiTeam
 linkedin_page				= https://www.linkedin.com/company/pratilipi
 
-
-
 # Language
-
 language_choose_language	= ভাষা পছন্দ করুন
 language_all				=  ভাষা 
 language_hi					= হিন্দী
@@ -26,10 +19,7 @@ language_en					= ইংরাজী
 language_te					= তেলুগু
 language_kn					= কন্নড
 
-
-
 # Pratilipi Types
-
 _pratilipi_type_book		=   গ্রন্থ
 _pratilipi_type_books		=   গ্রন্থসমূহ
 _pratilipi_type_poem		=   কবিতা
@@ -40,72 +30,56 @@ _pratilipi_type_article	= প্রবন্ধ
 _pratilipi_type_articles	 =   প্রবন্ধসমূহ
 _pratilipi_type_magazine	=   পত্রিকা
 _pratilipi_type_magazines	=   পত্রিকাসমূহ
-ा 
-
-
 
 # Author
-
 author_about				=  সংক্ষিপ্ত পরিচয়
 author_language		  =  ভাষা
 author_since				=  প্রতিলিপির সঙ্গে
-
 author_count_works			=  প্রকাশিত সাহিত্য
 author_count_reads			=  পাঠক দ্বারা পঠিত
 author_count_likes			=  পছন্দ করেছেন
 author_edit_profile			=  প্রোফাইল সম্পাদনা
 author_update_image				= চিত্র আপলোড
-
 author_drafts			=  অপ্রকাশিত রচনাসমূহ
 author_published_works		=  প্রকাশিত রচনাসমূহ
 author_add_new_content		=  নতুন রচনা লিখুন
-
 author_no_contents_published	= আমরা ক্ষমাপ্রার্থী , এই লেখকের একাউন্টে এখনো পর্যন্ত প্রকাশন কার্য শুরু হয় নি।
 
-
 # Pratilipi
-
 pratilipi_type		=   প্রকার
 pratilipi_listing_date		=   প্রকাশনার তারিখ
+pratilipi_last_updated_date	= Last Updated Date
 pratilipi_published		=   প্রকাশিত
 pratilipi_published_year	=   প্রকাশনার সাল
 pratilipi_summary		=   সারাংশ লিখুন
-
 pratilipi_edit_info		=   সম্বন্ধিত জ্ঞাতব্য সম্পাদিত করুন    
 pratilipi_edit_content		=   রচনা সম্পাদনা করুন
 pratilipi_update_cover		= फोटो उपलब्ध कीजिए
 pratilipi_count_reads		=   পাঠক সংখ্যা
 pratilipi_count_reviews		=   মোট রিভিউ
 pratilipi_count_likes		=   মোট লাইক্স
-
 pratilipi_move_to_drafts	=   অপ্রকাশিত করুন
 pratilipi_publish_it		=   প্রকাশিত করুন
-
+pratilipi_delete_content	= Delete
 pratilipi_no_reviews		=  আপনার পূর্বাপর বিবেচনা লিপিবদ্ধ করে আপনি প্রথম সমীক্ষক হতে পারেন।
-
 pratilipi_confirm_move_to_drafts_title	= ড্রাফ্টে সরানো হচ্ছে।
 pratilipi_confirm_move_to_drafts_body	= ড্রাফ্টে এই বিষয়বস্তু সরিয়ে ফেলার ব্যাপারে আপনি নিশ্চিত?
 pratilipi_confirm_move_to_drafts_true	= হ্যাঁ, ড্রাফ্টে সরানো হোক!
 pratilipi_confirm_move_to_drafts_false	= না, এটা অপ্রকাশিত করবেন না।
 
 # Rating
-
 rating_rating	=   রেটিং
 rating_ratings	=   রেটিং
 rating_rate_this		=  রেটিং দিন
 rating_your_rating	=  আপনার রেটিং
-
+rating_be_first_one	= Be the first one to rate it! 
 rating_1_star	=  ১
 rating_2_star	=  ২
 rating_3_star	=  ৩
 rating_4_star	=  ৪
 rating_5_star	=  ৫
 
-
-
-
 # Review
-
 review_heading =  রিভিউসমূহ
 review_write_a_review	 =  রিভিউ দিন
 review_title	=  রিভিউ শীর্ষক
@@ -122,7 +96,6 @@ review_helpful	 =  এই রিভিউ কি সহায়ক ছিল?
 review_see_all_reviews		= সকল টিপ্পনী দেখুন
 
 # Comments
-
 comment_reply_to_comment				= প্রত্যুত্তর
 comment_number_of_comments_singular		= প্রত্যুত্তর
 comment_number_of_comments_plural		= প্রত্যুত্তর
@@ -138,16 +111,12 @@ comment_submit_comment					= জমা
 comment_cancel_comment					= বাতিল
 
 # Search
-
 search 	=  খুঁজুন
 search_bar_help =  লেখকের নাম বা কাহিনী,কবিতা,পুস্তকের শিরোনাম টাইপ করুন
 search_results	=  সার্চ রেজাল্ট
 search_no_results_found =  আমরা ক্ষমাপ্রার্থী , আপনার দ্বারা যে অনুসন্ধান করা হয়েছে তা প্রতিলিপিতে উপলব্ধ নয়। অন্য রোমাঞ্চক অথবা রহস্য কাহিনী আপনি পাঠ করতে পারেন।
 
-
-
 # Write
-
 write_heading	= লিখুন                                                                                                                                                                                                                                                                        
 write_help	= কাহিনী,কবিতা,প্রবন্ধ,গ্রন্থ ইত্যাদি স্বয়ং প্রকাশিত করুন
 write_title	=  এখানে শিরোনাম লিখুন
@@ -157,52 +126,41 @@ write_language	 =  ভাষা
 write_summary	 =  সংক্ষিপ্ত সারাংশ লিখুন
 write_create_new_content	=  নতুন রচনা সৃষ্টি
 
-
-
-
 # Common User Popups
-
 user_sign_in			= সাইন ইন করুন
 user_to_sign_in			= আরম্ভ  করুন
 user_sign_in_with_facebook	= ফেসবুকের সাথে সাইন ইন করুন
 user_sign_in_to_pratilipi	= প্রতিলিপিতে সাইন ইন করুন
 user_sign_out			= সাইন আউট করুন
-
 user_sign_up			= নতুন একাউন্ট বানান
 user_sign_up_for_pratilipi	=  প্রতিলিপিতে নতুন একাউন্ট বানান
-
+user_sign_up_with_facebook	= Sign Up with Facebook
 user_forgot_password	=  যদি আপনি পাসওয়ার্ড ভুলে গিয়ে থাকেন?
 user_reset_password	=  নতুন পাসওয়ার্ড বানান
 user_reset_password_help	= এই সাইটে রেজিস্টার করার জন্য ব্যবহার করা ইমেল প্রদান করুন। 
-
 user_current_password		=  বর্তমান পাসওয়ার্ড
 user_new_password	=  নতুন পাসওয়ার্ড
-
 user_full_name	   =  সম্পূর্ণ নাম লিখুন
 user_email	=  ইমেল প্রদান করুন
+user_email_not_available	= Email Not Available!
+user_phone					= Phone
+user_phone_not_available	= Phone Number Not Available!
 user_password		=  পাসওয়ার্ড
 user_confirm_password    =  পাসওয়ার্ড অনুমোদন করুন
-
 user_my_profile	= আপনার প্রোফাইল
 user_my_account	= সেটিং
 user_is_new		= ব্যবহারকারী নতুন
 user_is_registered	= ব্যবহারকারী রেজিস্টার্ড
 user_email_verification		= আপনাকে পাঠানো ইমেল অনুমোদন করুন
-
-
-
-
+user_require_access			= You need to log in to perform this action!
 
 # My Account popup
-
 edit_account_heading		=  আপনার একাউন্ট
 edit_account_verify_email	=  আপনাকে পাঠানো ইমেলের অনুমোদন করুন
 edit_account_email_verified	=  ইমেলের অনুমোদন করা হয়েছে
 edit_account_change_password	=  পাসওয়ার্ড বদল করুন
 
-
 # Footer
-
 footer_follow_us_on_social_media	=  সোশাল মিডিয়াতে আমাদের ফলো করুন
 footer_about_us		=  আমাদের সম্পর্কে
 footer_work_with_us		=  আমাদের সাথে কাজ করুন
@@ -212,10 +170,7 @@ footer_terms_of_service	=  পরিষেবার শর্ত
 footer_contact_email		= bengali@pratilipi.com
 footer_contact_10_digit_number		= 9374724060
 
-
-
 # Common Words
-
 okay						= স্বীকৃত করুন
 cancel						=  ক্যান্সেল করুন
 save_changes				= পরিবর্তন সুরক্ষিত করুন
@@ -230,13 +185,10 @@ update						=  অপডেট
 share						=  শেয়ার করুন
 menu						=  শ্রেণী
 back						=  ব্যাক করুন
-close           =  বন্ধ করুন
 load_more_contents			= আরও দেখুন
 view_more					= আরও দেখুন
- 
 
 # Success Messages
-
 password_reset_request_success	 = পাসওয়ার্ড রিসেট সফল হয়েছে
 user_login_success			=  লগ-ইন সফল
 user_register_success			=  রেজিস্টার সফল
@@ -246,10 +198,9 @@ user_verified_success			= ব্যবহারকারীর অনুমো�
 content_created_success		= রচনা প্রকাশ সফল
 updated_author_info_success		=  লেখক পরিচয় সম্পাদন সফল
 updated_pratilipi_info_success		=  রচনা সম্বন্ধিত জিজ্ঞাস্য সফল
-
+updated_review						= Success !
 
 # Author Edit Popup
-
 edit_author_heading		=  সম্পদিত করুন
 edit_author_first_name		= প্রথম নাম পরিবর্তন
 edit_author_last_name		= অন্তিম নাম পরিবর্তন
@@ -262,9 +213,7 @@ edit_author_language		= ভাষা
 edit_author_summary		= সংক্ষিপ্ত পরিচয়
 edit_author_save_changes		= পরিবর্তন সেভ করুন
 
-
 # Pratilipi Edit Popup
-
 edit_pratilipi_heading			=  হেডিং পরিবর্তন
 edit_pratilipi_title			=  শীর্ষক
 edit_pratilipi_title_en			= শীর্ষক ( ইংরাজী তে )
@@ -272,18 +221,13 @@ edit_pratilipi_type			=  প্রকার
 edit_pratilipi_language			=  ভাষা
 edit_pratilipi_summary			=  রচনার সারাংশ
 edit_pratilipi_save_changes		=  পরিবর্তন সুরক্ষিত করুন
-ें 
-
-
 
 # Register Form
-
 register_part_1					= 
 register_part_2					= 
 register_part_3					= 
 
 # Event Page
-
 event_entries			= ইভেন্ট এন্ট্রি
 event_name				= ইভেন্ট  নাম
 event_name_en			=  ইভেন্ট নাম ইংরাজীতে
@@ -292,6 +236,7 @@ event_entries_url_list	= ইভেন্ট এন্ট্রির ইউ আ�
 event_save_changes		= পরিবর্তন সংরক্ষিত (সেভ) করুন
 
 # Gender
+gender				= Gender
 gender_male			=  পুরুষ
 gender_female		= নারী
 gender_other		= অন্যান্য
@@ -313,7 +258,9 @@ month_dec	= ডিসেম্বর
 # Library
 my_library			= আমার লাইব্রেরী
 add_to_library		= লাইব্রেরীতে এড করুন
+added_to_library	= Success! You have added this content to your library!
 remove_from_library	= লাইব্রেরী থেকে বহির্গত
+removed_from_library = You have removed the content from your library!
 empty_library		= খালি লাইব্রেরী=ক্ষমা করবেন, আপনার লাইব্রেরী এই মুহুর্তে শূন্য। আপনি রোমাঞ্চক কাহিনী এখানে এড করতে পারেন।
 
 # Reader
@@ -327,7 +274,6 @@ increase_font_size		= ফন্টের আকার বাড়ান
 decrease_font_size		=  ফন্টের আকার ছোট করুন
 increase_image_size		= ছবির আকার বড় করুন
 decrease_image_size		= ছবির আকার ছোট করুন
-
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	= রচনাটি পাঠ করে আনন্দ উপভোগ করুন

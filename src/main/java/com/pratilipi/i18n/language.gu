@@ -1,18 +1,12 @@
 # Do NOT edit
-
 pratilipi					= પ્રતિલિપિ
-
 home_page_title				= વાંચો ગુજરાતી વાર્તાઓ, કવિતાઓ, નવલકથાઓ, પુસ્તકો અને બીજું ઘણું
-
 facebook_page				= https://www.facebook.com/pratilipiGujarati/
 twitter_page				= https://twitter.com/TeamPratilipi
 googleplus_page				= https://plus.google.com/+PratilipiTeam
 linkedin_page				= https://www.linkedin.com/company/pratilipi
 
-
-
 # Language
-
 language_choose_language	                = ભાષા પસંદ કરો 
 language_all				        = ભાષાઓ 
 language_hi					= હિન્દી 
@@ -25,9 +19,7 @@ language_en					= અંગ્રેજી
 language_te					= તેલુગુ 
 language_kn					= કન્નડા 
 
-
 # Pratilipi Types
-
 _pratilipi_type_book		= પુસ્તક 
 _pratilipi_type_books		= પુસ્તકો 
 _pratilipi_type_poem		= કવિતા  
@@ -39,74 +31,55 @@ _pratilipi_type_articles	        = લેખો
 _pratilipi_type_magazine	= સામયિક
 _pratilipi_type_magazines	= સામયિકો  
 
-
-
 # Author
-
 author_about			= સંક્ષિપ્ત પરિચય 
 author_language		= ભાષા 
 author_since			= પ્રતિલિપિ સાથે
-
 author_count_works		= પ્રકાશિત સાહિત્ય  
 author_count_reads		= વાચક સંખ્યા   	
 author_count_likes		= વાચકોની પસંદ સંખ્યા
-
 author_edit_profile		= પ્રોફાઈલ સુધારો
 author_update_image		= ફોટો અપલોડ કરો
-
 author_drafts			= અપ્રકાશિત રચનાઓ 
 author_published_works	= પ્રકાશિત રચનાઓ 
 author_add_new_content	= નવી રચના લખો 
-
-
 author_no_contents_published	= માફ કરશો. આ રચનાકારના ખાતામાં સાહિત્ય પ્રકાશન થયેલ નથી.
-
     
 # Pratilipi
-
 pratilipi_type			= સાહિત્ય પ્રકાર 
-pratilipi_listing_date		= પ્રકાશનની તારીખ 	
+pratilipi_listing_date		= પ્રકાશનની તારીખ
+pratilipi_last_updated_date	= Last Updated Date 	
 pratilipi_published		=પ્રકાશિત 	
 pratilipi_published_year	= પ્રકાશન વર્ષ  
 pratilipi_summary		= સારાંશ લખો 
-
 pratilipi_edit_info		= માહિતીમાં સુધારો કરો  	
 pratilipi_edit_content		= રચનામાં સુધારો કરો  
 pratilipi_update_cover		= ફોટો અપલોડ કરો 
-
 pratilipi_count_reads		= વાચક સંખ્યા 
 pratilipi_count_reviews		= કુલ ટીપ્પણી 
 pratilipi_count_likes		= કુલ લાઈક્સ 	
-
 pratilipi_move_to_drafts	= અપ્રકાશિત કરો 
-pratilipi_publish_it		= પ્રકાશિત કરો 
-
+pratilipi_publish_it		= પ્રકાશિત કરો
+pratilipi_delete_content	= Delete 
 pratilipi_no_reviews		= આપ પ્રથમ સમીક્ષક બની ને લેખકનો ઉત્સાહ વધારી શકો છો. 
-
 pratilipi_confirm_move_to_drafts_title	= ડ્રાફ્ટમાં મોકલો 
 pratilipi_confirm_move_to_drafts_body	= આ રચનાને ડ્રાફ્ટમાં મોકલવી નિશ્ચિત છે?
 pratilipi_confirm_move_to_drafts_true	= હા, ડ્રાફ્ટમાં મોકલો!
 pratilipi_confirm_move_to_drafts_false	= ના, અપ્રકાશિત ન કરો!
 
-
 # Rating
-
 rating_rating		  = રેટિંગ 
 rating_ratings		= રેટિંગ 
 rating_rate_this	= રેટિંગ આપો 
 rating_your_rating	= આપનું રેટિંગ 
 rating_be_first_one	= રેટિંગ આપો 
-
 rating_1_star		= ૧ 
 rating_2_star		= ૨ 
 rating_3_star		= ૩
 rating_4_star		= ૪
 rating_5_star		= ૫ 
 
-
-
 # Review
-
 review_heading			    = ટીપ્પણીઓ  
 review_write_a_review		= ટીપ્પણી લખો
 review_title			      = ટીપ્પણીનું શીર્ષક   
@@ -123,7 +96,6 @@ review_helpful			= શું આ ટીપ્પણી મદદરૂપ રહ
 review_see_all_reviews		= બધા રિવ્યુઝ જુઓ 
 
 # Comments
-
 comment_reply_to_comment				= જવાબ આપો 
 comment_number_of_comments_singular		= જવાબો
 comment_number_of_comments_plural		= જવાબો
@@ -139,16 +111,12 @@ comment_submit_comment					= સબમિટ કરો
 comment_cancel_comment					= રદ કરો 
 
 # Search
-
 search 			= શોધો 
 search_bar_help	= લેખકનું નામ અથવા વાર્તા, કવિતા, પુસ્તકનું શીર્ષક ટાઈપ કરો  
 search_results		= શોધના પરિણામો
 search_no_results_found		= માફ કરશો, આપે કરેલ શોધનું પરિણામ શૂન્ય છે. પ્રતિલિપિ પર અન્ય રોમાંસ, હોરર અને રહસ્યકથાઓ માણો.  
 
-
-
 # Write
-
 write_heading		= લખો
 write_help		= વાર્તા,કવિતા,લેખ,પુસ્તક વગેરે સ્વયં પ્રકાશિત કરો  
 write_title		= અહી શીર્ષક લખો  
@@ -158,27 +126,20 @@ write_language		= ભાષા
 write_summary		= ટૂંકમાં સારાંશ લખો
 write_create_new_content	= આગળ વધો 
 
-
-
 # Common User Popups
-
 user_sign_in	= સાઈન ઇન કરો 
 user_to_sign_in	    = સાઈન ઇન કરો
 user_sign_in_with_facebook	= ફેસબુક સાથે સાઈન ઇન કરો 
 user_sign_in_to_pratilipi	= પ્રતિલિપિમાં સાઈન ઇન કરો
 user_sign_out			= સાઈન આઉટ કરો
-  
 user_sign_up			= નવું અકાઉન્ટ બનાવો  
 user_sign_up_for_pratilipi	= પ્રતિલિપિ પર નવું અકાઉન્ટ બનાવો
 user_sign_up_with_facebook	= ફેસબુકથી સાઈન ઇન કરો 
-  
 user_forgot_password		= પાસવર્ડ યાદ નથી?
 user_reset_password		= નવો પાસવર્ડ બનાવો 
 user_reset_password_help	= આ સાઈટ પર રજીસ્ટર કરવા માટે ઉપયોગમાં લીધેલ ઈ-મેલ આઈડી પ્રદાન કરો,  જ્યાં પાસવર્ડ રીસેટ કરવાનો ઈ-મેલ આપને પ્રાપ્ત થશે.   
-
 user_current_password		= વર્તમાન પાસવર્ડ 
 user_new_password		= નવો પાસવર્ડ
- 
 user_full_name			= પૂરું નામ લખો
 user_email			= ઈ-મેલ આઈડી પ્રદાન કરો  
 user_email_not_available	= ઈ-મેઈલ દર્જ થયેલ નથી!
@@ -186,27 +147,20 @@ user_phone					= ફોન
 user_phone_not_available	= ફોન નંબર દર્જ થયેલ નથી!
 user_password			= પાસવર્ડ 
 user_confirm_password	= પાસવર્ડની ખાતરી કરો 
-
 user_my_profile		= મારી પ્રોફાઈલ  
 user_my_account		= સેટિંગ  
-
 user_is_new			= ઉપયોગકર્તા નવા છે -	
 user_is_registered		= ઉપયોગકર્તા અગાઉથી અકાઉન્ટ ધરાવે છે - 
 user_email_verification		= આપને મોકલેલ ઈ-મેલની ચકાસણી કરો 		
 user_require_access			= આ પ્રકિયા માટે સાઈટ પર લોગ-ઇન કરો!
 
-
 # My Account popup
-
 edit_account_heading		= પ્રોફાઈલમાં બદલાવ ઈચ્છો છો? 
 edit_account_verify_email	= ઈ-મેલની ચકાસણી કરો 	
 edit_account_email_verified	= ઈ-મેલની ચકાસણી થઇ ગઈ છે 
 edit_account_change_password=  પાસવર્ડ બદલો 
 
-
-
 # Footer
-
 footer_follow_us_on_social_media	= સોશિયલ મિડિયા પર અમને ફોલો કરો  
 footer_about_us			= અમારા વિશે
 footer_work_with_us			= અમારી સાથે કામ કરો 
@@ -216,10 +170,7 @@ footer_terms_of_service		= સેવાની શરતો
 footer_contact_email		= gujarati@pratilipi.com
 footer_contact_10_digit_number		= 9925624460
 
-
-
 # Common Words
-
 okay			= ઓકે  
 cancel			= રદ કરો  
 save_changes		= બદલાવ સુરક્ષિત કરો 
@@ -237,10 +188,7 @@ back				= પાછા જાઓ
 load_more_contents			= વધુ રચનાઓ  તરફ 
 view_more					= વધુ જુઓ 
 
-
-
 # Success Messages
-
 password_reset_request_success		= પાસવર્ડ રીસેટ સફળ થયું
 user_login_success				= લોગ-ઈન પ્રવેશ સફળ થયો
 user_register_success				= રજીસ્ટ્રેશન સફળ થયું
@@ -253,7 +201,6 @@ updated_pratilipi_info_success	= રચના સંબંધિત માહિ
 updated_review						= સફળ !  
 
 # Author Edit Popup
-
 edit_author_heading				= લેખક પરિચય સુધારો
 edit_author_first_name			= પહેલું નામ બદલો
 edit_author_last_name			= અંતિમ નામ બદલો
@@ -267,7 +214,6 @@ edit_author_summary			= ટૂંકમાં પરિચય
 edit_author_save_changes		= બદલાવ સુરક્ષિત કરો
 
 # Pratilipi Edit Popup
-
 edit_pratilipi_heading			= રચના વિશેની માહિતીમાં ફેરફાર કરો
 edit_pratilipi_title			= શીર્ષક 
 edit_pratilipi_title_en		= શીર્ષક (અંગ્રેજીમાં)
@@ -276,17 +222,12 @@ edit_pratilipi_language		=ભાષા
 edit_pratilipi_summary			= રચનાનો સારાંશ
 edit_pratilipi_save_changes		= બદલાવને સુરક્ષિત કરો
 
-
-
 # Register Form
-
 register_part_1					= અહી રજીસ્ટર થઇ આપ સહમત થઇ રહ્યા છો    
 register_part_2					= અને 
 register_part_3					= .
 
-
 # Event Page
-
 event_entries			= ઇવેન્ટ એન્ટ્રી 
 event_name				= ઇવેન્ટ શીર્ષક 
 event_name_en			= ઇવેન્ટનું શીર્ષક અંગ્રેજીમાં 
@@ -294,8 +235,8 @@ event_description		= ઇવેન્ટ વિશે
 event_entries_url_list	= એન્ટ્રીનું URL લીસ્ટ
 event_save_changes		= બદલાવ સફળ કરો 
 
-
 # Gender
+gender				= Gender
 gender_male			= પુરુષ 
 gender_female		= સ્ત્રી 
 gender_other		= અન્ય 
@@ -316,8 +257,10 @@ month_dec	= ડીસેમ્બર
 
 # Library
 my_library			= મારી લાઈબ્રેરી 
-add_to_library		= લાઈબ્રેરીમાં ઉમેરો 
-remove_from_library	= લાઈબ્રેરીમાંથી કાઢી નાખો 
+add_to_library		= લાઈબ્રેરીમાં ઉમેરો
+added_to_library	= Success! You have added this content to your library! 
+remove_from_library	= લાઈબ્રેરીમાંથી કાઢી નાખો
+removed_from_library = You have removed the content from your library! 
 empty_library		= તમારી લાઈબ્રેરીમાં પુસ્તકો નથી, રચનાઓ માંથી ઉમેરો 
 
 # Reader
@@ -331,7 +274,6 @@ increase_font_size		= અક્ષર મોટા કરો
 decrease_font_size		= અક્ષર નાના કરો 
 increase_image_size		= ફોટો મોટો કરો 
 decrease_image_size		= ફોટો નાનો કરો 
-
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	= વાંચવાની મજા આવી?
