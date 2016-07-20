@@ -19,9 +19,9 @@
 	    		<a class="pratilipi-light-blue-button" href="/login?ret=${ author.getPageUrl() }"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add to Library</button>
 	    	<#else>
 	    		<#if pratilipi.isAddedToLib() == true>
-	    			<button type="button" class="pratilipi-grey-button" onclick="AddToLibrary(false)"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Library</button>
+	    			<button type="button" class="pratilipi-grey-button" onclick="AddToLibrary( ${ pratilipi.getId()?c }, false )"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Library</button>
 	    		<#else>
-	    			<button type="button" class="pratilipi-light-blue-button" onclick="AddToLibrary(true)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add to Library</button>
+	    			<button type="button" class="pratilipi-light-blue-button" onclick="AddToLibrary( ${ pratilipi.getId()?c }, true )"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add to Library</button>
 	    		</#if>
 	    	</#if>
 	    </div> 
