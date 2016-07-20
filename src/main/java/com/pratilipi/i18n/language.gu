@@ -44,7 +44,22 @@ author_drafts			= અપ્રકાશિત રચનાઓ
 author_published_works	= પ્રકાશિત રચનાઓ 
 author_add_new_content	= નવી રચના લખો 
 author_no_contents_published	= માફ કરશો. આ રચનાકારના ખાતામાં સાહિત્ય પ્રકાશન થયેલ નથી.
-    
+author_activity					= Activity
+author_about					= About
+author_biography				= Biography
+author_location					= Location
+author_date_of_birth			= Date Of Birth
+author_follow					= Follow
+author_unfollow					= UnFollow
+author_followers				= Followers
+author_no_followers				= Sorry! This author doesn't have any followers
+author_following				= Following
+author_no_following				= Sorry! This author is not following anyone!
+author_follow_members			= Members
+author_cannot_follow_yourself	= Yourself
+author_settings_require_first_name	= Please enter your first name!
+author_settings_require_language	= Please enter your language!
+
 # Pratilipi
 pratilipi_type			= સાહિત્ય પ્રકાર 
 pratilipi_listing_date		= પ્રકાશનની તારીખ
@@ -58,14 +73,19 @@ pratilipi_update_cover		= ફોટો અપલોડ કરો
 pratilipi_count_reads		= વાચક સંખ્યા 
 pratilipi_count_reviews		= કુલ ટીપ્પણી 
 pratilipi_count_likes		= કુલ લાઈક્સ 	
-pratilipi_move_to_drafts	= અપ્રકાશિત કરો 
-pratilipi_publish_it		= પ્રકાશિત કરો
-pratilipi_delete_content	= Delete 
 pratilipi_no_reviews		= આપ પ્રથમ સમીક્ષક બની ને લેખકનો ઉત્સાહ વધારી શકો છો. 
 pratilipi_confirm_move_to_drafts_title	= ડ્રાફ્ટમાં મોકલો 
 pratilipi_confirm_move_to_drafts_body	= આ રચનાને ડ્રાફ્ટમાં મોકલવી નિશ્ચિત છે?
 pratilipi_confirm_move_to_drafts_true	= હા, ડ્રાફ્ટમાં મોકલો!
 pratilipi_confirm_move_to_drafts_false	= ના, અપ્રકાશિત ન કરો!
+pratilipi_move_to_drafts				= અપ્રકાશિત કરો 
+pratilipi_publish_it					= પ્રકાશિત કરો
+pratilipi_delete_content				= Delete
+pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
+pratilipi_confirm_move_to_drafts_okay	= Okay
+pratilipi_confirm_delete_content		= Do you want to delete the content?
+pratilipi_confirm_delete_content_okay	= Okay
+pratilipi_deleted_successfully			= The content has been deleted successfully!
 
 # Rating
 rating_rating		  = રેટિંગ 
@@ -200,6 +220,10 @@ updated_author_info_success			= લેખક પરિચયમાં ફેર�
 updated_pratilipi_info_success	= રચના સંબંધિત માહિતીમાં ફેરફાર સફળ થયો
 updated_review						= સફળ !  
 
+#Failure Messages
+server_error_message				= Some error Occured! Please try again!
+write_please_login_desktop			= You can publish contents by logging into desktop.
+
 # Author Edit Popup
 edit_author_heading				= લેખક પરિચય સુધારો
 edit_author_first_name			= પહેલું નામ બદલો
@@ -261,7 +285,8 @@ add_to_library		= લાઈબ્રેરીમાં ઉમેરો
 added_to_library	= Success! You have added this content to your library! 
 remove_from_library	= લાઈબ્રેરીમાંથી કાઢી નાખો
 removed_from_library = You have removed the content from your library! 
-empty_library		= તમારી લાઈબ્રેરીમાં પુસ્તકો નથી, રચનાઓ માંથી ઉમેરો 
+empty_library		= તમારી લાઈબ્રેરીમાં પુસ્તકો નથી, રચનાઓ માંથી ઉમેરો
+library_content_in_library	= Add content to Library 
 
 # Reader
 reader_goto_content_page	= સારાંશ જુઓ 

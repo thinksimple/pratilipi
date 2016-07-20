@@ -175,13 +175,13 @@
 						<template is="dom-if" if="{{ !following }}">
 							<button class="pratilipi-light-blue-button" on-click="followAuthor">
 								<iron-icon icon="social:person-add"></iron-icon>
-								Follow{{ followCountAbbr }}
+								${ _strings.author_follow }{{ followCountAbbr }}
 							</button>
 						</template>
 						<template is="dom-if" if="{{ following }}">
 							<button class="pratilipi-grey-button" on-click="unFollowAuthor">
 								<iron-icon icon="icons:remove-circle"></iron-icon>
-								UnFollow{{ followCountAbbr }}
+								${ _strings.author_unfollow }{{ followCountAbbr }}
 							</button>
 						</template>
 					</div>
@@ -320,7 +320,7 @@
 			if( response != null && response.detail.request.xhr.response.message != null ) {
 				document.querySelector( 'pratilipi-alert' ).alert( response.detail.request.xhr.response.message, false );
 			} else {
-				document.querySelector( 'pratilipi-alert' ).alert( "Some error Occured! Please try again", false );
+				document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.server_error_message }", false );
 				console.log( response );
 			}
 		},
@@ -331,17 +331,17 @@
 		
 		shareAuthorOnFacebook: function() {
 			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl, 
-					"share", "width=1100,height=500,left=70px,top=60px" );
+					"share" + "%26" + "utm_source=author_page", "width=1100,height=500,left=70px,top=60px" );
 		},
 		
 		shareAuthorOnTwitter: function() {
 			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl,
-					"share", "width=1100,height=500,left=70px,top=60px" );
+					"share" + "%26" + "utm_source=author_page", "width=1100,height=500,left=70px,top=60px" );
 		},
 		
 		shareAuthorOnGplus: function() {
 			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl,
-					"share", "width=1100,height=500,left=70px,top=60px" );
+					"share" + "%26" + "utm_source=author_page", "width=1100,height=500,left=70px,top=60px" );
 		},
 
 		_chooseFile: function() {

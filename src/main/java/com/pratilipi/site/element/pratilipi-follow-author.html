@@ -69,15 +69,15 @@
 			<template is="dom-if" if="{{ canFollow }}">
 				<div class="follow-author-button pull-right">
 					<template is="dom-if" if="{{ !following }}">
-						<button class="pratilipi-light-blue-button" on-click="followAuthor">Follow{{ followCountString }}</button>
+						<button class="pratilipi-light-blue-button" on-click="followAuthor">${ _strings.author_follow }{{ followCountString }}</button>
 					</template>
 					<template is="dom-if" if="{{ following }}">
-						<button class="pratilipi-grey-button" on-click="unFollowAuthor">UnFollow{{ followCountString }}</button>
+						<button class="pratilipi-grey-button" on-click="unFollowAuthor">${ _strings.author_unfollow }{{ followCountString }}</button>
 					</template>
 				</div>
 			</template>
 			<template is="dom-if" if="{{ !canFollow }}">
-				<div class="yourself pull-right">YOURSELF</div>
+				<div class="yourself pull-right">${ _strings.author_cannot_follow_yourself }</div>
 			</template>
 		</div>
 		<iron-ajax
@@ -156,7 +156,7 @@
 				if( event != null && event.detail.request.xhr.response.message != null ) {
 					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
 				} else {
-					document.querySelector( 'pratilipi-alert' ).alert( "Some error Occured! Please try again", false );
+					document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.server_error_message }", false );
 					console.log( event );
 				}
 			},

@@ -44,6 +44,21 @@ author_drafts					= Drafts
 author_published_works			= Published Works
 author_add_new_content			= Add New Content
 author_no_contents_published	= Sorry! This Author doesn't have any books published!
+author_activity					= Activity
+author_about					= About
+author_biography				= Biography
+author_location					= Location
+author_date_of_birth			= Date Of Birth
+author_follow					= Follow
+author_unfollow					= UnFollow
+author_followers				= Followers
+author_no_followers				= Sorry! This author doesn't have any followers
+author_following				= Following
+author_no_following				= Sorry! This author is not following anyone!
+author_follow_members			= Members
+author_cannot_follow_yourself	= Yourself
+author_settings_require_first_name	= Please enter your first name!
+author_settings_require_language	= Please enter your language!
 
 # Pratilipi
 pratilipi_type				= Type
@@ -58,14 +73,19 @@ pratilipi_update_cover		= Upload Photo
 pratilipi_count_reads		= READS
 pratilipi_count_reviews		= REVIEWS
 pratilipi_count_likes		= LIKES
-pratilipi_move_to_drafts	= Move to Drafts
-pratilipi_publish_it		= Publish it!
-pratilipi_delete_content	= Delete
 pratilipi_no_reviews		= Sorry! No Reviews found for this content!
 pratilipi_confirm_move_to_drafts_title	= Moving to drafts
 pratilipi_confirm_move_to_drafts_body	= Are you sure to move this content to drafts?
 pratilipi_confirm_move_to_drafts_true	= Yes, move to drafts!
 pratilipi_confirm_move_to_drafts_false	= No, don't unpublish it!
+pratilipi_move_to_drafts				= Move to Drafts
+pratilipi_publish_it					= Publish
+pratilipi_delete_content				= Delete
+pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
+pratilipi_confirm_move_to_drafts_okay	= Okay
+pratilipi_confirm_delete_content		= Do you want to delete the content?
+pratilipi_confirm_delete_content_okay	= Okay
+pratilipi_deleted_successfully			= The content has been deleted successfully!
 
 # Rating
 rating_rating				= Rating 
@@ -200,6 +220,10 @@ updated_author_info_success			= Success !
 updated_pratilipi_info_success		= Success !
 updated_review						= Success !
 
+#Failure Messages
+server_error_message				= Some error Occured! Please try again!
+write_please_login_desktop			= You can publish contents by logging into desktop.
+
 # Author Edit Popup
 edit_author_heading				= Edit Author Information	
 edit_author_first_name			= First Name( Vernacular )
@@ -262,6 +286,7 @@ added_to_library	= Success! You have added this content to your library!
 remove_from_library	= Remove from Library
 removed_from_library = You have removed the content from your library!
 empty_library		= Sorry, there are no books in your library, you can add books from content page.
+library_content_in_library	= Add content to Library
 
 # Reader
 reader_goto_content_page	= Go to Content Page

@@ -44,6 +44,21 @@ author_drafts					= வரைவுகள்
 author_published_works			= பதிப்பித்துள்ள படைப்புகள்
 author_add_new_content			= புதிய படைப்பை சேர்க்க	
 author_no_contents_published	= மன்னிக்கவும்! இந்த ஆசிரியர் எந்த படைப்பையும் பிரசுரிக்கவில்லை.
+author_activity					= Activity
+author_about					= About
+author_biography				= Biography
+author_location					= Location
+author_date_of_birth			= Date Of Birth
+author_follow					= Follow
+author_unfollow					= UnFollow
+author_followers				= Followers
+author_no_followers				= Sorry! This author doesn't have any followers
+author_following				= Following
+author_no_following				= Sorry! This author is not following anyone!
+author_follow_members			= Members
+author_cannot_follow_yourself	= Yourself
+author_settings_require_first_name	= Please enter your first name!
+author_settings_require_language	= Please enter your language!
 
 # Pratilipi
 pratilipi_type				= வகை	
@@ -58,14 +73,19 @@ pratilipi_update_cover		= புகைப்படம்
 pratilipi_count_reads		= படித்தவர்கள்	
 pratilipi_count_reviews		= விமர்சனங்கள்	
 pratilipi_count_likes		= விருப்பங்கள்	
-pratilipi_move_to_drafts	= வரைவுகளுக்கு அனுப்ப
-pratilipi_publish_it		= பதிப்பிக்க
-pratilipi_delete_content	= Delete
 pratilipi_no_reviews		= மன்னிக்கவும்! இந்த படைப்பிற்கு எந்த விமர்சனமும் இதுவரை எழுதப்படவில்லை. விருப்பமிருப்பின் நீங்கள் எழுதலாம்.
 pratilipi_confirm_move_to_drafts_title	= வரைவுகளுக்கு அனுப்புதல் 
 pratilipi_confirm_move_to_drafts_body	= நிச்சயமாக இந்த படைப்பை வரைவுகளுக்கு அனுப்பவேண்டுமா?  
 pratilipi_confirm_move_to_drafts_true	= ஆம், வரைவுகளுக்கு அனுப்பவும்
 pratilipi_confirm_move_to_drafts_false	= இல்லை, வரைவுகளுக்கு அனுப்பவேண்டாம்
+pratilipi_move_to_drafts				= வரைவுகளுக்கு அனுப்ப
+pratilipi_publish_it					= பதிப்பிக்க
+pratilipi_delete_content				= Delete
+pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
+pratilipi_confirm_move_to_drafts_okay	= Okay
+pratilipi_confirm_delete_content		= Do you want to delete the content?
+pratilipi_confirm_delete_content_okay	= Okay
+pratilipi_deleted_successfully			= The content has been deleted successfully!
 
 # Rating
 rating_rating				= மதிப்பீடு 
@@ -200,6 +220,10 @@ updated_author_info_success			= வெற்றி !
 updated_pratilipi_info_success		= வெற்றி !
 updated_review						= வெற்றி !
 
+#Failure Messages
+server_error_message				= Some error Occured! Please try again!
+write_please_login_desktop			= You can publish contents by logging into desktop.
+
 # Author Edit Popup
 edit_author_heading				= உங்கள் விவரத்தை திருத்த	
 edit_author_first_name			= பெயர் (தமிழில்)
@@ -262,6 +286,7 @@ added_to_library	= Success! You have added this content to your library!
 remove_from_library	= என் நூலகத்திலிருந்து  அழிக்க  
 removed_from_library = You have removed the content from your library!
 empty_library		= மன்னிக்கவும், உங்களது நூலகத்தில் படைப்புகள் எதுவும் இல்லை,  பிடித்தமான படைப்புகளை சொடுக்கி அதன் பக்கத்திற்கு சென்று நூலகத்தில் சேர்க்கலாம்..
+library_content_in_library	= Add content to Library
 
 # Reader
 reader_goto_content_page	= படைப்புப் பக்கத்திற்குச் செல்ல

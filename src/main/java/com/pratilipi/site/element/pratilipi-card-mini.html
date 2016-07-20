@@ -307,8 +307,8 @@
 					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 					<div class="centered-div">
 						<div class="pratilipi-title pratilipi-title-mini">{{ fullTitle }}</div>
-						<h6>Do you want it to move to drafts?</h6>
-						<button class="btn btn-danger" on-click="moveContentToDrafts">Yes</button>
+						<h6>${ _strings.pratilipi_confirm_move_to_drafts }</h6>
+						<button class="btn btn-danger" on-click="moveContentToDrafts">${ _strings.pratilipi_confirm_move_to_drafts_okay }</button>
 					</div>
 				</div>
 			</template>
@@ -317,8 +317,8 @@
 					<paper-icon-button class="close-button" icon="icons:close" on-click="cancelEditFunction"></paper-icon-button>
 					<div class="centered-div">
 						<div class="pratilipi-title pratilipi-title-mini">{{ fullTitle }}</div>
-						<h6>Do you want it to delete the content?</h6>
-						<button class="btn btn-danger" on-click="deleteContent">Yes</button>
+						<h6>${ _strings.pratilipi_confirm_delete_content }</h6>
+						<button class="btn btn-danger" on-click="deleteContent">${ _strings.pratilipi_confirm_delete_content_okay }</button>
 					</div>
 				</div>
 			</template>
@@ -367,7 +367,7 @@
 					<div class="modal-body">
 						<paper-icon-button class="pull-right" icon="icons:close" data-dismiss="modal"></paper-icon-button>
 						<div class="library-item-menu">
-							<h6>Library</h6>
+							<h6>${ _strings.library_content_in_library }</h6>
 							<paper-toggle-button noink class="pull-right" checked="{{ addedToLib }}" on-change="switchLibraryState"></paper-toggle-button>
 						</div>
 					</div>
@@ -518,11 +518,11 @@
 				if( document.querySelector( 'pratilipi-user' ).getCurrentUser().isGuest ) {
 					this.async( function() {
 						this.set( 'addedToLib', ! this.addedToLib );
-					}, 150 );
+					}, 120 );
 					this.async( function() {
 						jQuery( this.querySelector( '.library-popup' ) ).modal( 'hide' );
 						document.querySelector( 'pratilipi-user' ).logIn( true );
-					}, 300 );
+					}, 250 );
 					return;
 				}
 				this.$.UserPratilipiLibraryApi.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=" + this.addedToLib );

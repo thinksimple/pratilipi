@@ -44,6 +44,21 @@ author_drafts				= अप्रकाशित रचनायें
 author_published_works		= प्रकाशित रचनायें
 author_add_new_content		= नवीन रचना लिहा
 author_no_contents_published	= साहित्यकारांच्या अकाउंट मध्ये अजून पर्यंत प्रकाशन कार्य चालू नाही झाले त्याबद्दल आम्ही  क्षमस्व आहोत.
+author_activity					= Activity
+author_about					= About
+author_biography				= Biography
+author_location					= Location
+author_date_of_birth			= Date Of Birth
+author_follow					= Follow
+author_unfollow					= UnFollow
+author_followers				= Followers
+author_no_followers				= Sorry! This author doesn't have any followers
+author_following				= Following
+author_no_following				= Sorry! This author is not following anyone!
+author_follow_members			= Members
+author_cannot_follow_yourself	= Yourself
+author_settings_require_first_name	= Please enter your first name!
+author_settings_require_language	= Please enter your language!
 
 # Pratilipi
 pratilipi_type				= विधा
@@ -58,14 +73,19 @@ pratilipi_update_cover		= फोटो अपलोड करा
 pratilipi_count_reads		= वाचकांनी वाचले
 pratilipi_count_reviews		= एकूण टिप्पणी
 pratilipi_count_likes		= एकूण लाइक्स	
-pratilipi_move_to_drafts	= अप्रकाशित करा
-pratilipi_publish_it		= प्रकाशित करा
-pratilipi_delete_content	= Delete
 pratilipi_no_reviews		= तुमच्या सामिक्षतेचे पहिले हकदार तुम्ही असून ती तुमी स्वतः देऊ शकता.
 pratilipi_confirm_move_to_drafts_title	= ड्राफ्ट मध्ये जा
 pratilipi_confirm_move_to_drafts_body	= या साहित्याला ड्राफ्ट मध्ये  जाण्यास सुनिश्चित करा
 pratilipi_confirm_move_to_drafts_true	= होय,  ड्राफ्ट मध्ये जा!
 pratilipi_confirm_move_to_drafts_false	= नाही, त्याला अप्रकाशित नका करुत!
+pratilipi_move_to_drafts				= अप्रकाशित करा
+pratilipi_publish_it					= प्रकाशित करा
+pratilipi_delete_content				= Delete
+pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
+pratilipi_confirm_move_to_drafts_okay	= Okay
+pratilipi_confirm_delete_content		= Do you want to delete the content?
+pratilipi_confirm_delete_content_okay	= Okay
+pratilipi_deleted_successfully			= The content has been deleted successfully!
 
 # Rating
 rating_rating				= रेटिंग
@@ -200,6 +220,10 @@ updated_author_info_success			= लेखक संपादन परिचय 
 updated_pratilipi_info_success		= संपादित माहिती निर्मिती यशस्वी आहे
 updated_review						= Success !
 
+#Failure Messages
+server_error_message				= Some error Occured! Please try again!
+write_please_login_desktop			= You can publish contents by logging into desktop.
+
 # Author Edit Popup
 edit_author_heading				= लेखक परिचय संपादित करां 
 edit_author_first_name			= नाव बदला
@@ -261,7 +285,8 @@ add_to_library		= संग्रहाला जोडा
 added_to_library	= Success! You have added this content to your library!
 remove_from_library	= संग्रहाला हटवा
 removed_from_library = You have removed the content from your library!
-empty_library		= माफ़ करा तुमच्या संग्रहामध्ये सध्या काहीच उपलब्ध नाही…यात रोचक कथा जोडु सकता 
+empty_library		= माफ़ करा तुमच्या संग्रहामध्ये सध्या काहीच उपलब्ध नाही…यात रोचक कथा जोडु सकता
+library_content_in_library	= Add content to Library 
 
 # Reader
 reader_goto_content_page	= साहित्याच्या सामग्री पुष्ठावर जा 

@@ -82,7 +82,7 @@
 							<paper-input class="pratilipi-blue" type="date" label="${ _strings.edit_author_birthday_ddmmyyyy }" always-float-label value="{{ dateOfBirth::input }}"></paper-input>
 						</div>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-							<paper-dropdown-menu id="authorGender" noink label="Gender" value="{{ gender::input }}">
+							<paper-dropdown-menu id="authorGender" noink label="${ _strings.gender }">
 								<paper-menu noink selected="[[ selectedGender ]]" class="dropdown-content" style="white-space: nowrap; width: auto;">
 									<paper-item value="MALE">${ _strings.gender_male }</paper-item>
 									<paper-item value="FEMALE">${ _strings.gender_female }</paper-item>
@@ -233,11 +233,11 @@
 				/* Mandatory fields */
 				if( ( this.firstName == null || this.firstName.trim() == "" ) 
 					&& ( this.firstNameEn == null || this.firstNameEn.trim() == "" ) ) {
-					this.message = "Please enter the first name!";
+					this.message = "${ _strings.author_settings_require_first_name }";
 					return;
 				}
 				if( this.$.authorLanguage.selectedItem == null ) {
-					this.message = "Please enter your preferred Language!";
+					this.message = "${ _strings.author_settings_require_language }";
 					return;
 				}
 
@@ -282,7 +282,7 @@
 			_authorApiError: function( event ) {
 				jQuery( '#authorSaveChangesButton' ).prop( 'disabled', false );
 				this.message = event.detail.request.xhr.response.message != null ? 
-						event.detail.request.xhr.response.message : "Some Error occurred! Please try Again.";   
+						event.detail.request.xhr.response.message : "${ _strings.server_error_message }";   
 			}
 
 		});

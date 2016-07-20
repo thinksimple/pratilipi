@@ -43,7 +43,22 @@ author_update_image				= ఫోటో అప్లోడ్ చేయండి
 author_drafts					= డ్రాఫ్టులు
 author_published_works			= ప్రచురించబడిన రచనలు
 author_add_new_content			= కొత్త రచనను చేయండి
-author_no_contents_published	= క్షమించండి! ఈ రచయిత ఖాతాలో ఎలాంటి రచనలు లేవు!  
+author_no_contents_published	= క్షమించండి! ఈ రచయిత ఖాతాలో ఎలాంటి రచనలు లేవు!
+author_activity					= Activity
+author_about					= About
+author_biography				= Biography
+author_location					= Location
+author_date_of_birth			= Date Of Birth
+author_follow					= Follow
+author_unfollow					= UnFollow
+author_followers				= Followers
+author_no_followers				= Sorry! This author doesn't have any followers
+author_following				= Following
+author_no_following				= Sorry! This author is not following anyone!
+author_follow_members			= Members
+author_cannot_follow_yourself	= Yourself
+author_settings_require_first_name	= Please enter your first name!
+author_settings_require_language	= Please enter your language!  
 
 # Pratilipi
 pratilipi_type				= వర్గం
@@ -58,14 +73,19 @@ pratilipi_update_cover		= ఫోటో అప్లోడ్ చేయండి
 pratilipi_count_reads		= ఫాఠకులు
 pratilipi_count_reviews		= సమీక్షలు
 pratilipi_count_likes		= నచ్చినవి
-pratilipi_move_to_drafts	= డ్రాఫ్ట్సులోకి పంపించండి
-pratilipi_publish_it		= ప్రచురించండి!
-pratilipi_delete_content	= Delete
 pratilipi_no_reviews		= క్షమించండి! ఈ రచనకు ఎలాంటి సమీక్షలు లేవు!
 pratilipi_confirm_move_to_drafts_title	= ఈ  రచన డ్రాఫ్టులలోకి పంపించబడుతోంది
 pratilipi_confirm_move_to_drafts_body	= ఈ రచనను మీరు డ్రాఫ్టులలోకి పంపించాలని భావిస్తున్నారా?
 pratilipi_confirm_move_to_drafts_true	= అవును. డ్రాఫ్టులలోకి పంపించండి
 pratilipi_confirm_move_to_drafts_false	= లేదు. డ్రాఫ్టులలోకి పంపించవద్దు
+pratilipi_move_to_drafts				= డ్రాఫ్ట్సులోకి పంపించండి
+pratilipi_publish_it					= ప్రచురించండి!
+pratilipi_delete_content				= Delete
+pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
+pratilipi_confirm_move_to_drafts_okay	= Okay
+pratilipi_confirm_delete_content		= Do you want to delete the content?
+pratilipi_confirm_delete_content_okay	= Okay
+pratilipi_deleted_successfully			= The content has been deleted successfully!
 
 # Rating
 rating_rating				= రేటింగ్‌  
@@ -200,6 +220,10 @@ updated_author_info_success			= విజయవంతంగా పూర్త�
 updated_pratilipi_info_success		= విజయవంతంగా పూర్తయ్యింది!
 updated_review						= విజయవంతంగా పూర్తయ్యింది!
 
+#Failure Messages
+server_error_message				= Some error Occured! Please try again!
+write_please_login_desktop			= You can publish contents by logging into desktop.
+
 # Author Edit Popup
 edit_author_heading				= రచయిత సమాచారాన్ని ఎడిట్ చేయండి	
 edit_author_first_name			= పేరు (తెలుగులో)
@@ -262,6 +286,7 @@ added_to_library	= Success! You have added this content to your library!
 remove_from_library	= గ్రంథాలయం నుండి తొలగించండి
 removed_from_library = You have removed the content from your library!
 empty_library		= క్షమించండి, మీ గ్రంథాలయంలో ఎలాంటి పుస్తకాలు లేవు. మీరు రచనల పేజికి వెళ్ళి వాటిని జత చేసుకోవచ్చు. 
+library_content_in_library	= Add content to Library
 
 # Reader
 reader_goto_content_page	= కంటెంట్ పేజీకి వెళ్లండి

@@ -4,7 +4,6 @@
 <#include "pratilipi-author-biography.html">
 <#include "pratilipi-author-following.html">
 <#include "pratilipi-author-followers.html">
-<#-- <#include "pratilipi-author-recent-contents.html"> -->
 
 <dom-module id="pratilipi-author-tabs">
 	<style>
@@ -51,8 +50,8 @@
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
 			<ul class="nav nav-tabs" role="tablist">
-				<li style="width: 50%;" role="presentation" class="active">	<a href="#author-activity" 	class="text-center" aria-controls="author-activity" role="tab" data-toggle="tab">Activity</a>	</li>
-				<li style="width: 50%;" role="presentation">				<a href="#author-about" 	class="text-center" aria-controls="author-about" 	role="tab" data-toggle="tab">About</a>		</li>
+				<li style="width: 50%;" role="presentation" class="active">	<a href="#author-activity" 	class="text-center" aria-controls="author-activity" role="tab" data-toggle="tab">${ _strings.author_activity }</a>	</li>
+				<li style="width: 50%;" role="presentation">				<a href="#author-about" 	class="text-center" aria-controls="author-about" 	role="tab" data-toggle="tab">${ _strings.author_about }</a>		</li>
 			</ul>
 		</div>
 		<div class="tab-content">
@@ -134,7 +133,7 @@
 		_pratilipiApiResponse: function( response ) {
 			var pratilipi = response.detail.response;
 			if( pratilipi.state == "DELETED" ) {
-				document.querySelector( 'pratilipi-alert' ).alert( "You have deleted the book successfully!" );
+				document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.pratilipi_deleted_successfully }" );
 				window.location.reload();
 			}
 		},
@@ -143,7 +142,7 @@
 			if( response != null && response.detail.request.xhr.response.message != null ) {
 				document.querySelector( 'pratilipi-alert' ).alert( response.detail.request.xhr.response.message, false );
 			} else {
-				document.querySelector( 'pratilipi-alert' ).alert( "Some error Occured! Please try again", false );
+				document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.server_error_message }", false );
 				console.log( response );
 			}
 			this.async( function() { window.location.reload(); }, 2000 );

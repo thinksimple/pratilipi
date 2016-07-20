@@ -44,6 +44,21 @@ author_drafts					= ഡ്രാഫ്റ്റുകള്
 author_published_works			= പ്രസിദ്ധീകരിച്ച രചനകള്‍
 author_add_new_content			= പുതിയ രചനകള്‍ ചേര്‍ക്കൂ
 author_no_contents_published	= ക്ഷമിക്കണം!  ഈ രചയിതാവ് രചനകള് ഒന്നും തന്നെ പ്രസിദ്ധീകരിച്ചിട്ടില്ല.
+author_activity					= Activity
+author_about					= About
+author_biography				= Biography
+author_location					= Location
+author_date_of_birth			= Date Of Birth
+author_follow					= Follow
+author_unfollow					= UnFollow
+author_followers				= Followers
+author_no_followers				= Sorry! This author doesn't have any followers
+author_following				= Following
+author_no_following				= Sorry! This author is not following anyone!
+author_follow_members			= Members
+author_cannot_follow_yourself	= Yourself
+author_settings_require_first_name	= Please enter your first name!
+author_settings_require_language	= Please enter your language!
 
 # Pratilipi
 pratilipi_type				= തരം
@@ -58,14 +73,19 @@ pratilipi_update_cover		= ഫോട്ടോ അപ് ലോഡ്  ചെയ�
 pratilipi_count_reads		= വായിച്ചവര്‍ 
 pratilipi_count_reviews		= റിവ്യൂസ് 
 pratilipi_count_likes		= ലൈക്സ്‌
-pratilipi_move_to_drafts	= ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റൂ
-pratilipi_publish_it		= പ്രസിദ്ധീകരിക്കൂ.
-pratilipi_delete_content	= Delete
 pratilipi_no_reviews		= ക്ഷമിക്കണം! ഈ രചനയ്ക്ക് റിവ്യൂസ് ഒന്നും തന്നെ ഇല്ല!
 pratilipi_confirm_move_to_drafts_title	= ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റുന്നു 
 pratilipi_confirm_move_to_drafts_body	= ഈ രചന ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റട്ടേ ?
 pratilipi_confirm_move_to_drafts_true	= അതെ, ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റൂ!
 pratilipi_confirm_move_to_drafts_false	= വേണ്ട, ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റരുത്!
+pratilipi_move_to_drafts				= ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റൂ
+pratilipi_publish_it					= പ്രസിദ്ധീകരിക്കൂ.
+pratilipi_delete_content				= Delete
+pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
+pratilipi_confirm_move_to_drafts_okay	= Okay
+pratilipi_confirm_delete_content		= Do you want to delete the content?
+pratilipi_confirm_delete_content_okay	= Okay
+pratilipi_deleted_successfully			= The content has been deleted successfully!
 
 # Rating
 rating_rating				= റേറ്റിംഗ് 
@@ -200,6 +220,10 @@ updated_author_info_success			=വിജയകരമായി പൂര്‍ത
 updated_pratilipi_info_success		= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
 updated_review						= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
 
+#Failure Messages
+server_error_message				= Some error Occured! Please try again!
+write_please_login_desktop			= You can publish contents by logging into desktop.
+
 # Author Edit Popup
 edit_author_heading				= രചയിതാവിനെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ തിരുത്തുക.	
 edit_author_first_name			= പേര് (മലയാളത്തില്‍)
@@ -262,6 +286,7 @@ added_to_library	= Success! You have added this content to your library!
 remove_from_library	= എന്‍റെ വായനശാലയില്‍ നിന്നും ഒഴിവാക്കുക
 removed_from_library = You have removed the content from your library!
 empty_library		= ക്ഷമിക്കണം! താങ്കളുടെ വായനശാലയില്‍ രചനകള്‍ ഒന്നും തന്നെ ഇല്ല, താങ്കള്‍ക്ക് വേണ്ട രചനയുടെ പേജില്‍ പോയി വായനശാലയിലേക്ക് ചേര്‍ക്കാവുന്നതാണ്.
+library_content_in_library	= Add content to Library
 
 # Reader
 reader_goto_content_page	= രചനയുടെ പേജിലേക്ക് പോകൂ

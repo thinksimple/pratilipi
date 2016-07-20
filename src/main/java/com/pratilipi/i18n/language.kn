@@ -44,6 +44,21 @@ author_drafts					         = ಅಪ್ರಕಟಿತ ಬರಹಗಳು
 author_published_works			   = ಪ್ರಕಟಿತ ಬರಹಗಳು 
 author_add_new_content		     = ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 
 author_no_contents_published	 = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರ ಪ್ರಕಟಿತ ಪುಸ್ತಕಗಳು ಯಾವುವೂ ಇಲ್ಲ!
+author_activity					= Activity
+author_about					= About
+author_biography				= Biography
+author_location					= Location
+author_date_of_birth			= Date Of Birth
+author_follow					= Follow
+author_unfollow					= UnFollow
+author_followers				= Followers
+author_no_followers				= Sorry! This author doesn't have any followers
+author_following				= Following
+author_no_following				= Sorry! This author is not following anyone!
+author_follow_members			= Members
+author_cannot_follow_yourself	= Yourself
+author_settings_require_first_name	= Please enter your first name!
+author_settings_require_language	= Please enter your language!
 
 # Pratilipi   
 pratilipi_type				            = ವಿಧ 
@@ -58,14 +73,19 @@ pratilipi_update_cover		        = ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡ�
 pratilipi_count_reads		          = ಓದುಗರು 
 pratilipi_count_reviews	          = ಪ್ರತಿಕ್ರಿಯೆಗಳು
 pratilipi_count_likes		          = ಮೆಚ್ಚುಗೆಗಳು 
-pratilipi_move_to_drafts	        = ಅಪ್ರಕಟಿತಗೊಳಿಸಿ
-pratilipi_publish_it		          = ಪ್ರಕಟಿಸಿ!
-pratilipi_delete_content			= Delete
 pratilipi_no_reviews		          = ಕ್ಷಮಿಸಿ! ಈ ಬರಹಕ್ಕೆ ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆಗಳಿಲ್ಲ! 
 pratilipi_confirm_move_to_drafts_title	   = ಅಪ್ರಕಟಿತಗೊಳ್ಳುತ್ತಿದೆ
 pratilipi_confirm_move_to_drafts_body	     = ಈ ಬರಹವನ್ನು ನೀವು ನಿಸ್ಸಂದೇಹವಾಗಿ ಅಪ್ರಕಟಿತಗೊಳಿಸುವಿರಾ?
 pratilipi_confirm_move_to_drafts_true	     = ಹೌದು, ಅಪ್ರಕಟಿತಗೊಳಿಸಿ!
 pratilipi_confirm_move_to_drafts_false	   = ಇಲ್ಲ, ಅಪ್ರಕಟಿತಗೊಳಿಸಬೇಡಿ!
+pratilipi_move_to_drafts				= ಅಪ್ರಕಟಿತಗೊಳಿಸಿ
+pratilipi_publish_it					= ಪ್ರಕಟಿಸಿ!
+pratilipi_delete_content				= Delete
+pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
+pratilipi_confirm_move_to_drafts_okay	= Okay
+pratilipi_confirm_delete_content		= Do you want to delete the content?
+pratilipi_confirm_delete_content_okay	= Okay
+pratilipi_deleted_successfully			= The content has been deleted successfully!
 
 # Rating          
 rating_rating				       = ರೇಟಿಂಗ್
@@ -200,6 +220,10 @@ updated_author_info_success			         = ಯಶಸ್ವಿ!
 updated_pratilipi_info_success		       = ಯಶಸ್ವಿ!
 updated_review						               = ಯಶಸ್ವಿ!
 
+#Failure Messages
+server_error_message				= Some error Occured! Please try again!
+write_please_login_desktop			= You can publish contents by logging into desktop.
+
 # Author Edit Popup
 edit_author_heading				       = ಲೇಖಕರ ಮಾಹಿತಿಯನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
 edit_author_first_name			     = ಮೊದಲ ಹೆಸರು (ಕನ್ನಡದಲ್ಲಿ)
@@ -262,6 +286,7 @@ added_to_library	         = ಯಶಸ್ವಿ! ಈ ಬರಹವನ್ನು ನ
 remove_from_library	       = ಪುಸ್ತಕ ಭಂಡಾರದಿಂದ ತೆಗೆದುಹಾಕಿ 
 removed_from_library       = ನೀವು ಬರಹವನ್ನು ಪುಸ್ತಕ ಭಂಡಾರದಿಂದ ತೆಗೆದು ಹಾಕಿರುವಿರಿ!
 empty_library		           = ಕ್ಷಮಿಸಿ, ನಿಮ್ಮ ಪುಸ್ತಕ ಭಂಡಾರದಲ್ಲಿ ಯಾವುದೇ ಪುಸ್ತಕಗಳಿಲ್ಲ, ನೀವು ಪುಸ್ತಕಗಳನ್ನು ಬರಹ ಪುಟದಿಂದ ತೆಗೆದು ಸೇರಿಸಬಹುದು.
+library_content_in_library	= Add content to Library
 
 # Reader
 reader_goto_content_page	         = ಬರಹ ಪುಟಕ್ಕೆ ಹೋಗಿ 

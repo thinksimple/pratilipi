@@ -75,7 +75,7 @@
 			<div class="author-follow-header">
 				<h5 class="pratilipi-red">{{ title }}</h5>
 				<template is="dom-if" if="{{ !emptyList }}">
-					<div class="follow-text text-center">{{ numberFound }} Members</div>
+					<div class="follow-text text-center">{{ numberFound }} ${ _strings.author_follow_members }</div>
 				</template>
 			</div>
 			<hr/>
@@ -88,7 +88,7 @@
 					</template>
 				</div>
 				<template is="dom-if" if="{{ showModalButton }}">
-					<div class="more-button" on-click="openModal">Show More</div>
+					<div class="more-button" on-click="openModal">${ _strings.show_more }</div>
 				</template>
 				<pratilipi-follow-author-popup
 					follow-list="{{ followList }}"

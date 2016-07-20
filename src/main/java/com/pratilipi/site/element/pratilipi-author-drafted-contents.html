@@ -157,7 +157,7 @@
 				if( jQuery( window ).width() >= 600 )
 					document.querySelector( 'pratilipi-write' ).createNewPratilipi( this.authorId );
 				else
-					document.querySelector( 'pratilipi-alert' ).alert( "Please log in to desktop to write!", false, 10 * 6000 );
+					document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.write_please_login_desktop }", false, 10 * 6000 );
 			},
 
 			_numberFoundObserver: function() {
@@ -230,7 +230,7 @@
 				this.set( 'isLoading', false );
 				this.set( 'showMore', true );
 				var message = response.detail.request.xhr.response.message != null ? 
-						response.detail.request.xhr.response.message : "Error occurred! Please try again!";
+						response.detail.request.xhr.response.message : "${ _strings.server_error_message }";
 				document.querySelector( 'pratilipi-alert' ).alert( message, false );
 			},
 

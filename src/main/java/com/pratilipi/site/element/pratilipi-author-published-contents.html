@@ -212,7 +212,7 @@
 				this.set( 'isLoading', false );
 				this.set( 'showMore', true );
 				var message = response.detail.request.xhr.response.message != null ? 
-						response.detail.request.xhr.response.message : "Error occurred! Please try again!";
+						response.detail.request.xhr.response.message : "${ _strings.server_error_message }";
 				document.querySelector( 'pratilipi-alert' ).alert( message, false );
 			},
 
