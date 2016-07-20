@@ -1,6 +1,6 @@
 <div class="media">
 	<a class="media-left" href="#">
-	    <img class="media-object img-circle" style="width:90px;height:90px;" src="https://hindizenblog.files.wordpress.com/2009/10/munshi-premchand.jpg" alt="Generic placeholder image">
+	    <img class="media-object img-circle pratilipi-without-margin" style="width:90px;height:90px;" src="https://hindizenblog.files.wordpress.com/2009/10/munshi-premchand.jpg" alt="Generic placeholder image">
 	</a>
 	<div class="media-body">
 	    <h4 class="media-heading">Premchand</h4>

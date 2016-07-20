@@ -12,7 +12,7 @@
   	<div class="pull-left">	
 	    <h4 class="media-heading">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; <a href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h4>
 	    <span id="book-rating-${ pratilipi.getId()?c }"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
-	    <span>${ pratilipi.getReadCount()?c }<span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+	    <span>${ pratilipi.getReadCount() }<span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
 	    <div>
 	    	<a class="pratilipi-light-blue-button" href="${ pratilipi.getReadPageUrl() }">Read</a>
 	    	<#if user.isGuest == true>

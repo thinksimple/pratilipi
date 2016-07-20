@@ -383,6 +383,10 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	margin-bottom: 0px;
 }
 
+.pratilipi-without-margin{
+	margin: 0px;
+}
+
 .works-number {
 	font-size: 15px;
 	color: grey;
