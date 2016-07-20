@@ -127,7 +127,7 @@
 			},
 			
 			_numberFoundObserver: function() {
-				jQuery( this ).css( 'display', this.author.hasAccessToUpdate ? 'none' : 'block' );
+				jQuery( this ).css( 'display', this.author.hasAccessToUpdate && this.numberFound == 0 ? 'none' : 'block' );
 				jQuery( this.querySelector( '.works-number' ) ).css( 'display', this.numberFound > 0 ? 'block' : 'none' );
 				jQuery( this.querySelector( '.author-no-works' ) ).css( 'display', this.numberFound > 0 ? 'none' : 'block' );
 			},
