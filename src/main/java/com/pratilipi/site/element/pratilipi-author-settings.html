@@ -270,7 +270,8 @@
 			_authorApiResponse: function( event ) {
 				this.message = "${ _strings.updated_author_info_success }";
 				jQuery( '#authorSaveChangesButton' ).prop( 'disabled', false );
-				var author = updateObject( this.author, event.detail.response );
+				var author = event.detail.response;
+				author.user = this.author.user;
 				this.domHost.updateAuthor( author );
 				this.async( function() {
 					this.message = null;

@@ -120,13 +120,14 @@
 			_authorObserver: function() {
 				/* Called before first rendering */
 				if( this.pratilipiListObject == null ) return;
-
+				/* Executed whenever author changes */
 				this.set( 'pratilipiList', [] );
 				this.set( 'cursor', null );
 				this.loadMore();
 			},
 			
 			_numberFoundObserver: function() {
+				jQuery( this ).css( 'display', this.author.hasAccessToUpdate ? 'none' : 'block' );
 				jQuery( this.querySelector( '.works-number' ) ).css( 'display', this.numberFound > 0 ? 'block' : 'none' );
 				jQuery( this.querySelector( '.author-no-works' ) ).css( 'display', this.numberFound > 0 ? 'none' : 'block' );
 			},
