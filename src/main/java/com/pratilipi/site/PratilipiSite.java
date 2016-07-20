@@ -724,6 +724,8 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "author", authorResponse );
 			dataModel.put( "userAuthor", userAuthorResponse );
 			dataModel.put( "publishedPratilipiList", pratilipiListResponse.getPratilipiList() );
+			dataModel.put( "followersList", followersList );
+			dataModel.put( "followingList", followingList );
 			if( pratilipiListResponse.getPratilipiList().size() == 20 && pratilipiListResponse.getCursor() != null )
 				dataModel.put( "publishedPratilipiListSearchQuery", "authorId=" + authorId + "&state=" + PratilipiState.PUBLISHED );
 		} else {
