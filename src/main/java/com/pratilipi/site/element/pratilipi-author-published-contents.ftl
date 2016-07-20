@@ -19,9 +19,7 @@
 	<hr style="margin-top:0px;margin-bottom:0px;">	
 
 	<#if publishedPratilipiList?has_content>
-		<#list publishedPratilipiList as pratilipi>
-			<#include "pratilipi-pratilipi-card-mini.ftl">
-		</#list>
+		<#include "pratilipi-card-list.ftl">
 	<#else>
 		<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
 			<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
