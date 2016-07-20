@@ -271,7 +271,7 @@
 				this.message = "${ _strings.updated_author_info_success }";
 				jQuery( '#authorSaveChangesButton' ).prop( 'disabled', false );
 				var author = updateObject( this.author, event.detail.response );
-				this.domHost.updateAuthor( this.author, author );
+				this.domHost.updateAuthor( author );
 				this.async( function() {
 					this.message = null;
 					this.close();
