@@ -42,7 +42,7 @@ public class PratilipiContentApi extends GenericApi {
 
 	}
 	
-	public static class Response extends GenericResponse { 
+	public static class Response extends GenericResponse {
 		
 		private Long pratilipiId;
 		private Integer pageNo;

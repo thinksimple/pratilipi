@@ -339,6 +339,17 @@ public class PratilipiDataUtil {
 			pratilipiDataList.add( pratilipiData );
 		}
 		
+		// Fetching UserPratilipi list from DataStore
+		List<UserPratilipi> userPratilipiList = dataAccessor.getUserPratilipiList(
+				AccessTokenFilter.getAccessToken().getUserId(),
+				pratilipiIdList );
+
+		// Setting isAddedToLib flag for for each PratilipiData in the list
+		for( int i = 0; i < userPratilipiList.size(); i++ ) {
+			UserPratilipi userPratilipi = userPratilipiList.get( i );
+			pratilipiDataList.get( i ).setAddedToLib( userPratilipi != null && userPratilipi.isAddedToLib() );
+		}
+		
 		return pratilipiDataList;
 		
 	}
@@ -396,17 +407,6 @@ public class PratilipiDataUtil {
 				pratilipiIdListCursorTuple.getDataList(),
 				pratilipiFilter.getAuthorId() == null,
 				false );
-		
-		// Fetching UserPratilipi list from DataStore
-		List<UserPratilipi> userPratilipiList = dataAccessor.getUserPratilipiList(
-				AccessTokenFilter.getAccessToken().getUserId(),
-				pratilipiIdListCursorTuple.getDataList() );
-
-		// Setting isAddedToLib flag for for each PratilipiData in the list
-		for( int i = 0; i < userPratilipiList.size(); i++ ) {
-			UserPratilipi userPratilipi = userPratilipiList.get( i );
-			pratilipiDataList.get( i ).setAddedToLib( userPratilipi != null && userPratilipi.isAddedToLib() );
-		}
 		
 		// Creating response object
 		return new DataListCursorTuple<PratilipiData>(
@@ -939,21 +939,17 @@ public class PratilipiDataUtil {
 			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( contentHtml );
 
-			if( contentHtml != null ) {
-				if( UxModeFilter.isAndroidApp() ) {
-					Object content = pratilipiContentUtil.toPratilipiContentData();
-					if( content != null && chapterNo != null )
-						content = ( (PratilipiContentData) content ).getChapter( chapterNo );
-					if( content != null && pageNo != null )
-						content = ( (Chapter) content ).getPage( pageNo );
-					return content;
-				} else {
-					contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
-					return contentHtml;
-				}
+			if( UxModeFilter.isAndroidApp() ) {
+				Object content = pratilipiContentUtil.toPratilipiContentData();
+				if( content != null && chapterNo != null )
+					content = ( (PratilipiContentData) content ).getChapter( chapterNo );
+				if( content != null && pageNo != null )
+					content = ( (Chapter) content ).getPage( pageNo );
+				return content;
+			} else {
+				contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
+				return contentHtml;
 			}
-
-			return null;
 			
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			
