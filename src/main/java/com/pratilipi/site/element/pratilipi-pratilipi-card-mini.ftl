@@ -16,7 +16,7 @@
 	    <div>
 	    	<a class="pratilipi-light-blue-button" href="${ pratilipi.getReadPageUrl() }">Read</a>
 	    	<#if user.isGuest == true>
-	    		<a class="pratilipi-light-blue-button" href="/login?ret=${ author.getPageUrl() }"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add to Library</button>
+	    		<a class="pratilipi-light-blue-button" href="/login?ret=${ author.getPageUrl() }"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add to Library</a>
 	    	<#else>
 	    		<#if pratilipi.isAddedToLib() == true>
 	    			<button type="button" class="pratilipi-grey-button" onclick="AddToLibrary( ${ pratilipi.getId()?c }, false )"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Library</button>
