@@ -87,7 +87,7 @@
 	<template>
 		<paper-card>
 			
-			<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
+			<template is="dom-if" if="{{ hasAccessToUpdate }}">
 				<div class="dropdown">
 					<paper-icon-button style="color: #333;" class="dropdown-trigger pull-right" icon="more-vert" noink type="button" data-toggle="dropdown"></paper-icon-button>
 					<ul style="margin-right: 6px; margin-top: 4px;" class="dropdown-menu pull-right">
@@ -111,15 +111,15 @@
 				</div>
 			</template>
 			
-			<!-- For wide-screens and mobile screens-->
+			<#-- For wide-screens and mobile screens-->
 			<div id="pratilipi-row">
 				<div id="pratilipi-col-left" style="padding: 20px 0px 10px 10px;">
-					<template is="dom-if" if="{{ !pratilipi.hasAccessToUpdate }}">
+					<template is="dom-if" if="{{ ! hasAccessToUpdate }}">
 						<div style="width: 150px; height: 225px; margin: 0 auto;" class="pratilipi-shadow">
 							<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ title }}"/>
 						</div>
 					</template>
-					<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
+					<template is="dom-if" if="{{ hasAccessToUpdate }}">
 						<div style="position: absolute; top: -1000px;">
 							<form id="uploadImage" method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId={{ pratilipi.pratilipiId }}" target="upload_target">
 								<input id="uploadImageInput" type="file" on-change="uploadImage" name="{{ pratilipi.pratilipiId }}" accept="image/*">
@@ -180,11 +180,17 @@
 					
 					<div style="position: relative; display: inline-block;">
 						<button on-click="redirectToReader" class="pratilipi-light-blue-button">${ _strings.read }</button>
-						<template is="dom-if" if="{{ pratilipi.hasAccessToUpdate }}">
-							<button id="changeStateButton" on-click="changePratilipiState" class="pratilipi-light-blue-button">{{ changeState }}</button>
+						<template is="dom-if" if="{{ canMoveToDrafts }}">
+							<button on-click="moveToDrafts" class="pratilipi-grey-button">${ _strings.pratilipi_move_to_drafts }</button>
+						</template>
+						<template is="dom-if" if="{{ canPublish }}">
+							<button on-click="publishPratilipi" class="pratilipi-light-blue-button">"${ _strings.pratilipi_publish_it }"</button>
+						</template>
+						<template is="dom-if" if="{{ canDelete }}">
+							<button on-click="deleteContent" class="pratilipi-grey-button">${ _strings.pratilipi_delete_content }</button>
 						</template>
 						<template is="dom-if" if="{{ !userpratilipi.addedToLib }}">
-							<button on-click="addToLibrary" class="pratilipi-grey-button">${ _strings.add_to_library }</button>
+							<button on-click="addToLibrary" class="pratilipi-light-blue-button">${ _strings.add_to_library }</button>
 						</template>
 						<template is="dom-if" if="{{ userpratilipi.addedToLib }}">
 							<button on-click="removeFromLibrary" class="pratilipi-grey-button">${ _strings.remove_from_library }</button>
@@ -349,28 +355,22 @@
 				
 				
 				this.set( 'pratilipi', pratilipi );
-				
-				this.title = ( pratilipi.title != null && pratilipi.title.trim() != "" ) ?
-						pratilipi.title : pratilipi.titleEn;
-				
-				this.averageRating = pratilipi.averageRating != null ? pratilipi.averageRating : 0 ;
-				this.ratingCount = pratilipi.ratingCount != null ? pratilipi.ratingCount : 0 ;
-				this.readCount = pratilipi.readCount != null ? pratilipi.readCount : 0 ;
-				this.pratilipiCoverImageUrl = pratilipi.coverImageUrl + ( pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150"; 
-				this.zeroRating = ( pratilipi.ratingCount != null && pratilipi.ratingCount > 0 ) ? true : false;
-				this.type = this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name;
-				this.listingDate = convertDate( pratilipi.listingDateMillis );
-				this.showLastUpdatedDate = pratilipi.lastUpdatedMillis != null ? true : false;
-				this.lastUpdatedDate = pratilipi.lastUpdatedMillis != null ? convertDate( pratilipi.lastUpdatedMillis ) : null; 
-				if( pratilipi.state == "DRAFTED" )
-					this.changeState = "${ _strings.pratilipi_publish_it }";
-				else if ( pratilipi.state == "PUBLISHED" )
-					this.changeState = "${ _strings.pratilipi_move_to_drafts }";
-				else
-					jQuery( '#changeStateButton' ).hide();
-
-
-				// Not displaying Summary if..
+				this.set( 'title', ( pratilipi.title != null && pratilipi.title.trim() != "" ) ? pratilipi.title : pratilipi.titleEn );
+				this.set( 'averageRating', pratilipi.averageRating != null ? pratilipi.averageRating : 0 );
+				this.set( 'ratingCount', pratilipi.ratingCount != null ? pratilipi.ratingCount : 0 );
+				this.set( 'readCount', pratilipi.readCount != null ? pratilipi.readCount : 0 );
+				this.set( 'pratilipiCoverImageUrl', pratilipi.coverImageUrl + ( pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
+				this.set( 'zeroRating', ( pratilipi.ratingCount != null && pratilipi.ratingCount > 0 ) ? true : false );
+				this.set( 'type', this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name );
+				this.set( 'listingDate', convertDate( pratilipi.listingDateMillis ) );
+				this.set( 'showLastUpdatedDate', pratilipi.lastUpdatedMillis != null ? true : false );
+				this.set( 'lastUpdatedDate', pratilipi.lastUpdatedMillis != null ? convertDate( pratilipi.lastUpdatedMillis ) : null );
+				this.set( 'hasAccessToUpdate', pratilipi.hasAccessToUpdate );
+				this.set( 'canMoveToDrafts', pratilipi.state != null && pratilipi.state != "DRAFTED" );
+				this.set( 'canPublish', pratilipi.state != null && pratilipi.state != "PUBLISHED" );
+				this.set( 'canDelete', pratilipi.state != null && pratilipi.state != "DELETED" && this.state != "PUBLISHED" && false );
+				<#-- Explicitly setting canDelete to false - awaiting business call -->
+				<#-- Display / Dont display Summary -->
 				if( pratilipi.summary == null || pratilipi.summary.trim() == "" ) { 
 					document.getElementById( "pratilipi-summary" ).style.display = "none";
 				} else {
@@ -432,18 +432,16 @@
 				}, 30 );
 			},
 			
-			changePratilipiState: function() {
-				if( this.pratilipi.state == "DRAFTED" )
-					this.publishPratilipi();
-				else if( this.pratilipi.state == "PUBLISHED" )
-					this.moveToDrafts();
-			},
-			
 			publishPratilipi: function() {
 				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=PUBLISHED" );
 				this.$.AjaxPost.generateRequest();
 			},
-			
+
+			deleteContent: function() {
+				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=DELETED" );
+				this.$.AjaxPost.generateRequest();
+			},
+
 			_moveToDrafts: function() {
 				if( !this.moveToDraftsBoolean ) return;
 				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=DRAFTED" );
