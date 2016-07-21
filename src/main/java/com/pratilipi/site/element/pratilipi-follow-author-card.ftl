@@ -1,4 +1,4 @@
-<#macro follow-author-card userId followCount following name pageUrl imageUrl >
+<#macro follow_author_card userId followCount following name pageUrl imageUrl >
 	<div class="media">
 		<a class="media-left" href="${ pageUrl }">
 		    <img class="media-object img-circle pratilipi-without-margin" style="width:90px;height:90px;" src="${ imageUrl }">
