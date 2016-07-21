@@ -1,7 +1,26 @@
 <dom-module id="pratilipi-user-login">
 
 	<style>
-		.modal-fullscreen .modal-dialog .modal-content {max-width: 400px;padding-top:30px;}
+		.modal-fullscreen {
+			padding: 0;
+		}
+		.modal-fullscreen .modal-dialog {
+			height: 100%;
+		}
+		.modal-fullscreen .modal-dialog .modal-content {
+			padding-top: 12px;
+			padding-bottom: 24px;
+			max-width: 400px;
+		}
+		.forgot-password {
+			display: block;
+			text-align: center;
+			margin-top: 24px; 
+		}
+		.register {
+			margin-top: 6px;
+			text-align: center;
+		}
 	</style>
 
 	<template>
@@ -24,17 +43,9 @@
 						<p>{{ message }}</p>
 					</div>
 					<button id="loginButton" class="pratilipi-blue-button" on-click="onSubmit">${ _strings.user_sign_in }</button>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="row">
-					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 center text-center">
-						<a class="pratilipi-red" on-click="resetPassword">${ _strings.user_forgot_password }</a>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 center text-center">
-						<span class="text-muted">${ _strings.user_is_new }</span>
-						<a class="pratilipi-blue" on-click="register">${ _strings.user_sign_up_for_pratilipi }</a>
-					</div>
+					<a class="pratilipi-red forgot-password" on-click="resetPassword">${ _strings.user_forgot_password }</a>
+					<div class="text-muted register">${ _strings.user_is_new }&nbsp;&nbsp;<a class="pratilipi-blue" on-click="register">${ _strings.user_sign_up_for_pratilipi }</a></div>
+					
 				</div>
 			</div>
 		</div>
