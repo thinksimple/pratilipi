@@ -2,6 +2,8 @@ package com.pratilipi.api.impl.event.shared;
 
 import java.util.List;
 
+import org.jsoup.Jsoup;
+
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.client.EventData;
@@ -15,6 +17,7 @@ public class GenericEventResponse extends GenericResponse {
 	
 	private Language language;
 	private String description;
+	private String descriptionSummary;
 	private List<String> pratilipiUrlList;
 	
 	private String pageUrl;
@@ -29,6 +32,8 @@ public class GenericEventResponse extends GenericResponse {
 		this.nameEn = eventData.getNameEn();
 		this.language = eventData.getLanguage();
 		this.description = eventData.getDescription();
+		this.descriptionSummary = Jsoup.parse( eventData.getDescription() ).text();
+		this.descriptionSummary = this.descriptionSummary.substring( 0, Math.min( 500, this.descriptionSummary.length() ) );
 		this.pratilipiUrlList = eventData.getPratilipiUrlList();
 		this.pageUrl = eventData.getPageUrl();
 		this.bannerImageUrl = eventData.getBannerImageUrl();
@@ -54,8 +59,12 @@ public class GenericEventResponse extends GenericResponse {
 		return language;
 	}
 	
-	public String getSummary() {
+	public String getDescription() {
 		return description;
+	}
+	
+	public String getDescriptionSummary() {
+		return descriptionSummary;
 	}
 
 	public List<String> getPratilipiUrlList() {

@@ -2,6 +2,8 @@ package com.pratilipi.api.impl.blogpost.shared;
 
 import java.util.Date;
 
+import org.jsoup.Jsoup;
+
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.data.client.BlogPostData;
@@ -35,6 +37,7 @@ public class GenericBlogPostResponse extends GenericResponse {
 	private String title;
 	private String titleEn;
 	private String content;
+	private String contentSummary;
 	
 	private BlogPostState state;
 	private User createdBy;
@@ -51,6 +54,8 @@ public class GenericBlogPostResponse extends GenericResponse {
 		this.title = blogPostData.getTitle();
 		this.titleEn = blogPostData.getTitleEn();
 		this.content = blogPostData.getContent();
+		this.contentSummary = Jsoup.parse( blogPostData.getContent() ).text();
+		this.contentSummary = this.contentSummary.substring( 0, Math.min( 500, this.contentSummary.length() ) );
 		this.state = blogPostData.getState();
 		
 		if( blogPostData.getCreatedBy() != null ) {
@@ -107,6 +112,10 @@ public class GenericBlogPostResponse extends GenericResponse {
 	
 	public void setContent( String content ) {
 		this.content = content;
+	}
+	
+	public String getContentSummary() {
+		return contentSummary;
 	}
 
 	
