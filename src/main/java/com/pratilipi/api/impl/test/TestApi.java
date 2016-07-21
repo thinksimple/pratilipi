@@ -6,14 +6,18 @@ import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.shared.GenericFileDownloadResponse;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.PratilipiContentType;
+import com.pratilipi.common.util.HttpUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
@@ -33,6 +37,7 @@ public class TestApi extends GenericApi {
 		String facebookId;
 		
 		Long pratilipiId;
+		String url;
 	}
 	
 	public static class Response extends GenericResponse {
@@ -49,12 +54,13 @@ public class TestApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetRequest request ) throws InsufficientAccessException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+/*		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( 5830554839678976L );
 		pratilipi.setContentType( PratilipiContentType.IMAGE );
 		pratilipi.setPageCount( 180 );
 		ObjectifyService.ofy().save().entity( pratilipi ).now();
-		
+*/		
+
 /*		String appPropertyId = "Api.PratilipiProcess.ValidateData";
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
 		appProperty.setValue( new Date( 0 ) );
@@ -145,7 +151,15 @@ public class TestApi extends GenericApi {
 			return new GenericResponse();
 			
 		}*/
+
 		
+		try {
+			BlobEntry blobEntry = HttpUtil.doGet( request.url );
+			new GenericFileDownloadResponse( blobEntry.getData(), blobEntry.getMimeType(), blobEntry.getETag() );
+		} catch (UnexpectedServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return new GenericResponse();
 		

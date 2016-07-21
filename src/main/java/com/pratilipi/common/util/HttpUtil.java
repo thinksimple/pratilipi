@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -18,6 +19,8 @@ import java.util.logging.Logger;
 import org.apache.commons.io.IOUtils;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.BlobEntry;
 
 public class HttpUtil {
 	
@@ -34,6 +37,23 @@ public class HttpUtil {
 		return queryStr.substring( 1 );
 	}
 
+	
+	public static BlobEntry doGet( String requestUrl ) 
+			throws UnexpectedServerException {
+		
+		try {
+			logger.log( Level.INFO, "Http GET Request: " + requestUrl );
+			URLConnection urlConn = new URL( requestUrl ).openConnection();
+			String mimeType = urlConn.getContentType();
+			byte[] data = IOUtils.toByteArray( urlConn );
+			logger.log( Level.INFO, "Http GET Response Type: " + mimeType + " & Length: "  + data.length );
+			return DataAccessorFactory.getBlobAccessor().newBlob( null, data, mimeType );
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to execute Http Get call.", e );
+			throw new UnexpectedServerException();
+		}
+		
+	}
 	
 	public static String doGet( String targetURL, Map<String, String> paramsMap ) 
 			throws UnexpectedServerException {
