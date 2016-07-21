@@ -16,9 +16,11 @@
 	<#if followingList.getAuthorList()?has_content>
 		<#include "pratilipi-follow-author-card.ftl">
 		<#list followingList.getAuthorList() as author>
-			<#assign self_profile_boolean = ( ${ user.getId()?? } && ( user.getId() == author.getUser().getId() ) )>
-			<#assign can_follow_boolean = !self_profile_boolean>
-			
+			<#if user.userId?? && user.userId != author.getUser().getId() >
+				<#assign can_follow_boolean = true>
+			<#else>
+				<#assign can_follow_boolean = false>
+			</#if>
 			<@follow_author_card isGuest=user.isGuest() can_follow=can_follow_boolean retUrl=author.getPageUrl() userId=author.getUser().getId()?c followCount=author.getFollowCount() following=author.isFollowing() name=author.getName()!author.getNameEn() pageUrl=author.getPageUrl() imageUrl=author.getImageUrl()/>
 		</#list>
 	</#if>
