@@ -128,7 +128,7 @@ public class UserAuthorDataUtil {
 			
 		}
 		
-		if( dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() ).getId() != null ) {
+		if( dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() ) != null ) {
 			// Setting UserData.isFollowing flag
 			List<Long> userIdList = new ArrayList<>( authorDataList.size() );
 			for( AuthorData authorData : authorDataList )
