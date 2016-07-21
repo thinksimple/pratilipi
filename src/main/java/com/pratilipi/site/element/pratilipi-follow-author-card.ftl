@@ -6,7 +6,7 @@
 		<div class="media-body">
 		    <a href="${ pageUrl }"><h4 class="media-heading">${ name }</h4></a>
 		    <span>${ followCount } Followers</span>
-		    <#if isGuest == true >
+		    <#if isGuest == "true" >
 		    	<a class="pratilipi-light-blue-button" href="/login?ret=${ retUrl }"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Follow &nbsp</a>
 		    <#else>
 		    	<#if can_follow == true>
