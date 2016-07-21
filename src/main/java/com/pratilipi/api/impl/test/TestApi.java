@@ -155,7 +155,7 @@ public class TestApi extends GenericApi {
 		
 		try {
 			BlobEntry blobEntry = HttpUtil.doGet( request.url );
-			new GenericFileDownloadResponse( blobEntry.getData(), blobEntry.getMimeType(), blobEntry.getETag() );
+			return new GenericFileDownloadResponse( blobEntry.getData(), blobEntry.getMimeType(), blobEntry.getETag() );
 		} catch (UnexpectedServerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
