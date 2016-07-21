@@ -28,7 +28,10 @@ import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.blogpost.shared.GenericBlogPostResponse;
+import com.pratilipi.api.impl.event.EventListApi;
 import com.pratilipi.api.impl.event.shared.GenericEventResponse;
+import com.pratilipi.api.impl.event.shared.GetEventListRequest;
+import com.pratilipi.api.impl.event.shared.GetEventListResponse;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
@@ -770,18 +773,24 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	public Map<String, Object> createDataModelForEventsPage( Language lang, boolean basicMode ) {
+	public Map<String, Object> createDataModelForEventsPage( Language lang, boolean basicMode ) throws InsufficientAccessException {
 		EventData eventData = new EventData();
 		eventData.setLanguage( lang );
 		
 		boolean hasAccessToAdd = EventDataUtil.hasAccessToAddEventData( eventData );
 		
+		GetEventListRequest eventListRequest = new GetEventListRequest();
+		eventListRequest.setLanguage( lang );
+		GetEventListResponse eventListResponse = ApiRegistry
+				.getApi( EventListApi.class )
+				.get( eventListRequest );
+		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Events" );
 		if( basicMode )
-			dataModel.put( "eventList", EventDataUtil.getEventDataList( lang ) );
+			dataModel.put( "eventList", eventListResponse );
 		else
-			dataModel.put( "eventListJson", new Gson().toJson( EventDataUtil.getEventDataList( lang ) ) );
+			dataModel.put( "eventListJson", new Gson().toJson( eventListResponse ) );
 		dataModel.put( "hasAccessToAdd", hasAccessToAdd );
 		return dataModel;
 	}

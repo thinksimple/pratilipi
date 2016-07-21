@@ -12,4 +12,8 @@ public class GetEventListRequest extends GenericRequest {
 		return language;
 	}
 	
+	public void setLanguage( Language language ) {
+		this.language = language;
+	}
+
 }
