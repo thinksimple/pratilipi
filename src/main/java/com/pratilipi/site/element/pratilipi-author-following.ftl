@@ -24,9 +24,8 @@
 			<script>
 			$( document ).ready(function() {
     			console.log( "Testing!" );
-    			console.log(${ user.userId?? });
-    			console.log(${ user.userId });
-    			console.log(${ local_author.getUser().getId() });
+    			console.log(${ user.userId?c });
+    			console.log(${ local_author.getUser().getId()?c });
     			console.log(${ can_follow_boolean });
 			});
 			</script>
