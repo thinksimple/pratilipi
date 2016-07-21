@@ -35,6 +35,15 @@ public class GenericUserResponse extends GenericResponse {
 	}
 	
 	
+
+	public Long getId() {
+		return userId;
+	}
+	
+	public Long getAuthorId() {
+		return authorId;
+	}
+	
 	public String getDisplayName() {
 		return displayName;
 	}
