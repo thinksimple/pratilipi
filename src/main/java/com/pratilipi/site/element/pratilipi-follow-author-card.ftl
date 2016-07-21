@@ -1,7 +1,7 @@
 function FollowAuthorPostRequest(authorId, follow){
 	$.ajax({type: "POST",
 	        url: "/api/userauthor/follow",
-	        data: { authorId: "${ authorId?c }", following: follow },
+	        data: { authorId: authorId, following: follow },
 	        success:function(response){
 	        	console.log(response);
 	        	console.log(typeof response);
@@ -33,12 +33,12 @@ function FollowAuthorPostRequest(authorId, follow){
 		    <#else>
 		    	<#if can_follow == "true">
 			    	<#if following == true >
-					    <button class="pratilipi-grey-button" onclick="FollowAuthorPostRequest(${ authorId }, false)">
+					    <button class="pratilipi-grey-button" onclick="FollowAuthorPostRequest(${ authorId?c }, false)">
 							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 							Unfollow &nbsp
 						</button>
 					<#else>
-						<button class="pratilipi-light-blue-button" onclick="FollowAuthorPostRequest(${ authorId }, true)>
+						<button class="pratilipi-light-blue-button" onclick="FollowAuthorPostRequest(${ authorId?c }, true)>
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 							Follow &nbsp
 						</button>			
