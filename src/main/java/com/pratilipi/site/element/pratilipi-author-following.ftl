@@ -16,7 +16,7 @@
 	<#if followingList.getAuthorList()?has_content>
 		<#include "pratilipi-follow-author-card.ftl">
 		<#list followingList.getAuthorList() as local_author>
-			<#if user.userId?? && user.userId != local_author.getUser().getId() >
+			<#if user.getId()?? && ( user.getId() != local_author.getUser().getId() ) >
 				<#assign can_follow_boolean = "true">
 			<#else>
 				<#assign can_follow_boolean = "false">
@@ -24,7 +24,7 @@
 			<script>
 			$( document ).ready(function() {
     			console.log( "Testing!" );
-    			console.log(${ user.userId?c });
+    			console.log(${ user.getId()?c });
     			console.log(${ local_author.getUser().getId()?c });
     			console.log(${ can_follow_boolean });
 			});
