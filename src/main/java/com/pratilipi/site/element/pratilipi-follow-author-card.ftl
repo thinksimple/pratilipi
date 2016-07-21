@@ -1,4 +1,4 @@
-<#macro follow_author_card userId followCount following name pageUrl imageUrl >
+<#macro follow_author_card isGuest can_follow retUrl userId followCount following name pageUrl imageUrl >
 	<div class="media">
 		<a class="media-left" href="${ pageUrl }">
 		    <img class="media-object img-circle pratilipi-without-margin" style="width:90px;height:90px;" src="${ imageUrl }">
@@ -6,20 +6,24 @@
 		<div class="media-body">
 		    <a href="${ pageUrl }"><h4 class="media-heading">${ name }</h4></a>
 		    <span>${ followCount } Followers</span>
-		    <#if userId == user.getId()?c >
-		    	<p>Yourself</p>
+		    <#if isGuest == true >
+		    	<a class="pratilipi-light-blue-button" href="/login?ret=${ retUrl }"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Follow &nbsp</a>
 		    <#else>
-		    	<#if following == true >
-				    <button class="pratilipi-grey-button">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-						Unfollow &nbsp
-					</button>
-				<#else>
-					<button class="pratilipi-light-blue-button">
-						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						Follow &nbsp
-					</button>			
-				</#if>
+		    	<#if can_follow == true>
+			    	<#if following == true >
+					    <button class="pratilipi-grey-button">
+							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+							Unfollow &nbsp
+						</button>
+					<#else>
+						<button class="pratilipi-light-blue-button">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+							Follow &nbsp
+						</button>			
+					</#if>		    		
+		    	<#else>
+		    		<p>Yourself</p>
+		    	</#if>
 		    </#if>	  			
 		</div>
 		<br>
