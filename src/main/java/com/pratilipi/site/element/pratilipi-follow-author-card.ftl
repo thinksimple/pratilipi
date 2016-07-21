@@ -9,7 +9,7 @@
 		    <#if isGuest == "true" >
 		    	<a class="pratilipi-light-blue-button" href="/login?ret=${ retUrl }"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Follow &nbsp</a>
 		    <#else>
-		    	<#if can_follow == true>
+		    	<#if can_follow == "true">
 			    	<#if following == true >
 					    <button class="pratilipi-grey-button">
 							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
