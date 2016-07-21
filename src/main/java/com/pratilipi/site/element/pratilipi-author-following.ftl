@@ -19,7 +19,7 @@
 			<#assign
 				isGuestBoolean = user.isGuest()
 				self_profile_boolean = ( user.getId()?? && ( user.getId() == author.getUser().getId() ) )
-				can_follow_boolean = self_profile_boolean?then( false, true )
+				can_follow_boolean = !self_profile_boolean
 			>
 			<@follow_author_card isGuest=isGuestBoolean can_follow=can_follow_boolean retUrl=author.getPageUrl() userId=author.getUser().getId()?c followCount=author.getFollowCount() following=author.isFollowing() name=author.getName()!author.getNameEn() pageUrl=author.getPageUrl() imageUrl=author.getImageUrl()/>
 		</#list>
