@@ -18,7 +18,8 @@
 		<#list followingList.getAuthorList() as author>
 			<#assign
 				isGuestBoolean = user.isGuest()
-				can_follow_boolean = ( user.getId()?? && ( user.getId() == author.getUser().getId() ) )?then( false, true )
+				self_profile_boolean = ( user.getId()?? && ( user.getId() == author.getUser().getId() ) )
+				can_follow_boolean = self_profile_boolean?then( false, true )
 			>
 			<@follow_author_card isGuest=isGuestBoolean can_follow=can_follow_boolean retUrl=author.getPageUrl() userId=author.getUser().getId()?c followCount=author.getFollowCount() following=author.isFollowing() name=author.getName()!author.getNameEn() pageUrl=author.getPageUrl() imageUrl=author.getImageUrl()/>
 		</#list>
