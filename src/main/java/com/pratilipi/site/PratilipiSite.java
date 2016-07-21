@@ -686,18 +686,12 @@ public class PratilipiSite extends HttpServlet {
 	
 	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode )
 			throws InsufficientAccessException {
-		
+
 		AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
 		authorApiGetRequest.setAuthorId( authorId );
 		AuthorApi.Response authorResponse = ApiRegistry
 				.getApi( AuthorApi.class )
 				.get( authorApiGetRequest );
-
-		UserAuthorFollowApi.GetRequest getRequest = new UserAuthorFollowApi.GetRequest();
-		getRequest.setAuthorId( authorId );
-		UserAuthorFollowApi.Response userAuthorResponse = ApiRegistry
-				.getApi( UserAuthorFollowApi.class )
-				.get( getRequest );
 
 		PratilipiListApi.GetRequest pratilipiListRequest = new PratilipiListApi.GetRequest();
 		pratilipiListRequest.setAuthorId( authorId );
@@ -705,40 +699,53 @@ public class PratilipiSite extends HttpServlet {
 		PratilipiListApi.Response pratilipiListResponse = ApiRegistry
 				.getApi( PratilipiListApi.class )
 				.get( pratilipiListRequest );
-		
-		UserAuthorFollowListApi.GetRequest followersListRequest = new UserAuthorFollowListApi.GetRequest();
-		followersListRequest.setAuthorId( authorId );
-		UserAuthorFollowListApi.Response followersList = ApiRegistry
-				.getApi( UserAuthorFollowListApi.class )
-				.get( followersListRequest );
 
-		UserAuthorFollowListApi.GetRequest followingListRequest = new UserAuthorFollowListApi.GetRequest();
-		followingListRequest.setUserId( authorResponse.getUser().getId() );
-		UserAuthorFollowListApi.Response followingList= ApiRegistry
-				.getApi( UserAuthorFollowListApi.class )
-				.get( followingListRequest );
-
+		Gson gson = new Gson();
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createAuthorPageTitle( authorResponse ) );
 		if( basicMode ) {
 			dataModel.put( "author", authorResponse );
-			dataModel.put( "userAuthor", userAuthorResponse );
 			dataModel.put( "publishedPratilipiList", pratilipiListResponse.getPratilipiList() );
-			dataModel.put( "followersList", followersList );
-			dataModel.put( "followingList", followingList );
 			if( pratilipiListResponse.getPratilipiList().size() == 20 && pratilipiListResponse.getCursor() != null )
 				dataModel.put( "publishedPratilipiListSearchQuery", "authorId=" + authorId + "&state=" + PratilipiState.PUBLISHED );
 		} else {
-			Gson gson = new Gson();
 			dataModel.put( "authorJson", gson.toJson( authorResponse ) );
-			dataModel.put( "userAuthorJson", gson.toJson( userAuthorResponse ) );
 			dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiListResponse.getPratilipiList() ) );
 			dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiListRequest ) );
 			dataModel.put( "publishedPratilipiListCursor", pratilipiListResponse.getCursor() );
 			dataModel.put( "publishedPratilipiListObjectJson", gson.toJson( pratilipiListResponse ) );
-			dataModel.put( "followersListJson", gson.toJson( followersList ) );
-			dataModel.put( "followingListJson", gson.toJson( followingList ) );
 		}
+
+		if( SystemProperty.STAGE.equals( "gamma" ) ) {
+			UserAuthorFollowApi.GetRequest getRequest = new UserAuthorFollowApi.GetRequest();
+			getRequest.setAuthorId( authorId );
+			UserAuthorFollowApi.Response userAuthorResponse = ApiRegistry
+					.getApi( UserAuthorFollowApi.class )
+					.get( getRequest );
+
+			UserAuthorFollowListApi.GetRequest followersListRequest = new UserAuthorFollowListApi.GetRequest();
+			followersListRequest.setAuthorId( authorId );
+			UserAuthorFollowListApi.Response followersList = ApiRegistry
+					.getApi( UserAuthorFollowListApi.class )
+					.get( followersListRequest );
+
+			UserAuthorFollowListApi.GetRequest followingListRequest = new UserAuthorFollowListApi.GetRequest();
+			followingListRequest.setUserId( authorResponse.getUser().getId() );
+			UserAuthorFollowListApi.Response followingList= ApiRegistry
+					.getApi( UserAuthorFollowListApi.class )
+					.get( followingListRequest );
+
+			if( basicMode ) {
+				dataModel.put( "userAuthor", userAuthorResponse );
+				dataModel.put( "followersList", followersList );
+				dataModel.put( "followingList", followingList );
+			} else {
+				dataModel.put( "userAuthorJson", gson.toJson( userAuthorResponse ) );
+				dataModel.put( "followersListJson", gson.toJson( followersList ) );
+				dataModel.put( "followingListJson", gson.toJson( followingList ) );
+			}
+		}
+		
 		return dataModel;
 		
 	}
