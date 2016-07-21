@@ -1,4 +1,26 @@
-<#macro follow_author_card isGuest can_follow retUrl userId followCount following name pageUrl imageUrl >
+function FollowAuthorPostRequest(authorId, follow){
+	$.ajax({type: "POST",
+	        url: "/api/userauthor/follow",
+	        data: { authorId: "${ authorId?c }", following: follow },
+	        success:function(response){
+	        	console.log(response);
+	        	console.log(typeof response);
+	        	
+	        	var parsed_data = jQuery.parseJSON( response );
+	  			if ( parsed_data.following == follow ) {
+	  				window.location.reload();
+	  			}
+	  			else {
+	  				
+	  			}
+			},
+	        fail:function(response){
+				alert("Sorry, we could not process your request.");
+			}			    		
+			
+	});
+}
+<#macro follow_author_card isGuest can_follow retUrl authorId followCount following name pageUrl imageUrl >
 	<div class="media">
 		<a class="media-left" href="${ pageUrl }">
 		    <img class="media-object img-circle pratilipi-without-margin" style="width:90px;height:90px;" src="${ imageUrl }">
@@ -11,12 +33,12 @@
 		    <#else>
 		    	<#if can_follow == "true">
 			    	<#if following == true >
-					    <button class="pratilipi-grey-button">
+					    <button class="pratilipi-grey-button" onclick="FollowAuthorPostRequest(${ authorId }, false)">
 							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 							Unfollow &nbsp
 						</button>
 					<#else>
-						<button class="pratilipi-light-blue-button">
+						<button class="pratilipi-light-blue-button" onclick="FollowAuthorPostRequest(${ authorId }, true)>
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 							Follow &nbsp
 						</button>			
