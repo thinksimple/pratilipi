@@ -128,20 +128,21 @@ public class UserAuthorDataUtil {
 			
 		}
 		
-		
-		// Setting UserData.isFollowing flag
-		List<Long> userIdList = new ArrayList<>( authorDataList.size() );
-		for( AuthorData authorData : authorDataList )
-			if( authorData.getUser().getId() != null )
-				userIdList.add( authorData.getUser().getId() );
-		
-		List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList(
-				userIdList,
-				dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() ).getId() );
-		
-		for( UserAuthor userAuthor : userAuthorList )
-			if( userAuthor != null && userAuthor.isFollowing() )
-				authorDataList.get( authorIdList.indexOf( userAuthor.getAuthorId() ) ).getUser().setFollowing( true );
+		if( dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() ).getId() != null ) {
+			// Setting UserData.isFollowing flag
+			List<Long> userIdList = new ArrayList<>( authorDataList.size() );
+			for( AuthorData authorData : authorDataList )
+				if( authorData.getUser().getId() != null )
+					userIdList.add( authorData.getUser().getId() );
+			
+			List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList(
+					userIdList,
+					dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() ).getId() );
+			
+			for( UserAuthor userAuthor : userAuthorList )
+				if( userAuthor != null && userAuthor.isFollowing() )
+					authorDataList.get( authorIdList.indexOf( userAuthor.getAuthorId() ) ).getUser().setFollowing( true );
+		}
 
 		
 		return new DataListCursorTuple<>(
