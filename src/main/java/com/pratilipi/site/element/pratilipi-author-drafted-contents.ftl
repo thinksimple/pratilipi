@@ -1,4 +1,28 @@
 <#if author.hasAccessToUpdate()==true >
+	<script>
+		function changePratilipiState(bookId, state) {
+		    $.ajax({type: "POST",
+		            url: "/api/pratilipi",
+		            data: { pratilipiId: bookId, state: state },
+		            success:function(response){
+		            	console.log(response);
+		            	console.log(typeof response);
+		            	
+		            	var parsed_data = jQuery.parseJSON( response );
+		      			if ( parsed_data.state == state ) {
+		      				window.location.reload();
+		      			}
+		      			else {
+		      				
+		      			}
+		    		},
+		            fail:function(response){
+						alert("Sorry, we could not process your request.");
+		    		}			    		
+		    		
+		    });		
+		}
+	</script>
 	<div class="pratilipi-shadow secondary-500 box">	
 		<div class="pull-left">
 			<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
