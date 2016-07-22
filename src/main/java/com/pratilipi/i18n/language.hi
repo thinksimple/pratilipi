@@ -44,26 +44,26 @@ author_drafts				= अप्रकाशित रचनायें
 author_published_works		= प्रकाशित रचनायें
 author_add_new_content		= नयी रचना लिखिए 
 author_no_contents_published	= हम माफ़ी चाहते है, यह रचनाकार के अकाउंट में अभी तक प्रकाशन कार्य शुरू नहीं हुआ है |
-author_activity					= Activity
-author_about					= About
-author_biography				= Biography
-author_location					= Location
-author_date_of_birth			= Date Of Birth
-author_follow					= Follow
-author_unfollow					= UnFollow
-author_followers				= Followers
-author_no_followers				= Sorry! This author doesn't have any followers
-author_following				= Following
-author_no_following				= Sorry! This author is not following anyone!
-author_follow_members			= Members
-author_cannot_follow_yourself	= Yourself
-author_settings_require_first_name	= Please enter your first name!
-author_settings_require_language	= Please enter your language!
+author_activity					= गतिविधि
+author_about					= व्यक्तिगत
+author_biography				= परिचय
+author_location					= स्थान
+author_date_of_birth			= जन्म तिथि
+author_follow					= फ़ॉलो
+author_unfollow					= अनफ़ॉलो    
+author_followers				= अनुयायी 
+author_no_followers				= अनुयायी संख्या शून्य
+author_following				= अनुसरण 
+author_no_following				= अनुसरण संख्या शून्य
+author_follow_members			= सदस्य 
+author_cannot_follow_yourself	= आपके बारे में 
+author_settings_require_first_name	= पहला नाम दर्ज करें 
+author_settings_require_language	= भाषा सुनिश्चित करें  
 
 # Pratilipi
 pratilipi_type				= विधा
 pratilipi_listing_date		= प्रकाशन दिनांक
-pratilipi_last_updated_date	= Last Updated Date	
+pratilipi_last_updated_date	= आखिरी बदलाव 
 pratilipi_published			= प्रकाशित	
 pratilipi_published_year	= प्रकाशन साल 
 pratilipi_summary			= सारांश 
@@ -80,12 +80,12 @@ pratilipi_confirm_move_to_drafts_true	= हाँ, ड्राफ्ट मे�
 pratilipi_confirm_move_to_drafts_false	= नहीं, इसे अप्रकाशित न करें
 pratilipi_move_to_drafts				= अप्रकाशित करें
 pratilipi_publish_it					= प्रकाशित करें
-pratilipi_delete_content				= Delete
-pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
-pratilipi_confirm_move_to_drafts_okay	= Okay
-pratilipi_confirm_delete_content		= Do you want to delete the content?
-pratilipi_confirm_delete_content_okay	= Okay
-pratilipi_deleted_successfully			= The content has been deleted successfully! 
+pratilipi_delete_content				= हटाएँ 
+pratilipi_confirm_move_to_drafts		= ड्राफ्ट में ले जाने की पुष्टि करें 
+pratilipi_confirm_move_to_drafts_okay	= स्वीकार हैं 
+pratilipi_confirm_delete_content		= साहित्य हटाने की पुष्टि करें 
+pratilipi_confirm_delete_content_okay	= स्वीकार हैं 
+pratilipi_deleted_successfully			= साहित्य हट चूका है 
 
 # Rating
 rating_rating				= रेटिंग
@@ -105,7 +105,7 @@ review_write_a_review		= टिप्पणी लिखें
 review_title				= टिप्पणी का शीर्षक  
 review_title_help			= उदाहरण के लिए – एक अद्भुत कहानी या एक सामान्य कहानी 
 review_content				= आपकी टिपण्णी 
-review_content_help			= Share your thoughts ! What made this work interesting ? What made it inspiring ? What did you learn from it ? You are helping others make a better choice ! 
+review_content_help			= यह कार्य को और अच्छा बनाने के लिए आपके सुझाव अवश्य दें। आपके सुझाव अमूल्य हैं।  
 review_submit_review	= दर्ज करें 
 review_edit_review			=  संपादित करें 
 review_delete_review		= टिप्पणी हटायें 
@@ -154,7 +154,7 @@ user_sign_in_to_pratilipi	= प्रतिलिपि में साइन �
 user_sign_out				= साइन आउट करें 
 user_sign_up				= नया अकाउंट बनाइये 
 user_sign_up_for_pratilipi	= प्रतिलिपि  पर नया अकाउंट बनाइये
-user_sign_up_with_facebook	= Sign Up with Facebook
+user_sign_up_with_facebook	= फ़ेसबुक के साथ साइन अप 
 user_forgot_password		= यदि आप पासवर्ड भूल गए हो?
 user_reset_password			= नया पासवर्ड बनायें
 user_reset_password_help	= इस साइट पर रजिस्टर करने के लिए इस्तेमाल किया ईमेल पता प्रदान करें | जहाँ पासवर्ड रिसेट का आपको इ-मेल प्राप्त होगा |  
@@ -218,11 +218,11 @@ user_verified_success				= उपयोगकर्ता पुष्टि स
 content_created_success				= रचना प्रकाशन सफल
 updated_author_info_success			= लेखक परिचय संपादन सफल हुआ 
 updated_pratilipi_info_success		= रचना संबंधित जानकारी का संपादन सफल हुआ
-updated_review						= Success ! 
+updated_review						= प्रक्रिया संपन्न 
 
 #Failure Messages
-server_error_message				= Some error Occured! Please try again!
-write_please_login_desktop			= You can publish contents by logging into desktop.
+server_error_message				= तकनिकी ख़ामी पाई गई है, पुनः प्रयास करें।
+write_please_login_desktop			= प्रकाशन की प्रक्रिया के लिए कंप्यूटर/लैपटॉप से लॉगिन करें। 
 
 # Author Edit Popup
 edit_author_heading				= लेखक परिचय संपादित करें 
@@ -260,33 +260,33 @@ event_entries_url_list	=एंट्री का युआरएल लिस�
 event_save_changes		= बदलाव को सुरक्षित करें
 
 # Gender
-gender				= Gender
+gender				= लिंग 
 gender_male			= पुरुष
 gender_female		=  स्त्री
 gender_other		= अन्य
 
  # Months
-month_jan	= January
-month_feb	= February
-month_mar	= March
-month_apr	= April
-month_may	= May
-month_jun	= June
-month_jul	= July
-month_aug	= August
-month_sep	= September
-month_oct	= October
-month_nov	= November
-month_dec	= December
+month_jan	= जनवरी
+month_feb	= फ़रवरी
+month_mar	= मार्च
+month_apr	= अप्रैल
+month_may	= मई 
+month_jun	= जून
+month_jul	= जुलाई
+month_aug	= अगस्त
+month_sep	= सितम्बर
+month_oct	= अक्टूबर
+month_nov	= नवेम्बर
+month_dec	= दिसम्बर
 
 # Library
 my_library			= मेरी लाइब्रेरी 
 add_to_library		= लाइब्रेरी में जोड़े 
-added_to_library	= Success! You have added this content to your library!
+added_to_library	= जय हो! यह साहित्य आपकी लाइब्रेरी में जोड़ दिया गया है।
 remove_from_library	= लाइब्रेरी से हटाए 
-removed_from_library = You have removed the content from your library!
+removed_from_library = आपने यह साहित्य को लाइब्रेरी से हटा दिया है!
 empty_library		= माफ़ कीजिए, आपकी लाइब्रेरी में फ़िलहाल कुछ भी उपलब्ध नहीं है । आप रोमांचक कहानियां यहाँ जोड़ सकते है ।
-library_content_in_library	= Add content to Library
+library_content_in_library	= लाईब्रेरी में जोड़े 
 
 # Reader
 reader_goto_content_page	= सारांश पेज पर जाएँ
