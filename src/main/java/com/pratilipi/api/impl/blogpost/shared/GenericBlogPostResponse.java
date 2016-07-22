@@ -54,7 +54,7 @@ public class GenericBlogPostResponse extends GenericResponse {
 		this.title = blogPostData.getTitle();
 		this.titleEn = blogPostData.getTitleEn();
 		this.content = blogPostData.getContent();
-		this.contentText = Jsoup.parse( blogPostData.getContent() ).text();
+		this.contentText = blogPostData.getContent() != null ? Jsoup.parse( blogPostData.getContent() ).text() : null;
 		this.state = blogPostData.getState();
 		
 		if( blogPostData.getCreatedBy() != null ) {

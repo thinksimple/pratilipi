@@ -32,7 +32,7 @@ public class GenericEventResponse extends GenericResponse {
 		this.nameEn = eventData.getNameEn();
 		this.language = eventData.getLanguage();
 		this.description = eventData.getDescription();
-		this.descriptionText = Jsoup.parse( eventData.getDescription() ).text();
+		this.descriptionText = eventData.getDescription() != null ? Jsoup.parse( eventData.getDescription() ).text() : null;
 		this.pratilipiUrlList = eventData.getPratilipiUrlList();
 		this.pageUrl = eventData.getPageUrl();
 		this.bannerImageUrl = eventData.getBannerImageUrl();

@@ -736,6 +736,19 @@ public class PratilipiSite extends HttpServlet {
 					.getApi( UserAuthorFollowListApi.class )
 					.get( followingListRequest );
 
+			// including drafted contents if author.hasAccessToUpdate
+			if( authorResponse.hasAccessToUpdate() ) {
+				Integer resultCount = 3;
+				PratilipiListApi.GetRequest draftedPratilipiListRequest = new PratilipiListApi.GetRequest();
+				draftedPratilipiListRequest.setAuthorId( authorId );
+				draftedPratilipiListRequest.setState( PratilipiState.DRAFTED );
+				draftedPratilipiListRequest.setResultCount( resultCount );
+				PratilipiListApi.Response draftedPratilipiListResponse = ApiRegistry
+						.getApi( PratilipiListApi.class )
+						.get( draftedPratilipiListRequest );
+				dataModel.put( "draftedPratilipiList", draftedPratilipiListResponse.getPratilipiList() );
+			}
+
 			if( basicMode ) {
 				dataModel.put( "userAuthor", userAuthorResponse );
 				dataModel.put( "followersList", followersList );
