@@ -278,7 +278,7 @@
 			},
 			ready: function() {
 				if( this.blogpost.contentText != null ) {
-					var contentText = this.blogpost.contentText;
+					var contentText = this.blogpost.contentText.replace(/&nbsp;/g, " " ).trim();
 					this.set( 'contentText', contentText.substring( 0, Math.min( 600, contentText.length ) ) + "..." );
 				}
 			}
