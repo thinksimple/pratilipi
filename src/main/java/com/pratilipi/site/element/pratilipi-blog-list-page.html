@@ -1,31 +1,7 @@
 <#include "pratilipi-edit-blog.html">
 
 <dom-module id="pratilipi-blog-list-page">
-
-	<style>
-		.nav-tabs>li>a {
-			font-size: 16px;
-			font-weight: 700;
-			line-height: 32px;
-			border: none;
-			color: #333;
-		}
-		.nav-tabs, .nav-tabs>li>a:hover {
-			border-bottom: none;
-			border-top: none;
-			border-left: none;
-			border-right: none;
-			background: none;
-		}
-		.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-			border-bottom: 3px solid #107FE5;
-			border-top: none;
-			border-left: none;
-			border-right: none;
-			background: none;
-		}
-	</style>
-
+	
 	<template>
 		<header class="nav-down">
     		<pratilipi-header user='[[ user ]]'></pratilipi-header>
@@ -44,42 +20,35 @@
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow: hidden;">
 						<template is="dom-if" if="{{ hasAccessToAdd }}">
-							<pratilipi-edit-blog></pratilipi-edit-blog>						
-							<div class="secondary-500 pratilipi-shadow" style="margin-bottom: 6px;">
-								<ul class="nav nav-tabs" role="tablist">
-									<li style="width: 50%;" role="presentation" class="active">	<a href="#drafted" 	class="text-center" aria-controls="drafted" role="tab" data-toggle="tab">${ _strings.author_activity }</a>	</li>
-									<li style="width: 50%;" role="presentation">				<a href="#published" 	class="text-center" aria-controls="published" 	role="tab" data-toggle="tab">${ _strings.author_about }</a>		</li>
-								</ul>
+							<pratilipi-edit-blog></pratilipi-edit-blog>
+							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+								Drafted Entries
 							</div>
-							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane active" id="drafted">
-									<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; margin-bottom: 8px; text-align: center;">
-										<div style="text-align: center;">
-											<a on-click="createNewBlog">
-												<iron-icon style="width: 64px; height: 64px;" icon="add-circle"></iron-icon>
-											</a>
-											<a on-click="createNewBlog">
-												<h6 style="margin-top: 10px;">Add a new blog</h6>
-											</a>
-										</div>
-									</paper-card>
-									<br class="pratilipi-break">
-									<template is="dom-repeat" items="[[ draftedBlogpostList ]]">
-										<pratilipi-bloglist-snippet blogpost="{{ item }}" drafted></pratilipi-bloglist-snippet>
-									</template>
+							<br class="pratilipi-break">
+							<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
+								<div style="text-align: center;">
+									<a on-click="createNewBlog">
+										<iron-icon style="width: 64px; height: 64px;" icon="add-circle"></iron-icon>
+									</a>
+									<a on-click="createNewBlog">
+										<h6 style="margin-top: 10px;">Add a new blog</h6>
+									</a>
 								</div>
-								<div role="tabpanel" class="tab-pane" id="published">
-									<template is="dom-repeat" items="[[ blogpostList ]]">
-										<pratilipi-bloglist-snippet blogpost="{{ item }}"></pratilipi-bloglist-snippet>
-									</template>
-								</div>
-							</div>
-						</template>
-						<template is="dom-if" if="{{ !hasAccessToAdd }}">
-							<template is="dom-repeat" items="[[ blogpostList ]]">
+							</paper-card>
+							<br class="pratilipi-break">
+							<template is="dom-repeat" items="[[ draftedBlogpostList ]]">
 								<pratilipi-bloglist-snippet blogpost="{{ item }}"></pratilipi-bloglist-snippet>
 							</template>
+							<br>
+							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+								Published Entries
+							</div>
+							<br class="pratilipi-break">
 						</template>
+						<template is="dom-repeat" items="[[ blogpostList ]]">
+							<pratilipi-bloglist-snippet blogpost="{{ item }}"></pratilipi-bloglist-snippet>
+						</template>
+
 						<!-- Spinner when Loading more books -->
 						<template is="dom-if" if="{{ isLoading }}">
 							<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
@@ -123,9 +92,7 @@
 
 	<script>
 		Polymer({
-
 			is: 'pratilipi-blog-list-page',
-
 			properties: {
 				userData: { type: Object },
 				user: { type: Object, observer: "_userObserver" },
@@ -174,13 +141,11 @@
 				// Return if there is an active call or cursor = null.
 				if( this.isLoading || this.isFinished || this.cursor == null )
 					return;
-
 				// Check for window height.
 				var reqHeight = jQuery( window ).scrollTop()
 						- jQuery( this ).position().top
 						+ jQuery( window ).height()
 						+ 2 * jQuery( window ).height();
-
 				if( jQuery( this ).outerHeight( true ) >= reqHeight )
 					return;
 				
@@ -207,7 +172,6 @@
 				var blogpostList = request.detail.response.blogPostList;
 				for( var i = 0; i < blogpostList.length; i++ )
 					this.push( 'blogpostList', blogpostList[i] );
-
 				if( request.detail.response.cursor == null || blogpostList.length < 10 ) {
 					this.includeShowMoreButton = false;
 					this.isFinished = true;
@@ -216,7 +180,6 @@
 					this.cursor = request.detail.response.cursor;
 				
 			},
-
 			_handleAjaxGetError: function() {
 				this.isLoading = false;
 				this.includeShowMoreButton = true;
@@ -260,35 +223,45 @@
     		margin-bottom: 8px;
 			--paper-card-header: { display: none };
 		}
+		.title-holder {
+			margin: 4px 0px 8px 0px;
+		}
+		.title-holder .blog-title {
+			max-width: calc( 100% - 36px );
+			font-size: 18px;
+		}
+		.title-holder .open-in-new {
+			float: right;
+		}
+		.title-holder .open-in-new iron-icon {
+			width: 24px;
+			height: 24px;
+			color: #094c89;
+		}
+		.content-summary {
+			max-height: 120px; 
+			overflow: hidden;
+			padding-right: 16px;
+			text-align: justify;
+			font-size: 14px;
+			line-height: 20px;
+		}
 	</style>
 	<template>
 		<paper-card style="padding: 16px 12px;">
-			<a target="_blank" class="pratilipi-blue" href="[[ blogpost.pageUrl ]]">
-				<iron-icon icon="icons:open-in-new" style="position: absolute; right: 20px; top: 20px;"></iron-icon>
-			</a>
-			<a href="[[ blogpost.pageUrl ]]">
-				<h4 style="display: inline-block; max-width: calc( 100% - 36px );" class="pratilipi-red">[[ blogpost.title ]]</h4>
-			</a>
-			<template is="dom-if" if="{{ drafted }}">
-				<span style="display: inline-block; margin-left: 10px;">DRAFTED</span>
-			</template>
-			<div class="text-muted" style="max-height: 160px; overflow: hidden;" id="blogpostContent"></div>
+			<div class="title-holder">
+				<a class="pratilipi-red blog-title" href="[[ blogpost.pageUrl ]]">[[ blogpost.title ]]</a>
+				<a class="open-in-new" target="_blank" href="[[ blogpost.pageUrl ]]"><iron-icon icon="icons:open-in-new"></iron-icon></a>
+			</div>
+			<div class="text-muted content-summary">{{ blog.contentText }}</div>
 		</paper-card>
 	</template>
 	<script>
 		Polymer({
-
 			is: 'pratilipi-bloglist-snippet',
-
 			properties: {
 				blogpost: { type: Object },
-				drafted: { type: Boolean, value: false }
 			},
-			
-			attached: function() {
-				jQuery( this.querySelector( '#blogpostContent' ) ).html( this.blogpost.content );
-			}
-			
 		});
 	</script>
 </dom-module>

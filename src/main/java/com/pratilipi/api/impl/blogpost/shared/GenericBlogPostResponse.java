@@ -37,7 +37,7 @@ public class GenericBlogPostResponse extends GenericResponse {
 	private String title;
 	private String titleEn;
 	private String content;
-	private String contentSummary;
+	private String contentText;
 	
 	private BlogPostState state;
 	private User createdBy;
@@ -54,8 +54,7 @@ public class GenericBlogPostResponse extends GenericResponse {
 		this.title = blogPostData.getTitle();
 		this.titleEn = blogPostData.getTitleEn();
 		this.content = blogPostData.getContent();
-		this.contentSummary = Jsoup.parse( blogPostData.getContent() ).text();
-		this.contentSummary = this.contentSummary.substring( 0, Math.min( 500, this.contentSummary.length() ) );
+		this.contentText = Jsoup.parse( blogPostData.getContent() ).text();
 		this.state = blogPostData.getState();
 		
 		if( blogPostData.getCreatedBy() != null ) {
@@ -114,8 +113,8 @@ public class GenericBlogPostResponse extends GenericResponse {
 		this.content = content;
 	}
 	
-	public String getContentSummary() {
-		return contentSummary;
+	public String getContentText() {
+		return contentText;
 	}
 
 	

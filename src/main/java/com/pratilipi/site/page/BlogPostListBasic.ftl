@@ -8,8 +8,24 @@
 		<#include "meta/HeadBasic.ftl">
 		
 		<style>
-			img {
-				max-width: 100%!important;
+			.title-holder {
+				margin: 4px 0px 8px 0px;
+			}
+			.title-holder .blog-title {
+				font-size: 18px;
+			}
+			.title-holder .view-more {
+				font-size: 14px;
+				float: right;
+				color: #094c89;
+			}
+			.content-summary {
+				max-height: 120px; 
+				overflow: hidden;
+				padding-right: 4px;
+				text-align: justify;
+				font-size: 14px;
+				line-height: 20px;
 			}
 		</style>
 		
@@ -20,17 +36,12 @@
 			<div class="parent-container">
 				<div class="container">
 					<#list blogPostList as blogPost>
-						<div class="secondary-500 pratilipi-shadow box" style="padding: 16px 12px;">
-							<a class="pratilipi-blue pull-right" href="${ blogPost.getPageUrl() }">
-								${ _strings.view_more }...
-							</a>
-							<a href="${ blogPost.getPageUrl() }">
-								<h4 style="display: inline-block;" class="pratilipi-red">${  blogPost.getTitle() }</h4>
-							</a>
-							<#if blogPost.getState() == "DRAFTED">
-								<span style="display: inline-block; margin-left: 5px;">DRAFTED</span>
-							</#if>
-							<div class="text-muted" style="max-height: 160px; overflow: hidden;">${ blogPost.getContent() }</div>
+						<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 16px;">
+							<div class="title-holder">
+								<a class="pratilipi-red blog-title" href="${ blogPost.getPageUrl() }">${  blogPost.getTitle() }</a>
+								<a class="view-more" href="${ blogPost.getPageUrl() }">${ _strings.view_more }...</a>
+							</div>
+							<div class="text-muted content-summary">${ blogPost.getContentText() }</div>
 						</div>
 					</#list>
 				</div>

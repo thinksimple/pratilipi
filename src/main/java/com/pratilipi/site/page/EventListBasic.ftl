@@ -16,11 +16,12 @@
 			.title-holder .view-more {
 				font-size: 14px;
 				float: right;
+				color: #094c89;
 			}
 			.description-summary {
 				max-height: 120px; 
 				overflow: hidden;
-				padding-right: 16px;
+				padding-right: 4px;
 				text-align: justify;
 				font-size: 14px;
 				line-height: 20px;
