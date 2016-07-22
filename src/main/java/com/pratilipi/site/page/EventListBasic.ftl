@@ -39,7 +39,7 @@
 								<a class="pratilipi-red event-title" href="${ event.pageUrl }">${ event.name }</a>
 								<a class="view-more" href="${ event.pageUrl }">${ _strings.view_more }...</a>
 							</div>
-							<div class="text-muted description-summary">${ event.descriptionText }</div>
+							<div class="text-muted description-summary">${ event.descriptionText! }</div>
 						</div>
 					</#list>
 				</div>
