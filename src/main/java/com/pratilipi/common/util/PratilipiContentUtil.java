@@ -281,7 +281,7 @@ public class PratilipiContentUtil {
 		
 		PratilipiContentDoc pcDoc = DataAccessorFactory.getDocAccessor().getPratilipiContentDoc();
 		
-		List<Pagelet> pageletList = _createPageletList( Jsoup.parse( content ) );
+		List<Pagelet> pageletList = _createPageletList( Jsoup.parse( content ).body() );
 		
 		Chapter chapter = null;
 		if( pageletList.get( 0 ).getType() != PratilipiContentDoc.PageletType.HEAD_1 ) {
