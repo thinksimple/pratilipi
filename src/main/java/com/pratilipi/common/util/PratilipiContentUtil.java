@@ -370,11 +370,15 @@ public class PratilipiContentUtil {
 				}
 				
 				JsonObject imgData = new JsonObject();
-				imgData.addProperty( "name", imagUrl );
+				imgData.addProperty( "name", imageName );
 				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
 				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
 				
 				pageletList.add( new Pagelet( imgData, PageletType.IMAGE ) );
+				
+			} else if( childNode.nodeName().equals( "br" ) ) {
+				
+				pagelet = null;
 				
 			} else {
 				
