@@ -10,13 +10,13 @@
 		<div class="pull-right">
 			<br>	
 			<a class="pull-right pratilipi-red" href="#">View More</a>
-		</div>
+		</div>                   
 		<div class="clearfix"></div>
 		<hr style="margin-top:0px;margin-bottom:0px;">	
 		<#if draftedPratilipiList?has_content>
 			<#list draftedPratilipiList as pratilipi>
 				<#include "pratilipi-draft-card-mini.ftl">
 			</#list>
-		<#/if>			
+		</#if>			
 	</div>
 </#if>
