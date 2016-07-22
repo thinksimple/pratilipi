@@ -29,7 +29,9 @@ public class PratilipiContentImageApi extends GenericApi {
 		private Integer pageNo;
 		
 		private String name;
-		
+
+		private Integer width;
+
 	}
 	
 	
@@ -49,7 +51,8 @@ public class PratilipiContentImageApi extends GenericApi {
 		else if( request.name != null )
 			blobEntry = (BlobEntry) PratilipiDataUtil.getPratilipiContentImage(
 					request.pratilipiId,
-					request.name );
+					request.name,
+					request.width );
 		
 		return new GenericFileDownloadResponse(
 				blobEntry.getData(),

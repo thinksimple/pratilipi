@@ -1036,7 +1036,7 @@ public class PratilipiDataUtil {
 		return pratilipi.getPageCount();
 	}
 	
-	public static BlobEntry getPratilipiContentImage( long pratilipiId, String name )
+	public static BlobEntry getPratilipiContentImage( long pratilipiId, String name, Integer width )
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		Pratilipi pratilipi = DataAccessorFactory.getDataAccessor()
@@ -1045,9 +1045,14 @@ public class PratilipiDataUtil {
 		if( ! hasAccessToReadPratilipiContent( pratilipi ) )
 			throw new InsufficientAccessException();
 		
-		return DataAccessorFactory.getBlobAccessor()
+		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
 				.getBlob( CONTENT_IMAGE_FOLDER + "/" + pratilipiId + "/" + name );
 	
+		if( width != null )
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
+		
+		return blobEntry;
+		
 	}
 
 	

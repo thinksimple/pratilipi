@@ -10,6 +10,7 @@ import com.pratilipi.api.impl.comment.CommentListApi;
 import com.pratilipi.api.impl.init.InitApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiContentImageApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.recommend.RecommendApi;
@@ -45,6 +46,7 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( PratilipiListApi.class );
 		ApiRegistry.register( PratilipiContentApi.class );
 		ApiRegistry.register( PratilipiCoverApi.class );
+		ApiRegistry.register( PratilipiContentImageApi.class );
 		
 		ApiRegistry.register( AuthorApi.class );
 		ApiRegistry.register( AuthorImageApi.class );
