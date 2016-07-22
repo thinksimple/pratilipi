@@ -299,7 +299,7 @@ public class PratilipiContentUtil {
 				
 			} else {
 				
-				chapter.getPage( 0 ).addPagelet( pagelet );;
+				chapter.getPage( 1 ).addPagelet( pagelet );;
 				
 			}
 		}
