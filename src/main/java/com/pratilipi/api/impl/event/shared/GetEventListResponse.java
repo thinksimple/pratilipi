@@ -22,4 +22,8 @@ public class GetEventListResponse extends GenericResponse {
 		this.eventList = eventListResponse;
 	}
 	
+	public List<GenericEventResponse> getEventList() {
+		return eventList;
+	}
+
 }

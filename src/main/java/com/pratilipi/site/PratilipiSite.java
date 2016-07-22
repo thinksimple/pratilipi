@@ -342,8 +342,6 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "AuthorList.ftl";
 			
 			} else if( uri.equals( "/events" ) ) {
-				if( ! basicMode )
-					resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
 			
@@ -788,9 +786,9 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Events" );
 		if( basicMode )
-			dataModel.put( "eventList", eventListResponse );
+			dataModel.put( "eventList", eventListResponse.getEventList() );
 		else
-			dataModel.put( "eventListJson", new Gson().toJson( eventListResponse ) );
+			dataModel.put( "eventListJson", new Gson().toJson( eventListResponse.getEventList() ) );
 		dataModel.put( "hasAccessToAdd", hasAccessToAdd );
 		return dataModel;
 	}

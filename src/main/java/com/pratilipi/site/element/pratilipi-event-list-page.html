@@ -95,14 +95,29 @@
     		padding: 16px 5px;
 			--paper-card-header: { display: none };
 		}
-		iron-icon {
-			position: absolute; 
-			right: 20px; 
-			top: 5px;
+		.title-holder {
+			margin: 4px 0px 8px 0px;
+		}
+		.title-holder .event-title {
+			max-width: calc( 100% - 36px );
+			font-size: 18px;
+		}
+		.title-holder .open-in-new {
+			float: right;
+		}
+		.title-holder .open-in-new iron-icon {
 			width: 24px;
 			height: 24px;
+			color: #094c89;
 		}
-		
+		.description-summary {
+			max-height: 120px; 
+			overflow: hidden;
+			padding-right: 16px;
+			text-align: justify;
+			font-size: 14px;
+			line-height: 20px;
+		}
 	</style>
 	<template>
 		<paper-card>
@@ -113,11 +128,11 @@
 					</a>
 				</div>
 				<div style="padding-left: 30px; padding-right: 20px;" class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-					<a href="[[ event.pageUrl ]]"><h4 class="pratilipi-red" style="max-width: calc( 100% - 36px );">[[ event.name ]]</h4></a>
-					<div style="max-height: 120px; overflow: hidden;" id="description" class="text-muted"></div>
-					<a target="_blank" class="pratilipi-blue" href="[[ event.pageUrl ]]">
-						<iron-icon icon="icons:open-in-new"></iron-icon>
-					</a>
+					<div class="title-holder">
+						<a class="pratilipi-red event-title" href="[[ event.pageUrl ]]">[[ event.name ]]</a>
+						<a class="open-in-new" target="_blank" href="[[ event.pageUrl ]]"><iron-icon icon="icons:open-in-new"></iron-icon></a>
+					</div>
+					<div class="text-muted description-summary">{{ event.descriptionSummary }}</div>
 				</div>
 			</div>
 		</paper-card>
@@ -129,12 +144,8 @@
 				event: { type: Object }
 			},
 			ready: function() {
-				if( this.event.description != null )
-					jQuery( this.querySelector( '#description' ) ).html( this.event.description );
-				if( this.event.bannerImageUrl.indexOf( '?' ) == -1 )
-					this.eventBannerImageUrl = this.event.bannerImageUrl + "?" + "width=400";
-				else
-					this.eventBannerImageUrl = this.event.bannerImageUrl + "&" + "width=400";
+				this.eventBannerImageUrl = this.event.bannerImageUrl + 
+											( this.event.bannerImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=400";
 			}
 		});
 	</script>
