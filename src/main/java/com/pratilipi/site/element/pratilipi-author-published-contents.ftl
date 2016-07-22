@@ -4,7 +4,7 @@
 	};
 </script>
 
-<#if ( ( user.isGuest == false ) && ( user.getId() != author.getUser().getId() ) && ( !publishedPratilipiList?has_content ) ) >
+<#if ( ( user.isGuest == false ) && ( user.getId() == author.getUser().getId() ) && ( !publishedPratilipiList?has_content ) ) >
 <#else>
 	<div class="pratilipi-shadow secondary-500 box">	
 		<div class="pull-left">
