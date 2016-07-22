@@ -59,7 +59,6 @@ public class PratilipiDataUtil {
 
 	
 	private static final String CONTENT_FOLDER 		 = "pratilipi-content/pratilipi";
-	private static final String CONTENT_IMAGE_FOLDER = "pratilipi/images";
 	private static final String IMAGE_CONTENT_FOLDER = "pratilipi-content/image";
 	private static final String KEYWORDS_FOLDER 	 = "pratilipi-keywords/pratilipi";
 	private static final String COVER_FOLDER 		 = "pratilipi-cover/original";
@@ -1046,7 +1045,7 @@ public class PratilipiDataUtil {
 			throw new InsufficientAccessException();
 		
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
-				.getBlob( CONTENT_IMAGE_FOLDER + "/" + pratilipiId + "/" + name );
+				.getBlob( "pratilipi/" + pratilipiId + "/images/" + name );
 	
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
