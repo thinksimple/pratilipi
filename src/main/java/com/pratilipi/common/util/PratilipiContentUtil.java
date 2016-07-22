@@ -378,9 +378,9 @@ public class PratilipiContentUtil {
 				
 			} else {
 				
-				String text  = node.getClass() == TextNode.class
-						? ( (TextNode) node ).text().trim()
-						: ( (Element) node ).text().trim();
+				String text  = childNode.getClass() == TextNode.class
+						? ( (TextNode) childNode ).text().trim()
+						: ( (Element) childNode ).text().trim();
 				if( text.isEmpty() )
 					continue;
 				if( pagelet == null ) {
