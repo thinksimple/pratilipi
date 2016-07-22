@@ -1,15 +1,16 @@
 <#if author.hasAccessToUpdate()==true >
 	<script>
 		function changePratilipiState(bookId, state) {
+		var caps_state = state.toUpperCase();
 		    $.ajax({type: "POST",
 		            url: "/api/pratilipi",
-		            data: { pratilipiId: bookId, state: state },
+		            data: { pratilipiId: bookId, state: caps_state },
 		            success:function(response){
 		            	console.log(response);
 		            	console.log(typeof response);
 		            	
 		            	var parsed_data = jQuery.parseJSON( response );
-		      			if ( parsed_data.state == state ) {
+		      			if ( parsed_data.state == caps_state ) {
 		      				window.location.reload();
 		      			}
 		      			else {
