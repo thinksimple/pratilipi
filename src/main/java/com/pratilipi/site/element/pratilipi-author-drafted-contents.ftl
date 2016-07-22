@@ -1,9 +1,9 @@
-<#if author.hasAccessToUpdate() >
+<#if author.hasAccessToUpdate()==true >
 	<div class="pratilipi-shadow secondary-500 box">	
 		<div class="pull-left">
 			<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
 				Drafts
-					<!-- <span><button class="pratilipi-grey-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new</button></span> -->
+					<#-- <span><button class="pratilipi-grey-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new</button></span> -->
 			</h5>
 			<p class="works-number"> 12</p>
 		</div>
