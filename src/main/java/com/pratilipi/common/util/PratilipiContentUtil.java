@@ -21,11 +21,16 @@ import org.jsoup.select.Elements;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.data.BlobAccessor;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.PratilipiContentData;
 import com.pratilipi.data.client.PratilipiContentData.Chapter;
 import com.pratilipi.data.client.PratilipiContentData.Page;
 import com.pratilipi.data.client.PratilipiContentData.Pagelet;
 import com.pratilipi.data.client.PratilipiContentData.PageletType;
+import com.pratilipi.data.type.BlobEntry;
+import com.pratilipi.data.type.Pratilipi;
 
 
 public class PratilipiContentUtil {
@@ -322,6 +327,74 @@ public class PratilipiContentUtil {
 		}
 		
 		return new PratilipiContentData( chapterList );
+		
+	}
+	
+	public List<Pagelet> createPageletList( Node node, Pratilipi pratilipi ) throws UnexpectedServerException {
+		
+		List<Pagelet> pageletList = new LinkedList<>();
+		
+		Pagelet pagelet = null;
+		for( Node childNode : node.childNodes() ) {
+			
+			if( childNode.nodeName().equals( "body" )
+					|| childNode.nodeName().equals( "div" )
+					|| childNode.nodeName().equals( "p" ) ) {
+				
+				pagelet = null;
+				pageletList.addAll( createPageletList( childNode, pratilipi ) );
+				
+			} else if( childNode.nodeName().equals( "img" ) ) {
+				
+				pagelet = null;
+				
+				BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+				BlobEntry blobEntry = null;
+				String imagUrl = childNode.attr( "src" );
+				String imageName = null;
+				if( imagUrl.startsWith( "http" ) ) {
+					imageName = imagUrl.replaceAll( "[:/.?=&+]+", "_" );
+					String fileName = "pratilipi/" + pratilipi.getId() + "/images/" + imagUrl.replaceAll( "[:/.?=&+]+", "_" );
+					blobEntry = blobAccessor.getBlob( fileName );
+					if( blobEntry == null ) {
+						blobEntry = HttpUtil.doGet( imagUrl );
+						blobEntry.setName( fileName );
+						blobAccessor.createOrUpdateBlob( blobEntry );
+					}
+				} else {
+					imageName = imagUrl.substring( imagUrl.indexOf( "name=" ) + 5 );
+					if( imageName.indexOf( '&' ) != -1 )
+						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
+					String fileName = "pratilipi/" + pratilipi.getId() + "/images/" + imageName;
+					blobEntry = blobAccessor.getBlob( fileName );
+				}
+				
+				JsonObject imgData = new JsonObject();
+				imgData.addProperty( "name", imagUrl );
+				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
+				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
+				
+				pageletList.add( new Pagelet( imgData, PageletType.IMAGE ) );
+				
+			} else {
+				
+				String text  = node.getClass() == TextNode.class
+						? ( (TextNode) node ).text().trim()
+						: ( (Element) node ).text().trim();
+				if( text.isEmpty() )
+					continue;
+				if( pagelet == null ) {
+					pagelet = new Pagelet( text, PageletType.TEXT );
+					pageletList.add( pagelet );
+				} else {
+					pagelet = new Pagelet( pagelet.getData() + " " + text, PageletType.TEXT );
+				}
+				
+			}
+			
+		}
+		
+		return pageletList;
 		
 	}
 	

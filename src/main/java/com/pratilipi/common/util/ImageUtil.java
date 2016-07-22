@@ -10,6 +10,14 @@ public class ImageUtil {
 	private static final ImagesService imagesService = ImagesServiceFactory.getImagesService();
 	
 
+	public static int getHeight( byte[] imageData ) {
+		return ImagesServiceFactory.makeImage( imageData ).getHeight();
+	}
+	
+	public static int getWidth( byte[] imageData ) {
+		return ImagesServiceFactory.makeImage( imageData ).getWidth();
+	}
+	
 	public static byte[] resize( byte[] imageData, int width ) {
 		Image image = ImagesServiceFactory.makeImage( imageData );
 		Transform resize = ImagesServiceFactory.makeResize(

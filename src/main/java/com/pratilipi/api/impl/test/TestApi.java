@@ -1,6 +1,10 @@
 package com.pratilipi.api.impl.test;
 
+import java.nio.charset.Charset;
 import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Node;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
@@ -10,12 +14,16 @@ import com.pratilipi.api.shared.GenericFileDownloadResponse;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.util.HttpUtil;
+import com.pratilipi.common.util.PratilipiContentUtil;
+import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.client.PratilipiContentData.Pagelet;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Pratilipi;
@@ -26,6 +34,7 @@ import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.data.util.PratilipiDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -37,22 +46,28 @@ public class TestApi extends GenericApi {
 		String facebookId;
 		
 		Long pratilipiId;
+		Integer pageNo;
 		String url;
 	}
 	
 	public static class Response extends GenericResponse {
 		
 		String msg;
+		List<Pagelet> pageletList;
 		
 		Response( String msg ) {
 			this.msg = msg;
 		}
 	
+		Response( List<Pagelet> pageletList ) {
+			this.pageletList = pageletList;
+		}
+		
 	}
 	
 	
 	@Get
-	public GenericResponse get( GetRequest request ) throws InsufficientAccessException {
+	public GenericResponse get( GetRequest request ) throws InsufficientAccessException, InvalidArgumentException {
 		
 /*		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( 5830554839678976L );
@@ -154,8 +169,11 @@ public class TestApi extends GenericApi {
 
 		
 		try {
-			BlobEntry blobEntry = HttpUtil.doGet( request.url );
-			return new GenericFileDownloadResponse( blobEntry.getData(), blobEntry.getMimeType(), blobEntry.getETag() );
+			Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( request.pratilipiId );
+			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+			BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/pratilipi" + "/" + request.pratilipiId );
+			Node node = Jsoup.parse( new String( blobEntry.getData(), Charset.forName( "UTF-8" ) ) ).body();
+			return new Response( new PratilipiContentUtil( "abcd" ).createPageletList( node, pratilipi ) );
 		} catch (UnexpectedServerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

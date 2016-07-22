@@ -59,12 +59,12 @@ public class PratilipiContentData {
 		
 		private String id;
 
-		private String data;
+		private Object data;
 
 		private PageletType type;
 		
 
-		public Pagelet( String data, PageletType type ) {
+		public Pagelet( Object data, PageletType type ) {
 			this.id = UUID.randomUUID().toString();
 			this.data = data;
 			this.type = type;
@@ -74,7 +74,7 @@ public class PratilipiContentData {
 			return id;
 		}
 
-		public String getData() {
+		public Object getData() {
 			return data;
 		}
 
@@ -85,7 +85,7 @@ public class PratilipiContentData {
 	}
 	
 	public enum PageletType {
-		TEXT, HTML, IMAGE
+		HEADING, SUB_HEADING, TEXT, HTML, IMAGE
 	}
 
 	
