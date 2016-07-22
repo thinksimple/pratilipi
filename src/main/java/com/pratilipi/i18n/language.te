@@ -17,7 +17,7 @@ language_ml					= మలయాళం
 language_bn					= బెంగాలీ
 language_en					= ఇంగ్లీష్
 language_te					= తెలుగు
-language_kn					= Kannada
+language_kn					= కన్నడం
 
 # Pratilipi Types
 _pratilipi_type_book		= పుస్తకం
@@ -252,7 +252,7 @@ register_part_2					= మరియు
 register_part_3					= .
 
 # Event Page
-event_entries			= సాహితీ కార్యక్రమాల వివరాలు
+event_entries			= పోటీ నిమిత్తం ప్రచురితమైన రచనలు
 event_name				= సాహితీ కార్యక్రమం పేరు
 event_name_en			= సాహితీ కార్యక్రమం పేరు (ఆంగ్లంలో)
 event_description		= సాహితీ కార్యక్రమం గురించి
