@@ -283,11 +283,12 @@ public class PratilipiContentUtil {
 		
 		List<Pagelet> pageletList = _createPageletList( Jsoup.parse( content ) );
 		
+		Chapter chapter = null;
 		if( pageletList.get( 0 ).getType() != PratilipiContentDoc.PageletType.HEAD_1 ) {
-			pcDoc.addChapter( new Chapter( pratilipi.getTitle() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() ) );
+			chapter = new Chapter( pratilipi.getTitle() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
+			pcDoc.addChapter( chapter );
 		}
 		
-		Chapter chapter = null;
 		for( Pagelet pagelet : pageletList ) {
 			if( pagelet.getType() == PratilipiContentDoc.PageletType.HEAD_1
 					|| pagelet.getType() == PratilipiContentDoc.PageletType.HEAD_2 ) {
