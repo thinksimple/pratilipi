@@ -59,6 +59,7 @@ public class PratilipiDataUtil {
 
 	
 	private static final String CONTENT_FOLDER 		 = "pratilipi-content/pratilipi";
+	private static final String CONTENT_IMAGE_FOLDER = "pratilipi/images";
 	private static final String IMAGE_CONTENT_FOLDER = "pratilipi-content/image";
 	private static final String KEYWORDS_FOLDER 	 = "pratilipi-keywords/pratilipi";
 	private static final String COVER_FOLDER 		 = "pratilipi-cover/original";
@@ -960,7 +961,7 @@ public class PratilipiDataUtil {
 		}
 		
 	}
-	
+		
 	public static int updatePratilipiContent( long pratilipiId, int pageNo,
 			PratilipiContentType contentType, Object pageContent, boolean insertNew )
 			throws InvalidArgumentException, InsufficientAccessException,
@@ -1035,6 +1036,20 @@ public class PratilipiDataUtil {
 		return pratilipi.getPageCount();
 	}
 	
+	public static BlobEntry getPratilipiContentImage( long pratilipiId, String name )
+			throws InsufficientAccessException, UnexpectedServerException {
+
+		Pratilipi pratilipi = DataAccessorFactory.getDataAccessor()
+				.getPratilipi( pratilipiId );
+
+		if( ! hasAccessToReadPratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
+		
+		return DataAccessorFactory.getBlobAccessor()
+				.getBlob( CONTENT_IMAGE_FOLDER + "/" + pratilipiId + "/" + name );
+	
+	}
+
 	
 	public static String getPratilipiKeywords( Long pratilipiId )
 			throws UnexpectedServerException {
