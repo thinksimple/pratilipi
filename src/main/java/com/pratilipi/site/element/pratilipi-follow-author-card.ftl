@@ -40,7 +40,7 @@
 							Unfollow &nbsp
 						</button>
 					<#else>
-						<button class="pratilipi-light-blue-button" onclick="FollowAuthorPostRequest(${ authorId?c }, true)>
+						<button class="pratilipi-light-blue-button" onclick="FollowAuthorPostRequest(${ authorId?c }, true)">
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 							Follow &nbsp
 						</button>			
