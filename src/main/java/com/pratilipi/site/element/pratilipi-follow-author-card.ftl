@@ -25,7 +25,7 @@
 <#macro follow_author_card isGuest can_follow retUrl authorId followCount following name pageUrl imageUrl >
 	<div class="media">
 		<a class="media-left" href="${ pageUrl }">
-		    <img class="media-object img-circle pratilipi-without-margin" style="width:90px;height:90px;" src="${ imageUrl }">
+		    <img class="media-object img-circle pratilipi-without-margin" src="${ imageUrl }">
 		</a>
 		<div class="media-body">
 		    <a href="${ pageUrl }"><h4 class="media-heading">${ name }</h4></a>
