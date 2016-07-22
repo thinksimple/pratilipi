@@ -2,6 +2,7 @@ package com.pratilipi.data;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.type.CommentDoc;
+import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipiDoc;
@@ -16,6 +17,9 @@ public interface DocAccessor {
 	
 
 
+	// Pratilipi Content Doc
+	PratilipiContentDoc getPratilipiContentDoc();
+	
 	// Pratilipi Reviews Doc
 	PratilipiReviewsDoc newPratilipiReviewsDoc();
 	PratilipiReviewsDoc getPratilipiReviewsDoc( Long pratilipiId ) throws UnexpectedServerException;

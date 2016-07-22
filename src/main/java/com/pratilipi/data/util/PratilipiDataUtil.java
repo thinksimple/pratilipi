@@ -37,8 +37,6 @@ import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.client.AuthorData;
-import com.pratilipi.data.client.PratilipiContentData;
-import com.pratilipi.data.client.PratilipiContentData.Chapter;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
@@ -46,9 +44,11 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.doc.PratilipiContentDocImpl.Chapter;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 
@@ -942,7 +942,7 @@ public class PratilipiDataUtil {
 			if( UxModeFilter.isAndroidApp() ) {
 				Object content = pratilipiContentUtil.toPratilipiContentData();
 				if( content != null && chapterNo != null )
-					content = ( (PratilipiContentData) content ).getChapter( chapterNo );
+					content = ( (PratilipiContentDoc) content ).getChapter( chapterNo );
 				if( content != null && pageNo != null )
 					content = ( (Chapter) content ).getPage( pageNo );
 				return content;

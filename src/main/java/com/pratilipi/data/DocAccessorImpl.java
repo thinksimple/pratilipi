@@ -9,10 +9,12 @@ import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.CommentDoc;
+import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipiDoc;
 import com.pratilipi.data.type.doc.CommentDocImpl;
+import com.pratilipi.data.type.doc.PratilipiContentDocImpl;
 import com.pratilipi.data.type.doc.PratilipiGoogleAnalyticsDocImpl;
 import com.pratilipi.data.type.doc.PratilipiReviewsDocImpl;
 import com.pratilipi.data.type.doc.UserPratilipiDocImpl;
@@ -46,6 +48,12 @@ public class DocAccessorImpl implements DocAccessor {
 		
 
 
+	// Pratilipi Content Doc
+	public PratilipiContentDoc getPratilipiContentDoc() {
+		return new PratilipiContentDocImpl();
+	}
+	
+	
 	// Pratilipi Reviews Doc
 	
 	@Override

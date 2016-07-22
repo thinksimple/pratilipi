@@ -1,6 +1,5 @@
 package com.pratilipi.common.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -12,11 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
-import org.jsoup.select.Elements;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -24,13 +21,12 @@ import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.client.PratilipiContentData;
-import com.pratilipi.data.client.PratilipiContentData.Chapter;
-import com.pratilipi.data.client.PratilipiContentData.Page;
-import com.pratilipi.data.client.PratilipiContentData.Pagelet;
-import com.pratilipi.data.client.PratilipiContentData.PageletType;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiContentDoc;
+import com.pratilipi.data.type.doc.PratilipiContentDocImpl.Chapter;
+import com.pratilipi.data.type.doc.PratilipiContentDocImpl.Page;
+import com.pratilipi.data.type.doc.PratilipiContentDocImpl.Pagelet;
 
 
 public class PratilipiContentUtil {
@@ -55,11 +51,18 @@ public class PratilipiContentUtil {
 	private static final String nonKeywordsPattern = "&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;|<[^>]*>|[!-/:-@\\[-`{-~]|।";
 
 	
+	private Pratilipi pratilipi;
 	private String content;
 	private Matcher matcher;
 	
 	
 	public PratilipiContentUtil( String content ) {
+		this.content = content;
+		matcher = pageBreakPattern.matcher( content );
+	}
+
+	public PratilipiContentUtil( Pratilipi pratilipi, String content ) {
+		this.pratilipi = pratilipi;
 		this.content = content;
 		matcher = pageBreakPattern.matcher( content );
 	}
@@ -274,63 +277,38 @@ public class PratilipiContentUtil {
 		return keywords.trim();
 	}
 
-	public PratilipiContentData toPratilipiContentData() {
+	public PratilipiContentDoc toPratilipiContentData() throws UnexpectedServerException {
 		
-		int pageCount = getPageCount();
+		PratilipiContentDoc pcDoc = DataAccessorFactory.getDocAccessor().getPratilipiContentDoc();
 		
-		List<Chapter> chapterList = new ArrayList<>( pageCount );
-
-		// Iterating through html pages and creating chapters.
-		for( int i = 1; i <= pageCount; i++ ) {
-			
-			String pageContent = getContent( i );
-			
-			List<Page> pageList = new LinkedList<>();
-			List<Pagelet> pageletList = new LinkedList<>();
-			
-			// Creating Jsoup Document.
-			Document document = Jsoup.parse( pageContent );
-			
-			// Iterating through h1 to h6 for getting the title.
-			String title = null;
-			for( int h = 1; h <= 6; h ++ ) {
-				Elements elements = document.getElementsByTag( "h" + h );
-				if( elements == null || elements.isEmpty() )
-					continue;
-				for( Element element : elements ) {
-					if( ! element.text().isEmpty() ) {
-						title = element.text().trim();
-						h = 7;
-						break;
-					}
-				}
+		List<Pagelet> pageletList = _createPageletList( Jsoup.parse( content ) );
+		
+		if( pageletList.get( 0 ).getType() != PratilipiContentDoc.PageletType.HEAD_1 )
+			pcDoc.addChapter( new Chapter( pratilipi.getTitle() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() ) );
+		
+		Chapter chapter = null;
+		for( Pagelet pagelet : pageletList ) {
+			if( pagelet.getType() == PratilipiContentDoc.PageletType.HEAD_1
+					|| pagelet.getType() == PratilipiContentDoc.PageletType.HEAD_2 ) {
+				
+				Page page = new Page();
+				page.addPagelet( pagelet );
+				chapter = new Chapter( pratilipi.getTitle() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
+				chapter.addPage( page );
+				pcDoc.addChapter( chapter );
+				
+			} else {
+				
+				chapter.getPage( 0 ).addPagelet( pagelet );;
+				
 			}
-			
-			List<Node> nodes = document.body().childNodes();
-			
-			// Creating Pagelets
-			for( Node node : nodes ) {
-				if( node.getClass() == Element.class ) {
-					Element element = (Element) node;
-					if( element.tag().getName().equalsIgnoreCase( "img" ) )
-						pageletList.add( new Pagelet( element.attr( "src" ), PageletType.IMAGE ) );
-					else if( ! element.text().trim().isEmpty() && ! element.text().trim().equals( title ) )
-						pageletList.add( new Pagelet( element.text().trim(), PageletType.TEXT ) );
-				} else if( node.getClass() == TextNode.class && ! node.toString().trim().isEmpty() ) {
-					pageletList.add( new Pagelet( node.toString().trim(), PageletType.TEXT ) );
-				}
-			}
-			
-			pageList.add( new Page( pageletList ) );
-			chapterList.add( new Chapter( title, pageList ) );
-
 		}
 		
-		return new PratilipiContentData( chapterList );
+		return pcDoc;
 		
 	}
 	
-	public List<Pagelet> createPageletList( Node node, Pratilipi pratilipi ) throws UnexpectedServerException {
+	private List<Pagelet> _createPageletList( Node node ) throws UnexpectedServerException {
 		
 		List<Pagelet> pageletList = new LinkedList<>();
 		
@@ -342,7 +320,17 @@ public class PratilipiContentUtil {
 					|| childNode.nodeName().equals( "p" ) ) {
 				
 				pagelet = null;
-				pageletList.addAll( createPageletList( childNode, pratilipi ) );
+				pageletList.addAll( _createPageletList( childNode ) );
+				
+			} else if( childNode.nodeName().equals( "h1" ) ) {
+				
+				pagelet = null;
+				pageletList.add( new Pagelet( ( (Element) childNode ).text().trim(), PratilipiContentDoc.PageletType.HEAD_1 ) );
+				
+			} else if( childNode.nodeName().equals( "h2" ) ) {
+				
+				pagelet = null;
+				pageletList.add( new Pagelet( ( (Element) childNode ).text().trim(), PratilipiContentDoc.PageletType.HEAD_2 ) );
 				
 			} else if( childNode.nodeName().equals( "img" ) ) {
 				
@@ -374,7 +362,7 @@ public class PratilipiContentUtil {
 				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
 				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
 				
-				pageletList.add( new Pagelet( imgData, PageletType.IMAGE ) );
+				pageletList.add( new Pagelet( imgData, PratilipiContentDoc.PageletType.IMAGE ) );
 				
 			} else if( childNode.nodeName().equals( "br" ) ) {
 				
@@ -388,10 +376,10 @@ public class PratilipiContentUtil {
 				if( text.isEmpty() )
 					continue;
 				if( pagelet == null ) {
-					pagelet = new Pagelet( text, PageletType.TEXT );
+					pagelet = new Pagelet( text, PratilipiContentDoc.PageletType.TEXT );
 					pageletList.add( pagelet );
 				} else {
-					pagelet = new Pagelet( pagelet.getData() + " " + text, PageletType.TEXT );
+					pagelet = new Pagelet( pagelet.getData() + " " + text, PratilipiContentDoc.PageletType.TEXT );
 				}
 				
 			}
