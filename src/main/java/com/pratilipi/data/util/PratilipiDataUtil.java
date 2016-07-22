@@ -937,7 +937,7 @@ public class PratilipiDataUtil {
 				return null;
 			
 			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( contentHtml );
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( pratilipi, contentHtml );
 
 			if( UxModeFilter.isAndroidApp() ) {
 				Object content = pratilipiContentUtil.toPratilipiContentData();
