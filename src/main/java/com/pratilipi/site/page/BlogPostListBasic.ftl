@@ -13,11 +13,12 @@
 			}
 			.title-holder .blog-title {
 				font-size: 18px;
+				margin-right: 12px;
 			}
 			.title-holder .view-more {
 				font-size: 14px;
-				float: right;
-				color: #094c89;
+				color: #107fe5;
+				white-space: nowrap;
 			}
 			.content-summary {
 				max-height: 120px; 

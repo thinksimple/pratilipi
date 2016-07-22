@@ -95,6 +95,7 @@
 			is: 'pratilipi-blog-list-page',
 			properties: {
 				userData: { type: Object },
+				userLoaded: { type: Boolean, value: false },
 				user: { type: Object, observer: "_userObserver" },
 				blogId: { type: String },
 				hasAccessToAdd: { types: Boolean, value: false },
@@ -113,6 +114,11 @@
 			},
 			
 			_userObserver: function() {
+				<#-- workaround user loaded for the first time -->
+				if( ! this.userLoaded ) {
+					this.userLoaded = true;
+					return;
+				}
 				this.async( function() {
 					window.location.reload();
 				}, 2000 );
@@ -227,33 +233,40 @@
 			margin: 4px 0px 8px 0px;
 		}
 		.title-holder .blog-title {
-			max-width: calc( 100% - 36px );
 			font-size: 18px;
+			margin-right: 12px;
 		}
-		.title-holder .open-in-new {
-			float: right;
-		}
-		.title-holder .open-in-new iron-icon {
-			width: 24px;
-			height: 24px;
-			color: #094c89;
+		.title-holder iron-icon {
+			width: 18px;
+			height: 18px;
+			margin-top: -4px;
+			margin-left: 4px;
+			opacity: 0.8;
 		}
 		.content-summary {
-			max-height: 120px; 
-			overflow: hidden;
+			padding-left: 16px;
 			padding-right: 16px;
 			text-align: justify;
 			font-size: 14px;
 			line-height: 20px;
 		}
+		.content-summary .view-more {
+			white-space: nowrap;
+			margin-left: 8px;
+			font-size: 14px;
+			line-height: 20px;
+			color: #111;
+		}
 	</style>
 	<template>
 		<paper-card style="padding: 16px 12px;">
 			<div class="title-holder">
-				<a class="pratilipi-red blog-title" href="[[ blogpost.pageUrl ]]">[[ blogpost.title ]]</a>
-				<a class="open-in-new" target="_blank" href="[[ blogpost.pageUrl ]]"><iron-icon icon="icons:open-in-new"></iron-icon></a>
+				<a class="pratilipi-red blog-title" target="_blank" href="[[ blogpost.pageUrl ]]">
+					[[ blogpost.title ]]
+					<iron-icon icon="icons:open-in-new"></iron-icon>
+				</a>
 			</div>
-			<div class="text-muted content-summary">{{ blogpost.contentText }}</div>
+			<div class="text-muted content-summary">{{ contentText }}<a class="view-more" href="{{ blogpost.pageUrl }}">( ${ _strings.view_more } )</a></div>
 		</paper-card>
 	</template>
 	<script>
@@ -261,7 +274,14 @@
 			is: 'pratilipi-bloglist-snippet',
 			properties: {
 				blogpost: { type: Object },
+				contentText: { type: String }
 			},
+			ready: function() {
+				if( this.blogpost.contentText != null ) {
+					var contentText = this.blogpost.contentText;
+					this.set( 'contentText', contentText.substring( 0, Math.min( 600, contentText.length ) ) + "..." );
+				}
+			}
 		});
 	</script>
 </dom-module>
