@@ -6,7 +6,26 @@
 		<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 		
 		<#include "meta/HeadBasic.ftl">
-		
+		<style>
+			.title-holder {
+				margin: 4px 0px 8px 0px;
+			}
+			.title-holder .event-title {
+				font-size: 18px;
+			}
+			.title-holder .view-more {
+				font-size: 14px;
+				float: right;
+			}
+			.description-summary {
+				max-height: 120px; 
+				overflow: hidden;
+				padding-right: 16px;
+				text-align: justify;
+				font-size: 14px;
+				line-height: 20px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -14,21 +33,12 @@
 			<div class="parent-container">
 				<div class="container">
 					<#list eventList as event>
-						<div class="secondary-500 pratilipi-shadow box" style="padding: 16px 5px;">
-							<div class="row">
-								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-									<a href="${ event.pageUrl }">
-										<img style="width: 200px; height: 150px; margin: 5px auto; display: block;" src="${ event.getBannerImageUrl(300) }" alt="${ event.name }" class="pratilipi-shadow" />
-									</a>
-								</div>
-								<div style="padding-left: 30px; padding-right: 20px;" class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-									<a href="${ event.pageUrl }"><h4 class="pratilipi-red">${ event.name }</h4></a>
-									<div style="max-height: 120px; overflow: hidden; margin-top: 15px;" class="text-muted">${ event.description }</div>
-									<a class="pratilipi-blue" href="${ event.pageUrl }" style="position: absolute; right: 20px; top: 0px;">
-										${ _strings.view_more }...
-									</a>
-								</div>
+						<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 16px;">
+							<div class="title-holder">
+								<a class="pratilipi-red event-title" href="${ event.pageUrl }">${ event.name }</a>
+								<a class="view-more" href="${ event.pageUrl }">${ _strings.view_more }...</a>
 							</div>
+							<div class="text-muted description-summary">${ event.descriptionText }</div>
 						</div>
 					</#list>
 				</div>

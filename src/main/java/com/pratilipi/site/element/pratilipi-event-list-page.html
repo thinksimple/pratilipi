@@ -129,10 +129,10 @@
 				</div>
 				<div style="padding-left: 30px; padding-right: 20px;" class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 					<div class="title-holder">
-						<a class="pratilipi-red event-title" href="[[ event.pageUrl ]]">[[ event.name ]]</a>
+						<a class="pratilipi-red event-title" href="[[ event.pageUrl ]]">{{ event.name }}</a>
 						<a class="open-in-new" target="_blank" href="[[ event.pageUrl ]]"><iron-icon icon="icons:open-in-new"></iron-icon></a>
 					</div>
-					<div class="text-muted description-summary">{{ event.descriptionSummary }}</div>
+					<div class="text-muted description-summary">{{ event.descriptionText }}</div>
 				</div>
 			</div>
 		</paper-card>

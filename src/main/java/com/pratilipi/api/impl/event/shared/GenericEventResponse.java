@@ -17,7 +17,7 @@ public class GenericEventResponse extends GenericResponse {
 	
 	private Language language;
 	private String description;
-	private String descriptionSummary;
+	private String descriptionText;
 	private List<String> pratilipiUrlList;
 	
 	private String pageUrl;
@@ -32,8 +32,7 @@ public class GenericEventResponse extends GenericResponse {
 		this.nameEn = eventData.getNameEn();
 		this.language = eventData.getLanguage();
 		this.description = eventData.getDescription();
-		this.descriptionSummary = Jsoup.parse( eventData.getDescription() ).text();
-		this.descriptionSummary = this.descriptionSummary.substring( 0, Math.min( 500, this.descriptionSummary.length() ) );
+		this.descriptionText = Jsoup.parse( eventData.getDescription() ).text();
 		this.pratilipiUrlList = eventData.getPratilipiUrlList();
 		this.pageUrl = eventData.getPageUrl();
 		this.bannerImageUrl = eventData.getBannerImageUrl();
@@ -63,8 +62,8 @@ public class GenericEventResponse extends GenericResponse {
 		return description;
 	}
 	
-	public String getDescriptionSummary() {
-		return descriptionSummary;
+	public String getdescriptionText() {
+		return descriptionText;
 	}
 
 	public List<String> getPratilipiUrlList() {
@@ -80,6 +79,9 @@ public class GenericEventResponse extends GenericResponse {
 		return bannerImageUrl;
 	}
 
+	public String getBannerImageUrl( Integer width ) {
+		return bannerImageUrl + ( bannerImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=" + width;
+	}
 	
 	public Boolean hasAccessToUpdate() {
 		return hasAccessToUpdate;
