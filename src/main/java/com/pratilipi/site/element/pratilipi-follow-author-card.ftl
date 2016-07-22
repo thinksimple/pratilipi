@@ -1,25 +1,27 @@
-function FollowAuthorPostRequest(authorId, follow){
-	$.ajax({type: "POST",
-	        url: "/api/userauthor/follow",
-	        data: { authorId: authorId, following: follow },
-	        success:function(response){
-	        	console.log(response);
-	        	console.log(typeof response);
-	        	
-	        	var parsed_data = jQuery.parseJSON( response );
-	  			if ( parsed_data.following == follow ) {
-	  				window.location.reload();
-	  			}
-	  			else {
-	  				
-	  			}
-			},
-	        fail:function(response){
-				alert("Sorry, we could not process your request.");
-			}			    		
-			
-	});
-}
+<script>
+	function FollowAuthorPostRequest(authorId, follow){
+		$.ajax({type: "POST",
+		        url: "/api/userauthor/follow",
+		        data: { authorId: authorId, following: follow },
+		        success:function(response){
+		        	console.log(response);
+		        	console.log(typeof response);
+		        	
+		        	var parsed_data = jQuery.parseJSON( response );
+		  			if ( parsed_data.following == follow ) {
+		  				window.location.reload();
+		  			}
+		  			else {
+		  				
+		  			}
+				},
+		        fail:function(response){
+					alert("Sorry, we could not process your request.");
+				}			    		
+				
+		});
+	}
+</script>
 <#macro follow_author_card isGuest can_follow retUrl authorId followCount following name pageUrl imageUrl >
 	<div class="media">
 		<a class="media-left" href="${ pageUrl }">
