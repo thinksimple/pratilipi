@@ -1063,7 +1063,7 @@ public class PratilipiDataUtil {
 			throw new InsufficientAccessException();
 		
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
-				.getBlob( "pratilipi/" + pratilipiId + "/images/" + name );
+				.getBlob( "pratilipi/" + pratilipiId + "/content/" + name );
 	
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );

@@ -36,19 +36,17 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 	public static class PageImpl implements PratilipiContentDoc.Page {
 
-		private List<Pagelet> pagelets;
+		private List<PageletImpl> pagelets;
 		
 		
 		public PageImpl() {}
 		
-		public PageImpl( List<Pagelet> pageletList ) {
-			this.pagelets = pageletList;
-		}
-
 		
 		@Override
 		public List<Pagelet> getPageletList() {
-			return pagelets == null ? new ArrayList<Pagelet>( 1 ) : pagelets;
+			return pagelets == null
+					? new ArrayList<Pagelet>( 1 )
+					: new ArrayList<Pagelet>( pagelets );
 		}
 
 		@Override
@@ -64,7 +62,7 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		
 		private String title;
 
-		private List<Page> pages;
+		private List<PageImpl> pages;
 
 		private Integer nesting;
 
@@ -96,7 +94,7 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		
 		@Override
 		public Page addPage( PageletType type, Object data ) {
-			Page page = new PageImpl();
+			PageImpl page = new PageImpl();
 			page.addPagelet( type, data );
 			if( this.pages == null )
 				this.pages = new LinkedList<>();
@@ -106,7 +104,9 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		
 		@Override
 		public List<Page> getPageList() {
-			return pages;
+			return pages == null
+					? new ArrayList<Page>( 0 )
+					: new ArrayList<Page>( pages );
 		}
 		
 		@Override
