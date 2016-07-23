@@ -770,6 +770,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", I18n.getString( "author_followers", language ) + " | " + createAuthorPageTitle( authorResponse ) );
+		dataModel.put( "author", authorResponse );
 		dataModel.put( "followersList", followersList );
 		dataModel.put( "followersListJson", new Gson().toJson( followersList ) );
 		dataModel.put( "currPage", currPage );
@@ -801,6 +802,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", I18n.getString( "author_following", language ) + " | " + createAuthorPageTitle( authorResponse ) );
+		dataModel.put( "author", authorResponse );
 		dataModel.put( "followingList", followingList );
 		dataModel.put( "followingListJson", new Gson().toJson( followingList ) );
 		dataModel.put( "currPage", currPage );
