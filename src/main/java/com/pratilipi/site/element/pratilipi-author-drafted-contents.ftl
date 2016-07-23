@@ -5,7 +5,7 @@
 				Drafts
 					<#-- <span><button class="pratilipi-grey-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new</button></span> -->
 			</h5>
-			<p class="works-number"> 12</p>
+			<p class="works-number"> ${ author.getContentDrafted() }</p>
 		</div>
 		<div class="pull-right">
 			<br>	

@@ -22,17 +22,19 @@
 	<div class="clearfix"></div>
 	<div class="follow-author">
 		<#if userAuthor.isFollowing()??>
-			<#if userAuthor.isFollowing() == true>
-				<button class="pratilipi-grey-button" onclick="FollowUnfollowPostRequest(false)">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-					Unfollow | ${ author.getFollowCount()?c }
-				</button>		
-			<#else>
-				<button class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					Follow | ${ author.getFollowCount()?c }
-				</button>
-			</#if> 
+			<#if ( user.getId() != author.getUser().getId() ) >
+				<#if userAuthor.isFollowing() == true>
+					<button class="pratilipi-grey-button" onclick="FollowUnfollowPostRequest(false)">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+						Unfollow | ${ author.getFollowCount()?c }
+					</button>		
+				<#else>
+					<button class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						Follow | ${ author.getFollowCount()?c }
+					</button>
+				</#if> 
+			</#if>
 		<#else>
 			<a class="pratilipi-light-blue-button" href="/login?ret=${ author.getPageUrl() }">
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>

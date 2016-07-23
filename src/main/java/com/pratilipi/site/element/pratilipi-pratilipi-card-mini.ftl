@@ -15,7 +15,7 @@
 	    <span>${ pratilipi.getReadCount() }<span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
 	    <div>
 	    	<#if user.isGuest == false>
-	    		<#if ( user.getId() == author.getUser().getId() ) >
+	    		<#if author.hasAccessToUpdate() >
 	    			<button type="button" class="pratilipi-light-blue-button" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DRAFTED' )">Move to Drafts</button>
 	    		</#if>
 	    		<#if pratilipi.isAddedToLib() == true>
