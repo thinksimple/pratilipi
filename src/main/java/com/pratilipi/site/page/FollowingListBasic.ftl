@@ -14,7 +14,6 @@
 
 	<body>
 		<div>
-			followersList = ${ followingListJson }
 			<#if followingList.getAuthorList()?has_content>
 				<#include "../element/pratilipi-follow-author-card.ftl">
 				<#list followingList.getAuthorList() as local_author>
