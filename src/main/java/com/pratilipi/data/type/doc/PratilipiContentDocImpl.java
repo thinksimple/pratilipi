@@ -16,6 +16,9 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		private Object data;
 		
 
+		@SuppressWarnings("unused")
+		private PageletImpl() {}
+		
 		public PageletImpl( PageletType type, Object data ) {
 			this.type = type;
 			this.data = data;
@@ -66,6 +69,9 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 		private Integer nesting;
 
+		
+		@SuppressWarnings("unused")
+		private ChapterImpl() {}
 		
 		public ChapterImpl( String title ) {
 			this.title = title;
