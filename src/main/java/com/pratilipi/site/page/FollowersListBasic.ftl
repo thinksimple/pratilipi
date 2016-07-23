@@ -12,7 +12,7 @@
 		<#include "../element/pratilipi-header.ftl">
 		<div class="parent-container">
 			<div class="container">
-				<div>
+				<div class="pratilipi-shadow secondary-500 box">
 					<#if followersList.getUserList()?has_content>
 						<#include "../element/pratilipi-follow-author-card.ftl">
 						<#list followersList.getUserList() as local_user>
