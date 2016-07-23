@@ -245,31 +245,6 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "action", action );
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 			
-			} else if( uri.equals( "/pratilipi-project" ) ) {
-				// Test Book
-				Long pratilipiId = 5630253470842880L;
-				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-				
-				if( ! PratilipiDataUtil.hasAccessToReadPratilipiContent( pratilipi ) )
-					throw new InsufficientAccessException();
-				
-				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-				PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
-				PratilipiApi.Response pratilipiResponse = new PratilipiApi.Response( pratilipiData );
-				UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( AccessTokenFilter.getAccessToken().getUserId(), pratilipiId );
-				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
-						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 20 );
-				
-				Gson gson = new Gson();
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Pratilipi Project" );
-				dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
-				dataModel.put( "addedToLib", ( userPratilipiData == null || userPratilipiData.isAddedToLib() == null ) ? 
-									false : userPratilipiData.isAddedToLib() );
-				dataModel.put( "reviewListJson", gson.toJson( toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) ) );
-				dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
-				templateName = templateFilePrefix + "Project.ftl";
-
 			} else if( uri.equals( "/search" ) ) {
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
@@ -354,9 +329,20 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
 			
-
-			
-			
+			} else if( uri.equals( "/followers" ) ) {
+				Long authorId = Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID_FOLLOWERS.getName() ) );
+				Integer currentPage = 	request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null &&
+										! request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ).trim().isEmpty() ? 
+						Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) ) : 1;
+				dataModel = createDataModelForFollowersPage( authorId, currentPage, filterLanguage );
+				templateName = templateFilePrefix + "FollowersListBasic.ftl";
+			} else if( uri.equals( "/following" ) ) {
+				Long userId = Long.parseLong( request.getParameter( RequestParameter.USER_ID_FOLLOWING.getName() ) );
+				Integer currentPage = 	request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null &&
+										! request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ).trim().isEmpty() ? 
+						Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) ) : 1;
+				dataModel = createDataModelForFollowingPage( userId, currentPage, filterLanguage );
+				templateName = templateFilePrefix + "FollowingListBasic.ftl";
 			} else {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Page Not Found !" );
@@ -762,6 +748,63 @@ public class PratilipiSite extends HttpServlet {
 		
 		return dataModel;
 		
+	}
+
+	public Map<String, Object> createDataModelForFollowersPage( Long authorId, Integer currPage, Language language ) 
+			throws InsufficientAccessException {
+
+		AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
+		authorApiGetRequest.setAuthorId( authorId );
+		AuthorApi.Response authorResponse = ApiRegistry
+				.getApi( AuthorApi.class )
+				.get( authorApiGetRequest );
+
+		Integer resultCount = 10;
+		UserAuthorFollowListApi.GetRequest followersListRequest = new UserAuthorFollowListApi.GetRequest();
+		followersListRequest.setAuthorId( authorId );
+		followersListRequest.setResultCount( resultCount );
+		followersListRequest.setOffset( ( currPage - 1 ) * resultCount );
+		UserAuthorFollowListApi.Response followersList = ApiRegistry
+				.getApi( UserAuthorFollowListApi.class )
+				.get( followersListRequest );
+
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", I18n.getString( "author_followers", language ) + " | " + createAuthorPageTitle( authorResponse ) );
+		dataModel.put( "followersList", followersList );
+		dataModel.put( "currPage", currPage );
+		dataModel.put( "maxPage", followersList.getNumberFound() % resultCount == 0 ? 
+				followersList.getNumberFound() / resultCount :  followersList.getNumberFound() / resultCount + 1 );
+		return dataModel;
+	}
+
+	public Map<String, Object> createDataModelForFollowingPage( Long userId, Integer currPage, Language language ) 
+			throws InsufficientAccessException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Long authorId = dataAccessor.getAuthorByUserId( userId ).getId();
+
+		AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
+		authorApiGetRequest.setAuthorId( authorId );
+		AuthorApi.Response authorResponse = ApiRegistry
+				.getApi( AuthorApi.class )
+				.get( authorApiGetRequest );
+
+		Integer resultCount = 10;
+		UserAuthorFollowListApi.GetRequest followingListRequest = new UserAuthorFollowListApi.GetRequest();
+		followingListRequest.setUserId( userId );
+		followingListRequest.setResultCount( resultCount );
+		followingListRequest.setOffset( ( currPage - 1 ) * resultCount );
+		UserAuthorFollowListApi.Response followingList= ApiRegistry
+				.getApi( UserAuthorFollowListApi.class )
+				.get( followingListRequest );
+
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", I18n.getString( "author_following", language ) + " | " + createAuthorPageTitle( authorResponse ) );
+		dataModel.put( "followingList", followingList );
+		dataModel.put( "currPage", currPage );
+		dataModel.put( "maxPage", followingList.getNumberFound() % resultCount == 0 ? 
+				followingList.getNumberFound() / resultCount :  followingList.getNumberFound() / resultCount + 1 );
+		return dataModel;
 	}
 
 	public Map<String, Object> createDataModelForAuthorsPage( Language lang )

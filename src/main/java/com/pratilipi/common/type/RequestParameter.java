@@ -10,7 +10,10 @@ public enum RequestParameter {
 	PRATILIPI_REVIEW( "review" ),
 	PASSWORD_RESET_EMAIL_EMAIL( "email" ),
 	PASSWORD_RESET_EMAIL_TOKEN( "token" ),
-	PASSWORD_RESET_EMAIL_FLAG( "passwordReset" )
+	PASSWORD_RESET_EMAIL_FLAG( "passwordReset" ),
+	VERIFY_EMAIL_FLAG( "verifyUser" ),
+	AUTHOR_ID_FOLLOWERS( "aId" ),
+	USER_ID_FOLLOWING( "uId" )
 	;
 	
 	
