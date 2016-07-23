@@ -120,7 +120,7 @@ public class PratilipiDocUtil {
 				String imageName = null;
 				if( imagUrl.startsWith( "http" ) ) {
 					imageName = imagUrl.replaceAll( "[:/.?=&+]+", "_" );
-					String fileName = "pratilipi/" + pratilipi.getId() + "/images/" + imagUrl.replaceAll( "[:/.?=&+]+", "_" );
+					String fileName = "pratilipi/" + pratilipi.getId() + "/content/" + imagUrl.replaceAll( "[:/.?=&+]+", "_" );
 					blobEntry = blobAccessor.getBlob( fileName );
 					if( blobEntry == null ) {
 						blobEntry = HttpUtil.doGet( imagUrl );
