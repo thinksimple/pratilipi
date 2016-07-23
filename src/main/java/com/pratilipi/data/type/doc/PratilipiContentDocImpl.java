@@ -118,46 +118,44 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 	
 
 	
-	public List<Chapter> chapterList;
+	public List<ChapterImpl> chapters;
 
 	
 	public PratilipiContentDocImpl() {}
 	
-	public PratilipiContentDocImpl( List<Chapter> chapterList ) {
-		this.chapterList = chapterList;
-	}
-	
 
 	@Override
 	public int getChapterCount() {
-		return chapterList == null ? 0 : chapterList.size();
+		return chapters == null ? 0 : chapters.size();
 	}
 
 	@Override
 	public Chapter getChapter( int chapterNo ) {
-		return chapterList == null || chapterList.size() < chapterNo ? null : chapterList.get( chapterNo - 1 );
+		return chapters == null || chapters.size() < chapterNo ? null : chapters.get( chapterNo - 1 );
 	}
 	
 	@Override
 	public List<Chapter> getChapterList() {
-		return chapterList == null ? new ArrayList<Chapter>( 0 ) : chapterList;
+		return chapters == null
+				? new ArrayList<Chapter>( 0 )
+				: new ArrayList<Chapter>( chapters );
 	}
 	
 	@Override
 	public Chapter addChapter( String title ) {
-		Chapter chapter = new ChapterImpl( title );
-		if( this.chapterList == null )
-			this.chapterList = new LinkedList<>();
-		this.chapterList.add( chapter );
+		ChapterImpl chapter = new ChapterImpl( title );
+		if( this.chapters == null )
+			this.chapters = new LinkedList<>();
+		this.chapters.add( chapter );
 		return chapter;
 	}
 
 	@Override
 	public Chapter addChapter( String title, int nesting ) {
-		Chapter chapter = new ChapterImpl( title, nesting );
-		if( this.chapterList == null )
-			this.chapterList = new LinkedList<>();
-		this.chapterList.add( chapter );
+		ChapterImpl chapter = new ChapterImpl( title, nesting );
+		if( this.chapters == null )
+			this.chapters = new LinkedList<>();
+		this.chapters.add( chapter );
 		return chapter;
 	}
 	
