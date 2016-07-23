@@ -360,7 +360,7 @@
 				this.set( 'ratingCount', pratilipi.ratingCount != null ? pratilipi.ratingCount : 0 );
 				this.set( 'readCount', pratilipi.readCount != null ? pratilipi.readCount : 0 );
 				this.set( 'pratilipiCoverImageUrl', pratilipi.coverImageUrl + ( pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
-				this.set( 'zeroRating', ( pratilipi.ratingCount != null && pratilipi.ratingCount == 0 ) ? true : false );
+				this.set( 'zeroRating', false );
 				this.set( 'type', this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name );
 				this.set( 'listingDate', convertDate( pratilipi.listingDateMillis ) );
 				this.set( 'showLastUpdatedDate', pratilipi.lastUpdatedMillis != null ? true : false );

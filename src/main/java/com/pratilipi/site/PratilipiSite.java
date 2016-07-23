@@ -192,6 +192,20 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "title", "Update Password" );
 				templateName = templateFilePrefix + "PasswordUpdateBasic.ftl";
 				
+			} else if( uri.equals( "/followers" ) ) {
+				Long authorId = Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID_FOLLOWERS.getName() ) );
+				Integer currentPage = 	request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null &&
+										! request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ).trim().isEmpty() ? 
+						Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) ) : 1;
+				dataModel = createDataModelForFollowersPage( authorId, currentPage, filterLanguage );
+				templateName = templateFilePrefix + "FollowersListBasic.ftl";
+			} else if( uri.equals( "/following" ) ) {
+				Long userId = Long.parseLong( request.getParameter( RequestParameter.USER_ID_FOLLOWING.getName() ) );
+				Integer currentPage = 	request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null &&
+										! request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ).trim().isEmpty() ? 
+						Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) ) : 1;
+				dataModel = createDataModelForFollowingPage( userId, currentPage, filterLanguage );
+				templateName = templateFilePrefix + "FollowingListBasic.ftl";
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode, request );
@@ -329,20 +343,6 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
 			
-			} else if( uri.equals( "/followers" ) ) {
-				Long authorId = Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID_FOLLOWERS.getName() ) );
-				Integer currentPage = 	request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null &&
-										! request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ).trim().isEmpty() ? 
-						Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) ) : 1;
-				dataModel = createDataModelForFollowersPage( authorId, currentPage, filterLanguage );
-				templateName = templateFilePrefix + "FollowersListBasic.ftl";
-			} else if( uri.equals( "/following" ) ) {
-				Long userId = Long.parseLong( request.getParameter( RequestParameter.USER_ID_FOLLOWING.getName() ) );
-				Integer currentPage = 	request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null &&
-										! request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ).trim().isEmpty() ? 
-						Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) ) : 1;
-				dataModel = createDataModelForFollowingPage( userId, currentPage, filterLanguage );
-				templateName = templateFilePrefix + "FollowingListBasic.ftl";
 			} else {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Page Not Found !" );
