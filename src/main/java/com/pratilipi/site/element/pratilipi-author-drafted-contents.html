@@ -155,7 +155,7 @@
 
 			_write: function() {
 				if( jQuery( window ).width() >= 600 )
-					document.querySelector( 'pratilipi-write' ).createNewPratilipi( this.authorId );
+					document.querySelector( 'pratilipi-write' ).createNewPratilipi( this.author.authorId );
 				else
 					document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.write_please_login_desktop }", false, 10 * 6000 );
 			},
