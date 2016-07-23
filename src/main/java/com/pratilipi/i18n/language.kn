@@ -93,6 +93,7 @@ rating_ratings				     = ರೇಟಿಂಗ್ಸ್
 rating_rate_this			     = ರೇಟಿಂಗ್ ನೀಡಿ!
 rating_your_rating			   = ನಿಮ್ಮ ರೇಟಿಂಗ್
 rating_be_first_one			   = ಇದಕ್ಕೆ ರೇಟಿಂಗ್ ನೀಡಲು ಮುಂದಾಗಿ!
+rating_mandatory_message		= Please enter your rating!
 rating_1_star			         = ಚೆನ್ನಾಗಿಲ್ಲ 
 rating_2_star			         = ಪರವಾಗಿಲ್ಲ  
 rating_3_star				       = ಚೆನ್ನಾಗಿದೆ 

@@ -181,17 +181,20 @@
 			},
 			
 			createOrEditReview: function( event ) {
-				
+
+				if( this.rating == null || this.rating == 0 ) {
+					this.message = "${ _strings.rating_mandatory_message }";
+					return;
+				}
+
 				this.message = "${ _strings.saving }";
 				jQuery( '#editReviewButton' ).prop( 'disabled', true );
-				
+
 				var body = {
 					pratilipiId : this.pratilipiId,
+					rating: this.rating
 			    };
-				
-				if( this.rating != null )
-					body.rating = this.rating;
-				
+
 				if( this.review != null )
 					body.review = this.review;
 				

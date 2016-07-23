@@ -10,7 +10,12 @@
 		var rating = $( '#inputRating' ).val();
 		var review = $( '#inputReview' ).val();
 
-		// Make Ajax call
+		if( rating == null || rating == 0 ) {
+			alert( "${ _strings.rating_mandatory_message }" );
+			return;
+		}
+
+		<#-- Make Ajax call -->
 
 		$.ajax({
 		

@@ -14,7 +14,7 @@
 
 	<body>
 		<div>
-			followersList = ${ followingList?c }
+			followersList = ${ followingListJson }
 		</div>
 		<div>
 			currPage = ${ currPage }

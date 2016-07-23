@@ -93,6 +93,7 @@ rating_ratings				= റേറ്റിംഗ്സ്
 rating_rate_this			= ഇത് റേറ്റ് ചെയ്യൂ
 rating_your_rating			= താങ്കളുടെ റേറ്റിംഗ്
 rating_be_first_one			= ഇത് റേറ്റ് ചെയ്യുന്ന ആദ്യത്തെ ആളാകൂ!
+rating_mandatory_message	= Please enter your rating!
 rating_1_star				= മോശം
 rating_2_star				= കൊള്ളാം
 rating_3_star				= നല്ലത്‌

@@ -771,6 +771,7 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", I18n.getString( "author_followers", language ) + " | " + createAuthorPageTitle( authorResponse ) );
 		dataModel.put( "followersList", followersList );
+		dataModel.put( "followersListJson", new Gson().toJson( followersList ) );
 		dataModel.put( "currPage", currPage );
 		dataModel.put( "maxPage", followersList.getNumberFound() % resultCount == 0 ? 
 				followersList.getNumberFound() / resultCount :  followersList.getNumberFound() / resultCount + 1 );
@@ -801,6 +802,7 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", I18n.getString( "author_following", language ) + " | " + createAuthorPageTitle( authorResponse ) );
 		dataModel.put( "followingList", followingList );
+		dataModel.put( "followingListJson", new Gson().toJson( followingList ) );
 		dataModel.put( "currPage", currPage );
 		dataModel.put( "maxPage", followingList.getNumberFound() % resultCount == 0 ? 
 				followingList.getNumberFound() / resultCount :  followingList.getNumberFound() / resultCount + 1 );

@@ -93,6 +93,7 @@ rating_ratings				= மதிப்பீடகள்
 rating_rate_this			= மதிப்பிடுக!
 rating_your_rating			= உங்கள் மதிப்பீடு!
 rating_be_first_one			= முதல் ஆளாக மதிப்பீடு வழங்க!
+rating_mandatory_message	= Please enter your rating!
 rating_1_star				= 1
 rating_2_star				= 2
 rating_3_star				= 3

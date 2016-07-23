@@ -93,6 +93,7 @@ rating_ratings				= रेटिंग
 rating_rate_this			= रेटिंग द्या
 rating_your_rating			= तुमचे रेटिंग
 rating_be_first_one			= आपली रेटींग द्या 
+rating_mandatory_message	= Please enter your rating!
 rating_1_star				= १
 rating_2_star				= २
 rating_3_star				= ३
