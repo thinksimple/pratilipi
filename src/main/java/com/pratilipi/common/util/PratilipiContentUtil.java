@@ -375,6 +375,9 @@ public class PratilipiContentUtil {
 					blobEntry = blobAccessor.getBlob( fileName );
 				}
 				
+				if( blobEntry == null )
+					continue;
+				
 				JsonObject imgData = new JsonObject();
 				imgData.addProperty( "name", imageName );
 				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
